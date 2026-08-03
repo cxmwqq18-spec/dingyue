@@ -38,6 +38,7 @@ const pollIntervalMs = Math.max(5_000, Number(process.env.TUTORIAL_POLL_INTERVAL
 const realGeneration = process.env.TUTORIAL_REAL_GENERATION === "1";
 const maxPaidAttempts = realGeneration ? Math.min(1, Math.max(1, Number(process.env.TUTORIAL_MAX_PAID_ATTEMPTS || 1))) : 0;
 const hideHistoricalAssets = process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS !== "0";
+const reuseJobId = process.env.TUTORIAL_REUSE_JOB_ID || "";
 const ffmpegPath = process.env.FFMPEG_PATH || ffmpegStatic || "ffmpeg";
 const ffprobePath = process.env.FFPROBE_PATH || siblingFfprobe(ffmpegPath) || "ffprobe";
 
@@ -616,8 +617,13 @@ async function submitJob(page, recorder) {
   }, undefined, { timeout: 90_000 });
   await pointAt(page, button);
   if (!realGeneration) {
+    await setHistoryMask(page, true);
     await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
     await recorder.capture(segment);
+    if (reuseJobId) {
+      log("reusing existing image job for recording", { jobId: reuseJobId });
+      return reuseJobId;
+    }
     log("skipped real image generation by request");
     return undefined;
   }
@@ -633,6 +639,7 @@ async function submitJob(page, recorder) {
   const responsePromise = page.waitForResponse((response) =>
     response.url().includes(`/api/sites/${siteId}/ai/jobs`) && response.request().method() === "POST",
   { timeout: 150_000 });
+  await setHistoryMask(page, true);
   await button.click({ timeout: 30_000, force: true });
   await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
   const response = await responsePromise;
@@ -649,6 +656,8 @@ async function submitJob(page, recorder) {
     workerDispatchStatus: data.workerDispatch?.status,
     creditsReserved: data.job.creditsReserved
   });
+  await openResults(page);
+  await setHistoryMask(page, true);
   await recorder.capture(segment);
   return String(data.job.id);
 }
@@ -742,30 +751,51 @@ function assetPreviewUrl(asset) {
   return storageKey ? `/api/local-assets/${storageKey}` : "";
 }
 
+async function waitForPreviewImageReady(page, dialog) {
+  const image = dialog.locator("img").first();
+  await image.waitFor({ state: "visible", timeout: 30_000 });
+  await page.waitForFunction(() => {
+    const dialog = document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]');
+    const img = dialog?.querySelector("img");
+    return Boolean(img && img.complete && img.naturalWidth > 32 && img.naturalHeight > 32);
+  }, undefined, { timeout: 30_000 });
+}
+
 async function openGeneratedPreview(page, asset) {
   await openResults(page);
   await setHistoryMask(page, true);
-  await page.evaluate((preview) => {
+  const clickedTarget = await page.evaluate(({ assetId, preview, storageKey }) => {
     const normalized = String(preview || "");
-    const fileName = normalized.split("?")[0].split("/").filter(Boolean).pop() || "";
-    const images = [...document.querySelectorAll("#review-request img")];
+    const decodedPreview = decodeURIComponent(normalized);
+    const normalizedStorage = String(storageKey || "");
+    const fileName = decodedPreview.split("?")[0].split("/").filter(Boolean).pop() || "";
+    const tokens = [assetId, normalized, decodedPreview, normalizedStorage, fileName].filter(Boolean);
+    const images = [...document.querySelectorAll("#review-request button img")];
     const img = images.find((item) => {
-      const src = item.getAttribute("src") || "";
-      return (normalized && src.includes(normalized)) || (fileName && src.includes(fileName));
+      const rawSrc = item.getAttribute("src") || "";
+      const src = decodeURIComponent(rawSrc);
+      const alt = item.getAttribute("alt") || "";
+      return tokens.some((token) => rawSrc.includes(token) || src.includes(token) || alt.includes(token));
     }) || images[0];
     const button = img?.closest("button");
-    if (button) button.click();
-  }, assetPreviewUrl(asset)).catch(() => undefined);
+    if (!button) return false;
+    button.scrollIntoView({ block: "center", inline: "center" });
+    window.setTimeout(() => button.click(), 120);
+    return true;
+  }, { assetId: asset?.id || "", preview: assetPreviewUrl(asset), storageKey: asset?.storageKey || "" }).catch(() => false);
+  if (clickedTarget) await page.waitForTimeout(250);
   const dialog = page.locator('[role="dialog"][aria-label*="Generated asset preview"]').first();
   if (!await dialog.isVisible({ timeout: 8_000 }).catch(() => false)) {
     const firstImageButton = page.locator("#review-request button:has(img)").first();
     if (await firstImageButton.isVisible({ timeout: 5_000 }).catch(() => false)) {
+      await firstImageButton.scrollIntoViewIfNeeded().catch(() => undefined);
       await clickWithPointer(page, firstImageButton, { force: true });
     }
   }
   await dialog.waitFor({ state: "visible", timeout: 30_000 });
   await setHistoryMask(page, true);
   const previewImage = dialog.locator("img").first();
+  await waitForPreviewImageReady(page, dialog);
   await pointAt(page, previewImage).catch(() => undefined);
 }
 
@@ -888,6 +918,7 @@ async function main() {
   });
   const recorder = new Recorder(page);
   const createdJobs = [];
+  const recoveredJobs = [];
   try {
     await captureLoginAndAuthenticate(page, context, recorder);
     await recordWorkspaceOverview(page, recorder);
@@ -897,7 +928,8 @@ async function main() {
     const jobId = await submitJob(page, recorder);
     let result;
     if (jobId) {
-      createdJobs.push(jobId);
+      if (realGeneration) createdJobs.push(jobId);
+      else recoveredJobs.push(jobId);
       await refreshAndRecordProgress(page, recorder);
       result = await waitForSuccess(page, jobId);
       await openGeneratedPreview(page, result.asset);
@@ -917,10 +949,11 @@ async function main() {
       probe: finalProbe,
       contactSheet: contactSheetPath,
       createdJobs,
+      recoveredJobs,
       paidCreateAttempts: createdJobs.length
     });
   } catch (error) {
-    await writeFailure(error, { createdJobs });
+    await writeFailure(error, { createdJobs, recoveredJobs });
     throw error;
   } finally {
     await browser.close().catch(() => undefined);
