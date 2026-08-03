@@ -5,7 +5,6 @@ import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
 import ffmpegPath from "ffmpeg-static";
-import sharp from "sharp";
 import {
   STOREFRONT_WATERMARK_VERSION,
   readWatermarkMarker,
@@ -14,7 +13,8 @@ import {
 
 const execFileAsync = promisify(execFile);
 const repoRoot = process.cwd();
-sharp.cache(false);
+let sharpLoader;
+const sharpImageExtensions = new Set([".avif", ".jpeg", ".jpg", ".png", ".webp"]);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -25,11 +25,45 @@ function read(relativePath) {
 }
 
 async function runFfmpeg(args, options = {}) {
-  assert(ffmpegPath, "ffmpeg-static should be available for video watermark smoke");
+  assert(ffmpegPath, "ffmpeg-static should be available for storefront watermark smoke");
   await execFileAsync(ffmpegPath, args, { timeout: 60_000, maxBuffer: 1024 * 1024, ...options });
 }
 
-async function videoDimensions(filePath) {
+async function runFfmpegBuffer(args, options = {}) {
+  assert(ffmpegPath, "ffmpeg-static should be available for storefront watermark smoke");
+  const result = await execFileAsync(ffmpegPath, args, {
+    encoding: "buffer",
+    timeout: 60_000,
+    maxBuffer: 8 * 1024 * 1024,
+    ...options
+  });
+  return Buffer.isBuffer(result.stdout) ? result.stdout : Buffer.from(result.stdout ?? "");
+}
+
+async function loadSharp() {
+  if (process.env.STOREFRONT_WATERMARK_DISABLE_SHARP === "1") {
+    sharpLoader = null;
+    return sharpLoader;
+  }
+  if (sharpLoader !== undefined) return sharpLoader;
+  try {
+    const moduleName = "sharp";
+    const mod = await import(moduleName);
+    const sharp = mod.default ?? mod;
+    sharp.cache(false);
+    sharpLoader = sharp;
+  } catch {
+    sharpLoader = null;
+  }
+  return sharpLoader;
+}
+
+async function mediaDimensions(filePath) {
+  const sharp = sharpImageExtensions.has(path.extname(filePath).toLowerCase()) ? await loadSharp() : null;
+  if (sharp) {
+    const metadata = await sharp(filePath).metadata();
+    return { width: Number(metadata.width ?? 0), height: Number(metadata.height ?? 0) };
+  }
   let output = "";
   try {
     await runFfmpeg(["-hide_banner", "-i", filePath]);
@@ -43,9 +77,69 @@ async function videoDimensions(filePath) {
   return { width: Number(match?.[1] ?? 0), height: Number(match?.[2] ?? 0) };
 }
 
+async function createSolidImage(filePath, { width, height, color }) {
+  const sharp = await loadSharp();
+  if (sharp) {
+    await sharp({
+      create: {
+        width,
+        height,
+        channels: 3,
+        background: color
+      }
+    }).png().toFile(filePath);
+    return;
+  }
+  const ffmpegColor = String(color).replace(/^#/, "0x");
+  await runFfmpeg([
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-y",
+    "-f",
+    "lavfi",
+    "-i",
+    `color=c=${ffmpegColor}:s=${width}x${height}:d=1`,
+    "-frames:v",
+    "1",
+    filePath
+  ]);
+}
+
 async function cropAbsDiff(leftPath, rightPath, crop) {
-  const left = await sharp(leftPath).extract(crop).raw().toBuffer();
-  const right = await sharp(rightPath).extract(crop).raw().toBuffer();
+  const sharp = await loadSharp();
+  const left = sharp
+    ? await sharp(leftPath).extract(crop).removeAlpha().raw().toBuffer()
+    : await runFfmpegBuffer([
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-i",
+      leftPath,
+      "-vf",
+      `crop=${crop.width}:${crop.height}:${crop.left}:${crop.top},format=rgb24`,
+      "-frames:v",
+      "1",
+      "-f",
+      "rawvideo",
+      "-"
+    ], { maxBuffer: crop.width * crop.height * 3 + 1024 });
+  const right = sharp
+    ? await sharp(rightPath).extract(crop).removeAlpha().raw().toBuffer()
+    : await runFfmpegBuffer([
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-i",
+      rightPath,
+      "-vf",
+      `crop=${crop.width}:${crop.height}:${crop.left}:${crop.top},format=rgb24`,
+      "-frames:v",
+      "1",
+      "-f",
+      "rawvideo",
+      "-"
+    ], { maxBuffer: crop.width * crop.height * 3 + 1024 });
   assert(left.length === right.length, "comparison crops should have the same byte length");
   let sum = 0;
   for (let index = 0; index < left.length; index += 1) {
@@ -55,21 +149,14 @@ async function cropAbsDiff(leftPath, rightPath, crop) {
 }
 
 async function smokeImageWatermark(tempDir) {
-  const original = path.join(tempDir, "image-original.webp");
-  const watermarked = path.join(tempDir, "image-watermarked.webp");
-  await sharp({
-    create: {
-      width: 640,
-      height: 480,
-      channels: 3,
-      background: "#182235"
-    }
-  }).webp({ quality: 96 }).toFile(original);
+  const original = path.join(tempDir, "image-original.png");
+  const watermarked = path.join(tempDir, "image-watermarked.png");
+  await createSolidImage(original, { width: 640, height: 480, color: "#182235" });
   await fs.copyFile(original, watermarked);
 
   const result = await watermarkMediaFile(watermarked, "myDreamshoots.com", { force: true });
-  const originalMeta = await sharp(original).metadata();
-  const watermarkedMeta = await sharp(watermarked).metadata();
+  const originalMeta = await mediaDimensions(original);
+  const watermarkedMeta = await mediaDimensions(watermarked);
   assert(result.changed, "image watermark should modify the file");
   assert(originalMeta.width === watermarkedMeta.width && originalMeta.height === watermarkedMeta.height, "image watermark should keep dimensions unchanged");
   const diff = await cropAbsDiff(original, watermarked, { left: 430, top: 440, width: 190, height: 30 });
@@ -105,7 +192,7 @@ async function smokeVideoWatermark(tempDir) {
   await runFfmpeg(["-hide_banner", "-loglevel", "error", "-y", "-ss", "0.1", "-i", original, "-frames:v", "1", "-q:v", "3", originalFrame]);
   const result = await watermarkMediaFile(watermarked, "Aidreamcapes.com", { force: true });
   assert(result.changed, "video watermark should modify the file");
-  const dimensions = await videoDimensions(watermarked);
+  const dimensions = await mediaDimensions(watermarked);
   assert(dimensions.width === 320 && dimensions.height === 240, `video watermark should keep dimensions unchanged, got ${dimensions.width}x${dimensions.height}`);
   await runFfmpeg(["-hide_banner", "-loglevel", "error", "-y", "-ss", "0.1", "-i", watermarked, "-frames:v", "1", "-q:v", "3", watermarkedFrame]);
   const diff = await cropAbsDiff(originalFrame, watermarkedFrame, { left: 185, top: 210, width: 125, height: 22 });

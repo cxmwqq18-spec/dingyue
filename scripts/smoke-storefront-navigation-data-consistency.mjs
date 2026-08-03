@@ -112,21 +112,6 @@ const focusedVisualRoutes = [
       Halloween: "/site/aidreamcapes/collections/halloween-party-portraits",
       Seasonal: "/site/aidreamcapes/collections/seasonal-celebration-photos"
     },
-    proofHrefs: {
-      "Private fan-scene albums": "/site/aidreamcapes/collections/fan-scene-albums",
-      "Game-day group portraits": "/site/aidreamcapes/collections/game-day-group-photos",
-      "Premiere flash portraits": "/site/aidreamcapes/collections/premiere-style-portraits",
-      "Cozy Christmas card portraits": "/site/aidreamcapes/collections/christmas-holiday-albums"
-    },
-    proofTabHrefs: {
-      "Fan Scenes": "/site/aidreamcapes/collections/fan-scene-albums",
-      "Game Day": "/site/aidreamcapes/collections/game-day-group-photos",
-      Premiere: "/site/aidreamcapes/collections/premiere-style-portraits",
-      Christmas: "/site/aidreamcapes/collections/christmas-holiday-albums",
-      Thanksgiving: "/site/aidreamcapes/collections/thanksgiving-memory-sets",
-      Halloween: "/site/aidreamcapes/collections/halloween-party-portraits",
-      Seasonal: "/site/aidreamcapes/collections/seasonal-celebration-photos"
-    },
     forbidPackageLoginCards: true,
     checkMotionVideos: true
   },

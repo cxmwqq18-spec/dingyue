@@ -3,7 +3,7 @@ import { chromium } from "playwright";
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(/\/$/, "");
 const routeChecks = [
   { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/collections", "/collections/creator-portraits", "/tools", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] },
-  { host: "www.aidreamcapes.com", paths: ["/", "/workflow", "/collections", "/collections/fan-scene-albums", "/collections/private-fan-scene-albums", "/collections/game-day-group-photos", "/collections/game-day-group-portraits", "/collections/christmas-holiday-albums", "/collections/christmas-group-albums", "/collections/new-year-countdown-albums", "/tools", "/tools/fan-scene-album-builder", "/tools/game-day-group-portrait-maker", "/tools/christmas-group-album-studio", "/tools/new-year-countdown-album-maker", "/tools/permission-safe-photo-planner", "/blog/fan-scene-photo-albums-guide", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] }
+  { host: "www.aidreamcapes.com", paths: ["/", "/workflow", "/collections", "/collections/fan-scene-albums", "/collections/private-fan-scene-albums", "/collections/game-day-group-photos", "/collections/game-day-group-portraits", "/collections/christmas-holiday-albums", "/collections/christmas-group-albums", "/collections/new-year-countdown-albums", "/tools", "/tools/fan-scene-album-builder", "/tools/game-day-group-portrait-maker", "/tools/christmas-group-album-studio", "/tools/new-year-countdown-album-maker", "/tools/permission-safe-photo-planner", "/blog/private-fan-scene-album-photo-package-guide", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] }
 ];
 const imageAltRouteChecks = [
   { host: "www.mydreamshoots.com", paths: ["/", "/collections", "/collections/world-cup-fan-photos", "/collections/christmas-photos", "/tools", "/tools/world-cup-fan-photos"] },
@@ -15,7 +15,10 @@ const legacyRedirectChecks = [
   { host: "www.aidreamcapes.com", path: "/collections/old-quarter-walks", target: "/collections/premiere-style-portraits" },
   { host: "www.aidreamcapes.com", path: "/tools/route-portrait-engine", target: "/tools/fan-scene-album-builder" },
   { host: "www.aidreamcapes.com", path: "/tools/coastal-portrait", target: "/tools/christmas-group-album-studio" },
-  { host: "www.aidreamcapes.com", path: "/tools/seasonal-celebration-album-maker", target: "/tools/new-year-countdown-album-maker" }
+  { host: "www.aidreamcapes.com", path: "/tools/seasonal-celebration-album-maker", target: "/tools/new-year-countdown-album-maker" },
+  { host: "www.aidreamcapes.com", path: "/blog/fan-scene-photo-albums-guide", target: "/blog/private-fan-scene-album-photo-package-guide" },
+  { host: "www.aidreamcapes.com", path: "/blog/game-day-group-portraits-guide", target: "/blog/game-day-group-portraits-photo-package-guide" },
+  { host: "www.aidreamcapes.com", path: "/blog/holiday-memory-albums-guide", target: "/blog/christmas-group-album-photo-package-guide" }
 ];
 
 function assert(condition, message) {

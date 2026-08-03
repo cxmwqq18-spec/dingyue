@@ -137,67 +137,78 @@ const DREAMSHOOT_LEGACY_BLOG_VIDEO_REDIRECTS: Record<string, string> = {
   "wedding-memory": "/blog/video-photo-package-guide"
 };
 const AIDREAMCAPES_LEGACY_BLOG_CATEGORY_REDIRECTS: Record<string, string> = {
-  "fan-scene-albums": "/blog/fan-scene-photo-albums-guide",
-  "private-fan-scene-albums": "/blog/fan-scene-photo-albums-guide",
-  "backstage-meetup-portraits": "/blog/fan-scene-photo-albums-guide",
-  "supporter-photo-walls": "/blog/fan-scene-photo-albums-guide",
-  "fan-keepsake-card-sets": "/blog/fan-scene-photo-albums-guide",
-  "game-day-group-photos": "/blog/game-day-group-portraits-guide",
-  "game-day-group-portraits": "/blog/game-day-group-portraits-guide",
-  "stadium-night-fan-sets": "/blog/game-day-group-portraits-guide",
-  "watch-party-albums": "/blog/game-day-group-portraits-guide",
-  "premiere-style-portraits": "/blog/premiere-style-photo-sets-guide",
-  "premiere-flash-portraits": "/blog/premiere-style-photo-sets-guide",
-  "vip-arrival-photo-sets": "/blog/premiere-style-photo-sets-guide",
-  "award-night-keepsake-albums": "/blog/premiere-style-photo-sets-guide",
-  "christmas-holiday-albums": "/blog/holiday-memory-albums-guide",
-  "christmas-group-albums": "/blog/holiday-memory-albums-guide",
-  "cozy-card-portrait-sets": "/blog/holiday-memory-albums-guide",
-  "winter-fan-greeting-albums": "/blog/holiday-memory-albums-guide",
-  "thanksgiving-memory-sets": "/blog/thanksgiving-keepsake-sets-category-guide",
-  "thanksgiving-table-keepsakes": "/blog/thanksgiving-keepsake-sets-category-guide",
-  "gratitude-group-portraits": "/blog/thanksgiving-keepsake-sets-category-guide",
-  "friendsgiving-memory-sets": "/blog/thanksgiving-keepsake-sets-category-guide",
-  "halloween-party-portraits": "/blog/halloween-party-portraits-category-guide",
-  "halloween-party-portrait-sets": "/blog/halloween-party-portraits-category-guide",
-  "costume-cast-photo-albums": "/blog/halloween-party-portraits-category-guide",
-  "seasonal-celebration-photos": "/blog/seasonal-celebration-photos-category-guide",
-  "birthday-fan-moment-sets": "/blog/seasonal-celebration-photos-category-guide",
-  "new-year-countdown-albums": "/blog/seasonal-celebration-photos-category-guide"
+  "fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",
+  "private-fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",
+  "backstage-meetup-portraits": "/blog/backstage-meetup-portraits-photo-package-guide",
+  "supporter-photo-walls": "/blog/creator-supporter-photo-wall-photo-package-guide",
+  "fan-keepsake-card-sets": "/blog/fan-keepsake-card-set-photo-package-guide",
+  "game-day-group-photos": "/blog/game-day-group-portraits-photo-package-guide",
+  "game-day-group-portraits": "/blog/game-day-group-portraits-photo-package-guide",
+  "stadium-night-fan-sets": "/blog/stadium-night-fan-set-photo-package-guide",
+  "watch-party-albums": "/blog/championship-watch-party-album-photo-package-guide",
+  "premiere-style-portraits": "/blog/premiere-flash-portraits-photo-package-guide",
+  "premiere-flash-portraits": "/blog/premiere-flash-portraits-photo-package-guide",
+  "vip-arrival-photo-sets": "/blog/vip-arrival-photo-set-photo-package-guide",
+  "award-night-keepsake-albums": "/blog/award-night-keepsake-album-photo-package-guide",
+  "christmas-holiday-albums": "/blog/christmas-group-album-photo-package-guide",
+  "christmas-group-albums": "/blog/christmas-group-album-photo-package-guide",
+  "cozy-card-portrait-sets": "/blog/cozy-card-portrait-set-photo-package-guide",
+  "winter-fan-greeting-albums": "/blog/winter-fan-greeting-album-photo-package-guide",
+  "thanksgiving-memory-sets": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "thanksgiving-table-keepsakes": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "gratitude-group-portraits": "/blog/gratitude-group-portrait-album-photo-package-guide",
+  "friendsgiving-memory-sets": "/blog/friendsgiving-memory-set-photo-package-guide",
+  "halloween-party-portraits": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "halloween-party-portrait-sets": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "costume-cast-photo-albums": "/blog/costume-cast-photo-album-photo-package-guide",
+  "seasonal-celebration-photos": "/blog/seasonal-celebration-photo-set-photo-package-guide",
+  "birthday-fan-moment-sets": "/blog/birthday-fan-moment-set-photo-package-guide",
+  "new-year-countdown-albums": "/blog/new-year-countdown-group-album-photo-package-guide"
+};
+const AIDREAMCAPES_LEGACY_BLOG_DIRECT_REDIRECTS: Record<string, string> = {
+  "fan-scene-photo-albums-guide": "/blog/private-fan-scene-album-photo-package-guide",
+  "game-day-group-portraits-guide": "/blog/game-day-group-portraits-photo-package-guide",
+  "premiere-style-photo-sets-guide": "/blog/premiere-flash-portraits-photo-package-guide",
+  "holiday-memory-albums-guide": "/blog/christmas-group-album-photo-package-guide",
+  "thanksgiving-keepsake-sets-category-guide": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "halloween-party-portraits-category-guide": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "seasonal-celebration-photos-category-guide": "/blog/seasonal-celebration-photo-set-photo-package-guide",
+  "permission-safe-fan-scene-references": "/blog/family-occasion-portrait-album-photo-package-guide",
+  "private-album-credit-planning": "/blog/private-fan-scene-album-photo-package-guide"
 };
 const AIDREAMCAPES_LEGACY_BLOG_TOOL_REDIRECTS: Record<string, string> = {
-  "fan-scene-builders-guide": "/blog/fan-scene-photo-albums-guide",
-  "game-day-builders-guide": "/blog/game-day-group-portraits-guide",
-  "premiere-creator-tools-guide": "/blog/premiere-style-photo-sets-guide",
-  "holiday-album-tools-guide": "/blog/holiday-memory-albums-guide",
-  "occasion-card-tools-guide": "/blog/seasonal-celebration-photos-category-guide",
-  "safety-prep-tools-guide": "/blog/permission-safe-fan-scene-references",
-  "fan-scene-album-builder": "/blog/fan-scene-photo-albums-guide",
-  "backstage-meetup-scene-builder": "/blog/fan-scene-photo-albums-guide",
-  "supporter-photo-wall-maker": "/blog/fan-scene-photo-albums-guide",
-  "fan-keepsake-card-maker": "/blog/fan-scene-photo-albums-guide",
-  "game-day-group-portrait-maker": "/blog/game-day-group-portraits-guide",
-  "stadium-night-fan-set-maker": "/blog/game-day-group-portraits-guide",
-  "watch-party-album-builder": "/blog/game-day-group-portraits-guide",
-  "premiere-portrait-set-builder": "/blog/premiere-style-photo-sets-guide",
-  "vip-arrival-photo-maker": "/blog/premiere-style-photo-sets-guide",
-  "award-night-album-studio": "/blog/premiere-style-photo-sets-guide",
-  "new-year-countdown-album-maker": "/blog/seasonal-celebration-photos-category-guide",
-  "christmas-group-album-studio": "/blog/holiday-memory-albums-guide",
-  "cozy-card-portrait-maker": "/blog/holiday-memory-albums-guide",
-  "winter-fan-greeting-maker": "/blog/holiday-memory-albums-guide",
-  "thanksgiving-keepsake-set-maker": "/blog/thanksgiving-keepsake-sets-category-guide",
-  "friendsgiving-memory-maker": "/blog/thanksgiving-keepsake-sets-category-guide",
-  "halloween-party-portrait-maker": "/blog/halloween-party-portraits-category-guide",
-  "costume-cast-album-builder": "/blog/halloween-party-portraits-category-guide",
-  "birthday-fan-moment-maker": "/blog/seasonal-celebration-photos-category-guide",
-  "permission-safe-photo-planner": "/blog/permission-safe-fan-scene-references"
+  "fan-scene-builders-guide": "/blog/private-fan-scene-album-photo-package-guide",
+  "game-day-builders-guide": "/blog/game-day-group-portraits-photo-package-guide",
+  "premiere-creator-tools-guide": "/blog/premiere-flash-portraits-photo-package-guide",
+  "holiday-album-tools-guide": "/blog/christmas-group-album-photo-package-guide",
+  "occasion-card-tools-guide": "/blog/seasonal-celebration-photo-set-photo-package-guide",
+  "safety-prep-tools-guide": "/blog/family-occasion-portrait-album-photo-package-guide",
+  "fan-scene-album-builder": "/blog/private-fan-scene-album-photo-package-guide",
+  "backstage-meetup-scene-builder": "/blog/backstage-meetup-portraits-photo-package-guide",
+  "supporter-photo-wall-maker": "/blog/creator-supporter-photo-wall-photo-package-guide",
+  "fan-keepsake-card-maker": "/blog/fan-keepsake-card-set-photo-package-guide",
+  "game-day-group-portrait-maker": "/blog/game-day-group-portraits-photo-package-guide",
+  "stadium-night-fan-set-maker": "/blog/stadium-night-fan-set-photo-package-guide",
+  "watch-party-album-builder": "/blog/championship-watch-party-album-photo-package-guide",
+  "premiere-portrait-set-builder": "/blog/premiere-flash-portraits-photo-package-guide",
+  "vip-arrival-photo-maker": "/blog/vip-arrival-photo-set-photo-package-guide",
+  "award-night-album-studio": "/blog/award-night-keepsake-album-photo-package-guide",
+  "new-year-countdown-album-maker": "/blog/new-year-countdown-group-album-photo-package-guide",
+  "christmas-group-album-studio": "/blog/christmas-group-album-photo-package-guide",
+  "cozy-card-portrait-maker": "/blog/cozy-card-portrait-set-photo-package-guide",
+  "winter-fan-greeting-maker": "/blog/winter-fan-greeting-album-photo-package-guide",
+  "thanksgiving-keepsake-set-maker": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "friendsgiving-memory-maker": "/blog/friendsgiving-memory-set-photo-package-guide",
+  "halloween-party-portrait-maker": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "costume-cast-album-builder": "/blog/costume-cast-photo-album-photo-package-guide",
+  "birthday-fan-moment-maker": "/blog/birthday-fan-moment-set-photo-package-guide",
+  "permission-safe-photo-planner": "/blog/family-occasion-portrait-album-photo-package-guide"
 };
 const AIDREAMCAPES_LEGACY_BLOG_VIDEO_REDIRECTS: Record<string, string> = {
-  "coastal-motion": "/blog/private-album-credit-planning",
-  "memory-film": "/blog/private-album-credit-planning",
-  "profile-travel": "/blog/private-album-credit-planning",
-  "route-motion": "/blog/private-album-credit-planning"
+  "coastal-motion": "/blog/private-fan-scene-album-photo-package-guide",
+  "memory-film": "/blog/private-fan-scene-album-photo-package-guide",
+  "profile-travel": "/blog/private-fan-scene-album-photo-package-guide",
+  "route-motion": "/blog/private-fan-scene-album-photo-package-guide"
 };
 const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools"]);
 const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
@@ -274,9 +285,12 @@ function legacyBlogRedirectPath(
   articleSlug: string,
   categoryRedirects: Record<string, string>,
   toolRedirects: Record<string, string>,
-  videoRedirects: Record<string, string>
+  videoRedirects: Record<string, string>,
+  directRedirects: Record<string, string> = {}
 ): string | undefined {
   const normalizedSlug = articleSlug.trim().toLowerCase();
+  const directLegacyRedirect = directRedirects[normalizedSlug];
+  if (directLegacyRedirect) return directLegacyRedirect;
   const directRedirect = toolRedirects[normalizedSlug];
   if (directRedirect) return directRedirect;
   if (normalizedSlug.endsWith("-photo-package-guide")) {
@@ -295,7 +309,13 @@ function redirectLegacyBlogArticle(site: { slug: string; name: string; branding:
   if (!slug.startsWith("/blog/")) return;
   const articleSlug = slug.slice("/blog/".length);
   const redirectPath = isAidreamcapesSite(site)
-    ? legacyBlogRedirectPath(articleSlug, AIDREAMCAPES_LEGACY_BLOG_CATEGORY_REDIRECTS, AIDREAMCAPES_LEGACY_BLOG_TOOL_REDIRECTS, AIDREAMCAPES_LEGACY_BLOG_VIDEO_REDIRECTS)
+    ? legacyBlogRedirectPath(
+      articleSlug,
+      AIDREAMCAPES_LEGACY_BLOG_CATEGORY_REDIRECTS,
+      AIDREAMCAPES_LEGACY_BLOG_TOOL_REDIRECTS,
+      AIDREAMCAPES_LEGACY_BLOG_VIDEO_REDIRECTS,
+      AIDREAMCAPES_LEGACY_BLOG_DIRECT_REDIRECTS
+    )
     : isMydreamshootsSite(site)
     ? legacyBlogRedirectPath(articleSlug, DREAMSHOOT_LEGACY_BLOG_CATEGORY_REDIRECTS, DREAMSHOOT_LEGACY_BLOG_TOOL_REDIRECTS, DREAMSHOOT_LEGACY_BLOG_VIDEO_REDIRECTS)
     : undefined;

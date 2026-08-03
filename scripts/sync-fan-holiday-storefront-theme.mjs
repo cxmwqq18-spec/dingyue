@@ -484,28 +484,28 @@ const videoDefs = legacyVideoShowcase.videoThemes.map((theme, index) => ({
 
 const blogDefs = [
   {
-    slug: "fan-scene-photo-albums-guide",
+    slug: "private-fan-scene-album-photo-package-guide",
     title: "How to plan fan-scene photo albums safely",
     summary: "Plan private fan-scene albums with approved source photos, original styling, visible credits, and clear likeness boundaries.",
     imageSlug: "private-fan-scene-album",
     tags: "Fan-scene albums|Source photo permissions|Private gallery|AI photo guide"
   },
   {
-    slug: "game-day-group-portraits-guide",
+    slug: "game-day-group-portraits-photo-package-guide",
     title: "Game-day group portraits without official marks",
     summary: "Create supporter scenes and group portraits while avoiding official team logos, event marks, and real athlete likenesses.",
     imageSlug: "game-day-group-portraits",
     tags: "Game-day portraits|Sports fan photos|Original styling|Private albums"
   },
   {
-    slug: "premiere-style-photo-sets-guide",
+    slug: "premiere-flash-portraits-photo-package-guide",
     title: "Premiere-inspired portrait sets for private albums",
     summary: "Use flash mood, formal styling, and original VIP atmosphere without copying real public figures or protected brands.",
     imageSlug: "premiere-flash-portraits",
     tags: "Premiere portraits|VIP style photos|Creator albums|Permission-safe AI"
   },
   {
-    slug: "holiday-memory-albums-guide",
+    slug: "christmas-group-album-photo-package-guide",
     title: "Holiday memory albums for Christmas, Thanksgiving, and Halloween",
     summary: "Compare seasonal photo directions, credit costs, and source-photo guidance before creating a private Aidreamcapes album.",
     imageSlug: "seasonal-celebration-photo-set",

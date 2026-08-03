@@ -64,10 +64,10 @@ const aidreamcapesNewTools = [
   "permission-safe-photo-planner"
 ];
 const aidreamcapesNewBlogs = [
-  "/blog/fan-scene-photo-albums-guide",
-  "/blog/game-day-group-portraits-guide",
-  "/blog/premiere-style-photo-sets-guide",
-  "/blog/holiday-memory-albums-guide"
+  "/blog/private-fan-scene-album-photo-package-guide",
+  "/blog/game-day-group-portraits-photo-package-guide",
+  "/blog/premiere-flash-portraits-photo-package-guide",
+  "/blog/christmas-group-album-photo-package-guide"
 ];
 const aidreamcapesLegacyPatterns = [
   /travel/i,

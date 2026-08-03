@@ -348,7 +348,7 @@ const mydreamshootsThemeArticles = [
 const aidreamcapesThemeArticles = [
   {
     label: "Fan-Scene Albums",
-    blogSlug: "/blog/fan-scene-photo-albums-guide",
+    blogSlug: "/blog/private-fan-scene-album-photo-package-guide",
     description: "Private fan-scene album categories for original supporter moments, meetup-style portraits, photo walls, and keepsake cards.",
     imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/fan-scene-albums.webp?v=20260731assetfix1",
     targetHref: "/collections/fan-scene-albums",
@@ -361,7 +361,7 @@ const aidreamcapesThemeArticles = [
   },
   {
     label: "Game-Day Group Portraits",
-    blogSlug: "/blog/game-day-group-portraits-guide",
+    blogSlug: "/blog/game-day-group-portraits-photo-package-guide",
     description: "Game-day group photo categories for arena-inspired portraits, stadium night sets, and watch party albums.",
     imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/game-day-group-photos.webp?v=20260731assetfix1",
     targetHref: "/collections/game-day-group-photos",
@@ -374,7 +374,7 @@ const aidreamcapesThemeArticles = [
   },
   {
     label: "Premiere-Inspired Portrait Sets",
-    blogSlug: "/blog/premiere-style-photo-sets-guide",
+    blogSlug: "/blog/premiere-flash-portraits-photo-package-guide",
     description: "Premiere-inspired categories for flash portraits, VIP arrivals, and award-night private albums.",
     imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/premiere-style-portraits.webp?v=20260731assetfix1",
     targetHref: "/collections/premiere-style-portraits",
@@ -387,7 +387,7 @@ const aidreamcapesThemeArticles = [
   },
   {
     label: "Christmas Holiday Albums",
-    blogSlug: "/blog/holiday-memory-albums-guide",
+    blogSlug: "/blog/christmas-group-album-photo-package-guide",
     description: "Christmas holiday album categories for group cards, cozy portraits, and winter fan greeting albums.",
     imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/christmas-holiday-albums.webp?v=20260731assetfix1",
     targetHref: "/collections/christmas-holiday-albums",
@@ -400,7 +400,7 @@ const aidreamcapesThemeArticles = [
   },
   {
     label: "Thanksgiving Keepsake Sets",
-    blogSlug: "/blog/thanksgiving-keepsake-sets-category-guide",
+    blogSlug: "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
     description: "Thanksgiving keepsake categories for table scenes, gratitude portraits, and Friendsgiving memory sets.",
     imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/thanksgiving-memory-sets.webp?v=20260731assetfix1",
     targetHref: "/collections/thanksgiving-memory-sets",
@@ -413,7 +413,7 @@ const aidreamcapesThemeArticles = [
   },
   {
     label: "Halloween Party Portraits",
-    blogSlug: "/blog/halloween-party-portraits-category-guide",
+    blogSlug: "/blog/halloween-party-portrait-set-photo-package-guide",
     description: "Halloween party portrait categories for costume-friendly albums, party scenes, and cast-style private galleries.",
     imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/halloween-party-portraits.webp?v=20260731assetfix1",
     targetHref: "/collections/halloween-party-portraits",
@@ -426,7 +426,7 @@ const aidreamcapesThemeArticles = [
   },
   {
     label: "Seasonal Celebration Photos",
-    blogSlug: "/blog/seasonal-celebration-photos-category-guide",
+    blogSlug: "/blog/seasonal-celebration-photo-set-photo-package-guide",
     description: "Seasonal celebration categories for birthdays, New Year countdowns, family occasions, and rotating private albums.",
     imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/seasonal-celebration-photos.webp?v=20260731assetfix1",
     targetHref: "/collections/seasonal-celebration-photos",
@@ -959,7 +959,7 @@ const siteConfigs = [
       },
       {
         id: "site_aidreamcapes_blog_fan_scene_references",
-        slug: "/blog/permission-safe-fan-scene-references",
+        slug: "/blog/permission-safe-fan-scene-reference-planning",
         pageTitle: "Permission-safe fan-scene references",
         title: "How to choose permission-safe fan-scene references for private albums",
         summary:
@@ -1016,7 +1016,7 @@ const siteConfigs = [
       },
       {
         id: "site_aidreamcapes_blog_private_album_credit",
-        slug: "/blog/private-album-credit-planning",
+        slug: "/blog/private-album-credit-planning-guide",
         pageTitle: "Private album credit planning",
         title: "How to plan private album credits for Aidreamcapes",
         summary:

@@ -16,9 +16,100 @@ import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
 const dreamshootPartnerTemplateSlugs = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
+const aidreamcapesLegacyBlogCategoryRedirects: Record<string, string> = {
+  "fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",
+  "private-fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",
+  "backstage-meetup-portraits": "/blog/backstage-meetup-portraits-photo-package-guide",
+  "supporter-photo-walls": "/blog/creator-supporter-photo-wall-photo-package-guide",
+  "fan-keepsake-card-sets": "/blog/fan-keepsake-card-set-photo-package-guide",
+  "game-day-group-photos": "/blog/game-day-group-portraits-photo-package-guide",
+  "game-day-group-portraits": "/blog/game-day-group-portraits-photo-package-guide",
+  "stadium-night-fan-sets": "/blog/stadium-night-fan-set-photo-package-guide",
+  "watch-party-albums": "/blog/championship-watch-party-album-photo-package-guide",
+  "premiere-style-portraits": "/blog/premiere-flash-portraits-photo-package-guide",
+  "premiere-flash-portraits": "/blog/premiere-flash-portraits-photo-package-guide",
+  "vip-arrival-photo-sets": "/blog/vip-arrival-photo-set-photo-package-guide",
+  "award-night-keepsake-albums": "/blog/award-night-keepsake-album-photo-package-guide",
+  "christmas-holiday-albums": "/blog/christmas-group-album-photo-package-guide",
+  "christmas-group-albums": "/blog/christmas-group-album-photo-package-guide",
+  "cozy-card-portrait-sets": "/blog/cozy-card-portrait-set-photo-package-guide",
+  "winter-fan-greeting-albums": "/blog/winter-fan-greeting-album-photo-package-guide",
+  "thanksgiving-memory-sets": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "thanksgiving-table-keepsakes": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "gratitude-group-portraits": "/blog/gratitude-group-portrait-album-photo-package-guide",
+  "friendsgiving-memory-sets": "/blog/friendsgiving-memory-set-photo-package-guide",
+  "halloween-party-portraits": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "halloween-party-portrait-sets": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "costume-cast-photo-albums": "/blog/costume-cast-photo-album-photo-package-guide",
+  "seasonal-celebration-photos": "/blog/seasonal-celebration-photo-set-photo-package-guide",
+  "birthday-fan-moment-sets": "/blog/birthday-fan-moment-set-photo-package-guide",
+  "new-year-countdown-albums": "/blog/new-year-countdown-group-album-photo-package-guide"
+};
+const aidreamcapesLegacyBlogDirectRedirects: Record<string, string> = {
+  "fan-scene-photo-albums-guide": "/blog/private-fan-scene-album-photo-package-guide",
+  "game-day-group-portraits-guide": "/blog/game-day-group-portraits-photo-package-guide",
+  "premiere-style-photo-sets-guide": "/blog/premiere-flash-portraits-photo-package-guide",
+  "holiday-memory-albums-guide": "/blog/christmas-group-album-photo-package-guide",
+  "thanksgiving-keepsake-sets-category-guide": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "halloween-party-portraits-category-guide": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "seasonal-celebration-photos-category-guide": "/blog/seasonal-celebration-photo-set-photo-package-guide",
+  "permission-safe-fan-scene-references": "/blog/family-occasion-portrait-album-photo-package-guide",
+  "private-album-credit-planning": "/blog/private-fan-scene-album-photo-package-guide"
+};
+const aidreamcapesLegacyBlogToolRedirects: Record<string, string> = {
+  "fan-scene-builders-guide": "/blog/private-fan-scene-album-photo-package-guide",
+  "game-day-builders-guide": "/blog/game-day-group-portraits-photo-package-guide",
+  "premiere-creator-tools-guide": "/blog/premiere-flash-portraits-photo-package-guide",
+  "holiday-album-tools-guide": "/blog/christmas-group-album-photo-package-guide",
+  "occasion-card-tools-guide": "/blog/seasonal-celebration-photo-set-photo-package-guide",
+  "safety-prep-tools-guide": "/blog/family-occasion-portrait-album-photo-package-guide",
+  "fan-scene-album-builder": "/blog/private-fan-scene-album-photo-package-guide",
+  "backstage-meetup-scene-builder": "/blog/backstage-meetup-portraits-photo-package-guide",
+  "supporter-photo-wall-maker": "/blog/creator-supporter-photo-wall-photo-package-guide",
+  "fan-keepsake-card-maker": "/blog/fan-keepsake-card-set-photo-package-guide",
+  "game-day-group-portrait-maker": "/blog/game-day-group-portraits-photo-package-guide",
+  "stadium-night-fan-set-maker": "/blog/stadium-night-fan-set-photo-package-guide",
+  "watch-party-album-builder": "/blog/championship-watch-party-album-photo-package-guide",
+  "premiere-portrait-set-builder": "/blog/premiere-flash-portraits-photo-package-guide",
+  "vip-arrival-photo-maker": "/blog/vip-arrival-photo-set-photo-package-guide",
+  "award-night-album-studio": "/blog/award-night-keepsake-album-photo-package-guide",
+  "new-year-countdown-album-maker": "/blog/new-year-countdown-group-album-photo-package-guide",
+  "christmas-group-album-studio": "/blog/christmas-group-album-photo-package-guide",
+  "cozy-card-portrait-maker": "/blog/cozy-card-portrait-set-photo-package-guide",
+  "winter-fan-greeting-maker": "/blog/winter-fan-greeting-album-photo-package-guide",
+  "thanksgiving-keepsake-set-maker": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "friendsgiving-memory-maker": "/blog/friendsgiving-memory-set-photo-package-guide",
+  "halloween-party-portrait-maker": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "costume-cast-album-builder": "/blog/costume-cast-photo-album-photo-package-guide",
+  "birthday-fan-moment-maker": "/blog/birthday-fan-moment-set-photo-package-guide",
+  "permission-safe-photo-planner": "/blog/family-occasion-portrait-album-photo-package-guide"
+};
+const aidreamcapesLegacyBlogVideoRedirects: Record<string, string> = {
+  "coastal-motion": "/blog/private-fan-scene-album-photo-package-guide",
+  "memory-film": "/blog/private-fan-scene-album-photo-package-guide",
+  "profile-travel": "/blog/private-fan-scene-album-photo-package-guide",
+  "route-motion": "/blog/private-fan-scene-album-photo-package-guide"
+};
 
 function isSpanishXbyStorefrontSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }): boolean {
   return isSpanishStorefrontSite(site);
+}
+
+function aidreamcapesLegacyBlogRedirectPath(siteSlug: string, slug: string): string | undefined {
+  if (siteSlug !== "aidreamcapes" || !slug.startsWith("/blog/")) return undefined;
+  const articleSlug = slug.slice("/blog/".length).trim().toLowerCase();
+  const directRedirect = aidreamcapesLegacyBlogDirectRedirects[articleSlug] ?? aidreamcapesLegacyBlogToolRedirects[articleSlug];
+  if (directRedirect) return directRedirect;
+  if (articleSlug.endsWith("-photo-package-guide")) {
+    return aidreamcapesLegacyBlogCategoryRedirects[articleSlug.slice(0, -"-photo-package-guide".length)];
+  }
+  if (articleSlug.endsWith("-tool-guide")) {
+    return aidreamcapesLegacyBlogToolRedirects[articleSlug.slice(0, -"-tool-guide".length)];
+  }
+  if (articleSlug.endsWith("-video-theme-guide")) {
+    return aidreamcapesLegacyBlogVideoRedirects[articleSlug.slice(0, -"-video-theme-guide".length)];
+  }
+  return undefined;
 }
 
 function isDreamshootPartnerTemplateSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }): boolean {
@@ -117,6 +208,8 @@ export default async function SiteCatchAllPage({
   if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect(routePath("/shipping"));
   if (slug === "/children-privacy-policy" || slug === "/childrens-privacy" || slug === "/policies/children-privacy") redirect(routePath("/children-privacy"));
   if (slug === "/state-privacy-rights" || slug === "/california-privacy" || slug === "/ccpa" || slug === "/policies/state-privacy") redirect(routePath("/state-privacy"));
+  const aidreamcapesBlogRedirect = aidreamcapesLegacyBlogRedirectPath(publicSlug, slug);
+  if (aidreamcapesBlogRedirect && aidreamcapesBlogRedirect !== slug) redirect(routePath(aidreamcapesBlogRedirect));
   if (slug === "/checkout") {
     const query = new URLSearchParams();
     for (const [key, value] of Object.entries(searchParams ? await searchParams : {})) {
