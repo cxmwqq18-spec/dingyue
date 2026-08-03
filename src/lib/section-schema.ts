@@ -1565,7 +1565,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         ],
         "creative_packs"
       ),
-      range("featuredCount", "Featured cards", 5, 3, 6)
+      range("featuredCount", "Featured cards", 12, 3, 12)
     ],
     blocks: [dreamshootCatalogPackBlock],
     presets: [
@@ -1579,7 +1579,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           tabs: "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal|Creator|Video|Utility",
           steps: "Pick pack|See credit cost|Generate album",
           source: "creative_packs",
-          featuredCount: 5
+          featuredCount: 12
         },
         blocks: [
           block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Create fan meetup portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Fan Photos", meta: "Fan meetups", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-04.webp", href: "/collections/world-cup-fan-photos" }),
