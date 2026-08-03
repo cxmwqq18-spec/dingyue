@@ -2002,6 +2002,8 @@ function applyThemeSettings(settings) {
   next.globalSections.footer = section("footer", {
     title: "Aidreamcapes",
     description: "Private fan-scene photo albums, game-day group portraits, premiere-inspired photo sets, and holiday memory albums from approved source photos.",
+    socialBody: "Fan-scene album ideas, seasonal keepsake planning, private delivery, and elegant AI-generated photo sets.",
+    bottomLine: "Private albums, live pricing, and fan-to-holiday photo storytelling in one storefront.",
     logoImageUrl: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c",
     logoAlt: "Aidreamcapes logo for private fan-scene and holiday photo albums",
     contactEmail: supportEmail,
