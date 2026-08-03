@@ -1027,8 +1027,8 @@ function aidreamcapesImageTutorialVideoSection(): SectionInstance {
     eyebrow: "AI image tutorial",
     title: "Create a private fan-scene image album.",
     subtitle: "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
-    imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260803aitutorial2",
-    videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260803aitutorial2",
+    imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260803aitutorial3",
+    videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260803aitutorial3",
     videoBadge: "AI image album workflow",
     playLabel: "Watch the Aidreamcapes AI image tutorial"
   });

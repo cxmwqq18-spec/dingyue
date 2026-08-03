@@ -37,6 +37,7 @@ const jobTimeoutMs = Math.max(60_000, Number(process.env.TUTORIAL_JOB_TIMEOUT_MS
 const pollIntervalMs = Math.max(5_000, Number(process.env.TUTORIAL_POLL_INTERVAL_MS || 12_000));
 const realGeneration = process.env.TUTORIAL_REAL_GENERATION === "1";
 const maxPaidAttempts = realGeneration ? Math.min(1, Math.max(1, Number(process.env.TUTORIAL_MAX_PAID_ATTEMPTS || 1))) : 0;
+const hideHistoricalAssets = process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS !== "0";
 const ffmpegPath = process.env.FFMPEG_PATH || ffmpegStatic || "ffmpeg";
 const ffprobePath = process.env.FFPROBE_PATH || siblingFfprobe(ffmpegPath) || "ffprobe";
 
@@ -181,6 +182,9 @@ async function installOverlay(page) {
     .tutorial-cursor.click { transform: translate(-5px,-5px) scale(.86); }
     .tutorial-mask { position: fixed; z-index: 2147482997; display: grid; place-items: center; border-radius: 10px; background: #ffffff; color: #111827; font: 700 17px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(17,24,39,.14); }
     .tutorial-chip-mask { position: fixed; z-index: 2147482996; display: grid; place-items: center; min-height: 46px; border-radius: 999px; background: #020617; color: #fff; font: 800 16px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+    .tutorial-history-mask { position: fixed; z-index: 40; display: grid; place-items: center; overflow: hidden; border: 1px solid rgba(148,163,184,.32); border-radius: 12px; background: linear-gradient(135deg, rgba(2,6,23,.98), rgba(15,23,42,.96)); color: rgba(226,232,240,.92); font: 800 15px/1.2 Inter, system-ui, sans-serif; letter-spacing: .04em; text-transform: uppercase; text-align: center; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 18px 44px rgba(0,0,0,.30); }
+    .tutorial-history-mask::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, rgba(148,163,184,.05) 0 10px, rgba(148,163,184,.11) 10px 20px); opacity: .65; }
+    .tutorial-history-mask span { position: relative; padding: 10px 14px; border-radius: 999px; background: rgba(15,23,42,.72); }
     .tutorial-file-backdrop { position: fixed; inset: 0; z-index: 2147482990; background: rgba(8,12,20,.42); backdrop-filter: blur(3px); pointer-events: none; }
     .tutorial-file-dialog { position: fixed; left: 50%; top: 50%; z-index: 2147482992; width: min(1120px, calc(100vw - 120px)); height: 610px; transform: translate(-50%,-50%); overflow: hidden; border: 1px solid #b9bdc7; border-radius: 16px; background: #f5f6f8; color: #20242b; box-shadow: 0 30px 90px rgba(0,0,0,.46); font: 500 16px/1.3 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; pointer-events: none; }
     .tutorial-file-titlebar { display: flex; align-items: center; gap: 10px; height: 58px; padding: 0 22px; border-bottom: 1px solid #d7d9df; background: #fbfbfc; }
@@ -219,7 +223,7 @@ async function installOverlay(page) {
       while (walker.nextNode()) nodes.push(walker.currentNode);
       for (const node of nodes) {
         const parent = node.parentElement;
-        if (!parent || parent.closest(".tutorial-caption,.tutorial-mask,.tutorial-chip-mask,.tutorial-file-dialog")) continue;
+        if (!parent || parent.closest(".tutorial-caption,.tutorial-mask,.tutorial-chip-mask,.tutorial-file-dialog,.tutorial-history-mask")) continue;
         const parentText = parent.textContent || "";
         let text = node.nodeValue || "";
         const original = text;
@@ -227,6 +231,11 @@ async function installOverlay(page) {
         text = text.replace(idPattern, "[private id]");
         text = text.replace(/\b(Credits:\s*)\d{3,}\b/gi, "$1----");
         text = text.replace(/\b\d{3,}\s+credits\b/gi, "---- credits");
+        if (window.__tutorialHistoryMaskMode) {
+          text = text.replace(/\b\d+\s+generated items?\b/gi, "previous results hidden");
+          text = text.replace(/\b\d+\s+generated images?\b/gi, "previous images hidden");
+          text = text.replace(/\b\d+\s+generated videos?\b/gi, "previous videos hidden");
+        }
         if (/\b(credits|creditos)\b/i.test(parentText)) text = text.replace(/\b\d{3,}\b/g, "----");
         if (text !== original) node.nodeValue = text;
       }
@@ -274,9 +283,71 @@ async function installOverlay(page) {
       }
       Object.assign(mask.style, { left: `${target.rect.left}px`, top: `${target.rect.top}px`, width: `${target.rect.width}px`, height: `${target.rect.height}px` });
     }
+    function clearHistoryMasks() {
+      document.querySelectorAll(".tutorial-history-mask").forEach((mask) => mask.remove());
+    }
+    function rectVisible(rect) {
+      return rect.width >= 54 && rect.height >= 54 && rect.bottom >= 0 && rect.right >= 0 && rect.top <= window.innerHeight && rect.left <= window.innerWidth;
+    }
+    function overlapRatio(a, b) {
+      const x = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+      const y = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+      const overlap = x * y;
+      const area = Math.max(1, Math.min(a.width * a.height, b.width * b.height));
+      return overlap / area;
+    }
+    function appendHistoryMask(rect, label) {
+      const clamped = {
+        left: Math.max(0, rect.left),
+        top: Math.max(0, rect.top),
+        right: Math.min(window.innerWidth, rect.right),
+        bottom: Math.min(window.innerHeight, rect.bottom)
+      };
+      clamped.width = Math.max(0, clamped.right - clamped.left);
+      clamped.height = Math.max(0, clamped.bottom - clamped.top);
+      if (!rectVisible(clamped)) return null;
+      const mask = document.createElement("div");
+      mask.className = "tutorial-history-mask";
+      const text = document.createElement("span");
+      text.textContent = label;
+      mask.appendChild(text);
+      Object.assign(mask.style, {
+        left: `${clamped.left}px`,
+        top: `${clamped.top}px`,
+        width: `${clamped.width}px`,
+        height: `${clamped.height}px`
+      });
+      document.body.appendChild(mask);
+      return clamped;
+    }
+    function historyMaskTargetForImage(img) {
+      if (img.closest(".tutorial-caption,.tutorial-mask,.tutorial-chip-mask,.tutorial-file-dialog,.tutorial-history-mask,[role='dialog'][aria-modal='true']")) return null;
+      const target = img.closest("button,article,figure,li,[data-workspace-sample-id],[data-asset-id]") || img.parentElement || img;
+      const targetRect = target.getBoundingClientRect();
+      const imageRect = img.getBoundingClientRect();
+      const rect = rectVisible(targetRect) && targetRect.width <= 780 && targetRect.height <= 780 ? targetRect : imageRect;
+      if (!rectVisible(rect)) return null;
+      return rect;
+    }
+    function maskHistoricalMedia() {
+      clearHistoryMasks();
+      if (!window.__tutorialHistoryMaskMode) return;
+      const selectors = ["#review-request img", "aside img", "[data-workspace-sample-id] img", "[data-asset-id] img"];
+      const rects = [];
+      for (const img of [...document.querySelectorAll(selectors.join(","))]) {
+        const rect = historyMaskTargetForImage(img);
+        if (!rect) continue;
+        const item = { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom, width: rect.width, height: rect.height };
+        if (rects.some((existing) => overlapRatio(existing, item) > 0.82)) continue;
+        const label = img.closest("aside") ? "Previous uploads hidden" : "Previous results hidden";
+        const added = appendHistoryMask(item, label);
+        if (added) rects.push(added);
+      }
+    }
     const caption = ensure("tutorial-caption");
     const highlight = ensure("tutorial-highlight");
     const cursor = ensure("tutorial-cursor");
+    window.__tutorialHistoryMaskMode = false;
     window.__tutorial = {
       setCaption(text) { caption.textContent = text; },
       highlight(rect) {
@@ -327,11 +398,16 @@ async function installOverlay(page) {
           </div>`;
         document.body.append(backdrop, dialog);
       },
+      setHistoryMaskMode(enabled) {
+        window.__tutorialHistoryMaskMode = Boolean(enabled);
+        maskHistoricalMedia();
+      },
       redact() {
         redactTextNodes(document.body);
         positionInputMask('input[name="email"]', "tutorial-mask-email", "masked email");
         positionInputMask('input[name="password"]', "tutorial-mask-password", "masked password");
         positionAccountMask();
+        maskHistoricalMedia();
       }
     };
     window.__tutorial.cursor(1160, 680);
@@ -342,6 +418,11 @@ async function installOverlay(page) {
 
 async function setCaption(page, caption) {
   await page.evaluate((text) => window.__tutorial?.setCaption?.(text), caption).catch(() => undefined);
+}
+
+async function setHistoryMask(page, enabled) {
+  const active = Boolean(enabled && hideHistoricalAssets);
+  await page.evaluate((value) => window.__tutorial?.setHistoryMaskMode?.(value), active).catch(() => undefined);
 }
 
 async function moveTutorialPointer(page, x, y, pulse = false) {
@@ -378,6 +459,7 @@ async function openLogin(page) {
   await page.goto(absoluteUrl("/login?mode=login"), { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
   await waitReady(page);
   await installOverlay(page);
+  await setHistoryMask(page, false);
   const email = page.locator('input[name="email"]').first();
   await email.waitFor({ state: "visible", timeout: 35_000 });
   return email;
@@ -440,6 +522,7 @@ async function openWorkspace(page, hash = "#step-create") {
   await page.goto(`${absoluteUrl("/app/create")}${hash}`, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
   await waitReady(page);
   await installOverlay(page);
+  await setHistoryMask(page, false);
   await closeMegaMenus(page);
   await closePreviewOverlay(page);
   await page.locator("#step-create").waitFor({ state: "visible", timeout: 60_000 });
@@ -621,6 +704,7 @@ async function openResults(page) {
   await page.goto(`${absoluteUrl("/app/create")}#resources-all`, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
   await waitReady(page);
   await installOverlay(page);
+  await setHistoryMask(page, true);
   await closeMegaMenus(page);
   await closePreviewOverlay(page);
   for (let attempt = 0; attempt < 4; attempt += 1) {
@@ -641,10 +725,12 @@ async function openResults(page) {
 
 async function refreshAndRecordProgress(page, recorder) {
   await openResults(page);
+  await setHistoryMask(page, true);
   const refresh = page.locator("#review-request").getByRole("button", { name: /Refresh status|Refreshing/i }).first();
   if (await refresh.isVisible().catch(() => false)) {
     await clickWithPointer(page, refresh, { force: true }).catch(() => undefined);
   }
+  await setHistoryMask(page, true);
   const progress = page.locator("#review-request").getByText(/Request progress|All assets|generated/i).first();
   await pointAt(page, progress).catch(() => undefined);
   await recorder.capture(timeline.find((segment) => segment.id === "progress"));
@@ -658,6 +744,7 @@ function assetPreviewUrl(asset) {
 
 async function openGeneratedPreview(page, asset) {
   await openResults(page);
+  await setHistoryMask(page, true);
   await page.evaluate((preview) => {
     const normalized = String(preview || "");
     const fileName = normalized.split("?")[0].split("/").filter(Boolean).pop() || "";
@@ -677,12 +764,14 @@ async function openGeneratedPreview(page, asset) {
     }
   }
   await dialog.waitFor({ state: "visible", timeout: 30_000 });
+  await setHistoryMask(page, true);
   const previewImage = dialog.locator("img").first();
   await pointAt(page, previewImage).catch(() => undefined);
 }
 
 async function openHistoricalImagePreview(page) {
   await openResults(page);
+  await setHistoryMask(page, true);
   const firstImageButton = page.locator("#review-request button:has(img)").first();
   if (await firstImageButton.isVisible({ timeout: 20_000 }).catch(() => false)) {
     await clickWithPointer(page, firstImageButton, { force: true });
