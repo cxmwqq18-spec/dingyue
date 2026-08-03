@@ -10239,37 +10239,44 @@ function SectionView({
               </div>
               <div className="mt-5 space-y-3" data-dreamshoot-image-product-grid="true" data-dreamshoot-image-product-wall="true">
                 {imageProductRows.map((row, rowIndex) => (
-                  <div
-                    className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7 md:gap-4"
-                    data-dreamshoot-image-product-row={String(rowIndex + 1)}
+                  <DreamshootShowcaseRail
+                    className="dreamshoot-showcase-rail relative left-1/2 -ml-[50vw] w-screen overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                     key={`image_product_wall_row_${rowIndex}`}
+                    reverse={rowIndex % 2 === 1}
+                    speed={rowIndex % 2 === 1 ? 12 : 14}
+                    trackClassName="dreamshoot-showcase-track flex w-max gap-3 px-5 md:gap-4"
                   >
-                    {row.map((card) => (
-                      <figure
-                        aria-label={`View ${card.meta} customer-created image product from ${card.title}`}
-                        className={`group relative aspect-[3/4] w-full cursor-zoom-in overflow-hidden rounded-[18px] border bg-[#0a0c12] shadow-[0_28px_78px_-58px_rgba(0,0,0,0.78)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
-                        data-dreamshoot-image-product-card="true"
-                        data-dreamshoot-image-product-row={String(rowIndex + 1)}
-                        data-dreamshoot-preview-meta={card.meta}
-                        data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
-                        data-dreamshoot-preview-title={card.title}
-                        data-dreamshoot-showcase-preview="image"
-                        key={card.railKey}
-                        role="button"
-                        tabIndex={0}
-                      >
-                        <StorefrontImage
-                          alt={`${card.meta} customer-created image product from ${card.title}`}
-                          className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.018]"
-                          fetchPriority={card.productIndex < 4 ? "high" : "low"}
-                          loading={card.productIndex < 4 ? "eager" : "lazy"}
-                          preview={false}
-                          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1280px) 25vw, 14vw"
-                          src={mediaAssetUrl(site, card.imageUrl)}
-                        />
-                      </figure>
-                    ))}
-                  </div>
+                    {row.concat(row).map((card, copyIndex) => {
+                      const primaryCard = copyIndex < row.length;
+                      return (
+                        <figure
+                          aria-hidden={primaryCard ? undefined : true}
+                          aria-label={primaryCard ? `View ${card.meta} customer-created image product from ${card.title}` : undefined}
+                          className={`group relative aspect-[3/4] w-[min(78vw,18rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[18px] border bg-[#0a0c12] shadow-[0_28px_78px_-58px_rgba(0,0,0,0.78)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:w-[calc((100vw-3.5rem)/2)] md:w-[calc((100vw-4.5rem)/3)] lg:w-[calc((100vw-5.5rem)/4)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
+                          data-dreamshoot-image-product-card={primaryCard ? "true" : undefined}
+                          data-dreamshoot-image-product-clone={primaryCard ? undefined : "true"}
+                          data-dreamshoot-image-product-row={primaryCard ? String(rowIndex + 1) : undefined}
+                          data-dreamshoot-preview-meta={card.meta}
+                          data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
+                          data-dreamshoot-preview-title={card.title}
+                          data-dreamshoot-showcase-preview="image"
+                          key={`${card.railKey}_${copyIndex}`}
+                          role={primaryCard ? "button" : undefined}
+                          tabIndex={primaryCard ? 0 : -1}
+                        >
+                          <StorefrontImage
+                            alt={`${card.meta} customer-created image product from ${card.title}`}
+                            className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.018]"
+                            fetchPriority={card.productIndex < 4 ? "high" : "low"}
+                            loading={card.productIndex < 4 ? "eager" : "lazy"}
+                            preview={false}
+                            sizes="(max-width: 640px) 78vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                            src={mediaAssetUrl(site, card.imageUrl)}
+                          />
+                        </figure>
+                      );
+                    })}
+                  </DreamshootShowcaseRail>
                 ))}
               </div>
             </div>

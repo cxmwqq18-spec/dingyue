@@ -343,10 +343,10 @@ assert(showcaseRenderer.includes("generationShowcaseImageCardsForSite(site, crea
 assert(showcaseRenderer.includes("imageProductRows"), "showcase images should be split into product wall rows");
 assert(imageShowcaseRenderer.includes("imageProductRows.map"), "showcase image cards should render in dynamically balanced wall rows");
 assert(showcaseRenderer.includes("Math.ceil(imageProductCards.length / 7)"), "showcase image wall should target seven products per row");
-assert(!imageShowcaseRenderer.includes("row.concat(row)"), "showcase image rows must not clone cards for continuous scrolling");
-assert(!imageShowcaseRenderer.includes("data-dreamshoot-image-product-clone"), "showcase image wall must not render cloned product card markers");
-assert(imageShowcaseRenderer.includes("row.map((card) =>"), "showcase image rows should render each product card exactly once");
-assert(imageShowcaseRenderer.includes("aspect-[3/4]") && imageShowcaseRenderer.includes("xl:grid-cols-7"), "showcase image cards should use four rows of seven portrait tiles on desktop");
+assert(imageShowcaseRenderer.includes("row.concat(row)"), "showcase image rows should repeat their seven-theme sequence for continuous slow scrolling");
+assert(imageShowcaseRenderer.includes("data-dreamshoot-image-product-clone"), "showcase image wall should mark cloned cards separately from primary themes");
+assert(!imageShowcaseRenderer.includes("xl:grid-cols-7"), "showcase image wall should not regress to the static seven-column grid");
+assert(imageShowcaseRenderer.includes("aspect-[3/4]") && imageShowcaseRenderer.includes("lg:w-[calc((100vw-5.5rem)/4)]"), "showcase image cards should use equal four-column portrait tiles on desktop");
 assert(imageShowcaseRenderer.includes("StorefrontImage"), "showcase image cards should render fixed-ratio large images");
 assert(imageShowcaseRenderer.includes("preview={false}"), "showcase image img tags should not duplicate the outer lightbox trigger");
 assert(showcaseRenderer.includes("alt={`${card.meta} customer-created image product"), "showcase images should have customer-created alt text");
@@ -357,7 +357,7 @@ assert(showcaseRenderer.includes("const imageProductCards = imageCards.map"), "h
 assert(!showcaseRenderer.includes("imageCards.slice(0, 12)"), "homepage showcase image wall should not truncate themes to 12 cards");
 assert(showcaseRenderer.includes('data-dreamshoot-image-product-grid="true"'), "showcase should expose a stable image product grid marker");
 assert(showcaseRenderer.includes('data-dreamshoot-image-product-wall="true"'), "showcase should expose a stable four-row image product wall marker");
-assert(showcaseRenderer.includes('data-dreamshoot-image-product-card="true"'), "showcase should expose stable image product card markers");
+assert(showcaseRenderer.includes("data-dreamshoot-image-product-card={primaryCard ? \"true\" : undefined}"), "showcase should expose stable primary image product card markers");
 assert(showcaseRenderer.includes('fetchPriority={card.productIndex < 4 ? "high" : "low"}'), "showcase should prioritize initially visible image product cards");
 assert(showcaseRenderer.includes('loading={card.productIndex < 4 ? "eager" : "lazy"}'), "showcase should eagerly load initially visible image product cards");
 assert(!imageShowcaseRenderer.includes("{String(card.index + 1).padStart"), "showcase image cards should not show visible numbers");
