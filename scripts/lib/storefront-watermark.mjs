@@ -61,6 +61,10 @@ export function normalizedStorefrontWatermarkOpacity(value) {
 }
 
 async function loadSharp() {
+  if (process.env.STOREFRONT_WATERMARK_DISABLE_SHARP === "1") {
+    sharpLoader = null;
+    return sharpLoader;
+  }
   if (sharpLoader !== undefined) return sharpLoader;
   try {
     const moduleName = "sharp";

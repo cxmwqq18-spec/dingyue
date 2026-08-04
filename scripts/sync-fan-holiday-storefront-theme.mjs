@@ -3,7 +3,6 @@ import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
-import sharp from "sharp";
 import { PrismaClient } from "@prisma/client";
 import {
   localShowcasePosterPath,
@@ -108,6 +107,7 @@ const skipAssets = flags.has("skip-assets");
 const forceAssets = flags.has("force-assets") || flags.has("force");
 const fallbackDerivedAssets = flags.has("fallback-derived-assets") || process.env.AIDREAMCAPES_FAN_HOLIDAY_FALLBACK_DERIVED_ASSETS === "1";
 const gallerySlotCount = 12;
+let sharpLoader;
 
 const rootCategoryDefs = [
   {
@@ -484,28 +484,28 @@ const videoDefs = legacyVideoShowcase.videoThemes.map((theme, index) => ({
 
 const blogDefs = [
   {
-    slug: "fan-scene-photo-albums-guide",
+    slug: "private-fan-scene-album-photo-package-guide",
     title: "How to plan fan-scene photo albums safely",
     summary: "Plan private fan-scene albums with approved source photos, original styling, visible credits, and clear likeness boundaries.",
     imageSlug: "private-fan-scene-album",
     tags: "Fan-scene albums|Source photo permissions|Private gallery|AI photo guide"
   },
   {
-    slug: "game-day-group-portraits-guide",
+    slug: "game-day-group-portraits-photo-package-guide",
     title: "Game-day group portraits without official marks",
     summary: "Create supporter scenes and group portraits while avoiding official team logos, event marks, and real athlete likenesses.",
     imageSlug: "game-day-group-portraits",
     tags: "Game-day portraits|Sports fan photos|Original styling|Private albums"
   },
   {
-    slug: "premiere-style-photo-sets-guide",
+    slug: "premiere-flash-portraits-photo-package-guide",
     title: "Premiere-inspired portrait sets for private albums",
     summary: "Use flash mood, formal styling, and original VIP atmosphere without copying real public figures or protected brands.",
     imageSlug: "premiere-flash-portraits",
     tags: "Premiere portraits|VIP style photos|Creator albums|Permission-safe AI"
   },
   {
-    slug: "holiday-memory-albums-guide",
+    slug: "christmas-group-album-photo-package-guide",
     title: "Holiday memory albums for Christmas, Thanksgiving, and Halloween",
     summary: "Compare seasonal photo directions, credit costs, and source-photo guidance before creating a private Aidreamcapes album.",
     imageSlug: "seasonal-celebration-photo-set",
@@ -669,6 +669,7 @@ async function renderDerivedImage({ source, output, title, meta, index, width = 
   if (!forceAssets && await fileExists(output)) {
     return { output, created: false };
   }
+  const sharp = await loadSharp();
   await ensureDir(output);
   const [background, accent, soft] = paletteForIndex(index);
   const overlay = Buffer.from(`
@@ -696,6 +697,18 @@ async function renderDerivedImage({ source, output, title, meta, index, width = 
     .webp({ quality: 86 })
     .toFile(output);
   return { output, created: true };
+}
+
+async function loadSharp() {
+  if (sharpLoader !== undefined) return sharpLoader;
+  try {
+    const moduleName = "sharp";
+    const mod = await import(moduleName);
+    sharpLoader = mod.default ?? mod;
+    return sharpLoader;
+  } catch (error) {
+    throw new Error(`sharp_unavailable_for_fallback_asset_generation:${error instanceof Error ? error.message : String(error)}`);
+  }
 }
 
 async function prepareAssets() {
@@ -2063,6 +2076,8 @@ function applyThemeSettings(settings) {
   next.globalSections.footer = section("footer", {
     title: "Aidreamcapes",
     description: "Private fan-scene photo albums, game-day group portraits, premiere-inspired photo sets, and holiday memory albums from approved source photos.",
+    socialBody: "Fan-scene album ideas, seasonal keepsake planning, private delivery, and elegant AI-generated photo sets.",
+    bottomLine: "Private albums, live pricing, and fan-to-holiday photo storytelling in one storefront.",
     logoImageUrl: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c",
     logoAlt: "Aidreamcapes logo for private fan-scene and holiday photo albums",
     contactEmail: supportEmail,

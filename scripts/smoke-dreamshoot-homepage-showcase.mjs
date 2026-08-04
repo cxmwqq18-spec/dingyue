@@ -282,7 +282,7 @@ function assertPage(pageJson, label, storeKey) {
 
 const expectedFeaturedPackCollectionSlugs = {
   mydreamshoots: ["world-cup-fan-photos", "gala-photos", "christmas-couple", "creator-portraits", "thanksgiving-group-photos", "holiday"],
-  aidreamcapes: ["fan-scene-albums", "game-day-group-photos", "premiere-style-portraits", "christmas-group-albums", "thanksgiving-table-keepsakes", "halloween-party-portraits"]
+  aidreamcapes: ["game-day-group-photos", "christmas-holiday-albums", "premiere-style-portraits", "fan-scene-albums", "thanksgiving-memory-sets", "seasonal-celebration-photos"]
 };
 
 function featuredPackCollectionSlugsForPage(pageJson) {

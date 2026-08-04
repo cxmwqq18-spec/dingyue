@@ -197,15 +197,15 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "home",
       eyebrow: "",
-      headline: "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
-      subheadline: "Upload clear photos once, then create private sports fan photos, sports-idol style meetups, red-carpet fan moments, Christmas group portraits, Thanksgiving albums, Halloween party photos, and seasonal cards. How credits work: you see the credit cost before every generation. Private by default: your uploads stay private in your signed-in account.",
+      headline: "AI Headshot Generators",
+      subheadline: "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies. Upload selfies and create your own AI model - Professional headshots without a studio.",
       imageUrl: assets.heroPackageWall,
       secondaryImageUrl: assets.heroCreditStudioCard,
       tertiaryImageUrl: assets.gala,
       heroGridImages: [assets.heroGridBusiness, assets.heroGridBeauty, assets.heroGridCyber, assets.heroGridTravel, assets.heroGridSports, assets.heroGridAvatar, assets.heroGridProduct, assets.heroGridVideo, assets.heroGridSocial, assets.heroGridNoir, assets.heroGridUpscale].join("|"),
       bulletList:
         "Upload clear photos you own or have permission to use.|Choose fan meetups, sports-idol style scenes, VIP looks, and holiday group albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.",
-      highlightWord: "fan",
+      highlightWord: "Headshot",
       heroBadge: "AI photo package studio",
       authRibbon: "Plans start at $24.50/month",
       authPrimaryLabel: "Continue with email",
