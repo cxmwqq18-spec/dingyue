@@ -6,7 +6,7 @@ import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
-import { hostAwareSitePath, publicSiteUrl } from "@/lib/domain-routing";
+import { hostAwareSitePath } from "@/lib/domain-routing";
 import { getPhotoPackageMegaGroups } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import type { CreativePack, CreativePackCategory, PublicCustomer, Site, ToolMenuItem } from "@/lib/types";
@@ -169,7 +169,7 @@ export function CustomerShellHeader({
   const logoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? aidreamcapesDisplayName : isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
   const readableLogoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? "MyDreamShoots" : logoText;
   const homeHref = basePath || "/";
-  const workflowHref = publicSiteUrl(site, "/workflow");
+  const workflowHref = `${basePath}/workflow`;
   const logoSrc = (site.branding as { logoImageUrl?: string }).logoImageUrl || (isAidreamcapes ? aidreamcapesLogoSrc : dreamshootLogoSrc);
   const logoAlt = isSpanishXby
     ? isAidreamcapes

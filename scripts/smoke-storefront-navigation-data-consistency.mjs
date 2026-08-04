@@ -454,6 +454,23 @@ async function assertFooterText(page, routeCheck, failures) {
   }
 }
 
+async function assertWorkflowNavigationHref(page, routeCheck, failures) {
+  if (!routeCheck.route.endsWith(routeCheck.site)) return;
+  const expectedHref = `/site/${routeCheck.site}/workflow`;
+  const actualHrefs = await page.locator("a").evaluateAll((anchors) => anchors
+    .filter((anchor) => /^(How it works|Como funciona)$/i.test((anchor.textContent || "").replace(/\s+/g, " ").trim()))
+    .map((anchor) => anchor.getAttribute("href") || ""));
+  if (!actualHrefs.length || actualHrefs.some((href) => normalizeHref(href) !== expectedHref)) {
+    failures.push({
+      site: routeCheck.site,
+      route: routeCheck.route,
+      type: "workflow_navigation_href",
+      expected: expectedHref,
+      actual: actualHrefs
+    });
+  }
+}
+
 async function assertShowcaseImageRail(page, routeCheck, failures) {
   if (!routeCheck.route.endsWith(routeCheck.site)) return;
   const result = await page.evaluate(() => {
@@ -580,6 +597,7 @@ async function smokeFocusedStorefrontVisuals(context) {
       });
     }
     await assertFooterText(page, routeCheck, failures);
+    await assertWorkflowNavigationHref(page, routeCheck, failures);
     await assertHomepageRouteTargets(page, routeCheck, failures);
     await assertShowcaseImageRail(page, routeCheck, failures);
     await assertShowcaseMotionVideos(page, routeCheck, failures, mediaResponses);

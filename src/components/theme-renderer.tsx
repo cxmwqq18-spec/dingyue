@@ -24,7 +24,7 @@ import { PartnerApplicationForm, type PartnerApplicationField } from "@/componen
 import { PricingBillingTable } from "@/components/storefront/pricing-billing-table";
 import { StorefrontInstantLink, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
-import { cleanHost, hostAwareSitePath, publicSiteSlug, publicSiteUrl } from "@/lib/domain-routing";
+import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
 import { dreamshootPackProfileForPack, dreamshootPackProfileForSlug, type DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
 import {
   aidreamcapesCategoryUseCaseProfileForSlug,
@@ -3047,14 +3047,16 @@ function hrefFor(site: Site, href: string): string {
       const targetHost = cleanHost(url.host);
       const siteHost = cleanHost(site.primaryDomain);
       const sameStoreHost = Boolean(siteHost && targetHost.replace(/^www\./, "") === siteHost.replace(/^www\./, ""));
-      if (pairedStore && sameStoreHost && url.pathname === "/help") {
-        url.pathname = "/faq";
-        return url.toString();
-      }
-      if (pairedStore && sameStoreHost && (url.pathname === "/how-it-works" || url.hash === "#workflow")) {
-        url.pathname = "/workflow";
-        url.hash = "";
-        return url.toString();
+      if (pairedStore && sameStoreHost) {
+        const normalizedPath = shortPolicyPath(
+          url.pathname === "/help"
+            ? "/faq"
+            : url.pathname === "/how-it-works" || url.hash === "#workflow"
+              ? "/workflow"
+              : url.pathname
+        );
+        const normalizedHash = url.hash === "#workflow" ? "" : url.hash;
+        return `${routedSitePath(site, normalizedPath)}${url.search}${normalizedHash}`;
       }
       const normalizedPolicyPath = shortPolicyPath(url.pathname);
       if (normalizedPolicyPath !== url.pathname) {
@@ -3066,9 +3068,9 @@ function hrefFor(site: Site, href: string): string {
     }
     return href;
   }
-  if (pairedStore && (href === "/workflow" || href === "/how-it-works")) return publicSiteUrl(site, "/workflow");
+  if (pairedStore && (href === "/workflow" || href === "/how-it-works")) return routedSitePath(site, "/workflow");
   if (pairedStore && href === "/help") return routedSitePath(site, "/faq");
-  if (href === "#workflow" || href === "/#workflow") return publicSiteUrl(site, "/workflow");
+  if (href === "#workflow" || href === "/#workflow") return routedSitePath(site, "/workflow");
   if (href === "#faq" || href === "/#faq") return routedSitePath(site, "/faq");
   const normalizedPolicyPath = shortPolicyPath(href);
   if (normalizedPolicyPath !== href) return routedSitePath(site, normalizedPolicyPath);

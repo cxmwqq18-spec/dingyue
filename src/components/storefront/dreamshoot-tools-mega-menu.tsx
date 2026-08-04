@@ -18,7 +18,7 @@ import {
   type LucideIcon
 } from "lucide-react";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
-import { hostAwareSitePath, publicSiteUrl } from "@/lib/domain-routing";
+import { cleanHost, hostAwareSitePath } from "@/lib/domain-routing";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { themeValueToString } from "@/lib/theme-values";
 import type { SectionBlockInstance, Site, ToolMenuItem } from "@/lib/types";
@@ -131,8 +131,29 @@ function routedSitePath(site: DreamShootToolsMenuSite, path = "/"): string {
 function hrefFor(site: DreamShootToolsMenuSite, href: string): string {
   if (!href) return routedSitePath(site);
   if (href === "javascript:void(0);") return "#";
-  if (href.startsWith("#") || /^(https?:|mailto:|tel:|sms:)/i.test(href)) return href;
-  if (href === "#workflow" || href === "/#workflow") return publicSiteUrl(site, "/workflow");
+  if (/^(mailto:|tel:|sms:)/i.test(href)) return href;
+  if (href === "#workflow" || href === "/#workflow") return routedSitePath(site, "/workflow");
+  if (href === "#faq" || href === "/#faq") return routedSitePath(site, "/faq");
+  if (href.startsWith("#")) return href;
+  if (/^https?:/i.test(href)) {
+    try {
+      const url = new URL(href);
+      const targetHost = cleanHost(url.host).replace(/^www\./, "");
+      const siteHost = cleanHost(site.primaryDomain).replace(/^www\./, "");
+      if (targetHost && siteHost && targetHost === siteHost) {
+        const normalizedPath = url.pathname === "/help"
+          ? "/faq"
+          : url.pathname === "/how-it-works" || url.hash === "#workflow"
+            ? "/workflow"
+            : url.pathname;
+        const normalizedHash = url.hash === "#workflow" ? "" : url.hash;
+        return `${routedSitePath(site, normalizedPath)}${url.search}${normalizedHash}`;
+      }
+    } catch {
+      return href;
+    }
+    return href;
+  }
   const legacyPrefix = `/site/${site.slug}`;
   if (href === legacyPrefix) return routedSitePath(site, "/");
   if (href.startsWith(`${legacyPrefix}/`)) return routedSitePath(site, href.slice(legacyPrefix.length));
