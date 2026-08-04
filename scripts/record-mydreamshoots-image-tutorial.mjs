@@ -246,7 +246,7 @@ async function installOverlay(page) {
     @keyframes tutorial-click-ring { 0% { opacity: 1; transform: scale(.55); } 70% { opacity: .88; transform: scale(1.28); } 100% { opacity: 0; transform: scale(1.55); } }
     .tutorial-mask { position: fixed; z-index: 2147482997; display: grid; place-items: center; border-radius: 10px; background: #ffffff; color: #111827; font: 700 17px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(17,24,39,.14); }
     .tutorial-chip-mask { position: fixed; z-index: 2147482996; display: grid; place-items: center; min-height: 46px; border-radius: 999px; background: #020617; color: #fff; font: 800 16px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
-    .tutorial-history-mask { position: fixed; z-index: 40; display: grid; place-items: center; overflow: hidden; border: 1px solid rgba(148,163,184,.32); border-radius: 12px; background: linear-gradient(135deg, rgba(2,6,23,.98), rgba(15,23,42,.96)); color: rgba(226,232,240,.92); font: 800 15px/1.2 Inter, system-ui, sans-serif; letter-spacing: .04em; text-transform: uppercase; text-align: center; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 18px 44px rgba(0,0,0,.30); }
+    .tutorial-history-mask { position: fixed; z-index: 2147482995; display: grid; place-items: center; overflow: hidden; border: 1px solid rgba(148,163,184,.32); border-radius: 12px; background: linear-gradient(135deg, rgba(2,6,23,.98), rgba(15,23,42,.96)); color: rgba(226,232,240,.92); font: 800 15px/1.2 Inter, system-ui, sans-serif; letter-spacing: .04em; text-transform: uppercase; text-align: center; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 18px 44px rgba(0,0,0,.30); }
     .tutorial-history-mask::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, rgba(148,163,184,.05) 0 10px, rgba(148,163,184,.11) 10px 20px); opacity: .65; }
     .tutorial-history-mask span { position: relative; padding: 10px 14px; border-radius: 999px; background: rgba(15,23,42,.72); }
     .tutorial-file-backdrop { display: none !important; }
@@ -414,6 +414,7 @@ async function installOverlay(page) {
     }
     function historyMaskTargetForImage(img) {
       if (img.closest(".tutorial-caption,.tutorial-mask,.tutorial-chip-mask,.tutorial-file-dialog,.tutorial-history-mask,[role='dialog'][aria-modal='true']")) return null;
+      if (img.closest("#review-request [role='status'],#review-request [role='alert']")) return null;
       const target = img.closest("button,article,figure,li,[data-workspace-sample-id],[data-asset-id]") || img.parentElement || img;
       const targetRect = target.getBoundingClientRect();
       const imageRect = img.getBoundingClientRect();
@@ -904,16 +905,17 @@ async function openGeneratedPreview(page, asset) {
 async function openHistoricalImagePreview(page) {
   await openResults(page);
   await setHistoryMask(page, true);
-  const freshImageButton = page.locator('#review-request button').filter({ hasText: /Fresh draft image preview/i }).first();
-  if (await freshImageButton.isVisible().catch(() => false)) {
-    await clickWithPointer(page, freshImageButton, { force: true });
-  } else {
-    const firstImageButton = page.locator("#review-request button:has(img)").first();
-    await firstImageButton.waitFor({ state: "visible", timeout: 25_000 });
-    await clickWithPointer(page, firstImageButton, { force: true });
-  }
+  const freshImageButton = page.locator(
+    '#review-request [role="status"] button[aria-label*="Open preview"], #review-request [role="status"] button:has-text("Open preview"), #review-request [role="status"] button:has(img)'
+  ).first();
+  await freshImageButton.waitFor({ state: "visible", timeout: 30_000 });
+  await page.waitForFunction(() => {
+    const button = document.querySelector('#review-request [role="status"] button[aria-label*="Open preview"], #review-request [role="status"] button');
+    return Boolean(button && !button.disabled && button.querySelector("img"));
+  }, undefined, { timeout: 30_000 });
+  await clickWithPointer(page, freshImageButton, { force: true, pauseBeforeClickMs: 700, pauseAfterClickMs: 900 });
   const dialog = page.locator('[role="dialog"][aria-label*="Generated asset preview"]').first();
-  await dialog.waitFor({ state: "visible", timeout: 25_000 });
+  await dialog.waitFor({ state: "visible", timeout: 30_000 });
   await waitForPreviewImageReady(page, dialog);
   const previewImage = dialog.locator("img").first();
   await pointAt(page, previewImage).catch(() => undefined);

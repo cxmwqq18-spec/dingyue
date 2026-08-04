@@ -5154,6 +5154,17 @@ function storefrontBrandName(site: Site): string {
   return site.branding.logoText || site.name;
 }
 
+function isPrimaryMyDreamShootsSite(site: Site): boolean {
+  const domain = (site.primaryDomain || "").toLowerCase();
+  return site.id === "site_dreamshoot" || site.slug === "mydreamshoots" || domain === "mydreamshoots.com" || domain === "www.mydreamshoots.com";
+}
+
+function heroBulletDisplayText(site: Site, item: string): string {
+  const trimmed = item.trim();
+  if (isPrimaryMyDreamShootsSite(site)) return trimmed;
+  return trimmed.split("|")[0]?.split("-")[0]?.trim() || trimmed;
+}
+
 function storefrontBrandText(site: Site, value: string): string {
   const brand = storefrontBrandName(site);
   if (isSpanishStorefrontSite(site) && value.toLowerCase().includes(brand.toLowerCase())) return value;
@@ -7167,7 +7178,7 @@ function SectionView({
           "Private source-photo intake with clear upload rules|Photo packs tied to real credits and subscriptions|Before and after proof blocks customers understand instantly|Published storefront pages stay separate from design drafts"
         )
       )
-        .map((item) => item.split("|")[0]?.split("-")[0]?.trim() || item.trim())
+        .map((item) => heroBulletDisplayText(site, item))
         .filter(Boolean);
       const heroStats = stats.length
         ? stats
@@ -7266,7 +7277,7 @@ function SectionView({
     }
     if (setting(section, "layout", "editorial") === "immersive_dark") {
       const bullets = listLines(setting(section, "bulletList", "Upload selfies and create your private AI model|Themed packs for headshots, travel, beauty, and style looks|AI video and virtual try-on add-ons|Private credits, albums, and downloads"))
-        .map((item) => item.split("|")[0]?.split("-")[0]?.trim() || item.trim())
+        .map((item) => heroBulletDisplayText(site, item))
         .filter(Boolean);
       const primaryCta = ctas[0];
       const secondaryCta = ctas[1];
@@ -7881,7 +7892,7 @@ function SectionView({
                   controls
                   playsInline
                   poster={image || undefined}
-                  preload="metadata"
+                  preload="auto"
                   src={videoUrl}
                 />
               ) : (
@@ -7973,7 +7984,7 @@ function SectionView({
                         controls
                         playsInline
                         poster={item.videoPoster || undefined}
-                        preload="metadata"
+                        preload="auto"
                         src={item.videoUrl}
                       />
                     ) : (
@@ -8018,7 +8029,7 @@ function SectionView({
                         controls
                         playsInline
                         poster={legacyVideoPoster || undefined}
-                        preload="metadata"
+                        preload="auto"
                         src={legacyVideoUrl}
                       />
                     ) : (
@@ -8438,6 +8449,8 @@ function SectionView({
             const title = blockValue(stat, "value", blockValue(stat, "title", "Trust"));
             const rawBody = blockValue(stat, "label", blockValue(stat, "description", ""));
             const body = rawBody.includes("|") ? rawBody.split("|").slice(1).join("|").trim() || rawBody : rawBody;
+            const linkLabel = blockValue(stat, "linkLabel", "");
+            const linkHref = blockValue(stat, "href", "");
             return (
               <div className={`${index > 0 ? "md:border-l md:border-[#e3d8cc]" : ""} flex gap-5 px-6 py-5`} key={instanceKey(stat, index, "trust_stat")} {...xfcartBlockAttrs(stat, index, "trust_stat")}>
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#f4ebe0] text-[#a6723e]">
@@ -8446,6 +8459,12 @@ function SectionView({
                 <div>
                   <p className="text-[1.02rem] font-semibold leading-tight [font-family:var(--site-title-font)]">{title}</p>
                   <p className="mt-1.5 text-[0.9rem] leading-6 text-[#6d665f]">{body}</p>
+                  {linkLabel && linkHref ? (
+                    <Link className="mt-3 inline-flex items-center gap-2 text-[0.9rem] font-semibold text-[#0f8d80] transition hover:translate-x-0.5" href={hrefFor(site, linkHref)}>
+                      {linkLabel}
+                      <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                    </Link>
+                  ) : null}
                 </div>
               </div>
             );
@@ -13951,11 +13970,11 @@ function SectionView({
     const journeyDescriptions = listLines(setting(section, "journeyDescriptions", "Upload your photos.|Pick a package and style.|AI builds your set.|Download from your private gallery."));
     const journeyIcons = [Camera, Globe2, Sparkles, Download];
     return (
-      <section className="bg-[#f7f2ea] px-5 py-[4.5rem]" id={sectionAnchor(section, "faq")}>
+      <section className="bg-[#f7f2ea] px-5 py-[4.5rem] text-[#171514]" id={sectionAnchor(section, "faq")}>
         <div className="mx-auto flex max-w-[var(--site-content-width)] flex-col items-center gap-10">
           <div className="w-full max-w-4xl text-center">
             <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#8f7d6d]">{setting(section, "eyebrow", "Questions before upload")}</p>
-            <h2 className="mt-4 text-4xl font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, "FAQ")}</h2>
+            <h2 className="mt-4 text-4xl font-semibold leading-[1.04] tracking-tight text-[#171514] [font-family:var(--site-title-font)] md:text-5xl">{sectionHeading(section, "FAQ")}</h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#6d665f]">{setting(section, "subtitle", "Answer the objections customers have before they upload private images or subscribe.")}</p>
             <div className="mt-7 overflow-hidden rounded-[18px] border border-[#e6dccf] bg-white text-left shadow-[0_22px_62px_-50px_rgba(24,24,27,0.12)]">
               {list.map((item, index) => {
@@ -13976,7 +13995,7 @@ function SectionView({
             </div>
           </div>
           <div className="w-full max-w-5xl border-t border-[#eadfce] bg-[#fffaf3] px-4 py-8 text-center lg:px-8">
-            <h3 className="text-[1.75rem] font-semibold leading-[1.04] tracking-tight [font-family:var(--site-title-font)] lg:text-[2.05rem]">
+            <h3 className="text-[1.75rem] font-semibold leading-[1.04] tracking-tight text-[#171514] [font-family:var(--site-title-font)] lg:text-[2.05rem]">
               {headingSetting(section, "journeyTitle", "Your photo flow")}
             </h3>
             <div className="mx-auto mt-7 grid max-w-4xl grid-cols-2 items-start gap-x-3 gap-y-6 sm:grid-cols-4 sm:gap-1">
@@ -14037,6 +14056,13 @@ function SectionView({
     const localizedHeading = spanishXbyRichText
       ? rawHeading.replace(/^About\b/i, "Sobre").replace(/^Contact\b/i, "Contacto")
       : rawHeading;
+    const noImageCardJourney = !applicationForm && !image && richCards.length > 0;
+    const showInlineRichCards = richCards.length > 0 && !noImageCardJourney;
+    const richTextGridClass = image
+      ? `lg:grid-cols-[0.82fr_1.18fr] ${workflowIntroRichText ? "lg:items-stretch" : "lg:items-center"}`
+      : noImageCardJourney
+        ? "lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1fr)] lg:items-stretch"
+        : "lg:grid-cols-[0.72fr_1fr] lg:items-start";
     if (renderContext.pagePath === "/blog" && renderContext.page.pageType === "blog") {
       const simpleBlogTitle = spanishXbyRichText
         ? aidreamcapesRichText ? "Notas" : "Blog"
@@ -14057,7 +14083,7 @@ function SectionView({
     return (
       <section className={dark ? "bg-[#101114] px-5 py-16 text-white" : "grid-paper bg-[#f7f3ec] px-5 py-16 text-[#14161a]"} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
-          <div className={`grid gap-8 ${image ? `lg:grid-cols-[0.82fr_1.18fr] ${workflowIntroRichText ? "lg:items-stretch" : "lg:items-center"}` : "lg:grid-cols-[0.72fr_1fr] lg:items-start"}`}>
+          <div className={`grid gap-8 ${richTextGridClass}`}>
             <div>
               {eyebrow ? <p className={dark ? "font-mono text-xs uppercase tracking-[0.22em] text-white/54" : "font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]"}>{eyebrow}</p> : null}
               <HeadingTag className={`${compact ? "mt-4 max-w-3xl text-3xl md:text-5xl" : "mt-4 max-w-4xl text-4xl md:text-6xl"} font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)]`}>
@@ -14080,7 +14106,7 @@ function SectionView({
                   ) : null}
                 </div>
               ) : null}
-              {richCards.length ? (
+              {showInlineRichCards ? (
                 <div className={dark ? "mt-8 grid gap-3 border-t border-white/12 pt-5 sm:grid-cols-2" : "mt-8 grid gap-3 border-t border-[#ddd4c8] pt-5 sm:grid-cols-2"}>
                   {richCards.slice(0, 4).map((card, index) => (
                     <article className={dark ? "rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "rich_text_card")} {...xfcartBlockAttrs(card, index, "rich_text_card")}>
@@ -14115,15 +14141,17 @@ function SectionView({
                 <img className={workflowIntroRichText ? "absolute inset-0 h-full w-full object-cover" : "aspect-[16/11] h-full w-full object-cover"} src={image} alt={setting(section, "title", id)} />
               </div>
             ) : (
-              <div className={dark ? "rounded-[28px] border border-white/10 bg-white/[0.05] p-6" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/76 p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.22)]"}>
+              <div className={`${dark ? "rounded-[28px] border border-white/10 bg-white/[0.05] p-6" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/76 p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.22)]"} ${noImageCardJourney ? "flex h-full flex-col" : ""}`}>
                 <p className={dark ? "font-mono text-xs uppercase tracking-[0.18em] text-white/44" : "font-mono text-xs uppercase tracking-[0.18em] text-[#8a7a6d]"}>{isSpanishXbySite(site) ? "flujo de fotos" : "photo journey"}</p>
-                <div className="mt-5 grid gap-3">
+                <div className={`mt-5 grid gap-3 ${noImageCardJourney ? "flex-1 auto-rows-fr" : ""}`}>
                   {(richCards.length
-                    ? richCards.slice(0, 4).map((card, index) => [
-                        blockValue(card, "title", blockValue(card, "label", `Step ${index + 1}`)),
-                        blockValue(card, "description", blockValue(card, "text", "A clear step in the private photo pack journey."))
-                      ])
-                    : isSpanishXbySite(site)
+                    ? richCards.slice(0, 4).map((card, index) => ({
+                        label: blockValue(card, "title", blockValue(card, "label", `Step ${index + 1}`)),
+                        detail: blockValue(card, "description", blockValue(card, "text", "A clear step in the private photo pack journey.")),
+                        card,
+                        index
+                      }))
+                    : (isSpanishXbySite(site)
                       ? isAidreamcapesSite(site)
                         ? [
                             ["Marca el destino", "Elige una ruta visual, define ambiente, luz y tipo de recuerdo antes de reservar creditos."],
@@ -14139,8 +14167,9 @@ function SectionView({
                           ["Choose a collection", "Compare packages, credits, delivery scope, and the photo style you want to create."],
                           ["Upload privately", "Add source portraits, style references, wardrobe ideas, and scene inspiration inside one account."],
                           ["Receive the album", "Track the request and review delivered lifestyle, portrait, and editorial images in a private gallery."]
-                        ]).map(([label, detail]) => (
-                    <div className={dark ? "rounded-[18px] border border-white/10 bg-black/18 px-4 py-3" : "rounded-[18px] border border-[#e4dace] bg-white/58 px-4 py-3"} key={label}>
+                        ]).map(([label, detail], index) => ({ label, detail, card: undefined, index }))
+                    ).map(({ label, detail, card, index }) => (
+                    <div className={`${dark ? "rounded-[18px] border border-white/10 bg-black/18 px-4 py-3" : "rounded-[18px] border border-[#e4dace] bg-white/58 px-4 py-3"} ${noImageCardJourney ? "flex flex-col justify-center" : ""}`} key={card ? instanceKey(card, index, "rich_text_journey_card") : label} {...(card ? xfcartBlockAttrs(card, index, "rich_text_card") : {})}>
                       <p className="text-sm font-semibold">{label}</p>
                       <p className={dark ? "mt-1 text-xs leading-5 text-white/58" : "mt-1 text-xs leading-5 text-[#706961]"}>{detail}</p>
                     </div>

@@ -52,6 +52,7 @@ const jobTimeoutMs = Math.max(60_000, Number(process.env.TUTORIAL_JOB_TIMEOUT_MS
 const pollIntervalMs = Math.max(5_000, Number(process.env.TUTORIAL_POLL_INTERVAL_MS || 12_000));
 const pageTimeoutMs = Math.max(30_000, Number(process.env.TUTORIAL_PAGE_TIMEOUT_MS || 120_000));
 process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS = process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS || "1";
+const hideHistoricalAssets = process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS === "1";
 const skipRealGeneration = process.env.TUTORIAL_REAL_GENERATION !== "1";
 const ffmpegPath = process.env.FFMPEG_PATH || ffmpegStatic || "ffmpeg";
 const ffprobePath = process.env.FFPROBE_PATH || siblingFfprobe(ffmpegPath) || "ffprobe";
@@ -282,6 +283,9 @@ async function installOverlay(page) {
     @keyframes tutorial-click-ring { 0% { opacity: 1; transform: scale(.55); } 70% { opacity: .88; transform: scale(1.28); } 100% { opacity: 0; transform: scale(1.55); } }
     .tutorial-mask { position: fixed; z-index: 2147482997; display: grid; place-items: center; border-radius: 10px; background: rgba(255,255,255,.94); color: #111827; font: 700 17px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(17,24,39,.14); }
     .tutorial-chip-mask { position: fixed; z-index: 2147482996; display: grid; place-items: center; min-height: 46px; border-radius: 999px; background: rgba(2,6,23,.95); color: #fff; font: 800 16px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+    .tutorial-history-mask { position: fixed; z-index: 2147482995; display: grid; place-items: center; overflow: hidden; border: 1px solid rgba(148,163,184,.34); border-radius: 12px; background: linear-gradient(135deg, rgba(2,6,23,.99), rgba(15,23,42,.97)); color: rgba(226,232,240,.92); font: 800 15px/1.2 Inter, system-ui, sans-serif; letter-spacing: .04em; text-transform: uppercase; text-align: center; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 18px 44px rgba(0,0,0,.30); }
+    .tutorial-history-mask::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, rgba(148,163,184,.05) 0 10px, rgba(148,163,184,.11) 10px 20px); opacity: .65; }
+    .tutorial-history-mask span { position: relative; padding: 10px 14px; border-radius: 999px; background: rgba(15,23,42,.72); }
     .tutorial-file-backdrop { display: none !important; }
     .tutorial-file-dialog { position: fixed; right: 38px; top: 50%; z-index: 2147482992; width: min(760px, calc(100vw - 96px)); height: 430px; transform: translateY(-50%); overflow: hidden; border: 1px solid #b9bdc7; border-radius: 14px; background: #f5f6f8; color: #20242b; box-shadow: 0 24px 70px rgba(0,0,0,.34); font: 500 14px/1.3 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; pointer-events: none; }
     .tutorial-file-titlebar { display: flex; align-items: center; gap: 10px; height: 42px; padding: 0 16px; border-bottom: 1px solid #d7d9df; background: #fbfbfc; }
@@ -330,6 +334,7 @@ async function installOverlay(page) {
   await page.evaluate(({ maskNames }) => {
     const emailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
     const names = maskNames;
+    let historyMaskMode = false;
     function ensure(cls, text = "") {
       let el = document.querySelector(`.${cls}`);
       if (!el) {
@@ -346,7 +351,7 @@ async function installOverlay(page) {
       while (walker.nextNode()) nodes.push(walker.currentNode);
       for (const node of nodes) {
         const parent = node.parentElement;
-        if (!parent || parent.closest(".tutorial-caption,.tutorial-mask,.tutorial-chip-mask")) continue;
+        if (!parent || parent.closest(".tutorial-caption,.tutorial-mask,.tutorial-chip-mask,.tutorial-history-mask")) continue;
         let text = node.nodeValue || "";
         const original = text;
         const parentText = parent.textContent || "";
@@ -395,6 +400,49 @@ async function installOverlay(page) {
         document.body.appendChild(mask);
       }
       Object.assign(mask.style, { left: `${target.rect.left}px`, top: `${target.rect.top}px`, width: `${target.rect.width}px`, height: `${target.rect.height}px` });
+    }
+    function clearHistoryMasks() {
+      document.querySelectorAll(".tutorial-history-mask").forEach((mask) => mask.remove());
+    }
+    function rectVisible(rect) {
+      return rect.width >= 54 && rect.height >= 54 && rect.bottom >= 0 && rect.right >= 0 && rect.top <= window.innerHeight && rect.left <= window.innerWidth;
+    }
+    function appendHistoryMask(rect, label) {
+      const clamped = {
+        left: Math.max(0, rect.left),
+        top: Math.max(0, rect.top),
+        right: Math.min(window.innerWidth, rect.right),
+        bottom: Math.min(window.innerHeight, rect.bottom)
+      };
+      clamped.width = Math.max(0, clamped.right - clamped.left);
+      clamped.height = Math.max(0, clamped.bottom - clamped.top);
+      if (!rectVisible(clamped)) return;
+      const mask = document.createElement("div");
+      mask.className = "tutorial-history-mask";
+      const text = document.createElement("span");
+      text.textContent = label;
+      mask.appendChild(text);
+      Object.assign(mask.style, {
+        left: `${clamped.left}px`,
+        top: `${clamped.top}px`,
+        width: `${clamped.width}px`,
+        height: `${clamped.height}px`
+      });
+      document.body.appendChild(mask);
+    }
+    function maskHistoricalMedia() {
+      clearHistoryMasks();
+      if (!historyMaskMode) return;
+      const root = document.querySelector("#video-workspace-videos");
+      if (!root) return;
+      const mediaItems = [...root.querySelectorAll("img, video")];
+      for (const media of mediaItems) {
+        if (media.closest("[role='dialog'][aria-modal='true'],.tutorial-caption,.tutorial-mask,.tutorial-chip-mask,.tutorial-history-mask")) continue;
+        if (media.closest("#video-workspace-videos [role='status'],#video-workspace-videos [role='alert']")) continue;
+        const card = media.closest(".group,button,figure,article,li") || media;
+        const rect = card.getBoundingClientRect();
+        if (rectVisible(rect)) appendHistoryMask(rect, "Previous results hidden");
+      }
     }
     const caption = ensure("tutorial-caption");
     const highlight = ensure("tutorial-highlight");
@@ -447,11 +495,16 @@ async function installOverlay(page) {
           </div>`;
         document.body.append(backdrop, dialog);
       },
+      setHistoryMaskMode(enabled) {
+        historyMaskMode = Boolean(enabled);
+        maskHistoricalMedia();
+      },
       redact() {
         redactTextNodes(document.body);
         positionInputMask('input[name="email"]', "tutorial-mask-email", "masked email");
         positionInputMask('input[name="password"]', "tutorial-mask-password", "masked password");
         positionAccountMask();
+        maskHistoricalMedia();
       }
     };
     window.__tutorial.cursor(Math.min(window.innerWidth - 18, Math.max(18, window.innerWidth * 0.62)), Math.min(window.innerHeight - 18, Math.max(18, window.innerHeight * 0.72)));
@@ -462,6 +515,11 @@ async function installOverlay(page) {
 
 async function setCaption(page, caption) {
   await page.evaluate((text) => window.__tutorial?.setCaption?.(text), caption).catch(() => undefined);
+}
+
+async function setHistoryMask(page, enabled) {
+  const active = Boolean(enabled && hideHistoricalAssets);
+  await page.evaluate((value) => window.__tutorial?.setHistoryMaskMode?.(value), active).catch(() => undefined);
 }
 
 async function moveTutorialPointer(page, x, y, pulse = false) {
@@ -508,6 +566,7 @@ async function openLogin(page) {
       await page.goto(absoluteUrl("/login?mode=login"), { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
       await waitReady(page);
       await installOverlay(page);
+      await setHistoryMask(page, false);
       const email = page.locator('input[name="email"]').first();
       await email.waitFor({ state: "visible", timeout: 35_000 });
       return email;
@@ -566,6 +625,7 @@ async function openWorkspace(page, hash = "#step-video") {
       await page.goto(`${absoluteUrl("/app/create")}${hash}`, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
       await waitReady(page);
       await installOverlay(page);
+      await setHistoryMask(page, false);
       await page.locator("#studio-console-video").waitFor({ state: "visible", timeout: 60_000 });
       await page.locator("#video-step-generate").waitFor({ state: "visible", timeout: 60_000 });
       return;
@@ -865,6 +925,7 @@ async function openResults(page) {
   for (let attempt = 1; attempt <= 4; attempt += 1) {
     if (await resultsSection.isVisible({ timeout: 2_000 }).catch(() => false)) {
       await installOverlay(page);
+      await setHistoryMask(page, true);
       await closeMegaMenus(page);
       return;
     }
@@ -883,6 +944,7 @@ async function openResults(page) {
     }).catch(() => undefined);
     await waitReady(page);
     await installOverlay(page);
+    await setHistoryMask(page, true);
     await closeMegaMenus(page);
     await page.waitForTimeout(1_000);
   }
@@ -918,6 +980,7 @@ async function closeMegaMenus(page) {
 
 async function focusGenerationProgress(page) {
   await openResults(page);
+  await setHistoryMask(page, true);
   const progressHeading = page.locator("#video-workspace-videos").getByText(/Video request progress/i).first();
   await progressHeading.scrollIntoViewIfNeeded().catch(() => undefined);
   await pointAt(page, progressHeading).catch(() => undefined);
@@ -926,14 +989,15 @@ async function focusGenerationProgress(page) {
 
 async function openHistoricalVideoPreview(page) {
   await openResults(page);
+  await setHistoryMask(page, true);
   await closeMegaMenus(page);
   const resultsSection = page.locator("#video-workspace-videos").first();
   await resultsSection.scrollIntoViewIfNeeded().catch(() => undefined);
-  const freshPreview = resultsSection.locator('button').filter({ hasText: /Fresh draft video preview/i }).first();
+  const freshPreview = resultsSection.locator('[role="status"] button').filter({ hasText: /Tutorial result video preview|Fresh draft video preview/i }).first();
   if (await freshPreview.isVisible().catch(() => false)) {
     await clickWithPointer(page, freshPreview, { force: true, timeout: 30_000 });
   } else {
-    const preview = resultsSection.locator('button:has-text("Open preview")').first();
+    const preview = resultsSection.locator('[role="status"] button:has-text("Open preview")').first();
     await preview.waitFor({ state: "visible", timeout: 20_000 });
     await clickWithPointer(page, preview, { force: true, timeout: 30_000 });
   }

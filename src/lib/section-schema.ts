@@ -84,7 +84,7 @@ const statBlock: ThemeBlockSchema = {
   type: "stat",
   label: "Metric",
   maxBlocks: 4,
-  settings: [text("value", "Value", "20-40"), text("label", "Label", "photos per album")],
+  settings: [text("value", "Value", "20-40"), text("label", "Label", "photos per album"), text("linkLabel", "Link label", ""), url("href", "Link", "")],
   preset: { label: "Metric", settings: { value: "20-40", label: "photos per album" } }
 };
 

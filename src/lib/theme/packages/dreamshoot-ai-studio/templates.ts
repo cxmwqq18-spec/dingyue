@@ -197,29 +197,29 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "home",
       eyebrow: "",
-      headline: "AI Headshot Generators",
-      subheadline: "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies. Upload selfies and create your own AI model - Professional headshots without a studio.",
+      headline: "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
+      subheadline: "upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.",
       imageUrl: assets.heroPackageWall,
       secondaryImageUrl: assets.heroCreditStudioCard,
       tertiaryImageUrl: assets.gala,
       heroGridImages: [assets.heroGridBusiness, assets.heroGridBeauty, assets.heroGridCyber, assets.heroGridTravel, assets.heroGridSports, assets.heroGridAvatar, assets.heroGridProduct, assets.heroGridVideo, assets.heroGridSocial, assets.heroGridNoir, assets.heroGridUpscale].join("|"),
       bulletList:
-        "Upload clear photos you own or have permission to use.|Choose fan meetups, sports-idol style scenes, VIP looks, and holiday group albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.",
-      highlightWord: "Headshot",
-      heroBadge: "AI photo package studio",
+        "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy|AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.",
+      highlightWord: "sports fan",
+      heroBadge: "AI photo package studio--AI Headshot Generators",
       authRibbon: "Plans start at $24.50/month",
       authPrimaryLabel: "Continue with email",
       authEmailPlaceholder: "Email address",
-      authButtonLabel: "Create account with email",
+      authButtonLabel: "Create my first photo set with Email",
       authPrimaryHref: "/login?mode=login",
       authEmailHref: "/login?mode=register",
       imageBadge: "15+ package categories",
-      imageCaption: "Choose a photo package first, then generate a private album.",
+      imageCaption: "Upload selfies and create your own AI model - Professional headshots without a studio.",
       socialProofLabel: "Private uploads and clear credit costs",
       layout: "immersive_dark"
     },
     [
-      block("hero_cta_primary", "cta", { label: "Create my first photo set", href: "/login", style: "primary" }),
+      block("hero_cta_primary", "cta", { label: "Create Now", href: "/login", style: "primary" }),
       block("hero_cta_secondary", "cta", { label: "Browse packages", href: "/collections", style: "secondary" }),
       block("hero_stat_credits", "stat", { value: "Credits", label: "shown before generation" }),
       block("hero_stat_packs", "stat", { value: "15+", label: "photo package themes" }),
@@ -574,12 +574,12 @@ const homeSections: ThemePageJson["sections"] = {
   ),
   trust_1: section(
     "trust_signal_bar",
-    { anchor: "trust", title: "Private by default, with clear credits before generation." },
+    { anchor: "trust", title: "Private safeguards for every AI photo shoot." },
     [
-      block("trust_private", "stat", { value: "Private by default", label: "Your uploads stay private inside the signed-in customer account" }),
-      block("trust_credits", "stat", { value: "How credits work", label: "credit costs are shown, reserved, used, or returned with visible history" }),
-      block("trust_model", "stat", { value: "Model", label: "premium packages use a private identity model for consistent results" }),
-      block("trust_checkout", "stat", { value: "Checkout", label: "monthly and yearly subscriptions use secure checkout" })
+      block("trust_no_training", "stat", { value: "No AI training on your photos", label: "Your inputs are never used to train models." }),
+      block("trust_auto_delete", "stat", { value: "30-day auto-delete", label: "Input photos automatically delete 30 days after generation." }),
+      block("trust_refund", "stat", { value: "100% money-back guarantee", label: "If the shoot doesn't look like you, refund.", linkLabel: "Read the refund policy", href: "/refunds" }),
+      block("trust_encryption", "stat", { value: "AES-256 at rest · TLS 256-bit in transit", label: "Encryption standards across the stack." })
     ]
   ),
   plan_rules_1: section(
@@ -988,8 +988,8 @@ function mydreamshootsTutorialVideoSection(): SectionInstance {
     eyebrow: "How it works",
     title: "Watch the private photo package workflow.",
     subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804draftfix1",
-    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804draftfix1",
+    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804resultfix2",
+    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804resultfix2",
     videoBadge: "Private gallery workflow",
     playLabel: "Watch the MyDreamShoots workflow"
   });
@@ -1001,8 +1001,8 @@ function mydreamshootsImageTutorialVideoSection(): SectionInstance {
     eyebrow: "AI image tutorial",
     title: "Create an AI photo set from source photos.",
     subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
     videoBadge: "AI photo generation",
     playLabel: "Watch the MyDreamShoots AI image tutorial"
   });
@@ -1014,8 +1014,8 @@ function aidreamcapesTutorialVideoSection(): SectionInstance {
     eyebrow: "How it works",
     title: "See how an Aidreamcapes occasion album is planned.",
     subtitle: "Start with approved source photos, choose a fan-scene or holiday direction, confirm the visible credit cost, and keep finished images inside your private Aidreamcapes gallery.",
-    imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804draftfix1",
-    videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804draftfix1",
+    imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804resultfix2",
+    videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804resultfix2",
     videoBadge: "Occasion album workflow",
     playLabel: "Watch the Aidreamcapes workflow"
   });
@@ -1027,8 +1027,8 @@ function aidreamcapesImageTutorialVideoSection(): SectionInstance {
     eyebrow: "AI image tutorial",
     title: "Create a private fan-scene image album.",
     subtitle: "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
-    imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-    videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+    imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+    videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
     videoBadge: "AI image album workflow",
     playLabel: "Watch the Aidreamcapes AI image tutorial"
   });

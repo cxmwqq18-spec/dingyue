@@ -2014,17 +2014,19 @@ export function CustomerWorkspaceShell({
   }
   function slotPreviewAssetFor(job: RuntimeJob, slot: RuntimeOutputSlot, outputAssets: ThemeRuntimeAsset[], fallbackLabel?: string): ThemeRuntimeAsset | undefined {
     const slotStorageKey = slot.storageKey;
-    if ((!slotStorageKey && !slot.previewUrl) || !slot.mimeType?.startsWith("video/")) return undefined;
+    const slotMimeType = slot.mimeType ?? "";
+    const slotPreviewable = slotMimeType.startsWith("image/") || slotMimeType.startsWith("video/");
+    if ((!slotStorageKey && !slot.previewUrl) || !slotPreviewable) return undefined;
     const existingAsset = slotStorageKey ? outputAssetForSlot(slotStorageKey, outputAssets) : undefined;
     if (existingAsset) return existingAsset;
-    const label = fallbackLabel ?? `${workspaceJobTitle(job, false)} video ${slot.index}`;
+    const label = fallbackLabel ?? `${workspaceJobTitle(job, false)} ${slotMimeType.startsWith("video/") ? "video" : "image"} ${slot.index}`;
     const normalizedSlotKey = slotStorageKey ? normalizedWorkspaceStorageKey(slotStorageKey) : `preview-url-${job.id}-${slot.index}`;
     return {
       id: `slot:${normalizedSlotKey}`,
       jobId: job.id,
       previewUrl: slotStorageKey ? workspaceSlotPreviewUrl(slotStorageKey) : slot.previewUrl!,
       storageKey: slotStorageKey,
-      mimeType: slot.mimeType ?? "video/mp4",
+      mimeType: slot.mimeType ?? "image/png",
       role: "output",
       reviewStatus: "approved",
       label,
@@ -3990,11 +3992,27 @@ export function CustomerWorkspaceShell({
                                             }
                                           })
                                         ) : (
-                                          <img
-                                            alt={slotMediaLabel}
-                                            className="aspect-[4/3] w-full object-cover"
-                                            src={slot.storageKey ? workspaceSlotPreviewUrl(slot.storageKey) : slot.previewUrl!}
-                                          />
+                                          <button
+                                            aria-label={`${t(spanishXby, "Open preview", "Abrir vista previa")}: ${slotMediaLabel}`}
+                                            className="group/image relative block w-full overflow-hidden text-left disabled:cursor-default"
+                                            disabled={!slotPreviewAsset}
+                                            onClick={() => {
+                                              if (slotPreviewAsset) setSelectedPreviewAssetId(slotPreviewAsset.id);
+                                            }}
+                                            type="button"
+                                          >
+                                            <img
+                                              alt={slotMediaLabel}
+                                              className="aspect-[4/3] w-full object-cover transition duration-200 group-hover/image:scale-[1.02]"
+                                              src={slot.storageKey ? workspaceSlotPreviewUrl(slot.storageKey) : slot.previewUrl!}
+                                            />
+                                            {slotPreviewAsset ? (
+                                              <span className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 rounded-full border border-white/18 bg-black/56 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur transition group-hover/image:bg-white/14">
+                                                <Eye className="h-3 w-3" strokeWidth={1.8} />
+                                                {t(spanishXby, "Open preview", "Abrir vista previa")}
+                                              </span>
+                                            ) : null}
+                                          </button>
                                         )
                                       ) : (
                                         <div className="grid aspect-[4/3] place-items-center bg-black/18 px-3 text-center">
@@ -4290,11 +4308,27 @@ export function CustomerWorkspaceShell({
                                           }
                                         })
                                       ) : (
-                                        <img
-                                          alt={slotMediaLabel}
-                                          className="aspect-[4/3] w-full object-cover"
-                                          src={slot.storageKey ? workspaceSlotPreviewUrl(slot.storageKey) : slot.previewUrl!}
-                                        />
+                                        <button
+                                          aria-label={`${t(spanishXby, "Open preview", "Abrir vista previa")}: ${slotMediaLabel}`}
+                                          className="group/image relative block w-full overflow-hidden text-left disabled:cursor-default"
+                                          disabled={!slotPreviewAsset}
+                                          onClick={() => {
+                                            if (slotPreviewAsset) setSelectedPreviewAssetId(slotPreviewAsset.id);
+                                          }}
+                                          type="button"
+                                        >
+                                          <img
+                                            alt={slotMediaLabel}
+                                            className="aspect-[4/3] w-full object-cover transition duration-200 group-hover/image:scale-[1.02]"
+                                            src={slot.storageKey ? workspaceSlotPreviewUrl(slot.storageKey) : slot.previewUrl!}
+                                          />
+                                          {slotPreviewAsset ? (
+                                            <span className="absolute bottom-2 left-2 inline-flex items-center gap-1.5 rounded-full border border-white/18 bg-black/56 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur transition group-hover/image:bg-white/14">
+                                              <Eye className="h-3 w-3" strokeWidth={1.8} />
+                                              {t(spanishXby, "Open preview", "Abrir vista previa")}
+                                            </span>
+                                          ) : null}
+                                        </button>
                                       )
                                     ) : (
                                       <div className="grid aspect-[4/3] place-items-center bg-black/18 px-3 text-center">

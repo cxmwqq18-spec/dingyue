@@ -1036,8 +1036,8 @@ const workflowJson: ThemePageJson = {
       eyebrow: "How it works",
       title: "Watch the private photo package workflow.",
       subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private gallery.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804draftfix1",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804draftfix1",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804resultfix2",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804resultfix2",
       videoBadge: "Private gallery workflow",
       playLabel: "Watch the private photo package workflow"
     }),
@@ -1046,8 +1046,8 @@ const workflowJson: ThemePageJson = {
       eyebrow: "AI image tutorial",
       title: "Create an AI photo set from source photos.",
       subtitle: "Choose a package, upload a clear source photo, review credits, start generation, and open the finished private image.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
       videoBadge: "AI photo generation",
       playLabel: "Watch the AI image tutorial"
     }),

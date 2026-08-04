@@ -16015,21 +16015,21 @@
                 "settings": {
                   "anchor": "home",
                   "eyebrow": "",
-                  "headline": "AI Headshot Generators",
-                  "subheadline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies. Upload selfies and create your own AI model - Professional headshots without a studio.",
+                  "headline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
+                  "subheadline": "upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.",
                   "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
                   "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
                   "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
                   "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
-                  "bulletList": "Upload clear photos you own or have permission to use.|Choose fan meetups, sports-idol style scenes, VIP looks, and holiday group albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.",
-                  "highlightWord": "Headshot",
-                  "heroBadge": "AI photo package studio",
+                  "bulletList": "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy|AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.",
+                  "highlightWord": "sports fan",
+                  "heroBadge": "AI photo package studio--AI Headshot Generators",
                   "authRibbon": "Plans start at $24.50/month",
                   "authPrimaryLabel": "Continue with email",
                   "authEmailPlaceholder": "Email address",
                   "authButtonLabel": "Create my first photo set with Email",
                   "imageBadge": "15+ package categories",
-                  "imageCaption": "Choose a photo package first, then generate a private album.",
+                  "imageCaption": "Upload selfies and create your own AI model - Professional headshots without a studio.",
                   "socialProofLabel": "Private uploads · Credit cost shown upfront · Download your favorites",
                   "layout": "immersive_dark"
                 },
@@ -16038,7 +16038,7 @@
                     "id": "hero_cta_primary",
                     "type": "cta",
                     "settings": {
-                      "label": "Create my first photo set",
+                      "label": "Create Now",
                       "href": "/login",
                       "style": "primary"
                     }
@@ -16546,8 +16546,8 @@
                   "eyebrow": "How it works",
                   "title": "Watch the private photo package workflow.",
                   "subtitle": "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-                  "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804draftfix1",
-                  "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804draftfix1",
+                  "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804resultfix2",
+                  "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804resultfix2",
                   "videoBadge": "Private gallery workflow",
                   "playLabel": "Watch the MyDreamShoots workflow"
                 },
@@ -16654,8 +16654,8 @@
                   "eyebrow": "AI image tutorial",
                   "title": "Create an AI photo set from source photos.",
                   "subtitle": "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-                  "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-                  "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+                  "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+                  "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
                   "videoBadge": "AI photo generation",
                   "playLabel": "Watch the MyDreamShoots AI image tutorial"
                 },
@@ -16920,21 +16920,21 @@
                 "settings": {
                   "anchor": "home",
                   "eyebrow": "",
-                  "headline": "AI Headshot Generators",
-                  "subheadline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies. Upload selfies and create your own AI model - Professional headshots without a studio.",
+                  "headline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
+                  "subheadline": "upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.",
                   "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
                   "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
                   "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
                   "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
-                  "bulletList": "Upload clear photos you own or have permission to use.|Choose fan meetups, sports-idol style scenes, VIP looks, and holiday group albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.",
-                  "highlightWord": "Headshot",
-                  "heroBadge": "AI photo package studio",
+                  "bulletList": "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy|AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.",
+                  "highlightWord": "sports fan",
+                  "heroBadge": "AI photo package studio--AI Headshot Generators",
                   "authRibbon": "Plans start at $24.50/month",
                   "authPrimaryLabel": "Continue with email",
                   "authEmailPlaceholder": "Email address",
                   "authButtonLabel": "Create my first photo set with Email",
                   "imageBadge": "15+ package categories",
-                  "imageCaption": "Choose a photo package first, then generate a private album.",
+                  "imageCaption": "Upload selfies and create your own AI model - Professional headshots without a studio.",
                   "socialProofLabel": "Private uploads · Credit cost shown upfront · Download your favorites",
                   "layout": "immersive_dark"
                 },
@@ -16943,7 +16943,7 @@
                     "id": "hero_cta_primary",
                     "type": "cta",
                     "settings": {
-                      "label": "Create my first photo set",
+                      "label": "Create Now",
                       "href": "/login",
                       "style": "primary"
                     }
@@ -17451,8 +17451,8 @@
                   "eyebrow": "How it works",
                   "title": "Watch the private photo package workflow.",
                   "subtitle": "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-                  "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804draftfix1",
-                  "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804draftfix1",
+                  "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804resultfix2",
+                  "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804resultfix2",
                   "videoBadge": "Private gallery workflow",
                   "playLabel": "Watch the MyDreamShoots workflow"
                 },
@@ -17559,8 +17559,8 @@
                   "eyebrow": "AI image tutorial",
                   "title": "Create an AI photo set from source photos.",
                   "subtitle": "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-                  "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-                  "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+                  "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+                  "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
                   "videoBadge": "AI photo generation",
                   "playLabel": "Watch the MyDreamShoots AI image tutorial"
                 },
@@ -17902,39 +17902,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -18153,39 +18155,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -18630,39 +18634,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -19029,39 +19035,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -19608,39 +19616,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -20263,39 +20273,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -20517,39 +20529,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -20710,39 +20724,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -20888,39 +20904,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -21042,39 +21060,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -21425,39 +21445,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -21584,39 +21606,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -21744,39 +21768,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -21865,39 +21891,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -21996,39 +22024,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -22119,39 +22149,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -23292,39 +23324,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -23479,39 +23513,41 @@
                 "type": "trust_signal_bar",
                 "settings": {
                   "anchor": "trust",
-                  "title": "Private by default, with clear credits before generation."
+                  "title": "Private safeguards for every AI photo shoot."
                 },
                 "blocks": [
                   {
-                    "id": "trust_private",
+                    "id": "trust_no_training",
                     "type": "stat",
                     "settings": {
-                      "value": "Private by default",
-                      "label": "Your uploads stay private inside the signed-in customer account"
+                      "value": "No AI training on your photos",
+                      "label": "Your inputs are never used to train models."
                     }
                   },
                   {
-                    "id": "trust_credits",
+                    "id": "trust_auto_delete",
                     "type": "stat",
                     "settings": {
-                      "value": "How credits work",
-                      "label": "credit costs are shown, reserved, used, or returned with visible history"
+                      "value": "30-day auto-delete",
+                      "label": "Input photos automatically delete 30 days after generation."
                     }
                   },
                   {
-                    "id": "trust_model",
+                    "id": "trust_refund",
                     "type": "stat",
                     "settings": {
-                      "value": "Model",
-                      "label": "premium packages use a private identity model for consistent results"
+                      "value": "100% money-back guarantee",
+                      "label": "If the shoot doesn't look like you, refund.",
+                      "linkLabel": "Read the refund policy",
+                      "href": "/refunds"
                     }
                   },
                   {
-                    "id": "trust_checkout",
+                    "id": "trust_encryption",
                     "type": "stat",
                     "settings": {
-                      "value": "Checkout",
-                      "label": "monthly and yearly subscriptions use secure checkout"
+                      "value": "AES-256 at rest · TLS 256-bit in transit",
+                      "label": "Encryption standards across the stack."
                     }
                   }
                 ]
@@ -31347,8 +31383,8 @@
                   "eyebrow": "How it works",
                   "title": "See how an Aidreamcapes occasion album is planned.",
                   "subtitle": "Start with approved source photos, choose a fan-scene or holiday direction, confirm the visible credit cost, and keep finished images inside your private Aidreamcapes gallery.",
-                  "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804draftfix1",
-                  "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804draftfix1",
+                  "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804resultfix2",
+                  "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804resultfix2",
                   "videoBadge": "Occasion album workflow",
                   "playLabel": "Watch the Aidreamcapes workflow"
                 },
@@ -31361,8 +31397,8 @@
                   "eyebrow": "AI image tutorial",
                   "title": "Create a private fan-scene image album.",
                   "subtitle": "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
-                  "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-                  "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+                  "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+                  "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
                   "videoBadge": "AI image album workflow",
                   "playLabel": "Watch the Aidreamcapes AI image tutorial"
                 },
@@ -32462,8 +32498,8 @@
                   "eyebrow": "How it works",
                   "title": "See how an Aidreamcapes occasion album is planned.",
                   "subtitle": "Start with approved source photos, choose a fan-scene or holiday direction, confirm the visible credit cost, and keep finished images inside your private Aidreamcapes gallery.",
-                  "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804draftfix1",
-                  "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804draftfix1",
+                  "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804resultfix2",
+                  "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804resultfix2",
                   "videoBadge": "Occasion album workflow",
                   "playLabel": "Watch the Aidreamcapes workflow"
                 },
@@ -32476,8 +32512,8 @@
                   "eyebrow": "AI image tutorial",
                   "title": "Create a private fan-scene image album.",
                   "subtitle": "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
-                  "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-                  "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+                  "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+                  "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
                   "videoBadge": "AI image album workflow",
                   "playLabel": "Watch the Aidreamcapes AI image tutorial"
                 },
@@ -94290,21 +94326,21 @@
               "settings": {
                 "anchor": "home",
                 "eyebrow": "",
-                "headline": "AI Headshot Generators",
-                "subheadline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies. Upload selfies and create your own AI model - Professional headshots without a studio.",
+                "headline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
+                "subheadline": "upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.",
                 "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
                 "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
                 "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
                 "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
-                "bulletList": "Upload clear photos you own or have permission to use.|Choose fan meetups, sports-idol style scenes, VIP looks, and holiday group albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.",
-                "highlightWord": "Headshot",
-                "heroBadge": "AI photo package studio",
+                "bulletList": "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy|AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.",
+                "highlightWord": "sports fan",
+                "heroBadge": "AI photo package studio--AI Headshot Generators",
                 "authRibbon": "Plans start at $24.50/month",
                 "authPrimaryLabel": "Continue with email",
                 "authEmailPlaceholder": "Email address",
                 "authButtonLabel": "Create my first photo set with Email",
                 "imageBadge": "15+ package categories",
-                "imageCaption": "Choose a photo package first, then generate a private album.",
+                "imageCaption": "Upload selfies and create your own AI model - Professional headshots without a studio.",
                 "socialProofLabel": "Private uploads · Credit cost shown upfront · Download your favorites",
                 "layout": "immersive_dark"
               },
@@ -94313,7 +94349,7 @@
                   "id": "hero_cta_primary",
                   "type": "cta",
                   "settings": {
-                    "label": "Create my first photo set",
+                    "label": "Create Now",
                     "href": "/login",
                     "style": "primary"
                   }
@@ -94829,8 +94865,8 @@
                 "eyebrow": "How it works",
                 "title": "Watch the private photo package workflow.",
                 "subtitle": "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-                "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804draftfix1",
-                "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804draftfix1",
+                "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804resultfix2",
+                "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804resultfix2",
                 "videoBadge": "Private gallery workflow",
                 "playLabel": "Watch the MyDreamShoots workflow"
               },
@@ -94937,8 +94973,8 @@
                 "eyebrow": "AI image tutorial",
                 "title": "Create an AI photo set from source photos.",
                 "subtitle": "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-                "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-                "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+                "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+                "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
                 "videoBadge": "AI photo generation",
                 "playLabel": "Watch the MyDreamShoots AI image tutorial"
               },
@@ -95266,39 +95302,41 @@
               "card_name": "Trust Signal Bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -95742,39 +95780,41 @@
               "card_name": "Trust Signal Bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -96314,39 +96354,41 @@
               "card_name": "Trust Signal Bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -96569,39 +96611,41 @@
               "card_name": "Trust Signal Bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -96734,39 +96778,41 @@
               "card_name": "Trust Signal Bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -96987,39 +97033,41 @@
               "card_name": "Trust Signal Bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -97136,39 +97184,41 @@
               "card_name": "Trust Signal Bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -97256,39 +97306,41 @@
               "card_name": "Trust Signal Bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -97816,39 +97868,41 @@
               "card_name": "Trust Signal Bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -100246,21 +100300,21 @@
               "settings": {
                 "anchor": "home",
                 "eyebrow": "",
-                "headline": "AI Headshot Generators",
-                "subheadline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies. Upload selfies and create your own AI model - Professional headshots without a studio.",
+                "headline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
+                "subheadline": "upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.",
                 "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
                 "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
                 "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
                 "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
-                "bulletList": "Upload clear photos you own or have permission to use.|Choose fan meetups, sports-idol style scenes, VIP looks, and holiday group albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.",
-                "highlightWord": "Headshot",
-                "heroBadge": "AI photo package studio",
+                "bulletList": "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy|AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.",
+                "highlightWord": "sports fan",
+                "heroBadge": "AI photo package studio--AI Headshot Generators",
                 "authRibbon": "Plans start at $24.50/month",
                 "authPrimaryLabel": "Continue with email",
                 "authEmailPlaceholder": "Email address",
                 "authButtonLabel": "Create my first photo set with Email",
                 "imageBadge": "15+ package categories",
-                "imageCaption": "Choose a photo package first, then generate a private album.",
+                "imageCaption": "Upload selfies and create your own AI model - Professional headshots without a studio.",
                 "socialProofLabel": "Private uploads · Credit cost shown upfront · Download your favorites",
                 "layout": "immersive_dark"
               },
@@ -100269,7 +100323,7 @@
                   "id": "hero_cta_primary",
                   "type": "cta",
                   "settings": {
-                    "label": "Create my first photo set",
+                    "label": "Create Now",
                     "href": "/login",
                     "style": "primary"
                   }
@@ -100783,8 +100837,8 @@
                 "eyebrow": "How it works",
                 "title": "Watch the private photo package workflow.",
                 "subtitle": "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-                "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804draftfix1",
-                "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804draftfix1",
+                "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804resultfix2",
+                "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804resultfix2",
                 "videoBadge": "Private gallery workflow",
                 "playLabel": "Watch the MyDreamShoots workflow"
               },
@@ -100891,8 +100945,8 @@
                 "eyebrow": "AI image tutorial",
                 "title": "Create an AI photo set from source photos.",
                 "subtitle": "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-                "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-                "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+                "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+                "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
                 "videoBadge": "AI photo generation",
                 "playLabel": "Watch the MyDreamShoots AI image tutorial"
               },
@@ -101220,39 +101274,41 @@
               "card_name": "trust_signal_bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -101696,39 +101752,41 @@
               "card_name": "trust_signal_bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -102268,39 +102326,41 @@
               "card_name": "trust_signal_bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -102523,39 +102583,41 @@
               "card_name": "trust_signal_bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -102688,39 +102750,41 @@
               "card_name": "trust_signal_bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -102935,39 +102999,41 @@
               "card_name": "trust_signal_bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -103084,39 +103150,41 @@
               "card_name": "trust_signal_bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -103203,39 +103271,41 @@
               "card_name": "trust_signal_bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -103763,39 +103833,41 @@
               "card_name": "trust_signal_bar",
               "settings": {
                 "anchor": "trust",
-                "title": "Private by default, with clear credits before generation."
+                "title": "Private safeguards for every AI photo shoot."
               },
               "blocks": [
                 {
-                  "id": "trust_private",
+                  "id": "trust_no_training",
                   "type": "stat",
                   "settings": {
-                    "value": "Private by default",
-                    "label": "Your uploads stay private inside the signed-in customer account"
+                    "value": "No AI training on your photos",
+                    "label": "Your inputs are never used to train models."
                   }
                 },
                 {
-                  "id": "trust_credits",
+                  "id": "trust_auto_delete",
                   "type": "stat",
                   "settings": {
-                    "value": "How credits work",
-                    "label": "credit costs are shown, reserved, used, or returned with visible history"
+                    "value": "30-day auto-delete",
+                    "label": "Input photos automatically delete 30 days after generation."
                   }
                 },
                 {
-                  "id": "trust_model",
+                  "id": "trust_refund",
                   "type": "stat",
                   "settings": {
-                    "value": "Model",
-                    "label": "premium packages use a private identity model for consistent results"
+                    "value": "100% money-back guarantee",
+                    "label": "If the shoot doesn't look like you, refund.",
+                    "linkLabel": "Read the refund policy",
+                    "href": "/refunds"
                   }
                 },
                 {
-                  "id": "trust_checkout",
+                  "id": "trust_encryption",
                   "type": "stat",
                   "settings": {
-                    "value": "Checkout",
-                    "label": "monthly and yearly subscriptions use secure checkout"
+                    "value": "AES-256 at rest · TLS 256-bit in transit",
+                    "label": "Encryption standards across the stack."
                   }
                 }
               ]
@@ -106590,8 +106662,8 @@
                 "eyebrow": "How it works",
                 "title": "See how an Aidreamcapes occasion album is planned.",
                 "subtitle": "Start with approved source photos, choose a fan-scene or holiday direction, confirm the visible credit cost, and keep finished images inside your private Aidreamcapes gallery.",
-                "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804draftfix1",
-                "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804draftfix1",
+                "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804resultfix2",
+                "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804resultfix2",
                 "videoBadge": "Occasion album workflow",
                 "playLabel": "Watch the Aidreamcapes workflow"
               },
@@ -106604,8 +106676,8 @@
                 "eyebrow": "AI image tutorial",
                 "title": "Create a private fan-scene image album.",
                 "subtitle": "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
-                "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-                "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+                "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+                "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
                 "videoBadge": "AI image album workflow",
                 "playLabel": "Watch the Aidreamcapes AI image tutorial"
               },
@@ -113233,8 +113305,8 @@
                 "eyebrow": "How it works",
                 "title": "See how an Aidreamcapes occasion album is planned.",
                 "subtitle": "Start with approved source photos, choose a fan-scene or holiday direction, confirm the visible credit cost, and keep finished images inside your private Aidreamcapes gallery.",
-                "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804draftfix1",
-                "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804draftfix1",
+                "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804resultfix2",
+                "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804resultfix2",
                 "videoBadge": "Occasion album workflow",
                 "playLabel": "Watch the Aidreamcapes workflow"
               },
@@ -113247,8 +113319,8 @@
                 "eyebrow": "AI image tutorial",
                 "title": "Create a private fan-scene image album.",
                 "subtitle": "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
-                "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-                "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+                "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+                "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
                 "videoBadge": "AI image album workflow",
                 "playLabel": "Watch the Aidreamcapes AI image tutorial"
               },
@@ -150903,21 +150975,21 @@
                   "settings": {
                     "anchor": "home",
                     "eyebrow": "",
-                    "headline": "AI Headshot Generators",
-                    "subheadline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies. Upload selfies and create your own AI model - Professional headshots without a studio.",
+                    "headline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
+                    "subheadline": "upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.",
                     "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
                     "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
                     "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
                     "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
-                    "bulletList": "Upload clear photos you own or have permission to use.|Choose fan meetups, sports-idol style scenes, VIP looks, and holiday group albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.",
-                    "highlightWord": "Headshot",
-                    "heroBadge": "AI photo package studio",
+                    "bulletList": "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy|AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.",
+                    "highlightWord": "sports fan",
+                    "heroBadge": "AI photo package studio--AI Headshot Generators",
                     "authRibbon": "Plans start at $24.50/month",
                     "authPrimaryLabel": "Continue with email",
                     "authEmailPlaceholder": "Email address",
                     "authButtonLabel": "Create my first photo set with Email",
                     "imageBadge": "15+ package categories",
-                    "imageCaption": "Choose a photo package first, then generate a private album.",
+                    "imageCaption": "Upload selfies and create your own AI model - Professional headshots without a studio.",
                     "socialProofLabel": "Private uploads · Credit cost shown upfront · Download your favorites",
                     "layout": "immersive_dark"
                   },
@@ -150926,7 +150998,7 @@
                       "id": "hero_cta_primary",
                       "type": "cta",
                       "settings": {
-                        "label": "Create my first photo set",
+                        "label": "Create Now",
                         "href": "/login",
                         "style": "primary"
                       }
@@ -151434,8 +151506,8 @@
                     "eyebrow": "How it works",
                     "title": "Watch the private photo package workflow.",
                     "subtitle": "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-                    "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804draftfix1",
-                    "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804draftfix1",
+                    "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804resultfix2",
+                    "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804resultfix2",
                     "videoBadge": "Private gallery workflow",
                     "playLabel": "Watch the MyDreamShoots workflow"
                   },
@@ -151542,8 +151614,8 @@
                     "eyebrow": "AI image tutorial",
                     "title": "Create an AI photo set from source photos.",
                     "subtitle": "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-                    "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-                    "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+                    "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+                    "videoUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
                     "videoBadge": "AI photo generation",
                     "playLabel": "Watch the MyDreamShoots AI image tutorial"
                   },
@@ -151881,39 +151953,41 @@
                   "type": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -152354,39 +152428,41 @@
                   "type": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -152929,39 +153005,41 @@
                   "type": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -153179,39 +153257,41 @@
                   "type": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -153353,39 +153433,41 @@
                   "type": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -153616,39 +153698,41 @@
                   "type": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -153772,39 +153856,41 @@
                   "type": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -153899,39 +153985,41 @@
                   "type": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -154579,39 +154667,41 @@
                   "type": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -158585,21 +158675,21 @@
                   "settings": {
                     "anchor": "home",
                     "eyebrow": "",
-                    "headline": "AI Headshot Generators",
-                    "subheadline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies. Upload selfies and create your own AI model - Professional headshots without a studio.",
+                    "headline": "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
+                    "subheadline": "upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.",
                     "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
                     "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
                     "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
                     "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
-                    "bulletList": "Upload clear photos you own or have permission to use.|Choose fan meetups, sports-idol style scenes, VIP looks, and holiday group albums.|Review the credit cost before generation starts.|Download finished results from your private gallery.",
-                    "highlightWord": "Headshot",
-                    "heroBadge": "AI photo package studio",
+                    "bulletList": "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy|AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.",
+                    "highlightWord": "sports fan",
+                    "heroBadge": "AI photo package studio--AI Headshot Generators",
                     "authRibbon": "Plans start at $24.50/month",
                     "authPrimaryLabel": "Continue with email",
                     "authEmailPlaceholder": "Email address",
                     "authButtonLabel": "Create my first photo set with Email",
                     "imageBadge": "15+ package categories",
-                    "imageCaption": "Choose a photo package first, then generate a private album.",
+                    "imageCaption": "Upload selfies and create your own AI model - Professional headshots without a studio.",
                     "socialProofLabel": "Private uploads · Credit cost shown upfront · Download your favorites",
                     "layout": "immersive_dark"
                   },
@@ -158608,7 +158698,7 @@
                       "id": "hero_cta_primary",
                       "type": "cta",
                       "settings": {
-                        "label": "Create my first photo set",
+                        "label": "Create Now",
                         "href": "/login",
                         "style": "primary"
                       }
@@ -159225,39 +159315,41 @@
                   "card_name": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -159599,39 +159691,41 @@
                   "card_name": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -160075,39 +160169,41 @@
                   "card_name": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -160647,39 +160743,41 @@
                   "card_name": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -160902,39 +161000,41 @@
                   "card_name": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -161067,39 +161167,41 @@
                   "card_name": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -161314,39 +161416,41 @@
                   "card_name": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -161463,39 +161567,41 @@
                   "card_name": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -161582,39 +161688,41 @@
                   "card_name": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -162142,39 +162250,41 @@
                   "card_name": "trust_signal_bar",
                   "settings": {
                     "anchor": "trust",
-                    "title": "Private by default, with clear credits before generation."
+                    "title": "Private safeguards for every AI photo shoot."
                   },
                   "blocks": [
                     {
-                      "id": "trust_private",
+                      "id": "trust_no_training",
                       "type": "stat",
                       "settings": {
-                        "value": "Private by default",
-                        "label": "Your uploads stay private inside the signed-in customer account"
+                        "value": "No AI training on your photos",
+                        "label": "Your inputs are never used to train models."
                       }
                     },
                     {
-                      "id": "trust_credits",
+                      "id": "trust_auto_delete",
                       "type": "stat",
                       "settings": {
-                        "value": "How credits work",
-                        "label": "credit costs are shown, reserved, used, or returned with visible history"
+                        "value": "30-day auto-delete",
+                        "label": "Input photos automatically delete 30 days after generation."
                       }
                     },
                     {
-                      "id": "trust_model",
+                      "id": "trust_refund",
                       "type": "stat",
                       "settings": {
-                        "value": "Model",
-                        "label": "premium packages use a private identity model for consistent results"
+                        "value": "100% money-back guarantee",
+                        "label": "If the shoot doesn't look like you, refund.",
+                        "linkLabel": "Read the refund policy",
+                        "href": "/refunds"
                       }
                     },
                     {
-                      "id": "trust_checkout",
+                      "id": "trust_encryption",
                       "type": "stat",
                       "settings": {
-                        "value": "Checkout",
-                        "label": "monthly and yearly subscriptions use secure checkout"
+                        "value": "AES-256 at rest · TLS 256-bit in transit",
+                        "label": "Encryption standards across the stack."
                       }
                     }
                   ]
@@ -163727,7 +163837,7 @@
       "publishedAt": "2026-06-18T00:00:00.000Z",
       "pageCount": 55,
       "sectionCount": 147,
-      "snapshotBytes": 612767
+      "snapshotBytes": 612305
     },
     {
       "id": "pub_site_aidreamcapes_v1",
@@ -164430,8 +164540,8 @@
                     "eyebrow": "How it works",
                     "title": "See how an Aidreamcapes occasion album is planned.",
                     "subtitle": "Start with approved source photos, choose a fan-scene or holiday direction, confirm the visible credit cost, and keep finished images inside your private Aidreamcapes gallery.",
-                    "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804draftfix1",
-                    "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804draftfix1",
+                    "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804resultfix2",
+                    "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804resultfix2",
                     "videoBadge": "Occasion album workflow",
                     "playLabel": "Watch the Aidreamcapes workflow"
                   },
@@ -164444,8 +164554,8 @@
                     "eyebrow": "AI image tutorial",
                     "title": "Create a private fan-scene image album.",
                     "subtitle": "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
-                    "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
-                    "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+                    "imageUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804resultfix2",
+                    "videoUrl": "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804resultfix2",
                     "videoBadge": "AI image album workflow",
                     "playLabel": "Watch the Aidreamcapes AI image tutorial"
                   },
@@ -173457,7 +173567,7 @@
       "publishedAt": "2026-06-27T00:00:00.000Z",
       "pageCount": 42,
       "sectionCount": 265,
-      "snapshotBytes": 295953
+      "snapshotBytes": 295957
     },
     {
       "id": "pub_site_mydreamshoots_xby_v1",
