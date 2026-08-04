@@ -91,12 +91,12 @@ function dreamshootFeaturedSections() {
         nextCampaignLabel: "Next: Thanksgiving / Halloween / Seasonal"
       },
       [
-        block("seasonal_christmas_1", "seasonal_image", { label: "Christmas Portraits", meta: "Card-ready mood", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp"), shape: "square" }),
-        block("seasonal_christmas_2", "seasonal_image", { label: "Greeting Card Scene", meta: "Festive group crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp"), shape: "square" }),
-        block("seasonal_christmas_3", "seasonal_image", { label: "Cozy Couple", meta: "Warm keepsake", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-04.webp"), shape: "square" }),
-        block("seasonal_christmas_4", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/christmas-photos/christmas-photos-cover.webp"), shape: "square" }),
-        block("seasonal_christmas_5", "seasonal_image", { label: "Seasonal Album", meta: "Family-style glow", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-08.webp"), shape: "square" }),
-        block("seasonal_christmas_6", "seasonal_image", { label: "Giftable Keepsake", meta: "Social-ready crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-05.webp"), shape: "square" })
+      block("seasonal_christmas_1", "seasonal_image", { label: "Christmas Portraits", meta: "Card-ready mood", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp"), collectionSlug: "christmas-photos", shape: "square" }),
+      block("seasonal_christmas_2", "seasonal_image", { label: "Greeting Card Scene", meta: "Festive group crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp"), collectionSlug: "christmas-photos", shape: "square" }),
+      block("seasonal_christmas_3", "seasonal_image", { label: "Cozy Couple", meta: "Warm keepsake", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-04.webp"), collectionSlug: "christmas-couple", shape: "square" }),
+      block("seasonal_christmas_4", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/christmas-photos/christmas-photos-cover.webp"), collectionSlug: "christmas-photos", shape: "square" }),
+      block("seasonal_christmas_5", "seasonal_image", { label: "Seasonal Album", meta: "Family-style glow", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-08.webp"), collectionSlug: "christmas-photos", shape: "square" }),
+      block("seasonal_christmas_6", "seasonal_image", { label: "Giftable Keepsake", meta: "Social-ready crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-05.webp"), collectionSlug: "christmas-couple", shape: "square" })
       ]
     ),
     featured_thanksgiving_1: section(
@@ -125,12 +125,12 @@ function dreamshootFeaturedSections() {
         nextCampaignLabel: "Next: Christmas / Halloween / Seasonal"
       },
       [
-        block("seasonal_thanksgiving_1", "seasonal_image", { label: "Dinner Portraits", meta: "Warm table scene", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp"), shape: "square" }),
-        block("seasonal_thanksgiving_2", "seasonal_image", { label: "Friendsgiving Set", meta: "Group-friendly crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp"), shape: "square" }),
-        block("seasonal_thanksgiving_3", "seasonal_image", { label: "Gratitude Card", meta: "Seasonal note", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp"), shape: "square" }),
-        block("seasonal_thanksgiving_4", "seasonal_image", { label: "Keepsake Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp"), shape: "square" }),
-        block("seasonal_thanksgiving_5", "seasonal_image", { label: "Family-style Album", meta: "Harvest warmth", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp"), shape: "square" }),
-        block("seasonal_thanksgiving_6", "seasonal_image", { label: "Host Story", meta: "Download-ready image", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp"), shape: "square" })
+      block("seasonal_thanksgiving_1", "seasonal_image", { label: "Dinner Portraits", meta: "Warm table scene", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
+      block("seasonal_thanksgiving_2", "seasonal_image", { label: "Friendsgiving Set", meta: "Group-friendly crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
+      block("seasonal_thanksgiving_3", "seasonal_image", { label: "Gratitude Card", meta: "Seasonal note", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
+      block("seasonal_thanksgiving_4", "seasonal_image", { label: "Keepsake Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
+      block("seasonal_thanksgiving_5", "seasonal_image", { label: "Family-style Album", meta: "Harvest warmth", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
+      block("seasonal_thanksgiving_6", "seasonal_image", { label: "Host Story", meta: "Download-ready image", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" })
       ]
     )
   };
@@ -166,12 +166,12 @@ function aidreamcapesFeaturedSections() {
         nextCampaignLabel: "Next: Thanksgiving / Halloween / Seasonal"
       },
       [
-        block("featured_christmas_album", "seasonal_image", { label: "Christmas album", meta: "Festive cover", imageUrl: asset("covers", "christmas-group-album"), shape: "square" }),
-        block("featured_christmas_category", "seasonal_image", { label: "Holiday category", meta: "Group-ready set", imageUrl: asset("categories", "christmas-holiday-albums"), shape: "square" }),
-        block("featured_christmas_gallery_1", "seasonal_image", { label: "Card cover", meta: "Cozy crop", imageUrl: asset("gallery", "christmas-group-album-01"), shape: "square" }),
-        block("featured_christmas_gallery_2", "seasonal_image", { label: "Winter greeting", meta: "Private album", imageUrl: asset("gallery", "christmas-group-album-02"), shape: "square" }),
-        block("featured_christmas_group", "seasonal_image", { label: "Group album", meta: "Family-style mood", imageUrl: asset("categories", "christmas-group-albums"), shape: "square" }),
-        block("featured_christmas_motion", "seasonal_image", { label: "Holiday story", meta: "Album-ready frame", imageUrl: asset("posters", "christmas-card-motion"), shape: "square" })
+      block("featured_christmas_album", "seasonal_image", { label: "Christmas album", meta: "Festive cover", imageUrl: asset("covers", "christmas-group-album"), collectionSlug: "christmas-group-albums", shape: "square" }),
+      block("featured_christmas_category", "seasonal_image", { label: "Holiday category", meta: "Group-ready set", imageUrl: asset("categories", "christmas-holiday-albums"), collectionSlug: "christmas-holiday-albums", shape: "square" }),
+      block("featured_christmas_gallery_1", "seasonal_image", { label: "Card cover", meta: "Cozy crop", imageUrl: asset("gallery", "christmas-group-album-01"), collectionSlug: "christmas-group-albums", shape: "square" }),
+      block("featured_christmas_gallery_2", "seasonal_image", { label: "Winter greeting", meta: "Private album", imageUrl: asset("gallery", "christmas-group-album-02"), collectionSlug: "winter-fan-greeting-albums", shape: "square" }),
+      block("featured_christmas_group", "seasonal_image", { label: "Group album", meta: "Family-style mood", imageUrl: asset("categories", "christmas-group-albums"), collectionSlug: "christmas-group-albums", shape: "square" }),
+      block("featured_christmas_motion", "seasonal_image", { label: "Holiday story", meta: "Album-ready frame", imageUrl: asset("posters", "christmas-card-motion"), collectionSlug: "christmas-holiday-albums", shape: "square" })
       ]
     ),
     featured_thanksgiving_1: section(
@@ -200,12 +200,12 @@ function aidreamcapesFeaturedSections() {
         nextCampaignLabel: "Next: Christmas / Halloween / Seasonal"
       },
       [
-        block("featured_thanksgiving_cover", "seasonal_image", { label: "Keepsake table", meta: "Warm cover", imageUrl: asset("covers", "thanksgiving-keepsake-table-set"), shape: "square" }),
-        block("featured_thanksgiving_category", "seasonal_image", { label: "Memory sets", meta: "Occasion category", imageUrl: asset("categories", "thanksgiving-memory-sets"), shape: "square" }),
-        block("featured_thanksgiving_gallery_1", "seasonal_image", { label: "Gratitude portrait", meta: "Private gallery", imageUrl: asset("gallery", "thanksgiving-keepsake-table-set-01"), shape: "square" }),
-        block("featured_thanksgiving_gallery_2", "seasonal_image", { label: "Friendsgiving scene", meta: "Group crop", imageUrl: asset("gallery", "thanksgiving-keepsake-table-set-02"), shape: "square" }),
-        block("featured_thanksgiving_table", "seasonal_image", { label: "Table keepsake", meta: "Seasonal card", imageUrl: asset("categories", "thanksgiving-table-keepsakes"), shape: "square" }),
-        block("featured_thanksgiving_motion", "seasonal_image", { label: "Host story", meta: "Album-ready frame", imageUrl: asset("posters", "thanksgiving-keepsake-film"), shape: "square" })
+      block("featured_thanksgiving_cover", "seasonal_image", { label: "Keepsake table", meta: "Warm cover", imageUrl: asset("covers", "thanksgiving-keepsake-table-set"), collectionSlug: "thanksgiving-table-keepsakes", shape: "square" }),
+      block("featured_thanksgiving_category", "seasonal_image", { label: "Memory sets", meta: "Occasion category", imageUrl: asset("categories", "thanksgiving-memory-sets"), collectionSlug: "thanksgiving-memory-sets", shape: "square" }),
+      block("featured_thanksgiving_gallery_1", "seasonal_image", { label: "Gratitude portrait", meta: "Private gallery", imageUrl: asset("gallery", "thanksgiving-keepsake-table-set-01"), collectionSlug: "gratitude-group-portraits", shape: "square" }),
+      block("featured_thanksgiving_gallery_2", "seasonal_image", { label: "Friendsgiving scene", meta: "Group crop", imageUrl: asset("gallery", "thanksgiving-keepsake-table-set-02"), collectionSlug: "friendsgiving-memory-sets", shape: "square" }),
+      block("featured_thanksgiving_table", "seasonal_image", { label: "Table keepsake", meta: "Seasonal card", imageUrl: asset("categories", "thanksgiving-table-keepsakes"), collectionSlug: "thanksgiving-table-keepsakes", shape: "square" }),
+      block("featured_thanksgiving_motion", "seasonal_image", { label: "Host story", meta: "Album-ready frame", imageUrl: asset("posters", "thanksgiving-keepsake-film"), collectionSlug: "thanksgiving-memory-sets", shape: "square" })
       ]
     )
   };

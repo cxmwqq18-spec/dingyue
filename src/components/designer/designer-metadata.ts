@@ -27,6 +27,7 @@ export function labelForSchema(type: SectionType, schemas: Record<string, ThemeS
     sample_strip: "样片横滑",
     story_mosaic: "故事拼图",
     video_feature: "视频展示",
+    mobile_video_showcase: "移动端视频展示",
     occasion_showcase: "场景展示",
     destination_showcase: "目的地展示",
     example_gallery: "灵感案例墙",

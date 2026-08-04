@@ -12,6 +12,7 @@ export type SectionType =
   | "hero"
   | "story_mosaic"
   | "video_feature"
+  | "mobile_video_showcase"
   | "brand_logo_strip"
   | "email_start_panel"
   | "feature_grid"

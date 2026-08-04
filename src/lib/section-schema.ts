@@ -357,6 +357,7 @@ const dreamshootSeasonalImageBlock: ThemeBlockSchema = {
     text("label", "Label", "Fan poster"),
     text("meta", "Meta", "Match-day crop"),
     image("imageUrl", "Image URL"),
+    text("collectionSlug", "Collection slug", ""),
     text("shape", "Shape", "wide")
   ],
   preset: {
@@ -365,6 +366,7 @@ const dreamshootSeasonalImageBlock: ThemeBlockSchema = {
       label: "Fan poster",
       meta: "Match-day crop",
       imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
+      collectionSlug: "",
       shape: "wide"
     }
   }
@@ -717,6 +719,35 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       url("videoUrl", "Video URL", ""),
       text("videoBadge", "Video badge", "HAPPY NEW YEAR"),
       text("playLabel", "Play label", "Watch tutorial")
+    ]
+  },
+  mobile_video_showcase: {
+    type: "mobile_video_showcase",
+    label: "Mobile Video Showcase",
+    category: "Storefront",
+    description: "Two-column mobile tutorial module with two vertical tutorial videos or a legacy image/video fallback.",
+    maxBlocks: 0,
+    settings: [
+      text("anchor", "Anchor", "mobile-video"),
+      text("eyebrow", "Eyebrow", "Mobile tutorial"),
+      text("title", "Title", "Watch the mobile workflow preview."),
+      textarea("subtitle", "Subtitle", "Show a portrait mobile walkthrough beside a supporting app image."),
+      image("imageUrl", "Left image"),
+      text("imageAlt", "Left image alt", "Mobile workflow preview"),
+      url("videoUrl", "Video URL", ""),
+      image("videoPoster", "Video poster"),
+      text("videoBadge", "Video badge", "Mobile"),
+      text("playLabel", "Play label", "Watch mobile tutorial"),
+      text("leftTitle", "Left title", "Image tutorial"),
+      url("leftVideoUrl", "Left video URL", ""),
+      image("leftVideoPoster", "Left video poster"),
+      text("leftPlayLabel", "Left play label", "Watch the image tutorial"),
+      text("rightTitle", "Right title", "Video tutorial"),
+      url("rightVideoUrl", "Right video URL", ""),
+      image("rightVideoPoster", "Right video poster"),
+      text("rightPlayLabel", "Right play label", "Watch the video tutorial"),
+      text("placeholderTitle", "Placeholder title", "Mobile tutorial coming soon"),
+      textarea("placeholderBody", "Placeholder body", "The mobile walkthrough video will be added here when the final file is ready.")
     ]
   },
   email_start_panel: {

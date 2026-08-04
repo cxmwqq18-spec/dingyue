@@ -1052,6 +1052,7 @@ function buildThemeSettings() {
     { id: "aidreamcapes_footer_guides", type: "menu_link", settings: { label: "Blog", href: "/blog", group: "company" } },
     { id: "aidreamcapes_footer_about", type: "menu_link", settings: { label: "About the Studio", href: "/about-us", group: "company" } },
     { id: "aidreamcapes_footer_contact", type: "menu_link", settings: { label: "Contact the Studio", href: "/contact-us", group: "company" } },
+    { id: "aidreamcapes_footer_refunds", type: "menu_link", settings: { label: "Refund Policy", href: "/refunds", group: "company" } },
     { id: "aidreamcapes_footer_faq", type: "menu_link", settings: { label: "FAQ", href: "/faq", group: "support" } },
     { id: "aidreamcapes_footer_privacy", type: "menu_link", settings: { label: "Privacy Promise", href: "/privacy", group: "support" } },
     { id: "aidreamcapes_footer_terms", type: "menu_link", settings: { label: "Studio Terms", href: "/terms", group: "support" } },

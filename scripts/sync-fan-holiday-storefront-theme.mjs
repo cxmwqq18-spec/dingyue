@@ -974,6 +974,57 @@ function seo(title, description, canonicalPath, keywords, ogImage = asset("cover
   };
 }
 
+function aidreamcapesTutorialVideoSection() {
+  return section("video_feature", {
+    anchor: "how-it-works",
+    eyebrow: "How it works",
+    title: "See how an Aidreamcapes occasion album is planned.",
+    subtitle: "Start with approved source photos, choose a fan-scene or holiday direction, confirm the visible credit cost, and keep finished images inside your private Aidreamcapes gallery.",
+    imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804draftfix1",
+    videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804draftfix1",
+    videoBadge: "Occasion album workflow",
+    playLabel: "Watch the Aidreamcapes workflow"
+  });
+}
+
+function aidreamcapesImageTutorialVideoSection() {
+  return section("video_feature", {
+    anchor: "ai-image-tutorial",
+    eyebrow: "AI image tutorial",
+    title: "Create a private fan-scene image album.",
+    subtitle: "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
+    imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
+    videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+    videoBadge: "AI image album workflow",
+    playLabel: "Watch the Aidreamcapes AI image tutorial"
+  });
+}
+
+function aidreamcapesMobileVideoShowcaseSection() {
+  return section("mobile_video_showcase", {
+    anchor: "mobile-video-tutorial",
+    eyebrow: "Mobile tutorial",
+    title: "Mobile workflow preview for Aidreamcapes.",
+    subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+    imageUrl: asset("gallery", "private-fan-scene-album-01"),
+    imageAlt: "Aidreamcapes private fan-scene album preview",
+    videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
+    videoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-mobile-tutorial-55s.jpg?v=20260804mobile1",
+    videoBadge: "Mobile workflow",
+    playLabel: "Watch the video tutorial",
+    leftTitle: "AI image tutorial",
+    leftVideoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-mobile-tutorial-55s.mp4?v=20260804mobile1",
+    leftVideoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-mobile-tutorial-55s.jpg?v=20260804mobile1",
+    leftPlayLabel: "Watch the image tutorial",
+    rightTitle: "AI video tutorial",
+    rightVideoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
+    rightVideoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-mobile-tutorial-55s.jpg?v=20260804mobile1",
+    rightPlayLabel: "Watch the video tutorial",
+    placeholderTitle: "Mobile tutorial coming soon",
+    placeholderBody: "The vertical mobile walkthrough will appear here when the final video is ready."
+  });
+}
+
 function homeSections() {
   return {
     hero_1: section("hero", {
@@ -1063,12 +1114,12 @@ function homeSections() {
       campaignLabel: "Current focus: private fan-scene albums",
       nextCampaignLabel: "Next: Christmas / Thanksgiving / Halloween"
     }, [
-      block("featured_fan_scene", "seasonal_image", { label: "Fan-scene album", meta: "Private meetup mood", imageUrl: asset("covers", "private-fan-scene-album"), shape: "wide" }),
-      block("featured_game_day", "seasonal_image", { label: "Game-day group", meta: "Supporter energy", imageUrl: asset("covers", "game-day-group-portraits"), shape: "tall" }),
-      block("featured_premiere", "seasonal_image", { label: "Premiere flash", meta: "VIP-inspired", imageUrl: asset("covers", "premiere-flash-portraits"), shape: "tall" }),
-      block("featured_christmas", "seasonal_image", { label: "Christmas album", meta: "Group cards", imageUrl: asset("covers", "christmas-group-album"), shape: "wide" }),
-      block("featured_thanksgiving", "seasonal_image", { label: "Thanksgiving set", meta: "Keepsake warmth", imageUrl: asset("covers", "thanksgiving-keepsake-table-set"), shape: "tall" }),
-      block("featured_halloween", "seasonal_image", { label: "Halloween portraits", meta: "Original party mood", imageUrl: asset("covers", "halloween-party-portrait-set"), shape: "tall" })
+      block("featured_fan_scene", "seasonal_image", { label: "Fan-scene album", meta: "Private meetup mood", imageUrl: asset("covers", "private-fan-scene-album"), collectionSlug: "fan-scene-albums", shape: "wide" }),
+      block("featured_game_day", "seasonal_image", { label: "Game-day group", meta: "Supporter energy", imageUrl: asset("covers", "game-day-group-portraits"), collectionSlug: "game-day-group-photos", shape: "tall" }),
+      block("featured_premiere", "seasonal_image", { label: "Premiere flash", meta: "VIP-inspired", imageUrl: asset("covers", "premiere-flash-portraits"), collectionSlug: "premiere-style-portraits", shape: "tall" }),
+      block("featured_christmas", "seasonal_image", { label: "Christmas album", meta: "Group cards", imageUrl: asset("covers", "christmas-group-album"), collectionSlug: "christmas-group-albums", shape: "wide" }),
+      block("featured_thanksgiving", "seasonal_image", { label: "Thanksgiving set", meta: "Keepsake warmth", imageUrl: asset("covers", "thanksgiving-keepsake-table-set"), collectionSlug: "thanksgiving-table-keepsakes", shape: "tall" }),
+      block("featured_halloween", "seasonal_image", { label: "Halloween portraits", meta: "Original party mood", imageUrl: asset("covers", "halloween-party-portrait-set"), collectionSlug: "halloween-party-portraits", shape: "tall" })
     ]),
     featured_christmas_1: section("dreamshoot_featured_pack", {
       anchor: "christmas-holiday-albums",
@@ -1093,12 +1144,12 @@ function homeSections() {
       campaignLabel: "Current focus: Christmas holiday albums",
       nextCampaignLabel: "Next: Thanksgiving / Halloween / Seasonal"
     }, [
-      block("featured_christmas_album", "seasonal_image", { label: "Christmas album", meta: "Festive cover", imageUrl: asset("covers", "christmas-group-album"), shape: "square" }),
-      block("featured_christmas_category", "seasonal_image", { label: "Holiday category", meta: "Group-ready set", imageUrl: asset("categories", "christmas-holiday-albums"), shape: "square" }),
-      block("featured_christmas_gallery_1", "seasonal_image", { label: "Card cover", meta: "Cozy crop", imageUrl: asset("gallery", "christmas-group-album-01"), shape: "square" }),
-      block("featured_christmas_gallery_2", "seasonal_image", { label: "Winter greeting", meta: "Private album", imageUrl: asset("gallery", "christmas-group-album-02"), shape: "square" }),
-      block("featured_christmas_group", "seasonal_image", { label: "Group album", meta: "Family-style mood", imageUrl: asset("categories", "christmas-group-albums"), shape: "square" }),
-      block("featured_christmas_motion", "seasonal_image", { label: "Holiday story", meta: "Album-ready frame", imageUrl: asset("posters", "christmas-card-motion"), shape: "square" })
+      block("featured_christmas_album", "seasonal_image", { label: "Christmas album", meta: "Festive cover", imageUrl: asset("covers", "christmas-group-album"), collectionSlug: "christmas-group-albums", shape: "square" }),
+      block("featured_christmas_category", "seasonal_image", { label: "Holiday category", meta: "Group-ready set", imageUrl: asset("categories", "christmas-holiday-albums"), collectionSlug: "christmas-holiday-albums", shape: "square" }),
+      block("featured_christmas_gallery_1", "seasonal_image", { label: "Card cover", meta: "Cozy crop", imageUrl: asset("gallery", "christmas-group-album-01"), collectionSlug: "christmas-group-albums", shape: "square" }),
+      block("featured_christmas_gallery_2", "seasonal_image", { label: "Winter greeting", meta: "Private album", imageUrl: asset("gallery", "christmas-group-album-02"), collectionSlug: "winter-fan-greeting-albums", shape: "square" }),
+      block("featured_christmas_group", "seasonal_image", { label: "Group album", meta: "Family-style mood", imageUrl: asset("categories", "christmas-group-albums"), collectionSlug: "christmas-group-albums", shape: "square" }),
+      block("featured_christmas_motion", "seasonal_image", { label: "Holiday story", meta: "Album-ready frame", imageUrl: asset("posters", "christmas-card-motion"), collectionSlug: "christmas-holiday-albums", shape: "square" })
     ]),
     featured_thanksgiving_1: section("dreamshoot_featured_pack", {
       anchor: "thanksgiving-memory-sets",
@@ -1123,12 +1174,12 @@ function homeSections() {
       campaignLabel: "Current focus: Thanksgiving keepsake sets",
       nextCampaignLabel: "Next: Christmas / Halloween / Seasonal"
     }, [
-      block("featured_thanksgiving_cover", "seasonal_image", { label: "Keepsake table", meta: "Warm cover", imageUrl: asset("covers", "thanksgiving-keepsake-table-set"), shape: "square" }),
-      block("featured_thanksgiving_category", "seasonal_image", { label: "Memory sets", meta: "Occasion category", imageUrl: asset("categories", "thanksgiving-memory-sets"), shape: "square" }),
-      block("featured_thanksgiving_gallery_1", "seasonal_image", { label: "Gratitude portrait", meta: "Private gallery", imageUrl: asset("gallery", "thanksgiving-keepsake-table-set-01"), shape: "square" }),
-      block("featured_thanksgiving_gallery_2", "seasonal_image", { label: "Friendsgiving scene", meta: "Group crop", imageUrl: asset("gallery", "thanksgiving-keepsake-table-set-02"), shape: "square" }),
-      block("featured_thanksgiving_table", "seasonal_image", { label: "Table keepsake", meta: "Seasonal card", imageUrl: asset("categories", "thanksgiving-table-keepsakes"), shape: "square" }),
-      block("featured_thanksgiving_motion", "seasonal_image", { label: "Host story", meta: "Album-ready frame", imageUrl: asset("posters", "thanksgiving-keepsake-film"), shape: "square" })
+      block("featured_thanksgiving_cover", "seasonal_image", { label: "Keepsake table", meta: "Warm cover", imageUrl: asset("covers", "thanksgiving-keepsake-table-set"), collectionSlug: "thanksgiving-table-keepsakes", shape: "square" }),
+      block("featured_thanksgiving_category", "seasonal_image", { label: "Memory sets", meta: "Occasion category", imageUrl: asset("categories", "thanksgiving-memory-sets"), collectionSlug: "thanksgiving-memory-sets", shape: "square" }),
+      block("featured_thanksgiving_gallery_1", "seasonal_image", { label: "Gratitude portrait", meta: "Private gallery", imageUrl: asset("gallery", "thanksgiving-keepsake-table-set-01"), collectionSlug: "gratitude-group-portraits", shape: "square" }),
+      block("featured_thanksgiving_gallery_2", "seasonal_image", { label: "Friendsgiving scene", meta: "Group crop", imageUrl: asset("gallery", "thanksgiving-keepsake-table-set-02"), collectionSlug: "friendsgiving-memory-sets", shape: "square" }),
+      block("featured_thanksgiving_table", "seasonal_image", { label: "Table keepsake", meta: "Seasonal card", imageUrl: asset("categories", "thanksgiving-table-keepsakes"), collectionSlug: "thanksgiving-table-keepsakes", shape: "square" }),
+      block("featured_thanksgiving_motion", "seasonal_image", { label: "Host story", meta: "Album-ready frame", imageUrl: asset("posters", "thanksgiving-keepsake-film"), collectionSlug: "thanksgiving-memory-sets", shape: "square" })
     ]),
     package_catalog_1: section("dreamshoot_package_catalog", {
       anchor: "packages",
@@ -1161,6 +1212,9 @@ function homeSections() {
       videoSlugs: videoDefs.map((theme) => theme.slug).join("|"),
       itemLimit: 8
     }),
+    tutorial_video_1: aidreamcapesTutorialVideoSection(),
+    tutorial_video_2: aidreamcapesImageTutorialVideoSection(),
+    mobile_video_1: aidreamcapesMobileVideoShowcaseSection(),
     flow_bridge_1: section("dreamshoot_flow_bridge", {
       anchor: "workflow",
       label: "Private album workflow",
@@ -1255,6 +1309,9 @@ function applyHomePage(pageJson) {
     "featured_thanksgiving_1",
     "package_catalog_1",
     "generation_showcase_1",
+    "tutorial_video_1",
+    "tutorial_video_2",
+    "mobile_video_1",
     "flow_bridge_1",
     "pricing_1",
     "proof_1",
@@ -1426,7 +1483,7 @@ function applyFaqPage(pageJson) {
 
 function applyWorkflowPage(pageJson) {
   pageJson.pageType = "content";
-  pageJson.sectionsOrder = ["workflow_intro_1", "workflow_1", "plan_rules_1", "faq_1", "conversion_1"];
+  pageJson.sectionsOrder = ["workflow_intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "plan_rules_1", "faq_1", "conversion_1"];
   pageJson.sections = {
     workflow_intro_1: section("rich_text", {
       eyebrow: "How it works",
@@ -1444,6 +1501,9 @@ function applyWorkflowPage(pageJson) {
       block("workflow_credits", "rich_text_card", { meta: "Credits", title: "Visible cost before generation", description: "Customers see the credit cost before a private request reserves credits." }),
       block("workflow_rights", "rich_text_card", { meta: "Rights", title: "Permission-safe theme boundaries", description: "Fan-scene and holiday album prompts avoid protected likenesses, logos, and official marks unless permission exists." })
     ]),
+    tutorial_video_1: aidreamcapesTutorialVideoSection(),
+    tutorial_image_video_1: aidreamcapesImageTutorialVideoSection(),
+    mobile_video_1: aidreamcapesMobileVideoShowcaseSection(),
     workflow_1: homeSections().flow_bridge_1,
     plan_rules_1: homeSections().trust_1,
     faq_1: homeSections().faq_1,
@@ -1958,6 +2018,7 @@ function applyThemeSettings(settings) {
     { label: "Guides", href: "/blog", group: "company" },
     { label: "About the Studio", href: "/about-us", group: "company" },
     { label: "Contact the Studio", href: "/contact-us", group: "company" },
+    { label: "Refund Policy", href: "/refunds", group: "company" },
     { label: "Help Center", href: "/faq", group: "support" },
     { label: "Privacy Promise", href: "/privacy", group: "support" },
     { label: "Studio Terms", href: "/terms", group: "support" },

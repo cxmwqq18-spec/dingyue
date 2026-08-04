@@ -1475,7 +1475,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
     ? blocks.map((block) => ({ label: blockValue(block, "label"), href: blockValue(block, "href", "#"), block }))
     : settings.navigation.footerLinks.map((link, index) => ({
         ...link,
-        block: { id: `footer_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href } } as SectionBlockInstance
+        block: { id: `footer_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href, group: link.group } } as SectionBlockInstance
       }));
   const visibleBaseLinks = (isDreamShootFooter || isAidreamcapesFooter)
     ? baseLinks.filter((item) => !isVirtualGoodsFooterLinkToHide(item.label, item.href))
@@ -1522,6 +1522,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
             ["About the Studio", "/about-us", "company"],
             ["Contact the Studio", "/contact-us", "company"],
             ["Creators Circle", "/creators-circle", "company"],
+            ["Refund Policy", "/refunds", "company"],
             ["Privacy Policy", "/privacy", "support"],
             ["Creative Safety", "/content", "support"],
             ["Terms of Service", "/terms", "support"],
@@ -1537,6 +1538,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
             ["About us", "/about-us", "company"],
             ["Contact us", "/contact-us", "company"],
             ["Creators Circle", "/creators-circle", "company"],
+            ["Refund Policy", "/refunds", "company"],
             ["Privacy Policy", "/privacy", "support"],
             ["Content policy", "/content", "support"],
             ["Terms of Service", "/terms", "support"],
@@ -1560,8 +1562,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
     return "";
   };
   const normalizedFooterGroup = (item: { label: string; href: string; block: SectionBlockInstance }) => {
-    const semantic = linkCategory(item);
     const configured = blockValue(item.block, "group", "").toLowerCase();
+    if (shortPolicyPath(item.href).toLowerCase() === "/refunds" && configured) return configured;
+    const semantic = linkCategory(item);
     return semantic || configured;
   };
   const hasGroupedFooterLinks = links.some((item) => blockValue(item.block, "group", "").trim());
@@ -2924,6 +2927,125 @@ function featuredPackImageShape(block: SectionBlockInstance): "wide" | "tall" | 
 function shouldAlignFeaturedPackGrid(blocks: SectionBlockInstance[]): boolean {
   const shapes = new Set(blocks.map(featuredPackImageShape));
   return shapes.size <= 1;
+}
+
+function normalizedFeaturedPackCollectionSlug(value: string): string {
+  const slug = dreamshootCategorySlug(value);
+  return slug && slug !== "all" ? slug : "";
+}
+
+function collectionSlugFromHrefValue(value: string): string {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  let pathname = trimmed;
+  if (/^https?:\/\//i.test(trimmed)) {
+    try {
+      pathname = new URL(trimmed).pathname;
+    } catch {
+      pathname = trimmed;
+    }
+  }
+  const match = pathname.match(/\/collections\/([^/?#]+)/);
+  return match?.[1] ? normalizedFeaturedPackCollectionSlug(decodeURIComponent(match[1])) : "";
+}
+
+function featuredPackSlugRefs(value: string): string[] {
+  return uniqueStringList(
+    value
+      .split(/[|,;\n]+/g)
+      .flatMap((part) => {
+        const fromHref = collectionSlugFromHrefValue(part);
+        const slug = fromHref || normalizedFeaturedPackCollectionSlug(part);
+        return slug ? [slug] : [];
+      })
+  );
+}
+
+function featuredPackImageSlugRefs(imageUrl: string): string[] {
+  const trimmed = imageUrl.trim();
+  if (!trimmed) return [];
+  let pathname = trimmed.split("#")[0]?.split("?")[0] ?? "";
+  if (/^https?:\/\//i.test(trimmed)) {
+    try {
+      pathname = new URL(trimmed).pathname;
+    } catch {
+      pathname = trimmed;
+    }
+  }
+  const segments = decodeURIComponent(pathname).split("/").filter(Boolean);
+  const fileName = segments.at(-1) ?? "";
+  const parent = segments.at(-2) ?? "";
+  const fileStem = fileName.replace(/\.[a-z0-9]+$/i, "");
+  const strippedStem = fileStem.replace(/(?:-\d+)+$/g, "").replace(/-cover$/i, "");
+  return uniqueStringList([parent, fileStem, strippedStem].map(normalizedFeaturedPackCollectionSlug).filter(Boolean));
+}
+
+function featuredPackCategorySlugTokens(category: CreativePackCategory): string[] {
+  return uniqueStringList([category.id, category.slug, category.label].map((value) => normalizedFeaturedPackCollectionSlug(value ?? "")).filter(Boolean));
+}
+
+function featuredPackCreativePackSlugTokens(pack: CreativePack): string[] {
+  return uniqueStringList([
+    pack.id,
+    pack.categoryRecord?.id,
+    pack.categoryRecord?.slug,
+    pack.categoryRecord?.label,
+    pack.category,
+    pack.name,
+    pack.aiAppSlug,
+    creativePackCollectionHref(pack).replace(/^\/collections\//, "")
+  ].map((value) => normalizedFeaturedPackCollectionSlug(value ?? "")).filter(Boolean));
+}
+
+function featuredPackCollectionHrefForSlug(
+  slug: string,
+  creativePacks: CreativePack[],
+  creativePackCategories: CreativePackCategory[]
+): string {
+  const normalizedSlug = normalizedFeaturedPackCollectionSlug(slug);
+  if (!normalizedSlug) return "";
+  const category = creativePackCategories.find(
+    (candidate) => candidate.status === "active" && featuredPackCategorySlugTokens(candidate).includes(normalizedSlug)
+  );
+  if (category) return collectionHref(category.slug || category.label || category.id);
+  const pack = creativePacks.find(
+    (candidate) => candidate.status === "active" && featuredPackCreativePackSlugTokens(candidate).includes(normalizedSlug)
+  );
+  return pack ? creativePackCollectionHref(pack) : "";
+}
+
+function featuredPackTileHref(
+  site: Site,
+  block: SectionBlockInstance,
+  creativePacks: CreativePack[],
+  creativePackCategories: CreativePackCategory[],
+  fallbackHref: string
+): string {
+  const explicitRefs = featuredPackSlugRefs(blockValue(block, "collectionSlug", ""));
+  for (const slug of explicitRefs) {
+    const href = featuredPackCollectionHrefForSlug(slug, creativePacks, creativePackCategories);
+    if (href) return hrefFor(site, href);
+  }
+  if (explicitRefs[0]) return hrefFor(site, collectionHref(explicitRefs[0]));
+
+  const legacyHref = blockValue(block, "href", "");
+  const legacyHrefSlug = collectionSlugFromHrefValue(legacyHref);
+  if (legacyHrefSlug) {
+    const href = featuredPackCollectionHrefForSlug(legacyHrefSlug, creativePacks, creativePackCategories);
+    return hrefFor(site, href || collectionHref(legacyHrefSlug));
+  }
+
+  const inferredRefs = uniqueStringList([
+    ...featuredPackImageSlugRefs(blockValue(block, "imageUrl", "")),
+    ...featuredPackSlugRefs(block.id),
+    ...featuredPackSlugRefs(blockValue(block, "label", ""))
+  ]);
+  for (const slug of inferredRefs) {
+    const href = featuredPackCollectionHrefForSlug(slug, creativePacks, creativePackCategories);
+    if (href) return hrefFor(site, href);
+  }
+
+  return hrefFor(site, legacyHref || fallbackHref || "/collections");
 }
 
 function runtimeCollectionImage(
@@ -4899,14 +5021,17 @@ function isVirtualGoodsFooterLinkToHide(label: string, href: string): boolean {
   const normalizedHref = shortPolicyPath(href).toLowerCase();
   const value = `${label} ${normalizedHref}`.toLowerCase();
   return (
-    normalizedHref === "/refunds" ||
     normalizedHref === "/shipping" ||
-    /\brefunds?\b|shipping|delivery|credit review|digital delivery/.test(value)
+    /\bshipping\b|delivery|credit review|digital delivery/.test(value)
   );
 }
 
 function canonicalSectionType(type: string): string {
-  if (type === "package_taxonomy") return "dreamshoot_package_taxonomy";
+  const normalizedType = type.trim().replace(/[\s-]+/g, "_").toLowerCase();
+  if (normalizedType === "mobile_video_showcase" || normalizedType.endsWith("_mobile_video_showcase")) {
+    return "mobile_video_showcase";
+  }
+  if (normalizedType === "package_taxonomy") return "dreamshoot_package_taxonomy";
   if (type.startsWith("aidreamcapes_")) return type.replace(/^aidreamcapes_/, "dreamshoot_");
   return type;
 }
@@ -6999,6 +7124,25 @@ function SectionView({
   mode: "published" | "preview";
   renderContext: RenderContext;
 }) {
+  const canonicalType = canonicalSectionType(section.type);
+  if (canonicalType !== section.type) {
+    return (
+      <SectionView
+        creativePackCategories={creativePackCategories}
+        creativePacks={creativePacks}
+        id={id}
+        mode={mode}
+        products={products}
+        renderContext={renderContext}
+        runtime={runtime}
+        section={{ ...section, type: canonicalType as SectionInstance["type"] }}
+        site={site}
+        siteAiApps={siteAiApps}
+        toolMenuItems={toolMenuItems}
+        videoThemes={videoThemes}
+      />
+    );
+  }
   const usesNativeDreamShootRenderer = section.type.startsWith("dreamshoot_");
   const legacySaasSection = usesNativeDreamShootRenderer ? null : renderLegacySaasSection({ id, section, site, products, creativePacks, mode, renderContext, siteAiApps });
   if (legacySaasSection) return legacySaasSection;
@@ -7756,6 +7900,145 @@ function SectionView({
               ) : null}
             </div>
           </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (section.type === "mobile_video_showcase") {
+    const aidreamcapes = isAidreamcapesSite(site);
+    const fallbackImage = aidreamcapes ? aidreamcapesFallbackHeroImages[0] : packImages.sports;
+    const imageSetting = setting(section, "imageUrl", fallbackImage);
+    const image = imageSetting ? mediaAssetUrl(site, imageSetting) : mediaAssetUrl(site, fallbackImage);
+    const rawVideoUrl = setting(section, "videoUrl", "");
+    const legacyVideoUrl = rawVideoUrl ? mediaAssetUrl(site, rawVideoUrl) : "";
+    const rawPoster = setting(section, "videoPoster", "");
+    const legacyVideoPoster = rawPoster ? mediaAssetUrl(site, rawPoster) : image;
+    const leftVideoUrlSetting = setting(section, "leftVideoUrl", "");
+    const rightVideoUrlSetting = setting(section, "rightVideoUrl", "");
+    const leftVideoPosterSetting = setting(section, "leftVideoPoster", "");
+    const rightVideoPosterSetting = setting(section, "rightVideoPoster", "");
+    const leftTitle = setting(section, "leftTitle", "Image tutorial");
+    const rightTitle = setting(section, "rightTitle", "Video tutorial");
+    const leftPlayLabel = setting(section, "leftPlayLabel", "Watch the image tutorial");
+    const rightPlayLabel = setting(section, "rightPlayLabel", "Watch the video tutorial");
+    const leftVideoUrl = leftVideoUrlSetting ? mediaAssetUrl(site, leftVideoUrlSetting) : legacyVideoUrl;
+    const rightVideoUrl = rightVideoUrlSetting ? mediaAssetUrl(site, rightVideoUrlSetting) : legacyVideoUrl;
+    const leftVideoPoster = leftVideoPosterSetting ? mediaAssetUrl(site, leftVideoPosterSetting) : legacyVideoPoster;
+    const rightVideoPoster = rightVideoPosterSetting ? mediaAssetUrl(site, rightVideoPosterSetting) : legacyVideoPoster;
+    const useModernLayout = Boolean(leftVideoUrlSetting || rightVideoUrlSetting || leftVideoPosterSetting || rightVideoPosterSetting || setting(section, "leftTitle", "") || setting(section, "rightTitle", ""));
+    const accent = aidreamcapes ? `linear-gradient(90deg, ${aidreamcapesAccent}, ${aidreamcapesCopper})` : dreamshootBrandGradient;
+    const badgeBg = aidreamcapes ? aidreamcapesCopper : "#173A8A";
+    const panelBorder = aidreamcapes ? "border-[#3a2519]" : "border-[#20284a]";
+    return (
+      <section className="bg-[#08090d] px-5 py-16 text-white" id={sectionAnchor(section, "mobile-video")}>
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <div className="max-w-3xl">
+            <p className="font-mono text-xs uppercase" style={{ color: aidreamcapes ? aidreamcapesAccent : accentBlue }}>{setting(section, "eyebrow", "Mobile tutorial")}</p>
+            <h2 className="mt-4 text-3xl font-semibold leading-tight md:text-5xl">{sectionHeading(section, "Watch the mobile workflow preview.")}</h2>
+            <p className="mt-4 text-sm leading-7 text-white/72">{setting(section, "subtitle", "Preview the mobile flow beside a supporting app image.")}</p>
+          </div>
+          {useModernLayout ? (
+            <div className="mt-8 grid gap-5 md:grid-cols-2 md:items-stretch">
+              {[
+                {
+                  title: leftTitle,
+                  playLabel: leftPlayLabel,
+                  videoUrl: leftVideoUrl,
+                  videoPoster: leftVideoPoster
+                },
+                {
+                  title: rightTitle,
+                  playLabel: rightPlayLabel,
+                  videoUrl: rightVideoUrl,
+                  videoPoster: rightVideoPoster
+                }
+              ].map((item, index) => (
+                <div
+                  className={`relative overflow-hidden rounded-[8px] border ${panelBorder} bg-[#11131a] p-4 shadow-[0_28px_90px_-62px_rgba(0,0,0,0.9)] sm:p-6`}
+                  key={`${item.title}-${index}`}
+                >
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-1" style={{ background: accent }} />
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/52">{setting(section, "videoBadge", "Mobile workflow")}</p>
+                      <h3 className="mt-2 text-lg font-semibold leading-tight text-white sm:text-xl">{item.title}</h3>
+                    </div>
+                  </div>
+                  <div className="overflow-hidden rounded-[30px] border-[10px] border-[#030409] bg-black shadow-[0_34px_100px_-58px_rgba(0,0,0,0.96)]">
+                    {item.videoUrl ? (
+                      <video
+                        aria-label={item.playLabel}
+                        className="aspect-[9/16] h-full w-full object-contain"
+                        controls
+                        playsInline
+                        poster={item.videoPoster || undefined}
+                        preload="metadata"
+                        src={item.videoUrl}
+                      />
+                    ) : (
+                      <div className="relative grid aspect-[9/16] h-full place-items-center overflow-hidden bg-[#05060a] px-8 text-center">
+                        {item.videoPoster ? <img className="absolute inset-0 h-full w-full object-cover opacity-25" src={item.videoPoster} alt="" /> : null}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,rgba(255,255,255,0.16),transparent_34%),linear-gradient(180deg,rgba(8,9,13,0.18),rgba(8,9,13,0.88))]" />
+                        <div className="relative">
+                          <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-white/92 text-[#07080c] shadow-[0_20px_64px_-36px_rgba(255,255,255,0.72)]">
+                            <PlayCircle className="h-8 w-8" strokeWidth={1.8} />
+                          </div>
+                          <h3 className="mt-5 text-2xl font-semibold leading-tight">{item.title}</h3>
+                          <p className="mt-3 text-sm leading-6 text-white/68">{setting(section, "placeholderBody", "The mobile walkthrough video will be added here when the final file is ready.")}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-8 grid gap-5 lg:grid-cols-2 lg:items-stretch">
+              <div className={`relative overflow-hidden rounded-[8px] border ${panelBorder} bg-[#11131a] p-4 shadow-[0_28px_90px_-62px_rgba(0,0,0,0.9)] sm:p-6`}>
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-1" style={{ background: accent }} />
+                <div className="mx-auto flex h-full max-w-[460px] items-center justify-center">
+                  <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[30px] border-[10px] border-[#030409] bg-black shadow-[0_34px_100px_-58px_rgba(0,0,0,0.96)]">
+                    <img className="h-full w-full object-cover" src={image} alt={setting(section, "imageAlt", "Mobile workflow preview")} />
+                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.0)_45%,rgba(0,0,0,0.48)_100%)]" />
+                    <div className="pointer-events-none absolute left-4 top-4 rounded-full px-3 py-1.5 text-xs font-semibold text-white" style={{ background: badgeBg }}>
+                      {setting(section, "videoBadge", "Mobile")}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className={`relative overflow-hidden rounded-[8px] border ${panelBorder} bg-[#11131a] p-4 shadow-[0_28px_90px_-62px_rgba(0,0,0,0.9)] sm:p-6`}>
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-1" style={{ background: accent }} />
+                <div className="mx-auto flex h-full max-w-[460px] items-center justify-center">
+                  <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[30px] border-[10px] border-[#030409] bg-black shadow-[0_34px_100px_-58px_rgba(0,0,0,0.96)]">
+                    {legacyVideoUrl ? (
+                      <video
+                        aria-label={setting(section, "playLabel", "Watch mobile tutorial")}
+                        className="h-full w-full object-cover"
+                        controls
+                        playsInline
+                        poster={legacyVideoPoster || undefined}
+                        preload="metadata"
+                        src={legacyVideoUrl}
+                      />
+                    ) : (
+                      <div className="relative grid h-full place-items-center overflow-hidden bg-[#05060a] px-8 text-center">
+                        {legacyVideoPoster ? <img className="absolute inset-0 h-full w-full object-cover opacity-25" src={legacyVideoPoster} alt="" /> : null}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,rgba(255,255,255,0.16),transparent_34%),linear-gradient(180deg,rgba(8,9,13,0.18),rgba(8,9,13,0.88))]" />
+                        <div className="relative">
+                          <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-white/92 text-[#07080c] shadow-[0_20px_64px_-36px_rgba(255,255,255,0.72)]">
+                            <PlayCircle className="h-8 w-8" strokeWidth={1.8} />
+                          </div>
+                          <h3 className="mt-5 text-2xl font-semibold leading-tight">{setting(section, "placeholderTitle", "Mobile tutorial coming soon")}</h3>
+                          <p className="mt-3 text-sm leading-6 text-white/68">{setting(section, "placeholderBody", "The mobile walkthrough video will be added here when the final file is ready.")}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     );
@@ -10577,40 +10860,46 @@ function SectionView({
                   const tileMeta = blockValue(item, "meta", "");
                   const label = spanishXbyFeaturedPack ? spanishFeaturedPackLabel(blockValue(item, "label", "Featured image"), aidreamcapes) : blockValue(item, "label", "Featured image");
                   const meta = tileMeta ? (spanishXbyFeaturedPack ? spanishFeaturedPackLabel(tileMeta, aidreamcapes) : tileMeta) : "";
+                  const tileHref = featuredPackTileHref(site, item, creativePacks, creativePackCategories, setting(section, "secondaryHref", "/collections"));
                   return (
-                    <figure
-                      className={useUniformFeaturedPackTiles ? "group min-w-0" : "group mb-3 break-inside-avoid overflow-hidden"}
+                    <Link
+                      aria-label={cardLinkLabel(spanishXbyFeaturedPack ? "Ver coleccion" : "View collection", label, spanishXbyFeaturedPack ? "esta coleccion" : "this collection")}
+                      className={useUniformFeaturedPackTiles ? "group block min-w-0" : "group block mb-3 break-inside-avoid overflow-hidden"}
+                      data-featured-pack-tile-link="true"
+                      href={tileHref}
                       key={instanceKey(item, index, "seasonal_image")}
                       {...xfcartBlockAttrs(item, index, "seasonal_image")}
                     >
-                      {useUniformFeaturedPackTiles ? (
-                        <StorefrontSafeImage
-                          alt={spanishXbyImageAlt(site, manualBlockImageAlt(item, spanishXbyFeaturedPack ? "Imagen de paquete destacado" : "Featured pack image"))}
-                          className="aspect-[4/3] rounded-[16px] border border-white/10 bg-[#080B12] shadow-[0_22px_62px_-48px_rgba(0,0,0,0.95)] transition duration-300 group-hover:border-white/22"
-                          fetchPriority={index < 2 ? "high" : "low"}
-                          imageClassName="transition duration-500 group-hover:brightness-110"
-                          loading={index < 2 ? "eager" : "lazy"}
-                          sizes="(max-width: 640px) 50vw, (max-width: 1280px) 22vw, 14rem"
-                          src={rawImage}
-                        />
-                      ) : (
-                        <StorefrontNaturalImage
-                          alt={spanishXbyImageAlt(site, manualBlockImageAlt(item, spanishXbyFeaturedPack ? "Imagen de paquete destacado" : "Featured pack image"))}
-                          className="rounded-[16px] border border-white/10 bg-[#080B12] shadow-[0_22px_62px_-48px_rgba(0,0,0,0.95)] transition duration-300 group-hover:border-white/22"
-                          fetchPriority={index < 2 ? "high" : "low"}
-                          imageClassName="transition duration-500 group-hover:brightness-110"
-                          loading={index < 2 ? "eager" : "lazy"}
-                          src={rawImage}
-                        />
-                      )}
-                      <figcaption className="mt-1.5 flex min-h-[32px] items-start gap-1.5 px-0.5 pb-0.5">
-                        <span className="mt-[0.42rem] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient }} />
-                        <span className="min-w-0">
-                          <span className="block truncate text-[11px] font-semibold leading-4 text-white/90">{label}</span>
-                          {meta ? <span className="block truncate text-[10px] leading-4 text-white/46">{meta}</span> : null}
-                        </span>
-                      </figcaption>
-                    </figure>
+                      <figure className="min-w-0">
+                        {useUniformFeaturedPackTiles ? (
+                          <StorefrontSafeImage
+                            alt={spanishXbyImageAlt(site, manualBlockImageAlt(item, spanishXbyFeaturedPack ? "Imagen de paquete destacado" : "Featured pack image"))}
+                            className="aspect-[4/3] rounded-[16px] border border-white/10 bg-[#080B12] shadow-[0_22px_62px_-48px_rgba(0,0,0,0.95)] transition duration-300 group-hover:border-white/22"
+                            fetchPriority={index < 2 ? "high" : "low"}
+                            imageClassName="transition duration-500 group-hover:brightness-110"
+                            loading={index < 2 ? "eager" : "lazy"}
+                            sizes="(max-width: 640px) 50vw, (max-width: 1280px) 22vw, 14rem"
+                            src={rawImage}
+                          />
+                        ) : (
+                          <StorefrontNaturalImage
+                            alt={spanishXbyImageAlt(site, manualBlockImageAlt(item, spanishXbyFeaturedPack ? "Imagen de paquete destacado" : "Featured pack image"))}
+                            className="rounded-[16px] border border-white/10 bg-[#080B12] shadow-[0_22px_62px_-48px_rgba(0,0,0,0.95)] transition duration-300 group-hover:border-white/22"
+                            fetchPriority={index < 2 ? "high" : "low"}
+                            imageClassName="transition duration-500 group-hover:brightness-110"
+                            loading={index < 2 ? "eager" : "lazy"}
+                            src={rawImage}
+                          />
+                        )}
+                        <figcaption className="mt-1.5 flex min-h-[32px] items-start gap-1.5 px-0.5 pb-0.5">
+                          <span className="mt-[0.42rem] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: aidreamcapes ? aidreamcapesCopper : dreamshootBrandGradient }} />
+                          <span className="min-w-0">
+                            <span className="block truncate text-[11px] font-semibold leading-4 text-white/90">{label}</span>
+                            {meta ? <span className="block truncate text-[10px] leading-4 text-white/46">{meta}</span> : null}
+                          </span>
+                        </figcaption>
+                      </figure>
+                    </Link>
                   );
                 })}
               </div>
@@ -13714,6 +14003,7 @@ function SectionView({
   if (section.type === "rich_text") {
     const spanishXbyRichText = isSpanishXbySite(site);
     const aidreamcapesRichText = isAidreamcapesSite(site);
+    const workflowIntroRichText = renderContext.pagePath === "/workflow" && id === "workflow_intro_1";
     const rawEyebrow = setting(section, "eyebrow", "");
     const eyebrow = spanishXbyRichText
       ? rawEyebrow
@@ -13723,7 +14013,13 @@ function SectionView({
           .replace(/^Delivery policy$/i, "Politica de entrega")
       : rawEyebrow;
     const body = storefrontPaidToolText(stripHtml(setting(section, "body", "Use this page to explain the photo experience, packages, delivery timing, and private customer journey.")));
-    const image = mediaAssetUrl(site, setting(section, "imageUrl", firstImage(section)));
+    const configuredImage = setting(section, "imageUrl", firstImage(section));
+    const workflowIntroFallbackImage = workflowIntroRichText
+      ? aidreamcapesRichText
+        ? aidreamcapesFallbackHeroImages[0]
+        : "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png"
+      : "";
+    const image = mediaAssetUrl(site, configuredImage || workflowIntroFallbackImage);
     const cards = sectionBlocks(section);
     const formFields = sectionBlocks(section, "form_field");
     const richCards = cards.filter((card) => card.type !== "form_field");
@@ -13761,7 +14057,7 @@ function SectionView({
     return (
       <section className={dark ? "bg-[#101114] px-5 py-16 text-white" : "grid-paper bg-[#f7f3ec] px-5 py-16 text-[#14161a]"} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
-          <div className={`grid gap-8 ${image ? "lg:grid-cols-[0.82fr_1.18fr] lg:items-center" : "lg:grid-cols-[0.72fr_1fr] lg:items-start"}`}>
+          <div className={`grid gap-8 ${image ? `lg:grid-cols-[0.82fr_1.18fr] ${workflowIntroRichText ? "lg:items-stretch" : "lg:items-center"}` : "lg:grid-cols-[0.72fr_1fr] lg:items-start"}`}>
             <div>
               {eyebrow ? <p className={dark ? "font-mono text-xs uppercase tracking-[0.22em] text-white/54" : "font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]"}>{eyebrow}</p> : null}
               <HeadingTag className={`${compact ? "mt-4 max-w-3xl text-3xl md:text-5xl" : "mt-4 max-w-4xl text-4xl md:text-6xl"} font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)]`}>
@@ -13815,8 +14111,8 @@ function SectionView({
                 />
               </div>
             ) : image ? (
-              <div className={dark ? "overflow-hidden rounded-[28px] border border-white/10 bg-zinc-900 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "overflow-hidden rounded-[28px] border border-[#ded5ca] bg-[#efe6d9] shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"}>
-                <img className="aspect-[16/11] h-full w-full object-cover" src={image} alt={setting(section, "title", id)} />
+              <div className={`${dark ? "overflow-hidden rounded-[28px] border border-white/10 bg-zinc-900 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "overflow-hidden rounded-[28px] border border-[#ded5ca] bg-[#efe6d9] shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"} ${workflowIntroRichText ? "relative aspect-[16/11] lg:aspect-auto lg:h-full lg:min-h-[34rem]" : ""}`}>
+                <img className={workflowIntroRichText ? "absolute inset-0 h-full w-full object-cover" : "aspect-[16/11] h-full w-full object-cover"} src={image} alt={setting(section, "title", id)} />
               </div>
             ) : (
               <div className={dark ? "rounded-[28px] border border-white/10 bg-white/[0.05] p-6" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/76 p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.22)]"}>

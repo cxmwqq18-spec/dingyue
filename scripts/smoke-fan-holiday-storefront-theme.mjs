@@ -152,6 +152,12 @@ function requireText(text, pattern, label) {
   if (!pattern.test(text)) fail(`missing_theme_signal:${label}:${pattern}`);
 }
 
+function collectionSlugsForFeaturedSection(section) {
+  return (section?.blocks ?? [])
+    .filter((block) => block?.type === "seasonal_image")
+    .map((block) => String(block?.settings?.collectionSlug ?? "").trim());
+}
+
 function requireHomeFeaturedPacks(data, siteId, checks) {
   const homePage = data.pages.find((page) => page.slug === "/" || page.pageType === "home");
   const pageJson = homePage?.publishedJson;
@@ -165,7 +171,8 @@ function requireHomeFeaturedPacks(data, siteId, checks) {
     if (pageJson?.sections?.[id]?.type !== "dreamshoot_featured_pack") fail(`${siteId}_missing_featured_pack:${id}`);
   }
   for (const check of checks) {
-    const raw = JSON.stringify(pageJson?.sections?.[check.id] ?? {});
+    const section = pageJson?.sections?.[check.id] ?? {};
+    const raw = JSON.stringify(section);
     for (const phrase of check.requiredPhrases) {
       if (!raw.includes(phrase)) fail(`${siteId}_${check.id}_missing_phrase:${phrase}`);
     }
@@ -174,6 +181,15 @@ function requireHomeFeaturedPacks(data, siteId, checks) {
     }
     for (const forbidden of check.forbiddenPatterns ?? []) {
       if (forbidden.test(raw)) fail(`${siteId}_${check.id}_forbidden_asset_or_copy:${forbidden}`);
+    }
+    if (check.collectionSlugs) {
+      const actual = collectionSlugsForFeaturedSection(section);
+      if (actual.join("|") !== check.collectionSlugs.join("|")) {
+        fail(`${siteId}_${check.id}_collection_slug_order:${actual.join("|")}`);
+      }
+      if (actual.some((slug) => !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || /^https?:|\/collections\//i.test(slug))) {
+        fail(`${siteId}_${check.id}_collection_slug_not_stable:${actual.join("|")}`);
+      }
     }
   }
 }
@@ -216,6 +232,7 @@ requireHomeFeaturedPacks(mydreamshootsData, mydreamshootsSiteId, [
   {
     id: "featured_christmas_1",
     requiredPhrases: ["Christmas group photos for cards, posts, and private albums.", "Create Christmas Photos", "/collections/christmas-photos"],
+    collectionSlugs: ["christmas-photos", "christmas-photos", "christmas-couple", "christmas-photos", "christmas-photos", "christmas-couple"],
     requiredAssets: [
       "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp",
       "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp",
@@ -229,6 +246,7 @@ requireHomeFeaturedPacks(mydreamshootsData, mydreamshootsSiteId, [
   {
     id: "featured_thanksgiving_1",
     requiredPhrases: ["Thanksgiving group photos for warm private albums.", "Create Thanksgiving Photos", "/collections/thanksgiving-group-photos"],
+    collectionSlugs: ["thanksgiving-group-photos", "thanksgiving-group-photos", "thanksgiving-group-photos", "thanksgiving-group-photos", "thanksgiving-group-photos", "thanksgiving-group-photos"],
     requiredAssets: [
       "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp",
       "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp",
@@ -245,6 +263,7 @@ requireHomeFeaturedPacks(aidreamcapesData, aidreamcapesSiteId, [
   {
     id: "featured_christmas_1",
     requiredPhrases: ["Build a private Christmas album around the people in your own photos.", "Create a Christmas album", "/collections/christmas-holiday-albums"],
+    collectionSlugs: ["christmas-group-albums", "christmas-holiday-albums", "christmas-group-albums", "winter-fan-greeting-albums", "christmas-group-albums", "christmas-holiday-albums"],
     requiredAssets: [
       "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/christmas-group-album.webp",
       "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/christmas-holiday-albums.webp"
@@ -254,6 +273,7 @@ requireHomeFeaturedPacks(aidreamcapesData, aidreamcapesSiteId, [
   {
     id: "featured_thanksgiving_1",
     requiredPhrases: ["Turn a gathering table into a permission-safe Thanksgiving keepsake set.", "Create a Thanksgiving set", "/collections/thanksgiving-memory-sets"],
+    collectionSlugs: ["thanksgiving-table-keepsakes", "thanksgiving-memory-sets", "gratitude-group-portraits", "friendsgiving-memory-sets", "thanksgiving-table-keepsakes", "thanksgiving-memory-sets"],
     requiredAssets: [
       "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/thanksgiving-keepsake-table-set.webp",
       "/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/thanksgiving-memory-sets.webp"

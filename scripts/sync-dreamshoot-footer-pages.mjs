@@ -59,6 +59,7 @@ const brandProfiles = [
       ["About us", "/about-us", "company"],
       ["Contact us", "/contact-us", "company"],
       ["Creators Circle", "/creators-circle", "company"],
+      ["Refund Policy", "/refunds", "company"],
       ["Privacy Policy", "/privacy", "support"],
       ["Content policy", "/content", "support"],
       ["Terms of Service", "/terms", "support"],
@@ -121,6 +122,7 @@ const brandProfiles = [
       ["About the Studio", "/about-us", "company"],
       ["Contact the Studio", "/contact-us", "company"],
       ["Creators Circle", "/creators-circle", "company"],
+      ["Refund Policy", "/refunds", "company"],
       ["Privacy Policy", "/privacy", "support"],
       ["Creative Safety", "/content", "support"],
       ["Terms of Service", "/terms", "support"],
@@ -133,6 +135,116 @@ const brandProfiles = [
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function workflowTutorialSections(profile) {
+  const isAidreamcapes = profile.brand === "Aidreamcapes";
+  const tutorial = isAidreamcapes
+    ? {
+        title: "See how an Aidreamcapes occasion album is planned.",
+        subtitle: "Start with approved source photos, choose a fan-scene or holiday direction, confirm the visible credit cost, and keep finished images inside your private Aidreamcapes gallery.",
+        imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804draftfix1",
+        videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804draftfix1",
+        videoBadge: "Occasion album workflow",
+        playLabel: "Watch the Aidreamcapes workflow"
+      }
+    : {
+        title: "Watch the private photo package workflow.",
+        subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
+        imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804draftfix1",
+        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804draftfix1",
+        videoBadge: "Private gallery workflow",
+        playLabel: "Watch the MyDreamShoots workflow"
+      };
+  const imageTutorial = isAidreamcapes
+    ? {
+        title: "Create a private fan-scene image album.",
+        subtitle: "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
+        imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
+        videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+        videoBadge: "AI image album workflow",
+        playLabel: "Watch the Aidreamcapes AI image tutorial"
+      }
+    : {
+        title: "Create an AI photo set from source photos.",
+        subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
+        imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
+        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+        videoBadge: "AI photo generation",
+        playLabel: "Watch the MyDreamShoots AI image tutorial"
+      };
+  const mobile = isAidreamcapes
+    ? {
+        title: "Mobile workflow preview for Aidreamcapes.",
+        subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+        imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/gallery/private-fan-scene-album-01.webp",
+        imageAlt: "Aidreamcapes private fan-scene album preview",
+        videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
+        videoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-mobile-tutorial-55s.jpg?v=20260804mobile1",
+        videoBadge: "Mobile workflow",
+        playLabel: "Watch the video tutorial",
+        leftTitle: "AI image tutorial",
+        leftVideoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-mobile-tutorial-55s.mp4?v=20260804mobile1",
+        leftVideoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-mobile-tutorial-55s.jpg?v=20260804mobile1",
+        leftPlayLabel: "Watch the image tutorial",
+        rightTitle: "AI video tutorial",
+        rightVideoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
+        rightVideoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-mobile-tutorial-55s.jpg?v=20260804mobile1",
+        rightPlayLabel: "Watch the video tutorial"
+      }
+    : {
+        title: "Mobile workflow preview for MyDreamShoots.",
+        subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+        imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
+        imageAlt: "Private album workspace preview",
+        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260804mobile1",
+        videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260804mobile1",
+        videoBadge: "Mobile workflow",
+        playLabel: "Watch the video tutorial",
+        leftTitle: "AI image tutorial",
+        leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260804mobile1",
+        leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260804mobile1",
+        leftPlayLabel: "Watch the image tutorial",
+        rightTitle: "AI video tutorial",
+        rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260804mobile1",
+        rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260804mobile1",
+        rightPlayLabel: "Watch the video tutorial"
+      };
+
+  return {
+    tutorial_video_1: {
+      id: "tutorial_video_1",
+      type: "video_feature",
+      settings: {
+        anchor: "how-it-works",
+        eyebrow: "How it works",
+        ...tutorial
+      },
+      blocks: []
+    },
+    tutorial_image_video_1: {
+      id: "tutorial_image_video_1",
+      type: "video_feature",
+      settings: {
+        anchor: "ai-image-tutorial",
+        eyebrow: "AI image tutorial",
+        ...imageTutorial
+      },
+      blocks: []
+    },
+    mobile_video_1: {
+      id: "mobile_video_1",
+      type: "mobile_video_showcase",
+      settings: {
+        anchor: "mobile-video-tutorial",
+        eyebrow: "Mobile tutorial",
+        placeholderTitle: "Mobile tutorial coming soon",
+        placeholderBody: "The vertical mobile walkthrough will appear here when the final video is ready.",
+        ...mobile
+      },
+      blocks: []
+    }
+  };
 }
 
 function proposedFederalPrivacyLegislationNotice(profile) {
@@ -174,7 +286,7 @@ function pageJson(profile, page) {
     return {
       version: 1,
       pageType: "content",
-      sectionsOrder: ["intro_1", "workflow_1", "rules_1", "faq_1", "conversion_1", "footer_1"],
+      sectionsOrder: ["intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "rules_1", "faq_1", "conversion_1", "footer_1"],
       sections: {
         intro_1: {
           id: "intro_1",
@@ -196,6 +308,7 @@ function pageJson(profile, page) {
             { id: "workflow_gallery", type: "rich_text_card", settings: { meta: "Gallery", title: "Private delivery", description: "Finished results return to the customer gallery instead of a public showcase." } }
           ]
         },
+        ...workflowTutorialSections(profile),
         workflow_1: {
           id: "workflow_1",
           type: "studio_steps",
@@ -431,9 +544,8 @@ function isVirtualGoodsFooterLinkToHide(label, href) {
   const normalizedHref = normalizePolicyHref(href ?? "").toLowerCase();
   const value = `${label ?? ""} ${normalizedHref}`.toLowerCase();
   return (
-    normalizedHref === "/refunds" ||
     normalizedHref === "/shipping" ||
-    /\brefunds?\b|shipping|delivery|credit review|digital delivery/.test(value)
+    /\bshipping\b|delivery|credit review|digital delivery/.test(value)
   );
 }
 

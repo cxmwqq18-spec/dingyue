@@ -6,26 +6,47 @@ import { PrismaClient } from "@prisma/client";
 
 const repoRoot = process.cwd();
 const statePath = path.join(repoRoot, "data", "platform-state.json");
-const homeOrder = [
-  "hero_1",
-  "featured_pack_1",
-  "generation_showcase_1",
-  "tutorial_video_1",
-  "tutorial_video_2",
-  "package_catalog_1",
-  "proof_1",
-  "pricing_1",
-  "faq_1",
-  "conversion_1",
-  "brand_strip_1"
-];
-const removedHomeSections = [
-  "visual_proof_1",
-  "featured_christmas_1",
-  "featured_thanksgiving_1",
-  "flow_bridge_1",
-  "trust_1"
-];
+const homeOrderByStore = {
+  mydreamshoots: [
+    "hero_1",
+    "featured_pack_1",
+    "featured_christmas_1",
+    "featured_thanksgiving_1",
+    "generation_showcase_1",
+    "tutorial_video_1",
+    "tutorial_video_2",
+    "mobile_video_1",
+    "package_catalog_1",
+    "proof_1",
+    "pricing_1",
+    "faq_1",
+    "conversion_1",
+    "brand_strip_1"
+  ],
+  aidreamcapes: [
+    "hero_1",
+    "brand_strip_1",
+    "visual_proof_1",
+    "featured_pack_1",
+    "featured_christmas_1",
+    "featured_thanksgiving_1",
+    "package_catalog_1",
+    "generation_showcase_1",
+    "tutorial_video_1",
+    "tutorial_video_2",
+    "mobile_video_1",
+    "flow_bridge_1",
+    "pricing_1",
+    "proof_1",
+    "faq_1",
+    "trust_1",
+    "conversion_1"
+  ]
+};
+const removedHomeSectionsByStore = {
+  mydreamshoots: ["visual_proof_1", "flow_bridge_1", "trust_1"],
+  aidreamcapes: []
+};
 const assetVersion = "20260801visualfix1";
 const aidreamAssetVersion = "20260801visualfix2";
 
@@ -122,20 +143,20 @@ const stores = [
       campaignLabel: "Current recommendation: World Cup Fan Photos",
       nextCampaignLabel: "Next: Christmas / Thanksgiving / Halloween"
     }, [
-      block("featured_worldcup_stadium", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: myAssets.galleryWorldCupFanThree, shape: "square" }),
-      block("featured_worldcup_gala", "seasonal_image", { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: myAssets.galleryGalaTwo, shape: "square" }),
-      block("featured_worldcup_christmas", "seasonal_image", { label: "Seasonal Card Direction", meta: "Holiday campaign option", imageUrl: myAssets.galleryChristmasCoupleTwo, shape: "square" }),
-      block("featured_worldcup_creator", "seasonal_image", { label: "Creator Profile Crop", meta: "Social-ready portrait", imageUrl: myAssets.galleryCreatorOne, shape: "square" }),
-      block("featured_worldcup_thanksgiving", "seasonal_image", { label: "Thanksgiving Keepsake", meta: "Warm group album", imageUrl: myAssets.galleryThanksgiving, shape: "square" }),
-      block("featured_worldcup_holiday", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: myAssets.galleryHoliday, shape: "square" })
+      block("featured_worldcup_stadium", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: myAssets.galleryWorldCupFanThree, collectionSlug: "world-cup-fan-photos", shape: "square" }),
+      block("featured_worldcup_gala", "seasonal_image", { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: myAssets.galleryGalaTwo, collectionSlug: "gala-photos", shape: "square" }),
+      block("featured_worldcup_christmas", "seasonal_image", { label: "Seasonal Card Direction", meta: "Holiday campaign option", imageUrl: myAssets.galleryChristmasCoupleTwo, collectionSlug: "christmas-couple", shape: "square" }),
+      block("featured_worldcup_creator", "seasonal_image", { label: "Creator Profile Crop", meta: "Social-ready portrait", imageUrl: myAssets.galleryCreatorOne, collectionSlug: "creator-portraits", shape: "square" }),
+      block("featured_worldcup_thanksgiving", "seasonal_image", { label: "Thanksgiving Keepsake", meta: "Warm group album", imageUrl: myAssets.galleryThanksgiving, collectionSlug: "thanksgiving-group-photos", shape: "square" }),
+      block("featured_worldcup_holiday", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: myAssets.galleryHoliday, collectionSlug: "holiday", shape: "square" })
     ]),
     tutorial: section("video_feature", {
       anchor: "how-it-works",
       eyebrow: "How it works",
       title: "Watch the private photo package workflow.",
       subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260803assetfix2",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260803assetfix2",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804draftfix1",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804draftfix1",
       videoBadge: "Private gallery workflow",
       playLabel: "Watch the MyDreamShoots workflow"
     }),
@@ -144,10 +165,32 @@ const stores = [
       eyebrow: "AI image tutorial",
       title: "Create an AI photo set from source photos.",
       subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260803aitutorial2",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260803aitutorial2",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
       videoBadge: "AI photo generation",
       playLabel: "Watch the MyDreamShoots AI image tutorial"
+    }),
+    mobile: section("mobile_video_showcase", {
+      anchor: "mobile-video-tutorial",
+      eyebrow: "Mobile tutorial",
+      title: "Mobile workflow preview for MyDreamShoots.",
+      subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+      imageUrl: myAssets.flowPrivateAlbumWorkspace,
+      imageAlt: "MyDreamShoots private album workspace preview",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260804mobile1",
+      videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260804mobile1",
+      videoBadge: "Mobile workflow",
+      playLabel: "Watch the video tutorial",
+      leftTitle: "AI image tutorial",
+      leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260804mobile1",
+      leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260804mobile1",
+      leftPlayLabel: "Watch the image tutorial",
+      rightTitle: "AI video tutorial",
+      rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260804mobile1",
+      rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260804mobile1",
+      rightPlayLabel: "Watch the video tutorial",
+      placeholderTitle: "Mobile tutorial coming soon",
+      placeholderBody: "The vertical mobile walkthrough will appear here when the final file is ready."
     }),
     reviews: section("testimonial_wall", {
       anchor: "reviews",
@@ -255,20 +298,20 @@ const stores = [
       campaignLabel: "Current recommendation: Game day + Christmas",
       nextCampaignLabel: "Next: Premiere / Thanksgiving / Halloween"
     }, [
-      block("aidream_featured_game_day", "seasonal_image", { label: "Game-Day Group Portraits", meta: "Supporter scenes", imageUrl: aidreamAssets.gameDay, shape: "square" }),
-      block("aidream_featured_christmas", "seasonal_image", { label: "Christmas Holiday Albums", meta: "Card-ready mood", imageUrl: aidreamAssets.christmas, shape: "square" }),
-      block("aidream_featured_premiere", "seasonal_image", { label: "Premiere-Inspired Portraits", meta: "Spotlight arrivals", imageUrl: aidreamAssets.premiere, shape: "square" }),
-      block("aidream_featured_fan", "seasonal_image", { label: "Private Fan-Scene Album", meta: "Approved group photos", imageUrl: aidreamAssets.fan, shape: "square" }),
-      block("aidream_featured_thanksgiving", "seasonal_image", { label: "Thanksgiving Keepsakes", meta: "Warm table scenes", imageUrl: aidreamAssets.thanksgiving, shape: "square" }),
-      block("aidream_featured_seasonal", "seasonal_image", { label: "Seasonal Celebration Photos", meta: "Rotating campaign pick", imageUrl: aidreamAssets.seasonal, shape: "square" })
+      block("aidream_featured_game_day", "seasonal_image", { label: "Game-Day Group Portraits", meta: "Supporter scenes", imageUrl: aidreamAssets.gameDay, collectionSlug: "game-day-group-photos", shape: "square" }),
+      block("aidream_featured_christmas", "seasonal_image", { label: "Christmas Holiday Albums", meta: "Card-ready mood", imageUrl: aidreamAssets.christmas, collectionSlug: "christmas-holiday-albums", shape: "square" }),
+      block("aidream_featured_premiere", "seasonal_image", { label: "Premiere-Inspired Portraits", meta: "Spotlight arrivals", imageUrl: aidreamAssets.premiere, collectionSlug: "premiere-style-portraits", shape: "square" }),
+      block("aidream_featured_fan", "seasonal_image", { label: "Private Fan-Scene Album", meta: "Approved group photos", imageUrl: aidreamAssets.fan, collectionSlug: "fan-scene-albums", shape: "square" }),
+      block("aidream_featured_thanksgiving", "seasonal_image", { label: "Thanksgiving Keepsakes", meta: "Warm table scenes", imageUrl: aidreamAssets.thanksgiving, collectionSlug: "thanksgiving-memory-sets", shape: "square" }),
+      block("aidream_featured_seasonal", "seasonal_image", { label: "Seasonal Celebration Photos", meta: "Rotating campaign pick", imageUrl: aidreamAssets.seasonal, collectionSlug: "seasonal-celebration-photos", shape: "square" })
     ]),
     tutorial: section("video_feature", {
       anchor: "how-it-works",
       eyebrow: "How it works",
       title: "See how an Aidreamcapes occasion album is planned.",
       subtitle: "Start with approved source photos, choose a fan-scene or holiday direction, confirm the visible credit cost, and keep finished images inside your private Aidreamcapes gallery.",
-      imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260803assetfix2",
-      videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260803assetfix2",
+      imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-tutorial-55s.jpg?v=20260804draftfix1",
+      videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4?v=20260804draftfix1",
       videoBadge: "Occasion album workflow",
       playLabel: "Watch the Aidreamcapes workflow"
     }),
@@ -277,10 +320,32 @@ const stores = [
       eyebrow: "AI image tutorial",
       title: "Create a private fan-scene image album.",
       subtitle: "Follow the Aidreamcapes workspace flow: choose a fan-scene album, add approved source photos, review the album details and credit cost, start generation, refresh All assets, and open the finished image.",
-      imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260803aitutorial4",
-      videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260803aitutorial4",
+      imageUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
+      videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
       videoBadge: "AI image album workflow",
       playLabel: "Watch the Aidreamcapes AI image tutorial"
+    }),
+    mobile: section("mobile_video_showcase", {
+      anchor: "mobile-video-tutorial",
+      eyebrow: "Mobile tutorial",
+      title: "Mobile workflow preview for Aidreamcapes.",
+      subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+      imageUrl: aidreamAssets.gallery,
+      imageAlt: "Aidreamcapes private fan-scene album preview",
+      videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
+      videoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-mobile-tutorial-55s.jpg?v=20260804mobile1",
+      videoBadge: "Mobile workflow",
+      playLabel: "Watch the video tutorial",
+      leftTitle: "AI image tutorial",
+      leftVideoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-mobile-tutorial-55s.mp4?v=20260804mobile1",
+      leftVideoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-ai-image-mobile-tutorial-55s.jpg?v=20260804mobile1",
+      leftPlayLabel: "Watch the image tutorial",
+      rightTitle: "AI video tutorial",
+      rightVideoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
+      rightVideoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-mobile-tutorial-55s.jpg?v=20260804mobile1",
+      rightPlayLabel: "Watch the video tutorial",
+      placeholderTitle: "Mobile tutorial coming soon",
+      placeholderBody: "The vertical mobile walkthrough will appear here when the final file is ready."
     }),
     reviews: section("testimonial_wall", {
       anchor: "reviews",
@@ -416,10 +481,13 @@ function applyStoreSpecificExistingSections(pageJson, store) {
   };
   sections.tutorial_video_1 = clone(store.tutorial);
   sections.tutorial_video_2 = clone(store.imageTutorial);
+  sections.mobile_video_1 = clone(store.mobile);
   sections.proof_1 = clone(store.reviews);
   sections.faq_1 = clone(store.faq);
   sections.brand_strip_1 = clone(store.partnerStrip);
+  const removedHomeSections = removedHomeSectionsByStore[store.key] ?? [];
   for (const sectionId of removedHomeSections) delete sections[sectionId];
+  const homeOrder = homeOrderByStore[store.key] ?? homeOrderByStore.mydreamshoots;
   pageJson.sectionsOrder = homeOrder.filter((sectionId) => Boolean(sections[sectionId]));
   return true;
 }

@@ -14,6 +14,12 @@ function assert(condition, message) {
   if (!condition) fail(message);
 }
 
+function featuredCollectionSlugs(section) {
+  return (section?.blocks ?? [])
+    .filter((block) => block?.type === "seasonal_image")
+    .map((block) => String(block?.settings?.collectionSlug ?? "").trim());
+}
+
 const site = state.sites?.find((item) => item.slug === "dreamshoot" || item.id === "site_dreamshoot");
 assert(site, "missing dreamshoot site");
 assert(site.id === "site_dreamshoot", `unexpected dreamshoot site id ${site.id}`);
@@ -47,24 +53,24 @@ assert(homePage?.publishedJson, "missing published home page");
 const homeOrder = homePage.publishedJson.sectionsOrder ?? [];
 const requiredHomeSections = [
   "hero_1",
-  "brand_strip_1",
-  "visual_proof_1",
   "featured_pack_1",
   "featured_christmas_1",
   "featured_thanksgiving_1",
+  "generation_showcase_1",
+  "tutorial_video_1",
+  "tutorial_video_2",
   "package_catalog_1",
-  "flow_bridge_1",
-  "pricing_1",
   "proof_1",
+  "pricing_1",
   "faq_1",
-  "trust_1",
-  "conversion_1"
+  "conversion_1",
+  "brand_strip_1"
 ];
 assert(homeOrder.length <= 14, `home page should stay focused at 14 or fewer sections, got ${homeOrder.length}`);
 for (const id of requiredHomeSections) {
   assert(homeOrder.includes(id), `home page missing required DreamShoot commercial section ${id}`);
 }
-for (const id of ["taxonomy_1", "sample_strip_1", "workflow_1", "packages_1", "free_tools_1", "plan_rules_1", "proof_pairs_1", "packages_strip_1"]) {
+for (const id of ["visual_proof_1", "flow_bridge_1", "trust_1", "taxonomy_1", "sample_strip_1", "workflow_1", "packages_1", "free_tools_1", "plan_rules_1", "proof_pairs_1", "packages_strip_1"]) {
   assert(!homeOrder.includes(id), `home page should not carry deep explainer section ${id}; it belongs on a supporting page`);
 }
 const hero = homePage.publishedJson.sections?.hero_1;
@@ -87,14 +93,14 @@ assert(
   `hero grid is still wedding/couple-heavy: ${weddingHeroImages.join(", ")}`
 );
 
-const homeAssetRefs = [];
+const homeAssetRefRecords = [];
 function collectAssetRefs(value, pathSegments = []) {
   if (pathSegments.includes("package_catalog_1") && pathSegments.includes("blocks")) {
     return;
   }
   if (typeof value === "string") {
     for (const part of value.split("|").map((item) => item.trim()).filter(Boolean)) {
-      if (part.includes("/assets/dreamshoot/")) homeAssetRefs.push(part);
+      if (part.includes("/assets/dreamshoot/")) homeAssetRefRecords.push({ asset: part, pathSegments });
     }
     return;
   }
@@ -107,16 +113,26 @@ function collectAssetRefs(value, pathSegments = []) {
   }
 }
 collectAssetRefs(homePage.publishedJson);
+const homeAssetRefs = homeAssetRefRecords.map((record) => record.asset);
 const homeAssetCounts = new Map();
 for (const asset of homeAssetRefs) homeAssetCounts.set(asset, (homeAssetCounts.get(asset) ?? 0) + 1);
-const overusedHomeAssets = [...homeAssetCounts.entries()].filter(([, count]) => count > 1);
+const sectionAssetCounts = new Map();
+for (const record of homeAssetRefRecords) {
+  const sectionId = record.pathSegments[0] === "sections" ? record.pathSegments[1] : record.pathSegments[0] ?? "page";
+  const key = `${sectionId}\u0000${record.asset}`;
+  sectionAssetCounts.set(key, (sectionAssetCounts.get(key) ?? 0) + 1);
+}
+const overusedSectionAssets = [...sectionAssetCounts.entries()].filter(([, count]) => count > 1);
 assert(
-  overusedHomeAssets.length === 0,
-  `home page single-image assets must not repeat: ${overusedHomeAssets.map(([asset, count]) => `${asset} x${count}`).join("; ")}`
+  overusedSectionAssets.length === 0,
+  `home page single-image assets must not repeat within one section: ${overusedSectionAssets.map(([key, count]) => {
+    const [sectionId, asset] = key.split("\u0000");
+    return `${sectionId}:${asset} x${count}`;
+  }).join("; ")}`
 );
 assert(homeAssetCounts.size >= 40, `home page should use at least 40 distinct DreamShoot visuals, got ${homeAssetCounts.size}`);
 for (const asset of homeAssetCounts.keys()) {
-  const assetPath = path.join(repoRoot, "public", asset.replace(/^\/+/, ""));
+  const assetPath = path.join(repoRoot, "public", asset.split("?")[0].split("#")[0].replace(/^\/+/, ""));
   assert(fs.existsSync(assetPath), `home page references a missing image asset: ${asset}`);
 }
 
@@ -140,19 +156,17 @@ function dreamshootFeaturedCatalogScore(pack) {
   return 15;
 }
 
-const runtimeHomeImageRefs = [...homeAssetRefs];
 const homeFeaturedPackImages = [...packs]
   .sort((a, b) => dreamshootFeaturedCatalogScore(a) - dreamshootFeaturedCatalogScore(b))
   .slice(0, Math.max(3, Math.min(6, Number(homePage.publishedJson.sections?.package_catalog_1?.settings?.featuredCount ?? 5))))
   .map((pack) => pack.imageUrl)
   .filter(Boolean);
-runtimeHomeImageRefs.push(...homeFeaturedPackImages);
-const runtimeHomeCounts = new Map();
-for (const asset of runtimeHomeImageRefs) runtimeHomeCounts.set(asset, (runtimeHomeCounts.get(asset) ?? 0) + 1);
-const runtimeDuplicates = [...runtimeHomeCounts.entries()].filter(([, count]) => count > 1);
+const runtimeCatalogCounts = new Map();
+for (const asset of homeFeaturedPackImages) runtimeCatalogCounts.set(asset, (runtimeCatalogCounts.get(asset) ?? 0) + 1);
+const runtimeDuplicates = [...runtimeCatalogCounts.entries()].filter(([, count]) => count > 1);
 assert(
   runtimeDuplicates.length === 0,
-  `rendered home page image assets must not repeat across sections and catalog packs: ${runtimeDuplicates.map(([asset, count]) => `${asset} x${count}`).join("; ")}`
+  `rendered home page catalog pack images must not repeat within the catalog: ${runtimeDuplicates.map(([asset, count]) => `${asset} x${count}`).join("; ")}`
 );
 
 const requiredPackNames = [
@@ -163,7 +177,7 @@ const requiredPackNames = [
   "Gala Photos",
   "Mafia",
   "Nature",
-  "Travel Scene Pack",
+  "Outdoor Creator Scenes",
   "World Cup Fan Photos",
   "Creator Portraits",
   "Fashion Editorial",
@@ -299,6 +313,10 @@ assert(
   `home featured pack order should be World Cup, Christmas, Thanksgiving; got ${featuredOrder.join(", ")}`
 );
 const featuredPackText = JSON.stringify(featuredPack);
+assert(
+  featuredCollectionSlugs(featuredPack).join("|") === "world-cup-fan-photos|gala-photos|christmas-couple|creator-portraits|thanksgiving-group-photos|holiday",
+  `World Cup featured pack stable collection slugs drifted: ${featuredCollectionSlugs(featuredPack).join("|")}`
+);
 for (const phrase of [
   "star-inspired",
   "celebrity-inspired",
@@ -312,19 +330,19 @@ for (const phrase of [
 }
 for (const phrase of [
   "World Cup fan photos for sports-idol style moments.",
-  "Sports-idol style fan photos without a studio.",
+  "A focused sports direction to compare first.",
   "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission.",
-  "Current campaign: World Cup Fan Photos"
+  "Current recommendation: World Cup Fan Photos"
 ]) {
   assert(featuredPackText.includes(phrase), `World Cup featured pack missing required copy: ${phrase}`);
 }
 const requiredWorldCupAssets = [
-  "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
-  "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
-  "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
-  "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png",
-  "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
-  "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png"
+  "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp",
+  "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp",
+  "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-02.webp",
+  "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp",
+  "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1",
+  "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1"
 ];
 for (const asset of requiredWorldCupAssets) {
   assert(featuredPackText.includes(asset), `World Cup featured pack missing generated asset: ${asset}`);
@@ -334,6 +352,10 @@ assert(!featuredPackText.includes("/assets/dreamshoot/generated/20260619/world-c
 const christmasPack = homePage.publishedJson.sections?.featured_christmas_1;
 assert(christmasPack?.type === "dreamshoot_featured_pack", "home page missing Christmas featured pack renderer");
 const christmasPackText = JSON.stringify(christmasPack);
+assert(
+  featuredCollectionSlugs(christmasPack).join("|") === "christmas-photos|christmas-photos|christmas-couple|christmas-photos|christmas-photos|christmas-couple",
+  `Christmas featured pack stable collection slugs drifted: ${featuredCollectionSlugs(christmasPack).join("|")}`
+);
 for (const phrase of [
   "Christmas group photos for cards, posts, and private albums.",
   "Create Christmas Photos",
@@ -355,6 +377,10 @@ assert(christmasPackText.includes("/assets/dreamshoot/generated/pack-galleries/c
 const thanksgivingPack = homePage.publishedJson.sections?.featured_thanksgiving_1;
 assert(thanksgivingPack?.type === "dreamshoot_featured_pack", "home page missing Thanksgiving featured pack renderer");
 const thanksgivingPackText = JSON.stringify(thanksgivingPack);
+assert(
+  featuredCollectionSlugs(thanksgivingPack).join("|") === "thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos",
+  `Thanksgiving featured pack stable collection slugs drifted: ${featuredCollectionSlugs(thanksgivingPack).join("|")}`
+);
 for (const phrase of [
   "Thanksgiving group photos for warm private albums.",
   "Create Thanksgiving Photos",

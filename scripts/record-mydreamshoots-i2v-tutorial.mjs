@@ -7,10 +7,13 @@ import ffmpegStatic from "ffmpeg-static";
 import { chromium } from "playwright";
 import sharp from "sharp";
 import "./load-runtime-env.mjs";
+import { ensureMydreamshootsLocalPreviewVideo } from "./tutorial-local-preview-seeds.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
 
+const tutorialDevice = String(process.env.TUTORIAL_DEVICE || "desktop").toLowerCase();
+const isMobileRecording = tutorialDevice === "mobile";
 const baseUrl = (process.env.TUTORIAL_BASE_URL || "https://www.mydreamshoots.com").replace(/\/$/, "");
 const siteId = process.env.TUTORIAL_SITE_ID || "site_dreamshoot";
 const siteSlug = process.env.TUTORIAL_SITE_SLUG || "mydreamshoots";
@@ -30,14 +33,25 @@ const failurePath = path.join(runDir, "failure-status.json");
 const contactSheetPath = path.join(runDir, "verification-contact-sheet.jpg");
 const cleanFrameSourcePath = path.resolve(repoRoot, process.env.TUTORIAL_SOURCE_FRAME_IMAGE || "public/assets/dreamshoot/generated/homepage-showcase/images/creator-portraits.webp");
 
-const viewport = { width: 1920, height: 1080 };
-const captureFps = Number(process.env.TUTORIAL_CAPTURE_FPS || 10);
+const viewport = {
+  width: Number(process.env.TUTORIAL_VIEWPORT_WIDTH || (isMobileRecording ? 390 : 1920)),
+  height: Number(process.env.TUTORIAL_VIEWPORT_HEIGHT || (isMobileRecording ? 844 : 1080))
+};
+const outputSize = {
+  width: Number(process.env.TUTORIAL_OUTPUT_WIDTH || (isMobileRecording ? 1080 : 1920)),
+  height: Number(process.env.TUTORIAL_OUTPUT_HEIGHT || (isMobileRecording ? 1920 : 1080))
+};
+const deviceScaleFactor = Number(process.env.TUTORIAL_DEVICE_SCALE_FACTOR || (isMobileRecording ? 2 : 1));
+const mobileUserAgent = process.env.TUTORIAL_MOBILE_USER_AGENT ||
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1";
+const captureFps = Number(process.env.TUTORIAL_CAPTURE_FPS || 5);
 const targetSeconds = Number(process.env.TUTORIAL_TARGET_SECONDS || 45);
 const headless = process.env.TUTORIAL_HEADLESS !== "0";
 const maxAttempts = Math.max(1, Number(process.env.TUTORIAL_MAX_ATTEMPTS || 3));
 const jobTimeoutMs = Math.max(60_000, Number(process.env.TUTORIAL_JOB_TIMEOUT_MS || 1_800_000));
 const pollIntervalMs = Math.max(5_000, Number(process.env.TUTORIAL_POLL_INTERVAL_MS || 12_000));
 const pageTimeoutMs = Math.max(30_000, Number(process.env.TUTORIAL_PAGE_TIMEOUT_MS || 120_000));
+process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS = process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS || "1";
 const skipRealGeneration = process.env.TUTORIAL_REAL_GENERATION !== "1";
 const ffmpegPath = process.env.FFMPEG_PATH || ffmpegStatic || "ffmpeg";
 const ffprobePath = process.env.FFPROBE_PATH || siblingFfprobe(ffmpegPath) || "ffprobe";
@@ -258,30 +272,60 @@ async function installOverlay(page) {
     input[name="email"], input[name="password"] { color: transparent !important; caret-color: transparent !important; text-shadow: none !important; }
     .tutorial-caption { position: fixed; left: 50%; bottom: 34px; transform: translateX(-50%); z-index: 2147483000; max-width: min(1280px, calc(100vw - 96px)); padding: 18px 28px; border: 1px solid rgba(255,255,255,.24); border-radius: 14px; background: rgba(5,8,14,.84); box-shadow: 0 22px 70px rgba(0,0,0,.44); color: white; font: 800 30px/1.22 Inter, system-ui, sans-serif; text-align: center; pointer-events: none; backdrop-filter: blur(12px); }
     .tutorial-caption::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 12px; border-radius: 999px; background: linear-gradient(135deg,#31d4ff,#ff61c7); vertical-align: 3px; }
-    .tutorial-highlight { position: fixed; z-index: 2147482998; border: 3px solid #31d4ff; border-radius: 16px; box-shadow: 0 0 0 9999px rgba(0,0,0,.10), 0 0 34px rgba(49,212,255,.45); pointer-events: none; opacity: 0; transition: opacity 160ms ease, left 220ms ease, top 220ms ease, width 220ms ease, height 220ms ease; }
-    .tutorial-cursor { position: fixed; z-index: 2147482999; width: 28px; height: 28px; transform: translate(-5px,-5px); pointer-events: none; filter: drop-shadow(0 8px 16px rgba(0,0,0,.46)); opacity: .94; transition: left 260ms ease, top 260ms ease, transform 160ms ease; }
-    .tutorial-cursor::before { content: ""; display: block; width: 0; height: 0; border-right: 18px solid transparent; border-bottom: 28px solid #fff; }
-    .tutorial-cursor.click { transform: translate(-5px,-5px) scale(.86); }
+    .tutorial-highlight { display: none !important; position: fixed; z-index: 2147482998; pointer-events: none; opacity: 0; }
+    .tutorial-cursor { position: fixed; z-index: 2147482999; width: 44px; height: 44px; transform: translate(-7px,-7px); pointer-events: none; filter: drop-shadow(0 10px 18px rgba(0,0,0,.62)); opacity: 0; transition: left 180ms ease, top 180ms ease, transform 170ms ease, opacity 120ms ease; }
+    .tutorial-cursor.visible { opacity: .98; }
+    .tutorial-cursor::before { content: ""; position: absolute; left: 0; top: 0; width: 0; height: 0; border-right: 24px solid transparent; border-bottom: 38px solid #ffffff; filter: drop-shadow(0 0 0 #0ea5e9) drop-shadow(0 0 8px rgba(14,165,233,.95)); }
+    .tutorial-cursor::after { content: ""; position: absolute; left: 12px; top: 15px; width: 34px; height: 34px; border: 4px solid #38d9ff; border-radius: 999px; background: rgba(56,217,255,.18); box-shadow: 0 0 0 3px rgba(255,255,255,.82), 0 0 24px rgba(56,217,255,.72); opacity: .78; transform: scale(.8); }
+    .tutorial-cursor.click { transform: translate(-7px,-7px) scale(.92); }
+    .tutorial-cursor.click::after { animation: tutorial-click-ring 720ms ease-out; }
+    @keyframes tutorial-click-ring { 0% { opacity: 1; transform: scale(.55); } 70% { opacity: .88; transform: scale(1.28); } 100% { opacity: 0; transform: scale(1.55); } }
     .tutorial-mask { position: fixed; z-index: 2147482997; display: grid; place-items: center; border-radius: 10px; background: rgba(255,255,255,.94); color: #111827; font: 700 17px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(17,24,39,.14); }
     .tutorial-chip-mask { position: fixed; z-index: 2147482996; display: grid; place-items: center; min-height: 46px; border-radius: 999px; background: rgba(2,6,23,.95); color: #fff; font: 800 16px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
-    .tutorial-file-backdrop { position: fixed; inset: 0; z-index: 2147482990; background: rgba(8,12,20,.42); backdrop-filter: blur(3px); pointer-events: none; }
-    .tutorial-file-dialog { position: fixed; left: 50%; top: 50%; z-index: 2147482992; width: min(1120px, calc(100vw - 120px)); height: 610px; transform: translate(-50%,-50%); overflow: hidden; border: 1px solid #b9bdc7; border-radius: 16px; background: #f5f6f8; color: #20242b; box-shadow: 0 30px 90px rgba(0,0,0,.46); font: 500 16px/1.3 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; pointer-events: none; }
-    .tutorial-file-titlebar { display: flex; align-items: center; gap: 10px; height: 58px; padding: 0 22px; border-bottom: 1px solid #d7d9df; background: #fbfbfc; }
-    .tutorial-file-dot { width: 13px; height: 13px; border-radius: 50%; background: #ff5f57; box-shadow: 23px 0 #febc2e, 46px 0 #28c840; }
-    .tutorial-file-toolbar { display: flex; align-items: center; gap: 14px; height: 54px; padding: 0 24px; border-bottom: 1px solid #d7d9df; color: #626975; }
+    .tutorial-file-backdrop { display: none !important; }
+    .tutorial-file-dialog { position: fixed; right: 38px; top: 50%; z-index: 2147482992; width: min(760px, calc(100vw - 96px)); height: 430px; transform: translateY(-50%); overflow: hidden; border: 1px solid #b9bdc7; border-radius: 14px; background: #f5f6f8; color: #20242b; box-shadow: 0 24px 70px rgba(0,0,0,.34); font: 500 14px/1.3 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; pointer-events: none; }
+    .tutorial-file-titlebar { display: flex; align-items: center; gap: 10px; height: 42px; padding: 0 16px; border-bottom: 1px solid #d7d9df; background: #fbfbfc; }
+    .tutorial-file-dot { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; box-shadow: 19px 0 #febc2e, 38px 0 #28c840; }
+    .tutorial-file-toolbar { display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 16px; border-bottom: 1px solid #d7d9df; color: #626975; }
     .tutorial-file-toolbar strong { margin-left: auto; margin-right: auto; color: #303641; font-size: 15px; }
-    .tutorial-file-body { display: grid; grid-template-columns: 220px 1fr; height: 498px; }
-    .tutorial-file-sidebar { padding: 24px 16px; border-right: 1px solid #d7d9df; background: #eceef2; }
-    .tutorial-file-sidebar div { padding: 11px 14px; border-radius: 8px; color: #5e6672; }
+    .tutorial-file-body { display: grid; grid-template-columns: 150px 1fr; height: 348px; }
+    .tutorial-file-sidebar { padding: 12px 10px; border-right: 1px solid #d7d9df; background: #eceef2; }
+    .tutorial-file-sidebar div { padding: 8px 10px; border-radius: 8px; color: #5e6672; }
     .tutorial-file-sidebar .active { background: #d8e8ff; color: #1264c8; font-weight: 800; }
-    .tutorial-file-main { display: grid; grid-template-rows: 1fr 64px; min-width: 0; }
-    .tutorial-file-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding: 24px; align-content: start; background: #ffffff; }
-    .tutorial-file-item { display: grid; gap: 8px; place-items: center; min-height: 155px; padding: 12px; border: 2px solid transparent; border-radius: 10px; background: #f3f4f6; color: #404753; }
+    .tutorial-file-main { display: grid; grid-template-rows: 1fr 52px; min-width: 0; }
+    .tutorial-file-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 14px; align-content: start; background: #ffffff; }
+    .tutorial-file-item { display: grid; gap: 6px; place-items: center; min-height: 112px; padding: 8px; border: 2px solid transparent; border-radius: 10px; background: #f3f4f6; color: #404753; }
     .tutorial-file-item.selected { border-color: #2575e8; background: #e7f0ff; color: #0f55a7; }
-    .tutorial-file-thumb { display: grid; place-items: center; width: 112px; height: 94px; overflow: hidden; border-radius: 7px; background: linear-gradient(135deg,#2d5e52,#e5a26f 54%,#231a1d); color: #ffffff; font-size: 12px; font-weight: 800; }
-    .tutorial-file-footer { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 12px 24px; border-top: 1px solid #d7d9df; background: #fbfbfc; }
+    .tutorial-file-thumb { display: grid; place-items: center; width: 78px; height: 62px; overflow: hidden; border-radius: 7px; background: linear-gradient(135deg,#2d5e52,#e5a26f 54%,#231a1d); color: #ffffff; font-size: 11px; font-weight: 800; }
+    .tutorial-file-footer { display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 8px 14px; border-top: 1px solid #d7d9df; background: #fbfbfc; }
     .tutorial-file-button { min-width: 98px; padding: 9px 18px; border: 1px solid #c4c8d0; border-radius: 8px; background: #ffffff; color: #4b5563; text-align: center; font-weight: 700; }
     .tutorial-file-button.primary { border-color: #2575e8; background: #2575e8; color: #ffffff; }
+    @media (max-width: 600px) {
+      .tutorial-caption { bottom: 12px; max-width: calc(100vw - 24px); padding: 10px 12px; border-radius: 12px; font: 800 15px/1.24 Inter, system-ui, sans-serif; box-shadow: 0 16px 44px rgba(0,0,0,.38); }
+      .tutorial-caption::before { width: 8px; height: 8px; margin-right: 7px; vertical-align: 1px; }
+      .tutorial-cursor { width: 30px; height: 30px; filter: drop-shadow(0 6px 12px rgba(0,0,0,.56)); }
+      .tutorial-cursor::before { border-right-width: 17px; border-bottom-width: 27px; }
+      .tutorial-cursor::after { left: 8px; top: 10px; width: 22px; height: 22px; border-width: 3px; }
+      .tutorial-mask { border-radius: 8px; font: 700 12px/1.15 Inter, system-ui, sans-serif; }
+      .tutorial-chip-mask { min-height: 34px; font: 800 11px/1.15 Inter, system-ui, sans-serif; }
+      .tutorial-file-dialog { left: 10px; right: auto; top: 46%; width: calc(100vw - 20px); height: min(410px, calc(100vh - 164px)); transform: translateY(-50%); border-radius: 12px; font-size: 12px; box-shadow: 0 18px 52px rgba(0,0,0,.34); }
+      .tutorial-file-titlebar { height: 34px; padding: 0 12px; }
+      .tutorial-file-dot { width: 9px; height: 9px; box-shadow: 15px 0 #febc2e, 30px 0 #28c840; }
+      .tutorial-file-toolbar { height: 34px; gap: 7px; padding: 0 10px; font-size: 11px; }
+      .tutorial-file-toolbar strong { font-size: 12px; }
+      .tutorial-file-body { grid-template-columns: 84px 1fr; height: calc(100% - 68px); }
+      .tutorial-file-sidebar { padding: 8px 6px; }
+      .tutorial-file-sidebar div { padding: 7px 6px; font-size: 11px; }
+      .tutorial-file-sidebar div:nth-child(n+5) { display: none; }
+      .tutorial-file-main { grid-template-rows: 1fr 44px; }
+      .tutorial-file-list { grid-template-columns: 1fr; gap: 8px; padding: 10px; overflow: hidden; }
+      .tutorial-file-item { min-height: 64px; grid-template-columns: 48px minmax(0,1fr); justify-items: start; gap: 8px; padding: 7px; }
+      .tutorial-file-item:nth-child(n+3) { display: none; }
+      .tutorial-file-thumb { width: 48px; height: 42px; font-size: 9px; }
+      .tutorial-file-item strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .tutorial-file-footer { gap: 7px; padding: 6px 10px; }
+      .tutorial-file-button { min-width: 70px; padding: 7px 10px; border-radius: 7px; }
+    }
   ` });
   await page.evaluate(({ maskNames }) => {
     const emailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
@@ -365,7 +409,11 @@ async function installOverlay(page) {
         Object.assign(highlight.style, { left: `${Math.max(0, rect.x - 8)}px`, top: `${Math.max(0, rect.y - 8)}px`, width: `${Math.max(0, rect.width + 16)}px`, height: `${Math.max(0, rect.height + 16)}px`, opacity: "1" });
       },
       cursor(x, y) { cursor.style.left = `${x}px`; cursor.style.top = `${y}px`; },
-      clickPulse() { cursor.classList.add("click"); window.setTimeout(() => cursor.classList.remove("click"), 180); },
+      clickPulse() {
+        cursor.classList.add("visible", "click");
+        window.setTimeout(() => cursor.classList.remove("click"), 360);
+        window.setTimeout(() => cursor.classList.remove("visible"), 1100);
+      },
       fileDialog(state) {
         const oldBackdrop = document.querySelector(".tutorial-file-backdrop");
         const oldDialog = document.querySelector(".tutorial-file-dialog");
@@ -406,7 +454,7 @@ async function installOverlay(page) {
         positionAccountMask();
       }
     };
-    window.__tutorial.cursor(1160, 680);
+    window.__tutorial.cursor(Math.min(window.innerWidth - 18, Math.max(18, window.innerWidth * 0.62)), Math.min(window.innerHeight - 18, Math.max(18, window.innerHeight * 0.72)));
     window.__tutorial.redact();
     window.setInterval(() => window.__tutorial?.redact?.(), 250);
   }, { maskNames });
@@ -418,7 +466,9 @@ async function setCaption(page, caption) {
 
 async function moveTutorialPointer(page, x, y, pulse = false) {
   await page.evaluate(({ x, y, pulse }) => {
-    window.__tutorial?.cursor?.(x, y);
+    const clampedX = Math.min(window.innerWidth - 18, Math.max(18, x));
+    const clampedY = Math.min(window.innerHeight - 18, Math.max(18, y));
+    window.__tutorial?.cursor?.(clampedX, clampedY);
     if (pulse) window.__tutorial?.clickPulse?.();
   }, { x, y, pulse }).catch(() => undefined);
 }
@@ -428,16 +478,20 @@ async function pointAt(page, locator) {
   if (!box) return;
   await page.evaluate((rect) => {
     window.__tutorial?.highlight?.(rect);
-    window.__tutorial?.cursor?.(rect.x + rect.width / 2, rect.y + rect.height / 2);
+    const x = Math.min(window.innerWidth - 18, Math.max(18, rect.x + rect.width / 2));
+    const y = Math.min(window.innerHeight - 18, Math.max(18, rect.y + rect.height / 2));
+    window.__tutorial?.cursor?.(x, y);
   }, { x: box.x, y: box.y, width: box.width, height: box.height }).catch(() => undefined);
 }
 
 async function clickWithPointer(page, locator, options = {}) {
   await pointAt(page, locator);
-  await page.waitForTimeout(options.pauseBeforeClickMs ?? 220);
+  await page.waitForTimeout(options.pauseBeforeClickMs ?? 320);
+  await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+  await page.waitForTimeout(120);
   await locator.click({ timeout: options.timeout ?? 30_000, force: options.force ?? false });
   await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
-  await page.waitForTimeout(options.pauseAfterClickMs ?? 250);
+  await page.waitForTimeout(options.pauseAfterClickMs ?? 500);
 }
 
 async function waitReady(page) {
@@ -476,6 +530,7 @@ async function captureLoginAndAuthenticate(page, context, recorder) {
   await password.fill(candidates[0].password);
   await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
   await pointAt(page, submit);
+  await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
   await recorder.captureFor(captureDurations.login, captions.login);
   await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
 
@@ -570,14 +625,50 @@ async function uploadFrame(page, recorder, recordChooser) {
 }
 
 async function selectUploadedFrame(page) {
-  await clearSelectedFrames(page);
-  const frameButton = page.locator('#studio-console-video button[aria-pressed="false"]').first();
+  const selectionReady = async (timeout = 8_000) => page.waitForFunction(() => {
+    const root = document.querySelector("#studio-console-video");
+    if (!root) return false;
+    const text = root.textContent || "";
+    return Boolean(root.querySelector("button[aria-pressed='true']")) ||
+      /[1-7]\s+of\s+7\s+selected/i.test(text) ||
+      /[1-7]\/7\s+(selected|frames)/i.test(text) ||
+      /Drag or use arrows/i.test(text);
+  }, undefined, { timeout });
+
+  const selectedButton = page.locator('#studio-console-video button[aria-pressed="true"]').first();
+  if (await selectedButton.isVisible().catch(() => false)) {
+    await pointAt(page, selectedButton).catch(() => undefined);
+    await selectionReady().catch(() => undefined);
+    return;
+  }
+
+  const preferredFrame = page
+    .locator('#studio-console-video button[aria-pressed="false"]:not([disabled])')
+    .filter({ hasText: /source-frame-clean|frame_/i })
+    .first();
+  const fallbackFrame = page.locator('#studio-console-video button[aria-pressed="false"]:not([disabled]):has(img)').first();
+  const frameButton = await preferredFrame.isVisible().catch(() => false) ? preferredFrame : fallbackFrame;
   await frameButton.waitFor({ state: "visible", timeout: 45_000 });
   await frameButton.scrollIntoViewIfNeeded().catch(() => undefined);
-  await clickWithPointer(page, frameButton, { force: true });
-  await page.waitForFunction(() => {
-    return Boolean(document.querySelector("#studio-console-video button[aria-pressed='true']"));
-  }, undefined, { timeout: 30_000 });
+  await clickWithPointer(page, frameButton, { force: true, pauseBeforeClickMs: 460, pauseAfterClickMs: 700 });
+
+  try {
+    await selectionReady(10_000);
+  } catch {
+    const clicked = await page.evaluate(() => {
+      const root = document.querySelector("#studio-console-video");
+      if (!root) return false;
+      const buttons = Array.from(root.querySelectorAll("button[aria-pressed='false']:not([disabled])"));
+      const preferred = buttons.find((button) => /source-frame-clean|frame_/i.test(button.textContent || "")) ||
+        buttons.find((button) => button.querySelector("img"));
+      if (!preferred) return false;
+      preferred.scrollIntoView({ block: "center", inline: "center" });
+      preferred.click();
+      return true;
+    });
+    if (!clicked) throw new Error("video_frame_select_button_missing");
+    await selectionReady(15_000);
+  }
 }
 
 async function configurePrompt(page) {
@@ -838,29 +929,40 @@ async function openHistoricalVideoPreview(page) {
   await closeMegaMenus(page);
   const resultsSection = page.locator("#video-workspace-videos").first();
   await resultsSection.scrollIntoViewIfNeeded().catch(() => undefined);
-  const preview = resultsSection.locator('button:has-text("Open preview")').first();
-  if (await preview.isVisible({ timeout: 15_000 }).catch(() => false)) {
+  const freshPreview = resultsSection.locator('button').filter({ hasText: /Fresh draft video preview/i }).first();
+  if (await freshPreview.isVisible().catch(() => false)) {
+    await clickWithPointer(page, freshPreview, { force: true, timeout: 30_000 });
+  } else {
+    const preview = resultsSection.locator('button:has-text("Open preview")').first();
+    await preview.waitFor({ state: "visible", timeout: 20_000 });
     await clickWithPointer(page, preview, { force: true, timeout: 30_000 });
-    const dialog = page.locator('[role="dialog"][aria-label*="Generated asset preview"]').first();
-    if (!await dialog.isVisible({ timeout: 5_000 }).catch(() => false)) {
-      await preview.click({ force: true, timeout: 10_000 }).catch(() => undefined);
-      await dialog.waitFor({ state: "visible", timeout: 10_000 }).catch(() => undefined);
-    }
-    const video = page.locator("video").first();
-    if (await video.isVisible({ timeout: 10_000 }).catch(() => false)) {
-      const box = await video.boundingBox().catch(() => null);
-      if (box) {
-        await moveTutorialPointer(page, box.x + box.width / 2, box.y + box.height / 2);
-        await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2).catch(() => undefined);
-        await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
-      }
-      await page.evaluate(() => {
-        const video = document.querySelector("video");
-        if (video) void video.play().catch(() => undefined);
-      }).catch(() => undefined);
-      await page.waitForTimeout(1_000);
-    }
   }
+  const dialog = page.locator('[role="dialog"][aria-label*="Generated asset preview"]').first();
+  await dialog.waitFor({ state: "visible", timeout: 20_000 });
+  const video = dialog.locator("video").first();
+  await video.waitFor({ state: "visible", timeout: 20_000 });
+  await page.waitForFunction(() => {
+    const dialog = document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]');
+    const video = dialog?.querySelector("video");
+    return Boolean(video && video.readyState >= 1 && Number.isFinite(video.duration) && video.duration > 0);
+  }, undefined, { timeout: 20_000 });
+  const box = await video.boundingBox().catch(() => null);
+  if (!box) throw new Error("historical_video_preview_missing_box");
+  await moveTutorialPointer(page, box.x + box.width / 2, box.y + box.height / 2, true);
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2).catch(() => undefined);
+  await page.evaluate(() => {
+    const dialog = document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]');
+    const video = dialog?.querySelector("video");
+    if (video) {
+      video.muted = true;
+      void video.play().catch(() => undefined);
+    }
+  }).catch(() => undefined);
+  await page.waitForFunction(() => {
+    const dialog = document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]');
+    const video = dialog?.querySelector("video");
+    return Boolean(video && video.currentTime > 0.25 && !video.paused);
+  }, undefined, { timeout: 10_000 });
   await closeMegaMenus(page);
 }
 
@@ -997,13 +1099,16 @@ async function generateBackgroundMusic() {
 }
 
 async function buildVideo(frameCount, voiceoverPath) {
+  const videoFilter = isMobileRecording
+    ? `fps=30,scale=${outputSize.width}:${outputSize.height}:force_original_aspect_ratio=decrease,pad=${outputSize.width}:${outputSize.height}:(ow-iw)/2:(oh-ih)/2:color=0x07090d,format=yuv420p`
+    : `fps=30,scale=${outputSize.width}:${outputSize.height}:force_original_aspect_ratio=increase,crop=${outputSize.width}:${outputSize.height},format=yuv420p`;
   await run(ffmpegPath, [
     "-y",
     "-framerate", String(captureFps),
     "-i", path.join(framesDir, "frame_%05d.png"),
     "-i", voiceoverPath,
     "-frames:v", String(Math.round(frameCount * (30 / captureFps))),
-    "-vf", "fps=30,scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,format=yuv420p",
+    "-vf", videoFilter,
     "-map", "0:v:0",
     "-map", "1:a:0",
     "-c:v", "libx264",
@@ -1030,7 +1135,7 @@ function verifyProbe(info) {
   const audio = streams.filter((stream) => stream.codec_type === "audio");
   const duration = Number(info.format?.duration || video?.duration || 0);
   if (!video) throw new Error("final_video_stream_missing");
-  if (Number(video.width) !== 1920 || Number(video.height) !== 1080) throw new Error(`final_video_dimensions_invalid: ${video.width}x${video.height}`);
+  if (Number(video.width) !== outputSize.width || Number(video.height) !== outputSize.height) throw new Error(`final_video_dimensions_invalid: ${video.width}x${video.height}`);
   if (!audio.length) throw new Error("final_video_narration_missing");
   if (Math.abs(duration - targetSeconds) > 0.75) throw new Error(`final_video_duration_invalid: ${duration}`);
   return { duration, width: video.width, height: video.height, audioStreams: audio.length };
@@ -1045,7 +1150,8 @@ async function exportSamples() {
     await run(ffmpegPath, ["-y", "-ss", String(second), "-i", finalOutputPath, "-frames:v", "1", "-q:v", "2", path.join(samplesDir, `sample-${String(second).padStart(2, "0")}s.jpg`)]);
   }
   const contactSheetStep = Math.max(4, Math.ceil(targetSeconds / 8));
-  await run(ffmpegPath, ["-y", "-i", finalOutputPath, "-vf", `fps=1/${contactSheetStep},scale=480:270,tile=4x2`, "-frames:v", "1", "-update", "1", contactSheetPath]);
+  const contactSheetScale = isMobileRecording ? "270:480" : "480:270";
+  await run(ffmpegPath, ["-y", "-i", finalOutputPath, "-vf", `fps=1/${contactSheetStep},scale=${contactSheetScale},tile=4x2`, "-frames:v", "1", "-update", "1", contactSheetPath]);
 }
 
 async function writeFailure(error, extra = {}) {
@@ -1057,11 +1163,22 @@ async function main() {
   await fs.rm(runDir, { recursive: true, force: true });
   await fs.mkdir(framesDir, { recursive: true });
   await fs.mkdir(outputDir, { recursive: true });
+  if (skipRealGeneration && siteId === "site_dreamshoot") await ensureMydreamshootsLocalPreviewVideo();
   await prepareCleanFrame();
-  log("prepared clean upload frame", { path: cleanFramePath });
+  log("prepared clean upload frame", { path: cleanFramePath, device: tutorialDevice, viewport, outputSize });
 
   const browser = await chromium.launch({ headless });
-  const context = await browser.newContext({ viewport, deviceScaleFactor: 1, baseURL: baseUrl, colorScheme: "dark", reducedMotion: "reduce", locale: "en-US" });
+  const context = await browser.newContext({
+    viewport,
+    deviceScaleFactor,
+    isMobile: isMobileRecording,
+    hasTouch: isMobileRecording,
+    ...(isMobileRecording ? { userAgent: mobileUserAgent } : {}),
+    baseURL: baseUrl,
+    colorScheme: "dark",
+    reducedMotion: "reduce",
+    locale: "en-US"
+  });
   const page = await context.newPage();
   page.setDefaultTimeout(pageTimeoutMs);
   page.on("pageerror", (error) => log("browser page error", { error: error.message }));

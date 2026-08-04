@@ -508,6 +508,7 @@ export function DesignerClient({
       "example_gallery",
       "story_mosaic",
       "video_feature",
+      "mobile_video_showcase",
       "photo_package_wall",
       "occasion_showcase",
       "dreamshoot_feature_tabs",

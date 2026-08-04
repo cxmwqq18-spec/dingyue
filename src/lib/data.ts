@@ -1017,7 +1017,7 @@ const helpJson: ThemePageJson = {
 const workflowJson: ThemePageJson = {
   pageType: "content",
   version: 1,
-  sectionsOrder: ["intro_1", "workflow_1", "rules_1", "faq_1", "conversion_1", "footer_1"],
+  sectionsOrder: ["intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "rules_1", "faq_1", "conversion_1", "footer_1"],
   sections: {
     intro_1: section("rich_text", {
       eyebrow: "How it works",
@@ -1030,6 +1030,48 @@ const workflowJson: ThemePageJson = {
       primaryHref: "/collections",
       secondaryCta: "View pricing",
       secondaryHref: "/pricing"
+    }),
+    tutorial_video_1: section("video_feature", {
+      anchor: "how-it-works",
+      eyebrow: "How it works",
+      title: "Watch the private photo package workflow.",
+      subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private gallery.",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260804draftfix1",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260804draftfix1",
+      videoBadge: "Private gallery workflow",
+      playLabel: "Watch the private photo package workflow"
+    }),
+    tutorial_image_video_1: section("video_feature", {
+      anchor: "ai-image-tutorial",
+      eyebrow: "AI image tutorial",
+      title: "Create an AI photo set from source photos.",
+      subtitle: "Choose a package, upload a clear source photo, review credits, start generation, and open the finished private image.",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260804draftfix1",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260804draftfix1",
+      videoBadge: "AI photo generation",
+      playLabel: "Watch the AI image tutorial"
+    }),
+    mobile_video_1: section("mobile_video_showcase", {
+      anchor: "mobile-video-tutorial",
+      eyebrow: "Mobile tutorial",
+      title: "Mobile workflow preview.",
+      subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+      imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
+      imageAlt: "Private album workspace preview",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260804mobile1",
+      videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260804mobile1",
+      videoBadge: "Mobile workflow",
+      playLabel: "Watch the video tutorial",
+      leftTitle: "AI image tutorial",
+      leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260804mobile1",
+      leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260804mobile1",
+      leftPlayLabel: "Watch the image tutorial",
+      rightTitle: "AI video tutorial",
+      rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260804mobile1",
+      rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260804mobile1",
+      rightPlayLabel: "Watch the video tutorial",
+      placeholderTitle: "Mobile tutorial coming soon",
+      placeholderBody: "The vertical mobile walkthrough will appear here when the final video is ready."
     }),
     workflow_1: section("studio_steps", {
       anchor: "workflow",
