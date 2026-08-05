@@ -23,15 +23,27 @@ const runDir = path.join(outputDir, process.env.TUTORIAL_RUN_SLUG || "mydreamsho
 const framesDir = path.join(runDir, "frames");
 const samplesDir = path.join(runDir, "samples");
 const narrationDir = path.join(runDir, "narration");
-const cleanFramePath = path.join(runDir, "source-frame-clean.jpg");
-const finalOutputPath = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_MP4 || "output/mydreamshoots-i2v-tutorial-45s.mp4");
+const finalOutputPath = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_MP4 || "output/mydreamshoots-i2v-tutorial-55s.mp4");
 const providerResultPath = path.join(runDir, "supplier-result.mp4");
 const narrationPath = path.join(runDir, "narration.m4a");
 const narrationVoicePath = path.join(runDir, "narration-voice.m4a");
 const musicBedPath = path.join(runDir, "background-bed.m4a");
 const failurePath = path.join(runDir, "failure-status.json");
 const contactSheetPath = path.join(runDir, "verification-contact-sheet.jpg");
-const cleanFrameSourcePath = path.resolve(repoRoot, process.env.TUTORIAL_SOURCE_FRAME_IMAGE || "public/assets/dreamshoot/generated/homepage-showcase/images/creator-portraits.webp");
+
+const mydreamshootsHugFrameSourceValues = [
+  "data/customer-assets/sites/site_dreamshoot/customers/cust_dreamshoot_mqq9gas9_i1vjal/assets/a72cd6e8-02ab-47a1-af4e-b025d0501aa9-images-1-.jpg",
+  "data/customer-assets/sites/site_dreamshoot/customers/cust_dreamshoot_mqq9gas9_i1vjal/assets/03795a74-5356-4889-a9ad-979dd7fb8873-images.jpg"
+];
+const fallbackFrameSourceValues = [
+  "public/assets/dreamshoot/generated/homepage-showcase/images/creator-portraits.webp"
+];
+const cleanFrameLabels = listEnv("TUTORIAL_SOURCE_FRAME_LABELS", ["images (1).jpg", "images.jpg"]);
+const cleanFrameSourcePaths = frameSourceValues().map(resolveRepoPath);
+const cleanFramePaths = cleanFrameSourcePaths.map((_, index) =>
+  path.join(runDir, cleanFrameLabels[index] || `source-frame-${String(index + 1).padStart(2, "0")}.jpg`)
+);
+const expectedFrameCount = cleanFramePaths.length;
 
 const viewport = {
   width: Number(process.env.TUTORIAL_VIEWPORT_WIDTH || (isMobileRecording ? 390 : 1920)),
@@ -44,8 +56,8 @@ const outputSize = {
 const deviceScaleFactor = Number(process.env.TUTORIAL_DEVICE_SCALE_FACTOR || (isMobileRecording ? 2 : 1));
 const mobileUserAgent = process.env.TUTORIAL_MOBILE_USER_AGENT ||
   "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1";
-const captureFps = Number(process.env.TUTORIAL_CAPTURE_FPS || 5);
-const targetSeconds = Number(process.env.TUTORIAL_TARGET_SECONDS || 45);
+const captureFps = Number(process.env.TUTORIAL_CAPTURE_FPS || 15);
+const targetSeconds = Number(process.env.TUTORIAL_TARGET_SECONDS || 55);
 const headless = process.env.TUTORIAL_HEADLESS !== "0";
 const maxAttempts = Math.max(1, Number(process.env.TUTORIAL_MAX_ATTEMPTS || 3));
 const jobTimeoutMs = Math.max(60_000, Number(process.env.TUTORIAL_JOB_TIMEOUT_MS || 1_800_000));
@@ -59,44 +71,51 @@ const ffprobePath = process.env.FFPROBE_PATH || siblingFfprobe(ffmpegPath) || "f
 const includeBackgroundMusic = process.env.TUTORIAL_BACKGROUND_MUSIC !== "0";
 const backgroundMusicVolume = Math.max(0, Math.min(1, Number(process.env.TUTORIAL_BACKGROUND_VOLUME || 0.12)));
 
-const promptText = process.env.TUTORIAL_PROMPT_TEXT || `Create a 6-second image-to-video clip from the selected frame. Keep the adult creator's face, hair, outfit, warm studio lighting, microphone, laptop, and background consistent. Add a slow 35mm push-in, gentle hair movement, subtle lamp glow, natural blinking, and a calm confident expression. No extra people, no logos, no watermark, no captions, no distorted hands. End on a steady close frame.`;
+const promptText = process.env.TUTORIAL_PROMPT_TEXT || "Using the uploaded images, generate a video of the two people hugging.";
 
 const narrationSegments = jsonEnv("TUTORIAL_NARRATION_JSON", [
   { duration: 3, text: `First, sign in to your private ${tutorialBrandName} workspace.` },
+  { duration: 6, text: "After login, review the credit plans and select a plan before generating." },
   { duration: 3, text: "Open the Image to Video workspace from your account." },
-  { duration: 8, text: "Click Upload, choose a clean frame image, and open it in the workspace." },
-  { duration: 4, text: "Wait for the frame to finish uploading before continuing." },
-  { duration: 4, text: "Select the uploaded image as the reference frame for the clip." },
-  { duration: 6, text: "Paste a clear motion prompt, then keep the format at sixteen by nine, seven twenty p, and six seconds." },
-  { duration: 4, text: "Click Generate video to submit the request to the active provider." },
-  { duration: 6, text: "Track the request in Video results while the provider prepares and delivers the video." },
-  { duration: 7, text: "Open the preview, press play, and review the finished video before downloading it." }
+  { duration: 4, text: "Click Upload to open the folder picker on your computer." },
+  { duration: 4, text: "Choose both clean frame images, then open them in the workspace." },
+  { duration: 5, text: "Scroll the left panel and confirm both uploaded frames are visible." },
+  { duration: 4, text: "Confirm the two selected frames will guide the image to video request." },
+  { duration: 6, text: "Paste the English hug prompt, then keep the format at sixteen by nine, seven twenty p, and six seconds." },
+  { duration: 4, text: "Click Generate video to submit the request." },
+  { duration: 2, text: "Show the generation progress briefly." },
+  { duration: 14, text: "Open the preview, press play, and review the finished hugging video smoothly." }
 ]);
 
 const captions = {
   login: "Sign in to your private workspace",
+  pricing: "Choose a credit plan before generating",
   workspace: "Open the Image to Video workspace",
-  upload: "Click Upload and choose a frame image",
-  uploaded: "Wait for the uploaded frame to appear",
-  select: "Select the frame image to guide the video",
-  prompt: "Paste the prompt and keep 16:9 / 720P / 6s",
+  upload: "Click Upload and choose two frame images",
+  uploadChooser: "Click Upload to open the folder picker",
+  uploadSelected: "Choose both frame images from your computer",
+  uploaded: "Wait for both uploaded frames to appear",
+  uploadedScroll: "Scroll the left panel to review both uploaded frames",
+  select: "Select both frames to guide the video",
+  prompt: "Paste the hug prompt and keep 16:9 / 720P / 6s",
   generate: "Click Generate video to submit",
-  progress: "Track generation progress in Video results",
-  result: "Open preview and play the finished video",
+  progress: "Show generation progress briefly",
+  result: "Open preview and play the hugging video",
   ...jsonEnv("TUTORIAL_CAPTIONS_JSON", {})
 };
 
 const captureDurations = {
   login: 3,
+  pricing: 6,
   workspace: 3,
   uploadChooser: 4,
   uploadSelected: 4,
-  uploaded: 4,
+  uploaded: 5,
   select: 4,
   prompt: 6,
   generate: 4,
-  progress: 6,
-  result: 7,
+  progress: 2,
+  result: 14,
   ...jsonEnv("TUTORIAL_CAPTURE_DURATIONS_JSON", {})
 };
 
@@ -117,6 +136,17 @@ function listEnv(name, fallback) {
   const value = process.env[name];
   if (!value) return fallback;
   return value.split(",").map((item) => item.trim()).filter(Boolean);
+}
+
+function resolveRepoPath(value) {
+  return path.isAbsolute(value) ? value : path.resolve(repoRoot, value);
+}
+
+function frameSourceValues() {
+  const multiValue = process.env.TUTORIAL_SOURCE_FRAME_IMAGES;
+  if (multiValue) return multiValue.split(",").map((item) => item.trim()).filter(Boolean);
+  if (process.env.TUTORIAL_SOURCE_FRAME_IMAGE) return [process.env.TUTORIAL_SOURCE_FRAME_IMAGE];
+  return siteId === "site_dreamshoot" ? mydreamshootsHugFrameSourceValues : fallbackFrameSourceValues;
 }
 
 function siblingFfprobe(binary) {
@@ -228,26 +258,15 @@ function run(command, args) {
   });
 }
 
-async function prepareCleanFrame() {
-  const meta = await sharp(cleanFrameSourcePath).metadata();
-  if (!meta.width || !meta.height) throw new Error("source_frame_metadata_missing");
-  const cropHeight = Math.floor(meta.height * 0.83);
-  const cleanCrop = await sharp(cleanFrameSourcePath).extract({ left: 0, top: 0, width: meta.width, height: cropHeight }).toBuffer();
-  const background = await sharp(cleanCrop)
-    .resize(1280, 720, { fit: "cover" })
-    .blur(18)
-    .modulate({ brightness: 0.76, saturation: 0.82 })
-    .jpeg({ quality: 88, mozjpeg: true })
-    .toBuffer();
-  const foreground = await sharp(cleanCrop)
-    .resize({ width: 760, height: 720, fit: "contain", withoutEnlargement: false })
-    .jpeg({ quality: 92, mozjpeg: true })
-    .toBuffer();
-  const fgMeta = await sharp(foreground).metadata();
-  await sharp(background)
-    .composite([{ input: foreground, left: Math.floor((1280 - (fgMeta.width || 760)) / 2), top: Math.floor((720 - (fgMeta.height || 720)) / 2) }])
-    .jpeg({ quality: 92, mozjpeg: true })
-    .toFile(cleanFramePath);
+async function prepareCleanFrames() {
+  for (const [index, sourcePath] of cleanFrameSourcePaths.entries()) {
+    const meta = await sharp(sourcePath).metadata();
+    if (!meta.width || !meta.height) throw new Error(`source_frame_metadata_missing:${sourcePath}`);
+    await sharp(sourcePath)
+      .rotate()
+      .jpeg({ quality: 94, mozjpeg: true })
+      .toFile(cleanFramePaths[index]);
+  }
 }
 
 class Recorder {
@@ -256,14 +275,15 @@ class Recorder {
     this.index = 0;
   }
 
-  async captureFor(seconds, caption) {
+  async captureFor(seconds, caption, options = {}) {
     await setCaption(this.page, caption);
     const count = Math.round(seconds * captureFps);
     for (let i = 0; i < count; i += 1) {
+      if (options.beforeFrame) await options.beforeFrame({ index: i, count });
       await this.page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
       await this.page.screenshot({ path: path.join(framesDir, `frame_${String(this.index).padStart(5, "0")}.png`), fullPage: false });
       this.index += 1;
-      await this.page.waitForTimeout(35);
+      await this.page.waitForTimeout(options.frameDelayMs ?? 35);
     }
   }
 }
@@ -286,6 +306,9 @@ async function installOverlay(page) {
     .tutorial-history-mask { position: fixed; z-index: 2147482995; display: grid; place-items: center; overflow: hidden; border: 1px solid rgba(148,163,184,.34); border-radius: 12px; background: linear-gradient(135deg, rgba(2,6,23,.99), rgba(15,23,42,.97)); color: rgba(226,232,240,.92); font: 800 15px/1.2 Inter, system-ui, sans-serif; letter-spacing: .04em; text-transform: uppercase; text-align: center; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 18px 44px rgba(0,0,0,.30); }
     .tutorial-history-mask::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, rgba(148,163,184,.05) 0 10px, rgba(148,163,184,.11) 10px 20px); opacity: .65; }
     .tutorial-history-mask span { position: relative; padding: 10px 14px; border-radius: 999px; background: rgba(15,23,42,.72); }
+    [role="dialog"][aria-label*="Generated asset preview"] video::-webkit-media-controls,
+    [role="dialog"][aria-label*="Generated asset preview"] video::-webkit-media-controls-panel,
+    [role="dialog"][aria-label*="Generated asset preview"] video::-webkit-media-controls-overlay-play-button { display: none !important; opacity: 0 !important; }
     .tutorial-file-backdrop { display: none !important; }
     .tutorial-file-dialog { position: fixed; right: 38px; top: 50%; z-index: 2147482992; width: min(760px, calc(100vw - 96px)); height: 430px; transform: translateY(-50%); overflow: hidden; border: 1px solid #b9bdc7; border-radius: 14px; background: #f5f6f8; color: #20242b; box-shadow: 0 24px 70px rgba(0,0,0,.34); font: 500 14px/1.3 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; pointer-events: none; }
     .tutorial-file-titlebar { display: flex; align-items: center; gap: 10px; height: 42px; padding: 0 16px; border-bottom: 1px solid #d7d9df; background: #fbfbfc; }
@@ -486,8 +509,8 @@ async function installOverlay(page) {
             </aside>
             <div class="tutorial-file-main">
               <div class="tutorial-file-list">
-                <div class="tutorial-file-item ${selected ? "selected" : ""}"><div class="tutorial-file-thumb">images.jpeg</div><strong>images.jpeg</strong></div>
-                <div class="tutorial-file-item ${selected ? "selected" : ""}"><div class="tutorial-file-thumb">source-frame-clean.jpg</div><strong>source-frame-clean.jpg</strong></div>
+                <div class="tutorial-file-item ${selected ? "selected" : ""}"><div class="tutorial-file-thumb">images (1)</div><strong>images (1).jpg</strong></div>
+                <div class="tutorial-file-item ${selected ? "selected" : ""}"><div class="tutorial-file-thumb">images</div><strong>images.jpg</strong></div>
                 <div class="tutorial-file-item"><div class="tutorial-file-thumb">creator-frame.png</div><strong>creator-frame.png</strong></div>
               </div>
               <div class="tutorial-file-footer"><span class="tutorial-file-button">Cancel</span><span class="tutorial-file-button primary">${selected ? "Open" : "Choose"}</span></div>
@@ -618,6 +641,24 @@ async function captureLoginAndAuthenticate(page, context, recorder) {
   throw new Error(`customer_login_failed: ${sanitizeText(lastError)}`);
 }
 
+async function showPricingRechargeStep(page, recorder) {
+  await page.goto(absoluteUrl("/pricing"), { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+  await waitReady(page);
+  await installOverlay(page);
+  await setHistoryMask(page, false);
+
+  const planButtons = page.locator("a,button").filter({ hasText: /^Select plan$/i });
+  const proButton = planButtons.nth(1);
+  const target = await proButton.waitFor({ state: "visible", timeout: 20_000 }).then(() => true).catch(() => false)
+    ? proButton
+    : planButtons.first();
+  await target.waitFor({ state: "visible", timeout: 20_000 });
+  await target.scrollIntoViewIfNeeded().catch(() => undefined);
+  await pointAt(page, target).catch(() => undefined);
+  await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+  await recorder.captureFor(captureDurations.pricing, captions.pricing);
+}
+
 async function openWorkspace(page, hash = "#step-video") {
   let lastError = "";
   for (let attempt = 1; attempt <= 4; attempt += 1) {
@@ -649,7 +690,7 @@ async function clearSelectedFrames(page) {
   }, undefined, { timeout: 15_000 }).catch(() => undefined);
 }
 
-async function uploadFrame(page, recorder, recordChooser) {
+async function uploadFrames(page, recorder, recordChooser) {
   await clearSelectedFrames(page);
   await clearSelectedFrames(page);
   const uploadResponsePromise = page.waitForResponse((response) =>
@@ -661,19 +702,19 @@ async function uploadFrame(page, recorder, recordChooser) {
     await clickWithPointer(page, uploadButton, { force: true });
     await page.evaluate(() => window.__tutorial?.fileDialog?.("desktop")).catch(() => undefined);
     await moveTutorialPointer(page, 1030, 510);
-    await recorder.captureFor(captureDurations.uploadChooser, captions.upload);
+    await recorder.captureFor(captureDurations.uploadChooser, captions.uploadChooser || captions.upload);
     await page.evaluate(() => window.__tutorial?.fileDialog?.("selected")).catch(() => undefined);
     await moveTutorialPointer(page, 1210, 860);
-    await recorder.captureFor(captureDurations.uploadSelected, captions.upload);
-    await page.locator('#studio-console-video input[type="file"]').first().setInputFiles(cleanFramePath);
+    await recorder.captureFor(captureDurations.uploadSelected, captions.uploadSelected || captions.upload);
+    await page.locator('#studio-console-video input[type="file"]').first().setInputFiles(cleanFramePaths);
     await page.evaluate(() => window.__tutorial?.fileDialog?.(null)).catch(() => undefined);
   } else {
-    await page.locator('#studio-console-video input[type="file"]').first().setInputFiles(cleanFramePath);
+    await page.locator('#studio-console-video input[type="file"]').first().setInputFiles(cleanFramePaths);
   }
-  await page.waitForFunction(() => {
+  await page.waitForFunction(({ expectedFrameCount }) => {
     const text = `${document.querySelector("#studio-console-video")?.textContent || ""} ${document.querySelector("#video-step-generate")?.textContent || ""}`;
-    return /[1-7]\s+of\s+7\s+selected/i.test(text) || /[1-7]\/7\s+(selected|frames)/i.test(text);
-  }, undefined, { timeout: 120_000 });
+    return new RegExp(`${expectedFrameCount}\\s+(?:of\\s+7\\s+selected|selected\\s+frames\\s+converted)|${expectedFrameCount}\\/7\\s+(?:selected|frames)`, "i").test(text);
+  }, { expectedFrameCount }, { timeout: 120_000 });
   const uploadResponse = await Promise.race([
     uploadResponsePromise,
     page.waitForTimeout(1_000).then(() => null)
@@ -684,19 +725,87 @@ async function uploadFrame(page, recorder, recordChooser) {
   }
 }
 
-async function selectUploadedFrame(page) {
-  const selectionReady = async (timeout = 8_000) => page.waitForFunction(() => {
+async function visibleVideoFrameRect(page, index, scope = "uploaded") {
+  return await page.evaluate(({ index, scope }) => {
+    const root = document.querySelector("#studio-console-video");
+    if (!root) return null;
+    const sectionHeading = Array.from(root.querySelectorAll("*")).find((node) => {
+      const text = node.textContent || "";
+      return scope === "selected" ? /SELECTED ORDER|FRAME ORDER/i.test(text) : /UPLOADED VIDEO FRAMES/i.test(text);
+    });
+    const nextSectionHeading = scope === "selected"
+      ? Array.from(root.querySelectorAll("*")).find((node) => /UPLOADED VIDEO FRAMES/i.test(node.textContent || ""))
+      : null;
+    const inScope = (node) => {
+      if (!sectionHeading) return true;
+      const afterStart = Boolean(sectionHeading.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING);
+      const beforeNext = !nextSectionHeading || Boolean(nextSectionHeading.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_PRECEDING);
+      return afterStart && beforeNext;
+    };
+    const pressedButtons = Array.from(root.querySelectorAll("button[aria-pressed]"))
+      .filter((button) => inScope(button) && (button.querySelector("img") || /images|source-frame|frame_/i.test(button.textContent || "")));
+    const allMediaButtons = Array.from(root.querySelectorAll("button, [role='button']"))
+      .filter((button) => {
+        const text = button.textContent || "";
+        if (!inScope(button)) return false;
+        if (/Upload|Write prompt|Delete|Clear/i.test(text)) return false;
+        return button.querySelector("img") || /images|source-frame|frame_/i.test(text);
+      });
+    const candidates = scope === "selected"
+      ? [...pressedButtons, ...allMediaButtons]
+      : [...allMediaButtons, ...pressedButtons];
+    const unique = [];
+    const seen = new Set();
+    for (const item of candidates) {
+      if (seen.has(item)) continue;
+      seen.add(item);
+      unique.push(item);
+    }
+    const target = unique[index] || unique[0];
+    if (!target) return null;
+    target.scrollIntoView({ block: "center", inline: "center", behavior: "instant" });
+    const rect = target.getBoundingClientRect();
+    return { x: rect.left, y: rect.top, width: rect.width, height: rect.height };
+  }, { index, scope }).catch(() => null);
+}
+
+async function pointAtFrameRect(page, index, scope = "uploaded", pulse = true) {
+  const rect = await visibleVideoFrameRect(page, index, scope);
+  if (!rect) return false;
+  await page.waitForTimeout(350);
+  await page.evaluate((rect) => {
+    window.__tutorial?.highlight?.(rect);
+    window.__tutorial?.cursor?.(rect.x + rect.width / 2, rect.y + rect.height / 2);
+  }, rect).catch(() => undefined);
+  if (pulse) await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+  return true;
+}
+
+async function showUploadedFramesInSidebar(page, recorder) {
+  await page.evaluate(() => {
+    const root = document.querySelector("#studio-console-video");
+    const heading = root && Array.from(root.querySelectorAll("*")).find((node) => /UPLOADED VIDEO FRAMES/i.test(node.textContent || ""));
+    heading?.scrollIntoView({ block: "start", inline: "nearest", behavior: "instant" });
+  }).catch(() => undefined);
+  await page.waitForTimeout(450);
+  await pointAtFrameRect(page, 0, "uploaded", true).catch(() => undefined);
+  await recorder.captureFor(2, captions.uploadedScroll || captions.uploaded);
+  await pointAtFrameRect(page, 1, "uploaded", true).catch(() => undefined);
+  await recorder.captureFor(Math.max(1, captureDurations.uploaded - 2), captions.uploadedScroll || captions.uploaded);
+}
+
+async function selectUploadedFrames(page) {
+  const selectionReady = async (timeout = 8_000) => page.waitForFunction(({ expectedFrameCount }) => {
     const root = document.querySelector("#studio-console-video");
     if (!root) return false;
     const text = root.textContent || "";
-    return Boolean(root.querySelector("button[aria-pressed='true']")) ||
-      /[1-7]\s+of\s+7\s+selected/i.test(text) ||
-      /[1-7]\/7\s+(selected|frames)/i.test(text) ||
-      /Drag or use arrows/i.test(text);
-  }, undefined, { timeout });
+    const selected = root.querySelectorAll("button[aria-pressed='true']").length;
+    return selected >= expectedFrameCount ||
+      new RegExp(`${expectedFrameCount}\\s+(?:of\\s+7\\s+selected|selected\\s+frames\\s+converted)|${expectedFrameCount}\\/7\\s+(?:selected|frames)`, "i").test(text);
+  }, { expectedFrameCount }, { timeout });
 
   const selectedButton = page.locator('#studio-console-video button[aria-pressed="true"]').first();
-  if (await selectedButton.isVisible().catch(() => false)) {
+  if (await page.locator('#studio-console-video button[aria-pressed="true"]').count().catch(() => 0) >= expectedFrameCount && await selectedButton.isVisible().catch(() => false)) {
     await pointAt(page, selectedButton).catch(() => undefined);
     await selectionReady().catch(() => undefined);
     return;
@@ -704,7 +813,7 @@ async function selectUploadedFrame(page) {
 
   const preferredFrame = page
     .locator('#studio-console-video button[aria-pressed="false"]:not([disabled])')
-    .filter({ hasText: /source-frame-clean|frame_/i })
+    .filter({ hasText: /images(?:\s*\(1\))?|source-frame|frame_/i })
     .first();
   const fallbackFrame = page.locator('#studio-console-video button[aria-pressed="false"]:not([disabled]):has(img)').first();
   const frameButton = await preferredFrame.isVisible().catch(() => false) ? preferredFrame : fallbackFrame;
@@ -715,20 +824,39 @@ async function selectUploadedFrame(page) {
   try {
     await selectionReady(10_000);
   } catch {
-    const clicked = await page.evaluate(() => {
+    const clicked = await page.evaluate(({ expectedFrameCount }) => {
       const root = document.querySelector("#studio-console-video");
       if (!root) return false;
       const buttons = Array.from(root.querySelectorAll("button[aria-pressed='false']:not([disabled])"));
-      const preferred = buttons.find((button) => /source-frame-clean|frame_/i.test(button.textContent || "")) ||
-        buttons.find((button) => button.querySelector("img"));
-      if (!preferred) return false;
-      preferred.scrollIntoView({ block: "center", inline: "center" });
-      preferred.click();
-      return true;
-    });
+      const preferred = [
+        ...buttons.filter((button) => /images(?:\s*\(1\))?|source-frame|frame_/i.test(button.textContent || "")),
+        ...buttons.filter((button) => button.querySelector("img"))
+      ];
+      let clicks = 0;
+      for (const button of preferred) {
+        if (root.querySelectorAll("button[aria-pressed='true']").length >= expectedFrameCount) break;
+        button.scrollIntoView({ block: "center", inline: "center" });
+        button.click();
+        clicks += 1;
+      }
+      return clicks > 0;
+    }, { expectedFrameCount });
     if (!clicked) throw new Error("video_frame_select_button_missing");
     await selectionReady(15_000);
   }
+}
+
+async function showSelectedFrameOrder(page, recorder) {
+  await page.evaluate(() => {
+    const root = document.querySelector("#studio-console-video");
+    const heading = root && Array.from(root.querySelectorAll("*")).find((node) => /SELECTED ORDER|FRAME ORDER/i.test(node.textContent || ""));
+    heading?.scrollIntoView({ block: "start", inline: "nearest", behavior: "instant" });
+  }).catch(() => undefined);
+  await page.waitForTimeout(350);
+  await pointAtFrameRect(page, 0, "selected", true).catch(() => undefined);
+  await recorder.captureFor(2, captions.select);
+  await pointAtFrameRect(page, 1, "selected", true).catch(() => undefined);
+  await recorder.captureFor(Math.max(1, captureDurations.select - 2), captions.select);
 }
 
 async function configurePrompt(page) {
@@ -741,7 +869,7 @@ async function configurePrompt(page) {
 }
 
 async function submitJobViaApiFallback(page, reason) {
-  const result = await page.evaluate(async ({ siteId, promptText, reason }) => {
+  const result = await page.evaluate(async ({ siteId, promptText, reason, expectedFrameCount }) => {
     function cookieValue(name) {
       return document.cookie
         .split(";")
@@ -765,9 +893,14 @@ async function submitJobViaApiFallback(page, reason) {
     const frameAssets = assets
       .filter((asset) => asset?.subjectRole === "video_frame" && asset?.role === "input" && String(asset.mimeType || "").startsWith("image/"))
       .sort((a, b) => Date.parse(b.createdAt || "") - Date.parse(a.createdAt || ""));
-    const frameAsset = frameAssets.find((asset) => /source-frame-clean/i.test(asset.label || "")) || frameAssets[0];
+    const preferredFrames = frameAssets.filter((asset) => /images(?:\s*\(1\))?|source-frame|frame_/i.test(asset.label || ""));
+    const selectedFrameAssets = (preferredFrames.length >= expectedFrameCount ? preferredFrames : frameAssets)
+      .slice(0, expectedFrameCount)
+      .reverse();
     if (!customer?.id) return { ok: false, error: "customer_missing" };
-    if (!frameAsset?.id) return { ok: false, error: "frame_asset_missing" };
+    if (selectedFrameAssets.length < expectedFrameCount || selectedFrameAssets.some((asset) => !asset?.id)) {
+      return { ok: false, error: "frame_assets_missing" };
+    }
 
     const themeResponse = await jsonFetch(`/api/sites/${siteId}/video-themes?pageSize=100&includeCategories=1&refresh=${Date.now()}`);
     if (!themeResponse.response.ok) return { ok: false, error: `themes_${themeResponse.response.status}` };
@@ -775,7 +908,7 @@ async function submitJobViaApiFallback(page, reason) {
     const selectedTheme = themes.find((theme) => /automatic motion/i.test(`${theme.name || ""} ${theme.headline || ""}`)) || themes[0];
     if (!selectedTheme?.id) return { ok: false, error: "video_theme_missing" };
 
-    const frameAssetIds = [frameAsset.id];
+    const frameAssetIds = selectedFrameAssets.map((asset) => asset.id);
     const idempotencyKey = `tutorial-${Date.now()}-${Math.random().toString(36).slice(2)}`;
     const csrf = cookieValue(`customer_csrf_${siteId}`);
     const requestBody = {
@@ -864,9 +997,9 @@ async function submitJobViaApiFallback(page, reason) {
       jobId: submitResponse.data.job.id,
       reused: Boolean(submitResponse.data.reused),
       workerDispatchStatus: submitResponse.data.workerDispatch?.status,
-      frameAssetId: frameAsset.id
+      frameAssetIds
     };
-  }, { siteId, promptText, reason });
+  }, { siteId, promptText, reason, expectedFrameCount });
   if (!result.ok || !result.jobId) throw new Error(`video_job_api_fallback_failed: ${sanitizeText(result.error || result.status || "unknown")}`);
   log("video job submitted via api fallback", {
     jobId: result.jobId,
@@ -1028,6 +1161,54 @@ async function openHistoricalVideoPreview(page) {
     return Boolean(video && video.currentTime > 0.25 && !video.paused);
   }, undefined, { timeout: 10_000 });
   await closeMegaMenus(page);
+}
+
+async function prepareGeneratedVideoPlayback(page, seconds) {
+  await page.evaluate(async ({ seconds }) => {
+    const dialog = document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]');
+    const video = dialog?.querySelector("video");
+    if (!video) return;
+    video.muted = true;
+    video.controls = false;
+    video.loop = false;
+    video.currentTime = 0;
+    if (video.readyState < 2) {
+      await new Promise((resolve) => {
+        const timeout = window.setTimeout(resolve, 3000);
+        const done = () => {
+          window.clearTimeout(timeout);
+          resolve();
+        };
+        video.addEventListener("loadeddata", done, { once: true });
+        video.addEventListener("canplay", done, { once: true });
+      });
+    }
+    const duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 6;
+    video.playbackRate = Math.max(0.35, Math.min(1, duration / Math.max(1, seconds - 0.25)));
+    await video.play().catch(() => undefined);
+  }, { seconds }).catch(() => undefined);
+}
+
+async function seekGeneratedVideoFrame(page, index, count) {
+  await page.evaluate(async ({ index, count }) => {
+    const dialog = document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]');
+    const video = dialog?.querySelector("video");
+    if (!video) return;
+    const duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 6;
+    const usableDuration = Math.max(0.1, duration - 0.08);
+    const target = Math.min(usableDuration, usableDuration * (index / Math.max(1, count - 1)));
+    if (Math.abs(video.currentTime - target) < 0.018 && video.readyState >= 2) return;
+    await new Promise((resolve) => {
+      const timeout = window.setTimeout(resolve, 180);
+      const done = () => {
+        window.clearTimeout(timeout);
+        resolve();
+      };
+      video.addEventListener("seeked", done, { once: true });
+      video.currentTime = target;
+    });
+    await video.play().catch(() => undefined);
+  }, { index, count }).catch(() => undefined);
 }
 
 async function runtime(page) {
@@ -1228,8 +1409,8 @@ async function main() {
   await fs.mkdir(framesDir, { recursive: true });
   await fs.mkdir(outputDir, { recursive: true });
   if (skipRealGeneration && siteId === "site_dreamshoot") await ensureMydreamshootsLocalPreviewVideo();
-  await prepareCleanFrame();
-  log("prepared clean upload frame", { path: cleanFramePath, device: tutorialDevice, viewport, outputSize });
+  await prepareCleanFrames();
+  log("prepared clean upload frames", { paths: cleanFramePaths, sources: cleanFrameSourcePaths, device: tutorialDevice, viewport, outputSize });
 
   const browser = await chromium.launch({ headless });
   const context = await browser.newContext({
@@ -1253,6 +1434,7 @@ async function main() {
   const jobIds = [];
   try {
     await captureLoginAndAuthenticate(page, context, recorder);
+    await showPricingRechargeStep(page, recorder);
     await openWorkspace(page, "#step-video");
     await pointAt(page, page.locator("#video-step-generate").getByText(/Create an AI video clip/i).first()).catch(() => undefined);
     await recorder.captureFor(captureDurations.workspace, captions.workspace);
@@ -1263,17 +1445,17 @@ async function main() {
     for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
       try {
         await openWorkspace(page, "#step-video");
-        await uploadFrame(page, recorder, !captured.upload);
+        await uploadFrames(page, recorder, !captured.upload);
         if (!captured.upload) {
           captured.upload = true;
         }
         if (!captured.uploaded) {
-          await recorder.captureFor(captureDurations.uploaded, captions.uploaded);
+          await showUploadedFramesInSidebar(page, recorder);
           captured.uploaded = true;
         }
-        await selectUploadedFrame(page);
+        await selectUploadedFrames(page);
         if (!captured.select) {
-          await recorder.captureFor(captureDurations.select, captions.select);
+          await showSelectedFrameOrder(page, recorder);
           captured.select = true;
         }
         await configurePrompt(page);
@@ -1322,9 +1504,13 @@ async function main() {
     if (skipRealGeneration) await openHistoricalVideoPreview(page);
     else await openResults(page);
     await page.evaluate(() => window.__tutorial?.highlight?.(null)).catch(() => undefined);
-    await recorder.captureFor(captureDurations.result, captions.result);
-    const expectedFrameCount = Math.round(targetSeconds * captureFps);
-    if (recorder.index !== expectedFrameCount) throw new Error(`capture_frame_count_invalid: ${recorder.index}`);
+    await prepareGeneratedVideoPlayback(page, captureDurations.result);
+    await recorder.captureFor(captureDurations.result, captions.result, {
+      frameDelayMs: Math.max(35, Math.round(1000 / captureFps)),
+      beforeFrame: ({ index, count }) => seekGeneratedVideoFrame(page, index, count)
+    });
+    const expectedCaptureFrameCount = Math.round(targetSeconds * captureFps);
+    if (recorder.index !== expectedCaptureFrameCount) throw new Error(`capture_frame_count_invalid: ${recorder.index}`);
     const voiceover = await generateNarration();
     await buildVideo(recorder.index, voiceover);
     const finalProbe = verifyProbe(await probe(finalOutputPath));

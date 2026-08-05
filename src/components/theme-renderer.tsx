@@ -14368,26 +14368,26 @@ function SectionView({
             />
           </article>
           <div className="mt-6 flex flex-wrap gap-3 text-sm">
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/privacy")}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/privacy")} rel="nofollow">
               {spanishXbyPolicy ? "Politica de privacidad" : "Privacy Policy"}
             </Link>
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/terms")}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/terms")} rel="nofollow">
               {spanishXbyPolicy ? "Terminos del servicio" : "Terms of Service"}
             </Link>
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/cookies")}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/cookies")} rel="nofollow">
               {spanishXbyPolicy ? "Politica de cookies" : "Cookie Policy"}
             </Link>
             {!spanishXbyPolicy ? (
-              <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/children-privacy")}>
+              <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/children-privacy")} rel="nofollow">
                 KIDS Act
               </Link>
             ) : null}
             {!spanishXbyPolicy ? (
-              <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/state-privacy")}>
+              <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/state-privacy")} rel="nofollow">
                 {isAidreamcapesSite(site) ? "CISA" : "DPDPA"}
               </Link>
             ) : null}
-            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/faq")}>
+            <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/faq")} rel="nofollow">
               {spanishXbyPolicy ? "Centro de ayuda" : "Help center"}
             </Link>
           </div>

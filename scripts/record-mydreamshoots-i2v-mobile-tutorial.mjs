@@ -15,8 +15,8 @@ process.env.TUTORIAL_SITE_ID = process.env.TUTORIAL_SITE_ID || "site_dreamshoot"
 process.env.TUTORIAL_SITE_SLUG = process.env.TUTORIAL_SITE_SLUG || "mydreamshoots";
 process.env.TUTORIAL_BRAND_NAME = process.env.TUTORIAL_BRAND_NAME || "MyDreamShoots";
 process.env.TUTORIAL_RUN_SLUG = process.env.TUTORIAL_RUN_SLUG || "mydreamshoots-i2v-mobile-tutorial-work";
-process.env.TUTORIAL_TARGET_SECONDS = process.env.TUTORIAL_TARGET_SECONDS || "45";
-process.env.TUTORIAL_OUTPUT_MP4 = process.env.TUTORIAL_OUTPUT_MP4 || "output/mydreamshoots-i2v-mobile-tutorial-45s.mp4";
+process.env.TUTORIAL_TARGET_SECONDS = process.env.TUTORIAL_TARGET_SECONDS || "55";
+process.env.TUTORIAL_OUTPUT_MP4 = process.env.TUTORIAL_OUTPUT_MP4 || "output/mydreamshoots-i2v-mobile-tutorial-55s.mp4";
 process.env.TUTORIAL_REAL_GENERATION = process.env.TUTORIAL_REAL_GENERATION || (process.env.MYDREAMSHOOTS_I2V_MOBILE_TUTORIAL_REAL_GENERATION === "1" ? "1" : "0");
 
 import { ensureMydreamshootsLocalPreviewVideo } from "./tutorial-local-preview-seeds.mjs";

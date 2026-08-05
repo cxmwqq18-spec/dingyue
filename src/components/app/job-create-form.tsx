@@ -62,6 +62,10 @@ type VideoToolSelection = {
   title: string;
   href?: string;
 };
+type PackageGalleryExample = {
+  src: string;
+  alt: string;
+};
 
 function previewImageAttrs(src: string, title: string, meta = "") {
   return {
@@ -73,6 +77,10 @@ function previewImageAttrs(src: string, title: string, meta = "") {
     role: "button",
     tabIndex: 0
   } as const;
+}
+
+function comparablePreviewImageUrl(value: string): string {
+  return value.trim().split(/[?#]/)[0] ?? value.trim();
 }
 
 function jobT(spanish: boolean, english: string, spanishText: string): string {
@@ -1093,6 +1101,7 @@ export function JobCreateForm({
   const [showAllOptions, setShowAllOptions] = useState(false);
   const localAssetMutationRef = useRef(0);
   const sourceUploadInputRef = useRef<HTMLInputElement | null>(null);
+  const packageDetailRef = useRef<HTMLDivElement | null>(null);
   const pendingUploadTargetRef = useRef<UploadTarget>("primary");
   const routedVideoToolIdsRef = useRef<Set<string>>(new Set());
   const selectedApp = siteAiApps.find((app) => app.aiApp.slug === aiAppSlug) ?? siteAiApps[0];
@@ -1129,6 +1138,35 @@ export function JobCreateForm({
   const selectionDescription = createMode === "theme"
     ? selectedPack?.description || selectedPack?.headline || jobT(spanish, "Choose this package, attach selfies, then review credits before generation.", "Elige este paquete, adjunta selfies y revisa los creditos antes de generar.")
     : selectedToolPreset?.description ?? jobT(spanish, "Choose this focused tool, attach selfies, then review credits before generation.", "Elige esta herramienta, adjunta selfies y revisa los creditos antes de generar.");
+  const selectedPackageGalleryExamples = useMemo<PackageGalleryExample[]>(() => {
+    if (createMode !== "theme" || !selectedPack) return [];
+    const excluded = new Set(
+      [selectionPreviewImage, withStorefrontPublicWatermarkUrl(selectedPack.imageUrl)]
+        .filter((image): image is string => Boolean(image))
+        .map((image) => comparablePreviewImageUrl(image))
+        .filter(Boolean)
+    );
+    const seen = new Set<string>();
+    const examples: PackageGalleryExample[] = [];
+    (selectedPack.galleryImages ?? []).forEach((image, imageIndex) => {
+      const src = withStorefrontPublicWatermarkUrl(image);
+      const key = comparablePreviewImageUrl(src);
+      if (!src || !key || excluded.has(key) || seen.has(key)) return;
+      seen.add(key);
+      const explicitAlt = selectedPack.galleryImageAlts?.[imageIndex]?.trim();
+      examples.push({
+        src,
+        alt: explicitAlt || `${selectionTitle} gallery example ${examples.length + 1}`
+      });
+    });
+    if (!examples.length && selectionPreviewImage) {
+      examples.push({
+        src: selectionPreviewImage,
+        alt: `${selectionTitle} cover preview`
+      });
+    }
+    return examples.slice(0, 12);
+  }, [createMode, selectedPack, selectionPreviewImage, selectionTitle]);
   const sourceAssets = assetsForRules(availableAssets, selectedWorkflow);
   const selectedCustomerModel = customerModels.find((model) => model.id === selectedCustomerModelId) ?? customerModels[0];
   const selectedFields = workflowFields(selectedWorkflow);
@@ -1448,12 +1486,20 @@ export function JobCreateForm({
     setPackageDialogOpen(true);
   }
 
-  function selectCreativePackAndOpen(pack: CreativePack) {
+  function revealPackageDetail() {
+    if (typeof window === "undefined") return;
+    window.setTimeout(() => {
+      packageDetailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
+  }
+
+  function selectCreativePackAndReveal(pack: CreativePack) {
     updateCreativePack(pack);
     setDialogMessage("");
     setDialogTone("info");
     setPackagePromptDraft(pack.prompt?.trim() || pack.description || pack.headline || "");
-    setPackageDialogOpen(true);
+    setPackageDialogOpen(false);
+    revealPackageDetail();
   }
 
   function selectToolPresetAndOpen(preset: ToolPreset) {
@@ -1477,6 +1523,7 @@ export function JobCreateForm({
       updateCreativePack(nextPacks[0]);
       setThemeCategory(nextCategory);
     }
+    revealPackageDetail();
   }
 
   function reviewCurrentRequest() {
@@ -2134,7 +2181,11 @@ export function JobCreateForm({
             </div>
           </div>
         ) : null}
-        <div className={`grid overflow-hidden rounded-[18px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/20"} ${createMode === "theme" ? "lg:grid-cols-[minmax(360px,1.25fr)_minmax(320px,0.75fr)]" : ""}`}>
+        <div
+          className={`grid scroll-mt-28 overflow-hidden rounded-[18px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/20"} ${createMode === "theme" ? "lg:grid-cols-[minmax(360px,1.25fr)_minmax(320px,0.75fr)]" : ""}`}
+          id="workspace-package-detail"
+          ref={packageDetailRef}
+        >
           {createMode === "theme" ? (
             <div className={`relative min-h-[340px] ${light ? "bg-[#f7f0e7]" : "bg-white/[0.04]"}`}>
               {selectionPreviewImage ? (
@@ -2209,6 +2260,45 @@ export function JobCreateForm({
             </div>
           </div>
         </div>
+        {createMode === "theme" && selectedPackageGalleryExamples.length ? (
+          <div className={`grid gap-4 rounded-[18px] border p-4 ${subtlePanelClass}`} data-workspace-package-gallery="true">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div className="min-w-0">
+                <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>{jobT(spanish, "Case gallery", "Galeria de ejemplos")}</p>
+                <h3 className={`mt-2 text-lg font-semibold leading-tight ${textClass}`}>
+                  {jobT(spanish, `${selectedPackageGalleryExamples.length} ${selectionTitle} image examples`, `${selectedPackageGalleryExamples.length} ejemplos de ${selectionTitle}`)}
+                </h3>
+              </div>
+              <p className={`max-w-2xl text-xs leading-5 ${mutedClass}`}>
+                {jobT(spanish, "Review the package examples before configuring the request. Click any example to view it full screen.", "Revisa los ejemplos del paquete antes de configurar la solicitud. Haz clic en cualquier ejemplo para verlo en pantalla completa.")}
+              </p>
+            </div>
+            <div className="grid items-start gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {selectedPackageGalleryExamples.map((example, index) => (
+                <figure
+                  className={`group overflow-hidden rounded-[14px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/20"}`}
+                  key={`${example.src}_${index}`}
+                >
+                  <div className="relative overflow-hidden bg-white/[0.08]">
+                    <img
+                      alt={example.alt}
+                      className="aspect-[4/3] w-full cursor-zoom-in object-cover transition duration-500 group-hover:brightness-110"
+                      decoding="async"
+                      fetchPriority={index < 4 ? "auto" : "low"}
+                      loading={index < 4 ? "eager" : "lazy"}
+                      sizes="(max-width: 640px) 50vw, (max-width: 1280px) 25vw, 16rem"
+                      src={example.src}
+                      {...previewImageAttrs(example.src, example.alt, jobT(spanish, "Package gallery example", "Ejemplo de galeria"))}
+                    />
+                    <span className="pointer-events-none absolute left-2 top-2 rounded-full bg-black/58 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/82">
+                      {jobT(spanish, `Example ${String(index + 1).padStart(2, "0")}`, `Ejemplo ${String(index + 1).padStart(2, "0")}`)}
+                    </span>
+                  </div>
+                </figure>
+              ))}
+            </div>
+          </div>
+        ) : null}
         <div className={createMode === "theme" ? "grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" : "grid gap-3 md:grid-cols-2 xl:grid-cols-3"}>
           {createMode === "theme" ? displayedCreativePacks.map((pack) => {
             const active = pack.id === selectedPack?.id;
@@ -2226,12 +2316,12 @@ export function JobCreateForm({
                 data-workspace-package-option={pack.id}
                 data-workspace-package-title={packageCardTitle}
                 key={pack.id}
-                onClick={() => selectCreativePackAndOpen(pack)}
+                onClick={() => selectCreativePackAndReveal(pack)}
                 type="button"
               >
-                <span className="overflow-hidden rounded-[12px] bg-white/[0.08]">
+                <span className="overflow-hidden rounded-[12px] bg-white/[0.08]" data-dreamshoot-preview-disabled="true">
                   {packageCardImage ? (
-                    <img className="aspect-[4/3] w-full cursor-zoom-in object-cover" src={packageCardImage} alt={packageCardTitle} {...previewImageAttrs(packageCardImage, packageCardTitle, jobT(spanish, "Package preview", "Vista previa del paquete"))} />
+                    <img className="aspect-[4/3] w-full object-cover" src={packageCardImage} alt={packageCardTitle} />
                   ) : (
                     <span className="flex aspect-[4/3] items-center justify-center">
                       <Sparkles className="h-6 w-6 opacity-60" strokeWidth={1.8} />

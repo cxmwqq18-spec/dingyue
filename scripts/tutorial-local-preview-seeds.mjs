@@ -8,6 +8,11 @@ import sharp from "sharp";
 
 const ffmpegPath = process.env.FFMPEG_PATH || ffmpegStatic || "ffmpeg";
 const ffprobePath = process.env.FFPROBE_PATH || "ffprobe";
+const MYDREAMSHOOTS_TUTORIAL_PRIMARY_ASSET_IDS = ["asset_mscs4baw_a5q3d5"];
+const MYDREAMSHOOTS_TUTORIAL_PARTNER_ASSET_IDS = ["asset_mscue5vm_2sw2kb"];
+const MYDREAMSHOOTS_HUG_TUTORIAL_SOURCE_JOB_ID = "job_msfh8hfh_20354f";
+const MYDREAMSHOOTS_HUG_TUTORIAL_PROMPT = "Using the uploaded images, generate a video of the two people hugging.";
+const MYDREAMSHOOTS_HUG_TUTORIAL_FRAME_ASSET_IDS = ["asset_msfh85av_yo86l1", "asset_msfh86rh_2d05x8"];
 
 function isLocalTutorialBaseUrl() {
   const raw = process.env.TUTORIAL_BASE_URL || "";
@@ -69,9 +74,11 @@ function existingResultSourceFor(siteId, kind) {
         ]
     : kind === "video"
       ? [
+          "data/customer-assets/sites/site_dreamshoot/customers/cust_dreamshoot_mqq9gas9_i1vjal/assets/job_msfh8hfh_20354f-video-1.mp4",
           "data/customer-assets/sites/site_dreamshoot/customers/cust_dreamshoot_mqq9gas9_i1vjal/assets/job_msakbi1h_10ac70-video-1.mp4"
         ]
       : [
+          "data/customer-assets/sites/site_dreamshoot/customers/cust_dreamshoot_mqq9gas9_i1vjal/assets/job_msfgtx0n_801a0d-output-1.webp",
           "data/customer-assets/sites/site_dreamshoot/customers/cust_dreamshoot_mqq9gas9_i1vjal/assets/job_mscxp4ha_62ec98-output-1.webp"
         ];
   const candidate = [...envCandidates, ...defaults]
@@ -130,13 +137,18 @@ async function writeFreshDraftImage(sourcePath, targetPath) {
   return outputMeta;
 }
 
-async function writeExistingResultVideo(sourcePath, targetPath) {
+async function writeExistingResultVideo(sourcePath, targetPath, options = {}) {
   await fs.mkdir(path.dirname(targetPath), { recursive: true });
+  const preserveSourceCanvas = Boolean(options.preserveSourceCanvas);
+  const videoFilter = preserveSourceCanvas
+    ? "scale=trunc(iw/2)*2:trunc(ih/2)*2,format=yuv420p"
+    : "scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,format=yuv420p";
   await runCommand(ffmpegPath, [
     "-y",
     "-i", sourcePath,
     "-t", "6",
-    "-vf", "scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,format=yuv420p",
+    "-map", "0:v:0",
+    "-vf", videoFilter,
     "-an",
     "-c:v", "libx264",
     "-preset", "fast",
@@ -155,10 +167,13 @@ async function writeExistingResultVideo(sourcePath, targetPath) {
   const info = JSON.parse(stdout);
   const video = (info.streams || []).find((stream) => stream.codec_type === "video");
   const duration = Number(info.format?.duration || video?.duration || 0);
-  if (!video || Number(video.width) !== 1280 || Number(video.height) !== 720 || duration < 4.5 || duration > 6.25) {
+  const validDimensions = preserveSourceCanvas
+    ? Number(video?.width || 0) > 0 && Number(video?.height || 0) > 0
+    : Number(video?.width) === 1280 && Number(video?.height) === 720;
+  if (!video || !validDimensions || duration < 4.5 || duration > 6.25) {
     throw new Error(`tutorial_existing_video_invalid:${targetPath}:${duration}`);
   }
-  return { width: Number(video.width), height: Number(video.height), duration };
+  return { width: Number(video.width), height: Number(video.height), duration, preservedSourceCanvas: preserveSourceCanvas };
 }
 
 async function writeFreshDraftVideo(sourcePath, targetPath) {
@@ -310,8 +325,8 @@ export async function ensureMydreamshootsLocalPreviewVideo() {
     const storageKey = `sites/${siteId}/customers/${customer.id}/assets/${jobId}-video-1.mp4`;
     const sourceVideo = existingResultSourceFor(siteId, "video");
     const targetPath = await previewTargetPath(storageKey);
-    const validation = await writeExistingResultVideo(sourceVideo, targetPath);
-    const promptText = process.env.TUTORIAL_PROMPT_TEXT || "Create a short motion concept from the selected source frame.";
+    const validation = await writeExistingResultVideo(sourceVideo, targetPath, { preserveSourceCanvas: true });
+    const promptText = process.env.TUTORIAL_PROMPT_TEXT || MYDREAMSHOOTS_HUG_TUTORIAL_PROMPT;
 
     const requestJson = {
       mode: "video",
@@ -323,6 +338,8 @@ export async function ensureMydreamshootsLocalPreviewVideo() {
       aspectRatio: "16:9",
       aspect_ratio: "16:9",
       resolution: "720p",
+      assetIds: MYDREAMSHOOTS_HUG_TUTORIAL_FRAME_ASSET_IDS,
+      frameAssetIds: MYDREAMSHOOTS_HUG_TUTORIAL_FRAME_ASSET_IDS,
       fields: {
         mode: "video",
         outputType: "video",
@@ -334,15 +351,19 @@ export async function ensureMydreamshootsLocalPreviewVideo() {
         aspectRatio: "16:9",
         aspect_ratio: "16:9",
         resolution: "720p",
+        assetIds: MYDREAMSHOOTS_HUG_TUTORIAL_FRAME_ASSET_IDS,
+        frameAssetIds: MYDREAMSHOOTS_HUG_TUTORIAL_FRAME_ASSET_IDS,
         promptNote: promptText,
         previewMode: "existing_local_result",
-        resultSource: path.basename(sourceVideo)
+        resultSource: path.basename(sourceVideo),
+        sourceJobId: MYDREAMSHOOTS_HUG_TUTORIAL_SOURCE_JOB_ID
       },
       prompt: promptText,
       worker: "local.demo.video",
       tutorialSeed: true,
       previewMode: "existing_local_result",
-      resultSource: path.basename(sourceVideo)
+      resultSource: path.basename(sourceVideo),
+      sourceJobId: MYDREAMSHOOTS_HUG_TUTORIAL_SOURCE_JOB_ID
     };
     const resultJson = {
       error: null,
@@ -362,7 +383,8 @@ export async function ensureMydreamshootsLocalPreviewVideo() {
       lastWorkerStatus: "succeeded",
       tutorialSeed: true,
       previewMode: "existing_local_result",
-      resultSource: path.basename(sourceVideo)
+      resultSource: path.basename(sourceVideo),
+      resultSourceJobId: MYDREAMSHOOTS_HUG_TUTORIAL_SOURCE_JOB_ID
     };
 
     await upsertPreviewRecords({
@@ -381,6 +403,7 @@ export async function ensureMydreamshootsLocalPreviewVideo() {
       validationReport: {
         source: "existing_local_result_video",
         resultSource: path.basename(sourceVideo),
+        sourceJobId: MYDREAMSHOOTS_HUG_TUTORIAL_SOURCE_JOB_ID,
         ...validation
       }
     });
@@ -507,10 +530,26 @@ export async function ensureMydreamshootsLocalPreviewImage() {
       mode: "image",
       outputType: "image",
       outputCount: 1,
+      trainingMode: "couple",
+      assetIds: [
+        ...MYDREAMSHOOTS_TUTORIAL_PRIMARY_ASSET_IDS,
+        ...MYDREAMSHOOTS_TUTORIAL_PARTNER_ASSET_IDS
+      ],
+      primaryAssetIds: MYDREAMSHOOTS_TUTORIAL_PRIMARY_ASSET_IDS,
+      partnerAssetIds: MYDREAMSHOOTS_TUTORIAL_PARTNER_ASSET_IDS,
       fields: {
         mode: "image",
         outputType: "image",
+        trainingMode: "couple",
         packageTitle: process.env.TUTORIAL_PACKAGE_TITLE || "Valentine Photos",
+        creativePackName: process.env.TUTORIAL_PACKAGE_TITLE || "Valentine Photos",
+        packageAudience: "both",
+        assetIds: [
+          ...MYDREAMSHOOTS_TUTORIAL_PRIMARY_ASSET_IDS,
+          ...MYDREAMSHOOTS_TUTORIAL_PARTNER_ASSET_IDS
+        ],
+        primaryAssetIds: MYDREAMSHOOTS_TUTORIAL_PRIMARY_ASSET_IDS,
+        partnerAssetIds: MYDREAMSHOOTS_TUTORIAL_PARTNER_ASSET_IDS,
         promptNote,
         previewMode: "existing_local_result",
         resultSource: path.basename(sourceImage)
@@ -559,6 +598,110 @@ export async function ensureMydreamshootsLocalPreviewImage() {
         source: "existing_local_result_image",
         resultSource: path.basename(sourceImage),
         ...validation
+      }
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function ensureMydreamshootsLocalPendingPreviewImage() {
+  if (process.env.MYDREAMSHOOTS_TUTORIAL_SEED_PREVIEW === "0" || !isLocalTutorialBaseUrl()) return;
+  const prisma = new PrismaClient();
+  try {
+    const siteId = "site_dreamshoot";
+    const customer = await customerForTutorial(prisma, siteId, "nora@mydreamshoots.localhost");
+    if (!customer) return;
+    const aiApp = await prisma.aiApp.findUnique({ where: { id: "ai_image" }, select: { id: true } });
+    if (!aiApp) return;
+
+    const now = new Date();
+    const jobId = "job_mydreamshoots_tutorial_preview_image";
+    const assetId = "asset_mydreamshoots_tutorial_preview_image";
+    const sourceImage = existingResultSourceFor(siteId, "image");
+    const promptNote = process.env.TUTORIAL_PROMPT_NOTE ||
+      "Warm romantic portrait with soft date-night lighting, natural expression, clean face detail, polished private album finish, no logos, no text, no watermark.";
+    const packageTitle = process.env.TUTORIAL_PACKAGE_TITLE || "Valentine Photos";
+    const selectedAssetIds = [
+      ...MYDREAMSHOOTS_TUTORIAL_PRIMARY_ASSET_IDS,
+      ...MYDREAMSHOOTS_TUTORIAL_PARTNER_ASSET_IDS
+    ];
+    const requestJson = {
+      mode: "image",
+      outputType: "image",
+      outputCount: 1,
+      trainingMode: "couple",
+      assetIds: selectedAssetIds,
+      primaryAssetIds: MYDREAMSHOOTS_TUTORIAL_PRIMARY_ASSET_IDS,
+      partnerAssetIds: MYDREAMSHOOTS_TUTORIAL_PARTNER_ASSET_IDS,
+      fields: {
+        mode: "image",
+        outputType: "image",
+        trainingMode: "couple",
+        packageTitle,
+        creativePackName: packageTitle,
+        packageAudience: "both",
+        assetIds: selectedAssetIds,
+        primaryAssetIds: MYDREAMSHOOTS_TUTORIAL_PRIMARY_ASSET_IDS,
+        partnerAssetIds: MYDREAMSHOOTS_TUTORIAL_PARTNER_ASSET_IDS,
+        promptNote,
+        previewMode: "existing_local_result",
+        resultSource: path.basename(sourceImage)
+      },
+      prompt: promptNote,
+      worker: "local.demo.image",
+      tutorialSeed: true,
+      previewMode: "pending_local_result",
+      resultSource: path.basename(sourceImage)
+    };
+    const resultJson = {
+      error: null,
+      outputs: [],
+      outputSlots: [{
+        index: 1,
+        status: "running",
+        stage: "image_generation_running",
+        progress: 36,
+        updatedAt: now.toISOString()
+      }],
+      requestId: "local_mydreamshoots_tutorial_preview_image_pending_result",
+      lastWorkerStage: "image_generation_running",
+      lastWorkerStatus: "running",
+      tutorialSeed: true,
+      previewMode: "pending_local_result",
+      resultSource: path.basename(sourceImage)
+    };
+
+    await prisma.assetUpload.updateMany({
+      where: { id: assetId },
+      data: { deletedAt: now, updatedAt: now }
+    });
+    await prisma.generationJob.upsert({
+      where: { id: jobId },
+      create: {
+        id: jobId,
+        siteId,
+        customerId: customer.id,
+        aiAppId: aiApp.id,
+        status: "running",
+        creditsReserved: 20,
+        entryPoint: "customer_workspace",
+        requestJson,
+        resultJson,
+        createdAt: now,
+        updatedAt: now
+      },
+      update: {
+        siteId,
+        customerId: customer.id,
+        aiAppId: aiApp.id,
+        status: "running",
+        creditsReserved: 20,
+        entryPoint: "customer_workspace",
+        requestJson,
+        resultJson,
+        createdAt: now,
+        updatedAt: now
       }
     });
   } finally {

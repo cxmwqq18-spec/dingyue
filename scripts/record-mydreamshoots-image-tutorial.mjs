@@ -7,7 +7,10 @@ import ffmpegStatic from "ffmpeg-static";
 import { chromium } from "playwright";
 import sharp from "sharp";
 import "./load-runtime-env.mjs";
-import { ensureMydreamshootsLocalPreviewImage } from "./tutorial-local-preview-seeds.mjs";
+import {
+  ensureMydreamshootsLocalPendingPreviewImage,
+  ensureMydreamshootsLocalPreviewImage
+} from "./tutorial-local-preview-seeds.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
@@ -59,16 +62,30 @@ const ffprobePath = process.env.FFPROBE_PATH || siblingFfprobe(ffmpegPath) || "f
 const packageTitle = process.env.TUTORIAL_PACKAGE_TITLE || "Valentine Photos";
 const promptNote = process.env.TUTORIAL_PROMPT_NOTE ||
   "Warm romantic portrait with soft date-night lighting, natural expression, clean face detail, polished private album finish, no logos, no text, no watermark.";
+const tutorialSampleCustomerId = process.env.TUTORIAL_SAMPLE_CUSTOMER_ID ||
+  (siteId === "site_dreamshoot" ? "cust_dreamshoot_mqq9gas9_i1vjal" : "");
+const tutorialPrimarySampleIds = parseCsv(process.env.TUTORIAL_PRIMARY_SAMPLE_IDS ||
+  (siteId === "site_dreamshoot" ? "asset_mscs4baw_a5q3d5" : ""));
+const tutorialPartnerSampleIds = parseCsv(process.env.TUTORIAL_PARTNER_SAMPLE_IDS ||
+  (siteId === "site_dreamshoot" ? "asset_mscue5vm_2sw2kb" : ""));
+const tutorialPrimarySampleTokens = parseCsv(process.env.TUTORIAL_PRIMARY_SAMPLE_TOKENS ||
+  (siteId === "site_dreamshoot" ? "2c85aa19-08be-4107-9447-13d890ee969e-source-selfie-clean.webp" : ""));
+const tutorialPartnerSampleTokens = parseCsv(process.env.TUTORIAL_PARTNER_SAMPLE_TOKENS ||
+  (siteId === "site_dreamshoot" ? "1256a1cb-c7a0-4e78-a7ef-565f5978118d-images-1-.webp" : ""));
+const useExistingTutorialSamples = process.env.TUTORIAL_USE_EXISTING_SAMPLES !== "0" &&
+  tutorialSampleCustomerId &&
+  tutorialPrimarySampleIds.length > 0 &&
+  tutorialPartnerSampleIds.length > 0;
 
 const baseTimeline = [
   { id: "login", duration: 5, caption: "Sign in to your private workspace", narration: `First, sign in to your private ${brandName} workspace.` },
   { id: "workspace", duration: 6, caption: "Open the AI photo workspace", narration: "Open the private workspace where uploads, credits, and results stay together." },
-  { id: "package", duration: 7, caption: "Choose a Photo package", narration: "Choose a photo package to set the style, credit cost, and output count." },
-  { id: "upload", duration: 8, caption: "Upload or select clear source photos", narration: "Upload or select clear source photos for the private model." },
-  { id: "review", duration: 9, caption: "Review model, audience, credits, and uploads", narration: "Review the package, audience, credits, and selected uploads." },
+  { id: "package", duration: 7, caption: "Choose Valentine Photos", narration: "Choose Valentine Photos to set the romantic package, credit cost, and output count." },
+  { id: "upload", duration: 8, caption: "Select the two source photos", narration: "Select the primary photo and the partner photo, so the Valentine package follows both references." },
+  { id: "review", duration: 9, caption: "Review package details and selected uploads", narration: "Review the selected uploads, creative direction, credits, and final output count." },
   { id: "start", duration: 5, caption: "Start the photo generation request", narration: `Start generation and let ${brandName} create the photo request.` },
-  { id: "progress", duration: 8, caption: "Refresh status in All assets", narration: "Refresh the workspace to track the request and load the latest results." },
-  { id: "result", duration: 7, caption: "Open and review the generated image", narration: "Open the finished result and review the generated image." }
+  { id: "progress", duration: 2, caption: "Watch the request begin generating", narration: "Show the request running briefly, then skip the wait." },
+  { id: "result", duration: 13, caption: "Open and review the generated image", narration: "Open the finished Valentine image and review it in the private gallery." }
 ];
 const timeline = buildTimeline(baseTimeline, targetFrameCount, captureFps);
 
@@ -76,6 +93,13 @@ function siblingFfprobe(binary) {
   if (!binary || binary === "ffmpeg") return undefined;
   const candidate = path.join(path.dirname(binary), "ffprobe");
   return fsSync.existsSync(candidate) ? candidate : undefined;
+}
+
+function parseCsv(value) {
+  return String(value || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
 }
 
 function buildTimeline(segments, frameCount, fps) {
@@ -680,6 +704,110 @@ async function uploadSourcePhoto(page, recorder) {
   await recorder.capture(timeline.find((segment) => segment.id === "upload"));
 }
 
+async function selectSampleByTokens(page, tokens, label) {
+  const target = await page.evaluate(({ tokens, label }) => {
+    const aside = document.querySelector("aside");
+    if (!aside) return null;
+    const normalizedTokens = tokens.map((token) => decodeURIComponent(String(token || ""))).filter(Boolean);
+    const matches = (img) => {
+      const src = decodeURIComponent(img.getAttribute("src") || "");
+      const alt = decodeURIComponent(img.getAttribute("alt") || "");
+      return normalizedTokens.some((token) => src.includes(token) || alt.includes(token));
+    };
+    const findImage = () => [...aside.querySelectorAll("img")].find(matches);
+    let img = findImage();
+    if (!img) {
+      aside.scrollTo({ top: label === "partner" ? aside.scrollHeight : 0, behavior: "instant" });
+      img = findImage();
+    }
+    if (!img) return null;
+    const target = img.closest("button,[role='button'],[data-workspace-sample-id],article,li,figure") || img;
+    target.scrollIntoView({ block: "center", inline: "nearest" });
+    const button = img.closest("button,[role='button']");
+    const selected = button?.getAttribute("aria-pressed") === "true" || /Selected/i.test(button?.textContent || "");
+    const rect = target.getBoundingClientRect();
+    return {
+      selected,
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+      rect: { x: rect.left, y: rect.top, width: rect.width, height: rect.height }
+    };
+  }, { tokens, label });
+  if (!target) throw new Error(`tutorial_sample_not_found:${label}`);
+  await page.evaluate((rect) => window.__tutorial?.highlight?.(rect), target.rect).catch(() => undefined);
+  await moveTutorialPointer(page, target.x, target.y, true);
+  if (!target.selected) {
+    await page.evaluate(({ tokens, label }) => {
+      const aside = document.querySelector("aside");
+      if (!aside) return;
+      const normalizedTokens = tokens.map((token) => decodeURIComponent(String(token || ""))).filter(Boolean);
+      const img = [...aside.querySelectorAll("img")].find((item) => {
+        const src = decodeURIComponent(item.getAttribute("src") || "");
+        const alt = decodeURIComponent(item.getAttribute("alt") || "");
+        return normalizedTokens.some((token) => src.includes(token) || alt.includes(token));
+      });
+      const button = img?.closest("button,[role='button']");
+      const selected = button?.getAttribute("aria-pressed") === "true" || /Selected/i.test(button?.textContent || "");
+      if (button && !selected) button.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true, view: window }));
+    }, { tokens, label }).catch(() => undefined);
+  }
+  await page.waitForTimeout(650);
+  await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
+}
+
+async function frameSelectedSamplesTogether(page) {
+  await page.evaluate(({ primaryTokens, partnerTokens }) => {
+    const aside = document.querySelector("aside");
+    if (!aside) return;
+    const findTarget = (tokens) => {
+      const normalizedTokens = tokens.map((token) => decodeURIComponent(String(token || ""))).filter(Boolean);
+      const img = [...aside.querySelectorAll("img")].find((item) => {
+        const src = decodeURIComponent(item.getAttribute("src") || "");
+        const alt = decodeURIComponent(item.getAttribute("alt") || "");
+        return normalizedTokens.some((token) => src.includes(token) || alt.includes(token));
+      });
+      return img?.closest("button,[role='button'],[data-workspace-sample-id],article,li,figure") || img || null;
+    };
+    const targets = [findTarget(primaryTokens), findTarget(partnerTokens)].filter(Boolean);
+    if (!targets.length) return;
+    const top = Math.min(...targets.map((target) => target.getBoundingClientRect().top + aside.scrollTop));
+    aside.scrollTo({ top: Math.max(0, top - 150), behavior: "instant" });
+  }, {
+    primaryTokens: tutorialPrimarySampleTokens,
+    partnerTokens: tutorialPartnerSampleTokens
+  }).catch(() => undefined);
+  await page.waitForTimeout(400);
+  await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
+}
+
+async function selectExistingSamples(page, recorder) {
+  await openWorkspace(page, "#step-create");
+  await page.evaluate(({ siteId, customerId, primarySampleIds, partnerSampleIds }) => {
+    const key = `dreamshoot:workspace:${siteId}:${customerId}:sample-selection:v2`;
+    localStorage.setItem(key, JSON.stringify({
+      primarySampleIds,
+      partnerSampleIds,
+      studioTrainingMode: "couple",
+      primaryGender: "nonbinary",
+      partnerGender: "nonbinary",
+      studioModelName: ""
+    }));
+  }, {
+    siteId,
+    customerId: tutorialSampleCustomerId,
+    primarySampleIds: tutorialPrimarySampleIds,
+    partnerSampleIds: tutorialPartnerSampleIds
+  }).catch(() => undefined);
+  await page.locator("#step-create").waitFor({ state: "visible", timeout: 60_000 });
+  await page.getByText(/Your Samples/i).first().waitFor({ state: "visible", timeout: 60_000 });
+  await page.getByText(/Partner Samples/i).first().waitFor({ state: "visible", timeout: 60_000 });
+  await selectSampleByTokens(page, tutorialPrimarySampleTokens, "primary");
+  await selectSampleByTokens(page, tutorialPartnerSampleTokens, "partner");
+  await frameSelectedSamplesTogether(page);
+  await recorder.capture(timeline.find((segment) => segment.id === "upload"));
+  await page.evaluate(() => window.__tutorial?.highlight?.(null)).catch(() => undefined);
+}
+
 async function recordWorkspaceOverview(page, recorder) {
   await openWorkspace(page, "#step-create");
   const workspaceHeading = page.getByText(/Start your AI photoshoot/i).first();
@@ -713,9 +841,25 @@ async function submitJob(page, recorder) {
   const segment = timeline.find((item) => item.id === "start");
   const button = page.locator('[role="dialog"][aria-modal="true"]').getByRole("button", { name: /Start photo package|Start generation|Start tool/i }).first();
   await button.waitFor({ state: "visible", timeout: 45_000 });
+  await button.evaluate((element) => element.scrollIntoView({ block: "center", inline: "center" })).catch(() => undefined);
+  await page.waitForTimeout(250);
   await pointAt(page, button);
   if (!realGeneration) {
-    await setHistoryMask(page, true);
+    await setHistoryMask(page, false);
+    if (siteId === "site_dreamshoot") {
+      await ensureMydreamshootsLocalPendingPreviewImage();
+      await page.evaluate(() => {
+        const dialog = document.querySelector('[role="dialog"][aria-modal="true"]');
+        const target = [...(dialog?.querySelectorAll("button") || [])].find((item) =>
+          /Start photo package|Start generation|Start tool|Creating job/i.test(item.textContent || "")
+        );
+        if (target) {
+          target.disabled = true;
+          target.textContent = "Creating job...";
+        }
+      }).catch(() => undefined);
+    }
+    await pointAt(page, button).catch(() => undefined);
     await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
     await recorder.capture(segment);
     if (reuseJobId) {
@@ -723,7 +867,7 @@ async function submitJob(page, recorder) {
       return reuseJobId;
     }
     log("skipped real image generation by request");
-    return undefined;
+    return siteId === "site_dreamshoot" ? "job_mydreamshoots_tutorial_preview_image" : undefined;
   }
   await page.waitForFunction(() => {
     const buttons = [...document.querySelectorAll('[role="dialog"][aria-modal="true"] button')];
@@ -813,7 +957,7 @@ async function waitForSuccess(page, jobId) {
 }
 
 async function openResults(page) {
-  await page.goto(`${absoluteUrl("/app/create")}#resources-all`, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+  await page.goto(`${absoluteUrl("/app/create")}?tutorialRefresh=${Date.now()}#resources-all`, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
   await waitReady(page);
   await installOverlay(page);
   await setHistoryMask(page, true);
@@ -867,20 +1011,57 @@ async function waitForPreviewImageReady(page, dialog) {
 async function openGeneratedPreview(page, asset) {
   await openResults(page);
   await setHistoryMask(page, true);
+  const tokens = [asset?.id || "", assetPreviewUrl(asset), asset?.storageKey || ""]
+    .flatMap((value) => {
+      const raw = String(value || "");
+      const decoded = decodeURIComponent(raw);
+      const fileName = decoded.split("?")[0].split("/").filter(Boolean).pop() || "";
+      return [raw, decoded, fileName];
+    })
+    .filter(Boolean);
+  await page.waitForFunction(({ tokens }) => {
+    const root = document.querySelector("#review-request");
+    if (!root) return false;
+    const text = root.textContent || "";
+    const hasDeliveredState = /Images delivered|Output ready|DELIVERED|SUCCEEDED/i.test(text);
+    const hasPreviewButton = [...root.querySelectorAll("button")].some((button) =>
+      /Open preview/i.test(`${button.textContent || ""} ${button.getAttribute("aria-label") || ""}`)
+    );
+    const hasImage = [...root.querySelectorAll("img")].some((img) => {
+      const src = decodeURIComponent(img.getAttribute("src") || "");
+      const alt = img.getAttribute("alt") || "";
+      return (img.complete && img.naturalWidth > 32 && img.naturalHeight > 32) ||
+        tokens.some((token) => src.includes(token) || alt.includes(token));
+    });
+    return hasDeliveredState && hasPreviewButton && hasImage;
+  }, { tokens }, { timeout: 60_000 }).catch(() => undefined);
+  const previewButton = page.locator('#review-request [role="status"] button').filter({ hasText: /Open preview/i }).first();
+  if (await previewButton.isVisible({ timeout: 5_000 }).catch(() => false)) {
+    await previewButton.scrollIntoViewIfNeeded().catch(() => undefined);
+    await clickWithPointer(page, previewButton, { force: true, pauseBeforeClickMs: 500, pauseAfterClickMs: 900 });
+  }
   const clickedTarget = await page.evaluate(({ assetId, preview, storageKey }) => {
+    if (document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]')) return true;
     const normalized = String(preview || "");
     const decodedPreview = decodeURIComponent(normalized);
     const normalizedStorage = String(storageKey || "");
     const fileName = decodedPreview.split("?")[0].split("/").filter(Boolean).pop() || "";
     const tokens = [assetId, normalized, decodedPreview, normalizedStorage, fileName].filter(Boolean);
-    const images = [...document.querySelectorAll("#review-request button img")];
+    const buttons = [...document.querySelectorAll("#review-request button")];
+    const textButton = buttons.find((item) => /Open preview/i.test(`${item.textContent || ""} ${item.getAttribute("aria-label") || ""}`));
+    if (textButton) {
+      textButton.scrollIntoView({ block: "center", inline: "center" });
+      window.setTimeout(() => textButton.click(), 120);
+      return true;
+    }
+    const images = [...document.querySelectorAll("#review-request img")];
     const img = images.find((item) => {
       const rawSrc = item.getAttribute("src") || "";
       const src = decodeURIComponent(rawSrc);
       const alt = item.getAttribute("alt") || "";
       return tokens.some((token) => rawSrc.includes(token) || src.includes(token) || alt.includes(token));
     }) || images[0];
-    const button = img?.closest("button");
+    const button = img?.closest("button,article")?.querySelector?.("button") || img?.closest("button");
     if (!button) return false;
     button.scrollIntoView({ block: "center", inline: "center" });
     window.setTimeout(() => button.click(), 120);
@@ -896,7 +1077,7 @@ async function openGeneratedPreview(page, asset) {
     }
   }
   await dialog.waitFor({ state: "visible", timeout: 30_000 });
-  await setHistoryMask(page, true);
+  await setHistoryMask(page, false);
   const previewImage = dialog.locator("img").first();
   await waitForPreviewImageReady(page, dialog);
   await pointAt(page, previewImage).catch(() => undefined);
@@ -916,6 +1097,7 @@ async function openHistoricalImagePreview(page) {
   await clickWithPointer(page, freshImageButton, { force: true, pauseBeforeClickMs: 700, pauseAfterClickMs: 900 });
   const dialog = page.locator('[role="dialog"][aria-label*="Generated asset preview"]').first();
   await dialog.waitFor({ state: "visible", timeout: 30_000 });
+  await setHistoryMask(page, false);
   await waitForPreviewImageReady(page, dialog);
   const previewImage = dialog.locator("img").first();
   await pointAt(page, previewImage).catch(() => undefined);
@@ -1040,6 +1222,24 @@ async function main() {
     reducedMotion: "reduce",
     locale: "en-US"
   });
+  if (useExistingTutorialSamples) {
+    await context.addInitScript(({ siteId, customerId, primarySampleIds, partnerSampleIds }) => {
+      const key = `dreamshoot:workspace:${siteId}:${customerId}:sample-selection:v2`;
+      localStorage.setItem(key, JSON.stringify({
+        primarySampleIds,
+        partnerSampleIds,
+        studioTrainingMode: "couple",
+        primaryGender: "nonbinary",
+        partnerGender: "nonbinary",
+        studioModelName: ""
+      }));
+    }, {
+      siteId,
+      customerId: tutorialSampleCustomerId,
+      primarySampleIds: tutorialPrimarySampleIds,
+      partnerSampleIds: tutorialPartnerSampleIds
+    });
+  }
   const page = await context.newPage();
   page.setDefaultTimeout(pageTimeoutMs);
   page.on("pageerror", (error) => log("browser page error", { error: error.message }));
@@ -1053,7 +1253,11 @@ async function main() {
     await captureLoginAndAuthenticate(page, context, recorder);
     await recordWorkspaceOverview(page, recorder);
     await choosePackage(page, recorder);
-    await uploadSourcePhoto(page, recorder);
+    if (useExistingTutorialSamples) {
+      await selectExistingSamples(page, recorder);
+    } else {
+      await uploadSourcePhoto(page, recorder);
+    }
     await openReviewDialog(page, recorder);
     const jobId = await submitJob(page, recorder);
     let result;
@@ -1061,6 +1265,7 @@ async function main() {
       if (realGeneration) createdJobs.push(jobId);
       else recoveredJobs.push(jobId);
       await refreshAndRecordProgress(page, recorder);
+      if (!realGeneration && siteId === "site_dreamshoot") await ensureMydreamshootsLocalPreviewImage();
       result = await waitForSuccess(page, jobId);
       await openGeneratedPreview(page, result.asset);
     } else {
