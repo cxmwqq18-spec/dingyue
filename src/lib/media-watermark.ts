@@ -17,6 +17,22 @@ export type MediaWatermarkResult = {
   mimeType: string;
 };
 
+type SharpWatermarkInstance = {
+  rotate: () => SharpWatermarkInstance;
+  metadata: () => Promise<{ width?: number; height?: number }>;
+  composite: (overlays: Array<{ input: Buffer; left: number; top: number }>) => SharpWatermarkInstance;
+  png: () => SharpWatermarkInstance;
+  jpeg: (options: { quality: number; mozjpeg: boolean }) => SharpWatermarkInstance;
+  avif: (options: { quality: number }) => SharpWatermarkInstance;
+  webp: (options: { quality: number; smartSubsample: boolean }) => SharpWatermarkInstance;
+  toBuffer: () => Promise<Buffer>;
+};
+
+type SharpWatermarkFactory = (
+  input: Buffer,
+  options?: { animated?: boolean }
+) => SharpWatermarkInstance;
+
 export function storefrontWatermarkTextForSite(siteId: string | undefined): string | undefined {
   if (siteId === "site_dreamshoot") return "myDreamshoots.com";
   if (siteId === "site_aidreamcapes") return "Aidreamcapes.com";
@@ -50,11 +66,11 @@ function normalizedWatermarkOpacity(value: unknown): number {
   return Number(clamped(opacity, 0.01, 0.5).toFixed(4));
 }
 
-async function sharpFactory(): Promise<typeof import("sharp") | undefined> {
+async function sharpFactory(): Promise<SharpWatermarkFactory | undefined> {
   try {
     const moduleName = "sharp";
     const mod = await import(/* webpackIgnore: true */ moduleName);
-    return (mod.default ?? mod) as typeof import("sharp");
+    return (mod.default ?? mod) as SharpWatermarkFactory;
   } catch {
     return undefined;
   }
