@@ -214,7 +214,7 @@ const homeSections: ThemePageJson["sections"] = {
       authPrimaryHref: "/login?mode=login",
       authEmailHref: "/login?mode=register",
       imageBadge: "15+ package categories",
-      imageCaption: "Upload selfies and create your own AI model - Professional headshots without a studio.",
+      imageCaption: "Generate your custom AI album Transform your favorite moments into professional-grade couple photos and stunning holiday memories.",
       socialProofLabel: "Private uploads and clear credit costs",
       layout: "immersive_dark"
     },
