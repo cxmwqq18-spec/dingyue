@@ -84,6 +84,8 @@
     "smoke:platform-email-domain-verification": "node scripts/smoke-platform-email-domain-verification.mjs",
     "smoke:mydreamshoots-pricing-checkout": "node scripts/smoke-mydreamshoots-pricing-checkout.mjs",
     "smoke:mydreamshoots-seo-indexing": "node scripts/smoke-mydreamshoots-seo-indexing.mjs",
+    "smoke:mydreamshoots-media-seo-schema": "node scripts/smoke-mydreamshoots-media-seo-schema.mjs",
+    "smoke:mydreamshoots-seo-ssr": "node scripts/smoke-mydreamshoots-seo-ssr.mjs",
     "smoke:mydreamshoots-login-redirect": "node scripts/smoke-mydreamshoots-login-redirect.mjs",
     "smoke:server": "node scripts/run-smoke-server.mjs",
     "smoke:security-baseline": "node scripts/smoke-security-baseline.mjs",

@@ -432,7 +432,7 @@ function lightweightVideoTheme(theme: VideoTheme): VideoTheme {
     effectiveMaxFrames: theme.effectiveMaxFrames,
     providerMaxFrames: theme.providerMaxFrames,
     generationCount: theme.generationCount,
-    createdAt: "",
+    createdAt: theme.createdAt,
     imageUrl: theme.imageUrl,
     galleryImages: (theme.galleryImages ?? []).filter(Boolean).slice(0, 12)
   };
@@ -2423,7 +2423,8 @@ export async function renderStorefrontPage({
           site: currentSite,
           collectionSlug: collectionCategory,
           routeMode,
-          creativePacks: trimCreativePacksForStorefront(focusedCollectionRenderData, publicDirectoryPackLimit)
+          creativePacks: trimCreativePacksForStorefront(focusedCollectionRenderData, publicDirectoryPackLimit),
+          products: state.products
         })
       : buildStorefrontJsonLd({
           site: currentSite,
@@ -2432,7 +2433,8 @@ export async function renderStorefrontPage({
           pagePath: slug,
           routeMode,
           creativePacks: pageRenderData.creativePacks,
-          products: state.products
+          products: state.products,
+          videoThemes: pageRenderData.videoThemes
         }),
     lightweightChrome: false
   });

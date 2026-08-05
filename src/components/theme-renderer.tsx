@@ -676,6 +676,39 @@ function shouldServerRenderFocusedCollectionSection(sectionType: string): boolea
     sectionType === "policy_content";
 }
 
+const publicSeoCriticalSectionTypes = new Set([
+  "pricing_table",
+  "testimonial_wall",
+  "reviews",
+  "trust_signal_bar",
+  "brand_logo_strip"
+]);
+
+function isPublicSeoRoute(pagePath: string): boolean {
+  return pagePath === "/" ||
+    pagePath === "/pricing" ||
+    pagePath === "/collections" ||
+    pagePath === "/tools" ||
+    pagePath === "/workflow" ||
+    pagePath === "/faq" ||
+    pagePath === "/blog" ||
+    pagePath === "/creators-circle" ||
+    pagePath === "/partner-registration" ||
+    pagePath === "/about-us" ||
+    pagePath === "/contact-us" ||
+    pagePath === "/privacy" ||
+    pagePath === "/terms" ||
+    pagePath === "/cookies" ||
+    pagePath === "/refunds" ||
+    pagePath === "/content" ||
+    pagePath === "/shipping" ||
+    pagePath === "/children-privacy" ||
+    pagePath === "/state-privacy" ||
+    pagePath.startsWith("/collections/") ||
+    pagePath.startsWith("/tools/") ||
+    pagePath.startsWith("/blog/");
+}
+
 function shouldServerRenderPublicSeoSection(pagePath: string, sectionType: string): boolean {
   if (pagePath === "/pricing") {
     return sectionType === "pricing_table";

@@ -1,7 +1,7 @@
 import { normalizeThemeSeo } from "@/lib/theme/seo";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
-import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
+import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
 
 export type JsonLdNode = Record<string, unknown>;
 
@@ -13,6 +13,7 @@ type JsonLdInput = {
   routeMode: "host" | "path";
   creativePacks?: CreativePack[];
   products?: Product[];
+  videoThemes?: VideoTheme[];
 };
 
 function cleanText(value: unknown, fallback = ""): string {
@@ -45,6 +46,11 @@ function isAidreamcapesSite(site: Site): boolean {
 
 function isSpanishXbySite(site: Site): boolean {
   return isSpanishStorefrontSite(site);
+}
+
+function isPrimaryMyDreamShootsSite(site: Site): boolean {
+  if (isAidreamcapesSite(site) || isSpanishXbySite(site)) return false;
+  return /site_dreamshoot|mydreamshoots|dreamshoot/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
 }
 
 function collapseSpanishXbyBrandRepeats(value: string): string {
@@ -136,6 +142,12 @@ function slugifySchemaPart(value: string): string {
     .replace(/[^a-z0-9-]+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+function canonicalCollectionSlugForCandidate(site: Site, value: unknown): string {
+  const slug = slugifySchemaPart(cleanText(value));
+  if (!slug) return "";
+  return canonicalSeoDirectoryPathForSite(site, "collection", slug).split("/").pop() || slug;
 }
 
 function listText(value: ThemeSettingValue | undefined): string[] {
@@ -517,6 +529,191 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
   return [];
 }
 
+type PublicOfferSource = {
+  product: Product;
+  price: Product["prices"][number];
+};
+
+function lowestUsdOfferSource(site: Site, products: Product[] | undefined): PublicOfferSource | undefined {
+  return (products ?? [])
+    .filter((product) => product.siteId === site.id && product.status === "active")
+    .flatMap((product) =>
+      product.prices
+        .filter((price) => price.siteId === site.id && price.currency.toLowerCase() === "usd")
+        .map((price) => ({ product, price }))
+    )
+    .sort((left, right) => left.price.amountCents - right.price.amountCents)[0];
+}
+
+function imageMediaPath(value: unknown): string {
+  const text = cleanText(value);
+  return /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(text) ? text : "";
+}
+
+function primaryPackImage(pack: CreativePack): string {
+  return imageMediaPath(pack.imageUrl) || (pack.galleryImages ?? []).map(imageMediaPath).find(Boolean) || "";
+}
+
+function subjectImageForPack(pack: CreativePack): string {
+  return (pack.galleryImages ?? []).map(imageMediaPath).find(Boolean) || primaryPackImage(pack);
+}
+
+function packMatchesCollectionSlug(site: Site, pack: CreativePack, slug: string): boolean {
+  const candidates = [
+    pack.categoryRecord?.slug,
+    pack.categoryRecord?.parent?.slug,
+    pack.category,
+    pack.name,
+    pack.id
+  ];
+  return candidates
+    .map((candidate) => canonicalCollectionSlugForCandidate(site, candidate))
+    .filter(Boolean)
+    .includes(slug);
+}
+
+function packProductSchema({
+  site,
+  routeMode,
+  pagePath,
+  pack,
+  products,
+  description
+}: {
+  site: Site;
+  routeMode: "host" | "path";
+  pagePath: string;
+  pack: CreativePack;
+  products?: Product[];
+  description: string;
+}): JsonLdNode | undefined {
+  if (!isPrimaryMyDreamShootsSite(site)) return undefined;
+  const image = primaryPackImage(pack);
+  if (!image) return undefined;
+  const subjectImage = subjectImageForPack(pack) || image;
+  const url = absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath));
+  const productName = cleanSchemaText(site, pack.name, "MyDreamShoots AI photo package");
+  const productDescription = cleanSchemaText(site, pack.description, description);
+  const offerSource = lowestUsdOfferSource(site, products);
+  const offerUrl = absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/pricing"));
+  const offer = offerSource ? {
+    "@type": "Offer",
+    "@id": `${url}#offer`,
+    name: cleanSchemaText(site, offerSource.price.metadata?.publicReference, offerSource.price.label || offerSource.product.name),
+    url: offerUrl,
+    priceCurrency: offerSource.price.currency.toUpperCase(),
+    price: (offerSource.price.amountCents / 100).toFixed(2),
+    availability: "https://schema.org/InStock",
+    itemCondition: "https://schema.org/NewCondition"
+  } : undefined;
+  const additionalProperty: JsonLdNode[] = [
+    {
+      "@type": "PropertyValue",
+      name: "Credit cost",
+      value: pack.creditCost
+    },
+    {
+      "@type": "PropertyValue",
+      name: "Output count",
+      value: pack.outputCount
+    }
+  ];
+  return {
+    "@type": "Product",
+    "@id": `${url}#product`,
+    name: productName,
+    description: productDescription,
+    sku: pack.id,
+    brand: {
+      "@type": "Brand",
+      name: siteBrandName(site)
+    },
+    category: cleanSchemaText(site, pack.categoryRecord?.label || pack.category, "AI photo package"),
+    image: [absoluteUrl(site, routeMode, image)],
+    url,
+    ...(offer ? { offers: offer } : {}),
+    additionalProperty,
+    subjectOf: {
+      "@type": "ImageObject",
+      "@id": `${url}#image`,
+      name: `${productName} preview image`,
+      contentUrl: absoluteUrl(site, routeMode, subjectImage),
+      description: cleanSchemaText(site, `Example preview image for ${productName}`, productDescription),
+      representativeOfPage: true
+    }
+  };
+}
+
+function iso8601Duration(seconds: number): string {
+  const totalSeconds = Math.max(1, Math.floor(seconds));
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const remainingSeconds = totalSeconds % 60;
+  return `PT${hours ? `${hours}H` : ""}${minutes ? `${minutes}M` : ""}${remainingSeconds || (!hours && !minutes) ? `${remainingSeconds}S` : ""}`;
+}
+
+function videoMediaPath(value: unknown): string {
+  const text = cleanText(value);
+  return /\.(?:mp4|webm)(?:[?#]|$)/i.test(text) ? text : "";
+}
+
+function normalizedUploadDate(value: unknown): string {
+  const text = cleanText(value);
+  if (!text) return "";
+  const date = new Date(text);
+  return Number.isNaN(date.getTime()) ? "" : date.toISOString();
+}
+
+function showcaseVideoSlugs(pageJson: ThemePageJson | undefined): string[] {
+  const showcase = sectionOfType(pageJson, "dreamshoot_generation_showcase");
+  return listText(showcase?.settings.videoSlugs).map(slugifySchemaPart).filter(Boolean);
+}
+
+function homeVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
+  if (!isPrimaryMyDreamShootsSite(input.site)) return [];
+  if (input.pagePath !== "/" && input.page.slug !== "/") return [];
+  const selectedSlugs = showcaseVideoSlugs(input.pageJson);
+  const videoBySlug = new Map<string, VideoTheme>();
+  (input.videoThemes ?? [])
+    .filter((theme) => theme.siteId === input.site.id && theme.status === "active")
+    .forEach((theme) => videoBySlug.set(slugifySchemaPart(theme.slug), theme));
+  const orderedThemes = [
+    ...selectedSlugs.map((slug) => videoBySlug.get(slug)).filter((theme): theme is VideoTheme => Boolean(theme)),
+    ...(input.videoThemes ?? []).filter((theme) => theme.siteId === input.site.id && theme.status === "active")
+  ];
+  const seen = new Set<string>();
+  const homeUrl = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, "/"));
+  return orderedThemes
+    .filter((theme) => {
+      if (seen.has(theme.id)) return false;
+      seen.add(theme.id);
+      return Boolean(
+        videoMediaPath((theme.galleryImages ?? []).find((item) => videoMediaPath(item))) &&
+        imageMediaPath(theme.imageUrl) &&
+        normalizedUploadDate(theme.createdAt)
+      );
+    })
+    .slice(0, 8)
+    .map((theme) => {
+      const videoUrl = videoMediaPath((theme.galleryImages ?? []).find((item) => videoMediaPath(item)));
+      const thumbnailUrl = imageMediaPath(theme.imageUrl);
+      const uploadDate = normalizedUploadDate(theme.createdAt);
+      const slug = slugifySchemaPart(theme.slug || theme.id);
+      const name = cleanSchemaText(input.site, theme.name, "MyDreamShoots AI motion example");
+      return {
+        "@type": "VideoObject",
+        "@id": `${homeUrl}#video-${slug}`,
+        name,
+        description: cleanSchemaText(input.site, theme.description, `Watch ${name} as a MyDreamShoots AI video example.`),
+        thumbnailUrl: [absoluteUrl(input.site, input.routeMode, thumbnailUrl || theme.imageUrl)],
+        uploadDate,
+        duration: iso8601Duration(theme.durationSeconds || 1),
+        contentUrl: absoluteUrl(input.site, input.routeMode, videoUrl),
+        url: `${homeUrl}#video-${slug}`
+      };
+    });
+}
+
 function collectionPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
   if (!input.pagePath.startsWith("/collections")) return [];
   const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
@@ -606,6 +803,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     faqSchema(input.site, input.pageJson),
     articleSchema(input.site, input.routeMode, input.pagePath, title, description, input.pageJson),
     ...collectionPageSchema(input, title, description),
+    ...homeVideoObjectSchemas(input),
     ...serviceOrProductSchema(input, title, description)
   ];
 
@@ -672,26 +870,44 @@ export function buildCollectionDirectoryJsonLd({
   site,
   collectionSlug,
   routeMode,
-  creativePacks = []
+  creativePacks = [],
+  products = []
 }: {
   site: Site;
   collectionSlug: string;
   routeMode: "host" | "path";
   creativePacks?: CreativePack[];
+  products?: Product[];
 }): JsonLdNode[] {
-  const item = getSeoDirectoryContentForSite(site, "collection", collectionSlug);
-  const pagePath = item.canonicalPath;
+  const pageSlug = canonicalCollectionSlugForCandidate(site, collectionSlug) || slugifySchemaPart(collectionSlug);
+  const pagePath = `/collections/${pageSlug || "all"}`;
+  const collectionLabel = cleanText(collectionSlug, pageSlug).replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()) || "Photo Packages";
+  const fallbackCollectionLabel = isSpanishXbySite(site) ? "Paquetes de fotos" : collectionLabel;
+  const item = (() => {
+    try {
+      return getSeoDirectoryContentForSite(site, "collection", collectionSlug);
+    } catch {
+      return {
+        slug: pageSlug,
+        canonicalPath: pagePath,
+        label: fallbackCollectionLabel,
+        title: `${fallbackCollectionLabel} | ${siteBrandName(site)}`,
+        description: isSpanishXbySite(site)
+          ? `${fallbackCollectionLabel} de ${siteBrandName(site)}`
+          : `${fallbackCollectionLabel} from ${siteBrandName(site)}`,
+        intro: isSpanishXbySite(site)
+          ? `Explora ${fallbackCollectionLabel.toLowerCase()} antes de gastar creditos.`
+          : `Browse ${fallbackCollectionLabel.toLowerCase()} before you spend credits.`,
+        useCases: [isSpanishXbySite(site) ? `${fallbackCollectionLabel} opciones` : `${fallbackCollectionLabel} photo options`]
+      };
+    }
+  })();
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
   const siteName = siteBrandName(site);
   const matchingPacks = creativePacks
     .filter((pack) => pack.status === "active")
-    .filter((pack) => {
-      const candidates = [pack.categoryRecord?.slug, pack.categoryRecord?.parent?.slug, pack.category, pack.name]
-        .map((value) => cleanText(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""))
-        .filter(Boolean);
-      return candidates.includes(item.slug);
-    })
+    .filter((pack) => packMatchesCollectionSlug(site, pack, item.slug))
     .slice(0, 12);
   const hasMatchingPacks = matchingPacks.length > 0;
   const itemListElement = (hasMatchingPacks ? matchingPacks : item.useCases.map((useCase, index) => ({
@@ -703,8 +919,8 @@ export function buildCollectionDirectoryJsonLd({
     const pack = entry as CreativePack;
     const name = cleanText(pack.name, item.useCases[index] ?? item.label);
     const image = cleanText(pack.imageUrl);
-    const entrySlug = cleanText(pack.categoryRecord?.slug || pack.category || pack.name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-    const entryPagePath = hasMatchingPacks && entrySlug ? getSeoDirectoryContentForSite(site, "collection", entrySlug).canonicalPath : pagePath;
+    const entrySlug = canonicalCollectionSlugForCandidate(site, pack.categoryRecord?.slug || pack.category || pack.name);
+    const entryPagePath = hasMatchingPacks && entrySlug ? `/collections/${entrySlug}` : pagePath;
     const entryPath = schemaPagePath(site, routeMode, entryPagePath);
     return {
       "@type": "ListItem",
@@ -734,7 +950,17 @@ export function buildCollectionDirectoryJsonLd({
       description: item.intro,
       url,
       itemListElement
-    }
+    },
+    ...(matchingPacks.length === 1
+      ? [packProductSchema({
+          site,
+          routeMode,
+          pagePath,
+          pack: matchingPacks[0],
+          products,
+          description: item.description
+        })].filter(Boolean) as JsonLdNode[]
+      : [])
   ];
 
   return [{ "@context": "https://schema.org", "@graph": graph, url }];

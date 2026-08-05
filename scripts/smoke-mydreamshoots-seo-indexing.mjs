@@ -51,6 +51,7 @@ const siteToolPage = readText("src/app/site/[siteSlug]/tools/[toolSlug]/page.tsx
 const siteRouteCanonical = readText("src/lib/site-route-canonical.ts");
 const storefrontRender = readText("src/lib/storefront-render.tsx");
 const storefrontStateRelational = readText("src/lib/storefront-state-relational.ts");
+const themeRenderer = readText("src/components/theme-renderer.tsx");
 const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const platformState = readJson("data/platform-state.json");
 const mydreamshootsSite = platformState.sites.find((site) => site.id === "site_dreamshoot");
@@ -142,6 +143,16 @@ assert(
     nextConfig.includes('source: "/site/:siteSlug/search"') &&
     !jsonLd.includes('"SearchAction"'),
   "robots should allow noindex discovery, /search should receive X-Robots-Tag, and JSON-LD must not emit SearchAction without an indexable search page"
+);
+assert(
+  themeRenderer.includes("publicSeoCriticalSectionTypes") &&
+    themeRenderer.includes('"pricing_table"') &&
+    themeRenderer.includes('"testimonial_wall"') &&
+    themeRenderer.includes('"reviews"') &&
+    themeRenderer.includes('"trust_signal_bar"') &&
+    themeRenderer.includes('"brand_logo_strip"') &&
+    themeRenderer.includes("isPublicSeoRoute(pagePath) && publicSeoCriticalSectionTypes.has(sectionType)"),
+  "public SEO critical pricing, review, and trust sections must be server-rendered instead of lazy placeholders"
 );
 
 for (const pathName of ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping"]) {
