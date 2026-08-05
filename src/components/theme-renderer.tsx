@@ -266,6 +266,8 @@ export function ThemeRenderer({
             sectionType !== "policy_content" &&
             sectionType !== "blog_article" &&
             sectionType !== "blog_list" &&
+            sectionType !== "video_feature" &&
+            sectionType !== "mobile_video_showcase" &&
             !shouldServerRenderPublicSeo &&
             (!focusedCollectionRoute || !shouldServerRenderFocusedCollectionSection(sectionType));
           return shouldLazyRender ? (
@@ -7351,14 +7353,14 @@ function SectionView({
               />
             ))}
           </div>
-          <div className="mx-auto grid min-h-[640px] max-w-[var(--site-content-width)] gap-7 py-10 sm:min-h-[710px] md:py-12 lg:grid-cols-[0.62fr_0.38fr] lg:items-center lg:py-14">
-            <div className="relative z-10 flex max-w-[760px] flex-col justify-center">
+          <div className="mx-auto grid min-h-[640px] max-w-[var(--site-content-width)] gap-7 py-10 sm:min-h-[710px] md:py-12 lg:grid-cols-[0.66fr_0.34fr] lg:items-center lg:py-14">
+            <div className="relative z-10 flex max-w-[860px] flex-col justify-center">
               <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/14 bg-white/[0.08] px-3.5 py-2 text-[12px] font-medium text-white/88 shadow-[0_18px_48px_-34px_rgba(22,220,240,0.6)] backdrop-blur">
                 <span className="h-2 w-2 rounded-full shadow-[0_0_16px_rgba(22,220,240,0.9)]" style={{ background: dreamshootBrandGradient }} />
                 {setting(section, "heroBadge", "Private AI portrait studio")}
               </div>
               <h1
-                className="mt-6 max-w-[780px] text-[clamp(2.55rem,6vw,5.95rem)] font-semibold leading-[0.94] tracking-tight text-balance text-white [font-family:var(--site-title-font)] sm:leading-[0.92]"
+                className="mt-6 max-w-[860px] text-[clamp(2.3rem,4.55vw,4.9rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white [font-family:var(--site-title-font)] sm:leading-[0.9]"
                 data-headline-text={setting(section, "headline")}
               >
                 {(() => {
@@ -7397,20 +7399,36 @@ function SectionView({
                 </div>
               ) : null}
               <div className="mt-7 grid max-w-[650px] gap-x-5 gap-y-3 sm:mt-8 sm:grid-cols-2">
-                {proofBullets.map((item) => (
-                  <div className="inline-flex items-start gap-2 text-sm leading-6 text-white/80" key={item}>
-                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white/18 bg-white/[0.05] shadow-[0_0_18px_-8px_rgba(22,220,240,0.9)]">
-                      <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={1.8} style={{ color: dreamshootCyan }} />
-                    </span>
-                    <span>{item}</span>
-                  </div>
-                ))}
+                {proofBullets.map((item) => {
+                  const refundLabel = "Read the refund policy";
+                  const refundHref = hrefFor(site, "https://www.mydreamshoots.com/refunds");
+                  const parts = item.includes(refundLabel) ? item.split(refundLabel) : null;
+                  return (
+                    <div className="inline-flex items-start gap-2 text-[0.94rem] leading-6 text-white/80" key={item}>
+                      <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white/18 bg-white/[0.05] shadow-[0_0_18px_-8px_rgba(22,220,240,0.9)]">
+                        <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={1.8} style={{ color: dreamshootCyan }} />
+                      </span>
+                      {parts ? (
+                        <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+                          <span>{parts[0].trim()}</span>
+                          <Link className="inline-flex whitespace-nowrap items-center gap-1 rounded-full border border-cyan-200/22 bg-cyan-400/10 px-2.5 py-1 text-[0.78rem] font-semibold leading-none text-cyan-100 transition hover:-translate-y-0.5 hover:border-cyan-200/34 hover:bg-cyan-400/14 hover:text-white" href={refundHref}>
+                            {refundLabel}
+                            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+                          </Link>
+                          {parts[1]?.trim() ? <span>{parts[1].trim()}</span> : null}
+                        </span>
+                      ) : (
+                        <span>{item}</span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
             <div className="relative z-10 hidden items-center justify-end md:flex">
-              <div className="relative w-full max-w-[440px] rounded-[30px] p-[1px] shadow-[0_36px_100px_-48px_rgba(0,0,0,0.98),0_0_70px_-44px_rgba(22,220,240,0.92)]" style={{ background: dreamshootBrandGradient }}>
-                <div className="rounded-[29px] p-4 text-white backdrop-blur-xl sm:p-7" style={{ background: dreamshootGlass }}>
+              <div className="relative w-full max-w-[420px] rounded-[28px] p-[1px] shadow-[0_30px_88px_-52px_rgba(0,0,0,0.94),0_0_54px_-34px_rgba(22,220,240,0.82)]" style={{ background: dreamshootBrandGradient }}>
+                <div className="rounded-[27px] p-4 text-white backdrop-blur-xl sm:p-6" style={{ background: dreamshootGlass }}>
                 <div
                   className="inline-flex rounded-full px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white shadow-[0_20px_45px_-28px_rgba(236,75,221,0.75)] sm:px-4 sm:py-2 sm:text-[12px]"
                   style={{ background: dreamshootBrandGradient }}
@@ -7419,7 +7437,7 @@ function SectionView({
                 </div>
                 <div className="mt-4 rounded-[18px] border border-white/12 bg-white/[0.07] p-3 shadow-[inset_0_0_0_1px_rgba(122,76,255,0.14)] sm:mt-6 sm:p-4">
                   <p className="text-xs font-semibold text-white sm:text-sm">{imageBadge}</p>
-                  <p className="mt-1.5 text-lg font-semibold leading-tight sm:mt-2 sm:text-2xl">{imageCaption}</p>
+                  <p className="mt-1.5 text-[1rem] font-medium leading-[1.45] text-white/92 sm:mt-2 sm:text-[1.18rem]">{imageCaption}</p>
                 </div>
                 <div className="mt-4 grid gap-2.5 sm:mt-5 sm:gap-3">
                   <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))}>
@@ -10677,34 +10695,35 @@ function SectionView({
       imageProductRows.push(row.map((card) => ({ ...card, railKey: `${card.id}-image-product-${rowIndex}` })));
     }
     const videoRailCards = videoCards.map((card) => ({ ...card, railKey: `${card.id}-video` }));
+    const showcaseIntro = (
+      <div className="mt-14 grid gap-7 border-t border-white/10 pt-10 lg:grid-cols-[minmax(0,0.62fr)_minmax(18rem,0.38fr)] lg:items-end">
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: aidreamcapes ? "#f2b27c" : "#8defff" }}>
+            {setting(section, "eyebrow", "Customer-created examples")}
+          </p>
+          <h2 className="mt-4 max-w-[46rem] text-[clamp(2.25rem,5vw,4.4rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-balance [font-family:var(--site-title-font)]">
+            {setting(section, "title", "Browse image and video themes customers have already created.")}
+          </h2>
+        </div>
+        <div className={`rounded-[24px] border bg-white/[0.07] p-5 shadow-[0_32px_92px_-66px_rgba(0,0,0,0.92)] backdrop-blur ${aidreamcapes ? "border-white/12" : "border-white/10"}`}>
+          <p className={`text-sm leading-7 ${mutedText}`}>
+            {setting(section, "subtitle", "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.")}
+          </p>
+          <Link className="mt-5 inline-flex items-center gap-2 rounded-[16px] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "primaryHref", "/login"))} style={{ background: accent }}>
+            {setting(section, "primaryCta", "Start with your photos")}
+            <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+          </Link>
+        </div>
+      </div>
+    );
 
     return (
       <section className={`relative overflow-hidden ${shellTone} px-5 py-16 md:py-20`} id={sectionAnchor(section, "generated-showcase")}>
         <div className={aidreamcapes ? "absolute inset-0 opacity-34 [background-image:radial-gradient(circle_at_center,rgba(255,239,221,0.72)_1px,transparent_1px)] [background-size:86px_86px]" : "absolute inset-0 opacity-38 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.72)_1px,transparent_1px)] [background-size:86px_86px]"} />
         <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_0%_8%,rgba(216,138,75,0.22),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(255,209,155,0.13),transparent_34%),radial-gradient(circle_at_58%_88%,rgba(184,110,54,0.14),transparent_36%),linear-gradient(180deg,rgba(5,7,14,0)_0%,rgba(5,7,14,0.96)_100%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_0%_8%,rgba(22,220,240,0.18),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(236,75,221,0.16),transparent_34%),radial-gradient(circle_at_54%_90%,rgba(122,76,255,0.16),transparent_36%),linear-gradient(180deg,rgba(5,7,14,0)_0%,rgba(5,7,14,0.96)_100%)]"} />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
-          <div className="grid gap-7 lg:grid-cols-[minmax(0,0.62fr)_minmax(18rem,0.38fr)] lg:items-end">
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: aidreamcapes ? "#f2b27c" : "#8defff" }}>
-                {setting(section, "eyebrow", "Customer-created examples")}
-              </p>
-              <h2 className="mt-4 max-w-[46rem] text-[clamp(2.25rem,5vw,4.4rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", "Browse image and video themes customers have already created.")}
-              </h2>
-            </div>
-            <div className={`rounded-[24px] border bg-white/[0.07] p-5 shadow-[0_32px_92px_-66px_rgba(0,0,0,0.92)] backdrop-blur ${aidreamcapes ? "border-white/12" : "border-white/10"}`}>
-              <p className={`text-sm leading-7 ${mutedText}`}>
-                {setting(section, "subtitle", "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.")}
-              </p>
-              <Link className="mt-5 inline-flex items-center gap-2 rounded-[16px] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "primaryHref", "/login"))} style={{ background: accent }}>
-                {setting(section, "primaryCta", "Start with your photos")}
-                <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-              </Link>
-            </div>
-          </div>
-
           <DreamshootShowcasePreview>
-            <div className="mt-10">
+            <div className="mt-0">
               <div className="flex flex-wrap items-end justify-between gap-4">
                 <h3 className="text-2xl font-semibold tracking-[-0.03em] md:text-3xl [font-family:var(--site-title-font)]">{setting(section, "imageTitle", "Customer image themes")}</h3>
                 <span className={`text-xs font-semibold uppercase tracking-[0.14em] ${mutedText}`}>{imageCards.length} examples</span>
@@ -10774,6 +10793,7 @@ function SectionView({
                 ))}
               </DreamshootShowcaseRail>
             </div>
+            {showcaseIntro}
           </DreamshootShowcasePreview>
         </div>
       </section>
