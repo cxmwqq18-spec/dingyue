@@ -1331,7 +1331,7 @@ async function loadStorefrontPublicCollectionDetailState(slug: string, collectio
   const mappedSite = toPublicSiteShell(site, []);
   const explicitSeoCollection = isExplicitSeoDirectoryContentForSite(mappedSite, "collection", collectionSlug);
 
-  const [selectedPacks, navigationData] = await Promise.all([
+  const [selectedPacks, navigationData, products] = await Promise.all([
     explicitSeoCollection
       ? Promise.resolve([])
       : loadStorefrontPublicCollectionSelectedPacks(site.id, collectionSlug),
@@ -1345,7 +1345,13 @@ async function loadStorefrontPublicCollectionDetailState(slug: string, collectio
           creativePacks,
           toolCategories: [],
           toolMenuItems: []
-        }))
+        })),
+    prisma.product.findMany({
+      where: { siteId: site.id, status: "active" },
+      include: { prices: true },
+      orderBy: [{ type: "asc" }, { createdAt: "asc" }],
+      take: publicRuntimeLimits("collection-detail").products
+    })
   ]);
   const creativePacks = Array.from(
     new Map([
@@ -1366,6 +1372,7 @@ async function loadStorefrontPublicCollectionDetailState(slug: string, collectio
     siteDomains: site.domains.map(toSiteDomain),
     creativePackCategories: navigationData.creativePackCategories,
     creativePacks,
+    products: products.map(mapProduct),
     toolCategories: navigationData.toolCategories,
     toolMenuItems: navigationData.toolMenuItems,
     mediaAssets
