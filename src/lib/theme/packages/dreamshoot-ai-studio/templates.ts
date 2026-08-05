@@ -197,7 +197,7 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "home",
       eyebrow: "",
-      headline: "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
+      headline: "Upload selfies and create your own AI model - Professional headshots without a studio.",
       subheadline: "upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.",
       imageUrl: assets.heroPackageWall,
       secondaryImageUrl: assets.heroCreditStudioCard,
@@ -205,8 +205,8 @@ const homeSections: ThemePageJson["sections"] = {
       heroGridImages: [assets.heroGridBusiness, assets.heroGridBeauty, assets.heroGridCyber, assets.heroGridTravel, assets.heroGridSports, assets.heroGridAvatar, assets.heroGridProduct, assets.heroGridVideo, assets.heroGridSocial, assets.heroGridNoir, assets.heroGridUpscale].join("|"),
       bulletList:
         "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy|AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.",
-      highlightWord: "sports fan",
-      heroBadge: "AI photo package studio--AI Headshot Generators",
+      highlightWord: "AI model",
+      heroBadge: "AI Headshot Generators",
       authRibbon: "Plans start at $24.50/month",
       authPrimaryLabel: "Continue with email",
       authEmailPlaceholder: "Email address",

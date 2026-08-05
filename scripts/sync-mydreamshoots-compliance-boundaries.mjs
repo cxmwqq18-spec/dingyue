@@ -33,7 +33,7 @@ const trustCopy = {
 };
 
 const contentCopy = {
-  homeHeadline: "Create sports fan meetups, VIP-style portraits, and holiday group photos from your selfies.",
+  homeHeadline: "Upload selfies and create your own AI model - Professional headshots without a studio.",
   headshotToolEyebrow: "AI Headshot Generator",
   headshotToolTitle: "AI headshots for LinkedIn, resumes, and founder profiles.",
   headshotToolSubtitle:
