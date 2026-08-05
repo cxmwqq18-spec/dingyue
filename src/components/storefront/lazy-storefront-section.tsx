@@ -282,50 +282,6 @@ function LazyMountedStorefrontSection({ intrinsicSize, payload }: { intrinsicSiz
   return <Mount {...payload} />;
 }
 
-function lazySectionLoadingCopy(sectionType: string) {
-  const normalized = sectionType.toLowerCase();
-  if (normalized.includes("generation_showcase")) {
-    return {
-      eyebrow: "Loading examples",
-      title: "Preparing image and video themes.",
-      description: "Customer-created examples are loading now."
-    };
-  }
-  if (normalized.includes("catalog") || normalized.includes("taxonomy") || normalized.includes("package") || normalized.includes("collection")) {
-    return {
-      eyebrow: "Loading packages",
-      title: "Preparing the package gallery.",
-      description: "Photo packs and categories are being organized."
-    };
-  }
-  if (normalized.includes("pricing")) {
-    return {
-      eyebrow: "Loading plans",
-      title: "Preparing credits and plan options.",
-      description: "The latest checkout-ready offers are loading."
-    };
-  }
-  if (normalized.includes("faq") || normalized.includes("rich_text") || normalized.includes("policy")) {
-    return {
-      eyebrow: "Loading details",
-      title: "Preparing this information.",
-      description: "Helpful details are being loaded for this section."
-    };
-  }
-  if (normalized.includes("proof") || normalized.includes("testimonial") || normalized.includes("trust")) {
-    return {
-      eyebrow: "Loading proof",
-      title: "Preparing customer proof.",
-      description: "Reviews and trust signals are loading now."
-    };
-  }
-  return {
-    eyebrow: "Loading section",
-    title: "Preparing this section.",
-    description: "Fresh storefront content is loading now."
-  };
-}
-
 function LazySectionPlaceholder({
   intrinsicSize,
   sectionType,
@@ -335,32 +291,20 @@ function LazySectionPlaceholder({
   sectionType: string;
   status: "idle" | "loading";
 }) {
-  const copy = lazySectionLoadingCopy(sectionType);
-  const warmSurface = sectionType.toLowerCase().includes("aidreamcapes");
+  const normalizedSectionType = sectionType.toLowerCase();
+  const warmSurface = normalizedSectionType.includes("aidreamcapes");
   const busy = status === "loading";
-  const skeletonCards = sectionType.toLowerCase().includes("pricing") ? 3 : 4;
+  const skeletonCards = normalizedSectionType.includes("pricing") ? 3 : 4;
 
   return (
     <div
       aria-busy={busy ? "true" : undefined}
-      aria-live={busy ? "polite" : undefined}
       className={warmSurface ? "bg-[#fff8ed] px-5 py-12 text-[#211914]" : "bg-[#f6f7fb] px-5 py-12 text-[#10121a]"}
-      role={busy ? "status" : undefined}
       style={{ minHeight: intrinsicSize }}
     >
       <div className="mx-auto flex min-h-[inherit] max-w-[var(--site-content-width)] items-center">
         <div className="w-full">
-          <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/76 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#687181] shadow-[0_16px_44px_-36px_rgba(20,22,26,0.32)]">
-            <span className="h-2 w-2 rounded-full bg-[#16dcf0] shadow-[0_0_18px_rgba(22,220,240,0.72)]" />
-            {copy.eyebrow}
-          </div>
-          <p className="mt-5 max-w-[36rem] text-[clamp(1.75rem,4vw,3.35rem)] font-semibold leading-tight [font-family:var(--site-title-font)]">
-            {copy.title}
-          </p>
-          <p className="mt-3 max-w-[34rem] text-sm leading-7 text-[#647080] md:text-base">
-            {copy.description}
-          </p>
-          <div className="mt-8 grid gap-4 md:grid-cols-4" aria-hidden="true">
+          <div className="grid gap-4 md:grid-cols-4" aria-hidden="true">
             {Array.from({ length: skeletonCards }).map((_, index) => (
               <div className="overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_24px_72px_-58px_rgba(20,22,26,0.36)]" key={`lazy_section_skeleton_${index}`}>
                 <div className="aspect-[4/3] animate-pulse bg-[linear-gradient(110deg,#eef2f7_0%,#f8fafc_45%,#e8edf5_100%)]" />

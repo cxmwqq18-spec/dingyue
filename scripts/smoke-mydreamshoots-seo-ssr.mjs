@@ -54,17 +54,36 @@ function graphNodes(html) {
 const homepage = await fetchHtml("/");
 const pricing = await fetchHtml("/pricing");
 const collection = await fetchHtml("/collections/professional-headshots");
+const workflow = await fetchHtml("/workflow");
+const faq = await fetchHtml("/faq");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
 const homepageGraph = graphNodes(homepage);
 const collectionGraph = graphNodes(collection);
 const collectionProducts = collectionGraph.filter((node) => node?.["@type"] === "Product");
 const collectionProduct = collectionProducts[0];
 const collectionOffer = collectionProduct?.offers;
+const forbiddenLoadingCopy = [
+  "Reviews and trust signals are loading now",
+  "Preparing credits and plan options",
+  "Preparing this section.",
+  "Preparing this information.",
+  "Fresh storefront content is loading now.",
+  "Helpful details are being loaded for this section.",
+  "Loading section"
+];
+const publicHtmlPages = {
+  homepage,
+  pricing,
+  collection,
+  workflow,
+  faq
+};
 
-assert.equal(homepage.includes("Reviews and trust signals are loading now"), false, "homepage must not SSR the review placeholder");
-assert.equal(homepage.includes("Preparing credits and plan options"), false, "homepage must not SSR the pricing placeholder");
-assert.equal(pricing.includes("Reviews and trust signals are loading now"), false, "pricing must not SSR the review placeholder");
-assert.equal(pricing.includes("Preparing credits and plan options"), false, "pricing must not SSR the pricing placeholder");
+for (const [pageName, html] of Object.entries(publicHtmlPages)) {
+  for (const copy of forbiddenLoadingCopy) {
+    assert.equal(html.includes(copy), false, `${pageName} must not SSR loading placeholder copy: ${copy}`);
+  }
+}
 assert.ok(pricing.includes("Starter") && (pricing.includes("$24.50") || pricing.includes("24.50")), "pricing HTML must contain real plan content");
 assert.equal(homepageGraph.filter((node) => node?.["@type"] === "VideoObject").length, 8, "homepage SSR must contain 8 VideoObject nodes");
 assert.equal(collectionProducts.length, 1, "collection SSR must contain one Product node");
@@ -88,7 +107,7 @@ assert.ok(sitemap.includes("https://www.mydreamshoots.com/collections/headshots"
 
 console.log(JSON.stringify({
   ok: true,
-  pages: ["/", "/pricing", "/collections/professional-headshots"],
+  pages: ["/", "/pricing", "/collections/professional-headshots", "/workflow", "/faq"],
   placeholders: 0,
   homepageVideoObjects: homepageGraph.filter((node) => node?.["@type"] === "VideoObject").length,
   collectionProductObjects: collectionProducts.length,
