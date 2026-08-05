@@ -57,6 +57,9 @@ const collection = await fetchHtml("/collections/professional-headshots");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
 const homepageGraph = graphNodes(homepage);
 const collectionGraph = graphNodes(collection);
+const collectionProducts = collectionGraph.filter((node) => node?.["@type"] === "Product");
+const collectionProduct = collectionProducts[0];
+const collectionOffer = collectionProduct?.offers;
 
 assert.equal(homepage.includes("Reviews and trust signals are loading now"), false, "homepage must not SSR the review placeholder");
 assert.equal(homepage.includes("Preparing credits and plan options"), false, "homepage must not SSR the pricing placeholder");
@@ -64,7 +67,22 @@ assert.equal(pricing.includes("Reviews and trust signals are loading now"), fals
 assert.equal(pricing.includes("Preparing credits and plan options"), false, "pricing must not SSR the pricing placeholder");
 assert.ok(pricing.includes("Starter") && (pricing.includes("$24.50") || pricing.includes("24.50")), "pricing HTML must contain real plan content");
 assert.equal(homepageGraph.filter((node) => node?.["@type"] === "VideoObject").length, 8, "homepage SSR must contain 8 VideoObject nodes");
-assert.equal(collectionGraph.filter((node) => node?.["@type"] === "Product").length, 1, "collection SSR must contain one Product node");
+assert.equal(collectionProducts.length, 1, "collection SSR must contain one Product node");
+assert.ok(Array.isArray(collectionProduct?.image) && collectionProduct.image.length > 0, "collection Product must contain an image");
+assert.equal(collectionProduct?.subjectOf?.["@type"], "ImageObject", "collection Product must contain an ImageObject subject");
+assert.equal(collectionOffer?.["@type"], "Offer", "collection Product must contain a purchasable Offer");
+assert.equal(collectionOffer?.priceCurrency, "USD", "collection Offer must use USD");
+assert.match(collectionOffer?.price ?? "", /^\d+\.\d{2}$/, "collection Offer must contain a decimal price");
+assert.equal(collectionOffer?.availability, "https://schema.org/InStock", "collection Offer must use the schema.org InStock URL");
+assert.equal(collectionOffer?.itemCondition, "https://schema.org/NewCondition", "collection Offer must use the schema.org NewCondition URL");
+assert.ok(
+  (collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Credit cost"),
+  "collection Product must expose credit cost"
+);
+assert.ok(
+  (collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Output count"),
+  "collection Product must expose output count"
+);
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/pricing"), "sitemap must contain the canonical pricing URL");
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/collections/headshots"), "sitemap must contain the canonical headshots URL");
 
@@ -73,5 +91,6 @@ console.log(JSON.stringify({
   pages: ["/", "/pricing", "/collections/professional-headshots"],
   placeholders: 0,
   homepageVideoObjects: homepageGraph.filter((node) => node?.["@type"] === "VideoObject").length,
-  collectionProductObjects: collectionGraph.filter((node) => node?.["@type"] === "Product").length
+  collectionProductObjects: collectionProducts.length,
+  collectionOfferPrice: collectionOffer.price
 }, null, 2));
