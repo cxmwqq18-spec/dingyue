@@ -56,14 +56,14 @@ const outputSize = {
 const deviceScaleFactor = Number(process.env.TUTORIAL_DEVICE_SCALE_FACTOR || (isMobileRecording ? 2 : 1));
 const mobileUserAgent = process.env.TUTORIAL_MOBILE_USER_AGENT ||
   "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1";
-const captureFps = Number(process.env.TUTORIAL_CAPTURE_FPS || 15);
+const captureFps = Number(process.env.TUTORIAL_CAPTURE_FPS || 30);
 const targetSeconds = Number(process.env.TUTORIAL_TARGET_SECONDS || 55);
 const headless = process.env.TUTORIAL_HEADLESS !== "0";
 const maxAttempts = Math.max(1, Number(process.env.TUTORIAL_MAX_ATTEMPTS || 3));
 const jobTimeoutMs = Math.max(60_000, Number(process.env.TUTORIAL_JOB_TIMEOUT_MS || 1_800_000));
 const pollIntervalMs = Math.max(5_000, Number(process.env.TUTORIAL_POLL_INTERVAL_MS || 12_000));
 const pageTimeoutMs = Math.max(30_000, Number(process.env.TUTORIAL_PAGE_TIMEOUT_MS || 120_000));
-process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS = process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS || "1";
+process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS = process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS || "0";
 const hideHistoricalAssets = process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS === "1";
 const skipRealGeneration = process.env.TUTORIAL_REAL_GENERATION !== "1";
 const ffmpegPath = process.env.FFMPEG_PATH || ffmpegStatic || "ffmpeg";
@@ -320,10 +320,15 @@ async function installOverlay(page) {
     .tutorial-file-sidebar div { padding: 8px 10px; border-radius: 8px; color: #5e6672; }
     .tutorial-file-sidebar .active { background: #d8e8ff; color: #1264c8; font-weight: 800; }
     .tutorial-file-main { display: grid; grid-template-rows: 1fr 52px; min-width: 0; }
-    .tutorial-file-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 14px; align-content: start; background: #ffffff; }
-    .tutorial-file-item { display: grid; gap: 6px; place-items: center; min-height: 112px; padding: 8px; border: 2px solid transparent; border-radius: 10px; background: #f3f4f6; color: #404753; }
+    .tutorial-file-list { display: grid; grid-template-columns: 1fr; gap: 8px; padding: 14px; align-content: start; background: #ffffff; }
+    .tutorial-file-item { display: grid; grid-template-columns: 40px minmax(0,1fr) 82px; align-items: center; gap: 10px; min-height: 58px; padding: 8px 10px; border: 2px solid transparent; border-radius: 10px; background: #f3f4f6; color: #404753; }
     .tutorial-file-item.selected { border-color: #2575e8; background: #e7f0ff; color: #0f55a7; }
-    .tutorial-file-thumb { display: grid; place-items: center; width: 78px; height: 62px; overflow: hidden; border-radius: 7px; background: linear-gradient(135deg,#2d5e52,#e5a26f 54%,#231a1d); color: #ffffff; font-size: 11px; font-weight: 800; }
+    .tutorial-file-kind { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 8px; background: #e5e7eb; color: #475569; font-size: 10px; font-weight: 900; letter-spacing: .04em; }
+    .tutorial-file-meta { min-width: 0; display: grid; gap: 3px; }
+    .tutorial-file-meta strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+    .tutorial-file-meta span { color: #697386; font-size: 11px; }
+    .tutorial-file-status { justify-self: end; border-radius: 999px; background: #dbeafe; color: #1d4ed8; padding: 5px 8px; font-size: 11px; font-weight: 800; opacity: 0; }
+    .tutorial-file-item.selected .tutorial-file-status { opacity: 1; }
     .tutorial-file-footer { display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 8px 14px; border-top: 1px solid #d7d9df; background: #fbfbfc; }
     .tutorial-file-button { min-width: 98px; padding: 9px 18px; border: 1px solid #c4c8d0; border-radius: 8px; background: #ffffff; color: #4b5563; text-align: center; font-weight: 700; }
     .tutorial-file-button.primary { border-color: #2575e8; background: #2575e8; color: #ffffff; }
@@ -346,10 +351,11 @@ async function installOverlay(page) {
       .tutorial-file-sidebar div:nth-child(n+5) { display: none; }
       .tutorial-file-main { grid-template-rows: 1fr 44px; }
       .tutorial-file-list { grid-template-columns: 1fr; gap: 8px; padding: 10px; overflow: hidden; }
-      .tutorial-file-item { min-height: 64px; grid-template-columns: 48px minmax(0,1fr); justify-items: start; gap: 8px; padding: 7px; }
-      .tutorial-file-item:nth-child(n+3) { display: none; }
-      .tutorial-file-thumb { width: 48px; height: 42px; font-size: 9px; }
-      .tutorial-file-item strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .tutorial-file-item { min-height: 58px; grid-template-columns: 34px minmax(0,1fr) 64px; gap: 7px; padding: 7px; }
+      .tutorial-file-kind { width: 32px; height: 32px; border-radius: 7px; font-size: 8px; }
+      .tutorial-file-meta strong { font-size: 11px; }
+      .tutorial-file-meta span { font-size: 10px; }
+      .tutorial-file-status { padding: 4px 6px; font-size: 9px; }
       .tutorial-file-footer { gap: 7px; padding: 6px 10px; }
       .tutorial-file-button { min-width: 70px; padding: 7px 10px; border-radius: 7px; }
     }
@@ -509,9 +515,8 @@ async function installOverlay(page) {
             </aside>
             <div class="tutorial-file-main">
               <div class="tutorial-file-list">
-                <div class="tutorial-file-item ${selected ? "selected" : ""}"><div class="tutorial-file-thumb">images (1)</div><strong>images (1).jpg</strong></div>
-                <div class="tutorial-file-item ${selected ? "selected" : ""}"><div class="tutorial-file-thumb">images</div><strong>images.jpg</strong></div>
-                <div class="tutorial-file-item"><div class="tutorial-file-thumb">creator-frame.png</div><strong>creator-frame.png</strong></div>
+                <div class="tutorial-file-item ${selected ? "selected" : ""}"><div class="tutorial-file-kind">JPG</div><div class="tutorial-file-meta"><strong>images (1).jpg</strong><span>Portrait frame image</span></div><span class="tutorial-file-status">Selected</span></div>
+                <div class="tutorial-file-item ${selected ? "selected" : ""}"><div class="tutorial-file-kind">JPG</div><div class="tutorial-file-meta"><strong>images.jpg</strong><span>Portrait frame image</span></div><span class="tutorial-file-status">Selected</span></div>
               </div>
               <div class="tutorial-file-footer"><span class="tutorial-file-button">Cancel</span><span class="tutorial-file-button primary">${selected ? "Open" : "Choose"}</span></div>
             </div>
