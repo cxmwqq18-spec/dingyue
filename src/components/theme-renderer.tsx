@@ -710,6 +710,9 @@ function isPublicSeoRoute(pagePath: string): boolean {
 }
 
 function shouldServerRenderPublicSeoSection(pagePath: string, sectionType: string): boolean {
+  if (isPublicSeoRoute(pagePath) && publicSeoCriticalSectionTypes.has(sectionType)) {
+    return true;
+  }
   if (pagePath === "/pricing") {
     return sectionType === "pricing_table";
   }
