@@ -1220,7 +1220,7 @@ function mydreamshootsFaqSection(): SectionInstance {
       imageAlt: "MyDreamShoots holiday celebration album cover",
       imageList: [
         assets.galleryChristmasCover,
-        assets.galleryChristmasPhotosOne,
+        assets.galleryChristmasPhotosThree,
         assets.galleryChristmasCoupleOne,
         assets.galleryThanksgivingFallback,
         assets.galleryHalloweenFallback,
@@ -1228,7 +1228,7 @@ function mydreamshootsFaqSection(): SectionInstance {
       ].join("|"),
       imageListAlt: [
         "MyDreamShoots holiday celebration album cover",
-        "MyDreamShoots Christmas portrait example",
+        "MyDreamShoots snowy Christmas portrait example",
         "MyDreamShoots Christmas couple portrait example",
         "MyDreamShoots Thanksgiving group album cover",
         "MyDreamShoots Halloween party portrait cover",
