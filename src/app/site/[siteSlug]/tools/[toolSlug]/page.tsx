@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { notFound, permanentRedirect } from "next/navigation";
 import { cache } from "react";
 import { renderToolPage, resolveToolPageForSite } from "@/lib/storefront-render";
-import { preferLocalPathModeState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
+import { readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
 import { canonicalSeoDirectoryPathForSite, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { publicSiteSlug as normalizePublicSiteSlug } from "@/lib/domain-routing";
@@ -61,23 +61,23 @@ function findPublicSiteInState<TSite extends { slug: string }>(state: { sites: T
 }
 
 const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
+  const detailState = await readPathModePublicRuntimeState(siteSlug, `/tools/${toolSlug}`, toolSlug);
+  const detailSite = findPublicSiteInState(detailState, siteSlug);
+  if (detailState && detailSite) {
+    const resolved = resolveToolPageForSite(detailState, detailSite, toolSlug);
+    if (resolved.matched) return { state: detailState, site: detailSite, ...resolved };
+  }
+
   const toolsState = await readPathModePublicRuntimeState(siteSlug, "/tools");
   const toolsSite = findPublicSiteInState(toolsState, siteSlug);
   if (toolsState && toolsSite) {
     const resolved = resolveToolPageForSite(toolsState, toolsSite, toolSlug);
     if (resolved.matched) return { state: toolsState, site: toolsSite, ...resolved };
   }
-  const detailState = preferLocalPathModeState(siteSlug)
-    ? undefined
-    : await readPathModePublicRuntimeState(siteSlug, `/tools/${toolSlug}`, toolSlug);
-  const detailSite = findPublicSiteInState(detailState, siteSlug);
-  if (detailState && detailSite) {
-    const resolved = resolveToolPageForSite(detailState, detailSite, toolSlug);
-    if (resolved.matched) return { state: detailState, site: detailSite, ...resolved };
-  }
+
   const state =
-    toolsState ??
     detailState ??
+    toolsState ??
     await readPathModePublicRuntimeState(siteSlug, "/");
   const site = findPublicSiteInState(state, siteSlug);
   if (!state || !site) return { state, site, siteAiApps: [], page: undefined, app: undefined, matched: false };
