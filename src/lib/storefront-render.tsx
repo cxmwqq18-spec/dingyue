@@ -2193,6 +2193,11 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     aliasMap.set(normalizeToolLookup(page.slug), page.slug);
   }
 
+  const explicitPageSlug = aliasMap.get(normalizedToolSlug) ?? aliasMap.get(directPageSlug);
+  const setLegacyAlias = (alias: string, target: string) => {
+    if (!aliasMap.has(alias)) aliasMap.set(alias, target);
+  };
+
   for (const pack of creativePacks) {
     const slugCandidates = [
       pack.aiAppSlug,
@@ -2201,23 +2206,23 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     ];
     for (const candidate of slugCandidates) {
       if (!candidate) continue;
-      aliasMap.set(candidate, "/tools/image-studio");
-      aliasMap.set(`/tools/${candidate}`, "/tools/image-studio");
-      aliasMap.set(normalizeToolLookup(candidate), "/tools/image-studio");
+      setLegacyAlias(candidate, "/tools/image-studio");
+      setLegacyAlias(`/tools/${candidate}`, "/tools/image-studio");
+      setLegacyAlias(normalizeToolLookup(candidate), "/tools/image-studio");
     }
   }
 
   if (/dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) {
     for (const alias of dreamshootImageStudioToolAliases) {
-      aliasMap.set(alias, "/tools/image-studio");
-      aliasMap.set(`/tools/${alias}`, "/tools/image-studio");
+      setLegacyAlias(alias, "/tools/image-studio");
+      setLegacyAlias(`/tools/${alias}`, "/tools/image-studio");
     }
   }
   if (isAidreamcapes) {
     for (const [alias, target] of aidreamcapesToolAliases) {
-      aliasMap.set(alias, `/tools/${target}`);
-      aliasMap.set(`/tools/${alias}`, `/tools/${target}`);
-      aliasMap.set(normalizeToolLookup(alias), `/tools/${target}`);
+      setLegacyAlias(alias, `/tools/${target}`);
+      setLegacyAlias(`/tools/${alias}`, `/tools/${target}`);
+      setLegacyAlias(normalizeToolLookup(alias), `/tools/${target}`);
     }
   }
   const explicitAidreamcapesToolSlug = isAidreamcapes && getExplicitSeoDirectorySlugsForSite(site, "tool").includes(canonicalToolSlug);
@@ -2226,7 +2231,7 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
   const legacyImageApp = canonicalToolSlug === "image-studio" || canonicalToolSlug === "image-generator"
     ? siteAiApps.find((siteApp) => siteApp.aiApp.slug === "image_generator")
     : undefined;
-  const resolvedSlug = aliasMap.get(toolSlug) ?? aliasMap.get(directPageSlug) ?? aliasMap.get(normalizedToolSlug) ?? normalizedPageSlug;
+  const resolvedSlug = explicitPageSlug ?? aliasMap.get(toolSlug) ?? aliasMap.get(directPageSlug) ?? aliasMap.get(normalizedToolSlug) ?? normalizedPageSlug;
   const page = site.pages.find((item) => item.slug === resolvedSlug);
   const app = directApp ?? legacyImageApp ?? (page?.slug === "/tools/image-studio" ? siteAiApps.find((siteApp) => siteApp.aiApp.slug === "image_generator") : undefined);
   const menuTool = (state.toolMenuItems ?? []).find((item) => {

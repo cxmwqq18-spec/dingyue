@@ -174,6 +174,14 @@ function creativePackData(pack) {
   };
 }
 
+function orderedCreativePackCreatedAt(pack, index, offsetsBySourceDate) {
+  const sourceDate = toDate(pack.createdAt) ?? new Date("2026-01-01T00:00:00.000Z");
+  const sourceKey = sourceDate.toISOString();
+  const offset = offsetsBySourceDate.get(sourceKey) ?? 0;
+  offsetsBySourceDate.set(sourceKey, offset + 1);
+  return new Date(sourceDate.getTime() + offset);
+}
+
 function mediaAssetData(asset) {
   return {
     id: asset.id,
@@ -419,10 +427,12 @@ async function writeContent(tx, records) {
     });
   }
   const creativePackIds = new Set();
-  for (const pack of records.creativePacks) {
+  const creativePackCreatedAtOffsets = new Map();
+  for (const [index, pack] of records.creativePacks.entries()) {
     const data = stripUndefined({
       ...creativePackData(pack),
-      categoryId: pack.categoryId ? creativePackCategoryIds.get(pack.categoryId) : undefined
+      categoryId: pack.categoryId ? creativePackCategoryIds.get(pack.categoryId) : undefined,
+      createdAt: orderedCreativePackCreatedAt(pack, index, creativePackCreatedAtOffsets)
     });
     const existing = await tx.creativePack.findFirst({
       where: { siteId, name: pack.name }
