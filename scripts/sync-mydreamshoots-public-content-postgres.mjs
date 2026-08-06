@@ -407,7 +407,7 @@ async function writeContent(tx, records) {
       }
     });
     if (existing) {
-      await tx.mediaAsset.update({ where: { id: existing.id }, data });
+      await tx.mediaAsset.update({ where: { id: existing.id }, data: { ...data, id: existing.id } });
     } else {
       await tx.mediaAsset.create({ data });
     }
@@ -421,7 +421,7 @@ async function writeContent(tx, records) {
       where: { siteId_slug: { siteId: data.siteId, slug: data.slug } }
     });
     if (existing) {
-      await tx.videoThemeCategory.update({ where: { id: existing.id }, data });
+      await tx.videoThemeCategory.update({ where: { id: existing.id }, data: { ...data, id: existing.id } });
       videoThemeCategoryIds.set(category.id, existing.id);
     } else {
       const created = await tx.videoThemeCategory.create({ data });
@@ -440,7 +440,7 @@ async function writeContent(tx, records) {
       where: { siteId_slug: { siteId: data.siteId, slug: data.slug } }
     });
     if (existing) {
-      await tx.videoTheme.update({ where: { id: existing.id }, data });
+      await tx.videoTheme.update({ where: { id: existing.id }, data: { ...data, id: existing.id } });
     } else {
       await tx.videoTheme.create({ data });
     }
@@ -466,7 +466,7 @@ async function writeContent(tx, records) {
       }
     });
     if (existing) {
-      await tx.themePublication.update({ where: { id: existing.id }, data });
+      await tx.themePublication.update({ where: { id: existing.id }, data: { ...data, id: existing.id } });
     } else {
       await tx.themePublication.create({ data });
     }
