@@ -181,6 +181,14 @@ assert.equal(homeGraph.some((node) => node?.["@type"] === "Review" || node?.["@t
 const sitemapEntries = await getStorefrontSitemapEntriesForHost(["www.mydreamshoots.com"]);
 const sitemapEntryByPath = new Map(sitemapEntries.map((entry) => [new URL(entry.loc).pathname, entry]));
 assert.ok((sitemapEntryByPath.get("/collections")?.images ?? []).length > 0, "collections sitemap entry should include image references");
+for (const pathName of ["/", "/pricing", "/workflow", "/faq", "/blog"]) {
+  const entry = sitemapEntryByPath.get(pathName);
+  assert.ok(entry, `${pathName} sitemap entry should exist`);
+  assert.ok((entry.images ?? []).length > 0, `${pathName} sitemap entry should include image references`);
+  for (const image of entry.images.slice(0, 3)) {
+    assert.match(image.loc, /^https:\/\/www\.mydreamshoots\.com\//, `${pathName} image sitemap loc should be absolute`);
+  }
+}
 for (const pack of activePacks) {
   const canonicalPath = canonicalSeoDirectoryPathForSite(site, "collection", pack.category || pack.name);
   const entry = sitemapEntryByPath.get(canonicalPath);

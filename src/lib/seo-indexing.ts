@@ -1,4 +1,5 @@
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPlatformStateFromLegacyJson } from "@/lib/storefront-state";
+import { getSiteByHostCandidatesFromState } from "@/lib/domain-routing";
 import { canonicalSeoDirectoryPathForSite, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { creativePackCollectionHref } from "@/lib/photo-package-taxonomy";
 import { resolveMediaAssetUrl } from "@/lib/media";
@@ -234,6 +235,80 @@ const AIDREAMCAPES_LEGACY_TOOL_CANONICAL_PATHS = new Map([
   ["/tools/seasonal-celebration-album-maker", "/tools/new-year-countdown-album-maker"],
   ["/tools/travel-journal-cover-maker", "/tools/new-year-countdown-album-maker"]
 ]);
+const AIDREAMCAPES_LEGACY_BLOG_CATEGORY_CANONICAL_PATHS: Record<string, string> = {
+  "fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",
+  "private-fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",
+  "backstage-meetup-portraits": "/blog/backstage-meetup-portraits-photo-package-guide",
+  "supporter-photo-walls": "/blog/creator-supporter-photo-wall-photo-package-guide",
+  "fan-keepsake-card-sets": "/blog/fan-keepsake-card-set-photo-package-guide",
+  "game-day-group-photos": "/blog/game-day-group-portraits-photo-package-guide",
+  "game-day-group-portraits": "/blog/game-day-group-portraits-photo-package-guide",
+  "stadium-night-fan-sets": "/blog/stadium-night-fan-set-photo-package-guide",
+  "watch-party-albums": "/blog/championship-watch-party-album-photo-package-guide",
+  "premiere-style-portraits": "/blog/premiere-flash-portraits-photo-package-guide",
+  "premiere-flash-portraits": "/blog/premiere-flash-portraits-photo-package-guide",
+  "vip-arrival-photo-sets": "/blog/vip-arrival-photo-set-photo-package-guide",
+  "award-night-keepsake-albums": "/blog/award-night-keepsake-album-photo-package-guide",
+  "christmas-holiday-albums": "/blog/christmas-group-album-photo-package-guide",
+  "christmas-group-albums": "/blog/christmas-group-album-photo-package-guide",
+  "cozy-card-portrait-sets": "/blog/cozy-card-portrait-set-photo-package-guide",
+  "winter-fan-greeting-albums": "/blog/winter-fan-greeting-album-photo-package-guide",
+  "thanksgiving-memory-sets": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "thanksgiving-table-keepsakes": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "gratitude-group-portraits": "/blog/gratitude-group-portrait-album-photo-package-guide",
+  "friendsgiving-memory-sets": "/blog/friendsgiving-memory-set-photo-package-guide",
+  "halloween-party-portraits": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "halloween-party-portrait-sets": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "costume-cast-photo-albums": "/blog/costume-cast-photo-album-photo-package-guide",
+  "seasonal-celebration-photos": "/blog/seasonal-celebration-photo-set-photo-package-guide",
+  "birthday-fan-moment-sets": "/blog/birthday-fan-moment-set-photo-package-guide",
+  "new-year-countdown-albums": "/blog/new-year-countdown-group-album-photo-package-guide"
+};
+const AIDREAMCAPES_LEGACY_BLOG_DIRECT_CANONICAL_PATHS: Record<string, string> = {
+  "fan-scene-photo-albums-guide": "/blog/private-fan-scene-album-photo-package-guide",
+  "game-day-group-portraits-guide": "/blog/game-day-group-portraits-photo-package-guide",
+  "premiere-style-photo-sets-guide": "/blog/premiere-flash-portraits-photo-package-guide",
+  "holiday-memory-albums-guide": "/blog/christmas-group-album-photo-package-guide",
+  "thanksgiving-keepsake-sets-category-guide": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "halloween-party-portraits-category-guide": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "seasonal-celebration-photos-category-guide": "/blog/seasonal-celebration-photo-set-photo-package-guide",
+  "permission-safe-fan-scene-references": "/blog/family-occasion-portrait-album-photo-package-guide",
+  "private-album-credit-planning": "/blog/private-fan-scene-album-photo-package-guide"
+};
+const AIDREAMCAPES_LEGACY_BLOG_TOOL_CANONICAL_PATHS: Record<string, string> = {
+  "fan-scene-builders-guide": "/blog/private-fan-scene-album-photo-package-guide",
+  "game-day-builders-guide": "/blog/game-day-group-portraits-photo-package-guide",
+  "premiere-creator-tools-guide": "/blog/premiere-flash-portraits-photo-package-guide",
+  "holiday-album-tools-guide": "/blog/christmas-group-album-photo-package-guide",
+  "occasion-card-tools-guide": "/blog/seasonal-celebration-photo-set-photo-package-guide",
+  "safety-prep-tools-guide": "/blog/family-occasion-portrait-album-photo-package-guide",
+  "fan-scene-album-builder": "/blog/private-fan-scene-album-photo-package-guide",
+  "backstage-meetup-scene-builder": "/blog/backstage-meetup-portraits-photo-package-guide",
+  "supporter-photo-wall-maker": "/blog/creator-supporter-photo-wall-photo-package-guide",
+  "fan-keepsake-card-maker": "/blog/fan-keepsake-card-set-photo-package-guide",
+  "game-day-group-portrait-maker": "/blog/game-day-group-portraits-photo-package-guide",
+  "stadium-night-fan-set-maker": "/blog/stadium-night-fan-set-photo-package-guide",
+  "watch-party-album-builder": "/blog/championship-watch-party-album-photo-package-guide",
+  "premiere-portrait-set-builder": "/blog/premiere-flash-portraits-photo-package-guide",
+  "vip-arrival-photo-maker": "/blog/vip-arrival-photo-set-photo-package-guide",
+  "award-night-album-studio": "/blog/award-night-keepsake-album-photo-package-guide",
+  "new-year-countdown-album-maker": "/blog/new-year-countdown-group-album-photo-package-guide",
+  "christmas-group-album-studio": "/blog/christmas-group-album-photo-package-guide",
+  "cozy-card-portrait-maker": "/blog/cozy-card-portrait-set-photo-package-guide",
+  "winter-fan-greeting-maker": "/blog/winter-fan-greeting-album-photo-package-guide",
+  "thanksgiving-keepsake-set-maker": "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
+  "friendsgiving-memory-maker": "/blog/friendsgiving-memory-set-photo-package-guide",
+  "halloween-party-portrait-maker": "/blog/halloween-party-portrait-set-photo-package-guide",
+  "costume-cast-album-builder": "/blog/costume-cast-photo-album-photo-package-guide",
+  "birthday-fan-moment-maker": "/blog/birthday-fan-moment-set-photo-package-guide",
+  "permission-safe-photo-planner": "/blog/family-occasion-portrait-album-photo-package-guide"
+};
+const AIDREAMCAPES_LEGACY_BLOG_VIDEO_CANONICAL_PATHS: Record<string, string> = {
+  "coastal-motion": "/blog/private-fan-scene-album-photo-package-guide",
+  "memory-film": "/blog/private-fan-scene-album-photo-package-guide",
+  "profile-travel": "/blog/private-fan-scene-album-photo-package-guide",
+  "route-motion": "/blog/private-fan-scene-album-photo-package-guide"
+};
 
 function normalizePath(slug: string): string {
   const value = slug.trim();
@@ -271,6 +346,50 @@ type SitemapEntry = {
   loc: string;
   images: SitemapImageEntry[];
 };
+
+function isSitemapImageKey(key: string): boolean {
+  const normalized = key.trim().toLowerCase();
+  return Boolean(
+    normalized &&
+      (
+        normalized === "src" ||
+        normalized === "image" ||
+        normalized === "images" ||
+        normalized === "imageurl" ||
+        normalized === "imageurls" ||
+        normalized === "ogimage" ||
+        normalized === "backgroundimage" ||
+        normalized === "backgroundimageurl" ||
+        normalized === "bgimage" ||
+        normalized === "bgimageurl" ||
+        normalized === "poster" ||
+        normalized === "posterurl" ||
+        normalized === "thumbnail" ||
+        normalized === "thumbnailurl" ||
+        normalized === "avatar" ||
+        normalized === "avatarurl" ||
+        normalized === "logo" ||
+        normalized === "logourl" ||
+        normalized === "cover" ||
+        normalized === "coverurl" ||
+        normalized === "hero" ||
+        normalized === "heroimage" ||
+        normalized === "heroimageurl" ||
+        normalized === "photo" ||
+        normalized === "photourl" ||
+        normalized === "picture" ||
+        normalized === "pictureurl" ||
+        /(?:image|images|imageurl|img|logo|avatar|cover|poster|thumbnail|banner|hero|photo|picture|src|url)$/i.test(normalized)
+      )
+  );
+}
+
+function splitSitemapImageCandidates(value: string): string[] {
+  return value
+    .split(/\n|\|/)
+    .map((item) => cleanText(item))
+    .filter(Boolean);
+}
 
 function absoluteMediaUrl(site: Site, value: string | undefined): string {
   const resolved = cleanText(resolveMediaAssetUrl(site, value));
@@ -321,10 +440,78 @@ function appendSitemapImages(entry: SitemapEntry, images: SitemapImageEntry[]): 
   }
 }
 
+function imageSitemapUrl(site: Site, value: string | undefined): string {
+  const resolved = absoluteMediaUrl(site, value);
+  if (!resolved) return "";
+  const pathname = cleanText(resolved).split(/[?#]/)[0].toLowerCase();
+  return /\.(?:avif|jpe?g|png|webp)(?:$)/i.test(pathname) ? resolved : "";
+}
+
+function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): SitemapImageEntry[] {
+  const images: SitemapImageEntry[] = [];
+  const seen = new Set<string>();
+  const title = cleanText(page.title, "MyDreamShoots page image");
+  const caption = cleanText(page.publishedJson.seo?.description, title);
+
+  const pushImage = (value: string | undefined, imageTitle = "", imageCaption = "") => {
+    const loc = imageSitemapUrl(site, value);
+    if (!loc) return;
+    const comparable = comparableSitemapImageUrl(loc);
+    if (!comparable || seen.has(comparable)) return;
+    seen.add(comparable);
+    images.push({
+      loc,
+      ...(imageTitle ? { title: imageTitle } : {}),
+      ...(imageCaption ? { caption: imageCaption } : {})
+    });
+  };
+
+  pushImage(page.publishedJson.seo?.ogImage, title, caption);
+
+  const visit = (value: unknown, key?: string): void => {
+    if (images.length >= limit) return;
+    if (typeof value === "string") {
+      if (!key || !isSitemapImageKey(key)) return;
+      for (const candidate of splitSitemapImageCandidates(value)) {
+        pushImage(candidate, images.length === 0 ? title : "", images.length === 0 ? caption : "");
+        if (images.length >= limit) return;
+      }
+      return;
+    }
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        if (images.length >= limit) return;
+        visit(item, key);
+      }
+      return;
+    }
+    if (!value || typeof value !== "object") return;
+    for (const [childKey, childValue] of Object.entries(value)) {
+      if (images.length >= limit) return;
+      visit(childValue, childKey);
+    }
+  };
+
+  visit(page.publishedJson);
+  return images.slice(0, limit);
+}
+
+function pageSitemapPathForSite(site: Site, page: ThemePage): string {
+  if (page.siteId !== site.id) return "";
+  const pageSeo = site.themeSettings.publishedJson.seo?.pages?.[page.id];
+  const policySeo = policySeoForSite(site, page.slug);
+  const canonicalPath = canonicalPublicPath(normalizePath(policySeo?.canonicalPath ?? pageSeo?.canonicalPath ?? page.slug));
+  const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug));
+  return isIndexablePage(page) && !isLegacyDuplicate && !isBlockedPublicPath(canonicalPath) && pageSeo?.index !== false && policySeo?.index !== false
+    ? canonicalDirectoryPathForSite(site, canonicalPath)
+    : "";
+}
+
 function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[] {
   const urls = getSitemapUrlsForSite(state, site);
   const entries = new Map(urls.map((loc) => [loc, { loc, images: [] } as SitemapEntry]));
   const activePacks = state.creativePacks.filter((pack) => pack.siteId === site.id && pack.status === "active");
+  const sitePages = pagesForSite(site);
 
   const collectionsEntry = entries.get(sitemapUrl(site, "/collections"));
   if (collectionsEntry) {
@@ -342,6 +529,14 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
     const entry = entries.get(loc);
     if (!entry) continue;
     appendSitemapImages(entry, packSitemapImages(site, pack));
+  }
+
+  for (const page of sitePages) {
+    const pagePath = pageSitemapPathForSite(site, page);
+    if (!pagePath) continue;
+    const entry = entries.get(sitemapUrl(site, pagePath));
+    if (!entry) continue;
+    appendSitemapImages(entry, collectPageSitemapImages(site, page));
   }
 
   return urls.map((loc) => entries.get(loc) ?? { loc, images: [] });
@@ -378,10 +573,43 @@ function canonicalToolPathForSite(site: Site, path: string): string {
   return normalized;
 }
 
+function legacyBlogCanonicalPath(
+  articleSlug: string,
+  categoryPaths: Record<string, string>,
+  toolPaths: Record<string, string>,
+  videoPaths: Record<string, string>,
+  directPaths: Record<string, string> = {}
+): string | undefined {
+  const normalizedSlug = articleSlug.trim().toLowerCase();
+  const directPath = directPaths[normalizedSlug] ?? toolPaths[normalizedSlug];
+  if (directPath) return directPath;
+  if (normalizedSlug.endsWith("-photo-package-guide")) return categoryPaths[normalizedSlug.slice(0, -"-photo-package-guide".length)];
+  if (normalizedSlug.endsWith("-tool-guide")) return toolPaths[normalizedSlug.slice(0, -"-tool-guide".length)];
+  if (normalizedSlug.endsWith("-video-theme-guide")) return videoPaths[normalizedSlug.slice(0, -"-video-theme-guide".length)];
+  return undefined;
+}
+
+function canonicalBlogPathForSite(site: Site, path: string): string {
+  const normalized = normalizePath(path);
+  if (!normalized.startsWith("/blog/")) return normalized;
+  const articleSlug = normalized.slice("/blog/".length);
+  const canonicalPath = isAidreamcapesSite(site)
+    ? legacyBlogCanonicalPath(
+      articleSlug,
+      AIDREAMCAPES_LEGACY_BLOG_CATEGORY_CANONICAL_PATHS,
+      AIDREAMCAPES_LEGACY_BLOG_TOOL_CANONICAL_PATHS,
+      AIDREAMCAPES_LEGACY_BLOG_VIDEO_CANONICAL_PATHS,
+      AIDREAMCAPES_LEGACY_BLOG_DIRECT_CANONICAL_PATHS
+    )
+    : undefined;
+  return canonicalPath ?? normalized;
+}
+
 function canonicalDirectoryPathForSite(site: Site, path: string): string {
   const normalized = normalizePath(path);
   if (normalized.startsWith("/collections/")) return canonicalSeoDirectoryPathForSite(site, "collection", normalized);
   if (normalized.startsWith("/tools/")) return canonicalToolPathForSite(site, normalized);
+  if (normalized.startsWith("/blog/")) return canonicalBlogPathForSite(site, normalized);
   return normalized;
 }
 
@@ -442,6 +670,10 @@ function blockHref(block: SectionBlockInstance): string {
 
 function blocksFromPage(page: ThemePageJson, types: Set<string>): SectionBlockInstance[] {
   return Object.values(page.sections).flatMap((section) => section.blocks ?? []).filter((block) => types.has(block.type));
+}
+
+function pagesForSite(site: Site): ThemePage[] {
+  return (site.pages ?? []).filter((page) => page.siteId === site.id);
 }
 
 function isDreamshootSite(site: Site): boolean {
@@ -574,6 +806,7 @@ function collectExplicitSeoDirectoryPaths(site: Site): string[] {
 function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[] {
   const paths = new Set<string>();
   const activePacks = state.creativePacks.filter((pack) => pack.siteId === site.id && pack.status === "active");
+  const sitePages = pagesForSite(site);
 
   for (const pack of activePacks) {
     for (const collectionPath of collectionPathsForPack(pack)) {
@@ -600,13 +833,13 @@ function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[
     for (const path of DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS) addToolPath(site, paths, path);
   }
 
-  const toolBlocks = site.pages.flatMap((page) => blocksFromPage(page.publishedJson, new Set(["tool_card", "catalog_pack", "feature_tab", "occasion", "package"])));
+  const toolBlocks = sitePages.flatMap((page) => blocksFromPage(page.publishedJson, new Set(["tool_card", "catalog_pack", "feature_tab", "occasion", "package"])));
   for (const block of toolBlocks) {
     const href = blockHref(block);
     addPublicPath(state, site, paths, href);
   }
   collectInternalHrefPaths(state, site, paths, site.themeSettings.publishedJson);
-  for (const page of site.pages) collectInternalHrefPaths(state, site, paths, page.publishedJson);
+  for (const page of sitePages) collectInternalHrefPaths(state, site, paths, page.publishedJson);
 
   return Array.from(paths);
 }
@@ -658,13 +891,10 @@ export async function getAidreamcapesSitemapUrls(): Promise<string[]> {
 }
 
 function getSitemapUrlsForSite(state: PlatformState, site: Site): string[] {
-  const paths = site?.pages.map((page) => {
-    const pageSeo = site.themeSettings.publishedJson.seo?.pages?.[page.id];
-    const policySeo = policySeoForSite(site, page.slug);
-    const canonicalPath = canonicalPublicPath(normalizePath(policySeo?.canonicalPath ?? pageSeo?.canonicalPath ?? page.slug));
-    const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug));
-    return isIndexablePage(page) && !isLegacyDuplicate && !isBlockedPublicPath(canonicalPath) && pageSeo?.index !== false && policySeo?.index !== false ? canonicalDirectoryPathForSite(site, canonicalPath) : "";
-  }).filter(Boolean) ?? FALLBACK_INDEXABLE_PATHS;
+  const sitePages = pagesForSite(site);
+  const paths = sitePages.length
+    ? sitePages.map((page) => pageSitemapPathForSite(site, page)).filter(Boolean)
+    : FALLBACK_INDEXABLE_PATHS;
 
   paths.push(...collectExplicitSeoDirectoryPaths(site));
   paths.push(...collectDynamicIndexablePaths(state, site));
@@ -769,17 +999,21 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
   if (!normalizedHost) {
     return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS).map((loc) => ({ loc, images: [] }));
   }
-  const isLocalHostRequest = normalizedHosts.some(isLocalDevelopmentHost);
+  const publicHostCandidates = normalizedHosts.filter((host) => !isLocalDevelopmentHost(host));
+  const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
+  const isLocalHostRequest = !publicHostCandidates.length && normalizedHosts.some(isLocalDevelopmentHost);
   const shouldUseLegacyStateFirst = prefersLegacyStateForPersistenceBackend() || isLocalHostRequest || process.env.NODE_ENV !== "production";
   const runtime = shouldUseLegacyStateFirst ? await readLegacyIndexableStateAndSites() : await readIndexableStateAndSites();
   if (!runtime) {
-    return publicFallbackSitemapUrlsForHost(normalizedHosts).map((loc) => ({ loc, images: [] }));
+    return publicFallbackSitemapUrlsForHost(siteHostCandidates).map((loc) => ({ loc, images: [] }));
   }
   if (isLocalHostRequest) return runtime.sites.flatMap((site) => sitemapEntriesForSite(runtime.state, site));
-  const site = runtime.sites.find((item) => normalizedHosts.some((host) => isHostForSite(item, host)));
+  const site =
+    getSiteByHostCandidatesFromState(runtime.state, siteHostCandidates) ??
+    runtime.sites.find((item) => siteHostCandidates.some((host) => isHostForSite(item, host)));
   if (site) return sitemapEntriesForSite(runtime.state, site);
-  if (normalizedHosts.some(isAidreamcapesHost)) return (await getAidreamcapesSitemapUrls()).map((loc) => ({ loc, images: [] }));
-  if (normalizedHosts.some(isMydreamshootsHost)) return (await getMydreamshootsSitemapUrls()).map((loc) => ({ loc, images: [] }));
+  if (siteHostCandidates.some(isAidreamcapesHost)) return (await getAidreamcapesSitemapUrls()).map((loc) => ({ loc, images: [] }));
+  if (siteHostCandidates.some(isMydreamshootsHost)) return (await getMydreamshootsSitemapUrls()).map((loc) => ({ loc, images: [] }));
   return runtime.sites.flatMap((item) => sitemapEntriesForSite(runtime.state, item));
 }
 

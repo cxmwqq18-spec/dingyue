@@ -241,7 +241,9 @@ assert(
 );
 assert(
   seoIndexing.includes("getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>") &&
-    seoIndexing.includes("normalizedHosts.some((host) => isHostForSite(item, host))") &&
+    seoIndexing.includes("pageSitemapPathForSite(site: Site, page: ThemePage): string") &&
+    seoIndexing.includes("getSiteByHostCandidatesFromState(runtime.state, siteHostCandidates)") &&
+    seoIndexing.includes("siteHostCandidates.some((host) => isHostForSite(item, host))") &&
     seoIndexing.includes("getAidreamcapesSitemapUrls") &&
     seoIndexing.includes("isLocalDevelopmentHost") &&
     seoIndexing.includes("runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site))"),
