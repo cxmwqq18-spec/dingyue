@@ -1,5 +1,7 @@
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPlatformStateFromLegacyJson } from "@/lib/storefront-state";
 import { canonicalSeoDirectoryPathForSite, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
+import { creativePackCollectionHref } from "@/lib/photo-package-taxonomy";
+import { resolveMediaAssetUrl } from "@/lib/media";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo } from "@/lib/theme/policy-seo";
 import type { CreativePack, PlatformState, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
@@ -12,6 +14,11 @@ const DREAMSHOOT_SITE_ID = "site_dreamshoot";
 const DREAMSHOOT_SITE_SLUGS = new Set(["mydreamshoots", "dreamshoot"]);
 const AIDREAMCAPES_SITE_ID = "site_aidreamcapes";
 const AIDREAMCAPES_SITE_SLUGS = new Set(["aidreamcapes"]);
+
+function cleanText(value: unknown, fallback = ""): string {
+  return typeof value === "string" ? value.replace(/\s+/g, " ").trim() || fallback : fallback;
+}
+
 const FALLBACK_INDEXABLE_PATHS = [
   "/",
   "/pricing",
@@ -91,18 +98,18 @@ const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
   "/tools/permission-safe-photo-planner",
   "/blog",
   "/blog/private-fan-scene-album-photo-package-guide",
+  "/blog/game-day-group-portraits-photo-package-guide",
+  "/blog/premiere-flash-portraits-photo-package-guide",
+  "/blog/christmas-group-album-photo-package-guide",
   "/blog/backstage-meetup-portraits-photo-package-guide",
   "/blog/creator-supporter-photo-wall-photo-package-guide",
   "/blog/fan-keepsake-card-set-photo-package-guide",
-  "/blog/game-day-group-portraits-photo-package-guide",
   "/blog/stadium-night-fan-set-photo-package-guide",
   "/blog/tunnel-entrance-fan-portraits-photo-package-guide",
   "/blog/championship-watch-party-album-photo-package-guide",
-  "/blog/premiere-flash-portraits-photo-package-guide",
   "/blog/spotlight-couple-portrait-set-photo-package-guide",
   "/blog/vip-arrival-photo-set-photo-package-guide",
   "/blog/award-night-keepsake-album-photo-package-guide",
-  "/blog/christmas-group-album-photo-package-guide",
   "/blog/holiday-party-photo-wall-photo-package-guide",
   "/blog/cozy-card-portrait-set-photo-package-guide",
   "/blog/winter-fan-greeting-album-photo-package-guide",
@@ -252,6 +259,92 @@ function originHost(origin: string): string {
 function sitemapUrl(site: Site, path: string): string {
   const origin = siteOrigin(site) || MYDREAMSHOOTS_ORIGIN;
   return path === "/" ? origin : `${origin}${path}`;
+}
+
+type SitemapImageEntry = {
+  loc: string;
+  title?: string;
+  caption?: string;
+};
+
+type SitemapEntry = {
+  loc: string;
+  images: SitemapImageEntry[];
+};
+
+function absoluteMediaUrl(site: Site, value: string | undefined): string {
+  const resolved = cleanText(resolveMediaAssetUrl(site, value));
+  if (!resolved) return "";
+  if (resolved.startsWith("http://") || resolved.startsWith("https://")) return resolved;
+  const origin = siteOrigin(site) || MYDREAMSHOOTS_ORIGIN;
+  return `${origin}${resolved.startsWith("/") ? resolved : `/${resolved}`}`;
+}
+
+function comparableSitemapImageUrl(value: string): string {
+  return cleanText(value).split(/[?#]/)[0];
+}
+
+function packSitemapImages(site: Site, pack: CreativePack, limit = 8): SitemapImageEntry[] {
+  const imagePaths = [pack.imageUrl, ...(pack.galleryImages ?? [])]
+    .map((value) => absoluteMediaUrl(site, value))
+    .filter(Boolean);
+  const seen = new Set<string>();
+  const images: SitemapImageEntry[] = [];
+
+  imagePaths.forEach((loc, index) => {
+    if (images.length >= limit) return;
+    const comparable = comparableSitemapImageUrl(loc);
+    if (!comparable || seen.has(comparable)) return;
+    seen.add(comparable);
+    const galleryIndex = index - 1;
+    const title = index === 0
+      ? cleanText(pack.name, "MyDreamShoots package preview")
+      : cleanText(pack.galleryImageAlts?.[galleryIndex], `${pack.name} gallery image ${galleryIndex + 1}`);
+    const caption = cleanText(pack.headline || pack.description, `${pack.name} photo package preview`);
+    images.push({
+      loc,
+      ...(title ? { title } : {}),
+      ...(caption ? { caption } : {})
+    });
+  });
+
+  return images;
+}
+
+function appendSitemapImages(entry: SitemapEntry, images: SitemapImageEntry[]): void {
+  const seen = new Set(entry.images.map((image) => comparableSitemapImageUrl(image.loc)).filter(Boolean));
+  for (const image of images) {
+    const comparable = comparableSitemapImageUrl(image.loc);
+    if (!comparable || seen.has(comparable)) continue;
+    seen.add(comparable);
+    entry.images.push(image);
+  }
+}
+
+function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[] {
+  const urls = getSitemapUrlsForSite(state, site);
+  const entries = new Map(urls.map((loc) => [loc, { loc, images: [] } as SitemapEntry]));
+  const activePacks = state.creativePacks.filter((pack) => pack.siteId === site.id && pack.status === "active");
+
+  const collectionsEntry = entries.get(sitemapUrl(site, "/collections"));
+  if (collectionsEntry) {
+    appendSitemapImages(
+      collectionsEntry,
+      activePacks
+        .slice(0, 12)
+        .flatMap((pack) => packSitemapImages(site, pack, 1))
+    );
+  }
+
+  for (const pack of activePacks) {
+    const packPath = canonicalDirectoryPathForSite(site, creativePackCollectionHref(pack));
+    const loc = sitemapUrl(site, packPath);
+    const entry = entries.get(loc);
+    if (!entry) continue;
+    appendSitemapImages(entry, packSitemapImages(site, pack));
+  }
+
+  return urls.map((loc) => entries.get(loc) ?? { loc, images: [] });
 }
 
 function slugifySegment(value: string): string {
@@ -604,6 +697,17 @@ export async function getStorefrontSitemapUrls(): Promise<string[]> {
   return runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site));
 }
 
+export async function getStorefrontSitemapEntries(): Promise<SitemapEntry[]> {
+  const runtime = await readIndexableStateAndSites();
+  if (!runtime) {
+    return FALLBACK_INDEXABLE_PATHS.map((path) => ({
+      loc: path === "/" ? MYDREAMSHOOTS_ORIGIN : `${MYDREAMSHOOTS_ORIGIN}${path}`,
+      images: []
+    }));
+  }
+  return runtime.sites.flatMap((site) => sitemapEntriesForSite(runtime.state, site));
+}
+
 function normalizeHostCandidate(host: string | null | undefined): string {
   return String(host ?? "").split(",")[0]?.trim().toLowerCase().split(":")[0] ?? "";
 }
@@ -655,21 +759,28 @@ function publicFallbackSitemapUrlsForHost(hosts: string[]): string[] {
 }
 
 export async function getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>): Promise<string[]> {
+  const entries = await getStorefrontSitemapEntriesForHost(hosts);
+  return entries.map((entry) => entry.loc);
+}
+
+export async function getStorefrontSitemapEntriesForHost(hosts: string | null | undefined | Array<string | null | undefined>): Promise<SitemapEntry[]> {
   const normalizedHosts = normalizeHostCandidates(hosts);
   const normalizedHost = normalizedHosts[0] ?? "";
-  if (!normalizedHost) return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
+  if (!normalizedHost) {
+    return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS).map((loc) => ({ loc, images: [] }));
+  }
   const isLocalHostRequest = normalizedHosts.some(isLocalDevelopmentHost);
   const shouldUseLegacyStateFirst = prefersLegacyStateForPersistenceBackend() || isLocalHostRequest || process.env.NODE_ENV !== "production";
   const runtime = shouldUseLegacyStateFirst ? await readLegacyIndexableStateAndSites() : await readIndexableStateAndSites();
   if (!runtime) {
-    return publicFallbackSitemapUrlsForHost(normalizedHosts);
+    return publicFallbackSitemapUrlsForHost(normalizedHosts).map((loc) => ({ loc, images: [] }));
   }
-  if (isLocalHostRequest) return runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site));
+  if (isLocalHostRequest) return runtime.sites.flatMap((site) => sitemapEntriesForSite(runtime.state, site));
   const site = runtime.sites.find((item) => normalizedHosts.some((host) => isHostForSite(item, host)));
-  if (site) return getSitemapUrlsForSite(runtime.state, site);
-  if (normalizedHosts.some(isAidreamcapesHost)) return getAidreamcapesSitemapUrls();
-  if (normalizedHosts.some(isMydreamshootsHost)) return getMydreamshootsSitemapUrls();
-  return runtime.sites.flatMap((item) => getSitemapUrlsForSite(runtime.state, item));
+  if (site) return sitemapEntriesForSite(runtime.state, site);
+  if (normalizedHosts.some(isAidreamcapesHost)) return (await getAidreamcapesSitemapUrls()).map((loc) => ({ loc, images: [] }));
+  if (normalizedHosts.some(isMydreamshootsHost)) return (await getMydreamshootsSitemapUrls()).map((loc) => ({ loc, images: [] }));
+  return runtime.sites.flatMap((item) => sitemapEntriesForSite(runtime.state, item));
 }
 
 export function storefrontSitemapUrlForHost(hosts: string | null | undefined | Array<string | null | undefined>): string | undefined {

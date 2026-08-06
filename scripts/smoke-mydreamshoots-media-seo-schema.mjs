@@ -7,9 +7,11 @@ import createJiti from "jiti";
 
 const repoRoot = process.cwd();
 const sourceRoot = path.join(repoRoot, "src");
+const serverOnlyStub = path.join(repoRoot, "scripts", "server-only-stub.js");
 const originalResolveFilename = Module._resolveFilename;
 Module._resolveFilename = function resolveFilename(request, ...args) {
   const resolvedRequest = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request;
+  if (request === "server-only") return serverOnlyStub;
   return originalResolveFilename.call(this, resolvedRequest, ...args);
 };
 
@@ -21,6 +23,9 @@ const {
 const {
   canonicalSeoDirectoryPathForSite
 } = jiti("../src/lib/dreamshoot-seo-content.ts");
+const {
+  getStorefrontSitemapEntriesForHost
+} = jiti("../src/lib/seo-indexing.ts");
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(repoRoot, relativePath), "utf8"));
@@ -172,6 +177,19 @@ for (const pack of activePacks) {
 }
 assert.equal(productPaths.size, 28, "each active pack should map to a unique canonical Product detail path");
 assert.equal(homeGraph.some((node) => node?.["@type"] === "Review" || node?.["@type"] === "AggregateRating"), false, "homepage JSON-LD should not emit review rating schema without a real review source");
+
+const sitemapEntries = await getStorefrontSitemapEntriesForHost(["www.mydreamshoots.com"]);
+const sitemapEntryByPath = new Map(sitemapEntries.map((entry) => [new URL(entry.loc).pathname, entry]));
+assert.ok((sitemapEntryByPath.get("/collections")?.images ?? []).length > 0, "collections sitemap entry should include image references");
+for (const pack of activePacks) {
+  const canonicalPath = canonicalSeoDirectoryPathForSite(site, "collection", pack.category || pack.name);
+  const entry = sitemapEntryByPath.get(canonicalPath);
+  assert.ok(entry, `${canonicalPath} should appear in the sitemap`);
+  assert.ok((entry.images ?? []).length > 0, `${canonicalPath} should include image sitemap entries`);
+  for (const image of entry.images) {
+    assert.match(image.loc, /^https:\/\/www\.mydreamshoots\.com\//, `${canonicalPath} image sitemap loc should be absolute`);
+  }
+}
 
 console.log(JSON.stringify({
   ok: true,

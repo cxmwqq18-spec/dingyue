@@ -110,8 +110,13 @@ assert.doesNotMatch(
 );
 assert.match(
   sitemapRoute,
-  /getStorefrontSitemapUrlsForHost\(\[\s*forwardedHost,\s*host\s*\]\)/,
+  /getStorefrontSitemapEntriesForHost\(\[\s*forwardedHost,\s*host\s*\]\)/,
   "sitemap route should prefer x-forwarded-host over host behind proxies"
+);
+assert.match(
+  sitemapRoute,
+  /xmlns:image="http:\/\/www\.google\.com\/schemas\/sitemap-image\/1\.1"/,
+  "sitemap route should expose the image sitemap namespace"
 );
 assert.match(
   hostCatchAll,

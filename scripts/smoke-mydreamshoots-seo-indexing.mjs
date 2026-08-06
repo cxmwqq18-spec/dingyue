@@ -103,14 +103,33 @@ assert(
 );
 
 const hrefHits = [];
+const visiblePackageLabelHits = [];
 walk(mydreamshootsSite, (key, value, location) => {
   if (key === "href" && typeof value === "string") hrefHits.push({ href: value, location: location.join(".") });
+  if (["label", "primaryCta", "secondaryCta", "ctaLabel"].includes(key) && typeof value === "string") {
+    if (value === "Headshot Generator" || value === "Browse packages") {
+      visiblePackageLabelHits.push({ label: value, location: location.join(".") });
+    }
+  }
 });
 const badLegacyHrefHits = hrefHits.filter((hit) => ["/cookie-policy", "/privacy-policy", "/terms-of-service"].includes(hit.href));
 assert(!badLegacyHrefHits.length, "MyDreamShoots internal hrefs must use canonical policy paths to avoid redirects", { badLegacyHrefHits });
 assert(
   hrefHits.some((hit) => hit.href === "/cookies"),
   "MyDreamShoots navigation/footer data must link directly to /cookies"
+);
+assert(
+  hrefHits.some((hit) => hit.href === "/collections/headshots"),
+  "MyDreamShoots visible Headshot Generator entries must link to /collections/headshots"
+);
+assert(
+  visiblePackageLabelHits.some((hit) => hit.label === "Headshot Generator"),
+  "MyDreamShoots visible CTA/nav labels must expose Headshot Generator"
+);
+assert(
+  !visiblePackageLabelHits.some((hit) => hit.label === "Browse packages"),
+  "MyDreamShoots visible CTA/nav labels must not use Browse packages",
+  { visiblePackageLabelHits }
 );
 
 assert(
@@ -124,6 +143,16 @@ assert(
   "Creators Circle must be backed by the synthetic DreamShoot template in both host and site routes"
 );
 assert(!templates.includes('href: "/cookie-policy"'), "MyDreamShoots templates must not generate /cookie-policy links");
+assert(
+  templates.includes('label: "Headshot Generator"') && templates.includes('href: "/collections/headshots"'),
+  "MyDreamShoots templates must expose Headshot Generator links to /collections/headshots"
+);
+assert(
+  !templates.includes('label: "Browse packages"') &&
+    !templates.includes('primaryCta: "Browse packages"') &&
+    !templates.includes('ctaLabel: "Browse packages"'),
+  "MyDreamShoots templates must not expose Browse packages as a CTA or navigation label"
+);
 
 for (const pathName of ["/cookie-policy", "/privacy-policy", "/terms-of-service"]) {
   assert(seoIndexing.includes(`"${pathName}"`), "sitemap legacy duplicate exclusions must include old policy paths", { pathName });
@@ -203,9 +232,11 @@ assert(
   sitemapRoute.includes('export const dynamic = "force-dynamic"') &&
     sitemapRoute.includes('request.headers.get("x-forwarded-host")') &&
     sitemapRoute.includes('request.headers.get("host")') &&
-    sitemapRoute.includes("getStorefrontSitemapUrlsForHost") &&
+    sitemapRoute.includes("getStorefrontSitemapEntriesForHost") &&
+    sitemapRoute.includes("xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\"") &&
     sitemapRoute.includes('"cache-control"') &&
-    sitemapRoute.includes('"x-sitemap-url-count"'),
+    sitemapRoute.includes('"x-sitemap-url-count"') &&
+    sitemapRoute.includes('"x-sitemap-image-count"'),
   "sitemap route must select URLs using the request host and emit cache/diagnostic headers"
 );
 assert(
