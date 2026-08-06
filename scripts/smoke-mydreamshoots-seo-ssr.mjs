@@ -59,6 +59,7 @@ const faq = await fetchHtml("/faq");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
 const homepageGraph = graphNodes(homepage);
 const collectionGraph = graphNodes(collection);
+const homepageVideos = homepageGraph.filter((node) => node?.["@type"] === "VideoObject");
 const collectionProducts = collectionGraph.filter((node) => node?.["@type"] === "Product");
 const collectionProduct = collectionProducts[0];
 const collectionOffer = collectionProduct?.offers;
@@ -85,10 +86,23 @@ for (const [pageName, html] of Object.entries(publicHtmlPages)) {
   }
 }
 assert.ok(pricing.includes("Starter") && (pricing.includes("$24.50") || pricing.includes("24.50")), "pricing HTML must contain real plan content");
-assert.equal(homepageGraph.filter((node) => node?.["@type"] === "VideoObject").length, 8, "homepage SSR must contain 8 VideoObject nodes");
+assert.equal(homepageVideos.length, 8, "homepage SSR must contain 8 VideoObject nodes");
+for (const video of homepageVideos) {
+  assert.equal(video.encodingFormat, "video/mp4", "homepage VideoObject must expose video encodingFormat");
+  assert.equal(video.publisher?.["@id"], "https://www.mydreamshoots.com#organization", "homepage VideoObject must connect to the Organization publisher");
+  assert.equal(video.potentialAction?.["@type"], "WatchAction", "homepage VideoObject must expose WatchAction");
+  assert.match(video.potentialAction?.target ?? "", /^https:\/\/www\.mydreamshoots\.com\/assets\/.+\.mp4(?:[?#].*)?$/, "homepage VideoObject WatchAction target must be an absolute MP4 asset");
+  assert.equal(video.thumbnail?.["@type"], "ImageObject", "homepage VideoObject must include an ImageObject thumbnail");
+  assert.equal(video.thumbnail?.contentUrl, video.thumbnailUrl?.[0], "homepage VideoObject thumbnail ImageObject must reuse thumbnailUrl");
+}
 assert.equal(collectionProducts.length, 1, "collection SSR must contain one Product node");
-assert.ok(Array.isArray(collectionProduct?.image) && collectionProduct.image.length > 0, "collection Product must contain an image");
+assert.ok(Array.isArray(collectionProduct?.image) && collectionProduct.image.length === 8, "collection Product must contain cover plus gallery image URLs");
+assert.equal(new Set(collectionProduct.image).size, collectionProduct.image.length, "collection Product image URLs must be unique");
+assert.equal(collectionProduct?.mainEntityOfPage, collectionProduct?.url, "collection Product must link to its visible page");
 assert.equal(collectionProduct?.subjectOf?.["@type"], "ImageObject", "collection Product must contain an ImageObject subject");
+assert.equal(collectionProduct?.subjectOf?.url, collectionProduct?.subjectOf?.contentUrl, "collection ImageObject url should match contentUrl");
+assert.equal(collectionProduct?.subjectOf?.thumbnailUrl, collectionProduct?.image?.[0], "collection ImageObject thumbnail should use the Product cover");
+assert.match(collectionProduct?.subjectOf?.encodingFormat ?? "", /^image\//, "collection ImageObject must expose image encodingFormat");
 assert.equal(collectionOffer?.["@type"], "Offer", "collection Product must contain a purchasable Offer");
 assert.equal(collectionOffer?.priceCurrency, "USD", "collection Offer must use USD");
 assert.match(collectionOffer?.price ?? "", /^\d+\.\d{2}$/, "collection Offer must contain a decimal price");
@@ -109,7 +123,7 @@ console.log(JSON.stringify({
   ok: true,
   pages: ["/", "/pricing", "/collections/professional-headshots", "/workflow", "/faq"],
   placeholders: 0,
-  homepageVideoObjects: homepageGraph.filter((node) => node?.["@type"] === "VideoObject").length,
+  homepageVideoObjects: homepageVideos.length,
   collectionProductObjects: collectionProducts.length,
   collectionOfferPrice: collectionOffer.price
 }, null, 2));

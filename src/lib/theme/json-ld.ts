@@ -550,8 +550,36 @@ function imageMediaPath(value: unknown): string {
   return /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(text) ? text : "";
 }
 
+function mediaEncodingFormat(value: unknown): string {
+  const pathname = cleanText(value).split(/[?#]/)[0].toLowerCase();
+  if (pathname.endsWith(".avif")) return "image/avif";
+  if (pathname.endsWith(".jpg") || pathname.endsWith(".jpeg")) return "image/jpeg";
+  if (pathname.endsWith(".png")) return "image/png";
+  if (pathname.endsWith(".webp")) return "image/webp";
+  if (pathname.endsWith(".mp4")) return "video/mp4";
+  if (pathname.endsWith(".webm")) return "video/webm";
+  return "";
+}
+
+function uniqueMediaPaths(values: unknown[], mediaPath: (value: unknown) => string, limit: number): string[] {
+  const paths: string[] = [];
+  const seen = new Set<string>();
+  for (const value of values) {
+    const path = mediaPath(value);
+    if (!path || seen.has(path)) continue;
+    seen.add(path);
+    paths.push(path);
+    if (paths.length >= limit) break;
+  }
+  return paths;
+}
+
+function packImagePaths(pack: CreativePack): string[] {
+  return uniqueMediaPaths([pack.imageUrl, ...(pack.galleryImages ?? [])], imageMediaPath, 8);
+}
+
 function primaryPackImage(pack: CreativePack): string {
-  return imageMediaPath(pack.imageUrl) || (pack.galleryImages ?? []).map(imageMediaPath).find(Boolean) || "";
+  return packImagePaths(pack)[0] || "";
 }
 
 function subjectImageForPack(pack: CreativePack): string {
@@ -588,10 +616,13 @@ function packProductSchema({
   description: string;
 }): JsonLdNode | undefined {
   if (!isPrimaryMyDreamShootsSite(site)) return undefined;
-  const image = primaryPackImage(pack);
+  const imagePaths = packImagePaths(pack);
+  const image = imagePaths[0];
   if (!image) return undefined;
   const subjectImage = subjectImageForPack(pack) || image;
   const url = absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath));
+  const subjectImageUrl = absoluteUrl(site, routeMode, subjectImage);
+  const primaryImageUrl = absoluteUrl(site, routeMode, image);
   const productName = cleanSchemaText(site, pack.name, "MyDreamShoots AI photo package");
   const productDescription = cleanSchemaText(site, pack.description, description);
   const offerSource = lowestUsdOfferSource(site, products);
@@ -629,16 +660,21 @@ function packProductSchema({
       name: siteBrandName(site)
     },
     category: cleanSchemaText(site, pack.categoryRecord?.label || pack.category, "AI photo package"),
-    image: [absoluteUrl(site, routeMode, image)],
+    image: imagePaths.map((path) => absoluteUrl(site, routeMode, path)),
     url,
+    mainEntityOfPage: url,
     ...(offer ? { offers: offer } : {}),
     additionalProperty,
     subjectOf: {
       "@type": "ImageObject",
       "@id": `${url}#image`,
       name: `${productName} preview image`,
-      contentUrl: absoluteUrl(site, routeMode, subjectImage),
+      url: subjectImageUrl,
+      contentUrl: subjectImageUrl,
+      thumbnailUrl: primaryImageUrl,
       description: cleanSchemaText(site, `Example preview image for ${productName}`, productDescription),
+      caption: `${productName} AI generated preview`,
+      encodingFormat: mediaEncodingFormat(subjectImage) || mediaEncodingFormat(image),
       representativeOfPage: true
     }
   };
@@ -700,16 +736,34 @@ function homeVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
       const uploadDate = normalizedUploadDate(theme.createdAt);
       const slug = slugifySchemaPart(theme.slug || theme.id);
       const name = cleanSchemaText(input.site, theme.name, "MyDreamShoots AI motion example");
+      const videoContentUrl = absoluteUrl(input.site, input.routeMode, videoUrl);
+      const thumbnailContentUrl = absoluteUrl(input.site, input.routeMode, thumbnailUrl || theme.imageUrl);
       return {
         "@type": "VideoObject",
         "@id": `${homeUrl}#video-${slug}`,
         name,
         description: cleanSchemaText(input.site, theme.description, `Watch ${name} as a MyDreamShoots AI video example.`),
-        thumbnailUrl: [absoluteUrl(input.site, input.routeMode, thumbnailUrl || theme.imageUrl)],
+        thumbnailUrl: [thumbnailContentUrl],
         uploadDate,
         duration: iso8601Duration(theme.durationSeconds || 1),
-        contentUrl: absoluteUrl(input.site, input.routeMode, videoUrl),
-        url: `${homeUrl}#video-${slug}`
+        contentUrl: videoContentUrl,
+        encodingFormat: mediaEncodingFormat(videoUrl),
+        url: `${homeUrl}#video-${slug}`,
+        mainEntityOfPage: homeUrl,
+        isPartOf: { "@id": `${siteBaseUrl(input.site, input.routeMode)}#website` },
+        publisher: { "@id": `${siteBaseUrl(input.site, input.routeMode)}#organization` },
+        thumbnail: {
+          "@type": "ImageObject",
+          "@id": `${homeUrl}#video-${slug}-thumbnail`,
+          url: thumbnailContentUrl,
+          contentUrl: thumbnailContentUrl,
+          name: `${name} video thumbnail`,
+          encodingFormat: mediaEncodingFormat(thumbnailUrl)
+        },
+        potentialAction: {
+          "@type": "WatchAction",
+          target: videoContentUrl
+        }
       };
     });
 }
