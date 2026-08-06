@@ -16,16 +16,15 @@ const failures = [];
 const expectedHomeOrders = {
   mydreamshoots: [
     "hero_1",
+    "generation_showcase_1",
     "featured_pack_1",
     "featured_christmas_1",
     "featured_thanksgiving_1",
-    "generation_showcase_1",
     "tutorial_video_1",
     "tutorial_video_2",
     "mobile_video_1",
     "package_catalog_1",
     "proof_1",
-    "pricing_1",
     "faq_1",
     "conversion_1",
     "brand_strip_1"
@@ -56,6 +55,7 @@ const removedHomeSectionsByStore = {
 };
 const expectedImageShowcasePriorityCount = 8;
 const expectedImageShowcaseCardCount = 28;
+const expectedTrustedLogoCount = 29;
 const dreamshootHomepageSafeShowcaseImagePathBySlug = {
   "ai-video-add-ons": "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-06.webp",
   "anime-avatar": "/assets/dreamshoot/generated/pack-galleries/anime-avatar/anime-avatar-12.webp",
@@ -271,12 +271,21 @@ function assertPage(pageJson, label, storeKey) {
   assert(pageJson?.sections?.tutorial_video_1?.type === "video_feature", `${label}: missing tutorial video section`);
   assert(pageJson?.sections?.tutorial_video_2?.type === "video_feature", `${label}: missing AI image tutorial video section`);
   assert(pageJson?.sections?.mobile_video_1?.type === "mobile_video_showcase", `${label}: missing mobile tutorial section`);
+  assert(pageJson?.sections?.pricing_1?.type === "pricing_table", `${label}: pricing section should remain available for embedded rendering`);
+  assert(!pageJson?.sectionsOrder?.includes("pricing_1"), `${label}: pricing_1 should be embedded in showcase instead of ordered at the bottom`);
   assertMobileVideoSection(pageJson?.sections?.mobile_video_1, `${label}: mydreamshoots mobile tutorial`);
   assert(Number(pageJson?.sections?.package_catalog_1?.settings?.featuredCount ?? 0) === 12, `${label}: homepage package catalog should feature 12 packs`);
   assert(pageJson?.sections?.proof_1?.settings?.mode === "reviews", `${label}: testimonial wall should render customer reviews`);
   assert((pageJson?.sections?.proof_1?.blocks ?? []).length >= 6, `${label}: expected at least 6 review cards`);
   assert((pageJson?.sections?.faq_1?.blocks ?? []).length >= 12, `${label}: expected expanded FAQ content`);
   assert(Number(settings.videoItemLimit ?? 0) === 8, `${label}: expected 8 video showcase items`);
+  assert(settings.showTrustedLogoIntro === true, `${label}: trusted logo intro should be enabled`);
+  assert(settings.trustedLogoTitle === "Trusted by creators worldwide", `${label}: trusted logo title drifted`);
+  assert(settings.aboutTitle === "What is MyDreamShoots?", `${label}: about title drifted`);
+  assert(String(settings.aboutBody ?? "").startsWith("MyDreamShoots is an AI photo and video studio"), `${label}: about body should describe MyDreamShoots`);
+  assert(settings.embeddedPricingSectionId === "pricing_1", `${label}: showcase should embed pricing_1`);
+  assert(Number(settings.trustedLogoSplitIndex ?? 0) === 15, `${label}: trusted logo row split should stay at 15`);
+  assert((pageJson?.sections?.generation_showcase_1?.blocks ?? []).filter((block) => block?.type === "logo").length === expectedTrustedLogoCount, `${label}: expected ${expectedTrustedLogoCount} trusted logo blocks`);
   assert(!("itemLimit" in settings), `${label}: old image-limiting itemLimit should be removed`);
 }
 
@@ -481,7 +490,7 @@ assert(storefrontRender.includes("loadStorefrontPublicVideoThemesForSection(curr
 const themeRenderer = fs.readFileSync(path.join(repoRoot, "src/components/theme-renderer.tsx"), "utf8");
 const showcaseRenderer = themeRenderer.match(/if \(section\.type === "dreamshoot_generation_showcase"\)[\s\S]*?if \(section\.type === "dreamshoot_featured_pack"\)/)?.[0] ?? "";
 const featuredPackRenderer = themeRenderer.match(/if \(section\.type === "dreamshoot_featured_pack"\)[\s\S]*?if \(section\.type === "dreamshoot_package_catalog"/)?.[0] ?? "";
-const imageShowcaseRenderer = showcaseRenderer.match(/<div className="mt-10">[\s\S]*?<div className="mt-12">/)?.[0] ?? "";
+const imageShowcaseRenderer = showcaseRenderer.match(/<div className="mt-5 space-y-3"[\s\S]*?<div className="mt-12">/)?.[0] ?? "";
 const videoShowcaseRenderer = showcaseRenderer.match(/<div className="mt-12">[\s\S]*?<\/DreamshootShowcasePreview>/)?.[0] ?? "";
 const videoFeatureRenderer = themeRenderer.match(/if \(section\.type === "video_feature"\)[\s\S]*?if \(section\.type === "luxury_highlight"\)/)?.[0] ?? "";
 const testimonialRenderer = themeRenderer.match(/if \(section\.type === "testimonial_wall"\)[\s\S]*?if \(section\.type === "faq"\)/)?.[0] ?? "";
@@ -491,8 +500,12 @@ assert(showcaseRenderer.includes("dreamshoot-showcase-track"), "showcase should 
 assert(showcaseRenderer.includes("DreamshootShowcaseRail"), "showcase video rails should auto-scroll without duplicating card data");
 assert(showcaseRenderer.includes("<figure"), "showcase material cards should render as figures");
 assert(showcaseRenderer.includes("DreamshootShowcasePreview"), "showcase material cards should open an image/video preview lightbox");
+assert(showcaseRenderer.includes("data-dreamshoot-trusted-logos"), "showcase should render the trusted logo intro wall");
+assert(showcaseRenderer.includes('setting(section, "embeddedPricingSectionId")'), "showcase should read the embedded pricing section setting");
+assert(showcaseRenderer.includes("PricingTableSectionView"), "showcase should reuse the pricing table renderer for embedded plans");
 assert(showcaseRenderer.includes('data-dreamshoot-showcase-preview="image"'), "showcase image cards should be clickable preview triggers");
 assert(showcaseRenderer.includes('data-dreamshoot-showcase-preview="video"'), "showcase video cards should be clickable preview triggers");
+assert(themeRenderer.includes('"dreamshoot_generation_showcase",\n  "pricing_table"'), "showcase sections should receive live products for embedded pricing");
 assert(themeRenderer.includes("dreamshootShowcaseImagePath"), "showcase images should keep dedicated AI-generated homepage fallback assets");
 assert(themeRenderer.includes('dreamshootHomepageShowcaseVersion = "20260801visualfix1"'), "showcase image URLs should use the 20260801visualfix1 cache-busting version");
 assert(themeRenderer.includes("dreamshootHomepageSafeShowcaseImagePathBySlug"), "homepage showcase should keep a curated safe single-image source table for DreamShoot product cards");

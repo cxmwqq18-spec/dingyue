@@ -7,7 +7,7 @@ import {
   mydreamshootsCategoryUseCaseProfileForSlug,
   type PhotoPackageUseCaseProfile
 } from "@/lib/photo-package-use-case-profiles";
-import { isSpanishStorefrontRequestIdentity, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
 export type SeoDirectoryKind = "collection" | "tool";
 
@@ -834,7 +834,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
   }
 };
 
-const aidreamcapesLegacyCollectionDirectory: SeoDirectoryMap = {
+const _aidreamcapesLegacyCollectionDirectory: SeoDirectoryMap = {
   "route-portrait-albums": {
     label: "Route Portrait Albums",
     title: "AI Route Portrait Albums - cinematic travel photos with Aidreamcapes",
@@ -1379,15 +1379,20 @@ const aidreamcapesCollectionAliases: Record<string, string> = {
   adventure: "game-day-group-photos",
   "anime-avatar": "halloween-party-portraits",
   city: "premiere-style-portraits",
+  ciudad: "premiere-style-portraits",
+  aventura: "game-day-group-photos",
   "christmas": "christmas-group-albums",
   "christmas-couple": "christmas-group-albums",
   coastal: "christmas-group-albums",
+  familia: "thanksgiving-memory-sets",
   costero: "christmas-group-albums",
   "creator-portraits": "premiere-style-portraits",
   cyberpunk: "halloween-party-portraits",
   destination: "fan-scene-albums",
   destino: "fan-scene-albums",
   engagement: "seasonal-celebration-photos",
+  "ano-nuevo": "new-year-countdown-albums",
+  "cumpleanos": "birthday-fan-moment-sets",
   "fan-scenes": "fan-scene-albums",
   "fashion-editorial": "premiere-style-portraits",
   "game-day": "game-day-group-photos",
@@ -1399,10 +1404,14 @@ const aidreamcapesCollectionAliases: Record<string, string> = {
   postcard: "seasonal-celebration-photos",
   postal: "seasonal-celebration-photos",
   seasonal: "seasonal-celebration-photos",
+  navidad: "christmas-group-albums",
+  montana: "alpine-trail-frames",
+  viaje: "fan-scene-albums",
   thanksgiving: "thanksgiving-memory-sets",
   "virtual-try-on": "premiere-style-portraits",
   "wedding-portraits": "seasonal-celebration-photos",
   "world-cup-fan-photos": "game-day-group-photos",
+  "cafe-corner-stories": "premiere-style-portraits",
   "cafe-street-journals": "premiere-style-portraits",
   "cafe-street-stories": "premiere-style-portraits",
   "destination-portrait-albums": "fan-scene-albums",
@@ -1414,9 +1423,11 @@ const aidreamcapesCollectionAliases: Record<string, string> = {
   "mountain-trails": "game-day-group-photos",
   "road-trip-frames": "game-day-group-photos",
   "itinerary-moodboards": "seasonal-celebration-photos",
+  "route-moodboard": "seasonal-celebration-photos",
   "route-moodboards": "seasonal-celebration-photos",
   "postcard-social-sets": "seasonal-celebration-photos",
   "postcard-story-sets": "seasonal-celebration-photos",
+  "social-keepsakes": "seasonal-celebration-photos",
   "travel-profile-stories": "fan-scene-albums",
   "solo-traveler-profiles": "fan-scene-albums",
   "island-resort-scenes": "seasonal-celebration-photos",
@@ -1472,7 +1483,9 @@ export function canonicalDreamshootDirectorySlug(kind: SeoDirectoryKind, slug: s
 
 export function canonicalSeoDirectorySlugForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): string {
   const slug = normalizeDirectorySlug(rawSlug);
-  return isAidreamcapesSite(site) ? canonicalAidreamcapesDirectorySlug(kind, slug) : canonicalDreamshootDirectorySlug(kind, slug);
+  if (isAidreamcapesSite(site)) return canonicalAidreamcapesDirectorySlug(kind, slug);
+  if (isSpanishXbySite(site) && kind === "collection") return canonicalSpanishXbyCollectionSlug(slug);
+  return canonicalDreamshootDirectorySlug(kind, slug);
 }
 
 export function canonicalSeoDirectoryPathForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): string {
@@ -1486,7 +1499,7 @@ export function canonicalAidreamcapesCollectionPath(rawSlug: string): string {
   return `/collections/${canonicalSlug}`;
 }
 
-const aidreamcapesLegacyToolDirectory: SeoDirectoryMap = {
+const _aidreamcapesLegacyToolDirectory: SeoDirectoryMap = {
   "route-portrait-engine": {
     label: "Route Portrait Engine",
     title: "AI Route Portrait Engine - create cinematic travel portraits",
@@ -2097,7 +2110,7 @@ function pluralTopicLabel(label: string): string {
   return `${label} Photos`;
 }
 
-function collectionTitleTopic(label: string): string {
+function _collectionTitleTopic(label: string): string {
   if (/\bVideo$/i.test(label)) return `${label} Packages`;
   if (/\b(Headshot|Portrait)$/i.test(label)) return `${label} Packages`;
   return `${stripTrailingMediaNoun(label)} Travel Packages`;

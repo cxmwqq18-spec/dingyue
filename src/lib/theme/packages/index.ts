@@ -3,7 +3,7 @@ import { dreamshootAiStudioPackage, dreamshootAiStudioTemplates } from "./dreams
 import { portraitCleanStudioPackage, portraitCleanStudioTemplates } from "./portrait-clean-studio";
 import { executiveHeadshotProPackage, executiveHeadshotProTemplates } from "./executive-headshot-pro";
 import { weddingStoryHousePackage, weddingStoryHouseTemplates } from "./wedding-story-house";
-import type { ThemePackageManifest, ThemePackageSiteSettings, ThemePackageTemplateKey } from "./types";
+import type { ThemePackageManifest, ThemePackageTemplateKey } from "./types";
 
 export type { ThemePackageManifest, ThemePackageSiteSettings, ThemePackageTemplateKey } from "./types";
 export { dreamshootAiStudioPackage } from "./dreamshoot-ai-studio";

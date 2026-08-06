@@ -98,8 +98,27 @@ const cardBlock: ThemeBlockSchema = {
 const faqBlock: ThemeBlockSchema = {
   type: "faq_item",
   label: "FAQ item",
-  settings: [text("question", "Question", "What should customers upload?"), textarea("answer", "Answer", "Clear recent photos work best.")],
-  preset: { label: "FAQ item", settings: { question: "New question", answer: "Write the answer here." } }
+  settings: [
+    text("question", "Question", "What should customers upload?"),
+    textarea("answer", "Answer", "Clear recent photos work best."),
+    textarea("body", "Additional paragraphs", "", "Use | to separate paragraphs."),
+    textarea("bulletList", "Bullet list", "", "Use | to separate bullet points."),
+    textarea("linkList", "Internal links", "", "Use Label::/path|Label::#anchor. Only internal / or # links are rendered."),
+    image("imageUrl", "Expanded image"),
+    text("imageAlt", "Expanded image alt text")
+  ],
+  preset: {
+    label: "FAQ item",
+    settings: {
+      question: "New question",
+      answer: "Write the answer here.",
+      body: "",
+      bulletList: "",
+      linkList: "",
+      imageUrl: "",
+      imageAlt: ""
+    }
+  }
 };
 
 const testimonialBlock: ThemeBlockSchema = {
@@ -1474,9 +1493,15 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     label: "Generated Image and Video Showcase",
     category: "Storefront",
     description: "Lazy-loaded homepage proof module with generated image cases and real short video cases.",
-    maxBlocks: 0,
+    maxBlocks: 40,
     settings: [
       text("anchor", "Anchor", "generated-showcase"),
+      checkbox("showTrustedLogoIntro", "Show trusted logo intro", false),
+      text("trustedLogoTitle", "Trusted logo title", "Trusted by creators worldwide"),
+      text("aboutTitle", "About heading", "What is MyDreamShoots?"),
+      textarea("aboutBody", "About body", "MyDreamShoots is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation."),
+      text("embeddedPricingSectionId", "Embedded pricing section ID", ""),
+      range("trustedLogoSplitIndex", "Trusted logo row split", 15, 1, 30),
       text("eyebrow", "Eyebrow", "Customer-created examples"),
       text("title", "Title", "Browse image and video themes customers have already created."),
       textarea("subtitle", "Subtitle", "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set."),
@@ -1493,6 +1518,12 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         label: "Generated image and video showcase",
         settings: {
           anchor: "generated-showcase",
+          showTrustedLogoIntro: false,
+          trustedLogoTitle: "Trusted by creators worldwide",
+          aboutTitle: "What is MyDreamShoots?",
+          aboutBody: "MyDreamShoots is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.",
+          embeddedPricingSectionId: "",
+          trustedLogoSplitIndex: 15,
           eyebrow: "Customer-created examples",
           title: "Browse image and video themes customers have already created.",
           subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
@@ -1503,9 +1534,11 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           videoItemLimit: 8,
           primaryCta: "Start with your photos",
           primaryHref: "/login"
-        }
+        },
+        blocks: [{ id: "trusted_logo_example", type: "logo", settings: { name: "ReviewHub", imageUrl: "", badge: "Trusted" } }]
       }
-    ]
+    ],
+    blocks: [logoBlock]
   },
   dreamshoot_featured_pack: {
     type: "dreamshoot_featured_pack",
@@ -2166,12 +2199,15 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     label: "FAQ",
     category: "Content",
     description: "Editable question and answer list.",
-    maxBlocks: 16,
+    maxBlocks: 18,
     settings: [
       text("anchor", "Anchor", "faq"),
       text("eyebrow", "Eyebrow", "Questions before upload"),
       text("title", "Title", "Frequently asked questions"),
       textarea("subtitle", "Subtitle"),
+      select("layout", "Layout", [["default", "Standard accordion"], ["visual_faq", "Visual FAQ"]], "default"),
+      image("imageUrl", "FAQ feature image"),
+      text("imageAlt", "FAQ feature image alt text"),
       text("supportEyebrow", "Support card eyebrow", "before they subscribe"),
       textarea(
         "supportBulletList",

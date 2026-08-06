@@ -19,7 +19,6 @@ import type {
 } from "@/components/designer/designer-types";
 import type { FieldOptions } from "@/components/designer/field-editor-types";
 import type {
-  SectionBlockInstance,
   SectionInstance,
   Site,
   ThemeBlockSchema,
@@ -108,6 +107,7 @@ function renderLocalGlobalField(
     return (
       <PropertyInlineField hint={field.hint} key={field.id} label={field.label}>
         <button
+          aria-checked={checked}
           className={`ant-switch flex h-5 w-11 items-center rounded-full border p-0.5 transition ${checked ? "ant-switch-checked border-[#f4a719] bg-[#f4a719]" : "border-[#e6e6e6] bg-white"}`}
           onClick={(event) => {
             event.preventDefault();

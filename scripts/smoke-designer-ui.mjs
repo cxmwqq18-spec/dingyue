@@ -45,7 +45,7 @@ function blockIdByTitle(page, sectionId, title) {
   return block.id;
 }
 
-function sectionOrderFromState() {
+function _sectionOrderFromState() {
   return homeFromSite(siteFromState(readState())).draftJson.sectionsOrder;
 }
 
@@ -158,7 +158,7 @@ async function run() {
   const originalPublishedHeadline = originalHome.publishedJson.sections.hero_1?.settings?.headline;
   assert(originalPublishedHeadline === "AI-Powered Wedding Photos in Any Destination", "Lumen home is not on the AI Wedding published baseline");
   const originalOrder = originalHome.draftJson.sectionsOrder;
-  const originalTrustIndex = originalOrder.indexOf("trust_1");
+  const _originalTrustIndex = originalOrder.indexOf("trust_1");
   const heroPrimaryBlockId = blockIdByTitle(originalHome, "hero_1", "See Examples");
   const santoriniBlockId = blockIdByTitle(originalHome, "destinations_1", "Santorini");
   const firstFaqBlockId = blockIdByTitle(originalHome, "faq_1", "Is this really AI-generated?");

@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
+import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { STOREFRONT_PUBLIC_HOST_HEADER } from "@/lib/storefront-route-mode";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?(?:\/|$)/i;
@@ -14,20 +14,31 @@ const PUBLIC_STOREFRONT_CACHE_CONTROL = "public, max-age=60, s-maxage=300, stale
 const PRIVATE_STOREFRONT_CACHE_CONTROL = "private, no-store, max-age=0, must-revalidate";
 const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   adventure: "road-trip-frames",
+  aventura: "game-day-group-photos",
   city: "old-quarter-walks",
+  ciudad: "premiere-style-portraits",
   coastal: "coastal-light-sets",
+  familia: "thanksgiving-memory-sets",
   costero: "coastal-light-sets",
   destination: "route-portrait-albums",
   destino: "route-portrait-albums",
   postcard: "postcard-story-sets",
   postal: "postcard-story-sets",
+  "ano-nuevo": "new-year-countdown-albums",
+  "cumpleanos": "birthday-fan-moment-sets",
+  "cafe-corner-stories": "premiere-style-portraits",
   "cafe-street-journals": "cafe-street-stories",
   "destination-portrait-albums": "route-portrait-albums",
   "coastal-getaways": "coastal-light-sets",
   "old-city-walks": "old-quarter-walks",
   "mountain-trails": "alpine-trail-frames",
+  navidad: "christmas-group-albums",
   "itinerary-moodboards": "route-moodboards",
+  "route-moodboard": "seasonal-celebration-photos",
   "postcard-social-sets": "postcard-story-sets",
+  "social-keepsakes": "seasonal-celebration-photos",
+  montana: "alpine-trail-frames",
+  viaje: "fan-scene-albums",
   "travel-profile-stories": "solo-traveler-profiles",
   "lagoon-route-studys": "lagoon-route-studies",
   nature: "nature-portrait-studio",
@@ -57,20 +68,33 @@ const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {
 };
 const AIDREAMCAPES_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "",
-  "background-changer": "route-portrait-engine",
-  "background-remover": "route-portrait-engine",
-  "couple-escape-album": "shared-route-album",
-  "dreamscape-generator": "route-portrait-engine",
-  headshot: "route-portrait-engine",
-  "image-generator": "route-portrait-engine",
-  "image-to-video": "route-portrait-engine",
+  "background-changer": "fan-scene-album-builder",
+  "background-remover": "fan-scene-album-builder",
+  "couple-escape-album": "birthday-fan-moment-maker",
+  "dreamscape-generator": "fan-scene-album-builder",
+  headshot: "premiere-portrait-set-builder",
+  "image-generator": "fan-scene-album-builder",
+  "image-to-video": "new-year-countdown-album-maker",
   "image-studio": "",
-  "portrait-generator": "route-portrait-engine",
-  "portrait-maker": "route-portrait-engine",
-  "product-reverie": "route-moodboard",
-  "soft-glam": "cafe-street-story",
-  "wedding-portraits": "",
-  "world-cup-fan-photos": ""
+  "portrait-generator": "fan-scene-album-builder",
+  "portrait-maker": "fan-scene-album-builder",
+  "product-reverie": "permission-safe-photo-planner",
+  "soft-glam": "premiere-portrait-set-builder",
+  "wedding-portraits": "birthday-fan-moment-maker",
+  "world-cup-fan-photos": "game-day-group-portrait-maker",
+  "route-portrait-engine": "fan-scene-album-builder",
+  "coastal-portrait": "christmas-group-album-studio",
+  "island-resort-scenes": "new-year-countdown-album-maker",
+  "scenic-overlook-story": "game-day-group-portrait-maker",
+  "travel-profile-story": "fan-scene-album-builder",
+  "editorial-getaway": "premiere-portrait-set-builder",
+  "cafe-street-story": "premiere-portrait-set-builder",
+  "cinematic-travel": "game-day-group-portrait-maker",
+  "route-moodboard": "permission-safe-photo-planner",
+  "social-keepsake": "birthday-fan-moment-maker",
+  "family-travel-keepsakes": "thanksgiving-keepsake-set-maker",
+  "seasonal-celebration-album-maker": "new-year-countdown-album-maker",
+  "travel-journal-cover-maker": "new-year-countdown-album-maker"
 };
 const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/about": "/about-us",
@@ -212,8 +236,13 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
   const siteFamily = siteSlug.startsWith("aidreamcapes") ? "aidreamcapes" : "mydreamshoots";
   const kind = (pathMatch?.[2] ?? hostMatch?.[1] ?? "").toLowerCase();
   const currentSlug = normalizePathSlug(pathMatch?.[3] ?? hostMatch?.[2] ?? "");
+  const spanishXbyCanonicalSlug = kind === "collections" && isSpanishStorefrontRequestIdentity(`${siteSlug} ${host}`)
+    ? canonicalSpanishXbyCollectionSlug(currentSlug)
+    : currentSlug;
   const redirectMap =
-    siteFamily === "aidreamcapes" && kind === "collections"
+    spanishXbyCanonicalSlug !== currentSlug
+      ? undefined
+      : siteFamily === "aidreamcapes" && kind === "collections"
       ? AIDREAMCAPES_COLLECTION_REDIRECTS
       : siteFamily === "mydreamshoots" && kind === "collections"
         ? MYDREAMSHOOTS_COLLECTION_REDIRECTS
@@ -222,7 +251,7 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
           : siteFamily === "aidreamcapes" && kind === "tools"
             ? AIDREAMCAPES_TOOL_REDIRECTS
           : undefined;
-  const canonicalSlug = redirectMap?.[currentSlug];
+  const canonicalSlug = spanishXbyCanonicalSlug !== currentSlug ? spanishXbyCanonicalSlug : redirectMap?.[currentSlug];
   if (canonicalSlug === undefined) return undefined;
 
   const nextUrl = request.nextUrl.clone();

@@ -22,9 +22,10 @@ import { StorefrontNavigationFeedback } from "@/components/storefront/navigation
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
 import { PricingBillingTable } from "@/components/storefront/pricing-billing-table";
-import { StorefrontInstantLink, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
+import { StorefrontInstantLink, StorefrontLinkPrefetchProvider, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
 import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
+import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { dreamshootPackProfileForPack, dreamshootPackProfileForSlug, type DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
 import {
   aidreamcapesCategoryUseCaseProfileForSlug,
@@ -32,7 +33,7 @@ import {
   type PhotoPackageUseCaseProfile
 } from "@/lib/photo-package-use-case-profiles";
 import { shortPolicyPath } from "@/lib/site-route-canonical";
-import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isSpanishStorefrontSite, SPANISH_XBY_COLLECTION_ALIASES } from "@/lib/spanish-storefronts";
 import {
   AlertTriangle,
   ArrowRight,
@@ -119,7 +120,6 @@ import type {
   SectionInstance,
   Site,
   SiteAiApp,
-  ThemeRuntimeAlbum,
   ThemeRuntimeAsset,
   ThemePageJson,
   ThemeRuntimeData,
@@ -209,11 +209,12 @@ export function ThemeRenderer({
   const entries = visibleSectionEntriesForRoute(getSectionEntries(displayPage), normalizedPath, displaySite);
   const publicSlug = publicSiteSlug(site.slug);
   const lazyRouteMode: StorefrontRouteMode = routeMode === "host" ? "host" : "path";
+  const disablePublicSeoPrefetch = mode === "published" && isPublicSeoRoute(normalizedPath);
   const routedSite: RoutedSite = {
     ...displaySite,
     __storefrontBasePath: routeMode === "host" ? "" : `/site/${publicSlug}`
   };
-  const publicPrefetchPaths = mode === "published"
+  const publicPrefetchPaths = mode === "published" && !disablePublicSeoPrefetch
     ? publicPrefetchCandidatesForPath(normalizedPath).map((path) => hrefFor(routedSite, path))
     : [];
   const storefrontPrefetchPaths = Array.from(new Set(publicPrefetchPaths)).slice(0, 4);
@@ -225,95 +226,98 @@ export function ThemeRenderer({
   };
   const focusedCollectionRoute = Boolean(collectionSlugFromPath(normalizedPath) || (normalizedPath === "/collections" && typeof query.category === "string" && query.category));
   return (
-    <div
-      className="bg-[var(--site-bg)] text-[var(--site-fg)] [font-family:var(--site-text-font)]"
-      suppressHydrationWarning={mode === "published"}
-    >
-      {storefrontPrefetchPaths.length ? <CustomerRoutePrefetch paths={storefrontPrefetchPaths} /> : null}
-      {runtime?.customer && runtime.clientBootstrapCustomer === true && mode === "published" ? (
-        <>
-          <CustomerBootstrapPrefetch mode="shell" siteSlug={publicSlug} />
-          <CustomerWorkspaceRuntimePrefetch siteId={site.id} siteSlug={publicSlug} />
-        </>
-      ) : null}
-      <StorefrontNavigationFeedback />
+    <StorefrontLinkPrefetchProvider disabled={disablePublicSeoPrefetch}>
       <div
-        className="xfcart-section"
-        data-section-id="header_plus"
-        data-section-style=""
-        data-section-type="header_plus"
-        id="xfcart-section-header_plus"
-        {...previewSelectedAttrs(previewSelection, "header_plus")}
+        className="bg-[var(--site-bg)] text-[var(--site-fg)] [font-family:var(--site-text-font)]"
+        suppressHydrationWarning={mode === "published"}
       >
-        <ThemeGlobalHeader
-          creativePackCategories={navigationCreativePackCategories ?? creativePackCategories}
-          creativePacks={navigationCreativePacks ?? creativePacks}
-          deferMegaMenuPanels
-          lightweight={lightweightChrome}
-          runtime={runtime}
-          site={routedSite}
-          settings={settings}
-          pagePath={normalizedPath}
-          toolMenuItems={navigationToolMenuItems ?? toolMenuItems}
-        />
+        {storefrontPrefetchPaths.length ? <CustomerRoutePrefetch paths={storefrontPrefetchPaths} /> : null}
+        {runtime?.customer && runtime.clientBootstrapCustomer === true && mode === "published" ? (
+          <>
+            <CustomerBootstrapPrefetch mode="shell" siteSlug={publicSlug} />
+            <CustomerWorkspaceRuntimePrefetch siteId={site.id} siteSlug={publicSlug} />
+          </>
+        ) : null}
+        <StorefrontNavigationFeedback />
+        <div
+          className="xfcart-section"
+          data-section-id="header_plus"
+          data-section-style=""
+          data-section-type="header_plus"
+          id="xfcart-section-header_plus"
+          {...previewSelectedAttrs(previewSelection, "header_plus")}
+        >
+          <ThemeGlobalHeader
+            creativePackCategories={navigationCreativePackCategories ?? creativePackCategories}
+            creativePacks={navigationCreativePacks ?? creativePacks}
+            deferMegaMenuPanels
+            lightweight={lightweightChrome}
+            runtime={runtime}
+            site={routedSite}
+            settings={settings}
+            pagePath={normalizedPath}
+            toolMenuItems={navigationToolMenuItems ?? toolMenuItems}
+          />
+        </div>
+        <main data-theme-sections-root="">
+          {entries.map(([id, section], index) => {
+            const sectionType = canonicalSectionType(section.type);
+            const shouldServerRenderPublicSeo = shouldServerRenderPublicSeoSection(normalizedPath, sectionType);
+            const shouldLazyRender = mode === "published" &&
+              index > 0 &&
+              sectionType !== "policy_content" &&
+              sectionType !== "blog_article" &&
+              sectionType !== "blog_list" &&
+              sectionType !== "video_feature" &&
+              sectionType !== "mobile_video_showcase" &&
+              !isPublicSeoRoute(normalizedPath) &&
+              !shouldServerRenderPublicSeo &&
+              (!focusedCollectionRoute || !shouldServerRenderFocusedCollectionSection(sectionType));
+            return shouldLazyRender ? (
+              <LazyStorefrontSection
+                apiPath={storefrontSectionApiPath(publicSlug, normalizedPath, id, query, lazyRouteMode)}
+                intrinsicSize={lazyIntrinsicSectionSize(sectionType)}
+                key={id}
+                sectionId={id}
+                sectionType={section.type}
+              />
+            ) : (
+              <ThemeSectionFrame
+                creativePackCategories={creativePackCategories}
+                creativePacks={creativePacks}
+                id={id}
+                key={id}
+                lazyRender={false}
+                mode={mode}
+                previewSelection={previewSelection}
+                products={products}
+                renderContext={renderContext}
+                runtime={runtime}
+                section={section}
+                site={routedSite}
+                siteAiApps={siteAiApps}
+                toolMenuItems={toolMenuItems}
+                videoThemes={videoThemes}
+              />
+            );
+          })}
+        </main>
+        <div
+          className="xfcart-section"
+          data-section-id="footer_plus"
+          data-section-style=""
+          data-section-type="footer_plus"
+          id="xfcart-section-footer_plus"
+          style={{
+            contentVisibility: "auto",
+            containIntrinsicSize: "1px 420px"
+          }}
+          {...previewSelectedAttrs(previewSelection, "footer_plus")}
+        >
+          <ThemeGlobalFooter lightweight={lightweightChrome} site={routedSite} settings={settings} />
+        </div>
       </div>
-      <main data-theme-sections-root="">
-        {entries.map(([id, section], index) => {
-          const sectionType = canonicalSectionType(section.type);
-          const shouldServerRenderPublicSeo = shouldServerRenderPublicSeoSection(normalizedPath, sectionType);
-          const shouldLazyRender = mode === "published" &&
-            index > 0 &&
-            sectionType !== "policy_content" &&
-            sectionType !== "blog_article" &&
-            sectionType !== "blog_list" &&
-            sectionType !== "video_feature" &&
-            sectionType !== "mobile_video_showcase" &&
-            !shouldServerRenderPublicSeo &&
-            (!focusedCollectionRoute || !shouldServerRenderFocusedCollectionSection(sectionType));
-          return shouldLazyRender ? (
-            <LazyStorefrontSection
-              apiPath={storefrontSectionApiPath(publicSlug, normalizedPath, id, query, lazyRouteMode)}
-              intrinsicSize={lazyIntrinsicSectionSize(sectionType)}
-              key={id}
-              sectionId={id}
-              sectionType={section.type}
-            />
-          ) : (
-            <ThemeSectionFrame
-              creativePackCategories={creativePackCategories}
-              creativePacks={creativePacks}
-              id={id}
-              key={id}
-              lazyRender={false}
-              mode={mode}
-              previewSelection={previewSelection}
-              products={products}
-              renderContext={renderContext}
-              runtime={runtime}
-              section={section}
-              site={routedSite}
-              siteAiApps={siteAiApps}
-              toolMenuItems={toolMenuItems}
-              videoThemes={videoThemes}
-            />
-          );
-        })}
-      </main>
-      <div
-        className="xfcart-section"
-        data-section-id="footer_plus"
-        data-section-style=""
-        data-section-type="footer_plus"
-        id="xfcart-section-footer_plus"
-        style={{
-          contentVisibility: "auto",
-          containIntrinsicSize: "1px 420px"
-        }}
-        {...previewSelectedAttrs(previewSelection, "footer_plus")}
-      >
-        <ThemeGlobalFooter lightweight={lightweightChrome} site={routedSite} settings={settings} />
-      </div>
-    </div>
+    </StorefrontLinkPrefetchProvider>
   );
 }
 
@@ -421,7 +425,10 @@ type PhotoPackageMegaGroup = {
   }>;
 };
 
-function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>, pagePath: string, _site: Site): Array<[string, SectionInstance]> {
+function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>, pagePath: string, site: Site): Array<[string, SectionInstance]> {
+  if (pagePath === "/" && !isSpanishXbySite(site) && (isMyDreamShootsProfileSite(site) || isAidreamcapesSite(site))) {
+    return entries.filter(([, section]) => canonicalSectionType(section.type) !== "video_feature");
+  }
   if (pagePath === "/collections") {
     let keptTaxonomy = false;
     return entries.filter(([, section]) => {
@@ -517,6 +524,7 @@ function pageHasMainHeadingBefore(sectionId: string, renderContext: RenderContex
 
 const sectionTypesUsingProducts = new Set([
   "cart_summary",
+  "dreamshoot_generation_showcase",
   "pricing_table",
   "product_detail",
   "products",
@@ -697,13 +705,21 @@ function isPublicSeoRoute(pagePath: string): boolean {
     pagePath === "/about-us" ||
     pagePath === "/contact-us" ||
     pagePath === "/privacy" ||
+    pagePath === "/policies/privacy" ||
     pagePath === "/terms" ||
+    pagePath === "/policies/terms" ||
     pagePath === "/cookies" ||
+    pagePath === "/policies/cookies" ||
     pagePath === "/refunds" ||
+    pagePath === "/policies/refunds" ||
     pagePath === "/content" ||
+    pagePath === "/policies/content" ||
     pagePath === "/shipping" ||
+    pagePath === "/policies/shipping" ||
     pagePath === "/children-privacy" ||
+    pagePath === "/policies/children-privacy" ||
     pagePath === "/state-privacy" ||
+    pagePath === "/policies/state-privacy" ||
     pagePath.startsWith("/collections/") ||
     pagePath.startsWith("/tools/") ||
     pagePath.startsWith("/blog/");
@@ -825,6 +841,13 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const dreamShootIdentity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText} ${title}`;
   const isDreamShoot = /mydreamshoots|dreamshoot/i.test(dreamShootIdentity);
   const isAidreamcapes = isAidreamcapesSite(site);
+  const disablePublicSeoPrefetch = isPublicSeoRoute(pagePath);
+  const pricingLabel = spanishXby ? "Precios" : "Pricing";
+  const pricingHeaderHref = pagePath === "/" && !spanishXby && isMyDreamShootsProfileSite(site) ? "#plans" : "/pricing";
+  const isPricingHref = (href: string) => {
+    const normalizedHref = href.trim().replace(/\/+$/, "") || "/";
+    return normalizedHref === "/pricing" || normalizedHref === "#plans" || normalizedHref === "/#plans";
+  };
   const announceEnabled = saasBool(saasHeader?.settings?.is_announce_show, false);
   const announceText = themeValueToString(saasHeader?.settings?.announce_title, "");
   const spanishHeaderLabel = (label: string, href: string) => {
@@ -832,7 +855,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     const normalizedLabel = label.trim().toLowerCase();
     const normalizedHref = href.trim().replace(/\/+$/, "") || "/";
     if (normalizedLabel === "faq" || normalizedHref === "/faq" || normalizedHref === "#faq" || normalizedHref === "/#faq") return "Preguntas";
-    if (normalizedLabel === "pricing" || normalizedHref === "/pricing") return "Precios";
+    if (normalizedLabel === "pricing" || isPricingHref(href)) return "Precios";
     if (normalizedLabel === "tools" || normalizedHref === "/tools") return "Herramientas";
     if (normalizedLabel === "how it works" || normalizedHref === "/workflow" || normalizedHref === "/#workflow" || normalizedHref === "#workflow") return "Como funciona";
     if (/browse packages|travel packages|photo packages|packages/.test(normalizedLabel) || normalizedHref === "/collections") return isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes";
@@ -843,6 +866,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const normalizeHeaderLink = <T extends { label: string; href: string }>(link: T): T => {
     const normalizedLabel = link.label.trim().toLowerCase();
     const normalizedHref = link.href.trim().replace(/\/+$/, "") || "/";
+    if ((isDreamShoot || isAidreamcapes) && (normalizedLabel === "pricing" || normalizedLabel === "precios" || isPricingHref(link.href))) {
+      return { ...link, label: pricingLabel, href: pricingHeaderHref };
+    }
     if (
       (isDreamShoot || isAidreamcapes) &&
       (normalizedLabel === "faq" ||
@@ -876,13 +902,12 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
       ...link,
       block: { id: `header_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href } } as SectionBlockInstance
     }))).filter((link) => !isRedundantAidreamcapesExamplesLink(link)).map(normalizeHeaderLink);
-  const pricingLabel = spanishXby ? "Precios" : "Pricing";
   const pricingLink = {
     label: pricingLabel,
-    href: "/pricing",
-    block: { id: `${isAidreamcapes ? "aidreamcapes" : "dreamshoot"}_header_pricing`, type: "menu_link", settings: { label: pricingLabel, href: "/pricing" } } as SectionBlockInstance
+    href: pricingHeaderHref,
+    block: { id: `${isAidreamcapes ? "aidreamcapes" : "dreamshoot"}_header_pricing`, type: "menu_link", settings: { label: pricingLabel, href: pricingHeaderHref } } as SectionBlockInstance
   };
-  const hasPricingLink = configuredLinks.some((link) => (link.href.trim().replace(/\/+$/, "") || "/") === "/pricing");
+  const hasPricingLink = configuredLinks.some((link) => isPricingHref(link.href));
   const faqLinkIndex = configuredLinks.findIndex((link) => {
     const normalizedLabel = link.label.trim().toLowerCase();
     const normalizedHref = link.href.trim().replace(/\/+$/, "") || "/";
@@ -1117,9 +1142,10 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
               return <span key={`${link.label}_${link.href}`}>{linkNode}</span>;
             }
 	            return (
-	              <ClickMegaMenu
+            <ClickMegaMenu
 	                blockAttrs={xfcartBlockAttrs(link.block, index, "header_nav")}
 	                buttonClassName={navClass}
+                disablePrefetch={disablePublicSeoPrefetch}
 	                key={`${link.label}_${link.href}`}
 	                label={link.label}
                   panelClassName={`fixed left-1/2 z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out ${announceEnabled && announceText ? "top-[126px]" : "top-[78px]"}`}
@@ -1291,6 +1317,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                            dark={dark}
 	                            groups={clientPhotoPackageMegaGroups}
 	                            key={`mobile_${link.label}_${link.href}`}
+	                            menuLabel={isDreamShoot && !spanishXby && !isAidreamcapes ? "Headshot Generator" : undefined}
 	                            spanish={spanishXby}
 	                          />
 	                        ) : (
@@ -1567,7 +1594,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
             ["Cookie Policy", "/cookies", "support"]
           ]
         : [
-            ["Browse packages", "/collections", "product"],
+            ["Headshot Generator", "/collections/headshots", "product"],
             ["Tools", "/tools", "product"],
             ["How it works", "/workflow", "product"],
             ["Pricing", "/pricing", "product"],
@@ -2026,7 +2053,7 @@ function spanishFeaturedPackLabel(value: string, aidreamcapes: boolean): string 
   return labels[normalized] ?? spanishPhotoPackageLabel(value, aidreamcapes);
 }
 
-function manualCatalogImageAlt(card: DreamShootCatalogCard): string {
+function _manualCatalogImageAlt(card: DreamShootCatalogCard): string {
   return manualImageAlt({
     id: card.id,
     src: card.imageUrl,
@@ -2439,7 +2466,7 @@ function creativePacksSortedForCategory(creativePacks: CreativePack[], category:
     .map(({ pack }) => pack);
 }
 
-function generationShowcaseCardFromCategory(site: Site, category: CreativePackCategory, creativePacks: CreativePack[], excludeImages: string[] = []): GenerationShowcaseImageCard | null {
+function _generationShowcaseCardFromCategory(site: Site, category: CreativePackCategory, creativePacks: CreativePack[], excludeImages: string[] = []): GenerationShowcaseImageCard | null {
   const slug = dreamshootCategorySlug(category.slug || category.label);
   const rootAidreamcapesCategory = isAidreamcapesSite(site) && !isSpanishXbySite(site) && isAidreamcapesRootCategorySlug(slug);
   const relatedPacks = creativePacksSortedForCategory(creativePacks, category);
@@ -3290,7 +3317,7 @@ function isExternalHttpHrefForSite(site: Site, href: string): boolean {
 
 function collectionHref(category: string): string {
   const slug = dreamshootCategorySlug(category);
-  return slug ? `/collections/${slug}` : "/collections";
+  return !slug || slug === "all" || slug === "todo" || slug === "todos" ? "/collections" : `/collections/${slug}`;
 }
 
 function publicStorefrontToken(value: string, prefixes: string[]): string {
@@ -3325,26 +3352,55 @@ function publicCartHref(site: Site, product: SiteProduct | undefined, price: Sit
 }
 
 const aidreamcapesCollectionCanonicalSlugs: Record<string, string> = {
-  adventure: "cinematic-travel",
-  city: "cafe-corner-stories",
-  coastal: "coastal-light-sets",
-  destination: "route-portrait-albums",
-  postcard: "social-keepsakes",
-  "cafe-street-journals": "cafe-corner-stories",
-  "destination-portrait-albums": "route-portrait-albums",
-  "coastal-getaways": "coastal-light-sets",
-  "old-city-walks": "cafe-corner-stories",
-  "cafe-street-stories": "cafe-corner-stories",
-  "mountain-trails": "cinematic-travel",
-  "road-trip-frames": "cinematic-travel",
-  "itinerary-moodboards": "route-moodboard",
-  "postcard-social-sets": "social-keepsakes",
-  "travel-profile-stories": "solo-traveler-profiles",
+  adventure: "game-day-group-photos",
+  aventura: "game-day-group-photos",
+  city: "premiere-style-portraits",
+  ciudad: "premiere-style-portraits",
+  coastal: "christmas-group-albums",
+  familia: "thanksgiving-memory-sets",
+  destination: "fan-scene-albums",
+  postcard: "seasonal-celebration-photos",
+  "ano-nuevo": "new-year-countdown-albums",
+  "cumpleanos": "birthday-fan-moment-sets",
+  navidad: "christmas-group-albums",
+  montana: "alpine-trail-frames",
+  viaje: "fan-scene-albums",
+  "cafe-street-journals": "premiere-style-portraits",
+  "destination-portrait-albums": "fan-scene-albums",
+  "coastal-getaways": "christmas-group-albums",
+  "old-city-walks": "premiere-style-portraits",
+  "cafe-street-stories": "premiere-style-portraits",
+  "mountain-trails": "game-day-group-photos",
+  "road-trip-frames": "game-day-group-photos",
+  "itinerary-moodboards": "seasonal-celebration-photos",
+  "postcard-social-sets": "seasonal-celebration-photos",
+  "travel-profile-stories": "fan-scene-albums",
   "lagoon-route-studys": "lagoon-route-studies"
 };
 
+const spanishXbyCollectionCanonicalSlugs = SPANISH_XBY_COLLECTION_ALIASES;
+
+const spanishXbyCatalogCategoryHrefOverrides: DreamshootCategoryHrefOverrides = {
+  all: "/collections",
+  todo: "/collections",
+  todos: "/collections",
+  ...Object.fromEntries(
+    Object.entries(spanishXbyCollectionCanonicalSlugs).map(([slug, canonicalSlug]) => [
+      slug,
+      `/collections/${canonicalSlug}`
+    ])
+  )
+};
+
 function canonicalCollectionHrefForSite(site: Site, href: string): string {
-  if (!isAidreamcapesSite(site)) return href;
+  if (!isAidreamcapesSite(site)) {
+    if (isSpanishXbySite(site)) {
+      const slug = dreamshootCategorySlug(href.replace(/^\/collections\//, ""));
+      const canonicalSlug = spanishXbyCollectionCanonicalSlugs[slug];
+      return canonicalSlug ? `/collections/${canonicalSlug}` : href;
+    }
+    return isMyDreamShootsProfileSite(site) ? canonicalSeoDirectoryPathForSite(site, "collection", href) : href;
+  }
   const slug = dreamshootCategorySlug(href.replace(/^\/collections\//, ""));
   const canonicalSlug = aidreamcapesCollectionCanonicalSlugs[slug];
   return canonicalSlug ? `/collections/${canonicalSlug}` : href;
@@ -3782,7 +3838,7 @@ function dreamshootToolDirectoryCopy(block: SectionBlockInstance, aidreamcapes =
   };
 }
 
-function dreamshootDefaultToolBlocks(): SectionBlockInstance[] {
+function _dreamshootDefaultToolBlocks(): SectionBlockInstance[] {
   return [
     "headshot-generator",
     "anime-avatar",
@@ -3874,7 +3930,7 @@ function toolActionHref(site: Site, href: string, fallbackToolId = "", fallbackT
   return hrefFor(site, rebuilt);
 }
 
-function toolStudioHref(site: Site, href: string, fallbackToolId = "", fallbackToolTitle = ""): string {
+function _toolStudioHref(site: Site, href: string, fallbackToolId = "", fallbackToolTitle = ""): string {
   const toolPath = toolActionHref(site, href, fallbackToolId, fallbackToolTitle);
   const slug =
     toolPath.split("?")[0]?.split("#")[0]?.split("/tools/")[1] ||
@@ -3890,7 +3946,7 @@ function customerAccountStatusLabel(status: string): string {
   return status;
 }
 
-function orderStatusLabel(status: string): string {
+function _orderStatusLabel(status: string): string {
   if (status === "paid") return "Paid";
   if (status === "fulfilled") return "Fulfilled";
   if (status === "checkout_started") return "Checkout started";
@@ -4265,7 +4321,7 @@ function selectedCartProduct(site: Site, products: SiteProduct[], query: Record<
   return { product, price };
 }
 
-function collectionPageCards(
+function _collectionPageCards(
   site: Site,
   creativePacks: CreativePack[],
   query: Record<string, string | string[] | undefined>
@@ -4414,15 +4470,15 @@ const aidreamcapesCatalogCardHrefOverrides: DreamshootCategoryHrefOverrides = {
 
 const accentBlue = "#2f6fed";
 const accentBlueSoft = "#dbe7ff";
-const accentBlueDeep = "#173a8a";
+const _accentBlueDeep = "#173a8a";
 const accentCopper = "#b9773f";
 const accentForest = "#3f6b50";
 const dreamshootPurple = "#7A4CFF";
 const dreamshootMagenta = "#EC4BDD";
 const dreamshootCyan = "#16DCF0";
 const dreamshootOrange = "#FFA644";
-const dreamshootBg = "#05070E";
-const dreamshootSurface = "#10111A";
+const _dreamshootBg = "#05070E";
+const _dreamshootSurface = "#10111A";
 const dreamshootGlass = "rgba(18, 18, 28, 0.86)";
 const dreamshootBrandGradient = `linear-gradient(90deg, ${dreamshootOrange} 0%, ${dreamshootMagenta} 38%, ${dreamshootPurple} 68%, ${dreamshootCyan} 100%)`;
 const dreamshootSplitCardClass =
@@ -4440,18 +4496,18 @@ const dreamshootSplitFooterClass = "mt-auto flex items-center justify-between ga
 const dreamshootSplitPhotoCountClass =
   "rounded-[8px] border border-cyan-200/18 bg-[#0D2B2C]/70 px-2.5 py-1 text-xs font-semibold leading-5 text-[#58E6D9] shadow-[inset_0_1px_0_rgba(255,255,255,0.10)]";
 const dreamshootSplitUsesClass = "truncate text-xs leading-5 text-slate-500";
-const aidreamcapesCream = "#FBF3E4";
-const aidreamcapesCreamSoft = "#FFF8ED";
-const aidreamcapesInk = "#1E1712";
-const aidreamcapesMutedInk = "#6F6257";
+const _aidreamcapesCream = "#FBF3E4";
+const _aidreamcapesCreamSoft = "#FFF8ED";
+const _aidreamcapesInk = "#1E1712";
+const _aidreamcapesMutedInk = "#6F6257";
 const aidreamcapesCopper = "#B86E36";
 const aidreamcapesAccent = "#D88A4B";
 const googleIconPath = "/assets/brand/google-g.svg";
-const paperWarm = "#f4f1eb";
-const panelWarm = "#fbfaf7";
-const borderWarm = "#d8d2c7";
-const inkBase = "#14161a";
-const inkMuted = "#6f716f";
+const _paperWarm = "#f4f1eb";
+const _panelWarm = "#fbfaf7";
+const _borderWarm = "#d8d2c7";
+const _inkBase = "#14161a";
+const _inkMuted = "#6f716f";
 
 function isAidreamcapesSite(site: Site): boolean {
   return /aidreamcapes/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
@@ -4467,7 +4523,7 @@ function isMyDreamShootsProfileSite(site: Site): boolean {
 }
 
 function storefrontCatalogCategoryHrefOverrides(site: Site): DreamshootCategoryHrefOverrides {
-  if (isSpanishXbySite(site)) return {};
+  if (isSpanishXbySite(site)) return spanishXbyCatalogCategoryHrefOverrides;
   if (isAidreamcapesSite(site)) return aidreamcapesCatalogCategoryHrefOverrides;
   if (isMyDreamShootsProfileSite(site)) return myDreamShootsCatalogCategoryHrefOverrides;
   return {};
@@ -4482,7 +4538,13 @@ function normalizeStorefrontCatalogCards(
   return cards.map((card) => {
     const href = card.href?.trim() ?? "";
     const pathname = href.replace(/^https?:\/\/[^/]+/i, "");
-    if (href && !/(?:^|\/)login(?:[/?#]|$)/i.test(pathname)) return card;
+    if (href && !/(?:^|\/)login(?:[/?#]|$)/i.test(pathname)) {
+      if (isSpanishXbySite(site) && pathname.startsWith("/collections/")) {
+        const canonicalHref = canonicalCollectionHrefForSite(site, pathname);
+        return canonicalHref !== pathname ? { ...card, href: canonicalHref } : card;
+      }
+      return card;
+    }
     const candidates = [card.id, card.title, card.category, card.meta, ...(card.filterTokens ?? [])]
       .filter(Boolean)
       .map((value) => dreamshootCategorySlug(String(value).replace(/^\/?collections\/?/, "")));
@@ -5435,7 +5497,7 @@ function photoPackageGroupAccent(group: PhotoPackageMegaGroup, index: number): s
   return photoPackageAccentPalette[index % photoPackageAccentPalette.length];
 }
 
-function photoPackageHighlightHref(site: Site, groups: PhotoPackageMegaGroup[], keywords: string[]): string {
+function _photoPackageHighlightHref(site: Site, groups: PhotoPackageMegaGroup[], keywords: string[]): string {
   const match = groups.find((group) => keywords.some((keyword) => `${group.slug} ${group.label}`.toLowerCase().includes(keyword)));
   return hrefFor(site, match?.items[0]?.href || "/collections");
 }
@@ -5673,7 +5735,7 @@ function DreamShootMegaToolsPanel({
         })}
       </div>
       <div className={warm ? "mt-5 grid gap-6 border-t border-[#eadfce] pt-5 lg:grid-cols-[1.22fr_1fr_1fr]" : "mt-5 grid gap-6 border-t border-[#263247] pt-5 lg:grid-cols-[1.22fr_1fr_1fr]"}>
-        {detailGroups.map((group, categoryIndex) => {
+        {detailGroups.map((group, _categoryIndex) => {
           return (
             <div key={`mega_group_${group.category}`} id={slugify(group.category)}>
               <ContentLabelTag className="mb-3 block text-[0.94rem] font-semibold" style={{ color: warm ? aidreamcapesCopper : group.meta.accent }}>
@@ -5721,7 +5783,8 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
   const visibleGroups = groups;
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
   const spanishXby = isSpanishXbySite(site);
-  const menuLabel = spanishXby ? isAidreamcapesSite(site) ? "Albumes de ocasion" : "Ver paquetes" : isAidreamcapesSite(site) ? "Occasion Albums" : "Browse packages";
+  const aidreamcapes = isAidreamcapesSite(site);
+  const menuLabel = spanishXby ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : isMyDreamShootsProfileSite(site) ? "Headshot Generator" : "Browse packages";
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileMenuSummaryClass(dark)}>
@@ -6417,7 +6480,7 @@ function renderLegacySaasSection({
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">{mode === "preview" ? "Preview catalog" : "Available now"}</span>
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {cards.map((card, index) => (
+            {cards.map((card, _index) => (
               <Link className="group overflow-hidden rounded-[1.2rem] border border-black/10 bg-white transition hover:-translate-y-1" href={hrefFor(site, card.href)} key={card.id}>
                 <div className="aspect-[4/5] overflow-hidden bg-zinc-200">
                   <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={card.imageUrl} alt={card.title} />
@@ -6743,7 +6806,7 @@ function renderLegacySaasSection({
     const relatedArticles = blogArticleCardsForSite(site, renderContext.pagePath).slice(0, 3);
     const HeadingTag = setting(section, "headingLevel", "h1") === "h2" ? "h2" : "h1";
     const primaryCta = setting(section, "primaryCta", isAidreamcapesSite(site) ? "Start an occasion album" : "Create my first photo set");
-    const primaryHref = setting(section, "primaryHref", "/login");
+    const _primaryHref = setting(section, "primaryHref", "/login");
     const targetHref = setting(section, "targetHref", setting(section, "secondaryHref", setting(section, "primaryHref", "")));
     const targetLabel = setting(section, "targetLabel", setting(section, "secondaryCta", primaryCta || "Open related page"));
 
@@ -7144,6 +7207,241 @@ function renderLegacySaasSection({
   }
 
   return null;
+}
+
+function PricingTableSectionView({
+  section,
+  site,
+  products,
+  renderContext,
+  embedded = false
+}: {
+  section: SectionInstance;
+  site: Site;
+  products: SiteProduct[];
+  renderContext: RenderContext;
+  embedded?: boolean;
+}) {
+  const aidreamcapes = isAidreamcapesSite(site);
+  const spanishXbyPricing = isSpanishXbySite(site);
+  const configuredFeaturedProductId = selectorIdSetting(section, "featuredProductId", "");
+  const activeSubscriptionProducts = products.filter((product) => product.type === "subscription" && product.status === "active");
+  const displayProducts = (activeSubscriptionProducts.length ? activeSubscriptionProducts : activeProducts(products)).slice(0, 3);
+  const billingCycle = billingCycleFromQuery(renderContext.query);
+  const canShowBillingSwitch = displayProducts.some((product) => productHasBillingCycle(product, "year"));
+  const featuredProductIdsByCycle = (["month", "year"] as const).reduce<Record<BillingCycle, string | undefined>>((acc, cycle) => {
+    acc[cycle] =
+      displayProducts.find((product) => product.id === configuredFeaturedProductId)?.id ??
+      displayProducts.find((product) => priceMetaBool(productPriceForBilling(product, cycle), "featured", false))?.id ??
+      displayProducts[0]?.id;
+    return acc;
+  }, { month: undefined, year: undefined });
+  const featuredPricesByCycle = (["month", "year"] as const).reduce<Record<BillingCycle, SiteProduct["prices"][number] | undefined>>((acc, cycle) => {
+    const featuredProduct = displayProducts.find((product) => product.id === featuredProductIdsByCycle[cycle]);
+    acc[cycle] = featuredProduct ? productPriceForBilling(featuredProduct, cycle) : undefined;
+    return acc;
+  }, { month: undefined, year: undefined });
+  const pricingPlans = displayProducts.map((product) => {
+    const prices = (["month", "year"] as const).reduce<Partial<Record<BillingCycle, {
+      id: string;
+      formattedAmount: string;
+      formattedOriginalAmount: string;
+      formattedEquivalentMonthly: string;
+      periodLabel: string;
+      planSubtitle: string;
+      discountLabel: string;
+      features: string[];
+      featured: boolean;
+      bestValue: boolean;
+      badgeLabel: string;
+      buttonLabel: string;
+      cartHref: string;
+    }>>>((acc, cycle) => {
+      const price = productPriceForBilling(product, cycle);
+      if (!price) return acc;
+      const occasionCount = priceMetaNumber(price, aidreamcapes ? "occasionCount" : "destinationCount", product.name === "Deluxe" ? 999 : product.name === "Premium" ? 4 : 2);
+      const featured = product.id === featuredProductIdsByCycle[cycle];
+      const originalAmountCents = priceMetaNumber(price, "originalAmountCents", 0);
+      const discountLabel = priceMetaString(price, "discountLabel", "");
+      const yearlyEquivalentMonthlyCents = priceMetaNumber(price, "yearlyEquivalentMonthlyCents", 0);
+      const bestValue = priceMetaBool(price, "bestValue", false);
+      const planSubtitle = priceMetaString(
+        price,
+        "planSubtitle",
+        spanishXbyPricing
+          ? aidreamcapes
+            ? "Creditos para probar albumes privados de fans y recuerdos festivos."
+            : "Creditos para probar perfiles, retratos y albumes privados."
+          : product.name === "Starter"
+            ? "Start with one focused headshot, beauty, or profile set"
+            : product.name === "Pro" || product.name === "Popular"
+              ? "Compare several package styles with room for reruns"
+              : "More credits for premium packs, video add-ons, and repeat campaigns"
+      );
+      const defaultFeatures = spanishXbyPricing ? [
+        localizedPriceCreditsLabel(site, price),
+        localizedCreditsImageEstimateLabel(site, price),
+        aidreamcapes ? "Crea albumes privados de fans y recuerdos festivos" : "Crea albumes privados despues de generar",
+        aidreamcapes ? "Editor de albumes con prompts" : "Editor de fotos con prompts",
+        "Filtros especiales con IA",
+        "Crea fotos escribiendo prompts en segundos",
+        "Crea videos con IA",
+        "Mejora magica para imagenes de alta resolucion",
+        "Sin marca de agua",
+        ...(product.name === "Premium" || product.name === "Deluxe" ? ["Salidas 4K de alta calidad"] : []),
+        ...(occasionCount >= 999 ? ["Direcciones de estilo ilimitadas"] : [])
+      ] : [
+        localizedPriceCreditsLabel(site, price),
+        localizedCreditsImageEstimateLabel(site, price),
+        "Create private photo albums after generation completes",
+        aidreamcapes ? "Fan and holiday album editor with prompts" : "AI photo editor with prompts",
+        "Special AI photo filters",
+        "Create photos by writing prompts in seconds",
+        "Create AI videos",
+        "Magic Upscaler for high-res images",
+        "No watermark",
+        ...(product.name === "Premium" || product.name === "Deluxe" ? ["4K Ultra-High quality outputs"] : []),
+        ...(occasionCount >= 999 ? ["Unlimited style directions"] : [])
+      ].filter(Boolean);
+      const featureLines = spanishXbyPricing ? [] : priceMetaLines(price, "featuresText");
+      const features = featureLines.length ? featureLines : defaultFeatures;
+      const badgeLabel = spanishXbyPricing
+        ? featured
+          ? "Mas elegido"
+          : bestValue
+            ? "Mejor valor"
+            : aidreamcapes
+              ? "Plan de album"
+              : "Plan de fotos"
+        : priceMetaString(
+            price,
+            "badgeLabel",
+            featured
+              ? setting(section, "featuredBadgeLabel", "Most Popular")
+              : bestValue
+                ? "Best Value"
+                : setting(section, "standardBadgeLabel", "Photo plan")
+          );
+      acc[cycle] = {
+        id: price.id,
+        formattedAmount: formatCurrency(price.amountCents, price.currency),
+        formattedOriginalAmount: originalAmountCents > price.amountCents ? formatCurrency(originalAmountCents, price.currency) : "",
+        formattedEquivalentMonthly: price.interval === "year" && yearlyEquivalentMonthlyCents > 0 ? formatCurrency(yearlyEquivalentMonthlyCents, price.currency) : "",
+        periodLabel: pricePeriodLabel(price),
+        planSubtitle,
+        discountLabel,
+        features,
+        featured,
+        bestValue,
+        badgeLabel,
+        buttonLabel: priceMetaString(price, "buttonLabel", isSpanishXbySite(site) ? "Seleccionar plan" : "Select plan"),
+        cartHref: publicCartHref(site, product, price)
+      };
+      return acc;
+    }, {});
+    return {
+      id: product.id,
+      name: product.name,
+      prices
+    };
+  });
+  const pricingImage = mediaAssetUrl(
+    site,
+    setting(
+      section,
+      "backgroundImage",
+      aidreamcapes
+        ? "/assets/sites/site_aidreamcapes/creative-packs/mountain-trails.webp?v=20260630webp"
+        : "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
+    )
+  );
+  const sidePanels = (["month", "year"] as const).reduce<Record<BillingCycle, {
+    eyebrow: string;
+    title: string;
+    body: string;
+    items: Array<readonly [string, string]>;
+  }>>((acc, cycle) => {
+    const featuredPrice = featuredPricesByCycle[cycle];
+    const configuredSideItems = (spanishXbyPricing ? [] : priceMetaLines(featuredPrice, "sidePanelItemsText"))
+      .map((line) => {
+        const [label, ...detailParts] = line.split("|").map((part) => part.trim());
+        return label && detailParts.join(" ").trim() ? [label, detailParts.join(" | ")] as const : undefined;
+      })
+      .filter((item): item is readonly [string, string] => Boolean(item));
+    acc[cycle] = {
+      eyebrow: spanishXbyPricing ? aidreamcapes ? "Por que elegir creditos de ruta" : "Por que elegir creditos" : priceMetaString(featuredPrice, "sidePanelEyebrow", setting(section, "sidePanelEyebrow", "Why people subscribe")),
+      title: spanishXbyPricing ? aidreamcapes ? "Creditos claros para albumes de ocasion flexibles." : "Creditos claros para paquetes privados flexibles." : priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")),
+      body: spanishXbyPricing
+        ? aidreamcapes
+          ? "Genera albumes privados de fans y recuerdos festivos tras revisar creditos y mantener saldo visible."
+          : "Genera albumes privados tras revisar creditos, mantener saldo visible y recargar solo cuando necesitas mas sesiones."
+        : priceMetaString(
+            featuredPrice,
+            "sidePanelBody",
+            setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
+          ),
+      items: configuredSideItems.length
+        ? configuredSideItems
+        : spanishXbyPricing
+          ? [
+              [aidreamcapes ? "Inicial" : "Inicio", aidreamcapes ? "Ideal para un album de fan, partido o recuerdo festivo." : "Ideal para retratos profesionales, perfiles y primeros albumes."],
+              ["Equilibrado", "Creditos equilibrados para varios albumes, ediciones por prompt y pruebas de estilo."],
+              ["Premium", "Mas creditos para video, mejora de resolucion, albumes repetidos y salidas de alta calidad."]
+            ]
+          : [
+              ["Starter", aidreamcapes ? "Best for one quick fan-scene, game-day, or holiday album." : "Best for quick headshots, profile sets, and first photo albums."],
+              ["Popular", "Balanced credits for creating several albums, prompt edits, and style tests."],
+              ["Premium", "More credits for videos, upscale runs, repeat albums, and high-quality outputs."]
+            ]
+    };
+    return acc;
+  }, {
+    month: { eyebrow: "", title: "", body: "", items: [] },
+    year: { eyebrow: "", title: "", body: "", items: [] }
+  });
+  const sectionClassName = embedded
+    ? "relative mt-16 overflow-hidden border-t border-white/10 py-14 text-white"
+    : aidreamcapes
+      ? "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white"
+      : "relative overflow-hidden bg-[#111114] px-5 py-16 text-white";
+  const contentClassName = embedded ? "relative" : "relative mx-auto max-w-[var(--site-content-width)]";
+  return (
+    <section className={sectionClassName} data-dreamshoot-embedded-pricing={embedded ? "true" : undefined} id={sectionAnchor(section, "plans")}>
+      <div className="absolute inset-0">
+        <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(216,138,75,0.18),transparent_20%),radial-gradient(circle_at_78%_8%,rgba(251,243,228,0.9),transparent_28%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(255,210,158,0.12),transparent_18%)]"} />
+        <div className={embedded ? "absolute right-0 top-0 hidden h-full w-[50%] overflow-hidden xl:block" : "absolute right-0 top-0 hidden h-full w-[52%] overflow-hidden lg:block"}>
+          <StorefrontImage
+            alt={setting(section, "title", "Pricing background")}
+            className={aidreamcapes ? "h-full w-full object-cover object-center opacity-[0.16]" : "h-full w-full object-cover object-center opacity-[0.9]"}
+            fetchPriority="low"
+            sizes={embedded ? "50vw" : "52vw"}
+            src={pricingImage}
+          />
+          <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,14,0.92)_0%,rgba(5,7,14,0.62)_42%,rgba(5,7,14,0.32)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(17,17,20,0.86)_0%,rgba(17,17,20,0.48)_32%,rgba(17,17,20,0.12)_74%,rgba(17,17,20,0.24)_100%)]"} />
+        </div>
+        <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,14,0.98)_0%,rgba(5,7,14,0.96)_42%,rgba(5,7,14,0.68)_60%,rgba(5,7,14,0.18)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(12,12,14,0.98)_0%,rgba(12,12,14,0.96)_42%,rgba(12,12,14,0.68)_60%,rgba(12,12,14,0.18)_100%)]"} />
+      </div>
+      <div className={contentClassName}>
+        <div className="max-w-[48rem]">
+          <h2 className="text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
+            {setting(section, "title", "Simple, Transparent Pricing")}
+          </h2>
+          <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-white/72" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{isSpanishXbySite(site) ? (aidreamcapes ? "Elige el plan de creditos adecuado para crear albumes privados de fans y recuerdos festivos." : "Elige el plan de creditos adecuado para crear fotos privadas, retratos profesionales y albumes con IA.") : setting(section, "subtitle", aidreamcapes ? "Choose the right credit plan for private fan-scene and holiday albums." : "Choose the right credit plan for private AI shoot packages, headshots, fan photos, and creator portraits.")}</p>
+          {!aidreamcapes && !isSpanishXbySite(site) ? (
+            <p className="mt-3 text-sm leading-6 text-white/58">The average professional photoshoot can cost around $725. MyDreamShoots keeps plan selection simple with monthly and yearly subscriptions.</p>
+          ) : null}
+        </div>
+        <PricingBillingTable
+          aidreamcapes={aidreamcapes}
+          canShowBillingSwitch={canShowBillingSwitch}
+          initialBillingCycle={billingCycle}
+          locale={spanishXbyPricing ? "es" : "en"}
+          plans={pricingPlans}
+          sidePanels={sidePanels}
+        />
+      </div>
+    </section>
+  );
 }
 
 function SectionView({
@@ -7946,7 +8244,7 @@ function SectionView({
                   controls
                   playsInline
                   poster={image || undefined}
-                  preload="auto"
+                  preload="metadata"
                   src={videoUrl}
                 />
               ) : (
@@ -8113,10 +8411,10 @@ function SectionView({
     const blocks = sectionBlocks(section);
     const featureCards = blocks.filter((item) => item.type === "card");
     const exampleCards = blocks.filter((item) => item.type === "example");
-    const leadImage = mediaAssetUrl(site, setting(section, "leadImageUrl", firstImage(section) || fallbackHeroImages[0]));
-    const leadKicker = setting(section, "leadKicker", "from one upload");
-    const leadTitle = setting(section, "leadTitle", "Turn everyday uploads into a complete AI photo story.");
-    const leadSideBody = setting(section, "leadSideBody", "Choose a package, track the album, and receive finished images in a secure customer gallery.");
+    const _leadImage = mediaAssetUrl(site, setting(section, "leadImageUrl", firstImage(section) || fallbackHeroImages[0]));
+    const _leadKicker = setting(section, "leadKicker", "from one upload");
+    const _leadTitle = setting(section, "leadTitle", "Turn everyday uploads into a complete AI photo story.");
+    const _leadSideBody = setting(section, "leadSideBody", "Choose a package, track the album, and receive finished images in a secure customer gallery.");
     const featureItems = (featureCards.length
       ? featureCards
       : [
@@ -9699,7 +9997,7 @@ function SectionView({
           : []
       };
     });
-    const editorial = setting(section, "layout", "seo_grid") === "editorial";
+    const _editorial = setting(section, "layout", "seo_grid") === "editorial";
     const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/collections" ? "h1" : "h2") === "h1" ? "h1" : "h2";
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
     const selectedPacks = activeCreativePacksForCollectionSlug(creativePacks, selectedCollectionSlug);
@@ -10731,6 +11029,77 @@ function SectionView({
       imageProductRows.push(row.map((card) => ({ ...card, railKey: `${card.id}-image-product-${rowIndex}` })));
     }
     const videoRailCards = videoCards.map((card) => ({ ...card, railKey: `${card.id}-video` }));
+    const trustedLogoBlocks = sectionBlocks(section, "logo");
+    const showTrustedLogoIntro = settingBool(section, "showTrustedLogoIntro", false) && trustedLogoBlocks.length > 0;
+    const trustedLogoSplitIndex = trustedLogoBlocks.length > 1
+      ? Math.max(1, Math.min(trustedLogoBlocks.length - 1, Math.round(numberSetting(section, "trustedLogoSplitIndex", 15))))
+      : trustedLogoBlocks.length;
+    const trustedLogoRows = showTrustedLogoIntro
+      ? [trustedLogoBlocks.slice(0, trustedLogoSplitIndex), trustedLogoBlocks.slice(trustedLogoSplitIndex)].filter((row) => row.length > 0)
+      : [];
+    const trustedProof = showTrustedLogoIntro ? (
+      <div className="relative left-1/2 mb-12 w-[min(82vw,106rem)] -translate-x-1/2 border-b border-white/10 pb-10 md:mb-14 md:pb-14" data-dreamshoot-trusted-logos="true">
+        <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-[-0.03em] text-white [font-family:var(--site-title-font)]">
+          {setting(section, "trustedLogoTitle", "Trusted by creators worldwide")}
+        </h2>
+        <div className="mx-auto mt-7 max-w-[78rem] space-y-3 md:mt-8 md:space-y-3.5">
+          {trustedLogoRows.map((row, rowIndex) => (
+            <DreamshootShowcaseRail
+              className="dreamshoot-showcase-rail mx-auto w-full overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              key={`trusted_logo_row_${rowIndex}`}
+              reverse={rowIndex % 2 === 1}
+              speed={rowIndex % 2 === 1 ? 17 : 15}
+              trackClassName="dreamshoot-showcase-track flex w-max gap-3 px-0 md:gap-4"
+            >
+              {row.map((logo, index) => {
+                const logoName = blockValue(logo, "name", `Creator logo ${index + 1}`);
+                const logoImage = blockValue(logo, "imageUrl", "");
+                const logoSrc = logoImage ? cleanStorefrontImageSrc(resolveMediaAssetUrl(site, logoImage)) : "";
+                return (
+                  <div
+                    aria-label={logoName}
+                    className="flex aspect-square w-[min(27vw,6.2rem)] shrink-0 items-center justify-center overflow-hidden rounded-[8px] border border-white/55 bg-[#08090d] px-3 py-2.5 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.85)] sm:w-[5.7rem] md:w-[6.25rem]"
+                    key={instanceKey(logo, index, "trusted_logo")}
+                    title={logoName}
+                    {...xfcartBlockAttrs(logo, index, "trusted_logo")}
+                  >
+                    {logoSrc ? (
+                      <img
+                        alt={`${logoName} logo`}
+                        className="max-h-[3.25rem] max-w-[5.25rem] object-contain"
+                        loading="lazy"
+                        src={logoSrc}
+                      />
+                    ) : (
+                      <span className="text-center text-sm font-semibold leading-tight text-white/82">{logoName}</span>
+                    )}
+                  </div>
+                );
+              })}
+            </DreamshootShowcaseRail>
+          ))}
+        </div>
+        <div className="mx-auto mt-10 max-w-[38rem] text-center md:mt-12">
+          <h2 className="text-[clamp(1.45rem,1.75vw,1.9rem)] font-semibold leading-tight tracking-[-0.03em] text-white [font-family:var(--site-title-font)]">
+            {setting(section, "aboutTitle", "What is MyDreamShoots?")}
+          </h2>
+          <p className="mt-4 text-[clamp(0.84rem,0.88vw,0.94rem)] font-medium leading-[1.58] text-white/74">
+            {setting(section, "aboutBody", "MyDreamShoots is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.")}
+          </p>
+        </div>
+      </div>
+    ) : null;
+    const embeddedPricingSectionId = setting(section, "embeddedPricingSectionId");
+    const embeddedPricingSection = embeddedPricingSectionId ? renderContext.page.sections[embeddedPricingSectionId] : undefined;
+    const embeddedPricing = embeddedPricingSection?.type === "pricing_table" ? (
+      <PricingTableSectionView
+        embedded
+        products={products}
+        renderContext={renderContext}
+        section={embeddedPricingSection}
+        site={site}
+      />
+    ) : null;
     const showcaseIntro = (
       <div className="mt-14 grid gap-7 border-t border-white/10 pt-10 lg:grid-cols-[minmax(0,0.62fr)_minmax(18rem,0.38fr)] lg:items-end">
         <div>
@@ -10758,6 +11127,7 @@ function SectionView({
         <div className={aidreamcapes ? "absolute inset-0 opacity-34 [background-image:radial-gradient(circle_at_center,rgba(255,239,221,0.72)_1px,transparent_1px)] [background-size:86px_86px]" : "absolute inset-0 opacity-38 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.72)_1px,transparent_1px)] [background-size:86px_86px]"} />
         <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_0%_8%,rgba(216,138,75,0.22),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(255,209,155,0.13),transparent_34%),radial-gradient(circle_at_58%_88%,rgba(184,110,54,0.14),transparent_36%),linear-gradient(180deg,rgba(5,7,14,0)_0%,rgba(5,7,14,0.96)_100%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_0%_8%,rgba(22,220,240,0.18),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(236,75,221,0.16),transparent_34%),radial-gradient(circle_at_54%_90%,rgba(122,76,255,0.16),transparent_36%),linear-gradient(180deg,rgba(5,7,14,0)_0%,rgba(5,7,14,0.96)_100%)]"} />
         <div className="relative mx-auto max-w-[var(--site-content-width)]">
+          {trustedProof}
           <DreamshootShowcasePreview>
             <div className="mt-0">
               <div className="flex flex-wrap items-end justify-between gap-4">
@@ -10829,8 +11199,9 @@ function SectionView({
                 ))}
               </DreamshootShowcaseRail>
             </div>
-            {showcaseIntro}
           </DreamshootShowcasePreview>
+          {embeddedPricing}
+          {showcaseIntro}
         </div>
       </section>
     );
@@ -11730,203 +12101,13 @@ function SectionView({
   }
 
   if (section.type === "pricing_table") {
-    const aidreamcapes = isAidreamcapesSite(site);
-    const spanishXbyPricing = isSpanishXbySite(site);
-    const configuredFeaturedProductId = selectorIdSetting(section, "featuredProductId", "");
-    const activeSubscriptionProducts = products.filter((product) => product.type === "subscription" && product.status === "active");
-    const displayProducts = (activeSubscriptionProducts.length ? activeSubscriptionProducts : activeProducts(products)).slice(0, 3);
-    const billingCycle = billingCycleFromQuery(renderContext.query);
-    const canShowBillingSwitch = displayProducts.some((product) => productHasBillingCycle(product, "year"));
-    const featuredProductIdsByCycle = (["month", "year"] as const).reduce<Record<BillingCycle, string | undefined>>((acc, cycle) => {
-      acc[cycle] =
-        displayProducts.find((product) => product.id === configuredFeaturedProductId)?.id ??
-        displayProducts.find((product) => priceMetaBool(productPriceForBilling(product, cycle), "featured", false))?.id ??
-        displayProducts[0]?.id;
-      return acc;
-    }, { month: undefined, year: undefined });
-    const featuredPricesByCycle = (["month", "year"] as const).reduce<Record<BillingCycle, SiteProduct["prices"][number] | undefined>>((acc, cycle) => {
-      const featuredProduct = displayProducts.find((product) => product.id === featuredProductIdsByCycle[cycle]);
-      acc[cycle] = featuredProduct ? productPriceForBilling(featuredProduct, cycle) : undefined;
-      return acc;
-    }, { month: undefined, year: undefined });
-    const pricingPlans = displayProducts.map((product) => {
-      const prices = (["month", "year"] as const).reduce<Partial<Record<BillingCycle, {
-        id: string;
-        formattedAmount: string;
-        formattedOriginalAmount: string;
-        formattedEquivalentMonthly: string;
-        periodLabel: string;
-        planSubtitle: string;
-        discountLabel: string;
-        features: string[];
-        featured: boolean;
-        bestValue: boolean;
-        badgeLabel: string;
-        buttonLabel: string;
-        cartHref: string;
-      }>>>((acc, cycle) => {
-        const price = productPriceForBilling(product, cycle);
-        if (!price) return acc;
-        const occasionCount = priceMetaNumber(price, aidreamcapes ? "occasionCount" : "destinationCount", product.name === "Deluxe" ? 999 : product.name === "Premium" ? 4 : 2);
-        const featured = product.id === featuredProductIdsByCycle[cycle];
-        const originalAmountCents = priceMetaNumber(price, "originalAmountCents", 0);
-        const discountLabel = priceMetaString(price, "discountLabel", "");
-        const yearlyEquivalentMonthlyCents = priceMetaNumber(price, "yearlyEquivalentMonthlyCents", 0);
-        const bestValue = priceMetaBool(price, "bestValue", false);
-        const planSubtitle = priceMetaString(
-          price,
-          "planSubtitle",
-          spanishXbyPricing
-            ? aidreamcapes
-              ? "Creditos para probar albumes privados de fans y recuerdos festivos."
-              : "Creditos para probar perfiles, retratos y albumes privados."
-            : product.name === "Starter"
-              ? "Start with one focused headshot, beauty, or profile set"
-              : product.name === "Pro" || product.name === "Popular"
-                ? "Compare several package styles with room for reruns"
-                : "More credits for premium packs, video add-ons, and repeat campaigns"
-        );
-        const defaultFeatures = spanishXbyPricing ? [
-          localizedPriceCreditsLabel(site, price),
-          localizedCreditsImageEstimateLabel(site, price),
-          aidreamcapes ? "Crea albumes privados de fans y recuerdos festivos" : "Crea albumes privados despues de generar",
-          aidreamcapes ? "Editor de albumes con prompts" : "Editor de fotos con prompts",
-          "Filtros especiales con IA",
-          "Crea fotos escribiendo prompts en segundos",
-          "Crea videos con IA",
-          "Mejora magica para imagenes de alta resolucion",
-          "Sin marca de agua",
-          ...(product.name === "Premium" || product.name === "Deluxe" ? ["Salidas 4K de alta calidad"] : []),
-          ...(occasionCount >= 999 ? ["Direcciones de estilo ilimitadas"] : [])
-        ] : [
-          localizedPriceCreditsLabel(site, price),
-          localizedCreditsImageEstimateLabel(site, price),
-          "Create private photo albums after generation completes",
-          aidreamcapes ? "Fan and holiday album editor with prompts" : "AI photo editor with prompts",
-          "Special AI photo filters",
-          "Create photos by writing prompts in seconds",
-          "Create AI videos",
-          "Magic Upscaler for high-res images",
-          "No watermark",
-          ...(product.name === "Premium" || product.name === "Deluxe" ? ["4K Ultra-High quality outputs"] : []),
-          ...(occasionCount >= 999 ? ["Unlimited style directions"] : [])
-        ].filter(Boolean);
-        const featureLines = spanishXbyPricing ? [] : priceMetaLines(price, "featuresText");
-        const features = featureLines.length ? featureLines : defaultFeatures;
-        const badgeLabel = spanishXbyPricing ? bestValue ? "Mejor valor" : setting(section, "featuredBadgeLabel", "Mas elegido") : priceMetaString(price, "badgeLabel", bestValue ? "Best Value" : setting(section, "featuredBadgeLabel", "Most Popular"));
-        acc[cycle] = {
-          id: price.id,
-          formattedAmount: formatCurrency(price.amountCents, price.currency),
-          formattedOriginalAmount: originalAmountCents > price.amountCents ? formatCurrency(originalAmountCents, price.currency) : "",
-          formattedEquivalentMonthly: price.interval === "year" && yearlyEquivalentMonthlyCents > 0 ? formatCurrency(yearlyEquivalentMonthlyCents, price.currency) : "",
-          periodLabel: pricePeriodLabel(price),
-          planSubtitle,
-          discountLabel,
-          features,
-          featured,
-          bestValue,
-          badgeLabel,
-	          buttonLabel: priceMetaString(price, "buttonLabel", isSpanishXbySite(site) ? "Seleccionar plan" : "Select plan"),
-          cartHref: publicCartHref(site, product, price)
-        };
-        return acc;
-      }, {});
-      return {
-        id: product.id,
-        name: product.name,
-        prices
-      };
-    });
-    const pricingImage = mediaAssetUrl(
-      site,
-      setting(
-        section,
-        "backgroundImage",
-        aidreamcapes
-          ? "/assets/sites/site_aidreamcapes/creative-packs/mountain-trails.webp?v=20260630webp"
-          : "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
-      )
-    );
-    const sidePanels = (["month", "year"] as const).reduce<Record<BillingCycle, {
-      eyebrow: string;
-      title: string;
-      body: string;
-      items: Array<readonly [string, string]>;
-    }>>((acc, cycle) => {
-      const featuredPrice = featuredPricesByCycle[cycle];
-      const configuredSideItems = (spanishXbyPricing ? [] : priceMetaLines(featuredPrice, "sidePanelItemsText"))
-        .map((line) => {
-          const [label, ...detailParts] = line.split("|").map((part) => part.trim());
-          return label && detailParts.join(" ").trim() ? [label, detailParts.join(" | ")] as const : undefined;
-        })
-        .filter((item): item is readonly [string, string] => Boolean(item));
-      acc[cycle] = {
-        eyebrow: spanishXbyPricing ? aidreamcapes ? "Por que elegir creditos de ruta" : "Por que elegir creditos" : priceMetaString(featuredPrice, "sidePanelEyebrow", setting(section, "sidePanelEyebrow", "Why people subscribe")),
-        title: spanishXbyPricing ? aidreamcapes ? "Creditos claros para albumes de ocasion flexibles." : "Creditos claros para paquetes privados flexibles." : priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")),
-        body: spanishXbyPricing
-          ? aidreamcapes
-            ? "Genera albumes privados de fans y recuerdos festivos tras revisar creditos y mantener saldo visible."
-            : "Genera albumes privados tras revisar creditos, mantener saldo visible y recargar solo cuando necesitas mas sesiones."
-          : priceMetaString(
-              featuredPrice,
-              "sidePanelBody",
-              setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
-            ),
-        items: configuredSideItems.length
-          ? configuredSideItems
-          : spanishXbyPricing
-            ? [
-                [aidreamcapes ? "Inicial" : "Inicio", aidreamcapes ? "Ideal para un album de fan, partido o recuerdo festivo." : "Ideal para retratos profesionales, perfiles y primeros albumes."],
-                ["Equilibrado", "Creditos equilibrados para varios albumes, ediciones por prompt y pruebas de estilo."],
-                ["Premium", "Mas creditos para video, mejora de resolucion, albumes repetidos y salidas de alta calidad."]
-              ]
-            : [
-                ["Starter", aidreamcapes ? "Best for one quick fan-scene, game-day, or holiday album." : "Best for quick headshots, profile sets, and first photo albums."],
-                ["Popular", "Balanced credits for creating several albums, prompt edits, and style tests."],
-                ["Premium", "More credits for videos, upscale runs, repeat albums, and high-quality outputs."]
-            ]
-      };
-      return acc;
-    }, {
-      month: { eyebrow: "", title: "", body: "", items: [] },
-      year: { eyebrow: "", title: "", body: "", items: [] }
-    });
     return (
-      <section className={aidreamcapes ? "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white" : "relative overflow-hidden bg-[#111114] px-5 py-16 text-white"} id={sectionAnchor(section, "plans")}>
-        <div className="absolute inset-0">
-          <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(216,138,75,0.18),transparent_20%),radial-gradient(circle_at_78%_8%,rgba(251,243,228,0.9),transparent_28%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(255,210,158,0.12),transparent_18%)]"} />
-          <div className="absolute right-0 top-0 hidden h-full w-[52%] overflow-hidden lg:block">
-            <StorefrontImage
-              alt={setting(section, "title", "Pricing background")}
-              className={aidreamcapes ? "h-full w-full object-cover object-center opacity-[0.16]" : "h-full w-full object-cover object-center opacity-[0.9]"}
-              fetchPriority="low"
-              sizes="52vw"
-              src={pricingImage}
-            />
-            <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,14,0.92)_0%,rgba(5,7,14,0.62)_42%,rgba(5,7,14,0.32)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(17,17,20,0.86)_0%,rgba(17,17,20,0.48)_32%,rgba(17,17,20,0.12)_74%,rgba(17,17,20,0.24)_100%)]"} />
-          </div>
-          <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,14,0.98)_0%,rgba(5,7,14,0.96)_42%,rgba(5,7,14,0.68)_60%,rgba(5,7,14,0.18)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(12,12,14,0.98)_0%,rgba(12,12,14,0.96)_42%,rgba(12,12,14,0.68)_60%,rgba(12,12,14,0.18)_100%)]"} />
-        </div>
-        <div className="relative mx-auto max-w-[var(--site-content-width)]">
-          <div className="max-w-[48rem]">
-            <h2 className="text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
-              {setting(section, "title", "Simple, Transparent Pricing")}
-            </h2>
-            <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-white/72" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{isSpanishXbySite(site) ? (aidreamcapes ? "Elige el plan de creditos adecuado para crear albumes privados de fans y recuerdos festivos." : "Elige el plan de creditos adecuado para crear fotos privadas, retratos profesionales y albumes con IA.") : setting(section, "subtitle", aidreamcapes ? "Choose the right credit plan for private fan-scene and holiday albums." : "Choose the right credit plan for private AI shoot packages, headshots, fan photos, and creator portraits.")}</p>
-            {!aidreamcapes && !isSpanishXbySite(site) ? (
-              <p className="mt-3 text-sm leading-6 text-white/58">The average professional photoshoot can cost around $725. MyDreamShoots keeps plan selection simple with monthly and yearly subscriptions.</p>
-            ) : null}
-          </div>
-          <PricingBillingTable
-            aidreamcapes={aidreamcapes}
-            canShowBillingSwitch={canShowBillingSwitch}
-            initialBillingCycle={billingCycle}
-            locale={spanishXbyPricing ? "es" : "en"}
-            plans={pricingPlans}
-            sidePanels={sidePanels}
-          />
-        </div>
-      </section>
+      <PricingTableSectionView
+        products={products}
+        renderContext={renderContext}
+        section={section}
+        site={site}
+      />
     );
   }
 
@@ -14013,6 +14194,136 @@ function SectionView({
   }
 
   if (section.type === "faq") {
+    const visualFaq = setting(section, "layout", "default") === "visual_faq"
+      && !isSpanishXbySite(site)
+      && (isMyDreamShootsProfileSite(site) || isAidreamcapesSite(site));
+    if (visualFaq) {
+      const list = settingListBlocks(
+        section,
+        "items",
+        ["Can I review the page before it changes for customers?|Yes. Draft edits can be reviewed first, then published when ready."],
+        (item, index) => {
+          const [question, answer] = parseFaq(item);
+          return { id: `legacy_faq_${index}`, type: "faq_item", settings: { question, answer } };
+        }
+      );
+      const aidreamcapesFaq = isAidreamcapesSite(site);
+      const visualSurface = aidreamcapesFaq ? "bg-[#1d1511]" : "bg-[#080b12]";
+      const visualPanel = aidreamcapesFaq ? "bg-[#2a1d16]" : "bg-[#111827]";
+      const visualMuted = aidreamcapesFaq ? "text-[#ead8c9]/70" : "text-slate-300/70";
+      const fallbackImage = aidreamcapesFaq
+        ? "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp"
+        : "/assets/dreamshoot/frames/faq-intro-portrait.png";
+      const configuredImage = setting(section, "imageUrl", fallbackImage);
+      const featureImage = mediaAssetUrl(site, configuredImage || fallbackImage);
+      const featureAlt = setting(
+        section,
+        "imageAlt",
+        aidreamcapesFaq ? "Aidreamcapes private occasion album example" : "MyDreamShoots private AI photo example"
+      );
+      const parseFaqLinks = (value: string) => listLines(value)
+        .map((entry) => {
+          const separator = entry.indexOf("::");
+          if (separator < 1) return undefined;
+          const label = entry.slice(0, separator).trim();
+          const href = entry.slice(separator + 2).trim();
+          if (!label || !/^[/#]/.test(href)) return undefined;
+          return { label, href };
+        })
+        .filter((entry): entry is { label: string; href: string } => Boolean(entry));
+      const renderRichAnswer = (item: SectionBlockInstance, index: number) => {
+        const answer = blockValue(item, "answer", "");
+        const body = listLines(blockValue(item, "body", ""));
+        const bullets = listLines(blockValue(item, "bulletList", ""));
+        const links = parseFaqLinks(blockValue(item, "linkList", ""));
+        const inlineImage = blockValue(item, "imageUrl", "");
+        const inlineImageSrc = inlineImage ? mediaAssetUrl(site, inlineImage) : "";
+        const inlineImageAlt = manualBlockImageAlt(item, `${headingBlockValue(item, "question", `FAQ item ${index + 1}`)} example`, { src: inlineImage });
+        return (
+          <div className={`border-t border-white/10 ${visualPanel} px-5 py-5 sm:px-6 sm:py-6`} data-faq-answer="rich">
+            {answer ? <p className={`max-w-[58rem] text-[0.96rem] leading-7 ${visualMuted}`}>{answer}</p> : null}
+            {body.map((paragraph, paragraphIndex) => (
+              <p className={`max-w-[58rem] text-[0.96rem] leading-7 ${paragraphIndex === 0 && !answer ? "" : "mt-4"} ${visualMuted}`} key={`${paragraph}_${paragraphIndex}`}>
+                {paragraph}
+              </p>
+            ))}
+            {bullets.length ? (
+              <ul className={`mt-5 grid gap-2 text-sm leading-6 ${visualMuted}`}>
+                {bullets.map((bullet, bulletIndex) => (
+                  <li className="flex gap-3" key={`${bullet}_${bulletIndex}`}>
+                    <span aria-hidden="true" className={aidreamcapesFaq ? "mt-[0.55rem] h-1.5 w-1.5 shrink-0 rounded-full bg-[#e2a36d]" : "mt-[0.55rem] h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-300"} />
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {links.length ? (
+              <nav aria-label="Related FAQ links" className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+                {links.map((link) => (
+                  <Link
+                    className={aidreamcapesFaq ? "inline-flex items-center gap-1.5 text-sm font-semibold text-[#f0b27e] underline decoration-[#f0b27e]/35 underline-offset-4 transition hover:text-white" : "inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-200 underline decoration-cyan-200/35 underline-offset-4 transition hover:text-white"}
+                    href={hrefFor(site, link.href)}
+                    key={`${link.label}_${link.href}`}
+                  >
+                    {link.label}
+                    <ChevronRight className="h-3.5 w-3.5" strokeWidth={2} />
+                  </Link>
+                ))}
+              </nav>
+            ) : null}
+            {inlineImageSrc ? (
+              <div className="mt-6 max-w-[34rem] overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-2" data-faq-item-image>
+                <img className="block h-auto w-full" src={inlineImageSrc} alt={inlineImageAlt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+              </div>
+            ) : null}
+          </div>
+        );
+      };
+      return (
+        <section className={`${visualSurface} px-5 py-16 text-white md:py-20`} data-visual-faq="true" id={sectionAnchor(section, "faq")}>
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <div className="mx-auto max-w-4xl text-center">
+              <p className={aidreamcapesFaq ? "font-mono text-[11px] uppercase tracking-[0.2em] text-[#e2a36d]/75" : "font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-200/75"}>
+                {setting(section, "eyebrow", "Questions before upload")}
+              </p>
+              <h2 className="mt-4 text-4xl font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)] md:text-6xl">{sectionHeading(section, "FAQ")}</h2>
+              <p className={`mx-auto mt-5 max-w-3xl text-base leading-8 ${visualMuted}`}>{setting(section, "subtitle", "Answers to the questions customers ask before creating a private photo set.")}</p>
+            </div>
+            <div className="mt-12 grid items-start gap-7 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-9">
+              <div className="lg:sticky lg:top-28" data-faq-feature-image>
+                <div className="overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-2 shadow-[0_32px_90px_-54px_rgba(0,0,0,0.9)]">
+                  {featureImage ? <img className="block h-auto w-full" src={featureImage} alt={featureAlt} loading="eager" decoding="async" /> : null}
+                </div>
+                <p className={`mt-4 max-w-md text-sm leading-6 ${visualMuted}`}>
+                  {aidreamcapesFaq ? "Original occasion directions, approved source photos, and private gallery delivery in one account." : "A guided place to compare AI photo directions, review credits, and keep finished work organized."}
+                </p>
+              </div>
+              <div className="min-w-0 overflow-hidden rounded-[8px] border border-white/10 bg-white/[0.035]" data-faq-accordion>
+                {list.map((item, index) => {
+                  const question = headingBlockValue(item, "question", `Question ${index + 1}`);
+                  return (
+                    <details
+                      className="group border-white/10 first:border-t-0 [&+details]:border-t"
+                      data-faq-index={index}
+                      data-faq-open={index === 0 ? "true" : "false"}
+                      key={instanceKey(item, index, "visual_faq")}
+                      open={index === 0}
+                      {...xfcartBlockAttrs(item, index, "visual_faq")}
+                    >
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-5 px-5 py-5 text-left transition hover:bg-white/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-200 sm:px-6">
+                        <h3 className="min-w-0 text-[1rem] font-semibold leading-6 text-white sm:text-[1.05rem]">{question}</h3>
+                        <ChevronRight aria-hidden="true" className="h-5 w-5 shrink-0 text-white/55 transition duration-200 group-open:rotate-90 group-open:text-white" strokeWidth={1.8} />
+                      </summary>
+                      {renderRichAnswer(item, index)}
+                    </details>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
     const list = settingListBlocks(
       section,
       "items",

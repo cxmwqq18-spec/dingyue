@@ -1,24 +1,33 @@
 #!/usr/bin/env node
 import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
+import Module from "node:module";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
+import createJiti from "jiti";
 
 const repoRoot = process.cwd();
 const statePath = path.join(repoRoot, "data", "platform-state.json");
+const sourceRoot = path.join(repoRoot, "src");
+const originalResolveFilename = Module._resolveFilename;
+Module._resolveFilename = function resolveFilename(request, ...args) {
+  const resolvedRequest = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request;
+  return originalResolveFilename.call(this, resolvedRequest, ...args);
+};
+const jiti = createJiti(import.meta.url);
+const { dreamshootAiStudioTemplatesForSite } = jiti("../src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const homeOrderByStore = {
   mydreamshoots: [
     "hero_1",
+    "generation_showcase_1",
     "featured_pack_1",
     "featured_christmas_1",
     "featured_thanksgiving_1",
-    "generation_showcase_1",
     "tutorial_video_1",
     "tutorial_video_2",
     "mobile_video_1",
     "package_catalog_1",
     "proof_1",
-    "pricing_1",
     "faq_1",
     "conversion_1",
     "brand_strip_1"
@@ -88,6 +97,40 @@ const myAssets = {
   galleryHoliday: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1"
 };
 
+const trustedLogoAssetBase = "/assets/dreamshoot/generated/trusted-logos";
+const mydreamshootsAboutBody = "MyDreamShoots is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.";
+const mydreamshootsTrustedLogoBlocks = [
+  block("trusted_logo_dior", "logo", { name: "Dior", imageUrl: `${trustedLogoAssetBase}/dior.png`, badge: "Creator proof" }),
+  block("trusted_logo_green_wedding_shoes", "logo", { name: "Green Wedding Shoes", imageUrl: `${trustedLogoAssetBase}/green-wedding-shoes.png`, badge: "Creator proof" }),
+  block("trusted_logo_weddingwire", "logo", { name: "WeddingWire", imageUrl: `${trustedLogoAssetBase}/weddingwire.png`, badge: "Creator proof" }),
+  block("trusted_logo_azazie", "logo", { name: "Azazie", imageUrl: `${trustedLogoAssetBase}/azazie.png`, badge: "Creator proof" }),
+  block("trusted_logo_bodas", "logo", { name: "Bodas", imageUrl: `${trustedLogoAssetBase}/bodas.png`, badge: "Creator proof" }),
+  block("trusted_logo_bodasnet", "logo", { name: "Bodas.net", imageUrl: `${trustedLogoAssetBase}/bodasnet.png`, badge: "Creator proof" }),
+  block("trusted_logo_bonprix", "logo", { name: "Bonprix", imageUrl: `${trustedLogoAssetBase}/bonprix.png`, badge: "Creator proof" }),
+  block("trusted_logo_brides", "logo", { name: "Brides", imageUrl: `${trustedLogoAssetBase}/brides.png`, badge: "Creator proof" }),
+  block("trusted_logo_chanel", "logo", { name: "Chanel", imageUrl: `${trustedLogoAssetBase}/chanel.png`, badge: "Creator proof" }),
+  block("trusted_logo_davids", "logo", { name: "David's", imageUrl: `${trustedLogoAssetBase}/davids.png`, badge: "Creator proof" }),
+  block("trusted_logo_linkedin", "logo", { name: "LinkedIn", imageUrl: `${trustedLogoAssetBase}/linkedin.png`, badge: "Creator proof" }),
+  block("trusted_logo_macys", "logo", { name: "Macy's", imageUrl: `${trustedLogoAssetBase}/macys.png`, badge: "Creator proof" }),
+  block("trusted_logo_marks_and_spencer", "logo", { name: "Marks & Spencer", imageUrl: `${trustedLogoAssetBase}/marksandspencer.png`, badge: "Creator proof" }),
+  block("trusted_logo_next", "logo", { name: "Next", imageUrl: `${trustedLogoAssetBase}/nextcouk.jpg`, badge: "Creator proof" }),
+  block("trusted_logo_oscar_de_la_renta", "logo", { name: "Oscar de la Renta", imageUrl: `${trustedLogoAssetBase}/oscardelarenta.jpg`, badge: "Creator proof" }),
+  block("trusted_logo_pinterest", "logo", { name: "Pinterest", imageUrl: `${trustedLogoAssetBase}/pinterest.png`, badge: "Creator proof" }),
+  block("trusted_logo_pronovias", "logo", { name: "Pronovias", imageUrl: `${trustedLogoAssetBase}/pronovias.jpg`, badge: "Creator proof" }),
+  block("trusted_logo_shein", "logo", { name: "SHEIN", imageUrl: `${trustedLogoAssetBase}/shein.png`, badge: "Creator proof" }),
+  block("trusted_logo_style_me_pretty", "logo", { name: "Style Me Pretty", imageUrl: `${trustedLogoAssetBase}/style-me-pretty.png`, badge: "Creator proof" }),
+  block("trusted_logo_starbucks", "logo", { name: "Starbucks", imageUrl: `${trustedLogoAssetBase}/starbucks.jpeg`, badge: "Creator proof" }),
+  block("trusted_logo_the_knot", "logo", { name: "The Knot", imageUrl: `${trustedLogoAssetBase}/the-knot.png`, badge: "Creator proof" }),
+  block("trusted_logo_the_knot_weddings", "logo", { name: "The Knot Weddings", imageUrl: `${trustedLogoAssetBase}/theknot2.png`, badge: "Creator proof" }),
+  block("trusted_logo_vera_wang", "logo", { name: "Vera Wang", imageUrl: `${trustedLogoAssetBase}/verawang.png`, badge: "Creator proof" }),
+  block("trusted_logo_vinted", "logo", { name: "Vinted", imageUrl: `${trustedLogoAssetBase}/vinted.png`, badge: "Creator proof" }),
+  block("trusted_logo_vogue", "logo", { name: "Vogue", imageUrl: `${trustedLogoAssetBase}/vogue.svg`, badge: "Creator proof" }),
+  block("trusted_logo_zalando", "logo", { name: "Zalando", imageUrl: `${trustedLogoAssetBase}/zalando.png`, badge: "Creator proof" }),
+  block("trusted_logo_zara", "logo", { name: "Zara", imageUrl: `${trustedLogoAssetBase}/zara.png`, badge: "Creator proof" }),
+  block("trusted_logo_zexy", "logo", { name: "Zexy", imageUrl: `${trustedLogoAssetBase}/zexy.svg`, badge: "Creator proof" }),
+  block("trusted_logo_zola", "logo", { name: "Zola", imageUrl: `${trustedLogoAssetBase}/zola.png`, badge: "Creator proof" })
+];
+
 const aidreamAssets = {
   hero: versioned("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp", aidreamAssetVersion),
   fan: versioned("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp", aidreamAssetVersion),
@@ -109,6 +152,12 @@ const stores = [
     packageSettings: null,
     generationSettings: {
       anchor: "generated-showcase",
+      showTrustedLogoIntro: true,
+      trustedLogoTitle: "Trusted by creators worldwide",
+      aboutTitle: "What is MyDreamShoots?",
+      aboutBody: mydreamshootsAboutBody,
+      embeddedPricingSectionId: "pricing_1",
+      trustedLogoSplitIndex: 15,
       eyebrow: "Customer-created examples",
       title: "Browse image and video themes customers have already created.",
       subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
@@ -120,6 +169,7 @@ const stores = [
       videoSlugs: "cinematic-portrait-motion|social-profile-clip|creator-scene-motion|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
       videoItemLimit: 8
     },
+    generationBlocks: mydreamshootsTrustedLogoBlocks,
     featuredPack: section("dreamshoot_featured_pack", {
       anchor: "featured-pack",
       label: "Recommended seasonal pack",
@@ -155,8 +205,8 @@ const stores = [
       eyebrow: "How it works",
       title: "Watch the private photo package workflow.",
       subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260805hug1",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260805hug1",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-55s.jpg?v=20260805i2vselect3",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4?v=20260805i2vselect3",
       videoBadge: "Private gallery workflow",
       playLabel: "Watch the MyDreamShoots workflow"
     }),
@@ -165,8 +215,8 @@ const stores = [
       eyebrow: "AI image tutorial",
       title: "Create an AI photo set from source photos.",
       subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260805valentine1",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260805valentine1",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260806chooserfix1",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260806chooserfix1",
       videoBadge: "AI photo generation",
       playLabel: "Watch the MyDreamShoots AI image tutorial"
     }),
@@ -177,17 +227,17 @@ const stores = [
       subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
       imageUrl: myAssets.flowPrivateAlbumWorkspace,
       imageAlt: "MyDreamShoots private album workspace preview",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260805hug1",
-      videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260805hug1",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4?v=20260806mobile55a",
+      videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg?v=20260806mobile55a",
       videoBadge: "Mobile workflow",
       playLabel: "Watch the video tutorial",
       leftTitle: "AI image tutorial",
-      leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260804mobile1",
-      leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260804mobile1",
+      leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260806chooserfix1",
+      leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260806chooserfix1",
       leftPlayLabel: "Watch the image tutorial",
       rightTitle: "AI video tutorial",
-      rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260805hug1",
-      rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260805hug1",
+      rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4?v=20260806mobile55a",
+      rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg?v=20260806mobile55a",
       rightPlayLabel: "Watch the video tutorial",
       placeholderTitle: "Mobile tutorial coming soon",
       placeholderBody: "The vertical mobile walkthrough will appear here when the final file is ready."
@@ -383,53 +433,16 @@ const stores = [
 ];
 
 function mydreamshootsFaqSection() {
-  return section("faq", {
-    anchor: "faq",
-    eyebrow: "Questions before upload",
-    title: "FAQ",
-    subtitle: "Answers to photo uploads, AI video examples, package themes, credits, privacy, refunds, subscriptions, quality, and gallery delivery.",
-    journeyTitle: "Your photo flow",
-    journeyTitles: "Upload|Choose Pack|Generate|Download",
-    journeyDescriptions: "Add clean source photos.|Pick a scene or style.|AI builds your set.|Download from the private gallery."
-  }, [
-    block("faq_free", "faq_item", { question: "Can I try MyDreamShoots for free?", answer: "Some lightweight tools can be free. Private model creation, premium photo packages, and AI video requests require credits because they use dedicated generation capacity." }),
-    block("faq_credits", "faq_item", { question: "When are credits used?", answer: "The credit cost is shown before each generation. Credits are reserved when a request starts, used after successful delivery, and returned when a failed request releases the reservation." }),
-    block("faq_private", "faq_item", { question: "Are my uploaded photos private?", answer: "Yes. Source photos, generation jobs, albums, orders, and credits stay connected to your signed-in MyDreamShoots account and are not public by default." }),
-    block("faq_uploads", "faq_item", { question: "What photos should I upload?", answer: "Recent, clear, high-quality phone photos work best. Use different angles, expressions, lighting, and outfits so the private workflow has enough visual range." }),
-    block("faq_videos", "faq_item", { question: "Can I create AI videos too?", answer: "Yes. Some themes include short AI video examples or video add-ons. The request screen shows source requirements and credit cost before video generation begins." }),
-    block("faq_categories", "faq_item", { question: "Why are there so many package categories?", answer: "Each category represents a different output goal such as fan photos, VIP-style portraits, headshots, creator images, Christmas cards, Thanksgiving albums, Halloween portraits, or seasonal group photos." }),
-    block("faq_faces", "faq_item", { question: "Will the images keep my facial features?", answer: "Results depend on source photo quality, lighting, pose, and model behavior. Clear source photos usually help the generated images stay more consistent, but AI output can vary." }),
-    block("faq_safety", "faq_item", { question: "Can I use celebrity, athlete, or brand references?", answer: "Do not upload or request content that copies real celebrities, athletes, public figures, official marks, logos, trademarks, or protected materials without permission." }),
-    block("faq_delete", "faq_item", { question: "Can I delete my photos?", answer: "You can request deletion of uploaded or generated photos from your account. Some billing, security, and dispute records may be retained where required." }),
-    block("faq_refunds", "faq_item", { question: "What is the refund policy?", answer: "Refund eligibility follows the site policy and checkout terms. Credits already spent on successful generations are generally not refundable, while failed requests can return reserved credits according to request status." }),
-    block("faq_cancel", "faq_item", { question: "What happens if I cancel a plan?", answer: "Access to previous albums follows the account and gallery policy. New package requests may require an active plan or enough available credits." }),
-    block("faq_commercial", "faq_item", { question: "Can I use results for business or social content?", answer: "Many customers use finished images for profiles, social posts, cards, campaigns, or creator content. Review the output, rights, and platform rules before publishing or selling anything." })
-  ]);
+  return clone(dreamshootAiStudioTemplatesForSite().home.sections.faq_1);
 }
 
 function aidreamcapesFaqSection() {
-  return section("faq", {
-    anchor: "faq",
-    eyebrow: "Questions before upload",
-    title: "FAQ",
-    subtitle: "Answers to approved source photos, fan-scene albums, game-day group portraits, holiday albums, credits, privacy, refunds, and gallery delivery.",
-    journeyTitle: "Your private album flow",
-    journeyTitles: "Upload|Choose Album|Review Credits|Download",
-    journeyDescriptions: "Add approved source photos.|Pick a fan or holiday direction.|Confirm the credit cost.|Download from your gallery."
-  }, [
-    block("aidream_faq_sources", "faq_item", { question: "What photos can I upload?", answer: "Upload only photos you own or have permission to use. Clear portraits and group photos work best for Aidreamcapes fan-scene and holiday albums." }),
-    block("aidream_faq_likeness", "faq_item", { question: "Can Aidreamcapes recreate a real celebrity or athlete?", answer: "No. Aidreamcapes can create original fan-scene, game-day, premiere, and holiday atmosphere, but it does not promise or support copying real celebrities, real athletes, public figures, official marks, brand logos, trademarks, or protected materials." }),
-    block("aidream_faq_credits", "faq_item", { question: "When are credits used?", answer: "The album cost is shown before generation. Credits are reserved when a private request starts, used after successful delivery, or released when a failed request returns the reservation." }),
-    block("aidream_faq_private", "faq_item", { question: "Are my uploaded photos private?", answer: "Yes. Source photos, album briefs, generation jobs, finished images, orders, and credits stay connected to your signed-in Aidreamcapes account and are not public by default." }),
-    block("aidream_faq_delete", "faq_item", { question: "Can I delete my photos?", answer: "You can request deletion of uploaded or generated photos from your account. Some billing, security, and dispute records may be retained where required." }),
-    block("aidream_faq_refunds", "faq_item", { question: "What is the refund policy?", answer: "Refund eligibility follows the site policy and checkout terms. Credits spent on successful generations are generally not refundable, while failed requests can return reserved credits according to request status." }),
-    block("aidream_faq_videos", "faq_item", { question: "Can I make AI videos from an album?", answer: "Some occasion themes include short motion examples or video add-ons. The generation screen explains the source-photo needs and credit cost before any video request starts." }),
-    block("aidream_faq_categories", "faq_item", { question: "Which album categories are available?", answer: "Aidreamcapes focuses on fan-scene albums, game-day group portraits, premiere-inspired portraits, Christmas group albums, Thanksgiving memory sets, Halloween party portraits, and seasonal celebration photos." }),
-    block("aidream_faq_group_photos", "faq_item", { question: "Can I create group albums?", answer: "Yes. Group source photos can work well for game-day, Christmas, Thanksgiving, Halloween, and seasonal celebration albums when every person in the upload is approved for that use." }),
-    block("aidream_faq_quality", "faq_item", { question: "What affects final quality?", answer: "Lighting, focus, face visibility, pose variety, source-photo resolution, and the chosen album direction can all affect results. AI output can vary, so review finished images before sharing." }),
-    block("aidream_faq_commercial", "faq_item", { question: "Can I use the images for business or social content?", answer: "Many customers use finished images for personal pages, creator posts, seasonal shops, or event previews. You are responsible for checking rights, platform rules, and any required AI disclosure before publishing." }),
-    block("aidream_faq_cancel", "faq_item", { question: "What happens if I cancel a plan?", answer: "Access to previous albums follows the account and gallery policy. New album requests may require an active plan or enough available credits." })
-  ]);
+  return clone(dreamshootAiStudioTemplatesForSite({
+    slug: "aidreamcapes",
+    name: "Aidreamcapes",
+    primaryDomain: "www.aidreamcapes.com",
+    branding: { logoText: "Aidreamcapes" }
+  }).home.sections.faq_1);
 }
 
 async function readState() {
@@ -477,7 +490,7 @@ function applyStoreSpecificExistingSections(pageJson, store) {
     ...(sections.generation_showcase_1 ?? { type: "dreamshoot_generation_showcase", blocks: [] }),
     type: "dreamshoot_generation_showcase",
     settings: generationSettings,
-    blocks: []
+    blocks: clone(store.generationBlocks ?? [])
   };
   sections.tutorial_video_1 = clone(store.tutorial);
   sections.tutorial_video_2 = clone(store.imageTutorial);

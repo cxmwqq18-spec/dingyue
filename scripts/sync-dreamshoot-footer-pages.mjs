@@ -50,7 +50,7 @@ const brandProfiles = [
     contactDescription:
       "Contact MyDreamShoots for AI photo package support, sales questions, account help, billing review, privacy requests, or address information.",
     footerLinks: [
-      ["Browse packages", "/collections", "product"],
+      ["Headshot Generator", "/collections/headshots", "product"],
       ["Tools", "/tools", "product"],
       ["How it works", "/workflow", "product"],
       ["Pricing", "/pricing", "product"],
@@ -151,8 +151,8 @@ function workflowTutorialSections(profile) {
     : {
         title: "Watch the private photo package workflow.",
         subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-        imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260805hug1",
-        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260805hug1",
+        imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-55s.jpg?v=20260805i2vselect3",
+        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4?v=20260805i2vselect3",
         videoBadge: "Private gallery workflow",
         playLabel: "Watch the MyDreamShoots workflow"
       };
@@ -168,8 +168,8 @@ function workflowTutorialSections(profile) {
     : {
         title: "Create an AI photo set from source photos.",
         subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-        imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260805valentine1",
-        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260805valentine1",
+        imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260806chooserfix1",
+        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260806chooserfix1",
         videoBadge: "AI photo generation",
         playLabel: "Watch the MyDreamShoots AI image tutorial"
       };
@@ -197,17 +197,17 @@ function workflowTutorialSections(profile) {
         subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
         imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
         imageAlt: "Private album workspace preview",
-        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260805hug1",
-        videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260805hug1",
+        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4?v=20260806mobile55a",
+        videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg?v=20260806mobile55a",
         videoBadge: "Mobile workflow",
         playLabel: "Watch the video tutorial",
         leftTitle: "AI image tutorial",
-        leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260804mobile1",
-        leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260804mobile1",
+        leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260806chooserfix1",
+        leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260806chooserfix1",
         leftPlayLabel: "Watch the image tutorial",
         rightTitle: "AI video tutorial",
-        rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260805hug1",
-        rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260805hug1",
+        rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4?v=20260806mobile55a",
+        rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg?v=20260806mobile55a",
         rightPlayLabel: "Watch the video tutorial"
       };
 
@@ -297,8 +297,8 @@ function pageJson(profile, page) {
             body: profile.workflowIntro,
             headingLevel: "h1",
             tone: "dark",
-            primaryCta: "Browse packages",
-            primaryHref: "/collections",
+            primaryCta: "Headshot Generator",
+            primaryHref: "/collections/headshots",
             secondaryCta: "View pricing",
             secondaryHref: "/pricing"
           },
@@ -390,9 +390,9 @@ function pageJson(profile, page) {
           settings: {
             eyebrow: "Start the workflow",
             title: "Choose a package and create a private set.",
-            subtitle: "Browse packages, compare credit costs, then sign in to upload photos and start the generation request.",
-            primaryCta: "Browse packages",
-            primaryHref: "/collections",
+            subtitle: "Open the Headshot Generator, compare credit costs, then sign in to upload photos and start the generation request.",
+            primaryCta: "Headshot Generator",
+            primaryHref: "/collections/headshots",
             secondaryCta: "View pricing",
             secondaryHref: "/pricing"
           },
@@ -540,7 +540,7 @@ function normalizePolicyHref(href) {
   return map[href] ?? href;
 }
 
-function isVirtualGoodsFooterLinkToHide(label, href) {
+function _isVirtualGoodsFooterLinkToHide(label, href) {
   const normalizedHref = normalizePolicyHref(href ?? "").toLowerCase();
   const value = `${label ?? ""} ${normalizedHref}`.toLowerCase();
   return (

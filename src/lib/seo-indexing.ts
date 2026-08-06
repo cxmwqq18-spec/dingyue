@@ -907,6 +907,10 @@ function getSitemapUrlsForSite(state: PlatformState, site: Site): string[] {
     paths.push(...REQUIRED_INDEXABLE_CONTENT_PATHS);
   }
 
+  if (isAidreamcapesSite(site)) {
+    paths.push(...AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS.filter((path) => path.startsWith("/blog/")));
+  }
+
   for (const path of REQUIRED_INDEXABLE_POLICY_PATHS) {
     const policySeo = policySeoForSite(site, path);
     if (!policySeo || policySeo.index === false) continue;

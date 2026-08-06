@@ -62,8 +62,8 @@ function makeCategoryArticle(input) {
   const isVideoTheme = kind === "video-theme";
   const articleKind = isTool ? "tool category" : isVideoTheme ? "video theme category" : "package category";
   const pluralKind = isTool ? "tools" : isVideoTheme ? "video themes" : "packages";
-  const directoryHref = isTool || isVideoTheme ? "/tools" : "/collections";
-  const directoryLabel = isTool || isVideoTheme ? "Tools" : "Photo Packages";
+  const directoryHref = isTool || isVideoTheme ? "/tools" : isAidreamcapes ? "/collections" : "/collections/headshots";
+  const directoryLabel = isTool || isVideoTheme ? "Tools" : isAidreamcapes ? "Browse packages" : "Headshot Generator";
   const sourceTerm = input.sourceTerm ?? (isVideoTheme ? "source frames" : isAidreamcapes ? "source portraits" : "source photos");
   const setTerm = isVideoTheme ? "video clip" : isAidreamcapes ? "album" : "photo set";
   const brandNiche = isAidreamcapes ? "fan and holiday" : "AI photo";
@@ -76,6 +76,8 @@ function makeCategoryArticle(input) {
   const faqIntro = input.faqIntro ?? `${label} questions usually come down to source quality, scope, credit planning, and whether the finished images match the intended use.`;
   const targetHref = input.targetHref ?? directoryHref;
   const targetLabel = input.targetLabel ?? (isTool ? `Open ${label} tool` : isVideoTheme ? `Open ${label} video themes` : `Open ${label} package`);
+  const primaryCta = input.primaryCta ?? (isTool || isVideoTheme ? "Open Tools" : isAidreamcapes ? "Browse packages" : "Headshot Generator");
+  const primaryHref = input.primaryHref ?? (isTool || isVideoTheme || isAidreamcapes ? directoryHref : "/collections/headshots");
   const openingLead = isAidreamcapes
     ? `The ${label} ${articleKind} gives ${brand} customers one clear private album direction to compare before credits are spent.`
     : `The ${label} ${articleKind} helps ${brand} customers choose a clear package direction before they spend credits.`;
@@ -104,6 +106,8 @@ function makeCategoryArticle(input) {
   const planningHeading = isAidreamcapes ? "A planning pass before credits" : "A planning pass before you spend credits";
   const planningIntro = isAidreamcapes && targetHref && targetHref !== directoryHref
     ? `Open <a href="${targetHref}">${label}</a> for the focused theme page, or browse <a href="${directoryHref}">${directoryLabel}</a> to compare it with nearby choices. The best choice is the one that makes the review criteria obvious before the first image is generated.`
+    : !isAidreamcapes && !isTool && !isVideoTheme
+      ? `Start with <a href="${directoryHref}">${directoryLabel}</a>, then compare ${label} with nearby categories before generating. The best choice is the one that makes the review criteria obvious before the first image is generated.`
     : `For broader browsing, open <a href="${directoryHref}">${directoryLabel}</a> and compare ${label} with the categories around it. The best choice is the one that makes the review criteria obvious before the first image is generated.`;
   const planningBullets = isAidreamcapes
     ? [
@@ -137,8 +141,8 @@ function makeCategoryArticle(input) {
     imageUrl: input.imageUrl,
     imageAlt: input.imageAlt ?? `${brand} ${label} ${articleKind} cover`,
     tags: input.tags ?? `${label}|${isTool ? "Tools" : isVideoTheme ? "Video themes" : "Photo packages"}|Credits|Private gallery`,
-    primaryCta: input.primaryCta ?? (isTool || isVideoTheme ? "Open Tools" : "Browse packages"),
-    primaryHref: directoryHref,
+    primaryCta,
+    primaryHref,
     secondaryCta: input.secondaryCta ?? "View pricing",
     secondaryHref: "/pricing",
     targetLabel,

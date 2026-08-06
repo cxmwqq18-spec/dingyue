@@ -31,16 +31,16 @@ function normalizeSeoObject(seo) {
   return JSON.stringify(seo) === before ? 0 : 1;
 }
 
-function normalizeThemeJson(value) {
+function _normalizeThemeJson(value) {
   if (!value || typeof value !== "object") return 0;
   let changes = 0;
   changes += normalizeSeoObject(value.seo);
   if (value.themeSettings && typeof value.themeSettings === "object") {
-    changes += normalizeThemeJson(value.themeSettings.draftJson);
-    changes += normalizeThemeJson(value.themeSettings.publishedJson);
+    changes += _normalizeThemeJson(value.themeSettings.draftJson);
+    changes += _normalizeThemeJson(value.themeSettings.publishedJson);
   }
   if (value.snapshot && typeof value.snapshot === "object") {
-    changes += normalizeThemeJson(value.snapshot.themeSettings);
+    changes += _normalizeThemeJson(value.snapshot.themeSettings);
   }
   return changes;
 }

@@ -8,8 +8,8 @@ import sharp from "sharp";
 
 const ffmpegPath = process.env.FFMPEG_PATH || ffmpegStatic || "ffmpeg";
 const ffprobePath = process.env.FFPROBE_PATH || "ffprobe";
-const MYDREAMSHOOTS_TUTORIAL_PRIMARY_ASSET_IDS = ["asset_mscs4baw_a5q3d5"];
-const MYDREAMSHOOTS_TUTORIAL_PARTNER_ASSET_IDS = ["asset_mscue5vm_2sw2kb"];
+const MYDREAMSHOOTS_TUTORIAL_PRIMARY_ASSET_IDS = ["asset_mscue5vm_2sw2kb"];
+const MYDREAMSHOOTS_TUTORIAL_PARTNER_ASSET_IDS = ["asset_mscs4baw_a5q3d5"];
 const MYDREAMSHOOTS_HUG_TUTORIAL_SOURCE_JOB_ID = "job_msfh8hfh_20354f";
 const MYDREAMSHOOTS_HUG_TUTORIAL_PROMPT = "Using the uploaded images, generate a video of the two people hugging.";
 const MYDREAMSHOOTS_HUG_TUTORIAL_FRAME_ASSET_IDS = ["asset_msfh85av_yo86l1", "asset_msfh86rh_2d05x8"];
@@ -25,7 +25,7 @@ function resolveRepoPath(value) {
   return path.isAbsolute(value) ? value : path.resolve(process.cwd(), value);
 }
 
-function draftSourceFor(siteId, kind) {
+function _draftSourceFor(siteId, kind) {
   const envCandidates = kind === "video"
     ? [
         process.env.TUTORIAL_SOURCE_FRAME_IMAGE,
@@ -176,7 +176,7 @@ async function writeExistingResultVideo(sourcePath, targetPath, options = {}) {
   return { width: Number(video.width), height: Number(video.height), duration, preservedSourceCanvas: preserveSourceCanvas };
 }
 
-async function writeFreshDraftVideo(sourcePath, targetPath) {
+async function _writeFreshDraftVideo(sourcePath, targetPath) {
   const framePath = `${targetPath}.draft-frame.webp`;
   await writeFreshDraftImage(sourcePath, framePath);
   await fs.mkdir(path.dirname(targetPath), { recursive: true });
@@ -407,6 +407,38 @@ export async function ensureMydreamshootsLocalPreviewVideo() {
         ...validation
       }
     });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function ensureMydreamshootsTutorialSampleAssets() {
+  if (process.env.MYDREAMSHOOTS_TUTORIAL_SEED_PREVIEW === "0" || !isLocalTutorialBaseUrl()) return;
+  const prisma = new PrismaClient();
+  try {
+    const siteId = "site_dreamshoot";
+    const customer = await customerForTutorial(prisma, siteId, "1621417163@qq.com");
+    if (!customer) return;
+    const now = new Date();
+    const samples = [
+      { id: MYDREAMSHOOTS_TUTORIAL_PRIMARY_ASSET_IDS[0], subjectRole: "primary" },
+      { id: MYDREAMSHOOTS_TUTORIAL_PARTNER_ASSET_IDS[0], subjectRole: "partner" }
+    ];
+    for (const sample of samples) {
+      await prisma.assetUpload.updateMany({
+        where: { id: sample.id, siteId },
+        data: {
+          customerId: customer.id,
+          role: "input",
+          subjectRole: sample.subjectRole,
+          visibility: "private",
+          reviewStatus: "approved",
+          validationStatus: "passed",
+          deletedAt: null,
+          updatedAt: now
+        }
+      });
+    }
   } finally {
     await prisma.$disconnect();
   }

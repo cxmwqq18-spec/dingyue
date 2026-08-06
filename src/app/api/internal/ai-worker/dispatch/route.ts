@@ -820,7 +820,7 @@ function buildVideoSkillPackQualityPrompt(params: {
   ].join("\n");
 }
 
-function buildVideoQualitySystemPrompt(params: {
+function _buildVideoQualitySystemPrompt(params: {
   aspectRatio: string;
   duration: string;
   frameCount: number;
@@ -850,7 +850,7 @@ function buildVideoQualitySystemPrompt(params: {
   ].join("\n");
 }
 
-function buildVideoReferenceContractPrompt(params: {
+function _buildVideoReferenceContractPrompt(params: {
   frameAssets: ImageInputAsset[];
   userNote: string;
 }) {
@@ -902,7 +902,7 @@ function buildOpeningPortraitStarterScenePrompt(userNote: string, frameCount: nu
   ].join("\n");
 }
 
-function buildOpeningPortraitVideoPrompt(userNote: string) {
+function _buildOpeningPortraitVideoPrompt(userNote: string) {
   if (!userRequestsOpeningPortraitSequence(userNote)) return "";
   return [
     "Opening sequence lock: begin with the opening portrait beat requested by the user. The first visible moments should show clear portrait-readable and front-facing faces before any turn, kiss, embrace, or side-profile interaction.",
@@ -932,11 +932,11 @@ function buildLk888MediaVideoPrompt(payload: WorkerPayload, referenceAssets = vi
   return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
 }
 
-function buildSingleReferenceDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
+function _buildSingleReferenceDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
   return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
 }
 
-function buildDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
+function _buildDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
   return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
 }
 

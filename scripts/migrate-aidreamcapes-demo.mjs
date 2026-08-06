@@ -1061,7 +1061,7 @@ function buildThemeSettings() {
     { id: "aidreamcapes_footer_children_privacy", type: "menu_link", settings: { label: "Children's Privacy", href: "/children-privacy", group: "support" } },
     { id: "aidreamcapes_footer_state_privacy", type: "menu_link", settings: { label: "U.S. Privacy Choices", href: "/state-privacy", group: "support" } }
   ];
-  const seo = source.seo ?? {};
+  const _seo = source.seo ?? {};
   const saasSettingsCurrent = scrubAidreamcapesText(clone(source.saasSettingsCurrent ?? {}));
   Object.assign(saasSettingsCurrent, {
     skin_bg: "#05070E",
@@ -1994,7 +1994,7 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
   }
 }
 
-function buildPages(version) {
+function buildPages(_version) {
   return pageMappings.map((mapping) => {
     const sourcePageJson = sourcePageByTemplate(sourceSite, mapping.templateKey, mapping.slug);
     const pageJson = customizePageJson(sourcePageJson, mapping);
@@ -2093,7 +2093,7 @@ const products = subscriptionPlans.map((plan) => {
         discountLabel: "Pay 6, get 12",
         billingCadence: "yearly",
         yearlyEquivalentMonthlyCents: plan.yearlyEquivalentMonthlyCents,
-        yearlySavingsLabel: "6 months free",
+        yearlySavingsLabel: "Annual savings shown at checkout",
         planFamily: plan.family,
         publicReference: `Aidreamcapes ${String(plan.name).toLowerCase()} yearly route credit plan`
       }

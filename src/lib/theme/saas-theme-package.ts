@@ -239,7 +239,7 @@ export interface ImportedSaasSettingsGroup {
   fields: ThemeFieldSchema[];
 }
 
-function defaultBlockFromRaw(block: RawSaasBlock, index: number): ThemeBlockSchema {
+function defaultBlockFromRaw(block: RawSaasBlock, _index: number): ThemeBlockSchema {
   const fields = (block.settings ?? []).map(toField);
   const label = localeText(block.name, block.type);
   return {

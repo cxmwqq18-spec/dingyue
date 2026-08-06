@@ -505,7 +505,7 @@ const { response: newSiteCustomerLoginResponse, json: newSiteCustomerLogin } = a
   name: "Mara Voss"
 });
 const newSiteCustomerCsrfCookie = cookieFrom(newSiteCustomerLoginResponse, `customer_csrf_${newSite.site.id}`);
-const newSiteCustomerCsrf = cookieValue(newSiteCustomerCsrfCookie, `customer_csrf_${newSite.site.id}`);
+const _newSiteCustomerCsrf = cookieValue(newSiteCustomerCsrfCookie, `customer_csrf_${newSite.site.id}`);
 const newSiteCustomerCookie = [cookieFrom(newSiteCustomerLoginResponse, `customer_session_${newSite.site.id}`), newSiteCustomerCsrfCookie].join("; ");
 if (
   !newSiteCustomerLogin.createdCustomer ||

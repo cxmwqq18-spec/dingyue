@@ -50,7 +50,7 @@ function loadSectionRuntime(cacheKey: string, siteId: string, section: AccountSe
   return request;
 }
 
-function emptyRuntime(): ThemeRuntimeData {
+function _emptyRuntime(): ThemeRuntimeData {
   return {
     jobs: [],
     assets: [],

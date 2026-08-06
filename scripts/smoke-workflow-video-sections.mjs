@@ -10,13 +10,13 @@ const insertedOrder = ["tutorial_video_1", "tutorial_image_video_1", "mobile_vid
 const expected = {
   site_dreamshoot: {
     introImage: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
-    video: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4",
+    video: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4",
     imageVideo: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4",
     mobileImage: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
     mobileLeftVideo: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4",
-    mobileRightVideo: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4",
+    mobileRightVideo: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4",
     mobileLeftPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg",
-    mobileRightPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg"
+    mobileRightPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg"
   },
   site_aidreamcapes: {
     introImage: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp",

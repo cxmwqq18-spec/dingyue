@@ -217,7 +217,7 @@ function ReferencePackageCard({
 function hrefForCategory(siteBasePath: string, tab: string, overrides?: DreamshootCategoryHrefOverrides) {
   const slug = categorySlug(tab);
   const override = overrides?.[slug] ?? overrides?.[tab.trim().toLowerCase()];
-  const path = override ?? (tab === "All" || tab === "Todos" || slug === "all" || slug === "todos" ? "/collections" : `/collections/${slug}`);
+  const path = override ?? (tab === "All" || tab === "Todos" || slug === "all" || slug === "todo" || slug === "todos" ? "/collections" : `/collections/${slug}`);
   return cardHref(siteBasePath, path);
 }
 

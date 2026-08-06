@@ -22,16 +22,6 @@ const modelStatusLabels: Record<CustomerModel["status"], string> = {
   archived: "已归档"
 };
 
-function modelTypeLabel(type: CustomerModel["modelType"]) {
-  return {
-    portrait: "人像模型",
-    couple: "双人模型",
-    product: "商品模型",
-    solo: "单人模型",
-    brand: "品牌模型"
-  }[type];
-}
-
 export function ModelTrainingPanel({
   siteId,
   models,

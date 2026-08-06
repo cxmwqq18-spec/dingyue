@@ -9,9 +9,12 @@ const args = new Set(process.argv.slice(2));
 const uniqueGalleryRoot = path.resolve(process.cwd(), "public/assets/dreamshoot/generated/pack-galleries");
 const uniqueGalleryPublicPrefix = "/assets/dreamshoot/generated/pack-galleries";
 const uniqueGalleryVersion = process.env.THEME_GALLERY_VERSION ?? "20260715b";
-const uniqueCoverRoot = path.resolve(process.cwd(), "public/assets/dreamshoot/generated/pack-covers");
+const _uniqueCoverRoot = path.resolve(process.cwd(), "public/assets/dreamshoot/generated/pack-covers");
 const uniqueCoverPublicPrefix = "/assets/dreamshoot/generated/pack-covers";
 const uniqueCoverVersion = process.env.THEME_COVER_VERSION ?? "20260731themeuniqueness1";
+const uniqueCoverVersionBySlug = {
+  engagement: process.env.THEME_ENGAGEMENT_COVER_VERSION ?? "20260805uncropped1"
+};
 let sharpLoader;
 const perceptualHashCache = new Map();
 
@@ -305,7 +308,7 @@ const forbiddenSourcePatternsBySlug = {
   "magic-upscaler": [/world[-_ ]?cup/i, /match[-_ ]?day/i, /stadium/i, /football/i, /sports/i, /wedding/i, /couple/i, /engagement/i]
 };
 
-function allowedThemeSource(asset, slug) {
+function _allowedThemeSource(asset, slug) {
   const cleanAsset = cleanLocalAsset(asset);
   if (!cleanAsset) return "";
   const forbidden = forbiddenSourcePatternsBySlug[slug] ?? [];
@@ -461,7 +464,7 @@ function providerGalleryPaths(slug) {
 }
 
 function providerCoverPath(slug) {
-  return `${uniqueCoverPublicPrefix}/${slug}/${slug}-cover.webp?v=${uniqueCoverVersion}`;
+  return `${uniqueCoverPublicPrefix}/${slug}/${slug}-cover.webp?v=${uniqueCoverVersionBySlug[slug] ?? uniqueCoverVersion}`;
 }
 
 async function ensureProviderCover(slug, sourcePublicPath) {
@@ -479,10 +482,22 @@ async function ensureProviderCover(slug, sourcePublicPath) {
   const overlay = Buffer.from(
     `<svg width="1280" height="960" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${accent[0]}" stop-opacity="0.16" offset="0"/><stop stop-color="${accent[1]}" stop-opacity="0.18" offset="1"/></linearGradient><radialGradient id="r" cx="${24 + (seed % 48)}%" cy="${18 + ((seed >>> 5) % 52)}%" r="72%"><stop stop-color="#ffffff" stop-opacity="0.11" offset="0"/><stop stop-color="#000000" stop-opacity="0" offset="1"/></radialGradient></defs><rect width="1280" height="960" fill="url(#g)"/><rect width="1280" height="960" fill="url(#r)"/></svg>`
   );
-  await image(assetFilePath(sourcePublicPath))
-    .resize(1280, 960, { fit: "cover", position: "entropy" })
-    .modulate({ brightness: 0.92, saturation: 1.12, hue: (seed % 28) - 14 })
+  const background = await image(assetFilePath(sourcePublicPath))
+    .resize(1280, 960, { fit: "cover", position: "centre" })
+    .blur(26)
+    .modulate({ brightness: 0.7, saturation: 1.05, hue: (seed % 28) - 14 })
     .composite([{ input: overlay, blend: "overlay" }])
+    .toBuffer();
+  const foreground = await image(assetFilePath(sourcePublicPath))
+    .resize(900, 900, { fit: "inside" })
+    .toBuffer();
+  const foregroundMeta = await image(foreground).metadata();
+  await image(background)
+    .composite([{
+      input: foreground,
+      left: Math.max(0, Math.floor((1280 - (foregroundMeta.width ?? 900)) / 2)),
+      top: Math.max(0, Math.floor((960 - (foregroundMeta.height ?? 900)) / 2))
+    }])
     .sharpen({ sigma: 0.46 })
     .webp({ quality: 90 })
     .toFile(coverFilePath);

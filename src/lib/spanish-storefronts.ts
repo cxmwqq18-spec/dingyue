@@ -34,6 +34,41 @@ export const SPANISH_STOREFRONT_SLUG_ALIASES: Record<string, string> = {
   "aidreamcapes-xby": "aidreamcapes-eu"
 };
 
+export const SPANISH_XBY_COLLECTION_ALIASES: Record<string, string> = {
+  belleza: "beauty",
+  creativo: "creative",
+  deportes: "world-cup-fan-photos",
+  "estilo-de-vida": "outdoor-creator-scenes",
+  "outdoor-creator-scenes": "estilo-y-fantasia",
+  "travel-scene-pack": "estilo-y-fantasia",
+  travel: "estilo-y-fantasia",
+  lifestyle: "estilo-y-fantasia",
+  creador: "creator",
+  retratos: "retratos-y-perfiles",
+  temporada: "seasonal",
+  utilidades: "video-y-utilidades",
+  video: "ai-video-add-ons"
+};
+
+export function canonicalSpanishXbyCollectionSlug(value: string): string {
+  const normalized = String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[_\s]+/g, "-")
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+  let canonical = normalized;
+  const seen = new Set<string>();
+  while (!seen.has(canonical)) {
+    seen.add(canonical);
+    const next = SPANISH_XBY_COLLECTION_ALIASES[canonical];
+    if (!next) break;
+    canonical = next;
+  }
+  return canonical;
+}
+
 export function cleanStorefrontHost(value: string | null | undefined): string {
   return String(value ?? "")
     .split(",")[0]

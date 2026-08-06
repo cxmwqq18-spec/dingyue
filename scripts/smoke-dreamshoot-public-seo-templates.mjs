@@ -1,8 +1,16 @@
 import assert from "node:assert/strict";
+import Module from "node:module";
 import path from "node:path";
 import createJiti from "jiti";
 
-const jiti = createJiti(import.meta.url, { alias: { "@": path.join(process.cwd(), "src") } });
+const sourceRoot = path.join(process.cwd(), "src");
+const originalResolveFilename = Module._resolveFilename;
+Module._resolveFilename = function resolveFilename(request, ...args) {
+  const resolvedRequest = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request;
+  return originalResolveFilename.call(this, resolvedRequest, ...args);
+};
+
+const jiti = createJiti(import.meta.url);
 const {
   aidreamcapesPublicSeoPageMetadata,
   dreamshootPublicSeoPageMetadata,

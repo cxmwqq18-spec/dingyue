@@ -18,6 +18,7 @@ const baseUrl = (process.env.TUTORIAL_BASE_URL || "https://www.mydreamshoots.com
 const siteId = process.env.TUTORIAL_SITE_ID || "site_dreamshoot";
 const siteSlug = process.env.TUTORIAL_SITE_SLUG || "mydreamshoots";
 const tutorialBrandName = process.env.TUTORIAL_BRAND_NAME || "MyDreamShoots";
+const isMyDreamShootsSite = /mydreamshoots/i.test(`${siteId} ${siteSlug} ${tutorialBrandName}`);
 const outputDir = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_DIR || "output");
 const runDir = path.join(outputDir, process.env.TUTORIAL_RUN_SLUG || "mydreamshoots-i2v-tutorial-real-work");
 const framesDir = path.join(runDir, "frames");
@@ -73,30 +74,43 @@ const backgroundMusicVolume = Math.max(0, Math.min(1, Number(process.env.TUTORIA
 
 const promptText = process.env.TUTORIAL_PROMPT_TEXT || "Using the uploaded images, generate a video of the two people hugging.";
 
-const narrationSegments = jsonEnv("TUTORIAL_NARRATION_JSON", [
-  { duration: 3, text: `First, sign in to your private ${tutorialBrandName} workspace.` },
-  { duration: 6, text: "After login, review the credit plans and select a plan before generating." },
-  { duration: 3, text: "Open the Image to Video workspace from your account." },
-  { duration: 4, text: "Click Upload to open the folder picker on your computer." },
-  { duration: 4, text: "Choose both clean frame images, then open them in the workspace." },
-  { duration: 5, text: "Scroll the left panel and confirm both uploaded frames are visible." },
-  { duration: 4, text: "Confirm the two selected frames will guide the image to video request." },
-  { duration: 6, text: "Paste the English hug prompt, then keep the format at sixteen by nine, seven twenty p, and six seconds." },
+const defaultNarrationSegments = isMobileRecording ? [
+  { duration: 4, text: `First, sign in to your private ${tutorialBrandName} workspace.` },
+  { duration: 7, text: "After signing in, review credits and choose a plan before creating your video." },
+  { duration: 4, text: "Now move from credits into the Image to Video workspace." },
+  { duration: 4, text: "Tap Upload, then choose the two portrait frames from your phone or file library." },
+  { duration: 4, text: "The workspace attaches those two images as frame references for the clip." },
+  { duration: 6, text: "Only the two selected portraits stay visible in the frame order." },
+  { duration: 5, text: "Review both frames before writing the motion prompt." },
+  { duration: 8, text: "Paste the English hug prompt, then keep the format at sixteen by nine, seven twenty p, and six seconds." },
   { duration: 4, text: "Click Generate video to submit the request." },
-  { duration: 2, text: "Show the generation progress briefly." },
-  { duration: 14, text: "Open the preview, press play, and review the finished hugging video smoothly." }
-]);
+  { duration: 3, text: "Show the generation progress briefly." },
+  { duration: 6, text: "Open the preview and review the finished six-second hugging video at normal speed." }
+] : [
+  { duration: 4, text: `First, sign in to your private ${tutorialBrandName} workspace.` },
+  { duration: 7, text: "After signing in, review credits and choose a plan before creating your video." },
+  { duration: 4, text: "Now move from credits into the Image to Video workspace." },
+  { duration: 4, text: "Click Upload to open the list-style picker on your computer." },
+  { duration: 4, text: "Choose both portrait rows from the list, then open them in the workspace." },
+  { duration: 6, text: "Only the two selected portraits stay visible in the frame order." },
+  { duration: 5, text: "Review both frames before writing the motion prompt." },
+  { duration: 8, text: "Paste the English hug prompt, then keep the format at sixteen by nine, seven twenty p, and six seconds." },
+  { duration: 4, text: "Click Generate video to submit the request." },
+  { duration: 3, text: "Show the generation progress briefly." },
+  { duration: 6, text: "Open the preview and review the finished six-second hugging video at normal speed." }
+];
+const narrationSegments = jsonEnv("TUTORIAL_NARRATION_JSON", defaultNarrationSegments);
 
 const captions = {
   login: "Sign in to your private workspace",
-  pricing: "Choose a credit plan before generating",
-  workspace: "Open the Image to Video workspace",
+  pricing: "After signing in, review credits before generating",
+  workspace: "Move into the Image to Video workspace",
   upload: "Click Upload and choose two frame images",
-  uploadChooser: "Click Upload to open the folder picker",
-  uploadSelected: "Choose both frame images from your computer",
-  uploaded: "Wait for both uploaded frames to appear",
-  uploadedScroll: "Scroll the left panel to review both uploaded frames",
-  select: "Select both frames to guide the video",
+  uploadChooser: isMobileRecording ? "Tap Upload and add two frame images" : "Open the list-style picker on the right",
+  uploadSelected: isMobileRecording ? "The two uploaded images become frame references" : "Choose both portrait rows from the list",
+  uploaded: "Only the two selected portraits remain visible",
+  uploadedScroll: "Review the two chosen frames in order",
+  select: "Review the two chosen frames in the selected order panel",
   prompt: "Paste the hug prompt and keep 16:9 / 720P / 6s",
   generate: "Click Generate video to submit",
   progress: "Show generation progress briefly",
@@ -105,17 +119,17 @@ const captions = {
 };
 
 const captureDurations = {
-  login: 3,
-  pricing: 6,
-  workspace: 3,
+  login: 4,
+  pricing: 7,
+  workspace: 4,
   uploadChooser: 4,
   uploadSelected: 4,
-  uploaded: 5,
-  select: 4,
-  prompt: 6,
+  uploaded: 6,
+  select: 5,
+  prompt: 8,
   generate: 4,
-  progress: 2,
-  result: 14,
+  progress: 3,
+  result: 6,
   ...jsonEnv("TUTORIAL_CAPTURE_DURATIONS_JSON", {})
 };
 
@@ -277,6 +291,7 @@ class Recorder {
 
   async captureFor(seconds, caption, options = {}) {
     await setCaption(this.page, caption);
+    await setCaptionPlacement(this.page, options.captionPlacement || "bottom");
     const count = Math.round(seconds * captureFps);
     for (let i = 0; i < count; i += 1) {
       if (options.beforeFrame) await options.beforeFrame({ index: i, count });
@@ -288,10 +303,22 @@ class Recorder {
   }
 }
 
+async function createTutorialPage(context) {
+  const page = await context.newPage();
+  page.setDefaultTimeout(pageTimeoutMs);
+  page.on("pageerror", (error) => log("browser page error", { error: error.message }));
+  page.on("console", (message) => {
+    if (message.type() === "error") log("browser console error", { error: message.text().slice(0, 240) });
+  });
+  return page;
+}
+
 async function installOverlay(page) {
   await page.addStyleTag({ content: `
     input[name="email"], input[name="password"] { color: transparent !important; caret-color: transparent !important; text-shadow: none !important; }
     .tutorial-caption { position: fixed; left: 50%; bottom: 34px; transform: translateX(-50%); z-index: 2147483000; max-width: min(1280px, calc(100vw - 96px)); padding: 18px 28px; border: 1px solid rgba(255,255,255,.24); border-radius: 14px; background: rgba(5,8,14,.84); box-shadow: 0 22px 70px rgba(0,0,0,.44); color: white; font: 800 30px/1.22 Inter, system-ui, sans-serif; text-align: center; pointer-events: none; backdrop-filter: blur(12px); }
+    .tutorial-caption.top { top: 76px; bottom: auto; }
+    .tutorial-caption.hidden { opacity: 0; }
     .tutorial-caption::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 12px; border-radius: 999px; background: linear-gradient(135deg,#31d4ff,#ff61c7); vertical-align: 3px; }
     .tutorial-highlight { display: none !important; position: fixed; z-index: 2147482998; pointer-events: none; opacity: 0; }
     .tutorial-cursor { position: fixed; z-index: 2147482999; width: 44px; height: 44px; transform: translate(-7px,-7px); pointer-events: none; filter: drop-shadow(0 10px 18px rgba(0,0,0,.62)); opacity: 0; transition: left 180ms ease, top 180ms ease, transform 170ms ease, opacity 120ms ease; }
@@ -303,6 +330,8 @@ async function installOverlay(page) {
     @keyframes tutorial-click-ring { 0% { opacity: 1; transform: scale(.55); } 70% { opacity: .88; transform: scale(1.28); } 100% { opacity: 0; transform: scale(1.55); } }
     .tutorial-mask { position: fixed; z-index: 2147482997; display: grid; place-items: center; border-radius: 10px; background: rgba(255,255,255,.94); color: #111827; font: 700 17px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(17,24,39,.14); }
     .tutorial-chip-mask { position: fixed; z-index: 2147482996; display: grid; place-items: center; min-height: 46px; border-radius: 999px; background: rgba(2,6,23,.95); color: #fff; font: 800 16px/1.2 Inter, system-ui, sans-serif; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+    .tutorial-video-frame-library-extra { display: none !important; }
+    .tutorial-background-media-hidden { visibility: hidden !important; }
     .tutorial-history-mask { position: fixed; z-index: 2147482995; display: grid; place-items: center; overflow: hidden; border: 1px solid rgba(148,163,184,.34); border-radius: 12px; background: linear-gradient(135deg, rgba(2,6,23,.99), rgba(15,23,42,.97)); color: rgba(226,232,240,.92); font: 800 15px/1.2 Inter, system-ui, sans-serif; letter-spacing: .04em; text-transform: uppercase; text-align: center; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 18px 44px rgba(0,0,0,.30); }
     .tutorial-history-mask::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, rgba(148,163,184,.05) 0 10px, rgba(148,163,184,.11) 10px 20px); opacity: .65; }
     .tutorial-history-mask span { position: relative; padding: 10px 14px; border-radius: 999px; background: rgba(15,23,42,.72); }
@@ -334,6 +363,7 @@ async function installOverlay(page) {
     .tutorial-file-button.primary { border-color: #2575e8; background: #2575e8; color: #ffffff; }
     @media (max-width: 600px) {
       .tutorial-caption { bottom: 12px; max-width: calc(100vw - 24px); padding: 10px 12px; border-radius: 12px; font: 800 15px/1.24 Inter, system-ui, sans-serif; box-shadow: 0 16px 44px rgba(0,0,0,.38); }
+      .tutorial-caption.top { top: 116px; bottom: auto; }
       .tutorial-caption::before { width: 8px; height: 8px; margin-right: 7px; vertical-align: 1px; }
       .tutorial-cursor { width: 30px; height: 30px; filter: drop-shadow(0 6px 12px rgba(0,0,0,.56)); }
       .tutorial-cursor::before { border-right-width: 17px; border-bottom-width: 27px; }
@@ -360,10 +390,11 @@ async function installOverlay(page) {
       .tutorial-file-button { min-width: 70px; padding: 7px 10px; border-radius: 7px; }
     }
   ` });
-  await page.evaluate(({ maskNames }) => {
+  await page.evaluate(({ maskNames, hideUploadedVideoFrameLibrary }) => {
     const emailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
     const names = maskNames;
     let historyMaskMode = false;
+    let videoFrameLibraryHidden = Boolean(hideUploadedVideoFrameLibrary);
     function ensure(cls, text = "") {
       let el = document.querySelector(`.${cls}`);
       if (!el) {
@@ -433,6 +464,68 @@ async function installOverlay(page) {
     function clearHistoryMasks() {
       document.querySelectorAll(".tutorial-history-mask").forEach((mask) => mask.remove());
     }
+    function isUploadedFramesHeading(node) {
+      const text = (node.textContent || "").trim();
+      return /UPLOADED VIDEO FRAMES/i.test(text) && !/SELECTED ORDER|FRAME ORDER|Create an AI video clip|Describe the clip/i.test(text);
+    }
+    function applyVideoFrameLibraryVisibility() {
+      document.querySelector(".tutorial-video-frame-library-cover")?.remove();
+      document.querySelectorAll(".tutorial-video-frame-library-extra").forEach((node) => node.classList.remove("tutorial-video-frame-library-extra"));
+      if (!videoFrameLibraryHidden) {
+        return;
+      }
+      const root = document.querySelector("#studio-console-video");
+      if (!root) return;
+      const selectedHeading = [...root.querySelectorAll("p,span,div,h2,h3")].find((node) => /SELECTED ORDER|FRAME ORDER/i.test((node.textContent || "").trim()));
+      const uploadedHeading = [...root.querySelectorAll("p,span,div,h2,h3")].find(isUploadedFramesHeading);
+      if (!uploadedHeading) return;
+      const follows = (anchor, node) => Boolean(anchor && (anchor.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING));
+      const before = (anchor, node) => !anchor || Boolean(anchor.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_PRECEDING);
+      const normalizeSrc = (src) => {
+        if (!src) return "";
+        try {
+          const url = new URL(src, window.location.href);
+          return url.pathname.split("/").pop() || url.pathname;
+        } catch {
+          return String(src).split("?")[0].split("/").pop() || String(src);
+        }
+      };
+      const selectedSources = new Set(
+        [...root.querySelectorAll("img")]
+          .filter((img) => follows(selectedHeading, img) && before(uploadedHeading, img))
+          .map((img) => normalizeSrc(img.currentSrc || img.src))
+          .filter(Boolean)
+      );
+      const libraryImages = [...root.querySelectorAll("img")]
+        .filter((img) => follows(uploadedHeading, img))
+        .map((img) => {
+          const card = img.closest(".group\\/frame,button[aria-pressed],button,[role='button'],figure,article,li") || img.parentElement || img;
+          const rect = img.getBoundingClientRect();
+          return { img, card, rect, src: normalizeSrc(img.currentSrc || img.src) };
+        })
+        .filter((item) => item.rect.width > 32 && item.rect.height > 32);
+      if (!libraryImages.length) return;
+      const keepSources = selectedSources.size ? selectedSources : new Set(libraryImages.slice(0, 2).map((item) => item.src).filter(Boolean));
+      const kept = new Set();
+      for (const item of libraryImages) {
+        const shouldKeep = keepSources.has(item.src) && !kept.has(item.src);
+        if (shouldKeep) {
+          kept.add(item.src);
+          continue;
+        }
+        item.card.classList.add("tutorial-video-frame-library-extra");
+      }
+      if (kept.size < keepSources.size) {
+        const fallbackKept = new Set(kept);
+        for (const item of libraryImages) {
+          if (fallbackKept.size >= Math.max(1, keepSources.size || 2)) break;
+          if (item.card.classList.contains("tutorial-video-frame-library-extra") && !fallbackKept.has(item.src)) {
+            item.card.classList.remove("tutorial-video-frame-library-extra");
+            fallbackKept.add(item.src);
+          }
+        }
+      }
+    }
     function rectVisible(rect) {
       return rect.width >= 54 && rect.height >= 54 && rect.bottom >= 0 && rect.right >= 0 && rect.top <= window.innerHeight && rect.left <= window.innerWidth;
     }
@@ -473,11 +566,28 @@ async function installOverlay(page) {
         if (rectVisible(rect)) appendHistoryMask(rect, "Previous results hidden");
       }
     }
+    function setPreviewCleanBackground(enabled) {
+      document.querySelectorAll(".tutorial-background-media-hidden").forEach((node) => node.classList.remove("tutorial-background-media-hidden"));
+      if (!enabled) return;
+      const root = document.querySelector("#video-workspace-videos");
+      if (!root) return;
+      const mediaItems = [...root.querySelectorAll("img, video")];
+      for (const media of mediaItems) {
+        if (media.closest("[role='dialog'][aria-modal='true'],.tutorial-caption,.tutorial-mask,.tutorial-chip-mask,.tutorial-history-mask")) continue;
+        const card = media.closest(".group,button,figure,article,li") || media;
+        card.classList.add("tutorial-background-media-hidden");
+      }
+    }
     const caption = ensure("tutorial-caption");
     const highlight = ensure("tutorial-highlight");
     const cursor = ensure("tutorial-cursor");
+    applyVideoFrameLibraryVisibility();
     window.__tutorial = {
       setCaption(text) { caption.textContent = text; },
+      setCaptionPlacement(placement) {
+        caption.classList.toggle("top", placement === "top");
+        caption.classList.toggle("hidden", placement === "hidden");
+      },
       highlight(rect) {
         if (!rect) {
           highlight.style.opacity = "0";
@@ -490,6 +600,10 @@ async function installOverlay(page) {
         cursor.classList.add("visible", "click");
         window.setTimeout(() => cursor.classList.remove("click"), 360);
         window.setTimeout(() => cursor.classList.remove("visible"), 1100);
+      },
+      setVideoFrameLibraryHidden(hidden) {
+        videoFrameLibraryHidden = Boolean(hidden);
+        applyVideoFrameLibraryVisibility();
       },
       fileDialog(state) {
         const oldBackdrop = document.querySelector(".tutorial-file-backdrop");
@@ -527,27 +641,43 @@ async function installOverlay(page) {
         historyMaskMode = Boolean(enabled);
         maskHistoricalMedia();
       },
+      setPreviewCleanBackground(enabled) {
+        setPreviewCleanBackground(Boolean(enabled));
+      },
       redact() {
         redactTextNodes(document.body);
         positionInputMask('input[name="email"]', "tutorial-mask-email", "masked email");
         positionInputMask('input[name="password"]', "tutorial-mask-password", "masked password");
         positionAccountMask();
+        applyVideoFrameLibraryVisibility();
         maskHistoricalMedia();
       }
     };
     window.__tutorial.cursor(Math.min(window.innerWidth - 18, Math.max(18, window.innerWidth * 0.62)), Math.min(window.innerHeight - 18, Math.max(18, window.innerHeight * 0.72)));
     window.__tutorial.redact();
     window.setInterval(() => window.__tutorial?.redact?.(), 250);
-  }, { maskNames });
+  }, { maskNames, hideUploadedVideoFrameLibrary: isMyDreamShootsSite });
 }
 
 async function setCaption(page, caption) {
   await page.evaluate((text) => window.__tutorial?.setCaption?.(text), caption).catch(() => undefined);
 }
 
+async function setCaptionPlacement(page, placement) {
+  await page.evaluate((value) => window.__tutorial?.setCaptionPlacement?.(value), placement).catch(() => undefined);
+}
+
 async function setHistoryMask(page, enabled) {
   const active = Boolean(enabled && hideHistoricalAssets);
   await page.evaluate((value) => window.__tutorial?.setHistoryMaskMode?.(value), active).catch(() => undefined);
+}
+
+async function setVideoFrameLibraryHidden(page, hidden) {
+  await page.evaluate((value) => window.__tutorial?.setVideoFrameLibraryHidden?.(value), hidden).catch(() => undefined);
+}
+
+async function setPreviewCleanBackground(page, enabled) {
+  await page.evaluate((value) => window.__tutorial?.setPreviewCleanBackground?.(value), enabled).catch(() => undefined);
 }
 
 async function moveTutorialPointer(page, x, y, pulse = false) {
@@ -559,8 +689,8 @@ async function moveTutorialPointer(page, x, y, pulse = false) {
   }, { x, y, pulse }).catch(() => undefined);
 }
 
-async function pointAt(page, locator) {
-  const box = await locator.boundingBox().catch(() => null);
+async function pointAt(page, locator, options = {}) {
+  const box = await locator.boundingBox({ timeout: options.timeout ?? 3_000 }).catch(() => null);
   if (!box) return;
   await page.evaluate((rect) => {
     window.__tutorial?.highlight?.(rect);
@@ -580,10 +710,138 @@ async function clickWithPointer(page, locator, options = {}) {
   await page.waitForTimeout(options.pauseAfterClickMs ?? 500);
 }
 
-async function waitReady(page) {
-  await page.waitForLoadState("domcontentloaded", { timeout: pageTimeoutMs }).catch(() => undefined);
-  await page.waitForLoadState("networkidle", { timeout: 30_000 }).catch(() => undefined);
+async function captureScrollToLocator(page, recorder, locator, seconds, caption, options = {}) {
+  const target = locator.first();
+  await target.waitFor({ state: "visible", timeout: options.timeout ?? 45_000 });
+  const scrollId = `tutorial-scroll-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const metrics = await target.evaluate((element, opts) => {
+    function scrollContainerFor(node) {
+      let current = node.parentElement;
+      while (current && current !== document.body) {
+        const style = window.getComputedStyle(current);
+        const canScroll = /(auto|scroll)/.test(`${style.overflowY} ${style.overflow}`);
+        if (canScroll && current.scrollHeight > current.clientHeight + 12) return current;
+        current = current.parentElement;
+      }
+      return document.scrollingElement || document.documentElement;
+    }
+    const container = scrollContainerFor(element);
+    container.setAttribute("data-tutorial-scroll-id", opts.scrollId);
+    const containerRect = container === document.scrollingElement || container === document.documentElement
+      ? { top: 0, height: window.innerHeight }
+      : container.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
+    const start = container.scrollTop;
+    const topWithin = rect.top - containerRect.top + start;
+    const bottomWithin = rect.bottom - containerRect.top + start;
+    const viewHeight = container === document.scrollingElement || container === document.documentElement
+      ? window.innerHeight
+      : container.clientHeight;
+    let targetTop = topWithin - (viewHeight - rect.height) / 2;
+    if (opts.block === "start") targetTop = topWithin - opts.topPadding;
+    if (opts.block === "end") targetTop = bottomWithin - viewHeight + opts.bottomPadding;
+    const max = Math.max(0, container.scrollHeight - container.clientHeight);
+    const clampedTarget = Math.max(0, Math.min(max, targetTop));
+    let animatedStart = start;
+    if (Number.isFinite(opts.startOffset)) {
+      const offsetStart = Math.max(0, Math.min(max, clampedTarget + opts.startOffset));
+      if (Math.abs(offsetStart - clampedTarget) > 8) animatedStart = offsetStart;
+    }
+    return {
+      scrollId: opts.scrollId,
+      start: animatedStart,
+      target: clampedTarget,
+      max
+    };
+  }, {
+    scrollId,
+    block: options.block || "center",
+    topPadding: options.topPadding ?? (isMobileRecording ? 140 : 96),
+    bottomPadding: options.bottomPadding ?? (isMobileRecording ? 160 : 96),
+    startOffset: options.startOffset
+  });
+
+  await recorder.captureFor(seconds, caption, {
+    captionPlacement: options.captionPlacement,
+    beforeFrame: async ({ index, count }) => {
+      await page.evaluate(({ metrics, index, count }) => {
+      const container = document.querySelector(`[data-tutorial-scroll-id="${metrics.scrollId}"]`) ||
+        document.scrollingElement ||
+        document.documentElement;
+      const raw = count <= 1 ? 1 : index / Math.max(1, count - 1);
+      const eased = raw < 0.5 ? 4 * raw * raw * raw : 1 - Math.pow(-2 * raw + 2, 3) / 2;
+      container.scrollTop = Math.round(metrics.start + (metrics.target - metrics.start) * eased);
+      window.__tutorial?.redact?.();
+      }, { metrics, index, count });
+      if (options.beforeFrame) await options.beforeFrame({ index, count });
+    }
+  });
+}
+
+async function waitReady(page, options = {}) {
+  await page.waitForLoadState("domcontentloaded", { timeout: options.domContentTimeout ?? pageTimeoutMs }).catch(() => undefined);
+  await page.waitForLoadState("networkidle", { timeout: options.networkIdleTimeout ?? 30_000 }).catch(() => undefined);
   await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
+}
+
+async function waitForStyledPricingPage(page, timeout = 45_000, settleMs = 500) {
+  await page.waitForFunction(() => {
+    const body = document.body;
+    if (!body) return false;
+    const bodyStyle = window.getComputedStyle(body);
+    const bodyFont = bodyStyle.fontFamily || "";
+    const hasNextCss = Array.from(document.styleSheets).some((sheet) =>
+      /\/_next\/static\/css\//.test(sheet.href || "")
+    );
+    const controls = Array.from(document.querySelectorAll("a,button"));
+    const planButtonStyled = controls.some((element) => {
+      if (!/^Select plan$/i.test((element.textContent || "").trim())) return false;
+      const rect = element.getBoundingClientRect();
+      const style = window.getComputedStyle(element);
+      return rect.width > 120 &&
+        rect.height > 38 &&
+        /flex|inline-flex/i.test(style.display) &&
+        Number.parseFloat(style.borderRadius) > 4 &&
+        style.backgroundColor !== "rgba(0, 0, 0, 0)" &&
+        !/Times New Roman|Times/i.test(style.fontFamily || "");
+    });
+    const billingControlsStyled = controls
+      .filter((element) => /^(Monthly|Yearly)$/i.test((element.textContent || "").trim()))
+      .every((element) => {
+        const rect = element.getBoundingClientRect();
+        const style = window.getComputedStyle(element);
+        return rect.height >= 36 &&
+          /flex|inline-flex/i.test(style.display) &&
+          Number.parseFloat(style.borderRadius) > 4 &&
+          !/Times New Roman|Times/i.test(style.fontFamily || "");
+      });
+    return hasNextCss &&
+      planButtonStyled &&
+      billingControlsStyled &&
+      !/Times New Roman|Times/i.test(bodyFont) &&
+      /MyDreamShoots/i.test(body.innerText || "");
+  }, undefined, { timeout });
+  if (settleMs > 0) await page.waitForTimeout(settleMs);
+}
+
+async function openStyledPricingPage(page) {
+  let lastError = "";
+  for (let attempt = 1; attempt <= 4; attempt += 1) {
+    try {
+      await page.goto(absoluteUrl("/pricing"), { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+      await waitReady(page);
+      await waitForStyledPricingPage(page);
+      await installOverlay(page);
+      await setHistoryMask(page, false);
+      await waitForStyledPricingPage(page, 10_000);
+      return;
+    } catch (error) {
+      lastError = error instanceof Error ? error.message : String(error);
+      log("pricing page style retry", { attempt, error: sanitizeText(lastError) });
+      await page.waitForTimeout(2_500);
+    }
+  }
+  throw new Error(`pricing_page_style_failed: ${sanitizeText(lastError)}`);
 }
 
 async function openLogin(page) {
@@ -647,10 +905,8 @@ async function captureLoginAndAuthenticate(page, context, recorder) {
 }
 
 async function showPricingRechargeStep(page, recorder) {
-  await page.goto(absoluteUrl("/pricing"), { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
-  await waitReady(page);
-  await installOverlay(page);
-  await setHistoryMask(page, false);
+  if (!isMyDreamShootsSite) return;
+  await openStyledPricingPage(page);
 
   const planButtons = page.locator("a,button").filter({ hasText: /^Select plan$/i });
   const proButton = planButtons.nth(1);
@@ -658,6 +914,20 @@ async function showPricingRechargeStep(page, recorder) {
     ? proButton
     : planButtons.first();
   await target.waitFor({ state: "visible", timeout: 20_000 });
+  if (isMobileRecording) {
+    await captureScrollToLocator(page, recorder, target, Math.max(1, captureDurations.pricing - 1), captions.pricing, {
+      block: "center",
+      captionPlacement: "bottom",
+      startOffset: -360,
+      beforeFrame: ({ index }) => index % 3 === 0
+        ? waitForStyledPricingPage(page, 5_000, 0)
+        : undefined
+    });
+    await pointAt(page, target).catch(() => undefined);
+    await waitForStyledPricingPage(page, 5_000, 0);
+    await recorder.captureFor(1, captions.pricing);
+    return;
+  }
   await target.scrollIntoViewIfNeeded().catch(() => undefined);
   await pointAt(page, target).catch(() => undefined);
   await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
@@ -668,10 +938,11 @@ async function openWorkspace(page, hash = "#step-video") {
   let lastError = "";
   for (let attempt = 1; attempt <= 4; attempt += 1) {
     try {
-      await page.goto(`${absoluteUrl("/app/create")}${hash}`, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
-      await waitReady(page);
+      await page.goto(`${absoluteUrl("/app/create")}${hash}`, { waitUntil: "commit", timeout: pageTimeoutMs });
+      await waitReady(page, { domContentTimeout: 15_000, networkIdleTimeout: 5_000 });
       await installOverlay(page);
       await setHistoryMask(page, false);
+      await setVideoFrameLibraryHidden(page, isMyDreamShootsSite);
       await page.locator("#studio-console-video").waitFor({ state: "visible", timeout: 60_000 });
       await page.locator("#video-step-generate").waitFor({ state: "visible", timeout: 60_000 });
       return;
@@ -701,6 +972,36 @@ async function uploadFrames(page, recorder, recordChooser) {
   const uploadResponsePromise = page.waitForResponse((response) =>
     response.url().includes(`/api/sites/${siteId}/customers/`) && response.url().includes("/assets") && response.request().method() === "POST",
   { timeout: 120_000 }).catch(() => null);
+  const waitForUploadComplete = async () => {
+    await page.waitForFunction(({ expectedFrameCount }) => {
+      const text = `${document.querySelector("#studio-console-video")?.textContent || ""} ${document.querySelector("#video-step-generate")?.textContent || ""}`;
+      return new RegExp(`${expectedFrameCount}\\s+(?:of\\s+7\\s+selected|selected\\s+frames\\s+converted)|${expectedFrameCount}\\/7\\s+(?:selected|frames)`, "i").test(text);
+    }, { expectedFrameCount }, { timeout: 120_000 });
+    const uploadResponse = await Promise.race([
+      uploadResponsePromise,
+      page.waitForTimeout(1_000).then(() => null)
+    ]);
+    if (uploadResponse && !uploadResponse.ok()) {
+      const data = await uploadResponse.json().catch(() => ({}));
+      throw new Error(`video_frame_upload_failed: ${sanitizeText(data.error || uploadResponse.status())}`);
+    }
+  };
+  if (recordChooser && isMobileRecording) {
+    const uploadButton = page.locator("#studio-console-video").getByRole("button", { name: /^Upload$/i }).first();
+    await uploadButton.waitFor({ state: "visible", timeout: 45_000 });
+    await pointAt(page, uploadButton).catch(() => undefined);
+    await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+    await recorder.captureFor(captureDurations.uploadChooser, captions.uploadChooser || captions.upload, {
+      captionPlacement: "top"
+    });
+    await page.locator('#studio-console-video input[type="file"]').first().setInputFiles(cleanFramePaths);
+    await waitForUploadComplete();
+    await waitForSelectedFramesReady(page);
+    await recorder.captureFor(captureDurations.uploadSelected, captions.uploadSelected || captions.upload, {
+      captionPlacement: "top"
+    });
+    return;
+  }
   if (recordChooser) {
     const uploadButton = page.locator("#studio-console-video").getByRole("button", { name: /^Upload$/i }).first();
     await uploadButton.waitFor({ state: "visible", timeout: 45_000 });
@@ -716,18 +1017,46 @@ async function uploadFrames(page, recorder, recordChooser) {
   } else {
     await page.locator('#studio-console-video input[type="file"]').first().setInputFiles(cleanFramePaths);
   }
+  await waitForUploadComplete();
+}
+
+async function waitForSelectedFramesReady(page, timeout = 120_000) {
   await page.waitForFunction(({ expectedFrameCount }) => {
-    const text = `${document.querySelector("#studio-console-video")?.textContent || ""} ${document.querySelector("#video-step-generate")?.textContent || ""}`;
-    return new RegExp(`${expectedFrameCount}\\s+(?:of\\s+7\\s+selected|selected\\s+frames\\s+converted)|${expectedFrameCount}\\/7\\s+(?:selected|frames)`, "i").test(text);
-  }, { expectedFrameCount }, { timeout: 120_000 });
-  const uploadResponse = await Promise.race([
-    uploadResponsePromise,
-    page.waitForTimeout(1_000).then(() => null)
-  ]);
-  if (uploadResponse && !uploadResponse.ok()) {
-    const data = await uploadResponse.json().catch(() => ({}));
-    throw new Error(`video_frame_upload_failed: ${sanitizeText(data.error || uploadResponse.status())}`);
-  }
+    const root = document.querySelector("#studio-console-video");
+    if (!root) return false;
+    const nodes = Array.from(root.querySelectorAll("*"));
+    const selectedHeading = nodes.find((node) => /SELECTED ORDER|FRAME ORDER/i.test(node.textContent || ""));
+    const uploadedHeading = nodes.find((node) => /UPLOADED VIDEO FRAMES/i.test(node.textContent || ""));
+    const after = (anchor, node) => !anchor || Boolean(anchor.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING);
+    const before = (anchor, node) => !anchor || Boolean(anchor.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_PRECEDING);
+    const candidates = Array.from(root.querySelectorAll("button,[role='button'],figure,article,li"))
+      .filter((card) => {
+        if (!after(selectedHeading, card) || !before(uploadedHeading, card)) return false;
+        const text = card.textContent || "";
+        return card.querySelector("img") || /images(?:\s*\(1\))?|source-frame|frame_/i.test(text);
+      });
+    const fallback = Array.from(root.querySelectorAll("button[aria-pressed='true']")).filter((card) => card.querySelector("img"));
+    const unique = [];
+    const seen = new Set();
+    for (const card of [...candidates, ...fallback]) {
+      if (seen.has(card)) continue;
+      seen.add(card);
+      unique.push(card);
+    }
+    const cards = unique.slice(0, expectedFrameCount);
+    if (cards.length < expectedFrameCount) return false;
+    return cards.every((card) => {
+      const text = card.textContent || "";
+      const img = card.querySelector("img");
+      return img &&
+        img.complete &&
+        img.naturalWidth > 32 &&
+        img.naturalHeight > 32 &&
+        !/Uploading|Loading|Processing|Converting|Queued/i.test(text);
+    });
+  }, { expectedFrameCount }, { timeout });
+  await page.waitForTimeout(800);
+  await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
 }
 
 async function visibleVideoFrameRect(page, index, scope = "uploaded") {
@@ -787,19 +1116,62 @@ async function pointAtFrameRect(page, index, scope = "uploaded", pulse = true) {
 }
 
 async function showUploadedFramesInSidebar(page, recorder) {
+  if (!isMyDreamShootsSite) {
+    await page.evaluate(() => {
+      const root = document.querySelector("#studio-console-video");
+      const heading = root && Array.from(root.querySelectorAll("*")).find((node) => /UPLOADED VIDEO FRAMES/i.test(node.textContent || ""));
+      heading?.scrollIntoView({ block: "start", inline: "nearest", behavior: "instant" });
+    }).catch(() => undefined);
+    await page.waitForTimeout(450);
+    await pointAtFrameRect(page, 0, "uploaded", true).catch(() => undefined);
+    await recorder.captureFor(2, captions.uploadedScroll || captions.uploaded);
+    await pointAtFrameRect(page, 1, "uploaded", true).catch(() => undefined);
+    await recorder.captureFor(Math.max(1, captureDurations.uploaded - 2), captions.uploadedScroll || captions.uploaded);
+    return;
+  }
+  await setVideoFrameLibraryHidden(page, true);
+  await waitForSelectedFramesReady(page);
   await page.evaluate(() => {
     const root = document.querySelector("#studio-console-video");
-    const heading = root && Array.from(root.querySelectorAll("*")).find((node) => /UPLOADED VIDEO FRAMES/i.test(node.textContent || ""));
-    heading?.scrollIntoView({ block: "start", inline: "nearest", behavior: "instant" });
+    const heading = root && Array.from(root.querySelectorAll("*")).find((node) => /SELECTED ORDER|FRAME ORDER/i.test(node.textContent || ""));
+    heading?.scrollIntoView({ block: "center", inline: "nearest", behavior: "instant" });
   }).catch(() => undefined);
   await page.waitForTimeout(450);
-  await pointAtFrameRect(page, 0, "uploaded", true).catch(() => undefined);
-  await recorder.captureFor(2, captions.uploadedScroll || captions.uploaded);
-  await pointAtFrameRect(page, 1, "uploaded", true).catch(() => undefined);
-  await recorder.captureFor(Math.max(1, captureDurations.uploaded - 2), captions.uploadedScroll || captions.uploaded);
+  const uploadedHeading = page.locator("#studio-console-video").getByText(/UPLOADED VIDEO FRAMES/i).first();
+  if (isMobileRecording && await uploadedHeading.isVisible().catch(() => false)) {
+    await captureScrollToLocator(page, recorder, uploadedHeading, 3, captions.uploadedScroll || captions.uploaded, {
+      block: "start",
+      topPadding: 176,
+      startOffset: -300
+    });
+  } else {
+    await pointAtFrameRect(page, 0, "selected", true).catch(() => undefined);
+    await recorder.captureFor(3, captions.uploadedScroll || captions.uploaded);
+  }
+  await pointAtFrameRect(page, 1, "selected", true).catch(() => undefined);
+  await recorder.captureFor(Math.max(1, captureDurations.uploaded - 3), captions.uploadedScroll || captions.uploaded);
 }
 
 async function selectUploadedFrames(page) {
+  const alreadySelected = await page.evaluate(({ expectedFrameCount }) => {
+    const root = document.querySelector("#studio-console-video");
+    if (!root) return false;
+    const text = root.textContent || "";
+    const selectedTextReady = new RegExp(`${expectedFrameCount}\\s+(?:of\\s+7\\s+selected|selected\\s+frames\\s+converted)|${expectedFrameCount}\\/7\\s+(?:selected|frames)`, "i").test(text);
+    const selectedHeading = Array.from(root.querySelectorAll("*")).find((node) => /SELECTED ORDER|FRAME ORDER/i.test(node.textContent || ""));
+    if (!selectedHeading) return selectedTextReady;
+    let section = selectedHeading;
+    while (section && section !== root) {
+      const sectionText = section.textContent || "";
+      const hasSelectedHeading = /SELECTED ORDER|FRAME ORDER/i.test(sectionText);
+      const mediaCount = section.querySelectorAll("img,video").length;
+      if (hasSelectedHeading && mediaCount >= expectedFrameCount) return true;
+      section = section.parentElement;
+    }
+    return selectedTextReady;
+  }, { expectedFrameCount }).catch(() => false);
+  if (alreadySelected) return;
+
   const selectionReady = async (timeout = 8_000) => page.waitForFunction(({ expectedFrameCount }) => {
     const root = document.querySelector("#studio-console-video");
     if (!root) return false;
@@ -852,16 +1224,26 @@ async function selectUploadedFrames(page) {
 }
 
 async function showSelectedFrameOrder(page, recorder) {
-  await page.evaluate(() => {
-    const root = document.querySelector("#studio-console-video");
-    const heading = root && Array.from(root.querySelectorAll("*")).find((node) => /SELECTED ORDER|FRAME ORDER/i.test(node.textContent || ""));
-    heading?.scrollIntoView({ block: "start", inline: "nearest", behavior: "instant" });
-  }).catch(() => undefined);
-  await page.waitForTimeout(350);
+  await waitForSelectedFramesReady(page);
+  const selectedHeading = page.locator("#studio-console-video").getByText(/SELECTED ORDER|FRAME ORDER/i).first();
+  if (isMobileRecording && await selectedHeading.isVisible().catch(() => false)) {
+    await captureScrollToLocator(page, recorder, selectedHeading, 2, captions.select, {
+      block: "start",
+      topPadding: 132,
+      startOffset: 260
+    });
+  } else {
+    await page.evaluate(() => {
+      const root = document.querySelector("#studio-console-video");
+      const heading = root && Array.from(root.querySelectorAll("*")).find((node) => /SELECTED ORDER|FRAME ORDER/i.test(node.textContent || ""));
+      heading?.scrollIntoView({ block: "start", inline: "nearest", behavior: "instant" });
+    }).catch(() => undefined);
+    await page.waitForTimeout(350);
+  }
   await pointAtFrameRect(page, 0, "selected", true).catch(() => undefined);
-  await recorder.captureFor(2, captions.select);
+  await recorder.captureFor(isMobileRecording ? 1 : 2, captions.select);
   await pointAtFrameRect(page, 1, "selected", true).catch(() => undefined);
-  await recorder.captureFor(Math.max(1, captureDurations.select - 2), captions.select);
+  await recorder.captureFor(Math.max(1, captureDurations.select - (isMobileRecording ? 3 : 2)), captions.select);
 }
 
 async function configurePrompt(page) {
@@ -871,6 +1253,32 @@ async function configurePrompt(page) {
   await textarea.fill(promptText);
   const six = page.locator("#video-step-generate").getByRole("button", { name: /^6s$/ }).first();
   if (await six.isVisible().catch(() => false)) await clickWithPointer(page, six, { force: true }).catch(() => undefined);
+}
+
+async function showPromptAndSettings(page, recorder) {
+  if (!isMobileRecording) {
+    await configurePrompt(page);
+    await recorder.captureFor(captureDurations.prompt, captions.prompt);
+    return;
+  }
+  const textarea = page.locator("#video-step-generate textarea").first();
+  await captureScrollToLocator(page, recorder, textarea, 2, captions.prompt, {
+    block: "center",
+    captionPlacement: "top"
+  });
+  await textarea.fill(promptText);
+  await pointAt(page, textarea).catch(() => undefined);
+  await recorder.captureFor(2, captions.prompt, { captionPlacement: "top" });
+  const six = page.locator("#video-step-generate").getByRole("button", { name: /^6s$/ }).first();
+  if (await six.isVisible().catch(() => false)) await clickWithPointer(page, six, { force: true }).catch(() => undefined);
+
+  const generateButton = page.locator("#video-step-generate").getByRole("button", { name: /Generate video/i }).first();
+  await captureScrollToLocator(page, recorder, generateButton, 2, captions.prompt, {
+    block: "center",
+    captionPlacement: "top"
+  });
+  await pointAt(page, generateButton).catch(() => undefined);
+  await recorder.captureFor(Math.max(1, captureDurations.prompt - 6), captions.prompt, { captionPlacement: "top" });
 }
 
 async function submitJobViaApiFallback(page, reason) {
@@ -1018,6 +1426,7 @@ async function submitJobViaApiFallback(page, reason) {
 async function submitJob(page) {
   const button = page.locator("#video-step-generate").getByRole("button", { name: /Generate video/i }).first();
   await button.waitFor({ state: "visible", timeout: 45_000 });
+  await button.scrollIntoViewIfNeeded().catch(() => undefined);
   const responsePredicate = (response) =>
     response.url().includes(`/api/sites/${siteId}/ai/jobs`) && response.request().method() === "POST";
   let lastMessage = "";
@@ -1100,6 +1509,7 @@ async function openResults(page) {
 async function showGenerateClickOnly(page) {
   const button = page.locator("#video-step-generate").getByRole("button", { name: /Generate video/i }).first();
   await button.waitFor({ state: "visible", timeout: 45_000 });
+  await button.scrollIntoViewIfNeeded().catch(() => undefined);
   await pointAt(page, button);
   await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
   log("skipped real supplier generation by request");
@@ -1125,12 +1535,75 @@ async function focusGenerationProgress(page) {
   await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
 }
 
+async function seededPreviewVideoAsset(page) {
+  if (!isMyDreamShootsSite) return null;
+  const data = await runtime(page).catch(() => null);
+  const assets = Array.isArray(data?.runtime?.assets) ? data.runtime.assets : [];
+  const videoAssets = assets.filter((asset) => String(asset?.mimeType || "").startsWith("video/"));
+  return videoAssets.find((asset) => asset?.jobId === "job_mydreamshoots_tutorial_preview_video") ||
+    videoAssets.find((asset) => /Tutorial result video preview/i.test(asset?.label || "")) ||
+    videoAssets.sort((a, b) => Date.parse(b?.createdAt || "") - Date.parse(a?.createdAt || ""))[0] ||
+    null;
+}
+
+async function forceHistoricalPreviewVideo(page, downloadUrl) {
+  if (!downloadUrl) return;
+  await page.evaluate(async ({ downloadUrl }) => {
+    const src = new URL(downloadUrl, window.location.origin).toString();
+    let dialog = document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]');
+    if (!dialog) {
+      dialog = document.createElement("div");
+      dialog.setAttribute("role", "dialog");
+      dialog.setAttribute("aria-label", "Generated asset preview");
+      dialog.setAttribute("aria-modal", "true");
+      Object.assign(dialog.style, {
+        position: "fixed",
+        inset: "0",
+        zIndex: "2147483001",
+        display: "grid",
+        placeItems: "center",
+        background: "rgba(0,0,0,.96)",
+        padding: "clamp(16px, 4vw, 56px)"
+      });
+      document.body.appendChild(dialog);
+    }
+    let video = dialog.querySelector("video");
+    if (!video) {
+      dialog.innerHTML = "";
+      video = document.createElement("video");
+      dialog.appendChild(video);
+    }
+    Object.assign(video.style, {
+      maxWidth: "min(92vw, 1120px)",
+      maxHeight: "min(88vh, 920px)",
+      width: "auto",
+      height: "auto",
+      objectFit: "contain",
+      background: "#000"
+    });
+    video.setAttribute("playsinline", "");
+    video.muted = true;
+    video.controls = false;
+    video.loop = false;
+    video.playbackRate = 1;
+    if (video.src !== src) {
+      video.src = src;
+      video.load();
+    }
+    try {
+      video.currentTime = 0;
+    } catch {}
+    await video.play().catch(() => undefined);
+  }, { downloadUrl }).catch(() => undefined);
+}
+
 async function openHistoricalVideoPreview(page) {
   await openResults(page);
   await setHistoryMask(page, true);
   await closeMegaMenus(page);
   const resultsSection = page.locator("#video-workspace-videos").first();
   await resultsSection.scrollIntoViewIfNeeded().catch(() => undefined);
+  const previewAsset = await seededPreviewVideoAsset(page);
   const freshPreview = resultsSection.locator('[role="status"] button').filter({ hasText: /Tutorial result video preview|Fresh draft video preview/i }).first();
   if (await freshPreview.isVisible().catch(() => false)) {
     await clickWithPointer(page, freshPreview, { force: true, timeout: 30_000 });
@@ -1139,15 +1612,36 @@ async function openHistoricalVideoPreview(page) {
     await preview.waitFor({ state: "visible", timeout: 20_000 });
     await clickWithPointer(page, preview, { force: true, timeout: 30_000 });
   }
-  const dialog = page.locator('[role="dialog"][aria-label*="Generated asset preview"]').first();
-  await dialog.waitFor({ state: "visible", timeout: 20_000 });
-  const video = dialog.locator("video").first();
-  await video.waitFor({ state: "visible", timeout: 20_000 });
-  await page.waitForFunction(() => {
-    const dialog = document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]');
-    const video = dialog?.querySelector("video");
-    return Boolean(video && video.readyState >= 1 && Number.isFinite(video.duration) && video.duration > 0);
-  }, undefined, { timeout: 20_000 });
+  let dialog = page.locator('[role="dialog"][aria-label*="Generated asset preview"]').first();
+  let video = dialog.locator("video").first();
+  try {
+    await dialog.waitFor({ state: "visible", timeout: 20_000 });
+    await setHistoryMask(page, false);
+    await setPreviewCleanBackground(page, true);
+    await page.evaluate(() => window.__tutorial?.highlight?.(null)).catch(() => undefined);
+    await video.waitFor({ state: "visible", timeout: 20_000 });
+    await page.waitForFunction(() => {
+      const dialog = document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]');
+      const video = dialog?.querySelector("video");
+      return Boolean(video && video.readyState >= 1 && Number.isFinite(video.duration) && video.duration > 0);
+    }, undefined, { timeout: 20_000 });
+  } catch (error) {
+    if (!previewAsset?.downloadUrl) throw error;
+    log("historical preview dialog fallback", { error: error instanceof Error ? error.message : String(error) });
+    await forceHistoricalPreviewVideo(page, previewAsset.downloadUrl);
+    dialog = page.locator('[role="dialog"][aria-label*="Generated asset preview"]').first();
+    video = dialog.locator("video").first();
+    await dialog.waitFor({ state: "visible", timeout: 20_000 });
+    await setHistoryMask(page, false);
+    await setPreviewCleanBackground(page, true);
+    await page.evaluate(() => window.__tutorial?.highlight?.(null)).catch(() => undefined);
+    await video.waitFor({ state: "visible", timeout: 20_000 });
+    await page.waitForFunction(() => {
+      const dialog = document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]');
+      const video = dialog?.querySelector("video");
+      return Boolean(video && video.readyState >= 1 && Number.isFinite(video.duration) && video.duration > 0);
+    }, undefined, { timeout: 20_000 });
+  }
   const box = await video.boundingBox().catch(() => null);
   if (!box) throw new Error("historical_video_preview_missing_box");
   await moveTutorialPointer(page, box.x + box.width / 2, box.y + box.height / 2, true);
@@ -1157,6 +1651,7 @@ async function openHistoricalVideoPreview(page) {
     const video = dialog?.querySelector("video");
     if (video) {
       video.muted = true;
+      video.playbackRate = 1;
       void video.play().catch(() => undefined);
     }
   }).catch(() => undefined);
@@ -1169,7 +1664,7 @@ async function openHistoricalVideoPreview(page) {
 }
 
 async function prepareGeneratedVideoPlayback(page, seconds) {
-  await page.evaluate(async ({ seconds }) => {
+  await page.evaluate(async ({ seconds: _seconds }) => {
     const dialog = document.querySelector('[role="dialog"][aria-label*="Generated asset preview"]');
     const video = dialog?.querySelector("video");
     if (!video) return;
@@ -1189,7 +1684,8 @@ async function prepareGeneratedVideoPlayback(page, seconds) {
       });
     }
     const duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 6;
-    video.playbackRate = Math.max(0.35, Math.min(1, duration / Math.max(1, seconds - 0.25)));
+    video.playbackRate = 1;
+    video.currentTime = Math.min(video.currentTime, Math.max(0, duration - 0.05));
     await video.play().catch(() => undefined);
   }, { seconds }).catch(() => undefined);
 }
@@ -1429,17 +1925,17 @@ async function main() {
     reducedMotion: "reduce",
     locale: "en-US"
   });
-  const page = await context.newPage();
-  page.setDefaultTimeout(pageTimeoutMs);
-  page.on("pageerror", (error) => log("browser page error", { error: error.message }));
-  page.on("console", (message) => {
-    if (message.type() === "error") log("browser console error", { error: message.text().slice(0, 240) });
-  });
+  let page = await createTutorialPage(context);
   const recorder = new Recorder(page);
   const jobIds = [];
   try {
     await captureLoginAndAuthenticate(page, context, recorder);
-    await showPricingRechargeStep(page, recorder);
+    if (isMyDreamShootsSite) await showPricingRechargeStep(page, recorder);
+    if (isMobileRecording && isMyDreamShootsSite) {
+      await page.close().catch(() => undefined);
+      page = await createTutorialPage(context);
+      recorder.page = page;
+    }
     await openWorkspace(page, "#step-video");
     await pointAt(page, page.locator("#video-step-generate").getByText(/Create an AI video clip/i).first()).catch(() => undefined);
     await recorder.captureFor(captureDurations.workspace, captions.workspace);
@@ -1451,6 +1947,7 @@ async function main() {
       try {
         await openWorkspace(page, "#step-video");
         await uploadFrames(page, recorder, !captured.upload);
+        await waitForSelectedFramesReady(page);
         if (!captured.upload) {
           captured.upload = true;
         }
@@ -1463,10 +1960,11 @@ async function main() {
           await showSelectedFrameOrder(page, recorder);
           captured.select = true;
         }
-        await configurePrompt(page);
         if (!captured.prompt) {
-          await recorder.captureFor(captureDurations.prompt, captions.prompt);
+          await showPromptAndSettings(page, recorder);
           captured.prompt = true;
+        } else {
+          await configurePrompt(page);
         }
         if (skipRealGeneration) {
           await showGenerateClickOnly(page);

@@ -42,12 +42,6 @@ function money(amountCents: number, currency = "usd"): string {
   }).format(amountCents / 100);
 }
 
-function toneFromScore(score: number): "good" | "warn" | "bad" {
-  if (score >= 76) return "good";
-  if (score >= 50) return "warn";
-  return "bad";
-}
-
 function statusLabel(status: string): string {
   if (status === "active") return "运营";
   if (status === "draft") return "草稿";

@@ -10,7 +10,7 @@ const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(
 const siteSlug = process.env.SMOKE_SITE_SLUG || "mydreamshoots";
 const siteId = process.env.SMOKE_SITE_ID || "site_dreamshoot";
 const hostName = new URL(baseUrl).hostname;
-const packageMenuLabel = /Browse packages|Travel Packages|Ver paquetes|Paquetes de viaje/i;
+const packageMenuLabel = /Headshot Generator|Occasion Albums|Browse occasion albums|Browse packages|Travel Packages|Ver paquetes|Paquetes de viaje|Paquetes de ocasion/i;
 const toolsMenuLabel = /^Tools$|^Herramientas$/i;
 const anonymousEntries = [
   { label: "MyDreamShoots home", path: `/site/${siteSlug}` },

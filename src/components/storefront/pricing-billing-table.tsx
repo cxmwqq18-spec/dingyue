@@ -80,18 +80,17 @@ export function PricingBillingTable({
         <div className="grid gap-4 lg:grid-cols-3">
           {visiblePlans.map(({ id, name, price }) => {
             if (!price) return null;
-            const hasBadge = price.featured || price.bestValue;
             return (
               <div
                 className={`relative flex h-full flex-col rounded-[12px] border ${price.featured || price.bestValue ? "border-[#c99152] bg-white text-[#171514] ring-1 ring-[#e9bf89]" : aidreamcapes ? "border-[#E3D3BE] bg-white text-[#171514]" : "border-white/12 bg-white text-[#171514]"} p-5 shadow-[0_28px_66px_-52px_rgba(70,46,24,0.24)]`}
                 key={id}
               >
-                {hasBadge ? (
-                  <div className="absolute left-5 top-5 rounded-full bg-[#c99152] px-3 py-1.5 text-center text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_16px_34px_-24px_rgba(201,145,82,0.85)]">
+                <div className="flex min-h-[2.5rem] items-start">
+                  <div className="inline-flex rounded-full bg-[#c99152] px-3 py-1.5 text-center text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_16px_34px_-24px_rgba(201,145,82,0.85)]">
                     {price.badgeLabel}
                   </div>
-                ) : null}
-                <p className={`${hasBadge ? "mt-12" : "mt-2"} text-[1.72rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)]`}>{name}</p>
+                </div>
+                <p className="mt-4 text-[1.72rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)]">{name}</p>
                 <p className="mt-2 min-h-[2.75rem] text-[0.92rem] text-[#6d665f]">{price.planSubtitle}</p>
                 <div className="mt-6 flex items-end gap-2">
                   <p className="text-[2.65rem] font-semibold leading-none tracking-[-0.04em] [font-family:var(--site-title-font)]">{price.formattedAmount}</p>
@@ -114,7 +113,7 @@ export function PricingBillingTable({
                     </div>
                   ))}
                 </div>
-                <StorefrontInstantLink className={`mt-6 inline-flex min-h-[48px] w-full items-center justify-center rounded-[10px] text-[0.95rem] font-semibold transition hover:-translate-y-0.5 ${price.featured ? "bg-[#c99152] text-white" : "bg-[#171514] text-white"}`} href={price.cartHref}>
+                <StorefrontInstantLink className={`mt-auto inline-flex min-h-[48px] w-full items-center justify-center rounded-[10px] text-[0.95rem] font-semibold transition hover:-translate-y-0.5 ${price.featured ? "bg-[#c99152] text-white" : "bg-[#171514] text-white"}`} href={price.cartHref}>
                   {price.buttonLabel}
                 </StorefrontInstantLink>
               </div>

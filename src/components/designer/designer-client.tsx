@@ -29,7 +29,6 @@ import {
   schemaMetaLine,
   templateDisplayName
 } from "@/components/designer/designer-metadata";
-import { DesignerPropertyPane } from "@/components/designer/designer-property-pane";
 import { DesignerWorkspacePane } from "@/components/designer/designer-workspace-pane";
 import {
   createGlobalTreeProps,
@@ -672,9 +671,9 @@ export function DesignerClient({
     setLastAction(action);
   }
 
-  function postPatchToIframe(payload: IframePatchPayload) {
+  const postPatchToIframe = useCallback((payload: IframePatchPayload) => {
     iframeRef.current?.contentWindow?.postMessage(payload, "*");
-  }
+  }, []);
 
   function reloadIframePreview() {
     iframeRecoveryCount.current = 0;
@@ -704,9 +703,9 @@ export function DesignerClient({
     window.setTimeout(checkIframePreviewHealth, 240);
   }
 
-  function syncSelectionToIframe(nextSelection = selection) {
+  const syncSelectionToIframe = useCallback((nextSelection = selection) => {
     syncSelectionToPreview({ selection: nextSelection, previewMode, postPatch: postPatchToIframe });
-  }
+  }, [postPatchToIframe, previewMode, selection]);
 
   function chooseSelection(nextSelection: Selection) {
     if (nextSelection.kind === "section" || nextSelection.kind === "block") {
@@ -745,7 +744,7 @@ export function DesignerClient({
     return () => window.removeEventListener("message", onPreviewMessage);
   }, [draft, themeSettings]);
 
-  function checkIframePreviewHealth() {
+  const checkIframePreviewHealth = useCallback(() => {
     const iframeDocument = iframeRef.current?.contentDocument;
     const hasPreviewRoot = Boolean(iframeDocument?.querySelector("[data-theme-sections-root]"));
     const sectionCount = iframeDocument?.querySelectorAll(".xfcart-section").length ?? 0;
@@ -763,7 +762,7 @@ export function DesignerClient({
     }
     setIframeStatus("failed");
     return false;
-  }
+  }, [syncSelectionToIframe]);
 
   useEffect(() => {
     if (previewMode !== "iframe") return;
@@ -781,7 +780,7 @@ export function DesignerClient({
       window.clearTimeout(earlyCheck);
       window.clearTimeout(recoveryCheck);
     };
-  }, [previewMode, selectedPageId, iframeReloadKey]);
+  }, [previewMode, selectedPageId, iframeReloadKey, checkIframePreviewHealth]);
 
   async function sendSaasAction(action: SaasThemeAction, fallbackMessage: string) {
     await sendXfcartAction({

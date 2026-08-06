@@ -998,8 +998,11 @@ function spanishPriceMetadata(metadata, spec, idMap) {
     else if (text.includes("pay 6, get 12")) next.discountLabel = "Paga 6, recibe 12";
     else if (text.includes("route launch price")) next.discountLabel = "Precio de lanzamiento de ruta";
   }
-  if (typeof next.yearlySavingsLabel === "string" && mixedText("yearlySavingsLabel").includes("6 months free")) {
-    next.yearlySavingsLabel = "6 meses gratis";
+  if (typeof next.yearlySavingsLabel === "string") {
+    const savingsText = mixedText("yearlySavingsLabel").toLowerCase();
+    if (savingsText.includes("annual savings") || savingsText.includes("yearly savings")) {
+      next.yearlySavingsLabel = "Ahorro anual indicado al pagar";
+    }
   }
   if (typeof next.publicReference === "string") next.publicReference = spanishPricePublicReference(original, spec);
   return next;
@@ -1142,7 +1145,7 @@ function patchSpanishGlobalSections(value, spec) {
   return value;
 }
 
-function spanishToolDetailJson(item, title, spec, idMap) {
+function spanishToolDetailJson(item, title, spec, _idMap) {
   const imageTool = spec.sourceSiteId === "site_dreamshoot";
   const topic = title.toLowerCase();
   return {

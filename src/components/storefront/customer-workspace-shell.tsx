@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ArrowDown, ArrowUp, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, Eye, Film, GripVertical, Heart, ImagePlus, LayoutGrid, Pencil, Play, RotateCcw, Trash2, Upload, X, UserRound, Users } from "lucide-react";
 import { AssetsPanel } from "@/components/app/assets-panel";
@@ -74,7 +74,6 @@ type OutputCopyJob = {
   createdAt: string;
   requestJson?: Record<string, unknown>;
 };
-const myDreamShootsDisplayName = "myᕲreamshoots";
 const VIDEO_FRAME_UPLOAD_LIMIT = CUSTOMER_VIDEO_FRAME_LIMIT;
 const LOCALLY_CREATED_VIDEO_FRAME_KEEPALIVE_MS = 120_000;
 const VIDEO_PREVIEW_INTERSECTION_MARGIN = "160px";
@@ -1354,9 +1353,9 @@ export function CustomerWorkspaceShell({
   const [runtimeAssets, setRuntimeAssets] = useState<ThemeRuntimeAsset[]>(() => initialRuntime?.assets ?? assets);
   const hydratedAssets = runtimeAssets;
   const [liveJobUpdates, setLiveJobUpdates] = useState<Record<string, LiveJobPatch>>({});
-  const baseRecentJobs = runtime?.jobs ?? [];
   const recentJobs = useMemo(
     () => {
+      const baseRecentJobs = runtime?.jobs ?? [];
       const patchedJobs = baseRecentJobs.map((job) => {
         const patch = liveJobUpdates[job.id];
         return patch ? applyLiveJobPatch(job, patch) : job;
@@ -1368,7 +1367,7 @@ export function CustomerWorkspaceShell({
       return [...patchedJobs, ...liveOnlyJobs]
         .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime());
     },
-    [baseRecentJobs, liveJobUpdates]
+    [liveJobUpdates, runtime?.jobs]
   );
   const customerModels = runtime?.customerModels ?? [];
   const adminSubscriptionBypass = runtime?.adminAccess?.canBypassBilling === true;
@@ -1679,7 +1678,7 @@ export function CustomerWorkspaceShell({
     window.setTimeout(() => {
       document.getElementById("resources-all")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
-  }, [searchParams]);
+  }, [searchParams, spanishXby]);
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof window.EventSource === "undefined") return;
@@ -1746,7 +1745,7 @@ export function CustomerWorkspaceShell({
       setManualRefreshKey(null);
       setRuntimeRefreshMessage(t(spanishXby, "Status refresh failed. Try again.", "No se pudo actualizar el estado. Intentalo de nuevo."));
     }
-  }, [completedRuntimeRefreshKey, manualRefreshKey, manualRefreshPending, runtimeState.status]);
+  }, [completedRuntimeRefreshKey, manualRefreshKey, manualRefreshPending, runtimeState.status, spanishXby]);
   useEffect(() => {
     const eventRefreshKey = eventRefreshKeyRef.current;
     if (eventRefreshKey !== null && completedRuntimeRefreshKey === eventRefreshKey) {
@@ -1767,7 +1766,7 @@ export function CustomerWorkspaceShell({
         return next;
       });
     }
-  }, [completedRuntimeRefreshKey, runtimeState.status]);
+  }, [completedRuntimeRefreshKey, runtimeState.status, spanishXby]);
   useEffect(() => {
     const nextAssets = runtime?.assets ?? initialRuntime?.assets ?? assets;
     setRuntimeAssets((current) => {
@@ -2754,14 +2753,6 @@ export function CustomerWorkspaceShell({
     }, 0);
   }
 
-  function openCreateUploadPicker(target: "primary" | "partner" = "primary") {
-    setActivePanel("create");
-    window.setTimeout(() => {
-      window.dispatchEvent(new CustomEvent("customer-workspace:open-source-upload", { detail: { target } }));
-      scrollToWorkspaceAnchor("source-photos");
-    }, 120);
-  }
-
   function openSidebarSamplePicker(target: SampleTarget) {
     pendingSampleTargetRef.current = target;
     sampleUploadInputRef.current?.click();
@@ -2832,7 +2823,7 @@ export function CustomerWorkspaceShell({
     if (previewSampleId === oldId) setPreviewSampleId(nextAsset.id);
   }
 
-  async function syncCurrentSamples(keepAssetIds: string[]) {
+  const syncCurrentSamples = useCallback(async (keepAssetIds: string[]) => {
     const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets`, {
       method: "PATCH",
       headers: {
@@ -2843,7 +2834,7 @@ export function CustomerWorkspaceShell({
     });
     if (!response.ok) return;
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
-  }
+  }, [customer.id, site.id]);
 
   async function deleteSamples(assets: SampleAsset[]) {
     const remoteIds = assets
@@ -3272,7 +3263,7 @@ export function CustomerWorkspaceShell({
     if (nextPrimaryIds.length) setPrimarySampleIds(nextPrimaryIds);
     if (nextPartnerIds.length) setPartnerSampleIds(nextPartnerIds);
     restoredSampleSelectionRef.current = true;
-  }, [readySourceAssets, recentJobs, sampleSelectionStorageKey]);
+  }, [readySourceAssets, recentJobs, sampleSelectionStorageKey, studioTrainingMode]);
 
   useEffect(() => {
     if (typeof window === "undefined" || !restoredSampleSelectionRef.current) return;
@@ -3297,7 +3288,7 @@ export function CustomerWorkspaceShell({
     if (!keepIds.length) return;
     syncedInitialSamplesRef.current = true;
     void syncCurrentSamples(keepIds);
-  }, [partnerSampleIds, primarySampleIds, readySourceAssets, runtimeState.status]);
+  }, [partnerSampleIds, primarySampleIds, readySourceAssets, runtimeState.status, syncCurrentSamples]);
 
   useEffect(() => {
     const handleAssetsUpdated = () => {

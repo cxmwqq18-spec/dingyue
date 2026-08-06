@@ -1,7 +1,7 @@
 "use client";
 
 import type { GlobalSettingsNodeDefinition, Selection } from "@/components/designer/designer-types";
-import { defaultSection, getSectionSchema } from "@/lib/section-schema";
+import { getSectionSchema } from "@/lib/section-schema";
 import {
   normalizeSaasSettingsCurrent,
   normalizeSaasSettingsCurrentForTheme,

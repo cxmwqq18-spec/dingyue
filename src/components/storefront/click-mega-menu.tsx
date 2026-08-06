@@ -8,6 +8,7 @@ type ClickMegaMenuProps = {
   blockAttrs?: Record<string, string | number | boolean | undefined>;
   buttonClassName: string;
   children: ReactNode;
+  disablePrefetch?: boolean;
   label: string;
   panelClassName: string;
   prefetchPaths?: string[];
@@ -24,7 +25,7 @@ function menuWarmFetchEnabled() {
   return process.env.NEXT_PUBLIC_STOREFRONT_MENU_WARM_FETCH === "1";
 }
 
-export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, panelClassName, prefetchPaths = [] }: ClickMegaMenuProps) {
+export function ClickMegaMenu({ blockAttrs, buttonClassName, children, disablePrefetch = false, label, panelClassName, prefetchPaths = [] }: ClickMegaMenuProps) {
   const [open, setOpen] = useState(false);
   const [panelMetrics, setPanelMetrics] = useState<{ maxHeight: number; top: number } | null>(null);
   const router = useRouter();
@@ -96,7 +97,7 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   }, []);
 
   const prefetchMenuPaths = useCallback(() => {
-    if (!menuPrefetchEnabled()) return;
+    if (disablePrefetch || !menuPrefetchEnabled()) return;
     if (prefetchedRef.current) return;
     prefetchedRef.current = true;
     const maxPrefetch = Number(process.env.NEXT_PUBLIC_STOREFRONT_MENU_PREFETCH_LIMIT ?? 2);
@@ -109,10 +110,10 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
         router.prefetch(path);
       }, 60 + index * 180)
     );
-  }, [prefetchKey, router, warmFetchPath]);
+  }, [disablePrefetch, prefetchKey, router, warmFetchPath]);
 
   const prefetchHoveredAnchor = useCallback((target: EventTarget | null) => {
-    if (!menuPrefetchEnabled() || process.env.NEXT_PUBLIC_STOREFRONT_MENU_HOVER_PREFETCH !== "1") return;
+    if (disablePrefetch || !menuPrefetchEnabled() || process.env.NEXT_PUBLIC_STOREFRONT_MENU_HOVER_PREFETCH !== "1") return;
     const anchor = target instanceof Element ? target.closest<HTMLAnchorElement>("a[href]") : null;
     const href = anchor?.getAttribute("href");
     if (!href || href.startsWith("#") || anchor?.target && anchor.target !== "_self") return;
@@ -129,7 +130,7 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
     hoveredPrefetchRef.current.add(path);
     router.prefetch(path);
     warmFetchPath(path, 240);
-  }, [router, warmFetchPath]);
+  }, [disablePrefetch, router, warmFetchPath]);
 
   useEffect(() => {
     if (!open) return;
@@ -154,14 +155,14 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, label, pa
   }, [open, updatePanelMetrics]);
 
   useEffect(() => {
-    if (!open || !menuPrefetchEnabled()) return;
+    if (!open || disablePrefetch || !menuPrefetchEnabled()) return;
     prefetchMenuPaths();
     return () => {
       prefetchTimerRefs.current.forEach((timer) => window.clearTimeout(timer));
       prefetchTimerRefs.current = [];
       cancelWarmFetches();
     };
-  }, [cancelWarmFetches, open, prefetchMenuPaths]);
+  }, [cancelWarmFetches, disablePrefetch, open, prefetchMenuPaths]);
 
   useEffect(() => {
     setOpen(false);

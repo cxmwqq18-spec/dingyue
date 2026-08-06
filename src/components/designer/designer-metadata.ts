@@ -18,7 +18,7 @@ function labelFor(type: SectionType): string {
   return sectionSchemas[type]?.label ?? type.split("_").map((word) => word[0].toUpperCase() + word.slice(1)).join(" ");
 }
 
-export function labelForSchema(type: SectionType, schemas: Record<string, ThemeSectionSchema>): string {
+export function labelForSchema(type: SectionType, _schemas: Record<string, ThemeSectionSchema>): string {
   const localized: Partial<Record<SectionType, string>> = {
     hero: "首屏横幅",
     brand_logo_strip: "品牌背书",

@@ -632,7 +632,7 @@ function iso(value: Date | string): string {
   return value instanceof Date ? value.toISOString() : value;
 }
 
-async function readAccountSectionRuntime({
+async function _readAccountSectionRuntime({
   customer,
   section,
   siteId

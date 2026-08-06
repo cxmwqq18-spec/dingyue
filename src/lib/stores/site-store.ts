@@ -63,7 +63,6 @@ import {
   toMediaAsset,
   toThemePublication,
   toThemePage,
-  toThemeSettings,
   toPublicSiteAdminRelational,
   toPublicPlatformAdminRelational,
   toAlbumRelational,

@@ -191,6 +191,15 @@ function blockValue(block: SectionBlockInstance, key: string, fallback = ""): st
   return cleanText(block.settings[key], fallback);
 }
 
+function faqAnswerText(block: SectionBlockInstance): string {
+  const answer = blockValue(block, "answer", blockValue(block, "description"));
+  const body = listText(block.settings.body);
+  const bulletList = listText(block.settings.bulletList);
+  return [answer, ...body, ...bulletList.map((item) => `• ${item}`)]
+    .filter(Boolean)
+    .join(" ");
+}
+
 function siteOriginUrl(site: Site): string {
   const domain = cleanText(site.primaryDomain);
   if (!domain) return "http://localhost:3000";
@@ -427,7 +436,7 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined): JsonLdNode 
 	        name: cleanSchemaText(site, blockValue(block, "question", blockValue(block, "title"))),
 	        acceptedAnswer: {
 	          "@type": "Answer",
-	          text: cleanSchemaText(site, blockValue(block, "answer", blockValue(block, "description")))
+	          text: cleanSchemaText(site, faqAnswerText(block))
 	        }
 	      }))
       .filter((item) => cleanText(item.name) && cleanText((item.acceptedAnswer as { text: string }).text));

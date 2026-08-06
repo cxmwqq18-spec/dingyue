@@ -135,7 +135,7 @@ export function AssetsPanel({
 
   async function deleteAsset(assetId: string) {
     const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${assetId}`, { method: "DELETE", headers: customerJsonHeaders(siteId) });
-    const result = (await response.json().catch(() => ({}))) as { error?: string };
+    const _result = (await response.json().catch(() => ({}))) as { error?: string };
     if (response.ok) {
       invalidateCustomerAssets(siteId, customer.id);
       setItems((current) => current.filter((asset) => asset.id !== assetId));

@@ -1,6 +1,6 @@
 "use client";
 
-import { type KeyboardEvent, type MouseEvent, type ReactNode, useEffect, useRef, useState } from "react";
+import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 type ShowcasePreviewKind = "image" | "video";
@@ -88,18 +88,18 @@ export function DreamshootShowcasePreview({ children, className = "block" }: Dre
     });
   };
 
-  const collectTriggerItems = (kind: ShowcasePreviewKind) => Array.from(rootRef.current?.querySelectorAll<HTMLElement>(PREVIEW_TRIGGER_SELECTOR) ?? [])
+  const collectTriggerItems = useCallback((kind: ShowcasePreviewKind) => Array.from(rootRef.current?.querySelectorAll<HTMLElement>(PREVIEW_TRIGGER_SELECTOR) ?? [])
     .map(previewFromTrigger)
-    .filter((item): item is ShowcasePreview => item !== null && item.kind === kind);
+    .filter((item): item is ShowcasePreview => item !== null && item.kind === kind), []);
 
-  const openPreview = (target: EventTarget | null) => {
+  const openPreview = useCallback((target: EventTarget | null) => {
     const nextPreview = previewFromEventTarget(target);
     if (!nextPreview) return false;
     const triggerItems = collectTriggerItems(nextPreview.kind);
     const index = Math.max(0, triggerItems.findIndex((item) => item.kind === nextPreview.kind && item.src === nextPreview.src));
     setGallery({ items: triggerItems.length ? triggerItems : [nextPreview], index });
     return true;
-  };
+  }, [collectTriggerItems]);
 
   const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
     if (openPreview(event.target)) {
@@ -142,7 +142,7 @@ export function DreamshootShowcasePreview({ children, className = "block" }: Dre
       root.removeEventListener("click", handleNativeClick, true);
       root.removeEventListener("keydown", handleNativeKeyDown, true);
     };
-  }, []);
+  }, [openPreview]);
 
   useEffect(() => {
     if (!gallery) return;

@@ -256,7 +256,7 @@ export function PlatformEmailPanel({
   const [saving, setSaving] = useState(false);
   const [testing, setTesting] = useState(false);
   const [testingSiteId, setTestingSiteId] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
 
   const resendConfigChoices = useMemo<PlatformResendConfig[]>(() => {
     if (status.configs?.length) return status.configs;

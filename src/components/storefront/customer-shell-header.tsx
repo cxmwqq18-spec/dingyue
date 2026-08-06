@@ -225,7 +225,7 @@ export function CustomerShellHeader({
           <nav className="hidden items-center justify-center gap-3 text-sm font-semibold lg:flex">
             <ClickMegaMenu
               buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
-              label={isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : isAidreamcapes ? "Occasion Albums" : "Browse packages"}
+              label={isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : isAidreamcapes ? "Occasion Albums" : isMyDreamShoots ? "Headshot Generator" : "Browse packages"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={packagePrefetchPaths}
             >

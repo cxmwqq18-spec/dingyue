@@ -747,7 +747,7 @@ export function DesignerModeTabs<T extends string>({
           const selected = item.key === active;
           return (
             <button
-              aria-selected={selected}
+              aria-pressed={selected}
               className={cx(
                 "tools_tab_item inline-flex items-center justify-center gap-1.5 text-sm transition",
                 tone === "pill"

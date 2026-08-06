@@ -175,7 +175,7 @@ const report = {
   timeoutMs,
   slowMs,
   slowTargets: sorted.filter((result) => result.ms >= slowMs),
-  summary: sorted.map(({ sample, ...result }) => result)
+  summary: sorted.map(({ sample: _sample, ...result }) => result)
 };
 
 console.log(JSON.stringify(report, null, 2));

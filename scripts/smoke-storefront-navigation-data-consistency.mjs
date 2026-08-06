@@ -39,7 +39,7 @@ const siteChecks = [
 const menuChecks = [
   {
     name: "packages",
-    buttonName: /Browse packages|Occasion Albums|Photo Packages|Ver paquetes|Paquetes de ocasion/i
+    buttonName: /Headshot Generator|Browse packages|Occasion Albums|Photo Packages|Ver paquetes|Paquetes de ocasion/i
   },
   {
     name: "tools",

@@ -32,6 +32,10 @@ const publicPrefix = args.get("public-prefix") ?? "/assets/dreamshoot/generated/
 const coverRoot = path.resolve(process.cwd(), args.get("cover-out") ?? "public/assets/dreamshoot/generated/pack-covers");
 const coverPublicPrefix = args.get("cover-public-prefix") ?? "/assets/dreamshoot/generated/pack-covers";
 const publicVersion = args.get("version") ?? process.env.THEME_GALLERY_VERSION ?? "20260715b";
+const coverPublicVersion = args.get("cover-version") ?? process.env.THEME_COVER_VERSION ?? publicVersion;
+const coverPublicVersionBySlug = {
+  engagement: process.env.THEME_ENGAGEMENT_COVER_VERSION ?? "20260805uncropped1"
+};
 const force = flags.has("force") || process.env.THEME_GALLERY_FORCE === "1";
 const saveSheets = flags.has("save-sheets") || process.env.THEME_GALLERY_SAVE_SHEETS === "1";
 const concurrency = Math.max(1, Math.min(3, Number(args.get("concurrency") ?? process.env.THEME_GALLERY_CONCURRENCY ?? "1") || 1));
@@ -108,8 +112,9 @@ function galleryPaths(slug) {
 }
 
 function coverPath(slug) {
+  const version = coverPublicVersionBySlug[slug] ?? coverPublicVersion;
   return {
-    publicPath: `${coverPublicPrefix}/${slug}/${slug}-cover.webp?v=${publicVersion}`,
+    publicPath: `${coverPublicPrefix}/${slug}/${slug}-cover.webp?v=${version}`,
     filePath: path.join(coverRoot, slug, `${slug}-cover.webp`)
   };
 }
@@ -242,10 +247,22 @@ async function createCoverFromGallery(slug, sourceFilePath) {
   const overlay = Buffer.from(
     `<svg width="1280" height="960" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#05070E" stop-opacity="0.18" offset="0"/><stop stop-color="#16dcf0" stop-opacity="0.12" offset="0.45"/><stop stop-color="#ff9f43" stop-opacity="0.16" offset="1"/></linearGradient></defs><rect width="1280" height="960" fill="url(#g)"/></svg>`
   );
-  await sharp(sourceFilePath)
-    .resize(1280, 960, { fit: "cover", position: "entropy" })
-    .modulate({ brightness: 0.94, saturation: 1.08, hue: 4 })
+  const background = await sharp(sourceFilePath)
+    .resize(1280, 960, { fit: "cover", position: "centre" })
+    .blur(26)
+    .modulate({ brightness: 0.7, saturation: 1.05, hue: 4 })
     .composite([{ input: overlay, blend: "overlay" }])
+    .toBuffer();
+  const foreground = await sharp(sourceFilePath)
+    .resize(900, 900, { fit: "inside" })
+    .toBuffer();
+  const foregroundMeta = await sharp(foreground).metadata();
+  await sharp(background)
+    .composite([{
+      input: foreground,
+      left: Math.max(0, Math.floor((1280 - (foregroundMeta.width ?? 900)) / 2)),
+      top: Math.max(0, Math.floor((960 - (foregroundMeta.height ?? 900)) / 2))
+    }])
     .sharpen({ sigma: 0.42 })
     .webp({ quality: 90 })
     .toFile(cover.filePath);

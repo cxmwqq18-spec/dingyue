@@ -30,8 +30,6 @@ import {
   buildSaasThemePublication
 } from "./theme/saas-theme-model";
 import {
-  weddingStoryHouseSiteSettings,
-  weddingStoryHouseTemplateLabels,
   weddingStoryHouseTemplates
 } from "./theme/packages/wedding-story-house";
 import { dreamshootAiStudioSiteSettings, dreamshootAiStudioTemplates } from "./theme/packages/dreamshoot-ai-studio";
@@ -261,7 +259,7 @@ function buildWeddingThemeSettings(): ThemeSettings {
   return next;
 }
 
-const dreamShootHomeSections = {
+const _dreamShootHomeSections = {
   email_start_1: section("email_start_panel", {
     anchor: "start",
     eyebrow: "Start your AI shoot",
@@ -1026,8 +1024,8 @@ const workflowJson: ThemePageJson = {
       headingLevel: "h1",
       tone: "dark",
       imageUrl: "/assets/dreamshoot/frames/workflow-upload-source.png",
-      primaryCta: "Browse packages",
-      primaryHref: "/collections",
+      primaryCta: "Headshot Generator",
+      primaryHref: "/collections/headshots",
       secondaryCta: "View pricing",
       secondaryHref: "/pricing"
     }),
@@ -1036,8 +1034,8 @@ const workflowJson: ThemePageJson = {
       eyebrow: "How it works",
       title: "Watch the private photo package workflow.",
       subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private gallery.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260805hug1",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260805hug1",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-55s.jpg?v=20260805i2vselect3",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4?v=20260805i2vselect3",
       videoBadge: "Private gallery workflow",
       playLabel: "Watch the private photo package workflow"
     }),
@@ -1046,8 +1044,8 @@ const workflowJson: ThemePageJson = {
       eyebrow: "AI image tutorial",
       title: "Create an AI photo set from source photos.",
       subtitle: "Choose a package, upload a clear source photo, review credits, start generation, and open the finished private image.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260805valentine1",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260805valentine1",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260806chooserfix1",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260806chooserfix1",
       videoBadge: "AI photo generation",
       playLabel: "Watch the AI image tutorial"
     }),
@@ -1058,17 +1056,17 @@ const workflowJson: ThemePageJson = {
       subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
       imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
       imageAlt: "Private album workspace preview",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260805hug1",
-      videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260805hug1",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4?v=20260806mobile55a",
+      videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg?v=20260806mobile55a",
       videoBadge: "Mobile workflow",
       playLabel: "Watch the video tutorial",
       leftTitle: "AI image tutorial",
-      leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260804mobile1",
-      leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260804mobile1",
+      leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260806chooserfix1",
+      leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260806chooserfix1",
       leftPlayLabel: "Watch the image tutorial",
       rightTitle: "AI video tutorial",
-      rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260805hug1",
-      rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260805hug1",
+      rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4?v=20260806mobile55a",
+      rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg?v=20260806mobile55a",
       rightPlayLabel: "Watch the video tutorial",
       placeholderTitle: "Mobile tutorial coming soon",
       placeholderBody: "The vertical mobile walkthrough will appear here when the final video is ready."
@@ -1108,9 +1106,9 @@ const workflowJson: ThemePageJson = {
     conversion_1: section("conversion_panel", {
       eyebrow: "Start the workflow",
       title: "Choose a photo package and create a private set.",
-      subtitle: "Browse packages, compare credit costs, then sign in to upload photos and start the generation request.",
-      primaryCta: "Browse packages",
-      primaryHref: "/collections",
+      subtitle: "Open the Headshot Generator, compare credit costs, then sign in to upload photos and start the generation request.",
+      primaryCta: "Headshot Generator",
+      primaryHref: "/collections/headshots",
       secondaryCta: "View pricing",
       secondaryHref: "/pricing"
     }),
@@ -1127,6 +1125,9 @@ const workflowJson: ThemePageJson = {
     robots: { index: true, follow: true }
   }
 };
+
+const mydreamshootsTermsPolicyBody =
+  "<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a MyDreamShoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums.</p><h3>2. Accounts, credits, and checkout</h3><p>You are responsible for accurate account information and secure sign-in. Credits are added after payment confirmation, displayed before generation, reserved when a request begins, used after successful delivery, and released or reviewed when a request fails.</p><h3>3. Upload rights and consent</h3><p>You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.</p><h3>4. No AI training on your photos</h3><p>Your inputs are never used to train models. 30-day auto-delete applies to input photos after generation. Private uploads and account records are protected with AES-256 at rest and TLS 256-bit in transit. Some billing, security, tax, dispute, refund, and account-integrity records may be retained where required or reasonably necessary.</p><h3>5. AI output variability</h3><p>AI photo results can vary based on source photo quality, pose, lighting, package settings, moderation review, provider availability, and model behavior. MyDreamShoots may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and use of outputs</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Refunds and guarantee review</h3><p>Refunds and credit adjustments follow the Refund Policy, including the 100% money-back guarantee when the shoot does not look like you, subject to support review, account history, and the details of the affected request.</p><h3>8. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account, billing, refund, policy, or legal questions.</p>";
 
 const termsJson: ThemePageJson = {
   pageType: "policy",
@@ -1154,6 +1155,12 @@ const termsJson: ThemePageJson = {
       { id: "terms_footer_refunds", type: "menu_link", settings: { label: "Refunds", href: "/refunds", group: "support" } }
     ])
   }
+};
+
+termsJson.sections.policy_1.settings = {
+  ...termsJson.sections.policy_1.settings,
+  lastUpdated: "August 5, 2026",
+  body: mydreamshootsTermsPolicyBody
 };
 
 const blogJson: ThemePageJson = {
@@ -1483,7 +1490,7 @@ function weddingPageJson(packageTemplate: ThemePackageTemplateKey, pageType: str
   return pageJson;
 }
 
-const weddingPages = (siteId: string): ThemePage[] =>
+const _weddingPages = (siteId: string): ThemePage[] =>
   weddingPageMappings.map((mapping) => {
     const pageJson =
       isWeddingDreamshootTemplateKey(mapping.packageTemplate)

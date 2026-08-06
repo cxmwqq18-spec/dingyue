@@ -2,8 +2,7 @@
 
 import Link, { type LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
-import { type ComponentProps, type FocusEvent, type MouseEvent, type PointerEvent, type ReactNode } from "react";
+import { createContext, useContext, useRef, type ComponentProps, type FocusEvent, type MouseEvent, type PointerEvent, type ReactNode } from "react";
 
 export type StorefrontInstantLinkProps = Omit<ComponentProps<typeof Link>, "href" | "onClick" | "children"> & {
   children: ReactNode;
@@ -13,6 +12,12 @@ export type StorefrontInstantLinkProps = Omit<ComponentProps<typeof Link>, "href
   onPointerDown?: (event: PointerEvent<HTMLAnchorElement>) => void;
   onPointerEnter?: (event: PointerEvent<HTMLAnchorElement>) => void;
 };
+
+const StorefrontLinkPrefetchContext = createContext(false);
+
+export function StorefrontLinkPrefetchProvider({ children, disabled }: { children: ReactNode; disabled: boolean }) {
+  return <StorefrontLinkPrefetchContext.Provider value={disabled}>{children}</StorefrontLinkPrefetchContext.Provider>;
+}
 
 function hrefFromUrl(targetUrl: URL) {
   return `${targetUrl.pathname}${targetUrl.search}${targetUrl.hash}`;
@@ -143,11 +148,13 @@ export function StorefrontInstantLink({
 }: StorefrontInstantLinkProps) {
   const router = useRouter();
   const hoverPrefetchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const disablePrefetch = useContext(StorefrontLinkPrefetchContext);
   const samePageHashHref = isSamePageHashHref(href, target);
-  const shouldUseLinkPrefetch = samePageHashHref ? false : prefetch ?? process.env.NEXT_PUBLIC_STOREFRONT_LINK_PREFETCH === "1";
+  const shouldUseLinkPrefetch = disablePrefetch || samePageHashHref ? false : prefetch ?? process.env.NEXT_PUBLIC_STOREFRONT_LINK_PREFETCH === "1";
   const forceDocumentNavigation = (props as Record<string, unknown>)["data-storefront-document-navigation"] === "true";
 
   function prefetchTarget() {
+    if (disablePrefetch) return;
     if (
       process.env.NEXT_PUBLIC_STOREFRONT_HOVER_PREFETCH !== "1" &&
       process.env.NEXT_PUBLIC_STOREFRONT_HOVER_PREFETCH_ALL !== "1"
@@ -189,6 +196,7 @@ export function StorefrontInstantLink({
   function handleFocus(event: FocusEvent<HTMLAnchorElement>) {
     onFocus?.(event);
     if (isInstantFilterAnchor(event)) return;
+    if (disablePrefetch) return;
     const targetUrl = internalStorefrontHref(href, target);
     if (!event.defaultPrevented && targetUrl && canFocusPrefetch(targetUrl)) prefetchTarget();
   }

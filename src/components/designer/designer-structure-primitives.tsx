@@ -445,7 +445,7 @@ export function DesignerStructureBranchCard({
 export function DesignerSectionBranchCard({
   blockDisplayLabel,
   blocks,
-  categoryLabel,
+  categoryLabel: _categoryLabel,
   dragState,
   instanceKey,
   isExpanded,
@@ -464,13 +464,13 @@ export function DesignerSectionBranchCard({
   onToggleSectionExpanded,
   resolveBlockSchema,
   schema,
-  schemaBlockCount,
+  schemaBlockCount: _schemaBlockCount,
   schemaMetaLine,
   section,
   sectionId,
   selectedSaasSectionSchemas,
   selection,
-  sectionIndex
+  sectionIndex: _sectionIndex
 }: {
   blockDisplayLabel: (schema: ThemeBlockSchema | undefined, block: SectionBlockInstance, index: number) => string;
   blocks: SectionBlockInstance[];
@@ -627,7 +627,7 @@ export function DesignerGlobalBranchCard({
   selection: Selection;
   title: string;
 }) {
-  const selected = selection.kind === "global" && selection.globalType === globalType;
+  const _selected = selection.kind === "global" && selection.globalType === globalType;
   const globalActive =
     (selection.kind === "global" && selection.globalType === globalType) ||
     (selection.kind === "globalBlock" && selection.globalType === globalType);

@@ -19,7 +19,7 @@ import type { CreativePack, Product, Site, SiteAiApp, ThemePage, ThemePageJson, 
 
 export function PreviewFrame({
   site,
-  pages,
+  pages: _pages,
   activePage,
   selectedPageId,
   draft,

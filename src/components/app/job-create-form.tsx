@@ -1,6 +1,6 @@
 "use client";
 
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Camera, CheckCircle2, Lightbulb, MapPin, Play, Sparkles, Trash2, UploadCloud, WandSparkles } from "lucide-react";
 import { getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, CreativePackCategory, PublicCustomer, SectionBlockInstance, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeCustomerModel, ToolMenuItem } from "@/lib/types";
@@ -1014,9 +1014,9 @@ export function JobCreateForm({
   trainingMode = "single",
   locale = "en",
   onJobCreated,
-  onContinueToSources,
+  onContinueToSources: _onContinueToSources,
   onReviewCurrentRequest,
-  onOpenUploadManager,
+  onOpenUploadManager: _onOpenUploadManager,
   onVideoToolSelected
 }: {
   siteId: string;
@@ -1053,7 +1053,7 @@ export function JobCreateForm({
   onVideoToolSelected?: (tool: VideoToolSelection) => void;
 }) {
   const spanish = locale === "es";
-  const siteAiApps = Array.isArray(rawSiteAiApps) ? rawSiteAiApps : [];
+  const siteAiApps = useMemo(() => Array.isArray(rawSiteAiApps) ? rawSiteAiApps : [], [rawSiteAiApps]);
   const normalizedInitialToolId = normalizeToolId(initialToolId);
   const menuSite = useMemo<JobCreateSite>(() => site ?? {
     id: siteId,
@@ -1104,6 +1104,19 @@ export function JobCreateForm({
   const packageDetailRef = useRef<HTMLDivElement | null>(null);
   const pendingUploadTargetRef = useRef<UploadTarget>("primary");
   const routedVideoToolIdsRef = useRef<Set<string>>(new Set());
+  const preferredRouteKeyRef = useRef<string | null>(null);
+  const appliedRetryDraftKeyRef = useRef<string | null>(null);
+  const preferredRouteStateRef = useRef<{
+    createMode: CreateMode;
+    creativePackId: string;
+    orderedActiveCreativePacks: CreativePack[];
+    selectedToolId: string;
+    toolPresets: ToolPreset[];
+    visibleCreativePacks: CreativePack[];
+    updateCreateMode: (nextMode: CreateMode) => void;
+    updateCreativePack: (pack: CreativePack) => void;
+    updateToolPreset: (preset: ToolPreset) => void;
+  } | null>(null);
   const selectedApp = siteAiApps.find((app) => app.aiApp.slug === aiAppSlug) ?? siteAiApps[0];
   const activeCreativePacks = useMemo(() => creativePacks.filter((pack) => pack.status === "active"), [creativePacks]);
   const packageMegaGroups = useMemo(() => getPhotoPackageMegaGroups(activeCreativePacks, creativePackCategories), [activeCreativePacks, creativePackCategories]);
@@ -1130,8 +1143,12 @@ export function JobCreateForm({
     : Math.max(toolPresets.length - displayedToolPresets.length, 0);
   const appPacks = packsForApp(orderedActiveCreativePacks, selectedApp?.aiApp.slug ?? "");
   const selectedPack = (createMode === "theme" ? orderedActiveCreativePacks : appPacks).find((pack) => pack.id === creativePackId) ?? (createMode === "theme" ? visibleCreativePacks[0] ?? orderedActiveCreativePacks[0] : appPacks[0]);
+  const selectedPackId = selectedPack?.id ?? "";
+  const selectedPackPrompt = selectedPack?.prompt?.trim() || selectedPack?.description || selectedPack?.headline || "";
   const selectedWorkflow = workflowFor(selectedApp);
   const selectedToolPreset = toolPresets.find((preset) => preset.id === selectedToolId);
+  const selectedToolPresetId = selectedToolPreset?.id ?? "";
+  const selectedToolPrompt = String(formValues[TOOL_PROMPT_FIELD_ID] || selectedToolPreset?.prompt || "");
   const selectedToolIsVideo = createMode === "tool" && selectedToolPreset?.kind === "video";
   const selectionPreviewImage = createMode === "theme" ? withStorefrontPublicWatermarkUrl(selectedPack?.imageUrl) : undefined;
   const selectionTitle = createMode === "theme" ? selectedPack ? workspacePackageLabel(selectedPack, packageMegaGroups) : jobT(spanish, "Photo package", "Paquete de fotos") : selectedToolPreset?.title ?? selectedApp?.aiApp.name ?? jobT(spanish, "AI tool", "Herramienta IA");
@@ -1249,7 +1266,7 @@ export function JobCreateForm({
   const selectedPillClass = light ? "bg-[#132329] text-white" : "bg-[#14161a] text-white";
   const selectedSoftPillClass = light ? "bg-white text-[#c65f32] ring-1 ring-[#ffd0b8]" : "bg-[#14161a]/10 text-[#14161a]";
   const neutralPillClass = light ? "bg-[#f1eadf] text-[#5f574f]" : "bg-white/[0.08] text-white/74";
-  const selectedPromptBuilderGroups = useMemo(() => promptBuilderGroupsForPack(selectedPack), [selectedPack?.id, selectedPack?.category, selectedPack?.name, selectedPack?.headline, selectedPack?.description]);
+  const selectedPromptBuilderGroups = useMemo(() => promptBuilderGroupsForPack(selectedPack), [selectedPack]);
   const promptBuilderSummary = selectedPromptBuilderGroups
     .map((group) => promptBuilderSelections[group.id])
     .filter((value): value is string => Boolean(value?.trim()))
@@ -1266,16 +1283,16 @@ export function JobCreateForm({
   const promptBuilderApplied = Boolean(promptBuilderDirectionText && packagePromptDraft.includes(promptBuilderDirectionText));
 
   useEffect(() => {
-    if (createMode === "theme" && selectedPack) {
-      setPackagePromptDraft(selectedPack.prompt?.trim() || selectedPack.description || selectedPack.headline || "");
+    if (createMode === "theme" && selectedPackId) {
+      setPackagePromptDraft(selectedPackPrompt);
       setPromptBuilderSelections({});
     }
-  }, [createMode, selectedPack?.id]);
+  }, [createMode, selectedPackId, selectedPackPrompt]);
 
   useEffect(() => {
-    if (createMode !== "tool" || !selectedToolPreset) return;
-    setPackagePromptDraft((current) => current || String(formValues[TOOL_PROMPT_FIELD_ID] || selectedToolPreset.prompt || ""));
-  }, [createMode, selectedToolPreset?.id]);
+    if (createMode !== "tool" || !selectedToolPresetId) return;
+    setPackagePromptDraft((current) => current || selectedToolPrompt);
+  }, [createMode, selectedToolPresetId, selectedToolPrompt]);
 
   useEffect(() => {
     setAvailableAssets((current) => mergeAssetLists(current, assets));
@@ -1437,7 +1454,7 @@ export function JobCreateForm({
     }
   }
 
-  function handleVideoToolPreset(preset: ToolPreset) {
+  const handleVideoToolPreset = useCallback((preset: ToolPreset) => {
     setCreateMode("tool");
     setSelectedToolId(preset.id);
     setPromptBuilderSelections({});
@@ -1446,7 +1463,7 @@ export function JobCreateForm({
     setDialogTone("info");
     setMessage(jobT(spanish, `${preset.title} opens in the Image to Video workspace.`, `${preset.title} se abre en el espacio Image to Video.`));
     onVideoToolSelected?.({ id: preset.id, title: preset.title, href: preset.href });
-  }
+  }, [onVideoToolSelected, spanish]);
 
   function updateToolPreset(preset: ToolPreset) {
     if (preset.kind === "video") {
@@ -1546,6 +1563,18 @@ export function JobCreateForm({
     sourceUploadInputRef.current?.click();
   }
 
+  preferredRouteStateRef.current = {
+    createMode,
+    creativePackId,
+    orderedActiveCreativePacks,
+    selectedToolId,
+    toolPresets,
+    visibleCreativePacks,
+    updateCreateMode,
+    updateCreativePack,
+    updateToolPreset
+  };
+
   useEffect(() => {
     const handleOpenUpload = (event: Event) => {
       const target = (event as CustomEvent<{ target?: UploadTarget }>).detail?.target;
@@ -1563,24 +1592,32 @@ export function JobCreateForm({
     if (!initialVideoPreset || routedVideoToolIdsRef.current.has(initialVideoPreset.id)) return;
     routedVideoToolIdsRef.current.add(initialVideoPreset.id);
     handleVideoToolPreset(initialVideoPreset);
-  }, [initialToolId, toolPresets]);
+  }, [handleVideoToolPreset, initialToolId, toolPresets]);
 
   useEffect(() => {
+    const preferredRouteKey = `${preferredMode ?? ""}|${preferredToolId ?? ""}|${preferredModeRequest}`;
     if (!preferredMode && !preferredToolId) return;
+    if (preferredRouteKeyRef.current === preferredRouteKey) return;
+    preferredRouteKeyRef.current = preferredRouteKey;
+    const routeState = preferredRouteStateRef.current;
+    if (!routeState) return;
     const normalizedPreferredToolId = preferredToolId ? normalizeToolId(preferredToolId) : "";
     if (preferredMode === "tool" || normalizedPreferredToolId) {
       const nextPreset =
-        toolPresets.find((preset) => preset.id === normalizedPreferredToolId) ??
-        toolPresets.find((preset) => preset.id === selectedToolId) ??
-        toolPresets[0];
-      updateCreateMode("tool");
-      if (nextPreset) updateToolPreset(nextPreset);
+        routeState.toolPresets.find((preset) => preset.id === normalizedPreferredToolId) ??
+        routeState.toolPresets.find((preset) => preset.id === routeState.selectedToolId) ??
+        routeState.toolPresets[0];
+      routeState.updateCreateMode("tool");
+      if (nextPreset) routeState.updateToolPreset(nextPreset);
       return;
     }
-    if (preferredMode === createMode) return;
-    const nextPack = orderedActiveCreativePacks.find((pack) => pack.id === creativePackId) ?? visibleCreativePacks[0] ?? orderedActiveCreativePacks[0];
-    updateCreateMode("theme");
-    if (nextPack) updateCreativePack(nextPack);
+    if (preferredMode === routeState.createMode) return;
+    const nextPack =
+      routeState.orderedActiveCreativePacks.find((pack) => pack.id === routeState.creativePackId) ??
+      routeState.visibleCreativePacks[0] ??
+      routeState.orderedActiveCreativePacks[0];
+    routeState.updateCreateMode("theme");
+    if (nextPack) routeState.updateCreativePack(nextPack);
   }, [preferredMode, preferredModeRequest, preferredToolId]);
 
   useEffect(() => {
@@ -1601,10 +1638,15 @@ export function JobCreateForm({
         };
       });
     }
-  }, [operationContext?.action, operationContext?.note, preferredModeRequest, createMode]);
+  }, [createMode, operationContext?.action, operationContext?.note, preferredModeRequest, spanish]);
 
   useEffect(() => {
-    if (!retryDraft) return;
+    if (!retryDraft) {
+      appliedRetryDraftKeyRef.current = null;
+      return;
+    }
+    if (appliedRetryDraftKeyRef.current === retryDraft.key) return;
+    appliedRetryDraftKeyRef.current = retryDraft.key;
     const nextMode: CreateMode = retryDraft.mode === "tool" ? "tool" : "theme";
     const availableAssetIds = new Set(availableAssets.map((asset) => asset.id));
     const restoredPrimaryIds = (retryDraft.primaryAssetIds ?? [])
@@ -1675,7 +1717,7 @@ export function JobCreateForm({
     }
 
     setMessage(jobT(spanish, "Previous failed request restored. Review the setup, then start generation again.", "Solicitud fallida restaurada. Revisa la configuracion y vuelve a iniciar la generacion."));
-  }, [retryDraft?.key]);
+  }, [availableAssets, customerModels, orderedActiveCreativePacks, retryDraft, selectedApp, selectedToolId, siteAiApps, spanish, toolPresets]);
 
   async function uploadSourceFiles(files: FileList | null) {
     const imageFiles = Array.from(files ?? []).filter((file) => file.type.startsWith("image/"));
@@ -2182,14 +2224,14 @@ export function JobCreateForm({
           </div>
         ) : null}
         <div
-          className={`grid scroll-mt-28 overflow-hidden rounded-[18px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/20"} ${createMode === "theme" ? "lg:grid-cols-[minmax(360px,1.25fr)_minmax(320px,0.75fr)]" : ""}`}
+          className={`grid scroll-mt-28 overflow-hidden rounded-[18px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/20"} ${createMode === "theme" ? "items-start lg:grid-cols-[minmax(360px,1.25fr)_minmax(320px,0.75fr)]" : ""}`}
           id="workspace-package-detail"
           ref={packageDetailRef}
         >
           {createMode === "theme" ? (
-            <div className={`relative min-h-[340px] ${light ? "bg-[#f7f0e7]" : "bg-white/[0.04]"}`}>
+            <div className={`relative aspect-[4/3] min-h-[260px] w-full self-start ${light ? "bg-[#f7f0e7]" : "bg-white/[0.04]"}`}>
               {selectionPreviewImage ? (
-                <img alt={selectionTitle} className="absolute inset-0 h-full w-full cursor-zoom-in object-cover" src={selectionPreviewImage} {...previewImageAttrs(selectionPreviewImage, selectionTitle, jobT(spanish, "Selected package", "Paquete seleccionado"))} />
+                <img alt={selectionTitle} className="absolute inset-0 h-full w-full cursor-zoom-in object-contain" data-workspace-selected-package-image="true" src={selectionPreviewImage} {...previewImageAttrs(selectionPreviewImage, selectionTitle, jobT(spanish, "Selected package", "Paquete seleccionado"))} />
               ) : (
                 <div className="absolute inset-0 grid place-items-center">
                   <Sparkles className="h-8 w-8 opacity-60" strokeWidth={1.8} />
@@ -2279,10 +2321,11 @@ export function JobCreateForm({
                   className={`group overflow-hidden rounded-[14px] border ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-black/20"}`}
                   key={`${example.src}_${index}`}
                 >
-                  <div className="relative overflow-hidden bg-white/[0.08]">
+                  <div className="relative aspect-square overflow-hidden bg-white/[0.08]">
                     <img
                       alt={example.alt}
-                      className="aspect-[4/3] w-full cursor-zoom-in object-cover transition duration-500 group-hover:brightness-110"
+                      className="h-full w-full cursor-zoom-in object-contain transition duration-500 group-hover:brightness-110"
+                      data-workspace-package-gallery-image="true"
                       decoding="async"
                       fetchPriority={index < 4 ? "auto" : "low"}
                       loading={index < 4 ? "eager" : "lazy"}

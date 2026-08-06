@@ -586,7 +586,7 @@ function getThemeRecordStatsFromSummaryRow(record: ThemeStatsSummaryRow): ThemeR
   };
 }
 
-function toSiteThemeSummary(record: SiteThemeSummaryRow): SiteThemeSummaryRecord {
+function _toSiteThemeSummary(record: SiteThemeSummaryRow): SiteThemeSummaryRecord {
   return {
     id: record.id,
     siteId: record.siteId,
@@ -618,7 +618,7 @@ function toSiteThemeStatsSummary(record: SiteThemeStatsSummaryRow): SiteThemeSum
   };
 }
 
-function toThemeCopySummary(record: ThemeCopySummaryRow): ThemeCopySummaryRecord {
+function _toThemeCopySummary(record: ThemeCopySummaryRow): ThemeCopySummaryRecord {
   return {
     id: record.id,
     siteId: record.siteId,
@@ -646,7 +646,7 @@ function toThemeCopyStatsSummary(record: ThemeCopyStatsSummaryRow): ThemeCopySum
   };
 }
 
-function saasRecordSummaryFromSiteTheme(record: SiteThemeSummaryRow): SaasThemeRecordSummary {
+function _saasRecordSummaryFromSiteTheme(record: SiteThemeSummaryRow): SaasThemeRecordSummary {
   return {
     name: record.name,
     themeId: record.themeId,

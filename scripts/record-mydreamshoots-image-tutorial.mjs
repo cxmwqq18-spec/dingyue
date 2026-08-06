@@ -1,13 +1,16 @@
 import fs from "node:fs/promises";
 import fsSync from "node:fs";
+import crypto from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawn } from "node:child_process";
+import { PrismaClient } from "@prisma/client";
 import ffmpegStatic from "ffmpeg-static";
 import { chromium } from "playwright";
 import sharp from "sharp";
 import "./load-runtime-env.mjs";
 import {
+  ensureMydreamshootsTutorialSampleAssets,
   ensureMydreamshootsLocalPendingPreviewImage,
   ensureMydreamshootsLocalPreviewImage
 } from "./tutorial-local-preview-seeds.mjs";
@@ -21,6 +24,14 @@ const baseUrl = (process.env.TUTORIAL_BASE_URL || "http://localhost:3002").repla
 const siteId = process.env.TUTORIAL_SITE_ID || "site_dreamshoot";
 const siteSlug = process.env.TUTORIAL_SITE_SLUG || "mydreamshoots";
 const brandName = process.env.TUTORIAL_BRAND_NAME || (siteSlug === "aidreamcapes" ? "Aidreamcapes" : "MyDreamShoots");
+const isMyDreamShootsSite = /mydreamshoots/i.test(`${siteId} ${siteSlug} ${brandName}`);
+if (isMyDreamShootsSite) process.env.TUTORIAL_CUSTOMER_EMAIL = process.env.TUTORIAL_CUSTOMER_EMAIL || "1621417163@qq.com";
+const redactPrivateData = process.env.TUTORIAL_REDACT_PRIVATE_DATA
+  ? process.env.TUTORIAL_REDACT_PRIVATE_DATA === "1"
+  : !isMyDreamShootsSite;
+const stopWhenFlowComplete = process.env.TUTORIAL_STOP_WHEN_FLOW_COMPLETE
+  ? process.env.TUTORIAL_STOP_WHEN_FLOW_COMPLETE === "1"
+  : isMyDreamShootsSite;
 const tutorialKey = process.env.TUTORIAL_RUN_KEY || `${siteSlug}-ai-image-tutorial`;
 const outputDir = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_DIR || "output");
 const runDir = path.join(outputDir, process.env.TUTORIAL_WORK_DIR || `${tutorialKey}-work`);
@@ -28,10 +39,15 @@ const framesDir = path.join(runDir, "frames");
 const samplesDir = path.join(runDir, "samples");
 const narrationDir = path.join(runDir, "narration");
 const sourcePhotoPath = path.join(runDir, "source-selfie-clean.jpg");
+const partnerPhotoPath = path.join(runDir, "partner-selfie-clean.jpg");
 const finalOutputPath = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_MP4 || `output/${tutorialKey}-55s.mp4`);
 const narrationPath = path.join(runDir, "narration.m4a");
+const narrationWithClicksPath = path.join(runDir, "narration-with-clicks.m4a");
+const mouseClickSoundPath = path.join(runDir, "mouse-click.wav");
 const failurePath = path.join(runDir, "failure-status.json");
 const contactSheetPath = path.join(runDir, "verification-contact-sheet.jpg");
+const clickSoundTimes = [];
+let captureFrameCursor = 0;
 
 const viewport = {
   width: Number(process.env.TUTORIAL_VIEWPORT_WIDTH || (isMobileRecording ? 390 : 1920)),
@@ -46,14 +62,13 @@ const mobileUserAgent = process.env.TUTORIAL_MOBILE_USER_AGENT ||
   "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1";
 const captureFps = Number(process.env.TUTORIAL_CAPTURE_FPS || 5);
 const targetSeconds = Number(process.env.TUTORIAL_TARGET_SECONDS || 55);
-const targetFrameCount = Math.round(targetSeconds * captureFps);
 const headless = process.env.TUTORIAL_HEADLESS !== "0";
 const pageTimeoutMs = Math.max(30_000, Number(process.env.TUTORIAL_PAGE_TIMEOUT_MS || 120_000));
 const jobTimeoutMs = Math.max(60_000, Number(process.env.TUTORIAL_JOB_TIMEOUT_MS || 1_200_000));
 const pollIntervalMs = Math.max(5_000, Number(process.env.TUTORIAL_POLL_INTERVAL_MS || 12_000));
 const realGeneration = process.env.TUTORIAL_REAL_GENERATION === "1";
 const maxPaidAttempts = realGeneration ? Math.min(1, Math.max(1, Number(process.env.TUTORIAL_MAX_PAID_ATTEMPTS || 1))) : 0;
-process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS = process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS || "1";
+process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS = process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS || "0";
 const hideHistoricalAssets = process.env.TUTORIAL_HIDE_HISTORICAL_ASSETS === "1";
 const reuseJobId = process.env.TUTORIAL_REUSE_JOB_ID || "";
 const ffmpegPath = process.env.FFMPEG_PATH || ffmpegStatic || "ffmpeg";
@@ -65,29 +80,48 @@ const promptNote = process.env.TUTORIAL_PROMPT_NOTE ||
 const tutorialSampleCustomerId = process.env.TUTORIAL_SAMPLE_CUSTOMER_ID ||
   (siteId === "site_dreamshoot" ? "cust_dreamshoot_mqq9gas9_i1vjal" : "");
 const tutorialPrimarySampleIds = parseCsv(process.env.TUTORIAL_PRIMARY_SAMPLE_IDS ||
-  (siteId === "site_dreamshoot" ? "asset_mscs4baw_a5q3d5" : ""));
-const tutorialPartnerSampleIds = parseCsv(process.env.TUTORIAL_PARTNER_SAMPLE_IDS ||
   (siteId === "site_dreamshoot" ? "asset_mscue5vm_2sw2kb" : ""));
+const tutorialPartnerSampleIds = parseCsv(process.env.TUTORIAL_PARTNER_SAMPLE_IDS ||
+  (siteId === "site_dreamshoot" ? "asset_mscs4baw_a5q3d5" : ""));
 const tutorialPrimarySampleTokens = parseCsv(process.env.TUTORIAL_PRIMARY_SAMPLE_TOKENS ||
-  (siteId === "site_dreamshoot" ? "2c85aa19-08be-4107-9447-13d890ee969e-source-selfie-clean.webp" : ""));
-const tutorialPartnerSampleTokens = parseCsv(process.env.TUTORIAL_PARTNER_SAMPLE_TOKENS ||
   (siteId === "site_dreamshoot" ? "1256a1cb-c7a0-4e78-a7ef-565f5978118d-images-1-.webp" : ""));
+const tutorialPartnerSampleTokens = parseCsv(process.env.TUTORIAL_PARTNER_SAMPLE_TOKENS ||
+  (siteId === "site_dreamshoot" ? "2c85aa19-08be-4107-9447-13d890ee969e-source-selfie-clean.webp" : ""));
 const useExistingTutorialSamples = process.env.TUTORIAL_USE_EXISTING_SAMPLES !== "0" &&
   tutorialSampleCustomerId &&
   tutorialPrimarySampleIds.length > 0 &&
   tutorialPartnerSampleIds.length > 0;
+const directTutorialCustomerSession = process.env.TUTORIAL_DIRECT_CUSTOMER_SESSION
+  ? process.env.TUTORIAL_DIRECT_CUSTOMER_SESSION === "1"
+  : isLocalBaseUrl() && isMyDreamShootsSite && useExistingTutorialSamples;
+const createdTutorialSessionIds = [];
 
-const baseTimeline = [
-  { id: "login", duration: 5, caption: "Sign in to your private workspace", narration: `First, sign in to your private ${brandName} workspace.` },
-  { id: "workspace", duration: 6, caption: "Open the AI photo workspace", narration: "Open the private workspace where uploads, credits, and results stay together." },
-  { id: "package", duration: 7, caption: "Choose Valentine Photos", narration: "Choose Valentine Photos to set the romantic package, credit cost, and output count." },
-  { id: "upload", duration: 8, caption: "Select the two source photos", narration: "Select the primary photo and the partner photo, so the Valentine package follows both references." },
-  { id: "review", duration: 9, caption: "Review package details and selected uploads", narration: "Review the selected uploads, creative direction, credits, and final output count." },
-  { id: "start", duration: 5, caption: "Start the photo generation request", narration: `Start generation and let ${brandName} create the photo request.` },
-  { id: "progress", duration: 2, caption: "Watch the request begin generating", narration: "Show the request running briefly, then skip the wait." },
-  { id: "result", duration: 13, caption: "Open and review the generated image", narration: "Open the finished Valentine image and review it in the private gallery." }
-];
-const timeline = buildTimeline(baseTimeline, targetFrameCount, captureFps);
+const baseTimeline = isMyDreamShootsSite
+  ? [
+      { id: "login", duration: 4, caption: "Sign in to your private workspace", narration: `First, sign in to your private ${brandName} workspace.` },
+      { id: "pricing", duration: 5, caption: "Choose a credit plan before generating", narration: "After login, review the real credit plans, then enter the workspace." },
+      { id: "workspace", duration: 6, caption: "Scroll down to the couple upload area", narration: "Open the AI photo workspace and scroll down to the couple upload area." },
+      { id: "package", duration: 5, caption: "Choose Valentine Photos", narration: "Choose Valentine Photos to set the romantic package, credit cost, and output count." },
+      { id: "upload", duration: 9, caption: "Select both couple source photos", narration: "In couple mode, choose a primary photo and a partner photo before generation." },
+      { id: "review", duration: 8, caption: "Configure the package for both of us", narration: "Configure the Valentine package, keep one output, and confirm both selected uploads." },
+      { id: "start", duration: 4, caption: "Start the photo generation request", narration: `Start generation and let ${brandName} create the photo request.` },
+      { id: "progress", duration: 4, caption: "Image delivered successfully", narration: "Pause on the delivered request, then open the preview." },
+      { id: "result", duration: 3, caption: "Open the generated image", narration: "Open the finished Valentine image in the private gallery." }
+    ]
+  : [
+      { id: "login", duration: 5, caption: "Sign in to your private workspace", narration: `First, sign in to your private ${brandName} workspace.` },
+      { id: "workspace", duration: 6, caption: "Open the AI photo workspace", narration: "Open the private workspace where uploads, credits, and results stay together." },
+      { id: "package", duration: 7, caption: "Choose Valentine Photos", narration: "Choose Valentine Photos to set the romantic package, credit cost, and output count." },
+      { id: "upload", duration: 8, caption: "Select the two source photos", narration: "Select the primary photo and the partner photo, so the Valentine package follows both references." },
+      { id: "review", duration: 9, caption: "Review package details and selected uploads", narration: "Review the selected uploads, creative direction, credits, and final output count." },
+      { id: "start", duration: 5, caption: "Start the photo generation request", narration: `Start generation and let ${brandName} create the photo request.` },
+      { id: "progress", duration: 2, caption: "Watch the request begin generating", narration: "Show the request running briefly, then skip the wait." },
+      { id: "result", duration: 13, caption: "Open and review the generated image", narration: "Open the finished Valentine image and review it in the private gallery." }
+    ];
+const naturalFrameCount = baseTimeline.reduce((sum, segment) => sum + Math.max(1, Math.round(segment.duration * captureFps)), 0);
+const targetFrameCount = stopWhenFlowComplete ? naturalFrameCount : Math.round(targetSeconds * captureFps);
+const finalDurationSeconds = targetFrameCount / captureFps;
+const timeline = buildTimeline(baseTimeline, targetFrameCount, captureFps, { scaleToTarget: !stopWhenFlowComplete });
 
 function siblingFfprobe(binary) {
   if (!binary || binary === "ffmpeg") return undefined;
@@ -102,7 +136,13 @@ function parseCsv(value) {
     .filter(Boolean);
 }
 
-function buildTimeline(segments, frameCount, fps) {
+function buildTimeline(segments, frameCount, fps, options = {}) {
+  if (!options.scaleToTarget) {
+    return segments.map((segment) => {
+      const frames = Math.max(1, Math.round(segment.duration * fps));
+      return { ...segment, frames, scaledDuration: frames / fps };
+    });
+  }
   const total = segments.reduce((sum, segment) => sum + segment.duration, 0);
   let previous = 0;
   return segments.map((segment, index) => {
@@ -155,7 +195,7 @@ function credentials() {
     );
     pushCredential(list, "1621417163@qq.com", process.env.SMOKE_AIDREAMCAPES_CUSTOMER_PASSWORD || process.env.SMOKE_CUSTOMER_PASSWORD || "aidreamcapes123", "aidreamcapes_demo");
   } else {
-    if (!isLocalBaseUrl()) pushCredential(list, "1621417163@qq.com", process.env.SMOKE_CUSTOMER_PASSWORD || "mydreamshoots123", "production_demo");
+    pushCredential(list, "1621417163@qq.com", process.env.SMOKE_CUSTOMER_PASSWORD || "mydreamshoots123", "production_demo");
     pushCredential(
       list,
       process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_EMAIL || process.env.SMOKE_CUSTOMER_EMAIL,
@@ -168,7 +208,6 @@ function credentials() {
       process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_PASSWORD || process.env.SMOKE_CUSTOMER_PASSWORD || "nora123",
       "local_demo"
     );
-    if (isLocalBaseUrl()) pushCredential(list, "1621417163@qq.com", process.env.SMOKE_CUSTOMER_PASSWORD || "mydreamshoots123", "production_demo");
   }
   const seen = new Set();
   return list.filter((item) => {
@@ -177,6 +216,81 @@ function credentials() {
     seen.add(key);
     return true;
   });
+}
+
+function csrfCookieNameForCustomer(targetSiteId) {
+  return `customer_csrf_${targetSiteId}`;
+}
+
+function signCsrf(scope, sessionId, nonce) {
+  const secret = process.env.CSRF_SECRET || process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET || "dev-csrf-secret-change-me";
+  return crypto.createHmac("sha256", secret).update(`${scope}:${sessionId}:${nonce}`).digest("base64url");
+}
+
+function createCsrfTokenForSession(scope, sessionId) {
+  const nonce = crypto.randomBytes(24).toString("base64url");
+  return `${nonce}.${signCsrf(scope, sessionId, nonce)}`;
+}
+
+async function createDirectCustomerSession(context, email) {
+  if (!directTutorialCustomerSession || !email) return false;
+  const prisma = new PrismaClient();
+  try {
+    const normalizedEmail = String(email).trim().toLowerCase();
+    const customer = await prisma.customer.findUnique({
+      where: { siteId_email: { siteId, email: normalizedEmail } },
+      select: { id: true, email: true, name: true, siteId: true }
+    });
+    if (!customer) {
+      log("direct tutorial customer session skipped", { reason: "customer_not_found", email: normalizedEmail });
+      return false;
+    }
+    const expiresAt = new Date(Date.now() + 6 * 60 * 60 * 1000);
+    const sessionId = `sess_tutorial_${Date.now().toString(36)}_${crypto.randomBytes(4).toString("hex")}`;
+    await prisma.customerSession.create({
+      data: {
+        id: sessionId,
+        siteId,
+        customerId: customer.id,
+        expiresAt
+      }
+    });
+    createdTutorialSessionIds.push(sessionId);
+    const csrfToken = createCsrfTokenForSession(`customer:${siteId}`, sessionId);
+    const expires = Math.floor(expiresAt.getTime() / 1000);
+    await context.addCookies([
+      {
+        name: `customer_session_${siteId}`,
+        value: sessionId,
+        url: baseUrl,
+        httpOnly: true,
+        sameSite: "Lax",
+        expires
+      },
+      {
+        name: csrfCookieNameForCustomer(siteId),
+        value: csrfToken,
+        url: baseUrl,
+        httpOnly: false,
+        sameSite: "Lax",
+        expires
+      }
+    ]);
+    log("authenticated browser context", { source: "direct_tutorial_session", email: customer.email, customerId: customer.id });
+    return true;
+  } finally {
+    await prisma.$disconnect().catch(() => undefined);
+  }
+}
+
+async function cleanupDirectTutorialSessions() {
+  if (!createdTutorialSessionIds.length) return;
+  const prisma = new PrismaClient();
+  try {
+    await prisma.customerSession.deleteMany({ where: { id: { in: createdTutorialSessionIds } } });
+  } finally {
+    await prisma.$disconnect().catch(() => undefined);
+  }
 }
 
 function sanitizeText(value) {
@@ -217,25 +331,82 @@ function run(command, args) {
   });
 }
 
-async function prepareSourcePhoto() {
-  const configured = process.env.TUTORIAL_SOURCE_IMAGE ? path.resolve(repoRoot, process.env.TUTORIAL_SOURCE_IMAGE) : "";
-  const candidates = [
-    configured,
-    path.join(repoRoot, "public/assets/dreamshoot/frames/sample-professional-headshot.png"),
-    path.join(repoRoot, "public/assets/dreamshoot/frames/faq-intro-portrait.png"),
-    path.join(repoRoot, "public/assets/dreamshoot/beauty-portrait-gpt2.png"),
-    path.join(repoRoot, "public/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png")
-  ].filter(Boolean);
-  const source = candidates.find((candidate) => fsSync.existsSync(candidate));
-  if (!source) throw new Error("tutorial_source_image_missing");
+function existingSampleFile(tokens) {
+  if (!tutorialSampleCustomerId) return "";
+  for (const token of tokens) {
+    const fileName = decodeURIComponent(String(token || "")).split("?")[0].split("/").filter(Boolean).pop();
+    if (!fileName) continue;
+    const candidate = path.join(repoRoot, "data/customer-assets/sites", siteId, "customers", tutorialSampleCustomerId, "assets", fileName);
+    if (fsSync.existsSync(candidate)) return candidate;
+  }
+  return "";
+}
+
+async function preparePhotoFile({ sourceCandidates, targetPath, missingCode }) {
+  const source = sourceCandidates.filter(Boolean).find((candidate) => fsSync.existsSync(candidate));
+  if (!source) throw new Error(missingCode);
   const image = sharp(source);
   const meta = await image.metadata();
   if (!meta.width || !meta.height) throw new Error("tutorial_source_image_metadata_missing");
   await image
     .resize(1024, 1280, { fit: "cover", position: "attention" })
     .jpeg({ quality: 92, mozjpeg: true })
-    .toFile(sourcePhotoPath);
-  log("prepared source photo", { source, path: sourcePhotoPath });
+    .toFile(targetPath);
+  log("prepared source photo", { source, path: targetPath });
+}
+
+async function prepareSourcePhoto() {
+  const configured = process.env.TUTORIAL_SOURCE_IMAGE ? path.resolve(repoRoot, process.env.TUTORIAL_SOURCE_IMAGE) : "";
+  const partnerConfigured = process.env.TUTORIAL_PARTNER_SOURCE_IMAGE ? path.resolve(repoRoot, process.env.TUTORIAL_PARTNER_SOURCE_IMAGE) : "";
+  const primaryExisting = existingSampleFile(tutorialPrimarySampleTokens);
+  const partnerExisting = existingSampleFile(tutorialPartnerSampleTokens);
+  await preparePhotoFile({
+    targetPath: sourcePhotoPath,
+    missingCode: "tutorial_source_image_missing",
+    sourceCandidates: [
+      primaryExisting,
+      configured,
+      path.join(repoRoot, "public/assets/dreamshoot/frames/sample-professional-headshot.png"),
+      path.join(repoRoot, "public/assets/dreamshoot/frames/faq-intro-portrait.png"),
+      path.join(repoRoot, "public/assets/dreamshoot/beauty-portrait-gpt2.png"),
+      path.join(repoRoot, "public/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png")
+    ]
+  });
+  await preparePhotoFile({
+    targetPath: partnerPhotoPath,
+    missingCode: "tutorial_partner_source_image_missing",
+    sourceCandidates: [
+      partnerExisting,
+      partnerConfigured,
+      path.join(repoRoot, "public/assets/dreamshoot/frames/faq-intro-portrait.png"),
+      path.join(repoRoot, "public/assets/dreamshoot/frames/sample-professional-headshot.png"),
+      path.join(repoRoot, "public/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png")
+    ]
+  });
+}
+
+async function thumbnailDataUrl(filePath) {
+  if (!filePath || !fsSync.existsSync(filePath)) return "";
+  const buffer = await sharp(filePath)
+    .resize(180, 140, { fit: "cover", position: "attention" })
+    .jpeg({ quality: 82, mozjpeg: true })
+    .toBuffer();
+  return `data:image/jpeg;base64,${buffer.toString("base64")}`;
+}
+
+async function fileDialogStateFor(role, selected = false) {
+  const primaryThumb = await thumbnailDataUrl(sourcePhotoPath);
+  const partnerThumb = await thumbnailDataUrl(partnerPhotoPath);
+  return {
+    title: role === "partner" ? "Choose partner photo" : "Choose primary photo",
+    selected: Boolean(selected),
+    selectedIndex: role === "partner" ? 1 : 0,
+    items: [
+      { label: "primary-selfie.jpg", thumbUrl: primaryThumb || "", tag: "primary" },
+      { label: "partner-selfie.jpg", thumbUrl: partnerThumb || "", tag: "partner" },
+      { label: "valentine-reference.jpg", thumbUrl: "", tag: "reference" }
+    ]
+  };
 }
 
 class Recorder {
@@ -245,19 +416,30 @@ class Recorder {
   }
 
   async capture(segment) {
-    await setCaption(this.page, segment.caption);
-    for (let i = 0; i < segment.frames; i += 1) {
+    await this.captureFor(segment.caption, segment.frames);
+  }
+
+  async captureFor(caption, frames, beforeFrame = async () => undefined) {
+    await setCaption(this.page, caption);
+    for (let i = 0; i < frames; i += 1) {
+      await beforeFrame(i, frames);
+      captureFrameCursor = this.index;
       await this.page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
       await this.page.screenshot({ path: path.join(framesDir, `frame_${String(this.index).padStart(5, "0")}.png`), fullPage: false });
       this.index += 1;
       await this.page.waitForTimeout(35);
     }
+    captureFrameCursor = this.index;
+  }
+
+  async captureDuring(segment, beforeFrame) {
+    await this.captureFor(segment.caption, segment.frames, beforeFrame);
   }
 }
 
 async function installOverlay(page) {
   await page.addStyleTag({ content: `
-    input[name="email"], input[name="password"] { color: transparent !important; caret-color: transparent !important; text-shadow: none !important; }
+    input[name="password"], body.tutorial-redact-private input[name="email"] { color: transparent !important; caret-color: transparent !important; text-shadow: none !important; }
     .tutorial-caption { position: fixed; left: 50%; bottom: 34px; transform: translateX(-50%); z-index: 2147483000; max-width: min(1280px, calc(100vw - 96px)); padding: 18px 28px; border: 1px solid rgba(255,255,255,.24); border-radius: 14px; background: rgba(5,8,14,.84); box-shadow: 0 22px 70px rgba(0,0,0,.44); color: white; font: 800 30px/1.22 Inter, system-ui, sans-serif; text-align: center; pointer-events: none; backdrop-filter: blur(12px); }
     .tutorial-caption::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 12px; border-radius: 999px; background: linear-gradient(135deg,#31d4ff,#ff61c7); vertical-align: 3px; }
     .tutorial-highlight { display: none !important; position: fixed; z-index: 2147482998; pointer-events: none; opacity: 0; }
@@ -288,6 +470,7 @@ async function installOverlay(page) {
     .tutorial-file-item { display: grid; gap: 6px; place-items: center; min-height: 112px; padding: 8px; border: 2px solid transparent; border-radius: 10px; background: #f3f4f6; color: #404753; }
     .tutorial-file-item.selected { border-color: #2575e8; background: #e7f0ff; color: #0f55a7; }
     .tutorial-file-thumb { display: grid; place-items: center; width: 78px; height: 62px; overflow: hidden; border-radius: 7px; background: linear-gradient(135deg,#111827,#8957e5 54%,#f59e0b); color: #ffffff; font-size: 11px; font-weight: 800; }
+    .tutorial-file-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .tutorial-file-footer { display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 8px 14px; border-top: 1px solid #d7d9df; background: #fbfbfc; }
     .tutorial-file-button { min-width: 98px; padding: 9px 18px; border: 1px solid #c4c8d0; border-radius: 8px; background: #ffffff; color: #4b5563; text-align: center; font-weight: 700; }
     .tutorial-file-button.primary { border-color: #2575e8; background: #2575e8; color: #ffffff; }
@@ -320,7 +503,8 @@ async function installOverlay(page) {
       .tutorial-file-button { min-width: 70px; padding: 7px 10px; border-radius: 7px; }
     }
   ` });
-  await page.evaluate(() => {
+  await page.evaluate(({ redactPrivateData }) => {
+    document.body.classList.toggle("tutorial-redact-private", Boolean(redactPrivateData));
     const emailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
     const idPattern = /\b(?:site|cust|asset|job|sess|model|album)_[A-Za-z0-9_-]{8,}\b/g;
     function ensure(cls, text = "") {
@@ -343,16 +527,18 @@ async function installOverlay(page) {
         const parentText = parent.textContent || "";
         let text = node.nodeValue || "";
         const original = text;
-        text = text.replace(emailPattern, "demo@masked.local");
-        text = text.replace(idPattern, "[private id]");
-        text = text.replace(/\b(Credits:\s*)\d{3,}\b/gi, "$1----");
-        text = text.replace(/\b\d{3,}\s+credits\b/gi, "---- credits");
+        if (redactPrivateData) {
+          text = text.replace(emailPattern, "demo@masked.local");
+          text = text.replace(idPattern, "[private id]");
+          text = text.replace(/\b(Credits:\s*)\d{3,}\b/gi, "$1----");
+          text = text.replace(/\b\d{3,}\s+credits\b/gi, "---- credits");
+        }
         if (window.__tutorialHistoryMaskMode) {
           text = text.replace(/\b\d+\s+generated items?\b/gi, "previous results hidden");
           text = text.replace(/\b\d+\s+generated images?\b/gi, "previous images hidden");
           text = text.replace(/\b\d+\s+generated videos?\b/gi, "previous videos hidden");
         }
-        if (/\b(credits|creditos)\b/i.test(parentText)) text = text.replace(/\b\d{3,}\b/g, "----");
+        if (redactPrivateData && /\b(credits|creditos)\b/i.test(parentText)) text = text.replace(/\b\d{3,}\b/g, "----");
         if (text !== original) node.nodeValue = text;
       }
     }
@@ -398,6 +584,20 @@ async function installOverlay(page) {
         document.body.appendChild(mask);
       }
       Object.assign(mask.style, { left: `${target.rect.left}px`, top: `${target.rect.top}px`, width: `${target.rect.width}px`, height: `${target.rect.height}px` });
+    }
+    function hideNextDevIssueToast() {
+      const hidden = new WeakSet();
+      const hide = (toast) => {
+        if (!toast || hidden.has(toast)) return;
+        hidden.add(toast);
+        if (typeof toast.setAttribute === "function") toast.setAttribute("data-hidden", "true");
+      };
+      document.querySelectorAll("[data-nextjs-toast][data-has-issues='true']").forEach(hide);
+      for (const portal of document.querySelectorAll("nextjs-portal")) {
+        const root = portal.shadowRoot;
+        if (!root) continue;
+        root.querySelectorAll("[data-nextjs-toast][data-has-issues='true']").forEach(hide);
+      }
     }
     function clearHistoryMasks() {
       document.querySelectorAll(".tutorial-history-mask").forEach((mask) => mask.remove());
@@ -496,24 +696,43 @@ async function installOverlay(page) {
         }
         oldBackdrop?.remove();
         oldDialog?.remove();
-        const selected = state === "selected";
+        const config = typeof state === "object" ? state : { selected: state === "selected" };
+        const selected = Boolean(config.selected);
+        const selectedIndex = Number.isFinite(config.selectedIndex) ? Number(config.selectedIndex) : 0;
+        const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        })[char]);
+        const items = Array.isArray(config.items) && config.items.length
+          ? config.items.slice(0, 3)
+          : [
+              { label: "source-selfie-clean.jpg", tag: "source" },
+              { label: "portrait-reference.jpg", tag: "portrait" },
+              { label: "album-frame.png", tag: "album" }
+            ];
+        const itemHtml = items.map((item, index) => {
+          const isSelected = selected && index === selectedIndex;
+          const thumb = item.thumbUrl
+            ? `<img alt="" src="${escapeHtml(item.thumbUrl)}" />`
+            : escapeHtml(item.tag || "image");
+          return `<div class="tutorial-file-item ${isSelected ? "selected" : ""}"><div class="tutorial-file-thumb">${thumb}</div><strong>${escapeHtml(item.label || "image.jpg")}</strong></div>`;
+        }).join("");
         const backdrop = document.createElement("div");
         backdrop.className = "tutorial-file-backdrop";
         const dialog = document.createElement("div");
         dialog.className = "tutorial-file-dialog";
         dialog.innerHTML = `
-          <div class="tutorial-file-titlebar"><span class="tutorial-file-dot"></span><strong>Choose a photo</strong></div>
+          <div class="tutorial-file-titlebar"><span class="tutorial-file-dot"></span><strong>${escapeHtml(config.title || "Choose a photo")}</strong></div>
           <div class="tutorial-file-toolbar"><span>&lsaquo;</span><span>&rsaquo;</span><span>Columns</span><strong>Desktop</strong><span>Search</span></div>
           <div class="tutorial-file-body">
             <aside class="tutorial-file-sidebar">
               <div>Recents</div><div>Shared</div><div class="active">Desktop</div><div>Documents</div><div>Downloads</div><div>Home</div>
             </aside>
             <div class="tutorial-file-main">
-              <div class="tutorial-file-list">
-                <div class="tutorial-file-item ${selected ? "selected" : ""}"><div class="tutorial-file-thumb">source</div><strong>source-selfie-clean.jpg</strong></div>
-                <div class="tutorial-file-item"><div class="tutorial-file-thumb">portrait</div><strong>portrait-reference.jpg</strong></div>
-                <div class="tutorial-file-item"><div class="tutorial-file-thumb">album</div><strong>album-frame.png</strong></div>
-              </div>
+              <div class="tutorial-file-list">${itemHtml}</div>
               <div class="tutorial-file-footer"><span class="tutorial-file-button">Cancel</span><span class="tutorial-file-button primary">${selected ? "Open" : "Choose"}</span></div>
             </div>
           </div>`;
@@ -525,16 +744,19 @@ async function installOverlay(page) {
       },
       redact() {
         redactTextNodes(document.body);
-        positionInputMask('input[name="email"]', "tutorial-mask-email", "masked email");
+        if (redactPrivateData) positionInputMask('input[name="email"]', "tutorial-mask-email", "masked email");
+        else document.querySelector(".tutorial-mask-email")?.remove();
         positionInputMask('input[name="password"]', "tutorial-mask-password", "masked password");
-        positionAccountMask();
+        if (redactPrivateData) positionAccountMask();
+        else document.querySelector(".tutorial-chip-mask")?.remove();
+        hideNextDevIssueToast();
         maskHistoricalMedia();
       }
     };
     window.__tutorial.cursor(Math.min(window.innerWidth - 18, Math.max(18, window.innerWidth * 0.62)), Math.min(window.innerHeight - 18, Math.max(18, window.innerHeight * 0.72)));
     window.__tutorial.redact();
     window.setInterval(() => window.__tutorial?.redact?.(), 250);
-  });
+  }, { redactPrivateData });
 }
 
 async function setCaption(page, caption) {
@@ -542,7 +764,7 @@ async function setCaption(page, caption) {
 }
 
 async function setHistoryMask(page, enabled) {
-  const active = Boolean(enabled && hideHistoricalAssets);
+  const active = Boolean(enabled && hideHistoricalAssets && !isMyDreamShootsSite);
   await page.evaluate((value) => window.__tutorial?.setHistoryMaskMode?.(value), active).catch(() => undefined);
 }
 
@@ -553,6 +775,7 @@ async function moveTutorialPointer(page, x, y, pulse = false) {
     window.__tutorial?.cursor?.(clampedX, clampedY);
     if (pulse) window.__tutorial?.clickPulse?.();
   }, { x, y, pulse }).catch(() => undefined);
+  if (pulse) queueMouseClickSound();
 }
 
 async function pointAt(page, locator) {
@@ -566,13 +789,132 @@ async function pointAt(page, locator) {
   }, { x: box.x, y: box.y, width: box.width, height: box.height }).catch(() => undefined);
 }
 
+function queueMouseClickSound(offsetMs = 0) {
+  if (isMobileRecording) return;
+  const seconds = Math.max(0, Math.min(finalDurationSeconds - 0.05, (captureFrameCursor / captureFps) + (offsetMs / 1000)));
+  const previous = clickSoundTimes.at(-1);
+  if (previous !== undefined && Math.abs(seconds - previous) < 0.18) return;
+  clickSoundTimes.push(seconds);
+}
+
+async function pulseTutorialClick(page, options = {}) {
+  await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+  if (options.sound !== false) queueMouseClickSound(options.offsetMs ?? 0);
+}
+
+function easeInOut(t) {
+  return t < 0.5 ? 2 * t * t : 1 - ((-2 * t + 2) ** 2) / 2;
+}
+
+function easeCubicInOut(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - (((-2 * t + 2) ** 3) / 2);
+}
+
+async function captureScrollToLocator(page, recorder, locator, frames, caption, options = {}) {
+  const target = locator.first();
+  await target.waitFor({ state: "visible", timeout: options.timeout ?? 45_000 });
+  const scrollId = `tutorial-scroll-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const metrics = await target.evaluate((element, opts) => {
+    function scrollContainerFor(node) {
+      let current = node.parentElement;
+      while (current && current !== document.body) {
+        const style = window.getComputedStyle(current);
+        const canScroll = /(auto|scroll)/.test(`${style.overflowY} ${style.overflow}`);
+        if (canScroll && current.scrollHeight > current.clientHeight + 12) return current;
+        current = current.parentElement;
+      }
+      return document.scrollingElement || document.documentElement;
+    }
+    const container = scrollContainerFor(element);
+    container.setAttribute("data-tutorial-scroll-id", opts.scrollId);
+    const isDocumentScroller = container === document.scrollingElement || container === document.documentElement;
+    const containerRect = isDocumentScroller ? { top: 0, height: window.innerHeight } : container.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
+    const start = container.scrollTop;
+    const topWithin = rect.top - containerRect.top + start;
+    const bottomWithin = rect.bottom - containerRect.top + start;
+    const viewHeight = isDocumentScroller ? window.innerHeight : container.clientHeight;
+    let targetTop = topWithin - ((viewHeight - rect.height) / 2);
+    if (opts.block === "start") targetTop = topWithin - opts.topPadding;
+    if (opts.block === "end") targetTop = bottomWithin - viewHeight + opts.bottomPadding;
+    const max = Math.max(0, container.scrollHeight - container.clientHeight);
+    const target = Math.max(0, Math.min(max, targetTop));
+    let animatedStart = start;
+    if (Number.isFinite(opts.startOffset)) {
+      const offsetStart = Math.max(0, Math.min(max, target + opts.startOffset));
+      if (Math.abs(offsetStart - target) > 8) animatedStart = offsetStart;
+    }
+    return { scrollId: opts.scrollId, start: animatedStart, target };
+  }, {
+    scrollId,
+    block: options.block || "center",
+    topPadding: options.topPadding ?? (isMobileRecording ? 132 : 96),
+    bottomPadding: options.bottomPadding ?? (isMobileRecording ? 160 : 96),
+    startOffset: options.startOffset
+  });
+
+  await recorder.captureFor(caption, frames, async (index, count) => {
+    const progress = count <= 1 ? 1 : index / Math.max(1, count - 1);
+    const eased = easeCubicInOut(progress);
+    await page.evaluate(({ metrics, eased }) => {
+      const container = document.querySelector(`[data-tutorial-scroll-id="${metrics.scrollId}"]`) ||
+        document.scrollingElement ||
+        document.documentElement;
+      container.scrollTop = Math.round(metrics.start + ((metrics.target - metrics.start) * eased));
+      window.__tutorial?.redact?.();
+    }, { metrics, eased }).catch(() => undefined);
+  });
+}
+
+async function createPageSampleScrollTarget(page) {
+  return page.evaluate(({ preferPartner }) => {
+    const root = document.scrollingElement || document.documentElement;
+    const aside = document.querySelector("aside");
+    const headings = [...(aside?.querySelectorAll("p,h2,h3,div,span") || [])];
+    const partnerHeading = headings.find((item) => /^Partner Samples$/i.test((item.textContent || "").trim()));
+    const primaryHeading = headings.find((item) => /^Your Samples$/i.test((item.textContent || "").trim()));
+    const sampleHeading = preferPartner ? partnerHeading || primaryHeading : primaryHeading || partnerHeading;
+    const currentY = window.scrollY || root.scrollTop || 0;
+    const maxY = Math.max(0, root.scrollHeight - window.innerHeight);
+    if (!sampleHeading) return { from: currentY, to: Math.min(maxY, currentY + Math.round(window.innerHeight * 0.42)) };
+    const rect = sampleHeading.getBoundingClientRect();
+    const targetY = currentY + rect.top - Math.max(120, Math.round(window.innerHeight * 0.18));
+    return { from: currentY, to: Math.max(0, Math.min(maxY, targetY)) };
+  }, { preferPartner: isMobileRecording }).catch(() => ({ from: 0, to: 0 }));
+}
+
+async function scrollCreatePageToSamples(page, progress = 1) {
+  const target = await createPageSampleScrollTarget(page);
+  const eased = easeInOut(Math.max(0, Math.min(1, progress)));
+  await page.evaluate(({ from, to, eased }) => {
+    window.scrollTo({ top: from + ((to - from) * eased), behavior: "instant" });
+  }, { ...target, eased }).catch(() => undefined);
+}
+
+function uploadButtonForRole(page, role) {
+  return page.locator("aside").getByRole("button", { name: /^Upload$/i }).nth(role === "partner" ? 1 : 0);
+}
+
+async function showUploadChooserOverlay(page, role, selected = false) {
+  if (isMobileRecording) {
+    await hideUploadChooserOverlay(page);
+    return;
+  }
+  const state = await fileDialogStateFor(role, selected);
+  await page.evaluate((dialogState) => window.__tutorial?.fileDialog?.(dialogState), state).catch(() => undefined);
+}
+
+async function hideUploadChooserOverlay(page) {
+  await page.evaluate(() => window.__tutorial?.fileDialog?.(null)).catch(() => undefined);
+}
+
 async function clickWithPointer(page, locator, options = {}) {
   await pointAt(page, locator);
   await page.waitForTimeout(options.pauseBeforeClickMs ?? 320);
-  await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+  await pulseTutorialClick(page, { sound: false });
   await page.waitForTimeout(120);
   await locator.click({ timeout: options.timeout ?? 30_000, force: options.force ?? false });
-  await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+  await pulseTutorialClick(page);
   await page.waitForTimeout(options.pauseAfterClickMs ?? 500);
 }
 
@@ -602,9 +944,9 @@ async function captureLoginAndAuthenticate(page, context, recorder) {
   await password.fill(candidates[0].password);
   await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
   await pointAt(page, submit);
-  await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+  await pulseTutorialClick(page);
   await recorder.capture(timeline.find((segment) => segment.id === "login"));
-  await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+  await pulseTutorialClick(page, { sound: false });
 
   let lastError = "login_failed";
   for (const [index, candidate] of candidates.entries()) {
@@ -620,8 +962,44 @@ async function captureLoginAndAuthenticate(page, context, recorder) {
     }
     lastError = data.error || response.status();
     log(`credential candidate ${index + 1} failed`, { error: lastError, source: candidate.source });
+    const targetEmail = String(process.env.TUTORIAL_CUSTOMER_EMAIL || "").trim().toLowerCase();
+    if (targetEmail && String(candidate.email).trim().toLowerCase() === targetEmail) {
+      if (await createDirectCustomerSession(context, candidate.email)) return;
+    }
   }
   throw new Error(`customer_login_failed: ${sanitizeText(lastError)}`);
+}
+
+async function showPricingRechargeStep(page, recorder) {
+  if (!isMyDreamShootsSite) return;
+  await page.goto(absoluteUrl("/pricing"), { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+  await waitReady(page);
+  await installOverlay(page);
+  await setHistoryMask(page, false);
+
+  const planButtons = page.locator("a,button").filter({ hasText: /^Select plan$/i });
+  const proButton = planButtons.nth(1);
+  const target = await proButton.waitFor({ state: "visible", timeout: 20_000 }).then(() => true).catch(() => false)
+    ? proButton
+    : planButtons.first();
+  await target.waitFor({ state: "visible", timeout: 20_000 });
+  const segment = timeline.find((item) => item.id === "pricing");
+  if (isMobileRecording) {
+    const scrollFrames = Math.max(1, segment.frames - 5);
+    await captureScrollToLocator(page, recorder, target, scrollFrames, segment.caption, {
+      block: "center",
+      startOffset: -420,
+      topPadding: 126
+    });
+    await pointAt(page, target).catch(() => undefined);
+    await pulseTutorialClick(page);
+    await recorder.captureFor(segment.caption, Math.max(1, segment.frames - scrollFrames));
+    return;
+  }
+  await target.scrollIntoViewIfNeeded().catch(() => undefined);
+  await pointAt(page, target).catch(() => undefined);
+  await pulseTutorialClick(page);
+  await recorder.capture(segment);
 }
 
 async function closeMegaMenus(page) {
@@ -666,12 +1044,29 @@ async function choosePackage(page, recorder) {
   await packageCard.waitFor({ state: "visible", timeout: 60_000 });
   await packageCard.scrollIntoViewIfNeeded().catch(() => undefined);
   await pointAt(page, packageCard);
+  if (isMyDreamShootsSite) {
+    const segment = timeline.find((item) => item.id === "package");
+    if (isMobileRecording) {
+      const scrollFrames = Math.max(1, segment.frames - 5);
+      await captureScrollToLocator(page, recorder, packageCard, scrollFrames, segment.caption, {
+        block: "center",
+        startOffset: -300,
+        topPadding: 120
+      });
+      await pointAt(page, packageCard).catch(() => undefined);
+      await recorder.captureFor(segment.caption, Math.max(1, segment.frames - scrollFrames));
+    } else {
+      await recorder.capture(segment);
+    }
+    await page.evaluate(() => window.__tutorial?.highlight?.(null)).catch(() => undefined);
+    return;
+  }
   await page.evaluate((title) => {
     const button = [...document.querySelectorAll("[data-workspace-package-title]")]
       .find((item) => item.getAttribute("data-workspace-package-title") === title);
     button?.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true, view: window }));
   }, packageTitle);
-  await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+  await pulseTutorialClick(page);
   await page.waitForTimeout(500);
   const packageDialog = page.locator('[role="dialog"][aria-modal="true"]').filter({ hasText: packageTitle }).first();
   const dialogTitle = packageDialog.getByText(new RegExp(packageTitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i")).first();
@@ -684,20 +1079,53 @@ async function choosePackage(page, recorder) {
 
 async function uploadSourcePhoto(page, recorder) {
   await openWorkspace(page, "#step-create");
-  const uploadButton = page.locator("aside").getByRole("button", { name: /^Upload$/i }).first();
-  await uploadButton.waitFor({ state: "visible", timeout: 45_000 });
-  await clickWithPointer(page, uploadButton, { force: true });
-  await page.evaluate(() => window.__tutorial?.fileDialog?.("desktop")).catch(() => undefined);
-  await moveTutorialPointer(page, 1010, 508);
+  await scrollCreatePageToSamples(page, 1);
+  const primaryUpload = uploadButtonForRole(page, "primary");
+  await primaryUpload.waitFor({ state: "visible", timeout: 45_000 });
+  await clickWithPointer(page, primaryUpload, { force: true });
+  if (isMobileRecording) {
+    let uploadInput = page.locator('aside input[type="file"]').first();
+    await uploadInput.setInputFiles(sourcePhotoPath);
+    if (isMyDreamShootsSite) {
+      const partnerUpload = uploadButtonForRole(page, "partner");
+      await partnerUpload.waitFor({ state: "visible", timeout: 45_000 });
+      await clickWithPointer(page, partnerUpload, { force: true });
+      uploadInput = page.locator('aside input[type="file"]').first();
+      await uploadInput.setInputFiles(partnerPhotoPath);
+    }
+    await hideUploadChooserOverlay(page);
+    await page.waitForFunction(() => {
+      const asideText = document.querySelector("aside")?.textContent || "";
+      return /uploaded and selected|1 selected|selected\./i.test(asideText) && !/Uploading \d+ sample/i.test(asideText);
+    }, undefined, { timeout: 120_000 }).catch(() => undefined);
+    await scrollCreatePageToSamples(page, 1);
+    const uploadedSample = page.locator("aside").getByText(/Selected|uploaded and selected|1 selected|Partner Samples/i).first();
+    await pointAt(page, uploadedSample).catch(() => undefined);
+    await recorder.capture(timeline.find((segment) => segment.id === "upload"));
+    return;
+  }
+  await showUploadChooserOverlay(page, "primary", false);
+  await moveTutorialPointer(page, isMobileRecording ? 290 : 1010, isMobileRecording ? 360 : 508);
   await page.waitForTimeout(650);
-  await page.evaluate(() => window.__tutorial?.fileDialog?.("selected")).catch(() => undefined);
-  await moveTutorialPointer(page, 1210, 860);
-  const uploadInput = page.locator('aside input[type="file"]').first();
+  await showUploadChooserOverlay(page, "primary", true);
+  await moveTutorialPointer(page, isMobileRecording ? 330 : 1210, isMobileRecording ? 610 : 860);
+  let uploadInput = page.locator('aside input[type="file"]').first();
   await uploadInput.setInputFiles(sourcePhotoPath);
-  await page.evaluate(() => window.__tutorial?.fileDialog?.(null)).catch(() => undefined);
+  await hideUploadChooserOverlay(page);
+  if (isMyDreamShootsSite) {
+    const partnerUpload = uploadButtonForRole(page, "partner");
+    await partnerUpload.waitFor({ state: "visible", timeout: 45_000 });
+    await clickWithPointer(page, partnerUpload, { force: true });
+    await showUploadChooserOverlay(page, "partner", false);
+    await page.waitForTimeout(500);
+    await showUploadChooserOverlay(page, "partner", true);
+    uploadInput = page.locator('aside input[type="file"]').first();
+    await uploadInput.setInputFiles(partnerPhotoPath);
+    await hideUploadChooserOverlay(page);
+  }
   await page.waitForFunction(() => {
     const asideText = document.querySelector("aside")?.textContent || "";
-    return /uploaded and selected|1 selected|selected\./i.test(asideText) && !/Uploading 1 sample/i.test(asideText);
+    return /uploaded and selected|1 selected|selected\./i.test(asideText) && !/Uploading \d+ sample/i.test(asideText);
   }, undefined, { timeout: 120_000 }).catch(() => undefined);
   const uploadedSample = page.locator("aside").getByText(/Selected|uploaded and selected|1 selected/i).first();
   await pointAt(page, uploadedSample).catch(() => undefined);
@@ -737,7 +1165,7 @@ async function selectSampleByTokens(page, tokens, label) {
   await page.evaluate((rect) => window.__tutorial?.highlight?.(rect), target.rect).catch(() => undefined);
   await moveTutorialPointer(page, target.x, target.y, true);
   if (!target.selected) {
-    await page.evaluate(({ tokens, label }) => {
+    await page.evaluate(({ tokens, label: _label }) => {
       const aside = document.querySelector("aside");
       if (!aside) return;
       const normalizedTokens = tokens.map((token) => decodeURIComponent(String(token || ""))).filter(Boolean);
@@ -780,6 +1208,97 @@ async function frameSelectedSamplesTogether(page) {
   await page.evaluate(() => window.__tutorial?.redact?.()).catch(() => undefined);
 }
 
+async function filterToTutorialSamples(page) {
+  if (!isMyDreamShootsSite) return;
+  await page.evaluate(({ tokens }) => {
+    const normalizedTokens = tokens.map((token) => decodeURIComponent(String(token || ""))).filter(Boolean);
+    const keepImage = (img) => {
+      const src = decodeURIComponent(img.getAttribute("src") || "");
+      const alt = decodeURIComponent(img.getAttribute("alt") || "");
+      return normalizedTokens.some((token) => src.includes(token) || alt.includes(token));
+    };
+    const aside = document.querySelector("aside");
+    if (!aside) return;
+    for (const item of [...aside.querySelectorAll('[role="listitem"]')]) {
+      const img = item.querySelector("img");
+      item.style.display = img && keepImage(img) ? "" : "none";
+    }
+  }, { tokens: [...tutorialPrimarySampleTokens, ...tutorialPartnerSampleTokens] }).catch(() => undefined);
+}
+
+async function recordExistingSampleUploadFlow(page, recorder) {
+  const segment = timeline.find((item) => item.id === "upload");
+  if (!isMyDreamShootsSite) {
+    await recorder.capture(segment);
+    return;
+  }
+
+  await frameSelectedSamplesTogether(page);
+  await filterToTutorialSamples(page);
+  const total = segment.frames;
+  if (isMobileRecording) {
+    await hideUploadChooserOverlay(page);
+    const introFrames = Math.max(4, Math.round(total * 0.28));
+    const scrollFrames = Math.max(5, Math.round(total * 0.44));
+    const finalFrames = Math.max(1, total - introFrames - scrollFrames);
+    const primaryUpload = uploadButtonForRole(page, "primary");
+    await primaryUpload.waitFor({ state: "visible", timeout: 30_000 }).catch(() => undefined);
+    await pointAt(page, primaryUpload).catch(() => undefined);
+    await recorder.captureFor(segment.caption, introFrames);
+
+    const partnerHeading = page.locator("aside").getByText(/^Partner Samples$/i).first();
+    await captureScrollToLocator(page, recorder, partnerHeading, scrollFrames, segment.caption, {
+      block: "start",
+      topPadding: 126,
+      startOffset: -320
+    }).catch(async () => {
+      await scrollCreatePageToSamples(page, 1);
+      await recorder.captureFor(segment.caption, scrollFrames);
+    });
+
+    const partnerUpload = uploadButtonForRole(page, "partner");
+    await pointAt(page, partnerUpload).catch(() => undefined);
+    const selectedSummary = page.locator("aside").getByText(/2 samples uploaded and selected|2 selected|Partner Samples/i).first();
+    if (await selectedSummary.isVisible().catch(() => false)) await pointAt(page, selectedSummary).catch(() => undefined);
+    await recorder.captureFor(segment.caption, finalFrames);
+    return;
+  }
+  const introFrames = Math.max(3, Math.round(total * 0.18));
+  const primaryDialogFrames = Math.max(4, Math.round(total * 0.18));
+  const primarySelectedFrames = Math.max(3, Math.round(total * 0.1));
+  const partnerDialogFrames = Math.max(4, Math.round(total * 0.18));
+  const partnerSelectedFrames = Math.max(3, Math.round(total * 0.1));
+  const used = introFrames + primaryDialogFrames + primarySelectedFrames + partnerDialogFrames + partnerSelectedFrames;
+  const finalFrames = Math.max(1, total - used);
+
+  const primaryUpload = uploadButtonForRole(page, "primary");
+  await primaryUpload.waitFor({ state: "visible", timeout: 30_000 }).catch(() => undefined);
+  await pointAt(page, primaryUpload).catch(() => undefined);
+  await recorder.captureFor(segment.caption, introFrames);
+  await pulseTutorialClick(page);
+  await showUploadChooserOverlay(page, "primary", false);
+  await recorder.captureFor(segment.caption, primaryDialogFrames);
+  await showUploadChooserOverlay(page, "primary", true);
+  await recorder.captureFor(segment.caption, primarySelectedFrames);
+  await hideUploadChooserOverlay(page);
+
+  const partnerUpload = uploadButtonForRole(page, "partner");
+  await partnerUpload.waitFor({ state: "visible", timeout: 30_000 }).catch(() => undefined);
+  await pointAt(page, partnerUpload).catch(() => undefined);
+  await pulseTutorialClick(page);
+  await showUploadChooserOverlay(page, "partner", false);
+  await recorder.captureFor(segment.caption, partnerDialogFrames);
+  await showUploadChooserOverlay(page, "partner", true);
+  await recorder.captureFor(segment.caption, partnerSelectedFrames);
+  await hideUploadChooserOverlay(page);
+
+  await frameSelectedSamplesTogether(page);
+  await filterToTutorialSamples(page);
+  const selectedSummary = page.locator("aside").getByText(/2 samples uploaded and selected|2 selected|Partner Samples/i).first();
+  await pointAt(page, selectedSummary).catch(() => undefined);
+  await recorder.captureFor(segment.caption, finalFrames);
+}
+
 async function selectExistingSamples(page, recorder) {
   await openWorkspace(page, "#step-create");
   await page.evaluate(({ siteId, customerId, primarySampleIds, partnerSampleIds }) => {
@@ -803,8 +1322,7 @@ async function selectExistingSamples(page, recorder) {
   await page.getByText(/Partner Samples/i).first().waitFor({ state: "visible", timeout: 60_000 });
   await selectSampleByTokens(page, tutorialPrimarySampleTokens, "primary");
   await selectSampleByTokens(page, tutorialPartnerSampleTokens, "partner");
-  await frameSelectedSamplesTogether(page);
-  await recorder.capture(timeline.find((segment) => segment.id === "upload"));
+  await recordExistingSampleUploadFlow(page, recorder);
   await page.evaluate(() => window.__tutorial?.highlight?.(null)).catch(() => undefined);
 }
 
@@ -812,13 +1330,30 @@ async function recordWorkspaceOverview(page, recorder) {
   await openWorkspace(page, "#step-create");
   const workspaceHeading = page.getByText(/Start your AI photoshoot/i).first();
   await pointAt(page, workspaceHeading).catch(() => undefined);
-  await recorder.capture(timeline.find((segment) => segment.id === "workspace"));
+  const segment = timeline.find((item) => item.id === "workspace");
+  if (!isMyDreamShootsSite) {
+    await recorder.capture(segment);
+    return;
+  }
+  const scrollTarget = await createPageSampleScrollTarget(page);
+  await recorder.captureDuring(segment, async (index, frames) => {
+    const progress = frames <= 1 ? 1 : index / (frames - 1);
+    const eased = easeInOut(progress);
+    await page.evaluate(({ from, to, eased }) => {
+      window.scrollTo({ top: from + ((to - from) * eased), behavior: "instant" });
+    }, { ...scrollTarget, eased }).catch(() => undefined);
+    if (index === Math.floor(frames * 0.72)) {
+      const upload = uploadButtonForRole(page, "primary");
+      await pointAt(page, upload).catch(() => undefined);
+    }
+  });
 }
 
 async function openReviewDialog(page, recorder) {
   await openWorkspace(page, "#step-create");
   const reviewButton = page.locator("#step-create").getByRole("button", { name: /Review and start|Configure package/i }).first();
   await reviewButton.waitFor({ state: "visible", timeout: 45_000 });
+  await reviewButton.evaluate((element) => element.scrollIntoView({ block: "center", inline: "center" })).catch(() => undefined);
   await clickWithPointer(page, reviewButton, { force: true, pauseAfterClickMs: 500 });
   const dialog = page.locator('[role="dialog"][aria-modal="true"]').filter({ hasText: /Selected uploads|Required credits|Estimated outputs|Photo package/i }).first();
   await dialog.waitFor({ state: "visible", timeout: 45_000 });
@@ -832,16 +1367,73 @@ async function openReviewDialog(page, recorder) {
     await pointAt(page, promptBox);
     await promptBox.fill(promptNote);
   }
-  const summary = dialog.getByText(/Required credits|Selected uploads|Output/i).first();
-  await pointAt(page, summary).catch(() => undefined);
-  await recorder.capture(timeline.find((segment) => segment.id === "review"));
+  if (!isMyDreamShootsSite) {
+    const summary = dialog.getByText(/Required credits|Selected uploads|Output/i).first();
+    await pointAt(page, summary).catch(() => undefined);
+    await recorder.capture(timeline.find((segment) => segment.id === "review"));
+    return;
+  }
+  const segment = timeline.find((item) => item.id === "review");
+  const topFrames = isMobileRecording
+    ? Math.max(5, Math.round(segment.frames * 0.28))
+    : Math.max(4, Math.round(segment.frames * 0.42));
+  const bottomFrames = Math.max(1, segment.frames - topFrames);
+  const bothCard = dialog.getByRole("button", { name: /For Both of Us/i }).first();
+  if (await bothCard.isVisible().catch(() => false)) {
+    await bothCard.scrollIntoViewIfNeeded().catch(() => undefined);
+    await clickWithPointer(page, bothCard, { force: true, pauseBeforeClickMs: 220, pauseAfterClickMs: 260 }).catch(() => undefined);
+  }
+  await pointAt(page, bothCard).catch(() => undefined);
+  await recorder.captureFor(segment.caption, topFrames);
+  const scrollTarget = await dialog.evaluate((element, options) => {
+    const selectedUploads = [...element.querySelectorAll("p,h2,h3,div")].find((item) => /Selected uploads/i.test(item.textContent || ""));
+    const startButton = [...element.querySelectorAll("button")].find((item) => /Start photo package|Start generation|Start tool/i.test(item.textContent || ""));
+    const anchor = options.mobile ? startButton || selectedUploads : selectedUploads || startButton;
+    function scrollableAncestorFor(node) {
+      let current = node?.parentElement;
+      while (current && current !== document.body && element.contains(current)) {
+        const style = window.getComputedStyle(current);
+        const canScroll = /(auto|scroll)/.test(`${style.overflowY} ${style.overflow}`);
+        if (canScroll && current.scrollHeight > current.clientHeight + 20) return current;
+        current = current.parentElement;
+      }
+      return null;
+    }
+    const scrollable = scrollableAncestorFor(anchor) || [...element.querySelectorAll("*")].find((candidate) => {
+      const style = window.getComputedStyle(candidate);
+      return /(auto|scroll)/.test(style.overflowY) && candidate.scrollHeight > candidate.clientHeight + 20;
+    }) || element;
+    const current = scrollable.scrollTop || 0;
+    const max = Math.max(0, scrollable.scrollHeight - scrollable.clientHeight);
+    let target = max;
+    if (anchor) {
+      const scrollRect = scrollable.getBoundingClientRect();
+      const anchorRect = anchor.getBoundingClientRect();
+      target = current + anchorRect.top - scrollRect.top - (options.mobile ? 74 : 64);
+    }
+    if (options.mobile) target = Math.max(target, max);
+    target = Math.max(0, Math.min(max, target));
+    scrollable.dataset.tutorialScrollTarget = "1";
+    return { from: current, to: target };
+  }, { mobile: isMobileRecording }).catch(() => ({ from: 0, to: 0 }));
+  await recorder.captureFor(segment.caption, bottomFrames, async (index, frames) => {
+    const progress = frames <= 1 ? 1 : index / (frames - 1);
+    const eased = easeInOut(progress);
+    await dialog.evaluate(({ from, to, eased }) => {
+      const scrollable = document.querySelector('[data-tutorial-scroll-target="1"]') || document.querySelector('[role="dialog"][aria-modal="true"]');
+      if (scrollable) scrollable.scrollTop = from + ((to - from) * eased);
+    }, { ...scrollTarget, eased }).catch(() => undefined);
+  });
+  const startButton = dialog.getByRole("button", { name: /Start photo package|Start generation|Start tool/i }).first();
+  await pointAt(page, startButton).catch(() => undefined);
 }
 
 async function submitJob(page, recorder) {
   const segment = timeline.find((item) => item.id === "start");
   const button = page.locator('[role="dialog"][aria-modal="true"]').getByRole("button", { name: /Start photo package|Start generation|Start tool/i }).first();
-  await button.waitFor({ state: "visible", timeout: 45_000 });
+  await button.waitFor({ state: "attached", timeout: 45_000 });
   await button.evaluate((element) => element.scrollIntoView({ block: "center", inline: "center" })).catch(() => undefined);
+  await button.waitFor({ state: "visible", timeout: 45_000 });
   await page.waitForTimeout(250);
   await pointAt(page, button);
   if (!realGeneration) {
@@ -860,7 +1452,7 @@ async function submitJob(page, recorder) {
       }).catch(() => undefined);
     }
     await pointAt(page, button).catch(() => undefined);
-    await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+    await pulseTutorialClick(page);
     await recorder.capture(segment);
     if (reuseJobId) {
       log("reusing existing image job for recording", { jobId: reuseJobId });
@@ -888,7 +1480,7 @@ async function submitJob(page, recorder) {
   { timeout: 150_000 });
   await setHistoryMask(page, true);
   await button.click({ timeout: 30_000, force: true });
-  await page.evaluate(() => window.__tutorial?.clickPulse?.()).catch(() => undefined);
+  await pulseTutorialClick(page);
   const response = await responsePromise;
   const data = await response.json().catch(() => ({}));
   if (!response.ok() || !data.job?.id) {
@@ -939,7 +1531,19 @@ async function waitForSuccess(page, jobId) {
   const started = Date.now();
   let lastStatus = "unknown";
   while (Date.now() - started < jobTimeoutMs) {
-    const data = await runtime(page);
+    let data;
+    try {
+      data = await runtime(page);
+    } catch (error) {
+      lastStatus = error instanceof Error ? error.message : String(error);
+      log("workspace runtime unavailable while waiting for image job", {
+        jobId,
+        error: lastStatus,
+        elapsedSeconds: Math.round((Date.now() - started) / 1000)
+      });
+      await page.waitForTimeout(pollIntervalMs);
+      continue;
+    }
     const job = jobFrom(data, jobId);
     const assets = imageAssetsForJob(data, jobId);
     if (job?.status) lastStatus = job.status;
@@ -979,7 +1583,226 @@ async function openResults(page) {
   await page.locator("#review-request").waitFor({ state: "visible", timeout: 30_000 });
 }
 
-async function refreshAndRecordProgress(page, recorder) {
+async function localPreviewImageAsset() {
+  if (siteId !== "site_dreamshoot") return undefined;
+  const storageKey = `sites/${siteId}/customers/${tutorialSampleCustomerId}/assets/job_mydreamshoots_tutorial_preview_image-output-1.webp`;
+  const filePath = path.join(repoRoot, "data", "customer-assets", storageKey);
+  const dataUrl = fsSync.existsSync(filePath)
+    ? `data:image/webp;base64,${(await fs.readFile(filePath)).toString("base64")}`
+    : "";
+  return {
+    id: "asset_mydreamshoots_tutorial_preview_image",
+    jobId: "job_mydreamshoots_tutorial_preview_image",
+    role: "output",
+    mimeType: "image/webp",
+    label: "Tutorial result image preview",
+    storageKey,
+    previewUrl: dataUrl || `/api/local-assets/${storageKey}`
+  };
+}
+
+function samplePreviewUrlForTokens(tokens) {
+  const token = tokens[0] || "";
+  return token ? `/api/local-assets/sites/${siteId}/customers/${tutorialSampleCustomerId}/assets/${token}` : "";
+}
+
+async function showSyntheticSuccessState(page, asset) {
+  const primaryUrl = samplePreviewUrlForTokens(tutorialPrimarySampleTokens);
+  const partnerUrl = samplePreviewUrlForTokens(tutorialPartnerSampleTokens);
+  await page.evaluate(({ asset, packageTitle: _packageTitle, primaryUrl, partnerUrl }) => {
+    document.querySelector('[role="dialog"][aria-modal="true"]')?.remove();
+    document.querySelector(".tutorial-generated-preview")?.remove();
+    document.body.classList.add("tutorial-synthetic-success-active");
+    window.history.replaceState(null, "", `${window.location.pathname}?tutorialRefresh=${Date.now()}#resources-all`);
+    window.scrollTo({ top: 0, behavior: "instant" });
+
+    let scene = document.querySelector(".tutorial-success-scene");
+    if (!scene) {
+      scene = document.createElement("section");
+      scene.className = "tutorial-success-scene";
+      document.body.appendChild(scene);
+    }
+    scene.innerHTML = `
+      <div class="tutorial-success-toolbar">
+        <button class="active">All</button><button>Recent</button><button>Favorites</button><button>Pick Package</button>
+        <span class="credits">Credits: 98829</span><span>All assets</span>
+      </div>
+      <div class="tutorial-success-head">
+        <div><h2>All assets</h2><p>0 active jobs • 0 need attention • 1 generated item</p></div>
+        <div><button>Refresh status</button><button class="primary">Pick Package</button></div>
+      </div>
+      <div class="tutorial-success-card" id="review-request">
+        <div class="tutorial-success-card-head">
+          <div><h3>AI generation</h3><strong>Images delivered</strong><p>The workspace updates when the generator sends progress.</p></div>
+          <span>SUCCEEDED</span>
+        </div>
+        <div class="tutorial-success-output" role="status">
+          <button class="tutorial-synthetic-preview-button" type="button" aria-label="Open preview">
+            <img alt="Generated Valentine Photos image" src="${asset.previewUrl}">
+            <span>Open preview</span>
+          </button>
+          <div class="tutorial-success-output-meta">
+            <b>Image 1</b><em>DELIVERED</em>
+            <div class="bar"><i></i></div>
+            <small><span>Output ready</span><span>100%</span></small>
+          </div>
+        </div>
+        <div class="tutorial-success-foot"><span>1 of 1 delivered</span><span>Updated 10:27:26 AM</span></div>
+      </div>
+      <div class="tutorial-success-samples" aria-label="Selected uploads">
+        <div><h4>Your Samples</h4><img src="${primaryUrl}" alt="Selected primary sample"></div>
+        <div><h4>Partner Samples</h4><img src="${partnerUrl}" alt="Selected partner sample"></div>
+      </div>
+    `;
+  }, { asset, packageTitle, primaryUrl, partnerUrl });
+  await page.addStyleTag({ content: `
+    .tutorial-synthetic-success-active main { opacity: .18 !important; }
+    .tutorial-success-scene {
+      position: fixed;
+      z-index: 2147482500;
+      left: 450px;
+      right: 0;
+      top: 112px;
+      bottom: 0;
+      overflow: hidden;
+      padding: 24px 36px;
+      background: #030406;
+      color: #fff;
+      font-family: Inter, system-ui, sans-serif;
+    }
+    .tutorial-success-toolbar { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .tutorial-success-toolbar button, .tutorial-success-head button { border: 1px solid rgba(255,255,255,.16); border-radius: 10px; background: #131922; color: #fff; padding: 12px 20px; font-weight: 800; }
+    .tutorial-success-toolbar button.active, .tutorial-success-head button.primary { background: #2f78ff; border-color: #2f78ff; }
+    .tutorial-success-toolbar .credits { margin-left: 0; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: 9px 16px; color: rgba(255,255,255,.72); font-weight: 800; }
+    .tutorial-success-head { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 26px; padding-bottom: 22px; border-bottom: 1px solid rgba(255,255,255,.45); }
+    .tutorial-success-head h2 { margin: 0 0 6px; font-size: 26px; }
+    .tutorial-success-head p { margin: 0; color: rgba(255,255,255,.75); font-weight: 700; }
+    .tutorial-success-card { width: min(620px, calc(100vw - 540px)); margin-top: 38px; border: 1px solid rgba(255,255,255,.68); border-radius: 16px; padding: 22px; background: #080a0e; box-shadow: 0 22px 60px rgba(0,0,0,.38); }
+    .tutorial-success-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+    .tutorial-success-card h3 { margin: 0 0 6px; font-size: 22px; }
+    .tutorial-success-card strong { display: block; color: #f8e7a1; font-size: 16px; }
+    .tutorial-success-card p { margin: 18px 0; color: rgba(255,255,255,.82); font-size: 16px; line-height: 1.45; }
+    .tutorial-success-card-head span { border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: 8px 14px; color: rgba(255,255,255,.58); font-size: 13px; font-weight: 900; letter-spacing: .18em; }
+    .tutorial-success-output { width: 304px; overflow: hidden; border: 1px solid rgba(255,255,255,.18); border-radius: 12px; background: #0e1117; }
+    .tutorial-synthetic-preview-button { position: relative; display: block; width: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; }
+    .tutorial-synthetic-preview-button img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+    .tutorial-synthetic-preview-button span { position: absolute; left: 14px; bottom: 14px; border: 1px solid rgba(255,255,255,.65); border-radius: 999px; padding: 8px 18px; background: rgba(80,52,35,.58); color: #fff; font-weight: 900; backdrop-filter: blur(8px); }
+    .tutorial-success-output-meta { padding: 12px 16px 14px; }
+    .tutorial-success-output-meta b { font-size: 15px; }
+    .tutorial-success-output-meta em { float: right; color: #8df0c1; font-style: normal; font-weight: 900; font-size: 13px; }
+    .tutorial-success-output-meta .bar { clear: both; margin: 15px 0 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,.12); }
+    .tutorial-success-output-meta .bar i { display: block; width: 100%; height: 100%; border-radius: inherit; background: #67efb7; }
+    .tutorial-success-output-meta small { display: flex; justify-content: space-between; color: rgba(255,255,255,.78); font-size: 13px; }
+    .tutorial-success-foot { display: flex; justify-content: space-between; margin-top: 18px; font-weight: 800; color: rgba(255,255,255,.86); }
+    .tutorial-success-samples { position: absolute; left: 700px; top: 280px; display: flex; gap: 16px; }
+    .tutorial-success-samples div { width: 116px; }
+    .tutorial-success-samples h4 { margin: 0 0 8px; font-size: 13px; color: rgba(255,255,255,.7); }
+    .tutorial-success-samples img { width: 100px; height: 100px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(255,255,255,.18); }
+    @media (max-width: 800px) {
+      .tutorial-success-scene { left: 0; top: 84px; padding: 14px; overflow: hidden; }
+      .tutorial-success-toolbar { gap: 8px; overflow: hidden; padding-bottom: 12px; }
+      .tutorial-success-toolbar button { padding: 9px 11px; font-size: 12px; }
+      .tutorial-success-toolbar .credits { display: none; }
+      .tutorial-success-head { margin-top: 16px; padding-bottom: 14px; }
+      .tutorial-success-head h2 { font-size: 21px; }
+      .tutorial-success-head p { font-size: 12px; }
+      .tutorial-success-head button { display: none; }
+      .tutorial-success-card { width: 100%; margin-top: 18px; padding: 14px; }
+      .tutorial-success-card h3 { font-size: 20px; }
+      .tutorial-success-card p { font-size: 13px; margin: 12px 0; }
+      .tutorial-success-output { width: min(290px, 100%); }
+      .tutorial-success-samples { position: static; margin-top: 14px; }
+      .tutorial-success-samples div { width: 86px; }
+      .tutorial-success-samples img { width: 76px; height: 76px; }
+    }
+  ` }).catch(() => undefined);
+  await page.waitForFunction(() => {
+    const images = [...document.querySelectorAll(".tutorial-success-scene img")];
+    return images.length >= 3 && images.every((img) => img.complete && img.naturalWidth > 32 && img.naturalHeight > 32);
+  }, undefined, { timeout: 30_000 }).catch(() => undefined);
+}
+
+async function showSyntheticGeneratedPreview(page, asset) {
+  await page.evaluate(({ asset, packageTitle }) => {
+    document.querySelector(".tutorial-generated-preview")?.remove();
+    const preview = document.createElement("div");
+    preview.className = "tutorial-generated-preview";
+    preview.setAttribute("role", "dialog");
+    preview.setAttribute("aria-modal", "true");
+    preview.setAttribute("aria-label", "Generated asset preview");
+    preview.innerHTML = `
+      <div class="tutorial-generated-preview-inner">
+        <div class="tutorial-generated-preview-media"><img src="${asset.previewUrl}" alt="Generated Valentine Photos image"></div>
+        <aside>
+          <button aria-label="Close preview">×</button>
+          <p>Generated output</p>
+          <h2>AI generation · 2026-08-05<br>10:26 · Generation 4 · Image 1</h2>
+          <p class="meta">Package: AI generation · Category: ${packageTitle} · Created 2026-08-05 10:26 · Generation 4 · Image 1</p>
+          <p class="count">1 of 1</p>
+          <div class="nav"><button>‹</button><button>›</button></div>
+          <button class="favorite">♡ Add favorite</button>
+          <button class="download">Download</button>
+        </aside>
+      </div>
+    `;
+    document.body.appendChild(preview);
+  }, { asset, packageTitle });
+  await page.addStyleTag({ content: `
+    .tutorial-generated-preview {
+      position: fixed;
+      inset: 86px 230px 40px 230px;
+      z-index: 2147482700;
+      display: grid;
+      border: 1px solid rgba(255,255,255,.72);
+      border-radius: 16px;
+      background: #050608;
+      color: #fff;
+      box-shadow: 0 34px 90px rgba(0,0,0,.72);
+      font-family: Inter, system-ui, sans-serif;
+    }
+    .tutorial-generated-preview-inner { display: grid; grid-template-columns: minmax(0, 1fr) 360px; min-height: 0; }
+    .tutorial-generated-preview-media { display: grid; place-items: center; min-width: 0; padding: 18px; background: #000; border-radius: 16px 0 0 16px; }
+    .tutorial-generated-preview-media img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; filter: contrast(1.02) saturate(1.02); }
+    .tutorial-generated-preview aside { position: relative; border-left: 1px solid rgba(255,255,255,.16); padding: 28px; }
+    .tutorial-generated-preview aside > button[aria-label] { position: absolute; right: 22px; top: 22px; width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.68); border-radius: 999px; background: transparent; color: #fff; font-size: 28px; }
+    .tutorial-generated-preview p { margin: 0; color: rgba(255,255,255,.88); font-weight: 800; }
+    .tutorial-generated-preview h2 { margin: 18px 0 22px; font-size: 26px; line-height: 1.35; }
+    .tutorial-generated-preview .meta { font-size: 16px; line-height: 1.55; font-weight: 650; }
+    .tutorial-generated-preview .count { margin-top: 18px; }
+    .tutorial-generated-preview .nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 345px; }
+    .tutorial-generated-preview .nav button, .tutorial-generated-preview .favorite, .tutorial-generated-preview .download { width: 100%; height: 54px; border: 1px solid rgba(255,255,255,.68); border-radius: 8px; background: transparent; color: #fff; font-size: 18px; font-weight: 800; }
+    .tutorial-generated-preview .favorite { margin-top: 10px; }
+    .tutorial-generated-preview .download { margin-top: 12px; border-color: #2f78ff; background: #2f78ff; }
+    @media (max-width: 800px) {
+      .tutorial-generated-preview { inset: 76px 10px 16px; border-radius: 14px; }
+      .tutorial-generated-preview-inner { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; }
+      .tutorial-generated-preview-media { border-radius: 14px 14px 0 0; padding: 10px; }
+      .tutorial-generated-preview aside { padding: 14px; border-left: 0; border-top: 1px solid rgba(255,255,255,.16); }
+      .tutorial-generated-preview h2 { margin: 8px 0 10px; font-size: 16px; }
+      .tutorial-generated-preview .meta, .tutorial-generated-preview .count, .tutorial-generated-preview .favorite { display: none; }
+      .tutorial-generated-preview .nav { display: none; }
+      .tutorial-generated-preview .download { height: 40px; margin-top: 8px; font-size: 14px; }
+      .tutorial-generated-preview aside > button[aria-label] { right: 12px; top: 10px; width: 34px; height: 34px; font-size: 22px; }
+    }
+  ` }).catch(() => undefined);
+  await page.waitForFunction(() => {
+    const img = document.querySelector(".tutorial-generated-preview img");
+    return Boolean(img && img.complete && img.naturalWidth > 32 && img.naturalHeight > 32);
+  }, undefined, { timeout: 30_000 }).catch(() => undefined);
+}
+
+async function refreshAndRecordProgress(page, recorder, asset) {
+  if (!realGeneration && isMyDreamShootsSite && asset) {
+    await showSyntheticSuccessState(page, asset);
+    await setHistoryMask(page, false);
+    const segment = timeline.find((item) => item.id === "progress");
+    const previewButton = page.locator(".tutorial-synthetic-preview-button").first();
+    await pointAt(page, previewButton).catch(() => undefined);
+    await recorder.captureFor(segment.caption, segment.frames, async (index, frames) => {
+      if (index === Math.max(0, frames - 2)) await pulseTutorialClick(page);
+    });
+    return;
+  }
   await openResults(page);
   await setHistoryMask(page, true);
   const refresh = page.locator("#review-request").getByRole("button", { name: /Refresh status|Refreshing/i }).first();
@@ -1008,7 +1831,36 @@ async function waitForPreviewImageReady(page, dialog) {
   }, undefined, { timeout: 30_000 });
 }
 
+async function sharpenGeneratedPreviewForRecording(page) {
+  if (!isMyDreamShootsSite) return;
+  await page.addStyleTag({ content: `
+    [role="dialog"][aria-label*="Generated asset preview"] img {
+      image-rendering: auto !important;
+      filter: contrast(1.02) saturate(1.02) !important;
+    }
+    [role="dialog"][aria-label*="Generated asset preview"] {
+      padding: 24px !important;
+    }
+    @media (min-width: 900px) {
+      [role="dialog"][aria-label*="Generated asset preview"] > div {
+        max-width: min(1520px, calc(100vw - 72px)) !important;
+      }
+    }
+  ` }).catch(() => undefined);
+}
+
 async function openGeneratedPreview(page, asset) {
+  if (!realGeneration && isMyDreamShootsSite && asset?.id === "asset_mydreamshoots_tutorial_preview_image") {
+    const previewButton = page.locator(".tutorial-synthetic-preview-button").first();
+    await pointAt(page, previewButton).catch(() => undefined);
+    await pulseTutorialClick(page, { sound: false });
+    await showSyntheticGeneratedPreview(page, asset);
+    await setHistoryMask(page, false);
+    await sharpenGeneratedPreviewForRecording(page);
+    const previewImage = page.locator(".tutorial-generated-preview img").first();
+    await pointAt(page, previewImage).catch(() => undefined);
+    return;
+  }
   await openResults(page);
   await setHistoryMask(page, true);
   const tokens = [asset?.id || "", assetPreviewUrl(asset), asset?.storageKey || ""]
@@ -1080,6 +1932,7 @@ async function openGeneratedPreview(page, asset) {
   await setHistoryMask(page, false);
   const previewImage = dialog.locator("img").first();
   await waitForPreviewImageReady(page, dialog);
+  await sharpenGeneratedPreviewForRecording(page);
   await pointAt(page, previewImage).catch(() => undefined);
 }
 
@@ -1099,6 +1952,7 @@ async function openHistoricalImagePreview(page) {
   await dialog.waitFor({ state: "visible", timeout: 30_000 });
   await setHistoryMask(page, false);
   await waitForPreviewImageReady(page, dialog);
+  await sharpenGeneratedPreviewForRecording(page);
   const previewImage = dialog.locator("img").first();
   await pointAt(page, previewImage).catch(() => undefined);
 }
@@ -1116,7 +1970,7 @@ async function generateNarration() {
     `[${index}:a]apad,atrim=duration=${segment.scaledDuration},asetpts=N/SR/TB[a${index}]`
   );
   const concatInputs = timeline.map((_, index) => `[a${index}]`).join("");
-  filters.push(`${concatInputs}concat=n=${timeline.length}:v=0:a=1,apad,atrim=duration=${targetSeconds},asetpts=N/SR/TB[aout]`);
+  filters.push(`${concatInputs}concat=n=${timeline.length}:v=0:a=1,apad,atrim=duration=${finalDurationSeconds},asetpts=N/SR/TB[aout]`);
   const args = ["-y"];
   for (const segmentPath of segmentPaths) args.push("-i", segmentPath);
   args.push(
@@ -1126,11 +1980,91 @@ async function generateNarration() {
     "-b:a", "128k",
     "-ar", "48000",
     "-ac", "2",
-    "-t", String(targetSeconds),
+    "-t", String(finalDurationSeconds),
     narrationPath
   );
   await run(ffmpegPath, args);
-  return narrationPath;
+  return mixMouseClicksIntoNarration(narrationPath);
+}
+
+function dedupeClickSoundTimes() {
+  const sorted = [...clickSoundTimes]
+    .filter((second) => Number.isFinite(second) && second >= 0 && second < finalDurationSeconds - 0.05)
+    .sort((a, b) => a - b);
+  const unique = [];
+  for (const second of sorted) {
+    if (!unique.length || second - unique.at(-1) >= 0.18) unique.push(second);
+  }
+  return unique;
+}
+
+function mouseClickWavBuffer() {
+  const sampleRate = 48_000;
+  const channels = 2;
+  const seconds = 0.09;
+  const sampleCount = Math.round(sampleRate * seconds);
+  const bytesPerSample = 2;
+  const dataSize = sampleCount * channels * bytesPerSample;
+  const buffer = Buffer.alloc(44 + dataSize);
+  buffer.write("RIFF", 0);
+  buffer.writeUInt32LE(36 + dataSize, 4);
+  buffer.write("WAVE", 8);
+  buffer.write("fmt ", 12);
+  buffer.writeUInt32LE(16, 16);
+  buffer.writeUInt16LE(1, 20);
+  buffer.writeUInt16LE(channels, 22);
+  buffer.writeUInt32LE(sampleRate, 24);
+  buffer.writeUInt32LE(sampleRate * channels * bytesPerSample, 28);
+  buffer.writeUInt16LE(channels * bytesPerSample, 32);
+  buffer.writeUInt16LE(16, 34);
+  buffer.write("data", 36);
+  buffer.writeUInt32LE(dataSize, 40);
+  let offset = 44;
+  for (let i = 0; i < sampleCount; i += 1) {
+    const t = i / sampleRate;
+    const firstTick = Math.sin(2 * Math.PI * 2400 * t) * Math.exp(-t * 78);
+    const secondTick = t > 0.016
+      ? Math.sin(2 * Math.PI * 3600 * (t - 0.016)) * Math.exp(-(t - 0.016) * 110) * 0.38
+      : 0;
+    const softBody = Math.sin(2 * Math.PI * 780 * t) * Math.exp(-t * 42) * 0.18;
+    const sample = Math.max(-1, Math.min(1, (firstTick + secondTick + softBody) * 0.56));
+    const value = Math.round(sample * 32767);
+    for (let channel = 0; channel < channels; channel += 1) {
+      buffer.writeInt16LE(value, offset);
+      offset += bytesPerSample;
+    }
+  }
+  return buffer;
+}
+
+async function mixMouseClicksIntoNarration(voiceoverPath) {
+  if (isMobileRecording) return voiceoverPath;
+  const clickTimes = dedupeClickSoundTimes();
+  if (!clickTimes.length) return voiceoverPath;
+  await fs.writeFile(mouseClickSoundPath, mouseClickWavBuffer());
+  const args = ["-y", "-i", voiceoverPath];
+  for (const _ of clickTimes) args.push("-i", mouseClickSoundPath);
+  const filters = ["[0:a]volume=1.0[voice]"];
+  const inputs = ["[voice]"];
+  clickTimes.forEach((second, index) => {
+    const delayMs = Math.max(0, Math.round(second * 1000));
+    filters.push(`[${index + 1}:a]adelay=${delayMs}|${delayMs},volume=0.7[c${index}]`);
+    inputs.push(`[c${index}]`);
+  });
+  filters.push(`${inputs.join("")}amix=inputs=${inputs.length}:duration=first:dropout_transition=0,alimiter=limit=0.98[aout]`);
+  await run(ffmpegPath, [
+    ...args,
+    "-filter_complex", filters.join(";"),
+    "-map", "[aout]",
+    "-c:a", "aac",
+    "-b:a", "128k",
+    "-ar", "48000",
+    "-ac", "2",
+    "-t", String(finalDurationSeconds),
+    narrationWithClicksPath
+  ]);
+  log("mixed desktop click sounds", { clicks: clickTimes.length });
+  return narrationWithClicksPath;
 }
 
 async function buildVideo(voiceoverPath) {
@@ -1152,7 +2086,7 @@ async function buildVideo(voiceoverPath) {
     "-b:a", "128k",
     "-ar", "48000",
     "-ac", "2",
-    "-t", String(targetSeconds),
+    "-t", String(finalDurationSeconds),
     "-movflags", "+faststart",
     finalOutputPath
   ]);
@@ -1171,13 +2105,13 @@ function verifyProbe(info) {
   if (!video) throw new Error("final_video_stream_missing");
   if (Number(video.width) !== outputSize.width || Number(video.height) !== outputSize.height) throw new Error(`final_video_dimensions_invalid: ${video.width}x${video.height}`);
   if (!audio.length) throw new Error("final_video_narration_missing");
-  if (duration > targetSeconds + 0.75 || duration < targetSeconds - 0.75) throw new Error(`final_video_duration_invalid: ${duration}`);
+  if (duration > finalDurationSeconds + 0.75 || duration < finalDurationSeconds - 0.75) throw new Error(`final_video_duration_invalid: ${duration}`);
   return { duration, width: video.width, height: video.height, audioStreams: audio.length };
 }
 
 async function exportSamples() {
   await fs.mkdir(samplesDir, { recursive: true });
-  const sampleSeconds = [3, 10, 18, 26, 36, 45, Math.max(1, Math.floor(targetSeconds - 3))].filter((second, index, list) => second < targetSeconds && list.indexOf(second) === index);
+  const sampleSeconds = [3, 10, 18, 26, 36, 45, Math.max(1, Math.floor(finalDurationSeconds - 3))].filter((second, index, list) => second < finalDurationSeconds && list.indexOf(second) === index);
   for (const second of sampleSeconds) {
     await run(ffmpegPath, ["-y", "-ss", String(second), "-i", finalOutputPath, "-frames:v", "1", "-q:v", "2", path.join(samplesDir, `sample-${String(second).padStart(2, "0")}s.jpg`)]);
   }
@@ -1194,6 +2128,7 @@ async function main() {
   await fs.rm(runDir, { recursive: true, force: true });
   await fs.mkdir(framesDir, { recursive: true });
   await fs.mkdir(outputDir, { recursive: true });
+  if (siteId === "site_dreamshoot") await ensureMydreamshootsTutorialSampleAssets();
   if (!realGeneration && siteId === "site_dreamshoot") await ensureMydreamshootsLocalPreviewImage();
   await prepareSourcePhoto();
   log("configuration", {
@@ -1201,6 +2136,7 @@ async function main() {
     siteId,
     siteSlug,
     targetSeconds,
+    finalDurationSeconds,
     device: tutorialDevice,
     viewport,
     outputSize,
@@ -1251,10 +2187,16 @@ async function main() {
   const recoveredJobs = [];
   try {
     await captureLoginAndAuthenticate(page, context, recorder);
+    if (isMyDreamShootsSite) await showPricingRechargeStep(page, recorder);
     await recordWorkspaceOverview(page, recorder);
     await choosePackage(page, recorder);
     if (useExistingTutorialSamples) {
-      await selectExistingSamples(page, recorder);
+      try {
+        await selectExistingSamples(page, recorder);
+      } catch (error) {
+        log("existing sample selection unavailable; falling back to upload", { error: error instanceof Error ? error.message : String(error) });
+        await uploadSourcePhoto(page, recorder);
+      }
     } else {
       await uploadSourcePhoto(page, recorder);
     }
@@ -1264,9 +2206,12 @@ async function main() {
     if (jobId) {
       if (realGeneration) createdJobs.push(jobId);
       else recoveredJobs.push(jobId);
-      await refreshAndRecordProgress(page, recorder);
-      if (!realGeneration && siteId === "site_dreamshoot") await ensureMydreamshootsLocalPreviewImage();
-      result = await waitForSuccess(page, jobId);
+      const localPreviewAsset = !realGeneration && siteId === "site_dreamshoot" ? await localPreviewImageAsset() : undefined;
+      if (localPreviewAsset) await ensureMydreamshootsLocalPreviewImage();
+      await refreshAndRecordProgress(page, recorder, localPreviewAsset);
+      result = localPreviewAsset
+        ? { job: { id: jobId, status: "succeeded" }, asset: localPreviewAsset }
+        : await waitForSuccess(page, jobId);
       await openGeneratedPreview(page, result.asset);
     } else {
       await refreshAndRecordProgress(page, recorder);
@@ -1292,6 +2237,7 @@ async function main() {
     throw error;
   } finally {
     await browser.close().catch(() => undefined);
+    await cleanupDirectTutorialSessions().catch(() => undefined);
   }
 }
 

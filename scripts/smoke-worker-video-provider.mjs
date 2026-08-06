@@ -30,7 +30,7 @@ const minimalVideoPromptFunction = files.dispatch.match(/function buildMinimalVi
 const orderedVideoProvidersFunction = files.dispatch.match(/function orderedVideoProviders[\s\S]*?\n}\n\nfunction orderedVideoSceneImageProviders/)?.[0] ?? "";
 const videoProviderModelCandidatesFunction = files.dispatch.match(/function videoProviderModelCandidates[\s\S]*?\n}\n\nfunction isVideoModelUnavailableError/)?.[0] ?? "";
 const shouldTryNextVideoModelFunction = files.dispatch.match(/function shouldTryNextVideoModel[\s\S]*?\n}\n\nfunction isImageGenerationModel/)?.[0] ?? "";
-const createVideoTaskFunction = files.dispatch.match(/async function createVideoTask[\s\S]*?\n}\n\nasync function pollVideoTask/)?.[0] ?? "";
+const _createVideoTaskFunction = files.dispatch.match(/async function createVideoTask[\s\S]*?\n}\n\nasync function pollVideoTask/)?.[0] ?? "";
 
 const checks = [
   {

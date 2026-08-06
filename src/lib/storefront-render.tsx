@@ -125,7 +125,7 @@ function trimToolDetailRenderData(renderData: SiteRenderData): SiteRenderData {
   };
 }
 
-const productSectionTypes = new Set(["cart_summary", "pricing_table", "product_detail", "products", "products_plus", "search_results"]);
+const productSectionTypes = new Set(["cart_summary", "dreamshoot_generation_showcase", "pricing_table", "product_detail", "products", "products_plus", "search_results"]);
 const siteAiAppSectionTypes = new Set(["ai_tool_entry", "ai_tool_grid", "aidreamcapes_tool_collection", "generation_form", "search_results"]);
 const creativePackSectionTypes = new Set(["aidreamcapes_package_catalog", "aidreamcapes_package_taxonomy", "collection_list_plus", "dreamshoot_generation_showcase", "dreamshoot_package_catalog", "dreamshoot_package_taxonomy", "dreamshoot_related_packages", "dreamshoot_theme_cta", "dreamshoot_theme_faq", "photo_package_wall", "products", "products_plus", "search_results"]);
 const toolMenuItemSectionTypes = new Set(["aidreamcapes_tool_collection", "dreamshoot_tool_collection", "search_results"]);
@@ -493,7 +493,7 @@ function trimMediaAssetsForPage(site: Site, pageJson: ThemePageJson, settings: S
 function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJson, slug: string): SiteRenderData {
   const sectionTypes = pageSectionTypes(pageJson);
   const needsProducts = slug === "/pricing" || slug === "/cart" || Array.from(sectionTypes).some((type) => productSectionTypes.has(type));
-  const hasPricingTable = slug === "/pricing" || sectionTypes.has("pricing_table");
+  const hasPricingTable = slug === "/pricing" || sectionTypes.has("pricing_table") || sectionTypes.has("dreamshoot_generation_showcase");
   const needsSiteAiApps = slug === "/tools" || slug.startsWith("/tools/") || Array.from(sectionTypes).some((type) => siteAiAppSectionTypes.has(type));
   const needsCreativePacks = slug === "/" || slug === "/collections" || slug === "/tools" || Array.from(sectionTypes).some((type) => creativePackSectionTypes.has(type));
   const needsVideoThemes = Array.from(sectionTypes).some((type) => videoThemeSectionTypes.has(type));
@@ -521,7 +521,7 @@ function trimRenderDataForSection(renderData: SiteRenderData, pageJson: ThemePag
   const needsCreativePacks = creativePackSectionTypes.has(sectionType);
   const needsToolMenuItems = toolMenuItemSectionTypes.has(sectionType);
   const needsVideoThemes = videoThemeSectionTypes.has(sectionType);
-  const hasPricingTable = sectionType === "pricing_table";
+  const hasPricingTable = sectionType === "pricing_table" || sectionType === "dreamshoot_generation_showcase";
   const packLimit = slug === "/collections" || sectionType === "dreamshoot_generation_showcase"
     ? publicDirectoryPackLimit
     : publicHomePackLimit;
@@ -764,6 +764,9 @@ function proposedFederalPrivacyLegislationNotice(brand: string): string {
   return `<h3>5. Proposed federal privacy legislation watch</h3><p>${brand} monitors proposed U.S. federal privacy legislation, including the SECURE Data Act and the GUARD Financial Data Act. These proposals are not treated as enacted storefront policy unless they become law, but our privacy operations are prepared around data minimization, customer access, portable copy, deletion, sensitive-data opt-in, and AI-use transparency where applicable.</p>`;
 }
 
+const MYDREAMSHOOTS_TERMS_POLICY_BODY =
+  `<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a MyDreamShoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums.</p><h3>2. Accounts, credits, and checkout</h3><p>You are responsible for accurate account information and secure sign-in. Credits are added after payment confirmation, displayed before generation, reserved when a request begins, used after successful delivery, and released or reviewed when a request fails.</p><h3>3. Upload rights and consent</h3><p>You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.</p><h3>4. No AI training on your photos</h3><p>Your inputs are never used to train models. 30-day auto-delete applies to input photos after generation. Private uploads and account records are protected with AES-256 at rest and TLS 256-bit in transit. Some billing, security, tax, dispute, refund, and account-integrity records may be retained where required or reasonably necessary.</p><h3>5. AI output variability</h3><p>AI photo results can vary based on source photo quality, pose, lighting, package settings, moderation review, provider availability, and model behavior. MyDreamShoots may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and use of outputs</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Refunds and guarantee review</h3><p>Refunds and credit adjustments follow the Refund Policy, including the 100% money-back guarantee when the shoot does not look like you, subject to support review, account history, and the details of the affected request.</p><h3>8. Contact</h3><p>Email <a href="mailto:support@mydreamshoots.com">support@mydreamshoots.com</a> for account, billing, refund, policy, or legal questions.</p>`;
+
 function mydreamshootsPolicyBody(path: string): string {
   const normalized = normalizePublicSlug(path).replace(/-/g, " ");
   if (normalized.includes("children")) {
@@ -776,7 +779,7 @@ function mydreamshootsPolicyBody(path: string): string {
     return "<h3>1. Essential cookies and local storage</h3><p>MyDreamShoots uses essential cookies and local storage for sign-in, account sessions, cart continuity, credit visibility, private gallery access, and site reliability.</p><h3>2. Security and checkout continuity</h3><p>Operational storage helps keep customer sessions secure, remember checkout state, protect private albums, and diagnose failed requests or delivery issues.</p><h3>3. Payment and service providers</h3><p>Checkout, infrastructure, email, analytics, and AI processing providers may use limited cookies or identifiers when needed for payment status, fraud prevention, service delivery, security, or operational measurement.</p><h3>4. Your choices</h3><p>You can clear cookies or adjust browser settings. Clearing storage may sign you out, interrupt checkout, remove local preferences, or require another sign-in before opening private albums, jobs, credit history, or downloads.</p><h3>5. Contact us</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with cookie, account session, checkout continuity, or private gallery questions.</p>";
   }
   if (normalized.includes("term")) {
-    return "<h3>1. Acceptance</h3><p>By using MyDreamShoots, creating an account, purchasing credits, uploading source photos, starting a generation job, or opening a private gallery, you agree to these terms and the privacy policy that governs account data, uploads, payment status, and delivery records.</p><h3>2. Accounts and security</h3><p>Customers must provide accurate account information, keep sign-in credentials secure, and use the service only for lawful personal, creator, or business workflows.</p><h3>3. Credits, packages, and delivery</h3><p>Credits are granted after confirmed payment, displayed before package creation, reserved when a job starts, consumed after successful delivery, and released when a request fails or times out.</p><h3>4. Uploaded content and rights</h3><p>You may only upload images and references you own or have permission to use. You remain responsible for source material and for how you use generated outputs.</p><h3>5. Service limits and safety</h3><p>MyDreamShoots may reject, remove, restrict, or review requests that violate law, policy, platform safety rules, or third-party rights.</p><h3>6. Contact us</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account, billing, refund, policy, generation, or private gallery questions.</p>";
+    return MYDREAMSHOOTS_TERMS_POLICY_BODY;
   }
   return "<p>Private uploads, account activity, credits, checkout status, generated images, and delivered albums are handled according to this policy.</p>";
 }
@@ -878,7 +881,7 @@ function syntheticStorefrontPolicyPage(site: Site, slug: string): ThemePage | un
           title,
           body: isSpanishXby ? spanishXbyPolicyBody(site, slug, contactEmail) : isAidreamcapes ? aidreamcapesPolicyBody(slug) : mydreamshootsPolicyBody(slug),
           contactEmail,
-          lastUpdated: "July 14, 2026",
+          lastUpdated: isSpanishXby || isAidreamcapes ? "July 14, 2026" : "August 5, 2026",
           headingLevel: "h1"
         },
         blocks: []
@@ -1572,13 +1575,18 @@ function spanishXbyToolBlockForSite(site: Site, block: SectionBlockInstance): Se
   };
 }
 
-function creativePackCollectionSlugs(pack: PlatformState["creativePacks"][number]): string[] {
-  return [
-    pack.categoryRecord?.slug,
-    pack.categoryRecord?.parent?.slug,
-    pack.category,
-    pack.name
-  ].map((value) => value ? normalizePublicSlug(value) : "").filter(Boolean);
+function creativePackCollectionSlugs(site: Site, pack: PlatformState["creativePacks"][number]): string[] {
+  return Array.from(new Set(
+    [
+      pack.categoryRecord?.slug,
+      pack.categoryRecord?.parent?.slug,
+      pack.category,
+      pack.name
+    ]
+      .map((value) => value ? normalizePublicSlug(value) : "")
+      .filter(Boolean)
+      .flatMap((slug) => [slug, canonicalSeoDirectorySlugForSite(site, "collection", slug)])
+  ));
 }
 
 export function canResolveCollectionSlugForSite(state: PlatformState, site: Site, collectionSlug: string): boolean {
@@ -1586,7 +1594,11 @@ export function canResolveCollectionSlugForSite(state: PlatformState, site: Site
   if (!normalized) return false;
   if (isExplicitSeoDirectoryContentForSite(site, "collection", normalized)) return true;
   const canonicalSlug = canonicalSeoDirectorySlugForSite(site, "collection", normalized);
-  return state.creativePacks.some((pack) => pack.siteId === site.id && pack.status === "active" && creativePackCollectionSlugs(pack).includes(canonicalSlug));
+  if ((state.creativePackCategories ?? []).some((category) => {
+    if (category.siteId !== site.id || category.status !== "active") return false;
+    return canonicalSeoDirectorySlugForSite(site, "collection", category.slug || category.label) === canonicalSlug;
+  })) return true;
+  return state.creativePacks.some((pack) => pack.siteId === site.id && pack.status === "active" && creativePackCollectionSlugs(site, pack).includes(canonicalSlug));
 }
 
 const workspaceOnlyToolSectionTypes = new Set(["upload_panel", "generation_form", "job_progress", "album_gallery"]);

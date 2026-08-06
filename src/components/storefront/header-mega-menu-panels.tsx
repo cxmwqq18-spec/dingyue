@@ -179,20 +179,22 @@ export function HeaderMobilePhotoPackagesMenu({
   collectionsHref,
   dark,
   groups,
+  menuLabel,
   spanish = false
 }: {
   aidreamcapes?: boolean;
   collectionsHref: string;
   dark: boolean;
   groups: HeaderPhotoPackageMegaGroup[];
+  menuLabel?: string;
   spanish?: boolean;
 }) {
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
-  const menuLabel = spanish ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : "Browse packages";
+  const resolvedMenuLabel = menuLabel ?? (spanish ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : "Browse packages");
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileSummaryClass(dark)}>
-        <span className="min-w-0 flex-1">{menuLabel}</span>
+        <span className="min-w-0 flex-1">{resolvedMenuLabel}</span>
         <span className={dark ? "rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] text-white/48" : "rounded-full bg-[#f3ede5] px-2 py-0.5 text-[11px] text-[#7c7268]"}>{totalItems}</span>
         <ChevronRight className={dark ? "h-4 w-4 rotate-90 text-white/42 transition group-open/mobile:-rotate-90" : "h-4 w-4 rotate-90 text-[#7c7268] transition group-open/mobile:-rotate-90"} strokeWidth={2} />
       </summary>

@@ -10,7 +10,6 @@ import {
 } from "@/lib/stores/site-store";
 import { getThemeRuntimeForCustomer } from "@/lib/server-store";
 import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
-import type { ThemeRuntimeData } from "@/lib/types";
 import type { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";

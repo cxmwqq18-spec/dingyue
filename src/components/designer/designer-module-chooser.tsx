@@ -18,7 +18,7 @@ function cx(...values: Array<string | false | null | undefined>) {
 export function DesignerModuleChooser({
   onAddSection,
   pageTitle,
-  sectionCount,
+  sectionCount: _sectionCount,
   moduleLibraryProps,
   variant = "footer"
 }: {

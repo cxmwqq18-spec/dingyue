@@ -160,6 +160,40 @@ const assets = {
   virtualLooks: "/assets/dreamshoot/frames/tab-virtual-looks.png"
 } as const;
 
+const trustedLogoAssetBase = "/assets/dreamshoot/generated/trusted-logos";
+const mydreamshootsAboutBody = "MyDreamShoots is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.";
+const mydreamshootsTrustedLogoBlocks = [
+  block("trusted_logo_dior", "logo", { name: "Dior", imageUrl: `${trustedLogoAssetBase}/dior.png`, badge: "Creator proof" }),
+  block("trusted_logo_green_wedding_shoes", "logo", { name: "Green Wedding Shoes", imageUrl: `${trustedLogoAssetBase}/green-wedding-shoes.png`, badge: "Creator proof" }),
+  block("trusted_logo_weddingwire", "logo", { name: "WeddingWire", imageUrl: `${trustedLogoAssetBase}/weddingwire.png`, badge: "Creator proof" }),
+  block("trusted_logo_azazie", "logo", { name: "Azazie", imageUrl: `${trustedLogoAssetBase}/azazie.png`, badge: "Creator proof" }),
+  block("trusted_logo_bodas", "logo", { name: "Bodas", imageUrl: `${trustedLogoAssetBase}/bodas.png`, badge: "Creator proof" }),
+  block("trusted_logo_bodasnet", "logo", { name: "Bodas.net", imageUrl: `${trustedLogoAssetBase}/bodasnet.png`, badge: "Creator proof" }),
+  block("trusted_logo_bonprix", "logo", { name: "Bonprix", imageUrl: `${trustedLogoAssetBase}/bonprix.png`, badge: "Creator proof" }),
+  block("trusted_logo_brides", "logo", { name: "Brides", imageUrl: `${trustedLogoAssetBase}/brides.png`, badge: "Creator proof" }),
+  block("trusted_logo_chanel", "logo", { name: "Chanel", imageUrl: `${trustedLogoAssetBase}/chanel.png`, badge: "Creator proof" }),
+  block("trusted_logo_davids", "logo", { name: "David's", imageUrl: `${trustedLogoAssetBase}/davids.png`, badge: "Creator proof" }),
+  block("trusted_logo_linkedin", "logo", { name: "LinkedIn", imageUrl: `${trustedLogoAssetBase}/linkedin.png`, badge: "Creator proof" }),
+  block("trusted_logo_macys", "logo", { name: "Macy's", imageUrl: `${trustedLogoAssetBase}/macys.png`, badge: "Creator proof" }),
+  block("trusted_logo_marks_and_spencer", "logo", { name: "Marks & Spencer", imageUrl: `${trustedLogoAssetBase}/marksandspencer.png`, badge: "Creator proof" }),
+  block("trusted_logo_next", "logo", { name: "Next", imageUrl: `${trustedLogoAssetBase}/nextcouk.jpg`, badge: "Creator proof" }),
+  block("trusted_logo_oscar_de_la_renta", "logo", { name: "Oscar de la Renta", imageUrl: `${trustedLogoAssetBase}/oscardelarenta.jpg`, badge: "Creator proof" }),
+  block("trusted_logo_pinterest", "logo", { name: "Pinterest", imageUrl: `${trustedLogoAssetBase}/pinterest.png`, badge: "Creator proof" }),
+  block("trusted_logo_pronovias", "logo", { name: "Pronovias", imageUrl: `${trustedLogoAssetBase}/pronovias.jpg`, badge: "Creator proof" }),
+  block("trusted_logo_shein", "logo", { name: "SHEIN", imageUrl: `${trustedLogoAssetBase}/shein.png`, badge: "Creator proof" }),
+  block("trusted_logo_style_me_pretty", "logo", { name: "Style Me Pretty", imageUrl: `${trustedLogoAssetBase}/style-me-pretty.png`, badge: "Creator proof" }),
+  block("trusted_logo_starbucks", "logo", { name: "Starbucks", imageUrl: `${trustedLogoAssetBase}/starbucks.jpeg`, badge: "Creator proof" }),
+  block("trusted_logo_the_knot", "logo", { name: "The Knot", imageUrl: `${trustedLogoAssetBase}/the-knot.png`, badge: "Creator proof" }),
+  block("trusted_logo_the_knot_weddings", "logo", { name: "The Knot Weddings", imageUrl: `${trustedLogoAssetBase}/theknot2.png`, badge: "Creator proof" }),
+  block("trusted_logo_vera_wang", "logo", { name: "Vera Wang", imageUrl: `${trustedLogoAssetBase}/verawang.png`, badge: "Creator proof" }),
+  block("trusted_logo_vinted", "logo", { name: "Vinted", imageUrl: `${trustedLogoAssetBase}/vinted.png`, badge: "Creator proof" }),
+  block("trusted_logo_vogue", "logo", { name: "Vogue", imageUrl: `${trustedLogoAssetBase}/vogue.svg`, badge: "Creator proof" }),
+  block("trusted_logo_zalando", "logo", { name: "Zalando", imageUrl: `${trustedLogoAssetBase}/zalando.png`, badge: "Creator proof" }),
+  block("trusted_logo_zara", "logo", { name: "Zara", imageUrl: `${trustedLogoAssetBase}/zara.png`, badge: "Creator proof" }),
+  block("trusted_logo_zexy", "logo", { name: "Zexy", imageUrl: `${trustedLogoAssetBase}/zexy.svg`, badge: "Creator proof" }),
+  block("trusted_logo_zola", "logo", { name: "Zola", imageUrl: `${trustedLogoAssetBase}/zola.png`, badge: "Creator proof" })
+];
+
 const dreamshootMegaTools = [
   block("mega_tool_headshot", "tool_card", { title: "Professional headshot maker", description: "Input: clear selfies or portraits you own or have permission to use. Output: private profile-ready headshot options. Best for: LinkedIn, resumes, founder bios, speaker pages, and team profiles. Cost: credits are shown before generation.", category: "Photo AI", badge: "Profile", imageUrl: assets.catalogHeadshotCard, href: toolHref("headshot") }),
   block("mega_tool_creator", "tool_card", { title: "Creator portrait studio", description: "Input: source portraits and creator references you own or can use. Output: private creator portraits for profiles, media kits, newsletters, and thumbnails. Best for: refreshing a public creator presence. Cost: credits are shown before generation.", category: "Photo AI", badge: "Creator", imageUrl: assets.heroGridSocial, href: toolHref("creator-portrait") }),
@@ -220,7 +254,7 @@ const homeSections: ThemePageJson["sections"] = {
     },
     [
       block("hero_cta_primary", "cta", { label: "Create Now", href: "/login", style: "primary" }),
-      block("hero_cta_secondary", "cta", { label: "Browse packages", href: "/collections", style: "secondary" }),
+      block("hero_cta_secondary", "cta", { label: "Headshot Generator", href: "/collections/headshots", style: "secondary" }),
       block("hero_stat_credits", "stat", { value: "Credits", label: "shown before generation" }),
       block("hero_stat_packs", "stat", { value: "15+", label: "photo package themes" }),
       block("hero_stat_private", "stat", { value: "Private", label: "model, uploads, albums" })
@@ -385,6 +419,12 @@ const homeSections: ThemePageJson["sections"] = {
     "dreamshoot_generation_showcase",
     {
       anchor: "generated-showcase",
+      showTrustedLogoIntro: true,
+      trustedLogoTitle: "Trusted by creators worldwide",
+      aboutTitle: "What is MyDreamShoots?",
+      aboutBody: mydreamshootsAboutBody,
+      embeddedPricingSectionId: "pricing_1",
+      trustedLogoSplitIndex: 15,
       eyebrow: "Customer-created examples",
       title: "Browse image and video themes customers have already created.",
       subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
@@ -395,7 +435,8 @@ const homeSections: ThemePageJson["sections"] = {
       videoItemLimit: 8,
       primaryCta: "Start with your photos",
       primaryHref: "/login"
-    }
+    },
+    mydreamshootsTrustedLogoBlocks
   ),
   flow_bridge_1: section(
     "dreamshoot_flow_bridge",
@@ -766,8 +807,8 @@ const templateSections = {
     title: "Choose a themed photo pack with a clear result before checkout.",
     subtitle: "See the style, source-photo needs, credit cost, and private album delivery flow before starting generation.",
     imageUrl: assets.headshotLifestyle,
-    ctaLabel: "Browse packages",
-    ctaHref: "/collections"
+    ctaLabel: "Headshot Generator",
+    ctaHref: "/collections/headshots"
   }),
   package_before_after_1: section(
     "before_after_gallery",
@@ -988,8 +1029,8 @@ function mydreamshootsTutorialVideoSection(): SectionInstance {
     eyebrow: "How it works",
     title: "Watch the private photo package workflow.",
     subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-45s.jpg?v=20260805hug1",
-    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-45s.mp4?v=20260805hug1",
+    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-55s.jpg?v=20260805i2vselect3",
+    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4?v=20260805i2vselect3",
     videoBadge: "Private gallery workflow",
     playLabel: "Watch the MyDreamShoots workflow"
   });
@@ -1001,8 +1042,8 @@ function mydreamshootsImageTutorialVideoSection(): SectionInstance {
     eyebrow: "AI image tutorial",
     title: "Create an AI photo set from source photos.",
     subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260805valentine1",
-    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260805valentine1",
+    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260806chooserfix1",
+    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260806chooserfix1",
     videoBadge: "AI photo generation",
     playLabel: "Watch the MyDreamShoots AI image tutorial"
   });
@@ -1042,17 +1083,17 @@ function mydreamshootsMobileVideoShowcaseSection(): SectionInstance {
     subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
     imageUrl: assets.flowPrivateAlbumWorkspace,
     imageAlt: "MyDreamShoots private album workspace preview",
-    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260805hug1",
-    videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260805hug1",
+    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4?v=20260806mobile55a",
+    videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg?v=20260806mobile55a",
     videoBadge: "Mobile workflow",
     playLabel: "Watch the video tutorial",
     leftTitle: "AI image tutorial",
-    leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260804mobile1",
-    leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260804mobile1",
+    leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260806chooserfix1",
+    leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260806chooserfix1",
     leftPlayLabel: "Watch the image tutorial",
     rightTitle: "AI video tutorial",
-    rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260805hug1",
-    rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260805hug1",
+    rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4?v=20260806mobile55a",
+    rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg?v=20260806mobile55a",
     rightPlayLabel: "Watch the video tutorial",
     placeholderTitle: "Mobile tutorial coming soon",
     placeholderBody: "The vertical mobile walkthrough will appear here when the final video is ready."
@@ -1173,24 +1214,132 @@ function mydreamshootsFaqSection(): SectionInstance {
       anchor: "faq",
       eyebrow: "Questions before upload",
       title: "FAQ",
-      subtitle: "Answers to photo uploads, AI video examples, package themes, credits, privacy, refunds, subscriptions, quality, and gallery delivery.",
+      subtitle: "Clear answers about source photos, packages, credits, AI images, short videos, styling tools, privacy, publishing, and delivery.",
+      layout: "visual_faq",
+      imageUrl: assets.galleryChristmasCover,
+      imageAlt: "MyDreamShoots holiday celebration album cover",
       journeyTitle: "Your photo flow",
       journeyTitles: "Upload|Choose Pack|Generate|Download",
       journeyDescriptions: "Add clean source photos.|Pick a scene or style.|AI builds your set.|Download from the private gallery."
     },
     [
-      block("faq_free", "faq_item", { question: "Can I try MyDreamShoots for free?", answer: "Some lightweight tools can be free. Private model creation, premium photo packages, and AI video requests require credits because they use dedicated generation capacity." }),
-      block("faq_credits", "faq_item", { question: "When are credits used?", answer: "The credit cost is shown before each generation. Credits are reserved when a request starts, used after successful delivery, and returned when a failed request releases the reservation." }),
-      block("faq_private", "faq_item", { question: "Are my uploaded photos private?", answer: "Yes. Source photos, generation jobs, albums, orders, and credits stay connected to your signed-in MyDreamShoots account and are not public by default." }),
-      block("faq_uploads", "faq_item", { question: "What photos should I upload?", answer: "Recent, clear, high-quality phone photos work best. Use different angles, expressions, lighting, and outfits so the private workflow has enough visual range." }),
-      block("faq_videos", "faq_item", { question: "Can I create AI videos too?", answer: "Yes. Some themes include short AI video examples or video add-ons. The request screen shows source requirements and credit cost before video generation begins." }),
-      block("faq_categories", "faq_item", { question: "Why are there so many package categories?", answer: "Each category represents a different output goal such as fan photos, VIP-style portraits, headshots, creator images, Christmas cards, Thanksgiving albums, Halloween portraits, or seasonal group photos." }),
-      block("faq_faces", "faq_item", { question: "Will the images keep my facial features?", answer: "Results depend on source photo quality, lighting, pose, and model behavior. Clear source photos usually help the generated images stay more consistent, but AI output can vary." }),
-      block("faq_safety", "faq_item", { question: "Can I use celebrity, athlete, or brand references?", answer: "Do not upload or request content that copies real celebrities, athletes, public figures, official marks, logos, trademarks, or protected materials without permission." }),
-      block("faq_delete", "faq_item", { question: "Can I delete my photos?", answer: "You can request deletion of uploaded or generated photos from your account. Some billing, security, and dispute records may be retained where required." }),
-      block("faq_refunds", "faq_item", { question: "What is the refund policy?", answer: "Refund eligibility follows the site policy and checkout terms. Credits already spent on successful generations are generally not refundable, while failed requests can return reserved credits according to request status." }),
-      block("faq_cancel", "faq_item", { question: "What happens if I cancel a plan?", answer: "Access to previous albums follows the account and gallery policy. New package requests may require an active plan or enough available credits." }),
-      block("faq_commercial", "faq_item", { question: "Can I use results for business or social content?", answer: "Many customers use finished images for profiles, social posts, cards, campaigns, or creator content. Review the output, rights, and platform rules before publishing or selling anything." })
+      block("faq_about", "faq_item", {
+        question: "What is MyDreamShoots?",
+        answer: "MyDreamShoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
+        body: "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
+        bulletList: "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
+        linkList: "Browse photo collections::/collections|Explore creative tools::/tools",
+        imageUrl: assets.headshotLifestyle,
+        imageAlt: "AI-generated lifestyle headshot from a MyDreamShoots photo package"
+      }),
+      block("faq_use", "faq_item", {
+        question: "How do I use MyDreamShoots?",
+        answer: "Start by choosing a package or tool that matches the result you want, then follow the upload and generation steps shown in your signed-in workspace.",
+        body: "The request flow keeps the important decisions together: source photos, package direction, selected files, credit cost, and generation status.|You can review the request before it starts, then return to the private gallery when the output is ready.",
+        bulletList: "Choose a collection or tool|Upload photos you own or have permission to use|Confirm the request details and credits|Review and download finished results",
+        linkList: "See the workflow::/workflow|Open your workspace::/login"
+      }),
+      block("faq_use_cases", "faq_item", {
+        question: "What can I create with MyDreamShoots?",
+        answer: "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
+        body: "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
+        bulletList: "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
+        linkList: "Compare package themes::/collections|View video tools::/tools"
+      }),
+      block("faq_free", "faq_item", {
+        question: "Is MyDreamShoots free?",
+        answer: "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
+        body: "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
+        bulletList: "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
+        linkList: "View pricing and plans::/pricing|Review available tools::/tools"
+      }),
+      block("faq_plans", "faq_item", {
+        question: "How do plans, credits, and promotions work?",
+        answer: "Plans provide account access and recurring credits, while one-time top-ups or package options can cover additional generation needs when available.",
+        body: "Credit amounts, package scope, and any active promotion are shown in the current pricing or checkout experience. Promotions can change, so this FAQ intentionally does not promise a fixed bonus or duration.|Credits are tied to the account that purchased or received them and should be reviewed before a request starts.",
+        bulletList: "Plans and top-ups can serve different workloads|Current pricing controls the active offer|Read checkout details before confirming payment",
+        linkList: "Compare plans::/pricing|Read terms before purchase::/terms"
+      }),
+      block("faq_credits", "faq_item", {
+        question: "When are credits used?",
+        answer: "The credit requirement is shown before a request starts. Credits are reserved when generation begins, settled after successful delivery, and released when a failed request returns its reservation.",
+        body: "A request may take time because image and video generation use dedicated processing capacity. The workspace keeps the request status and account history together so you can tell whether a charge was completed or released.",
+        bulletList: "Review the cost before starting|Reservations can remain while a job is processing|Failed requests can release reserved credits according to status",
+        linkList: "Review plan details::/pricing|Contact support about a request::/contact-us"
+      }),
+      block("faq_uploads", "faq_item", {
+        question: "What photos should I upload?",
+        answer: "Use recent, sharp photos where your face is visible and not heavily filtered. A small set of varied source images usually gives the workflow more useful information than many near-duplicates.",
+        body: "Good source photos do not need to be professional studio images. Natural phone photos can work well when the subject is well lit, unobstructed, and captured from several useful angles.",
+        bulletList: "Use clear focus and even lighting|Include front, three-quarter, and natural-expression views|Avoid sunglasses, extreme filters, heavy blur, and cropped faces|Include wardrobe or hairstyle variety when the package calls for it",
+        linkList: "Review the upload workflow::/workflow",
+        imageUrl: assets.upload,
+        imageAlt: "Clear source portrait recommended for MyDreamShoots uploads"
+      }),
+      block("faq_couples", "faq_item", {
+        question: "Can I create couple or group photos?",
+        answer: "Yes. Couple, friend, and group results work best when every person is clearly visible in approved source photos and the chosen package is designed for more than one subject.",
+        body: "For a group set, keep the source images organized and make sure each person has given permission for the intended use. Results can vary when faces are small, hidden, or heavily overlapping.",
+        bulletList: "Get permission from every person shown|Use clear group and individual reference photos|Choose a package that supports the number of subjects|Review faces and hands before sharing",
+        linkList: "Browse couple and group themes::/collections",
+        imageUrl: assets.galleryChristmasCoupleOne,
+        imageAlt: "Couple portrait example from a MyDreamShoots seasonal collection"
+      }),
+      block("faq_photo_generator", "faq_item", {
+        question: "How does the AI photo generator work?",
+        answer: "The generator combines your approved source photos with the selected package direction, then creates a new set of images that follows the package composition, styling, and scene cues.",
+        body: "The examples show the intended visual language, but they are not a guarantee of an identical result. Source quality, pose, lighting, subject count, and model behavior all affect the finished images.",
+        bulletList: "Choose a visual direction|Upload the source material|Review the request and credits|Inspect the delivered gallery and keep the strongest results",
+        linkList: "Explore photo collections::/collections",
+        imageUrl: assets.galleryCreatorOne,
+        imageAlt: "Creator portrait example from a MyDreamShoots AI photo collection"
+      }),
+      block("faq_video", "faq_item", {
+        question: "How does the AI video workflow work?",
+        answer: "Selected themes can turn approved images or a prepared visual direction into short AI motion outputs. The request screen explains the supported input, expected format, and credit requirement.",
+        body: "Video generation is more sensitive to image composition and motion cues than a still image request. Start with a clear hero image, keep the brief focused, and review the preview or status in your account.",
+        bulletList: "Choose a video-capable theme or add-on|Use a clean source image or finished still|Confirm the duration, format, and credits shown|Download the completed motion output from the private workspace",
+        linkList: "See video-capable tools::/tools|Review the workflow::/workflow",
+        imageUrl: assets.aiVideoAddonsPack,
+        imageAlt: "AI video add-on package preview for MyDreamShoots"
+      }),
+      block("faq_styling", "faq_item", {
+        question: "How do virtual looks, hairstyle, and styling tools work?",
+        answer: "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
+        body: "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
+        bulletList: "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
+        linkList: "Open styling tools::/tools",
+        imageUrl: assets.virtualLooks,
+        imageAlt: "Virtual styling look preview from MyDreamShoots"
+      }),
+      block("faq_operator", "faq_item", {
+        question: "Who operates MyDreamShoots?",
+        answer: "MyDreamShoots is operated as a customer-facing AI photo studio with account, billing, generation, and gallery support handled through the site workspace.",
+        body: "For a plan question, credit discrepancy, failed request, or delivery issue, include the account email, request details, and a short description so support can find the right record.|The site does not require customers to manage model providers or generation infrastructure themselves.",
+        bulletList: "Use the signed-in account for request history|Keep the request or order details when contacting support|Do not send private source photos through an unrelated public channel",
+        linkList: "Contact the support team::/contact-us"
+      }),
+      block("faq_publishing", "faq_item", {
+        question: "Can I use AI photos on social media, profiles, or business pages?",
+        answer: "You can use suitable finished images for personal profiles, social posts, creator pages, cards, campaign drafts, and other channels when you have the rights and follow the destination platform's rules.",
+        body: "Before publishing, check that everyone shown has approved the use, that no protected logo or likeness is being misrepresented, and that any required AI disclosure is included.",
+        bulletList: "Confirm subject and source-photo permissions|Review platform rules and disclosure requirements|Check crops, text, hands, and small details|Keep commercial claims accurate",
+        linkList: "Read content guidance::/content|Review the terms::/terms"
+      }),
+      block("faq_privacy", "faq_item", {
+        question: "Are my uploads and personal data private?",
+        answer: "Uploads, generation requests, albums, orders, and credit activity are associated with your signed-in account and are not public by default.",
+        body: "Privacy also depends on how you share or download a result. Use the private gallery for review, avoid uploading material you do not control, and remove content when you no longer need it where the account tools allow.",
+        bulletList: "Upload only material you are allowed to use|Keep account access secure|Review sharing and download choices before publishing|Read the privacy policy for retention and rights details",
+        linkList: "Read the privacy policy::/privacy|Review content rules::/content"
+      }),
+      block("faq_refunds", "faq_item", {
+        question: "What is the refund policy?",
+        answer: "Refund eligibility follows the current refund policy, checkout terms, and the status of the specific order or generation request.",
+        body: "Credits used for a successfully delivered result are generally not refundable. A failed or interrupted request may release its reservation according to the recorded status, while subscription or payment questions should be reviewed against the applicable purchase terms.",
+        bulletList: "Keep the order or request reference|Check whether the generation completed or failed|Contact support promptly when a charge or delivery looks incorrect",
+        linkList: "Read the refund policy::/refunds|Review purchase terms::/terms"
+      })
     ]
   );
 }
@@ -1215,60 +1364,130 @@ function aidreamcapesFaqSection(): SectionInstance {
       anchor: "faq",
       eyebrow: "Questions before upload",
       title: "FAQ",
-      subtitle: "Answers to approved source photos, fan-scene albums, game-day group portraits, holiday albums, credits, privacy, refunds, and gallery delivery.",
+      subtitle: "Practical answers about approved source photos, fan-scene and game-day directions, holiday albums, protected likeness safety, credits, privacy, and private gallery delivery.",
+      layout: "visual_faq",
+      imageUrl: aidreamcapesPublicAssets.hero,
+      imageAlt: "Aidreamcapes private fan-scene album cover",
       journeyTitle: "Your private album flow",
       journeyTitles: "Upload|Choose Album|Review Credits|Download",
       journeyDescriptions: "Add approved source photos.|Pick a fan or holiday direction.|Confirm the credit cost.|Download from your gallery."
     },
     [
       block("aidream_faq_sources", "faq_item", {
-        question: "What photos can I upload?",
-        answer: "Upload only photos you own or have permission to use. Clear portraits and group photos work best for Aidreamcapes fan-scene and holiday albums."
+        question: "What is Aidreamcapes?",
+        answer: "Aidreamcapes is a private occasion-album studio for creating original fan-scene, game-day, premiere-inspired, and holiday images from approved source photos.",
+        body: "The service is organized around an album direction rather than a single generic prompt. You choose the mood, upload photos you own or have permission to use, review credits, and receive the finished set in a private gallery.",
+        bulletList: "Fan-scene and supporter moments|Game-day group portraits|Premiere-inspired flash looks|Christmas, Thanksgiving, Halloween, and seasonal keepsakes",
+        linkList: "Explore album collections::/collections|Open occasion tools::/tools",
+        imageUrl: aidreamcapesPublicAssets.gallery,
+        imageAlt: "Finished Aidreamcapes fan-scene album image"
       }),
-      block("aidream_faq_likeness", "faq_item", {
-        question: "Can Aidreamcapes recreate a real celebrity or athlete?",
-        answer: "No. Aidreamcapes can create original fan-scene, game-day, premiere, and holiday atmosphere, but it does not promise or support copying real celebrities, real athletes, public figures, official marks, brand logos, trademarks, or protected materials."
-      }),
-      block("aidream_faq_credits", "faq_item", {
-        question: "When are credits used?",
-        answer: "The album cost is shown before generation. Credits are reserved when a private request starts, used after successful delivery, or released when a failed request returns the reservation."
-      }),
-      block("aidream_faq_private", "faq_item", {
-        question: "Are my uploaded photos private?",
-        answer: "Yes. Source photos, album briefs, generation jobs, finished images, orders, and credits stay connected to your signed-in Aidreamcapes account and are not public by default."
-      }),
-      block("aidream_faq_delete", "faq_item", {
-        question: "Can I delete my photos?",
-        answer: "You can request deletion of uploaded or generated photos from your account. Some billing, security, and dispute records may be retained where required."
-      }),
-      block("aidream_faq_refunds", "faq_item", {
-        question: "What is the refund policy?",
-        answer: "Refund eligibility follows the site policy and checkout terms. Credits spent on successful generations are generally not refundable, while failed requests can return reserved credits according to request status."
-      }),
-      block("aidream_faq_videos", "faq_item", {
-        question: "Can I make AI videos from an album?",
-        answer: "Some occasion themes include short motion examples or video add-ons. The generation screen explains the source-photo needs and credit cost before any video request starts."
+      block("aidream_faq_use", "faq_item", {
+        question: "How do I build a private occasion album?",
+        answer: "Choose an album direction, upload approved source photos, check the subjects and brief, review the credit cost, and start the request from your signed-in Aidreamcapes workspace.",
+        body: "The private gallery keeps the request status and delivered images together. This makes it easier to compare a fan-scene, game-day, premiere, or holiday direction before sharing the final album.",
+        bulletList: "Select one album mood|Upload approved source photos|Confirm group size and request details|Review the finished gallery before publishing",
+        linkList: "See the album workflow::/workflow|Open your workspace::/login"
       }),
       block("aidream_faq_categories", "faq_item", {
-        question: "Which album categories are available?",
-        answer: "Aidreamcapes focuses on fan-scene albums, game-day group portraits, premiere-inspired portraits, Christmas group albums, Thanksgiving memory sets, Halloween party portraits, and seasonal celebration photos."
+        question: "Which fan-scene and holiday albums can I create?",
+        answer: "Current directions include private fan-scene albums, game-day group portraits, premiere-inspired portraits, Christmas albums, Thanksgiving keepsakes, Halloween party portraits, and rotating seasonal celebrations.",
+        body: "Each category changes the setting, lighting, wardrobe cues, composition, and delivery goal. Browse the examples to choose a direction that fits a personal memory, community event, creator post, or seasonal shop.",
+        bulletList: "Fan-scene supporter moments|Game-day and watch-party group photos|Premiere and spotlight arrivals|Christmas and Thanksgiving memory sets|Halloween and seasonal celebration portraits",
+        linkList: "Compare album categories::/collections"
+      }),
+      block("aidream_faq_credits", "faq_item", {
+        question: "Do Aidreamcapes albums require credits?",
+        answer: "Album requests use credits when the current package or tool requires dedicated generation capacity. The credit cost is shown before you start.",
+        body: "Plans, top-ups, and package availability can change over time. Use the pricing and request screens as the current source of truth instead of relying on a fixed promotion or a permanent free allowance.",
+        bulletList: "Review the package cost before generation|Use the current pricing page for plan details|Keep the account that purchased the credits",
+        linkList: "View pricing and plans::/pricing|Browse occasion tools::/tools"
+      }),
+      block("aidream_faq_sources_guidance", "faq_item", {
+        question: "What should approved source photos look like?",
+        answer: "Use clear photos with visible faces, useful lighting, and enough resolution for the chosen album. Upload only photos you own or have permission to use.",
+        body: "For group albums, include both a group reference and individual photos when possible. Avoid heavy filters, tiny faces, deep shadows, and images where a person is partly hidden.",
+        bulletList: "Use sharp, well-lit portraits|Include front and three-quarter views|Keep group members visible and identifiable|Do not upload unapproved or scraped images",
+        linkList: "Review the workflow::/workflow",
+        imageUrl: aidreamcapesPublicAssets.fan,
+        imageAlt: "Aidreamcapes approved source-photo direction for a fan-scene album"
       }),
       block("aidream_faq_group_photos", "faq_item", {
-        question: "Can I create group albums?",
-        answer: "Yes. Group source photos can work well for game-day, Christmas, Thanksgiving, Halloween, and seasonal celebration albums when every person in the upload is approved for that use."
+        question: "Can I create couple, family, or group albums?",
+        answer: "Yes. Aidreamcapes can support couple, family, friend, and community groups when the selected album direction fits the number of people and everyone shown has approved the use.",
+        body: "Group results are more reliable when faces are not blocked and the source set includes consistent views of each person. Review the delivered images carefully before sharing them outside the private gallery.",
+        bulletList: "Get permission from every person shown|Choose an album built for the group size|Use clear individual references for small faces|Check the final gallery before publishing",
+        linkList: "Explore group album directions::/collections",
+        imageUrl: aidreamcapesPublicAssets.gameDay,
+        imageAlt: "Aidreamcapes game-day group portrait example"
       }),
-      block("aidream_faq_quality", "faq_item", {
-        question: "What affects final quality?",
-        answer: "Lighting, focus, face visibility, pose variety, source-photo resolution, and the chosen album direction can all affect results. AI output can vary, so review finished images before sharing."
+      block("aidream_faq_likeness", "faq_item", {
+        question: "Can Aidreamcapes copy a real celebrity, athlete, logo, or official mark?",
+        answer: "No. Aidreamcapes focuses on original fan atmosphere and occasion styling, not the unauthorized recreation of a real person's likeness, official team identity, logo, trademark, or protected mark.",
+        body: "You can describe a mood such as stadium lights, premiere flashes, supporter colors, or a holiday celebration without asking the system to reproduce protected identity elements.|Use your own approved photos and keep the creative direction clearly original.",
+        bulletList: "Avoid real celebrity or athlete likeness requests|Do not upload official logos or protected marks for recreation|Use original color, mood, and scene descriptions|Check rights before publishing a commercial result",
+        linkList: "Read content guidance::/content|Review the terms::/terms"
       }),
-      block("aidream_faq_commercial", "faq_item", {
-        question: "Can I use the images for business or social content?",
-        answer: "Many customers use finished images for personal pages, creator posts, seasonal shops, or event previews. You are responsible for checking rights, platform rules, and any required AI disclosure before publishing."
+      block("aidream_faq_album_credits", "faq_item", {
+        question: "How are album credits reserved and settled?",
+        answer: "The album cost is presented before generation. Credits can be reserved while a private request is processing, settled after successful delivery, or released when the recorded request status indicates a failure.",
+        body: "Keep the request status and account history if you need help with a charge. A delayed request is not automatically the same as a completed delivery.",
+        bulletList: "Review the cost before starting|Check processing status in the workspace|Keep the request reference for support questions",
+        linkList: "Compare plans::/pricing|Contact support::/contact-us"
+      }),
+      block("aidream_faq_video", "faq_item", {
+        question: "Can I turn an album image into a short video?",
+        answer: "Some occasion themes include short motion examples or video add-ons. The request screen explains the supported source image, output format, and credit cost before a video request begins.",
+        body: "Use a clear finished still with a simple composition when a theme supports motion. Video output can vary with faces, hands, overlapping people, and the amount of movement requested.",
+        bulletList: "Choose a motion-capable occasion tool|Use a finished still from your private gallery|Review the format and cost first|Inspect the motion result before sharing",
+        linkList: "Explore occasion tools::/tools",
+        imageUrl: aidreamcapesPublicAssets.seasonal,
+        imageAlt: "Aidreamcapes seasonal celebration image prepared for motion"
+      }),
+      block("aidream_faq_direction", "faq_item", {
+        question: "How do I choose between game-day, premiere, and holiday directions?",
+        answer: "Choose the direction based on the moment you want to communicate: energetic supporter scenes for game day, flash-lit arrival portraits for premiere styling, or warmer compositions for holiday memories.",
+        body: "The category examples are useful for comparing background treatment, wardrobe cues, group composition, and the crop you may need for a card, post, invitation, or private album.",
+        bulletList: "Game day: supporter energy and group framing|Premiere: flash, arrival, and spotlight styling|Holiday: warmth, cards, tables, and keepsake layouts",
+        linkList: "Browse album examples::/collections",
+        imageUrl: aidreamcapesPublicAssets.premiere,
+        imageAlt: "Aidreamcapes premiere-inspired portrait direction"
+      }),
+      block("aidream_faq_delivery", "faq_item", {
+        question: "Where are finished albums delivered?",
+        answer: "Finished images and supported motion outputs are delivered to the private gallery connected to your signed-in Aidreamcapes account.",
+        body: "The gallery is the place to review status, compare results, download favorites, and decide what to share. A public post or external link is a separate action that you control.",
+        bulletList: "Review requests inside your account|Download selected finished images|Keep private work in the gallery until it is ready to share",
+        linkList: "Open your workspace::/login|Review the workflow::/workflow"
+      }),
+      block("aidream_faq_publishing", "faq_item", {
+        question: "Can I publish album images on social or business pages?",
+        answer: "You can publish suitable finished images when you have permission from the people shown, the creative direction respects third-party rights, and the destination platform's rules are followed.",
+        body: "For a shop, event, or creator page, check the crop, caption, AI disclosure, and any claims about official affiliation before posting.",
+        bulletList: "Confirm subject permissions|Avoid implying official sponsorship or endorsement|Follow platform and advertising rules|Disclose AI use when required",
+        linkList: "Review content guidance::/content|Read the terms::/terms"
+      }),
+      block("aidream_faq_private", "faq_item", {
+        question: "How does Aidreamcapes protect private uploads?",
+        answer: "Source photos, album briefs, generation jobs, orders, and credit activity are associated with your signed-in account and are not public by default.",
+        body: "Protect the account that contains the source photos, use the private gallery for review, and upload only material that you are authorized to process.",
+        bulletList: "Use a secure account login|Upload only approved source photos|Review sharing choices before publishing|Read the privacy policy for retention details",
+        linkList: "Read the privacy policy::/privacy|Review content rules::/content"
       }),
       block("aidream_faq_cancel", "faq_item", {
         question: "What happens if I cancel a plan?",
-        answer: "Access to previous albums follows the account and gallery policy. New album requests may require an active plan or enough available credits."
-      })
+        answer: "Plan cancellation affects future plan access according to the purchase terms. Previous gallery access and any remaining credits follow the account and plan rules shown at checkout.",
+        body: "Before cancelling, review the current billing page and download anything you need from the private gallery. New album requests may require an active plan or enough available credits.",
+        bulletList: "Check the next billing date|Review remaining credits and gallery access|Download important finished work|Use support for account-specific questions",
+        linkList: "View plan details::/pricing|Contact support::/contact-us"
+      }),
+      block("aidream_faq_refunds", "faq_item", {
+        question: "What is the Aidreamcapes refund policy?",
+        answer: "Refund eligibility follows the current refund policy, checkout terms, and the status of the specific album or generation request.",
+        body: "Credits used for a successfully delivered result are generally not refundable. A failed request may release its reservation according to the recorded status, while subscription questions should be checked against the applicable purchase terms.",
+        bulletList: "Keep the order or request reference|Check whether the album was delivered|Contact support when a charge or delivery looks incorrect",
+        linkList: "Read the refund policy::/refunds|Review purchase terms::/terms"
+      }),
     ]
   );
 }
@@ -1627,10 +1846,13 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const faqSection = aidreamcapesTemplateSite ? aidreamcapesFaqSection() : mydreamshootsFaqSection();
   const partnerStripSection = aidreamcapesTemplateSite ? aidreamcapesPartnerStripSection() : mydreamshootsPartnerStripSection();
   const conversionSection = aidreamcapesTemplateSite ? aidreamcapesConversionSection() : homeSections.conversion_1;
+  const homeSectionsOrder = aidreamcapesTemplateSite
+    ? ["hero_1", "generation_showcase_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "tutorial_video_1", "tutorial_video_2", "mobile_video_1", "package_catalog_1", "proof_1", "pricing_1", "faq_1", "conversion_1", "brand_strip_1"]
+    : ["hero_1", "generation_showcase_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "tutorial_video_1", "tutorial_video_2", "mobile_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"];
   const templates: Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> = {
   home: page(
     "home",
-    ["hero_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "generation_showcase_1", "tutorial_video_1", "tutorial_video_2", "mobile_video_1", "package_catalog_1", "proof_1", "pricing_1", "faq_1", "conversion_1", "brand_strip_1"],
+    homeSectionsOrder,
     {
       hero_1: homeHeroSection,
       featured_pack_1: featuredPackSection,
@@ -1703,8 +1925,8 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         headingLevel: "h1",
         tone: "dark",
         imageUrl: assets.heroPackageWall,
-        primaryCta: "Browse packages",
-        primaryHref: "/collections",
+        primaryCta: "Headshot Generator",
+        primaryHref: "/collections/headshots",
         secondaryCta: "View pricing",
         secondaryHref: "/pricing"
       }, [
@@ -2087,7 +2309,7 @@ export const dreamshootAiStudioTemplates: Record<MydreamShootsAiStudioTemplateKe
 export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTemplateKey, string> = {
   home: "Home",
   pricing: "Pricing",
-  packages: "Browse packages",
+  packages: "Headshot Generator",
   tools: "Tools Directory",
   workflow: "How It Works",
   "package-detail": "Package Detail",
@@ -2134,7 +2356,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
     },
     navigation: {
       headerLinks: [
-        { label: "Browse packages", href: "/collections" },
+        { label: "Headshot Generator", href: "/collections/headshots" },
         { label: "Tools", href: "/tools" },
         { label: "How it works", href: "/workflow" },
         { label: "Blog", href: "/blog" },
@@ -2169,7 +2391,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           logoAlt: "MyDreamShoots heart camera logo"
         },
         blocks: [
-          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "Browse packages", href: "/collections" } },
+          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "Headshot Generator", href: "/collections/headshots" } },
           { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "Tools", href: "/tools" } },
           { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
           { id: "dreamshoot_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } },
@@ -2208,7 +2430,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         },
         blocks: [
           { id: "dreamshoot_footer_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing", group: "product" } },
-          { id: "dreamshoot_footer_packs", type: "menu_link", settings: { label: "Packs", href: "/collections", group: "product" } },
+          { id: "dreamshoot_footer_packs", type: "menu_link", settings: { label: "Headshot Generator", href: "/collections/headshots", group: "product" } },
           { id: "dreamshoot_footer_tools", type: "menu_link", settings: { label: "Tools", href: "/tools", group: "product" } },
           { id: "dreamshoot_footer_tool", type: "menu_link", settings: { label: "Headshot maker", href: toolHref("headshot"), group: "product" } },
           { id: "dreamshoot_footer_help", type: "menu_link", settings: { label: "FAQ", href: "/faq", group: "company" } },

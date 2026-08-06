@@ -78,7 +78,7 @@ function buildProducts() {
           discountLabel: "Pay 6, get 12",
           billingCadence: "yearly",
           yearlyEquivalentMonthlyCents: plan.yearlyEquivalentMonthlyCents,
-          yearlySavingsLabel: "6 months free",
+          yearlySavingsLabel: "Annual savings shown at checkout",
           planFamily: plan.family,
           bestValue: plan.bestValue,
           publicReference: `MyDreamShoots ${String(plan.name).toLowerCase()} yearly credit package`

@@ -505,7 +505,7 @@ function defaultVideoThemePrompt(videoTheme?: GenerationVideoTheme | null): stri
   return videoTheme?.prompt?.trim() ?? "";
 }
 
-function videoFrameOrderInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
+function _videoFrameOrderInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
   if (!requestedAssetIds.length) return "";
   const fields = fieldRecord(requestJson);
   const promptNote = typeof fields.promptNote === "string" && fields.promptNote.trim()
@@ -528,7 +528,7 @@ function videoFrameOrderInstruction(requestJson: Record<string, unknown> | undef
   ].filter(Boolean).join("\n");
 }
 
-function videoReferenceContractInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
+function _videoReferenceContractInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
   if (!requestedAssetIds.length) return "";
   const fields = fieldRecord(requestJson);
   const promptNote = typeof fields.promptNote === "string" && fields.promptNote.trim() ? fields.promptNote.trim() : "";
@@ -544,7 +544,7 @@ function videoReferenceContractInstruction(requestJson: Record<string, unknown> 
   ].filter(Boolean).join("\n");
 }
 
-function videoSkillPackQualityInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
+function _videoSkillPackQualityInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
   const modelPreference = requestedVideoModelPreference(requestJson);
   return [
     "Store video quality rules powered by the latest installed AI video skill pack: treat the user's written prompt as editable direction, not as the whole production prompt.",
@@ -1014,7 +1014,7 @@ export async function terminateGenerationJobRelational(params: {
     if (job.status !== "queued" && job.status !== "running") {
       throw new StoreError("generation_job_not_active", 409);
     }
-    const customer = await readCustomerForUpdate(tx, job.siteId, job.customerId);
+    const _customer = await readCustomerForUpdate(tx, job.siteId, job.customerId);
     const previousResult = jsonObject<Record<string, unknown>>(job.resultJson) ?? {};
     const requestJson = jsonObject<Record<string, unknown>>(job.requestJson) ?? {};
     const billing = requestJson.billing && typeof requestJson.billing === "object" && !Array.isArray(requestJson.billing)

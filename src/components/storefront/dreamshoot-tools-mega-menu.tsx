@@ -14,8 +14,7 @@ import {
   ShieldCheck,
   Sparkles,
   Users,
-  Youtube,
-  type LucideIcon
+  Youtube
 } from "lucide-react";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { cleanHost, hostAwareSitePath } from "@/lib/domain-routing";

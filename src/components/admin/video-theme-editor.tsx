@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Film, ImageIcon, Pencil, Plus, Save, Search, Trash2, X } from "lucide-react";
 import { fetchAdminJson } from "@/components/admin/admin-api-client";
 import {
@@ -137,17 +137,20 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
 
   const categoryById = useMemo(() => new Map(categories.map((category) => [category.id, category])), [categories]);
   const categoryOptions = categories.length ? categories : [];
+  const themeFiltersRef = useRef({ query, statusFilter, categoryFilter });
+  themeFiltersRef.current = { query, statusFilter, categoryFilter };
 
-  async function loadCategories(signal?: AbortSignal) {
+  const loadCategories = useCallback(async (signal?: AbortSignal) => {
     const response = await fetchAdminJson<CategoryQueryResult>(`/api/sites/${siteId}/video-theme-categories?admin=1`, { init: { signal }, ttlMs: 0 });
     if (!response.ok) throw new Error(response.data.error ?? "视频主题分类加载失败。");
     setCategories(response.data.categories ?? []);
-  }
+  }, [siteId]);
 
-  async function loadThemes(next: Partial<{ query: string; statusFilter: Status | ""; categoryFilter: string }> = {}, signal?: AbortSignal) {
-    const nextQuery = next.query ?? query;
-    const nextStatus = next.statusFilter ?? statusFilter;
-    const nextCategory = next.categoryFilter ?? categoryFilter;
+  const loadThemes = useCallback(async (next: Partial<{ query: string; statusFilter: Status | ""; categoryFilter: string }> = {}, signal?: AbortSignal) => {
+    const currentFilters = themeFiltersRef.current;
+    const nextQuery = next.query ?? currentFilters.query;
+    const nextStatus = next.statusFilter ?? currentFilters.statusFilter;
+    const nextCategory = next.categoryFilter ?? currentFilters.categoryFilter;
     const params = new URLSearchParams({ admin: "1", pageSize: "100" });
     if (nextQuery.trim()) params.set("q", nextQuery.trim());
     if (nextStatus) params.set("status", nextStatus);
@@ -157,7 +160,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
     setThemes(response.data.themes ?? []);
     setCounts(response.data.counts ?? {});
     setTotal(response.data.total ?? response.data.themes?.length ?? 0);
-  }
+  }, [siteId]);
 
   useEffect(() => {
     let active = true;
@@ -178,7 +181,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
       active = false;
       controller.abort();
     };
-  }, [siteId]);
+  }, [loadCategories, loadThemes]);
 
   function updateDraft<K extends keyof typeof draftTheme>(key: K, value: (typeof draftTheme)[K]) {
     setDraftTheme((current) => ({ ...current, [key]: value }));

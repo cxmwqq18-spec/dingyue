@@ -322,7 +322,7 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
       description: "Create private boudoir-inspired AI portraits for adult, consensual use from photos you own or have permission to use."
     },
     "/pricing": {
-      title: "MyDreamShoots Pricing | Credits for Private AI Photo Packages",
+      title: "MyDreamShoots Pricing | Credits for Private AI Headshot Generator",
       description: "Compare MyDreamShoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery."
     },
     "/tools": {

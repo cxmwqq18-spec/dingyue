@@ -20,7 +20,7 @@ import {
   resetSaasSettingsCurrentForTheme,
   normalizeSaasSettingsCurrentForTheme
 } from "@/lib/theme/saas-theme-package";
-import { defaultBlock, defaultSection, getSectionSchema } from "@/lib/section-schema";
+import { defaultBlock, getSectionSchema } from "@/lib/section-schema";
 import { withNormalizedSeo } from "@/lib/theme/seo";
 import { normalizeGlobalSection } from "@/lib/theme/section-normalize";
 import { getThemePackages, themePackageTemplateToPageJson, type ThemePackageManifest, type ThemePackageSiteSettings } from "@/lib/theme/registry";
@@ -85,7 +85,7 @@ import type {
 } from "./types";
 import { aiProviderStatus } from "@/lib/ai-provider-config";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType, type PlatformAiProviderType } from "@/lib/ai-provider-type";
-import { fallbackImageForSeed, resolveMediaAssetUrl } from "@/lib/media";
+import { resolveMediaAssetUrl } from "@/lib/media";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import type { SaasThemeRecord, SaasThemeSettingsRecord, SaasThemeTemplates } from "@/lib/theme/saas-theme-model";
 
@@ -535,7 +535,7 @@ function pageIdForTemplate(siteId: string, templateKey: string): string {
   return `${siteId}_${templateKey}`;
 }
 
-function fallbackPageTitle(templateKey: string): string {
+function _fallbackPageTitle(templateKey: string): string {
   const labels: Record<string, string> = {
     "404": "404",
     "account-billing": "Account and billing",
@@ -554,7 +554,7 @@ function fallbackPageTitle(templateKey: string): string {
   return labels[templateKey] ?? templateKey;
 }
 
-function fallbackPageSlug(templateKey: string): string {
+function _fallbackPageSlug(templateKey: string): string {
   const slugs: Record<string, string> = {
     "404": "/404",
     "account-billing": "/account",

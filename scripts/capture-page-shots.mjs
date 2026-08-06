@@ -176,7 +176,7 @@ async function captureShot(browser, entry) {
 async function main() {
   await ensureDir();
   const manifest = buildManifest();
-  await fs.writeFile(manifestPath, `${JSON.stringify(manifest.map(({ name, route }) => route), null, 2)}\n`);
+  await fs.writeFile(manifestPath, `${JSON.stringify(manifest.map(({ name: _name, route }) => route), null, 2)}\n`);
 
   const browser = await chromium.launch({ headless: true });
   try {
