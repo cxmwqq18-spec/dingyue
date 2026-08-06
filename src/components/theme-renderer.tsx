@@ -4825,6 +4825,7 @@ function aidreamcapesTaxonomyDetailFields(
 function displayAiAppName(site: Site, app: SiteAiApp | undefined): string {
   if (!app) return isSpanishXbySite(site) ? "Estudio IA" : "AI tool";
   if (isAidreamcapesSite(site)) return isSpanishXbySite(site) ? "Estudio IA de albumes privados" : "Aidreamcapes Occasion Album Studio";
+  if (/mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain ?? ""} ${site.branding.logoText}`)) return "MyDreamShoots Image Studio";
   if (!isSpanishXbySite(site)) return app.aiApp.name;
   return "Estudio de imagenes IA";
 }
@@ -4835,6 +4836,9 @@ function displayAiAppDescription(site: Site, app: SiteAiApp | undefined): string
     return isSpanishXbySite(site)
       ? "Generacion privada de albumes de fans y recuerdos festivos con entrega en galeria firmada."
       : "Private fan-scene, game-day, premiere, and holiday album generation with account-only gallery delivery.";
+  }
+  if (/mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain ?? ""} ${site.branding.logoText}`)) {
+    return "Private AI photo packs, scene generation, AI video-ready outputs, and customer-only gallery delivery.";
   }
   if (!isSpanishXbySite(site)) return app.aiApp.description;
   return "Generacion privada de fotos con entrega en album firmado.";
