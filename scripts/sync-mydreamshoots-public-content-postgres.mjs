@@ -376,6 +376,12 @@ async function writeContent(tx, records) {
     if (!data.aiAppId) continue;
     await tx.siteAiApp.upsert({ where: { id: data.id }, create: data, update: data });
   }
+  if (records.siteAiApps.length) {
+    await tx.siteAiApp.updateMany({
+      where: { siteId, id: { notIn: records.siteAiApps.map((app) => app.id) } },
+      data: { enabled: false }
+    });
+  }
   for (const product of records.products) {
     const data = productData(product);
     await tx.product.upsert({ where: { id: data.id }, create: data, update: data });
@@ -384,17 +390,56 @@ async function writeContent(tx, records) {
     const data = priceData(price);
     await tx.price.upsert({ where: { id: data.id }, create: data, update: data });
   }
+  const creativePackCategoryIds = new Map();
   for (const category of [...records.creativePackCategories].sort((left, right) => {
     const leftRoot = left.parentId ? 1 : 0;
     const rightRoot = right.parentId ? 1 : 0;
     return leftRoot - rightRoot || left.sortOrder - right.sortOrder;
   })) {
-    const data = stripUndefined(creativePackCategoryData(category));
-    await tx.creativePackCategory.upsert({ where: { id: data.id }, create: data, update: data });
+    const sourceData = creativePackCategoryData(category);
+    const data = stripUndefined({
+      ...sourceData,
+      parentId: category.parentId ? creativePackCategoryIds.get(category.parentId) : undefined
+    });
+    const existing = await tx.creativePackCategory.findUnique({
+      where: { siteId_slug: { siteId: data.siteId, slug: data.slug } }
+    });
+    if (existing) {
+      await tx.creativePackCategory.update({ where: { id: existing.id }, data: { ...data, id: existing.id } });
+      creativePackCategoryIds.set(category.id, existing.id);
+    } else {
+      const created = await tx.creativePackCategory.create({ data });
+      creativePackCategoryIds.set(category.id, created.id);
+    }
   }
+  if (creativePackCategoryIds.size) {
+    await tx.creativePackCategory.updateMany({
+      where: { siteId, id: { notIn: [...creativePackCategoryIds.values()] } },
+      data: { status: "archived" }
+    });
+  }
+  const creativePackIds = new Set();
   for (const pack of records.creativePacks) {
-    const data = stripUndefined(creativePackData(pack));
-    await tx.creativePack.upsert({ where: { id: data.id }, create: data, update: data });
+    const data = stripUndefined({
+      ...creativePackData(pack),
+      categoryId: pack.categoryId ? creativePackCategoryIds.get(pack.categoryId) : undefined
+    });
+    const existing = await tx.creativePack.findFirst({
+      where: { siteId, name: pack.name }
+    });
+    if (existing) {
+      await tx.creativePack.update({ where: { id: existing.id }, data: { ...data, id: existing.id } });
+      creativePackIds.add(existing.id);
+    } else {
+      const created = await tx.creativePack.create({ data });
+      creativePackIds.add(created.id);
+    }
+  }
+  if (creativePackIds.size) {
+    await tx.creativePack.updateMany({
+      where: { siteId, id: { notIn: [...creativePackIds] } },
+      data: { status: "archived" }
+    });
   }
   for (const asset of records.mediaAssets) {
     const data = stripUndefined(mediaAssetData(asset));
@@ -411,6 +456,12 @@ async function writeContent(tx, records) {
     } else {
       await tx.mediaAsset.create({ data });
     }
+  }
+  if (records.mediaAssets.length) {
+    await tx.mediaAsset.updateMany({
+      where: { siteId, storageKey: { notIn: records.mediaAssets.map((asset) => asset.storageKey) } },
+      data: { usageType: "legacy" }
+    });
   }
   await tx.toolMenuItem.deleteMany({ where: { siteId } });
   await tx.toolCategory.deleteMany({ where: { siteId } });
