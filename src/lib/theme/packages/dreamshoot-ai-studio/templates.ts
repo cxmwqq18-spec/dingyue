@@ -2388,7 +2388,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
     },
     navigation: {
       headerLinks: [
-        { label: "Headshot Generator", href: "/collections/headshots" },
+        { label: "Photoshoot Studio", href: "/collections/headshots" },
         { label: "Tools", href: "/tools" },
         { label: "How it works", href: "/workflow" },
         { label: "Blog", href: "/blog" },
@@ -2423,7 +2423,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           logoAlt: "MyDreamShoots heart camera logo"
         },
         blocks: [
-          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "Headshot Generator", href: "/collections/headshots" } },
+          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "Photoshoot Studio", href: "/collections/headshots" } },
           { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "Tools", href: "/tools" } },
           { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
           { id: "dreamshoot_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } },

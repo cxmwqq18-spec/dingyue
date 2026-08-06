@@ -181796,7 +181796,7 @@
                         "id": "dreamshoot_header_packs",
                         "type": "menu_link",
                         "settings": {
-                          "label": "Headshot Generator",
+                          "label": "Photoshoot Studio",
                           "href": "/collections/headshots"
                         }
                       },
@@ -182319,7 +182319,7 @@
                 "navigation": {
                   "headerLinks": [
                     {
-                      "label": "Headshot Generator",
+                      "label": "Photoshoot Studio",
                       "href": "/collections/headshots"
                     },
                     {
