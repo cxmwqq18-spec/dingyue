@@ -302,6 +302,16 @@ async function scrollThroughPage(page) {
   });
 }
 
+async function gotoRoute(page, route) {
+  try {
+    return await page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+  } catch (error) {
+    if (!String(error?.message ?? "").includes("net::ERR_ABORTED")) throw error;
+    await page.waitForTimeout(500);
+    return page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+  }
+}
+
 async function visitRouteAndCollectAssetFailures(page, route) {
   const badAssets = [];
   const mediaResponses = [];
@@ -316,7 +326,7 @@ async function visitRouteAndCollectAssetFailures(page, route) {
   };
   page.on("response", onResponse);
   try {
-    await page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+    await gotoRoute(page, route);
     await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
     await scrollThroughPage(page);
     await page.waitForLoadState("networkidle", { timeout: 5000 }).catch(() => undefined);
@@ -615,7 +625,7 @@ async function smokeNavigationDataConsistency() {
       for (const menuCheck of menuChecks) {
         let expected;
         for (const route of site.routes) {
-          await page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+          await gotoRoute(page, route);
           await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
           const signature = await extractMenuSignature(page, site.slug, route, menuCheck);
           if (!expected) {

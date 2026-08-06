@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
+
 import { normalizeThemeSeo } from "@/lib/theme/seo";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
@@ -570,6 +573,100 @@ function mediaEncodingFormat(value: unknown): string {
   return "";
 }
 
+type ImageDimensions = {
+  width: number;
+  height: number;
+};
+
+const imageDimensionsCache = new Map<string, ImageDimensions | undefined>();
+
+function localPublicAssetPath(value: unknown): string {
+  const text = cleanText(value).split(/[?#]/)[0];
+  if (!text) return "";
+  let pathname = "";
+  if (text.startsWith("http://") || text.startsWith("https://")) {
+    try {
+      pathname = new URL(text).pathname;
+    } catch {
+      return "";
+    }
+  } else {
+    pathname = text;
+  }
+  if (!pathname.startsWith("/assets/")) return "";
+  return path.join(process.cwd(), "public", pathname.replace(/^\/+/, ""));
+}
+
+function imageDimensionsFromPng(buffer: Buffer): ImageDimensions | undefined {
+  if (buffer.length < 24 || buffer.toString("ascii", 1, 4) !== "PNG") return undefined;
+  const width = buffer.readUInt32BE(16);
+  const height = buffer.readUInt32BE(20);
+  return width > 0 && height > 0 ? { width, height } : undefined;
+}
+
+function imageDimensionsFromWebp(buffer: Buffer): ImageDimensions | undefined {
+  if (buffer.length < 30 || buffer.toString("ascii", 0, 4) !== "RIFF" || buffer.toString("ascii", 8, 12) !== "WEBP") return undefined;
+  const chunk = buffer.toString("ascii", 12, 16);
+  if (chunk === "VP8X") {
+    const width = buffer.readUIntLE(24, 3) + 1;
+    const height = buffer.readUIntLE(27, 3) + 1;
+    return width > 0 && height > 0 ? { width, height } : undefined;
+  }
+  if (chunk === "VP8L" && buffer.length >= 25 && buffer[20] === 0x2f) {
+    const bits = buffer.readUInt32LE(21);
+    const width = (bits & 0x3fff) + 1;
+    const height = ((bits >> 14) & 0x3fff) + 1;
+    return width > 0 && height > 0 ? { width, height } : undefined;
+  }
+  if (chunk === "VP8 " && buffer.length >= 30) {
+    const width = buffer.readUInt16LE(26) & 0x3fff;
+    const height = buffer.readUInt16LE(28) & 0x3fff;
+    return width > 0 && height > 0 ? { width, height } : undefined;
+  }
+  return undefined;
+}
+
+function imageDimensionsFromJpeg(buffer: Buffer): ImageDimensions | undefined {
+  if (buffer.length < 4 || buffer[0] !== 0xff || buffer[1] !== 0xd8) return undefined;
+  let offset = 2;
+  while (offset + 9 < buffer.length) {
+    if (buffer[offset] !== 0xff) {
+      offset += 1;
+      continue;
+    }
+    const marker = buffer[offset + 1];
+    if (marker === 0xd8 || marker === 0xd9) {
+      offset += 2;
+      continue;
+    }
+    const segmentLength = buffer.readUInt16BE(offset + 2);
+    if (segmentLength < 2 || offset + 2 + segmentLength > buffer.length) return undefined;
+    const isStartOfFrame = marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker);
+    if (isStartOfFrame) {
+      const height = buffer.readUInt16BE(offset + 5);
+      const width = buffer.readUInt16BE(offset + 7);
+      return width > 0 && height > 0 ? { width, height } : undefined;
+    }
+    offset += 2 + segmentLength;
+  }
+  return undefined;
+}
+
+function imageDimensions(value: unknown): ImageDimensions | undefined {
+  const filePath = localPublicAssetPath(value);
+  if (!filePath) return undefined;
+  if (imageDimensionsCache.has(filePath)) return imageDimensionsCache.get(filePath);
+  let dimensions: ImageDimensions | undefined;
+  try {
+    const buffer = fs.readFileSync(filePath);
+    dimensions = imageDimensionsFromPng(buffer) ?? imageDimensionsFromWebp(buffer) ?? imageDimensionsFromJpeg(buffer);
+  } catch {
+    dimensions = undefined;
+  }
+  imageDimensionsCache.set(filePath, dimensions);
+  return dimensions;
+}
+
 function uniqueMediaPaths(values: unknown[], mediaPath: (value: unknown) => string, limit: number): string[] {
   const paths: string[] = [];
   const seen = new Set<string>();
@@ -636,6 +733,7 @@ function packProductSchema({
   const productDescription = cleanSchemaText(site, pack.description, description);
   const offerSource = lowestUsdOfferSource(site, products);
   const offerUrl = absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/pricing"));
+  const subjectImageDimensions = imageDimensions(subjectImage);
   const offer = offerSource ? {
     "@type": "Offer",
     "@id": `${url}#offer`,
@@ -684,7 +782,8 @@ function packProductSchema({
       description: cleanSchemaText(site, `Example preview image for ${productName}`, productDescription),
       caption: `${productName} AI generated preview`,
       encodingFormat: mediaEncodingFormat(subjectImage) || mediaEncodingFormat(image),
-      representativeOfPage: true
+      representativeOfPage: true,
+      ...(subjectImageDimensions ? subjectImageDimensions : {})
     }
   };
 }
@@ -747,6 +846,7 @@ function homeVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
       const name = cleanSchemaText(input.site, theme.name, "MyDreamShoots AI motion example");
       const videoContentUrl = absoluteUrl(input.site, input.routeMode, videoUrl);
       const thumbnailContentUrl = absoluteUrl(input.site, input.routeMode, thumbnailUrl || theme.imageUrl);
+      const thumbnailDimensions = imageDimensions(thumbnailUrl || theme.imageUrl);
       return {
         "@type": "VideoObject",
         "@id": `${homeUrl}#video-${slug}`,
@@ -767,7 +867,8 @@ function homeVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
           url: thumbnailContentUrl,
           contentUrl: thumbnailContentUrl,
           name: `${name} video thumbnail`,
-          encodingFormat: mediaEncodingFormat(thumbnailUrl)
+          encodingFormat: mediaEncodingFormat(thumbnailUrl),
+          ...(thumbnailDimensions ? thumbnailDimensions : {})
         },
         potentialAction: {
           "@type": "WatchAction",

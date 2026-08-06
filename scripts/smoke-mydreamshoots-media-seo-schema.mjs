@@ -49,6 +49,11 @@ function assertUnique(values, label) {
   assert.equal(new Set(values).size, values.length, `${label} should not contain duplicate values`);
 }
 
+function assertPositiveInteger(value, label) {
+  assert.equal(Number.isInteger(value), true, `${label} should be an integer`);
+  assert.ok(value > 0, `${label} should be positive`);
+}
+
 function assertPublicAssetUrl(value, label) {
   assertAbsoluteUrl(value, label);
   const url = new URL(value);
@@ -116,6 +121,8 @@ for (const video of videoObjects) {
   assert.equal(video.thumbnail?.["@type"], "ImageObject", "VideoObject thumbnail should be an ImageObject");
   assert.equal(video.thumbnail?.contentUrl, video.thumbnailUrl[0], "VideoObject thumbnail ImageObject should reuse thumbnailUrl");
   assert.equal(video.thumbnail?.encodingFormat, "image/webp", "VideoObject thumbnail should declare image/webp encoding");
+  assertPositiveInteger(video.thumbnail?.width, "VideoObject thumbnail width");
+  assertPositiveInteger(video.thumbnail?.height, "VideoObject thumbnail height");
 }
 
 const productPaths = new Set();
@@ -153,6 +160,8 @@ for (const pack of activePacks) {
   assert.equal(product.subjectOf.thumbnailUrl, product.image[0], `${canonicalPath} ImageObject thumbnail should use the package cover`);
   assert.match(product.subjectOf.encodingFormat, /^image\//, `${canonicalPath} ImageObject should declare an image encodingFormat`);
   assert.equal(product.subjectOf.representativeOfPage, true, `${canonicalPath} ImageObject should be representative of the page`);
+  assertPositiveInteger(product.subjectOf.width, `${canonicalPath} ImageObject width`);
+  assertPositiveInteger(product.subjectOf.height, `${canonicalPath} ImageObject height`);
   assert.equal(product.offers?.["@type"], "Offer", `${canonicalPath} Product should include one Offer`);
   assertMydreamshootsEntityId(product.offers?.["@id"], `${canonicalPath} Offer @id`);
   assertAbsoluteUrl(product.offers.url, `${canonicalPath} Offer url`);
