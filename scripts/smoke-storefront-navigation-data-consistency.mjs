@@ -470,11 +470,13 @@ async function assertShowcaseImageRail(page, routeCheck, failures) {
   if (!routeCheck.route.endsWith(routeCheck.site)) return;
   const result = await page.evaluate(() => {
     const section = document.querySelector("#generated-showcase");
-    const rail = section?.querySelector(".dreamshoot-showcase-rail");
-    const figures = [...(rail?.querySelectorAll("figure") ?? [])].slice(0, 4);
-    return figures.map((figure) => {
-      const image = figure.querySelector("img");
-      const frame = image?.closest("div");
+    const rails = [...(section?.querySelectorAll(".dreamshoot-showcase-rail") ?? [])];
+    const productFigureSelector = 'figure[data-dreamshoot-showcase-preview="image"], figure[data-dreamshoot-image-product-card]';
+    const rail = rails.find((item) => !item.querySelector("video") && item.querySelectorAll(productFigureSelector).length >= 4);
+    const figures = [...(rail?.querySelectorAll(productFigureSelector) ?? [])];
+    const images = figures.map((figure) => figure.querySelector("img")).filter(Boolean).slice(0, 4);
+    return images.map((image) => {
+      const frame = image.closest("figure") || image.parentElement;
       const imageRect = image?.getBoundingClientRect();
       const frameRect = frame?.getBoundingClientRect();
       return {
