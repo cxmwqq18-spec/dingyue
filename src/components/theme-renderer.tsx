@@ -1317,7 +1317,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                            dark={dark}
 	                            groups={clientPhotoPackageMegaGroups}
 	                            key={`mobile_${link.label}_${link.href}`}
-	                            menuLabel={isDreamShoot && !spanishXby && !isAidreamcapes ? "Headshot Generator" : undefined}
+	                            menuLabel={isDreamShoot && !spanishXby && !isAidreamcapes ? "Photoshoot Studio" : undefined}
 	                            spanish={spanishXby}
 	                          />
 	                        ) : (
@@ -5788,7 +5788,7 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
   const spanishXby = isSpanishXbySite(site);
   const aidreamcapes = isAidreamcapesSite(site);
-  const menuLabel = spanishXby ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : isMyDreamShootsProfileSite(site) ? "Headshot Generator" : "Browse packages";
+  const menuLabel = spanishXby ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : isMyDreamShootsProfileSite(site) ? "Photoshoot Studio" : "Browse packages";
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileMenuSummaryClass(dark)}>

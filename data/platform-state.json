@@ -13531,7 +13531,7 @@
           "navigation": {
             "headerLinks": [
               {
-                "label": "Headshot Generator",
+                "label": "Photoshoot Studio",
                 "href": "/collections/headshots"
               },
               {
@@ -13631,7 +13631,7 @@
                   "id": "global_header_1",
                   "type": "menu_link",
                   "settings": {
-                    "label": "Headshot Generator",
+                    "label": "Photoshoot Studio",
                     "href": "/collections/headshots"
                   }
                 },
@@ -14765,7 +14765,7 @@
           "navigation": {
             "headerLinks": [
               {
-                "label": "Headshot Generator",
+                "label": "Photoshoot Studio",
                 "href": "/collections/headshots"
               },
               {
@@ -14865,7 +14865,7 @@
                   "id": "global_header_1",
                   "type": "menu_link",
                   "settings": {
-                    "label": "Headshot Generator",
+                    "label": "Photoshoot Studio",
                     "href": "/collections/headshots"
                   }
                 },
@@ -16037,7 +16037,7 @@
                     "id": "hero_cta_primary",
                     "type": "cta",
                     "settings": {
-                      "label": "Create my first photo set",
+                      "label": "Create Now",
                       "href": "/login",
                       "style": "primary"
                     }
@@ -17295,7 +17295,7 @@
                     "id": "hero_cta_primary",
                     "type": "cta",
                     "settings": {
-                      "label": "Create my first photo set",
+                      "label": "Create Now",
                       "href": "/login",
                       "style": "primary"
                     }
@@ -168335,7 +168335,7 @@
                       "id": "hero_cta_primary",
                       "type": "cta",
                       "settings": {
-                        "label": "Create my first photo set",
+                        "label": "Create Now",
                         "href": "/login",
                         "style": "primary"
                       }
@@ -176073,7 +176073,7 @@
           "navigation": {
             "headerLinks": [
               {
-                "label": "Headshot Generator",
+                "label": "Photoshoot Studio",
                 "href": "/collections/headshots"
               },
               {
@@ -176173,7 +176173,7 @@
                   "id": "global_header_1",
                   "type": "menu_link",
                   "settings": {
-                    "label": "Headshot Generator",
+                    "label": "Photoshoot Studio",
                     "href": "/collections/headshots"
                   }
                 },
