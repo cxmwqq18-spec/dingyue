@@ -945,7 +945,8 @@ export const getStorefrontSiteByHostRelational = cache(async (host: string | nul
 function publicRuntimePageSlugs(slug?: string): string[] | undefined {
   if (!slug) return undefined;
   const normalized = slug === "/" ? "/" : slug.startsWith("/") ? slug : `/${slug}`;
-  return Array.from(new Set([normalized, "/404"]));
+  const legacySlugs = normalized === "/faq" ? ["/help"] : [];
+  return Array.from(new Set([normalized, ...legacySlugs, "/404"]));
 }
 
 function publicRuntimePageWhere(pageSlugs?: string[]): Prisma.ThemePageWhereInput | undefined {
