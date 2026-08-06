@@ -292,7 +292,7 @@ for (const site of state.sites ?? []) {
         if (hero?.blocks) {
           const primary = hero.blocks.find((block) => block.id === "hero_cta_primary");
           const secondary = hero.blocks.find((block) => block.id === "hero_cta_secondary");
-          if (primary?.settings) primary.settings.label = "Create my first photo set";
+          if (primary?.settings) primary.settings.label = "Create Now";
           if (secondary?.settings) {
             secondary.settings.label = headshotGeneratorLabel;
             secondary.settings.href = headshotGeneratorHref;

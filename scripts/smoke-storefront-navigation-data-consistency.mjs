@@ -156,7 +156,7 @@ function signatureFromItems(items, siteSlug) {
 }
 
 async function extractMenuSignature(page, siteSlug, route, menuCheck) {
-  const button = page.getByRole("button", { name: menuCheck.buttonName }).first();
+  const button = page.locator('nav button[aria-haspopup="dialog"]').filter({ hasText: menuCheck.buttonName }).first();
   await button.waitFor({ state: "visible", timeout: 30000 });
   await button.click({ timeout: 15000 });
   await page.waitForFunction(

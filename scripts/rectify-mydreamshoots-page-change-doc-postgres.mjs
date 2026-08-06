@@ -249,6 +249,19 @@ function updatePolicyTemplate(templateJson, canonicalPath) {
   return templateJson;
 }
 
+function updateHomeHeroCtas(pageJson) {
+  const hero = pageJson?.sections?.hero_1;
+  if (!hero?.blocks) return pageJson;
+  const primary = hero.blocks.find((block) => block.id === "hero_cta_primary");
+  const secondary = hero.blocks.find((block) => block.id === "hero_cta_secondary");
+  if (primary?.settings) primary.settings.label = "Create Now";
+  if (secondary?.settings) {
+    secondary.settings.label = headshotGeneratorLabel;
+    secondary.settings.href = headshotGeneratorHref;
+  }
+  return pageJson;
+}
+
 async function main() {
   const site = await prisma.site.findFirst({
     where: {
@@ -300,6 +313,8 @@ async function main() {
     if (page.slug === "/") {
       draftJson = setPageSeo(draftJson, "Professional AI Photo Generator Online - MyDreamShoots", "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.", "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator");
       publishedJson = setPageSeo(publishedJson, "Professional AI Photo Generator Online - MyDreamShoots", "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.", "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator");
+      draftJson = updateHomeHeroCtas(draftJson);
+      publishedJson = updateHomeHeroCtas(publishedJson);
     }
     if (page.slug === "/pricing") {
       draftJson = setPageSeo(draftJson, "MyDreamShoots Pricing | Credits for Private AI Headshot Generator", "Compare MyDreamShoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery.");

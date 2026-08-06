@@ -9,6 +9,33 @@
 
 固定规则：后续展开两个西班牙 `.eu` 店铺时，不得影响正常两个 `.com` 店铺；做功能优化、路由修复、菜单/分类/工具修复、性能优化、SEO 结构优化时，必须覆盖所有适用店铺，不能只改一半。四店之间的品牌、语言、域名、SEO 文案、图片资产和客户数据必须隔离。
 
+## 0. 文案与 SEO 变更审批
+
+上线前必须先比对旧网站已批准文案代码和本次新上传文案代码。没有站点负责人明确允许，不得随意改动网站文案、SEO 文案、TDK、Hero 文案、CTA、导航、Footer、Policy、FAQ、目录页、套餐页、工具页或结构化数据里的对外描述。
+
+- [ ] 上线前对比当前线上 release / 已批准基线与本次待上线代码中的客户可见文案。
+- [ ] 上线前对比 `data/platform-state.json`、主题模板、同步脚本、迁移脚本、Postgres 同步脚本和发布快照中的文案差异。
+- [ ] 如果 SEO `title`、`description`、`keywords`、canonical、OG/Twitter、JSON-LD、H1/H2/H3 或页面正文有变化，必须列出旧值、新值、文件位置、页面路径和变更原因。
+- [ ] 如果原来正常的文案被改动，必须把改动点列出来并等待站点负责人确认；未确认前不得上线。
+- [ ] 如果只是技术修复但引入了文案差异，也按文案变更处理，不能合并进“性能优化”“SEO SSR 更新”“同步脚本修复”等笼统上线说明里。
+- [ ] 上线记录里必须保留“文案差异审核结论”：无差异 / 已批准差异 / 阻断上线。
+
+### 2026-08-07 MyDreamShoots 首页 CTA 审核记录
+
+问题：`2026-08-06` 的 `Deploy latest storefront and SEO SSR updates` 同步中，MyDreamShoots 首页 hero 主按钮从已批准文案 `Create Now` 被改成 `Create my first photo set`。根因是 `data/platform-state.json` 的发布态页面数据和 `scripts/rectify-mydreamshoots-page-change-doc.mjs` 中的定向修复逻辑覆盖了模板里的 CTA。
+
+修复要求：
+
+- MyDreamShoots 首页 hero 主 CTA 固定为 `Create Now`，除非站点负责人再次明确批准变更。
+- 上线前必须检查 MyDreamShoots 首页 `/` 的 `hero_cta_primary.settings.label`，确保 draft、published 和发布快照一致。
+- 后续同步、SEO SSR、Postgres 修复、主题迁移或数据导入脚本不得在未记录差异并获得确认的情况下改动该 CTA。
+
+本次批准的修复差异：
+
+| 页面 | 字段 | 旧异常值 | 修复后值 | 结论 |
+| --- | --- | --- | --- | --- |
+| MyDreamShoots `/` | `hero_cta_primary.settings.label` | `Create my first photo set` | `Create Now` | 已按站点负责人要求恢复 |
+
 ## 1. TDK 检查
 
 上线前需要确认正常两个 `.com` 店铺的 `title`、`description`、`keywords` 已维护成功，并且线上页面源代码中展示的内容与下方一致。两个西班牙 `.eu` 店铺需要按 AIdreamshoots / AIdreamcapes EU 独立维护西班牙语 TDK，不能直接复用 `.com` 站文案。
