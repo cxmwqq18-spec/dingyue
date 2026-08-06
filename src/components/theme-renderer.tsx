@@ -14215,12 +14215,24 @@ function SectionView({
         ? "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp"
         : "/assets/dreamshoot/frames/faq-intro-portrait.png";
       const configuredImage = setting(section, "imageUrl", fallbackImage);
-      const featureImage = mediaAssetUrl(site, configuredImage || fallbackImage);
       const featureAlt = setting(
         section,
         "imageAlt",
         aidreamcapesFaq ? "Aidreamcapes private occasion album example" : "MyDreamShoots private AI photo example"
       );
+      const configuredImageList = listLines(setting(section, "imageList", ""));
+      const configuredImageAltList = listLines(setting(section, "imageListAlt", ""));
+      const featureGallery = (configuredImageList.length ? configuredImageList : [configuredImage || fallbackImage])
+        .map((image, index) => {
+          const src = mediaAssetUrl(site, image);
+          if (!src.startsWith("/assets/")) return undefined;
+          return {
+            src,
+            alt: configuredImageAltList[index] || `${featureAlt} ${index + 1}`
+          };
+        })
+        .filter((image): image is { src: string; alt: string } => Boolean(image))
+        .slice(0, 6);
       const parseFaqLinks = (value: string) => listLines(value)
         .map((entry) => {
           const separator = entry.indexOf("::");
@@ -14291,8 +14303,19 @@ function SectionView({
             </div>
             <div className="mt-12 grid items-start gap-7 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-9">
               <div className="lg:sticky lg:top-28" data-faq-feature-image>
-                <div className="overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-2 shadow-[0_32px_90px_-54px_rgba(0,0,0,0.9)]">
-                  {featureImage ? <img className="block h-auto w-full" src={featureImage} alt={featureAlt} loading="eager" decoding="async" /> : null}
+                <div className="grid grid-cols-2 gap-2" data-faq-feature-gallery>
+                  {featureGallery.map((image, index) => {
+                    const tileClassName = featureGallery.length > 1 && index === featureGallery.length - 1
+                      ? "col-span-2 aspect-[16/9]"
+                      : featureGallery.length > 1 && index === 0
+                        ? "col-span-2 aspect-[4/3]"
+                        : "aspect-[4/3]";
+                    return (
+                      <div className={`${tileClassName} overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-1 shadow-[0_20px_50px_-36px_rgba(0,0,0,0.9)]`} data-faq-feature-tile key={`${image.src}_${index}`}>
+                        <img className="block h-full w-full object-contain object-center" src={image.src} alt={image.alt} loading="eager" decoding="async" />
+                      </div>
+                    );
+                  })}
                 </div>
                 <p className={`mt-4 max-w-md text-sm leading-6 ${visualMuted}`}>
                   {aidreamcapesFaq ? "Original occasion directions, approved source photos, and private gallery delivery in one account." : "A guided place to compare AI photo directions, review credits, and keep finished work organized."}

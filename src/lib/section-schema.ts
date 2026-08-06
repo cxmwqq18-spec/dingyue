@@ -2208,6 +2208,8 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       select("layout", "Layout", [["default", "Standard accordion"], ["visual_faq", "Visual FAQ"]], "default"),
       image("imageUrl", "FAQ feature image"),
       text("imageAlt", "FAQ feature image alt text"),
+      textarea("imageList", "FAQ feature image gallery", "", "Use | to separate internal /assets/... images."),
+      textarea("imageListAlt", "FAQ feature image alt text list", "", "Use | to separate alt text in the same order as the image gallery."),
       text("supportEyebrow", "Support card eyebrow", "before they subscribe"),
       textarea(
         "supportBulletList",

@@ -1218,6 +1218,22 @@ function mydreamshootsFaqSection(): SectionInstance {
       layout: "visual_faq",
       imageUrl: assets.galleryChristmasCover,
       imageAlt: "MyDreamShoots holiday celebration album cover",
+      imageList: [
+        assets.galleryChristmasCover,
+        assets.galleryChristmasPhotosOne,
+        assets.galleryChristmasCoupleOne,
+        assets.galleryThanksgivingFallback,
+        assets.galleryHalloweenFallback,
+        assets.gallerySeasonalFallback
+      ].join("|"),
+      imageListAlt: [
+        "MyDreamShoots holiday celebration album cover",
+        "MyDreamShoots Christmas portrait example",
+        "MyDreamShoots Christmas couple portrait example",
+        "MyDreamShoots Thanksgiving group album cover",
+        "MyDreamShoots Halloween party portrait cover",
+        "MyDreamShoots seasonal holiday album cover"
+      ].join("|"),
       journeyTitle: "Your photo flow",
       journeyTitles: "Upload|Choose Pack|Generate|Download",
       journeyDescriptions: "Add clean source photos.|Pick a scene or style.|AI builds your set.|Download from the private gallery."
@@ -1368,6 +1384,22 @@ function aidreamcapesFaqSection(): SectionInstance {
       layout: "visual_faq",
       imageUrl: aidreamcapesPublicAssets.hero,
       imageAlt: "Aidreamcapes private fan-scene album cover",
+      imageList: [
+        aidreamcapesPublicAssets.hero,
+        aidreamcapesPublicAssets.gallery,
+        aidreamcapesPublicAssets.gameDay,
+        aidreamcapesPublicAssets.premiere,
+        aidreamcapesPublicAssets.seasonal,
+        aidreamcapesPublicAssets.christmas
+      ].join("|"),
+      imageListAlt: [
+        "Aidreamcapes private fan-scene album cover",
+        "Aidreamcapes private fan-scene gallery example",
+        "Aidreamcapes game-day group portrait cover",
+        "Aidreamcapes premiere-inspired portrait cover",
+        "Aidreamcapes seasonal celebration photo cover",
+        "Aidreamcapes Christmas group album cover"
+      ].join("|"),
       journeyTitle: "Your private album flow",
       journeyTitles: "Upload|Choose Album|Review Credits|Download",
       journeyDescriptions: "Add approved source photos.|Pick a fan or holiday direction.|Confirm the credit cost.|Download from your gallery."
