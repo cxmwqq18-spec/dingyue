@@ -71,11 +71,36 @@ async function loadSharp() {
     const mod = await import(moduleName);
     const sharp = mod.default ?? mod;
     sharp.cache(false);
-    sharpLoader = sharp;
+    sharpLoader = await sharpCanRenderSvgTextComposite(sharp) ? sharp : null;
   } catch {
     sharpLoader = null;
   }
   return sharpLoader;
+}
+
+async function sharpCanRenderSvgTextComposite(sharp) {
+  try {
+    const width = 240;
+    const height = 120;
+    const base = await sharp({
+      create: {
+        width,
+        height,
+        channels: 3,
+        background: "#182235"
+      }
+    }).png().toBuffer();
+    const watermarked = await sharp(base)
+      .composite([{ input: imageWatermarkSvg({ width, height, text: "WM", opacity: DEFAULT_STOREFRONT_WATERMARK_OPACITY }), left: 0, top: 0 }])
+      .png()
+      .toBuffer();
+    const left = await sharp(base).removeAlpha().raw().toBuffer();
+    const right = await sharp(watermarked).removeAlpha().raw().toBuffer();
+    if (left.length !== right.length) return false;
+    return left.some((value, index) => value !== right[index]);
+  } catch {
+    return false;
+  }
 }
 
 export function readWatermarkMarker(filePath) {

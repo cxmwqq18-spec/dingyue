@@ -21,6 +21,8 @@ type SharpWatermarkInstance = {
   rotate: () => SharpWatermarkInstance;
   metadata: () => Promise<{ width?: number; height?: number }>;
   composite: (overlays: Array<{ input: Buffer; left: number; top: number }>) => SharpWatermarkInstance;
+  removeAlpha: () => SharpWatermarkInstance;
+  raw: () => SharpWatermarkInstance;
   png: () => SharpWatermarkInstance;
   jpeg: (options: { quality: number; mozjpeg: boolean }) => SharpWatermarkInstance;
   avif: (options: { quality: number }) => SharpWatermarkInstance;
@@ -28,10 +30,21 @@ type SharpWatermarkInstance = {
   toBuffer: () => Promise<Buffer>;
 };
 
+type SharpCreateInput = {
+  create: {
+    width: number;
+    height: number;
+    channels: 3;
+    background: string;
+  };
+};
+
 type SharpWatermarkFactory = (
-  input: Buffer,
+  input: Buffer | SharpCreateInput,
   options?: { animated?: boolean }
 ) => SharpWatermarkInstance;
+
+let sharpFactoryPromise: Promise<SharpWatermarkFactory | undefined> | undefined;
 
 export function storefrontWatermarkTextForSite(siteId: string | undefined): string | undefined {
   if (siteId === "site_dreamshoot") return "myDreamshoots.com";
@@ -66,14 +79,22 @@ function normalizedWatermarkOpacity(value: unknown): number {
   return Number(clamped(opacity, 0.01, 0.5).toFixed(4));
 }
 
-async function sharpFactory(): Promise<SharpWatermarkFactory | undefined> {
+async function loadSharpFactory(): Promise<SharpWatermarkFactory | undefined> {
   try {
     const moduleName = "sharp";
     const mod = await import(/* webpackIgnore: true */ moduleName);
-    return (mod.default ?? mod) as SharpWatermarkFactory;
+    const sharp = (mod.default ?? mod) as SharpWatermarkFactory & { cache?: (value: boolean) => void };
+    sharp.cache?.(false);
+    return await sharpCanRenderSvgTextComposite(sharp) ? sharp : undefined;
   } catch {
     return undefined;
   }
+}
+
+async function sharpFactory(): Promise<SharpWatermarkFactory | undefined> {
+  if (process.env.STOREFRONT_WATERMARK_DISABLE_SHARP === "1") return undefined;
+  sharpFactoryPromise ??= loadSharpFactory();
+  return sharpFactoryPromise;
 }
 
 function watermarkGeometry(params: { width: number; height: number }): {
@@ -108,6 +129,31 @@ function imageWatermarkSvg(params: { width: number; height: number; text: string
     font-size="${fontSize}" fill="#ffffff" fill-opacity="${opacity}">${escapeXml(params.text)}</text>
 </svg>`
   );
+}
+
+async function sharpCanRenderSvgTextComposite(sharp: SharpWatermarkFactory): Promise<boolean> {
+  try {
+    const width = 240;
+    const height = 120;
+    const base = await sharp({
+      create: {
+        width,
+        height,
+        channels: 3,
+        background: "#182235"
+      }
+    }).png().toBuffer();
+    const watermarked = await sharp(base)
+      .composite([{ input: imageWatermarkSvg({ width, height, text: "WM", opacity: DEFAULT_MEDIA_WATERMARK_OPACITY }), left: 0, top: 0 }])
+      .png()
+      .toBuffer();
+    const left = await sharp(base).removeAlpha().raw().toBuffer();
+    const right = await sharp(watermarked).removeAlpha().raw().toBuffer();
+    if (left.length !== right.length) return false;
+    return left.some((value, index) => value !== right[index]);
+  } catch {
+    return false;
+  }
 }
 
 export async function watermarkImageBytes(params: {
