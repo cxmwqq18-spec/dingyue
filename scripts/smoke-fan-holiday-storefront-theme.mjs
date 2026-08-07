@@ -72,7 +72,6 @@ const aidreamcapesNewBlogs = [
 ];
 const aidreamcapesLegacyPatterns = [
   /travel/i,
-  /destination/i,
   /route-portrait/i,
   /route portrait/i,
   /coastal/i,

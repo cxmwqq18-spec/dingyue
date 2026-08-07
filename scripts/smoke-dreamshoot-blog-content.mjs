@@ -195,7 +195,7 @@ assert(
   "host route keeps legacy duplicate blog URLs on a permanent redirect path"
 );
 assert(
-  seoIndexing.includes("if (isLocalHostRequest) return runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site));") &&
+  seoIndexing.includes("if (isLocalHostRequest) return runtime.sites.flatMap((site) => sitemapEntriesForSite(runtime.state, site));") &&
     !seoIndexing.includes("if (isLocalHostRequest) return publicFallbackSitemapUrlsForHost(normalizedHosts);"),
   "local sitemap reads real indexable site pages before falling back"
 );

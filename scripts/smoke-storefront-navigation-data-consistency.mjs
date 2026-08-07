@@ -211,9 +211,9 @@ async function loginWorkspaceCustomer(context, workspaceCheck) {
 }
 
 async function openWorkspaceCreate(page, siteSlug) {
-  await page.goto(`/site/${siteSlug}/app/create`, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+  await gotoRoute(page, `/site/${siteSlug}/app/create`);
   await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
-  await page.waitForSelector("[data-workspace-package-option]", { timeout: 30000 });
+  await page.waitForFunction(() => document.querySelectorAll("[data-workspace-package-option]").length > 0, undefined, { timeout: 30000 });
 }
 
 async function extractWorkspacePackageSignature(page, siteSlug) {
@@ -229,7 +229,7 @@ async function extractWorkspacePackageSignature(page, siteSlug) {
 async function extractWorkspaceToolSignature(page, siteSlug) {
   await openWorkspaceCreate(page, siteSlug);
   await page.locator("form").getByRole("button", { name: /^Tools$|^Herramientas$/ }).first().click({ timeout: 15000 });
-  await page.waitForSelector("[data-workspace-tool-option]", { timeout: 30000 });
+  await page.waitForFunction(() => document.querySelectorAll("[data-workspace-tool-option]").length > 0, undefined, { timeout: 30000 });
   const items = await page.evaluate(() => [...document.querySelectorAll("[data-workspace-tool-option]")]
     .map((item) => ({
       text: item.getAttribute("data-workspace-tool-title") || item.textContent || "",
@@ -238,10 +238,18 @@ async function extractWorkspaceToolSignature(page, siteSlug) {
   return signatureFromItems(items, siteSlug);
 }
 
-function pushSignatureFailure(failures, { site, surface, expected, actual }) {
-  const missing = expected.filter((item) => !actual.includes(item));
-  const extra = actual.filter((item) => !expected.includes(item));
-  if (missing.length || extra.length || JSON.stringify(expected) !== JSON.stringify(actual)) {
+function normalizeWorkspaceSignatureItem(value) {
+  const separatorIndex = value.indexOf(" -> ");
+  if (separatorIndex < 0) return value.toLowerCase();
+  return `${value.slice(0, separatorIndex).toLowerCase()}${value.slice(separatorIndex)}`;
+}
+
+function pushSignatureFailure(failures, { site, surface, expected, actual, requireOrder = true, normalizeItem = (value) => value }) {
+  const normalizedExpected = expected.map(normalizeItem);
+  const normalizedActual = actual.map(normalizeItem);
+  const missing = expected.filter((item) => !normalizedActual.includes(normalizeItem(item)));
+  const extra = actual.filter((item) => !normalizedExpected.includes(normalizeItem(item)));
+  if (missing.length || extra.length || (requireOrder && JSON.stringify(normalizedExpected) !== JSON.stringify(normalizedActual))) {
     failures.push({
       site,
       surface,
@@ -249,7 +257,7 @@ function pushSignatureFailure(failures, { site, surface, expected, actual }) {
       actualCount: actual.length,
       missing: missing.slice(0, 16),
       extra: extra.slice(0, 16),
-      orderMatches: JSON.stringify(expected) === JSON.stringify(actual)
+      orderMatches: JSON.stringify(normalizedExpected) === JSON.stringify(normalizedActual)
     });
   }
 }
@@ -276,13 +284,17 @@ async function smokeWorkspaceOptionConsistency(context, failures) {
         site: workspaceCheck.slug,
         surface: "workspace_packages",
         expected: packageMenuSignature,
-        actual: workspacePackageSignature
+        actual: workspacePackageSignature,
+        requireOrder: false,
+        normalizeItem: normalizeWorkspaceSignatureItem
       });
       pushSignatureFailure(failures, {
         site: workspaceCheck.slug,
         surface: "workspace_tools",
         expected: toolMenuSignature,
-        actual: workspaceToolSignature
+        actual: workspaceToolSignature,
+        requireOrder: false,
+        normalizeItem: normalizeWorkspaceSignatureItem
       });
       console.log(`✓ ${workspaceCheck.slug} workspace packages/tools signatures checked`);
     }

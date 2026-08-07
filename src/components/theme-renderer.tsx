@@ -2221,7 +2221,7 @@ function withStorefrontPublicWatermarkCacheVersion(value: string): string {
     return value;
   }
   if (pathname.includes("/brand/")) return value;
-  if (!/\.(?:avif|jpe?g|png|webp|m4v|mov|mp4|webm)$/i.test(pathname)) return value;
+  if (!/\.(?:avif|jpe?g|png|svg|webp|m4v|mov|mp4|webm)$/i.test(pathname)) return value;
   params.set("wm", storefrontPublicWatermarkCacheVersion);
   return `${prefix}${pathname}?${params.toString()}${hash}`;
 }
@@ -11057,8 +11057,7 @@ function SectionView({
             >
               {row.map((logo, index) => {
                 const logoName = blockValue(logo, "name", `Creator logo ${index + 1}`);
-                const logoImage = blockValue(logo, "imageUrl", "");
-                const logoSrc = logoImage ? cleanStorefrontImageSrc(resolveMediaAssetUrl(site, logoImage)) : "";
+                const logoSrc = mediaAssetUrl(site, blockValue(logo, "imageUrl", ""));
                 return (
                   <div
                     aria-label={logoName}

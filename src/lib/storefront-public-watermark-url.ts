@@ -1,6 +1,6 @@
 export const STOREFRONT_PUBLIC_WATERMARK_CACHE_VERSION = "20260803watermark30sync1";
 
-const storefrontPublicMediaPattern = /\.(?:avif|jpe?g|png|webp|m4v|mov|mp4|webm)$/i;
+const storefrontPublicMediaPattern = /\.(?:avif|jpe?g|png|svg|webp|m4v|mov|mp4|webm)$/i;
 
 export function withStorefrontPublicWatermarkUrl(value: string | undefined): string {
   if (!value) return "";
