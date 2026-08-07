@@ -11057,7 +11057,10 @@ function SectionView({
             >
               {row.map((logo, index) => {
                 const logoName = blockValue(logo, "name", `Creator logo ${index + 1}`);
-                const logoSrc = mediaAssetUrl(site, blockValue(logo, "imageUrl", ""));
+                const logoImage = blockValue(logo, "imageUrl", "");
+                const logoSrc = logoImage
+                  ? withStorefrontPublicWatermarkCacheVersion(cleanStorefrontImageSrc(resolveMediaAssetUrl(site, logoImage)))
+                  : "";
                 return (
                   <div
                     aria-label={logoName}
