@@ -36,6 +36,87 @@
 | --- | --- | --- | --- | --- |
 | MyDreamShoots `/` | `hero_cta_primary.settings.label` | `Create my first photo set` | `Create Now` | 已按站点负责人要求恢复 |
 
+### 2026-08-07 SEO fingerprint 优化上线记录
+
+审批结论：本次差异用于处理“历史 SEO 文案相似度待审批项”，允许改动范围仅限两站套餐覆盖博客页 SEO TDK、重复 workflow 小节文案和重复 credit 卡片标题。MyDreamShoots 首页 TDK、Hero H1、Hero 正文、Hero 主 CTA `Create Now` 不在本次改动范围，已复核未变。
+
+说明：此前中间审核里出现的 `changed: 39` 是脚本按“变更记录/字段”统计出的数量，不是第 39 行或 39 个文件；最终上线以本节列出的实际差异为准。
+
+本次未变更的已批准首页文案：
+
+| 页面 | 字段 | 当前值 | 结论 |
+| --- | --- | --- | --- |
+| MyDreamShoots `/` | `title` | `Professional AI Photo Generator Online - MyDreamShoots` | 未改动 |
+| MyDreamShoots `/` | `description` | `Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.` | 未改动 |
+| MyDreamShoots `/` | `keywords` | `Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator` | 未改动 |
+| MyDreamShoots `/` | Hero 主 CTA | `Create Now` | 未改动 |
+
+本次 SEO TDK 差异：
+
+| 范围 | 页面数量 | 字段 | 旧规则 | 新规则 | 原因 |
+| --- | ---: | --- | --- | --- | --- |
+| MyDreamShoots 套餐覆盖博客 `/blog/*-photo-package-guide` | 28 | `title` / `description` / `keywords` | `Plan {Package} in MyDreamShoots: choose approved portraits, compare fit, review credit cost, and open the private gallery before downloads.` 等泛化模板 | 使用套餐自身描述生成 `private AI photo guide` 标题、差异化搜索描述和 source-photo/private-gallery keywords | 降低跨套餐 SEO 指纹相似度，保留英文客户可见文案 |
+| Aidreamcapes 套餐覆盖博客 `/blog/*-photo-package-guide` | 28 | `title` / `description` / `keywords` | `Plan {Package} in Aidreamcapes: choose approved portraits, compare fit, review credit cost, and open the private gallery before downloads.` 等泛化模板 | 使用 fan/holiday/private album 语义生成差异化标题、描述和 permission-safe keywords | 降低跨套餐 SEO 指纹相似度，保留品牌隔离 |
+
+涉及页面清单：
+
+| 店铺 | 页面 |
+| --- | --- |
+| MyDreamShoots | `/blog/creator-portraits-photo-package-guide`, `/blog/fashion-editorial-photo-package-guide`, `/blog/product-style-photo-package-guide`, `/blog/profile-cards-photo-package-guide`, `/blog/social-cards-photo-package-guide`, `/blog/anime-avatar-photo-package-guide`, `/blog/wedding-portraits-photo-package-guide`, `/blog/desi-wedding-photo-package-guide`, `/blog/indian-wedding-photo-package-guide`, `/blog/engagement-photo-package-guide`, `/blog/valentine-photos-photo-package-guide`, `/blog/cyberpunk-photo-package-guide`, `/blog/gala-photos-photo-package-guide`, `/blog/mafia-photo-package-guide`, `/blog/nature-photo-package-guide`, `/blog/outdoor-creator-scenes-photo-package-guide`, `/blog/boudoir-photo-package-guide`, `/blog/hairstyle-photo-package-guide`, `/blog/virtual-try-on-photo-package-guide`, `/blog/world-cup-fan-photos-photo-package-guide`, `/blog/ai-video-add-ons-photo-package-guide`, `/blog/magic-upscaler-photo-package-guide`, `/blog/professional-headshots-photo-package-guide`, `/blog/christmas-couple-photo-package-guide`, `/blog/christmas-photos-photo-package-guide`, `/blog/holiday-photo-package-guide`, `/blog/halloween-party-photos-photo-package-guide`, `/blog/thanksgiving-group-photos-photo-package-guide` |
+| Aidreamcapes | `/blog/private-fan-scene-album-photo-package-guide`, `/blog/game-day-group-portraits-photo-package-guide`, `/blog/premiere-flash-portraits-photo-package-guide`, `/blog/christmas-group-album-photo-package-guide`, `/blog/backstage-meetup-portraits-photo-package-guide`, `/blog/creator-supporter-photo-wall-photo-package-guide`, `/blog/fan-keepsake-card-set-photo-package-guide`, `/blog/stadium-night-fan-set-photo-package-guide`, `/blog/tunnel-entrance-fan-portraits-photo-package-guide`, `/blog/championship-watch-party-album-photo-package-guide`, `/blog/spotlight-couple-portrait-set-photo-package-guide`, `/blog/vip-arrival-photo-set-photo-package-guide`, `/blog/award-night-keepsake-album-photo-package-guide`, `/blog/holiday-party-photo-wall-photo-package-guide`, `/blog/cozy-card-portrait-set-photo-package-guide`, `/blog/winter-fan-greeting-album-photo-package-guide`, `/blog/autumn-host-photo-story-photo-package-guide`, `/blog/thanksgiving-keepsake-table-set-photo-package-guide`, `/blog/gratitude-group-portrait-album-photo-package-guide`, `/blog/friendsgiving-memory-set-photo-package-guide`, `/blog/halloween-party-portrait-set-photo-package-guide`, `/blog/haunted-premiere-portrait-set-photo-package-guide`, `/blog/costume-cast-photo-album-photo-package-guide`, `/blog/spooky-fan-card-portraits-photo-package-guide`, `/blog/birthday-fan-moment-set-photo-package-guide`, `/blog/family-occasion-portrait-album-photo-package-guide`, `/blog/seasonal-celebration-photo-set-photo-package-guide`, `/blog/new-year-countdown-group-album-photo-package-guide` |
+
+示例对比：
+
+| 页面 | 旧 title / description | 新 title / description |
+| --- | --- | --- |
+| MyDreamShoots `/blog/creator-portraits-photo-package-guide` | `Creator Portraits guide for MyDreamShoots private galleries` / `Plan Creator Portraits in MyDreamShoots: choose approved portraits, compare fit, review credit cost, and open the private gallery before downloads.` | `Creator Portraits private AI photo guide | MyDreamShoots` / `Generate fresh profile portraits for newsletters, landing pages, thumbnails, media kits. Review credit cost, source quality, and private downloads.` |
+| MyDreamShoots `/blog/product-style-photo-package-guide` | `Product Style guide for MyDreamShoots private galleries` / `Plan Product Style in MyDreamShoots: choose approved portraits, compare fit, review credit cost, and open the private gallery before downloads.` | `Product Style private AI photo guide | MyDreamShoots` / `Plan product-style visuals with lifestyle context, creator framing, and simple campaign direction. Review credit cost, source quality, and private downloads.` |
+| Aidreamcapes `/blog/private-fan-scene-album-photo-package-guide` | `Private Fan-Scene Album guide for Aidreamcapes private galleries` / `Plan Private Fan-Scene Album in Aidreamcapes: choose approved portraits, compare fit, review credit cost, and open the private gallery before downloads.` | `Private Fan-Scene Album planning guide | Aidreamcapes` / `Build a private album with fan meetup atmosphere, poster-wall styling. Review credit cost, approved uploads, and private album delivery.` |
+| Aidreamcapes `/blog/game-day-group-portraits-photo-package-guide` | `Game-Day Group Portraits guide for Aidreamcapes private galleries` / `Plan Game-Day Group Portraits in Aidreamcapes: choose approved portraits, compare fit, review credit cost, and open the private gallery before downloads.` | `Game-Day Group Portraits private album guide | Aidreamcapes` / `Create supporter group photos with arena glow, team-color styling notes. Review credit cost, approved uploads, and private album delivery.` |
+
+本次客户可见正文差异：
+
+| 范围 | 旧文案 | 新文案 | 原因 |
+| --- | --- | --- | --- |
+| MyDreamShoots mobile workflow 标题 | `Mobile workflow preview for MyDreamShoots.` | `MyDreamShoots mobile photo workflow preview.` | 避免两站重复句式 |
+| Aidreamcapes mobile workflow 标题 | `Mobile workflow preview for Aidreamcapes.` | `Aidreamcapes mobile private album preview.` | 避免两站重复句式 |
+| 两站 mobile workflow 副标题 | `See the image tutorial and video tutorial side by side in a vertical phone layout.` | MyDreamShoots: `Compare image setup and motion-preview steps in a vertical phone view.` / Aidreamcapes: `Compare portrait intake and album review steps in a vertical phone view.` | 避免跨站重复正文 |
+| MyDreamShoots credit 卡片标题 | `Review credits first` | `Check credits before generation` | 避免跨站重复正文 |
+| Aidreamcapes credit 卡片标题 | `Review credits first` | `Confirm album credits first` | 避免跨站重复正文 |
+
+本次技术守护：
+
+- `smoke:storefront-seo-fingerprint` 不再把不同 slug 的 article 页面互相比对为同页，避免跨套餐博客误报。
+- `/robots.txt` 增加安全头、短缓存和 `Vary: Host, X-Forwarded-Host`，并纳入 SEO indexing / security smoke。
+- `smoke:security-baseline` 在 legacy reset 禁用且本地 Lumen 关系表 fixture 不可重置时，会明确跳过有状态 fixture 检查；安全头和 robots 安全头仍必须通过。
+
+本次本地上线检查结果：
+
+| 命令 | 结果 |
+| --- | --- |
+| `npm run typecheck` | 通过 |
+| `npm run smoke:dreamshoot-blog-content` | 通过，`checkCount: 1858` |
+| `npm run smoke:storefront-seo-fingerprint` | 通过，`seoRecords: 122`、`visibleTextRecords: 4114` |
+| `npm run smoke:mydreamshoots-seo-indexing` | 通过 |
+| `npm run audit:domains` | 通过 |
+| `npm run audit:dreamshoot` | 通过 |
+| 客户前台中文扫描 | 通过，无命中 |
+| 旧重复文案扫描 `Mobile workflow preview for` / `See the image tutorial and video tutorial` / `Review credits first` | 通过，无命中 |
+| MyDreamShoots 首页 TDK / Hero CTA 数据核验 | 通过，CTA 为 `Create Now` |
+| `npm run smoke:storefront-public-routes` | 通过 |
+| `npm run smoke:storefront-sitemap-directory-coverage` | 通过，MyDreamShoots `117/110`、Aidreamcapes `117/117`，缺失 0 |
+| `npm run smoke:storefront-head-title-order` | 通过，两个 `.com` 首页 `titleIndex: 0` |
+| `npm run smoke:public-seo-policy` | 通过 |
+| `npm run smoke:public-seo-ssr` | 通过，四站 desktop/mobile `sectionApiRequests: 0` |
+| `npm run smoke:storefront-watermarks` | 通过 |
+| `npm run audit:storefront-watermarks -- --disk-only` | 通过，`issueCount: 0` |
+| `git diff --check` | 通过 |
+| `npm run lint` | 通过，保留既有 warning：`scripts/sync-mydreamshoots-public-content-postgres.mjs:271` unused `records` |
+| `npm run build` | 通过；build 后已恢复 `next-env.d.ts` 和 `tsconfig.json` 的构建副作用 |
+| `SMOKE_BASE_URL=http://127.0.0.1:3002 npm run smoke:security-baseline` | 通过安全头与 robots 安全头；有状态 fixture 项因本地关系表 reset 禁用而明确 skip |
+
+上线结论：符合本清单“文案与 SEO 变更审批”规则。除本节列出的已批准差异外，不允许夹带其他客户可见文案或 SEO TDK 改动。
+
 ## 1. TDK 检查
 
 上线前需要确认正常两个 `.com` 店铺的 `title`、`description`、`keywords` 已维护成功，并且线上页面源代码中展示的内容与下方一致。两个西班牙 `.eu` 店铺需要按 AIdreamshoots / AIdreamcapes EU 独立维护西班牙语 TDK，不能直接复用 `.com` 站文案。

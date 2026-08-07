@@ -113,7 +113,13 @@ walk(mydreamshootsSite, (key, value, location) => {
   }
 });
 const badLegacyHrefHits = hrefHits.filter((hit) => ["/cookie-policy", "/privacy-policy", "/terms-of-service"].includes(hit.href));
+const badLegacyCollectionHrefHits = hrefHits.filter((hit) => hit.href === "/collections/professional-headshots");
 assert(!badLegacyHrefHits.length, "MyDreamShoots internal hrefs must use canonical policy paths to avoid redirects", { badLegacyHrefHits });
+assert(
+  !badLegacyCollectionHrefHits.length,
+  "MyDreamShoots internal hrefs must use /collections/headshots instead of the legacy professional-headshots redirect",
+  { badLegacyCollectionHrefHits }
+);
 assert(
   hrefHits.some((hit) => hit.href === "/cookies"),
   "MyDreamShoots navigation/footer data must link directly to /cookies"
@@ -168,10 +174,12 @@ for (const pathName of ["/tools/headshot", "/tools/background-changer", "/tools/
 
 assert(
   !/disallow|Disallow/.test(robots) &&
+    nextConfig.includes('source: "/robots.txt"') &&
+    nextConfig.includes('value: "Host, X-Forwarded-Host"') &&
     nextConfig.includes('source: "/search"') &&
     nextConfig.includes('source: "/site/:siteSlug/search"') &&
     !jsonLd.includes('"SearchAction"'),
-  "robots should allow noindex discovery, /search should receive X-Robots-Tag, and JSON-LD must not emit SearchAction without an indexable search page"
+  "robots should allow noindex discovery, use host-aware cache/security headers, /search should receive X-Robots-Tag, and JSON-LD must not emit SearchAction without an indexable search page"
 );
 assert(
   themeRenderer.includes("publicSeoCriticalSectionTypes") &&

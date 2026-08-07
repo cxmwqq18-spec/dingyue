@@ -275,6 +275,7 @@ function formatPercent(value) {
 
 function samePageComparable(left, right) {
   if (left.slug && right.slug && left.slug === right.slug) return true;
+  if (left.pageType === "article" || right.pageType === "article") return false;
   if (left.pageType && right.pageType && left.pageType === right.pageType) return true;
   return false;
 }

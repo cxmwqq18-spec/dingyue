@@ -51,7 +51,7 @@ const replacements = new Map([
   ,["Background edits, previews, upscaling, and try-on flows help prepare stronger source images before checkout.", "Background edits, previews, upscaling, and try-on flows can help prepare clearer inputs before a full package."]
   ,["Train a private identity model", "Use a private identity flow"]
   ,["Advanced packages need a customer model so results can stay consistent across headshots, gala, lifestyle, and style sets.", "Premium packages can use a private identity workflow so results stay more consistent across different scenes."]
-  ,["Spend credits only when generating", "Review credits first"]
+  ,["Spend credits only when generating", "Check credits before generation"]
   ,["Credits are visible before a request starts and remain tied to subscription or one-time pack purchases.", "Credits are visible before a request starts. Successful generations consume the reserved credits, and failed requests can return them according to status."]
   ,["Download from the gallery", "Download from the gallery"]
   ,["Finished outputs return to the signed-in customer's album instead of being delivered through a generic download page.", "Finished outputs return to the signed-in customer's gallery for review and download."]

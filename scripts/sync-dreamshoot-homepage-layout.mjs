@@ -223,8 +223,8 @@ const stores = [
     mobile: section("mobile_video_showcase", {
       anchor: "mobile-video-tutorial",
       eyebrow: "Mobile tutorial",
-      title: "Mobile workflow preview for MyDreamShoots.",
-      subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+      title: "MyDreamShoots mobile photo workflow preview.",
+      subtitle: "Compare image setup and motion-preview steps in a vertical phone view.",
       imageUrl: myAssets.flowPrivateAlbumWorkspace,
       imageAlt: "MyDreamShoots private album workspace preview",
       videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",
@@ -378,8 +378,8 @@ const stores = [
     mobile: section("mobile_video_showcase", {
       anchor: "mobile-video-tutorial",
       eyebrow: "Mobile tutorial",
-      title: "Mobile workflow preview for Aidreamcapes.",
-      subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+      title: "Aidreamcapes mobile private album preview.",
+      subtitle: "Compare portrait intake and album review steps in a vertical phone view.",
       imageUrl: aidreamAssets.gallery,
       imageAlt: "Aidreamcapes private fan-scene album preview",
       videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",

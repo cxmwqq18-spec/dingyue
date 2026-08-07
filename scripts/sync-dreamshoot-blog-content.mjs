@@ -52,6 +52,111 @@ function searchFriendlySeoTitle(label, brand, category = "private galleries") {
   return `${truncatedLabel}${suffix}`;
 }
 
+function cleanPlainText(value) {
+  return String(value ?? "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function seoTitleFromCandidates(candidates, brand) {
+  const exactFit = candidates.find((title) => title.length >= 45 && title.length <= 70);
+  if (exactFit) return exactFit;
+  const shortFit = candidates.find((title) => title.length < 45);
+  if (shortFit) {
+    const padded = `${shortFit} for private planning`;
+    if (padded.length <= 70) return padded;
+  }
+  const fallback = candidates[0] ?? `${brand} private gallery guide`;
+  if (fallback.length <= 70) return fallback;
+  const suffixMatch = fallback.match(/\s\|\s[^|]+$/);
+  const suffix = suffixMatch?.[0] ?? ` | ${brand}`;
+  const maxPrefixLength = Math.max(16, 70 - suffix.length);
+  const prefix = fallback
+    .replace(/\s\|\s[^|]+$/, "")
+    .slice(0, maxPrefixLength)
+    .replace(/\s+\S*$/, "")
+    .trim();
+  return `${prefix}${suffix}`;
+}
+
+function packageSeoTitle(label, brand) {
+  const compactLabel = String(label ?? "").trim();
+  if (brand === "Aidreamcapes") {
+    const noun = /\balbums?\b/i.test(compactLabel) ? "planning guide" : "private album guide";
+    return seoTitleFromCandidates([
+      `${compactLabel} ${noun} | ${brand}`,
+      `${compactLabel} private planning guide | ${brand}`,
+      `${compactLabel} guide | ${brand}`
+    ], brand);
+  }
+  return seoTitleFromCandidates([
+    `${compactLabel} private AI photo guide | ${brand}`,
+    `${compactLabel} AI photo package guide | ${brand}`,
+    `${compactLabel} AI photo planning guide | ${brand}`,
+    `${compactLabel} source photo guide | ${brand}`
+  ], brand);
+}
+
+function firstSentence(value) {
+  const text = cleanPlainText(value);
+  const match = text.match(/^(.+?[.!?])(?:\s|$)/);
+  return (match?.[1] ?? text).trim();
+}
+
+function sentenceTrim(value, maxLength) {
+  const clean = cleanPlainText(value).replace(/[.;:,\s]+$/, "");
+  if (!clean) return "";
+  if (clean.length <= maxLength - 1) return `${clean}.`;
+  const limited = clean.slice(0, Math.max(20, maxLength - 1));
+  const phraseCandidate = clean
+    .slice(0, Math.max(20, maxLength - 1))
+    .replace(/[,;:]\s+[^,;:]*$/, "")
+    .replace(/[.;:,\s]+$/, "")
+    .trim();
+  if (phraseCandidate.length >= 48 && phraseCandidate.length < limited.trim().length) return `${phraseCandidate}.`;
+
+  const danglingWords = new Set([
+    "a", "an", "and", "as", "at", "before", "by", "for", "from", "in", "into", "of", "on", "or", "the", "that",
+    "to", "while", "which", "who", "with", "without"
+  ]);
+  let trimmed = clean
+    .slice(0, Math.max(20, maxLength - 1))
+    .replace(/\s+\S*$/, "")
+    .replace(/[.;:,\s]+$/, "")
+    .trim();
+  for (const pattern of [
+    /\s+(?:without|before|after|while|because|that|which|who|where|when)\s+[^,.!?;:]{0,52}$/i,
+    /\s+(?:and|or|with|for|to|in|on|from|into|of)\s+[^,.!?;:]{0,36}$/i
+  ]) {
+    const candidate = trimmed.replace(pattern, "").replace(/[.;:,\s]+$/, "").trim();
+    if (candidate.length >= 48) trimmed = candidate;
+  }
+  while (danglingWords.has(trimmed.split(/\s+/).pop()?.toLowerCase())) {
+    trimmed = trimmed.replace(/\s+\S+$/, "").replace(/[.;:,\s]+$/, "").trim();
+  }
+  return `${trimmed || clean.slice(0, Math.max(20, maxLength - 1)).trim()}.`;
+}
+
+function packageSeoDescription({ brand, label, description, headline }) {
+  const fallbackLead = brand === "Aidreamcapes"
+    ? `${label} helps plan a focused fan or holiday album from approved portraits.`
+    : `${label} helps plan a focused AI photo set from source photos.`;
+  const lead = firstSentence(description || headline || fallbackLead) || fallbackLead;
+  const suffix = brand === "Aidreamcapes"
+    ? "Review credit cost, approved uploads, and private album delivery."
+    : "Review credit cost, source quality, and private downloads.";
+  const trimmedLead = sentenceTrim(lead, 160 - suffix.length - 1);
+  const result = `${trimmedLead} ${suffix}`;
+  if (result.length >= 120) return result;
+  const expandedSuffix = brand === "Aidreamcapes"
+    ? "Review credit cost, approved uploads, permission fit, and private album delivery."
+    : "Review credit cost, source quality, identity fit, and private downloads.";
+  const expanded = `${trimmedLead} ${expandedSuffix}`;
+  if (expanded.length <= 160) return expanded;
+  return result;
+}
+
 function makeCategoryArticle(input) {
   const label = input.label;
   const lowerLabel = label.toLowerCase();
@@ -549,9 +654,11 @@ function makeCreativeCategoryArticle(state, siteId, brand, category, parent, pac
     reviewFocus: `Review whether the finished images match ${label} instead of drifting back into a generic ${parentLabel} result.`,
     elementStory: `${label} should have visible cues that explain the category choice: color, posture, crop, scene texture, styling, or movement readiness.`,
     avoid: `Avoid treating ${label} as interchangeable with every nearby ${parentLabel} option; a narrower category should make the review criteria clearer.`,
-    seoTitle: searchFriendlySeoTitle(label, brand),
-    seoDescription: `Plan ${label} in ${brand}: choose inputs, compare nearby packages, review credit cost, and check the private gallery before downloads.`,
-    seoKeywords: `${label}, ${brand} ${parentLabel}, AI photo package guide, private gallery planning, credit review`
+    seoTitle: packageSeoTitle(label, brand),
+    seoDescription: packageSeoDescription({ brand, label, description: category.description }),
+    seoKeywords: brand === "Aidreamcapes"
+      ? `${label}, ${brand} ${parentLabel}, private album planning, permission-safe portraits, credit review`
+      : `${label}, ${brand} ${parentLabel}, AI photo package guide, source photo planning, private gallery`
   });
 }
 
@@ -610,9 +717,11 @@ function buildCreativePackCoverageArticles(state, siteId, brand) {
         reviewFocus: `Review whether the finished images look like ${label} instead of drifting into a generic ${parentLabel} album.`,
         elementStory: `${label} should be recognizable through visible details such as color, posture, card framing, scene texture, seasonal cues, supporter energy, or private keepsake mood.`,
         avoid: `Avoid asking ${label} to cover several unrelated fan, game-day, premiere, or holiday scenes at once; the narrower theme should make review easier.`,
-        seoTitle: searchFriendlySeoTitle(label, brand),
-        seoDescription: `Plan ${label} in ${brand}: choose approved portraits, compare fit, review credit cost, and open the private gallery before downloads.`,
-        seoKeywords: `${label}, ${brand} ${categoryLabel}, ${parentLabel}, private album guide, credit review`
+        seoTitle: packageSeoTitle(label, brand),
+        seoDescription: packageSeoDescription({ brand, label, description: pack.description, headline: pack.headline }),
+        seoKeywords: brand === "Aidreamcapes"
+          ? `${label}, ${brand} ${categoryLabel}, ${parentLabel}, private album planning, permission-safe portraits, credit review`
+          : `${label}, ${brand} ${categoryLabel}, ${parentLabel}, AI photo package guide, source photo planning, private gallery`
       });
     });
 }

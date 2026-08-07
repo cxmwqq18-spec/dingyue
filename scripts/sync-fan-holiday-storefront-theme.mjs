@@ -1017,8 +1017,8 @@ function aidreamcapesMobileVideoShowcaseSection() {
   return section("mobile_video_showcase", {
     anchor: "mobile-video-tutorial",
     eyebrow: "Mobile tutorial",
-    title: "Mobile workflow preview for Aidreamcapes.",
-    subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+    title: "Aidreamcapes mobile private album preview.",
+    subtitle: "Compare portrait intake and album review steps in a vertical phone view.",
     imageUrl: asset("gallery", "private-fan-scene-album-01"),
     imageAlt: "Aidreamcapes private fan-scene album preview",
     videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
@@ -1243,7 +1243,7 @@ function homeSections() {
     }, [
       block("flow_upload", "card", { title: "Upload approved photos", text: "Add clear source photos that you own or have permission to use.", meta: "01", imageUrl: asset("covers", "private-fan-scene-album") }),
       block("flow_pick", "card", { title: "Pick a fan or holiday direction", text: "Choose fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, or seasonal album styling.", meta: "02", imageUrl: asset("covers", "game-day-group-portraits") }),
-      block("flow_credit", "card", { title: "Review credits first", text: "The credit cost is visible before generation reserves anything.", meta: "03", imageUrl: asset("covers", "thanksgiving-keepsake-table-set") }),
+      block("flow_credit", "card", { title: "Confirm album credits first", text: "The credit cost is visible before generation reserves anything.", meta: "03", imageUrl: asset("covers", "thanksgiving-keepsake-table-set") }),
       block("flow_download", "card", { title: "Download privately", text: "Finished results return to the signed-in account gallery.", meta: "04", imageUrl: asset("covers", "seasonal-celebration-photo-set") })
     ]),
     pricing_1: section("pricing_table", {

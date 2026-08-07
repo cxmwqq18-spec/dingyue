@@ -1053,7 +1053,7 @@ const workflowJson: ThemePageJson = {
       anchor: "mobile-video-tutorial",
       eyebrow: "Mobile tutorial",
       title: "Mobile workflow preview.",
-      subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+      subtitle: "Compare image setup and motion-preview steps in a vertical phone view.",
       imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
       imageAlt: "Private album workspace preview",
       videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",

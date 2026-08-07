@@ -175,8 +175,8 @@ function workflowTutorialSections(profile) {
       };
   const mobile = isAidreamcapes
     ? {
-        title: "Mobile workflow preview for Aidreamcapes.",
-        subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+        title: "Aidreamcapes mobile private album preview.",
+        subtitle: "Compare portrait intake and album review steps in a vertical phone view.",
         imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/gallery/private-fan-scene-album-01.webp",
         imageAlt: "Aidreamcapes private fan-scene album preview",
         videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
@@ -193,8 +193,8 @@ function workflowTutorialSections(profile) {
         rightPlayLabel: "Watch the video tutorial"
       }
     : {
-        title: "Mobile workflow preview for MyDreamShoots.",
-        subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+        title: "MyDreamShoots mobile photo workflow preview.",
+        subtitle: "Compare image setup and motion-preview steps in a vertical phone view.",
         imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
         imageAlt: "Private album workspace preview",
         videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",

@@ -642,7 +642,7 @@ const homeSections: ThemePageJson["sections"] = {
     [
       block("plan_rule_tools", "card", { meta: "source prep", title: "Prepare better source photos", description: "Background edits, previews, upscaling, and try-on flows can help prepare clearer inputs before a full package." }),
       block("plan_rule_model", "card", { meta: "identity consistency", title: "Use a private identity flow", description: "Premium packages can use a private identity workflow so results stay more consistent across different scenes." }),
-      block("plan_rule_credits", "card", { meta: "How credits work", title: "Review credits first", description: "Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation." }),
+      block("plan_rule_credits", "card", { meta: "How credits work", title: "Check credits before generation", description: "Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation." }),
       block("plan_rule_gallery", "card", { meta: "Private by default", title: "Your uploads stay private", description: "Your uploads stay private inside your signed-in MyDreamShoots account with your jobs, albums, downloads, and credit history." })
     ]
   ),
@@ -1080,8 +1080,8 @@ function mydreamshootsMobileVideoShowcaseSection(): SectionInstance {
   return section("mobile_video_showcase", {
     anchor: "mobile-video-tutorial",
     eyebrow: "Mobile tutorial",
-    title: "Mobile workflow preview for MyDreamShoots.",
-    subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+    title: "MyDreamShoots mobile photo workflow preview.",
+    subtitle: "Compare image setup and motion-preview steps in a vertical phone view.",
     imageUrl: assets.flowPrivateAlbumWorkspace,
     imageAlt: "MyDreamShoots private album workspace preview",
     videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",
@@ -1105,8 +1105,8 @@ function aidreamcapesMobileVideoShowcaseSection(): SectionInstance {
   return section("mobile_video_showcase", {
     anchor: "mobile-video-tutorial",
     eyebrow: "Mobile tutorial",
-    title: "Mobile workflow preview for Aidreamcapes.",
-    subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
+    title: "Aidreamcapes mobile private album preview.",
+    subtitle: "Compare portrait intake and album review steps in a vertical phone view.",
     imageUrl: aidreamcapesPublicAssets.gallery,
     imageAlt: "Aidreamcapes private fan-scene album preview",
     videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
@@ -1544,7 +1544,7 @@ function aidreamcapesPlanRulesSection(): SectionInstance {
     [
       block("aidream_plan_source", "card", { meta: "source prep", title: "Prepare better source photos", description: "Upload clear photos you own or have permission to use before starting a full album." }),
       block("aidream_plan_album", "card", { meta: "album direction", title: "Pick a fan or holiday album", description: "Choose fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, or seasonal styling before spending credits." }),
-      block("aidream_plan_credits", "card", { meta: "credit ledger", title: "Review credits first", description: "Reservations, successful generations, releases, and top-ups remain visible in the customer account." }),
+      block("aidream_plan_credits", "card", { meta: "credit ledger", title: "Confirm album credits first", description: "Reservations, successful generations, releases, and top-ups remain visible in the customer account." }),
       block("aidream_plan_gallery", "card", { meta: "private delivery", title: "Download from your gallery", description: "Finished fan and holiday images return to an account-only gallery for review and download." })
     ]
   );

@@ -427,7 +427,7 @@ const blockSettingsById = new Map([
     "plan_rule_credits",
     {
       meta: "How credits work",
-      title: "Review credits first",
+      title: "Check credits before generation",
       description: trustCopy.creditsBody
     }
   ],

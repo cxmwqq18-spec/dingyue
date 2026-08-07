@@ -47,6 +47,14 @@ const nextConfig = {
         ]
       },
       {
+        source: "/robots.txt",
+        headers: [
+          ...securityHeaders,
+          { key: "Cache-Control", value: "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400" },
+          { key: "Vary", value: "Host, X-Forwarded-Host" }
+        ]
+      },
+      {
         source: "/api/site-slugs/:siteSlug/storefront-section",
         headers: publicApiHeaders
       },
