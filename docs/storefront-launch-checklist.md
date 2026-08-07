@@ -434,3 +434,42 @@ SECURE Data Act / GUARD Financial Data Act 监测记录：
 - `npm run smoke:storefront-navigation-data`
 - `npm run smoke:storefront-sitemap-directory-coverage`
 - `npm run watermark:storefront-public-media -- --dry-run`
+
+## 2026-08-07 最新 release 上线审核记录
+
+本轮上线基线为线上 release `d5918d30`，最终 GitHub 提交为 `d65cfc60`，线上当前 release 为：
+`/www/wwwroot/mydreamshoots.com/releases/d65cfc60-logo-fix-202608071635`。
+
+### 文案差异审核结论
+
+- **已按旧值恢复**：MyDreamShoots FAQ/首页 showcase 的 `hero_1.settings.imageCaption` 从未经确认的新值
+  `Generate your custom AI album Transform your favorite moments into professional-grade couple photos and stunning holiday memories.`
+  恢复为旧值
+  `Upload selfies and create your own AI model - Professional headshots without a studio.`
+- **无 CTA 新增变更**：MyDreamShoots 首页 Hero 主 CTA 的 draft、published、发布快照和线上 SSR 均为 `Create Now`。
+- **无 TDK 变更**：两个 `.com` 店铺的 title、description、keywords 与本清单固定值一致。
+- Header / 登录转化区域仍存在其他既有 `Create my first photo set` 文案；本轮没有擅自扩展修改范围，避免未经批准的文案变更。
+- 结论：**已批准差异 / 旧值恢复，可上线**。未经站点负责人确认的 SEO fingerprint 相似文案不纳入本轮修改。
+
+### 本轮代码与部署变更
+
+- `9554dca9`：公开媒体水印批处理、marker 和上线 smoke 修复。
+- `eed86c9f`：恢复已批准旧文案、修复 DreamShoots 页面媒体引用和上线审计规则。
+- `52b721d2`：服务器无法用 sharp 渲染 SVG 文字时自动降级到 ffmpeg。
+- `d65cfc60`：可信 logo 保留已有 `.png/.jpg` 资源格式，避免自动改写为不存在的 `.webp`。
+
+### 上线前与线上验证
+
+- `npm run typecheck`、`npm run build`、`npm run audit:domains`、`npm run audit:dreamshoot`：通过。
+- `npm run smoke:storefront-watermarks`：通过。
+- `npm run watermark:storefront-public-media -- --dry-run`：`changed: 0`，`failures: []`。
+- `npm run audit:storefront-watermarks -- --disk-only`：`issueCount: 0`。
+- 线上 live watermark 抽样：两站各 1 个页面，`missingWatermarkUrls: []`、`mediaRequestErrors: []`、`issueCount: 0`。
+- 线上 sitemap：MyDreamShoots 117 条、AIdreamcapes 118 条；目录缺失 0、旧路径 0、跨站域名 0。
+- 线上首页 TDK、`<title>` 首位、SSR 无 `/storefront-section` 占位、`html/body translate="yes"`：通过。
+- MyDreamShoots 首页 trusted logo 29 个线上资源全部返回 200。
+- `mydreamshoots.service`：active；nginx 配置测试：successful。
+
+### 待负责人确认项
+
+`npm run smoke:storefront-seo-fingerprint` 仍会报告两个站点博客 SEO 文案之间的高相似度。该检查涉及现有 SEO 文案调整，按照本清单审批规则，本轮不擅自改动；如需消除该项，必须先列出旧值、新值、页面路径并获得站点负责人批准。
