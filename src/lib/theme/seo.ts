@@ -479,6 +479,7 @@ export function applyTitleTemplate(title: string, template: string, site: Site):
   const cleanTitle = cleanText(title, storefrontSeoBrandName(site));
   const cleanTemplate = normalizeStorefrontBrandText(site, template, defaultTitleTemplate(site));
   const suffix = cleanTemplate.replace("%s", "").replace(/^[\s|:–-]+|[\s|:–-]+$/g, "");
+  if (cleanTemplate.includes("%s") && !suffix) return cleanTitle;
   if (normalizeTitleToken(cleanTitle) === normalizeTitleToken(suffix)) return cleanTitle;
   if (suffix && normalizeTitleToken(cleanTitle).includes(normalizeTitleToken(suffix))) return cleanTitle;
   if (suffix && normalizeTitleToken(cleanTitle).endsWith(` | ${normalizeTitleToken(suffix)}`)) return cleanTitle;
