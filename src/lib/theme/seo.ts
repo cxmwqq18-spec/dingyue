@@ -478,6 +478,7 @@ export function withNormalizedSeo(site: Site, settings: ThemeSettings): ThemeSet
 export function applyTitleTemplate(title: string, template: string, site: Site): string {
   const cleanTitle = cleanText(title, storefrontSeoBrandName(site));
   const cleanTemplate = normalizeStorefrontBrandText(site, template, defaultTitleTemplate(site));
+  if (!cleanTemplate) return cleanTitle;
   const suffix = cleanTemplate.replace("%s", "").replace(/^[\s|:–-]+|[\s|:–-]+$/g, "");
   if (cleanTemplate.includes("%s") && !suffix) return cleanTitle;
   if (normalizeTitleToken(cleanTitle) === normalizeTitleToken(suffix)) return cleanTitle;
