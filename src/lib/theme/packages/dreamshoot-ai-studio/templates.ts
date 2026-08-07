@@ -72,6 +72,7 @@ const assets = {
   galleryChristmasCoupleOne: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp",
   galleryChristmasCoupleTwo: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-02.webp",
   galleryChristmasCoupleThree: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-03.webp",
+  galleryChristmasCoupleCover: versionedAsset("/assets/dreamshoot/generated/pack-covers/christmas-couple/christmas-couple-cover.webp"),
   galleryChristmasCover: versionedAsset("/assets/dreamshoot/generated/pack-covers/christmas-photos/christmas-photos-cover.webp"),
   gallerySeasonalFallback: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1",
   galleryHolidayFallback: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1",
@@ -248,7 +249,7 @@ const homeSections: ThemePageJson["sections"] = {
       authPrimaryHref: "/login?mode=login",
       authEmailHref: "/login?mode=register",
       imageBadge: "15+ package categories",
-      imageCaption: "Generate your custom AI album Transform your favorite moments into professional-grade couple photos and stunning holiday memories.",
+      imageCaption: "Upload selfies and create your own AI model - Professional headshots without a studio.",
       socialProofLabel: "Private uploads and clear credit costs",
       layout: "immersive_dark"
     },
@@ -1083,8 +1084,8 @@ function mydreamshootsMobileVideoShowcaseSection(): SectionInstance {
     subtitle: "See the image tutorial and video tutorial side by side in a vertical phone layout.",
     imageUrl: assets.flowPrivateAlbumWorkspace,
     imageAlt: "MyDreamShoots private album workspace preview",
-    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4?v=20260806mobile55a",
-    videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg?v=20260806mobile55a",
+    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",
+    videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260806mobile45a",
     videoBadge: "Mobile workflow",
     playLabel: "Watch the video tutorial",
     leftTitle: "AI image tutorial",
@@ -1216,7 +1217,7 @@ function mydreamshootsFaqSection(): SectionInstance {
       title: "FAQ",
       subtitle: "Clear answers about source photos, packages, credits, AI images, short videos, styling tools, privacy, publishing, and delivery.",
       layout: "visual_faq",
-      imageUrl: assets.galleryChristmasCover,
+      imageUrl: assets.galleryChristmasCoupleCover,
       imageAlt: "MyDreamShoots holiday celebration album cover",
       imageList: [
         assets.galleryChristmasCover,
@@ -1298,7 +1299,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         body: "For a group set, keep the source images organized and make sure each person has given permission for the intended use. Results can vary when faces are small, hidden, or heavily overlapping.",
         bulletList: "Get permission from every person shown|Use clear group and individual reference photos|Choose a package that supports the number of subjects|Review faces and hands before sharing",
         linkList: "Browse couple and group themes::/collections",
-        imageUrl: assets.galleryChristmasCoupleOne,
+        imageUrl: assets.galleryChristmasCoupleTwo,
         imageAlt: "Couple portrait example from a MyDreamShoots seasonal collection"
       }),
       block("faq_photo_generator", "faq_item", {

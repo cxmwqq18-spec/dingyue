@@ -61,7 +61,6 @@ const requiredHomeSections = [
   "tutorial_video_2",
   "package_catalog_1",
   "proof_1",
-  "pricing_1",
   "faq_1",
   "conversion_1",
   "brand_strip_1"
@@ -73,6 +72,9 @@ for (const id of requiredHomeSections) {
 for (const id of ["visual_proof_1", "flow_bridge_1", "trust_1", "taxonomy_1", "sample_strip_1", "workflow_1", "packages_1", "free_tools_1", "plan_rules_1", "proof_pairs_1", "packages_strip_1"]) {
   assert(!homeOrder.includes(id), `home page should not carry deep explainer section ${id}; it belongs on a supporting page`);
 }
+assert(homePage.publishedJson.sections?.pricing_1?.type === "pricing_table", "home pricing section should remain available for embedded rendering");
+assert(!homeOrder.includes("pricing_1"), "home pricing_1 should stay embedded in showcase instead of ordered separately");
+assert(homePage.publishedJson.sections?.generation_showcase_1?.settings?.embeddedPricingSectionId === "pricing_1", "home showcase should embed pricing_1");
 const hero = homePage.publishedJson.sections?.hero_1;
 assert(hero?.type === "hero", "missing home hero_1 section");
 const forbiddenVisualPattern = /wedding|engagement|couple|date-night|hero-gpt2|sample-wedding|sample-engagement/i;

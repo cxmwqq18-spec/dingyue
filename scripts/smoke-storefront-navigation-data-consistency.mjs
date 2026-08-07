@@ -594,33 +594,39 @@ async function assertFeaturedPackWhitespace(page, routeCheck, failures) {
 
 async function smokeFocusedStorefrontVisuals(context) {
   const failures = [];
-  const page = await context.newPage();
   for (const routeCheck of focusedVisualRoutes) {
-    const { badAssets, mediaResponses } = await visitRouteAndCollectAssetFailures(page, routeCheck.route);
-    if (badAssets.length) {
-      failures.push({
-        site: routeCheck.site,
-        route: routeCheck.route,
-        type: "asset_4xx_or_5xx",
-        badAssets: badAssets.slice(0, 12)
-      });
+    const page = await context.newPage();
+    try {
+      const { badAssets, mediaResponses } = await visitRouteAndCollectAssetFailures(page, routeCheck.route);
+      if (badAssets.length) {
+        failures.push({
+          site: routeCheck.site,
+          route: routeCheck.route,
+          type: "asset_4xx_or_5xx",
+          badAssets: badAssets.slice(0, 12)
+        });
+      }
+      await assertFooterText(page, routeCheck, failures);
+      await assertWorkflowNavigationHref(page, routeCheck, failures);
+      await assertHomepageRouteTargets(page, routeCheck, failures);
+      await assertShowcaseImageRail(page, routeCheck, failures);
+      await assertShowcaseMotionVideos(page, routeCheck, failures, mediaResponses);
+      await assertFeaturedPackWhitespace(page, routeCheck, failures);
+    } finally {
+      await page.close();
     }
-    await assertFooterText(page, routeCheck, failures);
-    await assertWorkflowNavigationHref(page, routeCheck, failures);
-    await assertHomepageRouteTargets(page, routeCheck, failures);
-    await assertShowcaseImageRail(page, routeCheck, failures);
-    await assertShowcaseMotionVideos(page, routeCheck, failures, mediaResponses);
-    await assertFeaturedPackWhitespace(page, routeCheck, failures);
   }
-  await page.close();
 
-  const mobilePage = await context.newPage();
-  await mobilePage.setViewportSize({ width: 390, height: 844 });
   for (const routeCheck of focusedVisualRoutes.filter((item) => item.route.endsWith(item.site))) {
-    await visitRouteAndCollectAssetFailures(mobilePage, routeCheck.route);
-    await assertFeaturedPackWhitespace(mobilePage, routeCheck, failures);
+    const mobilePage = await context.newPage();
+    try {
+      await mobilePage.setViewportSize({ width: 390, height: 844 });
+      await visitRouteAndCollectAssetFailures(mobilePage, routeCheck.route);
+      await assertFeaturedPackWhitespace(mobilePage, routeCheck, failures);
+    } finally {
+      await mobilePage.close();
+    }
   }
-  await mobilePage.close();
 
   assert(!failures.length, `Focused storefront visual/link checks failed:\n${JSON.stringify(failures, null, 2)}`);
 }
