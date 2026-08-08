@@ -20,6 +20,49 @@
 - [ ] 如果只是技术修复但引入了文案差异，也按文案变更处理，不能合并进“性能优化”“SEO SSR 更新”“同步脚本修复”等笼统上线说明里。
 - [ ] 上线记录里必须保留“文案差异审核结论”：无差异 / 已批准差异 / 阻断上线。
 
+### MyDreamShoots 首页文案锁定基线
+
+MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点负责人明确要求修改首页文案，否则不得私自修改、切换版本、从旧 JSON 反向导入、运行覆盖脚本，或把线上数据库 `published` / 最新发布快照回退到其他版本。
+
+锁定备份文件：`docs/content-locks/mydreamshoots-homepage-approved.json`
+
+锁定来源：Postgres `site_dreamshoot` 的首页 `ThemePage.publishedJson`，并包含 guard 用于页面 SEO 对比的 `ThemeSettings.publishedJson` 记录。
+
+锁定时间：`2026-08-08T00:00:00.000+08:00`
+
+锁定指纹：
+
+| 范围 | SHA-256 |
+| --- | --- |
+| 首页完整 `publishedJson` | `c6c1aa6ea1f25a7a25b80ad4f0778e1269a35bfb0dae5e86e8e634e870c284c1` |
+| 首页可见文案记录 | `8eed023078ba3b3e800f90bde385e11b43de10cf45ad00ea13e689cef46123ad` |
+
+当前批准的首页关键文案：
+
+| 字段 | 当前批准值 |
+| --- | --- |
+| SEO title | `Professional AI Photo Generator Online - MyDreamShoots` |
+| SEO description | `Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.` |
+| SEO keywords | `Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot` |
+| Hero badge | `AI Headshot Generators` |
+| Hero headline | `Upload selfies and create your own AI model - Professional headshots without a studio.` |
+| Hero body | `upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.` |
+| Hero primary CTA | `Create Now` |
+| Hero secondary CTA | `Headshot Generator` |
+| Auth card headline | `Generate your custom AI album Transform your favorite moments into professional-grade couple photos and stunning holiday memories.` |
+| Auth ribbon | `Plans start at $24.50/month` |
+| Auth primary action | `Continue with email` |
+| Auth email submit | `Create my first photo set with Email` |
+
+上线硬规则：
+
+- [ ] 上线前必须执行 `npm run guard:mydreamshoots-content`；该命令会同时比对数据库 `published`、最新 `ThemePublication.snapshot`、线上 HTML 和本锁定基线。
+- [ ] 常规上线、构建、同步、修复、迁移不得传 `--skip-homepage-lock`。
+- [ ] 如果 guard 报 `homepage-lock-*` 失败，默认判定为未批准首页文案漂移，必须停止上线。
+- [ ] 只有站点负责人明确要求修改首页文案时，才能先更新线上 draft、发布生成新的 published，再重新生成并提交本锁定备份。
+- [ ] 任何从 `data/platform-state.json`、主题模板、旧发布快照或同步脚本导入首页内容的动作都视为覆盖操作，不能作为普通 deploy/build 步骤运行。
+
+
 ### 2026-08-07 MyDreamShoots 首页 CTA 审核记录
 
 问题：`2026-08-06` 的 `Deploy latest storefront and SEO SSR updates` 同步中，MyDreamShoots 首页 hero 主按钮从已批准文案 `Create Now` 被改成 `Create my first photo set`。根因是 `data/platform-state.json` 的发布态页面数据和 `scripts/rectify-mydreamshoots-page-change-doc.mjs` 中的定向修复逻辑覆盖了模板里的 CTA。
