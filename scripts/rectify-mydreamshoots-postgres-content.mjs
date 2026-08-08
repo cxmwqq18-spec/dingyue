@@ -4,6 +4,21 @@ import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+const flags = new Set(process.argv.slice(2).filter((arg) => arg.startsWith("--")).map((arg) => arg.slice(2).split("=")[0]));
+const forceContentOverwrite = flags.has("force-content-overwrite");
+const dbRequested = flags.has("db");
+const dryRun = flags.has("dry-run") || !(forceContentOverwrite && dbRequested);
+
+function contentOverwriteGuardPayload() {
+  return {
+    writeEnabled: !dryRun,
+    requiredFlags: ["--db", "--force-content-overwrite"],
+    dbRequested,
+    note: dryRun
+      ? "No database rows were overwritten. Re-run with --db --force-content-overwrite to apply these text rewrites."
+      : "Content overwrite was explicitly enabled for this run."
+  };
+}
 
 const replacements = new Map([
   ["4.9/5 from creators using private photo packs", "Private uploads and clear credit costs"],
@@ -195,7 +210,7 @@ async function main() {
       const draftJson = rewriteJson(structuredClone(settings.draftJson));
       const publishedJson = rewriteJson(structuredClone(settings.publishedJson));
       if (changed(settings.draftJson, draftJson) || changed(settings.publishedJson, publishedJson)) {
-        await prisma.themeSettings.update({ where: { siteId }, data: { draftJson, publishedJson } });
+        if (!dryRun) await prisma.themeSettings.update({ where: { siteId }, data: { draftJson, publishedJson } });
         result.themeSettings += 1;
       }
     }
@@ -205,7 +220,7 @@ async function main() {
       const draftJson = rewriteJson(structuredClone(page.draftJson));
       const publishedJson = rewriteJson(structuredClone(page.publishedJson));
       if (changed(page.draftJson, draftJson) || changed(page.publishedJson, publishedJson)) {
-        await prisma.themePage.update({ where: { id: page.id }, data: { draftJson, publishedJson } });
+        if (!dryRun) await prisma.themePage.update({ where: { id: page.id }, data: { draftJson, publishedJson } });
         result.themePages += 1;
       }
     }
@@ -215,7 +230,7 @@ async function main() {
       const templates = rewriteJson(structuredClone(theme.templates));
       const themeSettings = rewriteJson(structuredClone(theme.settings));
       if (changed(theme.templates, templates) || changed(theme.settings, themeSettings)) {
-        await prisma.siteTheme.update({ where: { id: theme.id }, data: { templates, settings: themeSettings } });
+        if (!dryRun) await prisma.siteTheme.update({ where: { id: theme.id }, data: { templates, settings: themeSettings } });
         result.siteThemes += 1;
       }
     }
@@ -224,14 +239,14 @@ async function main() {
     for (const publication of publications) {
       const snapshot = rewriteJson(structuredClone(publication.snapshot));
       if (changed(publication.snapshot, snapshot)) {
-        await prisma.themePublication.update({ where: { id: publication.id }, data: { snapshot } });
+        if (!dryRun) await prisma.themePublication.update({ where: { id: publication.id }, data: { snapshot } });
         result.themePublications += 1;
       }
     }
   }
 
-  clearStateCaches();
-  console.log(JSON.stringify({ ok: true, ...result }, null, 2));
+  if (!dryRun) clearStateCaches();
+  console.log(JSON.stringify({ ok: true, dryRun, contentOverwriteGuard: contentOverwriteGuardPayload(), ...result }, null, 2));
 }
 
 main()

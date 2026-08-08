@@ -8,6 +8,7 @@ const hostCatchAll = readFileSync(new URL("../src/app/[...path]/page.tsx", impor
 const siteCatchAll = readFileSync(new URL("../src/app/site/[siteSlug]/[...path]/page.tsx", import.meta.url), "utf8");
 const robotsRoute = readFileSync(new URL("../src/app/robots.ts", import.meta.url), "utf8");
 const sitemapRoute = readFileSync(new URL("../src/app/sitemap.xml/route.ts", import.meta.url), "utf8");
+const middleware = readFileSync(new URL("../src/middleware.ts", import.meta.url), "utf8");
 
 function assertMetadataSource(path) {
   const escapedPath = path.replace("/", "\\/");
@@ -103,10 +104,25 @@ assertRedirectSource(hostCatchAll, "/refund-policy", 'redirect("/refunds")');
 assertRedirectSource(hostCatchAll, "/content-policy", 'redirect("/content")');
 assertRedirectSource(siteCatchAll, "/refund-policy", 'redirect(routePath("/refunds"))');
 assertRedirectSource(siteCatchAll, "/content-policy", 'redirect(routePath("/content"))');
-assert.doesNotMatch(
+assert.match(
   robotsRoute,
-  /disallow|Disallow/,
-  "robots.txt should not block private UI paths because Google must be able to see noindex headers"
+  /hostCandidates\.some\(isGrownstrideHost\)/,
+  "grownstride robots.txt must apply its disallow rule behind a host guard"
+);
+assert.match(
+  robotsRoute,
+  /test\.grownstride\.com/,
+  "robots.txt should recognize the grownstride test subdomain"
+);
+assert.match(
+  robotsRoute,
+  /grownstride\.com/,
+  "robots.txt should recognize the grownstride test host"
+);
+assert.match(
+  robotsRoute,
+  /disallow:\s*"\/"/,
+  "grownstride robots.txt should disallow crawling"
 );
 assert.match(
   sitemapRoute,
@@ -117,6 +133,11 @@ assert.match(
   sitemapRoute,
   /xmlns:image="http:\/\/www\.google\.com\/schemas\/sitemap-image\/1\.1"/,
   "sitemap route should expose the image sitemap namespace"
+);
+assert.match(
+  middleware,
+  /function canonicalPublicHostSitePathRedirect[\s\S]*PRIVATE_STORE_PATH_RE\.test\(pathname\)\) return undefined;/,
+  "public host canonical redirects must preserve site-scoped private routes such as the store admin login"
 );
 assert.match(
   hostCatchAll,

@@ -50,9 +50,10 @@ for (let index = 0; index < rawArgs.length; index += 1) {
   }
 }
 
-const dryRun = flags.has("dry-run");
+const forceContentOverwrite = flags.has("force-content-overwrite") || ["1", "true", "yes"].includes(String(args.get("force-content-overwrite") ?? "").toLowerCase());
+const dryRun = flags.has("dry-run") || !forceContentOverwrite;
 const updateDb = flags.has("db");
-const skipAssets = flags.has("skip-assets");
+const skipAssets = flags.has("skip-assets") || dryRun;
 const forceAssets = flags.has("force-assets") || flags.has("force");
 const allowStaticVideoFallback = flags.has("static-video-fallback") || flags.has("placeholder-assets");
 const selectedStores = new Set(
@@ -519,6 +520,15 @@ async function main() {
   console.log(JSON.stringify({
     ok: true,
     dryRun,
+    contentOverwriteGuard: {
+      writeEnabled: !dryRun,
+      requiredFlag: "--force-content-overwrite",
+      dbRequested: updateDb,
+      dbWriteEnabled: updateDb && !dryRun,
+      note: dryRun
+        ? "No files or database rows were overwritten. Re-run with --force-content-overwrite to write data/platform-state.json, and add --db to write Postgres."
+        : "Content overwrite was explicitly enabled for this run."
+    },
     stores: stores.map((store) => store.key),
     assets: assetReport,
     sections: sectionReport,

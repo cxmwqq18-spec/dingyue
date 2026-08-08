@@ -6,11 +6,25 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const statePath = path.join(process.cwd(), "data", "platform-state.json");
 const siteId = process.env.SYNC_SITE_ID ?? "site_dreamshoot";
-const dryRun = process.argv.includes("--dry-run");
+const flags = new Set(process.argv.slice(2).filter((arg) => arg.startsWith("--")).map((arg) => arg.slice(2).split("=")[0]));
+const forceContentOverwrite = flags.has("force-content-overwrite");
+const dbRequested = flags.has("db");
+const dryRun = flags.has("dry-run") || !(forceContentOverwrite && dbRequested);
 const cacheFiles = [
   path.join(process.cwd(), ".next", "cache", "platform-state-postgres.json"),
   path.join(process.cwd(), ".next-build", "cache", "platform-state-postgres.json")
 ];
+
+function contentOverwriteGuardPayload() {
+  return {
+    writeEnabled: !dryRun,
+    requiredFlags: ["--db", "--force-content-overwrite"],
+    dbRequested,
+    note: dryRun
+      ? "No database rows were overwritten. Re-run with --db --force-content-overwrite to import local JSON content into Postgres."
+      : "Content overwrite was explicitly enabled for this run."
+  };
+}
 
 function clone(value) {
   return value === undefined ? undefined : JSON.parse(JSON.stringify(value));
@@ -567,7 +581,7 @@ async function main() {
   const records = contentRecords(state, siteId);
   const summary = Object.fromEntries(Object.entries(records).map(([key, value]) => [key, Array.isArray(value) ? value.length : Boolean(value)]));
   if (dryRun) {
-    console.log(JSON.stringify({ ok: true, mode: "dry-run", siteId, summary }, null, 2));
+    console.log(JSON.stringify({ ok: true, mode: "dry-run", siteId, contentOverwriteGuard: contentOverwriteGuardPayload(), summary }, null, 2));
     return;
   }
 
@@ -597,7 +611,7 @@ async function main() {
   for (const cacheFile of cacheFiles) {
     if (fs.existsSync(cacheFile)) fs.unlinkSync(cacheFile);
   }
-  console.log(JSON.stringify({ ok: true, mode: "content-only-upsert", siteId, summary, ...result }, null, 2));
+  console.log(JSON.stringify({ ok: true, mode: "content-only-upsert", siteId, contentOverwriteGuard: contentOverwriteGuardPayload(), summary, ...result }, null, 2));
 }
 
 main()

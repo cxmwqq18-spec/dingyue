@@ -3,15 +3,26 @@ import { NextResponse } from "next/server";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { STOREFRONT_PUBLIC_HOST_HEADER } from "@/lib/storefront-route-mode";
 
-const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?(?:\/|$)/i;
-const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
+const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
+const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
 const INTERNAL_PATH_RE = /^\/(?:api|assets|_next\/static|_next\/image|robots\.txt|sitemap\.xml)(?:\/|$)/i;
 const BROWSER_ICON_PATH_RE = /^\/(?:favicon\.ico|favicon\.svg|icon\.svg|apple-touch-icon(?:\.png)?)$/i;
-const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
+const GROWNSTRIDE_TEST_HOST = "test.grownstride.com";
+const GROWNSTRIDE_LEGACY_HOSTS = new Set(["grownstride.com", "www.grownstride.com"]);
+const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
 const PUBLIC_STOREFRONT_CACHE_CONTROL = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
 const PRIVATE_STOREFRONT_CACHE_CONTROL = "private, no-store, max-age=0, must-revalidate";
+const HOP_BY_HOP_HEADERS = new Set([
+  "connection",
+  "keep-alive",
+  "proxy-connection",
+  "transfer-encoding",
+  "upgrade",
+  "te",
+  "trailer"
+]);
 const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   adventure: "road-trip-frames",
   aventura: "game-day-group-photos",
@@ -226,13 +237,16 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
 
-  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?)\/(collections|tools)\/([^/]+)(\/)?$/i);
+  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)\/(collections|tools)\/([^/]+)(\/)?$/i);
   const hostMatch = TARGET_HOST_RE.test(host)
     ? pathname.match(/^\/(collections|tools)\/([^/]+)(\/)?$/i)
     : undefined;
   if (!pathMatch && !hostMatch) return undefined;
 
-  const siteSlug = pathMatch?.[1]?.toLowerCase() ?? (host.toLowerCase().includes("aidreamcapes") ? "aidreamcapes" : "mydreamshoots");
+  const normalizedHost = host.toLowerCase();
+  const siteSlug =
+    pathMatch?.[1]?.toLowerCase() ??
+    (normalizedHost.includes("aidreamcapes") ? "aidreamcapes" : normalizedHost.includes("grownstride") ? "grownstride" : "mydreamshoots");
   const siteFamily = siteSlug.startsWith("aidreamcapes") ? "aidreamcapes" : "mydreamshoots";
   const kind = (pathMatch?.[2] ?? hostMatch?.[1] ?? "").toLowerCase();
   const currentSlug = normalizePathSlug(pathMatch?.[3] ?? hostMatch?.[2] ?? "");
@@ -268,7 +282,7 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
 function legacyPublicPathRedirect(request: NextRequest): NextResponse | undefined {
   const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?)(\/.*)$/i);
+  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)(\/.*)$/i);
   const scopedPath = pathMatch?.[2]?.toLowerCase() ?? "";
   const hostPath = TARGET_HOST_RE.test(host) ? pathname.toLowerCase() : "";
   const targetPath = LEGACY_PUBLIC_PATH_REDIRECTS[scopedPath] ?? LEGACY_PUBLIC_PATH_REDIRECTS[hostPath];
@@ -299,9 +313,10 @@ function localDefaultStorefrontRedirect(request: NextRequest): NextResponse | un
 
 function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse | undefined {
   const pathname = request.nextUrl.pathname;
+  if (PRIVATE_STORE_PATH_RE.test(pathname)) return undefined;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
   if (!TARGET_HOST_RE.test(host)) return undefined;
-  const match = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?)(\/.*)?$/i);
+  const match = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)(\/.*)?$/i);
   if (!match) return undefined;
   const siteSlug = match[1]?.toLowerCase() ?? "";
   const normalizedHost = host.toLowerCase();
@@ -313,6 +328,21 @@ function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse
   const scopedPath = match[2] || "/";
   const nextUrl = request.nextUrl.clone();
   nextUrl.pathname = scopedPath === "/" ? "/" : scopedPath;
+  return NextResponse.redirect(nextUrl, 308);
+}
+
+function grownstrideLegacyHostRedirect(request: NextRequest): NextResponse | undefined {
+  const host = String(request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "")
+    .split(",")[0]
+    ?.trim()
+    .toLowerCase()
+    .split(":")[0] ?? "";
+  if (!GROWNSTRIDE_LEGACY_HOSTS.has(host)) return undefined;
+
+  const nextUrl = request.nextUrl.clone();
+  nextUrl.protocol = "https:";
+  nextUrl.hostname = GROWNSTRIDE_TEST_HOST;
+  nextUrl.port = "";
   return NextResponse.redirect(nextUrl, 308);
 }
 
@@ -499,7 +529,19 @@ function storefrontSlugForHost(host: string | null | undefined): string | undefi
   if (normalized.includes("aidreamcapes.eu")) return "aidreamcapes-eu";
   if (normalized.includes("aidreamcapes")) return "aidreamcapes";
   if (normalized.includes("mydreamshoots")) return "mydreamshoots";
+  if (normalized.includes("grownstride")) return "grownstride";
   return undefined;
+}
+
+function isGrownstrideRequest(request: NextRequest): boolean {
+  return [request.headers.get("x-forwarded-host"), request.headers.get("host")].some(
+    (host) => storefrontSlugForHost(host) === "grownstride"
+  );
+}
+
+function applyGrownstrideNoindex(response: Response, request: NextRequest): Response {
+  if (isGrownstrideRequest(request)) response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  return response;
 }
 
 function sameServerStorefrontUrl(request: NextRequest): URL {
@@ -508,6 +550,14 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   if (!hostSlug || upstreamUrl.pathname.startsWith("/site/")) return upstreamUrl;
   upstreamUrl.pathname = `/site/${hostSlug}${upstreamUrl.pathname === "/" ? "" : upstreamUrl.pathname}`;
   return upstreamUrl;
+}
+
+function sanitizeUpstreamHeaders(headers: Headers): Headers {
+  const next = new Headers(headers);
+  for (const header of HOP_BY_HOP_HEADERS) next.delete(header);
+  next.delete("content-length");
+  next.delete("host");
+  return next;
 }
 
 async function storefrontIconResponse(request: NextRequest): Promise<Response | undefined> {
@@ -521,7 +571,7 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
   upstreamUrl.search = "";
 
   const upstreamResponse = await fetch(upstreamUrl, {
-    headers: { [REORDER_SKIP_HEADER]: "1", "x-pathname": request.nextUrl.pathname || "/" }
+    headers: sanitizeUpstreamHeaders(new Headers({ [REORDER_SKIP_HEADER]: "1", "x-pathname": request.nextUrl.pathname || "/" }))
   });
   if (!upstreamResponse.ok) return undefined;
 
@@ -540,12 +590,12 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 
 export async function middleware(request: NextRequest) {
   const iconResponse = await storefrontIconResponse(request);
-  if (iconResponse) return iconResponse;
+  if (iconResponse) return applyGrownstrideNoindex(iconResponse, request);
 
   const skipInternalRewrite = request.headers.get(REORDER_SKIP_HEADER) === "1";
-  const redirectResponse = skipInternalRewrite ? undefined : canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
-  if (redirectResponse) return redirectResponse;
-  if (!shouldRewriteStorefrontHtml(request)) return nextWithPathname(request);
+  const redirectResponse = skipInternalRewrite ? undefined : grownstrideLegacyHostRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
+  if (redirectResponse) return applyGrownstrideNoindex(redirectResponse, request);
+  if (!shouldRewriteStorefrontHtml(request)) return applyGrownstrideNoindex(nextWithPathname(request), request);
 
   const upstreamHeaders = new Headers(request.headers);
   upstreamHeaders.set(REORDER_SKIP_HEADER, "1");
@@ -567,16 +617,16 @@ export async function middleware(request: NextRequest) {
   }
 
   const upstreamResponse = await fetch(upstreamUrl, {
-    headers: upstreamHeaders,
+    headers: sanitizeUpstreamHeaders(upstreamHeaders),
     redirect: "manual"
   });
 
   const contentType = upstreamResponse.headers.get("content-type") ?? "";
   if (upstreamResponse.status >= 300 && upstreamResponse.status < 400) {
     const location = upstreamResponse.headers.get("location");
-    if (location) return NextResponse.redirect(new URL(location, request.url), upstreamResponse.status);
+    if (location) return applyGrownstrideNoindex(NextResponse.redirect(new URL(location, request.url), upstreamResponse.status), request);
   }
-  if (!upstreamResponse.ok || !contentType.includes("text/html")) return upstreamResponse;
+  if (!upstreamResponse.ok || !contentType.includes("text/html")) return applyGrownstrideNoindex(upstreamResponse, request);
 
   const html = await upstreamResponse.text();
   const shouldReorder = shouldReorderStorefrontHead(request);
@@ -593,12 +643,13 @@ export async function middleware(request: NextRequest) {
     headers.set("x-storefront-locale", "es");
     headers.set("content-language", "es");
   }
+  if (isGrownstrideRequest(request)) headers.set("X-Robots-Tag", "noindex, nofollow");
 
-  return new Response(rewrittenHtml, {
+  return applyGrownstrideNoindex(new Response(rewrittenHtml, {
     status: upstreamResponse.status,
     statusText: upstreamResponse.statusText,
     headers
-  });
+  }), request);
 }
 
 export const config = {

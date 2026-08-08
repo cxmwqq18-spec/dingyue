@@ -40,6 +40,26 @@ for (const host of platformHosts) {
   assert(!(state.siteDomains ?? []).some((domain) => domain.domain === host), `${host} must stay a platform host, not a public storefront domain`);
 }
 
+const grownstride = state.sites?.find((site) => site.id === "site_grownstride_test" || site.slug === "grownstride");
+assert(grownstride, "missing grownstride MyDreamShoots test site");
+assert(grownstride.primaryDomain === "test.grownstride.com", `grownstride primaryDomain must be test.grownstride.com, got ${grownstride.primaryDomain}`);
+const grownstrideDomains = (state.siteDomains ?? []).filter((domain) => domain.siteId === grownstride.id);
+const grownstridePrimary = grownstrideDomains.find((domain) => domain.domain === "test.grownstride.com");
+const grownstrideWww = grownstrideDomains.find((domain) => domain.domain === "www.grownstride.com");
+const grownstrideApex = grownstrideDomains.find((domain) => domain.domain === "grownstride.com");
+assert(grownstridePrimary, "missing test.grownstride.com in siteDomains");
+assert(grownstridePrimary.isPrimary, "test.grownstride.com must be the primary grownstride domain");
+assert(grownstridePrimary.status === "active", `test.grownstride.com must be active, got ${grownstridePrimary.status}`);
+assert(grownstrideWww, "missing www.grownstride.com legacy alias in siteDomains");
+assert(!grownstrideWww.isPrimary, "www.grownstride.com must remain a non-primary grownstride alias");
+assert(grownstrideWww.status === "active", `www.grownstride.com must be active, got ${grownstrideWww.status}`);
+assert(grownstrideApex, "missing grownstride.com in siteDomains");
+assert(!grownstrideApex.isPrimary, "grownstride.com should stay a non-primary alias while test.grownstride.com is primary");
+assert(grownstrideApex.status === "active", `grownstride.com must be active, got ${grownstrideApex.status}`);
+assert(!domainRoutingSource.includes(`"test.grownstride.com"`), "test.grownstride.com must not be registered as a platform host");
+assert(!domainRoutingSource.includes(`"www.grownstride.com"`), "www.grownstride.com must not be registered as a platform host");
+assert(!domainRoutingSource.includes(`"grownstride.com"`), "grownstride.com must not be registered as a platform host");
+
 const siteAdminHosts = ["www.aidreamcapes.xyz", "aidreamcapes.xyz"];
 for (const host of siteAdminHosts) {
   assert(domainRoutingSource.includes(`"${host}"`), `${host} must be registered as a site admin host`);
@@ -54,7 +74,9 @@ console.log(
       platformHosts,
       siteAdminHosts,
       dreamshootPrimaryDomain: dreamshoot.primaryDomain,
-      dreamshootDomainCount: dreamshootDomains.length
+      dreamshootDomainCount: dreamshootDomains.length,
+      grownstridePrimaryDomain: grownstride.primaryDomain,
+      grownstrideDomainCount: grownstrideDomains.length
     },
     null,
     2

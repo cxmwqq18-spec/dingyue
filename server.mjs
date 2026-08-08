@@ -96,6 +96,18 @@ function reorderHtmlHead(html) {
   return `${html.slice(0, headStart)}${reorderedHead}${html.slice(headClose)}`;
 }
 
+function applyApprovedLaunchCopy(html) {
+  return html
+    .replaceAll(
+      "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.",
+      "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic."
+    )
+    .replaceAll(
+      "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator",
+      "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
+    );
+}
+
 function interceptHtmlResponse(response) {
   const chunks = [];
   const write = response.write.bind(response);
@@ -141,7 +153,7 @@ function interceptHtmlResponse(response) {
     }
 
     const html = Buffer.concat(chunks).toString("utf8");
-    const nextHtml = reorderHtmlHead(html);
+    const nextHtml = applyApprovedLaunchCopy(reorderHtmlHead(html));
     const body = Buffer.from(nextHtml, "utf8");
     if (!response.headersSent) {
       response.removeHeader("content-length");

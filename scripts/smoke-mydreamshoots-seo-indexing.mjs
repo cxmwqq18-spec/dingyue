@@ -173,7 +173,9 @@ for (const pathName of ["/tools/headshot", "/tools/background-changer", "/tools/
 }
 
 assert(
-  !/disallow|Disallow/.test(robots) &&
+  /grownstride\.com/.test(robots) &&
+    /disallow:\s*["']\/["']/.test(robots) &&
+    /allow:\s*["']\/["']/.test(robots) &&
     nextConfig.includes('source: "/robots.txt"') &&
     nextConfig.includes('value: "Host, X-Forwarded-Host"') &&
     nextConfig.includes('source: "/search"') &&

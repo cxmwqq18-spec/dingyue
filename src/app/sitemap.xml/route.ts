@@ -42,6 +42,11 @@ function sitemapXml(entries: Array<{ loc: string; images: Array<{ loc: string; t
   ].join("\n");
 }
 
+function isGrownstrideHost(value: string | null | undefined): boolean {
+  const host = String(value ?? "").split(",")[0]?.trim().toLowerCase().split(":")[0] ?? "";
+  return host === "grownstride.com" || host === "www.grownstride.com" || host === "test.grownstride.com";
+}
+
 export async function GET(request: Request): Promise<Response> {
   const host = request.headers.get("host");
   const forwardedHost = request.headers.get("x-forwarded-host");
@@ -58,7 +63,10 @@ export async function GET(request: Request): Promise<Response> {
       "cache-control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400",
       "vary": "Host, X-Forwarded-Host, RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
       "x-sitemap-url-count": String(urlCount),
-      "x-sitemap-image-count": String(imageCount)
+      "x-sitemap-image-count": String(imageCount),
+      ...(isGrownstrideHost(forwardedHost) || isGrownstrideHost(host)
+        ? { "x-robots-tag": "noindex, nofollow" }
+        : {})
     }
   });
 }

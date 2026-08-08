@@ -1334,10 +1334,10 @@ function applyHomePage(pageJson) {
   ];
   pageJson.sections = homeSections();
   pageJson.seo = seo(
-    "Aidreamcapes private fan-scene photo albums and holiday memory sets",
-    "Create Aidreamcapes fan-scene photo albums, game-day group portraits, premiere-inspired photo sets, Christmas group albums, Thanksgiving keepsake sets, Halloween party portraits, and seasonal celebration photos from approved source images.",
+    "AIdreamcapes – the most advanced AI photo generator maker",
+    "Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.",
     "/",
-    "fan-scene photo albums, game-day group portraits, premiere-inspired photo sets, holiday memory albums, Christmas group albums, Thanksgiving keepsake sets, Halloween party portraits, Aidreamcapes"
+    "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos"
   );
   return pageJson;
 }
@@ -2039,9 +2039,9 @@ function applyThemeSettings(settings) {
     { label: "Cookie Notice", href: "/cookies", group: "support" }
   ];
   next.seo = {
-    title: "Aidreamcapes private fan-scene photo albums and holiday memory sets",
-    description: "Create private Aidreamcapes fan-scene photo albums, game-day group portraits, premiere-inspired photo sets, Christmas group albums, Thanksgiving keepsake sets, Halloween party portraits, and seasonal celebration photos from approved source images.",
-    keywords: "Aidreamcapes, fan-scene photo albums, game-day group portraits, premiere-inspired photo sets, holiday memory albums, Christmas group albums, Thanksgiving keepsake sets, Halloween party portraits",
+    title: "AIdreamcapes – the most advanced AI photo generator maker",
+    description: "Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.",
+    keywords: "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos",
     canonicalPath: "/",
     canonicalUrl: "https://www.aidreamcapes.com/",
     ogImage: asset("covers", "private-fan-scene-album"),

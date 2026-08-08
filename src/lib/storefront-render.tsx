@@ -47,6 +47,11 @@ import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, P
 const jobDetailSlug = "/app/jobs/detail";
 const dreamshootPartnerTemplateSlugs = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
 
+function isGrownstrideTestStorefront(site: Pick<Site, "id" | "slug" | "primaryDomain">): boolean {
+  const domain = (site.primaryDomain || "").toLowerCase();
+  return site.id === "site_grownstride_test" || site.slug === "grownstride" || domain === "grownstride.com" || domain === "www.grownstride.com" || domain === "test.grownstride.com";
+}
+
 type SiteRenderData = {
   creativePackCategories: CreativePackCategory[];
   creativePacks: ReturnType<typeof getSiteCreativePacksFromState>;
@@ -2326,6 +2331,8 @@ function renderThemePage({
   jsonLd?: JsonLdNode[];
   lightweightChrome?: boolean;
 }) {
+  const jsonLdNodes = isGrownstrideTestStorefront(currentSite) ? undefined : jsonLd;
+
   return (
     <div style={themeStyleVars(settings)}>
       <ThemeRenderer
@@ -2347,7 +2354,7 @@ function renderThemePage({
         videoThemes={renderData.videoThemes}
         lightweightChrome={lightweightChrome}
       />
-      {jsonLd?.length ? <StorefrontJsonLd nodes={jsonLd} /> : null}
+      {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} /> : null}
     </div>
   );
 }

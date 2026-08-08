@@ -504,7 +504,7 @@ function normalizeGlobalSection(type, section) {
 
 const aidreamcapesSeoPages = {
   home: {
-    title: "AIdreamcapes – the most advanced AI photo generator  maker",
+    title: "AIdreamcapes – the most advanced AI photo generator maker",
     description: "Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.",
     keywords: "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos",
     canonicalPath: "/",
@@ -1113,7 +1113,7 @@ function buildThemeSettings() {
     navigation,
     globalSections: scrubAidreamcapesText(globalSections),
     seo: {
-      siteTitle: "AIdreamcapes – the most advanced AI photo generator  maker",
+      siteTitle: "AIdreamcapes – the most advanced AI photo generator maker",
       siteDescription:
         "Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.",
       siteKeywords: "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos",

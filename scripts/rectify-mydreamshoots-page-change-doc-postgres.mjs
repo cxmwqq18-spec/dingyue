@@ -4,6 +4,21 @@ import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+const flags = new Set(process.argv.slice(2).filter((arg) => arg.startsWith("--")).map((arg) => arg.slice(2).split("=")[0]));
+const forceContentOverwrite = flags.has("force-content-overwrite");
+const dbRequested = flags.has("db");
+const dryRun = flags.has("dry-run") || !(forceContentOverwrite && dbRequested);
+
+function contentOverwriteGuardPayload() {
+  return {
+    writeEnabled: !dryRun,
+    requiredFlags: ["--db", "--force-content-overwrite"],
+    dbRequested,
+    note: dryRun
+      ? "No database rows were overwritten. Re-run with --db --force-content-overwrite to apply these text rewrites."
+      : "Content overwrite was explicitly enabled for this run."
+  };
+}
 const headshotGeneratorLabel = "Headshot Generator";
 const headshotGeneratorHref = "/collections/headshots";
 const policyLastUpdated = "August 5, 2026";
@@ -288,20 +303,20 @@ async function main() {
       if (!seo) continue;
       seo.siteTitle = "MyDreamShoots";
       seo.titleTemplate = "%s | MyDreamShoots";
-      seo.siteDescription = "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.";
-      seo.siteKeywords = "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator";
+      seo.siteDescription = "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.";
+      seo.siteKeywords = "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot";
       for (const [pageId, pageSeo] of Object.entries(seo.pages ?? {})) {
         if (!blogPageIds.has(pageId)) delete pageSeo.keywords;
       }
       if (seo.pages?.site_dreamshoot_home) {
         seo.pages.site_dreamshoot_home.title = "Professional AI Photo Generator Online - MyDreamShoots";
-        seo.pages.site_dreamshoot_home.description = "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.";
-        seo.pages.site_dreamshoot_home.keywords = "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator";
+        seo.pages.site_dreamshoot_home.description = "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.";
+        seo.pages.site_dreamshoot_home.keywords = "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot";
       }
       for (const page of themePages) updateThemeSeoPolicyPage(themeSettingsJson, page.id, policyCanonicalPathBySlug[page.slug]);
     }
     if (changed(settings.draftJson, draftJson) || changed(settings.publishedJson, publishedJson)) {
-      await prisma.themeSettings.update({ where: { siteId: site.id }, data: { draftJson, publishedJson } });
+      if (!dryRun) await prisma.themeSettings.update({ where: { siteId: site.id }, data: { draftJson, publishedJson } });
       result.themeSettings += 1;
     }
   }
@@ -311,8 +326,8 @@ async function main() {
     let publishedJson = rewriteJson(structuredClone(page.publishedJson));
     let title = page.title;
     if (page.slug === "/") {
-      draftJson = setPageSeo(draftJson, "Professional AI Photo Generator Online - MyDreamShoots", "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.", "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator");
-      publishedJson = setPageSeo(publishedJson, "Professional AI Photo Generator Online - MyDreamShoots", "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.", "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator");
+      draftJson = setPageSeo(draftJson, "Professional AI Photo Generator Online - MyDreamShoots", "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.", "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot");
+      publishedJson = setPageSeo(publishedJson, "Professional AI Photo Generator Online - MyDreamShoots", "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.", "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot");
       draftJson = updateHomeHeroCtas(draftJson);
       publishedJson = updateHomeHeroCtas(publishedJson);
     }
@@ -340,7 +355,7 @@ async function main() {
       publishedJson = updatePolicyJson(publishedJson, canonicalPath);
     }
     if (changed(page.draftJson, draftJson) || changed(page.publishedJson, publishedJson) || title !== page.title) {
-      await prisma.themePage.update({ where: { id: page.id }, data: { title, draftJson, publishedJson } });
+      if (!dryRun) await prisma.themePage.update({ where: { id: page.id }, data: { title, draftJson, publishedJson } });
       result.themePages += 1;
     }
   }
@@ -353,7 +368,7 @@ async function main() {
     updatePolicyTemplate(templates?.content, "/content");
     updatePolicyTemplate(templates?.refunds, "/refunds");
     if (changed(theme.templates, templates) || changed(theme.settings, themeSettings)) {
-      await prisma.siteTheme.update({ where: { id: theme.id }, data: { templates, settings: themeSettings } });
+      if (!dryRun) await prisma.siteTheme.update({ where: { id: theme.id }, data: { templates, settings: themeSettings } });
       result.siteThemes += 1;
     }
   }
@@ -376,7 +391,7 @@ async function main() {
     updatePolicyTemplate(snapshot?.saasTheme?.templates?.content, "/content");
     updatePolicyTemplate(snapshot?.saasTheme?.templates?.refunds, "/refunds");
     if (changed(publication.snapshot, snapshot)) {
-      await prisma.themePublication.update({ where: { id: publication.id }, data: { snapshot } });
+      if (!dryRun) await prisma.themePublication.update({ where: { id: publication.id }, data: { snapshot } });
       result.themePublications += 1;
     }
   }
@@ -396,13 +411,13 @@ async function main() {
     if (pack.id === "pack_dreamshoot_hairstyle") next.description = "Preview haircut, color, and styling ideas before you commit to a real salon change or a full image package.";
     if (pack.id === "pack_dreamshoot_upscaler") next.description = "Sharpen a favorite generated image for cleaner downloads, profile use, and larger display sizes.";
     if (next.headline !== pack.headline || next.description !== pack.description || next.prompt !== pack.prompt) {
-      await prisma.creativePack.update({ where: { id: pack.id }, data: { headline: next.headline, description: next.description, prompt: next.prompt } });
+      if (!dryRun) await prisma.creativePack.update({ where: { id: pack.id }, data: { headline: next.headline, description: next.description, prompt: next.prompt } });
       result.creativePacks += 1;
     }
   }
 
-  removeStateCaches();
-  console.log(JSON.stringify({ ok: true, siteId: site.id, ...result }, null, 2));
+  if (!dryRun) removeStateCaches();
+  console.log(JSON.stringify({ ok: true, dryRun, contentOverwriteGuard: contentOverwriteGuardPayload(), siteId: site.id, ...result }, null, 2));
 }
 
 main()

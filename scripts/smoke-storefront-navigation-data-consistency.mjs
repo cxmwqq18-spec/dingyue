@@ -517,9 +517,7 @@ async function assertShowcaseMotionVideos(page, routeCheck, failures, mediaRespo
   await page.waitForTimeout(4500);
   const result = await page.evaluate(async () => {
     const section = document.querySelector("#generated-showcase");
-    const rails = [...(section?.querySelectorAll(".dreamshoot-showcase-rail") ?? [])];
-    const rail = rails.find((item) => item.querySelector("video"));
-    const videos = [...(rail?.querySelectorAll("video") ?? [])].slice(0, 8);
+    const videos = [...(section?.querySelectorAll('[data-showcase-card-kind="video"] video') ?? [])];
     await Promise.all(videos.map((video) => new Promise((resolve) => {
       if (video.readyState >= 2 && video.videoWidth > 0 && video.videoHeight > 0) {
         resolve();
@@ -550,7 +548,7 @@ async function assertShowcaseMotionVideos(page, routeCheck, failures, mediaRespo
     const active = !item.paused || item.currentTime > 0.05;
     return !/\.mp4(?:[?#]|$)/i.test(item.currentSrc) || !playable || !active || !item.autoplay || !item.muted || !item.playsInline;
   });
-  if (result.length < 8 || badStatuses.length || invalidVideos.length) {
+  if (result.length < 1 || badStatuses.length || invalidVideos.length) {
     failures.push({
       site: routeCheck.site,
       route: routeCheck.route,

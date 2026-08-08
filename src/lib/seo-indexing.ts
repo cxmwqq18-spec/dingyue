@@ -15,6 +15,7 @@ const DREAMSHOOT_SITE_ID = "site_dreamshoot";
 const DREAMSHOOT_SITE_SLUGS = new Set(["mydreamshoots", "dreamshoot"]);
 const AIDREAMCAPES_SITE_ID = "site_aidreamcapes";
 const AIDREAMCAPES_SITE_SLUGS = new Set(["aidreamcapes"]);
+const GROWNSTRIDE_HOSTS = new Set(["grownstride.com", "www.grownstride.com", "test.grownstride.com"]);
 
 function cleanText(value: unknown, fallback = ""): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() || fallback : fallback;
@@ -699,6 +700,10 @@ function isMydreamshootsHost(host: string): boolean {
   return host === "www.mydreamshoots.com" || host === "mydreamshoots.com";
 }
 
+function isGrownstrideHost(host: string): boolean {
+  return GROWNSTRIDE_HOSTS.has(host);
+}
+
 function isAidreamcapesHost(host: string): boolean {
   return host === "www.aidreamcapes.com" || host === "aidreamcapes.com";
 }
@@ -1006,6 +1011,7 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
   const publicHostCandidates = normalizedHosts.filter((host) => !isLocalDevelopmentHost(host));
   const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
   const isLocalHostRequest = !publicHostCandidates.length && normalizedHosts.some(isLocalDevelopmentHost);
+  if (siteHostCandidates.some(isGrownstrideHost)) return [];
   const shouldUseLegacyStateFirst = prefersLegacyStateForPersistenceBackend() || isLocalHostRequest || process.env.NODE_ENV !== "production";
   const runtime = shouldUseLegacyStateFirst ? await readLegacyIndexableStateAndSites() : await readIndexableStateAndSites();
   if (!runtime) {
@@ -1023,6 +1029,7 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
 
 export function storefrontSitemapUrlForHost(hosts: string | null | undefined | Array<string | null | undefined>): string | undefined {
   const normalizedHost = normalizeFirstHost(hosts);
+  if (isGrownstrideHost(normalizedHost)) return undefined;
   if (isAidreamcapesHost(normalizedHost)) return AIDREAMCAPES_SITEMAP_URL;
   if (isMydreamshootsHost(normalizedHost)) return MYDREAMSHOOTS_SITEMAP_URL;
   return undefined;
