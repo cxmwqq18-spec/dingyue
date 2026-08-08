@@ -5273,6 +5273,17 @@ function isPrimaryMyDreamShootsSite(site: Site): boolean {
   );
 }
 
+function isGrownstrideTestSite(site: Pick<Site, "id" | "slug" | "primaryDomain">): boolean {
+  const domain = (site.primaryDomain || "").toLowerCase();
+  return (
+    site.id === "site_grownstride_test" ||
+    site.slug === "grownstride" ||
+    domain === "grownstride.com" ||
+    domain === "www.grownstride.com" ||
+    domain === "test.grownstride.com"
+  );
+}
+
 function heroBulletDisplayText(site: Site, item: string): string {
   const trimmed = item.trim();
   if (isPrimaryMyDreamShootsSite(site)) return trimmed;
@@ -14081,37 +14092,38 @@ function SectionView({
           ]
         : [];
     const featuredVoices = [...items, ...fallbackReviewItems].slice(0, reviewMode ? 8 : 4);
-    const summaryItems = reviewMode ? featuredVoices : items;
+    const stackedReviewLayout = reviewMode && isGrownstrideTestSite(site);
+    const summaryItems = stackedReviewLayout ? featuredVoices : items;
     const spanishXbyUseCaseWall = isSpanishXbySite(site);
     const isDreamShootUseCaseWall = !reviewMode && !spanishXbyUseCaseWall && /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain}`);
     return (
       <section className="relative overflow-hidden bg-[#fffaf3] px-5 py-16 text-[#14161a] md:py-18" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
-          <div className={reviewMode ? "flex flex-col gap-10" : "grid gap-8 lg:grid-cols-[minmax(250px,0.3fr)_minmax(0,0.7fr)]"}>
-            <div className={reviewMode ? "flex flex-col gap-8 border-b border-[#e7dccf] pb-9 lg:flex-row lg:items-end lg:justify-between" : "pt-2"}>
-              <div className={reviewMode ? "min-w-0 flex-1" : undefined}>
+          <div className={stackedReviewLayout ? "flex flex-col gap-10" : "grid gap-8 lg:grid-cols-[minmax(250px,0.3fr)_minmax(0,0.7fr)]"}>
+            <div className={stackedReviewLayout ? "flex flex-col gap-8 border-b border-[#e7dccf] pb-9 lg:flex-row lg:items-end lg:justify-between" : "pt-2"}>
+              <div className={stackedReviewLayout ? "min-w-0 flex-1" : undefined}>
                 <div className="h-px w-14 bg-[#b98a57]" />
-                <h2 className={`${reviewMode ? "max-w-[20ch]" : "max-w-[12ch]"} mt-4 text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]`}>
+                <h2 className={`${stackedReviewLayout ? "max-w-[20ch]" : "max-w-[12ch]"} mt-4 text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]`}>
                   {isDreamShootUseCaseWall ? "Ways people use MyDreamShoots" : headingSetting(section, "summaryTitle", sectionHeading(section, "Customer results"))}
                 </h2>
-                <p className={`${reviewMode ? "max-w-3xl" : "max-w-[17rem]"} mt-5 text-[0.94rem] leading-7 text-[#6d665f]`}>
+                <p className={`${stackedReviewLayout ? "max-w-3xl" : "max-w-[17rem]"} mt-5 text-[0.94rem] leading-7 text-[#6d665f]`}>
                   {isDreamShootUseCaseWall ? "Plan sports fan meetups, VIP-style red-carpet looks, Christmas cards, and holiday group albums before spending credits." : setting(section, "summaryBody", setting(section, "subtitle"))}
                 </p>
               </div>
               {!isDreamShootUseCaseWall ? (
-                <div className={reviewMode ? "flex flex-wrap items-center gap-x-6 gap-y-4 lg:pb-1" : undefined}>
-                  <div className={reviewMode ? "flex flex-col gap-2" : undefined}>
-                    <div className={reviewMode ? "flex items-center gap-2 text-[#d59a4b]" : "mt-8 flex items-center gap-2 text-[#d59a4b]"}>
+                <div className={stackedReviewLayout ? "flex flex-wrap items-center gap-x-6 gap-y-4 lg:pb-1" : undefined}>
+                  <div className={stackedReviewLayout ? "flex flex-col gap-2" : undefined}>
+                    <div className={stackedReviewLayout ? "flex items-center gap-2 text-[#d59a4b]" : "mt-8 flex items-center gap-2 text-[#d59a4b]"}>
                       {Array.from({ length: 5 }).map((_, starIndex) => (
                         <span key={starIndex}>★</span>
                       ))}
                       <span className="ml-3 text-[1.2rem] font-medium text-[#24211d]">{setting(section, "summaryRating", "")}</span>
                     </div>
-                    <p className={reviewMode ? "text-[0.94rem] text-[#6d665f]" : "mt-2 text-[0.94rem] text-[#6d665f]"}>{setting(section, "summaryMeta", "Customer examples")}</p>
+                    <p className={stackedReviewLayout ? "text-[0.94rem] text-[#6d665f]" : "mt-2 text-[0.94rem] text-[#6d665f]"}>{setting(section, "summaryMeta", "Customer examples")}</p>
                   </div>
                 </div>
               ) : null}
-              <div className={`${reviewMode ? "mt-0" : "mt-5"} flex flex-wrap items-center gap-2`}>
+              <div className={`${stackedReviewLayout ? "mt-0" : "mt-5"} flex flex-wrap items-center gap-2`}>
                 {summaryItems.slice(0, 5).map((item, index) => {
                   const name = isDreamShootUseCaseWall ? blockValue(item, "role", blockValue(item, "name", "Use case")) : blockValue(item, "name", "Customer");
                   const initials = name
@@ -14126,12 +14138,12 @@ function SectionView({
                     </div>
                   );
                 })}
-                <span className={`${reviewMode ? "ml-0" : "ml-1"} rounded-full border border-[#eadfce] bg-white px-3 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#7f786f]`}>
+                <span className={`${stackedReviewLayout ? "ml-0" : "ml-1"} rounded-full border border-[#eadfce] bg-white px-3 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#7f786f]`}>
                   {reviewMode ? (isSpanishXbySite(site) ? "Reseñas positivas" : "Positive reviews") : "Private examples"}
                 </span>
               </div>
             </div>
-            <div className={reviewMode ? "grid min-w-0 gap-5 sm:grid-cols-2 xl:grid-cols-4" : "grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3"}>
+            <div className={stackedReviewLayout ? "grid min-w-0 gap-5 sm:grid-cols-2 xl:grid-cols-4" : "grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3"}>
               {featuredVoices.map((item, index) => {
                 const avatar = mediaAssetUrl(site, blockValue(item, "avatarUrl", ""));
                 const resultImage = mediaAssetUrl(site, blockValue(item, "resultImageUrl", fallbackHeroImages[index % fallbackHeroImages.length]));
@@ -14142,8 +14154,8 @@ function SectionView({
                 const customerName = blockValue(item, "name", "Customer");
                 const customerRole = blockValue(item, "role", "customer review");
                 return (
-                  <article className={`group flex ${reviewMode ? "min-h-[410px]" : "min-h-[380px]"} min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#e7dccf] bg-white shadow-[0_22px_58px_-46px_rgba(20,22,26,0.16)]`} key={instanceKey(item, index, "testimonial")} {...xfcartBlockAttrs(item, index, "testimonial")}>
-                    <div className={`flex flex-1 flex-col ${reviewMode ? "p-5" : "p-[18px]"}`}>
+                  <article className={`group flex ${stackedReviewLayout ? "min-h-[410px]" : "min-h-[380px]"} min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#e7dccf] bg-white shadow-[0_22px_58px_-46px_rgba(20,22,26,0.16)]`} key={instanceKey(item, index, "testimonial")} {...xfcartBlockAttrs(item, index, "testimonial")}>
+                    <div className={`flex flex-1 flex-col ${stackedReviewLayout ? "p-5" : "p-[18px]"}`}>
                       <div className="flex items-center gap-3">
                         {avatar ? (
                           <img className="h-14 w-14 rounded-full border-[3px] border-white object-cover shadow-[0_16px_34px_-25px_rgba(20,22,26,0.35)]" src={avatar} alt={`Customer avatar for ${customerName} ${customerRole} review`} loading="lazy" decoding="async" fetchPriority="low" />
@@ -14168,7 +14180,7 @@ function SectionView({
                     </div>
                     <button
                       aria-label={`Open ${resultVideo ? "video" : "image"} result from ${customerName}'s ${customerRole} review`}
-                      className={`group/result relative block w-full overflow-hidden bg-[#f2e8da] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a57] focus-visible:ring-inset ${reviewMode ? "aspect-[3/2]" : "h-[180px]"}`}
+                      className={`group/result relative block w-full overflow-hidden bg-[#f2e8da] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a57] focus-visible:ring-inset ${stackedReviewLayout ? "aspect-[3/2]" : "h-[180px]"}`}
                       data-dreamshoot-preview-meta={cardMeta}
                       data-dreamshoot-preview-poster={resultImage}
                       data-dreamshoot-preview-src={resultVideo || resultImage}
@@ -14194,7 +14206,7 @@ function SectionView({
                           className="absolute inset-0 bg-[#f2e8da]"
                           fetchPriority="low"
                           loading="lazy"
-                          sizes={reviewMode ? "(max-width: 640px) 100vw, (max-width: 1279px) 50vw, 25vw" : "(max-width: 640px) 100vw, 20rem"}
+                          sizes={stackedReviewLayout ? "(max-width: 640px) 100vw, (max-width: 1279px) 50vw, 25vw" : "(max-width: 640px) 100vw, 20rem"}
                           src={resultImage}
                         />
                       )}
