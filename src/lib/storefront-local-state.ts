@@ -7,10 +7,19 @@ import {
   readStorefrontPublicRuntimeStateBySlugFromDatabase
 } from "@/lib/storefront-state";
 import { publicSiteSlug } from "@/lib/domain-routing";
+import {
+  isAnyLocalStorefrontReadPreference,
+  isDatabaseStorefrontReadPreference,
+  isExplicitLocalPreviewReadPreference,
+  isLegacyLocalStorefrontReadPreference,
+  isMydreamshootsContentSourceSlug,
+  requiresMydreamshootsPublishedSource
+} from "@/lib/storefront-content-source-policy";
 import type { CreativePackCategory, PlatformState, ToolCategory } from "@/lib/types";
 
 const localPlatformStateFile = path.join(process.cwd(), "data", "platform-state.json");
 let localJsonStateCache: { mtimeMs: number; state: PlatformState } | null = null;
+let warnedIgnoredMydreamshootsLocalPreference = false;
 
 function cloneJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
@@ -112,11 +121,31 @@ function isSynchronizedDreamshootSite(siteSlug?: string): boolean {
 
 export function preferLocalPathModeState(siteSlug?: string): boolean {
   const preference = pathModeReadPreference();
-  if (["database", "db", "relational"].includes(preference)) return false;
-  if (["local", "json", "legacy", "file"].includes(preference)) return true;
+  if (isMydreamshootsContentSourceSlug(siteSlug)) {
+    if (isLegacyLocalStorefrontReadPreference(preference) && !warnedIgnoredMydreamshootsLocalPreference && process.env.NODE_ENV !== "production") {
+      warnedIgnoredMydreamshootsLocalPreference = true;
+      console.warn(
+        `[storefront-content-source] Ignoring STOREFRONT_PATH_MODE_READS=${preference} for MyDreamShoots. ` +
+        "Use local-preview only for an intentional data/platform-state.json preview."
+      );
+    }
+    return isExplicitLocalPreviewReadPreference(preference);
+  }
+  if (isDatabaseStorefrontReadPreference(preference)) return false;
+  if (isAnyLocalStorefrontReadPreference(preference)) return true;
   if (prefersLocalPersistenceBackend()) return true;
   if (process.env.NODE_ENV === "production") return false;
   return !isSynchronizedDreamshootSite(siteSlug);
+}
+
+function databaseSourceError(kind: "runtime" | "metadata", siteSlug: string, pageSlug: string, error?: unknown): Error {
+  const original = error instanceof Error && error.message ? ` Original error: ${error.message}` : "";
+  return new Error(
+    `MyDreamShoots ${kind} for ${siteSlug}${pageSlug} must read Postgres published content. ` +
+    "Refusing to fall back to data/platform-state.json because that can reintroduce stale copy. " +
+    "Check DATABASE_URL/DB tunnel, or set STOREFRONT_PATH_MODE_READS=local-preview for an intentional JSON preview." +
+    original
+  );
 }
 
 function legacyPageSlugForSite(siteSlug: string, pageSlug: string): string | undefined {
@@ -125,6 +154,7 @@ function legacyPageSlugForSite(siteSlug: string, pageSlug: string): string | und
 }
 
 export async function readPathModePublicRuntimeState(siteSlug: string, pageSlug: string, contextSlug?: string): Promise<PlatformState | undefined> {
+  const requiresPublishedSource = requiresMydreamshootsPublishedSource(siteSlug, pathModeReadPreference());
   if (preferLocalPathModeState(siteSlug)) return readLocalState(siteSlug);
   try {
     const state = pageSlug === "/collections"
@@ -136,13 +166,16 @@ export async function readPathModePublicRuntimeState(siteSlug: string, pageSlug:
       const legacyState = await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, legacyPageSlug, contextSlug);
       if (legacyState?.sites[0]) return legacyState;
     }
-  } catch {
-    // Local development can exhaust or cold-start relational reads; JSON state keeps /site previews responsive.
+  } catch (error) {
+    if (requiresPublishedSource) throw databaseSourceError("runtime", siteSlug, pageSlug, error);
+    // Local development can exhaust or cold-start relational reads; JSON state keeps non-protected /site previews responsive.
   }
+  if (requiresPublishedSource) throw databaseSourceError("runtime", siteSlug, pageSlug);
   return readLocalState(siteSlug);
 }
 
 export async function readPathModePublicMetadataState(siteSlug: string, pageSlug: string): Promise<PlatformState | undefined> {
+  const requiresPublishedSource = requiresMydreamshootsPublishedSource(siteSlug, pathModeReadPreference());
   if (preferLocalPathModeState(siteSlug)) return readLocalState(siteSlug);
   try {
     const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, pageSlug);
@@ -152,8 +185,10 @@ export async function readPathModePublicMetadataState(siteSlug: string, pageSlug
       const legacyState = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(siteSlug, legacyPageSlug);
       if (legacyState?.sites[0]) return legacyState;
     }
-  } catch {
-    // Fall back to the local storefront preview state.
+  } catch (error) {
+    if (requiresPublishedSource) throw databaseSourceError("metadata", siteSlug, pageSlug, error);
+    // Fall back to the local storefront preview state for non-protected sites.
   }
+  if (requiresPublishedSource) throw databaseSourceError("metadata", siteSlug, pageSlug);
   return readLocalState(siteSlug);
 }

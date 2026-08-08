@@ -15,6 +15,7 @@ import { withStorefrontPublicWatermarkUrl } from "@/lib/storefront-public-waterm
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import { normalizePlatformAiProviderType, platformProviderTypeForAppType } from "@/lib/ai-provider-type";
 import { shouldFallbackRelationalRead, shouldUseRelationalReadFallbackCircuit, warnRelationalFallback } from "@/lib/stores/relational-fallback";
+import { isMydreamshootsContentSourceSiteId } from "@/lib/storefront-content-source-policy";
 import { videoProviderModelFamiliesForProviders } from "@/lib/video-provider-family";
 import { runnableVideoProviderModelFamiliesForRequest } from "@/lib/video-provider-availability";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit, isVideoProviderModel } from "@/lib/video-provider-limits";
@@ -1163,6 +1164,7 @@ export const getStorefrontPublicCreativePacksForSite = cache(async (siteId: stri
         });
         return rows.map(toPublicRuntimeCreativePack);
       } catch (error) {
+        if (isMydreamshootsContentSourceSiteId(siteId)) throw error;
         if (!shouldFallbackRelationalRead(error)) throw error;
         warnRelationalFallback("storefront public creative packs", error);
         return fallbackPublicCreativePacksForSite(siteId, take);
@@ -1184,6 +1186,7 @@ export const getStorefrontPublicCreativePackCategoriesForSite = cache(async (sit
         });
         return rows.map(toCreativePackCategory);
       } catch (error) {
+        if (isMydreamshootsContentSourceSiteId(siteId)) throw error;
         if (!shouldFallbackRelationalRead(error)) throw error;
         warnRelationalFallback("storefront public creative pack categories", error);
         return fallbackPublicCreativePackCategoriesForSite(siteId);
@@ -1230,6 +1233,7 @@ export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string
           };
         });
       } catch (error) {
+        if (isMydreamshootsContentSourceSiteId(siteId)) throw error;
         if (!shouldFallbackRelationalRead(error)) throw error;
         warnRelationalFallback("storefront public video themes", error);
         return fallbackPublicVideoThemesForSite(siteId, take);

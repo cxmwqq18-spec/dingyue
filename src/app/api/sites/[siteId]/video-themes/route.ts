@@ -5,6 +5,7 @@ import { photoPackageSlug } from "@/lib/photo-package-taxonomy";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import { readLocalJsonPlatformState } from "@/lib/storefront-local-state";
+import { isAnyLocalStorefrontReadPreference, isExplicitLocalPreviewReadPreference, isMydreamshootsContentSourceSiteId } from "@/lib/storefront-content-source-policy";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import { toVideoTheme, toVideoThemeCategory } from "@/lib/stores/prisma-mappers";
 import {
@@ -76,10 +77,11 @@ function categoryWhere(category?: string): Prisma.VideoThemeWhereInput | undefin
   };
 }
 
-function shouldUseLocalPublicVideoThemeReads(): boolean {
+function shouldUseLocalPublicVideoThemeReads(siteId: string): boolean {
   if (process.env.NODE_ENV === "production") return false;
   const preference = (process.env.STOREFRONT_PATH_MODE_READS ?? "").trim().toLowerCase();
-  return ["local", "json", "legacy", "file"].includes(preference);
+  if (isMydreamshootsContentSourceSiteId(siteId)) return isExplicitLocalPreviewReadPreference(preference);
+  return isAnyLocalStorefrontReadPreference(preference);
 }
 
 function localCategoryMap(state: PlatformState, siteId: string): Map<string, VideoThemeCategory> {
@@ -227,7 +229,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     AND: [categoryWhere(category), searchWhere(query)].filter(Boolean) as Prisma.VideoThemeWhereInput[]
   };
 
-  if (!admin && shouldUseLocalPublicVideoThemeReads()) {
+  if (!admin && shouldUseLocalPublicVideoThemeReads(siteId)) {
     const payload = await localVideoThemePayload({ category, includeCategories, page, pageSize, query, siteId });
     return payload
       ? NextResponse.json(payload)

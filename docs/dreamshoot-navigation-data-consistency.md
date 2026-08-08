@@ -18,8 +18,8 @@ This made the issue look like the create page was refreshing into a separate dat
 
 For MyDreamShoots, DreamShoot, and Aidreamcapes customer-facing routes, public navigation and signed-in navigation must use the same effective data source and layout rules.
 
-- Default local path-mode reads for these storefronts must use the relational database.
-- Use `STOREFRONT_PATH_MODE_READS=local`, `json`, `legacy`, or `file` only for an intentional local preview that is expected to differ from customer workspace data.
+- Default local path-mode reads for MyDreamShoots must use the relational database and must not fall back to `data/platform-state.json`.
+- Use `STOREFRONT_PATH_MODE_READS=local-preview`, `json-preview`, `legacy-preview`, or `file-preview` only for an intentional local preview that is expected to differ from customer workspace data.
 - Header/top-tab dropdown data is site-wide navigation data, not page-body data. `Browse packages` / `Travel Packages` and `Tools` must expose the same package themes, tool items, group headings, item order, and hrefs from every route and entry point for the same storefront.
 - Focused detail routes such as `/collections/<slug>` and `/tools/<slug>` may use filtered data for page sections, but they must not feed the header dropdown from that filtered runtime payload.
 - Query complete navigation datasets once per cache window and reuse them across routes. Do not create separate homepage, collection-detail, tool-detail, workspace, desktop, or mobile menu datasets that can drift.
