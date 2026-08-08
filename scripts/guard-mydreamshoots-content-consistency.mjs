@@ -7,6 +7,7 @@ import { PrismaClient } from "@prisma/client";
 
 const repoRoot = process.cwd();
 const statePath = path.join(repoRoot, "data", "platform-state.json");
+const homepageLockPath = path.join(repoRoot, "docs", "content-locks", "mydreamshoots-homepage-approved.json");
 const prisma = new PrismaClient();
 const rawArgs = process.argv.slice(2);
 const flags = new Set();
@@ -36,6 +37,7 @@ const guardPaths = parsePaths(args.get("paths") ?? process.env.MYDREAMSHOOTS_CON
 const skipLive = flags.has("skip-live") || process.env.MYDREAMSHOOTS_CONTENT_GUARD_LIVE === "0";
 const includeLocalJson = flags.has("include-local-json") || process.env.MYDREAMSHOOTS_CONTENT_GUARD_LOCAL_JSON === "1";
 const skipLocalJson = flags.has("skip-local-json") || !includeLocalJson;
+const skipHomepageLock = flags.has("skip-homepage-lock");
 const timeoutMs = positiveInt(args.get("timeout-ms") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_TIMEOUT_MS, 15_000);
 const minLiveCoverage = boundedNumber(args.get("min-live-coverage") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MIN_LIVE_COVERAGE, 0.62, 0, 1);
 const pathMinLiveCoverage = parsePathCoverage(args.get("min-live-coverage-by-path") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MIN_LIVE_COVERAGE_BY_PATH, { "/tools": 0.58 });
@@ -281,6 +283,22 @@ function fingerprintRecords(records) {
   return createHash("sha256").update(payload).digest("hex");
 }
 
+function stableJsonValue(value) {
+  if (Array.isArray(value)) return value.map(stableJsonValue);
+  if (!value || typeof value !== "object") return value;
+  return Object.fromEntries(
+    Object.keys(value)
+      .sort()
+      .map((key) => [key, stableJsonValue(value[key])])
+  );
+}
+
+function stableJsonFingerprint(value) {
+  return createHash("sha256")
+    .update(JSON.stringify(stableJsonValue(value)))
+    .digest("hex");
+}
+
 function fingerprintSummary(records) {
   return {
     fingerprint: fingerprintRecords(records),
@@ -309,6 +327,115 @@ function findLocalSite(state) {
     site.slug === "dreamshoot" ||
     site.primaryDomain === "www.mydreamshoots.com"
   );
+}
+
+function loadHomepageLock() {
+  if (!fs.existsSync(homepageLockPath)) {
+    addFailure("homepage-lock-missing", "MyDreamShoots approved homepage lock file is missing", {
+      homepageLockPath,
+      likelyCause: "the approved homepage copy baseline was removed or the repository checkout is incomplete"
+    });
+    return undefined;
+  }
+
+  try {
+    return JSON.parse(fs.readFileSync(homepageLockPath, "utf8"));
+  } catch (error) {
+    addFailure("homepage-lock-invalid-json", "MyDreamShoots approved homepage lock file is not valid JSON", {
+      homepageLockPath,
+      error: error instanceof Error ? error.message : String(error)
+    });
+    return undefined;
+  }
+}
+
+function compareHomepageLock({ dbPage, dbRecords }) {
+  if (skipHomepageLock) {
+    warnings.push({
+      type: "homepage-lock-skipped",
+      homepageLockPath,
+      message: "The approved homepage lock was skipped. Do not use --skip-homepage-lock in deploy/build prechecks."
+    });
+    return { status: "skipped", path: homepageLockPath };
+  }
+
+  const lock = loadHomepageLock();
+  if (!lock) return { status: "missing", path: homepageLockPath };
+
+  const lockedVisibleRecords = Array.isArray(lock.visibleRecords) ? lock.visibleRecords : [];
+  const lockedVisibleFingerprint = lock.fingerprints?.visibleTextSha256 ?? fingerprintRecords(lockedVisibleRecords);
+  const dbVisibleFingerprint = fingerprintRecords(dbRecords);
+  const lockedPublishedFingerprint = lock.fingerprints?.publishedJsonSha256;
+  const dbPublishedFingerprint = stableJsonFingerprint(dbPage.publishedJson);
+  const summary = {
+    status: "checked",
+    path: homepageLockPath,
+    lockedAt: lock.lockedAt ?? null,
+    policy: lock.policy?.rule ?? null,
+    page: lock.page ?? null,
+    fingerprints: {
+      approvedPublishedJson: lockedPublishedFingerprint,
+      databasePublishedJson: dbPublishedFingerprint,
+      approvedVisibleText: lockedVisibleFingerprint,
+      databaseVisibleText: dbVisibleFingerprint
+    }
+  };
+
+  if (lock.site?.id && lock.site.id !== siteId) {
+    addFailure("homepage-lock-site-mismatch", "MyDreamShoots approved homepage lock belongs to a different site", {
+      homepageLockPath,
+      expectedSiteId: siteId,
+      lockSite: lock.site
+    });
+  }
+
+  if (normalizePath(lock.page?.slug ?? "/") !== "/") {
+    addFailure("homepage-lock-page-mismatch", "MyDreamShoots approved homepage lock does not describe the homepage", {
+      homepageLockPath,
+      lockPage: lock.page
+    });
+  }
+
+  if (!lockedPublishedFingerprint) {
+    addFailure("homepage-lock-published-fingerprint-missing", "MyDreamShoots approved homepage lock is missing the published JSON fingerprint", {
+      homepageLockPath
+    });
+  } else if (lockedPublishedFingerprint !== dbPublishedFingerprint) {
+    addFailure("homepage-lock-published-json-mismatch", "MyDreamShoots homepage publishedJson no longer matches the approved locked baseline", {
+      homepageLockPath,
+      slug: "/",
+      approvedPublishedJsonSha256: lockedPublishedFingerprint,
+      databasePublishedJsonSha256: dbPublishedFingerprint,
+      likelyCause: "homepage content was modified, imported from another source, switched to a different version, or rolled back without updating the approved lock"
+    });
+  }
+
+  if (!lockedVisibleRecords.length) {
+    addFailure("homepage-lock-visible-records-missing", "MyDreamShoots approved homepage lock does not contain visible text records", {
+      homepageLockPath
+    });
+  } else {
+    const visibleComparison = compareStructuredFingerprints({
+      leftLabel: "approved homepage lock",
+      rightLabel: "database ThemePage.publishedJson",
+      slug: "/",
+      leftRecords: lockedVisibleRecords,
+      rightRecords: dbRecords
+    });
+    summary.visibleComparison = visibleComparison;
+  }
+
+  if (lockedVisibleFingerprint !== dbVisibleFingerprint) {
+    addFailure("homepage-lock-visible-fingerprint-mismatch", "MyDreamShoots homepage visible copy no longer matches the approved locked baseline", {
+      homepageLockPath,
+      slug: "/",
+      approvedVisibleTextSha256: lockedVisibleFingerprint,
+      databaseVisibleTextSha256: dbVisibleFingerprint,
+      likelyCause: "customer-facing homepage copy changed without an explicit approved copy update"
+    });
+  }
+
+  return summary;
 }
 
 function compareStructuredFingerprints({ leftLabel, rightLabel, slug, leftRecords, rightRecords }) {
@@ -509,6 +636,14 @@ async function main() {
     throw new Error("DATABASE_URL is required so the content guard can verify the database source of truth.");
   }
 
+  if (!skipHomepageLock && !guardPaths.includes("/")) {
+    addFailure("homepage-lock-path-not-guarded", "MyDreamShoots homepage lock requires / to be included in guarded paths", {
+      homepageLockPath,
+      guardedPaths: guardPaths,
+      likelyCause: "--paths excluded the homepage; do not bypass the approved homepage baseline in deploy/build prechecks"
+    });
+  }
+
   const site = await loadDatabaseSite();
   if (!site) throw new Error("MyDreamShoots site was not found in Postgres.");
   const settings = site.settings?.publishedJson ?? {};
@@ -518,6 +653,7 @@ async function main() {
   const localSettings = localSite?.themeSettings?.publishedJson;
   const perPage = [];
   const originReports = [];
+  let homepageLockReport = skipHomepageLock ? { status: "skipped", path: homepageLockPath } : null;
 
   if (!skipLocalJson && !localSite) {
     addFailure("local-json-site-missing", "data/platform-state.json does not contain the MyDreamShoots site", { statePath });
@@ -566,6 +702,11 @@ async function main() {
       publication: undefined,
       localJson: undefined
     };
+
+    if (normalizePath(slug) === "/") {
+      homepageLockReport = compareHomepageLock({ dbPage, dbRecords });
+      pageSummary.approvedHomepageLock = homepageLockReport;
+    }
 
     if (snapshotPage?.publishedJson) {
       const snapshotRecords = collectPageRecords(snapshotPage, latestPublication?.snapshot?.themeSettings?.publishedJson ?? latestPublication?.snapshot?.themeSettings ?? settings, `publication:${latestPublication.id}:${snapshotPage.slug ?? slug}`);
@@ -624,6 +765,7 @@ async function main() {
     localRender: localOrigin ? { origin: localOrigin, minLiveCoverage } : "skipped",
     pathMinLiveCoverage: Object.fromEntries(pathMinLiveCoverage),
     localJson: skipLocalJson ? "reference-only; skipped unless --include-local-json is passed" : statePath,
+    approvedHomepageLock: homepageLockReport ?? "not checked; / was not included in guarded paths",
     pages: perPage,
     originReports,
     warnings,
