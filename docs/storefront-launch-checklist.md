@@ -51,7 +51,7 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 | Hero secondary CTA | `Headshot Generator` |
 | Auth card headline | `Generate your custom AI album Transform your favorite moments into professional-grade couple photos and stunning holiday memories.` |
 | Auth ribbon | `Plans start at $24.50/month` |
-| Auth primary action | `Continue with email` |
+| Auth primary action | `Continue with Google` |
 | Auth email submit | `Create my first photo set with Email` |
 
 上线硬规则：

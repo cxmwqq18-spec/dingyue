@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "lockedAt": "2026-08-08T00:00:00.000+08:00",
+  "lockedAt": "2026-08-09T12:23:10.089+08:00",
   "policy": {
     "owner": "MyDreamShoots site owner",
     "rule": "This homepage copy baseline is locked. Do not modify, switch versions, import old JSON, or roll back production copy unless the site owner explicitly requests a homepage copy change.",
@@ -17,7 +17,7 @@
     "slug": "/",
     "title": "Home",
     "pageType": "home",
-    "updatedAt": "2026-08-08T05:41:08.200Z"
+    "updatedAt": "2026-08-09T03:58:20.439Z"
   },
   "latestPublication": {
     "id": "pub_site_dreamshoot_mr7ctxem",
@@ -44,7 +44,7 @@
     "highlightWord": "AI model",
     "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
     "authButtonLabel": "Create my first photo set with Email",
-    "authPrimaryLabel": "Continue with email",
+    "authPrimaryLabel": "Continue with Google",
     "socialProofLabel": "Private uploads · Credit cost shown upfront · Download your favorites",
     "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
     "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
@@ -66,7 +66,7 @@
     "brand_strip_1"
   ],
   "fingerprints": {
-    "publishedJsonSha256": "c6c1aa6ea1f25a7a25b80ad4f0778e1269a35bfb0dae5e86e8e634e870c284c1",
+    "publishedJsonSha256": "d93a7ec28a193fb993d1c5e1124198fb7432f681197af36b481e0ca43c0793fd",
     "visibleTextSha256": "8eed023078ba3b3e800f90bde385e11b43de10cf45ad00ea13e689cef46123ad",
     "visibleRecordCount": 283
   },
@@ -2326,7 +2326,7 @@
           "highlightWord": "AI model",
           "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
           "authButtonLabel": "Create my first photo set with Email",
-          "authPrimaryLabel": "Continue with email",
+          "authPrimaryLabel": "Continue with Google",
           "socialProofLabel": "Private uploads · Credit cost shown upfront · Download your favorites",
           "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
           "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
