@@ -979,7 +979,7 @@ function aidreamcapesHomeHeroSection(): SectionInstance {
       highlightWord: "private",
       heroBadge: "AI occasion album studio",
       authRibbon: "Plans start at $24.50/month",
-      authPrimaryLabel: "Continue with email",
+      authPrimaryLabel: "Continue with Google",
       authEmailPlaceholder: "Email address",
       authButtonLabel: "Create account with email",
       authPrimaryHref: "/login?mode=login",
