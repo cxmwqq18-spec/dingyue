@@ -957,8 +957,6 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
 export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const title = pageTitle(input.site, input.page);
   const description = pageDescription(input.site, input.page);
-  const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
-  const url = absoluteUrl(input.site, input.routeMode, path);
   const graph: Array<JsonLdNode | undefined> = [
     organizationSchema(input.site, input.routeMode),
     websiteSchema(input.site, input.routeMode),
@@ -971,7 +969,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     ...serviceOrProductSchema(input, title, description)
   ];
 
-  return [{ "@context": "https://schema.org", "@graph": graph.filter(Boolean), url }];
+  return [{ "@context": "https://schema.org", "@graph": graph.filter(Boolean) }];
 }
 
 export function buildToolDirectoryJsonLd({
@@ -1027,7 +1025,7 @@ export function buildToolDirectoryJsonLd({
     }
   ];
 
-  return [{ "@context": "https://schema.org", "@graph": graph, url }];
+  return [{ "@context": "https://schema.org", "@graph": graph }];
 }
 
 export function buildCollectionDirectoryJsonLd({
@@ -1127,5 +1125,5 @@ export function buildCollectionDirectoryJsonLd({
       : [])
   ];
 
-  return [{ "@context": "https://schema.org", "@graph": graph, url }];
+  return [{ "@context": "https://schema.org", "@graph": graph }];
 }
