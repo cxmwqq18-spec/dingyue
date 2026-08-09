@@ -157,10 +157,10 @@ export function PreviewFrame({
     if (!section) return;
     const sectionId = section.dataset.sectionId;
     if (!sectionId) return;
-    const block = target?.closest<HTMLElement>("[data-xfcart-block-id]");
+    const block = target?.closest<HTMLElement>("[data-xfcart-block-id], [data-xfcart-block-legacy-id]");
     event.preventDefault();
     event.stopPropagation();
-    onLivePreviewSelect(sectionId, block?.getAttribute("data-xfcart-block-id") ?? undefined);
+    onLivePreviewSelect(sectionId, block?.getAttribute("data-xfcart-block-id") ?? block?.getAttribute("data-xfcart-block-legacy-id") ?? undefined);
   }
 
   return (
@@ -184,28 +184,34 @@ export function PreviewFrame({
             </DesignerToolbarSegmented>
           </div>
 
-          <div className="ml-auto flex h-[56px] min-w-0 max-w-[calc(100%-176px)] shrink items-center justify-end overflow-x-auto overflow-y-hidden">
-            <DesignerToolbarButton className="min-w-[74px] gap-1 border-l border-white/10" onClick={onReloadPreview}>
-              <RefreshCw className="h-[15px] w-[15px]" strokeWidth={1.8} />
-              刷新
-            </DesignerToolbarButton>
-            <DesignerToolbarButton className="min-w-[84px] gap-1 border-l border-white/10" onClick={onPreviewModeToggle}>
-              <Eye className="h-[15px] w-[15px]" strokeWidth={1.8} />
-              {liveMode ? "编辑" : "预览"}
-            </DesignerToolbarButton>
-            <DesignerToolbarButton aria-label="保存草稿" className="min-w-[108px] gap-1 border-l border-white/10" data-designer-action="save-draft" onClick={onSaveDraft} title="保存草稿">
-              <Save className="h-[15px] w-[15px]" strokeWidth={1.8} />
-              保存草稿
-            </DesignerToolbarButton>
-            <DesignerToolbarButton className="min-w-[98px] gap-1 border-l border-white/10" data-designer-action="rollback-draft" onClick={onRollback} title="恢复整站草稿到最近一次线上发布版本">
-              <RotateCcw className="h-[15px] w-[15px]" strokeWidth={1.8} />
-              回滚全站
-            </DesignerToolbarButton>
-            <DesignerToolbarButton className="min-w-[108px] gap-1 border-l border-white/10" data-designer-action="publish-draft" onClick={onPublishDraft} title="发布当前所有页面草稿与全局设置" tone="primary">
-              <UploadCloud className="h-[15px] w-[15px]" strokeWidth={1.8} />
-              发布全站
-            </DesignerToolbarButton>
-            {toolbarTrailingNodes}
+          <div className="ml-auto flex h-[56px] min-w-0 shrink items-center justify-end overflow-x-auto overflow-y-hidden">
+            <ToolbarGroup label="查看">
+              <DesignerToolbarButton className="min-w-[70px] gap-1" onClick={onReloadPreview} title="刷新预览画面">
+                <RefreshCw className="h-[15px] w-[15px]" strokeWidth={1.8} />
+                刷新
+              </DesignerToolbarButton>
+              <DesignerToolbarButton className="min-w-[76px] gap-1" onClick={onPreviewModeToggle} title="切换 iframe 预览和实时编辑预览">
+                <Eye className="h-[15px] w-[15px]" strokeWidth={1.8} />
+                {liveMode ? "编辑" : "预览"}
+              </DesignerToolbarButton>
+            </ToolbarGroup>
+            <ToolbarGroup label="编辑">
+              <DesignerToolbarButton aria-label="保存草稿" className="min-w-[86px] gap-1" data-designer-action="save-draft" onClick={onSaveDraft} title="保存草稿不会上线，只写入后台草稿区">
+                <Save className="h-[15px] w-[15px]" strokeWidth={1.8} />
+                保存
+              </DesignerToolbarButton>
+              <DesignerToolbarButton className="min-w-[82px] gap-1" data-designer-action="rollback-draft" onClick={onRollback} title="恢复整站草稿到最近一次线上发布版本">
+                <RotateCcw className="h-[15px] w-[15px]" strokeWidth={1.8} />
+                回滚
+              </DesignerToolbarButton>
+            </ToolbarGroup>
+            <ToolbarGroup label="发布">
+              <DesignerToolbarButton className="min-w-[86px] gap-1" data-designer-action="publish-draft" onClick={onPublishDraft} title="发布会更新整站线上快照，隐藏草稿也会一起上线" tone="primary">
+                <UploadCloud className="h-[15px] w-[15px]" strokeWidth={1.8} />
+                发布
+              </DesignerToolbarButton>
+            </ToolbarGroup>
+            {toolbarTrailingNodes.length ? <ToolbarGroup label="退出">{toolbarTrailingNodes}</ToolbarGroup> : null}
           </div>
         </DesignerTopbarRow>
       </DesignerTopbarShell>
@@ -329,7 +335,28 @@ export function PreviewFrame({
                     .designer-live-preview .xfcart-section {
                       cursor: crosshair;
                     }
-                    .designer-live-preview [data-xfcart-block-id] {
+                    .designer-live-preview .xfcart-section:hover {
+                      outline: 2px solid rgba(47, 111, 237, 0.7);
+                      outline-offset: -2px;
+                      position: relative;
+                    }
+                    .designer-live-preview .xfcart-section:hover::after {
+                      content: "点击编辑 " attr(data-section-type);
+                      position: absolute;
+                      right: 14px;
+                      top: 14px;
+                      z-index: 59;
+                      border: 1px solid rgba(47, 111, 237, 0.24);
+                      border-radius: 999px;
+                      background: rgba(255,255,255,0.94);
+                      color: #2457c5;
+                      font: 600 11px/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+                      padding: 7px 10px;
+                      pointer-events: none;
+                      box-shadow: 0 18px 42px -32px rgba(24, 24, 27, 0.78);
+                    }
+                    .designer-live-preview [data-xfcart-block-id],
+                    .designer-live-preview [data-xfcart-block-legacy-id] {
                       cursor: cell;
                     }
                     .designer-live-preview .xfcart-section[data-xfcart-selected="true"] {
@@ -379,4 +406,15 @@ export function PreviewFrame({
 
 function cssAttrValue(value: string) {
   return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\A ");
+}
+
+function ToolbarGroup({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="flex h-[56px] shrink-0 items-center border-l border-white/10" data-designer-layout="saas-toolbar-action-group">
+      <span className="hidden h-full items-center px-2 font-mono text-[10px] uppercase tracking-[0.12em] text-white/38 xl:inline-flex">
+        {label}
+      </span>
+      <div className="flex h-full items-center">{children}</div>
+    </div>
+  );
 }

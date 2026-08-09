@@ -42,10 +42,9 @@ export function DesignerWorkspaceTabsBar({
   actions?: ReactNode;
 }) {
   return (
-    <div className={cx("tools_tab grid h-[52px] shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b border-[#c4c7cc] bg-white px-0 py-0 shadow-none", className)} data-designer-layout="saas-editor-tabs-bar" {...props}>
-      <div />
-      <div className="flex items-center justify-center">{children}</div>
-      <div className="flex items-center justify-end gap-1 pr-2">{actions}</div>
+    <div className={cx("tools_tab flex h-[56px] shrink-0 items-center gap-2 border-b border-[#c4c7cc] bg-white px-2 py-0 shadow-none", className)} data-designer-layout="saas-editor-tabs-bar" {...props}>
+      <div className="min-w-0 flex-1">{children}</div>
+      {actions ? <div className="flex shrink-0 items-center justify-end gap-1">{actions}</div> : null}
     </div>
   );
 }

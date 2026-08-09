@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComponentProps, Dispatch, DragEvent, SetStateAction } from "react";
+import type { ComponentProps, Dispatch, DragEvent, ReactNode, SetStateAction } from "react";
 import { GlobalTree } from "@/components/designer/global-tree";
 import { PageTree } from "@/components/designer/page-tree";
 import { SectionTree } from "@/components/designer/section-tree";
@@ -121,6 +121,7 @@ export function createSectionTreeProps({
   onCanvasEmptyDrop,
   onChooseSelection,
   onAddBlock,
+  emptyStateActions,
   onInsertSection,
   onLibrarySectionDragStart,
   onSectionDragEnd,
@@ -155,6 +156,7 @@ export function createSectionTreeProps({
   onCanvasEmptyDrop: (event: DragEvent<HTMLElement>) => void;
   onChooseSelection: (selection: Selection) => void;
   onAddBlock: (sectionId: string, blockSchema: ThemeBlockSchema) => void;
+  emptyStateActions?: ReactNode;
   onInsertSection: (type: SectionType, targetId?: string, position?: "before" | "after") => void;
   onLibrarySectionDragStart: ComponentProps<typeof SectionTree>["onLibrarySectionDragStart"];
   onSectionDragEnd: () => void;
@@ -192,6 +194,7 @@ export function createSectionTreeProps({
     onChooseBlock: (sectionId, blockId) => onChooseSelection({ kind: "block", sectionId, blockId }),
     onChooseSection: (sectionId) => onChooseSelection({ kind: "section", sectionId }),
     onAddBlock,
+    emptyStateActions,
     onDragEnd: onSectionDragEnd,
     onInsertSection,
     onLibrarySectionDragStart,

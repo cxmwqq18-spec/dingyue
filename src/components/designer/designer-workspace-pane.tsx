@@ -16,7 +16,7 @@ import {
 import { GlobalTree } from "@/components/designer/global-tree";
 import { SectionTree } from "@/components/designer/section-tree";
 
-export type DesignerWorkspaceTab = "templates" | "global";
+export type DesignerWorkspaceTab = "templates" | "global" | "publish";
 
 export function DesignerWorkspacePane({
   activeTab,
@@ -74,8 +74,9 @@ export function DesignerWorkspacePane({
         <DesignerModeTabs
           active={activeTab}
           items={[
-            { key: "templates", label: "积木配置" },
-            { key: "global", label: "全局配置" }
+            { key: "templates", label: "当前页面" },
+            { key: "global", label: "全局页头/页脚" },
+            { key: "publish", label: "发布检查" }
           ]}
           onValueChange={onTabChange}
           surface="bare"

@@ -63,6 +63,7 @@ export function selectionForEditorTab({
   activeSectionId?: string;
   firstSectionId?: string;
 }): Selection | null {
+  if (nextTab === "publish") return null;
   if (nextTab === "global") {
     if (currentSelection.kind === "global" || currentSelection.kind === "globalBlock" || currentSelection.kind === "globalSettings") return null;
     if (firstGlobalNodeId) return { kind: "globalSettings", node: firstGlobalNodeId };

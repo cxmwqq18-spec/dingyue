@@ -1,6 +1,7 @@
 "use client";
 
 import { type DragEvent, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { BookOpen, Menu, PanelBottom, PanelTop, SearchCheck } from "lucide-react";
 import { PreviewFrame } from "@/components/designer/preview-frame";
 import {
   type DesignerDragToken,
@@ -20,6 +21,7 @@ import {
 import {
   blockDisplayLabel,
   categoryLabel,
+  fieldDisplayLabel,
   globalNodeBlueprints,
   labelForSchema,
   pageOptionLabel,
@@ -30,6 +32,11 @@ import {
   templateDisplayName
 } from "@/components/designer/designer-metadata";
 import { DesignerWorkspacePane } from "@/components/designer/designer-workspace-pane";
+import {
+  type DesignerCopyLocatorItem,
+  type DesignerCopyLocatorQuickTarget
+} from "@/components/designer/designer-copy-locator";
+import { DesignerWorkbenchTutorial } from "@/components/designer/designer-workbench-tutorial";
 import {
   createGlobalTreeProps,
   createPageTreeProps,
@@ -99,6 +106,7 @@ import {
   defaultBlock,
   defaultSection,
   getSectionSchema,
+  readThemeFieldValue,
   sectionSchemas
 } from "@/lib/section-schema";
 import { buildSaasThemeDraft } from "@/lib/theme/saas-theme-model";
@@ -122,6 +130,7 @@ import type {
   ThemePage,
   ThemePageJson,
   ThemeSectionSchema,
+  ThemeSettingValue,
   ThemeSettings
 } from "@/lib/types";
 import type { SaasThemeAction } from "@/lib/server-store";
@@ -247,6 +256,26 @@ function specializeTemplateForPage(page: ThemePage, pageJson: ThemePageJson, pac
 
 function cloneDesignerJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function stripLocatorText(value: string) {
+  return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function locatorTextFromValue(value: ThemeSettingValue | undefined): string {
+  if (value === undefined || value === null) return "";
+  if (typeof value === "string") return stripLocatorText(value);
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (Array.isArray(value)) return value.map(locatorTextFromValue).filter(Boolean).join(" / ");
+  const record = value as Record<string, ThemeSettingValue>;
+  const prioritized = ["label", "title", "headline", "name", "text", "description", "href", "url"];
+  const direct = prioritized.map((key) => locatorTextFromValue(record[key])).find(Boolean);
+  if (direct) return direct;
+  return Object.values(record).map(locatorTextFromValue).filter(Boolean).join(" / ");
+}
+
+function shouldIndexField(field: ThemeFieldSchema) {
+  return !["image_picker", "media_asset", "video_url", "color", "range", "font_picker"].includes(field.type);
 }
 
 function applyThemePackageSettingsToDraftSettings(base: ThemeSettings, siteSettings?: ThemePackageSiteSettings): ThemeSettings {
@@ -390,6 +419,8 @@ export function DesignerClient({
   const [themeSettingsDraftVersion, setThemeSettingsDraftVersion] = useState<ThemeDraftMeta | undefined>(site.themeSettings.draftMeta);
   const [publishConfirmOpen, setPublishConfirmOpen] = useState(false);
   const [publishBusy, setPublishBusy] = useState(false);
+  const [tutorialOpen, setTutorialOpen] = useState(false);
+  const [locatorBreadcrumb, setLocatorBreadcrumb] = useState<string | undefined>(undefined);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>(() =>
     expansionStateForPage(initialPage?.draftJson, initialPage?.draftJson.sectionsOrder[0])
   );
@@ -397,6 +428,7 @@ export function DesignerClient({
   const [publishedVersion, setPublishedVersion] = useState(() => Math.max(1, ...pages.map((page) => page.publishedJson.version ?? 0)));
   const [lastAction, setLastAction] = useState("已载入当前页面草稿，可继续编辑并按需发布。");
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const tutorialButtonRef = useRef<HTMLButtonElement>(null);
   const [publishedPages, setPublishedPages] = useState<Record<string, ThemePageJson>>(
     Object.fromEntries(pages.map((page) => [page.id, clonePage(page.publishedJson)]))
   );
@@ -418,6 +450,29 @@ export function DesignerClient({
   useEffect(() => {
     resourceStatusRef.current = resourceStatus;
   }, [resourceStatus]);
+
+  useEffect(() => {
+    function onNativeTutorialClick(event: MouseEvent) {
+      const target = event.target instanceof Element ? event.target.closest("[data-designer-open-tutorial]") : null;
+      if (target) setTutorialOpen(true);
+    }
+    document.addEventListener("click", onNativeTutorialClick);
+    return () => document.removeEventListener("click", onNativeTutorialClick);
+  }, []);
+
+  useEffect(() => {
+    const button = tutorialButtonRef.current;
+    if (!button) return;
+    function openTutorial() {
+      setTutorialOpen(true);
+    }
+    button.addEventListener("pointerdown", openTutorial);
+    button.addEventListener("click", openTutorial);
+    return () => {
+      button.removeEventListener("pointerdown", openTutorial);
+      button.removeEventListener("click", openTutorial);
+    };
+  }, []);
 
   useEffect(() => {
     setDraftVersions(Object.fromEntries(pages.flatMap((page) => (page.draftMeta ? [[page.id, page.draftMeta] as const] : []))));
@@ -500,11 +555,6 @@ export function DesignerClient({
   const selectedSaasSectionSchemas = useMemo(() => getImportedSaasSectionSchemasForTheme(selectedSaasThemeKey), [selectedSaasThemeKey]);
   const activeBlock = selection.kind === "block" && activeSection ? safeBlocks(activeSection).find((block) => block.id === selection.blockId) : undefined;
   const activeGlobalBlock = selection.kind === "globalBlock" && activeSection ? safeBlocks(activeSection).find((block) => block.id === selection.blockId) : undefined;
-  const activeSectionSchema = activeSection ? schemaForType(activeSection.type) : undefined;
-  const activeBlockSchema = activeSection && activeBlock ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, activeSection, activeBlock.type) : undefined;
-  const activeGlobalBlockSchema = activeSection && activeGlobalBlock ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, activeSection, activeGlobalBlock.type) : undefined;
-  const selectedBlockSchema = activeBlockSchema ?? activeGlobalBlockSchema;
-  const selectedBlockSettings = selectedBlockSchema?.settings ?? [];
   const activeGlobalNodeFields = useMemo(
     () => (activeGlobalNode?.fieldIds?.length ? groupFieldsByIds(flattenedSaasFields, activeGlobalNode.fieldIds) : []),
     [activeGlobalNode, flattenedSaasFields]
@@ -674,10 +724,16 @@ export function DesignerClient({
   const changedSectionCount =
     currentSectionIds.filter((sectionId) => JSON.stringify(draft.sections[sectionId] ?? null) !== JSON.stringify(livePage.sections[sectionId] ?? null)).length +
     (JSON.stringify(draft.sectionsOrder) === JSON.stringify(livePage.sectionsOrder) ? 0 : 1);
+  const pageIsEmpty = sectionList.length === 0;
 
-  function schemaForType(type: SectionType): ThemeSectionSchema {
+  const schemaForType = useCallback((type: SectionType): ThemeSectionSchema => {
     return selectedSaasSectionSchemas[type] ?? sectionSchemas[type] ?? getSectionSchema(type);
-  }
+  }, [selectedSaasSectionSchemas]);
+  const activeSectionSchema = activeSection ? schemaForType(activeSection.type) : undefined;
+  const activeBlockSchema = activeSection && activeBlock ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, activeSection, activeBlock.type) : undefined;
+  const activeGlobalBlockSchema = activeSection && activeGlobalBlock ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, activeSection, activeGlobalBlock.type) : undefined;
+  const selectedBlockSchema = activeBlockSchema ?? activeGlobalBlockSchema;
+  const selectedBlockSettings = selectedBlockSchema?.settings ?? [];
 
   function defaultSectionForType(type: SectionType): SectionInstance {
     const schema = schemaForType(type);
@@ -688,6 +744,181 @@ export function DesignerClient({
       blocks: preset?.blocks ? JSON.parse(JSON.stringify(preset.blocks)) as SectionBlockInstance[] : []
     };
   }
+
+  const copyLocatorItems = useMemo<DesignerCopyLocatorItem[]>(() => {
+    const items: DesignerCopyLocatorItem[] = [];
+    const seen = new Set<string>();
+
+    function pushItem(item: DesignerCopyLocatorItem) {
+      const dedupeKey = `${item.source}:${item.path}:${item.text}`;
+      if (seen.has(dedupeKey)) return;
+      seen.add(dedupeKey);
+      items.push(item);
+    }
+
+    function pushField({
+      idBase,
+      field,
+      values,
+      fallbackValue,
+      path,
+      source,
+      sourceLabel,
+      selection,
+      workspaceTab
+    }: {
+      idBase: string;
+      field: ThemeFieldSchema;
+      values?: Record<string, ThemeSettingValue>;
+      fallbackValue?: ThemeSettingValue;
+      path: string;
+      source: DesignerCopyLocatorItem["source"];
+      sourceLabel: string;
+      selection: Selection;
+      workspaceTab: DesignerWorkspaceTab;
+    }) {
+      if (!shouldIndexField(field)) return;
+      const text = locatorTextFromValue(readThemeFieldValue(values, field) ?? fallbackValue ?? field.default);
+      if (!text) return;
+      pushItem({
+        id: `${idBase}:${field.id}`,
+        label: fieldDisplayLabel(field),
+        path,
+        selection,
+        source,
+        sourceLabel,
+        text,
+        workspaceTab
+      });
+    }
+
+    sectionList.forEach(({ id, section }, sectionIndex) => {
+      const schema = schemaForType(section.type);
+      const sectionLabel = labelForSchema(section.type, selectedSaasSectionSchemas);
+      schema.settings.forEach((field) => {
+        pushField({
+          idBase: `page:${id}`,
+          field,
+          values: section.settings,
+          path: `${activePage.title} / ${sectionLabel} / ${fieldDisplayLabel(field)}`,
+          source: "page",
+          sourceLabel: "当前页面",
+          selection: { kind: "section", sectionId: id },
+          workspaceTab: "templates"
+        });
+      });
+      safeBlocks(section).forEach((block, blockIndex) => {
+        const blockSchema = resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, section, block.type);
+        const blockLabel = blockDisplayLabel(blockSchema, block, blockIndex);
+        blockSchema?.settings.forEach((field) => {
+          pushField({
+            idBase: `page:${id}:${block.id}`,
+            field,
+            values: block.settings,
+            path: `${activePage.title} / ${sectionIndex + 1}. ${sectionLabel} / ${blockLabel} / ${fieldDisplayLabel(field)}`,
+            source: "page",
+            sourceLabel: "当前页面",
+            selection: { kind: "block", sectionId: id, blockId: block.id },
+            workspaceTab: "templates"
+          });
+        });
+      });
+    });
+
+    (["header", "footer"] as const).forEach((globalType) => {
+      const section = themeSettings.globalSections?.[globalType];
+      if (!section) return;
+      const schema = schemaForType(section.type);
+      const globalLabel = globalType === "header" ? "全局页头" : "全局页脚";
+      schema.settings.forEach((field) => {
+        pushField({
+          idBase: `global:${globalType}`,
+          field,
+          values: section.settings,
+          path: `${globalLabel} / ${fieldDisplayLabel(field)}`,
+          source: "global",
+          sourceLabel: "全局配置",
+          selection: { kind: "global", globalType },
+          workspaceTab: "global"
+        });
+      });
+      safeBlocks(section).forEach((block, blockIndex) => {
+        const blockSchema = resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, section, block.type);
+        const blockLabel = blockDisplayLabel(blockSchema, block, blockIndex);
+        blockSchema?.settings.forEach((field) => {
+          pushField({
+            idBase: `global:${globalType}:${block.id}`,
+            field,
+            values: block.settings,
+            path: `${globalLabel} / ${blockLabel} / ${fieldDisplayLabel(field)}`,
+            source: "global",
+            sourceLabel: "全局配置",
+            selection: { kind: "globalBlock", globalType, blockId: block.id },
+            workspaceTab: "global"
+          });
+        });
+      });
+    });
+
+    themeSettings.navigation.headerLinks.forEach((link, index) => {
+      pushItem({
+        id: `navigation:header:${index}`,
+        label: "页眉导航",
+        path: `全局配置 / 导航 / 页眉导航 / ${index + 1}`,
+        selection: { kind: "globalSettings", node: "navigation" },
+        source: "navigation",
+        sourceLabel: "导航菜单",
+        text: [link.label, link.href, link.group].filter(Boolean).join(" / "),
+        workspaceTab: "global"
+      });
+    });
+    themeSettings.navigation.footerLinks.forEach((link, index) => {
+      pushItem({
+        id: `navigation:footer:${index}`,
+        label: "页脚导航",
+        path: `全局配置 / 导航 / 页脚导航 / ${index + 1}`,
+        selection: { kind: "globalSettings", node: "navigation" },
+        source: "navigation",
+        sourceLabel: "导航菜单",
+        text: [link.label, link.href, link.group].filter(Boolean).join(" / "),
+        workspaceTab: "global"
+      });
+    });
+
+    const seoEntries = [
+      ["siteTitle", "站点标题", themeSettings.seo?.siteTitle],
+      ["siteDescription", "默认描述", themeSettings.seo?.siteDescription],
+      ["titleTemplate", "标题模板", themeSettings.seo?.titleTemplate],
+      ["defaultOgImage", "默认分享图", themeSettings.seo?.defaultOgImage]
+    ] as const;
+    seoEntries.forEach(([id, label, value]) => {
+      const text = locatorTextFromValue(value);
+      if (!text) return;
+      pushItem({
+        id: `seo:${id}`,
+        label,
+        path: `全局配置 / SEO 默认项 / ${label}`,
+        selection: { kind: "globalSettings", node: "seo" },
+        source: "seo",
+        sourceLabel: "SEO",
+        text,
+        workspaceTab: "global"
+      });
+    });
+
+    pushItem({
+      id: "code:hardcoded",
+      label: "代码硬编码",
+      path: "代码 / 尚未迁移为后台字段",
+      readOnly: true,
+      source: "code",
+      sourceLabel: "代码硬编码",
+      text: "如果搜索不到预览文案，通常需要开发把这句文案迁移为可配置字段。",
+      hint: "只读提示"
+    });
+
+    return items;
+  }, [activePage.title, schemaForType, sectionList, selectedSaasSectionSchemas, themeSettings]);
 
   function updateDraft(next: ThemePageJson, action: string) {
     setDrafts((current) => ({ ...current, [selectedPageId]: next }));
@@ -737,6 +968,7 @@ export function DesignerClient({
     if (nextSelection.kind === "global" || nextSelection.kind === "globalBlock") {
       setExpandedGlobals((current) => ({ ...current, [nextSelection.globalType]: true }));
     }
+    setLocatorBreadcrumb(undefined);
     setSelection(nextSelection);
     syncSelectionToIframe(nextSelection);
   }
@@ -751,6 +983,40 @@ export function DesignerClient({
       firstSectionId: sectionList[0]?.id
     });
     if (nextSelection) chooseSelection(nextSelection);
+  }
+
+  function chooseCopyQuickTarget(target: DesignerCopyLocatorQuickTarget) {
+    const nextSelection: Selection =
+      target === "header"
+        ? { kind: "global", globalType: "header" }
+        : target === "footer"
+        ? { kind: "global", globalType: "footer" }
+        : target === "navigation"
+        ? { kind: "globalSettings", node: "navigation" }
+        : { kind: "globalSettings", node: "seo" };
+    const nextLabel =
+      target === "header"
+        ? "全局页头"
+        : target === "footer"
+        ? "全局页脚"
+        : target === "navigation"
+        ? "全局导航"
+        : "SEO 默认项";
+    setActiveTab("global");
+    chooseSelection(nextSelection);
+    setLocatorBreadcrumb(`${activePage.title} / ${nextLabel}`);
+    setLastAction(`已定位到${nextLabel}。保存草稿不会上线，发布整站快照后前台才会读取。`);
+  }
+
+  function chooseCopyLocatorItem(item: DesignerCopyLocatorItem) {
+    if (item.workspaceTab) setActiveTab(item.workspaceTab);
+    if (item.selection) chooseSelection(item.selection);
+    setLocatorBreadcrumb(item.path);
+    setLastAction(
+      item.readOnly
+        ? `「${item.text}」属于${item.sourceLabel}，当前只能查看，需要开发迁移为可配置字段。`
+        : `已定位「${item.text}」：${item.path}`
+    );
   }
 
   useEffect(() => {
@@ -830,6 +1096,8 @@ export function DesignerClient({
     const firstSectionId = nextPage?.sectionsOrder[0] ?? "";
     setExpandedSections(expansionStateForPage(nextPage, firstSectionId));
     setSelection({ kind: "section", sectionId: firstSectionId });
+    setActiveTab("templates");
+    setLocatorBreadcrumb(undefined);
     iframeRecoveryCount.current = 0;
     setIframeStatus("loading");
     setIframeReloadKey((current) => current + 1);
@@ -1208,11 +1476,12 @@ export function DesignerClient({
       setLastAction(conflict ? "草稿保存被拦截：页面或全局设置版本已变化，请刷新后重新检查。" : "草稿保存失败，请检查页面配置后重试。");
       return { ok: false, pageVersions: nextPageVersions, settingsVersion: settingsSaved.draftVersion };
     }
-    setLastAction(`草稿已保存，${pages.length} 个页面与全局设置已写入草稿区。`);
+    setLastAction(`草稿已保存但不会上线：${pages.length} 个页面与全局设置已写入后台草稿区，发布整站快照后前台才会读取。`);
     return { ok: true, pageVersions: nextPageVersions, settingsVersion: settingsSaved.draftVersion };
   }
 
   function requestPublishDraft() {
+    setActiveTab("publish");
     setPublishConfirmOpen(true);
   }
 
@@ -1255,7 +1524,7 @@ export function DesignerClient({
     setPublishedThemeSettings(normalizeGlobalSections(cloneSettings(themeSettings)));
     setPublishedVersion(nextVersion);
     setPublishConfirmOpen(false);
-    setLastAction(`已发布到线上版本 v${nextVersion}，当前页与其他草稿页已同步为已发布状态。`);
+    setLastAction(`已发布到线上版本 v${nextVersion}：当前页面、隐藏草稿页与全局设置已写入同一套线上快照。`);
     } finally {
       setPublishBusy(false);
     }
@@ -1472,6 +1741,53 @@ export function DesignerClient({
     themeSettings
   });
 
+  const publishSummary = {
+    activePageTitle: activePage.title,
+    currentPageDirty,
+    dirtyPagesCount,
+    hiddenDraftCount,
+    globalSettingsDirty,
+    publishedVersion,
+    publicationCount,
+    currentDraftRevision: draftVersions[selectedPageId]?.revision ?? draft?.version ?? 1,
+    themeSettingsRevision: themeSettingsDraftVersion?.revision ?? 1
+  };
+  const activeLocatorBreadcrumb = locatorBreadcrumb ?? `${activePage.title} / ${selectionMeta.scope}${selectionMeta.detail ? ` / ${selectionMeta.detail}` : ""}`;
+  const emptyPageGlobalShortcuts = (
+    <div className="grid gap-1.5" data-designer-layout="saas-empty-page-global-shortcuts">
+      <button className="inline-flex h-8 items-center gap-1.5 rounded-[6px] border border-[#d9dde4] bg-white px-2 text-[11px] font-medium text-[#344054] transition hover:border-[#2f6fed] hover:text-[#2f6fed]" onClick={() => chooseCopyQuickTarget("header")} type="button">
+        <PanelTop className="h-3.5 w-3.5" strokeWidth={1.8} />
+        编辑页头
+      </button>
+      <button className="inline-flex h-8 items-center gap-1.5 rounded-[6px] border border-[#d9dde4] bg-white px-2 text-[11px] font-medium text-[#344054] transition hover:border-[#2f6fed] hover:text-[#2f6fed]" onClick={() => chooseCopyQuickTarget("footer")} type="button">
+        <PanelBottom className="h-3.5 w-3.5" strokeWidth={1.8} />
+        编辑页脚
+      </button>
+      <button className="inline-flex h-8 items-center gap-1.5 rounded-[6px] border border-[#d9dde4] bg-white px-2 text-[11px] font-medium text-[#344054] transition hover:border-[#2f6fed] hover:text-[#2f6fed]" onClick={() => chooseCopyQuickTarget("navigation")} type="button">
+        <Menu className="h-3.5 w-3.5" strokeWidth={1.8} />
+        编辑导航
+      </button>
+      <button className="inline-flex h-8 items-center gap-1.5 rounded-[6px] border border-[#d9dde4] bg-white px-2 text-[11px] font-medium text-[#344054] transition hover:border-[#2f6fed] hover:text-[#2f6fed]" onClick={() => chooseCopyQuickTarget("seo")} type="button">
+        <SearchCheck className="h-3.5 w-3.5" strokeWidth={1.8} />
+        编辑 SEO
+      </button>
+    </div>
+  );
+  const workspaceHeaderActions = (
+    <button
+      data-designer-open-tutorial="true"
+      className="inline-flex h-8 shrink-0 items-center gap-1 whitespace-nowrap rounded-[8px] border border-[#d8dbe1] bg-white px-3 text-[11px] font-medium leading-none text-[#383838] transition hover:bg-[#f7f8fb] focus-visible:outline-none active:scale-[0.98]"
+      onClick={() => setTutorialOpen(true)}
+      onPointerDown={() => setTutorialOpen(true)}
+      ref={tutorialButtonRef}
+      title="打开装修器新手教程"
+      type="button"
+    >
+      <BookOpen className="h-3.5 w-3.5" strokeWidth={1.8} />
+      教程
+    </button>
+  );
+
   const sectionTreeProps = createSectionTreeProps({
     activePage,
     blockDisplayLabel,
@@ -1488,6 +1804,7 @@ export function DesignerClient({
     onCanvasEmptyDrop,
     onChooseSelection: chooseSelection,
     onAddBlock: addBlock,
+    emptyStateActions: emptyPageGlobalShortcuts,
     onInsertSection: insertSection,
     onLibrarySectionDragStart,
     onSectionDragEnd,
@@ -1625,6 +1942,7 @@ export function DesignerClient({
       <DesignerWorkspacePane
         activeTab={activeTab}
         globalTreeProps={globalTreeProps}
+        headerActions={workspaceHeaderActions}
         mobileActions={{
           adminHref: `/site/${site.slug}/admin`,
           storefrontHref: `/site/${site.slug}`,
@@ -1639,6 +1957,7 @@ export function DesignerClient({
         onTabChange={switchEditorTab}
         pageTreeProps={pageTreeProps}
         propertyPaneProps={{
+          activePageTitle: activePage.title,
           activeBlock,
           activeBlockSchema,
           activeGlobalBlock,
@@ -1650,6 +1969,7 @@ export function DesignerClient({
           activeSectionSchema,
           addBlock,
           addGlobalBlock,
+          copyLocatorItems,
           deleteBlock,
           deleteGlobalBlock,
           deleteSection,
@@ -1664,7 +1984,12 @@ export function DesignerClient({
           moveBlock,
           moveGlobalBlock,
           moveSection,
+          locatorBreadcrumb: activeLocatorBreadcrumb,
           onChooseSelection: chooseSelection,
+          onCopyLocatorSelect: chooseCopyLocatorItem,
+          onCopyQuickSelect: chooseCopyQuickTarget,
+          pageIsEmpty,
+          publishSummary,
           products,
           safeBlocks,
           selectedBlockSettings,
@@ -1680,10 +2005,12 @@ export function DesignerClient({
           updateThemeLinks,
           updateThemeRadii,
           updateThemeSeo,
-          updateThemeTypography
+          updateThemeTypography,
+          workspaceTab: activeTab
         }}
         sectionTreeProps={sectionTreeProps}
       />
+      <DesignerWorkbenchTutorial onClose={() => setTutorialOpen(false)} open={tutorialOpen} />
       {publishConfirmOpen ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-4 py-6">
           <div className="w-full max-w-[760px] rounded-[16px] border border-[#d9dde4] bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.45)]">
@@ -1691,7 +2018,7 @@ export function DesignerClient({
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="text-[12px] font-medium uppercase tracking-[0.18em] text-[#667085]">确认发布</div>
-                  <h2 className="mt-1 text-[18px] font-semibold text-[#101828]">发布整站快照</h2>
+                  <h2 className="mt-1 text-[18px] font-semibold text-[#101828]">发布会更新整站线上快照</h2>
                 </div>
                 <button
                   className="rounded-[10px] border border-[#d9dde4] px-3 py-1.5 text-sm text-[#344054] transition hover:border-[#98a2b3] hover:text-[#101828]"
@@ -1704,11 +2031,11 @@ export function DesignerClient({
             </div>
             <div className="grid gap-4 px-5 py-4">
               <p className="text-[13px] leading-6 text-[#475467]">
-                这次发布会把当前页面草稿、隐藏草稿页和主题设置一起写入同一套线上快照。确认前请再看一眼范围。
+                保存草稿不会上线。确认发布后，系统会先保存草稿，再把当前页面、隐藏草稿页和全局设置一起写入线上快照。
               </p>
               <div className="grid gap-3 md:grid-cols-2">
                 <div className="rounded-[12px] border border-[#e6e9ee] bg-[#fafbfc] p-4">
-                  <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-[#667085]">本次范围</p>
+                  <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-[#667085]">会一起上线的内容</p>
                   <div className="mt-3 grid gap-2 text-[13px] text-[#344054]">
                     <div className="flex items-center justify-between gap-3">
                       <span>当前页面</span>
@@ -1729,7 +2056,7 @@ export function DesignerClient({
                   </div>
                 </div>
                 <div className="rounded-[12px] border border-[#e6e9ee] bg-[#fafbfc] p-4">
-                  <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-[#667085]">版本校验</p>
+                  <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-[#667085]">版本保护</p>
                   <div className="mt-3 grid gap-2 text-[13px] text-[#344054]">
                     <div className="flex items-center justify-between gap-3">
                       <span>当前线上版本</span>
@@ -1755,7 +2082,7 @@ export function DesignerClient({
                 </div>
               </div>
               <div className="rounded-[12px] border border-amber-200 bg-amber-50 px-4 py-3 text-[13px] leading-6 text-amber-900">
-                确认后会先保存草稿，再按同一套 reviewed versions 发布整站快照。若版本在你确认前被别的操作改过，这次发布会被 409 拦住。
+                如果页面草稿、全局设置或线上版本在你确认前被别人改过，这次发布会被 409 拦住，避免把别人的文案静默覆盖掉。
               </div>
             </div>
             <div className="flex flex-wrap items-center justify-end gap-2 border-t border-[#e6e9ee] px-5 py-4">
