@@ -243,7 +243,7 @@ const homeSections: ThemePageJson["sections"] = {
       highlightWord: "AI model",
       heroBadge: "AI Headshot Generators",
       authRibbon: "Plans start at $24.50/month",
-      authPrimaryLabel: "Continue with email",
+      authPrimaryLabel: "Continue with Google",
       authEmailPlaceholder: "Email address",
       authButtonLabel: "Create my first photo set with Email",
       authPrimaryHref: "/login?mode=login",

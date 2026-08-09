@@ -411,7 +411,7 @@ const homeJson: ThemePageJson = {
       highlightWord: "real",
       heroBadge: "AI photo package studio",
       authRibbon: "World Cup and gala packs live",
-      authPrimaryLabel: "Continue with email",
+      authPrimaryLabel: "Continue with Google",
       authEmailPlaceholder: "Email address",
       authButtonLabel: "Create account with email",
       authPrimaryHref: "/login?mode=login",

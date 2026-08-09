@@ -7658,6 +7658,8 @@ function SectionView({
       const imageCaption = setting(section, "imageCaption", "Private AI photo packs, ready for download.");
       const authEmailHref = setting(section, "authEmailHref", "/login?mode=register");
       const authEmailParams = hiddenSearchParamsFromHref(authEmailHref);
+      const authPrimaryLabel = setting(section, "authPrimaryLabel", "Continue with email");
+      const authPrimaryUsesGoogle = /google/i.test(authPrimaryLabel);
       const motionHeroAltPrefix = isAidreamcapesSite(site) ? "Aidreamcapes scrolling fan-scene and holiday album preview" : "MyDreamShoots scrolling AI photo package preview";
       const motionHeroTileCount = isAidreamcapesSite(site) && !isSpanishXbySite(site) ? gridImages.length : Math.max(8, gridImages.length);
       return (
@@ -7789,8 +7791,14 @@ function SectionView({
                 </div>
                 <div className="mt-4 grid gap-2.5 sm:mt-5 sm:gap-3">
                   <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))}>
-                    <Mail className="h-5 w-5" strokeWidth={1.8} />
-                    <span>{setting(section, "authPrimaryLabel", "Continue with email")}</span>
+                    {authPrimaryUsesGoogle ? (
+                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white shadow-[0_8px_22px_-14px_rgba(9,11,19,0.45)] ring-1 ring-black/[0.06]">
+                        <img className="h-5 w-5" src={googleIconPath} alt="" aria-hidden="true" />
+                      </span>
+                    ) : (
+                      <Mail className="h-5 w-5" strokeWidth={1.8} />
+                    )}
+                    <span>{authPrimaryLabel}</span>
                   </Link>
                   <div className="hidden grid-cols-[1fr_auto_1fr] items-center gap-3 text-xs text-white/54 sm:grid">
                     <span className="h-px bg-white/24" />
@@ -7841,7 +7849,7 @@ function SectionView({
           </div>
           <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] pb-7 md:hidden">
             <Link className="flex items-center justify-between rounded-[18px] border border-white/14 px-4 py-3 text-sm font-semibold text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.9)] backdrop-blur" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))} style={{ background: "linear-gradient(100deg, rgba(236,75,221,0.22), rgba(122,76,255,0.46), rgba(22,220,240,0.3))" }}>
-              <span>{setting(section, "imageBadge", "15+ package categories")}: {setting(section, "authPrimaryLabel", "Continue with email")}</span>
+              <span>{setting(section, "imageBadge", "15+ package categories")}: {authPrimaryLabel}</span>
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
           </div>
