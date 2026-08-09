@@ -3,6 +3,7 @@
 import { type ReactNode } from "react";
 import { FieldEditor } from "@/components/designer/field-editor-registry";
 import { blockSchemaDisplayLabel } from "@/components/designer/designer-metadata";
+import { readThemeFieldValue, resolveThemeBlockSchema } from "@/lib/section-schema";
 import {
   PropertyActionRow,
   PropertyBlockLibrary,
@@ -179,7 +180,7 @@ export function GlobalSettingsFields({
           onChange={(value) => onUpdateSaasGlobalSetting(field, value)}
           options={fieldOptions}
           site={site}
-          value={themeSettings.saasSettingsCurrent?.[field.id]}
+          value={readThemeFieldValue(themeSettings.saasSettingsCurrent, field)}
         />
       ))}
     </>
@@ -210,7 +211,7 @@ export function BlockFields({
           onChange={(value) => onChange(field, value)}
           options={fieldOptions}
           site={site}
-          value={values[field.id]}
+          value={readThemeFieldValue(values, field)}
         />
       ))}
       {actionRow}
@@ -261,7 +262,7 @@ export function SectionFields({
             label: blockSchemaDisplayLabel(blockSchema)
           }))}
           onAdd={(key) => {
-            const blockSchema = sectionSchema.blocks?.find((item) => item.type === key);
+            const blockSchema = resolveThemeBlockSchema(sectionSchema, key);
             if (blockSchema) onAddBlock(blockSchema);
           }}
           title="子块库"
@@ -303,7 +304,7 @@ export function GlobalSectionFields({
             label: blockSchemaDisplayLabel(blockSchema)
           }))}
           onAdd={(key) => {
-            const blockSchema = sectionSchema.blocks?.find((item) => item.type === key);
+            const blockSchema = resolveThemeBlockSchema(sectionSchema, key);
             if (blockSchema) onAddBlock(blockSchema);
           }}
           title="全局子块库"

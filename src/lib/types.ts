@@ -159,6 +159,7 @@ export interface ThemeSettings {
     >;
   };
   saasSettingsCurrent?: Record<string, ThemeSettingValue>;
+  draftMeta?: ThemeDraftMeta;
 }
 
 export type ThemeFieldType =
@@ -195,6 +196,7 @@ export interface ThemeFieldOption {
 
 export interface ThemeFieldSchema {
   id: string;
+  aliases?: string[];
   label: string;
   type: ThemeFieldType;
   default?: ThemeSettingValue;
@@ -209,6 +211,7 @@ export interface ThemeFieldSchema {
 
 export interface ThemeBlockSchema {
   type: string;
+  aliases?: string[];
   label: string;
   maxBlocks?: number;
   sourceName?: string;
@@ -221,6 +224,7 @@ export interface ThemeBlockSchema {
 
 export interface ThemeSectionSchema {
   type: SectionType;
+  aliases?: string[];
   label: string;
   category: "Storefront" | "AI business" | "Commerce" | "Content" | "Global";
   description: string;
@@ -264,6 +268,7 @@ export interface Site {
   themeSettings: {
     draftJson: ThemeSettings;
     publishedJson: ThemeSettings;
+    draftMeta?: ThemeDraftMeta;
   };
   pages: ThemePage[];
   mediaAssets?: MediaAsset[];

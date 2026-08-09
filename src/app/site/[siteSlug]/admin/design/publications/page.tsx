@@ -2,6 +2,7 @@ import { AdminShell } from "@/components/admin/admin-shell";
 import { DesignPublicationsWorkbench } from "@/components/admin/design-publications-workbench";
 import { DesignWorkspaceTabs } from "@/components/admin/design-workspace-tabs";
 import { getSiteThemePublicationMetaRelational } from "@/lib/stores/theme-store";
+import type { ThemeDraftMeta } from "@/lib/types";
 import {
   getSiteAdminData,
   modulePath,
@@ -24,6 +25,10 @@ export default async function DesignPublicationsPage({ params }: { params: Promi
   const settingsDirty = JSON.stringify(data.site.themeSettings.draftJson) !== JSON.stringify(data.site.themeSettings.publishedJson);
   const hasDirtyDraft = data.dirtyPages > 0 || settingsDirty;
   const firstPageId = data.site.pages[0]?.id;
+  const pageVersions: Record<string, ThemeDraftMeta | undefined> = Object.fromEntries(
+    data.site.pages.map((page) => [page.id, page.draftMeta])
+  );
+  const currentPublishedVersion = Math.max(1, ...data.site.pages.map((page) => page.publishedJson.version ?? 0));
   const latestPageCount = latest?.pageCount ?? 0;
   const latestSectionCount = latest?.sectionCount ?? 0;
   const seoReady = Boolean(data.site.themeSettings.draftJson.seo?.siteTitle && data.site.themeSettings.draftJson.seo?.siteDescription);
@@ -72,6 +77,7 @@ export default async function DesignPublicationsPage({ params }: { params: Promi
           latestVersion={latest?.version}
           preflightScore={hasDirtyDraft ? 70 : 100}
           preflightStale
+          pageVersions={pageVersions}
           publications={publications.map((publication) => ({
             id: publication.id,
             version: publication.version,
@@ -81,6 +87,8 @@ export default async function DesignPublicationsPage({ params }: { params: Promi
             publishedAt: publicationDate(publication.publishedAt),
             publishedBy: publication.publishedBy
           }))}
+          publishedVersion={currentPublishedVersion}
+          settingsVersion={data.site.themeSettings.draftMeta}
           settingsDirty={settingsDirty}
           siteId={data.site.id}
         />

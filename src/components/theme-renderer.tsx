@@ -100,7 +100,7 @@ function publicPrefetchCandidatesForPath(path: string) {
   return ["/", "/collections", "/tools", "/pricing"];
 }
 
-import { getSectionSchema } from "@/lib/section-schema";
+import { getSectionSchema, getThemeBlockSchema, readThemeFieldValue, resolveThemeFieldSchema } from "@/lib/section-schema";
 import { getSectionEntries } from "@/lib/theme";
 import { formatCurrency } from "@/lib/data";
 import { creativePackIconByName, suggestedCreativePackIconName } from "@/lib/creative-pack-icons";
@@ -1683,10 +1683,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
           twitterUrl: ""
         };
 	  const socialHref = (key: keyof typeof defaultSocialUrls) => {
-	    const value = footer?.settings[key];
-	    if (spanishXbyFooter && typeof value === "string" && /\b(?:aidreamcapes|mydreamshoots)\b/i.test(value) && !/-xby/i.test(value)) return "";
-	    if (value === undefined || value === null) return defaultSocialUrls[key];
-	    return themeValueToString(value, "").trim();
+	    const value = footer ? setting(footer, key, "") : "";
+	    if (spanishXbyFooter && /\b(?:aidreamcapes|mydreamshoots)\b/i.test(value) && !/-xby/i.test(value)) return "";
+	    return value || defaultSocialUrls[key];
 	  };
   const socialLinks = [
     { label: "Instagram", href: socialHref("instagramUrl"), icon: Instagram },
@@ -1896,7 +1895,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
 }
 
 function setting(section: SectionInstance, key: string, fallback = ""): string {
-  const value = themeValueToString(section.settings[key], "");
+  const schema = getSectionSchema(section.type);
+  const field = resolveThemeFieldSchema(schema.settings, key);
+  const value = themeValueToString(field ? readThemeFieldValue(section.settings, field) : section.settings[key], "");
   return value.trim() ? value : fallback;
 }
 
@@ -1915,7 +1916,9 @@ function listSetting(section: SectionInstance, key: string, fallback: string[] =
 }
 
 function blockValue(block: SectionBlockInstance, key: string, fallback = ""): string {
-  const value = themeValueToString(block.settings[key], "");
+  const blockSchema = getThemeBlockSchema(block.type);
+  const field = resolveThemeFieldSchema(blockSchema?.settings, key);
+  const value = themeValueToString(field ? readThemeFieldValue(block.settings, field) : block.settings[key], "");
   return value.trim() ? value : fallback;
 }
 
@@ -5932,12 +5935,12 @@ function sectionAnchor(section: SectionInstance, fallback: string): string {
 }
 
 function numberSetting(section: SectionInstance, key: string, fallback: number): number {
-  const value = Number(themeValueToString(section.settings[key], ""));
+  const value = Number(setting(section, key, ""));
   return Number.isFinite(value) ? value : fallback;
 }
 
 function blockNumber(block: SectionBlockInstance, key: string, fallback: number): number {
-  const value = Number(themeValueToString(block.settings[key], ""));
+  const value = Number(blockValue(block, key, ""));
   return Number.isFinite(value) ? value : fallback;
 }
 

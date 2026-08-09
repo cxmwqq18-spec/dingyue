@@ -38,6 +38,7 @@ export function DesignerWorkspacePane({
     storefrontHref: string;
     dirtyPagesCount: number;
     currentPageDirty: boolean;
+    publishedVersion: number;
     onSaveDraft: () => void;
     onPublishDraft: () => void;
     onRollback: () => void;
@@ -53,7 +54,7 @@ export function DesignerWorkspacePane({
         <div className="saas-mobile-workbench-actions" data-designer-layout="saas-mobile-workbench-actions">
           <div className="min-w-0 flex-1">
             <p>当前页面：{pageTreeProps?.activePage.title ?? sectionTreeProps.activePage.title}</p>
-            <span>{mobileActions.currentPageDirty ? "草稿待发布" : "已与线上同步"} · 待发布页面 {mobileActions.dirtyPagesCount}</span>
+            <span>{mobileActions.currentPageDirty ? "草稿待发布" : "已与线上同步"} · 待发布页面 {mobileActions.dirtyPagesCount} · 线上 v{mobileActions.publishedVersion}</span>
           </div>
           <div className="flex shrink-0 flex-wrap items-center justify-end gap-1.5">
             <Link href={mobileActions.adminHref}>后台</Link>

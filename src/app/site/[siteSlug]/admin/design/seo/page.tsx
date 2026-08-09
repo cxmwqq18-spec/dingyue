@@ -58,6 +58,7 @@ export default async function DesignSeoPage({ params }: { params: Promise<{ site
           站点搜索资料
         </div>
         <SeoSettingsEditor
+          draftMeta={data.site.themeSettings.draftMeta}
           initialSettings={data.site.themeSettings.draftJson}
           pages={pages}
           publishedSettings={data.site.themeSettings.publishedJson}

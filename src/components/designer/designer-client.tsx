@@ -94,7 +94,13 @@ import {
 import { parseFieldValue } from "@/components/designer/field-editor-registry";
 import type { DesignerResourceKind, DesignerResourceStatus, FieldOptions } from "@/components/designer/field-editor-types";
 import type { DesignerToolbarMenuOption } from "@/components/designer/designer-toolbar-primitives";
-import { aiSubscriptionSectionSchemas, defaultBlock, defaultSection, getSectionSchema, sectionSchemas } from "@/lib/section-schema";
+import {
+  aiSubscriptionSectionSchemas,
+  defaultBlock,
+  defaultSection,
+  getSectionSchema,
+  sectionSchemas
+} from "@/lib/section-schema";
 import { buildSaasThemeDraft } from "@/lib/theme/saas-theme-model";
 import { getThemePackages, themePackageTemplateToPageJson, type ThemePackageSiteSettings, type ThemePackageTemplateKey } from "@/lib/theme/registry";
 import {
@@ -111,6 +117,7 @@ import type {
   Site,
   SiteAiApp,
   ThemeBlockSchema,
+  ThemeDraftMeta,
   ThemeFieldSchema,
   ThemePage,
   ThemePageJson,
@@ -377,11 +384,17 @@ export function DesignerClient({
     Object.fromEntries(pages.map((page) => [page.id, clonePage(page.draftJson)]))
   );
   const [themeSettings, setThemeSettings] = useState<ThemeSettings>(normalizeGlobalSections(cloneSettings(site.themeSettings.draftJson)));
+  const [draftVersions, setDraftVersions] = useState<Record<string, ThemeDraftMeta>>(
+    Object.fromEntries(pages.flatMap((page) => page.draftMeta ? [[page.id, page.draftMeta] as const] : []))
+  );
+  const [themeSettingsDraftVersion, setThemeSettingsDraftVersion] = useState<ThemeDraftMeta | undefined>(site.themeSettings.draftMeta);
+  const [publishConfirmOpen, setPublishConfirmOpen] = useState(false);
+  const [publishBusy, setPublishBusy] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>(() =>
     expansionStateForPage(initialPage?.draftJson, initialPage?.draftJson.sectionsOrder[0])
   );
   const [expandedGlobals, setExpandedGlobals] = useState<Record<"header" | "footer", boolean>>({ header: false, footer: false });
-  const [publishedVersion, setPublishedVersion] = useState(() => Math.max(publicationCount, ...pages.map((page) => page.publishedJson.version), 1));
+  const [publishedVersion, setPublishedVersion] = useState(() => Math.max(1, ...pages.map((page) => page.publishedJson.version ?? 0)));
   const [lastAction, setLastAction] = useState("已载入当前页面草稿，可继续编辑并按需发布。");
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [publishedPages, setPublishedPages] = useState<Record<string, ThemePageJson>>(
@@ -405,6 +418,13 @@ export function DesignerClient({
   useEffect(() => {
     resourceStatusRef.current = resourceStatus;
   }, [resourceStatus]);
+
+  useEffect(() => {
+    setDraftVersions(Object.fromEntries(pages.flatMap((page) => (page.draftMeta ? [[page.id, page.draftMeta] as const] : []))));
+    setThemeSettingsDraftVersion(site.themeSettings.draftMeta);
+    setPublishedVersion(Math.max(1, ...pages.map((page) => page.publishedJson.version ?? 0)));
+  }, [pages, site.themeSettings.draftMeta]);
+
   const activePage = pages.find((page) => page.id === selectedPageId) ?? pages[0];
   const draft = drafts[selectedPageId];
   const livePage = publishedPages[selectedPageId] ?? activePage.publishedJson;
@@ -647,6 +667,9 @@ export function DesignerClient({
     return JSON.stringify(draftPage) !== JSON.stringify(pagePublished);
   }).length;
   const currentPageDirty = JSON.stringify(draft) !== JSON.stringify(livePage);
+  const globalSettingsDirty = JSON.stringify(themeSettings) !== JSON.stringify(publishedThemeSettings);
+  const wholeSiteDirtyCount = dirtyPagesCount + (globalSettingsDirty ? 1 : 0);
+  const hiddenDraftCount = Math.max(0, wholeSiteDirtyCount - (currentPageDirty ? 1 : 0));
   const currentSectionIds = Array.from(new Set([...draft.sectionsOrder, ...livePage.sectionsOrder]));
   const changedSectionCount =
     currentSectionIds.filter((sectionId) => JSON.stringify(draft.sections[sectionId] ?? null) !== JSON.stringify(livePage.sections[sectionId] ?? null)).length +
@@ -1149,42 +1172,67 @@ export function DesignerClient({
     void sendSaasAction({ type: "change", scope: "global_setting", name: field.id, value: parsed }, `已更新全局字段「${field.label}」。`);
   }
 
+  function currentPageDraftVersions(): Record<string, ThemeDraftMeta | undefined> {
+    return Object.fromEntries(pages.map((page) => [page.id, draftVersions[page.id] ?? page.draftMeta]));
+  }
+
   async function saveThemeSettings() {
-    const ok = await saveThemeSettingsDraft(site.id, themeSettings);
-    if (!ok) {
-      setLastAction("全局设置保存失败，请检查配置内容。");
-      return false;
+    const result = await saveThemeSettingsDraft(site.id, themeSettings, themeSettingsDraftVersion);
+    if (!result.ok) {
+      setLastAction(result.status === 409 ? "全局设置保存被拦截：草稿版本已变化，请刷新后重新检查。" : "全局设置保存失败，请检查配置内容。");
+      return { ok: false, draftVersion: themeSettingsDraftVersion, status: result.status };
     }
-    return true;
+    if (result.draftVersion) setThemeSettingsDraftVersion(result.draftVersion);
+    return { ok: true, draftVersion: result.draftVersion ?? themeSettingsDraftVersion, status: result.status };
   }
 
   async function saveDraft() {
+    const pageVersionsBeforeSave = currentPageDraftVersions();
     const [settingsSaved, pagesSaved] = await Promise.all([
       saveThemeSettings(),
       saveAllThemePageDrafts(
         site.id,
         pages.map((page) => ({
           pageId: page.id,
-          draftJson: drafts[page.id] ?? page.draftJson
+          draftJson: drafts[page.id] ?? page.draftJson,
+          expected: pageVersionsBeforeSave[page.id]
         }))
       )
     ]);
-    if (!settingsSaved || !pagesSaved) {
-      setLastAction("草稿保存失败，请检查页面配置后重试。");
-      return false;
+    if (Object.keys(pagesSaved.draftVersions).length) {
+      setDraftVersions((current) => ({ ...current, ...pagesSaved.draftVersions }));
+    }
+    const nextPageVersions = { ...pageVersionsBeforeSave, ...pagesSaved.draftVersions };
+    if (!settingsSaved.ok || !pagesSaved.ok) {
+      const conflict = pagesSaved.errors.some((item) => item.status === 409) || settingsSaved.status === 409;
+      setLastAction(conflict ? "草稿保存被拦截：页面或全局设置版本已变化，请刷新后重新检查。" : "草稿保存失败，请检查页面配置后重试。");
+      return { ok: false, pageVersions: nextPageVersions, settingsVersion: settingsSaved.draftVersion };
     }
     setLastAction(`草稿已保存，${pages.length} 个页面与全局设置已写入草稿区。`);
-    return true;
+    return { ok: true, pageVersions: nextPageVersions, settingsVersion: settingsSaved.draftVersion };
+  }
+
+  function requestPublishDraft() {
+    setPublishConfirmOpen(true);
   }
 
   async function publishDraft() {
+    if (publishBusy) return;
+    setPublishBusy(true);
+    try {
     const saved = await saveDraft();
-    if (!saved) return;
-    const result = await publishThemePageDraft(site.id, selectedPageId, "site_admin_demo");
-    if (!result) {
-      setLastAction("发布失败，当前草稿仍已保留。");
+    if (!saved.ok) return;
+    const result = await publishThemePageDraft(site.id, selectedPageId, "site_admin_demo", {
+      pageVersions: saved.pageVersions,
+      settingsVersion: saved.settingsVersion,
+      publishedVersion
+    });
+    if (!result.ok) {
+      setLastAction(result.status === 409 ? "发布已拦截：你确认时看到的页面、全局设置或线上版本已经变化，请刷新后重新检查。" : "发布失败，当前草稿仍已保留。");
       return;
     }
+    if (result.pageDraftVersions) setDraftVersions(result.pageDraftVersions);
+    if (result.settingsDraftVersion) setThemeSettingsDraftVersion(result.settingsDraftVersion);
     const nextVersion = result.publishedVersion ?? publishedVersion + 1;
     setPublishedPages(
       Object.fromEntries(
@@ -1206,7 +1254,11 @@ export function DesignerClient({
     );
     setPublishedThemeSettings(normalizeGlobalSections(cloneSettings(themeSettings)));
     setPublishedVersion(nextVersion);
+    setPublishConfirmOpen(false);
     setLastAction(`已发布到线上版本 v${nextVersion}，当前页与其他草稿页已同步为已发布状态。`);
+    } finally {
+      setPublishBusy(false);
+    }
   }
 
   async function rollback() {
@@ -1215,13 +1267,15 @@ export function DesignerClient({
       setLastAction("回滚失败，请稍后重试。");
       return;
     }
-    setDrafts(
-      Object.fromEntries(
-        pages.map((page) => [page.id, clonePage(publishedPages[page.id] ?? page.publishedJson)])
-      )
-    );
-    setThemeSettings(normalizeGlobalSections(cloneSettings(publishedThemeSettings)));
-    const selectedDraft = publishedPages[selectedPageId] ?? activePage.publishedJson;
+    const refreshedSite = result.site ?? site;
+    setDrafts(Object.fromEntries(refreshedSite.pages.map((page) => [page.id, clonePage(page.draftJson)])));
+    setPublishedPages(Object.fromEntries(refreshedSite.pages.map((page) => [page.id, clonePage(page.publishedJson)])));
+    setDraftVersions(Object.fromEntries(refreshedSite.pages.flatMap((page) => (page.draftMeta ? [[page.id, page.draftMeta] as const] : []))));
+    setThemeSettings(normalizeGlobalSections(cloneSettings(refreshedSite.themeSettings.draftJson)));
+    setThemeSettingsDraftVersion(refreshedSite.themeSettings.draftMeta);
+    setPublishedThemeSettings(normalizeGlobalSections(cloneSettings(refreshedSite.themeSettings.publishedJson)));
+    setPublishedVersion(Math.max(1, ...refreshedSite.pages.map((page) => page.publishedJson.version ?? 0)));
+    const selectedDraft = clonePage(refreshedSite.pages.find((page) => page.id === selectedPageId)?.draftJson ?? activePage.publishedJson);
     const firstSectionId = selectedDraft.sectionsOrder[0] ?? "";
     setExpandedSections(expansionStateForPage(selectedDraft, firstSectionId));
     setSelection({ kind: "section", sectionId: firstSectionId });
@@ -1243,10 +1297,14 @@ export function DesignerClient({
     setExpandedSections(expansionStateForPage(nextDraft, firstSectionId));
     setSelection({ kind: "section", sectionId: firstSectionId });
     setActiveTab("templates");
-    const saved = await saveThemePageDraft(site.id, selectedPageId, nextDraft);
-    if (!saved) {
+    const saved = await saveThemePageDraft(site.id, selectedPageId, nextDraft, draftVersions[selectedPageId] ?? activePage.draftMeta);
+    if (!saved.ok) {
       setLastAction("行业模板已放入本地草稿，但保存失败，请稍后再试。");
       return;
+    }
+    if (saved.draftVersion) {
+      const draftVersion = saved.draftVersion;
+      setDraftVersions((current) => ({ ...current, [selectedPageId]: draftVersion }));
     }
     reloadIframePreview();
     setLastAction(`已套用「${option.label}」到当前页面草稿，线上页面仍需发布后生效。`);
@@ -1290,11 +1348,16 @@ export function DesignerClient({
     setSelection({ kind: "section", sectionId: firstSectionId });
     setActiveTab("templates");
 
+    const pageVersionsBeforeSave = currentPageDraftVersions();
     const [pagesSaved, settingsSaved] = await Promise.all([
-      saveAllThemePageDrafts(site.id, nextDraftEntries),
-      saveThemeSettingsDraft(site.id, nextThemeSettings)
+      saveAllThemePageDrafts(site.id, nextDraftEntries.map((entry) => ({ ...entry, expected: pageVersionsBeforeSave[entry.pageId] }))),
+      saveThemeSettingsDraft(site.id, nextThemeSettings, themeSettingsDraftVersion)
     ]);
-    if (!pagesSaved || !settingsSaved) {
+    if (Object.keys(pagesSaved.draftVersions).length) {
+      setDraftVersions((current) => ({ ...current, ...pagesSaved.draftVersions }));
+    }
+    if (settingsSaved.draftVersion) setThemeSettingsDraftVersion(settingsSaved.draftVersion);
+    if (!pagesSaved.ok || !settingsSaved.ok) {
       setLastAction(`「${themePackage.name}」全站页面与全局装修已放入本地草稿，但保存失败，请稍后再试。`);
       return;
     }
@@ -1537,7 +1600,7 @@ export function DesignerClient({
           onLivePreviewSelect={choosePreviewSelection}
           onPageSelect={selectPage}
           onPreviewModeToggle={togglePreviewMode}
-          onPublishDraft={publishDraft}
+          onPublishDraft={requestPublishDraft}
           onReloadPreview={reloadIframePreview}
           onRollback={rollback}
           onSaveDraft={saveDraft}
@@ -1567,7 +1630,8 @@ export function DesignerClient({
           storefrontHref: `/site/${site.slug}`,
           currentPageDirty,
           dirtyPagesCount,
-          onPublishDraft: publishDraft,
+          publishedVersion,
+          onPublishDraft: requestPublishDraft,
           onRollback: rollback,
           onSaveDraft: saveDraft
         }}
@@ -1620,6 +1684,101 @@ export function DesignerClient({
         }}
         sectionTreeProps={sectionTreeProps}
       />
+      {publishConfirmOpen ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-4 py-6">
+          <div className="w-full max-w-[760px] rounded-[16px] border border-[#d9dde4] bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.45)]">
+            <div className="border-b border-[#e6e9ee] px-5 py-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <div className="text-[12px] font-medium uppercase tracking-[0.18em] text-[#667085]">确认发布</div>
+                  <h2 className="mt-1 text-[18px] font-semibold text-[#101828]">发布整站快照</h2>
+                </div>
+                <button
+                  className="rounded-[10px] border border-[#d9dde4] px-3 py-1.5 text-sm text-[#344054] transition hover:border-[#98a2b3] hover:text-[#101828]"
+                  onClick={() => setPublishConfirmOpen(false)}
+                  type="button"
+                >
+                  取消
+                </button>
+              </div>
+            </div>
+            <div className="grid gap-4 px-5 py-4">
+              <p className="text-[13px] leading-6 text-[#475467]">
+                这次发布会把当前页面草稿、隐藏草稿页和主题设置一起写入同一套线上快照。确认前请再看一眼范围。
+              </p>
+              <div className="grid gap-3 md:grid-cols-2">
+                <div className="rounded-[12px] border border-[#e6e9ee] bg-[#fafbfc] p-4">
+                  <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-[#667085]">本次范围</p>
+                  <div className="mt-3 grid gap-2 text-[13px] text-[#344054]">
+                    <div className="flex items-center justify-between gap-3">
+                      <span>当前页面</span>
+                      <span className="font-medium">{activePage?.title ?? "未选择"}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>待发布页面</span>
+                      <span className="font-medium">{dirtyPagesCount}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>隐藏草稿</span>
+                      <span className="font-medium">{hiddenDraftCount}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>全局设置</span>
+                      <span className="font-medium">{globalSettingsDirty ? "有变更" : "无变更"}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="rounded-[12px] border border-[#e6e9ee] bg-[#fafbfc] p-4">
+                  <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-[#667085]">版本校验</p>
+                  <div className="mt-3 grid gap-2 text-[13px] text-[#344054]">
+                    <div className="flex items-center justify-between gap-3">
+                      <span>当前线上版本</span>
+                      <span className="font-medium">v{publishedVersion}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>最近一次发布版本</span>
+                      <span className="font-medium">v{publishedVersion}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>发布记录</span>
+                      <span className="font-medium">{publicationCount}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>当前草稿页版本</span>
+                      <span className="font-medium">v{draftVersions[selectedPageId]?.revision ?? draft?.version ?? 1}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>主题设置草稿版本</span>
+                      <span className="font-medium">v{themeSettingsDraftVersion?.revision ?? 1}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-[12px] border border-amber-200 bg-amber-50 px-4 py-3 text-[13px] leading-6 text-amber-900">
+                确认后会先保存草稿，再按同一套 reviewed versions 发布整站快照。若版本在你确认前被别的操作改过，这次发布会被 409 拦住。
+              </div>
+            </div>
+            <div className="flex flex-wrap items-center justify-end gap-2 border-t border-[#e6e9ee] px-5 py-4">
+              <button
+                className="rounded-[10px] border border-[#d9dde4] bg-white px-4 py-2 text-sm text-[#344054] transition hover:border-[#98a2b3] hover:text-[#101828] disabled:cursor-not-allowed disabled:opacity-55"
+                disabled={publishBusy}
+                onClick={() => setPublishConfirmOpen(false)}
+                type="button"
+              >
+                返回
+              </button>
+              <button
+                className="rounded-[10px] border border-[#f4a719] bg-[#f4a719] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#eb9a0e] disabled:cursor-not-allowed disabled:opacity-55"
+                disabled={publishBusy}
+                onClick={() => void publishDraft()}
+                type="button"
+              >
+                {publishBusy ? "发布中" : "确认发布"}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -52,11 +52,13 @@ import {
   draftJsonWithMeta,
   makeThemeDraftMeta,
   RelationalStoreError,
+  themeSettingsDraftJsonWithMeta,
   toMediaAsset,
   toSite,
   toSiteTheme,
   toThemeCopy,
   toThemePage,
+  toThemeSettings,
   toThemePublication,
   uid,
   type PrismaLike
@@ -400,15 +402,19 @@ async function persistDraftThemeState(
 }
 
 async function persistSiteDraft(tx: PrismaLike, site: Site) {
+  const nextSettings = {
+    ...site.themeSettings,
+    draftMeta: makeThemeDraftMeta(site.themeSettings)
+  };
   await tx.themeSettings.upsert({
     where: { siteId: site.id },
     create: {
       id: `settings_${site.id}`,
       siteId: site.id,
-      draftJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue,
+      draftJson: themeSettingsDraftJsonWithMeta(nextSettings),
       publishedJson: cloneJson(site.themeSettings.publishedJson) as unknown as Prisma.InputJsonValue
     },
-    update: { draftJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue }
+    update: { draftJson: themeSettingsDraftJsonWithMeta(nextSettings) }
   });
   for (const page of site.pages) {
     page.draftMeta = makeThemeDraftMeta(page);
@@ -945,25 +951,46 @@ export async function saveThemePageDraftRelational(params: {
   return { page: toThemePage(updated), draftVersion: page.draftMeta };
 }
 
+type ThemeDraftVersionExpectation = { expectedRevision?: number; expectedEtag?: string };
+
+function hasDraftVersionExpectation(expected?: ThemeDraftVersionExpectation): boolean {
+  return expected?.expectedRevision !== undefined || expected?.expectedEtag !== undefined;
+}
+
 export async function saveThemeSettingsDraftRelational(params: {
   siteId: string;
   draftJson: ThemeSettings;
   actor?: string;
-}): Promise<{ site: Site }> {
+  expected?: ThemeDraftVersionExpectation;
+  requireExpected?: boolean;
+}): Promise<{ site: Site; draftVersion: ThemeDraftMeta }> {
   clearSiteThemeReadCache(params.siteId);
-  await prisma.themeSettings.upsert({
-    where: { siteId: params.siteId },
-    create: {
-      id: `settings_${params.siteId}`,
-      siteId: params.siteId,
-      draftJson: cloneJson(params.draftJson) as unknown as Prisma.InputJsonValue,
-      publishedJson: cloneJson(params.draftJson) as unknown as Prisma.InputJsonValue
-    },
-    update: {
-      draftJson: cloneJson(params.draftJson) as unknown as Prisma.InputJsonValue
+  return prisma.$transaction(async (tx) => {
+    const current = await tx.themeSettings.findUnique({ where: { siteId: params.siteId } });
+    const currentSettings = toThemeSettings(current);
+    if (current && params.requireExpected && !hasDraftVersionExpectation(params.expected)) {
+      throw new RelationalStoreError("theme_draft_version_required", 428);
     }
-  });
-  return { site: toSite(await getSiteWithThemeRecords(prisma, params.siteId)) };
+    if (current) assertThemeDraftVersion({ draftMeta: currentSettings.draftMeta }, params.expected);
+    const nextSettings = {
+      draftJson: cloneJson(params.draftJson),
+      publishedJson: current ? currentSettings.publishedJson : cloneJson(params.draftJson),
+      draftMeta: makeThemeDraftMeta(currentSettings)
+    };
+    await tx.themeSettings.upsert({
+      where: { siteId: params.siteId },
+      create: {
+        id: `settings_${params.siteId}`,
+        siteId: params.siteId,
+        draftJson: themeSettingsDraftJsonWithMeta(nextSettings),
+        publishedJson: cloneJson(nextSettings.publishedJson) as unknown as Prisma.InputJsonValue
+      },
+      update: {
+        draftJson: themeSettingsDraftJsonWithMeta(nextSettings)
+      }
+    });
+    return { site: toSite(await getSiteWithThemeRecords(tx, params.siteId)), draftVersion: nextSettings.draftMeta };
+  }, { timeout: 60000 });
 }
 
 export type ThemeFooterSocialLinks = {
@@ -997,12 +1024,18 @@ export async function updateThemeFooterSocialLinksRelational(params: {
   if (!current) {
     throw new RelationalStoreError("theme_settings_not_found", 404);
   }
-  const draftJson = applyFooterSocialLinks(current.draftJson as unknown as ThemeSettings, params.socialLinks);
-  const publishedJson = applyFooterSocialLinks(current.publishedJson as unknown as ThemeSettings, params.socialLinks);
+  const currentSettings = toThemeSettings(current);
+  const draftJson = applyFooterSocialLinks(currentSettings.draftJson, params.socialLinks);
+  const publishedJson = applyFooterSocialLinks(currentSettings.publishedJson, params.socialLinks);
+  const nextSettings = {
+    draftJson,
+    publishedJson,
+    draftMeta: makeThemeDraftMeta(currentSettings)
+  };
   await prisma.themeSettings.update({
     where: { siteId: params.siteId },
     data: {
-      draftJson: cloneJson(draftJson) as unknown as Prisma.InputJsonValue,
+      draftJson: themeSettingsDraftJsonWithMeta(nextSettings),
       publishedJson: cloneJson(publishedJson) as unknown as Prisma.InputJsonValue
     }
   });
@@ -1026,9 +1059,15 @@ export async function rollbackThemePageDraftRelational(params: {
     });
     const settings = await tx.themeSettings.findUnique({ where: { siteId: params.siteId } });
     if (settings) {
+      const currentSettings = toThemeSettings(settings);
+      const nextSettings = {
+        ...currentSettings,
+        draftJson: cloneJson(currentSettings.publishedJson),
+        draftMeta: makeThemeDraftMeta(currentSettings)
+      };
       await tx.themeSettings.update({
         where: { siteId: params.siteId },
-        data: { draftJson: cloneJson(settings.publishedJson) as unknown as Prisma.InputJsonValue }
+        data: { draftJson: themeSettingsDraftJsonWithMeta(nextSettings) }
       });
     }
     return { page: toThemePage(updated), draftVersion: page.draftMeta };
@@ -1062,16 +1101,21 @@ export async function resetDraftThemeFromActiveRelational(
     }
 
     const settingsDraft = cloneJson(latestPublication?.snapshot.themeSettings ?? site.themeSettings.publishedJson);
+    const nextSettings = {
+      ...site.themeSettings,
+      draftJson: settingsDraft,
+      draftMeta: makeThemeDraftMeta(site.themeSettings)
+    };
     await tx.themeSettings.upsert({
       where: { siteId },
       create: {
         id: `settings_${siteId}`,
         siteId,
-        draftJson: settingsDraft as unknown as Prisma.InputJsonValue,
-        publishedJson: settingsDraft as unknown as Prisma.InputJsonValue
+        draftJson: themeSettingsDraftJsonWithMeta(nextSettings),
+        publishedJson: cloneJson(settingsDraft) as unknown as Prisma.InputJsonValue
       },
       update: {
-        draftJson: settingsDraft as unknown as Prisma.InputJsonValue
+        draftJson: themeSettingsDraftJsonWithMeta(nextSettings)
       }
     });
 
@@ -1093,26 +1137,66 @@ export async function publishDraftPageRelational(
   siteId: string,
   pageId: string,
   actor = "site_admin_demo",
-  expected?: { expectedRevision?: number; expectedEtag?: string }
-): Promise<{ site: Site; draftVersion?: ThemeDraftMeta; publication: ThemePublication; publishedVersion: number }> {
+  expected?: ThemeDraftVersionExpectation & {
+    pageVersions?: Record<string, ThemeDraftVersionExpectation | undefined>;
+    settingsVersion?: ThemeDraftVersionExpectation;
+    expectedPublishedVersion?: number;
+    requireSnapshotVersions?: boolean;
+  }
+): Promise<{
+  site: Site;
+  draftVersion?: ThemeDraftMeta;
+  pageDraftVersions: Record<string, ThemeDraftMeta>;
+  settingsDraftVersion?: ThemeDraftMeta;
+  publication: ThemePublication;
+  publishedVersion: number;
+}> {
   clearSiteThemeReadCache(siteId);
   return prisma.$transaction(async (tx) => {
     const siteRecord = await getSiteWithThemeRecords(tx, siteId);
     const site = toSite(siteRecord);
     const targetPage = site.pages.find((page) => page.id === pageId);
     if (!targetPage) throw new RelationalStoreError("theme_page_not_found", 404);
-    assertThemeDraftVersion(targetPage, expected);
+    const currentPublishedVersion = Math.max(0, ...site.pages.map((page) => page.publishedJson.version ?? 0));
+    if (expected?.expectedPublishedVersion !== undefined && currentPublishedVersion !== expected.expectedPublishedVersion) {
+      throw new RelationalStoreError("theme_publish_conflict", 409);
+    }
+    if (expected?.requireSnapshotVersions) {
+      if (expected.expectedPublishedVersion === undefined) {
+        throw new RelationalStoreError("theme_publish_review_scope_incomplete", 409);
+      }
+      if (!hasDraftVersionExpectation(expected.settingsVersion)) {
+        throw new RelationalStoreError("theme_publish_review_scope_incomplete", 409);
+      }
+      for (const page of site.pages) {
+        if (!hasDraftVersionExpectation(expected.pageVersions?.[page.id])) {
+          throw new RelationalStoreError("theme_publish_review_scope_incomplete", 409);
+        }
+      }
+    }
+    const targetExpectation = expected?.pageVersions?.[pageId] ?? {
+      expectedRevision: expected?.expectedRevision,
+      expectedEtag: expected?.expectedEtag
+    };
+    assertThemeDraftVersion(targetPage, targetExpectation);
+    for (const page of site.pages) {
+      const pageExpectation = expected?.pageVersions?.[page.id];
+      if (pageExpectation && page.id !== pageId) assertThemeDraftVersion(page, pageExpectation);
+    }
+    if (expected?.settingsVersion) {
+      assertThemeDraftVersion({ draftMeta: site.themeSettings.draftMeta }, expected.settingsVersion);
+    }
 
-    const currentMax = Math.max(0, ...site.pages.map((page) => page.publishedJson.version ?? 0));
-    const publishedVersion = currentMax + 1;
+    const publishedVersion = currentPublishedVersion + 1;
     let draftVersion: ThemeDraftMeta | undefined;
+    const pageDraftVersions: Record<string, ThemeDraftMeta> = {};
 
     await tx.themeSettings.upsert({
       where: { siteId },
       create: {
         id: `settings_${siteId}`,
         siteId,
-        draftJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue,
+        draftJson: themeSettingsDraftJsonWithMeta(site.themeSettings),
         publishedJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue
       },
       update: {
@@ -1127,6 +1211,7 @@ export async function publishDraftPageRelational(
       page.draftJson.version = publishedVersion;
       page.draftMeta = makeThemeDraftMeta(page);
       if (page.id === pageId) draftVersion = page.draftMeta;
+      pageDraftVersions[page.id] = page.draftMeta;
       await tx.themePage.update({
         where: { id: page.id },
         data: {
@@ -1206,7 +1291,7 @@ export async function publishDraftPageRelational(
       targetId: siteId,
       metadata: { version: publishedVersion, pageId }
     });
-    return { site, draftVersion, publication, publishedVersion };
+    return { site, draftVersion, pageDraftVersions, settingsDraftVersion: site.themeSettings.draftMeta, publication, publishedVersion };
   }, { timeout: 120000 });
 }
 
@@ -1239,11 +1324,19 @@ export async function restoreDraftThemeFromPublicationRelational(
       create: {
         id: `settings_${siteId}`,
         siteId,
-        draftJson: cloneJson(publication.snapshot.themeSettings) as unknown as Prisma.InputJsonValue,
+        draftJson: themeSettingsDraftJsonWithMeta({
+          draftJson: cloneJson(publication.snapshot.themeSettings) as ThemeSettings,
+          publishedJson: cloneJson(publication.snapshot.themeSettings) as ThemeSettings,
+          draftMeta: makeThemeDraftMeta(site.themeSettings)
+        }),
         publishedJson: cloneJson(publication.snapshot.themeSettings) as unknown as Prisma.InputJsonValue
       },
       update: {
-        draftJson: cloneJson(publication.snapshot.themeSettings) as unknown as Prisma.InputJsonValue
+        draftJson: themeSettingsDraftJsonWithMeta({
+          draftJson: cloneJson(publication.snapshot.themeSettings) as ThemeSettings,
+          publishedJson: cloneJson(publication.snapshot.themeSettings) as ThemeSettings,
+          draftMeta: makeThemeDraftMeta(site.themeSettings)
+        })
       }
     });
     site.themeSettings.draftJson = cloneJson(publication.snapshot.themeSettings);
@@ -1398,7 +1491,7 @@ export async function activateSiteThemeRelational(params: {
       create: {
         id: `settings_${params.siteId}`,
         siteId: params.siteId,
-        draftJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue,
+        draftJson: themeSettingsDraftJsonWithMeta(site.themeSettings),
         publishedJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue
       },
       update: { publishedJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue }

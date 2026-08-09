@@ -1,16 +1,18 @@
 import { NextResponse } from "next/server";
-import { hasSiteAdminSession } from "@/lib/api-auth";
+import { requireSiteMutation } from "@/lib/api-auth";
+import { StoreError } from "@/lib/server-store";
 import { rollbackThemePageDraftRelational } from "@/lib/stores/theme-store";
+import type { NextRequest } from "next/server";
 
-export async function POST(_request: Request, { params }: { params: Promise<{ siteId: string; pageId: string }> }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string; pageId: string }> }) {
   const { siteId, pageId } = await params;
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
-  }
+  const guard = await requireSiteMutation(request, siteId, { key: `${siteId}:theme-rollback` });
+  if (!guard.ok) return guard.response;
   try {
-    await rollbackThemePageDraftRelational({ siteId, pageId });
-    return NextResponse.json({ ok: true, siteId, pageId, action: "draft_rolled_back" });
+    const result = await rollbackThemePageDraftRelational({ siteId, pageId });
+    return NextResponse.json({ ok: true, siteId, pageId, action: "draft_rolled_back", draftVersion: result.draftVersion });
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : "rollback_failed" }, { status: 404 });
+    const status = error instanceof StoreError ? error.status : 404;
+    return NextResponse.json({ error: error instanceof Error ? error.message : "rollback_failed" }, { status });
   }
 }

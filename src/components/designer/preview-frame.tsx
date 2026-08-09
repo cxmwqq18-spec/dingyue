@@ -2,7 +2,7 @@
 
 import { Children } from "react";
 import type { ReactNode, RefObject } from "react";
-import { Eye, Monitor, RefreshCw, RotateCcw, Save, Smartphone, UploadCloud } from "lucide-react";
+import { Database, Eye, FileCheck2, GitBranch, Monitor, RefreshCw, RotateCcw, Save, Smartphone, UploadCloud } from "lucide-react";
 import {
   DesignerToolbarMenu,
   DesignerToolbarButton,
@@ -248,12 +248,31 @@ export function PreviewFrame({
           </div>
         </div>
 
-        <div className="mt-2 flex items-center gap-2 rounded-[10px] border border-[#d9dde4] bg-white px-3 py-2 text-[12px] text-[#667085]">
-          <span className="h-2 w-2 shrink-0 rounded-full bg-[#2f6fed]" />
-          <span className="truncate">{lastAction}</span>
-          <span className="ml-auto hidden shrink-0 text-[11px] text-[#909294] xl:inline">
-            草稿主题：{draftThemeName || templateDisplayName(draftThemeKey)}
-          </span>
+        <div className="mt-2 grid gap-2 xl:grid-cols-[minmax(0,1fr)_auto]">
+          <div className="flex min-w-0 items-center gap-2 rounded-[10px] border border-[#d9dde4] bg-white px-3 py-2 text-[12px] text-[#667085]">
+            <span className="h-2 w-2 shrink-0 rounded-full bg-[#2f6fed]" />
+            <span className="truncate">{lastAction}</span>
+            <span className="ml-auto hidden shrink-0 text-[11px] text-[#909294] xl:inline">
+              草稿主题：{draftThemeName || templateDisplayName(draftThemeKey)}
+            </span>
+          </div>
+          <div
+            className="hidden items-center gap-1 rounded-[10px] border border-[#d9dde4] bg-white px-2 py-2 text-[11px] text-[#667085] xl:flex"
+            data-designer-contract="saas-content-source-guardrail"
+          >
+            <span className="inline-flex h-[24px] items-center gap-1 rounded-[6px] bg-[#f4f6f9] px-2" title="保存草稿写入 ThemePage.draftJson 和 ThemeSettings.draftJson">
+              <Database className="h-3.5 w-3.5" strokeWidth={1.8} />
+              DB 草稿区
+            </span>
+            <span className="inline-flex h-[24px] items-center gap-1 rounded-[6px] bg-[#eef7f0] px-2 text-[#18794e]" title="发布后前台读取 publishedJson">
+              <FileCheck2 className="h-3.5 w-3.5" strokeWidth={1.8} />
+              线上快照
+            </span>
+            <span className="inline-flex h-[24px] items-center gap-1 rounded-[6px] bg-[#fff4e6] px-2 text-[#9a5a1f]" title="代码部署只更新渲染逻辑，不自动覆盖数据库发布内容">
+              <GitBranch className="h-3.5 w-3.5" strokeWidth={1.8} />
+              代码独立
+            </span>
+          </div>
         </div>
       </div>
 

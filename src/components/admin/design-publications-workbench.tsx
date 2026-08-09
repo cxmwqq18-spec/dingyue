@@ -17,6 +17,7 @@ import {
 import { PublicationActions, RestorePublicationButton } from "@/components/admin/design-actions";
 import { downloadCsv } from "@/components/admin/export-utils";
 import { StatusPill } from "@/components/ui";
+import type { ThemeDraftMeta } from "@/lib/types";
 
 type PublicationItem = {
   id: string;
@@ -41,7 +42,10 @@ export function DesignPublicationsWorkbench({
   preflightScore,
   preflightStale = false,
   firstPageId,
-  siteId
+  siteId,
+  pageVersions,
+  settingsVersion,
+  publishedVersion
 }: {
   publications: PublicationItem[];
   latestVersion?: number;
@@ -56,6 +60,9 @@ export function DesignPublicationsWorkbench({
   preflightStale?: boolean;
   firstPageId?: string;
   siteId: string;
+  pageVersions: Record<string, ThemeDraftMeta | undefined>;
+  settingsVersion?: ThemeDraftMeta;
+  publishedVersion: number;
 }) {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -234,8 +241,13 @@ export function DesignPublicationsWorkbench({
               <div className="shrink-0">
                 <PublicationActions
                   canPublish={Boolean(firstPageId) && preflight.canPublish && !preflight.stale}
+                  dirtyPages={dirtyPages}
                   onBeforePublish={refreshPreflight}
+                  pageVersions={pageVersions}
                   pageId={firstPageId}
+                  publishedVersion={publishedVersion}
+                  settingsDirty={settingsDirty}
+                  settingsVersion={settingsVersion}
                   siteId={siteId}
                 />
               </div>

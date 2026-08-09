@@ -1,7 +1,7 @@
 "use client";
 
 import type { GlobalSettingsNodeDefinition, Selection } from "@/components/designer/designer-types";
-import { getSectionSchema } from "@/lib/section-schema";
+import { getSectionSchema, resolveThemeBlockSchema } from "@/lib/section-schema";
 import {
   normalizeSaasSettingsCurrent,
   normalizeSaasSettingsCurrentForTheme,
@@ -55,7 +55,7 @@ function stringifyValue(value: ThemeSettingValue | undefined): string {
 }
 
 function resolveBlockSchema(section: SectionInstance, blockType: string): ThemeBlockSchema | undefined {
-  return getSectionSchema(section.type).blocks?.find((schema) => schema.type === blockType);
+  return resolveThemeBlockSchema(getSectionSchema(section.type), blockType);
 }
 
 export function resolveBlockSchemaFromSchemas(
@@ -63,7 +63,7 @@ export function resolveBlockSchemaFromSchemas(
   section: SectionInstance,
   blockType: string
 ): ThemeBlockSchema | undefined {
-  return schemas[section.type]?.blocks?.find((schema) => schema.type === blockType) ?? resolveBlockSchema(section, blockType);
+  return resolveThemeBlockSchema(schemas[section.type] ?? getSectionSchema(section.type), blockType) ?? resolveBlockSchema(section, blockType);
 }
 
 export function safeBlocks(section?: SectionInstance): SectionBlockInstance[] {

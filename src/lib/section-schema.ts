@@ -2379,8 +2379,96 @@ export const sectionSchemas: Record<string, ThemeSectionSchema> = {
 
 export const sectionDefinitions = Object.keys(sectionSchemas) as SectionType[];
 
+let sectionSchemaLookupCache: Map<string, ThemeSectionSchema> | undefined;
+let blockSchemaLookupCache: Map<string, ThemeBlockSchema> | undefined;
+
+function registerSchemaName<T>(lookup: Map<string, T>, name: string | undefined, schema: T) {
+  const normalized = name?.trim();
+  if (normalized && !lookup.has(normalized)) lookup.set(normalized, schema);
+}
+
+function aliasesFor(value: { aliases?: string[] }): string[] {
+  return value.aliases?.map((alias) => alias.trim()).filter(Boolean) ?? [];
+}
+
+function sectionSchemaLookup() {
+  if (!sectionSchemaLookupCache) {
+    sectionSchemaLookupCache = new Map();
+    for (const schema of Object.values(sectionSchemas)) {
+      registerSchemaName(sectionSchemaLookupCache, String(schema.type), schema);
+      for (const alias of aliasesFor(schema)) registerSchemaName(sectionSchemaLookupCache, alias, schema);
+    }
+  }
+  return sectionSchemaLookupCache;
+}
+
+function blockSchemaLookup() {
+  if (!blockSchemaLookupCache) {
+    blockSchemaLookupCache = new Map();
+    for (const sectionSchema of Object.values(sectionSchemas)) {
+      for (const blockSchema of sectionSchema.blocks ?? []) {
+        registerSchemaName(blockSchemaLookupCache, blockSchema.type, blockSchema);
+        for (const alias of aliasesFor(blockSchema)) registerSchemaName(blockSchemaLookupCache, alias, blockSchema);
+      }
+    }
+  }
+  return blockSchemaLookupCache;
+}
+
+export function themeSchemaTypeMatches(schema: { type: string; aliases?: string[] }, type: string | undefined): boolean {
+  const normalized = type?.trim();
+  return Boolean(normalized && (schema.type === normalized || aliasesFor(schema).includes(normalized)));
+}
+
+export function themeFieldIdMatches(field: ThemeFieldSchema, fieldId: string | undefined): boolean {
+  const normalized = fieldId?.trim();
+  return Boolean(normalized && (field.id === normalized || aliasesFor(field).includes(normalized)));
+}
+
+export function resolveThemeFieldSchema(fields: ThemeFieldSchema[] | undefined, fieldId: string | undefined): ThemeFieldSchema | undefined {
+  if (!fields?.length) return undefined;
+  return fields.find((field) => themeFieldIdMatches(field, fieldId));
+}
+
+export function resolveThemeBlockSchema(sectionSchema: ThemeSectionSchema | undefined, blockType: string | undefined): ThemeBlockSchema | undefined {
+  if (!sectionSchema?.blocks?.length || !blockType) return undefined;
+  return sectionSchema.blocks.find((schema) => themeSchemaTypeMatches(schema, blockType));
+}
+
+export function getThemeBlockSchema(blockType: string | undefined): ThemeBlockSchema | undefined {
+  const normalized = blockType?.trim();
+  if (!normalized) return undefined;
+  return blockSchemaLookup().get(normalized);
+}
+
+export function readThemeFieldValue(
+  values: Record<string, ThemeSettingValue> | undefined,
+  field: ThemeFieldSchema
+): ThemeSettingValue | undefined {
+  if (!values) return undefined;
+  if (Object.prototype.hasOwnProperty.call(values, field.id)) return values[field.id];
+  for (const alias of aliasesFor(field)) {
+    if (Object.prototype.hasOwnProperty.call(values, alias)) return values[alias];
+  }
+  return undefined;
+}
+
+export function writeThemeFieldValue(
+  values: Record<string, ThemeSettingValue>,
+  field: ThemeFieldSchema | undefined,
+  fieldId: string,
+  value: ThemeSettingValue
+) {
+  const targetId = field?.id ?? fieldId;
+  values[targetId] = value;
+  if (!field) return;
+  for (const alias of aliasesFor(field)) {
+    if (alias !== targetId) delete values[alias];
+  }
+}
+
 export function getSectionSchema(type: SectionType): ThemeSectionSchema {
-  return sectionSchemas[type] ?? {
+  return sectionSchemaLookup().get(String(type)) ?? {
     type,
     label: String(type),
     category: "Storefront",
@@ -2405,7 +2493,7 @@ export function defaultSection(type: SectionType): SectionInstance {
   const schema = getSectionSchema(type);
   const preset = schema.presets?.[0];
   return {
-    type,
+    type: schema.type,
     settings: { ...(preset?.settings ?? defaultSettings(schema.settings)) },
     blocks: preset?.blocks ? JSON.parse(JSON.stringify(preset.blocks)) as SectionBlockInstance[] : []
   };

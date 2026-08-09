@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
-import { hasSiteAdminSession } from "@/lib/api-auth";
+import { requireSiteMutation } from "@/lib/api-auth";
+import { StoreError } from "@/lib/server-store";
 import { saveThemeSettingsDraftRelational } from "@/lib/stores/theme-store";
 import type { ThemeSettings } from "@/lib/types";
+import type { NextRequest } from "next/server";
 
 function validOptionalString(value: unknown) {
   return value === undefined || typeof value === "string";
@@ -36,12 +38,11 @@ function isValidSeoPayload(seo: ThemeSettings["seo"]) {
   );
 }
 
-export async function PUT(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  if (!(await hasSiteAdminSession(siteId))) {
-    return NextResponse.json({ error: "site_admin_login_required" }, { status: 401 });
-  }
-  const body = (await request.json().catch(() => null)) as { draftJson?: ThemeSettings } | null;
+  const guard = await requireSiteMutation(request, siteId, { key: `${siteId}:theme-settings-draft` });
+  if (!guard.ok) return guard.response;
+  const body = (await request.json().catch(() => null)) as { draftJson?: ThemeSettings; expectedRevision?: number; expectedEtag?: string } | null;
   if (!body?.draftJson?.colors || !body.draftJson.typography || !body.draftJson.navigation) {
     return NextResponse.json({ error: "invalid_theme_settings_json" }, { status: 400 });
   }
@@ -49,9 +50,16 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
     return NextResponse.json({ error: "invalid_theme_seo_json" }, { status: 400 });
   }
   try {
-    await saveThemeSettingsDraftRelational({ siteId, draftJson: body.draftJson });
-    return NextResponse.json({ ok: true, siteId, action: "theme_settings_draft_saved" });
+    const result = await saveThemeSettingsDraftRelational({
+      siteId,
+      draftJson: body.draftJson,
+      expected: { expectedRevision: body.expectedRevision, expectedEtag: body.expectedEtag },
+      requireExpected: true,
+      actor: guard.current.siteAdmin.id
+    });
+    return NextResponse.json({ ok: true, siteId, action: "theme_settings_draft_saved", draftVersion: result.draftVersion });
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : "theme_settings_save_failed" }, { status: 404 });
+    const status = error instanceof StoreError ? error.status : 404;
+    return NextResponse.json({ error: error instanceof Error ? error.message : "theme_settings_save_failed" }, { status });
   }
 }

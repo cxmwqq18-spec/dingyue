@@ -72,6 +72,35 @@ function cookieValue(cookie, name) {
   return cookie.split(";").map((part) => part.trim()).find((part) => part.startsWith(`${name}=`))?.slice(name.length + 1);
 }
 
+function draftMetaFromSettings(settings) {
+  const draftMeta = settings?.draftMeta ?? settings?.draftJson?.draftMeta;
+  if (draftMeta?.revision && draftMeta?.etag) return draftMeta;
+  const revision = Math.max(1, Number(settings?.draftJson?.version ?? 1));
+  return { revision, etag: `W/"${revision}-legacy"` };
+}
+
+function draftMetaFromPage(page) {
+  const draftMeta = page?.draftMeta ?? page?.draftJson?.draftMeta;
+  if (draftMeta?.revision && draftMeta?.etag) return draftMeta;
+  const revision = Math.max(1, Number(page?.draftJson?.version ?? 1));
+  return { revision, etag: `W/"${revision}-legacy"` };
+}
+
+function publishedVersionFromSite(site) {
+  return Math.max(1, ...(site?.pages ?? []).map((page) => Number(page?.publishedJson?.version ?? 1)));
+}
+
+function publishSnapshotPayload(site, actor) {
+  return {
+    actor,
+    expectedPageVersions: Object.fromEntries(
+      (site?.pages ?? []).map((page) => [page.id, draftMetaFromPage(page)])
+    ),
+    expectedSettingsVersion: draftMetaFromSettings(site?.themeSettings),
+    expectedPublishedVersion: publishedVersionFromSite(site)
+  };
+}
+
 async function expectStatus(path, status, options = {}) {
   const { response, json } = await request(path, { ...options, allowFailure: true });
   if (response.status !== status) {
@@ -1375,6 +1404,8 @@ if (settingsUpdate.site?.branding?.logoText !== "Lumen Smoke" || settingsUpdate.
 const { json: navSave } = await put(
   "/api/sites/site_lumen/theme/settings/draft",
   {
+    expectedRevision: draftMetaFromSettings(settingsUpdate.site.themeSettings).revision,
+    expectedEtag: draftMetaFromSettings(settingsUpdate.site.themeSettings).etag,
     draftJson: {
       ...settingsUpdate.site.themeSettings.draftJson,
       navigation: {
@@ -1431,9 +1462,10 @@ if (!contentDraftSave.ok) {
   throw new Error("content page draft save failed");
 }
 
+const { json: recordsBeforeContentPublish } = await get("/api/sites/site_lumen/theme/records", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
 const { json: contentPublish } = await post(
   "/api/sites/site_lumen/theme/pages/site_lumen_content/publish",
-  { actor: "smoke" },
+  publishSnapshotPayload(recordsBeforeContentPublish.site, "smoke"),
   { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
 );
 if (!contentPublish.publishedVersion) {
@@ -1819,9 +1851,10 @@ for (const themeCheck of internalThemeChecks) {
 	      }
 	    }
 
+    const { json: recordsBeforeWeddingPublish } = await get("/api/sites/site_lumen/theme/records", { cookie: lumenAdminCookie, csrf: lumenAdminCsrf });
     const { json: weddingPublish } = await post(
       `/api/sites/site_lumen/theme/pages/${weddingHomePage.id}/publish`,
-      { actor: "smoke_wedding_designer" },
+      publishSnapshotPayload(recordsBeforeWeddingPublish.site, "smoke_wedding_designer"),
       { cookie: lumenAdminCookie, csrf: lumenAdminCsrf }
     );
     if (!weddingPublish.publishedVersion) {

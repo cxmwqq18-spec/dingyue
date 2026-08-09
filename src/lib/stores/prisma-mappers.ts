@@ -482,8 +482,30 @@ export function slugify(input: string): string {
     .slice(0, 48);
 }
 
-export function makeThemeDraftMeta(page: Pick<import("@/lib/types").ThemePage, "draftJson" | "draftMeta">): import("@/lib/types").ThemeDraftMeta {
-  const revision = (page.draftMeta?.revision ?? page.draftJson.version ?? 0) + 1;
+function normalizeThemeDraftMeta(value: unknown, fallbackRevision = 1): import("@/lib/types").ThemeDraftMeta {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    const record = value as Partial<import("@/lib/types").ThemeDraftMeta>;
+    if (typeof record.revision === "number" && Number.isFinite(record.revision) && typeof record.updatedAt === "string" && typeof record.etag === "string") {
+      return {
+        revision: record.revision,
+        updatedAt: record.updatedAt,
+        etag: record.etag
+      };
+    }
+  }
+  const revision = Math.max(1, Math.trunc(fallbackRevision || 1));
+  return {
+    revision,
+    updatedAt: "1970-01-01T00:00:00.000Z",
+    etag: `W/"${revision}-legacy"`
+  };
+}
+
+export function makeThemeDraftMeta(record: {
+  draftJson?: object & { version?: number };
+  draftMeta?: import("@/lib/types").ThemeDraftMeta;
+}): import("@/lib/types").ThemeDraftMeta {
+  const revision = (record.draftMeta?.revision ?? record.draftJson?.version ?? 0) + 1;
   const updatedAt = new Date().toISOString();
   return {
     revision,
@@ -496,12 +518,12 @@ export function assertThemeDraftVersion(
   page: Pick<import("@/lib/types").ThemePage, "draftMeta">,
   expected?: { expectedRevision?: number; expectedEtag?: string }
 ) {
-  if (!expected) return;
+  if (!expected || (expected.expectedRevision === undefined && expected.expectedEtag === undefined)) return;
   if (expected.expectedRevision !== undefined && page.draftMeta?.revision !== expected.expectedRevision) {
-    throw new StoreError("theme_draft_revision_conflict", 409);
+    throw new StoreError("theme_draft_conflict", 409);
   }
   if (expected.expectedEtag !== undefined && page.draftMeta?.etag !== expected.expectedEtag) {
-    throw new StoreError("theme_draft_etag_conflict", 409);
+    throw new StoreError("theme_draft_conflict", 409);
   }
 }
 
@@ -513,11 +535,12 @@ export function toThemePage(record: {
   title: string;
   draftJson: unknown;
   publishedJson: unknown;
+  draftMeta?: unknown;
 }): import("@/lib/types").ThemePage {
   const draftJson = cloneJson(record.draftJson) as import("@/lib/types").ThemePageJson & {
     draftMeta?: import("@/lib/types").ThemeDraftMeta;
   };
-  const draftMeta = draftJson.draftMeta;
+  const draftMeta = normalizeThemeDraftMeta(draftJson.draftMeta ?? record.draftMeta, draftJson.version ?? 1);
   if (draftMeta) delete draftJson.draftMeta;
   return {
     id: record.id,
@@ -539,10 +562,21 @@ export function draftJsonWithMeta(page: import("@/lib/types").ThemePage): Prisma
 }
 
 export function toThemeSettings(record?: { draftJson: unknown; publishedJson: unknown } | null): import("@/lib/types").Site["themeSettings"] {
+  const draftJson = cloneJson(record?.draftJson ?? {}) as import("@/lib/types").ThemeSettings;
+  const draftMeta = normalizeThemeDraftMeta(draftJson.draftMeta, 1);
+  if (draftMeta) delete draftJson.draftMeta;
   return {
-    draftJson: cloneJson(record?.draftJson ?? {}) as import("@/lib/types").ThemeSettings,
-    publishedJson: cloneJson(record?.publishedJson ?? {}) as import("@/lib/types").ThemeSettings
+    draftJson,
+    publishedJson: cloneJson(record?.publishedJson ?? {}) as import("@/lib/types").ThemeSettings,
+    draftMeta
   };
+}
+
+export function themeSettingsDraftJsonWithMeta(settings: import("@/lib/types").Site["themeSettings"]): Prisma.InputJsonValue {
+  return cloneJson({
+    ...settings.draftJson,
+    draftMeta: settings.draftMeta
+  }) as unknown as Prisma.InputJsonValue;
 }
 
 export function toSite(record: {

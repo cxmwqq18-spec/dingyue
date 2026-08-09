@@ -1,4 +1,5 @@
 import { clonePage, cloneSettings, normalizeGlobalSections, safeBlocks } from "@/components/designer/designer-theme-utils";
+import { getSectionSchema, resolveThemeBlockSchema, resolveThemeFieldSchema, writeThemeFieldValue } from "@/lib/section-schema";
 import type { GlobalType } from "@/components/designer/designer-types";
 import type { SectionBlockInstance, SectionInstance, ThemePageJson, ThemeSettings, ThemeSettingValue } from "@/lib/types";
 
@@ -70,8 +71,10 @@ export function updatePageSectionSetting(
   value: ThemeSettingValue
 ): ThemePageJson | null {
   const next = clonePage(page);
-  if (!next.sections[sectionId]) return null;
-  next.sections[sectionId].settings[fieldId] = value;
+  const section = next.sections[sectionId];
+  if (!section) return null;
+  const field = resolveThemeFieldSchema(getSectionSchema(section.type).settings, fieldId);
+  writeThemeFieldValue(section.settings, field, fieldId, value);
   return next;
 }
 
@@ -92,9 +95,12 @@ export function updatePageBlockSetting(
   value: ThemeSettingValue
 ): ThemePageJson | null {
   const next = clonePage(page);
-  const block = safeBlocks(next.sections[sectionId]).find((item) => item.id === blockId);
-  if (!block) return null;
-  block.settings[fieldId] = value;
+  const section = next.sections[sectionId];
+  const block = safeBlocks(section).find((item) => item.id === blockId);
+  if (!section || !block) return null;
+  const blockSchema = resolveThemeBlockSchema(getSectionSchema(section.type), block.type);
+  const field = resolveThemeFieldSchema(blockSchema?.settings, fieldId);
+  writeThemeFieldValue(block.settings, field, fieldId, value);
   return next;
 }
 
@@ -148,7 +154,10 @@ export function updateGlobalSectionSetting(
 ): ThemeSettings {
   const next = normalizeGlobalSections(cloneSettings(settings));
   const section = next.globalSections?.[globalType];
-  if (section) section.settings[fieldId] = value;
+  if (section) {
+    const field = resolveThemeFieldSchema(getSectionSchema(section.type).settings, fieldId);
+    writeThemeFieldValue(section.settings, field, fieldId, value);
+  }
   return next;
 }
 
@@ -169,8 +178,13 @@ export function updateGlobalBlockSetting(
   value: ThemeSettingValue
 ): ThemeSettings {
   const next = normalizeGlobalSections(cloneSettings(settings));
-  const block = safeBlocks(next.globalSections?.[globalType]).find((item) => item.id === blockId);
-  if (block) block.settings[fieldId] = value;
+  const section = next.globalSections?.[globalType];
+  const block = safeBlocks(section).find((item) => item.id === blockId);
+  if (block && section) {
+    const blockSchema = resolveThemeBlockSchema(getSectionSchema(section.type), block.type);
+    const field = resolveThemeFieldSchema(blockSchema?.settings, fieldId);
+    writeThemeFieldValue(block.settings, field, fieldId, value);
+  }
   return next;
 }
 
