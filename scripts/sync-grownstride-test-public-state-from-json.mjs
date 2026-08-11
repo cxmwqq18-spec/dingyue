@@ -465,6 +465,34 @@ async function upsertById(model, data) {
     create: data,
     update: noId(data)
   });
+  return data.id;
+}
+
+async function upsertBySiteSlug(model, data) {
+  const existing = await model.findFirst({ where: { siteId, slug: data.slug } });
+  if (existing && existing.id !== data.id) {
+    await model.update({ where: { id: existing.id }, data: noId(data) });
+    return existing.id;
+  }
+  await upsertById(model, data);
+  return data.id;
+}
+
+async function upsertSiteTheme(tx, data) {
+  const existing = await tx.siteTheme.findUnique({
+    where: {
+      siteId_themeId: {
+        siteId: data.siteId,
+        themeId: data.themeId
+      }
+    }
+  });
+  if (existing && existing.id !== data.id) {
+    await tx.siteTheme.update({ where: { id: existing.id }, data: noId(data) });
+    return existing.id;
+  }
+  await upsertById(tx.siteTheme, data);
+  return data.id;
 }
 
 async function backupScopedPublicState(tx) {
@@ -692,7 +720,7 @@ async function writePublicState(tx, sourceState, records) {
 
   const siteThemeIds = collectionIds(records.siteThemes);
   await tx.siteTheme.updateMany({ where: excludingSourceIds(siteThemeIds), data: { status: "archived" } });
-  for (const theme of records.siteThemes) await upsertById(tx.siteTheme, siteThemeData(theme));
+  for (const theme of records.siteThemes) await upsertSiteTheme(tx, siteThemeData(theme));
 
   const themeCopyIds = collectionIds(records.themeCopies);
   await tx.themeCopy.deleteMany({ where: excludingSourceIds(themeCopyIds) });
@@ -735,16 +763,30 @@ async function writePublicState(tx, sourceState, records) {
     where: excludingSourceIds(creativeCategoryIds),
     data: { status: "archived", parentId: null }
   });
+  const creativeCategoryIdMap = new Map();
   for (const category of records.creativePackCategories) {
-    await upsertById(tx.creativePackCategory, creativePackCategoryData(category, null));
+    const actualId = await upsertBySiteSlug(tx.creativePackCategory, creativePackCategoryData(category, null));
+    creativeCategoryIdMap.set(category.id, actualId);
   }
   for (const category of records.creativePackCategories.filter((item) => item.parentId)) {
-    await tx.creativePackCategory.update({ where: { id: category.id }, data: { parentId: category.parentId } });
+    const actualId = creativeCategoryIdMap.get(category.id);
+    const actualParentId = creativeCategoryIdMap.get(category.parentId);
+    if (actualId && actualParentId) {
+      await tx.creativePackCategory.update({ where: { id: actualId }, data: { parentId: actualParentId } });
+    }
   }
 
   const creativePackIds = collectionIds(records.creativePacks);
   await tx.creativePack.updateMany({ where: excludingSourceIds(creativePackIds), data: { status: "archived" } });
-  for (const pack of records.creativePacks) await upsertById(tx.creativePack, creativePackData(pack));
+  for (const pack of records.creativePacks) {
+    await upsertById(
+      tx.creativePack,
+      creativePackData({
+        ...pack,
+        categoryId: pack.categoryId ? creativeCategoryIdMap.get(pack.categoryId) ?? pack.categoryId : null
+      })
+    );
+  }
 
   const mediaAssetIds = collectionIds(records.mediaAssets);
   await tx.mediaAsset.deleteMany({ where: excludingSourceIds(mediaAssetIds) });
@@ -763,22 +805,50 @@ async function writePublicState(tx, sourceState, records) {
     where: excludingSourceIds(toolCategoryIds),
     data: { status: "archived", parentId: null }
   });
-  for (const category of records.toolCategories) await upsertById(tx.toolCategory, toolCategoryData(category, null));
+  const toolCategoryIdMap = new Map();
+  for (const category of records.toolCategories) {
+    const actualId = await upsertBySiteSlug(tx.toolCategory, toolCategoryData(category, null));
+    toolCategoryIdMap.set(category.id, actualId);
+  }
   for (const category of records.toolCategories.filter((item) => item.parentId)) {
-    await tx.toolCategory.update({ where: { id: category.id }, data: { parentId: category.parentId } });
+    const actualId = toolCategoryIdMap.get(category.id);
+    const actualParentId = toolCategoryIdMap.get(category.parentId);
+    if (actualId && actualParentId) {
+      await tx.toolCategory.update({ where: { id: actualId }, data: { parentId: actualParentId } });
+    }
   }
 
   const toolMenuItemIds = collectionIds(records.toolMenuItems);
   await tx.toolMenuItem.updateMany({ where: excludingSourceIds(toolMenuItemIds), data: { status: "archived" } });
-  for (const item of records.toolMenuItems) await upsertById(tx.toolMenuItem, toolMenuItemData(item));
+  for (const item of records.toolMenuItems) {
+    await upsertBySiteSlug(
+      tx.toolMenuItem,
+      toolMenuItemData({
+        ...item,
+        categoryId: item.categoryId ? toolCategoryIdMap.get(item.categoryId) ?? item.categoryId : null
+      })
+    );
+  }
 
   const videoCategoryIds = collectionIds(records.videoThemeCategories);
   await tx.videoThemeCategory.updateMany({ where: excludingSourceIds(videoCategoryIds), data: { status: "archived" } });
-  for (const category of records.videoThemeCategories) await upsertById(tx.videoThemeCategory, videoThemeCategoryData(category));
+  const videoCategoryIdMap = new Map();
+  for (const category of records.videoThemeCategories) {
+    const actualId = await upsertBySiteSlug(tx.videoThemeCategory, videoThemeCategoryData(category));
+    videoCategoryIdMap.set(category.id, actualId);
+  }
 
   const videoThemeIds = collectionIds(records.videoThemes);
   await tx.videoTheme.updateMany({ where: excludingSourceIds(videoThemeIds), data: { status: "archived" } });
-  for (const theme of records.videoThemes) await upsertById(tx.videoTheme, videoThemeData(theme));
+  for (const theme of records.videoThemes) {
+    await upsertBySiteSlug(
+      tx.videoTheme,
+      videoThemeData({
+        ...theme,
+        categoryId: theme.categoryId ? videoCategoryIdMap.get(theme.categoryId) ?? theme.categoryId : null
+      })
+    );
+  }
 
   const existingDocument = await tx.platformStateDocument.findUnique({ where: { id: DOCUMENT_ID } });
   const nextState = nextDocumentState(existingDocument?.state, sourceState, records);
