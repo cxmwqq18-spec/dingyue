@@ -317,13 +317,13 @@ export function ThemeRenderer({
             previewEmptyState ?? (
               <div className="flex min-h-[440px] flex-1 items-center justify-center px-6 py-12">
                 <div className="w-full max-w-[820px] rounded-[20px] border border-dashed border-[#d4d9e2] bg-[#fafbfc] px-6 py-8 text-center text-[#475467] shadow-[0_16px_44px_-34px_rgba(15,23,42,0.25)]">
-                  <p className="text-[18px] font-semibold text-[#101828]">当前页面主体为空</p>
+                  <p className="text-[18px] font-semibold text-[#101828]">This page body is empty</p>
                   <p className="mt-2 text-[13px] leading-6 text-[#667085]">
-                    预览里看到的页头、页脚、导航和 SEO 属于全局配置。需要独立内容时，再从右侧添加页面模块。
+                    The header, footer, navigation, and SEO shown in preview come from global settings. Add page sections from the right panel when this page needs its own content.
                   </p>
                   <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#d9dde4] bg-white px-3 py-1.5 text-[12px] text-[#344054]">
                     <span className="h-2 w-2 rounded-full bg-[#f4a719]" />
-                    当前只有全局页头和页脚会参与预览
+                    Only the global header and footer are included in this preview
                   </div>
                 </div>
               </div>

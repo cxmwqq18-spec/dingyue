@@ -33075,6 +33075,33 @@
                 "canonicalPath": "/state-privacy",
                 "index": false,
                 "follow": true
+              },
+              "site_grownstride_test_best_ai_video": {
+                "title": "Best AI video gallery | MyDreamShoots",
+                "description": "Browse the full MyDreamShoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+                "canonicalPath": "/best-ai-video",
+                "index": false,
+                "follow": true
+              },
+              "site_grownstride_test_best_ai_image": {
+                "title": "Best AI image gallery | MyDreamShoots",
+                "description": "Browse the full MyDreamShoots AI image gallery with photo generator themes, private album ideas, and package examples.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+                "canonicalPath": "/best-ai-image",
+                "index": false,
+                "follow": true
+              },
+              "site_grownstride_test_best_packages": {
+                "title": "Best Packages | MyDreamShoots",
+                "description": "Compare MyDreamShoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/stadium-portrait.png",
+                "canonicalPath": "/best-packages",
+                "index": false,
+                "follow": true
               }
             }
           },
@@ -34307,6 +34334,33 @@
                 "keywords": "MyDreamShoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, California privacy rights, CCPA privacy request, state privacy law, Delaware company privacy contact, SECURE Data Act privacy monitoring, GUARD Financial Data Act privacy monitoring",
                 "ogImage": "",
                 "canonicalPath": "/state-privacy",
+                "index": false,
+                "follow": true
+              },
+              "site_grownstride_test_best_ai_video": {
+                "title": "Best AI video gallery | MyDreamShoots",
+                "description": "Browse the full MyDreamShoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+                "canonicalPath": "/best-ai-video",
+                "index": false,
+                "follow": true
+              },
+              "site_grownstride_test_best_ai_image": {
+                "title": "Best AI image gallery | MyDreamShoots",
+                "description": "Browse the full MyDreamShoots AI image gallery with photo generator themes, private album ideas, and package examples.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+                "canonicalPath": "/best-ai-image",
+                "index": false,
+                "follow": true
+              },
+              "site_grownstride_test_best_packages": {
+                "title": "Best Packages | MyDreamShoots",
+                "description": "Compare MyDreamShoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/stadium-portrait.png",
+                "canonicalPath": "/best-packages",
                 "index": false,
                 "follow": true
               }
@@ -49820,6 +49874,780 @@
               "follow": true
             },
             "title": "DPDPA"
+          }
+        },
+        {
+          "id": "site_grownstride_test_best_ai_video",
+          "siteId": "site_grownstride_test",
+          "pageType": "content",
+          "templateKey": "best-ai-video",
+          "slug": "/best-ai-video",
+          "title": "Best AI video",
+          "draftJson": {
+            "pageType": "content",
+            "version": 1,
+            "sectionsOrder": [
+              "best_ai_video_1"
+            ],
+            "sections": {
+              "best_ai_video_1": {
+                "type": "dreamshoot_media_gallery",
+                "settings": {
+                  "anchor": "best-ai-video",
+                  "kind": "video",
+                  "fullGallery": true,
+                  "eyebrow": "MyDreamShoots gallery",
+                  "title": "Best AI video",
+                  "subtitle": "Browse every MyDreamShoots motion case in one simple grid.",
+                  "imageSlugs": "",
+                  "videoSlugs": ""
+                },
+                "blocks": []
+              }
+            },
+            "seo": {
+              "title": "Best AI video gallery | MyDreamShoots",
+              "description": "Browse the full MyDreamShoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
+              "canonicalPath": "/best-ai-video",
+              "robots": {
+                "index": false,
+                "follow": true
+              },
+              "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+              "index": false,
+              "follow": true
+            }
+          },
+          "publishedJson": {
+            "pageType": "content",
+            "version": 1,
+            "sectionsOrder": [
+              "best_ai_video_1"
+            ],
+            "sections": {
+              "best_ai_video_1": {
+                "type": "dreamshoot_media_gallery",
+                "settings": {
+                  "anchor": "best-ai-video",
+                  "kind": "video",
+                  "fullGallery": true,
+                  "eyebrow": "MyDreamShoots gallery",
+                  "title": "Best AI video",
+                  "subtitle": "Browse every MyDreamShoots motion case in one simple grid.",
+                  "imageSlugs": "",
+                  "videoSlugs": ""
+                },
+                "blocks": []
+              }
+            },
+            "seo": {
+              "title": "Best AI video gallery | MyDreamShoots",
+              "description": "Browse the full MyDreamShoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
+              "canonicalPath": "/best-ai-video",
+              "robots": {
+                "index": false,
+                "follow": true
+              },
+              "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+              "index": false,
+              "follow": true
+            }
+          }
+        },
+        {
+          "id": "site_grownstride_test_best_ai_image",
+          "siteId": "site_grownstride_test",
+          "pageType": "content",
+          "templateKey": "best-ai-image",
+          "slug": "/best-ai-image",
+          "title": "Best AI image",
+          "draftJson": {
+            "pageType": "content",
+            "version": 1,
+            "sectionsOrder": [
+              "best_ai_image_1"
+            ],
+            "sections": {
+              "best_ai_image_1": {
+                "type": "dreamshoot_media_gallery",
+                "settings": {
+                  "anchor": "best-ai-image",
+                  "kind": "image",
+                  "fullGallery": true,
+                  "eyebrow": "MyDreamShoots gallery",
+                  "title": "Best AI image",
+                  "subtitle": "Browse every MyDreamShoots photo generator theme in one simple grid.",
+                  "imageSlugs": "",
+                  "videoSlugs": ""
+                },
+                "blocks": []
+              }
+            },
+            "seo": {
+              "title": "Best AI image gallery | MyDreamShoots",
+              "description": "Browse the full MyDreamShoots AI image gallery with photo generator themes, private album ideas, and package examples.",
+              "canonicalPath": "/best-ai-image",
+              "robots": {
+                "index": false,
+                "follow": true
+              },
+              "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+              "index": false,
+              "follow": true
+            }
+          },
+          "publishedJson": {
+            "pageType": "content",
+            "version": 1,
+            "sectionsOrder": [
+              "best_ai_image_1"
+            ],
+            "sections": {
+              "best_ai_image_1": {
+                "type": "dreamshoot_media_gallery",
+                "settings": {
+                  "anchor": "best-ai-image",
+                  "kind": "image",
+                  "fullGallery": true,
+                  "eyebrow": "MyDreamShoots gallery",
+                  "title": "Best AI image",
+                  "subtitle": "Browse every MyDreamShoots photo generator theme in one simple grid.",
+                  "imageSlugs": "",
+                  "videoSlugs": ""
+                },
+                "blocks": []
+              }
+            },
+            "seo": {
+              "title": "Best AI image gallery | MyDreamShoots",
+              "description": "Browse the full MyDreamShoots AI image gallery with photo generator themes, private album ideas, and package examples.",
+              "canonicalPath": "/best-ai-image",
+              "robots": {
+                "index": false,
+                "follow": true
+              },
+              "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+              "index": false,
+              "follow": true
+            }
+          }
+        },
+        {
+          "id": "site_grownstride_test_best_packages",
+          "siteId": "site_grownstride_test",
+          "pageType": "content",
+          "templateKey": "best-packages",
+          "slug": "/best-packages",
+          "title": "Best Packages",
+          "draftJson": {
+            "pageType": "content",
+            "version": 1,
+            "sectionsOrder": [
+              "featured_pack_1",
+              "featured_christmas_1",
+              "featured_thanksgiving_1"
+            ],
+            "sections": {
+              "featured_pack_1": {
+                "type": "dreamshoot_featured_pack",
+                "settings": {
+                  "anchor": "featured-pack",
+                  "label": "Featured seasonal pack",
+                  "badge": "Match-day pack",
+                  "title": "World Cup fan photos for sports-idol style moments.",
+                  "subtitle": "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing.",
+                  "primaryCta": "Create Fan Photos",
+                  "primaryHref": "/login",
+                  "secondaryCta": "View Sports Packs",
+                  "secondaryHref": "/collections",
+                  "photos": "Private gallery",
+                  "credits": "26 credits",
+                  "privacy": "Private album",
+                  "includedTitle": "Included outputs",
+                  "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+                  "safetyCopy": "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission.",
+                  "overlayTitle": "World Cup Pack",
+                  "overlaySubtitle": "Sports-idol style fan photos without a studio.",
+                  "overlayChips": "fan meetup|group shot|stadium|social-ready",
+                  "bottomNote": "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments.",
+                  "campaignLabel": "Current campaign: World Cup Fan Photos",
+                  "nextCampaignLabel": "Next: Christmas / Thanksgiving / Halloween"
+                },
+                "blocks": [
+                  {
+                    "id": "seasonal_worldcup_1",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Stadium Portrait",
+                      "meta": "Cinematic fan look",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/stadium-portrait.png",
+                      "collectionSlug": "world-cup-fan-photos",
+                      "shape": "tall"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_2",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Fan Meetup Photos",
+                      "meta": "Group-friendly shots",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/friend-fan-photos.png",
+                      "collectionSlug": "gala-photos",
+                      "shape": "wide"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_3",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Match-day Avatar",
+                      "meta": "Profile-ready crop",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/match-day-avatar.png",
+                      "collectionSlug": "christmas-couple",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_4",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Fan Poster",
+                      "meta": "Story and feed artwork",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/fan-poster.png",
+                      "collectionSlug": "creator-portraits",
+                      "shape": "tall"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_5",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Social Story",
+                      "meta": "Mobile-first layout",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/social-story.png",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "tall"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_6",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Banner / Cover",
+                      "meta": "Wide campaign image",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/banner-cover.png",
+                      "collectionSlug": "holiday",
+                      "shape": "wide"
+                    }
+                  }
+                ]
+              },
+              "featured_christmas_1": {
+                "type": "dreamshoot_featured_pack",
+                "settings": {
+                  "anchor": "christmas-holiday-pack",
+                  "label": "Featured holiday pack",
+                  "badge": "Christmas pack",
+                  "title": "Christmas group photos for cards, posts, and private albums.",
+                  "subtitle": "Create festive group portraits, cozy card scenes, warm couple images, and album-ready Christmas visuals from photos you own or can use.",
+                  "primaryCta": "Create Christmas Photos",
+                  "primaryHref": "/login",
+                  "secondaryCta": "View Christmas Photos",
+                  "secondaryHref": "/collections/christmas-photos",
+                  "photos": "Holiday cards",
+                  "credits": "20 credits",
+                  "privacy": "Private album",
+                  "includedTitle": "Included outputs",
+                  "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
+                  "safetyCopy": "Use photos you own or have permission to use. MyDreamShoots does not recreate protected brand marks, official holiday artwork, celebrity likenesses, or public figures without permission.",
+                  "overlayTitle": "Christmas Photos",
+                  "overlaySubtitle": "Festive holiday portraits without a studio.",
+                  "overlayChips": "Christmas cards|group portraits|cozy scenes|private",
+                  "bottomNote": "Holiday packs can cover Christmas cards, group portraits, couple keepsakes, Thanksgiving warmth, and private seasonal albums.",
+                  "campaignLabel": "Current campaign: Christmas Photos",
+                  "nextCampaignLabel": "Next: Thanksgiving / Halloween / Seasonal"
+                },
+                "blocks": [
+                  {
+                    "id": "seasonal_christmas_1",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Christmas Portraits",
+                      "meta": "Card-ready mood",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-06.webp",
+                      "collectionSlug": "christmas-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_christmas_2",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Greeting Card Scene",
+                      "meta": "Festive group crop",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-07.webp",
+                      "collectionSlug": "christmas-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_christmas_3",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Cozy Couple",
+                      "meta": "Warm keepsake",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-couple/christmas-couple-04.webp",
+                      "collectionSlug": "christmas-couple",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_christmas_4",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Holiday Cover",
+                      "meta": "Private album art",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-covers/christmas-photos/christmas-photos-cover.webp?v=20260801visualfix1",
+                      "collectionSlug": "christmas-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_christmas_5",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Seasonal Album",
+                      "meta": "Family-style glow",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-08.webp",
+                      "collectionSlug": "christmas-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_christmas_6",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Giftable Keepsake",
+                      "meta": "Social-ready crop",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-couple/christmas-couple-05.webp",
+                      "collectionSlug": "christmas-couple",
+                      "shape": "square"
+                    }
+                  }
+                ]
+              },
+              "featured_thanksgiving_1": {
+                "type": "dreamshoot_featured_pack",
+                "settings": {
+                  "anchor": "thanksgiving-pack",
+                  "label": "Featured seasonal pack",
+                  "badge": "Thanksgiving pack",
+                  "title": "Thanksgiving group photos for warm private albums.",
+                  "subtitle": "Create dinner-table portraits, Friendsgiving scenes, gratitude cards, and keepsake crops from photos you own or can use.",
+                  "primaryCta": "Create Thanksgiving Photos",
+                  "primaryHref": "/login",
+                  "secondaryCta": "View Thanksgiving Photos",
+                  "secondaryHref": "/collections/thanksgiving-group-photos",
+                  "photos": "Group portraits",
+                  "credits": "20 credits",
+                  "privacy": "Private gallery",
+                  "includedTitle": "Included outputs",
+                  "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
+                  "safetyCopy": "Use clear photos you own or have permission to use. MyDreamShoots keeps Thanksgiving sets private and avoids protected people, marks, or brand assets without permission.",
+                  "overlayTitle": "Thanksgiving Photos",
+                  "overlaySubtitle": "Warm gratitude scenes from approved photos.",
+                  "overlayChips": "group portraits|gratitude cards|Friendsgiving|private",
+                  "bottomNote": "Thanksgiving packs work best with clear group photos, warm setting cues, and simple album goals.",
+                  "campaignLabel": "Current campaign: Thanksgiving Group Photos",
+                  "nextCampaignLabel": "Next: Christmas / Halloween / Seasonal"
+                },
+                "blocks": [
+                  {
+                    "id": "seasonal_thanksgiving_1",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Dinner Portraits",
+                      "meta": "Warm table scene",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_thanksgiving_2",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Friendsgiving Set",
+                      "meta": "Group-friendly crop",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_thanksgiving_3",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Gratitude Card",
+                      "meta": "Seasonal note",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_thanksgiving_4",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Keepsake Cover",
+                      "meta": "Private album art",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_thanksgiving_5",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Family-style Album",
+                      "meta": "Harvest warmth",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_thanksgiving_6",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Host Story",
+                      "meta": "Download-ready image",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  }
+                ]
+              }
+            },
+            "seo": {
+              "title": "Best Packages | MyDreamShoots",
+              "description": "Compare MyDreamShoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
+              "canonicalPath": "/best-packages",
+              "robots": {
+                "index": false,
+                "follow": true
+              },
+              "ogImage": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/stadium-portrait.png",
+              "index": false,
+              "follow": true
+            }
+          },
+          "publishedJson": {
+            "pageType": "content",
+            "version": 1,
+            "sectionsOrder": [
+              "featured_pack_1",
+              "featured_christmas_1",
+              "featured_thanksgiving_1"
+            ],
+            "sections": {
+              "featured_pack_1": {
+                "type": "dreamshoot_featured_pack",
+                "settings": {
+                  "anchor": "featured-pack",
+                  "label": "Featured seasonal pack",
+                  "badge": "Match-day pack",
+                  "title": "World Cup fan photos for sports-idol style moments.",
+                  "subtitle": "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing.",
+                  "primaryCta": "Create Fan Photos",
+                  "primaryHref": "/login",
+                  "secondaryCta": "View Sports Packs",
+                  "secondaryHref": "/collections",
+                  "photos": "Private gallery",
+                  "credits": "26 credits",
+                  "privacy": "Private album",
+                  "includedTitle": "Included outputs",
+                  "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+                  "safetyCopy": "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission.",
+                  "overlayTitle": "World Cup Pack",
+                  "overlaySubtitle": "Sports-idol style fan photos without a studio.",
+                  "overlayChips": "fan meetup|group shot|stadium|social-ready",
+                  "bottomNote": "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments.",
+                  "campaignLabel": "Current campaign: World Cup Fan Photos",
+                  "nextCampaignLabel": "Next: Christmas / Thanksgiving / Halloween"
+                },
+                "blocks": [
+                  {
+                    "id": "seasonal_worldcup_1",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Stadium Portrait",
+                      "meta": "Cinematic fan look",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/stadium-portrait.png",
+                      "collectionSlug": "world-cup-fan-photos",
+                      "shape": "tall"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_2",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Fan Meetup Photos",
+                      "meta": "Group-friendly shots",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/friend-fan-photos.png",
+                      "collectionSlug": "gala-photos",
+                      "shape": "wide"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_3",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Match-day Avatar",
+                      "meta": "Profile-ready crop",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/match-day-avatar.png",
+                      "collectionSlug": "christmas-couple",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_4",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Fan Poster",
+                      "meta": "Story and feed artwork",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/fan-poster.png",
+                      "collectionSlug": "creator-portraits",
+                      "shape": "tall"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_5",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Social Story",
+                      "meta": "Mobile-first layout",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/social-story.png",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "tall"
+                    }
+                  },
+                  {
+                    "id": "seasonal_worldcup_6",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Banner / Cover",
+                      "meta": "Wide campaign image",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/banner-cover.png",
+                      "collectionSlug": "holiday",
+                      "shape": "wide"
+                    }
+                  }
+                ]
+              },
+              "featured_christmas_1": {
+                "type": "dreamshoot_featured_pack",
+                "settings": {
+                  "anchor": "christmas-holiday-pack",
+                  "label": "Featured holiday pack",
+                  "badge": "Christmas pack",
+                  "title": "Christmas group photos for cards, posts, and private albums.",
+                  "subtitle": "Create festive group portraits, cozy card scenes, warm couple images, and album-ready Christmas visuals from photos you own or can use.",
+                  "primaryCta": "Create Christmas Photos",
+                  "primaryHref": "/login",
+                  "secondaryCta": "View Christmas Photos",
+                  "secondaryHref": "/collections/christmas-photos",
+                  "photos": "Holiday cards",
+                  "credits": "20 credits",
+                  "privacy": "Private album",
+                  "includedTitle": "Included outputs",
+                  "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
+                  "safetyCopy": "Use photos you own or have permission to use. MyDreamShoots does not recreate protected brand marks, official holiday artwork, celebrity likenesses, or public figures without permission.",
+                  "overlayTitle": "Christmas Photos",
+                  "overlaySubtitle": "Festive holiday portraits without a studio.",
+                  "overlayChips": "Christmas cards|group portraits|cozy scenes|private",
+                  "bottomNote": "Holiday packs can cover Christmas cards, group portraits, couple keepsakes, Thanksgiving warmth, and private seasonal albums.",
+                  "campaignLabel": "Current campaign: Christmas Photos",
+                  "nextCampaignLabel": "Next: Thanksgiving / Halloween / Seasonal"
+                },
+                "blocks": [
+                  {
+                    "id": "seasonal_christmas_1",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Christmas Portraits",
+                      "meta": "Card-ready mood",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-06.webp",
+                      "collectionSlug": "christmas-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_christmas_2",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Greeting Card Scene",
+                      "meta": "Festive group crop",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-07.webp",
+                      "collectionSlug": "christmas-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_christmas_3",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Cozy Couple",
+                      "meta": "Warm keepsake",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-couple/christmas-couple-04.webp",
+                      "collectionSlug": "christmas-couple",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_christmas_4",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Holiday Cover",
+                      "meta": "Private album art",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-covers/christmas-photos/christmas-photos-cover.webp?v=20260801visualfix1",
+                      "collectionSlug": "christmas-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_christmas_5",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Seasonal Album",
+                      "meta": "Family-style glow",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-08.webp",
+                      "collectionSlug": "christmas-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_christmas_6",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Giftable Keepsake",
+                      "meta": "Social-ready crop",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-couple/christmas-couple-05.webp",
+                      "collectionSlug": "christmas-couple",
+                      "shape": "square"
+                    }
+                  }
+                ]
+              },
+              "featured_thanksgiving_1": {
+                "type": "dreamshoot_featured_pack",
+                "settings": {
+                  "anchor": "thanksgiving-pack",
+                  "label": "Featured seasonal pack",
+                  "badge": "Thanksgiving pack",
+                  "title": "Thanksgiving group photos for warm private albums.",
+                  "subtitle": "Create dinner-table portraits, Friendsgiving scenes, gratitude cards, and keepsake crops from photos you own or can use.",
+                  "primaryCta": "Create Thanksgiving Photos",
+                  "primaryHref": "/login",
+                  "secondaryCta": "View Thanksgiving Photos",
+                  "secondaryHref": "/collections/thanksgiving-group-photos",
+                  "photos": "Group portraits",
+                  "credits": "20 credits",
+                  "privacy": "Private gallery",
+                  "includedTitle": "Included outputs",
+                  "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
+                  "safetyCopy": "Use clear photos you own or have permission to use. MyDreamShoots keeps Thanksgiving sets private and avoids protected people, marks, or brand assets without permission.",
+                  "overlayTitle": "Thanksgiving Photos",
+                  "overlaySubtitle": "Warm gratitude scenes from approved photos.",
+                  "overlayChips": "group portraits|gratitude cards|Friendsgiving|private",
+                  "bottomNote": "Thanksgiving packs work best with clear group photos, warm setting cues, and simple album goals.",
+                  "campaignLabel": "Current campaign: Thanksgiving Group Photos",
+                  "nextCampaignLabel": "Next: Christmas / Halloween / Seasonal"
+                },
+                "blocks": [
+                  {
+                    "id": "seasonal_thanksgiving_1",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Dinner Portraits",
+                      "meta": "Warm table scene",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_thanksgiving_2",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Friendsgiving Set",
+                      "meta": "Group-friendly crop",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_thanksgiving_3",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Gratitude Card",
+                      "meta": "Seasonal note",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_thanksgiving_4",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Keepsake Cover",
+                      "meta": "Private album art",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_thanksgiving_5",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Family-style Album",
+                      "meta": "Harvest warmth",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  },
+                  {
+                    "id": "seasonal_thanksgiving_6",
+                    "type": "seasonal_image",
+                    "settings": {
+                      "label": "Host Story",
+                      "meta": "Download-ready image",
+                      "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp?v=20260801visualfix1",
+                      "collectionSlug": "thanksgiving-group-photos",
+                      "shape": "square"
+                    }
+                  }
+                ]
+              }
+            },
+            "seo": {
+              "title": "Best Packages | MyDreamShoots",
+              "description": "Compare MyDreamShoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
+              "canonicalPath": "/best-packages",
+              "robots": {
+                "index": false,
+                "follow": true
+              },
+              "ogImage": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/stadium-portrait.png",
+              "index": false,
+              "follow": true
+            }
           }
         }
       ],
@@ -229345,6 +230173,10 @@
                 "href": "/tools"
               },
               {
+                "label": "Best Packages",
+                "href": "/best-packages"
+              },
+              {
                 "label": "How it works",
                 "href": "/workflow"
               },
@@ -229355,13 +230187,39 @@
               {
                 "label": "Pricing",
                 "href": "/pricing"
-              },
-              {
-                "label": "FAQ",
-                "href": "#faq"
               }
             ],
             "footerLinks": [
+              {
+                "label": "Best Packages",
+                "href": "/best-packages",
+                "group": "product"
+              },
+              {
+                "label": "Best AI image",
+                "href": "/best-ai-image",
+                "group": "product"
+              },
+              {
+                "label": "Best AI video",
+                "href": "/best-ai-video",
+                "group": "product"
+              },
+              {
+                "label": "AI Tools",
+                "href": "/tools",
+                "group": "product"
+              },
+              {
+                "label": "How it works",
+                "href": "/workflow",
+                "group": "product"
+              },
+              {
+                "label": "Pricing",
+                "href": "/pricing",
+                "group": "product"
+              },
               {
                 "label": "Privacy Policy",
                 "href": "/privacy",
@@ -229453,12 +230311,20 @@
                   "id": "global_header_3",
                   "type": "menu_link",
                   "settings": {
+                    "label": "Best Packages",
+                    "href": "/best-packages"
+                  }
+                },
+                {
+                  "id": "global_header_4",
+                  "type": "menu_link",
+                  "settings": {
                     "label": "How it works",
                     "href": "/workflow"
                   }
                 },
                 {
-                  "id": "global_header_4",
+                  "id": "global_header_5",
                   "type": "menu_link",
                   "settings": {
                     "label": "Blog",
@@ -229466,19 +230332,11 @@
                   }
                 },
                 {
-                  "id": "global_header_5",
+                  "id": "global_header_6",
                   "type": "menu_link",
                   "settings": {
                     "label": "Pricing",
                     "href": "/pricing"
-                  }
-                },
-                {
-                  "id": "global_header_6",
-                  "type": "menu_link",
-                  "settings": {
-                    "label": "FAQ",
-                    "href": "#faq"
                   }
                 },
                 {
@@ -229853,13 +230711,67 @@
                   "id": "global_footer_1",
                   "type": "menu_link",
                   "settings": {
+                    "label": "Best Packages",
+                    "href": "/best-packages",
+                    "group": "product"
+                  }
+                },
+                {
+                  "id": "global_footer_2",
+                  "type": "menu_link",
+                  "settings": {
+                    "label": "Best AI image",
+                    "href": "/best-ai-image",
+                    "group": "product"
+                  }
+                },
+                {
+                  "id": "global_footer_3",
+                  "type": "menu_link",
+                  "settings": {
+                    "label": "Best AI video",
+                    "href": "/best-ai-video",
+                    "group": "product"
+                  }
+                },
+                {
+                  "id": "global_footer_4",
+                  "type": "menu_link",
+                  "settings": {
+                    "label": "AI Tools",
+                    "href": "/tools",
+                    "group": "product"
+                  }
+                },
+                {
+                  "id": "global_footer_5",
+                  "type": "menu_link",
+                  "settings": {
+                    "label": "How it works",
+                    "href": "/workflow",
+                    "group": "product"
+                  }
+                },
+                {
+                  "id": "global_footer_6",
+                  "type": "menu_link",
+                  "settings": {
+                    "label": "Pricing",
+                    "href": "/pricing",
+                    "group": "product"
+                  }
+                },
+                {
+                  "id": "global_footer_7",
+                  "type": "menu_link",
+                  "settings": {
                     "label": "Privacy Policy",
                     "href": "/privacy",
                     "group": "support"
                   }
                 },
                 {
-                  "id": "global_footer_2",
+                  "id": "global_footer_8",
                   "type": "menu_link",
                   "settings": {
                     "label": "Terms of Service",
@@ -229868,7 +230780,7 @@
                   }
                 },
                 {
-                  "id": "global_footer_3",
+                  "id": "global_footer_9",
                   "type": "menu_link",
                   "settings": {
                     "label": "Cookie Policy",
@@ -229877,7 +230789,7 @@
                   }
                 },
                 {
-                  "id": "global_footer_4",
+                  "id": "global_footer_10",
                   "type": "menu_link",
                   "settings": {
                     "label": "Content policy",
@@ -229886,7 +230798,7 @@
                   }
                 },
                 {
-                  "id": "global_footer_5",
+                  "id": "global_footer_11",
                   "type": "menu_link",
                   "settings": {
                     "label": "Help center",
@@ -229895,7 +230807,7 @@
                   }
                 },
                 {
-                  "id": "global_footer_6",
+                  "id": "global_footer_12",
                   "type": "menu_link",
                   "settings": {
                     "label": "About us",
@@ -229904,7 +230816,7 @@
                   }
                 },
                 {
-                  "id": "global_footer_7",
+                  "id": "global_footer_13",
                   "type": "menu_link",
                   "settings": {
                     "label": "Contact us",
@@ -229913,7 +230825,7 @@
                   }
                 },
                 {
-                  "id": "global_footer_8",
+                  "id": "global_footer_14",
                   "type": "menu_link",
                   "settings": {
                     "label": "Creators Circle",
@@ -229922,7 +230834,7 @@
                   }
                 },
                 {
-                  "id": "global_footer_9",
+                  "id": "global_footer_15",
                   "type": "menu_link",
                   "settings": {
                     "label": "Blog",
@@ -229931,7 +230843,7 @@
                   }
                 },
                 {
-                  "id": "global_footer_10",
+                  "id": "global_footer_16",
                   "type": "menu_link",
                   "settings": {
                     "label": "KIDS Act",
@@ -229940,7 +230852,7 @@
                   }
                 },
                 {
-                  "id": "global_footer_11",
+                  "id": "global_footer_17",
                   "type": "menu_link",
                   "settings": {
                     "label": "DPDPA",
@@ -229965,15 +230877,43 @@
               "site_dreamshoot_home": {
                 "title": "Professional AI Photo Generator Online - myDreamshoots",
                 "description": "Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/",
                 "index": true,
-                "follow": true,
-                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
+                "follow": true
+              },
+              "site_dreamshoot_best_ai_video": {
+                "title": "Best AI video gallery | myDreamshoots",
+                "description": "Browse the full myDreamshoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
+                "canonicalPath": "/best-ai-video",
+                "index": true,
+                "follow": true
+              },
+              "site_dreamshoot_best_ai_image": {
+                "title": "Best AI image gallery | myDreamshoots",
+                "description": "Browse the full myDreamshoots AI image gallery with photo generator themes, private album ideas, and package examples.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
+                "canonicalPath": "/best-ai-image",
+                "index": true,
+                "follow": true
+              },
+              "site_dreamshoot_best_packages": {
+                "title": "Best Packages | myDreamshoots",
+                "description": "Compare myDreamshoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
+                "canonicalPath": "/best-packages",
+                "index": true,
+                "follow": true
               },
               "site_dreamshoot_pricing": {
                 "title": "myDreamshoots Pricing | Credits for Private AI Headshot Generator",
                 "description": "Compare myDreamshoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/pricing",
                 "index": true,
@@ -229982,6 +230922,7 @@
               "site_dreamshoot_collections": {
                 "title": "Browse private AI photo packages | myDreamshoots",
                 "description": "Browse myDreamshoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/collections",
                 "index": true,
@@ -229990,6 +230931,7 @@
               "site_dreamshoot_tools": {
                 "title": "AI Photo Tools with Free Previews | Background, Headshots & Try-ons | myDreamshoots",
                 "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/tools",
                 "index": true,
@@ -229998,6 +230940,7 @@
               "site_dreamshoot_tool_image": {
                 "title": "AI Headshot Generator for LinkedIn, Resumes & Team Photos | myDreamshoots",
                 "description": "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/tools/headshot",
                 "index": true,
@@ -230006,6 +230949,7 @@
               "site_dreamshoot_login": {
                 "title": "Sign in to manage private AI photo albums",
                 "description": "Sign in to myDreamshoots to manage source photos, credits, private AI photo jobs, downloads, and customer-only generated albums.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/login",
                 "index": false,
@@ -230014,6 +230958,7 @@
               "site_dreamshoot_app": {
                 "title": "Workspace for uploads, credits, and generated albums",
                 "description": "Manage myDreamshoots source photos, credit activity, package requests, generated portraits, and private delivery inside the customer workspace.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/app",
                 "index": false,
@@ -230022,6 +230967,7 @@
               "site_dreamshoot_job_progress": {
                 "title": "Job progress for AI photo generation",
                 "description": "Track myDreamshoots generation status, reserved credits, package progress, and private album delivery from the customer workspace.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/app/jobs/progress",
                 "index": false,
@@ -230030,6 +230976,7 @@
               "site_dreamshoot_job_detail": {
                 "title": "Job detail for generated photo outputs",
                 "description": "Review myDreamshoots generated outputs, credit activity, package settings, and private image delivery details in the workspace.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/app/jobs/detail",
                 "index": false,
@@ -230038,6 +230985,7 @@
               "site_dreamshoot_album": {
                 "title": "Creator photo album downloads and review",
                 "description": "Open myDreamshoots private albums to review, compare, and download generated headshots, creator portraits, style sets, and fan photos.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/album",
                 "index": false,
@@ -230046,6 +230994,7 @@
               "site_dreamshoot_account": {
                 "title": "Account and billing for plans, credits, and receipts",
                 "description": "Review myDreamshoots plan status, credit balance, payment history, top-ups, subscriptions, and account settings.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/account",
                 "index": false,
@@ -230054,45 +231003,34 @@
               "site_dreamshoot_privacy": {
                 "title": "Privacy Policy for AI Photo Uploads, Credits, and Private Albums",
                 "description": "Read how myDreamshoots keeps account data, uploaded source photos, generated portraits, credit activity, checkout records, and private album access private. Your photos are never used to train models, input photos auto-delete 30 days after generation, and data is protected with AES-256 at rest and TLS 256-bit in transit.",
+                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, no AI training, 30-day auto-delete, AES-256",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/privacy",
                 "index": true,
-                "follow": true,
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, no AI training, 30-day auto-delete, AES-256"
+                "follow": true
               },
               "site_dreamshoot_privacy_policy": {
                 "title": "Privacy Policy for AI Photo Uploads, Credits, and Private Albums",
                 "description": "Read how myDreamshoots keeps account data, uploaded source photos, generated portraits, credit activity, checkout records, and private album access private. Your photos are never used to train models, input photos auto-delete 30 days after generation, and data is protected with AES-256 at rest and TLS 256-bit in transit.",
+                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, no AI training, 30-day auto-delete, AES-256",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/privacy",
                 "index": true,
-                "follow": true,
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, no AI training, 30-day auto-delete, AES-256"
+                "follow": true
               },
               "site_dreamshoot_refunds": {
                 "title": "Refund Policy for myDreamshoots Credits, Plans, and Failed Jobs",
                 "description": "Review how myDreamshoots handles the 100% money-back guarantee, unused credits, subscription cancellations, technical failures, reruns, billing reversals, and account credit history.",
+                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, no AI training, 30-day auto-delete, AES-256",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/refunds",
                 "index": true,
-                "follow": true,
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, no AI training, 30-day auto-delete, AES-256"
+                "follow": true
               },
               "site_dreamshoot_shipping": {
                 "title": "Digital delivery for AI photo albums and downloads",
                 "description": "Review how myDreamshoots delivers AI photo credits, generated images, downloads, and private albums digitally without physical shipping.",
+                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, digital delivery policy, AI photo delivery, no physical shipping, private gallery delivery",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/shipping",
                 "index": true,
@@ -230101,32 +231039,25 @@
               "site_dreamshoot_terms_service": {
                 "title": "Terms of Service for myDreamshoots AI Headshot Generator",
                 "description": "Review the myDreamshoots terms for customer accounts, AI photo credits, uploads, generation limits, refunds, and private gallery access. The service does not use your photos for model training, applies 30-day auto-delete to input photos, and protects data with AES-256 at rest and TLS 256-bit in transit.",
+                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, no AI training, 30-day auto-delete, AES-256",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/terms",
                 "index": true,
-                "follow": true,
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, no AI training, 30-day auto-delete, AES-256"
+                "follow": true
               },
               "site_dreamshoot_content": {
                 "title": "Content Policy for myDreamshoots Uploads and AI Photo Outputs",
                 "description": "Read the myDreamshoots content policy for permitted source photos, upload rights, identity consent, moderation review, private album use, and the trust commitments that keep your photos out of model training and auto-delete inputs after 30 days.",
+                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, no AI training, 30-day auto-delete, AES-256",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/content",
                 "index": true,
-                "follow": true,
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, no AI training, 30-day auto-delete, AES-256"
+                "follow": true
               },
               "site_dreamshoot_help": {
                 "title": "myDreamshoots FAQ",
                 "description": "Get FAQ answers for source photos, package selection, credits, billing, refunds, privacy, cookies, and private album delivery.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/faq",
                 "index": true,
@@ -230135,6 +231066,7 @@
               "site_dreamshoot_about_us": {
                 "title": "About private AI photo packages and galleries",
                 "description": "Learn about myDreamshoots, a private AI photo package workspace for creator portraits, headshots, fan photos, style sets, credits, and gallery delivery.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/about-us",
                 "index": true,
@@ -230143,56 +231075,9 @@
               "site_dreamshoot_contact_us": {
                 "title": "Contact account, billing, and photo package support",
                 "description": "Contact myDreamshoots for account access, upload guidance, billing questions, credit review, privacy requests, or creator photo package support.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
                 "canonicalPath": "/contact-us",
-                "index": true,
-                "follow": true
-              },
-              "site_dreamshoot_search": {
-                "title": "Search creator packages, AI tools, guides, and support",
-                "description": "Search myDreamshoots for AI photo packages, tools, pricing, upload help, source photo guides, privacy details, refunds, and account support.",
-                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-                "canonicalPath": "/search",
-                "index": true,
-                "follow": true
-              },
-              "site_dreamshoot_cart": {
-                "title": "Cart review for credits and checkout",
-                "description": "Review selected myDreamshoots credits, plan details, price, and package access before completing secure checkout.",
-                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-                "canonicalPath": "/cart",
-                "index": false,
-                "follow": true
-              },
-              "site_dreamshoot_404": {
-                "title": "Page not found - return to photo packages",
-                "description": "This myDreamshoots page is not available. Return to AI photo packages, tools, pricing, help, or the private customer workspace.",
-                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-                "canonicalPath": "/404",
-                "index": false,
-                "follow": true
-              },
-              "site_dreamshoot_workflow": {
-                "title": "How myDreamshoots works - private AI photo generation workflow",
-                "description": "Learn how myDreamshoots customers upload source photos, choose AI photo packages, review credits, generate private results, and download finished galleries.",
-                "ogImage": "",
-                "canonicalPath": "/workflow",
-                "index": true,
-                "follow": true
-              },
-              "site_dreamshoot_children_privacy": {
-                "title": "myDreamshoots KIDS Act",
-                "description": "Read the myDreamshoots children's privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private gallery handling.",
-                "ogImage": "",
-                "canonicalPath": "/children-privacy",
-                "index": true,
-                "follow": true
-              },
-              "site_dreamshoot_state_privacy": {
-                "title": "myDreamshoots DPDPA",
-                "description": "Review myDreamshoots DPDPA information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.",
-                "ogImage": "",
-                "canonicalPath": "/state-privacy",
                 "index": true,
                 "follow": true
               },
@@ -230454,6 +231339,60 @@
                 "keywords": "Thanksgiving Group Photos, myDreamshoots Thanksgiving Group Photos, Seasonal, AI photo package guide, source photo planning, private gallery",
                 "ogImage": "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-01.webp?v=20260715b",
                 "canonicalPath": "/blog/thanksgiving-group-photos-photo-package-guide",
+                "index": true,
+                "follow": true
+              },
+              "site_dreamshoot_search": {
+                "title": "Search creator packages, AI tools, guides, and support",
+                "description": "Search myDreamshoots for AI photo packages, tools, pricing, upload help, source photo guides, privacy details, refunds, and account support.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
+                "canonicalPath": "/search",
+                "index": true,
+                "follow": true
+              },
+              "site_dreamshoot_cart": {
+                "title": "Cart review for credits and checkout",
+                "description": "Review selected myDreamshoots credits, plan details, price, and package access before completing secure checkout.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
+                "canonicalPath": "/cart",
+                "index": false,
+                "follow": true
+              },
+              "site_dreamshoot_404": {
+                "title": "Page not found - return to photo packages",
+                "description": "This myDreamshoots page is not available. Return to AI photo packages, tools, pricing, help, or the private customer workspace.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
+                "canonicalPath": "/404",
+                "index": false,
+                "follow": true
+              },
+              "site_dreamshoot_workflow": {
+                "title": "How myDreamshoots works - private AI photo generation workflow",
+                "description": "Learn how myDreamshoots customers upload source photos, choose AI photo packages, review credits, generate private results, and download finished galleries.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "",
+                "canonicalPath": "/workflow",
+                "index": true,
+                "follow": true
+              },
+              "site_dreamshoot_children_privacy": {
+                "title": "myDreamshoots KIDS Act",
+                "description": "Read the myDreamshoots children's privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private gallery handling.",
+                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, children privacy notice, COPPA AI photo policy, minor photo upload privacy, parent deletion request",
+                "ogImage": "",
+                "canonicalPath": "/children-privacy",
+                "index": true,
+                "follow": true
+              },
+              "site_dreamshoot_state_privacy": {
+                "title": "myDreamshoots DPDPA",
+                "description": "Review myDreamshoots DPDPA information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.",
+                "keywords": "myDreamshoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, California privacy rights, CCPA privacy request, state privacy law, Delaware company privacy contact, SECURE Data Act privacy monitoring, GUARD Financial Data Act privacy monitoring",
+                "ogImage": "",
+                "canonicalPath": "/state-privacy",
                 "index": true,
                 "follow": true
               }
@@ -292001,6 +292940,780 @@
               },
               "title": "DPDPA"
             }
+          },
+          {
+            "id": "site_grownstride_test_best_ai_video",
+            "siteId": "site_grownstride_test",
+            "pageType": "content",
+            "templateKey": "best-ai-video",
+            "slug": "/best-ai-video",
+            "title": "Best AI video",
+            "draftJson": {
+              "pageType": "content",
+              "version": 1,
+              "sectionsOrder": [
+                "best_ai_video_1"
+              ],
+              "sections": {
+                "best_ai_video_1": {
+                  "type": "dreamshoot_media_gallery",
+                  "settings": {
+                    "anchor": "best-ai-video",
+                    "kind": "video",
+                    "fullGallery": true,
+                    "eyebrow": "MyDreamShoots gallery",
+                    "title": "Best AI video",
+                    "subtitle": "Browse every MyDreamShoots motion case in one simple grid.",
+                    "imageSlugs": "",
+                    "videoSlugs": ""
+                  },
+                  "blocks": []
+                }
+              },
+              "seo": {
+                "title": "Best AI video gallery | MyDreamShoots",
+                "description": "Browse the full MyDreamShoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
+                "canonicalPath": "/best-ai-video",
+                "robots": {
+                  "index": false,
+                  "follow": true
+                },
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+                "index": false,
+                "follow": true
+              }
+            },
+            "publishedJson": {
+              "pageType": "content",
+              "version": 1,
+              "sectionsOrder": [
+                "best_ai_video_1"
+              ],
+              "sections": {
+                "best_ai_video_1": {
+                  "type": "dreamshoot_media_gallery",
+                  "settings": {
+                    "anchor": "best-ai-video",
+                    "kind": "video",
+                    "fullGallery": true,
+                    "eyebrow": "MyDreamShoots gallery",
+                    "title": "Best AI video",
+                    "subtitle": "Browse every MyDreamShoots motion case in one simple grid.",
+                    "imageSlugs": "",
+                    "videoSlugs": ""
+                  },
+                  "blocks": []
+                }
+              },
+              "seo": {
+                "title": "Best AI video gallery | MyDreamShoots",
+                "description": "Browse the full MyDreamShoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
+                "canonicalPath": "/best-ai-video",
+                "robots": {
+                  "index": false,
+                  "follow": true
+                },
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+                "index": false,
+                "follow": true
+              }
+            }
+          },
+          {
+            "id": "site_grownstride_test_best_ai_image",
+            "siteId": "site_grownstride_test",
+            "pageType": "content",
+            "templateKey": "best-ai-image",
+            "slug": "/best-ai-image",
+            "title": "Best AI image",
+            "draftJson": {
+              "pageType": "content",
+              "version": 1,
+              "sectionsOrder": [
+                "best_ai_image_1"
+              ],
+              "sections": {
+                "best_ai_image_1": {
+                  "type": "dreamshoot_media_gallery",
+                  "settings": {
+                    "anchor": "best-ai-image",
+                    "kind": "image",
+                    "fullGallery": true,
+                    "eyebrow": "MyDreamShoots gallery",
+                    "title": "Best AI image",
+                    "subtitle": "Browse every MyDreamShoots photo generator theme in one simple grid.",
+                    "imageSlugs": "",
+                    "videoSlugs": ""
+                  },
+                  "blocks": []
+                }
+              },
+              "seo": {
+                "title": "Best AI image gallery | MyDreamShoots",
+                "description": "Browse the full MyDreamShoots AI image gallery with photo generator themes, private album ideas, and package examples.",
+                "canonicalPath": "/best-ai-image",
+                "robots": {
+                  "index": false,
+                  "follow": true
+                },
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+                "index": false,
+                "follow": true
+              }
+            },
+            "publishedJson": {
+              "pageType": "content",
+              "version": 1,
+              "sectionsOrder": [
+                "best_ai_image_1"
+              ],
+              "sections": {
+                "best_ai_image_1": {
+                  "type": "dreamshoot_media_gallery",
+                  "settings": {
+                    "anchor": "best-ai-image",
+                    "kind": "image",
+                    "fullGallery": true,
+                    "eyebrow": "MyDreamShoots gallery",
+                    "title": "Best AI image",
+                    "subtitle": "Browse every MyDreamShoots photo generator theme in one simple grid.",
+                    "imageSlugs": "",
+                    "videoSlugs": ""
+                  },
+                  "blocks": []
+                }
+              },
+              "seo": {
+                "title": "Best AI image gallery | MyDreamShoots",
+                "description": "Browse the full MyDreamShoots AI image gallery with photo generator themes, private album ideas, and package examples.",
+                "canonicalPath": "/best-ai-image",
+                "robots": {
+                  "index": false,
+                  "follow": true
+                },
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+                "index": false,
+                "follow": true
+              }
+            }
+          },
+          {
+            "id": "site_grownstride_test_best_packages",
+            "siteId": "site_grownstride_test",
+            "pageType": "content",
+            "templateKey": "best-packages",
+            "slug": "/best-packages",
+            "title": "Best Packages",
+            "draftJson": {
+              "pageType": "content",
+              "version": 1,
+              "sectionsOrder": [
+                "featured_pack_1",
+                "featured_christmas_1",
+                "featured_thanksgiving_1"
+              ],
+              "sections": {
+                "featured_pack_1": {
+                  "type": "dreamshoot_featured_pack",
+                  "settings": {
+                    "anchor": "featured-pack",
+                    "label": "Featured seasonal pack",
+                    "badge": "Match-day pack",
+                    "title": "World Cup fan photos for sports-idol style moments.",
+                    "subtitle": "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing.",
+                    "primaryCta": "Create Fan Photos",
+                    "primaryHref": "/login",
+                    "secondaryCta": "View Sports Packs",
+                    "secondaryHref": "/collections",
+                    "photos": "Private gallery",
+                    "credits": "26 credits",
+                    "privacy": "Private album",
+                    "includedTitle": "Included outputs",
+                    "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+                    "safetyCopy": "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission.",
+                    "overlayTitle": "World Cup Pack",
+                    "overlaySubtitle": "Sports-idol style fan photos without a studio.",
+                    "overlayChips": "fan meetup|group shot|stadium|social-ready",
+                    "bottomNote": "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments.",
+                    "campaignLabel": "Current campaign: World Cup Fan Photos",
+                    "nextCampaignLabel": "Next: Christmas / Thanksgiving / Halloween"
+                  },
+                  "blocks": [
+                    {
+                      "id": "seasonal_worldcup_1",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Stadium Portrait",
+                        "meta": "Cinematic fan look",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/stadium-portrait.png",
+                        "collectionSlug": "world-cup-fan-photos",
+                        "shape": "tall"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_2",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Fan Meetup Photos",
+                        "meta": "Group-friendly shots",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/friend-fan-photos.png",
+                        "collectionSlug": "gala-photos",
+                        "shape": "wide"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_3",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Match-day Avatar",
+                        "meta": "Profile-ready crop",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/match-day-avatar.png",
+                        "collectionSlug": "christmas-couple",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_4",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Fan Poster",
+                        "meta": "Story and feed artwork",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/fan-poster.png",
+                        "collectionSlug": "creator-portraits",
+                        "shape": "tall"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_5",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Social Story",
+                        "meta": "Mobile-first layout",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/social-story.png",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "tall"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_6",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Banner / Cover",
+                        "meta": "Wide campaign image",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/banner-cover.png",
+                        "collectionSlug": "holiday",
+                        "shape": "wide"
+                      }
+                    }
+                  ]
+                },
+                "featured_christmas_1": {
+                  "type": "dreamshoot_featured_pack",
+                  "settings": {
+                    "anchor": "christmas-holiday-pack",
+                    "label": "Featured holiday pack",
+                    "badge": "Christmas pack",
+                    "title": "Christmas group photos for cards, posts, and private albums.",
+                    "subtitle": "Create festive group portraits, cozy card scenes, warm couple images, and album-ready Christmas visuals from photos you own or can use.",
+                    "primaryCta": "Create Christmas Photos",
+                    "primaryHref": "/login",
+                    "secondaryCta": "View Christmas Photos",
+                    "secondaryHref": "/collections/christmas-photos",
+                    "photos": "Holiday cards",
+                    "credits": "20 credits",
+                    "privacy": "Private album",
+                    "includedTitle": "Included outputs",
+                    "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
+                    "safetyCopy": "Use photos you own or have permission to use. MyDreamShoots does not recreate protected brand marks, official holiday artwork, celebrity likenesses, or public figures without permission.",
+                    "overlayTitle": "Christmas Photos",
+                    "overlaySubtitle": "Festive holiday portraits without a studio.",
+                    "overlayChips": "Christmas cards|group portraits|cozy scenes|private",
+                    "bottomNote": "Holiday packs can cover Christmas cards, group portraits, couple keepsakes, Thanksgiving warmth, and private seasonal albums.",
+                    "campaignLabel": "Current campaign: Christmas Photos",
+                    "nextCampaignLabel": "Next: Thanksgiving / Halloween / Seasonal"
+                  },
+                  "blocks": [
+                    {
+                      "id": "seasonal_christmas_1",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Christmas Portraits",
+                        "meta": "Card-ready mood",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-06.webp",
+                        "collectionSlug": "christmas-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_christmas_2",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Greeting Card Scene",
+                        "meta": "Festive group crop",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-07.webp",
+                        "collectionSlug": "christmas-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_christmas_3",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Cozy Couple",
+                        "meta": "Warm keepsake",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-couple/christmas-couple-04.webp",
+                        "collectionSlug": "christmas-couple",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_christmas_4",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Holiday Cover",
+                        "meta": "Private album art",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-covers/christmas-photos/christmas-photos-cover.webp?v=20260801visualfix1",
+                        "collectionSlug": "christmas-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_christmas_5",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Seasonal Album",
+                        "meta": "Family-style glow",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-08.webp",
+                        "collectionSlug": "christmas-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_christmas_6",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Giftable Keepsake",
+                        "meta": "Social-ready crop",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-couple/christmas-couple-05.webp",
+                        "collectionSlug": "christmas-couple",
+                        "shape": "square"
+                      }
+                    }
+                  ]
+                },
+                "featured_thanksgiving_1": {
+                  "type": "dreamshoot_featured_pack",
+                  "settings": {
+                    "anchor": "thanksgiving-pack",
+                    "label": "Featured seasonal pack",
+                    "badge": "Thanksgiving pack",
+                    "title": "Thanksgiving group photos for warm private albums.",
+                    "subtitle": "Create dinner-table portraits, Friendsgiving scenes, gratitude cards, and keepsake crops from photos you own or can use.",
+                    "primaryCta": "Create Thanksgiving Photos",
+                    "primaryHref": "/login",
+                    "secondaryCta": "View Thanksgiving Photos",
+                    "secondaryHref": "/collections/thanksgiving-group-photos",
+                    "photos": "Group portraits",
+                    "credits": "20 credits",
+                    "privacy": "Private gallery",
+                    "includedTitle": "Included outputs",
+                    "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
+                    "safetyCopy": "Use clear photos you own or have permission to use. MyDreamShoots keeps Thanksgiving sets private and avoids protected people, marks, or brand assets without permission.",
+                    "overlayTitle": "Thanksgiving Photos",
+                    "overlaySubtitle": "Warm gratitude scenes from approved photos.",
+                    "overlayChips": "group portraits|gratitude cards|Friendsgiving|private",
+                    "bottomNote": "Thanksgiving packs work best with clear group photos, warm setting cues, and simple album goals.",
+                    "campaignLabel": "Current campaign: Thanksgiving Group Photos",
+                    "nextCampaignLabel": "Next: Christmas / Halloween / Seasonal"
+                  },
+                  "blocks": [
+                    {
+                      "id": "seasonal_thanksgiving_1",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Dinner Portraits",
+                        "meta": "Warm table scene",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_thanksgiving_2",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Friendsgiving Set",
+                        "meta": "Group-friendly crop",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_thanksgiving_3",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Gratitude Card",
+                        "meta": "Seasonal note",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_thanksgiving_4",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Keepsake Cover",
+                        "meta": "Private album art",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_thanksgiving_5",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Family-style Album",
+                        "meta": "Harvest warmth",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_thanksgiving_6",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Host Story",
+                        "meta": "Download-ready image",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    }
+                  ]
+                }
+              },
+              "seo": {
+                "title": "Best Packages | MyDreamShoots",
+                "description": "Compare MyDreamShoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
+                "canonicalPath": "/best-packages",
+                "robots": {
+                  "index": false,
+                  "follow": true
+                },
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/stadium-portrait.png",
+                "index": false,
+                "follow": true
+              }
+            },
+            "publishedJson": {
+              "pageType": "content",
+              "version": 1,
+              "sectionsOrder": [
+                "featured_pack_1",
+                "featured_christmas_1",
+                "featured_thanksgiving_1"
+              ],
+              "sections": {
+                "featured_pack_1": {
+                  "type": "dreamshoot_featured_pack",
+                  "settings": {
+                    "anchor": "featured-pack",
+                    "label": "Featured seasonal pack",
+                    "badge": "Match-day pack",
+                    "title": "World Cup fan photos for sports-idol style moments.",
+                    "subtitle": "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing.",
+                    "primaryCta": "Create Fan Photos",
+                    "primaryHref": "/login",
+                    "secondaryCta": "View Sports Packs",
+                    "secondaryHref": "/collections",
+                    "photos": "Private gallery",
+                    "credits": "26 credits",
+                    "privacy": "Private album",
+                    "includedTitle": "Included outputs",
+                    "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
+                    "safetyCopy": "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission.",
+                    "overlayTitle": "World Cup Pack",
+                    "overlaySubtitle": "Sports-idol style fan photos without a studio.",
+                    "overlayChips": "fan meetup|group shot|stadium|social-ready",
+                    "bottomNote": "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments.",
+                    "campaignLabel": "Current campaign: World Cup Fan Photos",
+                    "nextCampaignLabel": "Next: Christmas / Thanksgiving / Halloween"
+                  },
+                  "blocks": [
+                    {
+                      "id": "seasonal_worldcup_1",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Stadium Portrait",
+                        "meta": "Cinematic fan look",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/stadium-portrait.png",
+                        "collectionSlug": "world-cup-fan-photos",
+                        "shape": "tall"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_2",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Fan Meetup Photos",
+                        "meta": "Group-friendly shots",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/friend-fan-photos.png",
+                        "collectionSlug": "gala-photos",
+                        "shape": "wide"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_3",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Match-day Avatar",
+                        "meta": "Profile-ready crop",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/match-day-avatar.png",
+                        "collectionSlug": "christmas-couple",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_4",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Fan Poster",
+                        "meta": "Story and feed artwork",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/fan-poster.png",
+                        "collectionSlug": "creator-portraits",
+                        "shape": "tall"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_5",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Social Story",
+                        "meta": "Mobile-first layout",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/social-story.png",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "tall"
+                      }
+                    },
+                    {
+                      "id": "seasonal_worldcup_6",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Banner / Cover",
+                        "meta": "Wide campaign image",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/banner-cover.png",
+                        "collectionSlug": "holiday",
+                        "shape": "wide"
+                      }
+                    }
+                  ]
+                },
+                "featured_christmas_1": {
+                  "type": "dreamshoot_featured_pack",
+                  "settings": {
+                    "anchor": "christmas-holiday-pack",
+                    "label": "Featured holiday pack",
+                    "badge": "Christmas pack",
+                    "title": "Christmas group photos for cards, posts, and private albums.",
+                    "subtitle": "Create festive group portraits, cozy card scenes, warm couple images, and album-ready Christmas visuals from photos you own or can use.",
+                    "primaryCta": "Create Christmas Photos",
+                    "primaryHref": "/login",
+                    "secondaryCta": "View Christmas Photos",
+                    "secondaryHref": "/collections/christmas-photos",
+                    "photos": "Holiday cards",
+                    "credits": "20 credits",
+                    "privacy": "Private album",
+                    "includedTitle": "Included outputs",
+                    "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
+                    "safetyCopy": "Use photos you own or have permission to use. MyDreamShoots does not recreate protected brand marks, official holiday artwork, celebrity likenesses, or public figures without permission.",
+                    "overlayTitle": "Christmas Photos",
+                    "overlaySubtitle": "Festive holiday portraits without a studio.",
+                    "overlayChips": "Christmas cards|group portraits|cozy scenes|private",
+                    "bottomNote": "Holiday packs can cover Christmas cards, group portraits, couple keepsakes, Thanksgiving warmth, and private seasonal albums.",
+                    "campaignLabel": "Current campaign: Christmas Photos",
+                    "nextCampaignLabel": "Next: Thanksgiving / Halloween / Seasonal"
+                  },
+                  "blocks": [
+                    {
+                      "id": "seasonal_christmas_1",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Christmas Portraits",
+                        "meta": "Card-ready mood",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-06.webp",
+                        "collectionSlug": "christmas-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_christmas_2",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Greeting Card Scene",
+                        "meta": "Festive group crop",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-07.webp",
+                        "collectionSlug": "christmas-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_christmas_3",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Cozy Couple",
+                        "meta": "Warm keepsake",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-couple/christmas-couple-04.webp",
+                        "collectionSlug": "christmas-couple",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_christmas_4",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Holiday Cover",
+                        "meta": "Private album art",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-covers/christmas-photos/christmas-photos-cover.webp?v=20260801visualfix1",
+                        "collectionSlug": "christmas-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_christmas_5",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Seasonal Album",
+                        "meta": "Family-style glow",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-photos/christmas-photos-08.webp",
+                        "collectionSlug": "christmas-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_christmas_6",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Giftable Keepsake",
+                        "meta": "Social-ready crop",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/christmas-couple/christmas-couple-05.webp",
+                        "collectionSlug": "christmas-couple",
+                        "shape": "square"
+                      }
+                    }
+                  ]
+                },
+                "featured_thanksgiving_1": {
+                  "type": "dreamshoot_featured_pack",
+                  "settings": {
+                    "anchor": "thanksgiving-pack",
+                    "label": "Featured seasonal pack",
+                    "badge": "Thanksgiving pack",
+                    "title": "Thanksgiving group photos for warm private albums.",
+                    "subtitle": "Create dinner-table portraits, Friendsgiving scenes, gratitude cards, and keepsake crops from photos you own or can use.",
+                    "primaryCta": "Create Thanksgiving Photos",
+                    "primaryHref": "/login",
+                    "secondaryCta": "View Thanksgiving Photos",
+                    "secondaryHref": "/collections/thanksgiving-group-photos",
+                    "photos": "Group portraits",
+                    "credits": "20 credits",
+                    "privacy": "Private gallery",
+                    "includedTitle": "Included outputs",
+                    "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
+                    "safetyCopy": "Use clear photos you own or have permission to use. MyDreamShoots keeps Thanksgiving sets private and avoids protected people, marks, or brand assets without permission.",
+                    "overlayTitle": "Thanksgiving Photos",
+                    "overlaySubtitle": "Warm gratitude scenes from approved photos.",
+                    "overlayChips": "group portraits|gratitude cards|Friendsgiving|private",
+                    "bottomNote": "Thanksgiving packs work best with clear group photos, warm setting cues, and simple album goals.",
+                    "campaignLabel": "Current campaign: Thanksgiving Group Photos",
+                    "nextCampaignLabel": "Next: Christmas / Halloween / Seasonal"
+                  },
+                  "blocks": [
+                    {
+                      "id": "seasonal_thanksgiving_1",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Dinner Portraits",
+                        "meta": "Warm table scene",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_thanksgiving_2",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Friendsgiving Set",
+                        "meta": "Group-friendly crop",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_thanksgiving_3",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Gratitude Card",
+                        "meta": "Seasonal note",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_thanksgiving_4",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Keepsake Cover",
+                        "meta": "Private album art",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_thanksgiving_5",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Family-style Album",
+                        "meta": "Harvest warmth",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    },
+                    {
+                      "id": "seasonal_thanksgiving_6",
+                      "type": "seasonal_image",
+                      "settings": {
+                        "label": "Host Story",
+                        "meta": "Download-ready image",
+                        "imageUrl": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp?v=20260801visualfix1",
+                        "collectionSlug": "thanksgiving-group-photos",
+                        "shape": "square"
+                      }
+                    }
+                  ]
+                }
+              },
+              "seo": {
+                "title": "Best Packages | MyDreamShoots",
+                "description": "Compare MyDreamShoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
+                "canonicalPath": "/best-packages",
+                "robots": {
+                  "index": false,
+                  "follow": true
+                },
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/stadium-portrait.png",
+                "index": false,
+                "follow": true
+              }
+            }
           }
         ],
         "themeSettings": {
@@ -293139,6 +294852,33 @@
                 "ogImage": "/assets/sites/site_grownstride_test/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-01.webp?v=20260715b",
                 "canonicalPath": "/blog/thanksgiving-group-photos-photo-package-guide",
                 "index": true,
+                "follow": true
+              },
+              "site_grownstride_test_best_ai_video": {
+                "title": "Best AI video gallery | MyDreamShoots",
+                "description": "Browse the full MyDreamShoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+                "canonicalPath": "/best-ai-video",
+                "index": false,
+                "follow": true
+              },
+              "site_grownstride_test_best_ai_image": {
+                "title": "Best AI image gallery | MyDreamShoots",
+                "description": "Browse the full MyDreamShoots AI image gallery with photo generator themes, private album ideas, and package examples.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
+                "canonicalPath": "/best-ai-image",
+                "index": false,
+                "follow": true
+              },
+              "site_grownstride_test_best_packages": {
+                "title": "Best Packages | MyDreamShoots",
+                "description": "Compare MyDreamShoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
+                "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
+                "ogImage": "/assets/sites/site_grownstride_test/generated/20260621-worldcup-pack/stadium-portrait.png",
+                "canonicalPath": "/best-packages",
+                "index": false,
                 "follow": true
               }
             }
@@ -298566,9 +300306,9 @@
       },
       "publishedBy": "admin_dreamshoot_owner",
       "publishedAt": "2026-06-18T00:00:00.000Z",
-      "pageCount": 55,
-      "sectionCount": 147,
-      "snapshotBytes": 737914
+      "pageCount": 58,
+      "sectionCount": 152,
+      "snapshotBytes": 773493
     }
   ],
   "auditLogs": [

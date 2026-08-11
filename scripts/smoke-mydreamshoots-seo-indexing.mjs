@@ -147,8 +147,13 @@ assert(
   { headerLinks }
 );
 assert(
-  headerLabels.indexOf("Best Packages") === headerLabels.indexOf("Tools") + 1,
-  "MyDreamShoots header must place Best Packages immediately after Tools",
+  headerLabels.includes("AI Tools") && headerHrefs[headerLabels.indexOf("AI Tools")] === "/tools",
+  "MyDreamShoots header must expose AI Tools at /tools",
+  { headerLinks }
+);
+assert(
+  headerLabels.indexOf("Best Packages") === headerLabels.indexOf("AI Tools") + 1,
+  "MyDreamShoots header must place Best Packages immediately after AI Tools",
   { headerLinks }
 );
 assert(
