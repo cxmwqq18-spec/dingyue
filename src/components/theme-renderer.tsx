@@ -45,6 +45,7 @@ import {
 import {
   AlertTriangle,
   ArrowRight,
+  AtSign,
   BadgeCheck,
   CheckCircle2,
   Camera,
@@ -1767,21 +1768,24 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
         facebookUrl: "https://www.facebook.com/aidreamcapes",
         pinterestUrl: "https://www.pinterest.com/aidreamcapes",
         youtubeUrl: "https://www.youtube.com/@aidreamcapes",
+        threadsUrl: "",
         twitterUrl: "https://x.com/aidreamcapes"
       }
     : isDreamShootFooter
       ? {
-          instagramUrl: "https://www.instagram.com/mydreamshoots",
-          facebookUrl: "https://www.facebook.com/mydreamshoots",
-          pinterestUrl: "https://www.pinterest.com/mydreamshoots",
-          youtubeUrl: "https://www.youtube.com/@mydreamshoots",
-          twitterUrl: "https://x.com/mydreamshoots"
+          instagramUrl: "https://www.instagram.com/blydey_inc",
+          facebookUrl: "https://www.facebook.com/blydeyinc",
+          pinterestUrl: "https://www.pinterest.com/Blydeyinc",
+          youtubeUrl: "https://www.youtube.com/@blydey-inc",
+          threadsUrl: "https://www.threads.com/@blydey_inc",
+          twitterUrl: ""
         }
       : {
           instagramUrl: "",
           facebookUrl: "",
           pinterestUrl: "",
           youtubeUrl: "",
+          threadsUrl: "",
           twitterUrl: ""
         };
 	  const socialHref = (key: keyof typeof defaultSocialUrls) => {
@@ -1792,6 +1796,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const socialLinks = [
     { label: "Instagram", href: socialHref("instagramUrl"), icon: Instagram },
     { label: "Facebook", href: socialHref("facebookUrl"), icon: Facebook },
+    { label: "Threads", href: socialHref("threadsUrl"), icon: AtSign },
     { label: "Pinterest", href: socialHref("pinterestUrl"), icon: Pin },
     { label: "YouTube", href: socialHref("youtubeUrl"), icon: Youtube },
     { label: "X", href: socialHref("twitterUrl"), icon: Twitter }

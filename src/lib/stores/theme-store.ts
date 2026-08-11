@@ -1005,6 +1005,7 @@ export type ThemeFooterSocialLinks = {
   facebookUrl: string;
   pinterestUrl: string;
   youtubeUrl: string;
+  threadsUrl: string;
   twitterUrl: string;
 };
 

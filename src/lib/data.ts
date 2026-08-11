@@ -94,6 +94,7 @@ const publishedSettings: ThemeSettings = {
       socialHeading: "Follow Us",
       instagramUrl: "",
       facebookUrl: "",
+      threadsUrl: "",
       pinterestUrl: "",
       youtubeUrl: "",
       copyright: "Lumen Portrait Works. All rights reserved."

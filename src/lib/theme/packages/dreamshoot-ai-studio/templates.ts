@@ -1559,6 +1559,221 @@ function aidreamcapesFaqSection(): SectionInstance {
   );
 }
 
+type PublicFaqKey = "pricing" | "tools" | "collections" | "best-packages" | "best-ai-image" | "best-ai-video" | "help" | "tool-detail";
+type PublicFaqCopy = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  items: Array<[string, string]>;
+};
+
+function faqItemBlocks(prefix: string, items: PublicFaqCopy["items"]) {
+  return items.map(([question, answer], index) =>
+    block(`${prefix}_${index + 1}`, "faq_item", { question, answer })
+  );
+}
+
+function publicPageFaqSection(prefix: string, copy: PublicFaqCopy): SectionInstance {
+  return section("faq", {
+    anchor: "faq",
+    layout: "visual_faq",
+    eyebrow: copy.eyebrow,
+    title: copy.title,
+    subtitle: copy.subtitle,
+    journeyTitle: "Before you create",
+    journeyTitles: "Plan|Upload|Review|Download",
+    journeyDescriptions: "Choose the right page path.|Use approved source photos.|Check credits before generation.|Keep results in your private gallery."
+  }, faqItemBlocks(prefix, copy.items));
+}
+
+function mydreamshootsPageFaqSection(key: PublicFaqKey): SectionInstance {
+  const copy: Record<PublicFaqKey, PublicFaqCopy> = {
+    pricing: {
+      eyebrow: "Pricing FAQ",
+      title: "Pricing questions before you buy",
+      subtitle: "Plan, credit, checkout, and private generation answers for MyDreamShoots customers.",
+      items: [
+        ["How do I choose a MyDreamShoots plan?", "Choose a plan by how often you expect to create headshots, creator portraits, fan photos, AI edits, or video-ready outputs. The pricing page is the source of truth for included credits and current plan details."],
+        ["Are credits shown before generation starts?", "Yes. Package and tool requests show the credit requirement before a private generation request begins, so you can review the cost before credits are reserved."],
+        ["Can I add credits without changing plans?", "When top-ups are available, they add extra capacity to the same customer account without replacing the subscription plan. Checkout will show the active option before purchase."],
+        ["What happens if a paid generation fails?", "A failed or interrupted request can release reserved credits according to the recorded job status. Keep the request or order details when contacting support about a charge."]
+      ]
+    },
+    tools: {
+      eyebrow: "Tools FAQ",
+      title: "AI tool questions before upload",
+      subtitle: "How MyDreamShoots tools handle source photos, credits, output review, and private delivery.",
+      items: [
+        ["Which AI photo tool should I start with?", "Start with the tool that matches the output you need: headshots for professional profiles, creator portraits for campaigns, edit tools for cleanup, and video tools for short motion concepts."],
+        ["Do all tools use the private upload flow?", "Customer-facing tools keep uploads, request details, credit reservations, and finished assets connected to the signed-in MyDreamShoots account."],
+        ["Can tool results be used for social or business pages?", "Yes, when you have the rights to the source photos, the people shown have approved the use, and the destination platform rules are followed."],
+        ["What should I inspect before downloading tool results?", "Review faces, hands, text-like details, crops, and overall realism before publishing or reusing the downloaded image or clip."]
+      ]
+    },
+    collections: {
+      eyebrow: "Package FAQ",
+      title: "Photo package questions before you choose",
+      subtitle: "How to compare MyDreamShoots package categories before spending credits.",
+      items: [
+        ["How do I pick a photo package collection?", "Choose by the final use: profile refresh, creator campaign, couple scene, fan photo, seasonal card, beauty preview, or short motion add-on."],
+        ["Are package examples exact guarantees?", "No. Examples show the intended styling and composition, while source photo quality, pose, lighting, and model behavior affect final results."],
+        ["Can packages support couples or groups?", "Some packages support more than one person. Use clear approved photos for every subject and choose a package designed for the group size."],
+        ["Do package pages show credit costs?", "Package and generation screens show credit requirements before a request starts, so you can compare the direction before committing credits."]
+      ]
+    },
+    "best-packages": {
+      eyebrow: "Best packages FAQ",
+      title: "Best package questions for private albums",
+      subtitle: "How featured MyDreamShoots packages are organized for fast comparison.",
+      items: [
+        ["How are best packages selected?", "Best package pages highlight high-intent themes customers often compare before upload, including portraits, seasonal sets, creator looks, and motion-ready options."],
+        ["Are seasonal packages included?", "Yes. Holiday, Thanksgiving, Halloween, Christmas, and other rotating themes can appear when they are active for the storefront."],
+        ["Can I compare best packages before upload?", "Yes. Review the visual direction, intended use, source photo guidance, and credit expectations before signing in to start a request."],
+        ["Do best package recommendations change?", "They can change as the catalog, examples, and customer use cases evolve. The live page reflects the current storefront selection."]
+      ]
+    },
+    "best-ai-image": {
+      eyebrow: "AI image FAQ",
+      title: "Best AI image questions",
+      subtitle: "Source-photo and quality guidance for MyDreamShoots image themes.",
+      items: [
+        ["What makes an AI image theme useful?", "A useful theme has a clear output goal, visible example style, practical crop, and source-photo guidance that matches how you plan to use the final image."],
+        ["Which photos work best as image sources?", "Use sharp, recent, well-lit photos with visible faces or subjects. Avoid heavy filters, tiny crops, screenshots, and images you do not have permission to use."],
+        ["Can I use generated images on profiles?", "You can use suitable results on profiles or social pages when permissions, platform rules, and any required AI disclosure are handled."],
+        ["How should I review final AI images?", "Check identity details, hands, background artifacts, text-like marks, and crop quality before downloading or publishing."]
+      ]
+    },
+    "best-ai-video": {
+      eyebrow: "AI video FAQ",
+      title: "Best AI video questions",
+      subtitle: "How still images become private short motion concepts in MyDreamShoots.",
+      items: [
+        ["What can MyDreamShoots AI video tools create?", "Video tools can turn approved stills or finished package outputs into short motion concepts for profile clips, creator intros, product teasers, and album moments."],
+        ["Which still image works best for motion?", "Use a clean image with a clear subject, simple composition, and enough visual detail for movement without overloading faces, hands, or background elements."],
+        ["Are video credit costs shown first?", "Yes. Supported video requests show the format and credit requirement before generation begins."],
+        ["Where do completed clips appear?", "Completed motion outputs stay in the private customer workspace or gallery, where you can review and download them."]
+      ]
+    },
+    help: {
+      eyebrow: "Support FAQ",
+      title: "Support questions for MyDreamShoots customers",
+      subtitle: "Practical answers for account, billing, upload, privacy, and delivery help.",
+      items: [
+        ["How do I get help with a request?", "Contact support with the account email, order or job reference, and a short description of what looks wrong so the team can find the right record."],
+        ["Where can I review policy details?", "Use the privacy, refund, content, terms, and cookie pages for the rules that apply before uploading photos, buying credits, or publishing outputs."],
+        ["Can support explain credit history?", "Yes. Support can review visible order, credit reservation, settlement, release, and failed-request records for the signed-in account."],
+        ["Should I send private source photos by email?", "Avoid sending unnecessary private source photos through public channels. Use the account workspace and provide request details unless support asks for more."]
+      ]
+    },
+    "tool-detail": {
+      eyebrow: "Tool FAQ",
+      title: "Tool questions before generation",
+      subtitle: "How a focused MyDreamShoots tool uses source photos, credits, and private delivery.",
+      items: [
+        ["What should I upload for this tool?", "Upload clear source photos or references you own or have permission to use, with the subject visible and the intended edit or style goal in mind."],
+        ["Will this tool show credits before it starts?", "Yes. Paid tool requests show the credit requirement before generation so you can review the cost first."],
+        ["Where do finished tool results go?", "Finished images or clips stay connected to the signed-in customer workspace for review, download, and account history."],
+        ["Can I publish tool outputs?", "Publish only after checking permissions, platform rules, output quality, and any required AI disclosure."]
+      ]
+    }
+  };
+  return publicPageFaqSection(`mydreamshoots_${key.replace(/[^a-z0-9]+/g, "_")}_faq`, copy[key]);
+}
+
+function aidreamcapesPageFaqSection(key: PublicFaqKey): SectionInstance {
+  const copy: Record<PublicFaqKey, PublicFaqCopy> = {
+    pricing: {
+      eyebrow: "Album pricing FAQ",
+      title: "Aidreamcapes pricing questions",
+      subtitle: "Credit, album, checkout, and private delivery answers for occasion photo customers.",
+      items: [
+        ["How should I choose an Aidreamcapes plan?", "Choose by how often you expect to create fan-scene, game-day, premiere, holiday, or travel-inspired private albums."],
+        ["Are album credits visible before a request?", "Yes. The current request screen shows credit requirements before an album generation starts."],
+        ["Can a failed album request return credits?", "If a provider request fails before delivery, reserved credits can be released according to the recorded job status."],
+        ["Do prices and package availability change?", "They can. The live pricing and checkout screens control the current offer, included credits, and active album options."]
+      ]
+    },
+    tools: {
+      eyebrow: "Occasion tools FAQ",
+      title: "Aidreamcapes tool questions",
+      subtitle: "How occasion tools handle approved photos, private albums, and credit review.",
+      items: [
+        ["Which occasion tool should I use?", "Choose the tool that matches the moment: fan scenes, game-day groups, holiday cards, travel-style portraits, or permission-safe planning."],
+        ["Do tools recreate real public figures or official marks?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized likenesses, logos, or protected marks."],
+        ["Are source photos private?", "Uploads, requests, credit records, and finished albums remain connected to the signed-in customer account."],
+        ["Can I use results on social pages?", "Yes, when every person has approved the use and the post follows platform, rights, and disclosure rules."]
+      ]
+    },
+    collections: {
+      eyebrow: "Album collection FAQ",
+      title: "Aidreamcapes collection questions",
+      subtitle: "How to compare fan-scene, game-day, holiday, and occasion album categories.",
+      items: [
+        ["How do I choose an album collection?", "Start with the event feeling: supporter energy, group celebration, holiday memory, premiere flash, or travel-inspired atmosphere."],
+        ["Can groups use Aidreamcapes albums?", "Yes, when the selected album supports multiple people and every subject has approved the source photos and intended use."],
+        ["Are collection examples final guarantees?", "No. They show the creative direction, while source quality, group size, composition, and model behavior affect final results."],
+        ["Where are completed albums delivered?", "Finished albums are delivered to the private gallery connected to the signed-in account."]
+      ]
+    },
+    "best-packages": {
+      eyebrow: "Featured albums FAQ",
+      title: "Best Aidreamcapes album questions",
+      subtitle: "How featured private album directions help customers compare occasion outputs.",
+      items: [
+        ["What appears on the best albums page?", "The page highlights high-intent Aidreamcapes album directions for fan moments, game-day groups, seasonal memories, and creator-ready scenes."],
+        ["Can featured albums change?", "Yes. Featured selections can change as the storefront adds examples, seasonal directions, and active album categories."],
+        ["Do featured albums still require approved photos?", "Yes. Every album request should use source photos you own or have permission to process."],
+        ["Can I compare albums before spending credits?", "Yes. Review examples, use cases, upload guidance, and pricing before starting a private request."]
+      ]
+    },
+    "best-ai-image": {
+      eyebrow: "AI image FAQ",
+      title: "Best Aidreamcapes image questions",
+      subtitle: "Quality and rights guidance for private occasion image albums.",
+      items: [
+        ["What makes an Aidreamcapes image direction useful?", "A useful direction has a clear occasion, safe creative boundary, practical crop, and source-photo guidance that matches the album goal."],
+        ["Which images work best as sources?", "Use clear, well-lit photos with visible faces and permission from everyone shown."],
+        ["Can I publish finished images?", "Publish only after checking subject permission, platform rules, affiliation claims, and any required AI disclosure."],
+        ["What should I inspect before download?", "Review faces, hands, marks, captions, crops, and background details before using a finished image publicly."]
+      ]
+    },
+    "best-ai-video": {
+      eyebrow: "Motion FAQ",
+      title: "Aidreamcapes video questions",
+      subtitle: "How private album images can become short occasion motion concepts.",
+      items: [
+        ["What can Aidreamcapes motion tools create?", "They can turn a strong approved still or finished album image into a short motion concept for celebration, memory, or creator use."],
+        ["Which still image works best?", "Use a clean frame with a clear subject, balanced composition, and minimal overlapping faces or hands."],
+        ["Are video credits shown before generation?", "Yes. Supported motion requests show the format and credit requirement before the request starts."],
+        ["Where do finished clips appear?", "Completed clips stay inside the signed-in private gallery or workspace for review and download."]
+      ]
+    },
+    help: {
+      eyebrow: "Support FAQ",
+      title: "Aidreamcapes support questions",
+      subtitle: "Account, album, credit, policy, and delivery help for private occasion albums.",
+      items: [
+        ["What should I include in a support request?", "Include the account email, order or job reference, album direction, and a short description of the issue."],
+        ["Where are policy rules explained?", "Use the privacy, content, refund, terms, and cookie pages before uploading source photos, buying credits, or publishing album images."],
+        ["Can support review credit status?", "Support can review visible reservation, settlement, release, failed-request, and checkout records tied to the account."],
+        ["Should I send private photos through email?", "Do not send unnecessary private photos through external channels. Provide request details unless support asks for a specific reference."]
+      ]
+    },
+    "tool-detail": {
+      eyebrow: "Tool FAQ",
+      title: "Aidreamcapes tool questions before upload",
+      subtitle: "How focused occasion tools use approved photos, credits, and private albums.",
+      items: [
+        ["What should I upload for this tool?", "Upload approved source photos or references that match the occasion direction and show each subject clearly."],
+        ["Does the tool copy official identities?", "No. Keep prompts original and avoid unauthorized public-figure likenesses, official marks, protected logos, or misleading affiliation."],
+        ["When are credits used?", "Credits are shown before a request starts, reserved during generation, and settled or released according to the request status."],
+        ["Where do finished results go?", "Finished images or motion outputs stay in the private gallery connected to the signed-in Aidreamcapes account."]
+      ]
+    }
+  };
+  return publicPageFaqSection(`aidreamcapes_${key.replace(/[^a-z0-9]+/g, "_")}_faq`, copy[key]);
+}
+
 function aidreamcapesPlanRulesSection(): SectionInstance {
   return section(
     "rich_text",
@@ -1786,13 +2001,15 @@ function bestPackagesPage(
   featuredThanksgivingSection: SectionInstance,
   site?: DreamshootPublicSeoSiteSeed
 ): ThemePageJson {
+  const aidreamcapes = isAidreamcapesTemplateSite(site);
   return page(
     "content",
-    ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
+    ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "faq_1"],
     {
       featured_pack_1: featuredPackSection,
       featured_christmas_1: featuredChristmasSection,
-      featured_thanksgiving_1: featuredThanksgivingSection
+      featured_thanksgiving_1: featuredThanksgivingSection,
+      faq_1: aidreamcapes ? aidreamcapesPageFaqSection("best-packages") : mydreamshootsPageFaqSection("best-packages")
     },
     1,
     seoForPublicPage("/best-packages", site)
@@ -1801,11 +2018,13 @@ function bestPackagesPage(
 
 function bestMediaPage(kind: "image" | "video", aidreamcapes: boolean, site?: DreamshootPublicSeoSiteSeed): ThemePageJson {
   const path = kind === "image" ? "/best-ai-image" : "/best-ai-video";
+  const faqKey = kind === "image" ? "best-ai-image" : "best-ai-video";
   return page(
     "content",
-    [kind === "image" ? "best_ai_image_1" : "best_ai_video_1"],
+    [kind === "image" ? "best_ai_image_1" : "best_ai_video_1", "faq_1"],
     {
-      [kind === "image" ? "best_ai_image_1" : "best_ai_video_1"]: bestMediaGallerySection(kind, aidreamcapes)
+      [kind === "image" ? "best_ai_image_1" : "best_ai_video_1"]: bestMediaGallerySection(kind, aidreamcapes),
+      faq_1: aidreamcapes ? aidreamcapesPageFaqSection(faqKey) : mydreamshootsPageFaqSection(faqKey)
     },
     1,
     seoForPublicPage(path, site)
@@ -1815,7 +2034,7 @@ function bestMediaPage(kind: "image" | "video", aidreamcapes: boolean, site?: Dr
 function aidreamcapesWorkflowPage(): ThemePageJson {
   return page(
     "content",
-    ["workflow_intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "plan_rules_1", "faq_1", "conversion_1"],
+    ["workflow_intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "plan_rules_1", "conversion_1"],
     {
       workflow_intro_1: section("rich_text", {
         eyebrow: "How it works",
@@ -1838,7 +2057,6 @@ function aidreamcapesWorkflowPage(): ThemePageJson {
       mobile_video_1: aidreamcapesMobileVideoShowcaseSection(),
       workflow_1: aidreamcapesWorkflowStepsSection(),
       plan_rules_1: aidreamcapesPlanRulesSection(),
-      faq_1: aidreamcapesFaqSection(),
       conversion_1: aidreamcapesConversionSection()
     },
     1,
@@ -2002,7 +2220,7 @@ function aidreamcapesContactPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJ
   const companyAddress = "30 N GOULD ST STE R,SHERIDAN,WY 82801";
   return page(
     "content",
-    ["contact_intro_1", "contact_details_1", "faq_1", "conversion_1"],
+    ["contact_intro_1", "contact_details_1", "conversion_1"],
     {
       contact_intro_1: section("rich_text", {
         eyebrow: "Contact us",
@@ -2027,7 +2245,6 @@ function aidreamcapesContactPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJ
         contactEmail: supportEmail,
         body: `<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>${companyAddress}</p><h3>Contact Us</h3><p><a href="mailto:${supportEmail}">${supportEmail}</a></p>`
       }),
-      faq_1: aidreamcapesFaqSection(),
       conversion_1: aidreamcapesConversionSection()
     },
     1,
@@ -2082,14 +2299,14 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       pricing_1: homeSections.pricing_1,
       plan_rules_1: homeSections.plan_rules_1,
       trust_1: homeSections.trust_1,
-      faq_1: homeSections.faq_1,
+      faq_1: aidreamcapesTemplateSite ? aidreamcapesPageFaqSection("pricing") : mydreamshootsPageFaqSection("pricing"),
       conversion_1: homeSections.conversion_1
     },
     1
   ),
   packages: page(
     "collection",
-    ["taxonomy_1", "packages_1", "proof_pairs_1", "packages_strip_1", "trust_1", "conversion_1"],
+    ["taxonomy_1", "packages_1", "proof_pairs_1", "packages_strip_1", "trust_1", "faq_1", "conversion_1"],
     {
       taxonomy_1: homeSections.taxonomy_1,
       packages_1: homeSections.packages_1,
@@ -2098,6 +2315,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       packages_strip_1: homeSections.packages_strip_1,
       feature_tabs_1: homeSections.feature_tabs_1,
       trust_1: homeSections.trust_1,
+      faq_1: aidreamcapesTemplateSite ? aidreamcapesPageFaqSection("collections") : mydreamshootsPageFaqSection("collections"),
       conversion_1: homeSections.conversion_1
     },
     1
@@ -2112,14 +2330,14 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       packages_1: homeSections.packages_1,
       trust_1: homeSections.trust_1,
       pricing_1: homeSections.pricing_1,
-      faq_1: homeSections.faq_1,
+      faq_1: aidreamcapesTemplateSite ? aidreamcapesPageFaqSection("tools") : mydreamshootsPageFaqSection("tools"),
       conversion_1: homeSections.conversion_1
     },
     1
   ),
   workflow: page(
     "content",
-    ["workflow_intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "plan_rules_1", "faq_1", "conversion_1"],
+    ["workflow_intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "plan_rules_1", "conversion_1"],
     {
       workflow_intro_1: section("rich_text", {
         eyebrow: "How it works",
@@ -2142,7 +2360,6 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       mobile_video_1: mydreamshootsMobileVideoShowcaseSection(),
       workflow_1: homeSections.workflow_1,
       plan_rules_1: homeSections.plan_rules_1,
-      faq_1: homeSections.faq_1,
       conversion_1: homeSections.conversion_1
     },
     1,
@@ -2156,7 +2373,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   ),
   "package-detail": page(
     "package_detail",
-    ["package_hero_1", "package_before_after_1", "packages_1", "packages_strip_1", "trust_1", "pricing_1", "faq_1", "conversion_1"],
+    ["package_hero_1", "package_before_after_1", "packages_1", "packages_strip_1", "trust_1", "pricing_1", "conversion_1"],
     {
       package_hero_1: templateSections.package_hero_1,
       package_before_after_1: templateSections.package_before_after_1,
@@ -2164,7 +2381,6 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       packages_strip_1: homeSections.packages_strip_1,
       trust_1: homeSections.trust_1,
       pricing_1: homeSections.pricing_1,
-      faq_1: homeSections.faq_1,
       conversion_1: homeSections.conversion_1
     },
     1
@@ -2180,7 +2396,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       progress_1: section("job_progress", { title: "Generation progress" }),
       album_1: section("album_gallery", { title: "Private AI photo album", showDownloads: true }),
       trust_1: homeSections.trust_1,
-      faq_1: homeSections.faq_1
+      faq_1: aidreamcapesTemplateSite ? aidreamcapesPageFaqSection("tool-detail") : mydreamshootsPageFaqSection("tool-detail")
     },
     1
   ),
@@ -2240,13 +2456,12 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   ),
   "job-progress": page(
     "job_progress",
-    ["job_intro_1", "progress_1", "album_1", "trust_1", "faq_1"],
+    ["job_intro_1", "progress_1", "album_1", "trust_1"],
     {
       job_intro_1: templateSections.job_intro_1,
       progress_1: section("job_progress", { title: "Current generation status" }),
       album_1: section("album_gallery", { title: "Delivered outputs", showDownloads: true }),
-      trust_1: homeSections.trust_1,
-      faq_1: homeSections.faq_1
+      trust_1: homeSections.trust_1
     },
     1
   ),
@@ -2295,7 +2510,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     ["intro_1", "faq_1", "plan_rules_1"],
     {
       intro_1: section("rich_text", { eyebrow: "Help", title: "Help center", body: "Find practical answers about photo uploads, AI package selection, credits, billing, refunds, privacy, cookies, and private album delivery.", headingLevel: "h1" }),
-      faq_1: homeSections.faq_1,
+      faq_1: aidreamcapesTemplateSite ? aidreamcapesPageFaqSection("help") : mydreamshootsPageFaqSection("help"),
       plan_rules_1: homeSections.plan_rules_1
     },
     1
@@ -2397,7 +2612,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   ),
   "contact-us": page(
     "content",
-    ["contact_intro_1", "contact_details_1", "faq_1", "conversion_1"],
+    ["contact_intro_1", "contact_details_1", "conversion_1"],
     {
       contact_intro_1: section("rich_text", {
         eyebrow: "Contact us",
@@ -2422,7 +2637,6 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         contactEmail: "support@mydreamshoots.com",
         body: "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
       }),
-      faq_1: homeSections.faq_1,
       conversion_1: homeSections.conversion_1
     },
     1,
@@ -2623,11 +2837,12 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           supportHeading: "Support",
           socialHeading: "Why it works",
           socialBody: "myDreamshoots helps you turn your own photos into private AI headshots, portraits, and themed albums.",
-          instagramUrl: "https://www.instagram.com/mydreamshoots",
-          facebookUrl: "https://www.facebook.com/mydreamshoots",
-          pinterestUrl: "https://www.pinterest.com/mydreamshoots",
-          youtubeUrl: "https://www.youtube.com/@mydreamshoots",
-          twitterUrl: "https://x.com/mydreamshoots",
+          instagramUrl: "https://www.instagram.com/blydey_inc",
+          facebookUrl: "https://www.facebook.com/blydeyinc",
+          threadsUrl: "https://www.threads.com/@blydey_inc",
+          pinterestUrl: "https://www.pinterest.com/Blydeyinc",
+          youtubeUrl: "https://www.youtube.com/@blydey-inc",
+          twitterUrl: "",
           showPaymentIcons: true,
           companyName: "myDreamshoots.com",
           contactAddress: "8 THE GREEN STE B,DOVER,DE 19901",

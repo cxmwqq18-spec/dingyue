@@ -2439,6 +2439,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       textarea("socialBody", "Social body", "Destination photo inspiration, private delivery, and elegant AI-generated albums."),
       url("instagramUrl", "Instagram", ""),
       url("facebookUrl", "Facebook", ""),
+      url("threadsUrl", "Threads", ""),
       url("pinterestUrl", "Pinterest", ""),
       url("youtubeUrl", "YouTube", ""),
       url("twitterUrl", "X / Twitter", ""),

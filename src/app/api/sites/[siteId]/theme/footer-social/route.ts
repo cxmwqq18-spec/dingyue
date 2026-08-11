@@ -6,7 +6,7 @@ import {
   type ThemeFooterSocialLinks
 } from "@/lib/stores/theme-store";
 
-const socialUrlKeys = ["instagramUrl", "facebookUrl", "pinterestUrl", "youtubeUrl", "twitterUrl"] as const;
+const socialUrlKeys = ["instagramUrl", "facebookUrl", "pinterestUrl", "youtubeUrl", "threadsUrl", "twitterUrl"] as const;
 
 function cleanText(value: unknown, maxLength: number) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
@@ -42,6 +42,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     facebookUrl: "",
     pinterestUrl: "",
     youtubeUrl: "",
+    threadsUrl: "",
     twitterUrl: ""
   };
 

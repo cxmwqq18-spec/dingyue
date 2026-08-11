@@ -1890,6 +1890,57 @@ const fallbackToolDirectoryBlocks = cache((): SectionBlockInstance[] =>
   dreamshootToolDirectorySlugs.map((slug) => fallbackToolBlockForSlug(slug)).filter((block): block is SectionBlockInstance => Boolean(block))
 );
 
+function toolsDirectoryFaqSectionForSite(site: Site): SectionInstance {
+  const isAidreamcapes = isAidreamcapesStorefront(site);
+  const isSpanishXby = isSpanishXbyStorefront(site);
+  const items = isSpanishXby
+    ? isAidreamcapes
+      ? [
+          ["Que herramienta de ocasion debo usar?", "Elige la herramienta que coincida con el momento: fans, dia de partido, festivos, retratos de viaje o planificacion segura."],
+          ["Las herramientas copian identidades oficiales?", "No. Usa fotos aprobadas y direcciones originales, sin recrear celebridades, deportistas, logos o marcas protegidas sin permiso."],
+          ["Los resultados son privados?", "Si. Fotos fuente, pedidos, creditos y albumes terminados permanecen vinculados a la cuenta del cliente."],
+          ["Puedo publicar resultados en redes?", "Si, cuando las personas mostradas aprobaron el uso y cumples las reglas de plataforma, derechos y divulgacion."]
+        ]
+      : [
+          ["Que herramienta de fotos debo usar?", "Elige por resultado: retratos profesionales, retratos de creador, edicion de fondo, mejora de imagen o video corto."],
+          ["Las herramientas usan subida privada?", "Si. Fotos fuente, pedidos, creditos y resultados terminados permanecen vinculados a la cuenta del cliente."],
+          ["Puedo usar resultados en redes o paginas de negocio?", "Si, cuando tienes permiso para las fotos fuente y cumples las reglas de la plataforma."],
+          ["Que debo revisar antes de descargar?", "Revisa caras, manos, recortes, marcas, texto accidental y calidad general antes de publicar."]
+        ]
+    : isAidreamcapes
+      ? [
+          ["Which occasion tool should I use?", "Choose the tool that matches the moment: fan scenes, game-day groups, holiday cards, travel-style portraits, or permission-safe planning."],
+          ["Do tools recreate real public figures or official marks?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized likenesses, logos, or protected marks."],
+          ["Are source photos private?", "Uploads, requests, credit records, and finished albums remain connected to the signed-in customer account."],
+          ["Can I use results on social pages?", "Yes, when every person has approved the use and the post follows platform, rights, and disclosure rules."]
+        ]
+      : [
+          ["Which AI photo tool should I start with?", "Start with the tool that matches the output you need: headshots for professional profiles, creator portraits for campaigns, edit tools for cleanup, and video tools for short motion concepts."],
+          ["Do all tools use the private upload flow?", "Customer-facing tools keep uploads, request details, credit reservations, and finished assets connected to the signed-in MyDreamShoots account."],
+          ["Can tool results be used for social or business pages?", "Yes, when you have the rights to the source photos, the people shown have approved the use, and the destination platform rules are followed."],
+          ["What should I inspect before downloading tool results?", "Review faces, hands, text-like details, crops, and overall realism before publishing or reusing the downloaded image or clip."]
+        ];
+  return {
+    type: "faq",
+    settings: {
+      anchor: "faq",
+      layout: "visual_faq",
+      eyebrow: isSpanishXby ? "Preguntas de herramientas" : isAidreamcapes ? "Occasion tools FAQ" : "Tools FAQ",
+      title: isSpanishXby ? "Preguntas antes de usar herramientas" : isAidreamcapes ? "Aidreamcapes tool questions" : "AI tool questions before upload",
+      subtitle: isSpanishXby
+        ? "Respuestas sobre fotos fuente, creditos, privacidad y entrega."
+        : isAidreamcapes
+          ? "How occasion tools handle approved photos, private albums, and credit review."
+          : "How MyDreamShoots tools handle source photos, credits, output review, and private delivery."
+    },
+    blocks: items.map(([question, answer], index) => ({
+      id: `tools_directory_faq_${index + 1}`,
+      type: "faq_item",
+      settings: { question, answer }
+    }))
+  };
+}
+
 function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): ThemePageJson {
   const blocks = toolBlocksFromTheme(site);
   const toolsBySlug = new Map<string, SectionBlockInstance>();
@@ -1911,7 +1962,7 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
   const tools = Array.from(toolsBySlug.values()).map((tool) => isSpanishXby ? spanishXbyToolBlockForSite(site, tool) : tool);
   return {
     ...pageJson,
-    sectionsOrder: ["tools_directory_1"],
+    sectionsOrder: ["tools_directory_1", "faq_1"],
     sections: {
       tools_directory_1: {
         type: "dreamshoot_tool_collection",
@@ -1939,7 +1990,8 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
           layout: "directory"
         },
         blocks: tools
-      }
+      },
+      faq_1: toolsDirectoryFaqSectionForSite(site)
     }
   };
 }
@@ -1971,33 +2023,38 @@ function usesSharedDreamShootNavigation(site: Pick<Site, "id" | "slug" | "name" 
   return /mydreamshoots|dreamshoot/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`) || isAidreamcapesStorefront(site);
 }
 
-function aidreamcapesToolFaqBlocks(label: string, workflow: string[]): SectionBlockInstance[] {
-  return [
-    {
-      id: "faq_inputs",
-      type: "faq_item",
-      settings: {
-        question: `What should I upload for ${label}?`,
-        answer: workflow[1] ?? "Upload clear source portraits or references that match the dreamscape direction you want."
-      }
-    },
-    {
-      id: "faq_private",
-      type: "faq_item",
-      settings: {
-        question: "Are Aidreamcapes results private?",
-        answer: "Yes. Source photos, photo sets, credit records, and finished galleries stay connected to the signed-in customer account."
-      }
-    },
-    {
-      id: "faq_credits",
-      type: "faq_item",
-      settings: {
-        question: "When are credits used?",
-        answer: "Credits are shown before a request starts, reserved for generation, consumed after successful delivery, and released when a request fails."
-      }
-    }
-  ];
+function toolDetailFaqBlocksForSite(site: Site, label: string, workflow: string[]): SectionBlockInstance[] {
+  const aidreamcapes = isAidreamcapesStorefront(site);
+  const spanishXby = isSpanishXbyStorefront(site);
+  const safeWorkflow = workflow.filter((item) => item.trim());
+  const uploadGuidance = safeWorkflow[0] ?? safeWorkflow[1];
+  const imageOrAlbum = aidreamcapes ? "albums" : "images";
+  const privateBrand = site.branding.logoText || site.name || (aidreamcapes ? "Aidreamcapes" : "MyDreamShoots");
+  const items = spanishXby
+    ? [
+        [`Que debo subir para ${label}?`, uploadGuidance ?? "Sube fotos fuente claras y aprobadas que coincidan con la direccion que quieres crear."],
+        ["Los resultados son privados?", `Si. Fotos fuente, pedidos, creditos y resultados terminados permanecen vinculados a la cuenta privada de ${privateBrand}.`],
+        ["Cuando se usan los creditos?", "Los creditos se muestran antes de empezar, se reservan durante la generacion y se liberan si el pedido falla."],
+        [`Donde quedan los ${aidreamcapes ? "albumes" : "resultados"} terminados?`, `Los resultados terminados quedan en la galeria privada para revisar, descargar y decidir que compartir.`]
+      ]
+    : aidreamcapes
+      ? [
+          [`What should I upload for ${label}?`, uploadGuidance ?? "Upload clear approved source portraits or references that match the occasion direction you want."],
+          ["Does this tool recreate official identities?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized public-figure likenesses, logos, official marks, or misleading affiliation."],
+          ["When are credits used?", "Credits are shown before a request starts, reserved during generation, and settled or released according to the request status."],
+          ["Where do finished albums go?", "Finished images or motion outputs stay in the private gallery connected to the signed-in Aidreamcapes account."]
+        ]
+      : [
+          [`What should I upload for ${label}?`, uploadGuidance ?? "Upload clear source photos or references you own or have permission to use, with the subject visible and the intended style goal in mind."],
+          ["Does this tool use the private workspace?", "Yes. Source photos, request details, credit records, and finished results stay connected to the signed-in MyDreamShoots account."],
+          ["When are credits used?", "Paid tool requests show the credit requirement before generation, reserve credits while processing, and release them when a recorded failure returns the reservation."],
+          [`Where do finished ${imageOrAlbum} go?`, `Finished ${imageOrAlbum} stay in the private gallery or workspace for review, download, and account history.`]
+        ];
+  return items.map(([question, answer], index) => ({
+    id: `faq_tool_${index + 1}`,
+    type: "faq_item",
+    settings: { question, answer }
+  }));
 }
 
 function detailText(detail: ToolMenuItem["detailJson"] | undefined, key: keyof NonNullable<ToolMenuItem["detailJson"]>, fallback: string): string {
@@ -2127,41 +2184,18 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
         }))
       : toolDetailUseCaseBlocks(copy)
   };
-  if (aidreamcapes && page.sections.faq_1) {
+  if (page.sections.faq_1) {
     page.sections.faq_1.settings = {
       ...page.sections.faq_1.settings,
-      eyebrow: spanishXby ? "Preguntas de herramienta" : "Aidreamcapes tool questions",
+      eyebrow: spanishXby ? "Preguntas de herramienta" : aidreamcapes ? "Aidreamcapes tool questions" : "MyDreamShoots tool questions",
       title: spanishXby ? `FAQ de ${directoryContent.label}` : `${directoryContent.label} FAQ`,
-      subtitle: spanishXby ? "Respuestas sobre fotos fuente, creditos, galerias privadas y entrega antes de generar." : "Answers about source photos, credits, private galleries, and delivery before you generate."
+      subtitle: spanishXby
+        ? "Respuestas sobre fotos fuente, creditos, galerias privadas y entrega antes de generar."
+        : aidreamcapes
+          ? "Answers about approved source photos, credits, private albums, and delivery before you generate."
+          : "Answers about source photos, credits, private galleries, and delivery before you generate."
     };
-    page.sections.faq_1.blocks = spanishXby
-      ? [
-          {
-            id: "faq_inputs",
-            type: "faq_item",
-            settings: {
-              question: `Que debo subir para ${directoryContent.label}?`,
-              answer: directoryContent.workflow[1] ?? "Sube retratos o referencias claras que coincidan con la direccion de viaje que quieres."
-            }
-          },
-          {
-            id: "faq_private",
-            type: "faq_item",
-            settings: {
-              question: "Los resultados son privados?",
-              answer: "Si. Fotos fuente, pedidos, creditos y galerias terminadas permanecen vinculados a la cuenta del cliente."
-            }
-          },
-          {
-            id: "faq_credits",
-            type: "faq_item",
-            settings: {
-              question: "Cuando se usan los creditos?",
-              answer: "Los creditos se muestran antes de empezar, se reservan durante la generacion y se liberan si el pedido falla."
-            }
-          }
-        ]
-      : aidreamcapesToolFaqBlocks(directoryContent.label, directoryContent.workflow);
+    page.sections.faq_1.blocks = toolDetailFaqBlocksForSite(site, directoryContent.label, directoryContent.workflow);
   }
   const insertAfterEntry = page.sectionsOrder.includes("entry_1") ? page.sectionsOrder.indexOf("entry_1") + 1 : page.sectionsOrder.length;
   page.sectionsOrder.splice(insertAfterEntry, 0, guideSectionId, useCaseSectionId);

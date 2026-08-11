@@ -361,10 +361,20 @@ function companyIdentifiers(profile: StorefrontCompanyProfile): JsonLdNode[] {
   return identifiers;
 }
 
+function footerSocialSameAs(site: Site): string[] {
+  const footerSettings = site.themeSettings.publishedJson.globalSections?.footer?.settings as Record<string, unknown> | undefined;
+  if (!footerSettings) return [];
+  const keys = ["instagramUrl", "facebookUrl", "threadsUrl", "pinterestUrl", "youtubeUrl", "twitterUrl"] as const;
+  return Array.from(new Set(keys
+    .map((key) => cleanText(footerSettings[key]))
+    .filter((url) => /^https?:\/\//i.test(url))));
+}
+
 function organizationSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
   const profile = storefrontCompanyProfile(site);
   const address = companyAddressSchema(profile);
   const identifiers = companyIdentifiers(profile);
+  const sameAs = footerSocialSameAs(site);
   return {
     "@type": "Organization",
     "@id": `${siteBaseUrl(site, routeMode)}#organization`,
@@ -376,7 +386,8 @@ function organizationSchema(site: Site, routeMode: "host" | "path"): JsonLdNode 
     ...(profile.phone ? { telephone: profile.phone } : {}),
     ...(address ? { address } : {}),
     ...(profile.taxId ? { taxID: profile.taxId } : {}),
-    ...(identifiers.length ? { identifier: identifiers } : {})
+    ...(identifiers.length ? { identifier: identifiers } : {}),
+    ...(sameAs.length ? { sameAs } : {})
   };
 }
 
@@ -422,10 +433,61 @@ function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, t
   return { "@type": "BreadcrumbList", itemListElement: items };
 }
 
-function faqSchema(site: Site, pageJson: ThemePageJson | undefined): JsonLdNode | undefined {
+function faqQuestionNode(site: Site, question: string, answer: string): JsonLdNode | undefined {
+  const name = cleanSchemaText(site, question);
+  const text = cleanSchemaText(site, answer);
+  if (!name || !text) return undefined;
+  return {
+    "@type": "Question",
+    name,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text
+    }
+  };
+}
+
+function themeFaqQuestions(site: Site, input: JsonLdInput | undefined, section: ThemePageJson["sections"][string]): Array<[string, string]> {
+  const pageSlug = input?.pagePath?.split("/").filter(Boolean).pop() ?? "";
+  const selectedPack = input?.creativePacks
+    ?.filter((pack) => pack.status === "active")
+    .find((pack) => packMatchesCollectionSlug(site, pack, pageSlug));
+  const label = cleanText(selectedPack?.name, cleanText(section.settings.label, "this package"));
+  const outputCount = selectedPack?.outputCount || 20;
+  const creditCost = selectedPack?.creditCost || 20;
+  const aidreamcapes = isAidreamcapesSite(site);
+  const spanishXby = isSpanishXbySite(site);
+  if (spanishXby) {
+    return [
+      [`Que es el paquete ${label}?`, aidreamcapes
+        ? `${label} es un album privado que convierte fotos fuente aprobadas en una galeria de ocasion con creditos visibles y resultados listos para descargar.`
+        : `${label} es un tema que convierte fotos fuente aprobadas en una galeria privada con estilo consistente, creditos visibles y resultados listos para descargar.`],
+      [`Que fotos fuente funcionan mejor para ${label}?`, "Usa fotos claras, bien iluminadas y con permiso de uso. Evita capturas, recortes pequenos, filtros pesados e imagenes de personas sin consentimiento."],
+      [`Cuantas imagenes crea ${label}?`, `Este paquete esta configurado para ${outputCount} imagenes, y el coste de ${creditCost} creditos se muestra antes de iniciar la solicitud.`],
+      [aidreamcapes ? "Donde quedan los albumes terminados?" : "Donde quedan las imagenes terminadas?", "Los resultados terminados permanecen en tu galeria privada para revisar, conservar y descargar."],
+      ["Que ocurre si falla la generacion?", "Si una solicitud del proveedor se interrumpe antes de la entrega, los creditos reservados se liberan o se devuelven segun el estado."]
+    ];
+  }
+  return [
+    [`What is the ${label} package?`, aidreamcapes
+      ? `${label} is a focused Aidreamcapes private album that turns approved source photos into fan, game-day, premiere, or holiday imagery with visible credit cost and download-ready results.`
+      : `${label} is a focused MyDreamShoots theme that turns approved source photos into a private gallery with consistent styling, visible credit cost, and download-ready results.`],
+    [`Which source photos work best for ${label}?`, "Use clear, well-lit photos you own or have permission to use. Avoid screenshots, tiny crops, heavy filters, and images of people who have not consented."],
+    [`How many images does ${label} create?`, `This package is configured for ${outputCount} images, and the ${creditCost}-credit cost is shown before the generation request starts.`],
+    [aidreamcapes ? "Where do finished albums go?" : "Where do finished images go?", aidreamcapes ? "Finished Aidreamcapes images stay inside your signed-in private gallery for review and download." : "Finished results stay inside your signed-in private gallery for review and download."],
+    ["What happens if generation fails?", "If a provider request is interrupted before delivery, reserved credits are released or returned according to the request status so you can retry from the workspace."]
+  ];
+}
+
+function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: JsonLdInput): JsonLdNode | undefined {
   if (!hasPageSections(pageJson)) return undefined;
   const questions = pageJson.sectionsOrder.flatMap((sectionId) => {
     const section = pageJson.sections[sectionId];
+    if (section?.type === "dreamshoot_theme_faq") {
+      return themeFaqQuestions(site, input, section)
+        .map(([question, answer]) => faqQuestionNode(site, question, answer))
+        .filter(Boolean) as JsonLdNode[];
+    }
     if (section?.type !== "faq") return [];
     const blocks = section.blocks?.length
       ? section.blocks
@@ -434,15 +496,8 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined): JsonLdNode 
           return { id: `faq_${index}`, type: "faq_item", settings: { question, answer } };
         });
     return blocks
-      .map((block) => ({
-	        "@type": "Question",
-	        name: cleanSchemaText(site, blockValue(block, "question", blockValue(block, "title"))),
-	        acceptedAnswer: {
-	          "@type": "Answer",
-	          text: cleanSchemaText(site, faqAnswerText(block))
-	        }
-	      }))
-      .filter((item) => cleanText(item.name) && cleanText((item.acceptedAnswer as { text: string }).text));
+      .map((block) => faqQuestionNode(site, blockValue(block, "question", blockValue(block, "title")), faqAnswerText(block)))
+      .filter(Boolean) as JsonLdNode[];
   });
   return questions.length ? { "@type": "FAQPage", mainEntity: questions } : undefined;
 }
@@ -969,7 +1024,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     websiteSchema(input.site, input.routeMode),
     storefrontApplicationSchema(input, title, description),
     breadcrumbs(input.site, input.routeMode, input.pagePath, title),
-    faqSchema(input.site, input.pageJson),
+    faqSchema(input.site, input.pageJson, input),
     articleSchema(input.site, input.routeMode, input.pagePath, title, description, input.pageJson),
     ...collectionPageSchema(input, title, description),
     ...homeVideoObjectSchemas(input),
@@ -977,6 +1032,38 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   ];
 
   return [{ "@context": "https://schema.org", "@graph": graph.filter(Boolean) }];
+}
+
+function toolDirectoryFaqSchema(site: Site, item: ReturnType<typeof getSeoDirectoryContentForSite>): JsonLdNode {
+  const aidreamcapes = isAidreamcapesSite(site);
+  const spanishXby = isSpanishXbySite(site);
+  const uploadGuidance = item.workflow[0] ?? item.workflow[1];
+  const items = spanishXby
+    ? [
+        [`Que debo subir para ${item.label}?`, uploadGuidance ?? "Sube fotos fuente claras y aprobadas que coincidan con la direccion que quieres crear."],
+        ["Los resultados son privados?", "Si. Fotos fuente, pedidos, creditos y resultados terminados permanecen vinculados a la cuenta privada del cliente."],
+        ["Cuando se usan los creditos?", "Los creditos se muestran antes de empezar, se reservan durante la generacion y se liberan si el pedido falla."],
+        [aidreamcapes ? "Donde quedan los albumes terminados?" : "Donde quedan los resultados terminados?", "Los resultados terminados quedan en la galeria privada para revisar y descargar."]
+      ]
+    : aidreamcapes
+      ? [
+          [`What should I upload for ${item.label}?`, uploadGuidance ?? "Upload clear approved source portraits or references that match the occasion direction you want."],
+          ["Does this tool recreate official identities?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized public-figure likenesses, logos, official marks, or misleading affiliation."],
+          ["When are credits used?", "Credits are shown before a request starts, reserved during generation, and settled or released according to the request status."],
+          ["Where do finished albums go?", "Finished images or motion outputs stay in the private gallery connected to the signed-in Aidreamcapes account."]
+        ]
+      : [
+          [`What should I upload for ${item.label}?`, uploadGuidance ?? "Upload clear source photos or references you own or have permission to use, with the subject visible and the intended style goal in mind."],
+          ["Does this tool use the private workspace?", "Yes. Source photos, request details, credit records, and finished results stay connected to the signed-in MyDreamShoots account."],
+          ["When are credits used?", "Paid tool requests show the credit requirement before generation, reserve credits while processing, and release them when a recorded failure returns the reservation."],
+          ["Where do finished results go?", "Finished images or clips stay in the private gallery or workspace for review, download, and account history."]
+        ];
+  return {
+    "@type": "FAQPage",
+    mainEntity: items
+      .map(([question, answer]) => faqQuestionNode(site, question, answer))
+      .filter(Boolean)
+  };
 }
 
 export function buildToolDirectoryJsonLd({
@@ -1029,7 +1116,8 @@ export function buildToolDirectoryJsonLd({
         url: siteBaseUrl(site, routeMode)
       },
       url
-    }
+    },
+    toolDirectoryFaqSchema(site, item)
   ];
 
   return [{ "@context": "https://schema.org", "@graph": graph }];
@@ -1079,6 +1167,29 @@ export function buildCollectionDirectoryJsonLd({
     .filter((pack) => packMatchesCollectionSlug(site, pack, item.slug))
     .slice(0, 12);
   const hasMatchingPacks = matchingPacks.length > 0;
+  const faqPack = matchingPacks[0];
+  const faqLabel = cleanText(faqPack?.name, item.label);
+  const faqOutputCount = faqPack?.outputCount || 20;
+  const faqCreditCost = faqPack?.creditCost || 20;
+  const collectionFaqItems = isSpanishXbySite(site)
+    ? [
+        [`Que es el paquete ${faqLabel}?`, isAidreamcapesSite(site)
+          ? `${faqLabel} es un album privado que convierte fotos fuente aprobadas en una galeria de ocasion con creditos visibles y resultados listos para descargar.`
+          : `${faqLabel} es un tema que convierte fotos fuente aprobadas en una galeria privada con estilo consistente, creditos visibles y resultados listos para descargar.`],
+        [`Que fotos fuente funcionan mejor para ${faqLabel}?`, "Usa fotos claras, bien iluminadas y con permiso de uso. Evita capturas, recortes pequenos, filtros pesados e imagenes de personas sin consentimiento."],
+        [`Cuantas imagenes crea ${faqLabel}?`, `Este paquete esta configurado para ${faqOutputCount} imagenes, y el coste de ${faqCreditCost} creditos se muestra antes de iniciar la solicitud.`],
+        [isAidreamcapesSite(site) ? "Donde quedan los albumes terminados?" : "Donde quedan las imagenes terminadas?", "Los resultados terminados permanecen en tu galeria privada para revisar, conservar y descargar."],
+        ["Que ocurre si falla la generacion?", "Si una solicitud del proveedor se interrumpe antes de la entrega, los creditos reservados se liberan o se devuelven segun el estado."]
+      ]
+    : [
+        [`What is the ${faqLabel} package?`, isAidreamcapesSite(site)
+          ? `${faqLabel} is a focused Aidreamcapes private album that turns approved source photos into fan, game-day, premiere, or holiday imagery with visible credit cost and download-ready results.`
+          : `${faqLabel} is a focused MyDreamShoots theme that turns approved source photos into a private gallery with consistent styling, visible credit cost, and download-ready results.`],
+        [`Which source photos work best for ${faqLabel}?`, "Use clear, well-lit photos you own or have permission to use. Avoid screenshots, tiny crops, heavy filters, and images of people who have not consented."],
+        [`How many images does ${faqLabel} create?`, `This package is configured for ${faqOutputCount} images, and the ${faqCreditCost}-credit cost is shown before the generation request starts.`],
+        [isAidreamcapesSite(site) ? "Where do finished albums go?" : "Where do finished images go?", isAidreamcapesSite(site) ? "Finished Aidreamcapes images stay inside your signed-in private gallery for review and download." : "Finished results stay inside your signed-in private gallery for review and download."],
+        ["What happens if generation fails?", "If a provider request is interrupted before delivery, reserved credits are released or returned according to the request status so you can retry from the workspace."]
+      ];
   const itemListElement = (hasMatchingPacks ? matchingPacks : item.useCases.map((useCase, index) => ({
     id: `${item.slug}_${index}`,
     name: useCase,
@@ -1119,6 +1230,12 @@ export function buildCollectionDirectoryJsonLd({
       description: item.intro,
       url,
       itemListElement
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: collectionFaqItems
+        .map(([question, answer]) => faqQuestionNode(site, question, answer))
+        .filter(Boolean)
     },
     ...(matchingPacks.length === 1
       ? [packProductSchema({
