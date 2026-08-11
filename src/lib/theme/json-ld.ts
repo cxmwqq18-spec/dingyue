@@ -813,17 +813,24 @@ function showcaseVideoSlugs(pageJson: ThemePageJson | undefined): string[] {
   return listText(showcase?.settings.videoSlugs).map(slugifySchemaPart).filter(Boolean);
 }
 
+const blockedPublicVideoThemeSlugs = new Set(["creator-scene-motion"]);
+
+function isBlockedPublicVideoTheme(site: Site, theme: VideoTheme): boolean {
+  if (site.id !== "site_dreamshoot" && site.id !== "site_aidreamcapes") return false;
+  return blockedPublicVideoThemeSlugs.has(slugifySchemaPart(theme.slug));
+}
+
 function homeVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
   if (!isPrimaryMyDreamShootsSite(input.site)) return [];
   if (input.pagePath !== "/" && input.page.slug !== "/") return [];
-  const selectedSlugs = showcaseVideoSlugs(input.pageJson);
+  const selectedSlugs = showcaseVideoSlugs(input.pageJson).filter((slug) => !blockedPublicVideoThemeSlugs.has(slug));
   const videoBySlug = new Map<string, VideoTheme>();
   (input.videoThemes ?? [])
-    .filter((theme) => theme.siteId === input.site.id && theme.status === "active")
+    .filter((theme) => theme.siteId === input.site.id && theme.status === "active" && !isBlockedPublicVideoTheme(input.site, theme))
     .forEach((theme) => videoBySlug.set(slugifySchemaPart(theme.slug), theme));
   const orderedThemes = [
     ...selectedSlugs.map((slug) => videoBySlug.get(slug)).filter((theme): theme is VideoTheme => Boolean(theme)),
-    ...(input.videoThemes ?? []).filter((theme) => theme.siteId === input.site.id && theme.status === "active")
+    ...(input.videoThemes ?? []).filter((theme) => theme.siteId === input.site.id && theme.status === "active" && !isBlockedPublicVideoTheme(input.site, theme))
   ];
   const seen = new Set<string>();
   const homeUrl = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, "/"));

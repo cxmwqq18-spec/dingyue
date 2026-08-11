@@ -53,9 +53,10 @@ export async function saveThemePageDraft(siteId: string, pageId: string, draftJs
 }
 
 export async function saveAllThemePageDrafts(siteId: string, drafts: Array<{ pageId: string; draftJson: ThemePageJson; expected?: ThemeDraftMeta }>): Promise<DraftBulkSaveResult> {
-  const results = await Promise.all(
-    drafts.map(async (item) => ({ pageId: item.pageId, result: await saveThemePageDraft(siteId, item.pageId, item.draftJson, item.expected) }))
-  );
+  const results: Array<{ pageId: string; result: DraftSaveResult }> = [];
+  for (const item of drafts) {
+    results.push({ pageId: item.pageId, result: await saveThemePageDraft(siteId, item.pageId, item.draftJson, item.expected) });
+  }
   return {
     ok: results.every((item) => item.result.ok),
     draftVersions: Object.fromEntries(

@@ -25,8 +25,8 @@ const workflowSectionId = "flow_bridge_1";
 const CUSTOMER_VIDEO_FRAME_LIMIT = 7;
 const obsoleteShowcaseRows = {
   site_dreamshoot: {
-    categorySlugs: ["travel-story"],
-    themeSlugs: ["travel-route-story"]
+    categorySlugs: [],
+    themeSlugs: []
   }
 };
 
@@ -319,12 +319,11 @@ function applyHomeShowcase(pageJson, store) {
   const section = homepageShowcaseSection(store, 8, 8);
   pageJson.sections[showcaseSectionId] = section;
 
-  const hadWorkflow = pageJson.sectionsOrder.includes(workflowSectionId);
   const baseOrder = pageJson.sectionsOrder.filter((id) => id !== showcaseSectionId && id !== workflowSectionId);
-  const packageIndex = baseOrder.indexOf("package_catalog_1");
-  const insertAt = packageIndex >= 0 ? packageIndex + 1 : Math.min(5, baseOrder.length);
+  const featuredIndex = baseOrder.indexOf("featured_thanksgiving_1");
+  const heroIndex = baseOrder.indexOf("hero_1");
+  const insertAt = featuredIndex >= 0 ? featuredIndex + 1 : heroIndex >= 0 ? heroIndex + 1 : Math.min(1, baseOrder.length);
   baseOrder.splice(insertAt, 0, showcaseSectionId);
-  if (hadWorkflow) baseOrder.splice(insertAt + 1, 0, workflowSectionId);
   pageJson.sectionsOrder = baseOrder.filter((id) => Boolean(pageJson.sections[id]));
   return true;
 }
@@ -347,13 +346,13 @@ function applyShowcaseToState(state, stores) {
       const indexTemplate = theme.templates?.index;
       if (!indexTemplate?.sections || !Array.isArray(indexTemplate.content_for_page)) continue;
       indexTemplate.sections[showcaseSectionId] = clone(homepageShowcaseSection(store, 8, 8));
-      const hadWorkflow = indexTemplate.content_for_page.includes(workflowSectionId);
       const order = indexTemplate.content_for_page.filter((id) => id !== showcaseSectionId && id !== workflowSectionId);
-      const packageIndex = order.indexOf("package_catalog_1");
-      const insertAt = packageIndex >= 0 ? packageIndex + 1 : Math.min(5, order.length);
+      const featuredIndex = order.indexOf("featured_thanksgiving_1");
+      const heroIndex = order.indexOf("hero_1");
+      const insertAt = featuredIndex >= 0 ? featuredIndex + 1 : heroIndex >= 0 ? heroIndex + 1 : Math.min(1, order.length);
       order.splice(insertAt, 0, showcaseSectionId);
-      if (hadWorkflow) order.splice(insertAt + 1, 0, workflowSectionId);
       indexTemplate.content_for_page = order.filter((id) => Boolean(indexTemplate.sections[id]));
+      indexTemplate.sectionsOrder = indexTemplate.content_for_page;
       themeTemplateUpdates += 1;
     }
 

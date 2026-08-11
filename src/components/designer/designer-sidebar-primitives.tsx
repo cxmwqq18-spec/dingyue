@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type ButtonHTMLAttributes, type HTMLAttributes, type InputHTMLAttributes, type ReactNode } from "react";
+import type { ButtonHTMLAttributes, HTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
 import { ChevronRight, GripVertical, Search } from "lucide-react";
 
 function cx(...values: Array<string | false | null | undefined>) {
@@ -732,21 +732,6 @@ export function DesignerModeTabs<T extends string>({
   tone?: "underline" | "pill";
   surface?: "panel" | "bare";
 }) {
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-    function onNativeClick(event: MouseEvent) {
-      const target = event.currentTarget instanceof HTMLButtonElement ? event.currentTarget : null;
-      const key = target?.dataset.designerTabKey;
-      if (key) onValueChange(key as T);
-    }
-    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-designer-tab-key]"));
-    buttons.forEach((button) => button.addEventListener("click", onNativeClick));
-    return () => buttons.forEach((button) => button.removeEventListener("click", onNativeClick));
-  }, [items, onValueChange]);
-
   return (
     <div
       className={cx(
@@ -754,21 +739,20 @@ export function DesignerModeTabs<T extends string>({
         surface === "bare" && "w-full",
         className
       )}
-      ref={rootRef}
       {...props}
     >
       <div className={cx("flex items-center", tone === "pill" ? "justify-center" : "gap-4")}>
-        <div className={cx(tone === "pill" ? "wrap flex h-9 w-full items-center justify-center rounded-[30px] bg-[#ebeef3] p-0" : "flex items-center gap-4")}>
+        <div className={cx(tone === "pill" ? "flex min-h-10 w-full min-w-0 items-center justify-center gap-1 rounded-[10px] bg-[#eef1f5] p-1" : "flex items-center gap-4")}>
         {items.map((item) => {
           const selected = item.key === active;
           return (
             <button
               aria-pressed={selected}
               className={cx(
-                "tools_tab_item inline-flex items-center justify-center gap-1.5 text-sm transition",
+                "inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2f6fed]/35",
                 tone === "pill"
                   ? cx(
-                      "h-9 min-w-0 flex-1 rounded-[30px] px-2 py-0 text-[12px]",
+                      "h-8 flex-1 rounded-[8px] px-2 py-0 text-[12px] font-medium",
                       selected ? "bg-[#f4a719] text-white" : "text-[#6b7282] hover:text-[#383838]"
                     )
                   : cx(

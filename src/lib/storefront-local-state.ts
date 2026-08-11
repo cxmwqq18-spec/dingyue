@@ -125,7 +125,7 @@ export function preferLocalPathModeState(siteSlug?: string): boolean {
     if (isLegacyLocalStorefrontReadPreference(preference) && !warnedIgnoredMydreamshootsLocalPreference && process.env.NODE_ENV !== "production") {
       warnedIgnoredMydreamshootsLocalPreference = true;
       console.warn(
-        `[storefront-content-source] Ignoring STOREFRONT_PATH_MODE_READS=${preference} for MyDreamShoots. ` +
+        `[storefront-content-source] Ignoring STOREFRONT_PATH_MODE_READS=${preference} for synchronized storefront content. ` +
         "Use local-preview only for an intentional data/platform-state.json preview."
       );
     }
@@ -141,7 +141,7 @@ export function preferLocalPathModeState(siteSlug?: string): boolean {
 function databaseSourceError(kind: "runtime" | "metadata", siteSlug: string, pageSlug: string, error?: unknown): Error {
   const original = error instanceof Error && error.message ? ` Original error: ${error.message}` : "";
   return new Error(
-    `MyDreamShoots ${kind} for ${siteSlug}${pageSlug} must read Postgres published content. ` +
+    `Synchronized storefront ${kind} for ${siteSlug}${pageSlug} must read Postgres published content. ` +
     "Refusing to fall back to data/platform-state.json because that can reintroduce stale copy. " +
     "Check DATABASE_URL/DB tunnel, or set STOREFRONT_PATH_MODE_READS=local-preview for an intentional JSON preview." +
     original

@@ -15,6 +15,9 @@ const siteChecks = [
     requiredPaths: [
       "/",
       "/workflow",
+      "/best-packages",
+      "/best-ai-image",
+      "/best-ai-video",
       "/collections",
       "/collections/headshots",
       "/collections/thanksgiving-group-photos",
@@ -46,6 +49,9 @@ const siteChecks = [
     requiredPaths: [
       "/",
       "/workflow",
+      "/best-packages",
+      "/best-ai-image",
+      "/best-ai-video",
       "/collections",
       "/collections/fan-scene-albums",
       "/collections/game-day-group-photos",

@@ -4,7 +4,7 @@ import { IframePatchListener } from "@/components/designer/iframe-patch-listener
 import { ThemeRenderer } from "@/components/theme-renderer";
 import { verifyDesignerPreviewToken } from "@/lib/designer-preview-auth";
 import { siteAdminSessionCookie } from "@/lib/session";
-import { getSiteAdminBySessionRelational, getSiteAdminContextRelationalState, getSiteBySlugForAdmin } from "@/lib/stores/site-store";
+import { getSiteAdminBySessionRelational, getSiteAdminContextRelationalState, getSiteShellBySlugForAdmin } from "@/lib/stores/site-store";
 import { prisma } from "@/lib/prisma";
 import { toCreativePack } from "@/lib/stores/prisma-mappers";
 import { getSiteThemeStateRelational } from "@/lib/stores/theme-store";
@@ -20,13 +20,17 @@ export default async function ThemePreviewPage({
 }) {
   const { siteSlug, pageId } = await params;
   const query = searchParams ? await searchParams : {};
-  const stateSite = await getSiteBySlugForAdmin(siteSlug);
-  if (!stateSite) notFound();
-  const themeState = await getSiteThemeStateRelational(stateSite.id);
+  const routeTokenPayload = verifyDesignerPreviewToken(query.previewToken);
+  const tokenSiteId = routeTokenPayload?.siteSlug === siteSlug ? routeTokenPayload.siteId : undefined;
+  const shellSite = tokenSiteId ? undefined : await getSiteShellBySlugForAdmin(siteSlug);
+  const siteId = tokenSiteId ?? shellSite?.id;
+  if (!siteId) notFound();
+  const themeState = await getSiteThemeStateRelational(siteId);
   const site = themeState.site;
+  if (site.slug !== siteSlug) notFound();
   site.mediaAssets = themeState.mediaAssets;
   const cookieSessionId = (await cookies()).get(siteAdminSessionCookie(site.id))?.value;
-  const tokenPayload = verifyDesignerPreviewToken(query.previewToken, { siteId: site.id, siteSlug: site.slug });
+  const tokenPayload = routeTokenPayload?.siteId === site.id && routeTokenPayload.siteSlug === site.slug ? routeTokenPayload : undefined;
   const cookieSession = await getSiteAdminBySessionRelational({ siteId: site.id, sessionId: cookieSessionId });
   const tokenSession = tokenPayload
     ? await getSiteAdminBySessionRelational({ siteId: site.id, sessionId: tokenPayload.sessionId })

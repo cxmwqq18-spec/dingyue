@@ -38,17 +38,13 @@ export function DesignerWorkspaceNavigator({
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden" data-designer-layout="saas-workspace-navigator-root">
       {pageTreeProps ? (
-        <div className="shrink-0 px-0 pb-1">
-          <PageTree
-            {...pageTreeProps}
-            density="compact"
-            mode="switcher"
-            showHeader={false}
-            surface="plain"
-          />
-          <div className="max-h-[38vh] overflow-y-auto border-b border-[#c4c7cc] px-1.5 py-1.5">
+        <div className="flex min-h-0 shrink-0 basis-[38%] flex-col overflow-hidden px-0 pb-1" data-designer-layout="saas-page-directory-wrapper">
+          <div
+            className="min-h-0 flex-1 overflow-y-auto border-b border-[#c4c7cc] px-1.5 py-1.5"
+            data-designer-layout="saas-page-directory-scroll"
+          >
             <PageTree
               {...pageTreeProps}
               density="compact"

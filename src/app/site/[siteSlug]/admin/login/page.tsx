@@ -4,7 +4,7 @@ import { AdminLoginScreen } from "@/components/auth/admin-login-screen";
 import { PasswordLoginForm } from "@/components/auth/password-login-form";
 import { authMessageForCode } from "@/lib/auth-messages";
 import { siteAdminSessionCookie } from "@/lib/session";
-import { getFirstSiteAdminEmail, getSiteAdminBySessionRelational, getSiteBySlugForAdmin } from "@/lib/stores/site-store";
+import { getFirstSiteAdminEmail, getSiteAdminBySessionRelational, getSiteLoginShellBySlugForAdmin } from "@/lib/stores/site-store";
 
 export default async function SiteAdminLoginPage({
   params,
@@ -14,7 +14,7 @@ export default async function SiteAdminLoginPage({
   searchParams?: Promise<{ error?: string }>;
 }) {
   const { siteSlug } = await params;
-  const site = await getSiteBySlugForAdmin(siteSlug);
+  const site = await getSiteLoginShellBySlugForAdmin(siteSlug);
   if (!site) notFound();
   const sessionId = (await cookies()).get(siteAdminSessionCookie(site.id))?.value;
   if (sessionId && (await getSiteAdminBySessionRelational({ siteId: site.id, sessionId }))) redirect(`/site/${site.slug}/admin`);

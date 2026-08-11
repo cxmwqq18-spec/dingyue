@@ -467,6 +467,7 @@ export function FieldEditor({
     return (
       <SaasInlineFieldShell field={field}>
         <button
+          aria-label={fieldDisplayLabel({ id: field.id, label: field.label || field.id })}
           aria-checked={valueString === "true"}
           className={cx("ant-switch flex h-5 w-11 items-center rounded-full border p-0.5 transition", valueString === "true" ? "ant-switch-checked border-[#f4a719] bg-[#f4a719]" : "border-[#e6e6e6] bg-white")}
           onClick={(event) => {

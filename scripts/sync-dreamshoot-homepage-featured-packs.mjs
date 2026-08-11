@@ -7,6 +7,8 @@ import { PrismaClient } from "@prisma/client";
 const repoRoot = process.cwd();
 const statePath = path.join(repoRoot, "data", "platform-state.json");
 const orderedFeaturedIds = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
+const homepageFeaturedId = "featured_thanksgiving_1";
+const homepageRemovedFeaturedIds = ["featured_pack_1", "featured_christmas_1"];
 const additionalFeaturedIds = ["featured_christmas_1", "featured_thanksgiving_1"];
 const assetVersion = "20260801visualfix1";
 const dreamshootFeaturedCoverImages = {
@@ -233,12 +235,12 @@ const stores = [
 );
 
 function normalizeOrder(order, sections) {
-  const baseOrder = Array.from(new Set((order ?? []).filter((id) => !additionalFeaturedIds.includes(id))));
-  const packageIndex = baseOrder.indexOf("package_catalog_1");
-  const existingFeaturedIndex = baseOrder.indexOf("featured_pack_1");
-  const insertAt = existingFeaturedIndex >= 0 ? existingFeaturedIndex + 1 : packageIndex >= 0 ? packageIndex : Math.min(4, baseOrder.length);
-  baseOrder.splice(insertAt, 0, ...additionalFeaturedIds);
-  return baseOrder.filter((id) => id === "featured_pack_1" || Boolean(sections[id]));
+  const normalized = Array.from(new Set((order ?? []).filter((id) => !homepageRemovedFeaturedIds.includes(id)))).filter((id) => Boolean(sections[id]));
+  if (sections[homepageFeaturedId] && !normalized.includes(homepageFeaturedId)) {
+    const heroIndex = normalized.indexOf("hero_1");
+    normalized.splice(heroIndex >= 0 ? heroIndex + 1 : 0, 0, homepageFeaturedId);
+  }
+  return normalized;
 }
 
 function applyDreamshootVisualProofIsolation(sections) {
@@ -303,9 +305,10 @@ function applyFeaturedSectionsToPageJson(pageJson, store) {
     catalogThanksgiving: store.siteId === "site_dreamshoot" ? pageJson.sections.package_catalog_1?.blocks?.find((item) => item?.id === "catalog_thanksgiving") : undefined,
     catalogHalloween: store.siteId === "site_dreamshoot" ? pageJson.sections.package_catalog_1?.blocks?.find((item) => item?.id === "catalog_halloween") : undefined
   });
-  for (const id of additionalFeaturedIds) {
-    pageJson.sections[id] = clone(store.sections[id]);
+  for (const id of homepageRemovedFeaturedIds) {
+    if (pageJson.sections[id]) delete pageJson.sections[id];
   }
+  if (store.sections?.[homepageFeaturedId]) pageJson.sections[homepageFeaturedId] = clone(store.sections[homepageFeaturedId]);
   if (store.siteId === "site_dreamshoot") {
     applyDreamshootVisualProofIsolation(pageJson.sections);
   }
@@ -336,9 +339,10 @@ function applyFeaturedSectionsToThemeTemplate(template, store) {
     catalogThanksgiving: store.siteId === "site_dreamshoot" ? template.sections.package_catalog_1?.blocks?.find((item) => item?.id === "catalog_thanksgiving") : undefined,
     catalogHalloween: store.siteId === "site_dreamshoot" ? template.sections.package_catalog_1?.blocks?.find((item) => item?.id === "catalog_halloween") : undefined
   });
-  for (const id of additionalFeaturedIds) {
-    template.sections[id] = clone(store.sections[id]);
+  for (const id of homepageRemovedFeaturedIds) {
+    if (template.sections[id]) delete template.sections[id];
   }
+  if (store.sections?.[homepageFeaturedId]) template.sections[homepageFeaturedId] = clone(store.sections[homepageFeaturedId]);
   if (store.siteId === "site_dreamshoot") {
     applyDreamshootVisualProofIsolation(template.sections);
   }

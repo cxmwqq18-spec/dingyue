@@ -50,7 +50,9 @@ const brandProfiles = [
     contactDescription:
       "Contact MyDreamShoots for AI photo package support, sales questions, account help, billing review, privacy requests, or address information.",
     footerLinks: [
-      ["Headshot Generator", "/collections/headshots", "product"],
+      ["Best Packages", "/best-packages", "product"],
+      ["Best AI image", "/best-ai-image", "product"],
+      ["Best AI video", "/best-ai-video", "product"],
       ["Tools", "/tools", "product"],
       ["How it works", "/workflow", "product"],
       ["Pricing", "/pricing", "product"],
@@ -113,7 +115,9 @@ const brandProfiles = [
     contactDescription:
       "Contact Aidreamcapes for dreamscape portrait support, source photo guidance, billing review, privacy requests, or address information.",
     footerLinks: [
-      ["Travel Packages", "/collections", "product"],
+      ["Best Packages", "/best-packages", "product"],
+      ["Best AI image", "/best-ai-image", "product"],
+      ["Best AI video", "/best-ai-video", "product"],
       ["Tools", "/tools", "product"],
       ["How it works", "/workflow", "product"],
       ["Pricing", "/pricing", "product"],
@@ -178,7 +182,7 @@ function workflowTutorialSections(profile) {
         title: "Aidreamcapes mobile private album preview.",
         subtitle: "Compare portrait intake and album review steps in a vertical phone view.",
         imageUrl: "/assets/sites/site_aidreamcapes/fan-holiday-theme/gallery/private-fan-scene-album-01.webp",
-        imageAlt: "Aidreamcapes private fan-scene album preview",
+        imageAlt: "Mobile Aidreamcapes private album screen showing approved source-photo intake, fan-scene review, and finished gallery delivery.",
         videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
         videoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-mobile-tutorial-55s.jpg?v=20260804mobile1",
         videoBadge: "Mobile workflow",
@@ -196,7 +200,7 @@ function workflowTutorialSections(profile) {
         title: "MyDreamShoots mobile photo workflow preview.",
         subtitle: "Compare image setup and motion-preview steps in a vertical phone view.",
         imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
-        imageAlt: "Private album workspace preview",
+        imageAlt: "Mobile MyDreamShoots workspace screen showing private source-photo setup, credit review, and finished AI photo gallery steps.",
         videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",
         videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260806mobile45a",
         videoBadge: "Mobile workflow",

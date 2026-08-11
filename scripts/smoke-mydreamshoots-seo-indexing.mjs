@@ -85,6 +85,14 @@ assert(
   "Aidreamcapes must expose a standalone /workflow content page",
   { aidreamcapesWorkflow: aidreamcapesWorkflow && { id: aidreamcapesWorkflow.id, slug: aidreamcapesWorkflow.slug, pageType: aidreamcapesWorkflow.pageType } }
 );
+for (const pathName of ["/best-packages", "/best-ai-image", "/best-ai-video"]) {
+  const row = slugRows.find((item) => item.slug === pathName);
+  assert(
+    Boolean(row) && row.pageType === "content",
+    "MyDreamShoots must expose the new Best page as a standalone content page",
+    { pathName, row }
+  );
+}
 assert(
   !/requestedPath === "\/workflow"[\s\S]*return "\/"/.test(siteRouteCanonical),
   "/workflow must not canonicalize to the homepage"
@@ -107,11 +115,16 @@ const visiblePackageLabelHits = [];
 walk(mydreamshootsSite, (key, value, location) => {
   if (key === "href" && typeof value === "string") hrefHits.push({ href: value, location: location.join(".") });
   if (["label", "primaryCta", "secondaryCta", "ctaLabel"].includes(key) && typeof value === "string") {
-    if (value === "Headshot Generator" || value === "Browse packages") {
+    if (["Headshot Generator", "Browse packages", "Best Packages", "Best AI image", "Best AI video"].includes(value)) {
       visiblePackageLabelHits.push({ label: value, location: location.join(".") });
     }
   }
 });
+const headerLinks = mydreamshootsSite.themeSettings?.publishedJson?.navigation?.headerLinks ?? [];
+const headerLabels = headerLinks.map((link) => link.label);
+const headerHrefs = headerLinks.map((link) => link.href);
+const footerProductLinks = (mydreamshootsSite.themeSettings?.publishedJson?.navigation?.footerLinks ?? []).filter((link) => link.group === "product");
+const footerProductLabels = footerProductLinks.map((link) => link.label);
 const badLegacyHrefHits = hrefHits.filter((hit) => ["/cookie-policy", "/privacy-policy", "/terms-of-service"].includes(hit.href));
 const badLegacyCollectionHrefHits = hrefHits.filter((hit) => hit.href === "/collections/professional-headshots");
 assert(!badLegacyHrefHits.length, "MyDreamShoots internal hrefs must use canonical policy paths to avoid redirects", { badLegacyHrefHits });
@@ -126,11 +139,39 @@ assert(
 );
 assert(
   hrefHits.some((hit) => hit.href === "/collections/headshots"),
-  "MyDreamShoots visible Headshot Generator entries must link to /collections/headshots"
+  "MyDreamShoots must preserve canonical headshot collection links to /collections/headshots"
 );
 assert(
-  visiblePackageLabelHits.some((hit) => hit.label === "Headshot Generator"),
-  "MyDreamShoots visible CTA/nav labels must expose Headshot Generator"
+  headerLabels.includes("Best Packages") && headerHrefs[headerLabels.indexOf("Best Packages")] === "/best-packages",
+  "MyDreamShoots header must expose Best Packages at /best-packages",
+  { headerLinks }
+);
+assert(
+  headerLabels.indexOf("Best Packages") === headerLabels.indexOf("Tools") + 1,
+  "MyDreamShoots header must place Best Packages immediately after Tools",
+  { headerLinks }
+);
+assert(
+  !headerLabels.includes("FAQ") && !headerLabels.includes("Headshot Generator"),
+  "MyDreamShoots header must not expose the old FAQ or Headshot Generator top label",
+  { headerLinks }
+);
+for (const [label, href] of [["Best Packages", "/best-packages"], ["Best AI image", "/best-ai-image"], ["Best AI video", "/best-ai-video"]]) {
+  assert(
+    footerProductLinks.some((link) => link.label === label && link.href === href),
+    "MyDreamShoots footer product links must expose the new Best entry",
+    { label, href, footerProductLinks }
+  );
+  assert(
+    visiblePackageLabelHits.some((hit) => hit.label === label),
+    "MyDreamShoots visible labels must include the new Best entry",
+    { label, visiblePackageLabelHits }
+  );
+}
+assert(
+  !footerProductLabels.includes("Headshot Generator"),
+  "MyDreamShoots footer product links must not keep the old Headshot Generator label",
+  { footerProductLinks }
 );
 assert(
   !visiblePackageLabelHits.some((hit) => hit.label === "Browse packages"),
@@ -149,10 +190,14 @@ assert(
   "Creators Circle must be backed by the synthetic DreamShoot template in both host and site routes"
 );
 assert(!templates.includes('href: "/cookie-policy"'), "MyDreamShoots templates must not generate /cookie-policy links");
-assert(
-  templates.includes('label: "Headshot Generator"') && templates.includes('href: "/collections/headshots"'),
-  "MyDreamShoots templates must expose Headshot Generator links to /collections/headshots"
-);
+assert(templates.includes('href: "/collections/headshots"'), "MyDreamShoots templates must preserve canonical links to /collections/headshots");
+for (const [label, href] of [["Best Packages", "/best-packages"], ["Best AI image", "/best-ai-image"], ["Best AI video", "/best-ai-video"]]) {
+  assert(
+    templates.includes(`label: "${label}"`) && templates.includes(`href: "${href}"`),
+    "MyDreamShoots templates must expose the new Best page links",
+    { label, href }
+  );
+}
 assert(
   !templates.includes('label: "Browse packages"') &&
     !templates.includes('primaryCta: "Browse packages"') &&

@@ -76,6 +76,7 @@ const themeReadCache = createServerTtlCache("theme-store", Number(process.env.SI
 
 function clearSiteThemeReadCache(siteId: string) {
   themeReadCache.clear(`theme-state:${siteId}`);
+  themeReadCache.clear(`theme-site:${siteId}`);
   themeReadCache.clear(`theme-record-summary:${siteId}`);
   themeReadCache.clear(`publication-meta:${siteId}`);
   themeReadCache.clear(`publication-count:${siteId}`);
@@ -427,6 +428,10 @@ async function persistSiteDraft(tx: PrismaLike, site: Site) {
 
 export async function getSiteThemeStateRelational(siteId: string): Promise<ThemeState> {
   return themeReadCache.get(`theme-state:${siteId}`, () => loadSiteThemeStateRelational(siteId));
+}
+
+export async function getSiteThemeSiteRelational(siteId: string): Promise<Site> {
+  return themeReadCache.get(`theme-site:${siteId}`, async () => toSite(await getSiteWithThemeRecords(prisma, siteId)));
 }
 
 async function loadSiteThemeStateRelational(siteId: string): Promise<ThemeState> {

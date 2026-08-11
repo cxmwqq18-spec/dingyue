@@ -182,6 +182,33 @@ export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMeta
     index: true,
     follow: true
   },
+  "/best-packages": {
+    title: "Best Packages | MyDreamShoots",
+    description:
+      "Compare MyDreamShoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
+    keywords: "MyDreamShoots best packages, AI photo packages, seasonal AI photo pack, holiday AI photo pack",
+    canonicalPath: "/best-packages",
+    index: true,
+    follow: true
+  },
+  "/best-ai-image": {
+    title: "Best AI image gallery | MyDreamShoots",
+    description:
+      "Browse the full MyDreamShoots AI image gallery with photo generator themes, private album ideas, and package examples.",
+    keywords: "Best AI image, MyDreamShoots AI image gallery, AI photo generator themes, private AI photo examples",
+    canonicalPath: "/best-ai-image",
+    index: true,
+    follow: true
+  },
+  "/best-ai-video": {
+    title: "Best AI video gallery | MyDreamShoots",
+    description:
+      "Browse the full MyDreamShoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
+    keywords: "Best AI video, MyDreamShoots AI video gallery, AI video examples, image to video cases",
+    canonicalPath: "/best-ai-video",
+    index: true,
+    follow: true
+  },
   "/faq": {
     title: "MyDreamShoots FAQ",
     description:
@@ -245,6 +272,33 @@ export const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMe
       "Apply to partner with Aidreamcapes and share your audience, publishing channels, campaign fit, fan-scene album ideas, and holiday memory album collaboration goals.",
     keywords: "Aidreamcapes partner registration, fan-scene photo album partner, holiday memory album collaboration, AI portrait campaign partner",
     canonicalPath: "/partner-registration",
+    index: true,
+    follow: true
+  },
+  "/best-packages": {
+    title: "Best Packages | Aidreamcapes",
+    description:
+      "Compare Aidreamcapes recommended fan-scene, holiday, Thanksgiving, Christmas, and occasion album packages in one place.",
+    keywords: "Aidreamcapes best packages, fan-scene photo packages, holiday album packages, private occasion albums",
+    canonicalPath: "/best-packages",
+    index: true,
+    follow: true
+  },
+  "/best-ai-image": {
+    title: "Best AI image gallery | Aidreamcapes",
+    description:
+      "Browse every Aidreamcapes AI image theme with private fan-scene album examples, holiday keepsakes, and occasion photo generators.",
+    keywords: "Aidreamcapes best AI image, AI image gallery, fan-scene photo generator, holiday album examples",
+    canonicalPath: "/best-ai-image",
+    index: true,
+    follow: true
+  },
+  "/best-ai-video": {
+    title: "Best AI video gallery | Aidreamcapes",
+    description:
+      "Browse every Aidreamcapes AI video case with motion themes, fan-scene clips, and holiday album video examples.",
+    keywords: "Aidreamcapes best AI video, AI video gallery, fan-scene video examples, holiday motion themes",
+    canonicalPath: "/best-ai-video",
     index: true,
     follow: true
   }

@@ -145,42 +145,48 @@ export function DesignerPropertyPane({
   duplicateSection: (sectionId: string) => void;
   addBlock: (sectionId: string, blockSchema: ThemeBlockSchema) => void;
 }) {
-  const hasSelection = Boolean(activeSection || activeGlobalNode);
   const isGlobalSelection =
     selection.kind === "global" ||
     selection.kind === "globalBlock" ||
     selection.kind === "globalSettings";
+  const selectionMatchesWorkspaceTab =
+    workspaceTab === "publish"
+      ? false
+      : workspaceTab === "global"
+      ? isGlobalSelection
+      : selection.kind === "section" || selection.kind === "block";
+  const hasSelectionInWorkspace = selectionMatchesWorkspaceTab && Boolean(activeSection || activeGlobalNode);
   const inspectorTitle =
-    selection.kind === "globalSettings" && activeGlobalNode
+    selectionMatchesWorkspaceTab && selection.kind === "globalSettings" && activeGlobalNode
       ? `${activeGlobalNode.label}设置`
-      : selection.kind === "globalBlock" && activeGlobalBlockSchema
+      : selectionMatchesWorkspaceTab && selection.kind === "globalBlock" && activeGlobalBlockSchema
       ? `${blockSchemaDisplayLabel(activeGlobalBlockSchema)}设置`
-      : selection.kind === "block" && activeBlockSchema
+      : selectionMatchesWorkspaceTab && selection.kind === "block" && activeBlockSchema
       ? `${blockSchemaDisplayLabel(activeBlockSchema)}设置`
-      : activeSection
+      : selectionMatchesWorkspaceTab && activeSection
       ? `${labelForSchema(activeSection.type, selectedSaasSectionSchemas)}设置`
       : selectionMeta.scope;
   const bodyHeading =
-    selection.kind === "globalSettings" && activeGlobalNode
+    selectionMatchesWorkspaceTab && selection.kind === "globalSettings" && activeGlobalNode
       ? activeGlobalNode.label
-      : selection.kind === "globalBlock" && activeGlobalBlockSchema
+      : selectionMatchesWorkspaceTab && selection.kind === "globalBlock" && activeGlobalBlockSchema
       ? blockSchemaDisplayLabel(activeGlobalBlockSchema)
-      : selection.kind === "block" && activeBlockSchema
+      : selectionMatchesWorkspaceTab && selection.kind === "block" && activeBlockSchema
       ? blockSchemaDisplayLabel(activeBlockSchema)
-      : selection.kind === "global"
+      : selectionMatchesWorkspaceTab && selection.kind === "global"
       ? selection.globalType === "header"
         ? "页眉区域"
         : "页脚区域"
-      : activeSection
+      : selectionMatchesWorkspaceTab && activeSection
       ? labelForSchema(activeSection.type, selectedSaasSectionSchemas)
       : undefined;
   const backSelection =
-    selection.kind === "block" && activeSectionId
+    selectionMatchesWorkspaceTab && selection.kind === "block" && activeSectionId
       ? { kind: "section" as const, sectionId: activeSectionId }
-      : selection.kind === "globalBlock"
+      : selectionMatchesWorkspaceTab && selection.kind === "globalBlock"
       ? { kind: "global" as const, globalType: selection.globalType }
       : undefined;
-  const hasPaneContent = hasSelection || workspaceTab === "publish" || pageIsEmpty || copyLocatorItems.length > 0;
+  const hasPaneContent = hasSelectionInWorkspace || workspaceTab === "publish" || pageIsEmpty || copyLocatorItems.length > 0;
   return (
     <div className="h-full min-h-0 overflow-hidden bg-white">
       <PropertyInspector
@@ -205,7 +211,7 @@ export function DesignerPropertyPane({
               <PublishCheckPanel summary={publishSummary} />
             </PropertyPanelBody>
           </div>
-        ) : hasSelection ? (
+        ) : hasSelectionInWorkspace ? (
           <div className="flex h-full min-h-0 flex-col">
             <PropertyPanelHeader
               modeLabel={selectionMeta.scope}

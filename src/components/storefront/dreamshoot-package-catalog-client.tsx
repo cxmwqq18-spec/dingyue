@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { ArrowRight } from "lucide-react";
 import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 import { photoPackageLabel, photoPackageSlug } from "@/lib/photo-package-taxonomy";
+import { storefrontCardImageAlt } from "@/lib/storefront-media-alt";
 
 export type DreamshootPackageCatalogCard = {
   id: string;
@@ -12,6 +13,8 @@ export type DreamshootPackageCatalogCard = {
   category: string;
   meta: string;
   credits?: string;
+  imageAlt?: string;
+  imageAlts?: string[];
   imageUrl: string;
   imageUrls?: string[];
   href: string;
@@ -65,8 +68,20 @@ function cardActionLabel(card: DreamshootPackageCatalogCard, packageAction: stri
   return packageAction;
 }
 
-function imageAlt(card: DreamshootPackageCatalogCard) {
-  return `${card.title} preview`;
+function imageAlt(card: DreamshootPackageCatalogCard, imageUrl: string, imageIndex: number, locale: "en" | "es", brand: string) {
+  return storefrontCardImageAlt({
+    brand,
+    category: card.category,
+    description: card.description,
+    explicitAlt: imageIndex === 0 ? card.imageAlt : undefined,
+    imageAlts: card.imageAlts,
+    imageUrl,
+    index: imageIndex,
+    locale,
+    meta: card.metaLabel || card.meta,
+    role: imageIndex === 0 ? "card" : "gallery",
+    title: card.title
+  });
 }
 
 function comparableImageUrl(value: string): string {
@@ -109,7 +124,7 @@ function SafeCatalogImage({
   sizes?: string;
   src: string;
 }) {
-  const safeAlt = alt.trim() || "Private photo package preview";
+  const safeAlt = alt.trim() || "AI-generated private package visual showing a styled subject and intended gallery use";
   return (
     <img
       alt={safeAlt}
@@ -147,6 +162,7 @@ const referencePhotoCountClass =
 const referenceUsesClass = "truncate text-xs leading-5 text-slate-500";
 
 function ReferencePackageCard({
+  brandName,
   card,
   categoryHrefOverrides,
   index,
@@ -154,6 +170,7 @@ function ReferencePackageCard({
   packageAction,
   siteBasePath
 }: {
+  brandName: string;
   card: DreamshootPackageCatalogCard;
   categoryHrefOverrides?: DreamshootCategoryHrefOverrides;
   index: number;
@@ -175,8 +192,8 @@ function ReferencePackageCard({
         <div className={images.length > 1 ? "grid grid-cols-2 items-stretch gap-0.5 p-3" : "grid items-stretch p-3"}>
           {images.slice(0, 2).map((image, imageIndex) => (
             <div className={images.length > 1 ? referenceImageFrameClass : referenceSingleImageFrameClass} key={`${card.id}_split_${imageIndex}`}>
-              <SafeCatalogImage
-                alt={imageIndex === 0 ? imageAlt(card) : `${card.title} gallery preview`}
+	              <SafeCatalogImage
+	                alt={imageAlt(card, image, imageIndex, locale, brandName)}
                 className="h-full object-cover transition duration-500"
                 decoding="async"
                 fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
@@ -333,6 +350,7 @@ export function DreamshootPackageCatalogClient({
     ? "linear-gradient(90deg,#16dcf0,#D88A4B)"
     : brandGradient;
   const choosePackageLabel = locale === "es" ? "Elegir paquete" : "Choose package";
+  const brandName = aidreamcapes ? "AIdreamcapes" : locale === "es" ? "AIdreamshoots" : "MyDreamShoots";
 
   return (
     <DreamshootShowcasePreview>
@@ -389,8 +407,9 @@ export function DreamshootPackageCatalogClient({
         <div className={useReferenceCards ? "mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" : aidreamcapes ? "mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" : "mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"}>
           {featured.map((card, index) => (
             useReferenceCards ? (
-              <ReferencePackageCard
-                card={card}
+	              <ReferencePackageCard
+	                brandName={brandName}
+	                card={card}
                 categoryHrefOverrides={categoryHrefOverrides}
                 index={index}
                 key={card.id}
@@ -406,8 +425,8 @@ export function DreamshootPackageCatalogClient({
               key={card.id}
             >
               <div className="relative overflow-hidden bg-white/[0.04]">
-                <SafeCatalogImage
-                  alt={imageAlt(card)}
+	                <SafeCatalogImage
+		                  alt={imageAlt(card, card.imageUrl, 0, locale, brandName)}
                   className="transition duration-700"
                   decoding="async"
                   fetchPriority={index === 0 ? "auto" : "low"}
@@ -448,8 +467,9 @@ export function DreamshootPackageCatalogClient({
             <div className={useReferenceCards ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3" : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"}>
               {directory.map((card, index) => (
                 useReferenceCards ? (
-                  <ReferencePackageCard
-                    card={card}
+	                  <ReferencePackageCard
+	                    brandName={brandName}
+	                    card={card}
                     categoryHrefOverrides={categoryHrefOverrides}
                     index={index}
                     key={`rest_${card.id}`}
@@ -465,8 +485,8 @@ export function DreamshootPackageCatalogClient({
                   key={`rest_${card.id}`}
                 >
                   <div className="relative overflow-hidden bg-white/[0.04]">
-                    <SafeCatalogImage
-                      alt={imageAlt(card)}
+	                    <SafeCatalogImage
+	                      alt={imageAlt(card, card.imageUrl, 0, locale, brandName)}
                       className="transition duration-500"
                       decoding="async"
                       fetchPriority="low"

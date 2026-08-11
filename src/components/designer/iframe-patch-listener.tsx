@@ -18,7 +18,20 @@ export function IframePatchListener() {
       });
     }
 
-    function selectSection(id: string, blockId = "") {
+    function scrollSelectedSectionIntoView(section: HTMLElement, id: string) {
+      if (id === "footer_plus") {
+        section.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+        return;
+      }
+      if (id === "header_plus") {
+        section.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+        return;
+      }
+      const targetTop = section.getBoundingClientRect().top + window.scrollY - 28;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+    }
+
+    function selectSection(id: string, blockId = "", options?: { scroll?: boolean }) {
       selectedId = id;
       selectedBlockId = blockId;
       clearSelectedSections();
@@ -29,8 +42,8 @@ export function IframePatchListener() {
       if (blockId) {
         section.querySelector<HTMLElement>(`[data-xfcart-block-id="${CSS.escape(blockId)}"]`)?.setAttribute("data-xfcart-block-selected", "true");
       }
-      const targetTop = section.getBoundingClientRect().top + window.scrollY - 28;
-      window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+      if (options?.scroll === false) return;
+      scrollSelectedSectionIntoView(section, id);
     }
 
     function restoreSelection(id: string) {
@@ -45,8 +58,14 @@ export function IframePatchListener() {
         window.location.reload();
         return;
       }
+      if (event.data.act === "clearSelection") {
+        selectedId = "";
+        selectedBlockId = "";
+        clearSelectedSections();
+        return;
+      }
       if (event.data.act === "select") {
-        selectSection(event.data.id, event.data.blockId);
+        selectSection(event.data.id, event.data.blockId, { scroll: event.data.scroll !== false });
         return;
       }
       const id = event.data.id;

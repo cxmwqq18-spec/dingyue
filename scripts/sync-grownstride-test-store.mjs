@@ -630,6 +630,7 @@ async function syncDatabase() {
           conversionRate: pack.conversionRate ?? 0,
           imageUrl: pack.imageUrl,
           galleryImages: asInputJson(pack.galleryImages),
+          galleryImageAlts: asInputJson(pack.galleryImageAlts),
           createdAt: toDate(pack.createdAt)
         }
       });

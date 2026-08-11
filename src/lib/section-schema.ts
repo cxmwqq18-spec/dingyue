@@ -1505,13 +1505,17 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("eyebrow", "Eyebrow", "Customer-created examples"),
       text("title", "Title", "Browse image and video themes customers have already created."),
       textarea("subtitle", "Subtitle", "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set."),
-      text("imageTitle", "Image heading", "Customer image themes"),
-      text("videoTitle", "Video heading", "Customer video themes"),
+      text("imageTitle", "Image heading", "Best Photo Generator"),
+      text("imageAllLabel", "Image all link label", "View all photos"),
+      url("imageAllHref", "Image all link", "/best-ai-image"),
+      text("videoTitle", "Video heading", "Best Video Generator"),
+      text("videoAllLabel", "Video all link label", "View all videos"),
+      url("videoAllHref", "Video all link", "/best-ai-video"),
       textarea("imageSlugs", "Priority image package slugs", "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk"),
-      textarea("videoSlugs", "Video theme slugs", "cinematic-portrait-motion|social-profile-clip|creator-scene-motion|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion"),
+      textarea("videoSlugs", "Video theme slugs", "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion"),
       range("videoItemLimit", "Video items", 8, 1, 8),
       text("primaryCta", "Primary CTA", "Start with your photos"),
-      url("primaryHref", "Primary link", "/login")
+      url("primaryHref", "Primary link", "/app/create")
     ],
     presets: [
       {
@@ -1527,18 +1531,86 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           eyebrow: "Customer-created examples",
           title: "Browse image and video themes customers have already created.",
           subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
-          imageTitle: "Customer image themes",
-          videoTitle: "Customer video themes",
+          imageTitle: "Best Photo Generator",
+          imageAllLabel: "View all photos",
+          imageAllHref: "/best-ai-image",
+          videoTitle: "Best Video Generator",
+          videoAllLabel: "View all videos",
+          videoAllHref: "/best-ai-video",
           imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
-          videoSlugs: "cinematic-portrait-motion|social-profile-clip|creator-scene-motion|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
+          videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
           videoItemLimit: 8,
           primaryCta: "Start with your photos",
-          primaryHref: "/login"
+          primaryHref: "/app/create"
         },
         blocks: [{ id: "trusted_logo_example", type: "logo", settings: { name: "ReviewHub", imageUrl: "", badge: "Trusted" } }]
       }
     ],
     blocks: [logoBlock]
+  },
+  dreamshoot_media_gallery: {
+    type: "dreamshoot_media_gallery",
+    label: "Best AI Media Gallery",
+    category: "Storefront",
+    description: "Full grid page for all generated image or video cases.",
+    maxBlocks: 0,
+    settings: [
+      text("anchor", "Anchor", "best-ai-image"),
+      select(
+        "kind",
+        "Gallery kind",
+        [
+          ["image", "Image"],
+          ["video", "Video"]
+        ],
+        "image"
+      ),
+      select(
+        "headingLevel",
+        "Heading level",
+        [
+          ["h1", "H1"],
+          ["h2", "H2"]
+        ],
+        "h1"
+      ),
+      text("eyebrow", "Eyebrow", "MyDreamShoots gallery"),
+      text("title", "Title", "Best AI image"),
+      textarea("subtitle", "Subtitle", "Browse every AI image theme in one simple grid."),
+      textarea("imageSlugs", "Priority image package slugs", "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk"),
+      textarea("videoSlugs", "Priority video theme slugs", "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion")
+    ],
+    presets: [
+      {
+        label: "Best AI image gallery",
+        settings: {
+          anchor: "best-ai-image",
+          kind: "image",
+          headingLevel: "h1",
+          eyebrow: "MyDreamShoots gallery",
+          title: "Best AI image",
+          subtitle: "Browse every AI image theme in one simple grid.",
+          imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
+          videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion"
+        },
+        blocks: []
+      },
+      {
+        label: "Best AI video gallery",
+        settings: {
+          anchor: "best-ai-video",
+          kind: "video",
+          headingLevel: "h1",
+          eyebrow: "MyDreamShoots gallery",
+          title: "Best AI video",
+          subtitle: "Browse every AI video case in one simple grid.",
+          imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
+          videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion"
+        },
+        blocks: []
+      }
+    ],
+    blocks: []
   },
   dreamshoot_featured_pack: {
     type: "dreamshoot_featured_pack",

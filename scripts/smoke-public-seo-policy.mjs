@@ -99,6 +99,9 @@ function assertRedirectSource(source, from, to) {
 assertMetadataSource("/workflow");
 assertMetadataSource("/creators-circle");
 assertMetadataSource("/partner-registration");
+assertMetadataSource("/best-packages");
+assertMetadataSource("/best-ai-image");
+assertMetadataSource("/best-ai-video");
 await assertHeaders();
 assertRedirectSource(hostCatchAll, "/refund-policy", 'redirect("/refunds")');
 assertRedirectSource(hostCatchAll, "/content-policy", 'redirect("/content")');
@@ -141,8 +144,8 @@ assert.match(
 );
 assert.match(
   hostCatchAll,
-  /PUBLIC_DIRECTORY_PAGE_SLUGS\s*=\s*new Set\(\["\/collections", "\/tools"\]\)/,
-  "host catch-all should treat /collections and /tools roots as public directory pages"
+  /PUBLIC_DIRECTORY_PAGE_SLUGS\s*=\s*new Set\(\["\/collections", "\/tools", "\/best-packages", "\/best-ai-image", "\/best-ai-video"\]\)/,
+  "host catch-all should treat collections, tools, and Best pages as public directory pages"
 );
 assert.match(
   hostCatchAll,

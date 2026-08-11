@@ -1055,7 +1055,7 @@ const workflowJson: ThemePageJson = {
       title: "Mobile workflow preview.",
       subtitle: "Compare image setup and motion-preview steps in a vertical phone view.",
       imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
-      imageAlt: "Private album workspace preview",
+      imageAlt: "Private album workspace view showing source-photo intake, credit review, and finished gallery delivery steps.",
       videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",
       videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260806mobile45a",
       videoBadge: "Mobile workflow",
@@ -2089,7 +2089,7 @@ export const platformState: PlatformState = {
       usage: "theme",
       sourceType: "theme_seed",
       previewUrl: "/assets/site-media/lumen/ref-crops/photo-marrakech.png?v=20260607a",
-      altText: "Marrakech bridal editorial example",
+      altText: "Lumen Marrakech-inspired bridal editorial portrait showing ornate styling and warm destination light for a private wedding album",
       createdAt: "2026-05-04T16:00:00.000Z"
     },
     {
@@ -2125,7 +2125,7 @@ export const platformState: PlatformState = {
       usage: "policy",
       sourceType: "theme_seed",
       previewUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png",
-      altText: "Policy page header image",
+      altText: "MyDreamShoots content policy header showing a clean studio portrait and rights-safe AI photo guidance",
       createdAt: "2026-05-13T15:00:00.000Z"
     }
   ] satisfies MediaAsset[],

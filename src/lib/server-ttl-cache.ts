@@ -28,7 +28,9 @@ export function createServerTtlCache(scope: string, defaultTtlMs: number) {
       const value = perf.measure("cache_loader", loader, { hit: false })
         .then((result) => {
           const current = store.get(scopedKey);
-          if (current?.value === value) {
+          if (result === undefined) {
+            store.delete(scopedKey);
+          } else if (current?.value === value) {
             store.set(scopedKey, { expiresAt: Date.now() + ttlMs, value });
           }
           perf.finish({ hit: false });

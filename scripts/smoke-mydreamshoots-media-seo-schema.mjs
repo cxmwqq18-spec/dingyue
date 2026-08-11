@@ -88,7 +88,7 @@ const lowestUsdCents = Math.min(
 
 assert.equal(activePacks.length, 28, "MyDreamShoots should expose 28 active photo package themes");
 assert.equal(activeProducts.length, 7, "MyDreamShoots should expose 7 active pricing products");
-assert.equal(activeVideoThemes.length, 8, "MyDreamShoots should expose 8 active video themes");
+assert.equal(activeVideoThemes.length, 9, "MyDreamShoots should retain 9 active video themes including the internal-only Creator Scene Motion preset");
 assert.ok(homePage, "MyDreamShoots homepage should exist");
 
 const homeGraph = graphNodes(buildStorefrontJsonLd({
@@ -103,6 +103,7 @@ const homeGraph = graphNodes(buildStorefrontJsonLd({
 }));
 const videoObjects = homeGraph.filter((node) => node?.["@type"] === "VideoObject");
 assert.equal(videoObjects.length, 8, "homepage JSON-LD should expose exactly 8 VideoObject nodes");
+assert.ok(!videoObjects.some((video) => schemaSlug(video.name) === "creator-scene-motion"), "homepage JSON-LD must not expose Creator Scene Motion");
 for (const video of videoObjects) {
   assertMydreamshootsEntityId(video["@id"], "VideoObject @id");
   assert.ok(video.name, "VideoObject should include name");
@@ -189,6 +190,14 @@ assert.equal(homeGraph.some((node) => node?.["@type"] === "Review" || node?.["@t
 
 const sitemapEntries = await getStorefrontSitemapEntriesForHost(["www.mydreamshoots.com"]);
 const sitemapEntryByPath = new Map(sitemapEntries.map((entry) => [new URL(entry.loc).pathname, entry]));
+function assertRichSitemapImageTitle(image, pathName) {
+  const title = String(image.title ?? "").replace(/\s+/g, " ").trim();
+  assert.ok(title, `${pathName} image sitemap entry should include a title`);
+  assert.ok(title.split(/\s+/).length >= 8, `${pathName} image sitemap title should be descriptive: ${title}`);
+  assert.doesNotMatch(title, /https?:\/\/|\/assets\//i, `${pathName} image sitemap title should not contain a URL`);
+  assert.doesNotMatch(title, /Aidreamcapes/i, `${pathName} image sitemap title should not mention another brand`);
+  assert.doesNotMatch(title, /^(?:image|photo|preview|thumbnail|hero|.+\s+preview)$/i, `${pathName} image sitemap title should not be a placeholder: ${title}`);
+}
 assert.ok((sitemapEntryByPath.get("/collections")?.images ?? []).length > 0, "collections sitemap entry should include image references");
 for (const pathName of ["/", "/pricing", "/workflow", "/faq", "/blog"]) {
   const entry = sitemapEntryByPath.get(pathName);
@@ -205,6 +214,7 @@ for (const pack of activePacks) {
   assert.ok((entry.images ?? []).length > 0, `${canonicalPath} should include image sitemap entries`);
   for (const image of entry.images) {
     assert.match(image.loc, /^https:\/\/www\.mydreamshoots\.com\//, `${canonicalPath} image sitemap loc should be absolute`);
+    assertRichSitemapImageTitle(image, canonicalPath);
   }
 }
 

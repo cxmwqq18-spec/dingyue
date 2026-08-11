@@ -216,8 +216,9 @@ export function PageTree({
                         "page_directory__row_51dd group grid min-h-[34px] w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-1 rounded-[4px] border border-transparent px-2 py-1.5 text-left transition",
                         selected ? "bg-white text-[#383838] shadow-[8px_0_0_0_#fff]" : "text-[#6b7282] hover:bg-[#f7f8fb] hover:text-[#383838]"
                       )}
-                      data-designer-page-dirty={dirty ? "true" : "false"}
-                      data-designer-page-selected={selected ? "true" : "false"}
+	                      data-designer-page-dirty={dirty ? "true" : "false"}
+	                      data-designer-page-id={page.id}
+	                      data-designer-page-selected={selected ? "true" : "false"}
                       key={page.id}
                       onClick={() => onSelectPage(page.id)}
                       title={`${page.title} · ${page.slug} · ${page.templateKey ?? page.pageType}`}
@@ -232,7 +233,7 @@ export function PageTree({
                         </span>
                       </span>
                       <span className="flex shrink-0 flex-col items-end gap-0.5">
-                        <span className={cx("font-mono text-[9px] leading-3", selected ? "text-[#7c8087]" : "text-[#909294]")}>{sectionCount} 块</span>
+                        <span className={cx("font-mono text-[9px] leading-3", selected ? "text-[#7c8087]" : "text-[#909294]")}>{sectionCount} 模块</span>
                         <DesignerStatePill
                           className={cx("scale-[0.82] origin-right", selected && "border-[#d8dbe1]")}
                           label={dirty ? "草稿" : "线上"}
@@ -251,11 +252,21 @@ export function PageTree({
   );
 
   const tree = surface === "plain" ? (
-    <div className={cx(compact ? "p-0" : "p-0")} data-designer-layout="saas-page-card-tree">
+    <div
+      className={cx("min-h-0", mode === "directory" ? "h-full overflow-hidden" : "p-0")}
+      data-designer-layout="saas-page-card-tree"
+    >
       {treeBody}
     </div>
   ) : (
-    <div className={cx("rounded-[8px] border border-[#d9dde4] bg-[#f3f5f7]", compact ? "p-2.5" : "p-3")} data-designer-layout="saas-page-card-tree">
+    <div
+      className={cx(
+        "min-h-0 rounded-[8px] border border-[#d9dde4] bg-[#f3f5f7]",
+        mode === "directory" ? "h-full overflow-hidden" : undefined,
+        compact ? "p-2.5" : "p-3"
+      )}
+      data-designer-layout="saas-page-card-tree"
+    >
       {treeBody}
     </div>
   );

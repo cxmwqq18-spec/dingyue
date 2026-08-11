@@ -51,6 +51,17 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+html:has([data-admin-layout="saas-fullscreen-theme-designer"]),
+body:has([data-admin-layout="saas-fullscreen-theme-designer"]) {
+  height: 100%;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+body:has([data-admin-layout="saas-fullscreen-theme-designer"]) {
+  background: var(--designer-bg);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -2402,6 +2413,86 @@ textarea {
 
   .saas-designer-root .resource-meta-list {
     gap: 4px;
+  }
+
+  /*
+   * The workbench primitives intentionally use their own class namespace.
+   * Keep the legacy XFCart rules above available to older admin surfaces,
+   * but never let them resize the current designer command bar or inspector.
+   */
+  .saas-designer-root .designer-command-bar {
+    position: relative;
+    z-index: 40;
+    min-width: 0;
+  }
+
+  .saas-designer-root .designer-command-bar [data-designer-layout="saas-toolbar-action-group"] {
+    min-width: max-content;
+  }
+
+  .saas-designer-root .designer-workbench-inspector {
+    min-width: 420px;
+    max-width: 520px;
+    min-height: 0;
+  }
+
+  .saas-designer-root .designer-workbench-tabs {
+    min-width: 0;
+  }
+
+  .saas-designer-root .designer-workbench-split {
+    min-height: 0;
+  }
+
+  .saas-designer-root .designer-workbench-rail {
+    min-width: 0;
+  }
+
+  .saas-designer-root .designer-workbench-property {
+    min-width: 0;
+  }
+
+  .saas-designer-root [data-designer-layout="saas-editor-tabs-bar"] [data-designer-tab-key] {
+    min-width: 0;
+  }
+
+  @media (max-width: 920px) {
+    .saas-designer-root .saas-designer-preview-shell {
+      display: none !important;
+    }
+
+    .saas-designer-root .designer-workbench-inspector {
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+      border-left: 0;
+    }
+
+    .saas-designer-root .designer-workbench-split {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .saas-designer-root .designer-workbench-rail {
+      max-height: none;
+      min-height: 220px;
+      flex: 0 0 38%;
+      border-bottom: 1px solid #d0d5dd;
+    }
+
+    .saas-designer-root .designer-workbench-property {
+      flex: 1 1 auto;
+    }
+
+    .saas-designer-root .saas-mobile-workbench-actions {
+      flex-wrap: wrap;
+    }
+
+    .saas-designer-root .saas-mobile-workbench-actions > div:last-child {
+      width: 100%;
+      justify-content: flex-start;
+      overflow-x: auto;
+    }
   }
 
   .saas-designer-root .resource-meta-list span {

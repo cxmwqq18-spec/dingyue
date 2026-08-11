@@ -86,10 +86,14 @@ export const showcaseStores = [
       eyebrow: "Customer-created examples",
       title: "Browse image and video themes customers have already created.",
       subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
-      imageTitle: "Customer image themes",
-      videoTitle: "Customer video themes",
+      imageTitle: "Best Photo Generator",
+      imageAllLabel: "View all photos",
+      imageAllHref: "/best-ai-image",
+      videoTitle: "Best Video Generator",
+      videoAllLabel: "View all videos",
+      videoAllHref: "/best-ai-video",
       primaryCta: "Start with your photos",
-      primaryHref: "/login"
+      primaryHref: "/app/create"
     },
     assetRoot: "public/assets/dreamshoot/generated/homepage-showcase",
     publicRoot: "/assets/dreamshoot/generated/homepage-showcase",
@@ -124,13 +128,13 @@ export const showcaseStores = [
         durationSeconds: 5
       },
       {
-        slug: "creator-scene-motion",
+        slug: "travel-route-story",
         posterSlug: "creator-portraits",
-        categorySlug: "creator-motion",
-        name: "Creator Scene Motion",
-        headline: "A short creator portrait motion scene.",
-        description: "Uses a finished creator frame as the opening beat for a natural moving scene.",
-        prompt: "Create one realistic creator portrait motion clip from the supplied image frame. Preserve the main visible person, wardrobe, scene facts, lighting direction, and camera angle while adding subtle environmental movement and a smooth creator-profile camera drift. The subject must remain visible and recognizable as the source portrait; do not output an empty landscape, market, pet room, studio headshot, or unrelated postcard scene. Keep it continuous and realistic without text, logos, UI, or slideshow behavior.",
+        categorySlug: "travel-story",
+        name: "Travel Route Story",
+        headline: "A scenic route clip that follows the frame order.",
+        description: "Uses finished travel frames as the opening beat for a natural movement story.",
+        prompt: "Create one realistic travel route story video from the supplied image frame. Preserve the main visible person, scene facts, lighting direction, and camera angle while adding subtle environmental movement and a smooth travel-camera drift. The subject must remain visible and recognizable as the source frame; do not output an empty studio, market, pet room, or unrelated postcard scene. Keep it continuous and realistic without text, logos, UI, or slideshow behavior.",
         creditCost: 28,
         durationSeconds: 6
       },
@@ -257,13 +261,17 @@ export const showcaseStores = [
     ],
     section: {
       anchor: "generated-showcase",
-      eyebrow: "Customer occasion examples",
-      title: "Browse private fan-scene, game-day, and holiday themes customers can create.",
-      subtitle: "These examples use Aidreamcapes-owned theme assets and approved source-photo assumptions. Scan fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, and seasonal directions.",
-      imageTitle: "Fan and holiday image themes",
-      videoTitle: "Customer travel video themes",
-      primaryCta: "Start with approved photos",
-      primaryHref: "/login"
+      eyebrow: "Customer-created examples",
+      title: "Browse Aidreamcapes image and video themes customers have already created.",
+      subtitle: "These Aidreamcapes examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
+      imageTitle: "Best Photo Generator",
+      imageAllLabel: "View all photos",
+      imageAllHref: "/best-ai-image",
+      videoTitle: "Best Video Generator",
+      videoAllLabel: "View all videos",
+      videoAllHref: "/best-ai-video",
+      primaryCta: "Start with your photos",
+      primaryHref: "/app/create"
     },
     assetRoot: "public/assets/sites/site_aidreamcapes/fan-holiday-theme",
     publicRoot: "/assets/sites/site_aidreamcapes/fan-holiday-theme",
@@ -426,7 +434,7 @@ export function homepageShowcaseSection(store, images = 8, videos = 8) {
       ...store.section,
       imageSlugs: store.imageSlugs.slice(0, images).join("|"),
       videoSlugs: store.videoThemes.slice(0, videos).map((theme) => theme.slug).join("|"),
-      itemLimit: Math.min(8, Math.max(images, videos))
+      videoItemLimit: Math.min(8, videos)
     },
     blocks: []
   };

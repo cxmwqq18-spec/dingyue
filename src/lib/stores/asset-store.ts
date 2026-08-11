@@ -76,11 +76,8 @@ function sourceAssetIdsFromJobRequest(value: unknown): string[] {
     .filter((item): item is string => typeof item === "string" && item.trim().length > 0);
 }
 
-function customerAssetPreviewUrl(asset: Pick<AssetUpload, "id" | "siteId" | "customerId" | "role" | "storageKey">): string {
+function customerAssetPreviewUrl(asset: Pick<AssetUpload, "storageKey">): string {
   const storageKey = normalizeCustomerAssetStorageKey(asset.storageKey);
-  if (asset.role === "output") {
-    return `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download?preview=1`;
-  }
   return `/api/local-assets/${storageKey}`;
 }
 

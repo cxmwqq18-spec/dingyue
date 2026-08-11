@@ -184,6 +184,7 @@ function creativePackData(pack) {
     conversionRate: pack.conversionRate ?? 0,
     imageUrl: pack.imageUrl,
     galleryImages: json(pack.galleryImages, undefined),
+    galleryImageAlts: json(pack.galleryImageAlts, undefined),
     createdAt: toDate(pack.createdAt)
   };
 }

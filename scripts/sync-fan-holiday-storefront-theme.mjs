@@ -629,23 +629,23 @@ function paletteForIndex(index) {
 }
 
 const galleryAltVariants = [
-  "close portrait",
-  "half-body portrait",
-  "two-person moment",
-  "wide scene",
-  "candid smile",
-  "detail crop",
-  "group pose",
-  "evening light",
-  "vertical portrait",
-  "lifestyle frame",
-  "soft flash portrait",
-  "album cover crop"
+  "close portrait with clear facial detail",
+  "half-body fan-scene portrait in event lighting",
+  "two-person keepsake moment in a styled setting",
+  "wide scene showing the celebration atmosphere",
+  "candid smile prepared for private album sharing",
+  "detail crop with polished occasion styling",
+  "group-friendly pose with balanced composition",
+  "evening-light portrait with cinematic color",
+  "vertical profile crop for mobile sharing",
+  "lifestyle frame ready for download",
+  "soft flash portrait with premiere-style energy",
+  "album cover crop for the finished gallery"
 ];
 
 function galleryAltForPack(pack, index) {
   const variant = galleryAltVariants[index % galleryAltVariants.length];
-  return `${pack.name} ${variant} for Aidreamcapes private ${pack.meta.toLowerCase()} album`;
+  return `${pack.name} ${pack.meta.toLowerCase()} scene, ${variant}, private fan and holiday album gallery example for AIdreamcapes.`;
 }
 
 async function ensureDir(filePath) {
@@ -951,13 +951,13 @@ function videoThemeRows(categories, now) {
 
 function mediaAssetRows(now) {
   return [
-    { slug: "hero", label: "Aidreamcapes private fan-scene album hero", image: asset("covers", "private-fan-scene-album") },
-    { slug: "game-day", label: "Aidreamcapes game-day group portrait cover", image: asset("covers", "game-day-group-portraits") },
-    { slug: "premiere", label: "Aidreamcapes premiere inspired portrait cover", image: asset("covers", "premiere-flash-portraits") },
-    { slug: "christmas", label: "Aidreamcapes Christmas group album cover", image: asset("covers", "christmas-group-album") },
-    { slug: "thanksgiving", label: "Aidreamcapes Thanksgiving keepsake set cover", image: asset("covers", "thanksgiving-keepsake-table-set") },
-    { slug: "halloween", label: "Aidreamcapes Halloween party portrait cover", image: asset("covers", "halloween-party-portrait-set") },
-    { slug: "seasonal", label: "Aidreamcapes seasonal celebration album cover", image: asset("covers", "seasonal-celebration-photo-set") }
+    { slug: "hero", label: "Aidreamcapes private fan-scene album cover showing approved supporters in an original celebration setting", image: asset("covers", "private-fan-scene-album") },
+    { slug: "game-day", label: "Aidreamcapes game-day group portrait cover showing friends gathered under energetic stadium lighting", image: asset("covers", "game-day-group-portraits") },
+    { slug: "premiere", label: "Aidreamcapes premiere-inspired portrait cover showing a polished arrival scene with flash-lit event styling", image: asset("covers", "premiere-flash-portraits") },
+    { slug: "christmas", label: "Aidreamcapes Christmas group album cover showing friends sharing a warm festive holiday portrait", image: asset("covers", "christmas-group-album") },
+    { slug: "thanksgiving", label: "Aidreamcapes Thanksgiving keepsake cover showing a group gathered around a warm seasonal table scene", image: asset("covers", "thanksgiving-keepsake-table-set") },
+    { slug: "halloween", label: "Aidreamcapes Halloween party portrait cover showing expressive costumes in a cinematic celebration scene", image: asset("covers", "halloween-party-portrait-set") },
+    { slug: "seasonal", label: "Aidreamcapes seasonal celebration album cover showing a polished private keepsake portrait set", image: asset("covers", "seasonal-celebration-photo-set") }
   ].map((item) => ({
     id: `media_aidreamcapes_fan_holiday_${item.slug.replace(/[^a-z0-9]+/g, "_")}`,
     siteId: aidreamcapesSiteId,
@@ -1020,7 +1020,7 @@ function aidreamcapesMobileVideoShowcaseSection() {
     title: "Aidreamcapes mobile private album preview.",
     subtitle: "Compare portrait intake and album review steps in a vertical phone view.",
     imageUrl: asset("gallery", "private-fan-scene-album-01"),
-    imageAlt: "Aidreamcapes private fan-scene album preview",
+    imageAlt: "Mobile Aidreamcapes private album screen showing approved source-photo intake, fan-scene review, and finished gallery delivery.",
     videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
     videoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-mobile-tutorial-55s.jpg?v=20260804mobile1",
     videoBadge: "Mobile workflow",
@@ -1214,16 +1214,20 @@ function homeSections() {
     }))),
     generation_showcase_1: section("dreamshoot_generation_showcase", {
       anchor: "generated-showcase",
-      eyebrow: "Customer-created occasion examples",
-      title: "Browse private fan-scene, game-day, and holiday themes customers can create.",
-      subtitle: "These examples use Aidreamcapes-owned theme assets and approved source-photo assumptions. Scan the labels for fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, and seasonal directions.",
-      imageTitle: "Fan and holiday image themes",
-      videoTitle: "Customer travel video themes",
-      primaryCta: "Start with approved photos",
-      primaryHref: "/login",
+      eyebrow: "Customer-created examples",
+      title: "Browse Aidreamcapes image and video themes customers have already created.",
+      subtitle: "These Aidreamcapes examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
+      imageTitle: "Best Photo Generator",
+      imageAllLabel: "View all photos",
+      imageAllHref: "/best-ai-image",
+      videoTitle: "Best Video Generator",
+      videoAllLabel: "View all videos",
+      videoAllHref: "/best-ai-video",
+      primaryCta: "Start with your photos",
+      primaryHref: "/app/create",
       imageSlugs: homepageShowcaseImageSlugs.join("|"),
       videoSlugs: videoDefs.map((theme) => theme.slug).join("|"),
-      itemLimit: 8
+      videoItemLimit: 8
     }),
     tutorial_video_1: aidreamcapesTutorialVideoSection(),
     tutorial_video_2: aidreamcapesImageTutorialVideoSection(),
@@ -1315,29 +1319,83 @@ function applyHomePage(pageJson) {
   pageJson.version = pageJson.version ?? 1;
   pageJson.sectionsOrder = [
     "hero_1",
-    "brand_strip_1",
-    "visual_proof_1",
-    "featured_pack_1",
-    "featured_christmas_1",
     "featured_thanksgiving_1",
-    "package_catalog_1",
     "generation_showcase_1",
     "tutorial_video_1",
     "tutorial_video_2",
     "mobile_video_1",
-    "flow_bridge_1",
-    "pricing_1",
+    "package_catalog_1",
     "proof_1",
     "faq_1",
-    "trust_1",
-    "conversion_1"
+    "conversion_1",
+    "brand_strip_1"
   ];
   pageJson.sections = homeSections();
+  if (pageJson.sections.featured_pack_1) delete pageJson.sections.featured_pack_1;
+  if (pageJson.sections.featured_christmas_1) delete pageJson.sections.featured_christmas_1;
+  if (pageJson.sections.generation_showcase_1?.settings) {
+    pageJson.sections.generation_showcase_1.settings.imageTitle = "Best Photo Generator";
+    pageJson.sections.generation_showcase_1.settings.imageAllLabel = "View all photos";
+    pageJson.sections.generation_showcase_1.settings.imageAllHref = "/best-ai-image";
+    pageJson.sections.generation_showcase_1.settings.videoTitle = "Best Video Generator";
+    pageJson.sections.generation_showcase_1.settings.videoAllLabel = "View all videos";
+    pageJson.sections.generation_showcase_1.settings.videoAllHref = "/best-ai-video";
+    pageJson.sections.generation_showcase_1.settings.primaryHref = "/app/create";
+  }
   pageJson.seo = seo(
     "AIdreamcapes – the most advanced AI photo generator maker",
     "Transform your favorite moments into professional-grade photos and stunning memories with AIdreamcapes. Choose any setting, outfit, or vibe – all from home.",
     "/",
     "Dream Photos,Dream Photoshoot,Wedding Photoshoot,Wedding Photos,AI Photos,AI Photoshoot,Couple Photos"
+  );
+  return pageJson;
+}
+
+function applyBestPackagesPage(pageJson) {
+  const source = homeSections();
+  pageJson.pageType = "content";
+  pageJson.version = pageJson.version ?? 1;
+  pageJson.sections = {
+    featured_pack_1: clone(source.featured_pack_1),
+    featured_christmas_1: clone(source.featured_christmas_1),
+    featured_thanksgiving_1: clone(source.featured_thanksgiving_1)
+  };
+  pageJson.sectionsOrder = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
+  pageJson.seo = seo(
+    "Best Packages | AIdreamcapes",
+    "Compare AIdreamcapes recommended fan-scene, holiday, Thanksgiving, Christmas, and occasion album packages in one place.",
+    "/best-packages",
+    "private fan-scene albums, holiday memory sets, thanksgiving keepsake sets, best packages"
+  );
+  return pageJson;
+}
+
+function applyBestMediaPage(pageJson, kind) {
+  pageJson.pageType = "content";
+  pageJson.version = pageJson.version ?? 1;
+  pageJson.sections = {
+    [kind === "video" ? "best_ai_video_1" : "best_ai_image_1"]: section("dreamshoot_media_gallery", {
+      anchor: kind === "video" ? "best-ai-video" : "best-ai-image",
+      kind,
+      headingLevel: "h1",
+      fullGallery: true,
+      eyebrow: "Aidreamcapes gallery",
+      title: kind === "video" ? "Best AI video" : "Best AI image",
+      subtitle: kind === "video"
+        ? "Browse Aidreamcapes motion cases for fan scenes, occasion moods, and celebration albums in one simple grid."
+        : "Browse Aidreamcapes fan-scene, game-day, holiday, and occasion image themes in one simple grid.",
+      imageSlugs: "",
+      videoSlugs: ""
+    })
+  };
+  pageJson.sectionsOrder = [kind === "video" ? "best_ai_video_1" : "best_ai_image_1"];
+  pageJson.seo = seo(
+    kind === "video" ? "Best AI video gallery | AIdreamcapes" : "Best AI image gallery | AIdreamcapes",
+    kind === "video"
+      ? "Browse every AIdreamcapes AI video case with motion themes, fan-scene clips, and holiday album video examples."
+      : "Browse every AIdreamcapes AI image theme with private fan-scene album examples, holiday keepsakes, and occasion photo generators.",
+    kind === "video" ? "/best-ai-video" : "/best-ai-image",
+    kind === "video" ? "AIdreamcapes best AI video, AI video gallery, fan-scene video examples, holiday motion themes" : "AIdreamcapes best AI image, AI image gallery, fan-scene photo generator, holiday album examples"
   );
   return pageJson;
 }
@@ -1895,6 +1953,21 @@ function applyPageBySlug(page) {
     page.title = "Fan and holiday tools";
     page.draftJson = applyToolsPage(page.draftJson);
     page.publishedJson = applyToolsPage(page.publishedJson);
+  } else if (pageSlug === "/best-packages") {
+    page.title = "Best Packages";
+    page.templateKey = "best-packages";
+    page.draftJson = applyBestPackagesPage(page.draftJson);
+    page.publishedJson = applyBestPackagesPage(page.publishedJson);
+  } else if (pageSlug === "/best-ai-image") {
+    page.title = "Best AI image";
+    page.templateKey = "best-ai-image";
+    page.draftJson = applyBestMediaPage(page.draftJson, "image");
+    page.publishedJson = applyBestMediaPage(page.publishedJson, "image");
+  } else if (pageSlug === "/best-ai-video") {
+    page.title = "Best AI video";
+    page.templateKey = "best-ai-video";
+    page.draftJson = applyBestMediaPage(page.draftJson, "video");
+    page.publishedJson = applyBestMediaPage(page.publishedJson, "video");
   } else if (pageSlug === "/pricing") {
     page.title = "Pricing";
     page.draftJson = applyPricingPage(page.draftJson);
@@ -1944,6 +2017,9 @@ function currentCorePages(site) {
     "/pricing",
     "/collections",
     "/tools",
+    "/best-packages",
+    "/best-ai-image",
+    "/best-ai-video",
     "/login",
     "/app",
     "/app/jobs/progress",
@@ -1972,6 +2048,28 @@ function currentCorePages(site) {
     .map((page) => applyPageBySlug(clone(page)));
 }
 
+function buildStaticCorePage(slug, idSuffix, title, templateKey, pageJson) {
+  return {
+    id: `site_aidreamcapes_${idSuffix}`,
+    siteId: aidreamcapesSiteId,
+    pageType: pageJson.pageType ?? "content",
+    templateKey,
+    slug,
+    title,
+    draftJson: clone(pageJson),
+    publishedJson: clone(pageJson)
+  };
+}
+
+function missingBestCorePages(existingPages) {
+  const existingSlugs = new Set(existingPages.map((page) => page.slug));
+  const pages = [];
+  if (!existingSlugs.has("/best-packages")) pages.push(buildStaticCorePage("/best-packages", "best_packages", "Best Packages", "best-packages", applyBestPackagesPage({})));
+  if (!existingSlugs.has("/best-ai-image")) pages.push(buildStaticCorePage("/best-ai-image", "best_ai_image", "Best AI image", "best-ai-image", applyBestMediaPage({}, "image")));
+  if (!existingSlugs.has("/best-ai-video")) pages.push(buildStaticCorePage("/best-ai-video", "best_ai_video", "Best AI video", "best-ai-video", applyBestMediaPage({}, "video")));
+  return pages;
+}
+
 function sectionCountFromPages(pages) {
   return pages.reduce((sum, page) => sum + Object.keys(page.publishedJson?.sections ?? {}).length, 0);
 }
@@ -1989,6 +2087,9 @@ function applyTemplateUpdates(theme) {
   theme.settings = sanitizeJson(theme.settings ?? {});
   const pagesByKey = {
     index: applyHomePage({}),
+    "best-packages": applyBestPackagesPage({}),
+    "best-ai-image": applyBestMediaPage({}, "image"),
+    "best-ai-video": applyBestMediaPage({}, "video"),
     collection: applyCollectionPage({}),
     tools: applyToolsPage({}),
     page: applyPricingPage({}),
@@ -2005,7 +2106,7 @@ function applyTemplateUpdates(theme) {
     "blog-detail": buildBlogPage(blogDefs[0]).publishedJson
   };
   for (const [key, pageJson] of Object.entries(pagesByKey)) {
-    if (theme.templates[key] || ["index", "collection", "tools", "page", "help", "product"].includes(key)) {
+    if (theme.templates[key] || ["index", "collection", "tools", "page", "help", "product", "best-packages", "best-ai-image", "best-ai-video"].includes(key)) {
       theme.templates[key] = templateFromPageJson(pageJson);
     }
   }
@@ -2019,14 +2120,17 @@ function applyThemeSettings(settings) {
   next.navigation.headerLinks = [
     { label: "Occasion Albums", href: "/collections" },
     { label: "Tools", href: "/tools" },
+    { label: "Best Packages", href: "/best-packages" },
     { label: "How it works", href: "/workflow" },
-    { label: "Help", href: "/faq" },
-    { label: "Guides", href: "/blog" }
+    { label: "Guides", href: "/blog" },
+    { label: "Pricing", href: "/pricing" }
   ];
   next.navigation.footerLinks = [
-    { label: "Fan-Scene Albums", href: "/collections/fan-scene-albums", group: "product" },
-    { label: "Game-Day Group Portraits", href: "/collections/game-day-group-photos", group: "product" },
-    { label: "Holiday Memory Albums", href: "/collections/seasonal-celebration-photos", group: "product" },
+    { label: "Best Packages", href: "/best-packages", group: "product" },
+    { label: "Best AI image", href: "/best-ai-image", group: "product" },
+    { label: "Best AI video", href: "/best-ai-video", group: "product" },
+    { label: "Tools", href: "/tools", group: "product" },
+    { label: "How it works", href: "/workflow", group: "product" },
     { label: "Pricing", href: "/pricing", group: "product" },
     { label: "Guides", href: "/blog", group: "company" },
     { label: "About the Studio", href: "/about-us", group: "company" },
@@ -2217,6 +2321,7 @@ function applyFanHolidayThemeToState(state) {
   const videos = videoThemeRows(videoCategories, now);
   const mediaAssets = mediaAssetRows(now);
   const corePages = currentCorePages(site);
+  corePages.push(...missingBestCorePages(corePages));
   const toolPages = tools.map(buildToolPage);
   const blogPages = blogDefs.map(buildBlogPage);
   const productReport = applyAidreamcapesProductCopy(state);
@@ -2314,8 +2419,8 @@ async function updateDatabase(state) {
     for (const pack of (state.creativePacks ?? []).filter((row) => row.siteId === aidreamcapesSiteId)) {
       await prisma.creativePack.upsert({
         where: { id: pack.id },
-        create: { id: pack.id, siteId: aidreamcapesSiteId, categoryId: pack.categoryId, name: pack.name, headline: pack.headline, description: pack.description, prompt: pack.prompt, category: pack.category, aiAppSlug: pack.aiAppSlug, status: pack.status, creditCost: pack.creditCost, outputCount: pack.outputCount, trainingRequired: pack.trainingRequired, generationCount: pack.generationCount, conversionRate: pack.conversionRate, imageUrl: pack.imageUrl, galleryImages: pack.galleryImages },
-        update: { categoryId: pack.categoryId, name: pack.name, headline: pack.headline, description: pack.description, prompt: pack.prompt, category: pack.category, aiAppSlug: pack.aiAppSlug, status: pack.status, creditCost: pack.creditCost, outputCount: pack.outputCount, trainingRequired: pack.trainingRequired, imageUrl: pack.imageUrl, galleryImages: pack.galleryImages }
+        create: { id: pack.id, siteId: aidreamcapesSiteId, categoryId: pack.categoryId, name: pack.name, headline: pack.headline, description: pack.description, prompt: pack.prompt, category: pack.category, aiAppSlug: pack.aiAppSlug, status: pack.status, creditCost: pack.creditCost, outputCount: pack.outputCount, trainingRequired: pack.trainingRequired, generationCount: pack.generationCount, conversionRate: pack.conversionRate, imageUrl: pack.imageUrl, galleryImages: pack.galleryImages, galleryImageAlts: pack.galleryImageAlts },
+        update: { categoryId: pack.categoryId, name: pack.name, headline: pack.headline, description: pack.description, prompt: pack.prompt, category: pack.category, aiAppSlug: pack.aiAppSlug, status: pack.status, creditCost: pack.creditCost, outputCount: pack.outputCount, trainingRequired: pack.trainingRequired, imageUrl: pack.imageUrl, galleryImages: pack.galleryImages, galleryImageAlts: pack.galleryImageAlts }
       });
       report.packs += 1;
     }

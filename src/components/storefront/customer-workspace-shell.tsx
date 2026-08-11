@@ -1014,6 +1014,9 @@ function WorkspaceVideoPreviewButton({
 
   const showFallbackPoster = shouldLoad && Boolean(fallbackPosterSrc) && !fallbackPosterFailed && (!posterLoaded || posterFailed);
   const showPosterImage = shouldLoad && !posterFailed;
+  const posterAlt = spanish
+    ? `Poster de video generado con IA para ${label}, vista previa de galeria privada del cliente.`
+    : `AI-generated video poster for ${label}, private customer gallery preview.`;
 
   return (
     <button
@@ -1041,7 +1044,7 @@ function WorkspaceVideoPreviewButton({
         ) : null}
         {showPosterImage ? (
           <img
-            alt={label}
+            alt={posterAlt}
             className={`absolute inset-0 h-full w-full object-contain transition duration-300 ${posterLoaded ? "opacity-100" : "opacity-0"}`}
             data-media-key={mediaKey}
             decoding="async"

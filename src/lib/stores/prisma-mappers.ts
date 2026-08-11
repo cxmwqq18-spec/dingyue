@@ -28,6 +28,7 @@ import type {
 } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType } from "@/lib/ai-provider-type";
+import { storefrontGalleryMediaPairs } from "@/lib/storefront-media-alt";
 import { normalizeVideoFrameLimit, normalizeVideoModelPricing } from "@/lib/video-frame-config";
 
 type ProductWithPrices = Prisma.ProductGetPayload<{ include: { prices: true } }>;
@@ -671,6 +672,7 @@ export function toCreativePack(record: {
   conversionRate: number;
   imageUrl?: string | null;
   galleryImages?: unknown;
+  galleryImageAlts?: unknown;
   categoryRecord?: {
     id: string;
     siteId: string;
@@ -702,6 +704,9 @@ export function toCreativePack(record: {
   } | null;
   createdAt?: Date | string;
 }): CreativePack {
+  const galleryMedia = Array.isArray(record.galleryImages)
+    ? storefrontGalleryMediaPairs(record.galleryImages, record.galleryImageAlts, 24)
+    : undefined;
   return {
     id: record.id,
     siteId: record.siteId,
@@ -720,7 +725,8 @@ export function toCreativePack(record: {
     conversionRate: record.conversionRate,
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
     imageUrl: record.imageUrl ?? undefined,
-    galleryImages: Array.isArray(record.galleryImages) ? record.galleryImages.filter((item): item is string => typeof item === "string" && item.trim().length > 0) : undefined,
+    galleryImages: galleryMedia?.galleryImages,
+    galleryImageAlts: galleryMedia?.galleryImageAlts,
     categoryRecord: record.categoryRecord ? toCreativePackCategory(record.categoryRecord) : undefined
   };
 }

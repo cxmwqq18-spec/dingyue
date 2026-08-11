@@ -119,6 +119,32 @@ function coverPath(slug) {
   };
 }
 
+const galleryAltScenes = [
+  "close portrait with clear face detail",
+  "half-body editorial pose in themed lighting",
+  "group-friendly scene with polished composition",
+  "wide environmental frame showing the setting",
+  "expressive candid moment for social sharing",
+  "detail crop for a private album gallery",
+  "vertical profile crop for mobile channels",
+  "cinematic scene with richer color contrast",
+  "album cover style crop with strong subject focus",
+  "lifestyle frame prepared for download",
+  "event-style portrait with polished lighting",
+  "finished gallery example with a distinct pose"
+];
+
+function galleryImageAltForPack(pack, slug, index) {
+  const direction = themeDirections[slug] ?? pack.description ?? pack.headline ?? pack.name;
+  const subject = String(direction).split(";")[0].replace(/\s+/g, " ").trim() || `${pack.name} AI photo package`;
+  const scene = galleryAltScenes[index % galleryAltScenes.length];
+  return `${subject}, ${scene}, ${pack.name} package gallery example for MyDreamShoots.`;
+}
+
+function galleryImageAltsForPack(pack, slug, count) {
+  return Array.from({ length: count }, (_, index) => galleryImageAltForPack(pack, slug, index));
+}
+
 async function fileExists(filePath) {
   try {
     const stat = await fs.stat(filePath);
@@ -276,7 +302,7 @@ async function generatePack(pack, provider) {
   const cover = coverPath(slug);
   if (!force && complete.every(Boolean)) {
     if (!(await fileExists(cover.filePath))) await createCoverFromGallery(slug, outputs[0].filePath);
-    return { slug, name: pack.name, skipped: true, imageUrl: cover.publicPath, galleryImages: outputs.map((output) => output.publicPath) };
+    return { slug, name: pack.name, skipped: true, imageUrl: cover.publicPath, galleryImages: outputs.map((output) => output.publicPath), galleryImageAlts: galleryImageAltsForPack(pack, slug, outputs.length) };
   }
   for (let sheetIndex = 0; sheetIndex < 3; sheetIndex += 1) {
     console.log(`generating ${slug}: ${pack.name} sheet ${sheetIndex + 1}/3`);
@@ -289,7 +315,7 @@ async function generatePack(pack, provider) {
     await cropContactSheet(buffer, slug, sheetIndex);
   }
   await createCoverFromGallery(slug, outputs[0].filePath);
-  return { slug, name: pack.name, skipped: false, imageUrl: cover.publicPath, galleryImages: outputs.map((output) => output.publicPath) };
+  return { slug, name: pack.name, skipped: false, imageUrl: cover.publicPath, galleryImages: outputs.map((output) => output.publicPath), galleryImageAlts: galleryImageAltsForPack(pack, slug, outputs.length) };
 }
 
 async function mapLimit(items, workerCount, mapper) {

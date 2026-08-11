@@ -1015,12 +1015,12 @@ function buildThemeSettings() {
   globalSections.header.settings.ctaLabel = "Start a package";
   globalSections.header.settings.ctaHref = "/login";
   globalSections.header.blocks = [
-    { id: "aidreamcapes_header_collections", type: "menu_link", settings: { label: "Travel Packages", href: "/collections" } },
+    { id: "aidreamcapes_header_collections", type: "menu_link", settings: { label: "Occasion Albums", href: "/collections" } },
     { id: "aidreamcapes_header_tools", type: "menu_link", settings: { label: "Tools", href: "/tools" } },
+    { id: "aidreamcapes_header_best_packages", type: "menu_link", settings: { label: "Best Packages", href: "/best-packages" } },
     { id: "aidreamcapes_header_how", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
     { id: "aidreamcapes_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } },
     { id: "aidreamcapes_header_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing" } },
-    { id: "aidreamcapes_header_faq", type: "menu_link", settings: { label: "FAQ", href: "/faq" } },
     ...clone(aidreamcapesTools),
     ...clone(aidreamcapesTaxonomyBlocks.slice(0, 6))
   ];
@@ -1045,8 +1045,10 @@ function buildThemeSettings() {
   globalSections.footer.settings.salesEmail = "";
   globalSections.footer.settings.copyright = "© 2026 Aidreamcapes. All rights reserved.";
   globalSections.footer.blocks = [
-    { id: "aidreamcapes_footer_collections", type: "menu_link", settings: { label: "Travel Packages", href: "/collections", group: "product" } },
-    { id: "aidreamcapes_footer_tools", type: "menu_link", settings: { label: "Route Portrait Engine", href: "/tools/route-portrait-engine", group: "product" } },
+    { id: "aidreamcapes_footer_best_packages", type: "menu_link", settings: { label: "Best Packages", href: "/best-packages", group: "product" } },
+    { id: "aidreamcapes_footer_best_ai_image", type: "menu_link", settings: { label: "Best AI image", href: "/best-ai-image", group: "product" } },
+    { id: "aidreamcapes_footer_best_ai_video", type: "menu_link", settings: { label: "Best AI video", href: "/best-ai-video", group: "product" } },
+    { id: "aidreamcapes_footer_tools", type: "menu_link", settings: { label: "Tools", href: "/tools", group: "product" } },
     { id: "aidreamcapes_footer_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow", group: "product" } },
     { id: "aidreamcapes_footer_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing", group: "product" } },
     { id: "aidreamcapes_footer_guides", type: "menu_link", settings: { label: "Blog", href: "/blog", group: "company" } },
@@ -1085,7 +1087,7 @@ function buildThemeSettings() {
   const navigation = scrubAidreamcapesText(clone(source.navigation ?? { headerLinks: [], footerLinks: [] }));
   navigation.headerLinks = globalSections.header.blocks
     .filter((block) => block.type === "menu_link" && !block.settings?.category && !block.settings?.badge)
-    .slice(0, 5)
+    .slice(0, 6)
     .map((block) => ({
       label: block.settings.label,
       href: block.settings.href
@@ -1552,18 +1554,31 @@ function applyAidreamcapesPageOverrides(pageJson, mapping) {
   if (mapping.slug === "/") {
     pageJson.sectionsOrder = [
       "hero_1",
-      "visual_proof_1",
-      "brand_strip_1",
-      "package_catalog_1",
-      "featured_pack_1",
       "generation_showcase_1",
-      "pricing_1",
-      "flow_bridge_1",
+      "featured_thanksgiving_1",
+      "tutorial_video_1",
+      "tutorial_video_2",
+      "mobile_video_1",
+      "package_catalog_1",
       "proof_1",
-      "trust_1",
       "faq_1",
-      "conversion_1"
+      "conversion_1",
+      "brand_strip_1"
     ].filter((sectionId) => Boolean(pageJson.sections[sectionId]));
+    for (const removedSectionId of ["featured_pack_1", "featured_christmas_1"]) {
+      delete pageJson.sections[removedSectionId];
+    }
+    if (pageJson.sections.generation_showcase_1?.settings) {
+      Object.assign(pageJson.sections.generation_showcase_1.settings, {
+        imageTitle: "Best Photo Generator",
+        imageAllLabel: "View all photos",
+        imageAllHref: "/best-ai-image",
+        videoTitle: "Best Video Generator",
+        videoAllLabel: "View all videos",
+        videoAllHref: "/best-ai-video",
+        primaryHref: "/app/create"
+      });
+    }
   }
   if (mapping.slug === "/workflow") {
     if (pageJson.sections.workflow_intro_1?.settings) {
@@ -2248,11 +2263,11 @@ const creativePacks = packRows.map(([id, name, description, categorySlug, output
 }));
 
 const mediaAssets = [
-  ["media_aidreamcapes_hero", "Aidreamcapes cinematic travel portrait hero", "sites/site_aidreamcapes/theme/destination-story.png", aidreamcapesPackImages.destination],
-  ["media_aidreamcapes_coastal", "Aidreamcapes coastal escape portrait cover", "sites/site_aidreamcapes/theme/coastal-light-sets.png", aidreamcapesPackImages.coastal],
-  ["media_aidreamcapes_resort", "Aidreamcapes island resort scene cover", "sites/site_aidreamcapes/theme/island-resort-scenes.png", aidreamcapesPackImages.avatar],
-  ["media_aidreamcapes_editorial", "Aidreamcapes editorial getaway portrait cover", "sites/site_aidreamcapes/theme/editorial-getaways.png", aidreamcapesPackImages.editorial],
-  ["media_aidreamcapes_glam", "Aidreamcapes cafe street portrait cover", "sites/site_aidreamcapes/theme/cafe-corner-stories.png", aidreamcapesPackImages.glam]
+  ["media_aidreamcapes_hero", "Aidreamcapes cinematic travel portrait hero showing a styled traveler in a destination story scene", "sites/site_aidreamcapes/theme/destination-story.png", aidreamcapesPackImages.destination],
+  ["media_aidreamcapes_coastal", "Aidreamcapes coastal escape portrait with bright seaside light for a private travel album", "sites/site_aidreamcapes/theme/coastal-light-sets.png", aidreamcapesPackImages.coastal],
+  ["media_aidreamcapes_resort", "Aidreamcapes island resort portrait with tropical scenery for an original private getaway collection", "sites/site_aidreamcapes/theme/island-resort-scenes.png", aidreamcapesPackImages.avatar],
+  ["media_aidreamcapes_editorial", "Aidreamcapes editorial getaway portrait with polished styling for a destination-inspired private album", "sites/site_aidreamcapes/theme/editorial-getaways.png", aidreamcapesPackImages.editorial],
+  ["media_aidreamcapes_glam", "Aidreamcapes cafe street portrait with urban evening atmosphere for a cinematic travel collection", "sites/site_aidreamcapes/theme/cafe-corner-stories.png", aidreamcapesPackImages.glam]
 ].map(([id, label, storageKey, previewUrl]) => ({
   id,
   siteId,
@@ -2649,6 +2664,7 @@ async function syncAidreamcapesToDatabase() {
         conversionRate: pack.conversionRate,
         imageUrl: pack.imageUrl,
         galleryImages: pack.galleryImages,
+        galleryImageAlts: pack.galleryImageAlts,
         createdAt: toDate(pack.createdAt)
       }))
     });

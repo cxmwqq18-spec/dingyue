@@ -51,27 +51,44 @@ assert(
 const homePage = site.pages?.find((page) => page.slug === "/" || page.pageType === "home");
 assert(homePage?.publishedJson, "missing published home page");
 const homeOrder = homePage.publishedJson.sectionsOrder ?? [];
-const requiredHomeSections = [
+const expectedHomeOrder = [
   "hero_1",
-  "featured_pack_1",
-  "featured_christmas_1",
   "featured_thanksgiving_1",
   "generation_showcase_1",
   "tutorial_video_1",
   "tutorial_video_2",
+  "mobile_video_1",
   "package_catalog_1",
   "proof_1",
   "faq_1",
   "conversion_1",
   "brand_strip_1"
 ];
-assert(homeOrder.length <= 14, `home page should stay focused at 14 or fewer sections, got ${homeOrder.length}`);
-for (const id of requiredHomeSections) {
+assert(
+  homeOrder.join("|") === expectedHomeOrder.join("|"),
+  `home page order drifted: expected ${expectedHomeOrder.join(" > ")}, got ${homeOrder.join(" > ")}`
+);
+for (const id of expectedHomeOrder) {
   assert(homeOrder.includes(id), `home page missing required DreamShoot commercial section ${id}`);
+}
+assert(
+  homePage.publishedJson.sections?.featured_thanksgiving_1?.type === "dreamshoot_featured_pack",
+  "home page should retain the Thanksgiving featured package section"
+);
+for (const id of ["featured_pack_1", "featured_christmas_1"]) {
+  assert(!homeOrder.includes(id), `home page should not order Best Packages section ${id}`);
+  assert(!homePage.publishedJson.sections?.[id], `home page should not retain Best Packages section data ${id}`);
 }
 for (const id of ["visual_proof_1", "flow_bridge_1", "trust_1", "taxonomy_1", "sample_strip_1", "workflow_1", "packages_1", "free_tools_1", "plan_rules_1", "proof_pairs_1", "packages_strip_1"]) {
   assert(!homeOrder.includes(id), `home page should not carry deep explainer section ${id}; it belongs on a supporting page`);
 }
+const bestPackagesPage = site.pages?.find((page) => page.slug === "/best-packages");
+assert(bestPackagesPage?.publishedJson, "missing published Best Packages page");
+const bestPackagesOrder = bestPackagesPage.publishedJson.sectionsOrder ?? [];
+assert(
+  bestPackagesOrder.join("|") === "featured_pack_1|featured_christmas_1|featured_thanksgiving_1",
+  `Best Packages page should order World Cup, Christmas, Thanksgiving; got ${bestPackagesOrder.join(", ")}`
+);
 assert(homePage.publishedJson.sections?.pricing_1?.type === "pricing_table", "home pricing section should remain available for embedded rendering");
 assert(!homeOrder.includes("pricing_1"), "home pricing_1 should stay embedded in showcase instead of ordered separately");
 assert(homePage.publishedJson.sections?.generation_showcase_1?.settings?.embeddedPricingSectionId === "pricing_1", "home showcase should embed pricing_1");
@@ -307,13 +324,8 @@ assert(homeCatalog?.type === "dreamshoot_package_catalog", "home page missing Dr
 assert(homeCatalog?.settings?.source === "creative_packs", "home package catalog must use active creative packs, not a short manual demo list");
 assert(Number(homeCatalog?.settings?.featuredCount ?? 0) >= 5, "home package catalog should feature at least 5 cards before the full directory");
 
-const featuredPack = homePage.publishedJson.sections?.featured_pack_1;
-assert(featuredPack?.type === "dreamshoot_featured_pack", "home page missing DreamShoot featured pack renderer");
-const featuredOrder = homeOrder.filter((id) => id.startsWith("featured_"));
-assert(
-  JSON.stringify(featuredOrder) === JSON.stringify(["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"]),
-  `home featured pack order should be World Cup, Christmas, Thanksgiving; got ${featuredOrder.join(", ")}`
-);
+const featuredPack = bestPackagesPage.publishedJson.sections?.featured_pack_1;
+assert(featuredPack?.type === "dreamshoot_featured_pack", "Best Packages page missing DreamShoot featured pack renderer");
 const featuredPackText = JSON.stringify(featuredPack);
 assert(
   featuredCollectionSlugs(featuredPack).join("|") === "world-cup-fan-photos|gala-photos|christmas-couple|creator-portraits|thanksgiving-group-photos|holiday",
@@ -351,8 +363,8 @@ for (const asset of requiredWorldCupAssets) {
 }
 assert(!featuredPackText.includes("/assets/dreamshoot/generated/20260619/world-cup-fan-star"), "World Cup featured pack still references old football-star asset");
 
-const christmasPack = homePage.publishedJson.sections?.featured_christmas_1;
-assert(christmasPack?.type === "dreamshoot_featured_pack", "home page missing Christmas featured pack renderer");
+const christmasPack = bestPackagesPage.publishedJson.sections?.featured_christmas_1;
+assert(christmasPack?.type === "dreamshoot_featured_pack", "Best Packages page missing Christmas featured pack renderer");
 const christmasPackText = JSON.stringify(christmasPack);
 assert(
   featuredCollectionSlugs(christmasPack).join("|") === "christmas-photos|christmas-photos|christmas-couple|christmas-photos|christmas-photos|christmas-couple",
@@ -376,8 +388,8 @@ for (const asset of [
 }
 assert(christmasPackText.includes("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-10.webp"), "Christmas featured pack missing DreamShoot cover asset");
 
-const thanksgivingPack = homePage.publishedJson.sections?.featured_thanksgiving_1;
-assert(thanksgivingPack?.type === "dreamshoot_featured_pack", "home page missing Thanksgiving featured pack renderer");
+const thanksgivingPack = bestPackagesPage.publishedJson.sections?.featured_thanksgiving_1;
+assert(thanksgivingPack?.type === "dreamshoot_featured_pack", "Best Packages page missing Thanksgiving featured pack renderer");
 const thanksgivingPackText = JSON.stringify(thanksgivingPack);
 assert(
   featuredCollectionSlugs(thanksgivingPack).join("|") === "thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos",

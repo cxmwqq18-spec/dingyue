@@ -15,7 +15,17 @@ import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolic
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
-const dreamshootPartnerTemplateSlugs = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
+const dreamshootPartnerTemplateSlugs = new Set([
+  "/workflow",
+  "/faq",
+  "/creators-circle",
+  "/partner-registration",
+  "/about-us",
+  "/contact-us",
+  "/best-packages",
+  "/best-ai-image",
+  "/best-ai-video"
+]);
 const aidreamcapesLegacyBlogCategoryRedirects: Record<string, string> = {
   "fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",
   "private-fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",

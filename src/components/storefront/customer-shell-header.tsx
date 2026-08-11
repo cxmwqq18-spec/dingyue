@@ -1,9 +1,8 @@
 "use client";
 
-import { ArrowRight, Camera, ChevronRight, Coffee, Heart, ImageIcon, Map as MapIcon, Mountain, PlayCircle, Scissors, Sparkles, Sun, UserCircle, Users } from "lucide-react";
+import { ArrowRight, Camera, ChevronRight, Coffee, Heart, ImageIcon, Map as MapIcon, Mountain, PlayCircle, Scissors, Sparkles, Sun, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
-import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
@@ -11,6 +10,7 @@ import { getPhotoPackageMegaGroups } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import type { CreativePack, CreativePackCategory, PublicCustomer, Site, ToolMenuItem } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
+import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 
 type CustomerShellHeaderSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 type MenuGroupItem = { label: string; href: string };
@@ -198,6 +198,22 @@ export function CustomerShellHeader({
   const navClass = dark
     ? "inline-flex items-center gap-2 whitespace-nowrap border-white/16 bg-white/[0.035] text-white hover:border-white/28 hover:bg-white/[0.08]"
     : "inline-flex items-center gap-2 whitespace-nowrap border-[#d6cadc] bg-white/92 text-[#171514] shadow-[0_10px_30px_-24px_rgba(52,39,88,0.4)] hover:border-[#9f8bd7] hover:bg-white";
+  const desktopNavClass = `${navClass} px-2 py-2 text-[0.78rem] min-[1440px]:px-2.5 min-[1536px]:px-3 min-[1800px]:px-4 min-[1800px]:py-2.5 min-[1800px]:text-sm`;
+  const signedInClassName = dark
+    ? "flex min-w-0 items-center gap-1.5 rounded-full border border-white/55 bg-transparent px-1.5 py-1 text-[11px] leading-tight text-white min-[1536px]:gap-2 min-[1536px]:px-2 min-[1800px]:gap-2.5 min-[1800px]:px-3 min-[1800px]:text-xs"
+    : "flex min-w-0 items-center gap-1.5 rounded-full border border-[#dfd3c4] bg-white px-1.5 py-1 text-[11px] leading-tight text-[#171514] min-[1536px]:gap-2 min-[1536px]:px-2 min-[1800px]:gap-2.5 min-[1800px]:px-3 min-[1800px]:text-xs";
+  const signOutClassName = dark
+    ? "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-white/55 bg-transparent px-2.5 py-2 text-xs font-semibold text-white transition hover:bg-white/[0.08] min-[1800px]:px-3.5 min-[1800px]:py-2.5 min-[1800px]:text-sm"
+    : "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-[#171514] bg-[#171514] px-2.5 py-2 text-xs font-semibold text-white transition hover:bg-black min-[1800px]:px-3.5 min-[1800px]:py-2.5 min-[1800px]:text-sm";
+  const accountIconClassName = dark
+    ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white text-[#101114] min-[1800px]:h-9 min-[1800px]:w-9"
+    : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#15171a] text-white min-[1800px]:h-9 min-[1800px]:w-9";
+  const accountTextClassName = dark
+    ? "block max-w-[8rem] truncate text-[0.82rem] font-semibold min-[1800px]:max-w-[10rem] min-[1800px]:text-sm"
+    : "block max-w-[8rem] truncate text-[0.82rem] font-semibold min-[1800px]:max-w-[10rem] min-[1800px]:text-sm";
+  const accountEmailClassName = dark
+    ? "block max-w-[8.5rem] truncate text-[11px] text-white/72 min-[1800px]:max-w-[11rem] min-[1800px]:text-xs"
+    : "block max-w-[8.5rem] truncate text-[11px] text-[#706961] min-[1800px]:max-w-[11rem] min-[1800px]:text-xs";
 
   return (
     <header className={`sticky top-0 z-50 border-b font-sans backdrop-blur ${dark ? "border-white/10 bg-[#05070E]/[0.94] text-white" : "border-[#eadfce] bg-[#fbf6ee]/[0.96] text-[#171514]"}`}>
@@ -209,23 +225,23 @@ export function CustomerShellHeader({
               : "Crea sets privados de fotos con IA desde selfies cotidianos."
             : isAidreamcapes ? "Create private fan-scene and holiday albums from approved photos." : "Create private AI photo sets from everyday selfies."}
         </p>
-        <div className="flex min-h-[72px] items-center justify-between gap-5">
-          <StorefrontInstantLink aria-label={`${readableLogoText} home`} className="flex min-w-0 items-center gap-3" href={homeHref} title={`${readableLogoText} home`}>
-            <span className="relative inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[15px] bg-transparent">
-              <img className="h-12 w-12 object-contain" src={logoSrc} alt={logoAlt} width={48} height={48} />
+        <div className="flex h-[72px] flex-nowrap items-center justify-between gap-1.5 xl:gap-2 min-[1536px]:gap-2.5 min-[1800px]:h-[76px] min-[1800px]:gap-5">
+          <StorefrontInstantLink aria-label={`${readableLogoText} home`} className="order-1 flex min-w-0 max-w-[13.2rem] shrink items-center gap-2 min-[1536px]:max-w-[16rem] min-[1800px]:max-w-[24rem] min-[1800px]:gap-3" href={homeHref} title={`${readableLogoText} home`}>
+            <span className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-[13px] bg-transparent min-[1800px]:h-12 min-[1800px]:w-12 min-[1800px]:rounded-[15px]">
+              <img className="h-10 w-10 object-contain min-[1800px]:h-12 min-[1800px]:w-12" src={logoSrc} alt={logoAlt} width={48} height={48} />
             </span>
             <span className="min-w-0">
-              <span aria-label={readableLogoText} className={`block truncate text-[1.52rem] font-semibold leading-none tracking-[-0.03em] [font-family:var(--site-title-font)] ${dark ? "text-white" : "text-[#171514]"}`} title={readableLogoText}>
+              <span aria-label={readableLogoText} className={`block truncate text-[1.18rem] font-semibold leading-none tracking-normal [font-family:var(--site-title-font)] min-[1440px]:text-[1.28rem] min-[1536px]:text-[1.4rem] min-[1800px]:text-[1.52rem] ${dark ? "text-white" : "text-[#171514]"}`} title={readableLogoText}>
                 <span aria-hidden="true">{logoText}</span>
               </span>
               <span className="sr-only">{readableLogoText}</span>
             </span>
           </StorefrontInstantLink>
 
-          <nav className="hidden items-center justify-center gap-3 text-sm font-semibold lg:flex">
+          <nav className="order-2 hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-1 text-[0.78rem] font-semibold xl:flex min-[1440px]:gap-1.5 min-[1536px]:gap-2 min-[1800px]:gap-2.5">
             <ClickMegaMenu
-              buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
-              label={isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : isAidreamcapes ? "Occasion Albums" : isMyDreamShoots ? "Headshot Generator" : "Browse packages"}
+              buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`}
+              label={isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : isAidreamcapes ? "Occasion Albums" : isMyDreamShoots ? "Photoshoot Studio" : "Browse packages"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={packagePrefetchPaths}
             >
@@ -236,7 +252,7 @@ export function CustomerShellHeader({
               />
             </ClickMegaMenu>
             <ClickMegaMenu
-              buttonClassName={`rounded-[16px] border px-5 py-3 transition ${navClass}`}
+              buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`}
               label={isSpanishXby ? "Herramientas" : "Tools"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={toolPrefetchPaths}
@@ -250,31 +266,40 @@ export function CustomerShellHeader({
                 variantTone="dark"
               />
             </ClickMegaMenu>
-            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={workflowHref}>
+            {!isSpanishXby ? (
+              <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/best-packages`}>
+                Best Packages
+              </StorefrontInstantLink>
+            ) : null}
+            <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={workflowHref}>
               {isSpanishXby ? "Como funciona" : "How it works"}
             </StorefrontInstantLink>
-            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/app/create`} prefetch>
+            <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/app/create`} prefetch>
               {isSpanishXby ? "Espacio privado" : "Workspace"}
             </StorefrontInstantLink>
-            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/pricing`}>
+            <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/pricing`}>
               {isSpanishXby ? "Precios" : "Pricing"}
             </StorefrontInstantLink>
-            <StorefrontInstantLink className={`rounded-full border px-5 py-3 transition ${navClass}`} href={`${basePath}/faq`}>
-              {isSpanishXby ? "Preguntas" : "FAQ"}
-            </StorefrontInstantLink>
+            {isSpanishXby ? (
+              <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/faq`}>
+                Preguntas
+              </StorefrontInstantLink>
+            ) : null}
           </nav>
 
-          <div className="flex min-w-0 items-center gap-2">
-            <StorefrontInstantLink className={`hidden min-w-0 items-center gap-3 rounded-full border px-4 py-2 text-sm leading-tight md:inline-flex ${dark ? "border-white/55 bg-transparent text-white" : "border-[#dfd3c4] bg-white text-[#171514]"}`} href={`${basePath}/app/create`} prefetch>
-              <span className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${dark ? "bg-white text-[#171514]" : "bg-[#171514] text-white"}`}>
-                <UserCircle className="h-5 w-5" strokeWidth={1.8} />
-              </span>
-              <span className="min-w-0">
-                <span className="block max-w-[10rem] truncate font-semibold">{customer.name}</span>
-                <span className={`block max-w-[10rem] truncate text-xs ${dark ? "text-white/72" : "text-[#706961]"}`}>{customer.email}</span>
-              </span>
-            </StorefrontInstantLink>
-            <CustomerSignOutButton className={`rounded-full border px-5 py-3 text-sm font-semibold transition ${dark ? "border-white/55 bg-transparent text-white hover:bg-white/8" : "border-[#171514] bg-[#171514] text-white hover:bg-black"}`} label={isSpanishXby ? "Cerrar sesion" : "Sign out"} logoutHref={`/api/sites/${site.id}/auth/logout`} pendingLabel={isSpanishXby ? "Cerrando sesion..." : "Signing out..."} redirectHref={`${basePath}/login`} siteId={site.id} />
+          <div className="order-3 ml-auto shrink-0 min-[1800px]:ml-0" data-storefront-header-controls="">
+            <div className={signedInClassName}>
+              <StorefrontInstantLink aria-label={isSpanishXby ? "Abrir espacio privado" : "Open workspace"} className="inline-flex min-w-0 items-center gap-2 rounded-full pr-1 transition hover:opacity-80 min-[1800px]:gap-3" href={`${basePath}/app/create`} prefetch>
+                <span className={accountIconClassName}>
+                  <Users className="h-4 w-4" strokeWidth={1.8} />
+                </span>
+                <span className="min-w-0 text-left">
+                  <span className={accountTextClassName}>{customer.name}</span>
+                  <span className={accountEmailClassName}>{customer.email}</span>
+                </span>
+              </StorefrontInstantLink>
+              <CustomerSignOutButton className={signOutClassName} label={isSpanishXby ? "Cerrar sesion" : "Sign out"} logoutHref={`/api/sites/${site.id}/auth/logout`} pendingLabel={isSpanishXby ? "Cerrando sesion..." : "Signing out..."} redirectHref={`${basePath}/login`} siteId={site.id} />
+            </div>
           </div>
         </div>
       </div>

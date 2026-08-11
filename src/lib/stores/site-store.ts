@@ -11,6 +11,7 @@ import { isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-conte
 import { prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
 import { mutateLocalPlatformStateFallback, readLocalPlatformStateFallback, readPlatformState } from "@/lib/server-store";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
+import { storefrontGalleryMediaPairs } from "@/lib/storefront-media-alt";
 import { withStorefrontPublicWatermarkUrl } from "@/lib/storefront-public-watermark-url";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import { normalizePlatformAiProviderType, platformProviderTypeForAppType } from "@/lib/ai-provider-type";
@@ -98,7 +99,10 @@ function envPositiveInt(name: string, fallback: number): number {
   return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : fallback;
 }
 
-const siteAdminPrismaReadTimeoutMs = envPositiveInt("SITE_ADMIN_PRISMA_READ_TIMEOUT_MS", 3_000);
+const siteAdminPrismaReadTimeoutMs = envPositiveInt(
+  "SITE_ADMIN_PRISMA_READ_TIMEOUT_MS",
+  process.env.NODE_ENV === "development" ? 10_000 : 3_000
+);
 const siteAdminSummaryReadTimeoutMs = envPositiveInt("SITE_ADMIN_SUMMARY_READ_TIMEOUT_MS", 8_000);
 const siteAdminPrismaReadRetries = envPositiveInt("SITE_ADMIN_PRISMA_READ_RETRIES", 0);
 
@@ -557,6 +561,7 @@ const collectionDetailCreativePackSelect = {
   conversionRate: true,
   imageUrl: true,
   galleryImages: true,
+  galleryImageAlts: true,
   createdAt: true,
   categoryRecord: {
     select: {
@@ -610,6 +615,7 @@ const publicRuntimeCreativePackSelect = {
   conversionRate: true,
   imageUrl: true,
   galleryImages: true,
+  galleryImageAlts: true,
   createdAt: true,
   categoryRecord: collectionDetailCreativePackSelect.categoryRecord
 } satisfies Prisma.CreativePackSelect;
@@ -968,12 +974,14 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
   const isToolDetail = primary.startsWith("/tools/") && Boolean(contextSlug);
   const isCollections = primary === "/collections" || primary.startsWith("/collections/");
   const isCollectionDetail = isCollections && Boolean(contextSlug);
+  const isBestPackagePage = primary === "/best-packages";
+  const isBestMediaPage = primary === "/best-ai-image" || primary === "/best-ai-video";
   const isWorkspace = primary === "/app";
   return {
-    profile: isHome ? "home" : isPricing || isCart ? "pricing" : isTools ? "tools" : isCollectionDetail ? "collection-detail" : isCollections ? "collections" : isWorkspace ? "workspace" : "page",
+    profile: isHome ? "home" : isPricing || isCart ? "pricing" : isTools ? "tools" : isCollectionDetail ? "collection-detail" : isBestMediaPage ? "best-media" : isCollections || isBestPackagePage ? "collections" : isWorkspace ? "workspace" : "page",
     products: isHome || isPricing || isCart || isCollectionDetail,
     siteAiApps: isHome || isTools || isWorkspace,
-    creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isWorkspace,
+    creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isBestPackagePage || isBestMediaPage || isWorkspace,
     mediaAssets: isHome || isWorkspace,
     toolMenus: true,
     contextSlug: contextSlug ? slugify(contextSlug) : ""
@@ -984,7 +992,7 @@ function publicRuntimeLimits(profile: ReturnType<typeof publicRuntimeNeeds>["pro
   return {
     products: profile === "pricing" ? 12 : 8,
     siteAiApps: profile === "tools" ? 96 : profile === "home" ? 24 : 48,
-    creativePacks: profile === "collection-detail" ? 12 : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? undefined : 24,
+    creativePacks: profile === "collection-detail" ? 12 : profile === "best-media" ? undefined : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? undefined : 24,
     mediaAssets: profile === "home" ? 12 : profile === "workspace" ? 40 : 0
   };
 }
@@ -1011,6 +1019,7 @@ function toPublicRuntimeSiteAiApp(record: PublicRuntimeSiteAiAppRecord): SiteAiA
 
 function toPublicRuntimeCreativePack(record: PublicRuntimeCreativePackRecord): CreativePack {
   const pack = toCreativePack(record);
+  const galleryMedia = storefrontGalleryMediaPairs(pack.galleryImages, pack.galleryImageAlts, 12);
   const categoryRecord = pack.categoryRecord
     ? {
         id: pack.categoryRecord.id,
@@ -1045,9 +1054,8 @@ function toPublicRuntimeCreativePack(record: PublicRuntimeCreativePackRecord): C
   return {
     ...pack,
     prompt: undefined,
-    galleryImages: Array.isArray(pack.galleryImages)
-      ? pack.galleryImages.filter((item): item is string => typeof item === "string" && item.trim().length > 0).slice(0, 12)
-      : [],
+    galleryImages: galleryMedia.galleryImages,
+    galleryImageAlts: galleryMedia.galleryImageAlts,
     categoryRecord
   };
 }
@@ -1105,12 +1113,12 @@ function fallbackCustomerWorkspaceSiteAiApps(siteId: string): SiteAiApp[] {
     .slice(0, workspaceCustomerRuntimeLimits.siteAiApps);
 }
 
-function fallbackPublicVideoThemesForSite(siteId: string, take = 32): VideoTheme[] {
+function fallbackPublicVideoThemesForSite(siteId: string, take?: number): VideoTheme[] {
   const state = readPlatformState();
-  const themes = (state.videoThemes ?? [])
-    .filter((theme) => theme.siteId === siteId && theme.status === "active")
-    .sort((left, right) => left.createdAt.localeCompare(right.createdAt))
-    .slice(0, take);
+  const activeThemes = (state.videoThemes ?? [])
+    .filter((theme) => theme.siteId === siteId && theme.status === "active" && !isBlockedPublicVideoTheme(siteId, theme.slug))
+    .sort((left, right) => left.createdAt.localeCompare(right.createdAt));
+  const themes = typeof take === "number" ? activeThemes.slice(0, take) : activeThemes;
   const providers = (state.platformAiProviders ?? []).filter((provider) =>
     provider.enabled !== false &&
     Boolean(provider.aiUrl?.trim()) &&
@@ -1129,6 +1137,10 @@ function fallbackPublicVideoThemesForSite(siteId: string, take = 32): VideoTheme
     textToVideoProviderModelFamilies,
     imageToVideoProviderModelFamilies
   }));
+}
+
+function isBlockedPublicVideoTheme(siteId: string, slug: string): boolean {
+  return (siteId === "site_dreamshoot" || siteId === "site_aidreamcapes") && slug === "creator-scene-motion";
 }
 
 function storefrontPerfMark(label: string, startedAt: number, meta: Record<string, unknown> = {}) {
@@ -1196,24 +1208,25 @@ export const getStorefrontPublicCreativePackCategoriesForSite = cache(async (sit
   );
 });
 
-export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string, take = 32) => {
+export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string, take?: number) => {
+  const takeKey = typeof take === "number" ? String(take) : "all";
   return siteReadCache.get(
-    `public-video-themes:${siteId}:${take}`,
+    `public-video-themes:${siteId}:${takeKey}`,
     async () => {
       try {
         let rows = await prisma.videoTheme.findMany({
-          where: { siteId, status: "active" },
+          where: { siteId, status: "active", slug: { not: "creator-scene-motion" } },
           include: { category: true },
           orderBy: [{ createdAt: "asc" }],
-          take
+          ...(typeof take === "number" ? { take } : {})
         });
         if (!rows.length) {
           await ensureDefaultVideoThemesRelational(siteId);
           rows = await prisma.videoTheme.findMany({
-            where: { siteId, status: "active" },
+            where: { siteId, status: "active", slug: { not: "creator-scene-motion" } },
             include: { category: true },
             orderBy: [{ createdAt: "asc" }],
-            take
+            ...(typeof take === "number" ? { take } : {})
           });
         }
         const providers = await getPlatformAiProviderFallbackQueueRelational("video");
@@ -2434,7 +2447,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
 }
 
-export async function getSiteBySlugForAdmin(slug: string): Promise<Site | undefined> {
+export async function getSiteLoginShellBySlugForAdmin(slug: string): Promise<Site | undefined> {
   if (shouldUseRelationalReadFallbackCircuit()) {
     const fallback = localSiteBySlugForAdmin(slug);
     if (fallback) return fallback;
@@ -2454,6 +2467,32 @@ export async function getSiteBySlugForAdmin(slug: string): Promise<Site | undefi
     const fallback = localSiteBySlugForAdmin(slug);
     if (fallback) {
       warnRelationalFallback("admin login site lookup", error);
+      return fallback;
+    }
+    throw new RelationalStoreError("relational_site_lookup_unavailable", 503);
+  }
+}
+
+export async function getSiteBySlugForAdmin(slug: string): Promise<Site | undefined> {
+  if (shouldUseRelationalReadFallbackCircuit()) {
+    const fallback = localSiteBySlugForAdmin(slug);
+    if (fallback) return fallback;
+  }
+  try {
+    const canonicalSlug = canonicalSiteSlug(slug);
+    return await siteReadCache.get(`admin-site-full:${canonicalSlug}`, () => runSiteAdminRead(`admin site full:${canonicalSlug}`, async () => {
+      const site = await prisma.site.findFirst({
+        where: { slug: { in: legacySiteSlugCandidates(slug) } },
+        orderBy: { updatedAt: "desc" },
+        include: siteRuntimeInclude
+      });
+      return site ? toSite(site) : undefined;
+    }));
+  } catch (error) {
+    if (!shouldFallbackRelationalRead(error)) throw error;
+    const fallback = localSiteBySlugForAdmin(slug);
+    if (fallback) {
+      warnRelationalFallback("admin site full lookup", error);
       return fallback;
     }
     throw new RelationalStoreError("relational_site_lookup_unavailable", 503);
@@ -3926,35 +3965,48 @@ export async function createSiteRelational(params: {
       });
     }
 
-    for (const [index, page] of sourceSite.pages.entries()) {
-      await tx.themePage.create({
-        data: {
+    if (sourceSite.pages.length) {
+      await tx.themePage.createMany({
+        data: sourceSite.pages.map((page, index) => ({
           id: `${siteId}_${slugify(page.slug) || `page_${index + 1}`}`,
           siteId,
           pageType: page.pageType,
+          templateKey: page.templateKey,
           slug: page.slug,
           title: page.title,
           draftJson: cloneJson(page.draftJson) as unknown as Prisma.InputJsonValue,
-          publishedJson: cloneJson(page.publishedJson) as unknown as Prisma.InputJsonValue
-        }
+          publishedJson: cloneJson(page.publishedJson) as unknown as Prisma.InputJsonValue,
+          draftMeta: page.draftMeta
+            ? cloneJson(page.draftMeta) as unknown as Prisma.InputJsonValue
+            : undefined
+        }))
       });
     }
 
-    const siteAiApps = [];
-    for (const app of sourceSite.aiApps) {
-      const record = await tx.siteAiApp.create({
-        data: {
+    if (sourceSite.aiApps.length) {
+      await tx.siteAiApp.createMany({
+        data: sourceSite.aiApps.map((app) => ({
           id: `sai_${slug}_${app.aiApp.slug}`,
           siteId,
           aiAppId: app.aiAppId,
           enabled: app.enabled,
           creditCost: app.creditCost,
-          routeKey: app.routeKey
-        },
-        include: { aiApp: true }
+          routeKey: app.routeKey,
+          workflowConfig: app.workflowConfig
+            ? cloneJson(app.workflowConfig) as unknown as Prisma.InputJsonValue
+            : undefined,
+          providerConfig: app.providerConfig
+            ? cloneJson(app.providerConfig) as unknown as Prisma.InputJsonValue
+            : undefined
+        }))
       });
-      siteAiApps.push(toSiteAiApp(record));
     }
+    const siteAiAppRecords = await tx.siteAiApp.findMany({
+      where: { siteId },
+      include: { aiApp: true },
+      orderBy: { createdAt: "asc" }
+    });
+    const siteAiApps = siteAiAppRecords.map(toSiteAiApp);
 
     const gatewayGroupRecord = await tx.aiGatewayGroup.create({
       data: {
@@ -3973,15 +4025,19 @@ export async function createSiteRelational(params: {
     });
     const gatewayGroup = toGatewayGroup(gatewayGroupRecord);
 
-    await addAuditLogRelational(tx, {
-      siteId,
-      actorType: "platform_admin",
-      actorId: "platform",
-      action: "site_created",
-      targetType: "site",
-      targetId: siteId,
-      metadata: { slug, domain: domainName }
-    });
+    await addAuditLogRelational(
+      tx,
+      {
+        siteId,
+        actorType: "platform_admin",
+        actorId: "platform",
+        action: "site_created",
+        targetType: "site",
+        targetId: siteId,
+        metadata: { slug, domain: domainName }
+      },
+      { syncPlatformState: false }
+    );
 
     return {
       site: toSite(
@@ -3995,7 +4051,7 @@ export async function createSiteRelational(params: {
       siteAiApps,
       gatewayGroup
     };
-  });
+  }, { maxWait: 15000, timeout: 120000 });
   clearSiteReadCache();
   const { clearPlatformReadCache } = await import("@/lib/stores/platform-store");
   clearPlatformReadCache();
@@ -4864,6 +4920,7 @@ export async function upsertCreativePackRelational(params: {
   trainingRequired: boolean;
   imageUrl?: string;
   galleryImages?: string[];
+  galleryImageAlts?: string[];
 }): Promise<{ pack: CreativePack; created: boolean }> {
   const site = await prisma.site.findUnique({ where: { id: params.siteId }, select: { id: true } });
   if (!site) throw new RelationalStoreError("site_not_found", 404);
@@ -4879,7 +4936,9 @@ export async function upsertCreativePackRelational(params: {
     outputCount: params.outputCount,
     trainingRequired: params.trainingRequired
   });
-  const galleryImages = Array.isArray(params.galleryImages) ? params.galleryImages.map((item) => item.trim()).filter(Boolean).slice(0, 24) : [];
+  const galleryMedia = storefrontGalleryMediaPairs(params.galleryImages, params.galleryImageAlts, 24);
+  const galleryImages = galleryMedia.galleryImages;
+  const galleryImageAlts = galleryMedia.galleryImageAlts;
   const imageUrl = params.imageUrl?.trim() || galleryImages[0] || null;
   if (description.length < 8) throw new RelationalStoreError("creative_pack_description_required", 400);
   if (prompt && prompt.length > 6000) throw new RelationalStoreError("creative_pack_prompt_too_long", 400);
@@ -4913,7 +4972,8 @@ export async function upsertCreativePackRelational(params: {
           outputCount: params.outputCount,
           trainingRequired: params.trainingRequired,
           imageUrl,
-          galleryImages
+          galleryImages,
+          galleryImageAlts
         }
       })
     : await prisma.creativePack.create({
@@ -4934,6 +4994,7 @@ export async function upsertCreativePackRelational(params: {
           trainingRequired: params.trainingRequired,
           imageUrl,
           galleryImages,
+          galleryImageAlts,
           generationCount: 0,
           conversionRate: 0
         }

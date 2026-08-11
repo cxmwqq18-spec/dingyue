@@ -42,6 +42,7 @@ const publicCreativePackSelect = {
   conversionRate: true,
   imageUrl: true,
   galleryImages: true,
+  galleryImageAlts: true,
   createdAt: true,
   categoryRecord: {
     select: {
@@ -216,7 +217,8 @@ export async function POST(
       trainingRequired: Boolean(body.trainingRequired),
       imageUrl: body.imageUrl,
       categoryId: body.categoryId,
-      galleryImages: body.galleryImages
+      galleryImages: body.galleryImages,
+      galleryImageAlts: body.galleryImageAlts
     });
     clearPublicCreativePacksCache();
     return NextResponse.json({ ok: true, pack: result.pack, created: result.created });

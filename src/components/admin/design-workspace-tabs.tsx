@@ -9,6 +9,7 @@ type DesignWorkspaceTabsProps = {
   activePath?: string;
   seoReady?: boolean;
   tone?: "light" | "dark";
+  compact?: boolean;
 };
 
 function tabClass(active: boolean, tone: "light" | "dark") {
@@ -29,9 +30,10 @@ export function DesignWorkspaceTabs({
   publicationCount,
   activePath = "/admin/design",
   seoReady = false,
-  tone = "light"
+  tone = "light",
+  compact = false
 }: DesignWorkspaceTabsProps) {
-  const items = [
+  const allItems = [
     { label: "总览", href: `/site/${siteSlug}/admin/design`, icon: Palette, badge: String(pageCount) },
     { label: "页面", href: `/site/${siteSlug}/admin/design/pages`, icon: FileText, badge: String(pageCount) },
     { label: "导航", href: `/site/${siteSlug}/admin/design/navigation`, icon: GalleryVerticalEnd, badge: "menu" },
@@ -42,23 +44,27 @@ export function DesignWorkspaceTabs({
     { label: "装修器", href: `/site/${siteSlug}/admin/design/workbench`, icon: Palette, badge: "edit" },
     { label: "前台", href: `/site/${siteSlug}`, icon: ExternalLink, badge: "live", external: true }
   ];
+  const items = compact
+    ? allItems.filter((item) => ["总览", "页面", "导航", "SEO", "发布", "装修器", "前台"].includes(item.label))
+    : allItems;
 
   return (
-    <div className={`flex gap-2 overflow-x-auto ${tone === "dark" ? "pb-1" : "flex-wrap"}`} data-admin-tabs="saas-design-workspace-tabs">
+    <div className={`flex overflow-x-auto ${tone === "dark" ? "gap-1 pb-1" : "flex-wrap gap-2"}`} data-admin-tabs="saas-design-workspace-tabs">
       {items.map((item) => {
         const active = activePath === item.href.replace(`/site/${siteSlug}`, "");
         return (
           <Link
-            className={`inline-flex min-h-[34px] shrink-0 items-center gap-1 rounded-[10px] border px-3 text-xs font-medium transition active:scale-[0.98] ${tabClass(active, tone)}`}
+            className={`inline-flex min-h-[34px] shrink-0 items-center gap-1 rounded-[10px] border text-xs font-medium transition active:scale-[0.98] ${compact ? "px-2" : "px-3"} ${tabClass(active, tone)}`}
             href={item.href}
             key={item.href}
+            prefetch={false}
             target={item.external ? "_blank" : undefined}
             rel={item.external ? "noreferrer" : undefined}
           >
             <item.icon className="h-3.5 w-3.5" strokeWidth={1.8} />
             <span>{item.label}</span>
             <span
-              className={`border px-1.5 py-0.5 font-mono text-[10px] ${
+              className={`${compact ? "hidden xl:inline-flex" : "inline-flex"} border px-1.5 py-0.5 font-mono text-[10px] ${
                 tone === "dark"
                   ? active
                     ? "border-white/20 bg-white/15 text-white"

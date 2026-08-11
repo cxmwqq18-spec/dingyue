@@ -17,6 +17,9 @@ const siteChecks = [
       "/site/aidreamcapes/tools",
       "/site/aidreamcapes/tools/fan-scene-album-builder",
       "/site/aidreamcapes/tools/new-year-countdown-album-maker",
+      "/site/aidreamcapes/best-packages",
+      "/site/aidreamcapes/best-ai-image",
+      "/site/aidreamcapes/best-ai-video",
       "/site/aidreamcapes/pricing",
       "/site/aidreamcapes/faq",
       "/site/aidreamcapes/login"
@@ -29,6 +32,9 @@ const siteChecks = [
       "/site/mydreamshoots/collections",
       "/site/mydreamshoots/collections/creator-portraits",
       "/site/mydreamshoots/tools",
+      "/site/mydreamshoots/best-packages",
+      "/site/mydreamshoots/best-ai-image",
+      "/site/mydreamshoots/best-ai-video",
       "/site/mydreamshoots/pricing",
       "/site/mydreamshoots/faq",
       "/site/mydreamshoots/login"
@@ -158,12 +164,19 @@ function signatureFromItems(items, siteSlug) {
 async function extractMenuSignature(page, siteSlug, route, menuCheck) {
   const button = page.locator('nav button[aria-haspopup="dialog"]').filter({ hasText: menuCheck.buttonName }).first();
   await button.waitFor({ state: "visible", timeout: 30000 });
-  await button.click({ timeout: 15000 });
-  await page.waitForFunction(
-    () => Boolean(document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]')),
-    undefined,
-    { timeout: 10000 }
-  );
+  let opened = false;
+  for (let attempt = 0; attempt < 2 && !opened; attempt += 1) {
+    await button.click({ timeout: 15000 });
+    try {
+      await button.getAttribute("aria-expanded");
+      await page.locator('[data-storefront-mega-menu-panel][aria-hidden="false"]').first().waitFor({ state: "visible", timeout: 10000 });
+      opened = true;
+    } catch (error) {
+      if (attempt === 1) throw error;
+      await page.keyboard.press("Escape").catch(() => undefined);
+      await page.waitForTimeout(300);
+    }
+  }
   const items = await page.evaluate(
     ({ currentSiteSlug, currentMenuName }) => {
       const panel = document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]');
@@ -192,6 +205,31 @@ async function extractMenuSignature(page, siteSlug, route, menuCheck) {
   const signature = signatureFromItems(items, siteSlug);
   assert(signature.length > 0, `${siteSlug} ${route} ${menuCheck.name}: no menu item links were found`);
   return signature;
+}
+
+async function assertBestPackagesDirectLink(page, siteSlug, route, failures) {
+  const result = await page.evaluate(() => {
+    const nav = document.querySelector("header nav");
+    const normalizeText = (value) => String(value || "").replace(/\s+/g, " ").trim();
+    const bestAnchors = [...(nav?.querySelectorAll("a[href]") ?? [])]
+      .filter((anchor) => normalizeText(anchor.textContent) === "Best Packages")
+      .map((anchor) => anchor.getAttribute("href") || "");
+    const bestButtons = [...(nav?.querySelectorAll('button[aria-haspopup="dialog"]') ?? [])]
+      .filter((button) => normalizeText(button.textContent) === "Best Packages")
+      .map((button) => normalizeText(button.textContent));
+    return { bestAnchors, bestButtons };
+  });
+  const expectedHref = `/site/${siteSlug}/best-packages`;
+  if (!result.bestAnchors.some((href) => normalizeHref(href) === expectedHref) || result.bestButtons.length) {
+    failures.push({
+      site: siteSlug,
+      route,
+      surface: "best_packages_header_link",
+      expectedHref,
+      anchors: result.bestAnchors,
+      buttons: result.bestButtons
+    });
+  }
 }
 
 async function loginWorkspaceCustomer(context, workspaceCheck) {
@@ -315,12 +353,15 @@ async function scrollThroughPage(page) {
 }
 
 async function gotoRoute(page, route) {
-  try {
-    return await page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
-  } catch (error) {
-    if (!String(error?.message ?? "").includes("net::ERR_ABORTED")) throw error;
-    await page.waitForTimeout(500);
-    return page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      return await page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+    } catch (error) {
+      const message = String(error?.message ?? "");
+      const retryable = message.includes("net::ERR_ABORTED") || message.includes("net::ERR_CONNECTION_REFUSED") || message.includes("Timeout");
+      if (!retryable || attempt === 2) throw error;
+      await page.waitForTimeout(800 + attempt * 1200);
+    }
   }
 }
 
@@ -640,6 +681,11 @@ async function smokeNavigationDataConsistency() {
     const page = await context.newPage();
 
     for (const site of siteChecks) {
+      for (const route of site.routes) {
+        await gotoRoute(page, route);
+        await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
+        await assertBestPackagesDirectLink(page, site.slug, route, failures);
+      }
       for (const menuCheck of menuChecks) {
         let expected;
         for (const route of site.routes) {

@@ -20,8 +20,6 @@ const homeOrderByStore = {
   mydreamshoots: [
     "hero_1",
     "generation_showcase_1",
-    "featured_pack_1",
-    "featured_christmas_1",
     "featured_thanksgiving_1",
     "tutorial_video_1",
     "tutorial_video_2",
@@ -34,35 +32,48 @@ const homeOrderByStore = {
   ],
   aidreamcapes: [
     "hero_1",
-    "brand_strip_1",
-    "visual_proof_1",
-    "featured_pack_1",
-    "featured_christmas_1",
-    "featured_thanksgiving_1",
-    "package_catalog_1",
     "generation_showcase_1",
+    "featured_thanksgiving_1",
     "tutorial_video_1",
     "tutorial_video_2",
     "mobile_video_1",
-    "flow_bridge_1",
-    "pricing_1",
+    "package_catalog_1",
     "proof_1",
     "faq_1",
-    "trust_1",
-    "conversion_1"
+    "conversion_1",
+    "brand_strip_1"
   ]
 };
 const removedHomeSectionsByStore = {
-  mydreamshoots: ["visual_proof_1", "flow_bridge_1", "trust_1"],
-  aidreamcapes: []
+  mydreamshoots: ["visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1"],
+  aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
 };
+const bestPageTemplateKeys = ["best-packages", "best-ai-image", "best-ai-video"];
 const assetVersion = "20260801visualfix1";
 const aidreamAssetVersion = "20260801visualfix2";
 
 const rawArgs = process.argv.slice(2);
-const flags = new Set(rawArgs.filter((arg) => arg.startsWith("--")).map((arg) => arg.slice(2)));
+const flags = new Set();
+const args = new Map();
+for (let index = 0; index < rawArgs.length; index += 1) {
+  const rawArg = rawArgs[index];
+  if (!rawArg.startsWith("--")) continue;
+  const [key, ...rest] = rawArg.slice(2).split("=");
+  if (rest.length) {
+    args.set(key, rest.join("="));
+    continue;
+  }
+  const next = rawArgs[index + 1];
+  if (next && !next.startsWith("--")) {
+    args.set(key, next);
+    index += 1;
+  } else {
+    flags.add(key);
+  }
+}
 const dryRun = flags.has("dry-run");
 const updateDb = flags.has("db");
+const requestedStoreKey = String(args.get("site") ?? args.get("store") ?? "all").trim().toLowerCase();
 
 function versioned(pathname, version = assetVersion) {
   return `${pathname}?v=${version}`;
@@ -98,6 +109,7 @@ const myAssets = {
 };
 
 const trustedLogoAssetBase = "/assets/dreamshoot/generated/trusted-logos";
+const aidreamTrustedLogoAssetBase = "/assets/sites/site_aidreamcapes/trusted-logos";
 const mydreamshootsAboutBody = "MyDreamShoots is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.";
 const mydreamshootsTrustedLogoBlocks = [
   block("trusted_logo_dior", "logo", { name: "Dior", imageUrl: `${trustedLogoAssetBase}/dior.png`, badge: "Creator proof" }),
@@ -130,6 +142,14 @@ const mydreamshootsTrustedLogoBlocks = [
   block("trusted_logo_zexy", "logo", { name: "Zexy", imageUrl: `${trustedLogoAssetBase}/zexy.svg`, badge: "Creator proof" }),
   block("trusted_logo_zola", "logo", { name: "Zola", imageUrl: `${trustedLogoAssetBase}/zola.png`, badge: "Creator proof" })
 ];
+const aidreamcapesTrustedLogoBlocks = mydreamshootsTrustedLogoBlocks.map((logo) => ({
+  ...clone(logo),
+  id: `aidream_${logo.id}`,
+  settings: {
+    ...clone(logo.settings),
+    imageUrl: String(logo.settings.imageUrl).replace(trustedLogoAssetBase, aidreamTrustedLogoAssetBase)
+  }
+}));
 
 const aidreamAssets = {
   hero: versioned("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp", aidreamAssetVersion),
@@ -161,12 +181,16 @@ const stores = [
       eyebrow: "Customer-created examples",
       title: "Browse image and video themes customers have already created.",
       subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
-      imageTitle: "Customer image themes",
-      videoTitle: "Customer video themes",
+      imageTitle: "Best Photo Generator",
+      imageAllLabel: "View all photos",
+      imageAllHref: "/best-ai-image",
+      videoTitle: "Best Video Generator",
+      videoAllLabel: "View all videos",
+      videoAllHref: "/best-ai-video",
       primaryCta: "Start with your photos",
-      primaryHref: "/login",
+      primaryHref: "/app/create",
       imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
-      videoSlugs: "cinematic-portrait-motion|social-profile-clip|creator-scene-motion|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
+      videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
       videoItemLimit: 8
     },
     generationBlocks: mydreamshootsTrustedLogoBlocks,
@@ -224,9 +248,9 @@ const stores = [
       anchor: "mobile-video-tutorial",
       eyebrow: "Mobile tutorial",
       title: "MyDreamShoots mobile photo workflow preview.",
-      subtitle: "Compare image setup and motion-preview steps in a vertical phone view.",
+      subtitle: "Compare image setup and motion-preview steps in a vertical phone layout.",
       imageUrl: myAssets.flowPrivateAlbumWorkspace,
-      imageAlt: "MyDreamShoots private album workspace preview",
+      imageAlt: "Mobile MyDreamShoots workspace screen showing private source-photo setup, credit review, and finished AI photo gallery steps.",
       videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",
       videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260806mobile45a",
       videoBadge: "Mobile workflow",
@@ -279,6 +303,7 @@ const stores = [
     key: "aidreamcapes",
     siteId: "site_aidreamcapes",
     siteSlug: "aidreamcapes",
+    preserveExistingCopy: true,
     heroSettings: {
       anchor: "home",
       eyebrow: "",
@@ -314,17 +339,28 @@ const stores = [
     },
     generationSettings: {
       anchor: "generated-showcase",
-      eyebrow: "Customer occasion examples",
-      title: "Browse private fan-scene, game-day, and holiday themes customers can create.",
-      subtitle: "These examples use Aidreamcapes-owned theme assets and approved source-photo assumptions. Scan fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, and seasonal directions.",
-      imageTitle: "Fan and holiday image themes",
-      videoTitle: "Fan and holiday video themes",
-      primaryCta: "Start with approved photos",
-      primaryHref: "/login",
+      showTrustedLogoIntro: true,
+      trustedLogoTitle: "Trusted by Aidreamcapes creators worldwide",
+      aboutTitle: "What is Aidreamcapes?",
+      aboutBody: "Aidreamcapes is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.",
+      embeddedPricingSectionId: "pricing_1",
+      trustedLogoSplitIndex: 15,
+      eyebrow: "Customer-created examples",
+      title: "Browse Aidreamcapes image and video themes customers have already created.",
+      subtitle: "These Aidreamcapes examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
+      imageTitle: "Best Photo Generator",
+      imageAllLabel: "View all photos",
+      imageAllHref: "/best-ai-image",
+      videoTitle: "Best Video Generator",
+      videoAllLabel: "View all videos",
+      videoAllHref: "/best-ai-video",
+      primaryCta: "Start with your photos",
+      primaryHref: "/app/create",
       imageSlugs: "fan-scene-albums|game-day-group-photos|stadium-night-fan-sets|premiere-style-portraits|christmas-holiday-albums|thanksgiving-memory-sets|halloween-party-portraits|seasonal-celebration-photos",
       videoSlugs: "route-atlas-motion|coastal-memory-clip|old-quarter-walkthrough|resort-balcony-motion|scenic-overlook-pan|alpine-trail-motion|solo-traveler-profile-clip|heritage-celebration-film",
       videoItemLimit: 8
     },
+    generationBlocks: aidreamcapesTrustedLogoBlocks,
     featuredPack: section("dreamshoot_featured_pack", {
       anchor: "featured-pack",
       label: "Recommended occasion album",
@@ -379,9 +415,9 @@ const stores = [
       anchor: "mobile-video-tutorial",
       eyebrow: "Mobile tutorial",
       title: "Aidreamcapes mobile private album preview.",
-      subtitle: "Compare portrait intake and album review steps in a vertical phone view.",
+      subtitle: "Compare portrait intake and album review steps in a vertical phone layout.",
       imageUrl: aidreamAssets.gallery,
-      imageAlt: "Aidreamcapes private fan-scene album preview",
+      imageAlt: "Mobile Aidreamcapes private album screen showing approved source-photo intake, fan-scene review, and finished gallery delivery.",
       videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
       videoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-mobile-tutorial-55s.jpg?v=20260804mobile1",
       videoBadge: "Mobile workflow",
@@ -417,7 +453,7 @@ const stores = [
     faq: aidreamcapesFaqSection(),
     partnerStrip: section("brand_logo_strip", {
       anchor: "trusted",
-      title: "For fan communities, event planners, holiday sellers, creator teams, and local studios.",
+      title: "Aidreamcapes for fan communities, event planners, holiday sellers, creator teams, and local studios.",
       style: "dark"
     }, [
       block("aidream_partner_fan_communities", "logo", { name: "Fan communities", imageUrl: "", badge: "Groups" }),
@@ -457,8 +493,149 @@ function homePageForSite(site) {
   return site?.pages?.find((page) => page.slug === "/" || page.pageType === "home");
 }
 
-function applyStoreSpecificExistingSections(pageJson, store) {
+function settingText(section, key) {
+  const value = section?.settings?.[key];
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function firstSeasonalBlockImage(section) {
+  return (section?.blocks ?? [])
+    .map((block) => block?.settings?.imageUrl)
+    .find((value) => typeof value === "string" && value.trim());
+}
+
+function uniqueStringList(values) {
+  const seen = new Set();
+  return values
+    .map((value) => String(value ?? "").trim())
+    .filter(Boolean)
+    .filter((value) => {
+      if (seen.has(value)) return false;
+      seen.add(value);
+      return true;
+    });
+}
+
+function trustedLogoBlocksFromSection(section) {
+  const blocks = section?.blocks ?? [];
+  return blocks
+    .filter((block) => block?.type === "logo")
+    .map((block, index) => ({
+      ...clone(block),
+      id: `trusted_${block.id || `logo_${index + 1}`}`,
+      type: "logo"
+    }));
+}
+
+function aidreamcapesFaqImages(sections) {
+  const primaryImage = firstSeasonalBlockImage(sections.featured_christmas_1) ||
+    firstSeasonalBlockImage(sections.featured_pack_1) ||
+    settingText(sections.hero_1, "imageUrl");
+  const imageList = uniqueStringList([
+    firstSeasonalBlockImage(sections.featured_christmas_1),
+    firstSeasonalBlockImage(sections.featured_thanksgiving_1),
+    firstSeasonalBlockImage(sections.featured_pack_1),
+    settingText(sections.hero_1, "imageUrl"),
+    settingText(sections.hero_1, "secondaryImageUrl"),
+    settingText(sections.hero_1, "tertiaryImageUrl")
+  ]).filter((value) => value.startsWith("/assets/sites/site_aidreamcapes/"));
+  return { primaryImage, imageList };
+}
+
+function applyFeaturedThanksgivingToHomeSections(sections, featuredSections) {
+  if (featuredSections?.featured_thanksgiving_1) {
+    sections.featured_thanksgiving_1 = clone(featuredSections.featured_thanksgiving_1);
+  }
+}
+
+function applyAidreamcapesArchitectureOnly(pageJson, store, featuredSections = {}) {
   if (!pageJson?.sections) return false;
+  const sections = pageJson.sections;
+  const generation = sections.generation_showcase_1 ?? { type: "dreamshoot_generation_showcase", settings: {}, blocks: [] };
+  const generationSourceSettings = clone(store.generationSettings ?? {});
+  const generationSettings = {
+    ...generation.settings,
+    ...generationSourceSettings,
+    anchor: generationSourceSettings.anchor ?? generation.settings?.anchor ?? "generated-showcase",
+    embeddedPricingSectionId: "pricing_1",
+    videoItemLimit: Number(generationSourceSettings.videoItemLimit ?? generation.settings?.videoItemLimit ?? generation.settings?.itemLimit ?? 8) || 8
+  };
+  delete generationSettings.itemLimit;
+
+  const trustedBlocks = clone(store.generationBlocks ?? trustedLogoBlocksFromSection(store.partnerStrip));
+  const aboutTitle = settingText({ settings: generationSettings }, "aboutTitle");
+  const aboutBody = settingText({ settings: generationSettings }, "aboutBody");
+  if (trustedBlocks.length && aboutTitle && aboutBody) {
+    generationSettings.showTrustedLogoIntro = true;
+    generationSettings.trustedLogoTitle = settingText({ settings: generationSettings }, "trustedLogoTitle") || settingText(store.partnerStrip, "title");
+    generationSettings.trustedLogoSplitIndex = Math.max(
+      1,
+      Math.min(trustedBlocks.length - 1, Number(generationSettings.trustedLogoSplitIndex ?? Math.ceil(trustedBlocks.length / 2)) || Math.ceil(trustedBlocks.length / 2))
+    );
+    generationSettings.aboutTitle = aboutTitle;
+    generationSettings.aboutBody = aboutBody;
+  } else {
+    generationSettings.showTrustedLogoIntro = false;
+    delete generationSettings.trustedLogoTitle;
+    delete generationSettings.trustedLogoSplitIndex;
+    delete generationSettings.aboutTitle;
+    delete generationSettings.aboutBody;
+  }
+
+  sections.generation_showcase_1 = {
+    ...generation,
+    type: "dreamshoot_generation_showcase",
+    settings: generationSettings,
+    blocks: trustedBlocks
+  };
+
+  if (sections.package_catalog_1) {
+    sections.package_catalog_1 = {
+      ...sections.package_catalog_1,
+      settings: {
+        ...sections.package_catalog_1.settings,
+        featuredCount: 12
+      }
+    };
+  }
+  if (store.mobile) {
+    sections.mobile_video_1 = clone(store.mobile);
+  }
+  applyFeaturedThanksgivingToHomeSections(sections, featuredSections);
+  for (const sectionId of removedHomeSectionsByStore[store.key] ?? []) delete sections[sectionId];
+  if (sections.proof_1) {
+    sections.proof_1 = {
+      ...sections.proof_1,
+      settings: {
+        ...sections.proof_1.settings,
+        mode: "reviews"
+      }
+    };
+  }
+  if (sections.faq_1) {
+    const faqImages = aidreamcapesFaqImages(sections);
+    sections.faq_1 = {
+      ...sections.faq_1,
+      settings: {
+        ...sections.faq_1.settings,
+        layout: "visual_faq",
+        ...(faqImages.primaryImage ? { imageUrl: faqImages.primaryImage } : {}),
+        ...(faqImages.imageList.length ? { imageList: faqImages.imageList.join("|") } : {}),
+        imageAlt: settingText(sections.faq_1, "imageAlt") || settingText(sections.faq_1, "subtitle"),
+        imageListAlt: settingText(sections.faq_1, "imageListAlt") || settingText(sections.faq_1, "subtitle"),
+        featureCaption: settingText(sections.faq_1, "featureCaption") || settingText(sections.faq_1, "subtitle")
+      }
+    };
+  }
+
+  const homeOrder = homeOrderByStore[store.key] ?? homeOrderByStore.mydreamshoots;
+  pageJson.sectionsOrder = homeOrder.filter((sectionId) => Boolean(sections[sectionId]));
+  return true;
+}
+
+function applyStoreSpecificExistingSections(pageJson, store, featuredSections = {}) {
+  if (!pageJson?.sections) return false;
+  if (store.preserveExistingCopy) return applyAidreamcapesArchitectureOnly(pageJson, store, featuredSections);
   const sections = pageJson.sections;
   if (store.heroSettings && sections.hero_1) {
     sections.hero_1 = {
@@ -481,9 +658,6 @@ function applyStoreSpecificExistingSections(pageJson, store) {
       }
     };
   }
-  if (store.featuredPack) {
-    sections.featured_pack_1 = clone(store.featuredPack);
-  }
   const generationSettings = { ...(sections.generation_showcase_1?.settings ?? {}), ...clone(store.generationSettings) };
   delete generationSettings.itemLimit;
   sections.generation_showcase_1 = {
@@ -498,11 +672,138 @@ function applyStoreSpecificExistingSections(pageJson, store) {
   sections.proof_1 = clone(store.reviews);
   sections.faq_1 = clone(store.faq);
   sections.brand_strip_1 = clone(store.partnerStrip);
+  applyFeaturedThanksgivingToHomeSections(sections, featuredSections);
   const removedHomeSections = removedHomeSectionsByStore[store.key] ?? [];
   for (const sectionId of removedHomeSections) delete sections[sectionId];
   const homeOrder = homeOrderByStore[store.key] ?? homeOrderByStore.mydreamshoots;
   pageJson.sectionsOrder = homeOrder.filter((sectionId) => Boolean(sections[sectionId]));
   return true;
+}
+
+function bestPageSlug(templateKey) {
+  return `/${templateKey}`;
+}
+
+function bestPageTitle(templateKey) {
+  if (templateKey === "best-ai-image") return "Best AI image";
+  if (templateKey === "best-ai-video") return "Best AI video";
+  return "Best Packages";
+}
+
+function bestPageIdSuffix(templateKey) {
+  return templateKey.replaceAll("-", "_");
+}
+
+function bestPageTemplatesForSite(site) {
+  return dreamshootAiStudioTemplatesForSite({
+    id: site.id,
+    slug: site.slug,
+    name: site.name,
+    primaryDomain: site.primaryDomain,
+    branding: site.branding
+  });
+}
+
+function bestPageOgImage(site, json) {
+  const sections = json?.sections ?? {};
+  const homeSections = site.pages?.find((page) => page.slug === "/" || page.pageType === "home")?.publishedJson?.sections ?? {};
+  return firstSeasonalBlockImage(sections.featured_pack_1) ||
+    firstSeasonalBlockImage(sections.featured_christmas_1) ||
+    firstSeasonalBlockImage(sections.featured_thanksgiving_1) ||
+    site.themeSettings?.publishedJson?.seo?.defaultOgImage ||
+    site.themeSettings?.draftJson?.seo?.defaultOgImage ||
+    settingText(homeSections.hero_1, "heroVisualOverride") ||
+    settingText(homeSections.hero_1, "imageUrl") ||
+    settingText(homeSections.hero_1, "secondaryImageUrl") ||
+    "";
+}
+
+function bestThemePageRecord(site, templateKey, json) {
+  const slug = bestPageSlug(templateKey);
+  const pageJson = clone(json);
+  if (pageJson.seo && !pageJson.seo.ogImage) {
+    const ogImage = bestPageOgImage(site, pageJson);
+    if (ogImage) pageJson.seo = { ...pageJson.seo, ogImage };
+  }
+  return {
+    id: `${site.id}_${bestPageIdSuffix(templateKey)}`,
+    siteId: site.id,
+    pageType: pageJson.pageType ?? "content",
+    templateKey,
+    slug,
+    title: bestPageTitle(templateKey),
+    draftJson: clone(pageJson),
+    publishedJson: clone(pageJson)
+  };
+}
+
+function upsertBestPagesForSite(site) {
+  const templates = bestPageTemplatesForSite(site);
+  let updates = 0;
+  for (const templateKey of bestPageTemplateKeys) {
+    const json = templates[templateKey];
+    if (!json) continue;
+    const nextPage = bestThemePageRecord(site, templateKey, json);
+    const existingIndex = site.pages.findIndex((page) => page.slug === nextPage.slug);
+    if (existingIndex >= 0) {
+      site.pages[existingIndex] = { ...site.pages[existingIndex], ...nextPage, id: site.pages[existingIndex].id || nextPage.id };
+    } else {
+      const homeIndex = site.pages.findIndex((page) => page.slug === "/");
+      site.pages.splice(homeIndex >= 0 ? homeIndex + 1 : site.pages.length, 0, nextPage);
+    }
+    updates += 1;
+  }
+  return updates;
+}
+
+function upsertBestTemplates(theme, site) {
+  const templates = bestPageTemplatesForSite(site);
+  theme.templates ??= {};
+  let updates = 0;
+  for (const templateKey of bestPageTemplateKeys) {
+    if (!templates[templateKey]) continue;
+    theme.templates[templateKey] = clone(templates[templateKey]);
+    updates += 1;
+  }
+  return updates;
+}
+
+function upsertBestPagesInPublication(publication, site) {
+  const pages = publication.snapshot?.pages;
+  if (!Array.isArray(pages)) return 0;
+  const templates = bestPageTemplatesForSite(site);
+  let updates = 0;
+  for (const templateKey of bestPageTemplateKeys) {
+    const json = templates[templateKey];
+    if (!json) continue;
+    const page = bestThemePageRecord(site, templateKey, json);
+    const snapshotPage = {
+      id: page.id,
+      siteId: page.siteId,
+      pageType: page.pageType,
+      templateKey: page.templateKey,
+      slug: page.slug,
+      title: page.title,
+      draftJson: clone(page.draftJson),
+      publishedJson: clone(page.publishedJson)
+    };
+    const existingIndex = pages.findIndex((item) => item.slug === snapshotPage.slug);
+    if (existingIndex >= 0) pages[existingIndex] = { ...pages[existingIndex], ...snapshotPage, id: pages[existingIndex].id || snapshotPage.id };
+    else {
+      const homeIndex = pages.findIndex((item) => item.slug === "/");
+      pages.splice(homeIndex >= 0 ? homeIndex + 1 : pages.length, 0, snapshotPage);
+    }
+    updates += 1;
+  }
+  return updates;
+}
+
+function refreshPublicationStats(publication) {
+  if ("snapshotBytes" in publication) publication.snapshotBytes = Buffer.byteLength(JSON.stringify(publication.snapshot), "utf8");
+  if ("pageCount" in publication) publication.pageCount = publication.snapshot?.pages?.length ?? publication.pageCount;
+  if ("sectionCount" in publication) {
+    publication.sectionCount = (publication.snapshot?.pages ?? []).reduce((count, page) => count + Object.keys(page.publishedJson?.sections ?? {}).length, 0);
+  }
 }
 
 function applyStoreToState(state, store) {
@@ -512,18 +813,23 @@ function applyStoreToState(state, store) {
   const site = findSite(state, store);
   const homePage = homePageForSite(site);
   if (!site || !homePage) throw new Error(`missing_home_page:${store.key}`);
-  if (applyStoreSpecificExistingSections(homePage.draftJson, store)) pageUpdates += 1;
-  if (applyStoreSpecificExistingSections(homePage.publishedJson, store)) pageUpdates += 1;
+  const featuredSections = bestPageTemplatesForSite(site)["best-packages"]?.sections ?? {};
+  if (applyStoreSpecificExistingSections(homePage.draftJson, store, featuredSections)) pageUpdates += 1;
+  if (applyStoreSpecificExistingSections(homePage.publishedJson, store, featuredSections)) pageUpdates += 1;
+  pageUpdates += upsertBestPagesForSite(site);
 
   for (const theme of state.siteThemes ?? []) {
     if (theme.siteId !== store.siteId) continue;
+    themeUpdates += upsertBestTemplates(theme, site);
     const template = theme.templates?.index;
-    if (!template?.sections || !Array.isArray(template.content_for_page)) continue;
+    const templateOrder = Array.isArray(template?.sectionsOrder) ? template.sectionsOrder : template?.content_for_page;
+    if (!template?.sections || !Array.isArray(templateOrder)) continue;
     const syntheticPage = {
       sections: template.sections,
-      sectionsOrder: template.content_for_page
+      sectionsOrder: templateOrder
     };
-    applyStoreSpecificExistingSections(syntheticPage, store);
+    applyStoreSpecificExistingSections(syntheticPage, store, featuredSections);
+    template.sectionsOrder = syntheticPage.sectionsOrder;
     template.content_for_page = syntheticPage.sectionsOrder;
     themeUpdates += 1;
   }
@@ -531,24 +837,21 @@ function applyStoreToState(state, store) {
   for (const publication of state.themePublications ?? []) {
     if (publication.siteId !== store.siteId) continue;
     const snapshotHome = publication.snapshot?.pages?.find((page) => page.slug === "/");
-    if (snapshotHome?.publishedJson && applyStoreSpecificExistingSections(snapshotHome.publishedJson, store)) {
+    if (snapshotHome?.publishedJson && applyStoreSpecificExistingSections(snapshotHome.publishedJson, store, featuredSections)) {
       publicationUpdates += 1;
-      if ("snapshotBytes" in publication) publication.snapshotBytes = Buffer.byteLength(JSON.stringify(publication.snapshot), "utf8");
-      if ("pageCount" in publication) publication.pageCount = publication.snapshot?.pages?.length ?? publication.pageCount;
-      if ("sectionCount" in publication) {
-        publication.sectionCount = (publication.snapshot?.pages ?? []).reduce((count, page) => count + Object.keys(page.publishedJson?.sections ?? {}).length, 0);
-      }
     }
+    publicationUpdates += upsertBestPagesInPublication(publication, site);
+    refreshPublicationStats(publication);
   }
 
   return { pageUpdates, themeUpdates, publicationUpdates };
 }
 
-async function updateDatabase(state) {
+async function updateDatabase(state, selectedStores) {
   const prisma = new PrismaClient();
   const report = { pages: 0, siteThemes: 0, publications: 0 };
   try {
-    for (const store of stores) {
+    for (const store of selectedStores) {
       const site = findSite(state, store);
       const homePage = homePageForSite(site);
       if (homePage) {
@@ -557,6 +860,31 @@ async function updateDatabase(state) {
           data: {
             draftJson: homePage.draftJson,
             publishedJson: homePage.publishedJson
+          }
+        });
+        report.pages += 1;
+      }
+      for (const templateKey of bestPageTemplateKeys) {
+        const page = site?.pages?.find((item) => item.slug === bestPageSlug(templateKey));
+        if (!page) continue;
+        await prisma.themePage.upsert({
+          where: { siteId_slug: { siteId: store.siteId, slug: page.slug } },
+          create: {
+            id: page.id,
+            siteId: store.siteId,
+            pageType: page.pageType,
+            templateKey: page.templateKey,
+            slug: page.slug,
+            title: page.title,
+            draftJson: page.draftJson,
+            publishedJson: page.publishedJson
+          },
+          update: {
+            pageType: page.pageType,
+            templateKey: page.templateKey,
+            title: page.title,
+            draftJson: page.draftJson,
+            publishedJson: page.publishedJson
           }
         });
         report.pages += 1;
@@ -587,10 +915,14 @@ async function updateDatabase(state) {
 async function main() {
   const state = await readState();
   const report = {};
-  for (const store of stores) report[store.key] = applyStoreToState(state, store);
+  const selectedStores = requestedStoreKey === "all"
+    ? stores
+    : stores.filter((store) => store.key === requestedStoreKey || store.siteSlug === requestedStoreKey || store.siteId === requestedStoreKey);
+  if (!selectedStores.length) throw new Error(`unknown_store:${requestedStoreKey}`);
+  for (const store of selectedStores) report[store.key] = applyStoreToState(state, store);
   if (!dryRun) await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
-  const dbReport = updateDb && !dryRun ? await updateDatabase(state) : undefined;
-  console.log(JSON.stringify({ dryRun, report, dbReport }, null, 2));
+  const dbReport = updateDb && !dryRun ? await updateDatabase(state, selectedStores) : undefined;
+  console.log(JSON.stringify({ dryRun, selectedStores: selectedStores.map((store) => store.key), report, dbReport }, null, 2));
 }
 
 main().catch((error) => {

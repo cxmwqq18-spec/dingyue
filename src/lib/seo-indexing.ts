@@ -3,6 +3,7 @@ import { getSiteByHostCandidatesFromState } from "@/lib/domain-routing";
 import { canonicalSeoDirectoryPathForSite, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { creativePackCollectionHref } from "@/lib/photo-package-taxonomy";
 import { resolveMediaAssetUrl } from "@/lib/media";
+import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo } from "@/lib/theme/policy-seo";
 import type { CreativePack, PlatformState, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
@@ -165,7 +166,7 @@ const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
   "/tools/edit-by-prompt",
   "/tools/magic-upscaler"
 ];
-const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us"];
+const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/best-packages", "/best-ai-image", "/best-ai-video"];
 const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"];
 const DREAMSHOOT_FALLBACK_SITE = { id: DREAMSHOOT_SITE_ID, slug: "mydreamshoots", name: "MyDreamShoots", primaryDomain: "www.mydreamshoots.com" } as Site;
 const AIDREAMCAPES_FALLBACK_SITE = { id: AIDREAMCAPES_SITE_ID, slug: "aidreamcapes", name: "Aidreamcapes", primaryDomain: "www.aidreamcapes.com" } as Site;
@@ -418,8 +419,21 @@ function packSitemapImages(site: Site, pack: CreativePack, limit = 8): SitemapIm
     seen.add(comparable);
     const galleryIndex = index - 1;
     const title = index === 0
-      ? cleanText(pack.name, "MyDreamShoots package preview")
-      : cleanText(pack.galleryImageAlts?.[galleryIndex], `${pack.name} gallery image ${galleryIndex + 1}`);
+      ? storefrontCreativePackImageAlt({
+          brand: storefrontMediaBrandName(site),
+          imageUrl: loc,
+          locale: storefrontMediaAltLocaleForSite(site),
+          pack,
+          role: "cover"
+        })
+      : storefrontCreativePackImageAlt({
+          brand: storefrontMediaBrandName(site),
+          imageUrl: loc,
+          index: galleryIndex,
+          locale: storefrontMediaAltLocaleForSite(site),
+          pack,
+          role: "gallery"
+        });
     const caption = cleanText(pack.headline || pack.description, `${pack.name} photo package preview`);
     images.push({
       loc,

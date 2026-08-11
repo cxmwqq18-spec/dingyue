@@ -708,7 +708,7 @@ function buildCreativePackCoverageArticles(state, siteId, brand) {
         blogSlug: `/blog/${slug}-photo-package-guide`,
         description: pack.description || pack.headline || `${label} gives shoppers a focused ${parentLabel} direction to compare before starting a private album.`,
         imageUrl: blogSafeImageUrlForPack({ brand, slug, pack, category, parent }),
-        imageAlt: `${brand} ${label} theme cover`,
+        imageAlt: `${brand} ${label} collection cover showing the visual direction, scene, and intended private album use for this AI photo package.`,
         targetLabel: `Open ${label} theme`,
         targetHref,
         examples,

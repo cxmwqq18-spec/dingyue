@@ -349,7 +349,7 @@ const titleTranslations = new Map(
     "pricing credits visual": "Visual de creditos y precios",
     "aidreamcapes coastal escape portrait cover": "Portada de escapada costera AIdreamcapes",
     "aidreamcapes editorial getaway portrait cover": "Portada de escapada editorial AIdreamcapes",
-    "aidreamcapes island resort scene cover": "Portada de resort isleno AIdreamcapes",
+    "aidreamcapes island resort scene cover": "Portada de retrato en un resort isleño con paisaje tropical para un album privado de AIdreamcapes",
     "aidreamcapes cinematic travel portrait hero": "Heroe cinematico de retrato de viaje AIdreamcapes"
   })
 );
@@ -3274,7 +3274,8 @@ function buildDataset(source, spec) {
       generationCount: pack.generationCount,
       conversionRate: pack.conversionRate,
       imageUrl: pack.imageUrl ? spanishizeString(pack.imageUrl, spec, idMap) : null,
-      galleryImages: spanishizeJson(pack.galleryImages, spec, idMap)
+      galleryImages: spanishizeJson(pack.galleryImages, spec, idMap),
+      galleryImageAlts: spanishizeJson(pack.galleryImageAlts, spec, idMap)
     };
   });
   const toolCategories = sortByParent(source.toolCategories).map((category) => {
@@ -3718,7 +3719,8 @@ async function upsertDataset(dataset) {
         generationCount: pack.generationCount,
         conversionRate: pack.conversionRate,
         imageUrl: pack.imageUrl,
-        galleryImages: pack.galleryImages
+        galleryImages: pack.galleryImages,
+        galleryImageAlts: pack.galleryImageAlts
       }
     });
   }

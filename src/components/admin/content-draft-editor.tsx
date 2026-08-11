@@ -379,7 +379,7 @@ export function ContentDraftEditor({
               <span className="min-w-0 break-words text-[12px] text-[#666]">{message}</span>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Link className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" href={`/site/${site.slug}/admin/design/workbench?pageId=${encodeURIComponent(selectedPage.id)}`}>
+              <Link className="admin_btn inline-flex h-[30px] items-center gap-1 whitespace-nowrap" href={`/site/${site.slug}/admin/design/workbench?pageId=${encodeURIComponent(selectedPage.id)}`} prefetch={false}>
                 <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.8} />
                 全站检查
               </Link>

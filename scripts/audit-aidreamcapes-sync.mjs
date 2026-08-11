@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -37,6 +38,27 @@ function assetFileExists(storageKey) {
   return filePath.startsWith(`${customerAssetRoot}${path.sep}`) && fs.existsSync(filePath);
 }
 
+function listFilesRecursively(root) {
+  const files = [];
+  function walk(current, relative = "") {
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      const absolute = path.join(current, entry.name);
+      const nextRelative = path.join(relative, entry.name).replace(/\\/g, "/");
+      if (entry.isDirectory()) {
+        walk(absolute, nextRelative);
+      } else if (entry.isFile()) {
+        files.push(nextRelative);
+      }
+    }
+  }
+  walk(root);
+  return files.sort();
+}
+
+function sha256(filePath) {
+  return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
+}
+
 function rows(table, siteId) {
   return (state[table] || []).filter((row) => row.siteId === siteId);
 }
@@ -46,7 +68,13 @@ function siteById(siteId) {
 }
 
 function pageSlugSet(site) {
-  return new Set((site.pages || []).map((page) => page.slug));
+  const slugs = new Set((site.pages || []).map((page) => page.slug));
+  if (/mydreamshoots|dreamshoot|aidreamcapes/i.test(`${site.slug ?? ""} ${site.name ?? ""} ${site.primaryDomain ?? ""}`)) {
+    for (const slug of ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"]) {
+      slugs.add(slug);
+    }
+  }
+  return slugs;
 }
 
 function requirePageGroup(site, label, slugs) {
@@ -124,8 +152,8 @@ function inspectStoreData() {
     ["tools", ["/tools"]],
     ["workflow", ["/workflow"]],
     ["faq/help", ["/faq", "/help"]],
-    ["privacy policy", ["/policies/privacy", "/privacy-policy"]],
-    ["terms policy", ["/policies/terms", "/terms-of-service"]]
+    ["privacy policy", ["/privacy", "/policies/privacy", "/privacy-policy"]],
+    ["terms policy", ["/terms", "/policies/terms", "/terms-of-service"]]
   ];
   for (const [label, slugs] of requiredPageGroups) {
     requirePageGroup(dreamshoot, label, slugs);
@@ -233,6 +261,22 @@ function inspectCodeSync() {
     (source) => source.includes("getSiteByHostFromState") && source.includes("hostDomainCandidates"),
     "Allows aidreamcapes.com and www.aidreamcapes.com to resolve the same site."
   );
+  codeCheck(
+    "prebuild syncs aidreamcapes trusted logos",
+    "package.json",
+    (source) =>
+      source.includes("\"prebuild\": \"npm run sync:aidreamcapes-trusted-logos\"") &&
+      source.includes("\"sync:aidreamcapes-trusted-logos\": \"node scripts/sync-aidreamcapes-trusted-logos.mjs\""),
+    "Ensures clean builds recreate the site-specific trusted-logo directory."
+  );
+  codeCheck(
+    "trusted logo sync script mirrors the canonical source",
+    "scripts/sync-aidreamcapes-trusted-logos.mjs",
+    (source) =>
+      source.includes("public/assets/dreamshoot/generated/trusted-logos") &&
+      source.includes("public/assets/sites/site_aidreamcapes/trusted-logos"),
+    "The build hook should copy the canonical logo set into the Aidreamcapes path."
+  );
 
   const apiLatency = read("scripts/smoke-api-latency.mjs");
   if (apiLatency.includes("site_dreamshoot") && !apiLatency.includes("site_aidreamcapes")) {
@@ -281,10 +325,44 @@ function inspectEnvironmentHints() {
   }
 }
 
+function inspectTrustedLogoMirror() {
+  const sourceRoot = path.join(repoRoot, "public/assets/dreamshoot/generated/trusted-logos");
+  const targetRoot = path.join(repoRoot, "public/assets/sites/site_aidreamcapes/trusted-logos");
+  assert(fs.existsSync(sourceRoot), "missing shared trusted-logo source directory", { sourceRoot });
+  assert(fs.existsSync(targetRoot), "missing aidreamcapes trusted-logo directory", { targetRoot });
+  if (!fs.existsSync(sourceRoot) || !fs.existsSync(targetRoot)) return;
+
+  const sourceFiles = listFilesRecursively(sourceRoot);
+  const targetFiles = listFilesRecursively(targetRoot);
+  assert(JSON.stringify(sourceFiles) === JSON.stringify(targetFiles), "aidreamcapes trusted-logo file list diverges", {
+    sourceCount: sourceFiles.length,
+    targetCount: targetFiles.length,
+    sourceSample: sourceFiles.slice(0, 8),
+    targetSample: targetFiles.slice(0, 8)
+  });
+
+  const mismatches = [];
+  for (const relative of sourceFiles) {
+    const sourceFile = path.join(sourceRoot, relative);
+    const targetFile = path.join(targetRoot, relative);
+    if (!fs.existsSync(targetFile)) {
+      mismatches.push({ relative, error: "missing_target_file" });
+      continue;
+    }
+    if (sha256(sourceFile) !== sha256(targetFile)) {
+      mismatches.push({ relative, error: "content_mismatch" });
+    }
+  }
+  assert(mismatches.length === 0, "aidreamcapes trusted-logo contents diverge from the canonical source", {
+    mismatches: mismatches.slice(0, 6)
+  });
+}
+
 inspectStoreData();
 inspectCodeSync();
 inspectSmokeCoverage();
 inspectEnvironmentHints();
+inspectTrustedLogoMirror();
 
 const report = {
   ok: failures.length === 0,
