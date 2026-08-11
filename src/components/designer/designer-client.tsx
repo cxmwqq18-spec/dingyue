@@ -308,6 +308,10 @@ function shouldIndexField(field: ThemeFieldSchema) {
   return !["image_picker", "media_asset", "video_url", "color", "range", "font_picker"].includes(field.type);
 }
 
+function fallbackLocatorLabel(fieldId: string) {
+  return fieldDisplayLabel({ id: fieldId, label: fieldId });
+}
+
 function applyThemePackageSettingsToDraftSettings(base: ThemeSettings, siteSettings?: ThemePackageSiteSettings): ThemeSettings {
   const next = normalizeGlobalSections(cloneSettings(base));
   const packageSettings = siteSettings?.themeSettings;
@@ -587,6 +591,13 @@ export function DesignerClient({
     () => draft.sectionsOrder.map((id) => ({ id, section: draft.sections[id] })).filter((item) => item.section),
     [draft]
   );
+  const copyLocatorSectionList = useMemo(() => {
+    const orderedIds = new Set(draft.sectionsOrder);
+    const unplacedSections = Object.entries(draft.sections)
+      .filter(([id, section]) => section && !orderedIds.has(id))
+      .map(([id, section]) => ({ id, section }));
+    return [...sectionList, ...unplacedSections];
+  }, [draft.sections, draft.sectionsOrder, sectionList]);
   const selectedSectionId = selection.kind === "section" || selection.kind === "block" ? selection.sectionId : "";
   const activeSectionId = selectedSectionId && draft.sections[selectedSectionId] ? selectedSectionId : sectionList[0]?.id;
   const activeGlobalNode = selection.kind === "globalSettings" ? globalNodes.find((node) => node.id === selection.node) : undefined;
@@ -840,9 +851,10 @@ export function DesignerClient({
       });
     }
 
-    sectionList.forEach(({ id, section }, sectionIndex) => {
+    copyLocatorSectionList.forEach(({ id, section }, sectionIndex) => {
       const schema = schemaForType(section.type);
       const sectionLabel = labelForSchema(section.type, selectedSaasSectionSchemas);
+      const sectionSchemaFieldIds = new Set(schema.settings.map((field) => field.id));
       schema.settings.forEach((field) => {
         pushField({
           idBase: `page:${id}`,
@@ -855,9 +867,26 @@ export function DesignerClient({
           workspaceTab: "templates"
         });
       });
+      Object.entries(section.settings ?? {}).forEach(([fieldId, value]) => {
+        if (sectionSchemaFieldIds.has(fieldId)) return;
+        const text = locatorTextFromValue(value);
+        if (!text) return;
+        const label = fallbackLocatorLabel(fieldId);
+        pushItem({
+          id: `page:${id}:raw:${fieldId}`,
+          label,
+          path: `${activePage.title} / ${sectionIndex + 1}. ${sectionLabel} / ${label}`,
+          selection: { kind: "section", sectionId: id },
+          source: "page",
+          sourceLabel: "当前页面",
+          text,
+          workspaceTab: "templates"
+        });
+      });
       safeBlocks(section).forEach((block, blockIndex) => {
         const blockSchema = resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, section, block.type);
         const blockLabel = blockDisplayLabel(blockSchema, block, blockIndex);
+        const blockSchemaFieldIds = new Set(blockSchema?.settings.map((field) => field.id) ?? []);
         blockSchema?.settings.forEach((field) => {
           pushField({
             idBase: `page:${id}:${block.id}`,
@@ -870,6 +899,22 @@ export function DesignerClient({
             workspaceTab: "templates"
           });
         });
+        Object.entries(block.settings ?? {}).forEach(([fieldId, value]) => {
+          if (blockSchemaFieldIds.has(fieldId)) return;
+          const text = locatorTextFromValue(value);
+          if (!text) return;
+          const label = fallbackLocatorLabel(fieldId);
+          pushItem({
+            id: `page:${id}:${block.id}:raw:${fieldId}`,
+            label,
+            path: `${activePage.title} / ${sectionIndex + 1}. ${sectionLabel} / ${blockLabel} / ${label}`,
+            selection: { kind: "block", sectionId: id, blockId: block.id },
+            source: "page",
+            sourceLabel: "当前页面",
+            text,
+            workspaceTab: "templates"
+          });
+        });
       });
     });
 
@@ -878,6 +923,7 @@ export function DesignerClient({
       if (!section) return;
       const schema = schemaForType(section.type);
       const globalLabel = globalType === "header" ? "全局页头" : "全局页脚";
+      const globalSchemaFieldIds = new Set(schema.settings.map((field) => field.id));
       schema.settings.forEach((field) => {
         pushField({
           idBase: `global:${globalType}`,
@@ -890,9 +936,26 @@ export function DesignerClient({
           workspaceTab: "global"
         });
       });
+      Object.entries(section.settings ?? {}).forEach(([fieldId, value]) => {
+        if (globalSchemaFieldIds.has(fieldId)) return;
+        const text = locatorTextFromValue(value);
+        if (!text) return;
+        const label = fallbackLocatorLabel(fieldId);
+        pushItem({
+          id: `global:${globalType}:raw:${fieldId}`,
+          label,
+          path: `${globalLabel} / ${label}`,
+          selection: { kind: "global", globalType },
+          source: "global",
+          sourceLabel: "全局配置",
+          text,
+          workspaceTab: "global"
+        });
+      });
       safeBlocks(section).forEach((block, blockIndex) => {
         const blockSchema = resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, section, block.type);
         const blockLabel = blockDisplayLabel(blockSchema, block, blockIndex);
+        const blockSchemaFieldIds = new Set(blockSchema?.settings.map((field) => field.id) ?? []);
         blockSchema?.settings.forEach((field) => {
           pushField({
             idBase: `global:${globalType}:${block.id}`,
@@ -902,6 +965,22 @@ export function DesignerClient({
             source: "global",
             sourceLabel: "全局配置",
             selection: { kind: "globalBlock", globalType, blockId: block.id },
+            workspaceTab: "global"
+          });
+        });
+        Object.entries(block.settings ?? {}).forEach(([fieldId, value]) => {
+          if (blockSchemaFieldIds.has(fieldId)) return;
+          const text = locatorTextFromValue(value);
+          if (!text) return;
+          const label = fallbackLocatorLabel(fieldId);
+          pushItem({
+            id: `global:${globalType}:${block.id}:raw:${fieldId}`,
+            label,
+            path: `${globalLabel} / ${blockLabel} / ${label}`,
+            selection: { kind: "globalBlock", globalType, blockId: block.id },
+            source: "global",
+            sourceLabel: "全局配置",
+            text,
             workspaceTab: "global"
           });
         });
@@ -966,7 +1045,7 @@ export function DesignerClient({
     });
 
     return items;
-  }, [activePage.title, schemaForType, sectionList, selectedSaasSectionSchemas, themeSettings]);
+  }, [activePage.title, copyLocatorSectionList, schemaForType, selectedSaasSectionSchemas, themeSettings]);
 
   function updateDraft(next: ThemePageJson, action: string) {
     setDrafts((current) => ({ ...current, [selectedPageId]: next }));

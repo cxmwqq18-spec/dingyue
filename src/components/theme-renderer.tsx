@@ -7992,17 +7992,27 @@ function PricingTableSectionView({
       })
       .filter((item): item is readonly [string, string] => Boolean(item));
     acc[cycle] = {
-      eyebrow: spanishXbyPricing ? aidreamcapes ? "Por que elegir creditos de ruta" : "Por que elegir creditos" : priceMetaString(featuredPrice, "sidePanelEyebrow", setting(section, "sidePanelEyebrow", "Why people subscribe")),
-      title: spanishXbyPricing ? aidreamcapes ? "Creditos claros para albumes de ocasion flexibles." : "Creditos claros para paquetes privados flexibles." : priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")),
+      eyebrow: spanishXbyPricing
+        ? aidreamcapes ? "Por que elegir creditos de ruta" : "Por que elegir creditos"
+        : mydreamPricingCopyLayout
+          ? setting(section, "sidePanelEyebrow", "Why people subscribe")
+          : priceMetaString(featuredPrice, "sidePanelEyebrow", setting(section, "sidePanelEyebrow", "Why people subscribe")),
+      title: spanishXbyPricing
+        ? aidreamcapes ? "Creditos claros para albumes de ocasion flexibles." : "Creditos claros para paquetes privados flexibles."
+        : mydreamPricingCopyLayout
+          ? setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")
+          : priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")),
       body: spanishXbyPricing
         ? aidreamcapes
           ? "Genera albumes privados de fans y recuerdos festivos tras revisar creditos y mantener saldo visible."
           : "Genera albumes privados tras revisar creditos, mantener saldo visible y recargar solo cuando necesitas mas sesiones."
-        : priceMetaString(
-            featuredPrice,
-            "sidePanelBody",
-            setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
-          ),
+        : mydreamPricingCopyLayout
+          ? setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
+          : priceMetaString(
+              featuredPrice,
+              "sidePanelBody",
+              setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
+            ),
       items: configuredSideItems.length
         ? configuredSideItems
         : spanishXbyPricing
@@ -8050,7 +8060,7 @@ function PricingTableSectionView({
           <h2 className={mydreamPricingCopyLayout ? "text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-normal text-balance [font-family:var(--site-title-font)]" : "text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]"}>
             {pricingTitle}
           </h2>
-          {mydreamPricingCopyLayout ? <div className="mx-auto mt-3 h-px w-20 bg-white/58" /> : null}
+          {mydreamPricingCopyLayout ? <div className="mx-auto mt-3 h-0.5 w-24 rounded-full bg-white/70" /> : null}
           <p className={mydreamPricingCopyLayout ? "mt-4 text-[0.92rem] font-medium leading-6 text-white/78" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{pricingSubtitle}</p>
           {!aidreamcapes && !spanishXbyPricing ? (
             <>
@@ -8063,6 +8073,7 @@ function PricingTableSectionView({
           aidreamcapes={aidreamcapes}
           canShowBillingSwitch={canShowBillingSwitch}
           initialBillingCycle={billingCycle}
+          emphasizeBillingSwitch={mydreamPricingCopyLayout}
           locale={spanishXbyPricing ? "es" : "en"}
           plans={pricingPlans}
           sidePanels={sidePanels}
@@ -8990,7 +9001,7 @@ function SectionView({
           <div className={mydreamMobileCopyLayout ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
             {!mydreamMobileCopyLayout ? <p className="font-mono text-xs uppercase" style={{ color: aidreamcapes ? aidreamcapesAccent : accentBlue }}>{setting(section, "eyebrow", "Mobile tutorial")}</p> : null}
             <h2 className={mydreamMobileCopyLayout ? "text-3xl font-semibold leading-tight tracking-normal md:text-5xl" : "mt-4 text-3xl font-semibold leading-tight md:text-5xl"}>{sectionHeading(section, "Watch the mobile workflow preview.")}</h2>
-            {mydreamMobileCopyLayout ? <div className="mx-auto mt-3 h-px w-20 bg-white/58" /> : null}
+            {mydreamMobileCopyLayout ? <div className="mx-auto mt-3 h-0.5 w-24 rounded-full bg-white/70" /> : null}
             <p className={mydreamMobileCopyLayout ? "mt-4 text-[0.95rem] font-medium leading-7 text-white/76" : "mt-4 text-sm leading-7 text-white/72"}>{setting(section, "subtitle", "Preview the mobile flow beside a supporting app image.")}</p>
             {mydreamMobileCopyLayout && mobileSupportingCopy ? <p className="mx-auto mt-2 max-w-[42rem] text-sm leading-6 text-white/56">{mobileSupportingCopy}</p> : null}
           </div>
@@ -12066,7 +12077,7 @@ function SectionView({
             {title}
           </Link>
         </h3>
-        <div className="mx-auto h-px w-16 bg-white/58 md:mt-2" />
+        <div className="mx-auto h-0.5 w-20 rounded-full bg-white/70 md:mt-2" />
         <Link className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:text-white/76 md:absolute md:right-0 md:top-1" href={hrefFor(site, href)}>
           {label}
           <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
@@ -15186,10 +15197,11 @@ function SectionView({
           <div className={stackedReviewLayout ? "flex flex-col gap-10" : "grid gap-8 lg:grid-cols-[minmax(250px,0.3fr)_minmax(0,0.7fr)]"}>
             <div className={mydreamReviewCopyLayout ? "flex flex-col items-center gap-5 border-b border-[#e7dccf] pb-9 text-center" : stackedReviewLayout ? "flex flex-col gap-8 border-b border-[#e7dccf] pb-9 lg:flex-row lg:items-end lg:justify-between" : "pt-2"}>
               <div className={mydreamReviewCopyLayout ? "mx-auto max-w-3xl" : stackedReviewLayout ? "min-w-0 flex-1" : undefined}>
-                <div className={mydreamReviewCopyLayout ? "mx-auto h-px w-20 bg-[#b98a57]" : "h-px w-14 bg-[#b98a57]"} />
-                <h2 className={mydreamReviewCopyLayout ? "mt-4 text-center text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-normal text-balance [font-family:var(--site-title-font)]" : `${stackedReviewLayout ? "max-w-[20ch]" : "max-w-[12ch]"} mt-4 text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]`}>
+                {mydreamReviewCopyLayout ? null : <div className="h-px w-14 bg-[#b98a57]" />}
+                <h2 className={mydreamReviewCopyLayout ? "text-center text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-normal text-balance [font-family:var(--site-title-font)]" : `${stackedReviewLayout ? "max-w-[20ch]" : "max-w-[12ch]"} mt-4 text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]`}>
                   {mydreamReviewCopyLayout ? sectionHeading(section, "What Our Customers Say") : isDreamShootUseCaseWall ? "Ways people use myDreamshoots" : headingSetting(section, "summaryTitle", sectionHeading(section, "Customer results"))}
                 </h2>
+                {mydreamReviewCopyLayout ? <div className="mx-auto mt-3 h-0.5 w-24 rounded-full bg-[#b98a57]" /> : null}
                 <p className={mydreamReviewCopyLayout ? "mx-auto mt-4 max-w-2xl text-[0.92rem] font-medium leading-6 text-[#7c7167]" : `${stackedReviewLayout ? "max-w-3xl" : "max-w-[17rem]"} mt-5 text-[0.94rem] leading-7 text-[#6d665f]`}>
                   {mydreamReviewCopyLayout ? setting(section, "subtitle", "Our users love us and we love them!") : isDreamShootUseCaseWall ? "Plan sports fan meetups, VIP-style red-carpet looks, Christmas cards, and holiday group albums before spending credits." : setting(section, "summaryBody", setting(section, "subtitle"))}
                 </p>
