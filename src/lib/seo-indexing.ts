@@ -17,6 +17,7 @@ const DREAMSHOOT_SITE_SLUGS = new Set(["mydreamshoots", "dreamshoot"]);
 const AIDREAMCAPES_SITE_ID = "site_aidreamcapes";
 const AIDREAMCAPES_SITE_SLUGS = new Set(["aidreamcapes"]);
 const GROWNSTRIDE_HOSTS = new Set(["grownstride.com", "www.grownstride.com", "test.grownstride.com"]);
+const GROWNSTRIDE_RESERVED_HOSTS = new Set(["grownstride.com", "www.grownstride.com"]);
 
 function cleanText(value: unknown, fallback = ""): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() || fallback : fallback;
@@ -718,6 +719,10 @@ function isGrownstrideHost(host: string): boolean {
   return GROWNSTRIDE_HOSTS.has(host);
 }
 
+function isReservedGrownstrideHost(host: string): boolean {
+  return GROWNSTRIDE_RESERVED_HOSTS.has(host);
+}
+
 function isAidreamcapesHost(host: string): boolean {
   return host === "www.aidreamcapes.com" || host === "aidreamcapes.com";
 }
@@ -1025,7 +1030,7 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
   const publicHostCandidates = normalizedHosts.filter((host) => !isLocalDevelopmentHost(host));
   const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
   const isLocalHostRequest = !publicHostCandidates.length && normalizedHosts.some(isLocalDevelopmentHost);
-  if (siteHostCandidates.some(isGrownstrideHost)) return [];
+  if (siteHostCandidates.some(isReservedGrownstrideHost)) return [];
   const shouldUseLegacyStateFirst = prefersLegacyStateForPersistenceBackend() || isLocalHostRequest || process.env.NODE_ENV !== "production";
   const runtime = shouldUseLegacyStateFirst ? await readLegacyIndexableStateAndSites() : await readIndexableStateAndSites();
   if (!runtime) {
