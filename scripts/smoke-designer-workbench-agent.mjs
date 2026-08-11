@@ -356,6 +356,15 @@ async function getPreviewIframeMetrics(page) {
   };
 }
 
+async function getIframeWindowMetrics(page) {
+  return page.locator(".saas-designer-preview-frame iframe").first().evaluate((iframe) => ({
+    href: iframe.contentWindow?.location.href ?? "",
+    scrollY: iframe.contentWindow?.scrollY ?? 0,
+    scrollHeight: iframe.contentDocument?.documentElement?.scrollHeight ?? 0,
+    innerHeight: iframe.contentWindow?.innerHeight ?? 0
+  }));
+}
+
 function cssAttrValue(value) {
   return String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }
@@ -380,6 +389,66 @@ async function findPageSelect(page) {
       await page.locator(`[data-designer-page-id="${cssAttrValue(value)}"]`).first().click();
     }
   };
+}
+
+async function selectPageOptionByPattern(pageSelect, page, pattern) {
+  const options = await pageSelect.options();
+  const option = options.find((item) => pattern.test(`${item.label} ${item.value}`));
+  if (!option) return null;
+  await pageSelect.selectOption(option.value);
+  await page.waitForTimeout(450);
+  return option;
+}
+
+async function markVisiblePreviewNavigationTarget(page, options = {}) {
+  const { requireLink = false } = options;
+  const iframe = page.locator(".saas-designer-preview-frame iframe").first();
+  return iframe.evaluate((frame, requireLink) => {
+    const doc = frame.contentDocument;
+    const candidates = Array.from(
+      doc?.querySelectorAll(
+        requireLink
+          ? 'a[href]:not([href^="#"]):not([target="_blank"])'
+          : 'a[href]:not([href^="#"]):not([target="_blank"]), button:not([disabled])'
+      ) ?? []
+    );
+    const target = candidates.find((node) => {
+      const rect = node.getBoundingClientRect();
+      const style = window.getComputedStyle(node);
+      if (node instanceof HTMLAnchorElement) {
+        const targetUrl = new URL(node.href, doc?.location.href);
+        if (targetUrl.origin !== doc?.location.origin) return false;
+      }
+      return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden";
+    });
+    if (!target) return null;
+    target.setAttribute("data-smoke-preview-target", "true");
+    return {
+      tag: target.tagName.toLowerCase(),
+      text: (target.textContent || target.getAttribute("aria-label") || target.getAttribute("title") || "").trim().replace(/\s+/g, " ")
+    };
+  }, requireLink);
+}
+
+async function markVisiblePropertyInputTarget(page) {
+  return page.evaluate(() => {
+    const pane = document.querySelector('[data-designer-layout="saas-right-editor-pane"]');
+    const candidates = Array.from(
+      pane?.querySelectorAll('[data-designer-field-id] input[type="text"], [data-designer-field-id] textarea') ?? []
+    );
+    const target = candidates.find((node) => {
+      const rect = node.getBoundingClientRect();
+      const style = window.getComputedStyle(node);
+      const placeholder = (node.getAttribute("placeholder") ?? "").trim();
+      return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden" && !placeholder.includes("输入预览里看到的文案");
+    });
+    if (!target) return null;
+    target.setAttribute("data-smoke-typing-target", "true");
+    return {
+      placeholder: target.getAttribute("placeholder") ?? "",
+      value: target.value ?? ""
+    };
+  });
 }
 
 async function exerciseWorkbench(page, report, suiteReport) {
@@ -452,6 +521,98 @@ async function exerciseWorkbench(page, report, suiteReport) {
   const editablePage = await selectFirstEditablePageIfPresent(page, pageSelect);
   assert(editablePage, "workbench page selector did not expose an editable page with a non-empty body");
   await page.waitForTimeout(500);
+
+  await selectPageOptionByPattern(pageSelect, page, /(?:首页|home)(?:\s|$)|(?:^|\s)\/(?:\s|$)/i);
+  const previewIframe = page.locator(".saas-designer-preview-frame iframe").first();
+  const frame = page.frameLocator(".saas-designer-preview-frame iframe").first();
+  const initialIframeMetrics = await getIframeWindowMetrics(page);
+  assert(initialIframeMetrics.scrollHeight > initialIframeMetrics.innerHeight + 20, `preview iframe is not vertically scrollable: ${initialIframeMetrics.scrollHeight}px <= ${initialIframeMetrics.innerHeight}px`);
+  await previewIframe.evaluate((iframe) => iframe.contentWindow?.scrollTo(0, 0));
+  const previewStageBox = await page.locator("[data-designer-preview-stage]").boundingBox();
+  const previewIframeBox = await previewIframe.boundingBox();
+  const wheelPoint =
+    previewStageBox && previewIframeBox && previewIframeBox.y + previewIframeBox.height + 16 < previewStageBox.y + previewStageBox.height
+      ? { x: previewStageBox.x + 24, y: previewIframeBox.y + previewIframeBox.height + 24 }
+      : {
+          x: (previewIframeBox?.x ?? 0) + (previewIframeBox?.width ?? 320) / 2,
+          y: (previewIframeBox?.y ?? 0) + (previewIframeBox?.height ?? 320) / 2
+        };
+  const iframeScrollBefore = await getIframeWindowMetrics(page);
+  const previewWheelStartedAt = performance.now();
+  const outerScrollBeforePreviewWheel = await page.evaluate(() => window.scrollY);
+  await page.mouse.move(wheelPoint.x, wheelPoint.y);
+  await page.mouse.wheel(0, 900);
+  await page.waitForTimeout(250);
+  const iframeScrollAfter = await getIframeWindowMetrics(page);
+  const outerScrollAfterPreviewWheel = await page.evaluate(() => window.scrollY);
+  assert(outerScrollAfterPreviewWheel === outerScrollBeforePreviewWheel, `preview wheel moved the outer workbench: ${outerScrollBeforePreviewWheel} -> ${outerScrollAfterPreviewWheel}`);
+  assert(iframeScrollAfter.scrollY > iframeScrollBefore.scrollY, `preview wheel did not scroll iframe content: ${iframeScrollBefore.scrollY} -> ${iframeScrollAfter.scrollY}`);
+  suiteReport.performance.interactions.previewWheelScrollMs = roundMs(performance.now() - previewWheelStartedAt);
+
+  const rightPane = page.locator('[data-designer-layout="saas-right-editor-pane"]');
+  const rightPaneScrollState = await rightPane.evaluate((node) => ({ scrollTop: node.scrollTop, scrollHeight: node.scrollHeight, clientHeight: node.clientHeight }));
+  assert(rightPaneScrollState.scrollHeight > rightPaneScrollState.clientHeight + 8, "right property pane is not independently scrollable");
+  await rightPane.evaluate((node) => {
+    node.scrollTop = Math.min(node.scrollHeight - node.clientHeight, node.scrollTop + 500);
+  });
+  const rightPaneScrollAfter = await rightPane.evaluate((node) => node.scrollTop);
+  assert(rightPaneScrollAfter > rightPaneScrollState.scrollTop, `right property pane did not scroll internally: ${rightPaneScrollState.scrollTop} -> ${rightPaneScrollAfter}`);
+  await rightPane.evaluate((node) => {
+    node.scrollTop = 0;
+  });
+
+  const editTarget = await markVisiblePreviewNavigationTarget(page);
+  assert(editTarget, "edit-mode preview did not expose a visible same-origin link or button");
+  const editHrefBefore = (await getIframeWindowMetrics(page)).href;
+  const editClickStartedAt = performance.now();
+  await frame.locator('[data-smoke-preview-target="true"]').click({ force: true });
+  await page.waitForTimeout(250);
+  const editHrefAfter = (await getIframeWindowMetrics(page)).href;
+  assert(editHrefAfter === editHrefBefore, `edit定位 mode unexpectedly navigated preview: ${editHrefBefore} -> ${editHrefAfter}`);
+  const editClickBody = await page.locator("body").innerText();
+  assert(editClickBody.includes("已从编辑定位预览选中"), "edit定位 click did not select a preview source");
+  suiteReport.performance.interactions.editModePreviewClickMs = roundMs(performance.now() - editClickStartedAt);
+
+  const interactiveToggle = page.getByRole("button", { name: "真实交互", exact: true });
+  await interactiveToggle.click();
+  await page.waitForTimeout(500);
+  assert((await getPreviewIframeMetrics(page)).src.includes("previewMode=interactive"), "real interaction mode did not update iframe query");
+  const interactiveTarget = await markVisiblePreviewNavigationTarget(page, { requireLink: true });
+  if (!interactiveTarget) {
+    suiteReport.findings.push("预览页没有找到可验证的站内链接，已跳过真实交互跳转断言。");
+  } else {
+    const interactiveHrefBefore = (await getIframeWindowMetrics(page)).href;
+    const interactiveClickStartedAt = performance.now();
+    await frame.locator('[data-smoke-preview-target="true"]').click({ force: true });
+    await page.waitForTimeout(600);
+    const interactiveHrefAfter = (await getIframeWindowMetrics(page)).href;
+    assert(interactiveHrefAfter !== interactiveHrefBefore, `真实交互模式链接没有跳转: ${interactiveHrefBefore}`);
+    suiteReport.performance.interactions.interactivePreviewNavigationMs = roundMs(performance.now() - interactiveClickStartedAt);
+  }
+  await page.getByRole("button", { name: "编辑定位", exact: true }).click();
+  await page.waitForTimeout(500);
+
+  const typingTargetInfo = await markVisiblePropertyInputTarget(page);
+  if (!typingTargetInfo) {
+    suiteReport.findings.push("没有找到可稳定输入的页面字段，已跳过连续输入防抖断言。");
+  } else {
+    const typingTarget = page.locator('[data-smoke-typing-target="true"]').first();
+    const originalValue = await typingTarget.inputValue();
+    const xfcartBeforeTyping = report.apiRequests.filter((item) => item.method === "POST" && item.url.includes("/theme/xfcart-edit")).length;
+    const typingStartedAt = performance.now();
+    await typingTarget.click();
+    await typingTarget.press("ControlOrMeta+A");
+    await typingTarget.pressSequentially("designer smoke input 1234567890", { delay: 18 });
+    suiteReport.performance.interactions.typingInputSequenceMs = roundMs(performance.now() - typingStartedAt);
+    await page.waitForTimeout(1200);
+    const xfcartAfterTyping = report.apiRequests.filter((item) => item.method === "POST" && item.url.includes("/theme/xfcart-edit")).length;
+    const typingRequestCount = xfcartAfterTyping - xfcartBeforeTyping;
+    assert(typingRequestCount <= 2, `continuous field input triggered too many xfcart mutations: ${typingRequestCount}`);
+    suiteReport.performance.interactions.typingDebounceSettledMs = roundMs(performance.now() - typingStartedAt);
+    suiteReport.performance.interactions.typingXfcartRequestCount = typingRequestCount;
+    await typingTarget.fill(originalValue);
+    await page.waitForTimeout(700);
+  }
 
   await page.getByRole("button", { name: "全局页头/页脚", exact: true }).click();
   await page.waitForTimeout(200);
@@ -857,7 +1018,9 @@ async function run() {
     ["工作台桌面", report.workbench?.timings],
     ["工作台移动", report.mobile?.timings]
   ].map(([label, timings]) => `- ${label}：DOM ${formatMs(timings?.domContentLoadedMs)}，network idle ${formatMs(timings?.networkIdleMs)}，总计 ${formatMs(timings?.totalMs)}`);
-  const interactionLines = Object.entries(report.performance?.interactions ?? {}).map(([key, value]) => `- ${key}：${formatMs(value)}`);
+  const interactionLines = Object.entries(report.performance?.interactions ?? {}).map(([key, value]) =>
+    `- ${key}：${key.endsWith("RequestCount") ? `${value} 次` : formatMs(value)}`
+  );
   const apiTimingLines = [report.admin, report.workbench, report.mobile]
     .flatMap((entry) => entry?.apiRequests ?? [])
     .filter((entry) => typeof entry.durationMs === "number")
@@ -886,6 +1049,10 @@ async function run() {
     "",
     "## 关键检查",
     "- 后台首页无 pageerror、console error、network error 和 4xx/5xx 资源。",
+    "- 外层工作台保持锁定，滚轮会滚动 iframe 内网页，右侧属性区独立滚动。",
+    "- 编辑定位模式点击链接/按钮只选中内容来源，不发生业务跳转。",
+    "- 真实交互预览允许站内链接在 iframe 中正常跳转。",
+    "- 连续输入会被防抖合并，不会逐字符调用 xfcart mutation。",
     "- 工作台 Tab 重复点击不会触发 mutation API。",
     "- 保存草稿双击不会产生两批完整保存请求。",
     "- 发布确认展示隐藏草稿和线上版本。",
