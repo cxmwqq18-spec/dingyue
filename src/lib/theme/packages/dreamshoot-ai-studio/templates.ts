@@ -422,7 +422,7 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "packages",
       label: "AI PHOTO STUDIOS",
       title: "Professional AI Photo Packages",
-      subtitle: "Whether solo or with a partner, you can create stunning AI photo albums in just one click with myDreamshoots's themed photo packs. We've curated the best poses, outfit ideas, and hairstyles for you. Plus, we're always adding new photo packs to our collection. Send a heart to a special someone. Or use it just for fun!",
+      subtitle: "Whether solo or with a partner, you can create stunning AI photo albums in just one click with myDreamshoots's themed photo packs. We've curated the best poses, outfit ideas, and hairstyles for you. Plus, we're always adding new photo packs to our collection. Send a ❤️ to a special someone. Or use it just for fun!",
       directoryLabel: "AI PHOTO THEMED",
       directorySubtitle: "Use your own creativity surprise your partner with a romantic video or photo.",
       tabs: "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal|Creator|Video|Utility",

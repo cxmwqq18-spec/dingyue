@@ -56,7 +56,7 @@ const copyTargets = {
   mobileSupportingCopy: `Use ${brand}'s AI Video design your videos with your own creativity. Your next video content can instantly go viral.`,
   packageLabel: "AI PHOTO STUDIOS",
   packageTitle: "Professional AI Photo Packages",
-  packageSubtitle: `Whether solo or with a partner, you can create stunning AI photo albums in just one click with ${brand}'s themed photo packs. We've curated the best poses, outfit ideas, and hairstyles for you. Plus, we're always adding new photo packs to our collection. Send a heart to a special someone. Or use it just for fun!`,
+  packageSubtitle: `Whether solo or with a partner, you can create stunning AI photo albums in just one click with ${brand}'s themed photo packs. We've curated the best poses, outfit ideas, and hairstyles for you. Plus, we're always adding new photo packs to our collection. Send a ❤️ to a special someone. Or use it just for fun!`,
   directoryLabel: "AI PHOTO THEMED",
   directorySubtitle: "Use your own creativity surprise your partner with a romantic video or photo.",
   reviewTitle: "What Our Customers Say",

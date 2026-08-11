@@ -443,6 +443,7 @@ export function PreviewFrame({
                   ) : null}
                   <iframe
                     className="h-full w-full bg-white"
+                    key={`${selectedPageId}:${previewMode}:${iframeReloadKey}`}
                     onLoad={onIframeLoad}
                     ref={iframeRef}
                     src={`/site/${site.slug}/admin/design/preview/${selectedPageId}?previewToken=${encodeURIComponent(previewToken)}&previewMode=${previewMode}&reload=${iframeReloadKey}`}

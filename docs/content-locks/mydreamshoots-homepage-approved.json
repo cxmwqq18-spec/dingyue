@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "lockedAt": "2026-08-11T17:45:23.608+08:00",
+  "lockedAt": "2026-08-11T20:39:18.576+08:00",
   "policy": {
     "owner": "myDreamshoots site owner",
     "rule": "This homepage copy baseline is locked. Do not modify, switch versions, import old JSON, or roll back production copy unless the site owner explicitly requests a homepage copy change.",
@@ -63,8 +63,8 @@
     "brand_strip_1"
   ],
   "fingerprints": {
-    "publishedJsonSha256": "f83b7c32e215192103c36a48d203fb3d25bdc3181ecb79aee62b1b5f0107fdd5",
-    "visibleTextSha256": "cbf209b287724b93de0890c2277682d1f5a8d0aa2e4b3725f28038f45cf50cde",
+    "publishedJsonSha256": "62334b82dcd297cd7d1cc03ea1d64071431e61adb2f80211873ddd960cf5f036",
+    "visibleTextSha256": "9ce6882b2b582d0c0c882b91f0aa9777918da561c3ea4cc89bfd5656753cd216",
     "visibleRecordCount": 227
   },
   "visibleRecords": [
@@ -666,8 +666,8 @@
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1",
       "key": "subtitle",
-      "text": "Whether solo or with a partner, you can create stunning AI photo albums in just one click with myDreamshoots's themed photo packs. We've curated the best poses, outfit ideas, and hairstyles for you. Plus, we're always adding new photo packs to our collection. Send a heart to a special someone. Or use it just for fun!",
-      "normalized": "whether solo or with a partner you can create stunning ai photo albums in just one click with mydreamshoots s themed photo packs we ve curated the best poses outfit ideas and hairstyles for you plus we re always adding new photo packs to our collection send a heart to a special someone or use it just for fun",
+      "text": "Whether solo or with a partner, you can create stunning AI photo albums in just one click with myDreamshoots's themed photo packs. We've curated the best poses, outfit ideas, and hairstyles for you. Plus, we're always adding new photo packs to our collection. Send a ❤️ to a special someone. Or use it just for fun!",
+      "normalized": "whether solo or with a partner you can create stunning ai photo albums in just one click with mydreamshoots s themed photo packs we ve curated the best poses outfit ideas and hairstyles for you plus we re always adding new photo packs to our collection send a to a special someone or use it just for fun",
       "priority": 1
     },
     {

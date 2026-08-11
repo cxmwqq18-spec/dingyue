@@ -102,7 +102,7 @@ export function IframePatchListener() {
       const blockId = block?.dataset.xfcartBlockId ?? "";
       event.preventDefault();
       event.stopPropagation();
-      selectSection(id, blockId);
+      selectSection(id, blockId, { scroll: false });
       window.parent?.postMessage(
         {
           act: "previewSelect",
@@ -122,7 +122,7 @@ export function IframePatchListener() {
       if (!id) return;
       event.preventDefault();
       event.stopPropagation();
-      selectSection(id);
+      selectSection(id, "", { scroll: false });
       window.parent?.postMessage(
         {
           act: "previewSelect",
@@ -234,19 +234,17 @@ export function IframeInteractiveNavigation() {
       event.stopPropagation();
       event.stopImmediatePropagation();
       window.parent?.postMessage({ act: "previewNavigate", href: url.href }, window.location.origin);
-      const frameElement = window.frameElement as HTMLIFrameElement | null;
-      if (frameElement && typeof frameElement.setAttribute === "function") {
+      if (window.parent && window.parent !== window) {
+        document.documentElement.setAttribute("data-xfcart-interactive-navigation-via", "parent-message");
+        return;
+      }
+      window.setTimeout(() => {
         try {
-          document.documentElement.setAttribute("data-xfcart-interactive-navigation-via", "frame-src");
-          frameElement.setAttribute("src", url.href);
-          return;
+          document.documentElement.setAttribute("data-xfcart-interactive-navigation-via", "location-assign");
+          window.location.assign(url.href);
         } catch (error) {
           document.documentElement.setAttribute("data-xfcart-interactive-navigation-error", error instanceof Error ? error.message : String(error));
         }
-      }
-      window.setTimeout(() => {
-        document.documentElement.setAttribute("data-xfcart-interactive-navigation-via", "location-href");
-        window.location.href = url.href;
       }, 0);
     }
 

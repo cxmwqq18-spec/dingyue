@@ -1187,6 +1187,31 @@ export function DesignerClient({
     );
   }
 
+  const normalizedInteractivePath = useCallback((pathname: string) => {
+    const sitePrefix = `/site/${site.slug}`;
+    const rawPath = pathname === sitePrefix || pathname === `${sitePrefix}/`
+      ? "/"
+      : pathname.startsWith(`${sitePrefix}/`)
+        ? pathname.slice(sitePrefix.length)
+        : pathname;
+    const normalized = rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
+    return normalized.length > 1 ? normalized.replace(/\/+$/, "") : "/";
+  }, [site.slug]);
+
+  const pageForInteractivePath = useCallback((pathname: string) => {
+    const path = normalizedInteractivePath(pathname);
+    return pages.find((page) => normalizedInteractivePath(page.slug) === path);
+  }, [normalizedInteractivePath, pages]);
+
+  const interactivePreviewUrlForPage = useCallback((pageId: string) => {
+    const params = new URLSearchParams({
+      previewToken,
+      previewMode: "interactive",
+      reload: String(iframeReloadKey)
+    });
+    return new URL(`/site/${site.slug}/admin/design/preview/${pageId}?${params.toString()}`, window.location.origin).href;
+  }, [iframeReloadKey, previewToken, site.slug]);
+
   useEffect(() => {
     function onPreviewMessage(event: MessageEvent<IframeDesignerMessage>) {
       if (event.source !== iframeRef.current?.contentWindow) return;
@@ -1200,8 +1225,13 @@ export function DesignerClient({
           if (!sameOrigin || !sameSitePublicRoute) return;
           iframeRecoveryCount.current = 0;
           setIframeStatus("loading");
-          if (iframeRef.current) iframeRef.current.src = targetUrl.href;
-          setLastAction(`真实交互预览已打开 ${targetUrl.pathname}。切回编辑定位后可继续修改文案。`);
+          const targetPage = pageForInteractivePath(targetUrl.pathname);
+          if (iframeRef.current) iframeRef.current.src = targetPage ? interactivePreviewUrlForPage(targetPage.id) : targetUrl.href;
+          setLastAction(
+            targetPage
+              ? `真实交互预览已打开「${targetPage.title}」。切回编辑定位后可继续修改文案。`
+              : `真实交互预览已打开 ${targetUrl.pathname}。切回编辑定位后可继续修改文案。`
+          );
         } catch {
           return;
         }
@@ -1218,7 +1248,7 @@ export function DesignerClient({
 
     window.addEventListener("message", onPreviewMessage);
     return () => window.removeEventListener("message", onPreviewMessage);
-  }, [draft, previewMode, site.slug, themeSettings]);
+  }, [draft, interactivePreviewUrlForPage, pageForInteractivePath, previewMode, site.slug, themeSettings]);
 
   const checkIframePreviewHealth = useCallback(() => {
     const iframe = iframeRef.current;
@@ -1243,7 +1273,7 @@ export function DesignerClient({
     if (documentReady && iframeDocumentMatchesSrc && (previewMode === "interactive" ? interactiveNavigationReady : hasPreviewRoot && editListenerReady)) {
       iframeRecoveryCount.current = 0;
       setIframeStatus("ready");
-      if (previewMode === "edit") syncSelectionToIframe();
+      if (previewMode === "edit") syncSelectionToIframe(selection, { scroll: false });
       return true;
     }
     const stillNavigating =
@@ -1263,7 +1293,7 @@ export function DesignerClient({
     }
     setIframeStatus("failed");
     return false;
-  }, [previewMode, syncSelectionToIframe]);
+  }, [previewMode, selection, syncSelectionToIframe]);
 
   useEffect(() => {
     setIframeStatus((current) => (current === "ready" ? "ready" : "loading"));

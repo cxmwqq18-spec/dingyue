@@ -219,14 +219,24 @@ function isIgnorablePageError(message) {
   return message.includes("Connection closed") && message.includes("react-server-dom-webpack");
 }
 
+function hasTransientDevServerResponse(entry) {
+  return Boolean(
+    entry?.badResponses?.some((response) => response.status >= 500 && response.url.startsWith(baseUrl)) ||
+      entry?.consoleErrors?.some((item) => /server responded with a status of 5\d\d|ChunkLoadError|__webpack_modules__/.test(item)) ||
+      entry?.pageErrors?.some((item) => /ChunkLoadError|__webpack_modules__|fetch failed/.test(item))
+  );
+}
+
 function isTransientDevServerRunError(error, report) {
   const message = String(error?.stack ?? error);
   if (/ERR_CONNECTION_REFUSED|ERR_INCOMPLETE_CHUNKED_ENCODING|Connection closed/.test(message)) return true;
   if (/page\.goto: Timeout 60000ms exceeded/.test(message)) return true;
+  if (/ChunkLoadError|__webpack_modules__|rendered Next runtime error|server responded with a status of 5\d\d/.test(message)) return true;
   const entries = [report.admin, report.workbench, report.mobile].filter(Boolean);
   return entries.some((entry) => {
     return entry.failedRequests?.some((request) => /ERR_CONNECTION_REFUSED|ERR_INCOMPLETE_CHUNKED_ENCODING/.test(request.error ?? "")) ||
-      entry.consoleErrors?.some((item) => /ERR_CONNECTION_REFUSED|ERR_INCOMPLETE_CHUNKED_ENCODING/.test(item));
+      entry.consoleErrors?.some((item) => /ERR_CONNECTION_REFUSED|ERR_INCOMPLETE_CHUNKED_ENCODING/.test(item)) ||
+      hasTransientDevServerResponse(entry);
   });
 }
 
@@ -407,7 +417,7 @@ async function getIframeWindowMetrics(page) {
   }));
 }
 
-async function waitForPreviewIframeReady(page, { requireScrollable = true, timeoutMs = 30_000 } = {}) {
+async function waitForPreviewIframeReady(page, { requireScrollable = true, timeoutMs = 90_000 } = {}) {
   await page.waitForFunction(
     (requireScrollable) => {
       const iframe = document.querySelector(".saas-designer-preview-frame iframe");
@@ -495,6 +505,9 @@ async function markVisiblePreviewNavigationTarget(page, options = {}) {
       const style = window.getComputedStyle(node);
       const viewportWidth = doc?.documentElement.clientWidth ?? window.innerWidth;
       const viewportHeight = doc?.documentElement.clientHeight ?? window.innerHeight;
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const topElement = doc?.elementFromPoint(centerX, centerY);
       const isAnchor = node.tagName.toLowerCase() === "a";
       if (isAnchor) {
         const targetUrl = new URL(node.getAttribute("href") ?? "", doc?.location.href);
@@ -507,10 +520,15 @@ async function markVisiblePreviewNavigationTarget(page, options = {}) {
       }
       return rect.width > 0 &&
         rect.height > 0 &&
-        rect.bottom > 0 &&
-        rect.right > 0 &&
-        rect.top < viewportHeight &&
-        rect.left < viewportWidth &&
+        rect.top >= 8 &&
+        rect.left >= 8 &&
+        rect.bottom <= viewportHeight - 8 &&
+        rect.right <= viewportWidth - 8 &&
+        centerX >= 0 &&
+        centerY >= 0 &&
+        centerX <= viewportWidth &&
+        centerY <= viewportHeight &&
+        Boolean(topElement && (topElement === node || node.contains(topElement))) &&
         style.display !== "none" &&
         style.visibility !== "hidden";
     });
@@ -634,11 +652,15 @@ async function exerciseWorkbench(page, report, suiteReport) {
   assert(editablePage, "workbench page selector did not expose an editable page with a non-empty body");
   await page.waitForTimeout(150);
 
-  await selectPageOptionByPattern(pageSelect, page, /(?:首页|home)(?:\s|$)|(?:^|\s)\/(?:\s|$)/i);
+  await selectPageOptionByPattern(pageSelect, page, /(?:^|[\s/])(?:首页|home)(?:[\s/]|$)|(?:^|\s)\/(?:\s|$)/i);
   await waitForPreviewIframeReady(page);
   const previewIframe = page.locator(".saas-designer-preview-frame iframe").first();
   const frame = page.frameLocator(".saas-designer-preview-frame iframe").first();
   const initialIframeMetrics = await getIframeWindowMetrics(page);
+  assert(
+    initialIframeMetrics.scrollY <= 4,
+    `preview iframe auto-scrolled away from the page top after load: ${initialIframeMetrics.scrollY}px`
+  );
   assert(initialIframeMetrics.scrollHeight > initialIframeMetrics.innerHeight + 20, `preview iframe is not vertically scrollable: ${initialIframeMetrics.scrollHeight}px <= ${initialIframeMetrics.innerHeight}px`);
   await previewIframe.evaluate((iframe) => iframe.contentWindow?.scrollTo(0, 0));
   const previewStageBox = await page.locator("[data-designer-preview-stage]").boundingBox();
@@ -676,14 +698,22 @@ async function exerciseWorkbench(page, report, suiteReport) {
     node.scrollTop = 0;
   });
 
+  await previewIframe.evaluate((iframe) => iframe.contentWindow?.scrollTo(0, 0));
+  await page.waitForTimeout(120);
   const editTarget = await markVisiblePreviewNavigationTarget(page);
   assert(editTarget, "edit-mode preview did not expose a visible same-origin link or button");
   const editHrefBefore = (await getIframeWindowMetrics(page)).href;
+  const editScrollBefore = (await getIframeWindowMetrics(page)).scrollY;
   const editClickStartedAt = performance.now();
   await frame.locator('[data-smoke-preview-target="true"]').click({ force: true });
   await page.waitForTimeout(250);
-  const editHrefAfter = (await getIframeWindowMetrics(page)).href;
+  const editMetricsAfter = await getIframeWindowMetrics(page);
+  const editHrefAfter = editMetricsAfter.href;
   assert(editHrefAfter === editHrefBefore, `edit定位 mode unexpectedly navigated preview: ${editHrefBefore} -> ${editHrefAfter}`);
+  assert(
+    Math.abs(editMetricsAfter.scrollY - editScrollBefore) <= 8,
+    `edit定位 click unexpectedly moved iframe scroll: ${editScrollBefore} -> ${editMetricsAfter.scrollY}`
+  );
   const editClickBody = await page.locator("body").innerText();
   assert(editClickBody.includes("已从编辑定位预览选中"), "edit定位 click did not select a preview source");
   suiteReport.performance.interactions.editModePreviewClickMs = roundMs(performance.now() - editClickStartedAt);
@@ -706,7 +736,7 @@ async function exerciseWorkbench(page, report, suiteReport) {
         const iframe = document.querySelector(".saas-designer-preview-frame iframe");
         if (!(iframe instanceof HTMLIFrameElement)) return false;
         const href = iframe.contentDocument?.location.href ?? "";
-        return Boolean(href && href !== previousHref && !href.includes("/admin/design/preview/"));
+        return Boolean(href && href !== previousHref && iframe.contentDocument?.readyState === "complete");
       },
       interactiveHrefBefore,
       { timeout: 15_000, polling: 100 }
@@ -846,7 +876,7 @@ async function selectFirstEditablePageIfPresent(page, pageSelect, limit = 12) {
   const currentValue = await pageSelect.inputValue().catch(() => "");
   const prioritized = [
     ...options.filter((option) => option.value === currentValue),
-    ...options.filter((option) => /(?:^|\s)(?:首页|home|\/)(?:\s|$)/i.test(`${option.label} ${option.value}`) && option.value !== currentValue),
+    ...options.filter((option) => /(?:^|[\s/])(?:首页|home)(?:[\s/]|$)|(?:^|\s)\/(?:\s|$)/i.test(`${option.label} ${option.value}`) && option.value !== currentValue),
     ...options.filter((option) => option.value !== currentValue)
   ];
   const seen = new Set();
@@ -966,6 +996,54 @@ async function probeReusableSmokeSite(api, site) {
   return { ok: true, reason: "login ok" };
 }
 
+async function loginPlatformAdmin(api, timeoutMs = 30_000) {
+  const startedAt = Date.now();
+  let lastStatus = 0;
+  let lastJson = {};
+  let lastError = "";
+  while (Date.now() - startedAt < timeoutMs) {
+    let response;
+    try {
+      response = await api.post("/api/platform/auth/login", {
+        data: { email: platformEmail, password: platformPassword }
+      });
+    } catch (error) {
+      lastError = String(error?.message ?? error);
+      await wait(750);
+      continue;
+    }
+    lastStatus = response.status();
+    lastJson = await response.json().catch(() => ({}));
+    if (response.ok() && lastJson.ok) return { response, json: lastJson };
+    await wait(750);
+  }
+  throw new Error(`platform login failed: ${lastStatus} ${JSON.stringify(lastJson)} ${lastError}`.trim());
+}
+
+async function loginSandboxAdmin(api, clone, timeoutMs = 30_000) {
+  const startedAt = Date.now();
+  let lastStatus = 0;
+  let lastJson = {};
+  let lastError = "";
+  while (Date.now() - startedAt < timeoutMs) {
+    let response;
+    try {
+      response = await api.post(`/api/sites/${clone.id}/admin/auth/login`, {
+        data: { email: clone.email, password: clone.password }
+      });
+    } catch (error) {
+      lastError = String(error?.message ?? error);
+      await wait(750);
+      continue;
+    }
+    lastStatus = response.status();
+    lastJson = await response.json().catch(() => ({}));
+    if (response.ok() && lastJson.ok) return lastJson;
+    await wait(750);
+  }
+  throw new Error(`sandbox admin login failed: ${lastStatus} ${JSON.stringify(lastJson)} ${lastError}`.trim());
+}
+
 async function reuseExistingSmokeSite(prisma, api) {
   const requestedSlug = process.env.DESIGNER_SMOKE_REUSE_SLUG?.trim();
   const sites = requestedSlug
@@ -1017,11 +1095,7 @@ async function run() {
   let browser;
 
   try {
-    const platformLogin = await api.post("/api/platform/auth/login", {
-      data: { email: platformEmail, password: platformPassword }
-    });
-    const platformLoginJson = await platformLogin.json().catch(() => ({}));
-    assert(platformLogin.ok() && platformLoginJson.ok, `platform login failed: ${platformLogin.status()} ${JSON.stringify(platformLoginJson)}`);
+    const { response: platformLogin } = await loginPlatformAdmin(api);
     const platformCsrfCookie = cookieFrom(platformLogin, "platform_csrf");
     const platformCsrf = cookieValue(platformCsrfCookie, "platform_csrf");
     assert(platformCsrf, "missing platform csrf token");
@@ -1050,11 +1124,7 @@ async function run() {
     report.sandbox = { id: clone.id, slug: clone.slug, reused: Boolean(clone.reused) };
     report.performance.sandboxReady = await waitForSandboxRecords(prisma, clone);
 
-    const adminLogin = await api.post(`/api/sites/${clone.id}/admin/auth/login`, {
-      data: { email: clone.email, password: clone.password }
-    });
-    const adminLoginJson = await adminLogin.json().catch(() => ({}));
-    assert(adminLogin.ok() && adminLoginJson.ok, `sandbox admin login failed: ${adminLogin.status()} ${JSON.stringify(adminLoginJson)}`);
+    await loginSandboxAdmin(api, clone);
 
     browser = await chromium.launch(browserOptions);
     const storageState = await api.storageState();

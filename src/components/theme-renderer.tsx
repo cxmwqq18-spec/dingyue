@@ -11981,9 +11981,10 @@ function SectionView({
       : [];
     const trustedProof = showTrustedLogoIntro ? (
       <div className="relative left-1/2 mb-12 w-[min(82vw,106rem)] -translate-x-1/2 border-b border-white/10 pb-10 md:mb-14 md:pb-14" data-dreamshoot-trusted-logos="true">
-        <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-[-0.03em] text-white [font-family:var(--site-title-font)]">
+        <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
           {setting(section, "trustedLogoTitle", "Most Trusted Creators. | myDreamshoots")}
         </h2>
+        <div className="mx-auto mt-3 h-0.5 w-24 rounded-full bg-white/70" aria-hidden="true" />
         <div className="mx-auto mt-7 max-w-[78rem] space-y-3 md:mt-8 md:space-y-3.5">
           {trustedLogoRows.map((row, rowIndex) => (
             <DreamshootShowcaseRail

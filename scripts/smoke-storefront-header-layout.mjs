@@ -6,8 +6,8 @@ const stores = [
   {
     slug: "mydreamshoots",
     siteId: "site_dreamshoot",
-    publicLabels: ["Photoshoot Studio", "Tools", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"],
-    appLabels: ["Photoshoot Studio", "Tools", "Best Packages", "How it works", "Workspace", "Pricing"],
+    publicLabels: [["AI Photoshoot", "Photoshoot Studio"], "Tools", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"],
+    appLabels: [["AI Photoshoot", "Photoshoot Studio"], "Tools", "Best Packages", "How it works", "Workspace", "Pricing"],
     credentials: [
       {
         email: process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_EMAIL || process.env.SMOKE_CUSTOMER_EMAIL || "nora@mydreamshoots.localhost",
@@ -38,6 +38,13 @@ const viewports = [
   { name: "desktop_2048", width: 2048, height: 1100 },
   { name: "mobile_390", width: 390, height: 844 }
 ];
+const requestedStoreSlugs = new Set(
+  String(process.env.SMOKE_STORE_SLUGS ?? "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean)
+);
+const selectedStores = requestedStoreSlugs.size ? stores.filter((store) => requestedStoreSlugs.has(store.slug)) : stores;
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -174,9 +181,10 @@ async function assertAuthenticatedInlineAccount(page, store, viewport, { scope =
 }
 
 async function main() {
+  assert(selectedStores.length, `No storefront header smoke stores matched SMOKE_STORE_SLUGS=${[...requestedStoreSlugs].join(",")}`);
   const browser = await chromium.launch({ headless: true });
   try {
-    for (const store of stores) {
+    for (const store of selectedStores) {
       const guestContext = await browser.newContext();
       const guestPage = await guestContext.newPage();
       try {
