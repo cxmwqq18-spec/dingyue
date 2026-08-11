@@ -1,8 +1,8 @@
 {
   "lockVersion": 1,
-  "lockedAt": "2026-08-11T14:38:01.420+08:00",
+  "lockedAt": "2026-08-11T15:10:44.895+08:00",
   "policy": {
-    "owner": "myDreamshoots site owner",
+    "owner": "MyDreamShoots site owner",
     "rule": "This homepage copy baseline is locked. Do not modify, switch versions, import old JSON, or roll back production copy unless the site owner explicitly requests a homepage copy change.",
     "deployRequirement": "npm run guard:mydreamshoots-content must compare Postgres published content, the latest ThemePublication snapshot, production HTML, and this approved homepage lock before release."
   },
@@ -24,8 +24,8 @@
     "publishedAt": "2026-06-18T00:00:00.000Z"
   },
   "seo": {
-    "title": "Professional AI Photo Generator Online - myDreamshoots",
-    "description": "Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
+    "title": "Professional AI Photo Generator Online - MyDreamShoots",
+    "description": "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
     "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
   },
   "hero": {
@@ -63,7 +63,7 @@
     "brand_strip_1"
   ],
   "fingerprints": {
-    "publishedJsonSha256": "628f8c3ca38a67c48aa8eb20b4d2c24043e2ea3fa8c31fc3e3025252304c0687",
+    "publishedJsonSha256": "7f4056f64723d35e6d1cc7f0f7546ff47dbf2000b73f0bccf82ec8c13c710559",
     "visibleTextSha256": "0d6cc1e05823f336dbfcc58e51febda4b9c93e4d166e12252c6a6f8f8ac0945e",
     "visibleRecordCount": 220
   },
@@ -211,7 +211,7 @@
     {
       "source": "approved-lock:themePage:/:seo",
       "key": "seo.title",
-      "text": "Professional AI Photo Generator Online - myDreamshoots",
+      "text": "Professional AI Photo Generator Online - MyDreamShoots",
       "normalized": "professional ai photo generator online mydreamshoots",
       "priority": 0
     },
@@ -617,7 +617,7 @@
     {
       "source": "approved-lock:themePage:/:seo",
       "key": "seo.description",
-      "text": "Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
+      "text": "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
       "normalized": "turn your selfies into stunning couple photos in seconds with mydreamshoots the most advanced ai photo generator maker no studio no outfits just magic",
       "priority": 1
     },

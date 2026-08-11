@@ -174,7 +174,7 @@ const assets = {
 
 const trustedLogoAssetBase = "/assets/dreamshoot/generated/trusted-logos";
 const aidreamcapesTrustedLogoAssetBase = "/assets/sites/site_aidreamcapes/trusted-logos";
-const mydreamshootsAboutBody = "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photos and videos in seconds with myDreamshoots: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. Plans start at $24.50/month, and every package shows the credit cost before generation.";
+const mydreamshootsAboutBody = "MyDreamShoots is an AI photo and video studio operated by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photos and videos in seconds with MyDreamShoots: choose a theme, review credits before generation, keep uploads private, and download finished results from your private gallery.";
 const aidreamcapesAboutBody = "Aidreamcapes is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.";
 const mydreamshootsTrustedLogoBlocks = [
   block("trusted_logo_dior", "logo", { name: "Dior", imageUrl: `${trustedLogoAssetBase}/dior.png`, badge: "Creator proof" }),
@@ -443,7 +443,7 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "generated-showcase",
       showTrustedLogoIntro: true,
       trustedLogoTitle: "Most Trusted Creators | myDreamshoots",
-      aboutTitle: "What is myDreamshoots?",
+      aboutTitle: "What is MyDreamShoots?",
       aboutBody: mydreamshootsAboutBody,
       embeddedPricingSectionId: "pricing_1",
       trustedLogoSplitIndex: 15,

@@ -99,6 +99,14 @@ function reorderHtmlHead(html) {
 function applyApprovedLaunchCopy(html) {
   return html
     .replaceAll(
+      "Professional AI Photo Generator Online - myDreamshoots",
+      "Professional AI Photo Generator Online - MyDreamShoots"
+    )
+    .replaceAll(
+      "Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
+      "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic."
+    )
+    .replaceAll(
       "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.",
       "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic."
     )

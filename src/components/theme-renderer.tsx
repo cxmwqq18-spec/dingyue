@@ -2856,8 +2856,8 @@ const dreamshootManualImageAltByFile: Record<string, string> = {
   "world-cup-fan-star-clean-v1": "Football fan stadium photo concept for a match-day AI image package",
   "world-cup-fan-star-v1": "Football fan celebration concept for a sports AI photo package",
   "date-night-gpt2": "Romantic date-night portrait sample for couple photo packages",
-  "hero-gpt2": "DreamShootAI hero portrait collage preview for private AI photo packages",
-  "hero-gpt2-fast": "DreamShootAI fast-loading hero portrait collage preview for AI photo packages",
+  "hero-gpt2": "myDreamshoots hero portrait collage preview for private AI photo packages",
+  "hero-gpt2-fast": "myDreamshoots fast-loading hero portrait collage preview for AI photo packages",
   "game-day-group-portraits-01": "Cheering football fan in a packed stadium crowd, game-day group portrait example for private AIdreamcapes event keepsakes",
   "game-day-group-portraits-02": "Close supporter portrait under stadium lights, game-day group album scene for private AIdreamcapes event keepsakes",
   "game-day-group-portraits-03": "Group-friendly stadium celebration with fan crowd energy, game-day portrait gallery example for AIdreamcapes",
@@ -11989,10 +11989,10 @@ function SectionView({
         </div>
         <div className="mx-auto mt-10 max-w-[38rem] text-center md:mt-12">
           <h2 className="text-[clamp(1.45rem,1.75vw,1.9rem)] font-semibold leading-tight tracking-[-0.03em] text-white [font-family:var(--site-title-font)]">
-            {setting(section, "aboutTitle", "What is myDreamshoots?")}
+            {setting(section, "aboutTitle", "What is MyDreamShoots?")}
           </h2>
           <p className="mt-4 text-[clamp(0.84rem,0.88vw,0.94rem)] font-medium leading-[1.58] text-white/74">
-            {setting(section, "aboutBody", "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photos and videos in seconds with myDreamshoots: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. Plans start at $24.50/month, and every package shows the credit cost before generation.")}
+            {setting(section, "aboutBody", "MyDreamShoots is an AI photo and video studio operated by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photos and videos in seconds with MyDreamShoots: choose a theme, review credits before generation, keep uploads private, and download finished results from your private gallery.")}
           </p>
         </div>
       </div>

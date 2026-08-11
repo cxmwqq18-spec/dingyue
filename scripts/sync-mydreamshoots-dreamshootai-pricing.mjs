@@ -11,6 +11,7 @@ const flags = new Set(rawArgs.filter((arg) => arg.startsWith("--")).map((arg) =>
 const dryRunRequested = flags.has("dry-run");
 const writeJsonRequested = !dryRunRequested && flags.has("write-json");
 const writePostgresRequested = !dryRunRequested && flags.has("db") && flags.has("force-pricing-overwrite");
+const pricingTransactionTimeoutMs = Number(process.env.SYNC_PRICING_TRANSACTION_TIMEOUT_MS ?? 120000);
 
 function envOrManualPrice(envName, fallback) {
   return process.env[envName]?.trim() || fallback;
@@ -174,6 +175,9 @@ async function updatePostgres(products) {
   });
   if (!site) throw new Error("myDreamshoots site not found");
 
+  const timeout = Number.isFinite(pricingTransactionTimeoutMs) && pricingTransactionTimeoutMs > 0
+    ? pricingTransactionTimeoutMs
+    : 120000;
   await prisma.$transaction(async (tx) => {
     await assertNoYearlySubscriptionsInPostgres(tx, site.id);
     const activeProductIds = products.map((product) => product.id);
@@ -215,7 +219,7 @@ async function updatePostgres(products) {
         });
       }
     }
-  });
+  }, { timeout });
 
   return { siteId: site.id, products: products.length, prices: products.reduce((sum, product) => sum + product.prices.length, 0) };
 }

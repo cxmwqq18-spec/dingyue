@@ -59,7 +59,7 @@ function lowercaseBrandCopyHits(text) {
     const lineEndIndex = text.indexOf("\n", index);
     const lineEnd = lineEndIndex === -1 ? text.length : lineEndIndex;
     const line = text.slice(lineStart, lineEnd);
-    if (/https?:\/\/|mailto:|@/.test(line)) return false;
+    if (/https?:\/\/|mailto:|@|\/assets\/|\/images\/|\/videos\/|\.com\b/.test(line)) return false;
     return true;
   });
 }

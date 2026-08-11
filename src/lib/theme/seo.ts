@@ -5,7 +5,7 @@ import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
 type PageSeo = NonNullable<ThemeSettings["seo"]>["pages"][string];
 type PageJsonSeo = NonNullable<ThemePage["publishedJson"]["seo"]>;
-const myDreamShootsSeoName = "myDreamshoots";
+const myDreamShootsSeoName = "MyDreamShoots";
 const myDreamShootsBrandPattern = /(?:myᕲreamshoots|ʍʏƉʀɛǟʍֆhoots|MyÐreãm\$hoots)/g;
 
 function cleanText(value: string | undefined, fallback = ""): string {
@@ -267,9 +267,9 @@ function storefrontLaunchChecklistSeo(
   }
   if (!isMyDreamShootsSeoSite(site)) return seo;
   return {
-    title: "Professional AI Photo Generator Online - myDreamshoots",
+    title: "Professional AI Photo Generator Online - MyDreamShoots",
     description:
-      "Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
+      "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
     keywords: "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
   };
 }
