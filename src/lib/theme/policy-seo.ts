@@ -8,7 +8,7 @@ export interface PolicySeoCopy {
 }
 
 const POLICY_KEYWORDS = [
-  "MyDreamShoots policy",
+  "myDreamshoots policy",
   "AI photo privacy",
   "AI portrait terms",
   "photo upload privacy",
@@ -17,16 +17,16 @@ const POLICY_KEYWORDS = [
 ].join(", ");
 
 const MYDREAMSHOOTS_PRIVACY_POLICY_DESCRIPTION =
-  "Read how MyDreamShoots keeps account data, uploaded source photos, generated portraits, credit activity, checkout records, and private album access private. Your photos are never used to train models, input photos auto-delete 30 days after generation, and data is protected with AES-256 at rest and TLS 256-bit in transit.";
+  "Read how myDreamshoots keeps account data, uploaded source photos, generated portraits, credit activity, checkout records, and private album access private. Your photos are never used to train models, input photos auto-delete 30 days after generation, and data is protected with AES-256 at rest and TLS 256-bit in transit.";
 
 const MYDREAMSHOOTS_TERMS_POLICY_DESCRIPTION =
-  "Review the MyDreamShoots terms for customer accounts, AI photo credits, uploads, generation limits, refunds, and private gallery access. The service does not use your photos for model training, applies 30-day auto-delete to input photos, and protects data with AES-256 at rest and TLS 256-bit in transit.";
+  "Review the myDreamshoots terms for customer accounts, AI photo credits, uploads, generation limits, refunds, and private gallery access. The service does not use your photos for model training, applies 30-day auto-delete to input photos, and protects data with AES-256 at rest and TLS 256-bit in transit.";
 
 const MYDREAMSHOOTS_REFUNDS_POLICY_DESCRIPTION =
-  "Review how MyDreamShoots handles the 100% money-back guarantee, unused credits, subscription cancellations, technical failures, reruns, billing reversals, and account credit history.";
+  "Review how myDreamshoots handles the 100% money-back guarantee, unused credits, subscription cancellations, technical failures, reruns, billing reversals, and account credit history.";
 
 const MYDREAMSHOOTS_CONTENT_POLICY_DESCRIPTION =
-  "Read the MyDreamShoots content policy for permitted source photos, upload rights, identity consent, moderation review, private album use, and the trust commitments that keep your photos out of model training and auto-delete inputs after 30 days.";
+  "Read the myDreamshoots content policy for permitted source photos, upload rights, identity consent, moderation review, private album use, and the trust commitments that keep your photos out of model training and auto-delete inputs after 30 days.";
 
 export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
   "/policies/privacy": {
@@ -54,7 +54,7 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/policies/terms": {
-    title: "Terms of Service for MyDreamShoots AI Headshot Generator",
+    title: "Terms of Service for myDreamshoots AI Headshot Generator",
     description: MYDREAMSHOOTS_TERMS_POLICY_DESCRIPTION,
     keywords: POLICY_KEYWORDS,
     canonicalPath: "/terms",
@@ -62,7 +62,7 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/terms": {
-    title: "Terms of Service for MyDreamShoots AI Headshot Generator",
+    title: "Terms of Service for myDreamshoots AI Headshot Generator",
     description: MYDREAMSHOOTS_TERMS_POLICY_DESCRIPTION,
     keywords: POLICY_KEYWORDS,
     canonicalPath: "/terms",
@@ -70,7 +70,7 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/terms-of-service": {
-    title: "Terms of Service for MyDreamShoots AI Headshot Generator",
+    title: "Terms of Service for myDreamshoots AI Headshot Generator",
     description: MYDREAMSHOOTS_TERMS_POLICY_DESCRIPTION,
     keywords: POLICY_KEYWORDS,
     canonicalPath: "/terms",
@@ -78,38 +78,38 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/policies/cookies": {
-    title: "Cookie Policy for MyDreamShoots Sign-In, Checkout, and Albums",
+    title: "Cookie Policy for myDreamshoots Sign-In, Checkout, and Albums",
     description:
-      "Learn how MyDreamShoots uses essential cookies, local storage, security checks, checkout continuity, preference memory, analytics, and provider tools for its AI photo service.",
+      "Learn how myDreamshoots uses essential cookies, local storage, security checks, checkout continuity, preference memory, analytics, and provider tools for its AI photo service.",
     keywords: POLICY_KEYWORDS,
     canonicalPath: "/cookies",
     index: true,
     follow: true
   },
   "/cookies": {
-    title: "Cookie Policy for MyDreamShoots Sign-In, Checkout, and Albums",
+    title: "Cookie Policy for myDreamshoots Sign-In, Checkout, and Albums",
     description:
-      "Learn how MyDreamShoots uses essential cookies, local storage, security checks, checkout continuity, preference memory, analytics, and provider tools for its AI photo service.",
+      "Learn how myDreamshoots uses essential cookies, local storage, security checks, checkout continuity, preference memory, analytics, and provider tools for its AI photo service.",
     keywords: POLICY_KEYWORDS,
     canonicalPath: "/cookies",
     index: true,
     follow: true
   },
   "/cookie-policy": {
-    title: "Cookie Policy for MyDreamShoots Sign-In, Checkout, and Albums",
+    title: "Cookie Policy for myDreamshoots Sign-In, Checkout, and Albums",
     description:
-      "Learn how MyDreamShoots uses essential cookies, local storage, security checks, checkout continuity, preference memory, analytics, and provider tools for its AI photo service.",
+      "Learn how myDreamshoots uses essential cookies, local storage, security checks, checkout continuity, preference memory, analytics, and provider tools for its AI photo service.",
     keywords: POLICY_KEYWORDS,
     canonicalPath: "/cookies",
     index: true,
     follow: true
   },
   "/policies/refunds": {
-    title: "Refund Policy for MyDreamShoots Credits, Plans, and Failed Jobs",
+    title: "Refund Policy for myDreamshoots Credits, Plans, and Failed Jobs",
     description: MYDREAMSHOOTS_REFUNDS_POLICY_DESCRIPTION,
     keywords: [
       POLICY_KEYWORDS,
-      "MyDreamShoots refund policy",
+      "myDreamshoots refund policy",
       "AI photo credit refund",
       "subscription credit refund",
       "failed AI job refund"
@@ -119,11 +119,11 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/refunds": {
-    title: "Refund Policy for MyDreamShoots Credits, Plans, and Failed Jobs",
+    title: "Refund Policy for myDreamshoots Credits, Plans, and Failed Jobs",
     description: MYDREAMSHOOTS_REFUNDS_POLICY_DESCRIPTION,
     keywords: [
       POLICY_KEYWORDS,
-      "MyDreamShoots refund policy",
+      "myDreamshoots refund policy",
       "AI photo credit refund",
       "subscription credit refund",
       "failed AI job refund"
@@ -133,11 +133,11 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/refund-policy": {
-    title: "Refund Policy for MyDreamShoots Credits, Plans, and Failed Jobs",
+    title: "Refund Policy for myDreamshoots Credits, Plans, and Failed Jobs",
     description: MYDREAMSHOOTS_REFUNDS_POLICY_DESCRIPTION,
     keywords: [
       POLICY_KEYWORDS,
-      "MyDreamShoots refund policy",
+      "myDreamshoots refund policy",
       "AI photo credit refund",
       "subscription credit refund",
       "failed AI job refund"
@@ -147,11 +147,11 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/policies/content": {
-    title: "Content Policy for MyDreamShoots Uploads and AI Photo Outputs",
+    title: "Content Policy for myDreamshoots Uploads and AI Photo Outputs",
     description: MYDREAMSHOOTS_CONTENT_POLICY_DESCRIPTION,
     keywords: [
       POLICY_KEYWORDS,
-      "MyDreamShoots content policy",
+      "myDreamshoots content policy",
       "AI photo upload rules",
       "AI portrait consent",
       "private AI output policy"
@@ -161,11 +161,11 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/content": {
-    title: "Content Policy for MyDreamShoots Uploads and AI Photo Outputs",
+    title: "Content Policy for myDreamshoots Uploads and AI Photo Outputs",
     description: MYDREAMSHOOTS_CONTENT_POLICY_DESCRIPTION,
     keywords: [
       POLICY_KEYWORDS,
-      "MyDreamShoots content policy",
+      "myDreamshoots content policy",
       "AI photo upload rules",
       "AI portrait consent",
       "private AI output policy"
@@ -175,11 +175,11 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/content-policy": {
-    title: "Content Policy for MyDreamShoots Uploads and AI Photo Outputs",
+    title: "Content Policy for myDreamshoots Uploads and AI Photo Outputs",
     description: MYDREAMSHOOTS_CONTENT_POLICY_DESCRIPTION,
     keywords: [
       POLICY_KEYWORDS,
-      "MyDreamShoots content policy",
+      "myDreamshoots content policy",
       "AI photo upload rules",
       "AI portrait consent",
       "private AI output policy"
@@ -249,9 +249,9 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/policies/children-privacy": {
-    title: "MyDreamShoots KIDS Act",
+    title: "myDreamshoots KIDS Act",
     description:
-      "Read the MyDreamShoots KIDS Act notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private AI photo handling.",
+      "Read the myDreamshoots KIDS Act notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private AI photo handling.",
     keywords: [
       POLICY_KEYWORDS,
       "children privacy notice",
@@ -264,9 +264,9 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/children-privacy": {
-    title: "MyDreamShoots KIDS Act",
+    title: "myDreamshoots KIDS Act",
     description:
-      "Read the MyDreamShoots KIDS Act notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private AI photo handling.",
+      "Read the myDreamshoots KIDS Act notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private AI photo handling.",
     keywords: [
       POLICY_KEYWORDS,
       "children privacy notice",
@@ -279,9 +279,9 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/policies/state-privacy": {
-    title: "MyDreamShoots DPDPA",
+    title: "myDreamshoots DPDPA",
     description:
-      "Review MyDreamShoots DPDPA information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.",
+      "Review myDreamshoots DPDPA information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.",
     keywords: [
       POLICY_KEYWORDS,
       "California privacy rights",
@@ -296,9 +296,9 @@ export const MYDREAMSHOOTS_POLICY_SEO_BY_PATH: Record<string, PolicySeoCopy> = {
     follow: true
   },
   "/state-privacy": {
-    title: "MyDreamShoots DPDPA",
+    title: "myDreamshoots DPDPA",
     description:
-      "Review MyDreamShoots DPDPA information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.",
+      "Review myDreamshoots DPDPA information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.",
     keywords: [
       POLICY_KEYWORDS,
       "California privacy rights",

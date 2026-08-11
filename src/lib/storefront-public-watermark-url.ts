@@ -1,4 +1,4 @@
-export const STOREFRONT_PUBLIC_WATERMARK_CACHE_VERSION = "20260803watermark30sync1";
+export const STOREFRONT_PUBLIC_WATERMARK_CACHE_VERSION = "20260811watermark30sync2";
 
 const storefrontPublicMediaPattern = /\.(?:avif|jpe?g|png|svg|webp|m4v|mov|mp4|webm)$/i;
 

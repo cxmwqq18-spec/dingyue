@@ -65,6 +65,10 @@ function jsonArray<T>(value: Prisma.JsonValue | null | undefined): T[] {
 
 export function mapPrice(row: Prisma.PriceGetPayload<object>, fallback?: Partial<Price>): Price {
   const record = row as Prisma.PriceGetPayload<object> & { label?: string; metadata?: Prisma.JsonValue | null };
+  const interval: Price["interval"] =
+    row.interval === "year" || row.interval === "quarter" || row.interval === "half_year" || row.interval === "one_time"
+      ? row.interval
+      : "month";
   return {
     id: row.id,
     siteId: row.siteId,
@@ -72,7 +76,7 @@ export function mapPrice(row: Prisma.PriceGetPayload<object>, fallback?: Partial
     label: fallback?.label ?? record.label ?? row.id,
     amountCents: row.amountCents,
     currency: row.currency,
-    interval: row.interval === "year" ? "year" : row.interval === "one_time" ? "one_time" : "month",
+    interval,
     creditsGranted: row.creditsGranted,
     stripePriceId: row.stripePriceId ?? fallback?.stripePriceId ?? `manual_${row.id}`,
     metadata: fallback?.metadata ?? (jsonRecord(record.metadata) as Price["metadata"] | undefined)

@@ -123,7 +123,9 @@ function productTypeLabel(type: Product["type"]) {
 
 function intervalLabel(interval: Price["interval"]) {
   if (interval === "month") return "月度订阅";
-  if (interval === "year") return "年度订阅";
+  if (interval === "quarter") return "季度订阅";
+  if (interval === "half_year") return "半年订阅";
+  if (interval === "year") return "年度订阅（Legacy）";
   return "一次性购买";
 }
 
@@ -635,7 +637,9 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                       {fieldLabel("周期")}
                       <select className="selectmini w-full" onChange={(event) => updatePrice(activeProduct.id, price.id, "interval", event.target.value)} value={price.interval}>
                         <option value="month">月度订阅</option>
-                        <option value="year">年度订阅</option>
+                        <option value="quarter">季度订阅</option>
+                        <option value="half_year">半年订阅</option>
+                        <option value="year">年度订阅（Legacy）</option>
                         <option value="one_time">一次性购买</option>
                       </select>
                     </label>
@@ -749,7 +753,9 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                     {fieldLabel("周期")}
                     <select className="selectmini w-full" onChange={(event) => updateDraft(activeProduct.id, "interval", event.target.value as Price["interval"])} value={activeDraft?.interval ?? "month"}>
                       <option value="month">月度订阅</option>
-                      <option value="year">年度订阅</option>
+                      <option value="quarter">季度订阅</option>
+                      <option value="half_year">半年订阅</option>
+                      <option value="year">年度订阅（Legacy）</option>
                       <option value="one_time">一次性购买</option>
                     </select>
                   </label>

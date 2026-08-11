@@ -5,7 +5,7 @@ import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
 type PageSeo = NonNullable<ThemeSettings["seo"]>["pages"][string];
 type PageJsonSeo = NonNullable<ThemePage["publishedJson"]["seo"]>;
-const myDreamShootsSeoName = "MyDreamShoots";
+const myDreamShootsSeoName = "myDreamshoots";
 const myDreamShootsBrandPattern = /(?:myᕲreamshoots|ʍʏƉʀɛǟʍֆhoots|MyÐreãm\$hoots)/g;
 
 function cleanText(value: string | undefined, fallback = ""): string {
@@ -52,7 +52,7 @@ function normalizeStorefrontBrandText(site: Site, value: string | undefined, fal
     .replace(/\bMydreamShoots\b/g, brandName)
     .replace(/\bMydreamshoots\b/g, brandName)
     .replace(/\bDreamShootAI\b/g, brandName)
-    .replace(/\bMyDreamShoots-xby-xby\b/g, "MyDreamShoots-xby")
+    .replace(/\bMyDreamShoots-xby-xby\b/g, "myDreamshoots-xby")
     .replace(/\bAidreamcapes-xby-xby\b/g, "Aidreamcapes-xby");
 }
 
@@ -267,9 +267,9 @@ function storefrontLaunchChecklistSeo(
   }
   if (!isMyDreamShootsSeoSite(site)) return seo;
   return {
-    title: "Professional AI Photo Generator Online - MyDreamShoots",
+    title: "Professional AI Photo Generator Online - myDreamshoots",
     description:
-      "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
+      "Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
     keywords: "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
   };
 }
@@ -306,31 +306,31 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
   }
   const overrides: Record<string, Partial<PageSeo>> = {
     "/collections": {
-      title: "Browse private AI photo packages | MyDreamShoots",
-      description: "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs."
+      title: "Browse private AI photo packages | myDreamshoots",
+      description: "Browse myDreamshoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs."
     },
     "/collections/headshots": {
-      title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | MyDreamShoots",
+      title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | myDreamshoots",
       description: "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs."
     },
     "/collections/world-cup-fan-photos": {
-      title: "AI World Cup Fan Photos & Match-Day Posters | MyDreamShoots",
+      title: "AI World Cup Fan Photos & Match-Day Posters | myDreamshoots",
       description: "Create personal AI World Cup fan photos, match-day posters, and profile avatars from your own selfies for private fan use."
     },
     "/collections/boudoir": {
-      title: "Private AI Boudoir Photo Package | MyDreamShoots",
+      title: "Private AI Boudoir Photo Package | myDreamshoots",
       description: "Create private boudoir-inspired AI portraits for adult, consensual use from photos you own or have permission to use."
     },
     "/pricing": {
-      title: "MyDreamShoots Pricing | Credits for Private AI Headshot Generator",
-      description: "Compare MyDreamShoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery."
+      title: "myDreamshoots Pricing | Credits for Private AI Headshot Generator",
+      description: "Compare myDreamshoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery."
     },
     "/tools": {
-      title: "AI Photo Tools with Free Previews | Background, Headshots & Try-ons | MyDreamShoots",
-      description: "Explore MyDreamShoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums."
+      title: "AI Photo Tools with Free Previews | Background, Headshots & Try-ons | myDreamshoots",
+      description: "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums."
     },
     "/help": {
-      title: "MyDreamShoots FAQ",
+      title: "myDreamshoots FAQ",
       description: "Get FAQ answers for source photos, package selection, credits, billing, refunds, privacy, cookies, and private album delivery.",
       canonicalPath: "/faq"
     }

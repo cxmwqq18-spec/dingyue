@@ -174,7 +174,7 @@ const assets = {
 
 const trustedLogoAssetBase = "/assets/dreamshoot/generated/trusted-logos";
 const aidreamcapesTrustedLogoAssetBase = "/assets/sites/site_aidreamcapes/trusted-logos";
-const mydreamshootsAboutBody = "MyDreamShoots is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.";
+const mydreamshootsAboutBody = "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photos and videos in seconds with myDreamshoots: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. Plans start at $24.50/month, and every package shows the credit cost before generation.";
 const aidreamcapesAboutBody = "Aidreamcapes is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.";
 const mydreamshootsTrustedLogoBlocks = [
   block("trusted_logo_dior", "logo", { name: "Dior", imageUrl: `${trustedLogoAssetBase}/dior.png`, badge: "Creator proof" }),
@@ -364,7 +364,7 @@ const homeSections: ThemePageJson["sections"] = {
       privacy: "Private album",
       includedTitle: "Included outputs",
       includedOutputs: "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
-      safetyCopy: "Use photos you own or have permission to use. MyDreamShoots does not recreate protected brand marks, official holiday artwork, celebrity likenesses, or public figures without permission.",
+      safetyCopy: "Use photos you own or have permission to use. myDreamshoots does not recreate protected brand marks, official holiday artwork, celebrity likenesses, or public figures without permission.",
       overlayTitle: "Christmas Photos",
       overlaySubtitle: "Festive holiday portraits without a studio.",
       overlayChips: "Christmas cards|group portraits|cozy scenes|private",
@@ -398,7 +398,7 @@ const homeSections: ThemePageJson["sections"] = {
       privacy: "Private gallery",
       includedTitle: "Included outputs",
       includedOutputs: "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
-      safetyCopy: "Use clear photos you own or have permission to use. MyDreamShoots keeps Thanksgiving sets private and avoids protected people, marks, or brand assets without permission.",
+      safetyCopy: "Use clear photos you own or have permission to use. myDreamshoots keeps Thanksgiving sets private and avoids protected people, marks, or brand assets without permission.",
       overlayTitle: "Thanksgiving Photos",
       overlaySubtitle: "Warm gratitude scenes from approved photos.",
       overlayChips: "group portraits|gratitude cards|Friendsgiving|private",
@@ -442,8 +442,8 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "generated-showcase",
       showTrustedLogoIntro: true,
-      trustedLogoTitle: "Trusted by creators worldwide",
-      aboutTitle: "What is MyDreamShoots?",
+      trustedLogoTitle: "Most Trusted Creators | myDreamshoots",
+      aboutTitle: "What is myDreamshoots?",
       aboutBody: mydreamshootsAboutBody,
       embeddedPricingSectionId: "pricing_1",
       trustedLogoSplitIndex: 15,
@@ -480,7 +480,7 @@ const homeSections: ThemePageJson["sections"] = {
       bridgeHref: "/pricing"
     },
     [
-      block("flow_upload", "card", { title: "Private by default", text: "Your uploads stay private inside your signed-in MyDreamShoots account with your jobs, albums, downloads, and credit history. Only upload photos you own or have permission to use.", meta: "01" }),
+      block("flow_upload", "card", { title: "Private by default", text: "Your uploads stay private inside your signed-in myDreamshoots account with your jobs, albums, downloads, and credit history. Only upload photos you own or have permission to use.", meta: "01" }),
       block("flow_pack", "card", { title: "Choose a package", text: "Choose a photo package or quick AI tool.", meta: "02" }),
       block("flow_credits", "card", { title: "How credits work", text: "Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation.", meta: "03" }),
       block("flow_album", "card", { title: "Generate and download", text: "Generate your private results and download the photos you want to keep.", meta: "04" })
@@ -536,11 +536,11 @@ const homeSections: ThemePageJson["sections"] = {
     anchor: "package-path",
     eyebrow: "Why customers buy",
     title: "A clear path from upload to finished gallery.",
-    subtitle: "Start with studio tools, choose a plan for premium generation, then receive finished images in a private MyDreamShoots album.",
+    subtitle: "Start with studio tools, choose a plan for premium generation, then receive finished images in a private myDreamshoots album.",
     source: "blocks",
     layout: "steps"
   }, [
-    block("pkg_path_upload", "card", { title: "Private by default", text: "Your uploads stay private inside your signed-in MyDreamShoots account with your jobs, albums, downloads, and credit history. Only upload photos you own or have permission to use.", meta: "Step 01", imageUrl: assets.upload }),
+    block("pkg_path_upload", "card", { title: "Private by default", text: "Your uploads stay private inside your signed-in myDreamshoots account with your jobs, albums, downloads, and credit history. Only upload photos you own or have permission to use.", meta: "Step 01", imageUrl: assets.upload }),
     block("pkg_path_preview", "card", { title: "Preview", text: "Use studio tools to preview the look before paying for the full package.", meta: "Step 02", imageUrl: assets.hairstyle }),
     block("pkg_path_pay", "card", { title: "How credits work", text: "Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation.", meta: "Step 03", imageUrl: assets.socialCard }),
     block("pkg_path_deliver", "card", { title: "Deliver", text: "Finished outputs return to the private album and stay tied to the account.", meta: "Step 04", imageUrl: assets.avatarPortrait })
@@ -655,7 +655,7 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "plan-rules",
       eyebrow: "Plans and credits",
       title: "How credits work",
-      body: "Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation. Your uploads stay private inside your signed-in MyDreamShoots account with your jobs, albums, downloads, and credit history.",
+      body: "Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation. Your uploads stay private inside your signed-in myDreamshoots account with your jobs, albums, downloads, and credit history.",
       imageUrl: assets.manPortrait,
       primaryCta: "Choose a plan",
       primaryHref: "/pricing",
@@ -668,12 +668,12 @@ const homeSections: ThemePageJson["sections"] = {
       block("plan_rule_tools", "card", { meta: "source prep", title: "Prepare better source photos", description: "Background edits, previews, upscaling, and try-on flows can help prepare clearer inputs before a full package." }),
       block("plan_rule_model", "card", { meta: "identity consistency", title: "Use a private identity flow", description: "Premium packages can use a private identity workflow so results stay more consistent across different scenes." }),
       block("plan_rule_credits", "card", { meta: "How credits work", title: "Check credits before generation", description: "Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation." }),
-      block("plan_rule_gallery", "card", { meta: "Private by default", title: "Your uploads stay private", description: "Your uploads stay private inside your signed-in MyDreamShoots account with your jobs, albums, downloads, and credit history." })
+      block("plan_rule_gallery", "card", { meta: "Private by default", title: "Your uploads stay private", description: "Your uploads stay private inside your signed-in myDreamshoots account with your jobs, albums, downloads, and credit history." })
     ]
   ),
   pricing_1: section("pricing_table", {
     anchor: "plans",
-    title: "Plans & Pricing",
+    title: "Subscription Plans",
     subtitle: "Choose Starter, Pro, or Premium. Each package shows its credit cost before generation; failed requests can return reserved credits according to request status.",
     productType: "subscription",
     featuredProductId: "prod_dreamshoot_pro",
@@ -685,9 +685,9 @@ const homeSections: ThemePageJson["sections"] = {
     "testimonial_wall",
     {
       anchor: "reviews",
-      title: "Ways people use MyDreamShoots.",
+      title: "What Our Customers Say",
       subtitle: "Theme examples for fan meetup albums, VIP-style looks, Christmas cards, holiday groups, and short private clips.",
-      summaryTitle: "Ways people use MyDreamShoots",
+      summaryTitle: "Ways people use myDreamshoots",
       summaryBody: "Plan sports fan meetups, VIP-style red-carpet looks, Christmas cards, and holiday group albums before spending credits.",
       summaryRating: "",
       summaryMeta: "Narrative examples"
@@ -730,7 +730,7 @@ const homeSections: ThemePageJson["sections"] = {
         resultImageUrl: assets.galleryChristmasPhotosTwo
       }),
       block("review_credit", "testimonial", {
-        quote: "Pick a theme, check the credit cost, and keep every fan-photo or holiday result inside a private MyDreamShoots gallery.",
+        quote: "Pick a theme, check the credit cost, and keep every fan-photo or holiday result inside a private myDreamshoots gallery.",
         name: "Credit planning",
         role: "Private workflow",
         location: "Clear credits",
@@ -771,7 +771,7 @@ const homeSections: ThemePageJson["sections"] = {
     },
     [
       block("faq_free", "faq_item", {
-        question: "Can I try MyDreamShoots for free?",
+        question: "Can I try myDreamshoots for free?",
         answer: "Some lightweight tools can be free. Private model creation and premium photo packages require credits because they use dedicated generation capacity."
       }),
       block("faq_credits", "faq_item", {
@@ -780,7 +780,7 @@ const homeSections: ThemePageJson["sections"] = {
       }),
       block("faq_private", "faq_item", {
         question: "Are my uploaded photos private?",
-        answer: "Yes. Source photos, generation jobs, albums, orders, and credits stay connected to your signed-in MyDreamShoots account and are not public by default."
+        answer: "Yes. Source photos, generation jobs, albums, orders, and credits stay connected to your signed-in myDreamshoots account and are not public by default."
       }),
       block("faq_uploads", "faq_item", {
         question: "What photos should I upload?",
@@ -805,7 +805,7 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "start",
       eyebrow: "Start creating",
-      title: "Open your private MyDreamShoots studio.",
+      title: "Ready to try myDreamshoots Best AI Maker?",
       subtitle: "Subscribe, upload, choose packages, generate results, and keep delivery in one workspace.",
       primaryCta: "Create my first photo set",
       primaryHref: "/login",
@@ -900,7 +900,7 @@ const templateSections = {
   creators_intro_1: section("rich_text", {
     eyebrow: "Creator channel",
     title: "Earn with AI photo stories your audience can actually try.",
-    body: "MyDreamShoots partners with creators, community builders, photographers, coaches, and niche publishers who can introduce private AI photo packages in a useful, trustworthy way. Share themed photo packs, source-photo tips, before-and-after stories, and seasonal campaign links while your audience keeps uploads, credits, and albums inside their own account.",
+    body: "myDreamshoots partners with creators, community builders, photographers, coaches, and niche publishers who can introduce private AI photo packages in a useful, trustworthy way. Share themed photo packs, source-photo tips, before-and-after stories, and seasonal campaign links while your audience keeps uploads, credits, and albums inside their own account.",
     headingLevel: "h1",
     tone: "dark",
     imageUrl: assets.heroGridSocial,
@@ -910,7 +910,7 @@ const templateSections = {
     secondaryHref: "/collections"
   }, [
     block("creator_intro_commission", "rich_text_card", { meta: "Channel", title: "Creator-ready campaigns", description: "Launch content around headshots, fan photos, gala portraits, avatars, and seasonal photo packs without building a photo product yourself." }),
-    block("creator_intro_privacy", "rich_text_card", { meta: "Trust", title: "Private customer flow", description: "Followers sign in, upload, pay, generate, and download inside MyDreamShoots, so you promote the experience without handling personal photos." }),
+    block("creator_intro_privacy", "rich_text_card", { meta: "Trust", title: "Private customer flow", description: "Followers sign in, upload, pay, generate, and download inside myDreamshoots, so you promote the experience without handling personal photos." }),
     block("creator_intro_assets", "rich_text_card", { meta: "Assets", title: "Content angles included", description: "Use ready-made page links, package themes, talking points, and social story ideas that match our visual catalog." }),
     block("creator_intro_measurement", "rich_text_card", { meta: "Growth", title: "Room for paid channels", description: "We can reserve specific partner routes for influencers, newsletter operators, paid media tests, and community collaborations." })
   ]),
@@ -932,24 +932,24 @@ const templateSections = {
   creators_steps_1: section("rich_text", {
     eyebrow: "How it works",
     title: "A simple path from application to live campaign.",
-    body: "Tell us about your audience, preferred channels, publishing cadence, and the photo package angles you want to test. Approved partners receive a dedicated route, campaign notes, and a way to coordinate launch timing with the MyDreamShoots team.",
+    body: "Tell us about your audience, preferred channels, publishing cadence, and the photo package angles you want to test. Approved partners receive a dedicated route, campaign notes, and a way to coordinate launch timing with the myDreamshoots team.",
     tone: "warm"
   }, [
     block("creator_step_apply", "rich_text_card", { meta: "01", title: "Apply", description: "Submit your creator profile, social links, audience notes, and the kind of campaign you want to run." }),
     block("creator_step_match", "rich_text_card", { meta: "02", title: "Match", description: "We review fit, confirm the channel, and suggest photo packages that make sense for your audience." }),
-    block("creator_step_launch", "rich_text_card", { meta: "03", title: "Launch", description: "Publish with a partner route that sends customers to MyDreamShoots packages, pricing, or a specific offer." }),
+    block("creator_step_launch", "rich_text_card", { meta: "03", title: "Launch", description: "Publish with a partner route that sends customers to myDreamshoots packages, pricing, or a specific offer." }),
     block("creator_step_learn", "rich_text_card", { meta: "04", title: "Learn", description: "Track what resonates, refine the story, and plan follow-up drops around seasonal or niche photo themes." })
   ]),
   partner_form_1: section("rich_text", {
     eyebrow: "Partner application",
-    title: "Apply for a reserved MyDreamShoots promotion channel.",
-    body: "Tell us who you reach, how you publish, and which MyDreamShoots photo experiences would fit your audience. Approved partners can send customers to packages, pricing, or a specific private album offer.",
+    title: "Apply for a reserved myDreamshoots promotion channel.",
+    body: "Tell us who you reach, how you publish, and which myDreamshoots photo experiences would fit your audience. Approved partners can send customers to packages, pricing, or a specific private album offer.",
     headingLevel: "h1",
     layout: "application_form",
     tone: "dark",
     imageUrl: assets.proofCinematicWorlds,
     primaryCta: "Email partnership details",
-    primaryHref: "mailto:partners@mydreamshoots.com?subject=MyDreamShoots%20partner%20application",
+    primaryHref: "mailto:partners@mydreamshoots.com?subject=myDreamshoots%20partner%20application",
     secondaryCta: "Back to Creators Circle",
     secondaryHref: "/creators-circle"
   }, [
@@ -970,7 +970,7 @@ const templateSections = {
   }, [
     block("partner_expectation_fit", "rich_text_card", { meta: "Audience", title: "Clear audience fit", description: "Career, creator, sports, fashion, beauty, event, or personal-brand communities usually map well to our package catalog." }),
     block("partner_expectation_quality", "rich_text_card", { meta: "Quality", title: "Helpful creative framing", description: "We prefer educational demos, honest results, and practical package examples over hype-only promotions." }),
-    block("partner_expectation_compliance", "rich_text_card", { meta: "Rules", title: "Privacy and disclosure", description: "Partners should disclose AI use where appropriate and avoid collecting customer uploads outside MyDreamShoots." }),
+    block("partner_expectation_compliance", "rich_text_card", { meta: "Rules", title: "Privacy and disclosure", description: "Partners should disclose AI use where appropriate and avoid collecting customer uploads outside myDreamshoots." }),
     block("partner_expectation_launch", "rich_text_card", { meta: "Launch", title: "A testable plan", description: "Share when you can publish, what format you will use, and which route or offer would make the campaign easy to measure." })
   ])
 };
@@ -1054,11 +1054,11 @@ function mydreamshootsTutorialVideoSection(): SectionInstance {
     anchor: "how-it-works",
     eyebrow: "How it works",
     title: "Watch the private photo package workflow.",
-    subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
+    subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private myDreamshoots gallery.",
     imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-55s.jpg?v=20260805i2vselect3",
     videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4?v=20260805i2vselect3",
     videoBadge: "Private gallery workflow",
-    playLabel: "Watch the MyDreamShoots workflow"
+    playLabel: "Watch the myDreamshoots workflow"
   });
 }
 
@@ -1071,7 +1071,7 @@ function mydreamshootsImageTutorialVideoSection(): SectionInstance {
     imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260806chooserfix1",
     videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260806chooserfix1",
     videoBadge: "AI photo generation",
-    playLabel: "Watch the MyDreamShoots AI image tutorial"
+    playLabel: "Watch the myDreamshoots AI image tutorial"
   });
 }
 
@@ -1105,10 +1105,10 @@ function mydreamshootsMobileVideoShowcaseSection(): SectionInstance {
   return section("mobile_video_showcase", {
     anchor: "mobile-video-tutorial",
     eyebrow: "Mobile tutorial",
-    title: "MyDreamShoots mobile photo workflow preview.",
+    title: "myDreamshoots mobile photo workflow preview.",
     subtitle: "Compare image setup and motion-preview steps in a vertical phone view.",
     imageUrl: assets.flowPrivateAlbumWorkspace,
-    imageAlt: "Mobile MyDreamShoots workspace screen showing private source-photo setup, credit review, and finished AI photo gallery steps.",
+    imageAlt: "Mobile myDreamshoots workspace screen showing private source-photo setup, credit review, and finished AI photo gallery steps.",
     videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",
     videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260806mobile45a",
     videoBadge: "Mobile workflow",
@@ -1157,10 +1157,10 @@ function mydreamshootsReviewSection(): SectionInstance {
     {
       anchor: "reviews",
       mode: "reviews",
-      title: "What customers like about MyDreamShoots.",
+      title: "What customers like about myDreamshoots.",
       subtitle: "Clear credit costs, realistic-looking themes, private galleries, and quick planning keep showing up in customer feedback.",
       summaryTitle: "Customers love the private gallery flow.",
-      summaryBody: "Creators, small teams, sports fans, and holiday-card buyers use MyDreamShoots to test polished AI photo ideas before booking a studio or building a campaign.",
+      summaryBody: "Creators, small teams, sports fans, and holiday-card buyers use myDreamshoots to test polished AI photo ideas before booking a studio or building a campaign.",
       summaryRating: "4.9/5",
       summaryMeta: "Customer feedback"
     },
@@ -1243,7 +1243,7 @@ function mydreamshootsFaqSection(): SectionInstance {
       subtitle: "Clear answers about source photos, packages, credits, AI images, short videos, styling tools, privacy, publishing, and delivery.",
       layout: "visual_faq",
       imageUrl: assets.galleryChristmasCoupleCover,
-      imageAlt: "MyDreamShoots holiday album cover showing a warmly lit festive portrait prepared for seasonal cards and private celebration galleries",
+      imageAlt: "myDreamshoots holiday album cover showing a warmly lit festive portrait prepared for seasonal cards and private celebration galleries",
       imageList: [
         assets.galleryChristmasCover,
         assets.galleryChristmasPhotosThree,
@@ -1253,12 +1253,12 @@ function mydreamshootsFaqSection(): SectionInstance {
         assets.gallerySeasonalFallback
       ].join("|"),
       imageListAlt: [
-        "MyDreamShoots holiday album cover showing a festive portrait and warm seasonal styling",
-        "MyDreamShoots snowy Christmas portrait showing a couple in a winter holiday scene",
-        "MyDreamShoots Christmas couple portrait showing festive lights and gift-ready framing",
-        "MyDreamShoots Thanksgiving group album cover showing a warm family table scene",
-        "MyDreamShoots Halloween party portrait cover showing a cinematic costume scene",
-        "MyDreamShoots seasonal holiday album cover showing a private festive portrait set"
+        "myDreamshoots holiday album cover showing a festive portrait and warm seasonal styling",
+        "myDreamshoots snowy Christmas portrait showing a couple in a winter holiday scene",
+        "myDreamshoots Christmas couple portrait showing festive lights and gift-ready framing",
+        "myDreamshoots Thanksgiving group album cover showing a warm family table scene",
+        "myDreamshoots Halloween party portrait cover showing a cinematic costume scene",
+        "myDreamshoots seasonal holiday album cover showing a private festive portrait set"
       ].join("|"),
       journeyTitle: "Your photo flow",
       journeyTitles: "Upload|Choose Pack|Generate|Download",
@@ -1266,30 +1266,30 @@ function mydreamshootsFaqSection(): SectionInstance {
     },
     [
       block("faq_about", "faq_item", {
-        question: "What is MyDreamShoots?",
-        answer: "MyDreamShoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
+        question: "What is myDreamshoots?",
+        answer: "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
         body: "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
         bulletList: "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
         linkList: "Browse photo collections::/collections|Explore creative tools::/tools",
         imageUrl: assets.headshotLifestyle,
-        imageAlt: "AI-generated lifestyle headshot with natural framing for a MyDreamShoots creator and professional profile photo package"
+        imageAlt: "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
       }),
       block("faq_use", "faq_item", {
-        question: "How do I use MyDreamShoots?",
+        question: "How do I use myDreamshoots?",
         answer: "Start by choosing a package or tool that matches the result you want, then follow the upload and generation steps shown in your signed-in workspace.",
         body: "The request flow keeps the important decisions together: source photos, package direction, selected files, credit cost, and generation status.|You can review the request before it starts, then return to the private gallery when the output is ready.",
         bulletList: "Choose a collection or tool|Upload photos you own or have permission to use|Confirm the request details and credits|Review and download finished results",
         linkList: "See the workflow::/workflow|Open your workspace::/login"
       }),
       block("faq_use_cases", "faq_item", {
-        question: "What can I create with MyDreamShoots?",
+        question: "What can I create with myDreamshoots?",
         answer: "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
         body: "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
         bulletList: "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
         linkList: "Compare package themes::/collections|View video tools::/tools"
       }),
       block("faq_free", "faq_item", {
-        question: "Is MyDreamShoots free?",
+        question: "Is myDreamshoots free?",
         answer: "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
         body: "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
         bulletList: "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
@@ -1316,7 +1316,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         bulletList: "Use clear focus and even lighting|Include front, three-quarter, and natural-expression views|Avoid sunglasses, extreme filters, heavy blur, and cropped faces|Include wardrobe or hairstyle variety when the package calls for it",
         linkList: "Review the upload workflow::/workflow",
         imageUrl: assets.upload,
-        imageAlt: "Clear source portrait showing the sharp lighting and visible face recommended for MyDreamShoots AI photo uploads"
+        imageAlt: "Clear source portrait showing the sharp lighting and visible face recommended for myDreamshoots AI photo uploads"
       }),
       block("faq_couples", "faq_item", {
         question: "Can I create couple or group photos?",
@@ -1325,7 +1325,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         bulletList: "Get permission from every person shown|Use clear group and individual reference photos|Choose a package that supports the number of subjects|Review faces and hands before sharing",
         linkList: "Browse couple and group themes::/collections",
         imageUrl: assets.galleryChristmasCoupleTwo,
-        imageAlt: "MyDreamShoots couple portrait showing two people in a softly lit seasonal setting for a private keepsake photo collection"
+        imageAlt: "myDreamshoots couple portrait showing two people in a softly lit seasonal setting for a private keepsake photo collection"
       }),
       block("faq_photo_generator", "faq_item", {
         question: "How does the AI photo generator work?",
@@ -1334,7 +1334,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         bulletList: "Choose a visual direction|Upload the source material|Review the request and credits|Inspect the delivered gallery and keep the strongest results",
         linkList: "Explore photo collections::/collections",
         imageUrl: assets.galleryCreatorOne,
-        imageAlt: "MyDreamShoots creator portrait with polished framing and social-ready styling for an AI personal-brand photo collection"
+        imageAlt: "myDreamshoots creator portrait with polished framing and social-ready styling for an AI personal-brand photo collection"
       }),
       block("faq_video", "faq_item", {
         question: "How does the AI video workflow work?",
@@ -1343,7 +1343,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         bulletList: "Choose a video-capable theme or add-on|Use a clean source image or finished still|Confirm the duration, format, and credits shown|Download the completed motion output from the private workspace",
         linkList: "See video-capable tools::/tools|Review the workflow::/workflow",
         imageUrl: assets.aiVideoAddonsPack,
-        imageAlt: "MyDreamShoots motion-ready portrait example showing how an approved still can become a short AI video add-on"
+        imageAlt: "myDreamshoots motion-ready portrait example showing how an approved still can become a short AI video add-on"
       }),
       block("faq_styling", "faq_item", {
         question: "How do virtual looks, hairstyle, and styling tools work?",
@@ -1352,11 +1352,11 @@ function mydreamshootsFaqSection(): SectionInstance {
         bulletList: "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
         linkList: "Open styling tools::/tools",
         imageUrl: assets.virtualLooks,
-        imageAlt: "MyDreamShoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
+        imageAlt: "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
       }),
       block("faq_operator", "faq_item", {
-        question: "Who operates MyDreamShoots?",
-        answer: "MyDreamShoots is operated as a customer-facing AI photo studio with account, billing, generation, and gallery support handled through the site workspace.",
+        question: "Who operates myDreamshoots?",
+        answer: "myDreamshoots is operated as a customer-facing AI photo studio with account, billing, generation, and gallery support handled through the site workspace.",
         body: "For a plan question, credit discrepancy, failed request, or delivery issue, include the account email, request details, and a short description so support can find the right record.|The site does not require customers to manage model providers or generation infrastructure themselves.",
         bulletList: "Use the signed-in account for request history|Keep the request or order details when contacting support|Do not send private source photos through an unrelated public channel",
         linkList: "Contact the support team::/contact-us"
@@ -1757,15 +1757,15 @@ function bestMediaGallerySection(kind: "image" | "video", aidreamcapes: boolean)
     anchor: kind === "image" ? "best-ai-image" : "best-ai-video",
     kind,
     fullGallery: true,
-    eyebrow: aidreamcapes ? "Aidreamcapes gallery" : "MyDreamShoots gallery",
+    eyebrow: aidreamcapes ? "Aidreamcapes gallery" : "myDreamshoots gallery",
     title: kind === "image" ? "Best AI image" : "Best AI video",
     subtitle: aidreamcapes
       ? kind === "image"
         ? "Browse Aidreamcapes fan-scene, game-day, holiday, and occasion image themes in one simple grid."
         : "Browse Aidreamcapes motion cases for fan scenes, occasion moods, and celebration albums in one simple grid."
       : kind === "image"
-        ? "Browse every MyDreamShoots photo generator theme in one simple grid."
-        : "Browse every MyDreamShoots motion case in one simple grid.",
+        ? "Browse every myDreamshoots photo generator theme in one simple grid."
+        : "Browse every myDreamshoots motion case in one simple grid.",
     imageSlugs: "",
     videoSlugs: ""
   });
@@ -2114,7 +2114,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     {
       workflow_intro_1: section("rich_text", {
         eyebrow: "How it works",
-        title: "How MyDreamShoots turns uploads into private AI photo sets.",
+        title: "How myDreamshoots turns uploads into private AI photo sets.",
         body: "Upload photos you own, choose the photo package you want, review the visible credit cost, generate the private request, and download finished images from your account gallery.",
         headingLevel: "h1",
         tone: "dark",
@@ -2138,9 +2138,9 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     },
     1,
     {
-      title: "How MyDreamShoots AI photo generation works",
-      description: "Learn how MyDreamShoots customers upload source photos, choose AI photo packages, review credits, generate private results, and download finished galleries.",
-      keywords: "MyDreamShoots workflow, AI photo generation workflow, private AI photo packages, AI photo credits",
+      title: "How myDreamshoots AI photo generation works",
+      description: "Learn how myDreamshoots customers upload source photos, choose AI photo packages, review credits, generate private results, and download finished galleries.",
+      keywords: "myDreamshoots workflow, AI photo generation workflow, private AI photo packages, AI photo credits",
       canonicalPath: "/workflow",
       robots: { index: true, follow: true }
     }
@@ -2296,8 +2296,8 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     ["policy_1"],
     {
       policy_1: section("policy_content", {
-        title: "MyDreamShoots policy details",
-        body: "<p>MyDreamShoots policy pages cover customer account access, photo upload rights, private album delivery, credit usage, checkout records, refund review, content moderation, cookies, and privacy controls for AI photo customers.</p><p>Use the dedicated refund, content, privacy, terms, and cookie pages to review the rules that apply before uploading source photos, starting a generation job, buying credits, or downloading finished portraits.</p>"
+        title: "myDreamshoots policy details",
+        body: "<p>myDreamshoots policy pages cover customer account access, photo upload rights, private album delivery, credit usage, checkout records, refund review, content moderation, cookies, and privacy controls for AI photo customers.</p><p>Use the dedicated refund, content, privacy, terms, and cookie pages to review the rules that apply before uploading source photos, starting a generation job, buying credits, or downloading finished portraits.</p>"
       })
     },
     1
@@ -2351,9 +2351,9 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     ["about_intro_1", "about_values_1", "trust_1", "conversion_1"],
     {
       about_intro_1: section("rich_text", {
-        eyebrow: "About MyDreamShoots",
+        eyebrow: "About myDreamshoots",
         title: "Private AI photo packages with clear credits and real customer delivery.",
-        body: "MyDreamShoots helps you turn your own photos into private AI headshots, portraits, and themed albums. Upload photos you own, review credits before generation, and keep finished results in your signed-in gallery.",
+        body: "myDreamshoots helps you turn your own photos into private AI headshots, portraits, and themed albums. Upload photos you own, review credits before generation, and keep finished results in your signed-in gallery.",
         headingLevel: "h1",
         tone: "dark",
         imageUrl: assets.heroPackageWall,
@@ -2369,7 +2369,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       about_values_1: section("rich_text", {
         eyebrow: "How we work",
         title: "A practical photo workspace for customers who want control.",
-        body: "Our goal is simple: make AI photo creation feel organized, private, and understandable. MyDreamShoots focuses on clear package choices, realistic expectations, account-scoped delivery, and responsive support for questions about uploads, credits, checkout, privacy, and finished albums.",
+        body: "Our goal is simple: make AI photo creation feel organized, private, and understandable. myDreamshoots focuses on clear package choices, realistic expectations, account-scoped delivery, and responsive support for questions about uploads, credits, checkout, privacy, and finished albums.",
         imageUrl: assets.flowPrivateAlbumWorkspace,
         primaryCta: "View pricing",
         primaryHref: "/pricing",
@@ -2392,8 +2392,8 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     {
       contact_intro_1: section("rich_text", {
         eyebrow: "Contact us",
-        title: "Contact MyDreamShoots support.",
-        body: "Reach MyDreamShoots for account help, billing review, AI photo package questions, private album support, privacy requests, creator use cases, or plan questions.",
+        title: "Contact myDreamshoots support.",
+        body: "Reach myDreamshoots for account help, billing review, AI photo package questions, private album support, privacy requests, creator use cases, or plan questions.",
         headingLevel: "h1",
         tone: "dark",
         imageUrl: assets.catalogHeadshotCard,
@@ -2431,7 +2431,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       }),
       search_1: section("search_results", {
         eyebrow: "Site search",
-        title: "Search MyDreamShoots AI photo tools and packages",
+        title: "Search myDreamshoots AI photo tools and packages",
         emptyTitle: "No matching content yet.",
         emptyBody: "Try starter, pro, video, try-on, gala, privacy, uploads, or refunds.",
         resultLimit: 12
@@ -2454,10 +2454,10 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       }),
       cart_1: section("cart_summary", {
         eyebrow: "Checkout summary",
-        title: "Your selected MyDreamShoots plan",
-        subtitle: "Your selected plan, credit amount, and checkout status stay connected to your MyDreamShoots account. Credits are added after payment confirmation.",
+        title: "Your selected myDreamshoots plan",
+        subtitle: "Your selected plan, credit amount, and checkout status stay connected to your myDreamshoots account. Credits are added after payment confirmation.",
         emptyTitle: "Choose a plan first",
-        emptyBody: "Open pricing to select a monthly or yearly subscription plan.",
+        emptyBody: "Open pricing to select a monthly, quarterly, or semiannual subscription plan.",
         returnLabel: "Back to pricing",
         returnHref: "/pricing"
       }),
@@ -2474,7 +2474,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       not_found_1: section("not_found", {
         eyebrow: "404",
         title: "This page is not available.",
-        subtitle: "Return to AI photo packages, pricing, sign-in, or your private MyDreamShoots workspace.",
+        subtitle: "Return to AI photo packages, pricing, sign-in, or your private myDreamshoots workspace.",
         primaryCta: "Return home",
         primaryHref: "/",
         secondaryCta: "View packages",
@@ -2507,7 +2507,7 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
   "best-packages": "Best Packages",
   "best-ai-image": "Best AI image",
   "best-ai-video": "Best AI video",
-  tools: "Tools Directory",
+  tools: "AI Tools Directory",
   workflow: "How It Works",
   "package-detail": "Package Detail",
   "tool-detail": "AI Tool Detail",
@@ -2534,7 +2534,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
   branding: {
     logoText: "myᕲreamshoots",
     market: "AI photo packages, personal AI models, paid tools, credits, AI video, and private albums",
-    description: "MyDreamShoots is a premium AI photo workspace for themed photo packages, personal AI models, paid studio tools, AI video-ready outputs, and private gallery delivery."
+    description: "myDreamshoots is a premium AI photo workspace for themed photo packages, personal AI models, paid studio tools, AI video-ready outputs, and private gallery delivery."
   },
   themeSettings: {
     colors: {
@@ -2553,8 +2553,8 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
     },
     navigation: {
       headerLinks: [
-        { label: "Photoshoot Studio", href: "/collections/headshots" },
-        { label: "Tools", href: "/tools" },
+        { label: "AI Photoshoot", href: "/collections/headshots" },
+        { label: "AI Tools", href: "/tools" },
         { label: "Best Packages", href: "/best-packages" },
         { label: "How it works", href: "/workflow" },
         { label: "Blog", href: "/blog" },
@@ -2564,7 +2564,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         { label: "Best Packages", href: "/best-packages", group: "product" },
         { label: "Best AI image", href: "/best-ai-image", group: "product" },
         { label: "Best AI video", href: "/best-ai-video", group: "product" },
-        { label: "Tools", href: "/tools", group: "product" },
+        { label: "AI Tools", href: "/tools", group: "product" },
         { label: "Pricing", href: "/pricing", group: "product" },
         { label: "Privacy Policy", href: "/privacy", group: "support" },
         { label: "Terms of Service", href: "/terms", group: "support" },
@@ -2590,11 +2590,11 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           style: "dark_pills",
           mobileLabel: "Menu",
           logoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
-          logoAlt: "MyDreamShoots heart camera logo"
+          logoAlt: "myDreamshoots heart camera logo"
         },
         blocks: [
-          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "Photoshoot Studio", href: "/collections/headshots" } },
-          { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "Tools", href: "/tools" } },
+          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "AI Photoshoot", href: "/collections/headshots" } },
+          { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "AI Tools", href: "/tools" } },
           { id: "dreamshoot_header_best_packages", type: "menu_link", settings: { label: "Best Packages", href: "/best-packages" } },
           { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
           { id: "dreamshoot_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } },
@@ -2606,14 +2606,14 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         settings: {
           title: "myᕲreamshoots",
           logoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
-          logoAlt: "MyDreamShoots heart camera logo",
+          logoAlt: "myDreamshoots heart camera logo",
           tagline: "Private AI photo sets with visible credit costs and gallery delivery",
           body: "Upload your selfies, choose a style, review the credit cost, and download a private photo set.",
           productHeading: "Explore",
           companyHeading: "Content",
           supportHeading: "Support",
           socialHeading: "Why it works",
-          socialBody: "MyDreamShoots helps you turn your own photos into private AI headshots, portraits, and themed albums.",
+          socialBody: "myDreamshoots helps you turn your own photos into private AI headshots, portraits, and themed albums.",
           instagramUrl: "https://www.instagram.com/mydreamshoots",
           facebookUrl: "https://www.facebook.com/mydreamshoots",
           pinterestUrl: "https://www.pinterest.com/mydreamshoots",
@@ -2634,7 +2634,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           { id: "dreamshoot_footer_best_packages", type: "menu_link", settings: { label: "Best Packages", href: "/best-packages", group: "product" } },
           { id: "dreamshoot_footer_best_ai_image", type: "menu_link", settings: { label: "Best AI image", href: "/best-ai-image", group: "product" } },
           { id: "dreamshoot_footer_best_ai_video", type: "menu_link", settings: { label: "Best AI video", href: "/best-ai-video", group: "product" } },
-          { id: "dreamshoot_footer_tools", type: "menu_link", settings: { label: "Tools", href: "/tools", group: "product" } },
+          { id: "dreamshoot_footer_tools", type: "menu_link", settings: { label: "AI Tools", href: "/tools", group: "product" } },
           { id: "dreamshoot_footer_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing", group: "product" } },
           { id: "dreamshoot_footer_tool", type: "menu_link", settings: { label: "Headshot maker", href: toolHref("headshot"), group: "product" } },
           { id: "dreamshoot_footer_help", type: "menu_link", settings: { label: "FAQ", href: "/faq", group: "company" } },
@@ -2653,10 +2653,10 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       }
     },
     seo: {
-      siteTitle: "MyDreamShoots",
+      siteTitle: "myDreamshoots",
       siteDescription: "AI photo package subscription with personal AI models, private uploads, paid tools, AI video-ready outputs, and customer-only galleries.",
       siteKeywords: "",
-      titleTemplate: "%s | MyDreamShoots",
+      titleTemplate: "%s | myDreamshoots",
       defaultOgImage: assets.hero
     },
     saasSettingsCurrent: {
@@ -2676,7 +2676,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         header_plus: {
           type: "header_plus",
           version: "1",
-          card_name: "MyDreamShoots header",
+          card_name: "myDreamshoots header",
           settings: {
             is_announce_show: true,
             announce_title: "Create private AI photo sets from everyday selfies.",
@@ -2688,7 +2688,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         footer_plus: {
           type: "footer_plus",
           version: "1",
-          card_name: "MyDreamShoots footer",
+          card_name: "myDreamshoots footer",
           settings: {
             footer_bg_color: "#111114",
             footer_text_color: "#d8d0c7"

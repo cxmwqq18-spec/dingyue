@@ -238,7 +238,7 @@ async function smokeRouteContracts() {
   assert(storefrontBatchScript.includes("public/assets/sites/site_aidreamshoots"), "CLI batch should include AIdreamshoots public assets");
 
   const storefrontWatermarkUrl = await read("src/lib/storefront-public-watermark-url.ts");
-  assert(storefrontWatermarkUrl.includes("20260803watermark30sync1"), "shared public watermark URL helper should use the current cache-buster");
+  assert(storefrontWatermarkUrl.includes("20260811watermark30sync2"), "shared public watermark URL helper should use the current cache-buster");
   assert(storefrontWatermarkUrl.includes("params.set(\"wm\""), "shared public watermark URL helper should append the wm query");
 
   const jobCreateForm = await read("src/components/app/job-create-form.tsx");

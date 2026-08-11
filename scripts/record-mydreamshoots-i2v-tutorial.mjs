@@ -17,7 +17,7 @@ const isMobileRecording = tutorialDevice === "mobile";
 const baseUrl = (process.env.TUTORIAL_BASE_URL || "https://www.mydreamshoots.com").replace(/\/$/, "");
 const siteId = process.env.TUTORIAL_SITE_ID || "site_dreamshoot";
 const siteSlug = process.env.TUTORIAL_SITE_SLUG || "mydreamshoots";
-const tutorialBrandName = process.env.TUTORIAL_BRAND_NAME || "MyDreamShoots";
+const tutorialBrandName = process.env.TUTORIAL_BRAND_NAME || "myDreamshoots";
 const isMyDreamShootsSite = /mydreamshoots/i.test(`${siteId} ${siteSlug} ${tutorialBrandName}`);
 const outputDir = path.resolve(repoRoot, process.env.TUTORIAL_OUTPUT_DIR || "output");
 const runDir = path.join(outputDir, process.env.TUTORIAL_RUN_SLUG || "mydreamshoots-i2v-tutorial-real-work");
@@ -806,7 +806,7 @@ async function waitForStyledPricingPage(page, timeout = 45_000, settleMs = 500) 
         !/Times New Roman|Times/i.test(style.fontFamily || "");
     });
     const billingControlsStyled = controls
-      .filter((element) => /^(Monthly|Yearly)$/i.test((element.textContent || "").trim()))
+      .filter((element) => /^(Monthly|Quarterly|Semiannually)$/i.test((element.textContent || "").trim()))
       .every((element) => {
         const rect = element.getBoundingClientRect();
         const style = window.getComputedStyle(element);
@@ -819,7 +819,7 @@ async function waitForStyledPricingPage(page, timeout = 45_000, settleMs = 500) 
       planButtonStyled &&
       billingControlsStyled &&
       !/Times New Roman|Times/i.test(bodyFont) &&
-      /MyDreamShoots/i.test(body.innerText || "");
+      /myDreamshoots/i.test(body.innerText || "");
   }, undefined, { timeout });
   if (settleMs > 0) await page.waitForTimeout(settleMs);
 }
@@ -1909,7 +1909,7 @@ async function main() {
   await fs.rm(runDir, { recursive: true, force: true });
   await fs.mkdir(framesDir, { recursive: true });
   await fs.mkdir(outputDir, { recursive: true });
-  if (skipRealGeneration && siteId === "site_dreamshoot") await ensureMydreamshootsLocalPreviewVideo();
+  if (skipRealGeneration && siteId === "site_dreamshoot") await ensuremyDreamshootsLocalPreviewVideo();
   await prepareCleanFrames();
   log("prepared clean upload frames", { paths: cleanFramePaths, sources: cleanFrameSourcePaths, device: tutorialDevice, viewport, outputSize });
 

@@ -425,6 +425,8 @@ export interface CustomerSession {
   expiresAt: string;
 }
 
+export type PriceInterval = "month" | "quarter" | "half_year" | "year" | "one_time";
+
 export interface Price {
   id: string;
   siteId: string;
@@ -432,7 +434,7 @@ export interface Price {
   label: string;
   amountCents: number;
   currency: string;
-  interval: "month" | "year" | "one_time";
+  interval: PriceInterval;
   creditsGranted: number;
   stripePriceId: string;
   metadata?: Record<string, string | number | boolean>;

@@ -219,7 +219,7 @@ function siteBaseUrl(site: Site, routeMode: "host" | "path"): string {
   return hasCanonicalDomain ? origin : `${origin}/site/${site.slug}`;
 }
 
-const storefrontPublicWatermarkCacheVersion = "20260803watermark30sync1";
+const storefrontPublicWatermarkCacheVersion = "20260811watermark30sync2";
 
 function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   const cleanValue = value.trim();

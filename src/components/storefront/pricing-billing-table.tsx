@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 
-type BillingCycle = "month" | "year";
+type BillingCycle = "month" | "quarter" | "half_year";
+const billingCycles = ["month", "quarter", "half_year"] as const;
 
 type PricingPlanPrice = {
   id: string;
@@ -53,16 +54,21 @@ export function PricingBillingTable({
   const [billingCycle, setBillingCycle] = useState<BillingCycle>(initialBillingCycle);
   const activeSidePanel = sidePanels[billingCycle] ?? sidePanels.month;
   const visiblePlans = useMemo(
-    () => plans.map((plan) => ({ ...plan, price: plan.prices[billingCycle] ?? plan.prices.month ?? plan.prices.year })).filter((plan) => plan.price),
+    () => plans.map((plan) => ({ ...plan, price: plan.prices[billingCycle] ?? plan.prices.month })).filter((plan) => plan.price),
     [billingCycle, plans]
   );
+  const cycleLabel = (cycle: BillingCycle) => {
+    if (cycle === "month") return locale === "es" ? "Mensual" : "Monthly";
+    if (cycle === "quarter") return locale === "es" ? "Trimestral" : "Quarterly";
+    return locale === "es" ? "Semestral" : "Semiannually";
+  };
 
   return (
     <>
       <div className="mt-7 flex flex-wrap gap-3">
         {canShowBillingSwitch ? (
-          <div className="inline-grid grid-cols-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1 shadow-[0_18px_50px_-40px_rgba(0,0,0,0.75)] backdrop-blur">
-            {(["month", "year"] as const).map((cycle) => (
+          <div className="inline-grid grid-cols-1 rounded-[12px] border border-white/14 bg-white/[0.08] p-1 shadow-[0_18px_50px_-40px_rgba(0,0,0,0.75)] backdrop-blur sm:grid-cols-3">
+            {billingCycles.map((cycle) => (
               <button
                 aria-pressed={billingCycle === cycle}
                 className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold transition ${billingCycle === cycle ? "bg-white text-[#171514]" : "text-white/68 hover:text-white"}`}
@@ -70,7 +76,7 @@ export function PricingBillingTable({
                 onClick={() => setBillingCycle(cycle)}
                 type="button"
               >
-                {cycle === "month" ? locale === "es" ? "Mensual" : "Monthly" : locale === "es" ? "Anual" : "Yearly"}
+                {cycleLabel(cycle)}
               </button>
             ))}
           </div>
@@ -96,7 +102,7 @@ export function PricingBillingTable({
                   <p className="text-[2.65rem] font-semibold leading-none tracking-[-0.04em] [font-family:var(--site-title-font)]">{price.formattedAmount}</p>
                   <p className="pb-2 text-[0.88rem] text-[#7f786f]">{price.periodLabel}</p>
                 </div>
-                {billingCycle === "year" && price.formattedEquivalentMonthly ? (
+                {billingCycle !== "month" && price.formattedEquivalentMonthly ? (
                   <p className="mt-2 text-sm font-medium text-[#7f786f]">{locale === "es" ? `Equivale a ${price.formattedEquivalentMonthly} / mes` : `Equivalent to ${price.formattedEquivalentMonthly} / month`}</p>
                 ) : null}
                 {price.formattedOriginalAmount ? (

@@ -23,6 +23,10 @@ function jsonRecord(value: unknown): Record<string, string | number | boolean> |
   return value as Record<string, string | number | boolean>;
 }
 
+function priceInterval(value: string): Price["interval"] {
+  return value === "year" || value === "quarter" || value === "half_year" || value === "one_time" ? value : "month";
+}
+
 function countGroupRow(row: { _count?: unknown }): number {
   const count = row._count;
   if (!count || typeof count !== "object") return 0;
@@ -118,7 +122,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
           label: price.label,
           amountCents: price.amountCents,
           currency: price.currency,
-          interval: price.interval === "year" ? "year" : price.interval === "one_time" ? "one_time" : "month",
+          interval: priceInterval(price.interval),
           creditsGranted: price.creditsGranted,
           stripePriceId: price.stripePriceId ?? `manual_${price.id}`,
           metadata: jsonRecord(price.metadata)
