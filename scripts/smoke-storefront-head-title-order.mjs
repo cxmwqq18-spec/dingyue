@@ -6,7 +6,7 @@ const storefronts = [
   {
     host: "www.mydreamshoots.com",
     path: "/",
-    title: "Professional AI Photo Generator Online - MyDreamShoots"
+    title: "Professional AI Photo Generator Online - myDreamshoots"
   },
   {
     host: "www.aidreamcapes.com",

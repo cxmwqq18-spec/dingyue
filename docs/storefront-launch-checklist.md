@@ -41,8 +41,8 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 
 | 字段 | 当前批准值 |
 | --- | --- |
-| SEO title | `Professional AI Photo Generator Online - MyDreamShoots` |
-| SEO description | `Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.` |
+| SEO title | `Professional AI Photo Generator Online - myDreamshoots` |
+| SEO description | `Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.` |
 | SEO keywords | `Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot` |
 | Hero badge | `AI Headshot Generators` |
 | Hero headline | `Upload selfies and create your own AI model - Professional headshots without a studio.` |
@@ -128,9 +128,9 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 ### MyDreamShoots
 
 - [ ] `title` 正确：
-  `Professional AI Photo Generator Online - MyDreamShoots`
+  `Professional AI Photo Generator Online - myDreamshoots`
 - [ ] `description` 正确：
-  `Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.`
+  `Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.`
 - [ ] `keywords` 正确：
   `Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot`
 
@@ -183,7 +183,7 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 上线前需要确认店铺图片、Logo、艺术字、图标型品牌内容具备可访问名称。
 
 - [ ] 首页 Logo 图片有 `alt`，或父级链接有明确 `aria-label` / `title`。
-- [ ] 艺术字品牌展示不影响可访问名称，例如视觉上显示 `myᕲreamshoots` 或 `ልiጋreamርapes` 时，辅助信息仍能表达 `MyDreamShoots` 或 `Aidreamcapes`。
+- [ ] 艺术字品牌展示不影响可访问名称，例如视觉上显示 `myᕲreamshoots` 或 `ልiጋreamርapes` 时，辅助信息仍能表达 `myDreamshoots` 或 `Aidreamcapes`。
 - [ ] Logo 图片使用合法 `alt`；文字型艺术字不能乱加无效 `alt` 属性，应使用 `aria-label`、`title`、`sr-only` 明文解析。
 - [ ] 主要内容图片有描述性 `alt`。
 - [ ] 纯装饰图片可以使用空 `alt=""`，但不能影响关键信息理解。
@@ -193,7 +193,7 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 
 上线前 Header / Footer 的视觉品牌标题必须与已批准艺术字一致，同时 `aria-label`、`alt`、`title`、SEO、JSON-LD 等可访问或结构化名称继续使用普通品牌名。
 
-- MyDreamShoots：视觉展示 `myᕲreamshoots`；可访问 / SEO 名称使用 `MyDreamShoots`。
+- MyDreamShoots：视觉展示 `myᕲreamshoots`；可访问 / SEO 名称使用 `myDreamshoots`。
 - AIdreamcapes：视觉展示 `ልiጋreamርapes`；可访问 / SEO 名称使用 `Aidreamcapes`。
 
 建议检查重点：
