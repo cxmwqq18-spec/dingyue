@@ -53,6 +53,7 @@
     "sync:aidreamcapes-trusted-logos": "node scripts/sync-aidreamcapes-trusted-logos.mjs",
     "sync:dreamshoot-featured-packs": "node scripts/sync-dreamshoot-homepage-featured-packs.mjs",
     "sync:dreamshoot-blog-content": "node scripts/sync-dreamshoot-blog-content.mjs",
+    "sync:grownstride-test-public-state": "node scripts/sync-grownstride-test-public-state-from-json.mjs",
     "generate:dreamshoot-homepage-images": "node scripts/generate-dreamshoot-homepage-images.mjs",
     "generate:dreamshoot-homepage-videos": "node scripts/generate-dreamshoot-homepage-videos.mjs",
     "smoke:dreamshoot-homepage-showcase": "node scripts/smoke-dreamshoot-homepage-showcase.mjs",
