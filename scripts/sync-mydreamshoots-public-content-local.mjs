@@ -34,10 +34,52 @@ const dryRun = flags.has("dry-run") || (!writeJson && !writeLock);
 const now = new Date();
 
 const brand = "myDreamshoots";
+const copyTargets = {
+  trustedLogoTitle: `Most Trusted Creators. | ${brand}`,
+  aboutTitle: `What is ${brand}?`,
+  aboutBody: `${brand} is an AI photo and video studio produced by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photo and video in seconds with ${brand}'s: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. Plans start at $24.50/month, and every package shows the credit cost before generation.`,
+  imageTitle: "Best Photo Generator",
+  imageAllLabel: "VIEW ALL PHOTO",
+  imageAllHref: "/best-ai-image",
+  videoTitle: "Best Video Generator",
+  videoAllLabel: "VIEW ALL VIDEO",
+  videoAllHref: "/best-ai-video",
+  pricingTitle: "Subscription Plans",
+  pricingSubtitle: "Choose the plan that works for you",
+  pricingMarketComparison: `The average professional photoshoot can cost around $725. ${brand} keeps plan selection simple with monthly or quarterly and semiannually subscriptions.`,
+  pricingDescription: "Choose Starter, Pro, or Premium. Each package shows its credit cost before generation; failed requests can return reserved credits according to request status.",
+  pricingSidePanelEyebrow: "Why people subscribe",
+  pricingSidePanelTitle: "Our plans starts from $24.50 and are designed to be more affordable and flexible.",
+  pricingSidePanelBody: "Credits stay predictable while packs stay flexible. You can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.",
+  mobileTitle: "How it works",
+  mobileSubtitle: "Upload selfies and start creating your AI photshoot now",
+  mobileSupportingCopy: `Use ${brand}'s AI Video design your videos with your own creativity. Your next video content can instantly go viral.`,
+  packageLabel: "AI PHOTO STUDIOS",
+  packageTitle: "Professional AI Photo Packages",
+  packageSubtitle: `Whether solo or with a partner, you can create stunning AI photo albums in just one click with ${brand}'s themed photo packs. We've curated the best poses, outfit ideas, and hairstyles for you. Plus, we're always adding new photo packs to our collection. Send a heart to a special someone. Or use it just for fun!`,
+  directoryLabel: "AI PHOTO THEMED",
+  directorySubtitle: "Use your own creativity surprise your partner with a romantic video or photo.",
+  reviewTitle: "What Our Customers Say",
+  reviewSubtitle: "Our users love us and we love them!",
+  reviewBody: `${brand} is an AI photo and video creator platform with creativity creators from all over the world. Creators are not simply content distributors. At their best, they are brokers of trust.`,
+  conversionEyebrow: "BEST AI MAKER",
+  conversionTitle: `Ready to try the ${brand}'s Best AI Maker?`,
+  conversionSubtitle: `We've designed ${brand} to be as easy as possible to use, allowing you to focus on unleashing your creativity with complete peace of mind. Subscribe, upload, choose packages, generate results, and keep delivery in one workspace.`
+};
+const issueGroupOrder = [
+  "01_about_copy",
+  "02_generator_headings_links",
+  "03_pricing_heading",
+  "04_pricing_copy_order",
+  "05_mobile_tutorial",
+  "06_package_catalog",
+  "07_theme_directory",
+  "08_reviews",
+  "09_conversion"
+];
 const aboutBody =
-  "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photos and videos in seconds with myDreamshoots: choose a theme, review credits before generation, keep uploads private, and download finished results from your private gallery.";
-const subscriptionSubtitle =
-  "Choose Starter, Pro, or Premium with monthly, quarterly, or semiannual billing. Each package shows its credit cost before generation; failed requests can return reserved credits according to request status.";
+  copyTargets.aboutBody;
+const subscriptionSubtitle = copyTargets.pricingSubtitle;
 
 const visibleTextKeys = new Set([
   "answer",
@@ -50,6 +92,8 @@ const visibleTextKeys = new Set([
   "ctaLabel",
   "description",
   "detail",
+  "directoryLabel",
+  "directorySubtitle",
   "eyebrow",
   "headline",
   "heading",
@@ -57,6 +101,7 @@ const visibleTextKeys = new Set([
   "includedTitle",
   "label",
   "location",
+  "marketComparison",
   "meta",
   "name",
   "nextCampaignLabel",
@@ -71,9 +116,13 @@ const visibleTextKeys = new Set([
   "role",
   "safetyCopy",
   "secondaryCta",
+  "sidePanelBody",
+  "sidePanelEyebrow",
+  "sidePanelTitle",
   "subheading",
   "subheadline",
   "subtitle",
+  "supportingCopy",
   "text",
   "title"
 ]);
@@ -83,31 +132,37 @@ const highSignalKeys = new Set([
   "body",
   "caption",
   "description",
+  "directorySubtitle",
   "eyebrow",
   "headline",
   "heading",
+  "marketComparison",
   "primaryCta",
   "question",
   "quote",
   "secondaryCta",
+  "sidePanelBody",
+  "sidePanelTitle",
   "subheading",
   "subheadline",
   "subtitle",
+  "supportingCopy",
   "text",
   "title"
 ]);
 
 const exactReplacements = new Map([
-  ["Trusted by creators worldwide", `Most Trusted Creators | ${brand}`],
-  ["What is MyDreamShoots?", `What is ${brand}?`],
-  ["What is myᕲreamshoots?", `What is ${brand}?`],
+  ["Trusted by creators worldwide", copyTargets.trustedLogoTitle],
+  [`Most Trusted Creators | ${brand}`, copyTargets.trustedLogoTitle],
+  ["What is MyDreamShoots?", copyTargets.aboutTitle],
+  ["What is myᕲreamshoots?", copyTargets.aboutTitle],
   ["What customers like about MyDreamShoots.", "What Our Customers Say"],
   ["Ways people use MyDreamShoots.", "What Our Customers Say"],
   ["Common ways people use MyDreamShoots.", "What Our Customers Say"],
   ["Plans & Pricing", "Subscription Plans"],
   ["Simple, Transparent Pricing", "Subscription Plans"],
-  ["Open your private MyDreamShoots studio.", `Ready to try ${brand} Best AI Maker?`],
-  ["Open your private myᕲreamshoots studio.", `Ready to try ${brand} Best AI Maker?`],
+  ["Open your private MyDreamShoots studio.", copyTargets.conversionTitle],
+  ["Open your private myᕲreamshoots studio.", copyTargets.conversionTitle],
   ["Open pricing to select a monthly or yearly subscription plan.", "Open pricing to select a monthly, quarterly, or semiannual subscription plan."],
   ["Open pricing to select a monthly, quarterly, or semisemiannual subscription plan.", "Open pricing to select a monthly, quarterly, or semiannual subscription plan."],
   ["Open pricing to select a monthly, quarterly, or semisemiannual plan.", "Open pricing to select a monthly, quarterly, or semiannual plan."]
@@ -336,12 +391,191 @@ function syncCopy(value, stats, key = "") {
   return value;
 }
 
+function noteStructuredChange(stats, group, source, key, before, after) {
+  if (before === after) return;
+  stats.stringsChanged += 1;
+  stats.sectionFieldsChanged += 1;
+  const groupStats = stats.issueGroups[group] ?? { fieldsChanged: 0, examples: [] };
+  groupStats.fieldsChanged += 1;
+  if (groupStats.examples.length < 4) {
+    groupStats.examples.push({ source, key, before: String(before ?? "").slice(0, 160), after: String(after ?? "").slice(0, 160) });
+  }
+  stats.issueGroups[group] = groupStats;
+  stats.examples.push({ key: `${group}:${key}`, before: String(before ?? "").slice(0, 180), after: String(after ?? "").slice(0, 180) });
+}
+
+function createIssueGroups() {
+  return Object.fromEntries(issueGroupOrder.map((group) => [group, { fieldsChanged: 0, examples: [] }]));
+}
+
+function setSectionSetting(sections, sectionId, key, value, stats, group, source) {
+  const section = sections?.[sectionId];
+  if (!section || typeof section !== "object") return;
+  const settings = section.settings && typeof section.settings === "object" ? section.settings : (section.settings = {});
+  const before = settings[key];
+  if (before === value) return;
+  settings[key] = value;
+  noteStructuredChange(stats, group, `${source}.sections.${sectionId}`, key, before, value);
+}
+
+function syncKnownMydreamSections(pageJson, stats, source) {
+  if (!pageJson || typeof pageJson !== "object" || !pageJson.sections || typeof pageJson.sections !== "object") return;
+  const { sections } = pageJson;
+
+  for (const [key, value] of [
+    ["trustedLogoTitle", copyTargets.trustedLogoTitle],
+    ["aboutTitle", copyTargets.aboutTitle],
+    ["aboutBody", copyTargets.aboutBody]
+  ]) {
+    setSectionSetting(sections, "generation_showcase_1", key, value, stats, "01_about_copy", source);
+  }
+
+  for (const [key, value] of [
+    ["imageTitle", copyTargets.imageTitle],
+    ["imageAllLabel", copyTargets.imageAllLabel],
+    ["imageAllHref", copyTargets.imageAllHref],
+    ["videoTitle", copyTargets.videoTitle],
+    ["videoAllLabel", copyTargets.videoAllLabel],
+    ["videoAllHref", copyTargets.videoAllHref]
+  ]) {
+    setSectionSetting(sections, "generation_showcase_1", key, value, stats, "02_generator_headings_links", source);
+  }
+
+  for (const [key, value] of [
+    ["title", copyTargets.pricingTitle]
+  ]) {
+    setSectionSetting(sections, "pricing_1", key, value, stats, "03_pricing_heading", source);
+  }
+
+  for (const [key, value] of [
+    ["subtitle", copyTargets.pricingSubtitle],
+    ["marketComparison", copyTargets.pricingMarketComparison],
+    ["description", copyTargets.pricingDescription],
+    ["sidePanelEyebrow", copyTargets.pricingSidePanelEyebrow],
+    ["sidePanelTitle", copyTargets.pricingSidePanelTitle],
+    ["sidePanelBody", copyTargets.pricingSidePanelBody]
+  ]) {
+    setSectionSetting(sections, "pricing_1", key, value, stats, "04_pricing_copy_order", source);
+  }
+
+  for (const [key, value] of [
+    ["title", copyTargets.mobileTitle],
+    ["subtitle", copyTargets.mobileSubtitle],
+    ["supportingCopy", copyTargets.mobileSupportingCopy]
+  ]) {
+    setSectionSetting(sections, "mobile_video_1", key, value, stats, "05_mobile_tutorial", source);
+  }
+
+  for (const [key, value] of [
+    ["label", copyTargets.packageLabel],
+    ["title", copyTargets.packageTitle],
+    ["subtitle", copyTargets.packageSubtitle]
+  ]) {
+    setSectionSetting(sections, "package_catalog_1", key, value, stats, "06_package_catalog", source);
+  }
+
+  for (const [key, value] of [
+    ["directoryLabel", copyTargets.directoryLabel],
+    ["directorySubtitle", copyTargets.directorySubtitle]
+  ]) {
+    setSectionSetting(sections, "package_catalog_1", key, value, stats, "07_theme_directory", source);
+  }
+
+  for (const [key, value] of [
+    ["title", copyTargets.reviewTitle],
+    ["subtitle", copyTargets.reviewSubtitle],
+    ["summaryTitle", copyTargets.reviewTitle],
+    ["summaryBody", copyTargets.reviewBody],
+    ["summaryRating", ""],
+    ["summaryMeta", ""]
+  ]) {
+    setSectionSetting(sections, "proof_1", key, value, stats, "08_reviews", source);
+  }
+
+  for (const [key, value] of [
+    ["eyebrow", copyTargets.conversionEyebrow],
+    ["title", copyTargets.conversionTitle],
+    ["subtitle", copyTargets.conversionSubtitle]
+  ]) {
+    setSectionSetting(sections, "conversion_1", key, value, stats, "09_conversion", source);
+  }
+}
+
+function syncKnownMydreamSectionsDeep(value, stats, source = "state") {
+  if (!value || typeof value !== "object") return;
+  syncKnownMydreamSections(value, stats, source);
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => syncKnownMydreamSectionsDeep(item, stats, `${source}[${index}]`));
+    return;
+  }
+  for (const [key, entry] of Object.entries(value)) {
+    if (!entry || typeof entry !== "object") continue;
+    syncKnownMydreamSectionsDeep(entry, stats, `${source}.${key}`);
+  }
+}
+
+function templateKeyForPage(page) {
+  const slug = normalizePath(page?.slug ?? page?.draftJson?.slug ?? page?.publishedJson?.slug ?? "");
+  if (slug === "/") return "index";
+  return slug.replace(/^\/+/, "").replace(/\/+$/g, "") || "index";
+}
+
+function pageJsonToThemeTemplate(page) {
+  const pageJson = clone(page?.draftJson ?? page?.publishedJson ?? {});
+  if (!pageJson || typeof pageJson !== "object") return undefined;
+  const order = Array.isArray(pageJson.sectionsOrder)
+    ? pageJson.sectionsOrder
+    : Array.isArray(pageJson.content_for_page)
+      ? pageJson.content_for_page
+      : [];
+  pageJson.content_for_page = [...order];
+  return pageJson;
+}
+
+function syncSiteThemeTemplatesFromPages(state, site, stats) {
+  const templates = {};
+  for (const page of asArray(site.pages)) {
+    const key = templateKeyForPage(page);
+    const template = pageJsonToThemeTemplate(page);
+    if (template) templates[key] = template;
+  }
+  if (!Object.keys(templates).length) return;
+
+  for (const theme of asArray(state.siteThemes).filter((entry) => entry.siteId === siteId)) {
+    if (!siteThemeNeedsTemplateRebuild(theme)) continue;
+    const before = JSON.stringify(theme.templates ?? {});
+    theme.templates = clone(templates);
+    const after = JSON.stringify(theme.templates);
+    if (before !== after) {
+      stats.siteThemeTemplatesChanged += 1;
+      stats.examples.push({
+        key: `siteThemeTemplates:${theme.id ?? "site_theme"}`,
+        before: before.slice(0, 180),
+        after: after.slice(0, 180)
+      });
+    }
+  }
+}
+
+function siteThemeNeedsTemplateRebuild(theme) {
+  const templates = theme?.templates && typeof theme.templates === "object" ? theme.templates : {};
+  const home = templates.index;
+  if (home?.sections?.generation_showcase_1?.type !== "dreamshoot_generation_showcase") return true;
+  if (home?.sections?.mobile_video_1?.settings?.title !== copyTargets.mobileTitle) return true;
+  if (templates["best-packages"]?.sections?.featured_pack_1?.type !== "dreamshoot_featured_pack") return true;
+  if (templates["best-ai-image"]?.sections?.best_ai_image_1?.type !== "dreamshoot_media_gallery") return true;
+  if (templates["best-ai-video"]?.sections?.best_ai_video_1?.type !== "dreamshoot_media_gallery") return true;
+  return false;
+}
+
 function syncTargetState(state) {
-  const stats = { stringsChanged: 0, examples: [] };
+  const stats = { stringsChanged: 0, sectionFieldsChanged: 0, siteThemeTemplatesChanged: 0, examples: [], issueGroups: createIssueGroups() };
   const site = asArray(state.sites).find((item) => item.id === siteId);
   if (!site) throw new Error(`site ${siteId} not found in ${statePath}`);
 
   syncCopy(site, stats);
+  syncKnownMydreamSectionsDeep(site, stats, `site:${site.id}`);
+  syncSiteThemeTemplatesFromPages(state, site, stats);
 
   for (const collectionName of [
     "siteThemes",
@@ -358,6 +592,7 @@ function syncTargetState(state) {
   ]) {
     for (const item of asArray(state[collectionName]).filter((entry) => entry.siteId === siteId)) {
       syncCopy(item, stats);
+      syncKnownMydreamSectionsDeep(item, stats, `${collectionName}:${item.id ?? "item"}`);
     }
   }
 
@@ -366,7 +601,7 @@ function syncTargetState(state) {
     publication.snapshot.themeSettings = clone(site.themeSettings?.publishedJson ?? {});
   }
 
-  stats.examples = stats.examples.slice(0, 24);
+  stats.examples = stats.examples.slice(0, 36);
   return { site, stats };
 }
 
@@ -494,6 +729,9 @@ function main() {
     },
     copy: {
       stringsChanged: stats.stringsChanged,
+      sectionFieldsChanged: stats.sectionFieldsChanged,
+      siteThemeTemplatesChanged: stats.siteThemeTemplatesChanged,
+      issueGroups: stats.issueGroups,
       examples: stats.examples
     },
     homepageLock: homepageLock.fingerprints

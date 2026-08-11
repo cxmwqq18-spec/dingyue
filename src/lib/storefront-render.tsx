@@ -45,7 +45,17 @@ import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolic
 import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
-const dreamshootPartnerTemplateSlugs = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
+const dreamshootPartnerTemplateSlugs = new Set([
+  "/workflow",
+  "/faq",
+  "/creators-circle",
+  "/partner-registration",
+  "/about-us",
+  "/contact-us",
+  "/best-packages",
+  "/best-ai-image",
+  "/best-ai-video"
+]);
 
 function isGrownstrideTestStorefront(site: Pick<Site, "id" | "slug" | "primaryDomain">): boolean {
   const domain = (site.primaryDomain || "").toLowerCase();
@@ -2914,6 +2924,9 @@ function syntheticDreamShootPartnerPage(site: Site, slug: string): ThemePage | u
     slug === "/partner-registration" ? "partner-registration" :
     slug === "/about-us" ? "about-us" :
     slug === "/contact-us" ? "contact-us" :
+    slug === "/best-packages" ? "best-packages" :
+    slug === "/best-ai-image" ? "best-ai-image" :
+    slug === "/best-ai-video" ? "best-ai-video" :
     "creators-circle";
   const pageJson = dreamshootAiStudioTemplatesForSite(site)[templateKey];
   return {
@@ -2928,6 +2941,9 @@ function syntheticDreamShootPartnerPage(site: Site, slug: string): ThemePage | u
       templateKey === "partner-registration" ? "Partner Registration" :
       templateKey === "about-us" ? "About Us" :
       templateKey === "contact-us" ? "Contact Us" :
+      templateKey === "best-packages" ? "Best Packages" :
+      templateKey === "best-ai-image" ? "Best AI image" :
+      templateKey === "best-ai-video" ? "Best AI video" :
       "Creators Circle",
     draftJson: pageJson,
     publishedJson: pageJson

@@ -38,7 +38,7 @@ const skipLive = flags.has("skip-live") || process.env.MYDREAMSHOOTS_CONTENT_GUA
 const includeLocalJson = flags.has("include-local-json") || process.env.MYDREAMSHOOTS_CONTENT_GUARD_LOCAL_JSON === "1";
 const skipLocalJson = flags.has("skip-local-json") || !includeLocalJson;
 const skipHomepageLock = flags.has("skip-homepage-lock");
-const timeoutMs = positiveInt(args.get("timeout-ms") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_TIMEOUT_MS, 15_000);
+const timeoutMs = positiveInt(args.get("timeout-ms") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_TIMEOUT_MS, 45_000);
 const minLiveCoverage = boundedNumber(args.get("min-live-coverage") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MIN_LIVE_COVERAGE, 0.62, 0, 1);
 const pathMinLiveCoverage = parsePathCoverage(args.get("min-live-coverage-by-path") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MIN_LIVE_COVERAGE_BY_PATH, { "/tools": 0.58 });
 const maxLiveRecords = positiveInt(args.get("max-live-records") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MAX_LIVE_RECORDS, 90);
@@ -56,6 +56,8 @@ const visibleTextKeys = new Set([
   "ctaLabel",
   "description",
   "detail",
+  "directoryLabel",
+  "directorySubtitle",
   "eyebrow",
   "headline",
   "heading",
@@ -63,6 +65,7 @@ const visibleTextKeys = new Set([
   "includedTitle",
   "label",
   "location",
+  "marketComparison",
   "meta",
   "name",
   "nextCampaignLabel",
@@ -77,9 +80,13 @@ const visibleTextKeys = new Set([
   "role",
   "safetyCopy",
   "secondaryCta",
+  "sidePanelBody",
+  "sidePanelEyebrow",
+  "sidePanelTitle",
   "subheading",
   "subheadline",
   "subtitle",
+  "supportingCopy",
   "text",
   "title"
 ]);
@@ -89,16 +96,21 @@ const highSignalKeys = new Set([
   "body",
   "caption",
   "description",
+  "directorySubtitle",
   "eyebrow",
   "headline",
   "heading",
+  "marketComparison",
   "primaryCta",
   "question",
   "quote",
   "secondaryCta",
+  "sidePanelBody",
+  "sidePanelTitle",
   "subheading",
   "subheadline",
   "subtitle",
+  "supportingCopy",
   "text",
   "title"
 ]);

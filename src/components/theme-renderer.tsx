@@ -738,6 +738,9 @@ function isPublicSeoRoute(pagePath: string): boolean {
     pagePath === "/blog" ||
     pagePath === "/creators-circle" ||
     pagePath === "/partner-registration" ||
+    pagePath === "/best-packages" ||
+    pagePath === "/best-ai-image" ||
+    pagePath === "/best-ai-video" ||
     pagePath === "/about-us" ||
     pagePath === "/contact-us" ||
     pagePath === "/privacy" ||
@@ -7950,6 +7953,24 @@ function PricingTableSectionView({
     )
   );
   const pricingTitle = setting(section, "title", "Subscription Plans");
+  const mydreamPricingCopyLayout = !aidreamcapes && !spanishXbyPricing && isMyDreamShootsProfileSite(site);
+  const pricingSubtitle = spanishXbyPricing
+    ? aidreamcapes
+      ? "Elige el plan de creditos adecuado para crear albumes privados de fans y recuerdos festivos."
+      : "Elige el plan de creditos adecuado para crear fotos privadas, retratos profesionales y albumes con IA."
+    : setting(section, "subtitle", aidreamcapes ? "Choose the right credit plan for private fan-scene and holiday albums." : "Choose the plan that works for you");
+  const pricingMarketComparison = setting(
+    section,
+    "marketComparison",
+    mydreamPricingCopyLayout
+      ? "The average professional photoshoot can cost around $725. myDreamshoots keeps plan selection simple with monthly or quarterly and semiannually subscriptions."
+      : "The average professional photoshoot can cost around $725. myDreamshoots keeps plan selection simple with monthly, quarterly, and semiannual subscriptions."
+  );
+  const pricingDescription = setting(
+    section,
+    "description",
+    "Choose Starter, Pro, or Premium. Each package shows its credit cost before generation; failed requests can return reserved credits according to request status."
+  );
   const pricingImageAlt = spanishXbyImageAlt(site, manualImageAlt({
     explicitAlt: setting(section, "imageAlt", ""),
     src: pricingImage,
@@ -8025,13 +8046,17 @@ function PricingTableSectionView({
         <div className={aidreamcapes ? "absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,14,0.98)_0%,rgba(5,7,14,0.96)_42%,rgba(5,7,14,0.68)_60%,rgba(5,7,14,0.18)_100%)]" : "absolute inset-0 bg-[linear-gradient(90deg,rgba(12,12,14,0.98)_0%,rgba(12,12,14,0.96)_42%,rgba(12,12,14,0.68)_60%,rgba(12,12,14,0.18)_100%)]"} />
       </div>
       <div className={contentClassName}>
-        <div className="max-w-[48rem]">
-          <h2 className="text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">
-            {setting(section, "title", "Subscription Plans")}
+        <div className={mydreamPricingCopyLayout ? "mx-auto max-w-[52rem] text-center" : "max-w-[48rem]"}>
+          <h2 className={mydreamPricingCopyLayout ? "text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-normal text-balance [font-family:var(--site-title-font)]" : "text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]"}>
+            {pricingTitle}
           </h2>
-          <p className={aidreamcapes ? "mt-3 text-[0.98rem] leading-7 text-white/72" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{isSpanishXbySite(site) ? (aidreamcapes ? "Elige el plan de creditos adecuado para crear albumes privados de fans y recuerdos festivos." : "Elige el plan de creditos adecuado para crear fotos privadas, retratos profesionales y albumes con IA.") : setting(section, "subtitle", aidreamcapes ? "Choose the right credit plan for private fan-scene and holiday albums." : "Choose the plan that works for you. Each package shows its credit cost before generation; failed requests can return reserved credits according to request status.")}</p>
-          {!aidreamcapes && !isSpanishXbySite(site) ? (
-            <p className="mt-3 text-sm leading-6 text-white/58">The average professional photoshoot can cost around $725. myDreamshoots keeps plan selection simple with monthly, quarterly, and semiannual subscriptions.</p>
+          {mydreamPricingCopyLayout ? <div className="mx-auto mt-3 h-px w-20 bg-white/58" /> : null}
+          <p className={mydreamPricingCopyLayout ? "mt-4 text-[0.92rem] font-medium leading-6 text-white/78" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{pricingSubtitle}</p>
+          {!aidreamcapes && !spanishXbyPricing ? (
+            <>
+              <p className={mydreamPricingCopyLayout ? "mx-auto mt-5 max-w-[46rem] text-sm leading-6 text-white/64" : "mt-3 text-sm leading-6 text-white/58"}>{pricingMarketComparison}</p>
+              {mydreamPricingCopyLayout ? <p className="mx-auto mt-3 max-w-[48rem] text-sm leading-6 text-white/58">{pricingDescription}</p> : null}
+            </>
           ) : null}
         </div>
         <PricingBillingTable
@@ -8954,16 +8979,20 @@ function SectionView({
     const leftVideoPoster = leftVideoPosterSetting ? mediaAssetUrl(site, leftVideoPosterSetting) : legacyVideoPoster;
     const rightVideoPoster = rightVideoPosterSetting ? mediaAssetUrl(site, rightVideoPosterSetting) : legacyVideoPoster;
     const useModernLayout = Boolean(leftVideoUrlSetting || rightVideoUrlSetting || leftVideoPosterSetting || rightVideoPosterSetting || setting(section, "leftTitle", "") || setting(section, "rightTitle", ""));
+    const mydreamMobileCopyLayout = !aidreamcapes && !isSpanishXbySite(site) && isMyDreamShootsProfileSite(site);
+    const mobileSupportingCopy = setting(section, "supportingCopy", "");
     const accent = aidreamcapes ? `linear-gradient(90deg, ${aidreamcapesAccent}, ${aidreamcapesCopper})` : dreamshootBrandGradient;
     const badgeBg = aidreamcapes ? aidreamcapesCopper : "#173A8A";
     const panelBorder = aidreamcapes ? "border-[#3a2519]" : "border-[#20284a]";
     return (
       <section className="bg-[#08090d] px-5 py-16 text-white" id={sectionAnchor(section, "mobile-video")}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
-          <div className="max-w-3xl">
-            <p className="font-mono text-xs uppercase" style={{ color: aidreamcapes ? aidreamcapesAccent : accentBlue }}>{setting(section, "eyebrow", "Mobile tutorial")}</p>
-            <h2 className="mt-4 text-3xl font-semibold leading-tight md:text-5xl">{sectionHeading(section, "Watch the mobile workflow preview.")}</h2>
-            <p className="mt-4 text-sm leading-7 text-white/72">{setting(section, "subtitle", "Preview the mobile flow beside a supporting app image.")}</p>
+          <div className={mydreamMobileCopyLayout ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
+            {!mydreamMobileCopyLayout ? <p className="font-mono text-xs uppercase" style={{ color: aidreamcapes ? aidreamcapesAccent : accentBlue }}>{setting(section, "eyebrow", "Mobile tutorial")}</p> : null}
+            <h2 className={mydreamMobileCopyLayout ? "text-3xl font-semibold leading-tight tracking-normal md:text-5xl" : "mt-4 text-3xl font-semibold leading-tight md:text-5xl"}>{sectionHeading(section, "Watch the mobile workflow preview.")}</h2>
+            {mydreamMobileCopyLayout ? <div className="mx-auto mt-3 h-px w-20 bg-white/58" /> : null}
+            <p className={mydreamMobileCopyLayout ? "mt-4 text-[0.95rem] font-medium leading-7 text-white/76" : "mt-4 text-sm leading-7 text-white/72"}>{setting(section, "subtitle", "Preview the mobile flow beside a supporting app image.")}</p>
+            {mydreamMobileCopyLayout && mobileSupportingCopy ? <p className="mx-auto mt-2 max-w-[42rem] text-sm leading-6 text-white/56">{mobileSupportingCopy}</p> : null}
           </div>
           {useModernLayout ? (
             <div className="mt-8 grid gap-5 md:grid-cols-2 md:items-stretch">
@@ -11898,12 +11927,13 @@ function SectionView({
 
   if (section.type === "dreamshoot_generation_showcase") {
     const aidreamcapes = isAidreamcapesSite(site);
-    const canonicalGeneratorCopy = !isSpanishXbySite(site) && (isMyDreamShootsProfileSite(site) || aidreamcapes);
+    const mydreamProfileSite = isMyDreamShootsProfileSite(site);
+    const canonicalGeneratorCopy = !isSpanishXbySite(site) && (mydreamProfileSite || aidreamcapes);
     const imageTitle = canonicalGeneratorCopy ? "Best Photo Generator" : setting(section, "imageTitle", "Best Photo Generator");
-    const imageAllLabel = canonicalGeneratorCopy ? "View all photos" : setting(section, "imageAllLabel", "View all photos");
+    const imageAllLabel = canonicalGeneratorCopy ? mydreamProfileSite ? "VIEW ALL PHOTO" : "View all photos" : setting(section, "imageAllLabel", "View all photos");
     const imageAllHref = canonicalGeneratorCopy ? "/best-ai-image" : setting(section, "imageAllHref", "/best-ai-image");
     const videoTitle = canonicalGeneratorCopy ? "Best Video Generator" : setting(section, "videoTitle", "Best Video Generator");
-    const videoAllLabel = canonicalGeneratorCopy ? "View all videos" : setting(section, "videoAllLabel", "View all videos");
+    const videoAllLabel = canonicalGeneratorCopy ? mydreamProfileSite ? "VIEW ALL VIDEO" : "View all videos" : setting(section, "videoAllLabel", "View all videos");
     const videoAllHref = canonicalGeneratorCopy ? "/best-ai-video" : setting(section, "videoAllHref", "/best-ai-video");
     const primaryHref = canonicalGeneratorCopy ? "/app/create" : setting(section, "primaryHref", "/app/create");
     const videoItemLimit = Math.max(1, Math.min(8, numberSetting(section, "videoItemLimit", numberSetting(section, "itemLimit", 8))));
@@ -11941,7 +11971,7 @@ function SectionView({
     const trustedProof = showTrustedLogoIntro ? (
       <div className="relative left-1/2 mb-12 w-[min(82vw,106rem)] -translate-x-1/2 border-b border-white/10 pb-10 md:mb-14 md:pb-14" data-dreamshoot-trusted-logos="true">
         <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-[-0.03em] text-white [font-family:var(--site-title-font)]">
-          {setting(section, "trustedLogoTitle", "Trusted by creators worldwide")}
+          {setting(section, "trustedLogoTitle", "Most Trusted Creators. | myDreamshoots")}
         </h2>
         <div className="mx-auto mt-7 max-w-[78rem] space-y-3 md:mt-8 md:space-y-3.5">
           {trustedLogoRows.map((row, rowIndex) => (
@@ -11989,10 +12019,10 @@ function SectionView({
         </div>
         <div className="mx-auto mt-10 max-w-[38rem] text-center md:mt-12">
           <h2 className="text-[clamp(1.45rem,1.75vw,1.9rem)] font-semibold leading-tight tracking-[-0.03em] text-white [font-family:var(--site-title-font)]">
-            {setting(section, "aboutTitle", "What is MyDreamShoots?")}
+            {setting(section, "aboutTitle", "What is myDreamshoots?")}
           </h2>
           <p className="mt-4 text-[clamp(0.84rem,0.88vw,0.94rem)] font-medium leading-[1.58] text-white/74">
-            {setting(section, "aboutBody", "MyDreamShoots is an AI photo and video studio operated by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photos and videos in seconds with MyDreamShoots: choose a theme, review credits before generation, keep uploads private, and download finished results from your private gallery.")}
+            {setting(section, "aboutBody", "myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photo and video in seconds with myDreamshoots's: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. Plans start at $24.50/month, and every package shows the credit cost before generation.")}
           </p>
         </div>
       </div>
@@ -12029,6 +12059,20 @@ function SectionView({
         </div>
       </div>
     );
+    const renderShowcaseSubsectionHeader = (title: string, href: string, label: string, kind: "photo" | "video") => (
+      <div className="relative flex flex-col items-center gap-3 text-center md:block" data-dreamshoot-showcase-heading={kind}>
+        <h3 className="text-2xl font-semibold tracking-normal md:text-3xl [font-family:var(--site-title-font)]">
+          <Link className="transition hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80" href={hrefFor(site, href)}>
+            {title}
+          </Link>
+        </h3>
+        <div className="mx-auto h-px w-16 bg-white/58 md:mt-2" />
+        <Link className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:text-white/76 md:absolute md:right-0 md:top-1" href={hrefFor(site, href)}>
+          {label}
+          <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
+        </Link>
+      </div>
+    );
 
     return (
       <section className={`relative overflow-hidden ${shellTone} px-5 py-16 md:py-20`} id={sectionAnchor(section, "generated-showcase")}>
@@ -12038,19 +12082,7 @@ function SectionView({
           {trustedProof}
           <DreamshootShowcasePreview>
             <div className="mt-0">
-              <div className="flex flex-wrap items-end justify-between gap-4">
-                <h3 className="text-2xl font-semibold tracking-[-0.03em] md:text-3xl [font-family:var(--site-title-font)]">
-                  <Link className="transition hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80" href={hrefFor(site, imageAllHref)}>
-                    {imageTitle}
-                  </Link>
-                </h3>
-                <div className="flex flex-wrap items-center justify-end gap-3">
-                  <Link className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:text-white/76" href={hrefFor(site, imageAllHref)}>
-                    {imageAllLabel}
-                    <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
-                  </Link>
-                </div>
-              </div>
+              {renderShowcaseSubsectionHeader(imageTitle, imageAllHref, imageAllLabel, "photo")}
               <div className="mt-5 space-y-3" data-dreamshoot-image-product-grid="true" data-dreamshoot-image-product-wall="true">
                 {imageProductRows.map((row, rowIndex) => (
                   <DreamshootShowcaseRail
@@ -12098,19 +12130,7 @@ function SectionView({
             </div>
 
             <div className="mt-12">
-              <div className="flex flex-wrap items-end justify-between gap-4">
-                <h3 className="text-2xl font-semibold tracking-[-0.03em] md:text-3xl [font-family:var(--site-title-font)]">
-                  <Link className="transition hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80" href={hrefFor(site, videoAllHref)}>
-                    {videoTitle}
-                  </Link>
-                </h3>
-                <div className="flex flex-wrap items-center justify-end gap-3">
-                  <Link className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:text-white/76" href={hrefFor(site, videoAllHref)}>
-                    {videoAllLabel}
-                    <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
-                  </Link>
-                </div>
-              </div>
+              {renderShowcaseSubsectionHeader(videoTitle, videoAllHref, videoAllLabel, "video")}
               <DreamshootShowcaseRail className="dreamshoot-showcase-rail relative left-1/2 -ml-[50vw] mt-5 w-screen overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" reverse speed={58} trackClassName="dreamshoot-showcase-track flex w-max gap-2 px-0">
 	                {videoRailCards.map((card) => (
 	                  <figure
@@ -12398,6 +12418,8 @@ function SectionView({
         cards={sortedDisplayCards}
         categoryHrefOverrides={categoryHrefOverrides}
         creditLabel={spanishXbyCatalog ? "Coste en creditos visible antes de generar" : "Credit cost shown before generation"}
+        directoryLabel={setting(section, "directoryLabel", spanishXbyCatalog ? "Directorio completo" : "Full theme directory")}
+        directorySubtitle={setting(section, "directorySubtitle", spanishXbyCatalog ? "Explora todas las categorias y temas disponibles." : "Browse every available theme by category on the full collections page.")}
         directoryTitle={spanishXbyCatalog ? "Explora todos los paquetes disponibles." : "Browse all available photo packs."}
         featuredCount={featuredCount}
         initialCategory={selectedCategory || "all"}
@@ -15157,21 +15179,23 @@ function SectionView({
     const summaryItems = stackedReviewLayout ? featuredVoices : items;
     const spanishXbyUseCaseWall = isSpanishXbySite(site);
     const isDreamShootUseCaseWall = !reviewMode && !spanishXbyUseCaseWall && /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain}`);
+    const mydreamReviewCopyLayout = stackedReviewLayout && !spanishXbyUseCaseWall;
     return (
       <section className="relative overflow-hidden bg-[#fffaf3] px-5 py-16 text-[#14161a] md:py-18" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className={stackedReviewLayout ? "flex flex-col gap-10" : "grid gap-8 lg:grid-cols-[minmax(250px,0.3fr)_minmax(0,0.7fr)]"}>
-            <div className={stackedReviewLayout ? "flex flex-col gap-8 border-b border-[#e7dccf] pb-9 lg:flex-row lg:items-end lg:justify-between" : "pt-2"}>
-              <div className={stackedReviewLayout ? "min-w-0 flex-1" : undefined}>
-                <div className="h-px w-14 bg-[#b98a57]" />
-                <h2 className={`${stackedReviewLayout ? "max-w-[20ch]" : "max-w-[12ch]"} mt-4 text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]`}>
-                  {isDreamShootUseCaseWall ? "Ways people use myDreamshoots" : headingSetting(section, "summaryTitle", sectionHeading(section, "Customer results"))}
+            <div className={mydreamReviewCopyLayout ? "flex flex-col items-center gap-5 border-b border-[#e7dccf] pb-9 text-center" : stackedReviewLayout ? "flex flex-col gap-8 border-b border-[#e7dccf] pb-9 lg:flex-row lg:items-end lg:justify-between" : "pt-2"}>
+              <div className={mydreamReviewCopyLayout ? "mx-auto max-w-3xl" : stackedReviewLayout ? "min-w-0 flex-1" : undefined}>
+                <div className={mydreamReviewCopyLayout ? "mx-auto h-px w-20 bg-[#b98a57]" : "h-px w-14 bg-[#b98a57]"} />
+                <h2 className={mydreamReviewCopyLayout ? "mt-4 text-center text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-normal text-balance [font-family:var(--site-title-font)]" : `${stackedReviewLayout ? "max-w-[20ch]" : "max-w-[12ch]"} mt-4 text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]`}>
+                  {mydreamReviewCopyLayout ? sectionHeading(section, "What Our Customers Say") : isDreamShootUseCaseWall ? "Ways people use myDreamshoots" : headingSetting(section, "summaryTitle", sectionHeading(section, "Customer results"))}
                 </h2>
-                <p className={`${stackedReviewLayout ? "max-w-3xl" : "max-w-[17rem]"} mt-5 text-[0.94rem] leading-7 text-[#6d665f]`}>
-                  {isDreamShootUseCaseWall ? "Plan sports fan meetups, VIP-style red-carpet looks, Christmas cards, and holiday group albums before spending credits." : setting(section, "summaryBody", setting(section, "subtitle"))}
+                <p className={mydreamReviewCopyLayout ? "mx-auto mt-4 max-w-2xl text-[0.92rem] font-medium leading-6 text-[#7c7167]" : `${stackedReviewLayout ? "max-w-3xl" : "max-w-[17rem]"} mt-5 text-[0.94rem] leading-7 text-[#6d665f]`}>
+                  {mydreamReviewCopyLayout ? setting(section, "subtitle", "Our users love us and we love them!") : isDreamShootUseCaseWall ? "Plan sports fan meetups, VIP-style red-carpet looks, Christmas cards, and holiday group albums before spending credits." : setting(section, "summaryBody", setting(section, "subtitle"))}
                 </p>
+                {mydreamReviewCopyLayout ? <p className="mx-auto mt-3 max-w-3xl text-[0.94rem] leading-7 text-[#6d665f]">{setting(section, "summaryBody", "myDreamshoots is an AI photo and video creator platform with creativity creators from all over the world. Creators are not simply content distributors. At their best, they are brokers of trust.")}</p> : null}
               </div>
-              {!isDreamShootUseCaseWall ? (
+              {!isDreamShootUseCaseWall && !mydreamReviewCopyLayout ? (
                 <div className={stackedReviewLayout ? "flex flex-wrap items-center gap-x-6 gap-y-4 lg:pb-1" : undefined}>
                   <div className={stackedReviewLayout ? "flex flex-col gap-2" : undefined}>
                     <div className={stackedReviewLayout ? "flex items-center gap-2 text-[#d59a4b]" : "mt-8 flex items-center gap-2 text-[#d59a4b]"}>

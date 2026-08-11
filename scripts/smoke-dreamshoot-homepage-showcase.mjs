@@ -241,12 +241,14 @@ function assertPage(pageJson, label, storeKey) {
   }
   assertOrder(pageJson?.sectionsOrder ?? [], label, storeKey);
   const settings = pageJson?.sections?.generation_showcase_1?.settings ?? {};
+  const expectedImageAllLabel = storeKey === "mydreamshoots" ? "VIEW ALL PHOTO" : "View all photos";
+  const expectedVideoAllLabel = storeKey === "mydreamshoots" ? "VIEW ALL VIDEO" : "View all videos";
   assert(String(settings.videoSlugs ?? "").split("|").filter(Boolean).length === 8, `${label}: expected 8 video slugs`);
   assert(settings.imageTitle === "Best Photo Generator", `${label}: image showcase heading drifted`);
-  assert(settings.imageAllLabel === "View all photos", `${label}: image showcase all-link label drifted`);
+  assert(settings.imageAllLabel === expectedImageAllLabel, `${label}: image showcase all-link label drifted`);
   assert(settings.imageAllHref === "/best-ai-image", `${label}: image showcase all-link href drifted`);
   assert(settings.videoTitle === "Best Video Generator", `${label}: video showcase heading drifted`);
-  assert(settings.videoAllLabel === "View all videos", `${label}: video showcase all-link label drifted`);
+  assert(settings.videoAllLabel === expectedVideoAllLabel, `${label}: video showcase all-link label drifted`);
   assert(settings.videoAllHref === "/best-ai-video", `${label}: video showcase all-link href drifted`);
   assert(settings.primaryHref === "/app/create", `${label}: primary CTA should point to the workspace create flow`);
   assert(!String(settings.videoSlugs ?? "").includes("creator-scene-motion"), `${label}: showcase video slugs should not include creator-scene-motion`);
@@ -281,13 +283,32 @@ function assertPage(pageJson, label, storeKey) {
   assert((pageJson?.sections?.faq_1?.blocks ?? []).length >= 12, `${label}: expected expanded FAQ content`);
   assert(Number(settings.videoItemLimit ?? 0) === 8, `${label}: expected 8 video showcase items`);
   assert(settings.showTrustedLogoIntro === true, `${label}: trusted logo intro should be enabled`);
-  assert(settings.trustedLogoTitle === "Trusted by creators worldwide", `${label}: trusted logo title drifted`);
-  assert(settings.aboutTitle === "What is MyDreamShoots?", `${label}: about title drifted`);
-  assert(String(settings.aboutBody ?? "").startsWith("MyDreamShoots is an AI photo and video studio"), `${label}: about body should describe MyDreamShoots`);
+  assert(settings.trustedLogoTitle === "Most Trusted Creators. | myDreamshoots", `${label}: trusted logo title drifted`);
+  assert(settings.aboutTitle === "What is myDreamshoots?", `${label}: about title drifted`);
+  assert(String(settings.aboutBody ?? "").startsWith("myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC"), `${label}: about body should describe myDreamshoots`);
   assert(settings.embeddedPricingSectionId === "pricing_1", `${label}: showcase should embed pricing_1`);
   assert(Number(settings.trustedLogoSplitIndex ?? 0) === 15, `${label}: trusted logo row split should stay at 15`);
   assert((pageJson?.sections?.generation_showcase_1?.blocks ?? []).filter((block) => block?.type === "logo").length === expectedTrustedLogoCount, `${label}: expected ${expectedTrustedLogoCount} trusted logo blocks`);
   assert(!("itemLimit" in settings), `${label}: old image-limiting itemLimit should be removed`);
+  const pricingSettings = pageJson?.sections?.pricing_1?.settings ?? {};
+  assert(pricingSettings.subtitle === "Choose the plan that works for you", `${label}: pricing subtitle drifted`);
+  assert(String(pricingSettings.marketComparison ?? "").includes("$725"), `${label}: pricing market comparison should mention the $725 photoshoot comparison`);
+  assert(String(pricingSettings.description ?? "").startsWith("Choose Starter, Pro, or Premium."), `${label}: pricing description drifted`);
+  assert(pricingSettings.sidePanelTitle === "Our plans starts from $24.50 and are designed to be more affordable and flexible.", `${label}: pricing side panel title drifted`);
+  const mobileSettings = pageJson?.sections?.mobile_video_1?.settings ?? {};
+  assert(mobileSettings.title === "How it works", `${label}: mobile tutorial title drifted`);
+  assert(String(mobileSettings.supportingCopy ?? "").includes("Your next video content can instantly go viral."), `${label}: mobile tutorial supporting copy drifted`);
+  const catalogSettings = pageJson?.sections?.package_catalog_1?.settings ?? {};
+  assert(catalogSettings.label === "AI PHOTO STUDIOS", `${label}: package catalog label drifted`);
+  assert(catalogSettings.title === "Professional AI Photo Packages", `${label}: package catalog title drifted`);
+  assert(catalogSettings.directoryLabel === "AI PHOTO THEMED", `${label}: theme directory label drifted`);
+  const proofSettings = pageJson?.sections?.proof_1?.settings ?? {};
+  assert(proofSettings.title === "What Our Customers Say", `${label}: review title drifted`);
+  assert(proofSettings.subtitle === "Our users love us and we love them!", `${label}: review subtitle drifted`);
+  assert(String(proofSettings.summaryBody ?? "").includes("brokers of trust"), `${label}: review body drifted`);
+  const conversionSettings = pageJson?.sections?.conversion_1?.settings ?? {};
+  assert(conversionSettings.eyebrow === "BEST AI MAKER", `${label}: conversion eyebrow drifted`);
+  assert(conversionSettings.title === "Ready to try the myDreamshoots's Best AI Maker?", `${label}: conversion title drifted`);
 }
 
 function assertBestPackagesPage(pageJson, label) {
@@ -354,9 +375,15 @@ function assertMobileVideoSection(section, label) {
   const rightPoster = comparableImageUrl(settings.rightVideoPoster);
   const videoUrl = comparableImageUrl(settings.videoUrl);
   const posterUrl = comparableImageUrl(settings.videoPoster);
-  assert(String(settings.eyebrow ?? "").toLowerCase().includes("mobile"), `${label}: mobile eyebrow should identify mobile workflow`);
-  assert(String(settings.title ?? "").trim().length > 12, `${label}: mobile section should have a real title`);
-  assert(String(settings.subtitle ?? "").includes("vertical phone layout"), `${label}: mobile copy should mention the vertical phone layout`);
+  const usesMydreamDocCopy = String(settings.title ?? "").trim() === "How it works";
+  if (usesMydreamDocCopy) {
+    assert(String(settings.subtitle ?? "").includes("Upload selfies and start creating your AI photshoot now"), `${label}: mobile subtitle should match the approved myDreamshoots copy`);
+    assert(String(settings.supportingCopy ?? "").includes("AI Video"), `${label}: mobile supporting copy should mention AI Video`);
+  } else {
+    assert(String(settings.eyebrow ?? "").toLowerCase().includes("mobile"), `${label}: mobile eyebrow should identify mobile workflow`);
+    assert(String(settings.title ?? "").trim().length > 12, `${label}: mobile section should have a real title`);
+    assert(String(settings.subtitle ?? "").includes("vertical phone layout"), `${label}: mobile copy should mention the vertical phone layout`);
+  }
   assert(String(settings.leftTitle ?? "").toLowerCase().includes("image"), `${label}: left title should identify the image tutorial`);
   assert(String(settings.rightTitle ?? "").toLowerCase().includes("video"), `${label}: right title should identify the video tutorial`);
   assert(/\.mp4$/.test(leftVideoUrl), `${label}: left mobile tutorial should use an mp4 video`);

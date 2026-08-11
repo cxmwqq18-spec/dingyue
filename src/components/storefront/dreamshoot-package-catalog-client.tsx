@@ -298,6 +298,8 @@ export function DreamshootPackageCatalogClient({
   cards,
   categoryHrefOverrides,
   creditLabel,
+  directoryLabel,
+  directorySubtitle,
   directoryTitle,
   featuredCount,
   initialCategory = "",
@@ -316,6 +318,8 @@ export function DreamshootPackageCatalogClient({
   cards: DreamshootPackageCatalogCard[];
   categoryHrefOverrides?: DreamshootCategoryHrefOverrides;
   creditLabel: string;
+  directoryLabel?: string;
+  directorySubtitle?: string;
   directoryTitle: string;
   featuredCount: number;
   initialCategory?: string;
@@ -350,7 +354,9 @@ export function DreamshootPackageCatalogClient({
     ? "linear-gradient(90deg,#16dcf0,#D88A4B)"
     : brandGradient;
   const choosePackageLabel = locale === "es" ? "Elegir paquete" : "Choose package";
-  const brandName = aidreamcapes ? "AIdreamcapes" : locale === "es" ? "AIdreamshoots" : "MyDreamShoots";
+  const brandName = aidreamcapes ? "AIdreamcapes" : locale === "es" ? "AIdreamshoots" : "myDreamshoots";
+  const resolvedDirectoryLabel = directoryLabel?.trim() || (locale === "es" ? "Directorio completo" : "Full theme directory");
+  const resolvedDirectorySubtitle = directorySubtitle?.trim() || (locale === "es" ? "Explora todas las categorias y temas disponibles." : "Browse every available theme by category on the full collections page.");
 
   return (
     <DreamshootShowcasePreview>
@@ -456,8 +462,9 @@ export function DreamshootPackageCatalogClient({
           <div className="mt-9">
             <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">{locale === "es" ? "Directorio completo" : "Full directory"}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">{resolvedDirectoryLabel}</p>
                 <h2 className="mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white">{directoryTitle}</h2>
+                {resolvedDirectorySubtitle ? <p className="mt-2 max-w-2xl text-sm leading-6 text-white/56">{resolvedDirectorySubtitle}</p> : null}
               </div>
               <a className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" href={openCollectionsHref}>
                 {locale === "es" ? "Abrir colecciones" : "Open collections"}
@@ -521,10 +528,10 @@ export function DreamshootPackageCatalogClient({
           <div className="mt-9 flex flex-col gap-4 rounded-[22px] border border-white/12 bg-white/[0.045] p-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">
-                {locale === "es" ? "Directorio completo" : "Full theme directory"}
+                {resolvedDirectoryLabel}
               </p>
               <p className="mt-2 text-sm leading-6 text-white/62">
-                {locale === "es" ? "Explora todas las categorias y temas disponibles." : "Browse every available theme by category on the full collections page."}
+                {resolvedDirectorySubtitle}
               </p>
             </div>
             <a className="inline-flex shrink-0 items-center justify-center gap-2 rounded-[16px] border border-white/14 px-4 py-3 text-sm font-semibold text-white/82 transition hover:border-white/28 hover:text-white" href={openCollectionsHref}>

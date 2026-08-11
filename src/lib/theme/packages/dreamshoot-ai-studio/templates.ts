@@ -174,47 +174,48 @@ const assets = {
 
 const trustedLogoAssetBase = "/assets/dreamshoot/generated/trusted-logos";
 const aidreamcapesTrustedLogoAssetBase = "/assets/sites/site_aidreamcapes/trusted-logos";
-const mydreamshootsAboutBody = "MyDreamShoots is an AI photo and video studio operated by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photos and videos in seconds with MyDreamShoots: choose a theme, review credits before generation, keep uploads private, and download finished results from your private gallery.";
+const mydreamshootsAboutBody = "myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photo and video in seconds with myDreamshoots's: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. Plans start at $24.50/month, and every package shows the credit cost before generation.";
 const aidreamcapesAboutBody = "Aidreamcapes is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.";
-const mydreamshootsTrustedLogoBlocks = [
-  block("trusted_logo_dior", "logo", { name: "Dior", imageUrl: `${trustedLogoAssetBase}/dior.png`, badge: "Creator proof" }),
-  block("trusted_logo_green_wedding_shoes", "logo", { name: "Green Wedding Shoes", imageUrl: `${trustedLogoAssetBase}/green-wedding-shoes.png`, badge: "Creator proof" }),
-  block("trusted_logo_weddingwire", "logo", { name: "WeddingWire", imageUrl: `${trustedLogoAssetBase}/weddingwire.png`, badge: "Creator proof" }),
-  block("trusted_logo_azazie", "logo", { name: "Azazie", imageUrl: `${trustedLogoAssetBase}/azazie.png`, badge: "Creator proof" }),
-  block("trusted_logo_bodas", "logo", { name: "Bodas", imageUrl: `${trustedLogoAssetBase}/bodas.png`, badge: "Creator proof" }),
-  block("trusted_logo_bodasnet", "logo", { name: "Bodas.net", imageUrl: `${trustedLogoAssetBase}/bodasnet.png`, badge: "Creator proof" }),
-  block("trusted_logo_bonprix", "logo", { name: "Bonprix", imageUrl: `${trustedLogoAssetBase}/bonprix.png`, badge: "Creator proof" }),
-  block("trusted_logo_brides", "logo", { name: "Brides", imageUrl: `${trustedLogoAssetBase}/brides.png`, badge: "Creator proof" }),
-  block("trusted_logo_chanel", "logo", { name: "Chanel", imageUrl: `${trustedLogoAssetBase}/chanel.png`, badge: "Creator proof" }),
-  block("trusted_logo_davids", "logo", { name: "David's", imageUrl: `${trustedLogoAssetBase}/davids.png`, badge: "Creator proof" }),
-  block("trusted_logo_linkedin", "logo", { name: "LinkedIn", imageUrl: `${trustedLogoAssetBase}/linkedin.png`, badge: "Creator proof" }),
-  block("trusted_logo_macys", "logo", { name: "Macy's", imageUrl: `${trustedLogoAssetBase}/macys.png`, badge: "Creator proof" }),
-  block("trusted_logo_marks_and_spencer", "logo", { name: "Marks & Spencer", imageUrl: `${trustedLogoAssetBase}/marksandspencer.png`, badge: "Creator proof" }),
-  block("trusted_logo_next", "logo", { name: "Next", imageUrl: `${trustedLogoAssetBase}/nextcouk.jpg`, badge: "Creator proof" }),
-  block("trusted_logo_oscar_de_la_renta", "logo", { name: "Oscar de la Renta", imageUrl: `${trustedLogoAssetBase}/oscardelarenta.jpg`, badge: "Creator proof" }),
-  block("trusted_logo_pinterest", "logo", { name: "Pinterest", imageUrl: `${trustedLogoAssetBase}/pinterest.png`, badge: "Creator proof" }),
-  block("trusted_logo_pronovias", "logo", { name: "Pronovias", imageUrl: `${trustedLogoAssetBase}/pronovias.jpg`, badge: "Creator proof" }),
-  block("trusted_logo_shein", "logo", { name: "SHEIN", imageUrl: `${trustedLogoAssetBase}/shein.png`, badge: "Creator proof" }),
-  block("trusted_logo_style_me_pretty", "logo", { name: "Style Me Pretty", imageUrl: `${trustedLogoAssetBase}/style-me-pretty.png`, badge: "Creator proof" }),
-  block("trusted_logo_starbucks", "logo", { name: "Starbucks", imageUrl: `${trustedLogoAssetBase}/starbucks.jpeg`, badge: "Creator proof" }),
-  block("trusted_logo_the_knot", "logo", { name: "The Knot", imageUrl: `${trustedLogoAssetBase}/the-knot.png`, badge: "Creator proof" }),
-  block("trusted_logo_the_knot_weddings", "logo", { name: "The Knot Weddings", imageUrl: `${trustedLogoAssetBase}/theknot2.png`, badge: "Creator proof" }),
-  block("trusted_logo_vera_wang", "logo", { name: "Vera Wang", imageUrl: `${trustedLogoAssetBase}/verawang.png`, badge: "Creator proof" }),
-  block("trusted_logo_vinted", "logo", { name: "Vinted", imageUrl: `${trustedLogoAssetBase}/vinted.png`, badge: "Creator proof" }),
-  block("trusted_logo_vogue", "logo", { name: "Vogue", imageUrl: `${trustedLogoAssetBase}/vogue.svg`, badge: "Creator proof" }),
-  block("trusted_logo_zalando", "logo", { name: "Zalando", imageUrl: `${trustedLogoAssetBase}/zalando.png`, badge: "Creator proof" }),
-  block("trusted_logo_zara", "logo", { name: "Zara", imageUrl: `${trustedLogoAssetBase}/zara.png`, badge: "Creator proof" }),
-  block("trusted_logo_zexy", "logo", { name: "Zexy", imageUrl: `${trustedLogoAssetBase}/zexy.svg`, badge: "Creator proof" }),
-  block("trusted_logo_zola", "logo", { name: "Zola", imageUrl: `${trustedLogoAssetBase}/zola.png`, badge: "Creator proof" })
-];
-const aidreamcapesTrustedLogoBlocks = mydreamshootsTrustedLogoBlocks.map((logo) => ({
-  ...logo,
-  id: `aidream_${logo.id}`,
-  settings: {
-    ...logo.settings,
-    imageUrl: String(logo.settings.imageUrl).replace(trustedLogoAssetBase, aidreamcapesTrustedLogoAssetBase)
-  }
-}));
+const trustedLogoDefinitions = [
+  { key: "wliano", name: "Wliano", file: "39__wliano__wliano.com.png" },
+  { key: "hmaxio", name: "Hmaxio", file: "13__hmaxio__hmaxio.co.za.png" },
+  { key: "invorae", name: "Invorae", file: "14__invorae__invorae.com.png" },
+  { key: "bolvian", name: "Bolvian", file: "03__bolvian__bolvian.co.za.png" },
+  { key: "ravinr", name: "Ravinr", file: "24__ravinr__ravinr.co.za.png" },
+  { key: "luntra", name: "Luntra", file: "19__luntra__luntra.co.za.png" },
+  { key: "yaveno", name: "Yaveno", file: "44__yaveno__yaveno.co.za.png" },
+  { key: "vkovel", name: "Vkovel", file: "37__vkovel__vkovel.com.webp" },
+  { key: "orvinoe", name: "Orvinoe", file: "21__orvinoe__orvinoe.com.png" },
+  { key: "elvorae", name: "Elvorae", file: "06__elvorae__elvorae.co.za.png" },
+  { key: "trovic", name: "Trovic", file: "31__trovic__trovic.co.za.png" },
+  { key: "aroveno", name: "Aroveno", file: "02__aroveno__aroveno.co.za.png" },
+  { key: "ulvanx", name: "Ulvanx", file: "33__ulvanx__ulvanx.com.png" },
+  { key: "kernivo", name: "Kernivo", file: "17__kernivo__kernivo.com.png" },
+  { key: "bpickr", name: "Bpickr", file: "04__bpickr__bpickr.co.za.png" },
+  { key: "jurvina", name: "Jurvina", file: "15__jurvina__jurvina.com.png" },
+  { key: "zervino", name: "Zervino", file: "45__zervino__zervino.co.za.png" },
+  { key: "harlivo", name: "Harlivo", file: "12__harlivo__harlivo.com.png" },
+  { key: "qervon", name: "Qervon", file: "22__qervon__qervon.com.png" },
+  { key: "zuvric", name: "Zuvric", file: "46__zuvric__zuvric.com.png" },
+  { key: "urmino", name: "Urmino", file: "34__urmino__urmino.com.png" },
+  { key: "wlivon", name: "Wlivon", file: "41__wlivon__wlivon.com.png" },
+  { key: "rpfira", name: "Rpfira", file: "25__rpfira__rpfira.com.png" },
+  { key: "klnova", name: "Klnova", file: "42__klnova__klnova.com.png" },
+  { key: "qmarto", name: "Qmarto", file: "47__qmarto__xn--qmarto-220j.co.za.png" },
+  { key: "folvian", name: "Folvian", file: "09__folvian__folvian.com.webp" },
+  { key: "gmarto", name: "Gmarto", file: "10__gmarto__gmarto.co.za.png" },
+  { key: "tuzemo", name: "Tuzemo", file: "32__tuzemo__tuzemo.com.png" },
+  { key: "ervanoe", name: "Ervanoe", file: "07__ervanoe__ervanoe.com.webp" }
+] as const;
+
+function trustedLogoBlocks(basePath: string, prefix: string) {
+  return trustedLogoDefinitions.map(({ key, name, file }) =>
+    block(`${prefix}${key}`, "logo", { name, imageUrl: `${basePath}/${file}`, badge: "Creator proof" })
+  );
+}
+
+const mydreamshootsTrustedLogoBlocks = trustedLogoBlocks(trustedLogoAssetBase, "trusted_logo_");
+const aidreamcapesTrustedLogoBlocks = trustedLogoBlocks(aidreamcapesTrustedLogoAssetBase, "aidream_trusted_logo_");
 
 const dreamshootMegaTools = [
   block("mega_tool_headshot", "tool_card", { title: "Professional headshot maker", description: "Input: clear selfies or portraits you own or have permission to use. Output: private profile-ready headshot options. Best for: LinkedIn, resumes, founder bios, speaker pages, and team profiles. Cost: credits are shown before generation.", category: "Photo AI", badge: "Profile", imageUrl: assets.catalogHeadshotCard, href: toolHref("headshot") }),
@@ -419,9 +420,11 @@ const homeSections: ThemePageJson["sections"] = {
     "dreamshoot_package_catalog",
     {
       anchor: "packages",
-      label: "Photo package catalog",
-      title: "Choose a photo package first.",
-      subtitle: "Each package shows the finished look, photo count, credit cost, and boundaries before you start. Choose fan photos, VIP-style looks, Christmas cards, Thanksgiving portraits, Halloween party albums, or seasonal group photos from images you own or have permission to use.",
+      label: "AI PHOTO STUDIOS",
+      title: "Professional AI Photo Packages",
+      subtitle: "Whether solo or with a partner, you can create stunning AI photo albums in just one click with myDreamshoots's themed photo packs. We've curated the best poses, outfit ideas, and hairstyles for you. Plus, we're always adding new photo packs to our collection. Send a heart to a special someone. Or use it just for fun!",
+      directoryLabel: "AI PHOTO THEMED",
+      directorySubtitle: "Use your own creativity surprise your partner with a romantic video or photo.",
       tabs: "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal|Creator|Video|Utility",
       steps: "Pick pack|See credit cost|Generate album",
       source: "creative_packs",
@@ -442,8 +445,8 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "generated-showcase",
       showTrustedLogoIntro: true,
-      trustedLogoTitle: "Most Trusted Creators | myDreamshoots",
-      aboutTitle: "What is MyDreamShoots?",
+      trustedLogoTitle: "Most Trusted Creators. | myDreamshoots",
+      aboutTitle: "What is myDreamshoots?",
       aboutBody: mydreamshootsAboutBody,
       embeddedPricingSectionId: "pricing_1",
       trustedLogoSplitIndex: 15,
@@ -451,10 +454,10 @@ const homeSections: ThemePageJson["sections"] = {
       title: "Browse image and video themes customers have already created.",
       subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
       imageTitle: "Best Photo Generator",
-      imageAllLabel: "View all photos",
+      imageAllLabel: "VIEW ALL PHOTO",
       imageAllHref: "/best-ai-image",
       videoTitle: "Best Video Generator",
-      videoAllLabel: "View all videos",
+      videoAllLabel: "VIEW ALL VIDEO",
       videoAllHref: "/best-ai-video",
       imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
       videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
@@ -674,7 +677,12 @@ const homeSections: ThemePageJson["sections"] = {
   pricing_1: section("pricing_table", {
     anchor: "plans",
     title: "Subscription Plans",
-    subtitle: "Choose Starter, Pro, or Premium. Each package shows its credit cost before generation; failed requests can return reserved credits according to request status.",
+    subtitle: "Choose the plan that works for you",
+    marketComparison: "The average professional photoshoot can cost around $725. myDreamshoots keeps plan selection simple with monthly or quarterly and semiannually subscriptions.",
+    description: "Choose Starter, Pro, or Premium. Each package shows its credit cost before generation; failed requests can return reserved credits according to request status.",
+    sidePanelEyebrow: "Why people subscribe",
+    sidePanelTitle: "Our plans starts from $24.50 and are designed to be more affordable and flexible.",
+    sidePanelBody: "Credits stay predictable while packs stay flexible. You can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.",
     productType: "subscription",
     featuredProductId: "prod_dreamshoot_pro",
     featuredBadgeLabel: "Most Popular",
@@ -804,9 +812,9 @@ const homeSections: ThemePageJson["sections"] = {
     "conversion_panel",
     {
       anchor: "start",
-      eyebrow: "Start creating",
-      title: "Ready to try myDreamshoots Best AI Maker?",
-      subtitle: "Subscribe, upload, choose packages, generate results, and keep delivery in one workspace.",
+      eyebrow: "BEST AI MAKER",
+      title: "Ready to try the myDreamshoots's Best AI Maker?",
+      subtitle: "We've designed myDreamshoots to be as easy as possible to use, allowing you to focus on unleashing your creativity with complete peace of mind. Subscribe, upload, choose packages, generate results, and keep delivery in one workspace.",
       primaryCta: "Create my first photo set",
       primaryHref: "/login",
       secondaryCta: "Choose a plan",
@@ -1105,8 +1113,9 @@ function mydreamshootsMobileVideoShowcaseSection(): SectionInstance {
   return section("mobile_video_showcase", {
     anchor: "mobile-video-tutorial",
     eyebrow: "Mobile tutorial",
-    title: "myDreamshoots mobile photo workflow preview.",
-    subtitle: "Compare image setup and motion-preview steps in a vertical phone view.",
+    title: "How it works",
+    subtitle: "Upload selfies and start creating your AI photshoot now",
+    supportingCopy: "Use myDreamshoots's AI Video design your videos with your own creativity. Your next video content can instantly go viral.",
     imageUrl: assets.flowPrivateAlbumWorkspace,
     imageAlt: "Mobile myDreamshoots workspace screen showing private source-photo setup, credit review, and finished AI photo gallery steps.",
     videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",
@@ -1157,12 +1166,12 @@ function mydreamshootsReviewSection(): SectionInstance {
     {
       anchor: "reviews",
       mode: "reviews",
-      title: "What customers like about myDreamshoots.",
-      subtitle: "Clear credit costs, realistic-looking themes, private galleries, and quick planning keep showing up in customer feedback.",
-      summaryTitle: "Customers love the private gallery flow.",
-      summaryBody: "Creators, small teams, sports fans, and holiday-card buyers use myDreamshoots to test polished AI photo ideas before booking a studio or building a campaign.",
-      summaryRating: "4.9/5",
-      summaryMeta: "Customer feedback"
+      title: "What Our Customers Say",
+      subtitle: "Our users love us and we love them!",
+      summaryTitle: "What Our Customers Say",
+      summaryBody: "myDreamshoots is an AI photo and video creator platform with creativity creators from all over the world. Creators are not simply content distributors. At their best, they are brokers of trust.",
+      summaryRating: "",
+      summaryMeta: ""
     },
     [
       block("review_ava", "testimonial", { quote: "The package cards made it easy to pick a direction before I spent credits. My sports fan set looked polished and stayed organized in one private gallery.", name: "Ava M.", role: "Sports fan album", location: "Fan photos", rating: "5", avatarUrl: assets.reviewAvaAvatar, resultImageUrl: assets.galleryWorldCupFanThree }),
