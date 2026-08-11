@@ -4914,6 +4914,24 @@ const _dreamshootBg = "#05070E";
 const _dreamshootSurface = "#10111A";
 const dreamshootGlass = "rgba(18, 18, 28, 0.86)";
 const dreamshootBrandGradient = `linear-gradient(90deg, ${dreamshootOrange} 0%, ${dreamshootMagenta} 38%, ${dreamshootPurple} 68%, ${dreamshootCyan} 100%)`;
+
+function DreamshootUnderlinedTitle({
+  children,
+  gradient = dreamshootBrandGradient,
+  underlineClassName = "mt-3"
+}: {
+  children: ReactNode;
+  gradient?: string;
+  underlineClassName?: string;
+}) {
+  return (
+    <span className="inline-flex max-w-full flex-col items-stretch">
+      <span>{children}</span>
+      <span className={`${underlineClassName} h-[3px] w-full rounded-full`} style={{ background: gradient }} aria-hidden="true" />
+    </span>
+  );
+}
+
 const dreamshootSplitCardClass =
   "group relative block overflow-hidden rounded-[14px] border border-white/[0.11] bg-[#111827]/[0.82] text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.92)] transition duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[linear-gradient(90deg,rgba(255,166,68,0.74),rgba(236,75,221,0.52),rgba(22,220,240,0.68))] before:opacity-70 before:content-[''] hover:-translate-y-1 hover:border-cyan-200/24 hover:shadow-[0_24px_74px_-50px_rgba(22,220,240,0.42)]";
 const dreamshootSplitImageShellClass = "bg-[#0B1020]/[0.70]";
@@ -8063,9 +8081,12 @@ function PricingTableSectionView({
       <div className={contentClassName}>
         <div className={mydreamPricingCopyLayout ? "mx-auto max-w-[52rem] text-center" : "max-w-[48rem]"}>
           <h2 className={mydreamPricingCopyLayout ? "text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-normal text-balance [font-family:var(--site-title-font)]" : "text-[clamp(2.25rem,3.6vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]"}>
-            {pricingTitle}
+            {mydreamPricingCopyLayout ? (
+              <DreamshootUnderlinedTitle>{pricingTitle}</DreamshootUnderlinedTitle>
+            ) : (
+              pricingTitle
+            )}
           </h2>
-          {mydreamPricingCopyLayout ? <div className="mx-auto mt-3 h-0.5 w-24 rounded-full bg-white/70" /> : null}
           <p className={mydreamPricingCopyLayout ? "mt-4 text-[0.92rem] font-medium leading-6 text-white/78" : "mt-3 text-[0.98rem] leading-7 text-white/72"}>{pricingSubtitle}</p>
           {!aidreamcapes && !spanishXbyPricing ? (
             <>
@@ -9005,8 +9026,13 @@ function SectionView({
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className={mydreamMobileCopyLayout ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
             {!mydreamMobileCopyLayout ? <p className="font-mono text-xs uppercase" style={{ color: aidreamcapes ? aidreamcapesAccent : accentBlue }}>{setting(section, "eyebrow", "Mobile tutorial")}</p> : null}
-            <h2 className={mydreamMobileCopyLayout ? "text-3xl font-semibold leading-tight tracking-normal md:text-5xl" : "mt-4 text-3xl font-semibold leading-tight md:text-5xl"}>{sectionHeading(section, "Watch the mobile workflow preview.")}</h2>
-            {mydreamMobileCopyLayout ? <div className="mx-auto mt-3 h-0.5 w-24 rounded-full bg-white/70" /> : null}
+            <h2 className={mydreamMobileCopyLayout ? "text-3xl font-semibold leading-tight tracking-normal md:text-5xl" : "mt-4 text-3xl font-semibold leading-tight md:text-5xl"}>
+              {mydreamMobileCopyLayout ? (
+                <DreamshootUnderlinedTitle gradient={accent}>{sectionHeading(section, "Watch the mobile workflow preview.")}</DreamshootUnderlinedTitle>
+              ) : (
+                sectionHeading(section, "Watch the mobile workflow preview.")
+              )}
+            </h2>
             <p className={mydreamMobileCopyLayout ? "mt-4 text-[0.95rem] font-medium leading-7 text-white/76" : "mt-4 text-sm leading-7 text-white/72"}>{setting(section, "subtitle", "Preview the mobile flow beside a supporting app image.")}</p>
             {mydreamMobileCopyLayout && mobileSupportingCopy ? <p className="mx-auto mt-2 max-w-[42rem] text-sm leading-6 text-white/56">{mobileSupportingCopy}</p> : null}
           </div>
@@ -11852,7 +11878,11 @@ function SectionView({
                 {setting(section, "eyebrow", aidreamcapes ? "Aidreamcapes gallery" : "myDreamshoots gallery")}
               </p>
               <HeadingTag className="mt-4 text-[clamp(2.2rem,5vw,4.1rem)] font-semibold leading-[1] tracking-normal text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", titleFallback)}
+                {kind === "video" && isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) ? (
+                  <DreamshootUnderlinedTitle underlineClassName="mt-4">{setting(section, "title", titleFallback)}</DreamshootUnderlinedTitle>
+                ) : (
+                  setting(section, "title", titleFallback)
+                )}
               </HeadingTag>
               <p className="mt-4 max-w-2xl text-base leading-7 text-white/68">
                 {setting(section, "subtitle", subtitleFallback)}
@@ -11877,8 +11907,8 @@ function SectionView({
                       role="button"
                       tabIndex={0}
                     >
-                      <div className="aspect-[3/4]">
-	                        <DreamshootShowcaseVideo className="h-full w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={index < 4} src={mediaAssetUrl(site, card.videoUrl)} />
+                      <div className={isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) ? "aspect-square" : "aspect-[3/4]"}>
+	                        <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={index < 4} src={mediaAssetUrl(site, card.videoUrl)} />
                       </div>
                       <figcaption className="border-t border-white/10 bg-[#090B12] p-3">
                         <span className="block truncate text-sm font-semibold text-white">{card.title}</span>
@@ -11952,6 +11982,7 @@ function SectionView({
     const videoAllLabel = canonicalGeneratorCopy ? mydreamProfileSite ? "VIEW ALL VIDEO" : "View all videos" : setting(section, "videoAllLabel", "View all videos");
     const videoAllHref = canonicalGeneratorCopy ? "/best-ai-video" : setting(section, "videoAllHref", "/best-ai-video");
     const primaryHref = canonicalGeneratorCopy ? "/app/create" : setting(section, "primaryHref", "/app/create");
+    const useMydreamShowcaseGrid = mydreamProfileSite && renderContext.pagePath === "/";
     const videoItemLimit = Math.max(1, Math.min(8, numberSetting(section, "videoItemLimit", numberSetting(section, "itemLimit", 8))));
     const selectedImageSlugs = listLines(setting(section, "imageSlugs"));
     const selectedVideoSlugs = listLines(setting(section, "videoSlugs"));
@@ -11963,6 +11994,8 @@ function SectionView({
 
     const videoCards = generationShowcaseVideoCardsForSite(publicVideoThemesForShowcase(site, videoThemes), selectedVideoSlugs, videoItemLimit);
     const imageProductCards = imageCards.map((card, productIndex) => ({ ...card, productIndex }));
+    const homepageImageProductCards = imageProductCards.slice(0, 16);
+    const homepageVideoCards = videoCards.slice(0, 8);
     const imageProductRowCount = Math.max(1, Math.ceil(imageProductCards.length / 7));
     type ImageProductWallCard = (typeof imageProductCards)[number] & { railKey: string };
     const imageProductRows: ImageProductWallCard[][] = [];
@@ -11987,9 +12020,10 @@ function SectionView({
     const trustedProof = showTrustedLogoIntro ? (
       <div className="relative left-1/2 mb-12 w-[min(82vw,106rem)] -translate-x-1/2 border-b border-white/10 pb-10 md:mb-14 md:pb-14" data-dreamshoot-trusted-logos="true">
         <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
-          {setting(section, "trustedLogoTitle", "Most Trusted Creators. | myDreamshoots")}
+          <DreamshootUnderlinedTitle gradient={accent}>
+            {setting(section, "trustedLogoTitle", "Most Trusted Creators. | myDreamshoots")}
+          </DreamshootUnderlinedTitle>
         </h2>
-        <div className="mx-auto mt-3 h-0.5 w-24 rounded-full bg-white/70" aria-hidden="true" />
         <div className="mx-auto mt-7 max-w-[78rem] space-y-3 md:mt-8 md:space-y-3.5">
           {trustedLogoRows.map((row, rowIndex) => (
             <DreamshootShowcaseRail
@@ -12079,11 +12113,12 @@ function SectionView({
     const renderShowcaseSubsectionHeader = (title: string, href: string, label: string, kind: "photo" | "video") => (
       <div className="relative flex flex-col items-center gap-3 text-center md:block" data-dreamshoot-showcase-heading={kind}>
         <h3 className="text-2xl font-semibold tracking-normal md:text-3xl [font-family:var(--site-title-font)]">
-          <Link className="transition hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80" href={hrefFor(site, href)}>
-            {title}
+          <Link className="inline-flex max-w-full flex-col items-stretch transition hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80" href={hrefFor(site, href)}>
+            <DreamshootUnderlinedTitle gradient={accent} underlineClassName="mt-2">
+              {title}
+            </DreamshootUnderlinedTitle>
           </Link>
         </h3>
-        <div className="mx-auto h-0.5 w-20 rounded-full bg-white/70 md:mt-2" />
         <Link className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:text-white/76 md:absolute md:right-0 md:top-1" href={hrefFor(site, href)}>
           {label}
           <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
@@ -12100,74 +12135,150 @@ function SectionView({
           <DreamshootShowcasePreview>
             <div className="mt-0">
               {renderShowcaseSubsectionHeader(imageTitle, imageAllHref, imageAllLabel, "photo")}
-              <div className="mt-5 space-y-3" data-dreamshoot-image-product-grid="true" data-dreamshoot-image-product-wall="true">
-                {imageProductRows.map((row, rowIndex) => (
-                  <DreamshootShowcaseRail
-                    className="dreamshoot-showcase-rail relative left-1/2 -ml-[50vw] w-screen overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                    key={`image_product_wall_row_${rowIndex}`}
-                    reverse={rowIndex % 2 === 1}
-                    speed={rowIndex % 2 === 1 ? 12 : 14}
-                    trackClassName="dreamshoot-showcase-track flex w-max gap-3 px-5 md:gap-4"
-                  >
-	                    {row.map((card) => (
-	                      <figure
-                    aria-label={`View ${cardImageAltForSite(site, { category: card.meta, imageUrl: mediaAssetUrl(site, card.imageUrl), index: card.productIndex, meta: "gallery image product", role: "gallery", title: card.title })}`}
-                        className={`group relative aspect-square w-[min(78vw,18rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[18px] border bg-[#0a0c12] shadow-[0_28px_78px_-58px_rgba(0,0,0,0.78)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:w-[calc((100vw-3.5rem)/2)] md:w-[calc((100vw-4.5rem)/3)] lg:w-[calc((100vw-5.5rem)/4)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
-                        data-dreamshoot-image-product-card="true"
-                        data-dreamshoot-image-product-row={String(rowIndex + 1)}
-                        data-dreamshoot-preview-meta={card.meta}
-                        data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
-                        data-dreamshoot-preview-title={cardImageAltForSite(site, { category: card.meta, imageUrl: mediaAssetUrl(site, card.imageUrl), index: card.productIndex, meta: "gallery image product", role: "gallery", title: card.title })}
-                        data-dreamshoot-showcase-preview="image"
-                        key={card.railKey}
-                        role="button"
-                        tabIndex={0}
-                      >
-	                        <StorefrontImage
-	                          alt={cardImageAltForSite(site, {
-	                            category: card.meta,
-	                            imageUrl: mediaAssetUrl(site, card.imageUrl),
-	                            index: card.productIndex,
-	                            meta: "gallery image product",
-	                            role: "gallery",
-	                            title: card.title
-	                          })}
-                          className="h-full w-full bg-[#05070e] object-contain object-center transition duration-300 group-hover:brightness-105"
+              {useMydreamShowcaseGrid ? (
+                <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4" data-dreamshoot-homepage-gallery-grid="photo" data-dreamshoot-image-product-grid="true">
+                  {homepageImageProductCards.map((card) => (
+                    <figure
+                      aria-label={`View ${cardImageAltForSite(site, { category: card.meta, imageUrl: mediaAssetUrl(site, card.imageUrl), index: card.productIndex, meta: "gallery image product", role: "gallery", title: card.title })}`}
+                      className="group min-w-0 cursor-zoom-in overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] shadow-[0_28px_84px_-66px_rgba(0,0,0,0.92)] transition hover:-translate-y-0.5 hover:border-white/24 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                      data-dreamshoot-image-product-card="true"
+                      data-dreamshoot-preview-meta={card.meta}
+                      data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
+                      data-dreamshoot-preview-title={cardImageAltForSite(site, { category: card.meta, imageUrl: mediaAssetUrl(site, card.imageUrl), index: card.productIndex, meta: "gallery image product", role: "gallery", title: card.title })}
+                      data-dreamshoot-showcase-preview="image"
+                      key={`${card.id}-image-grid`}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <div className="aspect-square min-w-0 max-w-full overflow-hidden">
+                        <StorefrontImage
+                          alt={cardImageAltForSite(site, {
+                            category: card.meta,
+                            imageUrl: mediaAssetUrl(site, card.imageUrl),
+                            index: card.productIndex,
+                            meta: "gallery image product",
+                            role: "gallery",
+                            title: card.title
+                          })}
+                          className="h-full w-full max-w-full bg-[#05070e] object-contain object-center transition duration-300 group-hover:brightness-105"
                           fetchPriority={card.productIndex < 4 ? "high" : "low"}
                           loading={card.productIndex < 4 ? "eager" : "lazy"}
                           preview={false}
-                          sizes="(max-width: 640px) 78vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
                           src={mediaAssetUrl(site, card.imageUrl)}
                         />
-                      </figure>
-                    ))}
-                  </DreamshootShowcaseRail>
-                ))}
-              </div>
+                      </div>
+                      <figcaption className="border-t border-white/10 p-3">
+                        <span className="block truncate text-sm font-semibold text-white">{card.title}</span>
+                        <span className="mt-1 flex items-center gap-2 truncate text-xs text-white/58">
+                          <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: accent }} />
+                          {card.meta}
+                        </span>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-5 space-y-3" data-dreamshoot-image-product-grid="true" data-dreamshoot-image-product-wall="true">
+                  {imageProductRows.map((row, rowIndex) => (
+                    <DreamshootShowcaseRail
+                      className="dreamshoot-showcase-rail relative left-1/2 -ml-[50vw] w-screen overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                      key={`image_product_wall_row_${rowIndex}`}
+                      reverse={rowIndex % 2 === 1}
+                      speed={rowIndex % 2 === 1 ? 12 : 14}
+                      trackClassName="dreamshoot-showcase-track flex w-max gap-3 px-5 md:gap-4"
+                    >
+                      {row.map((card) => (
+                        <figure
+                          aria-label={`View ${cardImageAltForSite(site, { category: card.meta, imageUrl: mediaAssetUrl(site, card.imageUrl), index: card.productIndex, meta: "gallery image product", role: "gallery", title: card.title })}`}
+                          className={`group relative aspect-square w-[min(78vw,18rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[18px] border bg-[#0a0c12] shadow-[0_28px_78px_-58px_rgba(0,0,0,0.78)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:w-[calc((100vw-3.5rem)/2)] md:w-[calc((100vw-4.5rem)/3)] lg:w-[calc((100vw-5.5rem)/4)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
+                          data-dreamshoot-image-product-card="true"
+                          data-dreamshoot-image-product-row={String(rowIndex + 1)}
+                          data-dreamshoot-preview-meta={card.meta}
+                          data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
+                          data-dreamshoot-preview-title={cardImageAltForSite(site, { category: card.meta, imageUrl: mediaAssetUrl(site, card.imageUrl), index: card.productIndex, meta: "gallery image product", role: "gallery", title: card.title })}
+                          data-dreamshoot-showcase-preview="image"
+                          key={card.railKey}
+                          role="button"
+                          tabIndex={0}
+                        >
+                          <StorefrontImage
+                            alt={cardImageAltForSite(site, {
+                              category: card.meta,
+                              imageUrl: mediaAssetUrl(site, card.imageUrl),
+                              index: card.productIndex,
+                              meta: "gallery image product",
+                              role: "gallery",
+                              title: card.title
+                            })}
+                            className="h-full w-full bg-[#05070e] object-contain object-center transition duration-300 group-hover:brightness-105"
+                            fetchPriority={card.productIndex < 4 ? "high" : "low"}
+                            loading={card.productIndex < 4 ? "eager" : "lazy"}
+                            preview={false}
+                            sizes="(max-width: 640px) 78vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                            src={mediaAssetUrl(site, card.imageUrl)}
+                          />
+                        </figure>
+                      ))}
+                    </DreamshootShowcaseRail>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="mt-12">
               {renderShowcaseSubsectionHeader(videoTitle, videoAllHref, videoAllLabel, "video")}
-              <DreamshootShowcaseRail className="dreamshoot-showcase-rail relative left-1/2 -ml-[50vw] mt-5 w-screen overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" reverse speed={58} trackClassName="dreamshoot-showcase-track flex w-max gap-2 px-0">
-	                {videoRailCards.map((card) => (
-	                  <figure
-	                    aria-label={videoPlaybackAriaLabelForSite(site, videoPosterAltForSite(site, { meta: card.meta, title: card.title }))}
-                    className={`group relative aspect-[3/4] w-[min(86vw,24rem)] shrink-0 cursor-pointer overflow-hidden rounded-[16px] border bg-black text-white shadow-[0_30px_86px_-64px_rgba(0,0,0,0.76)] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 md:w-[clamp(24rem,25vw,34rem)] ${aidreamcapes ? "border-[#f2b27c]/40" : "border-white/10"}`}
-                    data-dreamshoot-preview-meta={card.meta}
-                    data-dreamshoot-preview-poster={mediaAssetUrl(site, card.posterUrl)}
-                    data-dreamshoot-preview-src={mediaAssetUrl(site, card.videoUrl)}
-                    data-dreamshoot-preview-title={videoPosterAltForSite(site, { meta: card.meta, title: card.title })}
-                    data-dreamshoot-showcase-preview="video"
-                    data-showcase-card-kind="video"
-                    key={card.railKey}
-                    role="button"
-                    tabIndex={0}
-                  >
-	                    <DreamshootShowcaseVideo className="h-full w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={card.index < 4} src={mediaAssetUrl(site, card.videoUrl)} />
-                    <figcaption className="sr-only">{`${card.meta} gallery video example.`}</figcaption>
-                  </figure>
-                ))}
-              </DreamshootShowcaseRail>
+              {useMydreamShowcaseGrid ? (
+                <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4" data-dreamshoot-homepage-gallery-grid="video">
+                  {homepageVideoCards.map((card) => (
+                    <figure
+                      aria-label={videoPlaybackAriaLabelForSite(site, videoPosterAltForSite(site, { meta: card.meta, title: card.title }))}
+                      className="group relative min-w-0 cursor-pointer overflow-hidden rounded-[8px] border border-white/12 bg-black text-white shadow-[0_28px_84px_-66px_rgba(0,0,0,0.92)] transition hover:-translate-y-0.5 hover:border-white/24 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                      data-dreamshoot-preview-meta={card.meta}
+                      data-dreamshoot-preview-poster={mediaAssetUrl(site, card.posterUrl)}
+                      data-dreamshoot-preview-src={mediaAssetUrl(site, card.videoUrl)}
+                      data-dreamshoot-preview-title={videoPosterAltForSite(site, { meta: card.meta, title: card.title })}
+                      data-dreamshoot-showcase-preview="video"
+                      data-showcase-card-kind="video"
+                      key={`${card.id}-video-grid`}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <div className="aspect-square min-w-0 max-w-full overflow-hidden">
+                        <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={card.index < 4} src={mediaAssetUrl(site, card.videoUrl)} />
+                      </div>
+                      <figcaption className="border-t border-white/10 bg-[#090B12] p-3">
+                        <span className="block truncate text-sm font-semibold text-white">{card.title}</span>
+                        <span className="mt-1 flex items-center gap-2 truncate text-xs text-white/58">
+                          <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: accent }} />
+                          {card.meta}
+                        </span>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              ) : (
+                <DreamshootShowcaseRail className="dreamshoot-showcase-rail relative left-1/2 -ml-[50vw] mt-5 w-screen overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" reverse speed={58} trackClassName="dreamshoot-showcase-track flex w-max gap-2 px-0">
+                  {videoRailCards.map((card) => (
+                    <figure
+                      aria-label={videoPlaybackAriaLabelForSite(site, videoPosterAltForSite(site, { meta: card.meta, title: card.title }))}
+                      className={`group relative aspect-[3/4] w-[min(86vw,24rem)] shrink-0 cursor-pointer overflow-hidden rounded-[16px] border bg-black text-white shadow-[0_30px_86px_-64px_rgba(0,0,0,0.76)] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 md:w-[clamp(24rem,25vw,34rem)] ${aidreamcapes ? "border-[#f2b27c]/40" : "border-white/10"}`}
+                      data-dreamshoot-preview-meta={card.meta}
+                      data-dreamshoot-preview-poster={mediaAssetUrl(site, card.posterUrl)}
+                      data-dreamshoot-preview-src={mediaAssetUrl(site, card.videoUrl)}
+                      data-dreamshoot-preview-title={videoPosterAltForSite(site, { meta: card.meta, title: card.title })}
+                      data-dreamshoot-showcase-preview="video"
+                      data-showcase-card-kind="video"
+                      key={card.railKey}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={card.index < 4} src={mediaAssetUrl(site, card.videoUrl)} />
+                      <figcaption className="sr-only">{`${card.meta} gallery video example.`}</figcaption>
+                    </figure>
+                  ))}
+                </DreamshootShowcaseRail>
+              )}
             </div>
           </DreamshootShowcasePreview>
           {showcaseIntro}
@@ -15205,9 +15316,14 @@ function SectionView({
               <div className={mydreamReviewCopyLayout ? "mx-auto max-w-3xl" : stackedReviewLayout ? "min-w-0 flex-1" : undefined}>
                 {mydreamReviewCopyLayout ? null : <div className="h-px w-14 bg-[#b98a57]" />}
                 <h2 className={mydreamReviewCopyLayout ? "text-center text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-normal text-balance [font-family:var(--site-title-font)]" : `${stackedReviewLayout ? "max-w-[20ch]" : "max-w-[12ch]"} mt-4 text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]`}>
-                  {mydreamReviewCopyLayout ? sectionHeading(section, "What Our Customers Say") : isDreamShootUseCaseWall ? "Ways people use myDreamshoots" : headingSetting(section, "summaryTitle", sectionHeading(section, "Customer results"))}
+                  {mydreamReviewCopyLayout ? (
+                    <DreamshootUnderlinedTitle>{sectionHeading(section, "What Our Customers Say")}</DreamshootUnderlinedTitle>
+                  ) : isDreamShootUseCaseWall ? (
+                    "Ways people use myDreamshoots"
+                  ) : (
+                    headingSetting(section, "summaryTitle", sectionHeading(section, "Customer results"))
+                  )}
                 </h2>
-                {mydreamReviewCopyLayout ? <div className="mx-auto mt-3 h-0.5 w-24 rounded-full bg-[#b98a57]" /> : null}
                 <p className={mydreamReviewCopyLayout ? "mx-auto mt-4 max-w-2xl text-[0.92rem] font-medium leading-6 text-[#7c7167]" : `${stackedReviewLayout ? "max-w-3xl" : "max-w-[17rem]"} mt-5 text-[0.94rem] leading-7 text-[#6d665f]`}>
                   {mydreamReviewCopyLayout ? setting(section, "subtitle", "Our users love us and we love them!") : isDreamShootUseCaseWall ? "Plan sports fan meetups, VIP-style red-carpet looks, Christmas cards, and holiday group albums before spending credits." : setting(section, "summaryBody", setting(section, "subtitle"))}
                 </p>
@@ -15493,7 +15609,7 @@ function SectionView({
                         : "aspect-[4/3]";
                     return (
                       <div className={`${tileClassName} overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-1 shadow-[0_20px_50px_-36px_rgba(0,0,0,0.9)]`} data-faq-feature-tile key={`${image.src}_${index}`}>
-                        <img className="block h-full w-full object-contain object-center" src={image.src} alt={image.alt} loading="eager" decoding="async" />
+                        <img className="block h-full w-full max-w-full object-contain object-center" src={image.src} alt={image.alt} loading="eager" decoding="async" />
                       </div>
                     );
                   })}
@@ -15715,7 +15831,7 @@ function SectionView({
               </div>
             ) : image ? (
               <div className={`${dark ? "overflow-hidden rounded-[28px] border border-white/10 bg-zinc-900 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "overflow-hidden rounded-[28px] border border-[#ded5ca] bg-[#efe6d9] shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"} ${workflowIntroRichText ? "relative aspect-[16/11] lg:aspect-auto lg:h-full lg:min-h-[34rem]" : ""}`}>
-                <img className={workflowIntroRichText ? "absolute inset-0 h-full w-full object-cover" : "aspect-[16/11] h-full w-full object-cover"} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} />
+                <img className={workflowIntroRichText ? "absolute inset-0 h-full w-full max-w-full object-cover" : "aspect-[16/11] h-full w-full max-w-full object-cover"} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} />
               </div>
             ) : (
               <div className={`${dark ? "rounded-[28px] border border-white/10 bg-white/[0.05] p-6" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/76 p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.22)]"} ${noImageCardJourney ? "flex h-full flex-col" : ""}`}>

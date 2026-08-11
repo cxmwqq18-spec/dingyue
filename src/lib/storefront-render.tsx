@@ -811,18 +811,18 @@ function proposedFederalPrivacyLegislationNotice(brand: string): string {
 }
 
 const MYDREAMSHOOTS_TERMS_POLICY_BODY =
-  `<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a MyDreamShoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums.</p><h3>2. Accounts, credits, and checkout</h3><p>You are responsible for accurate account information and secure sign-in. Credits are added after payment confirmation, displayed before generation, reserved when a request begins, used after successful delivery, and released or reviewed when a request fails.</p><h3>3. Upload rights and consent</h3><p>You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.</p><h3>4. No AI training on your photos</h3><p>Your inputs are never used to train models. 30-day auto-delete applies to input photos after generation. Private uploads and account records are protected with AES-256 at rest and TLS 256-bit in transit. Some billing, security, tax, dispute, refund, and account-integrity records may be retained where required or reasonably necessary.</p><h3>5. AI output variability</h3><p>AI photo results can vary based on source photo quality, pose, lighting, package settings, moderation review, provider availability, and model behavior. MyDreamShoots may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and use of outputs</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Refunds and guarantee review</h3><p>Refunds and credit adjustments follow the Refund Policy, including the 100% money-back guarantee when the shoot does not look like you, subject to support review, account history, and the details of the affected request.</p><h3>8. Contact</h3><p>Email <a href="mailto:support@mydreamshoots.com">support@mydreamshoots.com</a> for account, billing, refund, policy, or legal questions.</p>`;
+  `<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a myDreamshoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums.</p><h3>2. Accounts, credits, and checkout</h3><p>You are responsible for accurate account information and secure sign-in. Credits are added after payment confirmation, displayed before generation, reserved when a request begins, used after successful delivery, and released or reviewed when a request fails.</p><h3>3. Upload rights and consent</h3><p>You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.</p><h3>4. No AI training on your photos</h3><p>Your inputs are never used to train models. 30-day auto-delete applies to input photos after generation. Private uploads and account records are protected with AES-256 at rest and TLS 256-bit in transit. Some billing, security, tax, dispute, refund, and account-integrity records may be retained where required or reasonably necessary.</p><h3>5. AI output variability</h3><p>AI photo results can vary based on source photo quality, pose, lighting, package settings, moderation review, provider availability, and model behavior. myDreamshoots may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and use of outputs</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Refunds and guarantee review</h3><p>Refunds and credit adjustments follow the Refund Policy, including the 100% money-back guarantee when the shoot does not look like you, subject to support review, account history, and the details of the affected request.</p><h3>8. Contact</h3><p>Email <a href="mailto:support@mydreamshoots.com">support@mydreamshoots.com</a> for account, billing, refund, policy, or legal questions.</p>`;
 
 function mydreamshootsPolicyBody(path: string): string {
   const normalized = normalizePublicSlug(path).replace(/-/g, " ");
   if (normalized.includes("children")) {
-    return "<h3>1. Service audience</h3><p>MyDreamShoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. MyDreamShoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. DPDPA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">DPDPA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>";
+    return "<h3>1. Service audience</h3><p>myDreamshoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. myDreamshoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. DPDPA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">DPDPA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>";
   }
   if (normalized.includes("state privacy") || normalized.includes("california") || normalized.includes("ccpa")) {
-    return "<h3>1. DPDPA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. MyDreamShoots does not sell personal source photos or generated private albums as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: myDreamshoots.com; Address: 8 THE GREEN STE B,DOVER,DE 19901; Contact Us: support@mydreamshoots.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>" + proposedFederalPrivacyLegislationNotice("MyDreamShoots");
+    return "<h3>1. DPDPA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. myDreamshoots does not sell personal source photos or generated private albums as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: myDreamshoots.com; Address: 8 THE GREEN STE B,DOVER,DE 19901; Contact Us: support@mydreamshoots.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>" + proposedFederalPrivacyLegislationNotice("myDreamshoots");
   }
   if (normalized.includes("cookie")) {
-    return "<h3>1. Essential cookies and local storage</h3><p>MyDreamShoots uses essential cookies and local storage for sign-in, account sessions, cart continuity, credit visibility, private gallery access, and site reliability.</p><h3>2. Security and checkout continuity</h3><p>Operational storage helps keep customer sessions secure, remember checkout state, protect private albums, and diagnose failed requests or delivery issues.</p><h3>3. Payment and service providers</h3><p>Checkout, infrastructure, email, analytics, and AI processing providers may use limited cookies or identifiers when needed for payment status, fraud prevention, service delivery, security, or operational measurement.</p><h3>4. Your choices</h3><p>You can clear cookies or adjust browser settings. Clearing storage may sign you out, interrupt checkout, remove local preferences, or require another sign-in before opening private albums, jobs, credit history, or downloads.</p><h3>5. Contact us</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with cookie, account session, checkout continuity, or private gallery questions.</p>";
+    return "<h3>1. Essential cookies and local storage</h3><p>myDreamshoots uses essential cookies and local storage for sign-in, account sessions, cart continuity, credit visibility, private gallery access, and site reliability.</p><h3>2. Security and checkout continuity</h3><p>Operational storage helps keep customer sessions secure, remember checkout state, protect private albums, and diagnose failed requests or delivery issues.</p><h3>3. Payment and service providers</h3><p>Checkout, infrastructure, email, analytics, and AI processing providers may use limited cookies or identifiers when needed for payment status, fraud prevention, service delivery, security, or operational measurement.</p><h3>4. Your choices</h3><p>You can clear cookies or adjust browser settings. Clearing storage may sign you out, interrupt checkout, remove local preferences, or require another sign-in before opening private albums, jobs, credit history, or downloads.</p><h3>5. Contact us</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with cookie, account session, checkout continuity, or private gallery questions.</p>";
   }
   if (normalized.includes("term")) {
     return MYDREAMSHOOTS_TERMS_POLICY_BODY;
@@ -1916,7 +1916,7 @@ function toolsDirectoryFaqSectionForSite(site: Site): SectionInstance {
         ]
       : [
           ["Which AI photo tool should I start with?", "Start with the tool that matches the output you need: headshots for professional profiles, creator portraits for campaigns, edit tools for cleanup, and video tools for short motion concepts."],
-          ["Do all tools use the private upload flow?", "Customer-facing tools keep uploads, request details, credit reservations, and finished assets connected to the signed-in MyDreamShoots account."],
+          ["Do all tools use the private upload flow?", "Customer-facing tools keep uploads, request details, credit reservations, and finished assets connected to the signed-in myDreamshoots account."],
           ["Can tool results be used for social or business pages?", "Yes, when you have the rights to the source photos, the people shown have approved the use, and the destination platform rules are followed."],
           ["What should I inspect before downloading tool results?", "Review faces, hands, text-like details, crops, and overall realism before publishing or reusing the downloaded image or clip."]
         ];
@@ -1931,7 +1931,7 @@ function toolsDirectoryFaqSectionForSite(site: Site): SectionInstance {
         ? "Respuestas sobre fotos fuente, creditos, privacidad y entrega."
         : isAidreamcapes
           ? "How occasion tools handle approved photos, private albums, and credit review."
-          : "How MyDreamShoots tools handle source photos, credits, output review, and private delivery."
+          : "How myDreamshoots tools handle source photos, credits, output review, and private delivery."
     },
     blocks: items.map(([question, answer], index) => ({
       id: `tools_directory_faq_${index + 1}`,
@@ -2023,30 +2023,49 @@ function usesSharedDreamShootNavigation(site: Pick<Site, "id" | "slug" | "name" 
   return /mydreamshoots|dreamshoot/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`) || isAidreamcapesStorefront(site);
 }
 
+function uploadGuidanceFromWorkflow(workflow: string[], fallback: string): string {
+  const candidates = workflow.map((item) => item.trim()).filter(Boolean);
+  const useful = candidates.find((item) => {
+    const normalized = item.toLowerCase();
+    if (/review the result|choose the look|create and download/.test(normalized)) return false;
+    return /\b(upload|photo|photos|source|selfie|selfies|portrait|portraits|reference|references|image|images)\b/.test(normalized);
+  });
+  if (!useful) return fallback;
+  const wordCount = useful.split(/\s+/).filter(Boolean).length;
+  if (wordCount < 6 || /^upload (clear )?source (photos|portraits)\.?$/i.test(useful)) return fallback;
+  return useful;
+}
+
 function toolDetailFaqBlocksForSite(site: Site, label: string, workflow: string[]): SectionBlockInstance[] {
   const aidreamcapes = isAidreamcapesStorefront(site);
   const spanishXby = isSpanishXbyStorefront(site);
-  const safeWorkflow = workflow.filter((item) => item.trim());
-  const uploadGuidance = safeWorkflow[0] ?? safeWorkflow[1];
   const imageOrAlbum = aidreamcapes ? "albums" : "images";
-  const privateBrand = site.branding.logoText || site.name || (aidreamcapes ? "Aidreamcapes" : "MyDreamShoots");
+  const privateBrand = site.branding.logoText || site.name || (aidreamcapes ? "Aidreamcapes" : "myDreamshoots");
+  const uploadGuidance = uploadGuidanceFromWorkflow(
+    workflow,
+    spanishXby
+      ? "Sube fotos fuente claras y aprobadas que coincidan con la direccion que quieres crear."
+      : aidreamcapes
+        ? "Upload clear approved source portraits or references that match the occasion direction you want."
+        : "Upload clear source photos or references you own or have permission to use, with the subject visible and the intended style goal in mind."
+  );
   const items = spanishXby
     ? [
-        [`Que debo subir para ${label}?`, uploadGuidance ?? "Sube fotos fuente claras y aprobadas que coincidan con la direccion que quieres crear."],
+        [`Que debo subir para ${label}?`, uploadGuidance],
         ["Los resultados son privados?", `Si. Fotos fuente, pedidos, creditos y resultados terminados permanecen vinculados a la cuenta privada de ${privateBrand}.`],
         ["Cuando se usan los creditos?", "Los creditos se muestran antes de empezar, se reservan durante la generacion y se liberan si el pedido falla."],
         [`Donde quedan los ${aidreamcapes ? "albumes" : "resultados"} terminados?`, `Los resultados terminados quedan en la galeria privada para revisar, descargar y decidir que compartir.`]
       ]
     : aidreamcapes
       ? [
-          [`What should I upload for ${label}?`, uploadGuidance ?? "Upload clear approved source portraits or references that match the occasion direction you want."],
+          [`What should I upload for ${label}?`, uploadGuidance],
           ["Does this tool recreate official identities?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized public-figure likenesses, logos, official marks, or misleading affiliation."],
           ["When are credits used?", "Credits are shown before a request starts, reserved during generation, and settled or released according to the request status."],
           ["Where do finished albums go?", "Finished images or motion outputs stay in the private gallery connected to the signed-in Aidreamcapes account."]
         ]
       : [
-          [`What should I upload for ${label}?`, uploadGuidance ?? "Upload clear source photos or references you own or have permission to use, with the subject visible and the intended style goal in mind."],
-          ["Does this tool use the private workspace?", "Yes. Source photos, request details, credit records, and finished results stay connected to the signed-in MyDreamShoots account."],
+          [`What should I upload for ${label}?`, uploadGuidance],
+          ["Does this tool use the private workspace?", "Yes. Source photos, request details, credit records, and finished results stay connected to the signed-in myDreamshoots account."],
           ["When are credits used?", "Paid tool requests show the credit requirement before generation, reserve credits while processing, and release them when a recorded failure returns the reservation."],
           [`Where do finished ${imageOrAlbum} go?`, `Finished ${imageOrAlbum} stay in the private gallery or workspace for review, download, and account history.`]
         ];
@@ -2187,7 +2206,7 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
   if (page.sections.faq_1) {
     page.sections.faq_1.settings = {
       ...page.sections.faq_1.settings,
-      eyebrow: spanishXby ? "Preguntas de herramienta" : aidreamcapes ? "Aidreamcapes tool questions" : "MyDreamShoots tool questions",
+      eyebrow: spanishXby ? "Preguntas de herramienta" : aidreamcapes ? "Aidreamcapes tool questions" : "myDreamshoots tool questions",
       title: spanishXby ? `FAQ de ${directoryContent.label}` : `${directoryContent.label} FAQ`,
       subtitle: spanishXby
         ? "Respuestas sobre fotos fuente, creditos, galerias privadas y entrega antes de generar."

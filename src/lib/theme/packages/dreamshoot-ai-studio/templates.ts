@@ -1591,9 +1591,9 @@ function mydreamshootsPageFaqSection(key: PublicFaqKey): SectionInstance {
     pricing: {
       eyebrow: "Pricing FAQ",
       title: "Pricing questions before you buy",
-      subtitle: "Plan, credit, checkout, and private generation answers for MyDreamShoots customers.",
+      subtitle: "Plan, credit, checkout, and private generation answers for myDreamshoots customers.",
       items: [
-        ["How do I choose a MyDreamShoots plan?", "Choose a plan by how often you expect to create headshots, creator portraits, fan photos, AI edits, or video-ready outputs. The pricing page is the source of truth for included credits and current plan details."],
+        ["How do I choose a myDreamshoots plan?", "Choose a plan by how often you expect to create headshots, creator portraits, fan photos, AI edits, or video-ready outputs. The pricing page is the source of truth for included credits and current plan details."],
         ["Are credits shown before generation starts?", "Yes. Package and tool requests show the credit requirement before a private generation request begins, so you can review the cost before credits are reserved."],
         ["Can I add credits without changing plans?", "When top-ups are available, they add extra capacity to the same customer account without replacing the subscription plan. Checkout will show the active option before purchase."],
         ["What happens if a paid generation fails?", "A failed or interrupted request can release reserved credits according to the recorded job status. Keep the request or order details when contacting support about a charge."]
@@ -1602,10 +1602,10 @@ function mydreamshootsPageFaqSection(key: PublicFaqKey): SectionInstance {
     tools: {
       eyebrow: "Tools FAQ",
       title: "AI tool questions before upload",
-      subtitle: "How MyDreamShoots tools handle source photos, credits, output review, and private delivery.",
+      subtitle: "How myDreamshoots tools handle source photos, credits, output review, and private delivery.",
       items: [
         ["Which AI photo tool should I start with?", "Start with the tool that matches the output you need: headshots for professional profiles, creator portraits for campaigns, edit tools for cleanup, and video tools for short motion concepts."],
-        ["Do all tools use the private upload flow?", "Customer-facing tools keep uploads, request details, credit reservations, and finished assets connected to the signed-in MyDreamShoots account."],
+        ["Do all tools use the private upload flow?", "Customer-facing tools keep uploads, request details, credit reservations, and finished assets connected to the signed-in myDreamshoots account."],
         ["Can tool results be used for social or business pages?", "Yes, when you have the rights to the source photos, the people shown have approved the use, and the destination platform rules are followed."],
         ["What should I inspect before downloading tool results?", "Review faces, hands, text-like details, crops, and overall realism before publishing or reusing the downloaded image or clip."]
       ]
@@ -1613,7 +1613,7 @@ function mydreamshootsPageFaqSection(key: PublicFaqKey): SectionInstance {
     collections: {
       eyebrow: "Package FAQ",
       title: "Photo package questions before you choose",
-      subtitle: "How to compare MyDreamShoots package categories before spending credits.",
+      subtitle: "How to compare myDreamshoots package categories before spending credits.",
       items: [
         ["How do I pick a photo package collection?", "Choose by the final use: profile refresh, creator campaign, couple scene, fan photo, seasonal card, beauty preview, or short motion add-on."],
         ["Are package examples exact guarantees?", "No. Examples show the intended styling and composition, while source photo quality, pose, lighting, and model behavior affect final results."],
@@ -1624,7 +1624,7 @@ function mydreamshootsPageFaqSection(key: PublicFaqKey): SectionInstance {
     "best-packages": {
       eyebrow: "Best packages FAQ",
       title: "Best package questions for private albums",
-      subtitle: "How featured MyDreamShoots packages are organized for fast comparison.",
+      subtitle: "How featured myDreamshoots packages are organized for fast comparison.",
       items: [
         ["How are best packages selected?", "Best package pages highlight high-intent themes customers often compare before upload, including portraits, seasonal sets, creator looks, and motion-ready options."],
         ["Are seasonal packages included?", "Yes. Holiday, Thanksgiving, Halloween, Christmas, and other rotating themes can appear when they are active for the storefront."],
@@ -1635,7 +1635,7 @@ function mydreamshootsPageFaqSection(key: PublicFaqKey): SectionInstance {
     "best-ai-image": {
       eyebrow: "AI image FAQ",
       title: "Best AI image questions",
-      subtitle: "Source-photo and quality guidance for MyDreamShoots image themes.",
+      subtitle: "Source-photo and quality guidance for myDreamshoots image themes.",
       items: [
         ["What makes an AI image theme useful?", "A useful theme has a clear output goal, visible example style, practical crop, and source-photo guidance that matches how you plan to use the final image."],
         ["Which photos work best as image sources?", "Use sharp, recent, well-lit photos with visible faces or subjects. Avoid heavy filters, tiny crops, screenshots, and images you do not have permission to use."],
@@ -1646,9 +1646,9 @@ function mydreamshootsPageFaqSection(key: PublicFaqKey): SectionInstance {
     "best-ai-video": {
       eyebrow: "AI video FAQ",
       title: "Best AI video questions",
-      subtitle: "How still images become private short motion concepts in MyDreamShoots.",
+      subtitle: "How still images become private short motion concepts in myDreamshoots.",
       items: [
-        ["What can MyDreamShoots AI video tools create?", "Video tools can turn approved stills or finished package outputs into short motion concepts for profile clips, creator intros, product teasers, and album moments."],
+        ["What can myDreamshoots AI video tools create?", "Video tools can turn approved stills or finished package outputs into short motion concepts for profile clips, creator intros, product teasers, and album moments."],
         ["Which still image works best for motion?", "Use a clean image with a clear subject, simple composition, and enough visual detail for movement without overloading faces, hands, or background elements."],
         ["Are video credit costs shown first?", "Yes. Supported video requests show the format and credit requirement before generation begins."],
         ["Where do completed clips appear?", "Completed motion outputs stay in the private customer workspace or gallery, where you can review and download them."]
@@ -1656,7 +1656,7 @@ function mydreamshootsPageFaqSection(key: PublicFaqKey): SectionInstance {
     },
     help: {
       eyebrow: "Support FAQ",
-      title: "Support questions for MyDreamShoots customers",
+      title: "Support questions for myDreamshoots customers",
       subtitle: "Practical answers for account, billing, upload, privacy, and delivery help.",
       items: [
         ["How do I get help with a request?", "Contact support with the account email, order or job reference, and a short description of what looks wrong so the team can find the right record."],
@@ -1668,7 +1668,7 @@ function mydreamshootsPageFaqSection(key: PublicFaqKey): SectionInstance {
     "tool-detail": {
       eyebrow: "Tool FAQ",
       title: "Tool questions before generation",
-      subtitle: "How a focused MyDreamShoots tool uses source photos, credits, and private delivery.",
+      subtitle: "How a focused myDreamshoots tool uses source photos, credits, and private delivery.",
       items: [
         ["What should I upload for this tool?", "Upload clear source photos or references you own or have permission to use, with the subject visible and the intended edit or style goal in mind."],
         ["Will this tool show credits before it starts?", "Yes. Paid tool requests show the credit requirement before generation so you can review the cost first."],
@@ -2267,25 +2267,28 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const faqSection = aidreamcapesTemplateSite ? aidreamcapesFaqSection() : mydreamshootsFaqSection();
   const partnerStripSection = aidreamcapesTemplateSite ? aidreamcapesPartnerStripSection() : mydreamshootsPartnerStripSection();
   const conversionSection = aidreamcapesTemplateSite ? aidreamcapesConversionSection() : homeSections.conversion_1;
-  const homeSectionsOrder = ["hero_1", "generation_showcase_1", "featured_thanksgiving_1", "tutorial_video_1", "tutorial_video_2", "mobile_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"];
+  const homeSectionsOrder = aidreamcapesTemplateSite
+    ? ["hero_1", "generation_showcase_1", "featured_thanksgiving_1", "tutorial_video_1", "tutorial_video_2", "mobile_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"]
+    : ["hero_1", "generation_showcase_1", "tutorial_video_1", "tutorial_video_2", "mobile_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"];
+  const homePageSections: ThemePageJson["sections"] = {
+    hero_1: homeHeroSection,
+    generation_showcase_1: generationShowcaseSection,
+    ...(aidreamcapesTemplateSite ? { featured_thanksgiving_1: featuredThanksgivingSection } : {}),
+    tutorial_video_1: tutorialVideoSection,
+    tutorial_video_2: imageTutorialVideoSection,
+    mobile_video_1: mobileVideoSection,
+    package_catalog_1: packageCatalogSection,
+    proof_1: reviewSection,
+    pricing_1: homeSections.pricing_1,
+    faq_1: faqSection,
+    conversion_1: conversionSection,
+    brand_strip_1: partnerStripSection
+  };
   const templates: Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> = {
   home: page(
     "home",
     homeSectionsOrder,
-    {
-      hero_1: homeHeroSection,
-      featured_thanksgiving_1: featuredThanksgivingSection,
-      generation_showcase_1: generationShowcaseSection,
-      tutorial_video_1: tutorialVideoSection,
-      tutorial_video_2: imageTutorialVideoSection,
-      mobile_video_1: mobileVideoSection,
-      package_catalog_1: packageCatalogSection,
-      proof_1: reviewSection,
-      pricing_1: homeSections.pricing_1,
-      faq_1: faqSection,
-      conversion_1: conversionSection,
-      brand_strip_1: partnerStripSection
-    },
+    homePageSections,
     1
   ),
   "best-packages": bestPackagesPage(featuredPackSection, featuredChristmasSection, featuredThanksgivingSection, site),

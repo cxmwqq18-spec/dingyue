@@ -20,7 +20,6 @@ const homeOrderByStore = {
   mydreamshoots: [
     "hero_1",
     "generation_showcase_1",
-    "featured_thanksgiving_1",
     "tutorial_video_1",
     "tutorial_video_2",
     "mobile_video_1",
@@ -45,7 +44,7 @@ const homeOrderByStore = {
   ]
 };
 const removedHomeSectionsByStore = {
-  mydreamshoots: ["visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1"],
+  mydreamshoots: ["visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
   aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
 };
 const bestPageTemplateKeys = ["best-packages", "best-ai-image", "best-ai-video"];
@@ -245,11 +244,11 @@ const stores = [
       anchor: "how-it-works",
       eyebrow: "How it works",
       title: "Watch the private photo package workflow.",
-      subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
+      subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private myDreamshoots gallery.",
       imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-55s.jpg?v=20260805i2vselect3",
       videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4?v=20260805i2vselect3",
       videoBadge: "Private gallery workflow",
-      playLabel: "Watch the MyDreamShoots workflow"
+      playLabel: "Watch the myDreamshoots workflow"
     }),
     imageTutorial: section("video_feature", {
       anchor: "ai-image-tutorial",
@@ -259,7 +258,7 @@ const stores = [
       imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260806chooserfix1",
       videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260806chooserfix1",
       videoBadge: "AI photo generation",
-      playLabel: "Watch the MyDreamShoots AI image tutorial"
+      playLabel: "Watch the myDreamshoots AI image tutorial"
     }),
     mobile: section("mobile_video_showcase", {
       anchor: "mobile-video-tutorial",
@@ -268,7 +267,7 @@ const stores = [
       subtitle: "Upload selfies and start creating your AI photshoot now",
       supportingCopy: "Use myDreamshoots's AI Video design your videos with your own creativity. Your next video content can instantly go viral.",
       imageUrl: myAssets.flowPrivateAlbumWorkspace,
-      imageAlt: "Mobile MyDreamShoots workspace screen showing private source-photo setup, credit review, and finished AI photo gallery steps.",
+      imageAlt: "Mobile myDreamshoots workspace screen showing private source-photo setup, credit review, and finished AI photo gallery steps.",
       videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",
       videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260806mobile45a",
       videoBadge: "Mobile workflow",

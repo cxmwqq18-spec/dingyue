@@ -17,7 +17,6 @@ const expectedHomeOrders = {
   mydreamshoots: [
     "hero_1",
     "generation_showcase_1",
-    "featured_thanksgiving_1",
     "tutorial_video_1",
     "tutorial_video_2",
     "mobile_video_1",
@@ -42,12 +41,13 @@ const expectedHomeOrders = {
   ]
 };
 const removedHomeSectionsByStore = {
-  mydreamshoots: ["visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1"],
+  mydreamshoots: ["visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
   aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
 };
-const expectedBestPackagesOrder = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
+const expectedBestPackagesOrder = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "faq_1"];
 const expectedImageShowcasePriorityCount = 8;
 const expectedImageShowcaseCardCount = 28;
+const expectedHomepageImageGridCardCount = 16;
 const expectedTrustedLogoCount = 29;
 const dreamshootHomepageSafeShowcaseImagePathBySlug = {
   "ai-video-add-ons": "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-06.webp",
@@ -231,7 +231,9 @@ function assertOrder(order, label, storeKey) {
 
 function assertPage(pageJson, label, storeKey) {
   assert(pageJson?.sections?.generation_showcase_1?.type === "dreamshoot_generation_showcase", `${label}: wrong showcase section type`);
-  assert(pageJson?.sections?.featured_thanksgiving_1?.type === "dreamshoot_featured_pack", `${label}: missing Thanksgiving featured pack on homepage`);
+  if (storeKey === "aidreamcapes") {
+    assert(pageJson?.sections?.featured_thanksgiving_1?.type === "dreamshoot_featured_pack", `${label}: missing Thanksgiving featured pack on homepage`);
+  }
   assert(pageJson?.sections?.package_catalog_1?.type === "dreamshoot_package_catalog", `${label}: wrong package catalog section type`);
   assert(pageJson?.sections?.proof_1?.type === "testimonial_wall", `${label}: wrong review section type`);
   assert(pageJson?.sections?.conversion_1?.type === "conversion_panel", `${label}: missing conversion CTA before customer types`);
@@ -315,18 +317,20 @@ function assertBestPackagesPage(pageJson, label) {
   if (pageJson && "pageType" in pageJson) assert(pageJson.pageType === "content", `${label}: Best Packages should be a content page`);
   const order = pageJson?.sectionsOrder ?? pageJson?.content_for_page ?? [];
   assert(order.join("|") === expectedBestPackagesOrder.join("|"), `${label}: unexpected Best Packages order ${order.join("|")}`);
-  for (const sectionId of expectedBestPackagesOrder) {
+  for (const sectionId of expectedBestPackagesOrder.filter((id) => id !== "faq_1")) {
     assert(pageJson?.sections?.[sectionId]?.type === "dreamshoot_featured_pack", `${label}: missing Best Packages section ${sectionId}`);
   }
+  assert(pageJson?.sections?.faq_1?.type === "faq", `${label}: missing Best Packages FAQ section`);
 }
 
 function assertBestMediaPage(pageJson, kind, label) {
   const sectionId = kind === "image" ? "best_ai_image_1" : "best_ai_video_1";
   if (pageJson && "pageType" in pageJson) assert(pageJson.pageType === "content", `${label}: Best AI ${kind} should be a content page`);
   const order = pageJson?.sectionsOrder ?? pageJson?.content_for_page ?? [];
-  assert(order.join("|") === sectionId, `${label}: unexpected Best AI ${kind} order ${order.join("|")}`);
+  assert(order.join("|") === `${sectionId}|faq_1`, `${label}: unexpected Best AI ${kind} order ${order.join("|")}`);
   const section = pageJson?.sections?.[sectionId];
   assert(section?.type === "dreamshoot_media_gallery", `${label}: missing Best AI ${kind} media gallery`);
+  assert(pageJson?.sections?.faq_1?.type === "faq", `${label}: missing Best AI ${kind} FAQ section`);
   assert(section?.settings?.kind === kind, `${label}: Best AI ${kind} gallery kind drifted`);
   assert(section?.settings?.fullGallery === true, `${label}: Best AI ${kind} gallery should use full active data`);
   assert(!String(section?.settings?.imageSlugs ?? "").trim(), `${label}: Best AI ${kind} gallery should not limit image slugs`);
@@ -566,6 +570,7 @@ const imageShowcaseRenderer = showcaseRenderer.match(/<div className="mt-5 space
 const videoShowcaseRenderer = showcaseRenderer.match(/<div className="mt-12">[\s\S]*?<\/DreamshootShowcasePreview>/)?.[0] ?? "";
 const videoFeatureRenderer = themeRenderer.match(/if \(section\.type === "video_feature"\)[\s\S]*?if \(section\.type === "luxury_highlight"\)/)?.[0] ?? "";
 const testimonialRenderer = themeRenderer.match(/if \(section\.type === "testimonial_wall"\)[\s\S]*?if \(section\.type === "faq"\)/)?.[0] ?? "";
+const pricingBillingTable = fs.readFileSync(path.join(repoRoot, "src/components/storefront/pricing-billing-table.tsx"), "utf8");
 assert(videoFeatureRenderer.includes('setting(section, "videoUrl", "")') && videoFeatureRenderer.includes("<video"), "tutorial video feature should render a real videoUrl when configured");
 assert(videoFeatureRenderer.includes("poster={image || undefined}") && videoFeatureRenderer.includes("preload=\"metadata\""), "tutorial video feature should keep poster fallback and metadata loading");
 assert(showcaseRenderer.includes("dreamshoot-showcase-track"), "showcase should render horizontal showcase rails");
@@ -600,21 +605,26 @@ assert(showcaseRenderer.includes("generationShowcaseImageCardsForSite(site, crea
 assert(featuredPackRenderer.includes("featuredPackTileHref"), "featured pack tiles should resolve links through the runtime taxonomy resolver");
 assert(themeRenderer.includes('blockValue(block, "collectionSlug", "")'), "featured pack tile links should accept stable collection slug metadata");
 assert(featuredPackRenderer.includes('data-featured-pack-tile-link="true"'), "featured pack tiles should render as tracked links");
-assert(showcaseRenderer.includes("imageProductRows"), "showcase images should be split into product wall rows");
-assert(imageShowcaseRenderer.includes("imageProductRows.map"), "showcase image cards should render in dynamically balanced wall rows");
+assert(showcaseRenderer.includes("useMydreamShowcaseGrid"), "showcase should gate the new homepage grid to MyDreamShoots");
+assert(showcaseRenderer.includes('data-dreamshoot-homepage-gallery-grid="photo"'), "MyDreamShoots homepage photo showcase should render the gallery-style grid");
+assert(showcaseRenderer.includes('data-dreamshoot-homepage-gallery-grid="video"'), "MyDreamShoots homepage video showcase should render the gallery-style grid");
+assert(showcaseRenderer.includes("grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"), "MyDreamShoots homepage showcase grid should use one, two, then four columns");
+assert(showcaseRenderer.includes(`const homepageImageProductCards = imageProductCards.slice(0, ${expectedHomepageImageGridCardCount})`), `MyDreamShoots homepage photo grid should show ${expectedHomepageImageGridCardCount} cards before sending customers to the full gallery`);
+assert(showcaseRenderer.includes("const homepageVideoCards = videoCards.slice(0, 8)"), "MyDreamShoots homepage video grid should render the configured two-row eight-card set");
+assert(showcaseRenderer.includes("imageProductRows"), "showcase images should keep the scrolling row fallback for paired storefronts");
+assert(imageShowcaseRenderer.includes("imageProductRows.map"), "showcase image cards should keep dynamically balanced wall rows for paired storefronts");
 assert(showcaseRenderer.includes("Math.ceil(imageProductCards.length / 7)"), "showcase image wall should target seven products per row");
 assert(!imageShowcaseRenderer.includes("row.concat(row)"), "showcase image wall must not duplicate homepage theme cards in the render tree");
 assert(!imageShowcaseRenderer.includes("data-dreamshoot-image-product-clone"), "showcase image wall should not emit cloned product cards");
 assert(!imageShowcaseRenderer.includes("xl:grid-cols-7"), "showcase image wall should not regress to the static seven-column grid");
-assert(imageShowcaseRenderer.includes("aspect-square") && imageShowcaseRenderer.includes("lg:w-[calc((100vw-5.5rem)/4)]"), "showcase image cards should use equal four-column square tiles on desktop");
+assert(showcaseRenderer.includes("aspect-square") && (showcaseRenderer.includes("xl:grid-cols-4") || showcaseRenderer.includes("lg:w-[calc((100vw-5.5rem)/4)]")), "showcase image cards should use equal four-column square tiles on desktop");
 assert(imageShowcaseRenderer.includes("StorefrontImage"), "showcase image cards should render fixed-ratio large images");
 assert(imageShowcaseRenderer.includes("object-contain object-center"), "showcase image cards should show the complete source image without cover cropping");
 assert(!imageShowcaseRenderer.includes('className="h-full w-full object-cover transition duration-700'), "showcase image cards must not crop source images with object-cover");
 assert(!imageShowcaseRenderer.includes("group-hover:scale-[1.018]"), "showcase image cards must not crop source images on hover");
 assert(imageShowcaseRenderer.includes("preview={false}"), "showcase image img tags should not duplicate the outer lightbox trigger");
 assert(showcaseRenderer.includes("cardImageAltForSite(site") && showcaseRenderer.includes('role: "gallery"'), "showcase images should use rich gallery alt text");
-assert(!imageShowcaseRenderer.includes("{card.title}</p>"), "showcase image cards should not show visible titles");
-assert(!imageShowcaseRenderer.includes("{card.meta}</p>"), "showcase image cards should not show visible meta labels");
+assert(showcaseRenderer.includes("{card.title}</span>") && showcaseRenderer.includes("{card.meta}"), "MyDreamShoots homepage grid cards should show visible title and category copy");
 assert(!imageShowcaseRenderer.includes("bg-gradient-to-t from-black/78"), "showcase image cards should not add a text overlay gradient");
 assert(showcaseRenderer.includes("const imageProductCards = imageCards.map"), "homepage showcase should include every dynamic image product card in the wall");
 assert(!showcaseRenderer.includes("imageCards.slice(0, 8)"), "homepage showcase image wall should not truncate themes to 8 priority cards");
@@ -627,11 +637,11 @@ assert(showcaseRenderer.includes('loading={card.productIndex < 4 ? "eager" : "la
 assert(!imageShowcaseRenderer.includes("{String(card.index + 1).padStart"), "showcase image cards should not show visible numbers");
 assert(showcaseRenderer.includes("DreamshootShowcaseVideo"), "showcase videos should render through the autoplay client component");
 assert(showcaseRenderer.includes("priority={card.index < 4}"), "showcase should eagerly prepare initially visible motion cards");
-assert(videoShowcaseRenderer.includes("aspect-[3/4]") && videoShowcaseRenderer.includes("md:w-[clamp(24rem,25vw,34rem)]"), "showcase video cards should match the large portrait image tile size");
-assert(videoShowcaseRenderer.includes('className="h-full w-full object-cover"'), "showcase video cards should preserve media ratio without stretching");
+assert(videoShowcaseRenderer.includes("aspect-square"), "MyDreamShoots homepage video grid should use square media framing to match square showcase video assets");
+assert(mediaGalleryRenderer.includes("aspect-square") && mediaGalleryRenderer.includes('data-dreamshoot-media-gallery-grid="video"'), "Best AI video gallery should use square media framing for MyDreamShoots video assets");
+assert(videoShowcaseRenderer.includes("h-full w-full") && videoShowcaseRenderer.includes("object-cover"), "showcase video cards should preserve media ratio without stretching");
 assert(!videoShowcaseRenderer.includes("{String(card.index + 1).padStart"), "showcase video cards should not show visible numbers");
-assert(!videoShowcaseRenderer.includes("{card.title}</p>"), "showcase video cards should not show visible titles");
-assert(!videoShowcaseRenderer.includes("{card.meta}</div>") && !videoShowcaseRenderer.includes("{card.meta}</span>"), "showcase video cards should not show visible meta pills");
+assert(videoShowcaseRenderer.includes("<figcaption") && videoShowcaseRenderer.includes("{card.title}</span>") && videoShowcaseRenderer.includes("{card.meta}"), "MyDreamShoots homepage video grid cards should show visible title and category copy");
 assert(!videoShowcaseRenderer.includes("Motion clip"), "showcase video cards should not show visible motion labels");
 assert(!showcaseRenderer.includes("autoLoad={railIndex"), "showcase videos must not leave most rail cards poster-only behind an index gate");
 assert(showcaseRenderer.includes("gallery video example"), "showcase videos should have accessible labels");
@@ -645,6 +655,10 @@ assert(!showcaseRenderer.includes("Make a clip"), "showcase material cards shoul
 assert(testimonialRenderer.includes('setting(section, "mode", "use_cases") === "reviews"'), "testimonial wall should support explicit customer review mode");
 assert(testimonialRenderer.includes("slice(0, reviewMode ? 8 : 4)"), "review mode should render eight cards for a richer desktop wall");
 assert(testimonialRenderer.includes('data-dreamshoot-review-preview="true"'), "review results should expose clickable preview markers");
+assert(themeRenderer.includes("function DreamshootUnderlinedTitle"), "homepage section headings should share the gradient underline helper");
+assert(!themeRenderer.includes("h-0.5 w-24 rounded-full bg-white/70"), "MyDreamShoots homepage headings should not regress to fixed short white underlines");
+assert(pricingBillingTable.includes("mydreamshootsGradientUnderline") && pricingBillingTable.includes("sm:w-[25.25rem]"), "pricing billing switch underline should use the wider MyDreamShoots gradient treatment");
+assert(!pricingBillingTable.includes("h-0.5 w-24 rounded-full bg-white/70"), "pricing billing switch should not regress to the fixed short white underline");
 
 const showcasePreviewComponent = fs.readFileSync(path.join(repoRoot, "src/components/storefront/dreamshoot-showcase-preview.tsx"), "utf8");
 assert(showcasePreviewComponent.includes('role="dialog"') && showcasePreviewComponent.includes('aria-modal="true"'), "showcase preview should render an accessible modal dialog");

@@ -6,6 +6,7 @@ import { StorefrontInstantLink } from "@/components/storefront/storefront-instan
 
 type BillingCycle = "month" | "quarter" | "half_year";
 const billingCycles = ["month", "quarter", "half_year"] as const;
+const mydreamshootsGradientUnderline = "linear-gradient(90deg, #FFA644 0%, #EC4BDD 38%, #7A4CFF 68%, #16DCF0 100%)";
 
 type PricingPlanPrice = {
   id: string;
@@ -83,7 +84,9 @@ export function PricingBillingTable({
             ))}
           </div>
         ) : null}
-        {canShowBillingSwitch && emphasizeBillingSwitch ? <div className="h-0.5 w-24 rounded-full bg-white/70" /> : null}
+        {canShowBillingSwitch && emphasizeBillingSwitch ? (
+          <div className="h-[3px] w-full max-w-[calc(100vw-2.5rem)] rounded-full sm:w-[25.25rem]" style={{ background: mydreamshootsGradientUnderline }} />
+        ) : null}
       </div>
       <div className="mt-8 grid gap-5 2xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="grid gap-4 lg:grid-cols-3">

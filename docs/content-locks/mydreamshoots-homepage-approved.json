@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "lockedAt": "2026-08-11T20:39:18.576+08:00",
+  "lockedAt": "2026-08-12T00:16:28.628+08:00",
   "policy": {
     "owner": "myDreamshoots site owner",
     "rule": "This homepage copy baseline is locked. Do not modify, switch versions, import old JSON, or roll back production copy unless the site owner explicitly requests a homepage copy change.",
@@ -52,7 +52,6 @@
   "sectionsOrder": [
     "hero_1",
     "generation_showcase_1",
-    "featured_thanksgiving_1",
     "tutorial_video_1",
     "tutorial_video_2",
     "mobile_video_1",
@@ -63,9 +62,9 @@
     "brand_strip_1"
   ],
   "fingerprints": {
-    "publishedJsonSha256": "62334b82dcd297cd7d1cc03ea1d64071431e61adb2f80211873ddd960cf5f036",
-    "visibleTextSha256": "9ce6882b2b582d0c0c882b91f0aa9777918da561c3ea4cc89bfd5656753cd216",
-    "visibleRecordCount": 227
+    "publishedJsonSha256": "bd1ae831410f1cfd0de06f3b6dc72c49f9dd406487ee393e0a18f01d305cb1ab",
+    "visibleTextSha256": "bdfcbe2ce45e2d901d438e0e12ecc16fb126660351adf1559d547df763301f9d",
+    "visibleRecordCount": 192
   },
   "visibleRecords": [
     {
@@ -237,13 +236,6 @@
       "priority": 0
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "title",
-      "text": "Thanksgiving group photos for warm private albums.",
-      "normalized": "thanksgiving group photos for warm private albums",
-      "priority": 0
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.hero_1",
       "key": "headline",
       "text": "Upload selfies and create your own AI model - Professional headshots without a studio.",
@@ -367,13 +359,6 @@
       "key": "description",
       "text": "Create cozy Christmas couple portraits, friend-card moments, and giftable holiday keepsakes.",
       "normalized": "create cozy christmas couple portraits friend card moments and giftable holiday keepsakes",
-      "priority": 1
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "subtitle",
-      "text": "Create dinner-table portraits, Friendsgiving scenes, gratitude cards, and keepsake crops from photos you own or can use.",
-      "normalized": "create dinner table portraits friendsgiving scenes gratitude cards and keepsake crops from photos you own or can use",
       "priority": 1
     },
     {
@@ -727,13 +712,6 @@
       "priority": 2
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "primaryCta",
-      "text": "Create Thanksgiving Photos",
-      "normalized": "create thanksgiving photos",
-      "priority": 2
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.pricing_1",
       "key": "sidePanelBody",
       "text": "Credits stay predictable while packs stay flexible. You can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.",
@@ -836,13 +814,6 @@
       "key": "directorySubtitle",
       "text": "Use your own creativity surprise your partner with a romantic video or photo.",
       "normalized": "use your own creativity surprise your partner with a romantic video or photo",
-      "priority": 2
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "secondaryCta",
-      "text": "View Thanksgiving Photos",
-      "normalized": "view thanksgiving photos",
       "priority": 2
     },
     {
@@ -1014,41 +985,6 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "campaignLabel",
-      "text": "Current campaign: Thanksgiving Group Photos",
-      "normalized": "current campaign thanksgiving group photos",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[0]",
-      "key": "label",
-      "text": "Dinner Portraits",
-      "normalized": "dinner portraits",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "includedOutputs",
-      "text": "Dinner-table portraits",
-      "normalized": "dinner table portraits",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[5]",
-      "key": "meta",
-      "text": "Download-ready image",
-      "normalized": "download ready image",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "includedOutputs",
-      "text": "Download-ready images",
-      "normalized": "download ready images",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[5]",
       "key": "name",
       "text": "Eli T.",
@@ -1077,13 +1013,6 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[4]",
-      "key": "label",
-      "text": "Family-style Album",
-      "normalized": "family style album",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[0]",
       "key": "meta",
       "text": "Fan meetups",
@@ -1105,13 +1034,6 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "label",
-      "text": "Featured seasonal pack",
-      "normalized": "featured seasonal pack",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[25]",
       "key": "name",
       "text": "Folvian",
@@ -1119,59 +1041,10 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "overlayChips",
-      "text": "Friendsgiving",
-      "normalized": "friendsgiving",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "includedOutputs",
-      "text": "Friendsgiving memories",
-      "normalized": "friendsgiving memories",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[1]",
-      "key": "label",
-      "text": "Friendsgiving Set",
-      "normalized": "friendsgiving set",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[26]",
       "key": "name",
       "text": "Gmarto",
       "normalized": "gmarto",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[2]",
-      "key": "label",
-      "text": "Gratitude Card",
-      "normalized": "gratitude card",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "includedOutputs",
-      "text": "Gratitude cards",
-      "normalized": "gratitude cards",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[1]",
-      "key": "meta",
-      "text": "Group-friendly crop",
-      "normalized": "group friendly crop",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "includedOutputs",
-      "text": "Group-friendly crops",
-      "normalized": "group friendly crops",
       "priority": 3
     },
     {
@@ -1193,13 +1066,6 @@
       "key": "name",
       "text": "Harlivo",
       "normalized": "harlivo",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[4]",
-      "key": "meta",
-      "text": "Harvest warmth",
-      "normalized": "harvest warmth",
       "priority": 3
     },
     {
@@ -1238,20 +1104,6 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[5]",
-      "key": "label",
-      "text": "Host Story",
-      "normalized": "host story",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "includedTitle",
-      "text": "Included outputs",
-      "normalized": "included outputs",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[2]",
       "key": "name",
       "text": "Invorae",
@@ -1263,13 +1115,6 @@
       "key": "name",
       "text": "Jurvina",
       "normalized": "jurvina",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[3]",
-      "key": "label",
-      "text": "Keepsake Cover",
-      "normalized": "keepsake cover",
       "priority": 3
     },
     {
@@ -1322,13 +1167,6 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "nextCampaignLabel",
-      "text": "Next: Christmas / Halloween / Seasonal",
-      "normalized": "next christmas halloween seasonal",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[3]",
       "key": "name",
       "text": "Noah P.",
@@ -1361,34 +1199,6 @@
       "key": "name",
       "text": "Photo studios",
       "normalized": "photo studios",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "overlayChips",
-      "text": "private",
-      "normalized": "private",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[3]",
-      "key": "meta",
-      "text": "Private album art",
-      "normalized": "private album art",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "includedOutputs",
-      "text": "Private album covers",
-      "normalized": "private album covers",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "privacy",
-      "text": "Private gallery",
-      "normalized": "private gallery",
       "priority": 3
     },
     {
@@ -1455,20 +1265,6 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[2]",
-      "key": "meta",
-      "text": "Seasonal note",
-      "normalized": "seasonal note",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "includedOutputs",
-      "text": "Seasonal notes",
-      "normalized": "seasonal notes",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.hero_1.blocks[2]",
       "key": "label",
       "text": "shown before generation",
@@ -1525,20 +1321,6 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "badge",
-      "text": "Thanksgiving pack",
-      "normalized": "thanksgiving pack",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "overlayTitle",
-      "text": "Thanksgiving Photos",
-      "normalized": "thanksgiving photos",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[10]",
       "key": "name",
       "text": "Trovic",
@@ -1574,13 +1356,6 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "safetyCopy",
-      "text": "Use clear photos you own or have permission to use. myDreamshoots keeps Thanksgiving sets private and avoids protected people, marks, or brand assets without permission.",
-      "normalized": "use clear photos you own or have permission to use mydreamshoots keeps thanksgiving sets private and avoids protected people marks or brand assets without permission",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[1]",
       "key": "location",
       "text": "VIP-style set",
@@ -1592,27 +1367,6 @@
       "key": "name",
       "text": "Vkovel",
       "normalized": "vkovel",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "includedOutputs",
-      "text": "Warm gathering scenes",
-      "normalized": "warm gathering scenes",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1",
-      "key": "overlaySubtitle",
-      "text": "Warm gratitude scenes from approved photos.",
-      "normalized": "warm gratitude scenes from approved photos",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.featured_thanksgiving_1.blocks[0]",
-      "key": "meta",
-      "text": "Warm table scene",
-      "normalized": "warm table scene",
       "priority": 3
     },
     {

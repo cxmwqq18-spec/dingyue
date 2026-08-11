@@ -11,6 +11,8 @@ dist
 .DS_Store
 *.log
 coverage
+artifacts/
+backups/
 tsconfig.tsbuildinfo
 .codex-artifacts/
 .codex/
