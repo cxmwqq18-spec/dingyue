@@ -11996,7 +11996,7 @@ function SectionView({
 	                return (
 	                  <div
 	                    aria-label={logoAlt}
-	                    className="flex aspect-square w-[min(27vw,6.2rem)] shrink-0 items-center justify-center overflow-hidden rounded-[8px] border border-white/55 bg-[#08090d] px-3 py-2.5 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.85)] sm:w-[5.7rem] md:w-[6.25rem]"
+	                    className="flex aspect-square w-[min(27vw,6.2rem)] shrink-0 items-center justify-center overflow-hidden rounded-[8px] border border-white/70 bg-white px-3 py-2.5 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.85)] ring-1 ring-black/10 sm:w-[5.7rem] md:w-[6.25rem]"
 	                    key={instanceKey(logo, index, "trusted_logo")}
 	                    title={logoAlt}
 	                    {...xfcartBlockAttrs(logo, index, "trusted_logo")}
@@ -12009,7 +12009,7 @@ function SectionView({
 	                        src={logoSrc}
                       />
                     ) : (
-                      <span className="text-center text-sm font-semibold leading-tight text-white/82">{logoName}</span>
+                      <span className="text-center text-sm font-semibold leading-tight text-[#14161a]">{logoName}</span>
                     )}
                   </div>
                 );
