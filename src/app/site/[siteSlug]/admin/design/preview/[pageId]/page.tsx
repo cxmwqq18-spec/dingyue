@@ -16,10 +16,11 @@ export default async function ThemePreviewPage({
   searchParams
 }: {
   params: Promise<{ siteSlug: string; pageId: string }>;
-  searchParams?: Promise<{ previewToken?: string }>;
+  searchParams?: Promise<{ previewToken?: string; previewMode?: string }>;
 }) {
   const { siteSlug, pageId } = await params;
   const query = searchParams ? await searchParams : {};
+  const interactivePreview = query.previewMode === "interactive";
   const routeTokenPayload = verifyDesignerPreviewToken(query.previewToken);
   const tokenSiteId = routeTokenPayload?.siteSlug === siteSlug ? routeTokenPayload.siteId : undefined;
   const shellSite = tokenSiteId ? undefined : await getSiteShellBySlugForAdmin(siteSlug);
@@ -64,8 +65,8 @@ export default async function ThemePreviewPage({
     isPreview: true
   };
   return (
-    <div style={themeStyleVars(settings)}>
-      <IframePatchListener />
+    <div data-designer-preview-mode={interactivePreview ? "interactive" : "edit"} style={themeStyleVars(settings)}>
+      {interactivePreview ? null : <IframePatchListener />}
       <ThemeRenderer
         creativePacks={creativePacks}
         mode="preview"

@@ -114,11 +114,33 @@ export function IframePatchListener() {
       );
     }
 
+    function onPreviewSubmit(event: SubmitEvent) {
+      const target = event.target instanceof Element ? event.target : null;
+      const section = target?.closest<HTMLElement>(".xfcart-section[data-section-id]");
+      if (!section) return;
+      const id = section.dataset.sectionId;
+      if (!id) return;
+      event.preventDefault();
+      event.stopPropagation();
+      selectSection(id);
+      window.parent?.postMessage(
+        {
+          act: "previewSelect",
+          id,
+          blockId: "",
+          sectionType: section.dataset.sectionType ?? ""
+        },
+        "*"
+      );
+    }
+
     window.addEventListener("message", onMessage);
     document.addEventListener("click", onPreviewClick, true);
+    document.addEventListener("submit", onPreviewSubmit, true);
     return () => {
       window.removeEventListener("message", onMessage);
       document.removeEventListener("click", onPreviewClick, true);
+      document.removeEventListener("submit", onPreviewSubmit, true);
     };
   }, []);
 
@@ -142,7 +164,7 @@ export function IframePatchListener() {
             position: relative;
           }
           .xfcart-section[data-xfcart-selected="true"]::before {
-            content: "Selected in designer";
+            content: "编辑定位已选中";
             position: absolute;
             left: 14px;
             top: 14px;

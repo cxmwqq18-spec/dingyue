@@ -112,6 +112,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
       types: result.responseType,
       id: result.sectionId ?? "",
       html,
+      pageDraftVersions: Object.fromEntries(site.pages.flatMap((page) => (page.draftMeta ? [[page.id, page.draftMeta] as const] : []))),
+      settingsDraftVersion: site.themeSettings.draftMeta,
       theme_id: payload.theme_id ?? "",
       themeKey: payload.themeKey ?? payload.theme_key ?? "",
       page: payload.page ?? "index"

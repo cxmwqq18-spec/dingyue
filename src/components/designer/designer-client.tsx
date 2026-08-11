@@ -137,6 +137,35 @@ import type {
 import type { SaasThemeAction } from "@/lib/server-store";
 import type { DesignerWorkspaceTab } from "@/components/designer/designer-workspace-pane";
 
+type XfcartVersionResult = {
+  pageDraftVersions?: Record<string, ThemeDraftMeta>;
+  settingsDraftVersion?: ThemeDraftMeta;
+};
+
+type QueuedXfcartAction = {
+  action: SaasThemeAction;
+  fallbackMessage: string;
+  sequence: number;
+};
+
+type QueuedXfcartActionRecord = {
+  inflight: boolean;
+  pending?: QueuedXfcartAction;
+  promise?: Promise<XfcartVersionResult | undefined>;
+  timerId?: number;
+};
+
+type XfcartMutationContext = {
+  pages: ThemePage[];
+  drafts: Record<string, ThemePageJson>;
+  selectedPageId: string;
+  draft: ThemePageJson;
+  themeSettings: ThemeSettings;
+  themeId: string;
+  themeKey: string;
+  previewMode: PreviewMode;
+};
+
 function templatePackageKeyForPage(page: ThemePage, templateName: string): ThemePackageTemplateKey | undefined {
   const normalizedTemplate = templateName.replace(/\.liquid$/, "");
   const byPageType: Record<string, ThemePackageTemplateKey> = {
@@ -399,7 +428,7 @@ export function DesignerClient({
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop");
   const [previewViewportPreset, setPreviewViewportPreset] = useState<PreviewViewportPreset>("desktop-1440");
   const [activeTab, setActiveTab] = useState<DesignerWorkspaceTab>("templates");
-  const [previewMode, setPreviewMode] = useState<PreviewMode>("iframe");
+  const [previewMode, setPreviewMode] = useState<PreviewMode>("edit");
   const [iframeReloadKey, setIframeReloadKey] = useState(0);
   const [iframeStatus, setIframeStatus] = useState<"loading" | "ready" | "recovering" | "failed">("loading");
   const iframeRecoveryCount = useRef(0);
@@ -431,6 +460,9 @@ export function DesignerClient({
   const [lastAction, setLastAction] = useState("已载入当前页面草稿，可继续编辑并按需发布。");
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const mutationBusyRef = useRef(false);
+  const previewMutationQueuesRef = useRef(new Map<string, QueuedXfcartActionRecord>());
+  const previewMutationSequenceRef = useRef(0);
+  const xfcartContextRef = useRef<XfcartMutationContext | null>(null);
   const dirtyPageIdsRef = useRef<Set<string>>(new Set());
   const themeSettingsDirtyRef = useRef(false);
   const previewSelectionLockUntilRef = useRef(0);
@@ -486,7 +518,7 @@ export function DesignerClient({
   useEffect(() => {
     if (window.matchMedia("(max-width: 640px)").matches) {
       setDevice("mobile");
-      setPreviewMode("iframe");
+      setPreviewMode("edit");
     }
   }, []);
 
@@ -958,23 +990,26 @@ export function DesignerClient({
 
   function changePreviewDevice(nextDevice: "desktop" | "mobile") {
     setDevice(nextDevice);
-    if (nextDevice !== "mobile") return;
-    setPreviewMode("iframe");
-    setLastAction("手机预览已固定使用 iframe，按真实移动端宽度渲染，不使用桌面上下文兜底。");
+    setLastAction(nextDevice === "mobile" ? "手机预览使用真实移动端宽度渲染，默认仍是编辑定位模式。" : "已切换到桌面缩放预览，默认仍是编辑定位模式。");
     reloadIframePreview();
   }
 
   function togglePreviewMode() {
-    if (device === "mobile") {
-      setPreviewMode("iframe");
-      setLastAction("手机预览保持 iframe 模式，避免实时预览误用桌面宽度。");
-      reloadIframePreview();
-      return;
-    }
-    setPreviewMode((current) => (current === "iframe" ? "live" : "iframe"));
+    const nextMode: PreviewMode = previewMode === "edit" ? "interactive" : "edit";
+    setPreviewMode(nextMode);
+    setLastAction(
+      nextMode === "interactive"
+        ? "已切换到真实交互预览：点击会按正常网站行为跳转。"
+        : "已切换到编辑定位模式：点击只选中文案和模块，不执行业务跳转。"
+    );
+    reloadIframePreview();
   }
 
   function handleIframeLoad() {
+    if (previewMode === "interactive") {
+      setIframeStatus("ready");
+      return;
+    }
     window.setTimeout(checkIframePreviewHealth, 240);
   }
 
@@ -1009,7 +1044,7 @@ export function DesignerClient({
     }
     setLocatorBreadcrumb(undefined);
     setSelection(nextSelection);
-    if (options?.syncPreview !== false) {
+    if (options?.syncPreview !== false && previewMode === "edit") {
       syncSelectionToIframe(nextSelection, { scroll: options?.scrollPreview ?? true });
     }
   }
@@ -1075,6 +1110,7 @@ export function DesignerClient({
 
   useEffect(() => {
     function onPreviewMessage(event: MessageEvent<IframeDesignerMessage>) {
+      if (previewMode !== "edit") return;
       if (event.source !== iframeRef.current?.contentWindow) return;
       if (Date.now() < previewSelectionLockUntilRef.current) return;
       const nextState = selectionFromPreviewMessage({ message: event.data, draft, themeSettings });
@@ -1086,18 +1122,18 @@ export function DesignerClient({
 
     window.addEventListener("message", onPreviewMessage);
     return () => window.removeEventListener("message", onPreviewMessage);
-  }, [draft, themeSettings]);
+  }, [draft, previewMode, themeSettings]);
 
   const checkIframePreviewHealth = useCallback(() => {
     const iframe = iframeRef.current;
     const iframeDocument = iframe?.contentDocument;
     const iframeHref = iframeDocument?.location?.href ?? "";
-    const hasPreviewRoot = Boolean(iframeDocument?.querySelector("[data-theme-sections-root]"));
     const documentReady = iframeDocument?.readyState === "complete" || iframeDocument?.readyState === "interactive";
-    if (hasPreviewRoot && documentReady) {
+    const hasPreviewRoot = Boolean(iframeDocument?.querySelector("[data-theme-sections-root]"));
+    if (documentReady && (previewMode === "interactive" || hasPreviewRoot)) {
       iframeRecoveryCount.current = 0;
       setIframeStatus("ready");
-      syncSelectionToIframe();
+      if (previewMode === "edit") syncSelectionToIframe();
       return true;
     }
     const stillNavigating = !iframeDocument || iframeDocument.readyState === "loading" || iframeHref === "about:blank";
@@ -1113,16 +1149,12 @@ export function DesignerClient({
     }
     setIframeStatus("failed");
     return false;
-  }, [syncSelectionToIframe]);
+  }, [previewMode, syncSelectionToIframe]);
 
   useEffect(() => {
-    if (previewMode !== "iframe") return;
     setIframeStatus((current) => (current === "ready" ? "ready" : "loading"));
     const earlyCheck = window.setTimeout(() => {
-      const iframeDocument = iframeRef.current?.contentDocument;
-      if (iframeDocument?.querySelector("[data-theme-sections-root]")) {
-        checkIframePreviewHealth();
-      }
+      checkIframePreviewHealth();
     }, 900);
     const slowCheck = window.setTimeout(() => {
       checkIframePreviewHealth();
@@ -1137,24 +1169,138 @@ export function DesignerClient({
     };
   }, [previewMode, selectedPageId, iframeReloadKey, checkIframePreviewHealth]);
 
-  async function sendSaasAction(action: SaasThemeAction, fallbackMessage: string) {
-    await sendXfcartAction({
+  useEffect(() => {
+    xfcartContextRef.current = {
+      pages,
+      drafts,
+      selectedPageId,
+      draft,
+      themeSettings,
+      themeId: saasDraft.themeId,
+      themeKey: selectedSaasThemeKey,
+      previewMode
+    };
+  }, [draft, drafts, pages, previewMode, saasDraft.themeId, selectedPageId, selectedSaasThemeKey, themeSettings]);
+
+  function applyXfcartVersionResult(result?: XfcartVersionResult) {
+    if (!result) return;
+    if (result.pageDraftVersions && Object.keys(result.pageDraftVersions).length) {
+      setDraftVersions((current) => ({ ...current, ...result.pageDraftVersions }));
+    }
+    if (result.settingsDraftVersion) setThemeSettingsDraftVersion(result.settingsDraftVersion);
+  }
+
+  async function sendSaasAction(action: SaasThemeAction, fallbackMessage: string): Promise<XfcartVersionResult | undefined> {
+    const context = xfcartContextRef.current ?? {
+      pages,
+      drafts,
+      selectedPageId,
+      draft,
+      themeSettings,
+      themeId: saasDraft.themeId,
+      themeKey: selectedSaasThemeKey,
+      previewMode
+    };
+    const result = await sendXfcartAction({
       siteId: site.id,
       action,
       fallbackMessage,
       context: {
-        pages,
-        selectedPageId,
-        draft,
-        themeSettings,
-        themeId: saasDraft.themeId,
-        themeKey: selectedSaasThemeKey
+        pages: context.pages,
+        selectedPageId: context.selectedPageId,
+        draft: "pageId" in action ? context.drafts[action.pageId] ?? context.draft : context.draft,
+        themeSettings: context.themeSettings,
+        themeId: context.themeId,
+        themeKey: context.themeKey
       },
-      previewMode,
+      previewMode: context.previewMode,
       postPatch: postPatchToIframe,
       setLastAction
     });
+    applyXfcartVersionResult(result);
+    return result;
   }
+
+  function queuedActionKey(action: SaasThemeAction) {
+    const scope = "scope" in action ? action.scope : "page";
+    const pageId = "pageId" in action ? action.pageId : "";
+    const sectionId = "sectionId" in action ? action.sectionId ?? "" : "";
+    const blockId = "blockId" in action ? action.blockId : "";
+    const globalType = "globalType" in action ? action.globalType : "";
+    const name = "name" in action ? action.name : "";
+    return [action.type, scope, pageId, globalType, sectionId, blockId, name].join("|");
+  }
+
+  function mergeXfcartVersionResults(results: Array<XfcartVersionResult | undefined>): XfcartVersionResult | undefined {
+    const pageDraftVersions: Record<string, ThemeDraftMeta> = {};
+    let settingsDraftVersion: ThemeDraftMeta | undefined;
+    for (const result of results) {
+      if (result?.pageDraftVersions) Object.assign(pageDraftVersions, result.pageDraftVersions);
+      if (result?.settingsDraftVersion) settingsDraftVersion = result.settingsDraftVersion;
+    }
+    if (!Object.keys(pageDraftVersions).length && !settingsDraftVersion) return undefined;
+    return { pageDraftVersions, settingsDraftVersion };
+  }
+
+  async function drainPreviewMutationQueue(key: string): Promise<XfcartVersionResult | undefined> {
+    const record = previewMutationQueuesRef.current.get(key);
+    if (!record) return undefined;
+    if (record.timerId) {
+      window.clearTimeout(record.timerId);
+      record.timerId = undefined;
+    }
+    if (record.inflight && record.promise) return record.promise;
+    record.inflight = true;
+    record.promise = (async () => {
+      const results: Array<XfcartVersionResult | undefined> = [];
+      while (record.pending) {
+        const pending = record.pending;
+        record.pending = undefined;
+        results.push(await sendSaasAction(pending.action, pending.fallbackMessage));
+      }
+      return mergeXfcartVersionResults(results);
+    })();
+    try {
+      return await record.promise;
+    } finally {
+      record.inflight = false;
+      record.promise = undefined;
+      if (!record.pending) previewMutationQueuesRef.current.delete(key);
+      else void drainPreviewMutationQueue(key);
+    }
+  }
+
+  function queuePreviewMutation(action: SaasThemeAction, fallbackMessage: string, delayMs = 420) {
+    const key = queuedActionKey(action);
+    const record = previewMutationQueuesRef.current.get(key) ?? { inflight: false };
+    if (record.timerId) window.clearTimeout(record.timerId);
+    record.pending = {
+      action,
+      fallbackMessage,
+      sequence: previewMutationSequenceRef.current += 1
+    };
+    if (!record.inflight) {
+      record.timerId = window.setTimeout(() => {
+        void drainPreviewMutationQueue(key);
+      }, delayMs);
+    }
+    previewMutationQueuesRef.current.set(key, record);
+  }
+
+  async function flushPreviewMutationQueues(): Promise<XfcartVersionResult | undefined> {
+    const keys = Array.from(previewMutationQueuesRef.current.keys());
+    const results = await Promise.all(keys.map((key) => drainPreviewMutationQueue(key)));
+    return mergeXfcartVersionResults(results);
+  }
+
+  function cancelPreviewMutationQueues() {
+    previewMutationQueuesRef.current.forEach((record) => {
+      if (record.timerId) window.clearTimeout(record.timerId);
+    });
+    previewMutationQueuesRef.current.clear();
+  }
+
+  useEffect(() => cancelPreviewMutationQueues, []);
 
   function selectPage(pageId: string) {
     setSelectedPageId(pageId);
@@ -1313,7 +1459,7 @@ export function DesignerClient({
     const next = updatePageSectionSetting(draft, id, field.id, parsed);
     if (!next) return;
     updateDraft(next, `已更新模块字段「${field.label}」。`);
-    void sendSaasAction({ type: "change", pageId: selectedPageId, scope: "page_section", sectionId: id, name: field.id, value: parsed }, `已更新模块字段「${field.label}」。`);
+    queuePreviewMutation({ type: "change", pageId: selectedPageId, scope: "page_section", sectionId: id, name: field.id, value: parsed }, `已更新模块字段「${field.label}」。`);
   }
 
   function addBlock(sectionId: string, blockSchema: ThemeBlockSchema) {
@@ -1336,7 +1482,7 @@ export function DesignerClient({
     const next = updatePageBlockSetting(draft, sectionId, blockId, field.id, parsed);
     if (!next) return;
     updateDraft(next, `已更新子块字段「${field.label}」。`);
-    void sendSaasAction({ type: "change", pageId: selectedPageId, scope: "page_block", sectionId, blockId, name: field.id, value: parsed }, `已更新子块字段「${field.label}」。`);
+    queuePreviewMutation({ type: "change", pageId: selectedPageId, scope: "page_block", sectionId, blockId, name: field.id, value: parsed }, `已更新子块字段「${field.label}」。`);
   }
 
   function editGlobalSetting(globalType: "header" | "footer", field: ThemeFieldSchema, value: string) {
@@ -1344,7 +1490,7 @@ export function DesignerClient({
     markThemeSettingsDirty();
     setThemeSettings((current) => updateGlobalSectionSetting(current, globalType, field.id, parsed));
     setLastAction(`已更新${globalType === "header" ? "页眉" : "页脚"}字段「${field.label}」。`);
-    void sendSaasAction({ type: "change", scope: "global", globalType, name: field.id, value: parsed }, `已更新${globalType === "header" ? "页眉" : "页脚"}字段「${field.label}」。`);
+    queuePreviewMutation({ type: "change", scope: "global", globalType, name: field.id, value: parsed }, `已更新${globalType === "header" ? "页眉" : "页脚"}字段「${field.label}」。`);
   }
 
   function addGlobalBlock(globalType: "header" | "footer", blockSchema: ThemeBlockSchema) {
@@ -1361,7 +1507,7 @@ export function DesignerClient({
     markThemeSettingsDirty();
     setThemeSettings((current) => updateGlobalBlockSettingInSettings(current, globalType, blockId, field.id, parsed));
     setLastAction(`已更新${globalType === "header" ? "页眉" : "页脚"}子块字段「${field.label}」。`);
-    void sendSaasAction({ type: "change", scope: "global_block", globalType, blockId, name: field.id, value: parsed }, `已更新${globalType === "header" ? "页眉" : "页脚"}子块字段「${field.label}」。`);
+    queuePreviewMutation({ type: "change", scope: "global_block", globalType, blockId, name: field.id, value: parsed }, `已更新${globalType === "header" ? "页眉" : "页脚"}子块字段「${field.label}」。`);
   }
 
   function moveGlobalBlock(globalType: "header" | "footer", blockId: string, direction: -1 | 1) {
@@ -1515,21 +1661,11 @@ export function DesignerClient({
     markThemeSettingsDirty();
     setThemeSettings((current) => updateThemeSettingFromSaasField(current, field.id, parsed, selectedSaasThemeKey));
     setLastAction(`已更新全局字段「${field.label}」。`);
-    void sendSaasAction({ type: "change", scope: "global_setting", name: field.id, value: parsed }, `已更新全局字段「${field.label}」。`);
+    queuePreviewMutation({ type: "change", scope: "global_setting", name: field.id, value: parsed }, `已更新全局字段「${field.label}」。`);
   }
 
   function currentPageDraftVersions(): Record<string, ThemeDraftMeta | undefined> {
     return Object.fromEntries(pages.map((page) => [page.id, draftVersions[page.id] ?? page.draftMeta]));
-  }
-
-  async function saveThemeSettings() {
-    const result = await saveThemeSettingsDraft(site.id, themeSettings, themeSettingsDraftVersion);
-    if (!result.ok) {
-      setLastAction(result.status === 409 ? "全局设置保存被拦截：草稿版本已变化，请刷新后重新检查。" : "全局设置保存失败，请检查配置内容。");
-      return { ok: false, draftVersion: themeSettingsDraftVersion, status: result.status };
-    }
-    if (result.draftVersion) setThemeSettingsDraftVersion(result.draftVersion);
-    return { ok: true, draftVersion: result.draftVersion ?? themeSettingsDraftVersion, status: result.status };
   }
 
   async function saveDraft() {
@@ -1543,17 +1679,23 @@ export function DesignerClient({
       };
     }
     mutationBusyRef.current = true;
-    const pageVersionsBeforeSave = currentPageDraftVersions();
-    const dirtyPageIds = Array.from(dirtyPageIdsRef.current).filter((pageId) => pages.some((page) => page.id === pageId));
-    const shouldSaveThemeSettings = themeSettingsDirtyRef.current;
     try {
+      const flushedPreviewVersions = await flushPreviewMutationQueues();
+      const pageVersionsBeforeSave = {
+        ...currentPageDraftVersions(),
+        ...(flushedPreviewVersions?.pageDraftVersions ?? {})
+      };
+      const settingsVersionBeforeSave = flushedPreviewVersions?.settingsDraftVersion ?? themeSettingsDraftVersion;
+      const dirtyPageIds = Array.from(dirtyPageIdsRef.current).filter((pageId) => pages.some((page) => page.id === pageId));
+      const shouldSaveThemeSettings = themeSettingsDirtyRef.current;
       if (!dirtyPageIds.length && !shouldSaveThemeSettings) {
         setLastAction("没有需要保存的草稿改动：当前页面和全局设置已在后台草稿区。");
-        return { ok: true, pageVersions: pageVersionsBeforeSave, settingsVersion: themeSettingsDraftVersion };
+        return { ok: true, pageVersions: pageVersionsBeforeSave, settingsVersion: settingsVersionBeforeSave };
       }
       const settingsSaved = shouldSaveThemeSettings
-        ? await saveThemeSettings()
-        : { ok: true, draftVersion: themeSettingsDraftVersion, status: 200 };
+        ? await saveThemeSettingsDraft(site.id, themeSettings, settingsVersionBeforeSave)
+        : { ok: true, draftVersion: settingsVersionBeforeSave, status: 200 };
+      if (settingsSaved.draftVersion) setThemeSettingsDraftVersion(settingsSaved.draftVersion);
       const pagesSaved = dirtyPageIds.length
         ? await saveAllThemePageDrafts(
             site.id,
@@ -1647,6 +1789,7 @@ export function DesignerClient({
     }
     mutationBusyRef.current = true;
     try {
+      cancelPreviewMutationQueues();
       const result = await resetThemeDraftFromActive(site.id, "site_admin_demo");
       if (!result) {
         setLastAction("回滚失败，请稍后重试。");
@@ -1676,6 +1819,7 @@ export function DesignerClient({
   async function applyIndustryTemplate(optionKey: string) {
     const option = templateApplyOptions.find((item) => item.key === optionKey);
     if (!option) return;
+    await flushPreviewMutationQueues();
     const nextPage = themePackageTemplateToPageJson(option.packageKey, option.templateKey, activePage.pageType, draft.version);
     if (!nextPage) {
       setLastAction("行业模板套用失败，当前页面没有匹配模板。");
@@ -1705,6 +1849,7 @@ export function DesignerClient({
   async function applyIndustryPackageToAllPages(packageKey: string) {
     const themePackage = industryThemePackages.find((item) => item.key === packageKey);
     if (!themePackage) return;
+    await flushPreviewMutationQueues();
     const nextDraftEntries = pages
       .map((page) => {
         const templateName = page.templateKey ?? resolvePageTemplateName(page.id, pages);
@@ -1775,7 +1920,7 @@ export function DesignerClient({
     if (!nextState) return;
     setActiveTab(nextState.tab);
     chooseSelection(nextState.selection, { lockPreviewSelection: false });
-    setLastAction(nextState.actionLabel.replace("iframe preview", "live preview"));
+    setLastAction(nextState.actionLabel.replace("iframe preview", "编辑定位预览"));
   }
 
   const activePackageCard =

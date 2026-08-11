@@ -114,7 +114,7 @@ export function PreviewFrame({
 }) {
   const toolbarLeadingNodes = Children.toArray(toolbarLeading);
   const toolbarTrailingNodes = Children.toArray(toolbarTrailing);
-  const liveMode = previewMode === "live";
+  const interactiveMode = previewMode === "interactive";
   const syncStateClass = currentPageDirty
     ? "border-[#f2d3a4] bg-[#fff4e6] text-[#b06d2c]"
     : "border-[#cbe7d5] bg-[#edf7f0] text-[#18794e]";
@@ -132,7 +132,7 @@ export function PreviewFrame({
       : iframeStatus === "failed"
         ? "border-[#ffd0d0] bg-[#fff1f1] text-[#b42318]"
         : "border-[#f2d3a4] bg-[#fff4e6] text-[#b06d2c]";
-  const renderLivePreview = device === "desktop" && (previewMode === "live" || iframeStatus === "failed");
+  const renderFallbackPreview = device === "desktop" && iframeStatus === "failed";
   const previewViewport = previewViewportFor(device, previewViewportPreset);
   const previewStageRef = useRef<HTMLDivElement | null>(null);
   const [previewStageBounds, setPreviewStageBounds] = useState({ width: 0, height: 0 });
@@ -180,6 +180,7 @@ export function PreviewFrame({
       : previewScale >= 0.995
         ? `1:1 实际大小 · ${previewViewport.label}`
         : `桌面缩放预览 · ${previewViewport.label} · ${previewScaleLabel}`;
+  const previewInteractionLabel = interactiveMode ? "真实交互预览" : "编辑定位模式";
   const selectedBlockRule = selectedPreviewSectionId && selectedPreviewBlockId
     ? `
       .designer-live-preview .xfcart-section[data-section-id="${cssAttrValue(selectedPreviewSectionId)}"] [data-xfcart-block-id="${cssAttrValue(selectedPreviewBlockId)}"],
@@ -220,6 +221,20 @@ export function PreviewFrame({
     onLivePreviewSelect(sectionId, block?.getAttribute("data-xfcart-block-id") ?? block?.getAttribute("data-xfcart-block-legacy-id") ?? undefined);
   }
 
+  function onPreviewWheel(event: React.WheelEvent<HTMLDivElement>) {
+    if (renderFallbackPreview) return;
+    const frameWindow = iframeRef.current?.contentWindow;
+    if (!frameWindow) return;
+    const canScroll = Math.abs(event.deltaY) > 0 || Math.abs(event.deltaX) > 0;
+    if (!canScroll) return;
+    event.preventDefault();
+    frameWindow.scrollBy({
+      left: event.deltaX,
+      top: event.deltaY,
+      behavior: "auto"
+    });
+  }
+
   return (
     <section className="saas-designer-preview-frame flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-[#d7dce4]">
       <DesignerTopbarShell data-designer-toolbar="saas-top-editor-toolbar">
@@ -247,9 +262,9 @@ export function PreviewFrame({
                 <RefreshCw className="h-[15px] w-[15px]" strokeWidth={1.8} />
                 刷新
               </DesignerToolbarButton>
-              <DesignerToolbarButton className="min-w-[76px]" onClick={onPreviewModeToggle} title="切换 iframe 预览和实时编辑预览">
+              <DesignerToolbarButton className="min-w-[96px]" onClick={onPreviewModeToggle} title="切换编辑定位和真实交互预览">
                 <Eye className="h-[15px] w-[15px]" strokeWidth={1.8} />
-                {liveMode ? "编辑" : "预览"}
+                {interactiveMode ? "编辑定位" : "真实交互"}
               </DesignerToolbarButton>
             </ToolbarGroup>
             <ToolbarGroup label="编辑">
@@ -315,14 +330,14 @@ export function PreviewFrame({
             <span className="hidden h-[40px] items-center rounded-[10px] border border-[#d9dde4] bg-white px-3 text-[12px] text-[#667085] 2xl:inline-flex">
               当前主题 {activeThemeName}
             </span>
-            <span className={`inline-flex h-[40px] items-center rounded-[10px] border px-3 text-[12px] font-medium ${previewMode === "live" ? "border-[#d9dde4] bg-white text-[#667085]" : iframeStatusClass}`}>
-              {previewMode === "live" ? "实时预览" : iframeStatusLabel}
+            <span className={`inline-flex h-[40px] items-center rounded-[10px] border px-3 text-[12px] font-medium ${interactiveMode ? "border-[#d9dde4] bg-white text-[#667085]" : iframeStatusClass}`}>
+              {interactiveMode ? "真实交互预览" : iframeStatusLabel}
             </span>
             <span
               className="inline-flex h-[40px] items-center rounded-[10px] border border-[#c9d8f7] bg-[#f4f7ff] px-3 text-[12px] font-medium text-[#2457c5]"
               data-designer-preview-mode-label
             >
-              {previewModeLabel}
+              {previewInteractionLabel} · {previewModeLabel}
             </span>
           </div>
 
@@ -369,9 +384,10 @@ export function PreviewFrame({
 
       <div className="editor_wrapper_cont min-h-0 flex-1 overflow-hidden bg-[#d7dce4] p-4">
         <div
-          className="relative flex h-full min-h-0 min-w-0 items-center justify-center overflow-hidden"
+          className="relative flex h-full min-h-0 min-w-0 items-start justify-center overflow-hidden"
           data-designer-preview-stage
           ref={previewStageRef}
+          onWheelCapture={onPreviewWheel}
         >
           <div
             className="relative shrink-0"
@@ -392,7 +408,7 @@ export function PreviewFrame({
                 transformOrigin: "top left"
               }}
             >
-              {!renderLivePreview ? (
+              {!renderFallbackPreview ? (
                 <>
                   {iframeStatus === "loading" || iframeStatus === "recovering" ? (
                     <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex justify-center p-3">
@@ -415,16 +431,16 @@ export function PreviewFrame({
                   ) : null}
                   <iframe
                     className="h-full w-full bg-white"
-                    key={`${selectedPageId}_${iframeReloadKey}`}
+                    key={`${selectedPageId}_${previewMode}_${iframeReloadKey}`}
                     onLoad={onIframeLoad}
                     ref={iframeRef}
-                    src={`/site/${site.slug}/admin/design/preview/${selectedPageId}?previewToken=${encodeURIComponent(previewToken)}&reload=${iframeReloadKey}`}
+                    src={`/site/${site.slug}/admin/design/preview/${selectedPageId}?previewToken=${encodeURIComponent(previewToken)}&previewMode=${previewMode}&reload=${iframeReloadKey}`}
                     title={`${activePage.title} preview`}
                   />
                 </>
               ) : (
-                <div className="designer-live-preview h-full overflow-y-auto bg-white" onClickCapture={onLivePreviewClick}>
-                  {previewMode === "iframe" && iframeStatus === "failed" ? (
+                <div className="designer-live-preview h-full overflow-y-auto bg-white" onClickCapture={interactiveMode ? undefined : onLivePreviewClick}>
+                  {previewMode === "edit" && iframeStatus === "failed" ? (
                     <div className="sticky top-0 z-50 flex items-center gap-2 border-b border-[#f2d3a4] bg-[#fff7ed] px-4 py-2 text-[12px] text-[#9a5a1f]">
                       <span className="h-2 w-2 rounded-full bg-current opacity-70" />
                       <span>iframe 预览未完成载入，已临时切换为实时预览。</span>

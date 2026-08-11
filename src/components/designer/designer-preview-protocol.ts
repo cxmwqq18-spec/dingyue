@@ -3,7 +3,7 @@ import { globalTypeFromPreviewId, safeBlocks } from "@/components/designer/desig
 import type { GlobalSettingsNode, Selection } from "@/components/designer/designer-types";
 import type { DesignerWorkspaceTab } from "@/components/designer/designer-workspace-pane";
 
-export type PreviewMode = "iframe" | "live";
+export type PreviewMode = "edit" | "interactive";
 export type PreviewViewportPreset = "desktop-1440" | "desktop-1536" | "desktop-1920";
 
 export type PreviewViewportSpec = {
@@ -76,7 +76,7 @@ export function syncSelectionToPreview({
   postPatch: (payload: IframePatchPayload) => void;
   scroll?: boolean;
 }) {
-  if (previewMode !== "iframe") return;
+  if (previewMode !== "edit") return;
   const previewId = previewSectionIdForSelection(selection);
   if (!previewId) {
     postPatch({ act: "clearSelection" });
@@ -136,7 +136,7 @@ export function selectionFromPreviewMessage({
     return {
       tab: "global",
       selection,
-      actionLabel: `Selected ${sectionId}${blockId ? ` block ${blockId}` : ""} from iframe preview.`
+      actionLabel: `已从编辑定位预览选中 ${sectionId}${blockId ? ` / ${blockId}` : ""}。`
     };
   }
 
@@ -149,6 +149,6 @@ export function selectionFromPreviewMessage({
   return {
     tab: "templates",
     selection,
-    actionLabel: `Selected ${sectionId}${blockId ? ` block ${blockId}` : ""} from iframe preview.`
+    actionLabel: `已从编辑定位预览选中 ${sectionId}${blockId ? ` / ${blockId}` : ""}。`
   };
 }
