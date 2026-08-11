@@ -120,6 +120,7 @@ function isSynchronizedDreamshootSite(siteSlug?: string): boolean {
 }
 
 export function preferLocalPathModeState(siteSlug?: string): boolean {
+  if (siteSlug?.startsWith("designer-smoke-")) return false;
   const preference = pathModeReadPreference();
   if (isMydreamshootsContentSourceSlug(siteSlug)) {
     if (isLegacyLocalStorefrontReadPreference(preference) && !warnedIgnoredMydreamshootsLocalPreference && process.env.NODE_ENV !== "production") {

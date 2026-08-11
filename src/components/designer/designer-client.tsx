@@ -1110,8 +1110,25 @@ export function DesignerClient({
 
   useEffect(() => {
     function onPreviewMessage(event: MessageEvent<IframeDesignerMessage>) {
-      if (previewMode !== "edit") return;
       if (event.source !== iframeRef.current?.contentWindow) return;
+      if (previewMode === "interactive" && event.data?.act === "previewNavigate" && typeof event.data.href === "string") {
+        try {
+          const targetUrl = new URL(event.data.href, window.location.origin);
+          const sameOrigin = targetUrl.origin === window.location.origin;
+          const sameSitePublicRoute =
+            (targetUrl.pathname === `/site/${site.slug}` || targetUrl.pathname.startsWith(`/site/${site.slug}/`)) &&
+            !targetUrl.pathname.startsWith(`/site/${site.slug}/admin`);
+          if (!sameOrigin || !sameSitePublicRoute) return;
+          iframeRecoveryCount.current = 0;
+          setIframeStatus("loading");
+          if (iframeRef.current) iframeRef.current.src = targetUrl.href;
+          setLastAction(`真实交互预览已打开 ${targetUrl.pathname}。切回编辑定位后可继续修改文案。`);
+        } catch {
+          return;
+        }
+        return;
+      }
+      if (previewMode !== "edit") return;
       if (Date.now() < previewSelectionLockUntilRef.current) return;
       const nextState = selectionFromPreviewMessage({ message: event.data, draft, themeSettings });
       if (!nextState) return;
@@ -1122,21 +1139,39 @@ export function DesignerClient({
 
     window.addEventListener("message", onPreviewMessage);
     return () => window.removeEventListener("message", onPreviewMessage);
-  }, [draft, previewMode, themeSettings]);
+  }, [draft, previewMode, site.slug, themeSettings]);
 
   const checkIframePreviewHealth = useCallback(() => {
     const iframe = iframeRef.current;
     const iframeDocument = iframe?.contentDocument;
+    const iframeSrc = iframe?.src ?? iframe?.getAttribute("src") ?? "";
     const iframeHref = iframeDocument?.location?.href ?? "";
+    const normalizePreviewUrl = (value: string) => {
+      try {
+        const url = new URL(value);
+        url.hash = "";
+        url.searchParams.delete("reload");
+        return url.href;
+      } catch {
+        return value.split("#", 1)[0];
+      }
+    };
+    const iframeDocumentMatchesSrc = Boolean(iframeSrc) && Boolean(iframeHref) && normalizePreviewUrl(iframeSrc) === normalizePreviewUrl(iframeHref);
     const documentReady = iframeDocument?.readyState === "complete" || iframeDocument?.readyState === "interactive";
     const hasPreviewRoot = Boolean(iframeDocument?.querySelector("[data-theme-sections-root]"));
-    if (documentReady && (previewMode === "interactive" || hasPreviewRoot)) {
+    const editListenerReady = previewMode !== "edit" || iframeDocument?.documentElement.getAttribute("data-xfcart-preview-listener-ready") === "true";
+    const interactiveNavigationReady = previewMode !== "interactive" || iframeDocument?.documentElement.getAttribute("data-xfcart-interactive-navigation-ready") === "true";
+    if (documentReady && iframeDocumentMatchesSrc && (previewMode === "interactive" ? interactiveNavigationReady : hasPreviewRoot && editListenerReady)) {
       iframeRecoveryCount.current = 0;
       setIframeStatus("ready");
       if (previewMode === "edit") syncSelectionToIframe();
       return true;
     }
-    const stillNavigating = !iframeDocument || iframeDocument.readyState === "loading" || iframeHref === "about:blank";
+    const stillNavigating =
+      !iframeDocument ||
+      iframeDocument.readyState === "loading" ||
+      iframeHref === "about:blank" ||
+      !iframeDocumentMatchesSrc;
     if (stillNavigating) {
       setIframeStatus("loading");
       return false;
@@ -1271,6 +1306,10 @@ export function DesignerClient({
   }
 
   function queuePreviewMutation(action: SaasThemeAction, fallbackMessage: string, delayMs = 420) {
+    if (action.type === "change") {
+      setLastAction(`${fallbackMessage} 已更新本地草稿，保存草稿后刷新预览。`);
+      return;
+    }
     const key = queuedActionKey(action);
     const record = previewMutationQueuesRef.current.get(key) ?? { inflight: false };
     if (record.timerId) window.clearTimeout(record.timerId);
@@ -1723,6 +1762,7 @@ export function DesignerClient({
         return { ok: false, pageVersions: nextPageVersions, settingsVersion: settingsSaved.draftVersion };
       }
       if (settingsSaved.ok) themeSettingsDirtyRef.current = false;
+      reloadIframePreview();
       setLastAction(`草稿已保存但不会上线：${dirtyPageIds.length} 个已编辑页面与全局设置已写入后台草稿区，发布整站快照后前台才会读取。`);
       return { ok: true, pageVersions: nextPageVersions, settingsVersion: settingsSaved.draftVersion };
     } finally {

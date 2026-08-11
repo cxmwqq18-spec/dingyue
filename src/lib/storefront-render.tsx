@@ -2917,7 +2917,7 @@ export async function renderStorefrontSectionPayload({
 
 function syntheticDreamShootPartnerPage(site: Site, slug: string): ThemePage | undefined {
   if (!dreamshootPartnerTemplateSlugs.has(slug)) return undefined;
-  if (!(/dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`) || isAidreamcapesStorefront(site))) return undefined;
+  if (!usesSharedDreamShootNavigation(site)) return undefined;
   const templateKey =
     slug === "/workflow" ? "workflow" :
     slug === "/faq" ? "help" :

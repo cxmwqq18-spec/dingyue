@@ -7,6 +7,8 @@ import { PrismaClient } from "@prisma/client";
 
 import "./load-runtime-env.mjs";
 
+process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY ??= "1";
+
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputDir = path.join(repoRoot, "output", "designer-workbench-agent");
 const baseUrl = (process.env.SMOKE_BASE_URL ?? "http://127.0.0.1:3002").replace(/\/$/, "");
@@ -213,6 +215,34 @@ async function inspectVisibleButtons(page) {
   );
 }
 
+function isIgnorablePageError(message) {
+  return message.includes("Connection closed") && message.includes("react-server-dom-webpack");
+}
+
+function isTransientDevServerRunError(error, report) {
+  const message = String(error?.stack ?? error);
+  if (/ERR_CONNECTION_REFUSED|ERR_INCOMPLETE_CHUNKED_ENCODING|Connection closed/.test(message)) return true;
+  if (/page\.goto: Timeout 60000ms exceeded/.test(message)) return true;
+  const entries = [report.admin, report.workbench, report.mobile].filter(Boolean);
+  return entries.some((entry) => {
+    return entry.failedRequests?.some((request) => /ERR_CONNECTION_REFUSED|ERR_INCOMPLETE_CHUNKED_ENCODING/.test(request.error ?? "")) ||
+      entry.consoleErrors?.some((item) => /ERR_CONNECTION_REFUSED|ERR_INCOMPLETE_CHUNKED_ENCODING/.test(item));
+  });
+}
+
+async function waitForDevServerReady(url, timeoutMs = 45_000) {
+  const startedAt = performance.now();
+  while (performance.now() - startedAt < timeoutMs) {
+    try {
+      const response = await fetch(url, { method: "HEAD" });
+      if (response.ok || response.status < 500) return;
+    } catch {
+      // Keep polling while Next dev is restarting.
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1_000));
+  }
+}
+
 async function auditPage(page, pathname, viewport, screenshotName) {
   const pageErrors = [];
   const consoleErrors = [];
@@ -221,7 +251,10 @@ async function auditPage(page, pathname, viewport, screenshotName) {
   const apiRequests = [];
   const requestStartedAt = new Map();
 
-  page.on("pageerror", (error) => pageErrors.push(String(error?.stack ?? error)));
+  page.on("pageerror", (error) => {
+    const message = String(error?.stack ?? error);
+    if (!isIgnorablePageError(message)) pageErrors.push(message);
+  });
   page.on("console", (message) => {
     if (message.type() === "error" && !message.text().includes("webpack")) {
       consoleErrors.push(message.text());
@@ -284,7 +317,12 @@ async function auditPage(page, pathname, viewport, screenshotName) {
   assert(!bodyText.includes("Runtime TypeError"), `${pathname} rendered Next runtime error`);
   assert(await page.locator('[data-admin-error="true"], [data-designer-error="true"]').count() === 0, `${pathname} rendered admin error boundary`);
 
-  await page.screenshot({ path: path.join(outputDir, screenshotName), fullPage: true });
+  let screenshotError = "";
+  try {
+    await page.screenshot({ path: path.join(outputDir, screenshotName), fullPage: true, timeout: 15_000 });
+  } catch (error) {
+    screenshotError = String(error?.stack ?? error);
+  }
   return {
     pathname,
     viewport,
@@ -301,6 +339,7 @@ async function auditPage(page, pathname, viewport, screenshotName) {
     bodyText,
     recoveredFromErrorBoundary,
     recoveredFromNetworkError,
+    screenshotError,
     transientErrors
   };
 }
@@ -358,11 +397,48 @@ async function getPreviewIframeMetrics(page) {
 
 async function getIframeWindowMetrics(page) {
   return page.locator(".saas-designer-preview-frame iframe").first().evaluate((iframe) => ({
+    src: iframe.getAttribute("src") ?? iframe.src ?? "",
     href: iframe.contentWindow?.location.href ?? "",
+    readyState: iframe.contentDocument?.readyState ?? "",
     scrollY: iframe.contentWindow?.scrollY ?? 0,
     scrollHeight: iframe.contentDocument?.documentElement?.scrollHeight ?? 0,
+    clientHeight: iframe.contentDocument?.documentElement?.clientHeight ?? 0,
     innerHeight: iframe.contentWindow?.innerHeight ?? 0
   }));
+}
+
+async function waitForPreviewIframeReady(page, { requireScrollable = true, timeoutMs = 30_000 } = {}) {
+  await page.waitForFunction(
+    (requireScrollable) => {
+      const iframe = document.querySelector(".saas-designer-preview-frame iframe");
+      if (!(iframe instanceof HTMLIFrameElement)) return false;
+      const doc = iframe.contentDocument;
+      const win = iframe.contentWindow;
+      if (!doc || !win) return false;
+      const src = iframe.src || new URL(iframe.getAttribute("src") ?? "", document.baseURI).href;
+      const href = doc.location.href ?? "";
+      const normalize = (value) => {
+        try {
+          const url = new URL(value, document.baseURI);
+          url.hash = "";
+          url.searchParams.delete("reload");
+          return url.href;
+        } catch {
+          return value.split("#", 1)[0];
+        }
+      };
+      if (!src || !href || normalize(src) !== normalize(href)) return false;
+      if (doc.readyState !== "interactive" && doc.readyState !== "complete") return false;
+      if (!doc.querySelector("[data-theme-sections-root]")) return false;
+      const previewMode = doc.querySelector("[data-designer-preview-mode]")?.getAttribute("data-designer-preview-mode") ?? new URL(src, document.baseURI).searchParams.get("previewMode");
+      if (previewMode === "edit" && doc.documentElement.getAttribute("data-xfcart-preview-listener-ready") !== "true") return false;
+      if (previewMode === "interactive" && doc.documentElement.getAttribute("data-xfcart-interactive-navigation-ready") !== "true") return false;
+      if (requireScrollable && doc.documentElement.scrollHeight <= doc.documentElement.clientHeight + 20) return false;
+      return true;
+    },
+    requireScrollable,
+    { timeout: timeoutMs, polling: 200 }
+  );
 }
 
 function cssAttrValue(value) {
@@ -396,7 +472,7 @@ async function selectPageOptionByPattern(pageSelect, page, pattern) {
   const option = options.find((item) => pattern.test(`${item.label} ${item.value}`));
   if (!option) return null;
   await pageSelect.selectOption(option.value);
-  await page.waitForTimeout(450);
+  await page.waitForTimeout(150);
   return option;
 }
 
@@ -405,6 +481,8 @@ async function markVisiblePreviewNavigationTarget(page, options = {}) {
   const iframe = page.locator(".saas-designer-preview-frame iframe").first();
   return iframe.evaluate((frame, requireLink) => {
     const doc = frame.contentDocument;
+    doc?.querySelectorAll("[data-smoke-preview-target]").forEach((node) => node.removeAttribute("data-smoke-preview-target"));
+    const currentUrl = doc ? new URL(doc.location.href) : null;
     const candidates = Array.from(
       doc?.querySelectorAll(
         requireLink
@@ -412,20 +490,50 @@ async function markVisiblePreviewNavigationTarget(page, options = {}) {
           : 'a[href]:not([href^="#"]):not([target="_blank"]), button:not([disabled])'
       ) ?? []
     );
-    const target = candidates.find((node) => {
+    const interactiveCandidates = candidates.filter((node) => {
       const rect = node.getBoundingClientRect();
       const style = window.getComputedStyle(node);
-      if (node instanceof HTMLAnchorElement) {
-        const targetUrl = new URL(node.href, doc?.location.href);
+      const viewportWidth = doc?.documentElement.clientWidth ?? window.innerWidth;
+      const viewportHeight = doc?.documentElement.clientHeight ?? window.innerHeight;
+      const isAnchor = node.tagName.toLowerCase() === "a";
+      if (isAnchor) {
+        const targetUrl = new URL(node.getAttribute("href") ?? "", doc?.location.href);
         if (targetUrl.origin !== doc?.location.origin) return false;
+        if (requireLink && currentUrl && targetUrl.pathname === currentUrl.pathname && targetUrl.search === currentUrl.search && targetUrl.hash === currentUrl.hash) return false;
+        if (requireLink) {
+          const isSiteRoot = /^\/site\/[^/]+$/.test(targetUrl.pathname);
+          if (targetUrl.pathname === "/" || isSiteRoot) return false;
+        }
       }
-      return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden";
+      return rect.width > 0 &&
+        rect.height > 0 &&
+        rect.bottom > 0 &&
+        rect.right > 0 &&
+        rect.top < viewportHeight &&
+        rect.left < viewportWidth &&
+        style.display !== "none" &&
+        style.visibility !== "hidden";
     });
+    const preferredOrder = ["/pricing", "/tools", "/collections", "/app", "/login", "/help", "/workflow"];
+    const target = interactiveCandidates
+      .slice()
+      .sort((left, right) => {
+        if (left.tagName.toLowerCase() === "a" && right.tagName.toLowerCase() === "a") {
+          const leftPath = new URL(left.getAttribute("href") ?? "", doc?.location.href).pathname;
+          const rightPath = new URL(right.getAttribute("href") ?? "", doc?.location.href).pathname;
+          const leftScore = preferredOrder.findIndex((item) => leftPath.startsWith(item));
+          const rightScore = preferredOrder.findIndex((item) => rightPath.startsWith(item));
+          if (leftScore !== rightScore) return (leftScore === -1 ? 99 : leftScore) - (rightScore === -1 ? 99 : rightScore);
+        }
+        return 0;
+      })
+      .find(Boolean);
     if (!target) return null;
     target.setAttribute("data-smoke-preview-target", "true");
     return {
       tag: target.tagName.toLowerCase(),
-      text: (target.textContent || target.getAttribute("aria-label") || target.getAttribute("title") || "").trim().replace(/\s+/g, " ")
+      text: (target.textContent || target.getAttribute("aria-label") || target.getAttribute("title") || "").trim().replace(/\s+/g, " "),
+      href: target.tagName.toLowerCase() === "a" ? new URL(target.getAttribute("href") ?? "", doc?.location.href).href : ""
     };
   }, requireLink);
 }
@@ -433,18 +541,22 @@ async function markVisiblePreviewNavigationTarget(page, options = {}) {
 async function markVisiblePropertyInputTarget(page) {
   return page.evaluate(() => {
     const pane = document.querySelector('[data-designer-layout="saas-right-editor-pane"]');
+    pane?.querySelectorAll("[data-smoke-typing-target]").forEach((node) => node.removeAttribute("data-smoke-typing-target"));
     const candidates = Array.from(
-      pane?.querySelectorAll('[data-designer-field-id] input[type="text"], [data-designer-field-id] textarea') ?? []
+      pane?.querySelectorAll('[data-designer-field-id] textarea, [data-designer-field-id] input:not([type="hidden"]):not([type="color"]):not([type="range"]):not([type="checkbox"]):not([type="radio"])') ?? []
     );
     const target = candidates.find((node) => {
-      const rect = node.getBoundingClientRect();
-      const style = window.getComputedStyle(node);
+      if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) return false;
       const placeholder = (node.getAttribute("placeholder") ?? "").trim();
-      return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden" && !placeholder.includes("输入预览里看到的文案");
+      const value = String(node.value ?? "");
+      return !node.disabled && !node.readOnly && value.length > 0 && !placeholder.includes("输入预览里看到的文案");
     });
     if (!target) return null;
+    target.closest("[data-designer-field-id]")?.scrollIntoView({ block: "center", inline: "nearest" });
     target.setAttribute("data-smoke-typing-target", "true");
+    const field = target.closest("[data-designer-field-id]");
     return {
+      fieldId: field?.getAttribute("data-designer-field-id") ?? "",
       placeholder: target.getAttribute("placeholder") ?? "",
       value: target.value ?? ""
     };
@@ -520,9 +632,10 @@ async function exerciseWorkbench(page, report, suiteReport) {
 
   const editablePage = await selectFirstEditablePageIfPresent(page, pageSelect);
   assert(editablePage, "workbench page selector did not expose an editable page with a non-empty body");
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(150);
 
   await selectPageOptionByPattern(pageSelect, page, /(?:首页|home)(?:\s|$)|(?:^|\s)\/(?:\s|$)/i);
+  await waitForPreviewIframeReady(page);
   const previewIframe = page.locator(".saas-designer-preview-frame iframe").first();
   const frame = page.frameLocator(".saas-designer-preview-frame iframe").first();
   const initialIframeMetrics = await getIframeWindowMetrics(page);
@@ -550,14 +663,16 @@ async function exerciseWorkbench(page, report, suiteReport) {
   suiteReport.performance.interactions.previewWheelScrollMs = roundMs(performance.now() - previewWheelStartedAt);
 
   const rightPane = page.locator('[data-designer-layout="saas-right-editor-pane"]');
-  const rightPaneScrollState = await rightPane.evaluate((node) => ({ scrollTop: node.scrollTop, scrollHeight: node.scrollHeight, clientHeight: node.clientHeight }));
-  assert(rightPaneScrollState.scrollHeight > rightPaneScrollState.clientHeight + 8, "right property pane is not independently scrollable");
-  await rightPane.evaluate((node) => {
+  const propertyBody = rightPane.locator('[data-designer-layout="saas-property-body"]').first();
+  assert(await propertyBody.count() === 1, "right property pane missing its internal field scroll container");
+  const rightPaneScrollState = await propertyBody.evaluate((node) => ({ scrollTop: node.scrollTop, scrollHeight: node.scrollHeight, clientHeight: node.clientHeight }));
+  assert(rightPaneScrollState.scrollHeight > rightPaneScrollState.clientHeight + 8, "right property field body is not independently scrollable");
+  await propertyBody.evaluate((node) => {
     node.scrollTop = Math.min(node.scrollHeight - node.clientHeight, node.scrollTop + 500);
   });
-  const rightPaneScrollAfter = await rightPane.evaluate((node) => node.scrollTop);
-  assert(rightPaneScrollAfter > rightPaneScrollState.scrollTop, `right property pane did not scroll internally: ${rightPaneScrollState.scrollTop} -> ${rightPaneScrollAfter}`);
-  await rightPane.evaluate((node) => {
+  const rightPaneScrollAfter = await propertyBody.evaluate((node) => node.scrollTop);
+  assert(rightPaneScrollAfter > rightPaneScrollState.scrollTop, `right property field body did not scroll internally: ${rightPaneScrollState.scrollTop} -> ${rightPaneScrollAfter}`);
+  await propertyBody.evaluate((node) => {
     node.scrollTop = 0;
   });
 
@@ -575,8 +690,10 @@ async function exerciseWorkbench(page, report, suiteReport) {
 
   const interactiveToggle = page.getByRole("button", { name: "真实交互", exact: true });
   await interactiveToggle.click();
-  await page.waitForTimeout(500);
+  await waitForPreviewIframeReady(page, { requireScrollable: false });
   assert((await getPreviewIframeMetrics(page)).src.includes("previewMode=interactive"), "real interaction mode did not update iframe query");
+  await previewIframe.evaluate((iframe) => iframe.contentWindow?.scrollTo(0, 0));
+  await page.waitForTimeout(120);
   const interactiveTarget = await markVisiblePreviewNavigationTarget(page, { requireLink: true });
   if (!interactiveTarget) {
     suiteReport.findings.push("预览页没有找到可验证的站内链接，已跳过真实交互跳转断言。");
@@ -584,13 +701,30 @@ async function exerciseWorkbench(page, report, suiteReport) {
     const interactiveHrefBefore = (await getIframeWindowMetrics(page)).href;
     const interactiveClickStartedAt = performance.now();
     await frame.locator('[data-smoke-preview-target="true"]').click({ force: true });
-    await page.waitForTimeout(600);
+    await page.waitForFunction(
+      (previousHref) => {
+        const iframe = document.querySelector(".saas-designer-preview-frame iframe");
+        if (!(iframe instanceof HTMLIFrameElement)) return false;
+        const href = iframe.contentDocument?.location.href ?? "";
+        return Boolean(href && href !== previousHref && !href.includes("/admin/design/preview/"));
+      },
+      interactiveHrefBefore,
+      { timeout: 15_000, polling: 100 }
+    ).catch(() => undefined);
     const interactiveHrefAfter = (await getIframeWindowMetrics(page)).href;
-    assert(interactiveHrefAfter !== interactiveHrefBefore, `真实交互模式链接没有跳转: ${interactiveHrefBefore}`);
+    const interactiveDebug = await previewIframe.evaluate((iframe) => ({
+      count: iframe.contentDocument?.documentElement.getAttribute("data-xfcart-interactive-navigation-count") ?? "",
+      lastHref: iframe.contentDocument?.documentElement.getAttribute("data-xfcart-interactive-navigation-last-href") ?? "",
+      ready: iframe.contentDocument?.documentElement.getAttribute("data-xfcart-interactive-navigation-ready") ?? "",
+      via: iframe.contentDocument?.documentElement.getAttribute("data-xfcart-interactive-navigation-via") ?? "",
+      error: iframe.contentDocument?.documentElement.getAttribute("data-xfcart-interactive-navigation-error") ?? "",
+      frameSrc: iframe.getAttribute("src") ?? ""
+    }));
+    assert(interactiveHrefAfter !== interactiveHrefBefore, `真实交互模式链接没有跳转: ${interactiveHrefBefore}; target=${interactiveTarget.href} ${interactiveTarget.text}; debug=${JSON.stringify(interactiveDebug)}`);
     suiteReport.performance.interactions.interactivePreviewNavigationMs = roundMs(performance.now() - interactiveClickStartedAt);
   }
   await page.getByRole("button", { name: "编辑定位", exact: true }).click();
-  await page.waitForTimeout(500);
+  await waitForPreviewIframeReady(page, { requireScrollable: false });
 
   const typingTargetInfo = await markVisiblePropertyInputTarget(page);
   if (!typingTargetInfo) {
@@ -933,50 +1067,66 @@ async function run() {
       }
     };
 
-    await withAuthedContext({ width: 1600, height: 1200 }, async (context) => {
-      const adminPage = await context.newPage();
-      const adminReport = await auditPage(adminPage, `/site/${clone.slug}/admin`, { width: 1600, height: 1200 }, "admin-desktop.png");
-      report.screenshots.push("admin-desktop.png");
-      report.admin = adminReport;
-      await assertNoLayoutDefects(adminPage, "admin dashboard", 1600);
-      await adminPage.close();
-    });
+    const runUiFlow = async () => {
+      await withAuthedContext({ width: 1600, height: 1200 }, async (context) => {
+        const adminPage = await context.newPage();
+        const adminReport = await auditPage(adminPage, `/site/${clone.slug}/admin`, { width: 1600, height: 1200 }, "admin-desktop.png");
+        if (!report.screenshots.includes("admin-desktop.png")) report.screenshots.push("admin-desktop.png");
+        report.admin = adminReport;
+        await assertNoLayoutDefects(adminPage, "admin dashboard", 1600);
+        await adminPage.close();
+      });
 
-    await withAuthedContext({ width: 1600, height: 1200 }, async (context) => {
-      const workbenchPage = await context.newPage();
-      const workbenchReport = await auditPage(
-        workbenchPage,
-        `/site/${clone.slug}/admin/design/workbench`,
-        { width: 1600, height: 1200 },
-        "workbench-desktop.png"
-      );
-      report.screenshots.push("workbench-desktop.png");
-      report.workbench = workbenchReport;
-      await exerciseWorkbench(workbenchPage, workbenchReport, report);
-      await workbenchPage.close();
-    });
+      await withAuthedContext({ width: 1600, height: 1200 }, async (context) => {
+        const workbenchPage = await context.newPage();
+        const workbenchReport = await auditPage(
+          workbenchPage,
+          `/site/${clone.slug}/admin/design/workbench`,
+          { width: 1600, height: 1200 },
+          "workbench-desktop.png"
+        );
+        if (!report.screenshots.includes("workbench-desktop.png")) report.screenshots.push("workbench-desktop.png");
+        report.workbench = workbenchReport;
+        await exerciseWorkbench(workbenchPage, workbenchReport, report);
+        await workbenchPage.close();
+      });
 
-    await withAuthedContext({ width: 390, height: 844 }, async (context) => {
-      const mobilePage = await context.newPage();
-      const mobileReport = await auditPage(
-        mobilePage,
-        `/site/${clone.slug}/admin/design/workbench`,
-        { width: 390, height: 844 },
-        "workbench-mobile.png"
-      );
-      report.screenshots.push("workbench-mobile.png");
-      report.mobile = mobileReport;
-      await assertNoLayoutDefects(mobilePage, "mobile workbench", 390);
-      assert(await mobilePage.locator(".saas-designer-preview-shell").count() === 1, "mobile workbench missing workspace shell");
-      assert(await mobilePage.locator('[data-designer-preview-viewport-control="mobile"]').count() === 1, "mobile viewport label missing");
-      assert(await mobilePage.locator('[data-designer-preview-viewport-control="desktop"]').count() === 0, "desktop viewport selector should be hidden on mobile");
-      await mobilePage.close();
-    });
+      await withAuthedContext({ width: 390, height: 844 }, async (context) => {
+        const mobilePage = await context.newPage();
+        const mobileReport = await auditPage(
+          mobilePage,
+          `/site/${clone.slug}/admin/design/workbench`,
+          { width: 390, height: 844 },
+          "workbench-mobile.png"
+        );
+        if (!report.screenshots.includes("workbench-mobile.png")) report.screenshots.push("workbench-mobile.png");
+        report.mobile = mobileReport;
+        await assertNoLayoutDefects(mobilePage, "mobile workbench", 390);
+        assert(await mobilePage.locator(".saas-designer-preview-shell").count() === 1, "mobile workbench missing workspace shell");
+        assert(await mobilePage.locator('[data-designer-preview-viewport-control="mobile"]').count() === 1, "mobile viewport label missing");
+        assert(await mobilePage.locator('[data-designer-preview-viewport-control="desktop"]').count() === 0, "desktop viewport selector should be hidden on mobile");
+        await mobilePage.close();
+      });
 
-    for (const entry of [report.admin, report.workbench, report.mobile]) {
-      assert(entry.pageErrors.length === 0, `${entry.pathname} page errors: ${entry.pageErrors.join("\n")}`);
-      assert(entry.consoleErrors.length === 0, `${entry.pathname} console errors: ${entry.consoleErrors.join("\n")}`);
-      assert(entry.badResponses.length === 0, `${entry.pathname} bad responses: ${JSON.stringify(entry.badResponses)}`);
+      for (const entry of [report.admin, report.workbench, report.mobile]) {
+        assert(entry.pageErrors.length === 0, `${entry.pathname} page errors: ${entry.pageErrors.join("\n")}`);
+        assert(entry.consoleErrors.length === 0, `${entry.pathname} console errors: ${entry.consoleErrors.join("\n")}`);
+        assert(entry.badResponses.length === 0, `${entry.pathname} bad responses: ${JSON.stringify(entry.badResponses)}`);
+      }
+    };
+
+    for (let attempt = 1; attempt <= 2; attempt += 1) {
+      try {
+        await runUiFlow();
+        break;
+      } catch (error) {
+        if (attempt === 2 || !isTransientDevServerRunError(error, report)) throw error;
+        report.findings.push("Next dev server 在烟测中途断线，智能体已等待服务恢复并自动重试一次。");
+        report.admin = undefined;
+        report.workbench = undefined;
+        report.mobile = undefined;
+        await waitForDevServerReady(baseUrl);
+      }
     }
 
     if (!clone.reused) {

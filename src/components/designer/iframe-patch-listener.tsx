@@ -137,10 +137,12 @@ export function IframePatchListener() {
     window.addEventListener("message", onMessage);
     document.addEventListener("click", onPreviewClick, true);
     document.addEventListener("submit", onPreviewSubmit, true);
+    document.documentElement.setAttribute("data-xfcart-preview-listener-ready", "true");
     return () => {
       window.removeEventListener("message", onMessage);
       document.removeEventListener("click", onPreviewClick, true);
       document.removeEventListener("submit", onPreviewSubmit, true);
+      document.documentElement.removeAttribute("data-xfcart-preview-listener-ready");
     };
   }, []);
 
@@ -205,4 +207,56 @@ export function IframePatchListener() {
       }}
     />
   );
+}
+
+export function IframeInteractiveNavigation() {
+  useEffect(() => {
+    function onInteractiveClick(event: MouseEvent) {
+      if (event.defaultPrevented || event.metaKey || event.altKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+      const target = event.target;
+      const anchor = target && typeof (target as Element).closest === "function"
+        ? (target as Element).closest<HTMLAnchorElement>("a[href]")
+        : null;
+      if (!anchor || (anchor.target && anchor.target !== "_self")) return;
+      const href = anchor.getAttribute("href") ?? "";
+      if (!href || href.startsWith("#") || /^(mailto|tel|sms):/i.test(href)) return;
+      const url = new URL(anchor.href, window.location.href);
+      if (url.origin !== window.location.origin) return;
+      const currentSiteSlug = window.location.pathname.match(/^\/site\/([^/]+)/)?.[1] ?? "";
+      const sameSitePublicRoute = currentSiteSlug &&
+        (url.pathname === `/site/${currentSiteSlug}` || url.pathname.startsWith(`/site/${currentSiteSlug}/`)) &&
+        !url.pathname.startsWith(`/site/${currentSiteSlug}/admin`);
+      if (!sameSitePublicRoute) return;
+      const currentCount = Number(document.documentElement.getAttribute("data-xfcart-interactive-navigation-count") ?? "0") || 0;
+      document.documentElement.setAttribute("data-xfcart-interactive-navigation-count", String(currentCount + 1));
+      document.documentElement.setAttribute("data-xfcart-interactive-navigation-last-href", url.href);
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      window.parent?.postMessage({ act: "previewNavigate", href: url.href }, window.location.origin);
+      const frameElement = window.frameElement as HTMLIFrameElement | null;
+      if (frameElement && typeof frameElement.setAttribute === "function") {
+        try {
+          document.documentElement.setAttribute("data-xfcart-interactive-navigation-via", "frame-src");
+          frameElement.setAttribute("src", url.href);
+          return;
+        } catch (error) {
+          document.documentElement.setAttribute("data-xfcart-interactive-navigation-error", error instanceof Error ? error.message : String(error));
+        }
+      }
+      window.setTimeout(() => {
+        document.documentElement.setAttribute("data-xfcart-interactive-navigation-via", "location-href");
+        window.location.href = url.href;
+      }, 0);
+    }
+
+    document.addEventListener("click", onInteractiveClick, true);
+    document.documentElement.setAttribute("data-xfcart-interactive-navigation-ready", "true");
+    return () => {
+      document.removeEventListener("click", onInteractiveClick, true);
+      document.documentElement.removeAttribute("data-xfcart-interactive-navigation-ready");
+    };
+  }, []);
+
+  return null;
 }

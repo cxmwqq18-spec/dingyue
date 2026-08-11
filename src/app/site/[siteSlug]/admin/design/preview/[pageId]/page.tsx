@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
-import { IframePatchListener } from "@/components/designer/iframe-patch-listener";
+import { IframeInteractiveNavigation, IframePatchListener } from "@/components/designer/iframe-patch-listener";
 import { ThemeRenderer } from "@/components/theme-renderer";
 import { verifyDesignerPreviewToken } from "@/lib/designer-preview-auth";
 import { siteAdminSessionCookie } from "@/lib/session";
@@ -66,7 +66,7 @@ export default async function ThemePreviewPage({
   };
   return (
     <div data-designer-preview-mode={interactivePreview ? "interactive" : "edit"} style={themeStyleVars(settings)}>
-      {interactivePreview ? null : <IframePatchListener />}
+      {interactivePreview ? <IframeInteractiveNavigation /> : <IframePatchListener />}
       <ThemeRenderer
         creativePacks={creativePacks}
         mode="preview"

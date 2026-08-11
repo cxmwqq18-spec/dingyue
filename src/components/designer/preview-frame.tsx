@@ -1,6 +1,6 @@
 "use client";
 
-import { Children, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Children, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode, RefObject } from "react";
 import { Database, Eye, FileCheck2, GitBranch, Monitor, RefreshCw, RotateCcw, Save, Smartphone, UploadCloud } from "lucide-react";
 import {
@@ -221,19 +221,32 @@ export function PreviewFrame({
     onLivePreviewSelect(sectionId, block?.getAttribute("data-xfcart-block-id") ?? block?.getAttribute("data-xfcart-block-legacy-id") ?? undefined);
   }
 
-  function onPreviewWheel(event: React.WheelEvent<HTMLDivElement>) {
-    if (renderFallbackPreview) return;
-    const frameWindow = iframeRef.current?.contentWindow;
-    if (!frameWindow) return;
-    const canScroll = Math.abs(event.deltaY) > 0 || Math.abs(event.deltaX) > 0;
-    if (!canScroll) return;
-    event.preventDefault();
-    frameWindow.scrollBy({
-      left: event.deltaX,
-      top: event.deltaY,
-      behavior: "auto"
-    });
-  }
+  const onPreviewWheel = useMemo(() => {
+    return (event: WheelEvent) => {
+      if (renderFallbackPreview) return;
+      const frameWindow = iframeRef.current?.contentWindow;
+      if (!frameWindow) return;
+      const canScroll = Math.abs(event.deltaY) > 0 || Math.abs(event.deltaX) > 0;
+      if (!canScroll) return;
+      event.preventDefault();
+      frameWindow.scrollBy({
+        left: event.deltaX,
+        top: event.deltaY,
+        behavior: "auto"
+      });
+    };
+  }, [iframeRef, renderFallbackPreview]);
+
+  useEffect(() => {
+    const node = previewStageRef.current;
+    if (!node) return;
+    const handleWheel = (event: WheelEvent) => onPreviewWheel(event);
+    const options = { passive: false, capture: true } as const;
+    node.addEventListener("wheel", handleWheel, options);
+    return () => {
+      node.removeEventListener("wheel", handleWheel, options);
+    };
+  }, [onPreviewWheel]);
 
   return (
     <section className="saas-designer-preview-frame flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-[#d7dce4]">
@@ -387,7 +400,6 @@ export function PreviewFrame({
           className="relative flex h-full min-h-0 min-w-0 items-start justify-center overflow-hidden"
           data-designer-preview-stage
           ref={previewStageRef}
-          onWheelCapture={onPreviewWheel}
         >
           <div
             className="relative shrink-0"
@@ -431,7 +443,6 @@ export function PreviewFrame({
                   ) : null}
                   <iframe
                     className="h-full w-full bg-white"
-                    key={`${selectedPageId}_${previewMode}_${iframeReloadKey}`}
                     onLoad={onIframeLoad}
                     ref={iframeRef}
                     src={`/site/${site.slug}/admin/design/preview/${selectedPageId}?previewToken=${encodeURIComponent(previewToken)}&previewMode=${previewMode}&reload=${iframeReloadKey}`}

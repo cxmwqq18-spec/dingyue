@@ -155,7 +155,7 @@ export function StorefrontInstantLink({
   const disablePrefetch = useContext(StorefrontLinkPrefetchContext) || isDesignerPreviewRoute();
   const samePageHashHref = isSamePageHashHref(href, target);
   const shouldUseLinkPrefetch = disablePrefetch || samePageHashHref ? false : prefetch ?? process.env.NEXT_PUBLIC_STOREFRONT_LINK_PREFETCH === "1";
-  const forceDocumentNavigation = (props as Record<string, unknown>)["data-storefront-document-navigation"] === "true";
+  const forceDocumentNavigation = isDesignerPreviewRoute() || (props as Record<string, unknown>)["data-storefront-document-navigation"] === "true";
 
   function prefetchTarget() {
     if (disablePrefetch) return;
