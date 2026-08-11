@@ -29,6 +29,17 @@ const stores = [
     siteSeed: undefined
   },
   {
+    key: "grownstride-test",
+    siteId: "site_grownstride_test",
+    siteSlug: "grownstride",
+    siteSeed: {
+      slug: "grownstride",
+      name: "MyDreamShoots Test",
+      primaryDomain: "test.grownstride.com",
+      branding: { logoText: "myDreamshoots" }
+    }
+  },
+  {
     key: "aidreamcapes",
     siteId: "site_aidreamcapes",
     siteSlug: "aidreamcapes",
