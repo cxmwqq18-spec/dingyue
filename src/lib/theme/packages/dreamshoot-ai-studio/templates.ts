@@ -1591,89 +1591,105 @@ function mydreamshootsPageFaqSection(key: PublicFaqKey): SectionInstance {
     pricing: {
       eyebrow: "Pricing FAQ",
       title: "Pricing questions before you buy",
-      subtitle: "Plan, credit, checkout, and private generation answers for myDreamshoots customers.",
+      subtitle: "Detailed plan, credit, checkout, private gallery, refund, and AI photo generation answers for myDreamshoots customers.",
       items: [
-        ["How do I choose a myDreamshoots plan?", "Choose a plan by how often you expect to create headshots, creator portraits, fan photos, AI edits, or video-ready outputs. The pricing page is the source of truth for included credits and current plan details."],
-        ["Are credits shown before generation starts?", "Yes. Package and tool requests show the credit requirement before a private generation request begins, so you can review the cost before credits are reserved."],
-        ["Can I add credits without changing plans?", "When top-ups are available, they add extra capacity to the same customer account without replacing the subscription plan. Checkout will show the active option before purchase."],
-        ["What happens if a paid generation fails?", "A failed or interrupted request can release reserved credits according to the recorded job status. Keep the request or order details when contacting support about a charge."]
+        ["How do I choose a myDreamshoots plan for AI photo generation?", "Choose a plan by the number of private AI photo sets you expect to create each month. A light plan can fit occasional AI headshots or profile photos, while higher-credit plans are better for creator portraits, seasonal albums, product lifestyle images, fan photos, and AI video add-ons that need more generation attempts."],
+        ["What are credits and when are they charged?", "Credits are the account balance used for paid AI generation. myDreamshoots shows the credit cost before a package, AI headshot generator, image editing tool, or video workflow starts; credits are reserved during processing and settled only according to the recorded request status."],
+        ["Can I buy extra credits without changing my subscription?", "When one-time top-ups are available, they add extra generation capacity to the same private customer account without replacing the active plan. The checkout screen shows the current top-up amount, credit quantity, currency, and payment terms before purchase."],
+        ["Does pricing include private galleries and downloads?", "Paid requests are connected to the signed-in workspace, so finished images or clips can be reviewed from a private gallery before download. Pricing is designed around visible credits, private delivery, and repeatable album organization rather than a public feed of generated images."],
+        ["What happens if a paid AI generation fails?", "If a provider request fails or is interrupted before delivery, the platform records the job status and can release reserved credits according to that status. Keep the order, credit, or job reference when contacting support about a failed generation, duplicate charge, or missing gallery result."],
+        ["Where should I check cancellation, refund, and renewal details?", "Use the live checkout, account workspace, Terms of Service, and Refund Policy for the current subscription, renewal, cancellation, refund, and credit rules. Promotional pricing and plan contents can change, so the pricing page and checkout confirmation are the source of truth before payment."]
       ]
     },
     tools: {
       eyebrow: "Tools FAQ",
       title: "AI tool questions before upload",
-      subtitle: "How myDreamshoots tools handle source photos, credits, output review, and private delivery.",
+      subtitle: "Answers about myDreamshoots AI photo tools, source photos, credits, privacy, quality review, and publishing use.",
       items: [
-        ["Which AI photo tool should I start with?", "Start with the tool that matches the output you need: headshots for professional profiles, creator portraits for campaigns, edit tools for cleanup, and video tools for short motion concepts."],
-        ["Do all tools use the private upload flow?", "Customer-facing tools keep uploads, request details, credit reservations, and finished assets connected to the signed-in myDreamshoots account."],
-        ["Can tool results be used for social or business pages?", "Yes, when you have the rights to the source photos, the people shown have approved the use, and the destination platform rules are followed."],
-        ["What should I inspect before downloading tool results?", "Review faces, hands, text-like details, crops, and overall realism before publishing or reusing the downloaded image or clip."]
+        ["Which AI photo tool should I start with?", "Start with the tool that matches the final asset you need. Use headshot tools for LinkedIn, resumes, founder bios, and team pages; creator portrait tools for media kits and campaign images; edit tools for cleanup or enhancement; and AI video tools when you want a short motion concept from an approved still image."],
+        ["What source photos work best for AI tools?", "Use sharp, recent, well-lit photos where the subject is visible and the intended edit is clear. Avoid screenshots, heavy beauty filters, tiny crops, sunglasses, blurred faces, extreme compression, and any photo you do not own or have permission to process."],
+        ["Do myDreamshoots tools use a private upload flow?", "Yes. Customer-facing AI tools keep source photos, request settings, credit reservations, generation status, and finished images connected to the signed-in myDreamshoots workspace instead of publishing them publicly by default."],
+        ["How are credits shown for AI photo and video tools?", "Paid tools show the credit requirement before generation begins, so you can compare an AI headshot, background edit, image enhancement, portrait style, or AI video request before credits are reserved. Failed requests can release reserved credits according to the recorded job status."],
+        ["Can tool results be used for social media or business pages?", "You can use suitable results for social media, creator pages, LinkedIn, websites, ad drafts, or business profiles when you control the source photos, every person shown has approved the use, and the destination platform rules and AI disclosure requirements are followed."],
+        ["What should I inspect before downloading or publishing results?", "Review identity details, facial consistency, hands, text-like marks, logos, background artifacts, crop quality, and overall realism. AI results should be checked before use in professional profiles, campaigns, printed material, or customer-facing business pages."]
       ]
     },
     collections: {
       eyebrow: "Package FAQ",
       title: "Photo package questions before you choose",
-      subtitle: "How to compare myDreamshoots package categories before spending credits.",
+      subtitle: "How to compare AI photo package collections, upload requirements, credits, private delivery, and publishing rights before creating.",
       items: [
-        ["How do I pick a photo package collection?", "Choose by the final use: profile refresh, creator campaign, couple scene, fan photo, seasonal card, beauty preview, or short motion add-on."],
-        ["Are package examples exact guarantees?", "No. Examples show the intended styling and composition, while source photo quality, pose, lighting, and model behavior affect final results."],
-        ["Can packages support couples or groups?", "Some packages support more than one person. Use clear approved photos for every subject and choose a package designed for the group size."],
-        ["Do package pages show credit costs?", "Package and generation screens show credit requirements before a request starts, so you can compare the direction before committing credits."]
+        ["How do I choose the right AI photo package collection?", "Choose by the final use of the gallery: professional headshots, creator portraits, dating profile photos, couple scenes, fan-inspired moments, seasonal cards, hairstyle previews, fashion editorials, product lifestyle images, or AI video-ready stills. Each collection helps you compare the visual direction before spending credits."],
+        ["What source photos should I prepare before choosing a package?", "Prepare clear, permission-safe photos with good lighting, visible faces, and a few angles or expressions. For identity-heavy packages such as AI headshots or creator portraits, a varied source set usually works better than many near-duplicate selfies."],
+        ["Are package examples exact guarantees?", "No. Examples show the intended style, framing, lighting, and use case, but final results depend on source-photo quality, pose, crop, subject count, prompt direction, and AI model behavior. Use examples as a comparison guide, not as an identical-output promise."],
+        ["Can packages support couples, friends, teams, or groups?", "Some collections are designed for more than one person, while others work best with a single subject. For group or couple AI photos, upload approved source photos for every person, choose a package that fits the group size, and review faces and hands carefully before sharing."],
+        ["Do package pages show credit costs and output expectations?", "Package pages and generation screens show credit requirements before a request starts, and many packages also describe the expected output count or album direction. This helps you compare private AI photo packages before reserving credits."],
+        ["Where are finished package results delivered?", "Finished images are delivered to the private myDreamshoots gallery or workspace tied to the signed-in account. You can review the gallery, keep the strongest outputs, download files, and decide what is appropriate to publish or reuse."]
       ]
     },
     "best-packages": {
       eyebrow: "Best packages FAQ",
       title: "Best package questions for private albums",
-      subtitle: "How featured myDreamshoots packages are organized for fast comparison.",
+      subtitle: "How featured myDreamshoots AI photo packages are selected, compared, updated, and delivered through private galleries.",
       items: [
-        ["How are best packages selected?", "Best package pages highlight high-intent themes customers often compare before upload, including portraits, seasonal sets, creator looks, and motion-ready options."],
-        ["Are seasonal packages included?", "Yes. Holiday, Thanksgiving, Halloween, Christmas, and other rotating themes can appear when they are active for the storefront."],
-        ["Can I compare best packages before upload?", "Yes. Review the visual direction, intended use, source photo guidance, and credit expectations before signing in to start a request."],
-        ["Do best package recommendations change?", "They can change as the catalog, examples, and customer use cases evolve. The live page reflects the current storefront selection."]
+        ["What makes a package appear on the Best Packages page?", "The page highlights high-intent AI photo packages that customers commonly compare before upload, such as professional headshots, creator portraits, seasonal albums, fan photos, beauty previews, fashion concepts, and motion-ready visual sets."],
+        ["Which best package should I choose first?", "Start with the result you need most urgently. Choose professional headshots for work profiles, creator portraits for personal-brand content, seasonal packages for cards or holiday posts, and video-ready packages when you want a still image that can support short AI motion later."],
+        ["Can I compare best packages before uploading photos?", "Yes. Review each package's style, sample images, intended use, source-photo guidance, output expectation, and visible credit cost before signing in or reserving credits. This makes the page useful for planning a private AI photo shoot in advance."],
+        ["Are holiday and seasonal AI photo packages included?", "Yes. Active Christmas, Thanksgiving, Halloween, New Year, fan-event, and other seasonal packages can appear when they fit the current catalog. Seasonal availability can rotate, so the live page reflects the storefront's current best package selection."],
+        ["Do best package recommendations change over time?", "They can change as examples, customer use cases, package quality, and catalog priorities evolve. The Best Packages page is designed as a curated comparison surface, not a permanent ranking that never changes."],
+        ["How do credits and private delivery work for best packages?", "The selected package shows credit requirements before generation starts. Finished results stay in the private myDreamshoots workspace or gallery for review and download, so you can inspect quality before using the images publicly."]
       ]
     },
     "best-ai-image": {
       eyebrow: "AI image FAQ",
       title: "Best AI image questions",
-      subtitle: "Source-photo and quality guidance for myDreamshoots image themes.",
+      subtitle: "Guidance for choosing AI image themes, preparing source photos, reviewing quality, and using private results responsibly.",
       items: [
-        ["What makes an AI image theme useful?", "A useful theme has a clear output goal, visible example style, practical crop, and source-photo guidance that matches how you plan to use the final image."],
-        ["Which photos work best as image sources?", "Use sharp, recent, well-lit photos with visible faces or subjects. Avoid heavy filters, tiny crops, screenshots, and images you do not have permission to use."],
-        ["Can I use generated images on profiles?", "You can use suitable results on profiles or social pages when permissions, platform rules, and any required AI disclosure are handled."],
-        ["How should I review final AI images?", "Check identity details, hands, background artifacts, text-like marks, and crop quality before downloading or publishing."]
+        ["What can the Best AI Image page help me create?", "The Best AI Image page helps you compare private AI image directions such as profile photos, professional portraits, creator images, seasonal albums, fashion concepts, beauty previews, product lifestyle shots, and social-ready visuals generated from approved source photos."],
+        ["How do I choose the best AI image theme for my use case?", "Choose by destination and intent. LinkedIn headshots need a cleaner professional look, creator campaigns need expressive crops, seasonal cards need clear holiday context, and business or product images need realistic framing that matches the channel where the image will appear."],
+        ["Which source photos produce the best AI image results?", "Use sharp, recent, well-lit photos with visible faces or subjects, natural skin detail, and minimal obstruction. Avoid heavy filters, screenshots, low-resolution crops, copyrighted references, and images of people who have not approved the intended use."],
+        ["Are AI image results private by default?", "Generated image requests are tied to the signed-in myDreamshoots account and delivered through the private workspace or gallery. The images are not treated as a public portfolio by default, but privacy also depends on what you choose to download and share."],
+        ["Can I use generated AI images on profiles, social media, or business pages?", "You can use suitable results when you control the source material, have permission from every person shown, follow platform rules, and include any required AI disclosure. Review commercial claims, endorsements, logos, and sensitive contexts before publishing."],
+        ["How should I review final AI images before download?", "Check face identity, hands, teeth, eyes, text-like marks, background artifacts, clothing details, brand marks, and crop quality. Keep the strongest outputs and avoid using images that could misrepresent a person, location, product, or affiliation."]
       ]
     },
     "best-ai-video": {
       eyebrow: "AI video FAQ",
       title: "Best AI video questions",
-      subtitle: "How still images become private short motion concepts in myDreamshoots.",
+      subtitle: "How myDreamshoots turns approved still images into private short motion concepts with visible credits and review steps.",
       items: [
-        ["What can myDreamshoots AI video tools create?", "Video tools can turn approved stills or finished package outputs into short motion concepts for profile clips, creator intros, product teasers, and album moments."],
-        ["Which still image works best for motion?", "Use a clean image with a clear subject, simple composition, and enough visual detail for movement without overloading faces, hands, or background elements."],
-        ["Are video credit costs shown first?", "Yes. Supported video requests show the format and credit requirement before generation begins."],
-        ["Where do completed clips appear?", "Completed motion outputs stay in the private customer workspace or gallery, where you can review and download them."]
+        ["What can myDreamshoots AI video tools create?", "AI video tools can turn approved still images or finished package outputs into short motion concepts for profile clips, creator intros, product teasers, fan moments, holiday album scenes, and social content drafts."],
+        ["When should I choose AI video instead of an AI image package?", "Choose an AI image package when you need a polished still gallery. Choose an AI video workflow when the goal is motion: a short intro, animated profile concept, product teaser, album moment, or social clip that starts from a strong approved image."],
+        ["Which still image works best for AI video generation?", "Use a clean frame with a clear subject, balanced composition, visible face or product detail, and enough background space for movement. Avoid crowded group photos, tiny faces, heavy blur, text-heavy graphics, and images with complicated hands or overlapping objects."],
+        ["Are AI video credits, format, and duration shown before generation?", "Yes. Supported video requests show the available format, credit requirement, and workflow details before generation starts. Video generation can cost more credits than still images because motion processing is more resource intensive."],
+        ["Where do completed AI video clips appear?", "Completed clips stay inside the private customer workspace or gallery, where you can review playback, check quality, and download the output. Keep the job reference if a video request fails or does not appear as expected."],
+        ["Can I publish AI video outputs on social media or business channels?", "You can publish suitable clips when the source image is approved, every person shown has consented, the content follows platform rules, and any required AI disclosure is included. Review faces, motion artifacts, brand marks, and implied endorsements before posting."]
       ]
     },
     help: {
       eyebrow: "Support FAQ",
       title: "Support questions for myDreamshoots customers",
-      subtitle: "Practical answers for account, billing, upload, privacy, and delivery help.",
+      subtitle: "Detailed help for AI photo requests, account access, billing, credits, policies, private galleries, uploads, and delivery questions.",
       items: [
-        ["How do I get help with a request?", "Contact support with the account email, order or job reference, and a short description of what looks wrong so the team can find the right record."],
-        ["Where can I review policy details?", "Use the privacy, refund, content, terms, and cookie pages for the rules that apply before uploading photos, buying credits, or publishing outputs."],
-        ["Can support explain credit history?", "Yes. Support can review visible order, credit reservation, settlement, release, and failed-request records for the signed-in account."],
-        ["Should I send private source photos by email?", "Avoid sending unnecessary private source photos through public channels. Use the account workspace and provide request details unless support asks for more."]
+        ["How do I get help with an AI photo or AI video request?", "Contact support with the account email, order reference, job reference, package or tool name, and a short description of what happened. Those details help the team locate the generation request, credit reservation, payment event, or private gallery record faster."],
+        ["What information should I include when reporting a bad result?", "Include the page or tool you used, the package direction, the approximate request time, and what looks wrong in the output, such as identity mismatch, crop issue, missing download, image artifact, or video motion problem. Do not send extra private source photos unless support asks for a specific reference."],
+        ["Can support review credits, failed jobs, or refund questions?", "Support can review visible checkout records, credit reservations, settled credits, released credits, failed-request states, and private delivery status tied to the signed-in account. Refund eligibility still follows the current Refund Policy, Terms of Service, and the recorded order status."],
+        ["Where can I read the rules before uploading photos?", "Use the Privacy Policy, Content Policy, Terms of Service, Refund Policy, and Cookie Policy before uploading source photos, buying credits, or publishing outputs. These pages explain privacy, acceptable content, billing, refund, and site-use rules."],
+        ["Should I send private source photos through email or chat?", "Avoid sending unnecessary private photos through external channels. The workspace is the preferred place for source photos and private generation records; support usually needs identifiers and a description before any additional image reference."],
+        ["What if my request involves another person, a brand, or sensitive content?", "Only upload photos you own or have permission to use, and make sure every person shown has approved the intended use. Avoid misleading endorsements, protected logos, public-figure likeness issues, sensitive contexts, or content that violates the Content Policy."]
       ]
     },
     "tool-detail": {
       eyebrow: "Tool FAQ",
       title: "Tool questions before generation",
-      subtitle: "How a focused myDreamshoots tool uses source photos, credits, and private delivery.",
+      subtitle: "How a focused myDreamshoots tool uses approved source photos, visible credits, private galleries, and quality review before download.",
       items: [
-        ["What should I upload for this tool?", "Upload clear source photos or references you own or have permission to use, with the subject visible and the intended edit or style goal in mind."],
-        ["Will this tool show credits before it starts?", "Yes. Paid tool requests show the credit requirement before generation so you can review the cost first."],
-        ["Where do finished tool results go?", "Finished images or clips stay connected to the signed-in customer workspace for review, download, and account history."],
-        ["Can I publish tool outputs?", "Publish only after checking permissions, platform rules, output quality, and any required AI disclosure."]
+        ["What can this myDreamshoots tool create?", "A focused tool creates a specific output such as an AI headshot, portrait style, background edit, image enhancement, creator visual, or short AI video concept. The tool page explains the intended result before you start a private generation request."],
+        ["What should I upload for this tool?", "Upload clear source photos or references you own or have permission to use, with the subject visible, the intended edit in mind, and enough detail for the AI workflow. Better source photos usually improve face consistency, crop quality, and overall realism."],
+        ["Will this tool show credits before it starts?", "Yes. Paid tool requests show the credit requirement before generation, reserve credits while processing, and settle or release credits according to the recorded request status. Review the cost before starting if you are comparing multiple tools."],
+        ["Are finished tool results private?", "Finished images or clips stay connected to the signed-in myDreamshoots workspace or private gallery for review, download, and account history. They are not public by default, but you control what you download and share."],
+        ["Can I publish tool outputs on social media or business pages?", "Publish only after checking source-photo rights, subject consent, destination platform rules, output quality, and any required AI disclosure. Be careful with logos, public figures, misleading affiliations, and commercial claims."],
+        ["What should I review before downloading tool results?", "Inspect faces, hands, eyes, text-like marks, background artifacts, brand marks, crops, and motion quality for video. Keep the strongest results and avoid using outputs that misrepresent identity, a product, or a professional claim."]
       ]
     }
   };
@@ -1685,89 +1701,105 @@ function aidreamcapesPageFaqSection(key: PublicFaqKey): SectionInstance {
     pricing: {
       eyebrow: "Album pricing FAQ",
       title: "Aidreamcapes pricing questions",
-      subtitle: "Credit, album, checkout, and private delivery answers for occasion photo customers.",
+      subtitle: "Detailed answers about Aidreamcapes credits, private album pricing, checkout, delivery, refunds, and occasion photo generation.",
       items: [
-        ["How should I choose an Aidreamcapes plan?", "Choose by how often you expect to create fan-scene, game-day, premiere, holiday, or travel-inspired private albums."],
-        ["Are album credits visible before a request?", "Yes. The current request screen shows credit requirements before an album generation starts."],
-        ["Can a failed album request return credits?", "If a provider request fails before delivery, reserved credits can be released according to the recorded job status."],
-        ["Do prices and package availability change?", "They can. The live pricing and checkout screens control the current offer, included credits, and active album options."]
+        ["How should I choose an Aidreamcapes plan?", "Choose by how often you expect to create private fan-scene albums, game-day group portraits, premiere-inspired sets, holiday cards, seasonal memories, or travel-style photo albums. Higher-credit plans are better for repeated album experiments or motion-ready outputs."],
+        ["Are album credits visible before a request?", "Yes. Aidreamcapes shows the credit requirement before a private album or occasion tool starts generation, so you can compare package direction, output expectations, and budget before credits are reserved."],
+        ["Can I add credits for extra album requests?", "When top-ups are available, they add extra album generation capacity to the same signed-in account without replacing the active plan. Checkout shows the current credit quantity, price, and terms before purchase."],
+        ["Can a failed album request return credits?", "If a provider request fails before delivery, reserved credits can be released according to the recorded job status. Keep the order or job reference when asking support to review a failed album, missing gallery, or billing question."],
+        ["Does pricing include private gallery delivery?", "Aidreamcapes requests are designed around private upload, visible credit review, generation status, and private gallery delivery. Finished images or clips remain connected to the account so you can review and download them before sharing."],
+        ["Do prices and package availability change?", "They can. The live pricing and checkout screens control the current offer, included credits, active album categories, subscription terms, and any seasonal package availability."]
       ]
     },
     tools: {
       eyebrow: "Occasion tools FAQ",
       title: "Aidreamcapes tool questions",
-      subtitle: "How occasion tools handle approved photos, private albums, and credit review.",
+      subtitle: "How Aidreamcapes occasion tools handle approved photos, fan-scene boundaries, credits, private albums, and publishing safety.",
       items: [
-        ["Which occasion tool should I use?", "Choose the tool that matches the moment: fan scenes, game-day groups, holiday cards, travel-style portraits, or permission-safe planning."],
-        ["Do tools recreate real public figures or official marks?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized likenesses, logos, or protected marks."],
-        ["Are source photos private?", "Uploads, requests, credit records, and finished albums remain connected to the signed-in customer account."],
-        ["Can I use results on social pages?", "Yes, when every person has approved the use and the post follows platform, rights, and disclosure rules."]
+        ["Which Aidreamcapes occasion tool should I use?", "Choose the tool that matches the private album moment: fan-scene atmosphere, game-day group energy, holiday cards, travel-style portraits, premiere-inspired photos, or permission-safe content planning."],
+        ["Do tools recreate real public figures or official marks?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized celebrity likenesses, athlete identities, official logos, league marks, venue marks, or misleading affiliation."],
+        ["What source photos work best for occasion tools?", "Use clear, well-lit photos with permission from every person shown. Group tools work better when faces are visible and not heavily overlapping; holiday and fan-scene tools work better when the source photos have enough detail for a private album concept."],
+        ["Are source photos and finished albums private?", "Uploads, request details, credit records, generation status, and finished albums remain connected to the signed-in Aidreamcapes account. Results are delivered to a private gallery for review and download rather than a public listing."],
+        ["How are credits handled for Aidreamcapes tools?", "Supported tools show the credit requirement before generation starts, reserve credits while processing, and settle or release credits according to the recorded request status. Review the cost before starting an album or motion request."],
+        ["Can I use results on social pages?", "Yes, when every person shown approved the use, the content avoids misleading endorsement or official affiliation, and the post follows platform and AI disclosure rules."]
       ]
     },
     collections: {
       eyebrow: "Album collection FAQ",
       title: "Aidreamcapes collection questions",
-      subtitle: "How to compare fan-scene, game-day, holiday, and occasion album categories.",
+      subtitle: "How to compare fan-scene, game-day, holiday, travel, and occasion album collections before spending credits.",
       items: [
-        ["How do I choose an album collection?", "Start with the event feeling: supporter energy, group celebration, holiday memory, premiere flash, or travel-inspired atmosphere."],
-        ["Can groups use Aidreamcapes albums?", "Yes, when the selected album supports multiple people and every subject has approved the source photos and intended use."],
-        ["Are collection examples final guarantees?", "No. They show the creative direction, while source quality, group size, composition, and model behavior affect final results."],
-        ["Where are completed albums delivered?", "Finished albums are delivered to the private gallery connected to the signed-in account."]
+        ["How do I choose an Aidreamcapes album collection?", "Start with the occasion and publishing goal: supporter energy, game-day groups, holiday memories, premiere-style arrivals, travel-inspired portraits, creator scenes, or private celebration albums."],
+        ["Can groups use Aidreamcapes albums?", "Yes, when the selected album supports multiple people and every subject has approved the source photos and intended use. Clear group and individual references help the workflow preserve faces and reduce awkward overlaps."],
+        ["Are collection examples final guarantees?", "No. Examples show creative direction, mood, crop, and use case, while source-photo quality, group size, composition, lighting, and AI model behavior affect final results. Use examples to compare album direction before reserving credits."],
+        ["Do Aidreamcapes collections avoid official identity or logo issues?", "Aidreamcapes collections are designed for original fan-scene and occasion atmosphere. Do not upload or request unauthorized public-figure likenesses, official marks, protected logos, or content that implies a false endorsement."],
+        ["How are album credits and output expectations shown?", "Album pages and generation screens show visible credit requirements before a request starts. When an output count or album scope is available, review it before choosing the direction."],
+        ["Where are completed albums delivered?", "Finished albums are delivered to the private gallery connected to the signed-in account, where you can review, download, and decide which images are appropriate to share."]
       ]
     },
     "best-packages": {
       eyebrow: "Featured albums FAQ",
       title: "Best Aidreamcapes album questions",
-      subtitle: "How featured private album directions help customers compare occasion outputs.",
+      subtitle: "How featured Aidreamcapes private albums help customers compare occasion outputs, source-photo needs, credits, and safe use.",
       items: [
-        ["What appears on the best albums page?", "The page highlights high-intent Aidreamcapes album directions for fan moments, game-day groups, seasonal memories, and creator-ready scenes."],
-        ["Can featured albums change?", "Yes. Featured selections can change as the storefront adds examples, seasonal directions, and active album categories."],
-        ["Do featured albums still require approved photos?", "Yes. Every album request should use source photos you own or have permission to process."],
-        ["Can I compare albums before spending credits?", "Yes. Review examples, use cases, upload guidance, and pricing before starting a private request."]
+        ["What appears on the best Aidreamcapes albums page?", "The page highlights high-intent private album directions for fan moments, game-day groups, seasonal memories, holiday cards, premiere-inspired scenes, and creator-ready occasion photos."],
+        ["How should I compare featured album directions?", "Compare the occasion, sample imagery, source-photo needs, group size, visible credit cost, private delivery path, and intended channel before starting an album request."],
+        ["Can featured albums change?", "Yes. Featured selections can change as Aidreamcapes adds examples, seasonal directions, safer creative boundaries, and active album categories. The live page reflects the current storefront curation."],
+        ["Do featured albums still require approved photos?", "Yes. Every album request should use source photos you own or have permission to process, with consent from every person shown. Avoid protected marks, official logos, and misleading affiliation."],
+        ["Can I compare albums before spending credits?", "Yes. Review examples, use cases, upload guidance, policy boundaries, and pricing before starting a private request. This helps you choose the best album direction for the occasion."],
+        ["Where do featured album results go?", "Finished images or clips stay in the private Aidreamcapes gallery tied to the signed-in account, where you can review quality and download the results that fit your event or campaign."]
       ]
     },
     "best-ai-image": {
       eyebrow: "AI image FAQ",
       title: "Best Aidreamcapes image questions",
-      subtitle: "Quality and rights guidance for private occasion image albums.",
+      subtitle: "Quality, rights, source-photo, and private delivery guidance for Aidreamcapes AI occasion images.",
       items: [
-        ["What makes an Aidreamcapes image direction useful?", "A useful direction has a clear occasion, safe creative boundary, practical crop, and source-photo guidance that matches the album goal."],
-        ["Which images work best as sources?", "Use clear, well-lit photos with visible faces and permission from everyone shown."],
-        ["Can I publish finished images?", "Publish only after checking subject permission, platform rules, affiliation claims, and any required AI disclosure."],
-        ["What should I inspect before download?", "Review faces, hands, marks, captions, crops, and background details before using a finished image publicly."]
+        ["What makes an Aidreamcapes AI image direction useful?", "A useful direction has a clear occasion, safe creative boundary, practical crop, and source-photo guidance that matches the private album goal, whether it is a fan-scene memory, game-day group, holiday card, or travel-style portrait."],
+        ["Which images work best as sources?", "Use clear, well-lit photos with visible faces and permission from everyone shown. Avoid screenshots, tiny crops, heavy filters, unauthorized public-figure references, official logos, and images that imply a false endorsement."],
+        ["How should I choose between image album styles?", "Choose by the scene you want to remember or share: group celebration, supporter atmosphere, seasonal card, premiere-style portrait, travel memory, or creator-ready occasion visual. The best image direction should match the final channel and privacy expectations."],
+        ["Are finished Aidreamcapes images private?", "Finished images stay in the private gallery connected to the signed-in account for review and download. They are not public by default, but you should still decide carefully what to share outside the workspace."],
+        ["Can I publish finished images?", "Publish only after checking subject permission, platform rules, affiliation claims, official marks, sensitive context, and any required AI disclosure. Avoid captions or use cases that suggest an official relationship that does not exist."],
+        ["What should I inspect before download?", "Review faces, hands, marks, captions, crops, background details, logos, and realism before using a finished image publicly or in a campaign."]
       ]
     },
     "best-ai-video": {
       eyebrow: "Motion FAQ",
       title: "Aidreamcapes video questions",
-      subtitle: "How private album images can become short occasion motion concepts.",
+      subtitle: "How private album images can become short occasion motion concepts with visible credits, review steps, and safe publishing guidance.",
       items: [
-        ["What can Aidreamcapes motion tools create?", "They can turn a strong approved still or finished album image into a short motion concept for celebration, memory, or creator use."],
-        ["Which still image works best?", "Use a clean frame with a clear subject, balanced composition, and minimal overlapping faces or hands."],
-        ["Are video credits shown before generation?", "Yes. Supported motion requests show the format and credit requirement before the request starts."],
-        ["Where do finished clips appear?", "Completed clips stay inside the signed-in private gallery or workspace for review and download."]
+        ["What can Aidreamcapes motion tools create?", "Motion tools can turn a strong approved still or finished private album image into a short occasion video concept for celebrations, fan memories, group moments, holiday cards, travel-inspired albums, or creator use."],
+        ["Which still image works best for motion?", "Use a clean frame with a clear subject, balanced composition, visible faces, and minimal overlapping hands or objects. Avoid crowded group photos, tiny faces, heavy blur, and official marks that could create rights or affiliation issues."],
+        ["When should I choose motion instead of still images?", "Choose still images when you need a gallery of downloadable album photos. Choose motion when you want a short clip, intro, celebration moment, or social draft that starts from one strong approved image."],
+        ["Are video credits shown before generation?", "Yes. Supported motion requests show the format and credit requirement before the request starts. Motion generation can require more credits than still images because it uses additional processing."],
+        ["Where do finished clips appear?", "Completed clips stay inside the signed-in private gallery or workspace for review and download. Keep the job reference if a clip fails, takes too long, or does not appear in the expected gallery."],
+        ["Can I publish Aidreamcapes motion outputs?", "You can publish suitable clips when the source image is approved, every person shown has consented, the content avoids misleading official affiliation, and the post follows platform and AI disclosure rules."]
       ]
     },
     help: {
       eyebrow: "Support FAQ",
       title: "Aidreamcapes support questions",
-      subtitle: "Account, album, credit, policy, and delivery help for private occasion albums.",
+      subtitle: "Account, album, credit, policy, rights, upload, and delivery help for private Aidreamcapes occasion albums.",
       items: [
-        ["What should I include in a support request?", "Include the account email, order or job reference, album direction, and a short description of the issue."],
-        ["Where are policy rules explained?", "Use the privacy, content, refund, terms, and cookie pages before uploading source photos, buying credits, or publishing album images."],
-        ["Can support review credit status?", "Support can review visible reservation, settlement, release, failed-request, and checkout records tied to the account."],
-        ["Should I send private photos through email?", "Do not send unnecessary private photos through external channels. Provide request details unless support asks for a specific reference."]
+        ["What should I include in an Aidreamcapes support request?", "Include the account email, order or job reference, album direction, request time, and a short description of the issue, such as missing gallery delivery, credit question, quality concern, or failed generation."],
+        ["Where are policy rules explained?", "Use the Privacy Policy, Content Policy, Refund Policy, Terms of Service, and Cookie Policy before uploading source photos, buying credits, or publishing album images. These pages explain privacy, acceptable content, rights, billing, and site-use rules."],
+        ["Can support review credit status?", "Support can review visible reservation, settlement, release, failed-request, checkout, and delivery records tied to the account. Refund eligibility still depends on the applicable policy and the recorded status of the request."],
+        ["Should I send private photos through email?", "Do not send unnecessary private photos through external channels. Provide request details first, and use the private workspace for source photos unless support asks for a specific reference."],
+        ["What if an album includes a group or fan-scene concept?", "Make sure every person shown has approved the source photos and intended use. Avoid unauthorized public figures, official marks, protected logos, and captions that imply a real endorsement or affiliation."],
+        ["What happens if an album or motion request fails?", "Keep the job reference and contact support if the gallery does not appear, a clip fails, or credits look incorrect. Failed provider requests can release reserved credits according to the recorded status."]
       ]
     },
     "tool-detail": {
       eyebrow: "Tool FAQ",
       title: "Aidreamcapes tool questions before upload",
-      subtitle: "How focused occasion tools use approved photos, credits, and private albums.",
+      subtitle: "How focused Aidreamcapes occasion tools use approved photos, visible credits, private galleries, and safe publishing rules.",
       items: [
-        ["What should I upload for this tool?", "Upload approved source photos or references that match the occasion direction and show each subject clearly."],
-        ["Does the tool copy official identities?", "No. Keep prompts original and avoid unauthorized public-figure likenesses, official marks, protected logos, or misleading affiliation."],
-        ["When are credits used?", "Credits are shown before a request starts, reserved during generation, and settled or released according to the request status."],
-        ["Where do finished results go?", "Finished images or motion outputs stay in the private gallery connected to the signed-in Aidreamcapes account."]
+        ["What can this Aidreamcapes tool create?", "A focused tool creates a specific occasion output such as a fan-scene album image, game-day group portrait, holiday card, premiere-inspired photo, travel-style portrait, or short motion concept from approved source photos."],
+        ["What should I upload for this tool?", "Upload approved source photos or references that match the occasion direction and show each subject clearly. For group tools, include clear faces and avoid heavy overlaps; for motion tools, start with one strong still image."],
+        ["Does the tool copy official identities?", "No. Keep prompts original and avoid unauthorized public-figure likenesses, official marks, protected logos, league marks, venue marks, or misleading affiliation. Aidreamcapes is built around original occasion atmosphere and private albums."],
+        ["When are credits used?", "Credits are shown before a request starts, reserved during generation, and settled or released according to the request status. Review the cost before choosing between still image and motion workflows."],
+        ["Where do finished results go?", "Finished images or motion outputs stay in the private gallery connected to the signed-in Aidreamcapes account for review, download, and account history."],
+        ["Can I publish finished tool results?", "Publish only after checking subject permission, platform rules, AI disclosure requirements, affiliation claims, logos, and overall output quality. Avoid implying a real endorsement or official relationship."]
       ]
     }
   };

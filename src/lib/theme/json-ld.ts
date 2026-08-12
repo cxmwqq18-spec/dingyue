@@ -470,12 +470,17 @@ function themeFaqQuestions(site: Site, input: JsonLdInput | undefined, section: 
   }
   return [
     [`What is the ${label} package?`, aidreamcapes
-      ? `${label} is a focused Aidreamcapes private album that turns approved source photos into fan, game-day, premiere, or holiday imagery with visible credit cost and download-ready results.`
-      : `${label} is a focused MyDreamShoots theme that turns approved source photos into a private gallery with consistent styling, visible credit cost, and download-ready results.`],
-    [`Which source photos work best for ${label}?`, "Use clear, well-lit photos you own or have permission to use. Avoid screenshots, tiny crops, heavy filters, and images of people who have not consented."],
-    [`How many images does ${label} create?`, `This package is configured for ${outputCount} images, and the ${creditCost}-credit cost is shown before the generation request starts.`],
-    [aidreamcapes ? "Where do finished albums go?" : "Where do finished images go?", aidreamcapes ? "Finished Aidreamcapes images stay inside your signed-in private gallery for review and download." : "Finished results stay inside your signed-in private gallery for review and download."],
-    ["What happens if generation fails?", "If a provider request is interrupted before delivery, reserved credits are released or returned according to the request status so you can retry from the workspace."]
+      ? `${label} is a focused Aidreamcapes private album that turns approved source photos into fan, game-day, premiere, holiday, travel, or occasion imagery with visible credit cost and download-ready results. It is designed for customers who want a private gallery around one clear moment instead of a generic image generator.`
+      : `${label} is a focused MyDreamShoots theme that turns approved source photos into a private gallery with consistent styling, visible credit cost, and download-ready results. Use it when you want a specific AI photo set for profiles, creator content, seasonal cards, personal-brand visuals, or social-ready albums.`],
+    [`Which source photos work best for ${label}?`, aidreamcapes
+      ? "Use clear, well-lit photos you own or have permission to use, with every person visible and approved for the intended album. Avoid screenshots, tiny crops, heavy filters, overlapping faces, official logos, public-figure references, and images that could imply a false endorsement."
+      : "Use clear, well-lit photos you own or have permission to use, with faces or subjects visible from a few useful angles. Avoid screenshots, tiny crops, heavy filters, blurred selfies, text-heavy graphics, and images of people who have not consented."],
+    [`How many images does ${label} create and how many credits does it use?`, `This package is configured for ${outputCount} images, and the ${creditCost}-credit cost is shown before the generation request starts. Review the output count, source-photo requirements, and gallery goal before reserving credits.`],
+    [`Can I use ${label} results for social media or business content?`, aidreamcapes
+      ? "You can share suitable results when everyone shown has approved the use, platform rules are followed, AI disclosure is handled where required, and the post does not imply an official relationship with a team, league, celebrity, venue, or brand."
+      : "You can use suitable results for profiles, social posts, creator pages, cards, or business drafts when you control the source photos, every person shown has approved the use, and the destination platform rules and AI disclosure requirements are followed."],
+    [aidreamcapes ? "Where do finished albums go?" : "Where do finished images go?", aidreamcapes ? "Finished Aidreamcapes images stay inside your signed-in private gallery, where you can review faces, hands, marks, crops, and overall realism before downloading the results that fit your occasion." : "Finished results stay inside your signed-in private gallery, where you can review identity details, hands, backgrounds, crops, and overall realism before downloading the images that fit your intended channel."],
+    ["What happens if generation fails?", "If a provider request is interrupted before delivery, reserved credits are released or returned according to the request status so you can retry from the workspace. Keep the job reference if you contact support about a failed generation, missing gallery, or credit question."]
   ];
 }
 
@@ -1048,12 +1053,16 @@ function toolDirectoryFaqSchema(site: Site, item: ReturnType<typeof getSeoDirect
     : aidreamcapes
       ? [
           [`What should I upload for ${item.label}?`, uploadGuidance ?? "Upload clear approved source portraits or references that match the occasion direction you want."],
+          ["What kind of result does this tool create?", `This ${item.label} tool creates a focused Aidreamcapes private album or motion concept for a specific occasion, such as a fan-scene memory, game-day group portrait, holiday card, travel-style scene, or creator-ready moment.`],
+          ["What source photos work best?", "Use clear, well-lit photos with permission from every person shown. Group tools work better with visible faces and a balanced composition; motion tools work better with one strong still image that has room for movement."],
           ["Does this tool recreate official identities?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized public-figure likenesses, logos, official marks, or misleading affiliation."],
           ["When are credits used?", "Credits are shown before a request starts, reserved during generation, and settled or released according to the request status."],
           ["Where do finished albums go?", "Finished images or motion outputs stay in the private gallery connected to the signed-in Aidreamcapes account."]
         ]
       : [
           [`What should I upload for ${item.label}?`, uploadGuidance ?? "Upload clear source photos or references you own or have permission to use, with the subject visible and the intended style goal in mind."],
+          ["What kind of result does this tool create?", `This ${item.label} tool creates a focused MyDreamShoots output such as an AI headshot, portrait edit, background change, creator visual, or short video concept.`],
+          ["What source photos work best?", "Use clear, recent, well-lit photos with the subject visible and enough detail for the workflow to understand identity, pose, and styling. Avoid screenshots, heavy filters, tiny crops, and images you do not own or have permission to process."],
           ["Does this tool use the private workspace?", "Yes. Source photos, request details, credit records, and finished results stay connected to the signed-in MyDreamShoots account."],
           ["When are credits used?", "Paid tool requests show the credit requirement before generation, reserve credits while processing, and release them when a recorded failure returns the reservation."],
           ["Where do finished results go?", "Finished images or clips stay in the private gallery or workspace for review, download, and account history."]
@@ -1183,12 +1192,17 @@ export function buildCollectionDirectoryJsonLd({
       ]
     : [
         [`What is the ${faqLabel} package?`, isAidreamcapesSite(site)
-          ? `${faqLabel} is a focused Aidreamcapes private album that turns approved source photos into fan, game-day, premiere, or holiday imagery with visible credit cost and download-ready results.`
-          : `${faqLabel} is a focused MyDreamShoots theme that turns approved source photos into a private gallery with consistent styling, visible credit cost, and download-ready results.`],
-        [`Which source photos work best for ${faqLabel}?`, "Use clear, well-lit photos you own or have permission to use. Avoid screenshots, tiny crops, heavy filters, and images of people who have not consented."],
-        [`How many images does ${faqLabel} create?`, `This package is configured for ${faqOutputCount} images, and the ${faqCreditCost}-credit cost is shown before the generation request starts.`],
-        [isAidreamcapesSite(site) ? "Where do finished albums go?" : "Where do finished images go?", isAidreamcapesSite(site) ? "Finished Aidreamcapes images stay inside your signed-in private gallery for review and download." : "Finished results stay inside your signed-in private gallery for review and download."],
-        ["What happens if generation fails?", "If a provider request is interrupted before delivery, reserved credits are released or returned according to the request status so you can retry from the workspace."]
+          ? `${faqLabel} is a focused Aidreamcapes private album that turns approved source photos into fan, game-day, premiere, holiday, travel, or occasion imagery with visible credit cost and download-ready results. It is designed for customers who want a private gallery around one clear moment instead of a generic image generator.`
+          : `${faqLabel} is a focused MyDreamShoots theme that turns approved source photos into a private gallery with consistent styling, visible credit cost, and download-ready results. Use it when you want a specific AI photo set for profiles, creator content, seasonal cards, personal-brand visuals, or social-ready albums.`],
+        [`Which source photos work best for ${faqLabel}?`, isAidreamcapesSite(site)
+          ? "Use clear, well-lit photos you own or have permission to use, with every person visible and approved for the intended album. Avoid screenshots, tiny crops, heavy filters, overlapping faces, official logos, public-figure references, and images that could imply a false endorsement."
+          : "Use clear, well-lit photos you own or have permission to use, with faces or subjects visible from a few useful angles. Avoid screenshots, tiny crops, heavy filters, blurred selfies, text-heavy graphics, and images of people who have not consented."],
+        [`How many images does ${faqLabel} create and how many credits does it use?`, `This package is configured for ${faqOutputCount} images, and the ${faqCreditCost}-credit cost is shown before the generation request starts. Review the output count, source-photo requirements, and gallery goal before reserving credits.`],
+        [`Can I use ${faqLabel} results for social media or business content?`, isAidreamcapesSite(site)
+          ? "You can share suitable results when everyone shown has approved the use, platform rules are followed, AI disclosure is handled where required, and the post does not imply an official relationship with a team, league, celebrity, venue, or brand."
+          : "You can use suitable results for profiles, social posts, creator pages, cards, or business drafts when you control the source photos, every person shown has approved the use, and the destination platform rules and AI disclosure requirements are followed."],
+        [isAidreamcapesSite(site) ? "Where do finished albums go?" : "Where do finished images go?", isAidreamcapesSite(site) ? "Finished Aidreamcapes images stay inside your signed-in private gallery, where you can review faces, hands, marks, crops, and overall realism before downloading the results that fit your occasion." : "Finished results stay inside your signed-in private gallery, where you can review identity details, hands, backgrounds, crops, and overall realism before downloading the images that fit your intended channel."],
+        ["What happens if generation fails?", "If a provider request is interrupted before delivery, reserved credits are released or returned according to the request status so you can retry from the workspace. Keep the job reference if you contact support about a failed generation, missing gallery, or credit question."]
       ];
   const itemListElement = (hasMatchingPacks ? matchingPacks : item.useCases.map((useCase, index) => ({
     id: `${item.slug}_${index}`,

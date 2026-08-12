@@ -1909,16 +1909,20 @@ function toolsDirectoryFaqSectionForSite(site: Site): SectionInstance {
         ]
     : isAidreamcapes
       ? [
-          ["Which occasion tool should I use?", "Choose the tool that matches the moment: fan scenes, game-day groups, holiday cards, travel-style portraits, or permission-safe planning."],
-          ["Do tools recreate real public figures or official marks?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized likenesses, logos, or protected marks."],
-          ["Are source photos private?", "Uploads, requests, credit records, and finished albums remain connected to the signed-in customer account."],
-          ["Can I use results on social pages?", "Yes, when every person has approved the use and the post follows platform, rights, and disclosure rules."]
+          ["Which Aidreamcapes occasion tool should I use?", "Choose the tool that matches the private album moment: fan-scene atmosphere, game-day group energy, holiday cards, travel-style portraits, premiere-inspired photos, or permission-safe content planning."],
+          ["Do tools recreate real public figures or official marks?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized celebrity likenesses, athlete identities, official logos, league marks, venue marks, or misleading affiliation."],
+          ["What source photos work best for occasion tools?", "Use clear, well-lit photos with permission from every person shown. Group tools work better when faces are visible and not heavily overlapping; holiday and fan-scene tools work better when the source photos have enough detail for a private album concept."],
+          ["Are source photos and finished albums private?", "Uploads, request details, credit records, generation status, and finished albums remain connected to the signed-in Aidreamcapes account. Results are delivered to a private gallery for review and download rather than a public listing."],
+          ["How are credits handled for Aidreamcapes tools?", "Supported tools show the credit requirement before generation starts, reserve credits while processing, and settle or release credits according to the recorded request status. Review the cost before starting an album or motion request."],
+          ["Can I use results on social pages?", "Yes, when every person shown approved the use, the content avoids misleading endorsement or official affiliation, and the post follows platform and AI disclosure rules."]
         ]
       : [
-          ["Which AI photo tool should I start with?", "Start with the tool that matches the output you need: headshots for professional profiles, creator portraits for campaigns, edit tools for cleanup, and video tools for short motion concepts."],
-          ["Do all tools use the private upload flow?", "Customer-facing tools keep uploads, request details, credit reservations, and finished assets connected to the signed-in myDreamshoots account."],
-          ["Can tool results be used for social or business pages?", "Yes, when you have the rights to the source photos, the people shown have approved the use, and the destination platform rules are followed."],
-          ["What should I inspect before downloading tool results?", "Review faces, hands, text-like details, crops, and overall realism before publishing or reusing the downloaded image or clip."]
+          ["Which AI photo tool should I start with?", "Start with the tool that matches the final asset you need. Use headshot tools for LinkedIn, resumes, founder bios, and team pages; creator portrait tools for media kits and campaign images; edit tools for cleanup or enhancement; and AI video tools when you want a short motion concept from an approved still image."],
+          ["What source photos work best for AI tools?", "Use sharp, recent, well-lit photos where the subject is visible and the intended edit is clear. Avoid screenshots, heavy beauty filters, tiny crops, sunglasses, blurred faces, extreme compression, and any photo you do not own or have permission to process."],
+          ["Do myDreamshoots tools use a private upload flow?", "Yes. Customer-facing AI tools keep source photos, request settings, credit reservations, generation status, and finished images connected to the signed-in myDreamshoots workspace instead of publishing them publicly by default."],
+          ["How are credits shown for AI photo and video tools?", "Paid tools show the credit requirement before generation begins, so you can compare an AI headshot, background edit, image enhancement, portrait style, or AI video request before credits are reserved. Failed requests can release reserved credits according to the recorded job status."],
+          ["Can tool results be used for social media or business pages?", "You can use suitable results for social media, creator pages, LinkedIn, websites, ad drafts, or business profiles when you control the source photos, every person shown has approved the use, and the destination platform rules and AI disclosure requirements are followed."],
+          ["What should I inspect before downloading or publishing results?", "Review identity details, facial consistency, hands, text-like marks, logos, background artifacts, crop quality, and overall realism. AI results should be checked before use in professional profiles, campaigns, printed material, or customer-facing business pages."]
         ];
   return {
     type: "faq",
@@ -1930,8 +1934,8 @@ function toolsDirectoryFaqSectionForSite(site: Site): SectionInstance {
       subtitle: isSpanishXby
         ? "Respuestas sobre fotos fuente, creditos, privacidad y entrega."
         : isAidreamcapes
-          ? "How occasion tools handle approved photos, private albums, and credit review."
-          : "How myDreamshoots tools handle source photos, credits, output review, and private delivery."
+          ? "Answers about Aidreamcapes occasion tools, approved source photos, protected-identity boundaries, credits, privacy, social use, and private album delivery."
+          : "Answers about myDreamshoots AI photo tools, source photos, credits, privacy, quality review, and publishing use."
     },
     blocks: items.map(([question, answer], index) => ({
       id: `tools_directory_faq_${index + 1}`,
@@ -2059,12 +2063,16 @@ function toolDetailFaqBlocksForSite(site: Site, label: string, workflow: string[
     : aidreamcapes
       ? [
           [`What should I upload for ${label}?`, uploadGuidance],
+          ["What kind of result does this tool create?", `This ${label} tool creates a focused Aidreamcapes private album or motion concept for a specific occasion, such as a fan-scene memory, game-day group portrait, holiday card, travel-style scene, or creator-ready moment.`],
+          ["What source photos work best?", "Use clear, well-lit photos with permission from every person shown. Group tools work better with visible faces and a balanced composition; motion tools work better with one strong still image that has room for movement."],
           ["Does this tool recreate official identities?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized public-figure likenesses, logos, official marks, or misleading affiliation."],
           ["When are credits used?", "Credits are shown before a request starts, reserved during generation, and settled or released according to the request status."],
           ["Where do finished albums go?", "Finished images or motion outputs stay in the private gallery connected to the signed-in Aidreamcapes account."]
         ]
       : [
           [`What should I upload for ${label}?`, uploadGuidance],
+          ["What kind of result does this tool create?", `This ${label} tool creates a focused myDreamshoots output such as an AI headshot, portrait edit, background change, creator visual, or short video concept.`],
+          ["What source photos work best?", "Use clear, recent, well-lit photos with the subject visible and enough detail for the workflow to understand identity, pose, and styling. Avoid screenshots, heavy filters, tiny crops, and images you do not own or have permission to process."],
           ["Does this tool use the private workspace?", "Yes. Source photos, request details, credit records, and finished results stay connected to the signed-in myDreamshoots account."],
           ["When are credits used?", "Paid tool requests show the credit requirement before generation, reserve credits while processing, and release them when a recorded failure returns the reservation."],
           [`Where do finished ${imageOrAlbum} go?`, `Finished ${imageOrAlbum} stay in the private gallery or workspace for review, download, and account history.`]
