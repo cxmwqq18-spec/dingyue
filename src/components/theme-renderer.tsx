@@ -8435,7 +8435,7 @@ function SectionView({
               <div className="mt-7 grid max-w-[650px] gap-x-5 gap-y-3 sm:mt-8 sm:grid-cols-2">
                 {proofBullets.map((item) => {
                   const refundLabel = "Read the refund policy";
-                  const refundHref = hrefFor(site, "https://www.mydreamshoots.com/refunds");
+                  const refundHref = hrefFor(site, "/refunds");
                   const parts = item.includes(refundLabel) ? item.split(refundLabel) : null;
                   return (
                     <div className="inline-flex items-start gap-2 text-[0.94rem] leading-6 text-white/80" key={item}>

@@ -44,7 +44,7 @@ const removedHomeSectionsByStore = {
   mydreamshoots: ["visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
   aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
 };
-const expectedBestPackagesOrder = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "faq_1"];
+const expectedBestPackagesOrder = ["intro_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "faq_1"];
 const expectedImageShowcasePriorityCount = 8;
 const expectedImageShowcaseCardCount = 28;
 const expectedHomepageImageGridCardCount = 16;
@@ -318,7 +318,9 @@ function assertBestPackagesPage(pageJson, label) {
   if (pageJson && "pageType" in pageJson) assert(pageJson.pageType === "content", `${label}: Best Packages should be a content page`);
   const order = pageJson?.sectionsOrder ?? pageJson?.content_for_page ?? [];
   assert(order.join("|") === expectedBestPackagesOrder.join("|"), `${label}: unexpected Best Packages order ${order.join("|")}`);
-  for (const sectionId of expectedBestPackagesOrder.filter((id) => id !== "faq_1")) {
+  assert(pageJson?.sections?.intro_1?.type === "rich_text", `${label}: missing Best Packages H1 intro section`);
+  assert(pageJson?.sections?.intro_1?.settings?.headingLevel === "h1", `${label}: Best Packages intro should render the page H1`);
+  for (const sectionId of expectedBestPackagesOrder.filter((id) => !["intro_1", "faq_1"].includes(id))) {
     assert(pageJson?.sections?.[sectionId]?.type === "dreamshoot_featured_pack", `${label}: missing Best Packages section ${sectionId}`);
   }
   assert(pageJson?.sections?.faq_1?.type === "faq", `${label}: missing Best Packages FAQ section`);

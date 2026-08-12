@@ -72,8 +72,8 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 
 - [ ] Header 顶部导航不再展示 `FAQ`，在 `Tools` 后展示 `Best Packages`，链接为 `/best-packages`；`Best Packages` 是普通页面链接，不能触发套餐下拉框；`Workspace` 和右侧 CTA 保持原位。
 - [ ] Footer 的 Product/Explore 入口不再展示旧的 `Headshot Generator` 单项，改为 `Best Packages`、`Best AI image`、`Best AI video`、`Tools`、`How it works`、`Pricing`。
-- [ ] 首页 `/` 仅保留 `featured_thanksgiving_1` 这一组推荐套餐 section，并恢复到 `generation_showcase_1` 后面；`featured_pack_1`、`featured_christmas_1` 只在 `/best-packages` 展示。
-- [ ] `/best-packages` 必须展示三组推荐套餐 section，顺序固定为 `featured_pack_1`、`featured_christmas_1`、`featured_thanksgiving_1`，保留各站点自己的文案和素材。
+- [ ] MyDreamShoots 首页 `/` 不展示推荐套餐 section；Aidreamcapes 首页保留 `featured_thanksgiving_1` 并放在 `generation_showcase_1` 后面；`featured_pack_1`、`featured_christmas_1` 只在 `/best-packages` 展示。
+- [ ] `/best-packages` 必须先展示唯一 H1 intro，再展示三组推荐套餐 section，顺序固定为 `intro_1`、`featured_pack_1`、`featured_christmas_1`、`featured_thanksgiving_1`、`faq_1`，保留各站点自己的文案和素材。
 - [ ] `/best-ai-image` 使用 `dreamshoot_media_gallery` + `fullGallery: true` 展示完整图片主题数据，不能使用首页 priority slug 或固定数量上限；桌面 4 列、移动端自适应折行。
 - [ ] `/best-ai-video` 使用 `dreamshoot_media_gallery` + `fullGallery: true` 展示完整视频案例数据，不能使用首页视频数量上限；桌面 4 列、移动端自适应折行。
 - [ ] 首页和独立媒体页都不显示 `28 EXAMPLES`、`8 CLIPS` 或其他数量标签；首页展示模块文案固定为 `Best Photo Generator`、`Best Video Generator`、`View all photos`、`View all videos`。
@@ -89,8 +89,8 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 
 - [ ] 顶部导航固定保留 `Photoshoot Studio` / `Occasion Albums`、`Tools`、`Best Packages`、`How it works`、`Blog` / `Guides`、`Pricing`、`Workspace`；`Best Packages` 必须紧跟 `Tools`，且必须是页面链接。
 - [ ] Footer 固定保留 `Best Packages`、`Best AI image`、`Best AI video` 三个新入口；旧的单一 `Headshot Generator` footer 入口不得恢复。
-- [ ] 首页推荐套餐只允许出现 `featured_thanksgiving_1`；`featured_pack_1` 和 `featured_christmas_1` 不得回到首页。
-- [ ] `/best-packages` 固定展示 `featured_pack_1`、`featured_christmas_1`、`featured_thanksgiving_1` 三组推荐套餐，不得少于三组，不得改成下拉菜单或局部弹窗。
+- [ ] MyDreamShoots 首页不展示推荐套餐 section；Aidreamcapes 首页推荐套餐只允许出现 `featured_thanksgiving_1`；`featured_pack_1` 和 `featured_christmas_1` 不得回到首页。
+- [ ] `/best-packages` 固定展示唯一 H1 intro、`featured_pack_1`、`featured_christmas_1`、`featured_thanksgiving_1` 和页面专属 FAQ，不得少于三组推荐套餐，不得改成下拉菜单或局部弹窗。
 - [ ] `/best-ai-image` 与 `/best-ai-video` 固定为独立页面，桌面四列、移动端自适应折行，使用完整公开数据源，不得回退成首页滑轨、数量上限或 priority-only 列表。
 - [ ] 首页展示模块文案固定为 `Best Photo Generator`、`Best Video Generator`、`View all photos`、`View all videos`；首页和独立媒体页都不得恢复 `Customer image themes`、`Customer video themes`、`28 EXAMPLES`、`8 CLIPS`。
 - [ ] `/best-ai-image` 与 `/best-ai-video` 的页面说明和 SEO description 不得再出现 `customer` / `customer-created`，统一使用无客户表述的营销文案，例如 `Browse every AI image theme in one simple grid.`、`Browse every AI video case in one simple grid.`。

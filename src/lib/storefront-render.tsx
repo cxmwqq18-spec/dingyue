@@ -37,6 +37,7 @@ import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellR
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
+import { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } from "@/lib/dreamshoot-tool-faq";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
@@ -2022,61 +2023,18 @@ function usesSharedDreamShootNavigation(site: Pick<Site, "id" | "slug" | "name" 
   return /mydreamshoots|dreamshoot/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`) || isAidreamcapesStorefront(site);
 }
 
-function uploadGuidanceFromWorkflow(workflow: string[], fallback: string): string {
-  const candidates = workflow.map((item) => item.trim()).filter(Boolean);
-  const useful = candidates.find((item) => {
-    const normalized = item.toLowerCase();
-    if (/review the result|choose the look|create and download/.test(normalized)) return false;
-    return /\b(upload|photo|photos|source|selfie|selfies|portrait|portraits|reference|references|image|images)\b/.test(normalized);
-  });
-  if (!useful) return fallback;
-  const wordCount = useful.split(/\s+/).filter(Boolean).length;
-  if (wordCount < 6 || /^upload (clear )?source (photos|portraits)\.?$/i.test(useful)) return fallback;
-  return useful;
-}
-
-function toolDetailFaqBlocksForSite(site: Site, label: string, workflow: string[]): SectionBlockInstance[] {
-  const aidreamcapes = isAidreamcapesStorefront(site);
-  const spanishXby = isSpanishXbyStorefront(site);
-  const imageOrAlbum = aidreamcapes ? "albums" : "images";
-  const privateBrand = site.branding.logoText || site.name || (aidreamcapes ? "Aidreamcapes" : "myDreamshoots");
-  const uploadGuidance = uploadGuidanceFromWorkflow(
-    workflow,
-    spanishXby
-      ? "Sube fotos fuente claras y aprobadas que coincidan con la direccion que quieres crear."
-      : aidreamcapes
-        ? "Upload clear approved source portraits or references that match the occasion direction you want."
-        : "Upload clear source photos or references you own or have permission to use, with the subject visible and the intended style goal in mind."
-  );
-  const items = spanishXby
-    ? [
-        [`Que debo subir para ${label}?`, uploadGuidance],
-        ["Los resultados son privados?", `Si. Fotos fuente, pedidos, creditos y resultados terminados permanecen vinculados a la cuenta privada de ${privateBrand}.`],
-        ["Cuando se usan los creditos?", "Los creditos se muestran antes de empezar, se reservan durante la generacion y se liberan si el pedido falla."],
-        [`Donde quedan los ${aidreamcapes ? "albumes" : "resultados"} terminados?`, `Los resultados terminados quedan en la galeria privada para revisar, descargar y decidir que compartir.`]
-      ]
-    : aidreamcapes
-      ? [
-          [`What should I upload for ${label}?`, uploadGuidance],
-          ["What kind of result does this tool create?", `This ${label} tool creates a focused Aidreamcapes private album or motion concept for a specific occasion, such as a fan-scene memory, game-day group portrait, holiday card, travel-style scene, or creator-ready moment.`],
-          ["What source photos work best?", "Use clear, well-lit photos with permission from every person shown. Group tools work better with visible faces and a balanced composition; motion tools work better with one strong still image that has room for movement."],
-          ["Does this tool recreate official identities?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized public-figure likenesses, logos, official marks, or misleading affiliation."],
-          ["When are credits used?", "Credits are shown before a request starts, reserved during generation, and settled or released according to the request status."],
-          ["Where do finished albums go?", "Finished images or motion outputs stay in the private gallery connected to the signed-in Aidreamcapes account."]
-        ]
-      : [
-          [`What should I upload for ${label}?`, uploadGuidance],
-          ["What kind of result does this tool create?", `This ${label} tool creates a focused myDreamshoots output such as an AI headshot, portrait edit, background change, creator visual, or short video concept.`],
-          ["What source photos work best?", "Use clear, recent, well-lit photos with the subject visible and enough detail for the workflow to understand identity, pose, and styling. Avoid screenshots, heavy filters, tiny crops, and images you do not own or have permission to process."],
-          ["Does this tool use the private workspace?", "Yes. Source photos, request details, credit records, and finished results stay connected to the signed-in myDreamshoots account."],
-          ["When are credits used?", "Paid tool requests show the credit requirement before generation, reserve credits while processing, and release them when a recorded failure returns the reservation."],
-          [`Where do finished ${imageOrAlbum} go?`, `Finished ${imageOrAlbum} stay in the private gallery or workspace for review, download, and account history.`]
-        ];
-  return items.map(([question, answer], index) => ({
-    id: `faq_tool_${index + 1}`,
-    type: "faq_item",
-    settings: { question, answer }
-  }));
+function toolDetailFaqBlocksForSite(
+  site: Site,
+  input: {
+    toolSlug: string;
+    label: string;
+    description: string;
+    category: string;
+    workflow: string[];
+    useCases: string[];
+  }
+): SectionBlockInstance[] {
+  return dreamshootToolDetailFaqBlocks({ site, ...input }, `faq_tool_${input.toolSlug}`);
 }
 
 function detailText(detail: ToolMenuItem["detailJson"] | undefined, key: keyof NonNullable<ToolMenuItem["detailJson"]>, fallback: string): string {
@@ -2207,17 +2165,20 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
       : toolDetailUseCaseBlocks(copy)
   };
   if (page.sections.faq_1) {
+    const toolFaqInput = {
+      site,
+      toolSlug,
+      label: effectiveTitle,
+      description: effectiveDescription,
+      category: effectiveCategory,
+      workflow: workflowItems.length ? workflowItems : directoryContent.workflow,
+      useCases: useCaseItems
+    };
     page.sections.faq_1.settings = {
       ...page.sections.faq_1.settings,
-      eyebrow: spanishXby ? "Preguntas de herramienta" : aidreamcapes ? "Aidreamcapes tool questions" : "myDreamshoots tool questions",
-      title: spanishXby ? `FAQ de ${directoryContent.label}` : `${directoryContent.label} FAQ`,
-      subtitle: spanishXby
-        ? "Respuestas sobre fotos fuente, creditos, galerias privadas y entrega antes de generar."
-        : aidreamcapes
-          ? "Answers about approved source photos, credits, private albums, and delivery before you generate."
-          : "Answers about source photos, credits, private galleries, and delivery before you generate."
+      ...dreamshootToolDetailFaqSectionSettings(toolFaqInput)
     };
-    page.sections.faq_1.blocks = toolDetailFaqBlocksForSite(site, directoryContent.label, directoryContent.workflow);
+    page.sections.faq_1.blocks = toolDetailFaqBlocksForSite(site, toolFaqInput);
   }
   const insertAfterEntry = page.sectionsOrder.includes("entry_1") ? page.sectionsOrder.indexOf("entry_1") + 1 : page.sectionsOrder.length;
   page.sectionsOrder.splice(insertAfterEntry, 0, guideSectionId, useCaseSectionId);

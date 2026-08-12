@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { normalizeThemeSeo } from "@/lib/theme/seo";
+import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
@@ -1040,33 +1041,14 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
 }
 
 function toolDirectoryFaqSchema(site: Site, item: ReturnType<typeof getSeoDirectoryContentForSite>): JsonLdNode {
-  const aidreamcapes = isAidreamcapesSite(site);
-  const spanishXby = isSpanishXbySite(site);
-  const uploadGuidance = item.workflow[0] ?? item.workflow[1];
-  const items = spanishXby
-    ? [
-        [`Que debo subir para ${item.label}?`, uploadGuidance ?? "Sube fotos fuente claras y aprobadas que coincidan con la direccion que quieres crear."],
-        ["Los resultados son privados?", "Si. Fotos fuente, pedidos, creditos y resultados terminados permanecen vinculados a la cuenta privada del cliente."],
-        ["Cuando se usan los creditos?", "Los creditos se muestran antes de empezar, se reservan durante la generacion y se liberan si el pedido falla."],
-        [aidreamcapes ? "Donde quedan los albumes terminados?" : "Donde quedan los resultados terminados?", "Los resultados terminados quedan en la galeria privada para revisar y descargar."]
-      ]
-    : aidreamcapes
-      ? [
-          [`What should I upload for ${item.label}?`, uploadGuidance ?? "Upload clear approved source portraits or references that match the occasion direction you want."],
-          ["What kind of result does this tool create?", `This ${item.label} tool creates a focused Aidreamcapes private album or motion concept for a specific occasion, such as a fan-scene memory, game-day group portrait, holiday card, travel-style scene, or creator-ready moment.`],
-          ["What source photos work best?", "Use clear, well-lit photos with permission from every person shown. Group tools work better with visible faces and a balanced composition; motion tools work better with one strong still image that has room for movement."],
-          ["Does this tool recreate official identities?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized public-figure likenesses, logos, official marks, or misleading affiliation."],
-          ["When are credits used?", "Credits are shown before a request starts, reserved during generation, and settled or released according to the request status."],
-          ["Where do finished albums go?", "Finished images or motion outputs stay in the private gallery connected to the signed-in Aidreamcapes account."]
-        ]
-      : [
-          [`What should I upload for ${item.label}?`, uploadGuidance ?? "Upload clear source photos or references you own or have permission to use, with the subject visible and the intended style goal in mind."],
-          ["What kind of result does this tool create?", `This ${item.label} tool creates a focused MyDreamShoots output such as an AI headshot, portrait edit, background change, creator visual, or short video concept.`],
-          ["What source photos work best?", "Use clear, recent, well-lit photos with the subject visible and enough detail for the workflow to understand identity, pose, and styling. Avoid screenshots, heavy filters, tiny crops, and images you do not own or have permission to process."],
-          ["Does this tool use the private workspace?", "Yes. Source photos, request details, credit records, and finished results stay connected to the signed-in MyDreamShoots account."],
-          ["When are credits used?", "Paid tool requests show the credit requirement before generation, reserve credits while processing, and release them when a recorded failure returns the reservation."],
-          ["Where do finished results go?", "Finished images or clips stay in the private gallery or workspace for review, download, and account history."]
-        ];
+  const items = dreamshootToolDetailFaqItems({
+    site,
+    toolSlug: item.slug,
+    label: item.label,
+    description: item.description,
+    workflow: item.workflow,
+    useCases: item.useCases
+  });
   return {
     "@type": "FAQPage",
     mainEntity: items

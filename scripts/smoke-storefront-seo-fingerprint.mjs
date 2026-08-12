@@ -23,20 +23,35 @@ const sites = [
   }
 ];
 
-const approvedSynchronizedHomeOrder = [
-  "hero_1",
-  "featured_thanksgiving_1",
-  "generation_showcase_1",
-  "tutorial_video_1",
-  "tutorial_video_2",
-  "mobile_video_1",
-  "package_catalog_1",
-  "proof_1",
-  "faq_1",
-  "conversion_1",
-  "brand_strip_1"
-];
-const approvedBestPackagesOrder = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
+const approvedHomeOrders = {
+  site_dreamshoot: [
+    "hero_1",
+    "generation_showcase_1",
+    "tutorial_video_1",
+    "tutorial_video_2",
+    "mobile_video_1",
+    "package_catalog_1",
+    "proof_1",
+    "faq_1",
+    "conversion_1",
+    "brand_strip_1"
+  ],
+  site_aidreamcapes: [
+    "hero_1",
+    "generation_showcase_1",
+    "featured_thanksgiving_1",
+    "tutorial_video_1",
+    "tutorial_video_2",
+    "mobile_video_1",
+    "package_catalog_1",
+    "proof_1",
+    "faq_1",
+    "conversion_1",
+    "brand_strip_1"
+  ]
+};
+const homepageFeaturedPackageSectionIds = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
+const approvedBestPackagesOrder = ["intro_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "faq_1"];
 
 const visibleTextKeys = new Set([
   "answer",
@@ -323,12 +338,13 @@ for (const [siteId, order] of [
   ["site_dreamshoot", dreamshootHomeOrder],
   ["site_aidreamcapes", aidreamcapesHomeOrder]
 ]) {
-  if (order.length > 0 && JSON.stringify(order) !== JSON.stringify(approvedSynchronizedHomeOrder)) {
-    failures.push(`home_sections_order_mismatch:${siteId}:expected=${approvedSynchronizedHomeOrder.join(" > ")}:actual=${order.join(" > ")}`);
+  const approvedHomeOrder = approvedHomeOrders[siteId];
+  if (order.length > 0 && approvedHomeOrder && JSON.stringify(order) !== JSON.stringify(approvedHomeOrder)) {
+    failures.push(`home_sections_order_mismatch:${siteId}:expected=${approvedHomeOrder.join(" > ")}:actual=${order.join(" > ")}`);
   }
   const home = getSite(siteId).pages?.find((page) => page.slug === "/" || page.pageType === "home");
-  for (const featuredSectionId of approvedBestPackagesOrder) {
-    if (featuredSectionId === "featured_thanksgiving_1") {
+  for (const featuredSectionId of homepageFeaturedPackageSectionIds) {
+    if (siteId === "site_aidreamcapes" && featuredSectionId === "featured_thanksgiving_1") {
       if (!home?.publishedJson?.sections?.[featuredSectionId]) {
         failures.push(`home_featured_section_missing:${siteId}:${featuredSectionId}`);
       }

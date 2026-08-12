@@ -17,6 +17,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 
 const jiti = createJiti(import.meta.url);
 const { dreamshootAiStudioTemplatesForSite } = jiti("../src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
+const { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } = jiti("../src/lib/dreamshoot-tool-faq.ts");
 
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
@@ -76,7 +77,134 @@ function templateFaq(templates, key) {
   return faq?.type === "faq" ? clone(faq) : null;
 }
 
-function desiredFaqForSlug(templates, page) {
+function templateSection(templates, key, sectionId) {
+  const template = templates?.[key];
+  const section = template?.sections?.[sectionId];
+  return section ? clone(section) : null;
+}
+
+function generatedOrderForTemplateKey(generatedTemplates, key) {
+  const template = generatedTemplates?.[key];
+  const order = Array.isArray(template?.sectionsOrder)
+    ? template.sectionsOrder
+    : Array.isArray(template?.content_for_page)
+      ? template.content_for_page
+      : [];
+  return order.filter(Boolean);
+}
+
+function templateKeyForPublicSlug(page) {
+  const slug = normalizePath(page?.slug);
+  if (slug === "/best-packages") return "best-packages";
+  if (slug === "/best-ai-image") return "best-ai-image";
+  if (slug === "/best-ai-video") return "best-ai-video";
+  return "";
+}
+
+function syncOrderFromGenerated(pageJson, generatedTemplates, key) {
+  if (!["best-packages", "best-ai-image", "best-ai-video"].includes(key)) return 0;
+  if (!pageJson || typeof pageJson !== "object" || !pageJson.sections || typeof pageJson.sections !== "object") return 0;
+  const desiredOrder = generatedOrderForTemplateKey(generatedTemplates, key);
+  if (!desiredOrder.length) return 0;
+  const existingIds = new Set(Object.keys(pageJson.sections));
+  const orderedKnownIds = desiredOrder.filter((id) => existingIds.has(id));
+  const existingOrder = Array.isArray(pageJson.sectionsOrder)
+    ? pageJson.sectionsOrder
+    : Array.isArray(pageJson.content_for_page)
+      ? pageJson.content_for_page
+      : Object.keys(pageJson.sections);
+  const rest = existingOrder.filter((id) => !desiredOrder.includes(id) && existingIds.has(id));
+  const nextOrder = [...orderedKnownIds, ...rest];
+  const before = clone(pageJson);
+  pageJson.sectionsOrder = nextOrder;
+  if (Array.isArray(pageJson.content_for_page)) pageJson.content_for_page = nextOrder;
+  return changed(before, pageJson) ? 1 : 0;
+}
+
+function cleanText(value) {
+  if (typeof value !== "string") return "";
+  return value
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function titleFromSlug(value) {
+  return cleanText(value)
+    .split(/[-_]+/g)
+    .filter(Boolean)
+    .map((word) => (word.length <= 3 && word === word.toUpperCase() ? word : `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`))
+    .join(" ");
+}
+
+function slugFromPath(value) {
+  const slug = normalizePath(value);
+  return slug.split("/").filter(Boolean).pop() ?? "";
+}
+
+function shortDescription(value) {
+  const text = cleanText(value);
+  if (!text) return "";
+  const firstSentence = text.match(/^(.+?[.!?])(?:\s|$)/)?.[1];
+  return cleanText(firstSentence ?? text);
+}
+
+function sentenceWithoutBrandRepeats(value, brand) {
+  return cleanText(value)
+    .replace(new RegExp(`\\s*${brand}\\s+does not recreate[^.]*\\.`, "ig"), " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function toolContextForPage(store, site, state, page) {
+  const toolSlug = slugFromPath(page?.slug);
+  const menuItems = [
+    ...(site?.toolMenuItems ?? []),
+    ...((state.toolMenuItems ?? []).filter((item) => item.siteId === store.siteId))
+  ];
+  const menuItem = menuItems.find((item) => item.slug === toolSlug || normalizePath(item.href) === normalizePath(page?.slug));
+  const sections = page?.publishedJson?.sections ?? page?.draftJson?.sections ?? {};
+  const banner = sections.tool_banner_1?.settings ?? {};
+  const entry = sections.entry_1?.settings ?? {};
+  const label = cleanText(menuItem?.title) || cleanText(page?.title) || cleanText(entry.title) || cleanText(banner.title) || titleFromSlug(toolSlug);
+  const rawDescription =
+    cleanText(menuItem?.description) ||
+    cleanText(page?.publishedJson?.seo?.description) ||
+    cleanText(entry.subtitle) ||
+    cleanText(banner.subtitle) ||
+    `${label} helps customers create private AI photo results from approved source photos.`;
+  const brand = store.key === "aidreamcapes" ? "Aidreamcapes" : "myDreamshoots";
+  const category = cleanText(menuItem?.category?.label) || cleanText(menuItem?.category) || "";
+  const toolDescription = sentenceWithoutBrandRepeats(shortDescription(rawDescription), brand);
+  return {
+    brand,
+    label,
+    slug: toolSlug || label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+    category,
+    description: toolDescription || `${label} helps customers create private AI photo results from approved source photos.`,
+    aiAppSlug: cleanText(entry.aiAppSlug) || cleanText(menuItem?.aiAppSlug)
+  };
+}
+
+function toolDetailFaqForPage(store, site, state, page) {
+  const context = toolContextForPage(store, site, state, page);
+  const faqInput = {
+    site,
+    toolSlug: context.slug,
+    label: context.label,
+    description: context.description,
+    category: context.category,
+    workflow: [],
+    useCases: []
+  };
+  return {
+    type: "faq",
+    settings: dreamshootToolDetailFaqSectionSettings(faqInput),
+    blocks: dreamshootToolDetailFaqBlocks(faqInput, `${store.key}_${context.slug}_faq`)
+  };
+}
+
+function desiredFaqForSlug(templates, page, context = {}) {
   const slug = normalizePath(page?.slug);
   const pageType = String(page?.pageType ?? "");
   const templateKey = String(page?.templateKey ?? "");
@@ -94,7 +222,10 @@ function desiredFaqForSlug(templates, page) {
   if (slug === "/best-packages") return templateFaq(templates, "best-packages");
   if (slug === "/best-ai-image") return templateFaq(templates, "best-ai-image");
   if (slug === "/best-ai-video") return templateFaq(templates, "best-ai-video");
-  if (/^\/tools\/[^/]+$/.test(slug) || pageType === "ai_tool" || templateKey === "tool-detail" || templateKey === "product") return templateFaq(templates, "tool-detail");
+  if (/^\/tools\/[^/]+$/.test(slug) || pageType === "ai_tool" || templateKey === "tool-detail" || templateKey === "product") {
+    if (context.store && context.site && context.state) return toolDetailFaqForPage(context.store, context.site, context.state, page);
+    return templateFaq(templates, "tool-detail");
+  }
   return null;
 }
 
@@ -161,13 +292,41 @@ function syncFaqSection(pageJson, desiredFaq) {
   return changed(before, pageJson) ? 1 : 0;
 }
 
-function updatePageJsonPair(page, templates) {
+function syncBestPackagesIntro(pageJson, generatedTemplates) {
+  if (!pageJson || typeof pageJson !== "object" || !pageJson.sections || typeof pageJson.sections !== "object") return 0;
+  const before = clone(pageJson);
+  const desiredIntro = templateSection(generatedTemplates, "best-packages", "intro_1");
+  if (!desiredIntro) return 0;
+  pageJson.sections.intro_1 = desiredIntro;
+  const order = Array.isArray(pageJson.sectionsOrder) ? pageJson.sectionsOrder : Object.keys(pageJson.sections);
+  const normalizedOrder = [
+    "intro_1",
+    ...order.filter((id) => id !== "intro_1")
+  ];
+  pageJson.sectionsOrder = normalizedOrder;
+  return changed(before, pageJson) ? 1 : 0;
+}
+
+function syncSeoAdditionsForSlug(pageJson, page, generatedTemplates) {
+  const key = templateKeyForPublicSlug(page);
+  let updates = normalizePath(page?.slug) === "/best-packages" ? syncBestPackagesIntro(pageJson, generatedTemplates) : 0;
+  if (key) updates += syncOrderFromGenerated(pageJson, generatedTemplates, key);
+  return updates;
+}
+
+function updatePageJsonPair(page, templates, context = {}) {
   const beforeDraft = page?.draftJson;
   const beforePublished = page?.publishedJson;
   const draftJson = clone(beforeDraft);
   const publishedJson = clone(beforePublished);
-  const desiredFaq = desiredFaqForSlug(templates, page);
-  const updates = syncFaqSection(draftJson, desiredFaq) + syncFaqSection(publishedJson, desiredFaq);
+  const desiredFaq = desiredFaqForSlug(templates, page, context);
+  const updates =
+    syncSeoAdditionsForSlug(draftJson, page, templates) +
+    syncSeoAdditionsForSlug(publishedJson, page, templates) +
+    syncFaqSection(draftJson, desiredFaq) +
+    syncFaqSection(publishedJson, desiredFaq) +
+    syncSeoAdditionsForSlug(draftJson, page, templates) +
+    syncSeoAdditionsForSlug(publishedJson, page, templates);
   return {
     changed: updates > 0 && (changed(beforeDraft, draftJson) || changed(beforePublished, publishedJson)),
     updates,
@@ -176,31 +335,41 @@ function updatePageJsonPair(page, templates) {
   };
 }
 
-function syncFaqInTemplates(themeTemplates, generatedTemplates) {
+function syncFaqInTemplates(themeTemplates, generatedTemplates, context = {}) {
   if (!themeTemplates || typeof themeTemplates !== "object") return 0;
   let updates = 0;
   for (const [key, template] of Object.entries(themeTemplates)) {
     if (!template || typeof template !== "object") continue;
     const desiredFaq = desiredFaqForTemplateKey(generatedTemplates, key);
     if (desiredFaq === undefined) continue;
+    if (key === "best-packages") updates += syncBestPackagesIntro(template, generatedTemplates);
     updates += syncFaqSection(template, desiredFaq);
+    updates += syncOrderFromGenerated(template, generatedTemplates, key);
     if (Array.isArray(template.pages)) {
       for (const page of template.pages) {
-        const pageDesired = desiredFaqForSlug(generatedTemplates, page);
+        updates += syncSeoAdditionsForSlug(page?.draftJson, page, generatedTemplates) + syncSeoAdditionsForSlug(page?.publishedJson, page, generatedTemplates);
+        const pageDesired = desiredFaqForSlug(generatedTemplates, page, context);
         updates += syncFaqSection(page?.draftJson, pageDesired) + syncFaqSection(page?.publishedJson, pageDesired);
+        updates += syncSeoAdditionsForSlug(page?.draftJson, page, generatedTemplates) + syncSeoAdditionsForSlug(page?.publishedJson, page, generatedTemplates);
       }
     }
   }
   return updates;
 }
 
-function syncFaqInSnapshot(snapshot, generatedTemplates) {
+function syncFaqInSnapshot(snapshot, generatedTemplates, context = {}) {
   if (!snapshot || typeof snapshot !== "object") return 0;
   let updates = 0;
+  updates += syncFaqInTemplates(snapshot.saasTheme?.templates, generatedTemplates, context);
+  updates += syncFaqInTemplates(snapshot.theme?.templates, generatedTemplates, context);
   for (const page of Array.isArray(snapshot.pages) ? snapshot.pages : []) {
-    const desiredFaq = desiredFaqForSlug(generatedTemplates, page);
+    updates += syncSeoAdditionsForSlug(page?.draftJson, page, generatedTemplates);
+    updates += syncSeoAdditionsForSlug(page?.publishedJson, page, generatedTemplates);
+    const desiredFaq = desiredFaqForSlug(generatedTemplates, page, context);
     updates += syncFaqSection(page?.draftJson, desiredFaq);
     updates += syncFaqSection(page?.publishedJson, desiredFaq);
+    updates += syncSeoAdditionsForSlug(page?.draftJson, page, generatedTemplates);
+    updates += syncSeoAdditionsForSlug(page?.publishedJson, page, generatedTemplates);
   }
   return updates;
 }
@@ -211,7 +380,7 @@ function updateSiteState(state, store, generatedTemplates) {
   const report = { pages: 0, faqSections: 0, siteThemes: 0, themePublications: 0 };
 
   for (const page of site.pages ?? []) {
-    const result = updatePageJsonPair(page, generatedTemplates);
+    const result = updatePageJsonPair(page, generatedTemplates, { store, site, state });
     if (!result.changed) continue;
     page.draftJson = result.draftJson;
     page.publishedJson = result.publishedJson;
@@ -222,7 +391,16 @@ function updateSiteState(state, store, generatedTemplates) {
   for (const theme of state.siteThemes ?? []) {
     if (theme.siteId !== store.siteId) continue;
     const templates = clone(theme.templates);
-    const updates = syncFaqInTemplates(templates, generatedTemplates);
+    const updates = syncFaqInTemplates(templates, generatedTemplates, { store, site, state });
+    if (!updates || !changed(theme.templates, templates)) continue;
+    theme.templates = templates;
+    report.siteThemes += 1;
+    report.faqSections += updates;
+  }
+
+  for (const theme of site.siteThemes ?? []) {
+    const templates = clone(theme.templates);
+    const updates = syncFaqInTemplates(templates, generatedTemplates, { store, site, state });
     if (!updates || !changed(theme.templates, templates)) continue;
     theme.templates = templates;
     report.siteThemes += 1;
@@ -232,7 +410,21 @@ function updateSiteState(state, store, generatedTemplates) {
   for (const publication of state.themePublications ?? []) {
     if (publication.siteId !== store.siteId) continue;
     const snapshot = clone(publication.snapshot);
-    const updates = syncFaqInSnapshot(snapshot, generatedTemplates);
+    const updates = syncFaqInSnapshot(snapshot, generatedTemplates, { store, site, state });
+    if (!updates || !changed(publication.snapshot, snapshot)) continue;
+    publication.snapshot = snapshot;
+    publication.pageCount = Array.isArray(snapshot.pages) ? snapshot.pages.length : publication.pageCount;
+    publication.sectionCount = Array.isArray(snapshot.pages)
+      ? snapshot.pages.reduce((count, page) => count + Object.keys(page?.publishedJson?.sections ?? {}).length, 0)
+      : publication.sectionCount;
+    publication.snapshotBytes = Buffer.byteLength(JSON.stringify(snapshot), "utf8");
+    report.themePublications += 1;
+    report.faqSections += updates;
+  }
+
+  for (const publication of site.themePublications ?? []) {
+    const snapshot = clone(publication.snapshot);
+    const updates = syncFaqInSnapshot(snapshot, generatedTemplates, { store, site, state });
     if (!updates || !changed(publication.snapshot, snapshot)) continue;
     publication.snapshot = snapshot;
     publication.pageCount = Array.isArray(snapshot.pages) ? snapshot.pages.length : publication.pageCount;
@@ -262,8 +454,18 @@ async function updateDatabase(generatedTemplatesByStore) {
   try {
     for (const store of stores) {
       const generatedTemplates = generatedTemplatesByStore.get(store.siteId);
+      const dbSite = await prisma.site.findUnique({
+        where: { id: store.siteId },
+        include: {
+          toolMenuItems: { include: { category: { include: { parent: true } } } }
+        }
+      });
+      const siteContext = dbSite
+        ? { ...dbSite, branding: dbSite.branding && typeof dbSite.branding === "object" ? dbSite.branding : store.siteSeed?.branding ?? {}, toolMenuItems: dbSite.toolMenuItems }
+        : { id: store.siteId, slug: store.siteSlug, name: store.siteSeed?.name ?? store.siteSlug, primaryDomain: store.siteSeed?.primaryDomain ?? "", branding: store.siteSeed?.branding ?? {}, toolMenuItems: [] };
+      const dbContext = { store, site: siteContext, state: { toolMenuItems: siteContext.toolMenuItems ?? [] } };
       for (const page of await prisma.themePage.findMany({ where: { siteId: store.siteId } })) {
-        const result = updatePageJsonPair(page, generatedTemplates);
+        const result = updatePageJsonPair(page, generatedTemplates, dbContext);
         if (!result.changed) continue;
         await prisma.themePage.update({
           where: { id: page.id },
@@ -275,7 +477,7 @@ async function updateDatabase(generatedTemplatesByStore) {
 
       for (const theme of await prisma.siteTheme.findMany({ where: { siteId: store.siteId } })) {
         const templates = clone(theme.templates);
-        const updates = syncFaqInTemplates(templates, generatedTemplates);
+        const updates = syncFaqInTemplates(templates, generatedTemplates, dbContext);
         if (!updates || !changed(theme.templates, templates)) continue;
         await prisma.siteTheme.update({ where: { id: theme.id }, data: { templates } });
         report.siteThemes += 1;
@@ -284,7 +486,7 @@ async function updateDatabase(generatedTemplatesByStore) {
 
       for (const publication of await prisma.themePublication.findMany({ where: { siteId: store.siteId } })) {
         const snapshot = clone(publication.snapshot);
-        const updates = syncFaqInSnapshot(snapshot, generatedTemplates);
+        const updates = syncFaqInSnapshot(snapshot, generatedTemplates, dbContext);
         if (!updates || !changed(publication.snapshot, snapshot)) continue;
         await prisma.themePublication.update({
           where: { id: publication.id },
