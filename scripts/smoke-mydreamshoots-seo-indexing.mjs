@@ -286,6 +286,14 @@ assert(
   "sitemap URL expansion must cover storefront menu tools, package categories, theme hrefs, and canonical public support pages"
 );
 assert(
+  dreamshootSeoContent.includes("dreamshootDefaultPublicToolSlugs") &&
+    dreamshootSeoContent.includes('"creator-portrait"') &&
+    dreamshootSeoContent.includes('"magic-upscaler"') &&
+    dreamshootSeoContent.includes("indexableDreamshootDefaultTool") &&
+    dreamshootSeoContent.includes("item.explicit || indexableDreamshootDefaultTool"),
+  "default public MyDreamShoots tool detail pages must be indexable when they are included in sitemap coverage"
+);
+assert(
   storefrontStateRelational.includes("creativePackCategories.map(toCreativePackCategory)") &&
     storefrontStateRelational.includes("toolCategories.map(toToolCategory)") &&
     storefrontStateRelational.includes("toolMenuItems.map(toToolMenuItem)") &&
@@ -299,11 +307,24 @@ assert(
     sitemapRoute.includes('request.headers.get("x-forwarded-host")') &&
     sitemapRoute.includes('request.headers.get("host")') &&
     sitemapRoute.includes("getStorefrontSitemapEntriesForHost") &&
+    !sitemapRoute.includes("new Date().toISOString()") &&
+    sitemapRoute.includes("entry.lastmod") &&
+    sitemapRoute.includes("entry.changefreq") &&
     sitemapRoute.includes("xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\"") &&
     sitemapRoute.includes('"cache-control"') &&
     sitemapRoute.includes('"x-sitemap-url-count"') &&
     sitemapRoute.includes('"x-sitemap-image-count"'),
-  "sitemap route must select URLs using the request host and emit cache/diagnostic headers"
+  "sitemap route must select URLs using the request host, emit per-entry sitemap metadata, and avoid request-time lastmod"
+);
+assert(
+  seoIndexing.includes("SITEMAP_STATIC_FALLBACK_LASTMOD") &&
+    seoIndexing.includes("lastmod?: string") &&
+    seoIndexing.includes("latestThemePublicationLastmod") &&
+    seoIndexing.includes("sitemapLastmodForPath") &&
+    seoIndexing.includes("sitemapChangeFrequencyForPath") &&
+    seoIndexing.includes('return "monthly"') &&
+    seoIndexing.includes('return "weekly"'),
+  "sitemap entries must carry stable lastmod values and page-type changefreq metadata from indexing"
 );
 assert(
   seoIndexing.includes("getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>") &&

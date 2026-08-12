@@ -541,6 +541,8 @@ export function toThemePage(record: {
   draftJson: unknown;
   publishedJson: unknown;
   draftMeta?: unknown;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
 }): import("@/lib/types").ThemePage {
   const draftJson = cloneJson(record.draftJson) as import("@/lib/types").ThemePageJson & {
     draftMeta?: import("@/lib/types").ThemeDraftMeta;
@@ -555,7 +557,9 @@ export function toThemePage(record: {
     title: record.title,
     draftJson,
     publishedJson: cloneJson(record.publishedJson) as import("@/lib/types").ThemePageJson,
-    draftMeta
+    draftMeta,
+    createdAt: toIsoString(record.createdAt),
+    updatedAt: toIsoString(record.updatedAt)
   };
 }
 
@@ -886,6 +890,7 @@ export function toToolCategory(record: {
   sortOrder: number;
   status: string;
   createdAt?: Date | string;
+  updatedAt?: Date | string;
 }): ToolCategory {
   return {
     id: record.id,
@@ -899,7 +904,8 @@ export function toToolCategory(record: {
     iconName: record.icon ?? undefined,
     sortOrder: record.sortOrder,
     status: record.status as ToolCategory["status"],
-    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(record.updatedAt)
   };
 }
 
@@ -919,6 +925,7 @@ export function toToolMenuItem(record: {
   sortOrder: number;
   status: string;
   createdAt?: Date | string;
+  updatedAt?: Date | string;
 }): ToolMenuItem {
   return {
     id: record.id,
@@ -935,7 +942,8 @@ export function toToolMenuItem(record: {
     detailJson: jsonObject<ToolMenuItem["detailJson"]>(record.detailJson as Prisma.JsonValue | null | undefined),
     sortOrder: record.sortOrder,
     status: record.status as ToolMenuItem["status"],
-    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(record.updatedAt)
   };
 }
 

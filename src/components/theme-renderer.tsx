@@ -18,6 +18,7 @@ import { DreamshootToolDirectoryClient, type DreamshootToolDirectoryCard } from 
 import { DreamShootMegaToolsPanel as SharedDreamShootMegaToolsPanel, getToolBlocksFromMenuItems as getSharedToolBlocksFromMenuItems } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem } from "@/components/storefront/header-mega-menu-panels";
 import { LazyStorefrontSection } from "@/components/storefront/lazy-storefront-section";
+import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
@@ -8372,9 +8373,9 @@ function SectionView({
                     <StorefrontImage
                       alt={heroGridAlt}
                       className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
-                      fetchPriority={index < 4 ? "high" : "low"}
-                      loading={index < 4 ? "eager" : "lazy"}
-                      priority={index < 4}
+                      fetchPriority={index === 0 ? "high" : "low"}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      priority={index === 0}
                       sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw"
                       src={heroGridImage}
                     />
@@ -8978,13 +8979,13 @@ function SectionView({
           <div className="mt-8 overflow-hidden rounded-[26px] p-[3px] shadow-[0_28px_90px_-52px_rgba(47,111,237,0.24)]" style={{ borderColor: "rgba(47,111,237,0.3)", background: `linear-gradient(180deg, ${accentBlueSoft}, ${accentBlue})` }}>
             <div className="relative overflow-hidden rounded-[24px] bg-[#121216]">
               {videoUrl ? (
-                <video
+                <LazyStorefrontVideo
                   aria-label={setting(section, "playLabel", "Watch tutorial")}
+                  autoPlayOnInteraction
                   className="aspect-[16/9] w-full object-cover"
                   controls
                   playsInline
                   poster={image || undefined}
-                  preload="metadata"
                   src={videoUrl}
                 />
               ) : (
@@ -9079,13 +9080,13 @@ function SectionView({
                   </div>
                   <div className="overflow-hidden rounded-[30px] border-[10px] border-[#030409] bg-black shadow-[0_34px_100px_-58px_rgba(0,0,0,0.96)]">
                     {item.videoUrl ? (
-                      <video
+                      <LazyStorefrontVideo
                         aria-label={item.playLabel}
+                        autoPlayOnInteraction
                         className="aspect-[9/16] h-full w-full object-contain"
                         controls
                         playsInline
                         poster={item.videoPoster || undefined}
-                        preload="auto"
                         src={item.videoUrl}
                       />
                     ) : (
@@ -9124,13 +9125,13 @@ function SectionView({
                 <div className="mx-auto flex h-full max-w-[460px] items-center justify-center">
                   <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[30px] border-[10px] border-[#030409] bg-black shadow-[0_34px_100px_-58px_rgba(0,0,0,0.96)]">
                     {legacyVideoUrl ? (
-                      <video
+                      <LazyStorefrontVideo
                         aria-label={setting(section, "playLabel", "Watch mobile tutorial")}
+                        autoPlayOnInteraction
                         className="h-full w-full object-cover"
                         controls
                         playsInline
                         poster={legacyVideoPoster || undefined}
-                        preload="auto"
                         src={legacyVideoUrl}
                       />
                     ) : (
@@ -11413,6 +11414,16 @@ function SectionView({
     const details = listLines(setting(section, "detailList", ""));
     const useCases = listLines(setting(section, "useCases", ""));
     const workflow = listLines(setting(section, "workflow", ""));
+    const internalLinks = listLines(setting(section, "internalLinks", ""))
+      .map((entry) => {
+        const separator = entry.indexOf("::");
+        if (separator < 1) return undefined;
+        const label = entry.slice(0, separator).trim();
+        const href = entry.slice(separator + 2).trim();
+        if (!label || !/^[/#]/.test(href)) return undefined;
+        return { label, href };
+      })
+      .filter((entry): entry is { label: string; href: string } => Boolean(entry));
     const kind = setting(section, "kind", "collection");
     const spanishXbyDirectory = isSpanishXbySite(site);
     const guideStats = spanishXbyDirectory
@@ -11500,6 +11511,19 @@ function SectionView({
                       </li>
                     ))}
                   </ol>
+                </div>
+              ) : null}
+              {internalLinks.length ? (
+                <div className="mt-6 border-t border-[#eee1cf] pt-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#8b6a4b]">{spanishXbyDirectory ? "Paginas relacionadas" : "Related pages"}</p>
+                  <nav aria-label={spanishXbyDirectory ? "Paginas relacionadas" : "Related pages"} className="mt-3 grid gap-2">
+                    {internalLinks.map((link) => (
+                      <Link className="group inline-flex items-center justify-between gap-3 rounded-[8px] border border-[#eadbc7] bg-[#fffaf3] px-3 py-2 text-sm font-semibold text-[#4b5563] transition hover:border-[#e4561b]/35 hover:text-[#14161a]" href={hrefFor(site, link.href)} key={`${link.label}_${link.href}`}>
+                        <span>{link.label}</span>
+                        <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#e4561b] transition group-hover:translate-x-0.5" strokeWidth={2} />
+                      </Link>
+                    ))}
+                  </nav>
                 </div>
               ) : null}
               <Link className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "ctaHref", "/login"))}>
@@ -11927,7 +11951,7 @@ function SectionView({
                       tabIndex={0}
                     >
                       <div className={isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) ? "aspect-square" : "aspect-[3/4]"}>
-	                        <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={index < 4} src={mediaAssetUrl(site, card.videoUrl)} />
+	                        <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
                       </div>
                       <figcaption className="border-t border-white/10 bg-[#090B12] p-3">
                         <span className="block truncate text-sm font-semibold text-white">{card.title}</span>
@@ -12264,7 +12288,7 @@ function SectionView({
                       tabIndex={0}
                     >
                       <div className="aspect-square min-w-0 max-w-full overflow-hidden">
-                        <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={card.index < 4} src={mediaAssetUrl(site, card.videoUrl)} />
+                        <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
                       </div>
                       <figcaption className="border-t border-white/10 bg-[#090B12] p-3">
                         <span className="block truncate text-sm font-semibold text-white">{card.title}</span>
@@ -12292,7 +12316,7 @@ function SectionView({
                       role="button"
                       tabIndex={0}
                     >
-                      <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={card.index < 4} src={mediaAssetUrl(site, card.videoUrl)} />
+                      <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
                       <figcaption className="sr-only">{`${card.meta} gallery video example.`}</figcaption>
                     </figure>
                   ))}
@@ -15449,14 +15473,13 @@ function SectionView({
                       type="button"
                     >
 	                      {resultVideo ? (
-	                        <video
+	                        <LazyStorefrontVideo
 	                          aria-label={videoPosterAltForSite(site, { meta: cardMeta || customerRole, title: cardTitle })}
 	                          className="absolute inset-0 h-full w-full object-cover"
 	                          controls={false}
 	                          muted
                           playsInline
                           poster={resultImage}
-                          preload="metadata"
                           src={resultVideo}
                         />
 	                      ) : (

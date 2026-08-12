@@ -11,11 +11,8 @@ function escapeXml(value: string): string {
     .replace(/'/g, "&apos;");
 }
 
-function sitemapXml(entries: Array<{ loc: string; images: Array<{ loc: string; title?: string; caption?: string }> }>): string {
-  const now = new Date().toISOString();
+function sitemapXml(entries: Array<{ loc: string; images: Array<{ loc: string; title?: string; caption?: string }>; lastmod?: string; changefreq?: string; priority?: string }>): string {
   const urlEntries = entries.map((entry) => {
-    const changeFrequency = entry.loc.endsWith("/blog/preparing-source-photos") ? "weekly" : "daily";
-    const priority = new URL(entry.loc).pathname === "/" ? "1.0" : "0.7";
     const imageEntries = entry.images.map((image) => [
       "    <image:image>",
       `      <image:loc>${escapeXml(image.loc)}</image:loc>`,
@@ -26,9 +23,9 @@ function sitemapXml(entries: Array<{ loc: string; images: Array<{ loc: string; t
     return [
       "  <url>",
       `    <loc>${escapeXml(entry.loc)}</loc>`,
-      `    <lastmod>${now}</lastmod>`,
-      `    <changefreq>${changeFrequency}</changefreq>`,
-      `    <priority>${priority}</priority>`,
+      ...(entry.lastmod ? [`    <lastmod>${escapeXml(entry.lastmod)}</lastmod>`] : []),
+      ...(entry.changefreq ? [`    <changefreq>${escapeXml(entry.changefreq)}</changefreq>`] : []),
+      ...(entry.priority ? [`    <priority>${escapeXml(entry.priority)}</priority>`] : []),
       ...imageEntries,
       "  </url>"
     ].join("\n");

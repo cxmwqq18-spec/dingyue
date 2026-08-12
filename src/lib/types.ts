@@ -110,6 +110,8 @@ export interface ThemePage {
   draftJson: ThemePageJson;
   publishedJson: ThemePageJson;
   draftMeta?: ThemeDraftMeta;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ThemeSettings {
@@ -546,6 +548,7 @@ export interface ToolCategory {
   sortOrder: number;
   status: "active" | "draft" | "paused";
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface ToolMenuItem {
@@ -575,6 +578,7 @@ export interface ToolMenuItem {
   sortOrder: number;
   status: "active" | "draft" | "paused";
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface AiGatewayGroup {

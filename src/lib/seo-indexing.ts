@@ -35,6 +35,10 @@ const FALLBACK_INDEXABLE_PATHS = [
   "/tools/headshot",
   "/tools/background-changer",
   "/tools/image-to-video",
+  "/tools/background-remover",
+  "/tools/photo-enhancer",
+  "/tools/magic-upscaler",
+  "/tools/virtual-try-on",
   "/privacy",
   "/terms",
   "/cookies",
@@ -136,7 +140,18 @@ const BLOCKED_PATH_PREFIXES = ["/404", "/account", "/admin", "/album", "/api", "
 const NON_PAGE_PATH_PREFIXES = ["/_next", "/assets", "/fonts", "/images", "/media", "/robots.txt", "/sitemap.xml", "/videos"];
 const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy"]);
 const NON_INDEXABLE_TOOL_PATHS = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/image-generator", "/tools/image_generator", "/tools/travel-portraits"]);
-const REQUIRED_INDEXABLE_TOOL_PATHS = ["/tools/photo-ai", "/tools/video-ai", "/tools/ai-photo-edit", "/tools/headshot", "/tools/background-changer", "/tools/image-to-video"];
+const REQUIRED_INDEXABLE_TOOL_PATHS = [
+  "/tools/photo-ai",
+  "/tools/video-ai",
+  "/tools/ai-photo-edit",
+  "/tools/headshot",
+  "/tools/background-changer",
+  "/tools/image-to-video",
+  "/tools/background-remover",
+  "/tools/photo-enhancer",
+  "/tools/magic-upscaler",
+  "/tools/virtual-try-on"
+];
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
   "/tools/headshot",
   "/tools/creator-portrait",
@@ -169,6 +184,7 @@ const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
 ];
 const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/best-packages", "/best-ai-image", "/best-ai-video"];
 const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"];
+const SITEMAP_STATIC_FALLBACK_LASTMOD = "2026-08-01T00:00:00.000Z";
 const DREAMSHOOT_FALLBACK_SITE = { id: DREAMSHOOT_SITE_ID, slug: "mydreamshoots", name: "MyDreamShoots", primaryDomain: "www.mydreamshoots.com" } as Site;
 const AIDREAMCAPES_FALLBACK_SITE = { id: AIDREAMCAPES_SITE_ID, slug: "aidreamcapes", name: "Aidreamcapes", primaryDomain: "www.aidreamcapes.com" } as Site;
 const CANONICAL_PUBLIC_PATHS = new Map([
@@ -348,7 +364,119 @@ type SitemapImageEntry = {
 type SitemapEntry = {
   loc: string;
   images: SitemapImageEntry[];
+  lastmod?: string;
+  changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
+  priority?: string;
 };
+
+function normalizeSitemapDate(value: unknown): string | undefined {
+  if (typeof value !== "string" || !value.trim()) return undefined;
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) ? new Date(timestamp).toISOString() : undefined;
+}
+
+function latestSitemapDate(values: unknown[]): string | undefined {
+  return values
+    .map(normalizeSitemapDate)
+    .filter((value): value is string => Boolean(value))
+    .sort((a, b) => Date.parse(b) - Date.parse(a))[0];
+}
+
+function sitemapPathFromUrl(loc: string): string {
+  try {
+    return normalizePath(new URL(loc).pathname);
+  } catch {
+    return "/";
+  }
+}
+
+function sitemapChangeFrequencyForPath(path: string): SitemapEntry["changefreq"] {
+  const normalized = normalizePath(path);
+  if (normalized === "/" || normalized === "/collections" || normalized === "/tools" || normalized === "/blog") return "daily";
+  if (REQUIRED_INDEXABLE_POLICY_PATHS.includes(normalized)) return "monthly";
+  return "weekly";
+}
+
+function sitemapPriorityForPath(path: string): string {
+  const normalized = normalizePath(path);
+  if (normalized === "/") return "1.0";
+  if (normalized === "/tools" || normalized === "/collections" || normalized === "/blog") return "0.9";
+  if (normalized.startsWith("/tools/") || normalized.startsWith("/collections/")) return "0.8";
+  return "0.7";
+}
+
+function sitemapFallbackEntry(loc: string): SitemapEntry {
+  const path = sitemapPathFromUrl(loc);
+  return {
+    loc,
+    images: [],
+    lastmod: SITEMAP_STATIC_FALLBACK_LASTMOD,
+    changefreq: sitemapChangeFrequencyForPath(path),
+    priority: sitemapPriorityForPath(path)
+  };
+}
+
+function latestThemePublicationLastmod(state: PlatformState, siteId: string): string | undefined {
+  return latestSitemapDate(
+    state.themePublications
+      .filter((publication) => publication.siteId === siteId)
+      .map((publication) => publication.publishedAt)
+  );
+}
+
+function sitemapLastmodForPath(
+  state: PlatformState,
+  site: Site,
+  path: string,
+  sitePages: ThemePage[],
+  activePacks: CreativePack[],
+  sitePublicationLastmod: string | undefined
+): string {
+  const normalizedPath = normalizePath(path);
+  const matchingPage = sitePages.find((page) => pageSitemapPathForSite(site, page) === normalizedPath);
+  const pageLastmod = matchingPage ? latestSitemapDate([matchingPage.updatedAt, matchingPage.createdAt]) : undefined;
+  if (pageLastmod) return pageLastmod;
+
+  if (normalizedPath === "/collections" || normalizedPath.startsWith("/collections/")) {
+    const categorySlug = normalizedPath === "/collections"
+      ? ""
+      : canonicalSeoDirectorySlugForSite(site, "collection", normalizedPath);
+    const matchingCategory = (state.creativePackCategories ?? []).find((category) => {
+      if (category.siteId !== site.id || category.status !== "active") return false;
+      if (!categorySlug) return true;
+      return canonicalSeoDirectorySlugForSite(site, "collection", category.slug || category.label) === categorySlug;
+    });
+    const matchingPacks = activePacks.filter((pack) => normalizedPath === "/collections" || collectionSlugsForPack(site, pack).includes(categorySlug));
+    const collectionLastmod = latestSitemapDate([
+      matchingCategory?.createdAt,
+      ...matchingPacks.map((pack) => pack.createdAt)
+    ]);
+    if (collectionLastmod) return collectionLastmod;
+  }
+
+  if (normalizedPath === "/tools" || normalizedPath.startsWith("/tools/")) {
+    const toolSlug = normalizedPath.startsWith("/tools/") ? normalizedPath.slice("/tools/".length) : "";
+    const matchingTools = (state.toolMenuItems ?? []).filter((item) => {
+      if (item.siteId !== site.id || item.status !== "active") return false;
+      if (!toolSlug) return true;
+      const itemPath = sitePathFromHref(site, item.href || pathFromSlug("/tools", item.slug));
+      return itemPath === normalizedPath || slugifySegment(item.slug) === slugifySegment(toolSlug);
+    });
+    const matchingCategoryIds = new Set(matchingTools.map((item) => item.categoryId).filter(Boolean));
+    const matchingCategories = (state.toolCategories ?? []).filter((category) => {
+      if (category.siteId !== site.id || category.status !== "active") return false;
+      if (!toolSlug) return true;
+      return matchingCategoryIds.has(category.id);
+    });
+    const toolLastmod = latestSitemapDate([
+      ...matchingTools.flatMap((item) => [item.updatedAt, item.createdAt]),
+      ...matchingCategories.flatMap((category) => [category.updatedAt, category.createdAt])
+    ]);
+    if (toolLastmod) return toolLastmod;
+  }
+
+  return sitePublicationLastmod ?? SITEMAP_STATIC_FALLBACK_LASTMOD;
+}
 
 function isSitemapImageKey(key: string): boolean {
   const normalized = key.trim().toLowerCase();
@@ -528,6 +656,7 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
   const entries = new Map(urls.map((loc) => [loc, { loc, images: [] } as SitemapEntry]));
   const activePacks = state.creativePacks.filter((pack) => pack.siteId === site.id && pack.status === "active");
   const sitePages = pagesForSite(site);
+  const sitePublicationLastmod = latestThemePublicationLastmod(state, site.id);
 
   const collectionsEntry = entries.get(sitemapUrl(site, "/collections"));
   if (collectionsEntry) {
@@ -555,7 +684,16 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
     appendSitemapImages(entry, collectPageSitemapImages(site, page));
   }
 
-  return urls.map((loc) => entries.get(loc) ?? { loc, images: [] });
+  return urls.map((loc) => {
+    const entry = entries.get(loc) ?? { loc, images: [] };
+    const path = sitemapPathFromUrl(loc);
+    return {
+      ...entry,
+      lastmod: sitemapLastmodForPath(state, site, path, sitePages, activePacks, sitePublicationLastmod),
+      changefreq: sitemapChangeFrequencyForPath(path),
+      priority: sitemapPriorityForPath(path)
+    };
+  });
 }
 
 function slugifySegment(value: string): string {
@@ -958,10 +1096,7 @@ export async function getStorefrontSitemapUrls(): Promise<string[]> {
 export async function getStorefrontSitemapEntries(): Promise<SitemapEntry[]> {
   const runtime = await readIndexableStateAndSites();
   if (!runtime) {
-    return FALLBACK_INDEXABLE_PATHS.map((path) => ({
-      loc: path === "/" ? MYDREAMSHOOTS_ORIGIN : `${MYDREAMSHOOTS_ORIGIN}${path}`,
-      images: []
-    }));
+    return FALLBACK_INDEXABLE_PATHS.map((path) => sitemapFallbackEntry(path === "/" ? MYDREAMSHOOTS_ORIGIN : `${MYDREAMSHOOTS_ORIGIN}${path}`));
   }
   return runtime.sites.flatMap((site) => sitemapEntriesForSite(runtime.state, site));
 }
@@ -1025,7 +1160,7 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
   const normalizedHosts = normalizeHostCandidates(hosts);
   const normalizedHost = normalizedHosts[0] ?? "";
   if (!normalizedHost) {
-    return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS).map((loc) => ({ loc, images: [] }));
+    return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS).map(sitemapFallbackEntry);
   }
   const publicHostCandidates = normalizedHosts.filter((host) => !isLocalDevelopmentHost(host));
   const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
@@ -1034,15 +1169,15 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
   const shouldUseLegacyStateFirst = prefersLegacyStateForPersistenceBackend() || isLocalHostRequest || process.env.NODE_ENV !== "production";
   const runtime = shouldUseLegacyStateFirst ? await readLegacyIndexableStateAndSites() : await readIndexableStateAndSites();
   if (!runtime) {
-    return publicFallbackSitemapUrlsForHost(siteHostCandidates).map((loc) => ({ loc, images: [] }));
+    return publicFallbackSitemapUrlsForHost(siteHostCandidates).map(sitemapFallbackEntry);
   }
   if (isLocalHostRequest) return runtime.sites.flatMap((site) => sitemapEntriesForSite(runtime.state, site));
   const site =
     getSiteByHostCandidatesFromState(runtime.state, siteHostCandidates) ??
     runtime.sites.find((item) => siteHostCandidates.some((host) => isHostForSite(item, host)));
   if (site) return sitemapEntriesForSite(runtime.state, site);
-  if (siteHostCandidates.some(isAidreamcapesHost)) return (await getAidreamcapesSitemapUrls()).map((loc) => ({ loc, images: [] }));
-  if (siteHostCandidates.some(isMydreamshootsHost)) return (await getMydreamshootsSitemapUrls()).map((loc) => ({ loc, images: [] }));
+  if (siteHostCandidates.some(isAidreamcapesHost)) return (await getAidreamcapesSitemapUrls()).map(sitemapFallbackEntry);
+  if (siteHostCandidates.some(isMydreamshootsHost)) return (await getMydreamshootsSitemapUrls()).map(sitemapFallbackEntry);
   return runtime.sites.flatMap((item) => sitemapEntriesForSite(runtime.state, item));
 }
 

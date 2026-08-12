@@ -574,8 +574,8 @@ const videoShowcaseRenderer = showcaseRenderer.match(/<div className="mt-12">[\s
 const videoFeatureRenderer = themeRenderer.match(/if \(section\.type === "video_feature"\)[\s\S]*?if \(section\.type === "luxury_highlight"\)/)?.[0] ?? "";
 const testimonialRenderer = themeRenderer.match(/if \(section\.type === "testimonial_wall"\)[\s\S]*?if \(section\.type === "faq"\)/)?.[0] ?? "";
 const pricingBillingTable = fs.readFileSync(path.join(repoRoot, "src/components/storefront/pricing-billing-table.tsx"), "utf8");
-assert(videoFeatureRenderer.includes('setting(section, "videoUrl", "")') && videoFeatureRenderer.includes("<video"), "tutorial video feature should render a real videoUrl when configured");
-assert(videoFeatureRenderer.includes("poster={image || undefined}") && videoFeatureRenderer.includes("preload=\"metadata\""), "tutorial video feature should keep poster fallback and metadata loading");
+assert(videoFeatureRenderer.includes('setting(section, "videoUrl", "")') && videoFeatureRenderer.includes("<LazyStorefrontVideo"), "tutorial video feature should render a lazy videoUrl when configured");
+assert(videoFeatureRenderer.includes("poster={image || undefined}") && themeRenderer.includes("LazyStorefrontVideo"), "tutorial video feature should keep poster fallback while deferring mp4 loading");
 assert(showcaseRenderer.includes("dreamshoot-showcase-track"), "showcase should render horizontal showcase rails");
 assert(showcaseRenderer.includes("DreamshootShowcaseRail"), "showcase video rails should auto-scroll without duplicating card data");
 assert(showcaseRenderer.includes("<figure"), "showcase material cards should render as figures");
@@ -639,7 +639,8 @@ assert(showcaseRenderer.includes('fetchPriority={card.productIndex < 4 ? "high" 
 assert(showcaseRenderer.includes('loading={card.productIndex < 4 ? "eager" : "lazy"}'), "showcase should eagerly load initially visible image product cards");
 assert(!imageShowcaseRenderer.includes("{String(card.index + 1).padStart"), "showcase image cards should not show visible numbers");
 assert(showcaseRenderer.includes("DreamshootShowcaseVideo"), "showcase videos should render through the autoplay client component");
-assert(showcaseRenderer.includes("priority={card.index < 4}"), "showcase should eagerly prepare initially visible motion cards");
+assert(showcaseRenderer.includes("priority={false}"), "showcase video cards should stay poster-only by default and defer MP4 requests until near the viewport");
+assert(!showcaseRenderer.includes("priority={card.index < 4}"), "showcase video cards must not eagerly request initially visible MP4 files");
 assert(videoShowcaseRenderer.includes("aspect-square"), "MyDreamShoots homepage video grid should use square media framing to match square showcase video assets");
 assert(mediaGalleryRenderer.includes("aspect-square") && mediaGalleryRenderer.includes('data-dreamshoot-media-gallery-grid="video"'), "Best AI video gallery should use square media framing for MyDreamShoots video assets");
 assert(videoShowcaseRenderer.includes("h-full w-full") && videoShowcaseRenderer.includes("object-cover"), "showcase video cards should preserve media ratio without stretching");

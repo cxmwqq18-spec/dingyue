@@ -2058,11 +2058,19 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
   const aidreamcapes = isAidreamcapesStorefront(site);
   const spanishXby = isSpanishXbyStorefront(site);
   const directoryContent = getSeoDirectoryContentForSite(site, "tool", toolSlug);
+  const useDirectoryToolContent = spanishXby || aidreamcapes || directoryContent.explicit;
+  const toolBrandName = site.branding.logoText || site.name || (aidreamcapes ? "Aidreamcapes" : "myDreamshoots");
   const effectiveCategory = spanishXby ? aidreamcapes ? "Herramienta de viaje IA" : "Herramienta de fotos IA" : category;
-  const effectiveTitle = spanishXby ? directoryContent.label : detailText(detail, "title", aidreamcapes ? directoryContent.label : title);
-  const effectiveDescription = spanishXby ? directoryContent.intro : detailText(detail, "subtitle", aidreamcapes ? directoryContent.intro : blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", copy.intro)));
-  const effectiveCta = detailText(detail, "ctaLabel", spanishXby ? aidreamcapes ? "Crear ruta privada" : "Crear set privado" : aidreamcapes ? directoryContent.ctaLabel : copy.primaryCta);
-  const guideTitle = detailText(detail, "guideTitle", spanishXby ? `Guia de ${effectiveTitle}` : aidreamcapes ? directoryContent.h3[0] ?? copy.guideTitle : copy.guideTitle);
+  const effectiveTitle = useDirectoryToolContent ? directoryContent.label : detailText(detail, "title", title);
+  const effectiveDescription = useDirectoryToolContent
+    ? directoryContent.intro
+    : detailText(detail, "subtitle", blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", copy.intro)));
+  const effectiveCta = useDirectoryToolContent
+    ? directoryContent.ctaLabel
+    : detailText(detail, "ctaLabel", copy.primaryCta);
+  const guideTitle = useDirectoryToolContent
+    ? directoryContent.h3[0] ?? (spanishXby ? `Guia de ${effectiveTitle}` : copy.guideTitle)
+    : detailText(detail, "guideTitle", copy.guideTitle);
   const guideBody = detailText(
     detail,
     "guideBody",
@@ -2072,16 +2080,15 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
         : `Sube fotos fuente claras, elige el estilo, revisa creditos visibles y guarda resultados en la galeria privada de ${site.branding.logoText || site.name}.`
       : aidreamcapes ? directoryContent.workflow.join(" ") : copy.guideBody
   );
-  const detailTitle = detailText(detail, "detailTitle", spanishXby ? `Detalles de ${effectiveTitle}` : aidreamcapes ? `How ${directoryContent.label} fits Aidreamcapes` : `What ${title} is used for`);
-  const detailBody = detailText(
-    detail,
-    "detailBody",
-    spanishXby
-      ? "Esta pagina resume el uso recomendado, las fotos fuente necesarias y el flujo privado antes de iniciar la generacion."
-      : aidreamcapes ? directoryContent.details.join(" ") : copy.detailBody
-  );
-  const workflowItems = spanishXby ? directoryContent.workflow : detailList(detail, "workflow", aidreamcapes ? directoryContent.workflow : []);
-  const useCaseItems = spanishXby ? directoryContent.useCases : detailList(detail, "useCases", aidreamcapes ? directoryContent.useCases : [copy.useCaseOneDescription, copy.useCaseTwoDescription]);
+  const effectiveGuideBody = useDirectoryToolContent ? directoryContent.workflow.join(" ") : guideBody;
+  const detailTitle = useDirectoryToolContent
+    ? spanishXby ? `Detalles de ${effectiveTitle}` : `How ${directoryContent.label} fits ${toolBrandName}`
+    : detailText(detail, "detailTitle", `What ${title} is used for`);
+  const detailBody = useDirectoryToolContent
+    ? directoryContent.details.join(" ")
+    : detailText(detail, "detailBody", copy.detailBody);
+  const workflowItems = useDirectoryToolContent ? directoryContent.workflow : detailList(detail, "workflow", []);
+  const useCaseItems = useDirectoryToolContent ? directoryContent.useCases : detailList(detail, "useCases", [copy.useCaseOneDescription, copy.useCaseTwoDescription]);
   const imageUrl = blockString(tool, "imageUrl", sectionSetting(page, "entry_1", "imageUrl"));
   const appCreateHref = isStandaloneVideoToolSlug(toolSlug) ? "/app/create#step-video" : `/app/create?tool_id=${encodeURIComponent(toolSlug)}`;
   const keptSectionIds = page.sectionsOrder.filter((sectionId) => {
@@ -2132,7 +2139,7 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
     settings: {
       eyebrow: effectiveCategory,
       title: guideTitle,
-      body: guideBody,
+      body: effectiveGuideBody,
       primaryCta: effectiveCta,
       primaryHref: appCreateHref,
       secondaryCta: spanishXby ? "Elegir un plan" : "Choose a plan",
@@ -2160,7 +2167,11 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
       ? useCaseItems.slice(0, 4).map((description, index) => ({
           id: `tool_detail_use_case_${index + 1}`,
           type: "rich_text_card",
-          settings: { meta: index === 0 ? spanishXby ? "Ideal para" : "Best for" : spanishXby ? "Caso de uso" : "Use case", title: description, description }
+          settings: {
+            meta: index === 0 ? spanishXby ? "Ideal para" : "Best for" : spanishXby ? "Caso de uso" : "Use case",
+            title: useDirectoryToolContent ? directoryContent.h3[index + 1] ?? `${spanishXby ? "Caso" : "Use case"} ${index + 1}` : description,
+            description
+          }
         }))
       : toolDetailUseCaseBlocks(copy)
   };
