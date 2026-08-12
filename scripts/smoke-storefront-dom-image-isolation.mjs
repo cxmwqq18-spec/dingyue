@@ -290,7 +290,11 @@ async function visit(page, route) {
   return true;
 }
 
-const browser = await chromium.launch({ headless: true });
+const chromiumExecutablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || "";
+const browser = await chromium.launch({
+  headless: true,
+  ...(chromiumExecutablePath ? { executablePath: chromiumExecutablePath } : {})
+});
 const page = await browser.newPage({ viewport: { width: 1440, height: 1400 } });
 const auditedRoutes = [];
 

@@ -13388,15 +13388,14 @@ function SectionView({
     const heroImage = mediaAssetUrl(site, setting(section, "imageUrl", dreamshootToolSceneDefaults.entry));
     const toolEntryTitle = setting(section, "title", spanishXbyToolEntry ? "Herramienta IA" : "AI tool");
     const toolEntrySubtitle = setting(section, "subtitle", "");
-    const toolEntryBrand = storefrontMediaBrandName(site);
     const toolEntryHeroAlt = spanishXbyImageAlt(site, manualImageAlt({
       explicitAlt: setting(section, "imageAlt", ""),
       src: heroImage,
       fallback: spanishXbyToolEntry
-        ? `Imagen principal de ${toolEntryTitle} mostrando un flujo de album privado con fotos fuente, creditos y resultados terminados en ${toolEntryBrand}.`
+        ? `Imagen principal de ${toolEntryTitle}`
         : (isAidreamcapesSite(site)
           ? fallbackAltFromImageSrc(heroImage)
-          : `${toolEntryTitle} hero scene showing a private AI album workflow with source photos, credits, and finished gallery results for ${toolEntryBrand}.`)
+          : `${toolEntryTitle} hero image`)
     }));
     const toolEntrySteps = spanishXbyToolEntry
       ? [
