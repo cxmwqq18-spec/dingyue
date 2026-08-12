@@ -12038,7 +12038,7 @@ function SectionView({
     const videoCards = generationShowcaseVideoCardsForSite(publicVideoThemesForShowcase(site, videoThemes), selectedVideoSlugs, videoItemLimit);
     const imageProductCards = imageCards.map((card, productIndex) => ({ ...card, productIndex }));
     const homepageImageProductCards = imageProductCards.slice(0, 16);
-    const homepageVideoCards = videoCards.slice(0, 4);
+    const homepageVideoCards = videoCards.slice(0, 8);
     const imageProductRowCount = Math.max(1, Math.ceil(imageProductCards.length / 7));
     type ImageProductWallCard = (typeof imageProductCards)[number] & { railKey: string };
     const imageProductRows: ImageProductWallCard[][] = [];
@@ -12324,7 +12324,7 @@ function SectionView({
               )}
             </div>
           </DreamshootShowcasePreview>
-          {showcaseIntro}
+          {useMydreamShowcaseGrid ? null : showcaseIntro}
           {embeddedPricing}
         </div>
       </section>

@@ -1,6 +1,7 @@
 import { chromium } from "playwright";
 
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(/\/$/, "");
+const base = new URL(baseUrl);
 // This change set is scoped to the two .com storefronts; .eu remains covered by the language/SSR smokes.
 const routeChecks = [
   { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/collections", "/collections/creator-portraits", "/tools", "/best-packages", "/best-ai-image", "/best-ai-video", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] },
@@ -42,6 +43,12 @@ function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function requestHeadersForHost(host) {
+  const headers = { Host: host, "x-forwarded-host": host };
+  if (base.port) headers["x-forwarded-port"] = base.port;
+  return headers;
+}
+
 async function requestGetWithRetry(request, url, options, attempts = 5) {
   let lastError;
   for (let attempt = 0; attempt < attempts; attempt += 1) {
@@ -68,9 +75,18 @@ function normalizeHostPath(host, href) {
   }
 }
 
+function canonicalMediaSrc(value) {
+  const src = decodeHtmlAttribute(value);
+  try {
+    return new URL(src, baseUrl).pathname;
+  } catch {
+    return src.split(/[?#]/)[0] || src;
+  }
+}
+
 async function statusForPath(request, host, path) {
   const response = await requestGetWithRetry(request, `${baseUrl}${path}`, {
-    headers: { Host: host },
+    headers: requestHeadersForHost(host),
     maxRedirects: 0,
     timeout: 60000
   });
@@ -79,7 +95,7 @@ async function statusForPath(request, host, path) {
 
 async function redirectForPath(request, host, path) {
   return requestGetWithRetry(request, `${baseUrl}${path}`, {
-    headers: { Host: host },
+    headers: requestHeadersForHost(host),
     maxRedirects: 0,
     timeout: 60000
   });
@@ -87,7 +103,7 @@ async function redirectForPath(request, host, path) {
 
 async function collectInternalLinks(request, host, path) {
   const response = await requestGetWithRetry(request, `${baseUrl}${path}`, {
-    headers: { Host: host },
+    headers: requestHeadersForHost(host),
     timeout: 60000
   });
   if (response.status() >= 400) return [];
@@ -243,7 +259,7 @@ function invalidVideoLabelReason(host, attrs) {
 
 async function imageAltFailuresForPath(request, host, path) {
   const response = await requestGetWithRetry(request, `${baseUrl}${path}`, {
-    headers: { Host: host },
+    headers: requestHeadersForHost(host),
     timeout: 60000
   });
   if (response.status() >= 400) return [{ host, path, status: response.status(), reason: "image_alt_page_unavailable" }];
@@ -273,7 +289,8 @@ async function imageAltFailuresForPath(request, host, path) {
     const normalizedAlt = String(alt ?? "").replace(/\s+/g, " ").trim().toLowerCase();
     if (!normalizedAlt || !isSeoMediaImage(src) || isDecorativeImage(attrs)) continue;
     const existing = seenMediaAlts.get(normalizedAlt);
-    if (existing && existing.src !== src) {
+    const canonicalSrc = canonicalMediaSrc(src);
+    if (existing && existing.canonicalSrc !== canonicalSrc) {
       failures.push({
         host,
         path,
@@ -284,7 +301,7 @@ async function imageAltFailuresForPath(request, host, path) {
         duplicateOf: existing.src
       });
     } else {
-      seenMediaAlts.set(normalizedAlt, { src, index });
+      seenMediaAlts.set(normalizedAlt, { src, canonicalSrc, index });
     }
   }
   return failures;
@@ -292,7 +309,7 @@ async function imageAltFailuresForPath(request, host, path) {
 
 async function videoLabelFailuresForPath(request, host, path) {
   const response = await requestGetWithRetry(request, `${baseUrl}${path}`, {
-    headers: { Host: host },
+    headers: requestHeadersForHost(host),
     timeout: 60000
   });
   if (response.status() >= 400) return [{ host, path, status: response.status(), reason: "video_label_page_unavailable" }];

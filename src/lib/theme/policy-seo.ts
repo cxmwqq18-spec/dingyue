@@ -384,12 +384,12 @@ const AIDREAMCAPES_POLICY_SEO_BY_CANONICAL: Record<string, Omit<PolicySeoCopy, "
   "/children-privacy": {
     title: "Aidreamcapes KIDS Act",
     description:
-      "Learn how Aidreamcapes handles KIDS Act questions, guardian requests, minor source-photo concerns, uploaded portraits, generated travel images, and private gallery removal questions.",
+      "Learn how Aidreamcapes handles KIDS Act questions, guardian requests, minor source-photo concerns, uploaded portraits, generated occasion images, and private gallery removal questions.",
     keywords: [
       AIDREAMCAPES_POLICY_KEYWORDS,
       "minor source photo privacy",
       "guardian source photo request",
-      "COPPA travel portrait review",
+      "COPPA occasion portrait review",
       "private gallery removal"
     ].join(", ")
   },

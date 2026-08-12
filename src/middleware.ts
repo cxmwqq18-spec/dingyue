@@ -496,7 +496,7 @@ function withInlineAidreamcapesLogo(html: string, request: NextRequest): string 
 
 function nextWithPathname(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-pathname", request.nextUrl.pathname || "/");
+  requestHeaders.set("x-pathname", requestHeaders.get("x-pathname") || request.nextUrl.pathname || "/");
   return NextResponse.next({ request: { headers: requestHeaders } });
 }
 
@@ -593,7 +593,9 @@ export async function middleware(request: NextRequest) {
   if (iconResponse) return applyGrownstrideNoindex(iconResponse, request);
 
   const skipInternalRewrite = request.headers.get(REORDER_SKIP_HEADER) === "1";
-  const redirectResponse = skipInternalRewrite ? undefined : grownstrideLegacyHostRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
+  if (skipInternalRewrite) return applyGrownstrideNoindex(nextWithPathname(request), request);
+
+  const redirectResponse = grownstrideLegacyHostRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
   if (redirectResponse) return applyGrownstrideNoindex(redirectResponse, request);
   if (!shouldRewriteStorefrontHtml(request)) return applyGrownstrideNoindex(nextWithPathname(request), request);
 

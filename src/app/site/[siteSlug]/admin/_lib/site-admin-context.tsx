@@ -864,7 +864,7 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataP
       }).catch((error) => {
         if (!shouldFallbackRelationalRead(error)) throw error;
         warnRelationalFallback("site admin context", error);
-        throw error;
+        return {};
       })
     : Promise.resolve({});
   const customerAdminCollectionsPromise = useLiveAdminReads && needsFullCustomerCollections

@@ -103,15 +103,47 @@ function siteThemeData(theme) {
   });
 }
 
-function publicationData(publication, site) {
+function publicationData(publication, site, siteThemes = []) {
+  const activeTheme = siteThemes.find((theme) => theme.status === "active") ?? siteThemes[0];
+  const sourceSnapshot = json(publication.snapshot);
+  const snapshot = {
+    ...clone(sourceSnapshot),
+    pages: asArray(site.pages).map((page) => ({
+      id: page.id,
+      siteId,
+      pageType: page.pageType,
+      templateKey: page.templateKey ?? null,
+      slug: page.slug,
+      title: page.title,
+      draftJson: json(page.draftJson),
+      publishedJson: json(page.publishedJson),
+      draftMeta: page.draftMeta ? clone(page.draftMeta) : undefined,
+      updatedAt: page.updatedAt
+    })),
+    themeSettings: json(site.themeSettings.publishedJson)
+  };
+
+  if (activeTheme) {
+    snapshot.saasTheme = {
+      ...(sourceSnapshot.saasTheme ?? {}),
+      name: activeTheme.name,
+      themeId: activeTheme.themeId,
+      themeKey: activeTheme.themeKey,
+      status: activeTheme.status,
+      templates: json(activeTheme.templates),
+      settings: json(activeTheme.settings),
+      updatedAt: activeTheme.updatedAt
+    };
+  }
+
   return stripUndefined({
     id: publication.id,
     siteId: publication.siteId,
     version: publication.version,
-    snapshot: json(publication.snapshot),
-    pageCount: publication.snapshot?.pages?.length ?? site.pages.length,
+    snapshot,
+    pageCount: snapshot.pages.length,
     sectionCount: site.pages.reduce((sum, page) => sum + Object.keys(page.publishedJson?.sections ?? {}).length, 0),
-    snapshotBytes: Buffer.byteLength(JSON.stringify(publication.snapshot ?? {}), "utf8"),
+    snapshotBytes: Buffer.byteLength(JSON.stringify(snapshot), "utf8"),
     publishedBy: publication.publishedBy,
     publishedAt: toDate(publication.publishedAt)
   });
@@ -178,7 +210,7 @@ async function writeScopedContent(tx, records) {
   }
 
   for (const publication of records.themePublications) {
-    const data = publicationData(publication, records.site);
+    const data = publicationData(publication, records.site, records.siteThemes);
     const existing = await tx.themePublication.findUnique({
       where: {
         siteId_version: {
@@ -201,7 +233,7 @@ async function writeScopedContent(tx, records) {
     orderBy: [{ version: "desc" }]
   });
   if (sourcePublication && latestDatabasePublication) {
-    const sourceData = publicationData(sourcePublication, records.site);
+    const sourceData = publicationData(sourcePublication, records.site, records.siteThemes);
     await tx.themePublication.update({
       where: { id: latestDatabasePublication.id },
       data: {

@@ -1704,7 +1704,7 @@ function aidreamcapesPageFaqSection(key: PublicFaqKey): SectionInstance {
       title: "Aidreamcapes pricing questions",
       subtitle: "Detailed answers about Aidreamcapes credits, private album pricing, checkout, delivery, refunds, and occasion photo generation.",
       items: [
-        ["How should I choose an Aidreamcapes plan?", "Choose by how often you expect to create private fan-scene albums, game-day group portraits, premiere-inspired sets, holiday cards, seasonal memories, or travel-style photo albums. Higher-credit plans are better for repeated album experiments or motion-ready outputs."],
+        ["How should I choose an Aidreamcapes plan?", "Choose by how often you expect to create private fan-scene albums, game-day group portraits, premiere-inspired sets, holiday cards, seasonal memories, or creator occasion albums. Higher-credit plans are better for repeated album experiments or motion-ready outputs."],
         ["Are album credits visible before a request?", "Yes. Aidreamcapes shows the credit requirement before a private album or occasion tool starts generation, so you can compare package direction, output expectations, and budget before credits are reserved."],
         ["Can I add credits for extra album requests?", "When top-ups are available, they add extra album generation capacity to the same signed-in account without replacing the active plan. Checkout shows the current credit quantity, price, and terms before purchase."],
         ["Can a failed album request return credits?", "If a provider request fails before delivery, reserved credits can be released according to the recorded job status. Keep the order or job reference when asking support to review a failed album, missing gallery, or billing question."],
@@ -1717,7 +1717,7 @@ function aidreamcapesPageFaqSection(key: PublicFaqKey): SectionInstance {
       title: "Aidreamcapes tool questions",
       subtitle: "How Aidreamcapes occasion tools handle approved photos, fan-scene boundaries, credits, private albums, and publishing safety.",
       items: [
-        ["Which Aidreamcapes occasion tool should I use?", "Choose the tool that matches the private album moment: fan-scene atmosphere, game-day group energy, holiday cards, travel-style portraits, premiere-inspired photos, or permission-safe content planning."],
+        ["Which Aidreamcapes occasion tool should I use?", "Choose the tool that matches the private album moment: fan-scene atmosphere, game-day group energy, holiday cards, creator occasion portraits, premiere-inspired photos, or permission-safe content planning."],
         ["Do tools recreate real public figures or official marks?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized celebrity likenesses, athlete identities, official logos, league marks, venue marks, or misleading affiliation."],
         ["What source photos work best for occasion tools?", "Use clear, well-lit photos with permission from every person shown. Group tools work better when faces are visible and not heavily overlapping; holiday and fan-scene tools work better when the source photos have enough detail for a private album concept."],
         ["Are source photos and finished albums private?", "Uploads, request details, credit records, generation status, and finished albums remain connected to the signed-in Aidreamcapes account. Results are delivered to a private gallery for review and download rather than a public listing."],
@@ -1728,9 +1728,9 @@ function aidreamcapesPageFaqSection(key: PublicFaqKey): SectionInstance {
     collections: {
       eyebrow: "Album collection FAQ",
       title: "Aidreamcapes collection questions",
-      subtitle: "How to compare fan-scene, game-day, holiday, travel, and occasion album collections before spending credits.",
+      subtitle: "How to compare fan-scene, game-day, holiday, premiere, and occasion album collections before spending credits.",
       items: [
-        ["How do I choose an Aidreamcapes album collection?", "Start with the occasion and publishing goal: supporter energy, game-day groups, holiday memories, premiere-style arrivals, travel-inspired portraits, creator scenes, or private celebration albums."],
+        ["How do I choose an Aidreamcapes album collection?", "Start with the occasion and publishing goal: supporter energy, game-day groups, holiday memories, premiere-style arrivals, creator portraits, fan-scene concepts, or private celebration albums."],
         ["Can groups use Aidreamcapes albums?", "Yes, when the selected album supports multiple people and every subject has approved the source photos and intended use. Clear group and individual references help the workflow preserve faces and reduce awkward overlaps."],
         ["Are collection examples final guarantees?", "No. Examples show creative direction, mood, crop, and use case, while source-photo quality, group size, composition, lighting, and AI model behavior affect final results. Use examples to compare album direction before reserving credits."],
         ["Do Aidreamcapes collections avoid official identity or logo issues?", "Aidreamcapes collections are designed for original fan-scene and occasion atmosphere. Do not upload or request unauthorized public-figure likenesses, official marks, protected logos, or content that implies a false endorsement."],
@@ -1756,9 +1756,9 @@ function aidreamcapesPageFaqSection(key: PublicFaqKey): SectionInstance {
       title: "Best Aidreamcapes image questions",
       subtitle: "Quality, rights, source-photo, and private delivery guidance for Aidreamcapes AI occasion images.",
       items: [
-        ["What makes an Aidreamcapes AI image direction useful?", "A useful direction has a clear occasion, safe creative boundary, practical crop, and source-photo guidance that matches the private album goal, whether it is a fan-scene memory, game-day group, holiday card, or travel-style portrait."],
+        ["What makes an Aidreamcapes AI image direction useful?", "A useful direction has a clear occasion, safe creative boundary, practical crop, and source-photo guidance that matches the private album goal, whether it is a fan-scene memory, game-day group, holiday card, or creator occasion portrait."],
         ["Which images work best as sources?", "Use clear, well-lit photos with visible faces and permission from everyone shown. Avoid screenshots, tiny crops, heavy filters, unauthorized public-figure references, official logos, and images that imply a false endorsement."],
-        ["How should I choose between image album styles?", "Choose by the scene you want to remember or share: group celebration, supporter atmosphere, seasonal card, premiere-style portrait, travel memory, or creator-ready occasion visual. The best image direction should match the final channel and privacy expectations."],
+        ["How should I choose between image album styles?", "Choose by the scene you want to remember or share: group celebration, supporter atmosphere, seasonal card, premiere-style portrait, fan moment, or creator-ready occasion visual. The best image direction should match the final channel and privacy expectations."],
         ["Are finished Aidreamcapes images private?", "Finished images stay in the private gallery connected to the signed-in account for review and download. They are not public by default, but you should still decide carefully what to share outside the workspace."],
         ["Can I publish finished images?", "Publish only after checking subject permission, platform rules, affiliation claims, official marks, sensitive context, and any required AI disclosure. Avoid captions or use cases that suggest an official relationship that does not exist."],
         ["What should I inspect before download?", "Review faces, hands, marks, captions, crops, background details, logos, and realism before using a finished image publicly or in a campaign."]
@@ -1769,7 +1769,7 @@ function aidreamcapesPageFaqSection(key: PublicFaqKey): SectionInstance {
       title: "Aidreamcapes video questions",
       subtitle: "How private album images can become short occasion motion concepts with visible credits, review steps, and safe publishing guidance.",
       items: [
-        ["What can Aidreamcapes motion tools create?", "Motion tools can turn a strong approved still or finished private album image into a short occasion video concept for celebrations, fan memories, group moments, holiday cards, travel-inspired albums, or creator use."],
+        ["What can Aidreamcapes motion tools create?", "Motion tools can turn a strong approved still or finished private album image into a short occasion video concept for celebrations, fan memories, group moments, holiday cards, premiere-style albums, or creator use."],
         ["Which still image works best for motion?", "Use a clean frame with a clear subject, balanced composition, visible faces, and minimal overlapping hands or objects. Avoid crowded group photos, tiny faces, heavy blur, and official marks that could create rights or affiliation issues."],
         ["When should I choose motion instead of still images?", "Choose still images when you need a gallery of downloadable album photos. Choose motion when you want a short clip, intro, celebration moment, or social draft that starts from one strong approved image."],
         ["Are video credits shown before generation?", "Yes. Supported motion requests show the format and credit requirement before the request starts. Motion generation can require more credits than still images because it uses additional processing."],
@@ -1795,7 +1795,7 @@ function aidreamcapesPageFaqSection(key: PublicFaqKey): SectionInstance {
       title: "Aidreamcapes occasion tool questions",
       subtitle: "A fallback FAQ for new Aidreamcapes tool pages before the page-specific FAQ sync writes questions based on the occasion, source-photo needs, and private album output.",
       items: [
-        ["How should I choose an Aidreamcapes occasion tool?", "Choose the tool that matches the private album moment you want to create, such as fan-scene atmosphere, game-day group energy, holiday cards, travel-style portraits, premiere-inspired photos, or a short motion concept from an approved still image."],
+        ["How should I choose an Aidreamcapes occasion tool?", "Choose the tool that matches the private album moment you want to create, such as fan-scene atmosphere, game-day group energy, holiday cards, creator occasion portraits, premiere-inspired photos, or a short motion concept from an approved still image."],
         ["Which source photos are best for occasion tools?", "Use clear, well-lit photos with permission from everyone shown. Group tools work better with visible faces and less overlap, while motion tools usually need one strong still image with a clear subject and room for movement."],
         ["How should I describe a fan-scene or holiday request?", "Keep the direction original and practical: describe mood, crop, setting, colors, group size, and album use. Avoid unauthorized public-figure likenesses, official team logos, venue marks, brand logos, trademarks, or captions that imply a real endorsement."],
         ["How do credits work for Aidreamcapes tools?", "Supported tools show the credit requirement before an album or motion request starts. Credits can be reserved during processing and settled or released according to the recorded request status, which helps customers compare still image and motion options."],

@@ -10,8 +10,21 @@ const failures = [];
 
 const aidreamcapesSiteId = "site_aidreamcapes";
 const mydreamshootsSiteId = "site_dreamshoot";
-const expectedBestPackagesOrder = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
-const expectedHomeOrder = [
+const expectedFeaturedPackageIds = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
+const expectedBestPackagesOrder = ["intro_1", ...expectedFeaturedPackageIds, "faq_1"];
+const expectedMydreamshootsHomeOrder = [
+  "hero_1",
+  "generation_showcase_1",
+  "tutorial_video_1",
+  "tutorial_video_2",
+  "mobile_video_1",
+  "package_catalog_1",
+  "proof_1",
+  "faq_1",
+  "conversion_1",
+  "brand_strip_1"
+];
+const expectedAidreamcapesHomeOrder = [
   "hero_1",
   "generation_showcase_1",
   "featured_thanksgiving_1",
@@ -171,21 +184,29 @@ function collectionSlugsForFeaturedSection(section) {
     .map((block) => String(block?.settings?.collectionSlug ?? "").trim());
 }
 
-function requireHomeWithoutFeaturedPacks(data, siteId) {
+function requireHomeFeaturedPackBaseline(data, siteId, options = {}) {
+  const { thanksgivingOnHome = false } = options;
   const homePage = data.pages.find((page) => page.slug === "/" || page.pageType === "home");
   const pageJson = homePage?.publishedJson;
   const order = pageJson?.sectionsOrder ?? [];
-  const featuredOrder = order.filter((id) => String(id).startsWith("featured_") && id !== "featured_thanksgiving_1");
-  if (featuredOrder.length) {
-    fail(`${siteId}_home_featured_pack_order:${featuredOrder.join(",")}`);
+  const featuredOrder = order.filter((id) => String(id).startsWith("featured_"));
+  const unexpectedFeaturedOrder = thanksgivingOnHome
+    ? featuredOrder.filter((id) => id !== "featured_thanksgiving_1")
+    : featuredOrder;
+  if (unexpectedFeaturedOrder.length) {
+    fail(`${siteId}_home_featured_pack_order:${unexpectedFeaturedOrder.join(",")}`);
   }
+  const expectedHomeOrder = thanksgivingOnHome ? expectedAidreamcapesHomeOrder : expectedMydreamshootsHomeOrder;
   if (JSON.stringify(order) !== JSON.stringify(expectedHomeOrder)) {
     fail(`${siteId}_home_order:${order.join(",")}`);
   }
-  if (pageJson?.sections?.featured_thanksgiving_1?.type !== "dreamshoot_featured_pack") {
+  if (thanksgivingOnHome && pageJson?.sections?.featured_thanksgiving_1?.type !== "dreamshoot_featured_pack") {
     fail(`${siteId}_home_missing_thanksgiving_featured_pack`);
   }
-  for (const id of expectedBestPackagesOrder.filter((sectionId) => sectionId !== "featured_thanksgiving_1")) {
+  if (!thanksgivingOnHome && pageJson?.sections?.featured_thanksgiving_1) {
+    fail(`${siteId}_home_featured_pack_not_removed:featured_thanksgiving_1`);
+  }
+  for (const id of expectedFeaturedPackageIds.filter((sectionId) => thanksgivingOnHome ? sectionId !== "featured_thanksgiving_1" : true)) {
     if (pageJson?.sections?.[id]) fail(`${siteId}_home_featured_pack_not_removed:${id}`);
   }
 }
@@ -197,7 +218,7 @@ function requireBestPackagesPage(data, siteId, checks) {
   if (JSON.stringify(order) !== JSON.stringify(expectedBestPackagesOrder)) {
     fail(`${siteId}_best_packages_order:${order.join(",")}`);
   }
-  for (const id of expectedBestPackagesOrder) {
+  for (const id of expectedFeaturedPackageIds) {
     if (pageJson?.sections?.[id]?.type !== "dreamshoot_featured_pack") fail(`${siteId}_missing_best_package_section:${id}`);
   }
   for (const check of checks) {
@@ -224,18 +245,30 @@ function requireBestPackagesPage(data, siteId, checks) {
   }
 }
 
-function requirePublishedSnapshotBestPackages(data, siteId) {
+function requirePublishedSnapshotBestPackages(data, siteId, options = {}) {
+  const { thanksgivingOnHome = false } = options;
   for (const publication of data.themePublications) {
     const homeSnapshot = publication.snapshot?.pages?.find((page) => page.slug === "/" || page.pageType === "home");
     const homeJson = homeSnapshot?.publishedJson ?? homeSnapshot?.draftJson;
-  const homeFeaturedOrder = (homeJson?.sectionsOrder ?? []).filter((id) => String(id).startsWith("featured_"));
-    if (homeFeaturedOrder.some((id) => id !== "featured_thanksgiving_1")) {
-      fail(`${siteId}_publication_home_featured_pack_order:${publication.id}:${homeFeaturedOrder.join(",")}`);
+    const homeFeaturedOrder = (homeJson?.sectionsOrder ?? []).filter((id) => String(id).startsWith("featured_"));
+    const unexpectedFeaturedOrder = thanksgivingOnHome
+      ? homeFeaturedOrder.filter((id) => id !== "featured_thanksgiving_1")
+      : homeFeaturedOrder;
+    if (unexpectedFeaturedOrder.length) {
+      fail(`${siteId}_publication_home_featured_pack_order:${publication.id}:${unexpectedFeaturedOrder.join(",")}`);
     }
-    if (homeJson?.sections?.featured_thanksgiving_1?.type !== "dreamshoot_featured_pack") {
+    const expectedHomeOrder = thanksgivingOnHome ? expectedAidreamcapesHomeOrder : expectedMydreamshootsHomeOrder;
+    const homeOrder = homeJson?.sectionsOrder ?? [];
+    if (JSON.stringify(homeOrder) !== JSON.stringify(expectedHomeOrder)) {
+      fail(`${siteId}_publication_home_order:${publication.id}:${homeOrder.join(",")}`);
+    }
+    if (thanksgivingOnHome && homeJson?.sections?.featured_thanksgiving_1?.type !== "dreamshoot_featured_pack") {
       fail(`${siteId}_publication_missing_thanksgiving_featured_pack:${publication.id}`);
     }
-    for (const id of expectedBestPackagesOrder.filter((sectionId) => sectionId !== "featured_thanksgiving_1")) {
+    if (!thanksgivingOnHome && homeJson?.sections?.featured_thanksgiving_1) {
+      fail(`${siteId}_publication_home_featured_pack_not_removed:${publication.id}:featured_thanksgiving_1`);
+    }
+    for (const id of expectedFeaturedPackageIds.filter((sectionId) => thanksgivingOnHome ? sectionId !== "featured_thanksgiving_1" : true)) {
       if (homeJson?.sections?.[id]) fail(`${siteId}_publication_home_featured_pack_not_removed:${publication.id}:${id}`);
     }
 
@@ -245,7 +278,7 @@ function requirePublishedSnapshotBestPackages(data, siteId) {
     if (JSON.stringify(order) !== JSON.stringify(expectedBestPackagesOrder)) {
       fail(`${siteId}_publication_best_packages_order:${publication.id}:${order.join(",")}`);
     }
-    for (const id of expectedBestPackagesOrder) {
+    for (const id of expectedFeaturedPackageIds) {
       if (pageJson?.sections?.[id]?.type !== "dreamshoot_featured_pack") {
         fail(`${siteId}_publication_missing_best_package_section:${publication.id}:${id}`);
       }
@@ -287,7 +320,7 @@ const aidreamcapesText = JSON.stringify(
 );
 const mydreamshootsText = JSON.stringify(mydreamshootsData);
 
-requireHomeWithoutFeaturedPacks(mydreamshootsData, mydreamshootsSiteId);
+requireHomeFeaturedPackBaseline(mydreamshootsData, mydreamshootsSiteId, { thanksgivingOnHome: false });
 requireBestPackagesPage(mydreamshootsData, mydreamshootsSiteId, [
   {
     id: "featured_christmas_1",
@@ -319,7 +352,7 @@ requireBestPackagesPage(mydreamshootsData, mydreamshootsSiteId, [
   }
 ]);
 
-requireHomeWithoutFeaturedPacks(aidreamcapesData, aidreamcapesSiteId);
+requireHomeFeaturedPackBaseline(aidreamcapesData, aidreamcapesSiteId, { thanksgivingOnHome: true });
 requireBestPackagesPage(aidreamcapesData, aidreamcapesSiteId, [
   {
     id: "featured_christmas_1",
@@ -342,8 +375,8 @@ requireBestPackagesPage(aidreamcapesData, aidreamcapesSiteId, [
     forbiddenPatterns: [/\/assets\/dreamshoot\//i, /MyDreamShoots/i]
   }
 ]);
-requirePublishedSnapshotBestPackages(mydreamshootsData, mydreamshootsSiteId);
-requirePublishedSnapshotBestPackages(aidreamcapesData, aidreamcapesSiteId);
+requirePublishedSnapshotBestPackages(mydreamshootsData, mydreamshootsSiteId, { thanksgivingOnHome: false });
+requirePublishedSnapshotBestPackages(aidreamcapesData, aidreamcapesSiteId, { thanksgivingOnHome: true });
 
 const aidreamcapesRootRows = aidreamcapesData.creativePackCategories.filter((category) => !category.parentId && aidreamcapesRootCategories.includes(category.slug));
 const aidreamcapesChildRows = aidreamcapesData.creativePackCategories.filter((category) => category.parentId && aidreamcapesNewCategories.includes(category.slug));

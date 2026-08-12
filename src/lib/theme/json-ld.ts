@@ -75,9 +75,9 @@ function schemaServiceType(site: Site, pagePath: string): string {
     return "herramienta de generacion y edicion de fotos con IA";
   }
   if (isAidreamcapesSite(site)) {
-    if (pagePath.includes("moodboard")) return "AI travel moodboard planning service";
-    if (pagePath.includes("postcard") || pagePath.includes("journal")) return "AI travel album and postcard portrait service";
-    return "AI travel portrait generation service";
+    if (pagePath.includes("moodboard")) return "AI fan-scene moodboard planning service";
+    if (pagePath.includes("postcard") || pagePath.includes("journal")) return "AI occasion album and keepsake portrait service";
+    return "AI occasion portrait generation service";
   }
   if (pagePath.includes("video")) return "AI image to video concept tool";
   if (pagePath.includes("headshot")) return "AI headshot and profile portrait tool";
@@ -86,7 +86,7 @@ function schemaServiceType(site: Site, pagePath: string): string {
 
 function itemListName(site: Site, title: string): string {
   if (isSpanishXbySite(site)) return isAidreamcapesSite(site) ? `${title} opciones de album de viaje` : `${title} opciones de paquete`;
-  if (isAidreamcapesSite(site)) return `${title} travel album options`;
+  if (isAidreamcapesSite(site)) return `${title} occasion album options`;
   return `${title} package options`;
 }
 
@@ -471,7 +471,7 @@ function themeFaqQuestions(site: Site, input: JsonLdInput | undefined, section: 
   }
   return [
     [`What is the ${label} package?`, aidreamcapes
-      ? `${label} is a focused Aidreamcapes private album that turns approved source photos into fan, game-day, premiere, holiday, travel, or occasion imagery with visible credit cost and download-ready results. It is designed for customers who want a private gallery around one clear moment instead of a generic image generator.`
+      ? `${label} is a focused Aidreamcapes private album that turns approved source photos into fan, game-day, premiere, holiday, creator, or occasion imagery with visible credit cost and download-ready results. It is designed for customers who want a private gallery around one clear moment instead of a generic image generator.`
       : `${label} is a focused MyDreamShoots theme that turns approved source photos into a private gallery with consistent styling, visible credit cost, and download-ready results. Use it when you want a specific AI photo set for profiles, creator content, seasonal cards, personal-brand visuals, or social-ready albums.`],
     [`Which source photos work best for ${label}?`, aidreamcapes
       ? "Use clear, well-lit photos you own or have permission to use, with every person visible and approved for the intended album. Avoid screenshots, tiny crops, heavy filters, overlapping faces, official logos, public-figure references, and images that could imply a false endorsement."
@@ -582,7 +582,7 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
         provider: { "@type": "Organization", name: siteName },
         serviceType: isSpanishXbySite(input.site)
           ? isAidreamcapesSite(input.site) ? "servicio de retratos de viaje IA" : "servicio de generacion de fotos IA"
-          : isAidreamcapesSite(input.site) ? "AI travel portrait generation service" : "AI photo generation service",
+          : isAidreamcapesSite(input.site) ? "AI occasion portrait generation service" : "AI photo generation service",
         url,
         ...(offerCatalog ? { offers: { "@id": `${url}#offers` } } : {})
       },
@@ -1016,7 +1016,7 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
       "@id": `${siteBaseUrl(input.site, input.routeMode)}#plans`,
       name: isSpanishXbySite(input.site)
         ? isAidreamcapesSite(input.site) ? `Paquetes de retrato de viaje y creditos ${siteName}` : `Paquetes de fotos y creditos ${siteName}`
-        : isAidreamcapesSite(input.site) ? "Aidreamcapes travel portrait packages and credits" : "MyDreamShoots photo packages and credits",
+        : isAidreamcapesSite(input.site) ? "Aidreamcapes occasion portrait packages and credits" : "MyDreamShoots photo packages and credits",
       url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, "/pricing"))
     }
   };
@@ -1092,7 +1092,7 @@ export function buildToolDirectoryJsonLd({
         availability: "https://schema.org/InStock",
         category: isSpanishXbySite(site)
           ? isAidreamcapesSite(site) ? "herramienta de retratos de viaje IA" : "herramienta de fotos IA"
-          : isAidreamcapesSite(site) ? "AI travel portrait tool" : "AI photo tool",
+          : isAidreamcapesSite(site) ? "AI occasion portrait tool" : "AI photo tool",
         url
       }
     },
@@ -1174,7 +1174,7 @@ export function buildCollectionDirectoryJsonLd({
       ]
     : [
         [`What is the ${faqLabel} package?`, isAidreamcapesSite(site)
-          ? `${faqLabel} is a focused Aidreamcapes private album that turns approved source photos into fan, game-day, premiere, holiday, travel, or occasion imagery with visible credit cost and download-ready results. It is designed for customers who want a private gallery around one clear moment instead of a generic image generator.`
+          ? `${faqLabel} is a focused Aidreamcapes private album that turns approved source photos into fan, game-day, premiere, holiday, creator, or occasion imagery with visible credit cost and download-ready results. It is designed for customers who want a private gallery around one clear moment instead of a generic image generator.`
           : `${faqLabel} is a focused MyDreamShoots theme that turns approved source photos into a private gallery with consistent styling, visible credit cost, and download-ready results. Use it when you want a specific AI photo set for profiles, creator content, seasonal cards, personal-brand visuals, or social-ready albums.`],
         [`Which source photos work best for ${faqLabel}?`, isAidreamcapesSite(site)
           ? "Use clear, well-lit photos you own or have permission to use, with every person visible and approved for the intended album. Avoid screenshots, tiny crops, heavy filters, overlapping faces, official logos, public-figure references, and images that could imply a false endorsement."

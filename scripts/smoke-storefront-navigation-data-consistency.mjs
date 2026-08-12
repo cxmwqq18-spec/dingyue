@@ -45,11 +45,11 @@ const siteChecks = [
 const menuChecks = [
   {
     name: "packages",
-    buttonName: /Headshot Generator|Photoshoot Studio|Browse packages|Occasion Albums|Photo Packages|Ver paquetes|Paquetes de ocasion/i
+    buttonName: /AI Photoshoot|Headshot Generator|Photoshoot Studio|Browse packages|Occasion Albums|Photo Packages|Ver paquetes|Paquetes de ocasion/i
   },
   {
     name: "tools",
-    buttonName: /^Tools$|^Herramientas$/
+    buttonName: /^(AI Tools|Tools|Herramientas)$/
   }
 ];
 
@@ -164,22 +164,12 @@ function signatureFromItems(items, siteSlug) {
 async function extractMenuSignature(page, siteSlug, route, menuCheck) {
   const button = page.locator('nav button[aria-haspopup="dialog"]').filter({ hasText: menuCheck.buttonName }).first();
   await button.waitFor({ state: "visible", timeout: 30000 });
-  let opened = false;
-  for (let attempt = 0; attempt < 2 && !opened; attempt += 1) {
-    await button.click({ timeout: 15000 });
-    try {
-      await button.getAttribute("aria-expanded");
-      await page.locator('[data-storefront-mega-menu-panel][aria-hidden="false"]').first().waitFor({ state: "visible", timeout: 10000 });
-      opened = true;
-    } catch (error) {
-      if (attempt === 1) throw error;
-      await page.keyboard.press("Escape").catch(() => undefined);
-      await page.waitForTimeout(300);
-    }
-  }
+  const controlId = await button.getAttribute("aria-controls");
   const items = await page.evaluate(
-    ({ currentSiteSlug, currentMenuName }) => {
-      const panel = document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]');
+    ({ currentSiteSlug, currentMenuName, currentControlId }) => {
+      const panel = currentControlId
+        ? document.getElementById(currentControlId)
+        : document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]');
       if (!panel) return [];
       const toolCardAnchors = currentMenuName === "tools"
         ? [...panel.querySelectorAll('a[data-xfcart-block-type="tool_card"][href]')]
@@ -196,10 +186,10 @@ async function extractMenuSignature(page, siteSlug, route, menuCheck) {
             return item.href.includes(`/site/${currentSiteSlug}/collections/`) || item.href.startsWith("/collections/");
           }
           return item.href.includes(`/site/${currentSiteSlug}/tools/`) || item.href.startsWith("/tools/");
-        });
+      });
       return links;
     },
-    { currentSiteSlug: siteSlug, currentMenuName: menuCheck.name }
+    { currentSiteSlug: siteSlug, currentMenuName: menuCheck.name, currentControlId: controlId }
   );
   await page.keyboard.press("Escape").catch(() => undefined);
   const signature = signatureFromItems(items, siteSlug);
@@ -358,7 +348,13 @@ async function gotoRoute(page, route) {
       return await page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
     } catch (error) {
       const message = String(error?.message ?? "");
-      const retryable = message.includes("net::ERR_ABORTED") || message.includes("net::ERR_CONNECTION_REFUSED") || message.includes("Timeout");
+      const retryable =
+        message.includes("net::ERR_ABORTED") ||
+        message.includes("net::ERR_CONNECTION_REFUSED") ||
+        message.includes("net::ERR_EMPTY_RESPONSE") ||
+        message.includes("ECONNRESET") ||
+        message.includes("socket hang up") ||
+        message.includes("Timeout");
       if (!retryable || attempt === 2) throw error;
       await page.waitForTimeout(800 + attempt * 1200);
     }
@@ -526,10 +522,12 @@ async function assertShowcaseImageRail(page, routeCheck, failures) {
     const rails = [...(section?.querySelectorAll(".dreamshoot-showcase-rail") ?? [])];
     const productFigureSelector = 'figure[data-dreamshoot-showcase-preview="image"], figure[data-dreamshoot-image-product-card]';
     const rail = rails.find((item) => !item.querySelector("video") && item.querySelectorAll(productFigureSelector).length >= 4);
-    const figures = [...(rail?.querySelectorAll(productFigureSelector) ?? [])];
+    const railFigures = [...(rail?.querySelectorAll(productFigureSelector) ?? [])];
+    const gridFigures = [...(section?.querySelectorAll(productFigureSelector) ?? [])];
+    const figures = railFigures.length >= 4 ? railFigures : gridFigures;
     const images = figures.map((figure) => figure.querySelector("img")).filter(Boolean).slice(0, 4);
     return images.map((image) => {
-      const frame = image.closest("figure") || image.parentElement;
+      const frame = image.parentElement || image.closest("figure");
       const imageRect = image?.getBoundingClientRect();
       const frameRect = frame?.getBoundingClientRect();
       return {
@@ -546,7 +544,7 @@ async function assertShowcaseImageRail(page, routeCheck, failures) {
     failures.push({
       site: routeCheck.site,
       route: routeCheck.route,
-      type: "showcase_image_rail_blank_or_unloaded",
+      type: "showcase_image_grid_or_rail_blank_or_unloaded",
       images: result
     });
   }

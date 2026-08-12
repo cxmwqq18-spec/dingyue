@@ -48,7 +48,7 @@ const expectedBestPackagesOrder = ["intro_1", "featured_pack_1", "featured_chris
 const expectedImageShowcasePriorityCount = 8;
 const expectedImageShowcaseCardCount = 28;
 const expectedHomepageImageGridCardCount = 16;
-const expectedHomepageVideoGridCardCount = 4;
+const expectedHomepageVideoGridCardCount = 8;
 const expectedTrustedLogoCount = 29;
 const dreamshootHomepageSafeShowcaseImagePathBySlug = {
   "ai-video-add-ons": "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-06.webp",
@@ -588,7 +588,7 @@ assert(!mediaGalleryRenderer.includes("cardsCount"), "Best AI media gallery shou
 assert(showcaseRenderer.includes("data-dreamshoot-trusted-logos"), "showcase should render the trusted logo intro wall");
 assert(showcaseRenderer.includes('setting(section, "embeddedPricingSectionId")'), "showcase should read the embedded pricing section setting");
 assert(showcaseRenderer.includes("PricingTableSectionView"), "showcase should reuse the pricing table renderer for embedded plans");
-assert(showcaseRenderer.indexOf("</DreamshootShowcasePreview>") < showcaseRenderer.indexOf("{showcaseIntro}") && showcaseRenderer.indexOf("{showcaseIntro}") < showcaseRenderer.indexOf("{embeddedPricing}"), "showcase intro should render below image/video rails and above embedded pricing");
+assert(showcaseRenderer.indexOf("</DreamshootShowcasePreview>") < showcaseRenderer.indexOf("{useMydreamShowcaseGrid ? null : showcaseIntro}") && showcaseRenderer.indexOf("{useMydreamShowcaseGrid ? null : showcaseIntro}") < showcaseRenderer.indexOf("{embeddedPricing}"), "showcase intro should render below image/video rails and above embedded pricing when the homepage grid is not active");
 assert(showcaseRenderer.includes('data-dreamshoot-showcase-preview="image"'), "showcase image cards should be clickable preview triggers");
 assert(showcaseRenderer.includes('data-dreamshoot-showcase-preview="video"'), "showcase video cards should be clickable preview triggers");
 assert(themeRenderer.includes('"dreamshoot_generation_showcase",\n  "pricing_table"'), "showcase sections should receive live products for embedded pricing");
@@ -613,7 +613,8 @@ assert(showcaseRenderer.includes('data-dreamshoot-homepage-gallery-grid="photo"'
 assert(showcaseRenderer.includes('data-dreamshoot-homepage-gallery-grid="video"'), "MyDreamShoots homepage video showcase should render the gallery-style grid");
 assert(showcaseRenderer.includes("grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"), "MyDreamShoots homepage showcase grid should use one, two, then four columns");
 assert(showcaseRenderer.includes(`const homepageImageProductCards = imageProductCards.slice(0, ${expectedHomepageImageGridCardCount})`), `MyDreamShoots homepage photo grid should show ${expectedHomepageImageGridCardCount} cards before sending customers to the full gallery`);
-assert(showcaseRenderer.includes(`const homepageVideoCards = videoCards.slice(0, ${expectedHomepageVideoGridCardCount})`), `MyDreamShoots homepage video grid should render one row of ${expectedHomepageVideoGridCardCount} cards before sending customers to the full video gallery`);
+assert(showcaseRenderer.includes(`const homepageVideoCards = videoCards.slice(0, ${expectedHomepageVideoGridCardCount})`), `MyDreamShoots homepage video grid should render ${expectedHomepageVideoGridCardCount} cards before sending customers to the full video gallery`);
+assert(showcaseRenderer.includes("{useMydreamShowcaseGrid ? null : showcaseIntro}"), "MyDreamShoots homepage should hide the customer-created examples intro block below the gallery grids");
 assert(showcaseRenderer.includes("imageProductRows"), "showcase images should keep the scrolling row fallback for paired storefronts");
 assert(imageShowcaseRenderer.includes("imageProductRows.map"), "showcase image cards should keep dynamically balanced wall rows for paired storefronts");
 assert(showcaseRenderer.includes("Math.ceil(imageProductCards.length / 7)"), "showcase image wall should target seven products per row");

@@ -1905,7 +1905,7 @@ function toolsDirectoryFaqSectionForSite(site: Site): SectionInstance {
         ]
     : isAidreamcapes
       ? [
-          ["Which Aidreamcapes occasion tool should I use?", "Choose the tool that matches the private album moment: fan-scene atmosphere, game-day group energy, holiday cards, travel-style portraits, premiere-inspired photos, or permission-safe content planning."],
+          ["Which Aidreamcapes occasion tool should I use?", "Choose the tool that matches the private album moment: fan-scene atmosphere, game-day group energy, holiday cards, creator occasion portraits, premiere-inspired photos, or permission-safe content planning."],
           ["Do tools recreate real public figures or official marks?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized celebrity likenesses, athlete identities, official logos, league marks, venue marks, or misleading affiliation."],
           ["What source photos work best for occasion tools?", "Use clear, well-lit photos with permission from every person shown. Group tools work better when faces are visible and not heavily overlapping; holiday and fan-scene tools work better when the source photos have enough detail for a private album concept."],
           ["Are source photos and finished albums private?", "Uploads, request details, credit records, generation status, and finished albums remain connected to the signed-in Aidreamcapes account. Results are delivered to a private gallery for review and download rather than a public listing."],
