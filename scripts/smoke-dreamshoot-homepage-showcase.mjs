@@ -48,6 +48,7 @@ const expectedBestPackagesOrder = ["featured_pack_1", "featured_christmas_1", "f
 const expectedImageShowcasePriorityCount = 8;
 const expectedImageShowcaseCardCount = 28;
 const expectedHomepageImageGridCardCount = 16;
+const expectedHomepageVideoGridCardCount = 4;
 const expectedTrustedLogoCount = 29;
 const dreamshootHomepageSafeShowcaseImagePathBySlug = {
   "ai-video-add-ons": "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-06.webp",
@@ -610,7 +611,7 @@ assert(showcaseRenderer.includes('data-dreamshoot-homepage-gallery-grid="photo"'
 assert(showcaseRenderer.includes('data-dreamshoot-homepage-gallery-grid="video"'), "MyDreamShoots homepage video showcase should render the gallery-style grid");
 assert(showcaseRenderer.includes("grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"), "MyDreamShoots homepage showcase grid should use one, two, then four columns");
 assert(showcaseRenderer.includes(`const homepageImageProductCards = imageProductCards.slice(0, ${expectedHomepageImageGridCardCount})`), `MyDreamShoots homepage photo grid should show ${expectedHomepageImageGridCardCount} cards before sending customers to the full gallery`);
-assert(showcaseRenderer.includes("const homepageVideoCards = videoCards.slice(0, 8)"), "MyDreamShoots homepage video grid should render the configured two-row eight-card set");
+assert(showcaseRenderer.includes(`const homepageVideoCards = videoCards.slice(0, ${expectedHomepageVideoGridCardCount})`), `MyDreamShoots homepage video grid should render one row of ${expectedHomepageVideoGridCardCount} cards before sending customers to the full video gallery`);
 assert(showcaseRenderer.includes("imageProductRows"), "showcase images should keep the scrolling row fallback for paired storefronts");
 assert(imageShowcaseRenderer.includes("imageProductRows.map"), "showcase image cards should keep dynamically balanced wall rows for paired storefronts");
 assert(showcaseRenderer.includes("Math.ceil(imageProductCards.length / 7)"), "showcase image wall should target seven products per row");

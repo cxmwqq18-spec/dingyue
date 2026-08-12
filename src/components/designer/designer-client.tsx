@@ -461,7 +461,7 @@ export function DesignerClient({
   );
   const [expandedGlobals, setExpandedGlobals] = useState<Record<"header" | "footer", boolean>>({ header: false, footer: false });
   const [publishedVersion, setPublishedVersion] = useState(() => Math.max(1, ...pages.map((page) => page.publishedJson.version ?? 0)));
-  const [lastAction, setLastAction] = useState("已载入当前页面草稿，可继续编辑并按需发布。");
+  const [lastAction, setLastAction] = useState("已载入后台草稿。输入字段会自动同步左侧草稿预览，点击发布后才上线。");
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const mutationBusyRef = useRef(false);
   const previewMutationQueuesRef = useRef(new Map<string, QueuedXfcartActionRecord>());
@@ -568,6 +568,21 @@ export function DesignerClient({
     }
   }, [site.id]);
 
+  const siteWithDesignerMedia = useMemo<Site>(() => ({
+    ...site,
+    mediaAssets
+  }), [site, mediaAssets]);
+
+  const upsertDesignerMediaAsset = useCallback((asset: MediaAsset) => {
+    setMediaAssets((current) => [asset, ...current.filter((item) => item.id !== asset.id)]);
+    setResourceStatus((current) => ({ ...current, mediaAssets: "ready" }));
+  }, []);
+
+  const removeDesignerMediaAsset = useCallback((assetId: string) => {
+    setMediaAssets((current) => current.filter((item) => item.id !== assetId));
+    setResourceStatus((current) => ({ ...current, mediaAssets: "ready" }));
+  }, []);
+
   const fieldOptions = useMemo<FieldOptions>(() => ({
     pages,
     products,
@@ -575,8 +590,10 @@ export function DesignerClient({
     mediaAssets,
     creativePacks,
     requestResource: loadDesignerResource,
+    upsertMediaAsset: upsertDesignerMediaAsset,
+    removeMediaAsset: removeDesignerMediaAsset,
     resourceStatus
-  }), [pages, products, siteAiApps, mediaAssets, creativePacks, loadDesignerResource, resourceStatus]);
+  }), [pages, products, siteAiApps, mediaAssets, creativePacks, loadDesignerResource, upsertDesignerMediaAsset, removeDesignerMediaAsset, resourceStatus]);
   const saasSettingsGroups = useMemo(() => getImportedSaasSettingsGroupsForTheme(selectedSaasThemeKey), [selectedSaasThemeKey]);
   const flattenedSaasFields = useMemo(() => saasSettingsGroups.flatMap((group) => group.fields), [saasSettingsGroups]);
   const globalNodes = useMemo(() => {
@@ -1070,7 +1087,7 @@ export function DesignerClient({
   function changePreviewDevice(nextDevice: "desktop" | "mobile") {
     setDevice(nextDevice);
     setLastAction(nextDevice === "mobile" ? "手机预览使用真实移动端宽度渲染，默认仍是编辑定位模式。" : "已切换到桌面缩放预览，默认仍是编辑定位模式。");
-    reloadIframePreview();
+    if (previewMode === "interactive") reloadIframePreview();
   }
 
   function togglePreviewMode() {
@@ -1093,6 +1110,7 @@ export function DesignerClient({
   }
 
   const syncSelectionToIframe = useCallback((nextSelection = selection, options?: { scroll?: boolean }) => {
+    if (previewMode !== "interactive") return;
     syncSelectionToPreview({
       selection: nextSelection,
       previewMode,
@@ -1123,7 +1141,7 @@ export function DesignerClient({
     }
     setLocatorBreadcrumb(undefined);
     setSelection(nextSelection);
-    if (options?.syncPreview !== false && previewMode === "edit") {
+    if (options?.syncPreview !== false && previewMode === "interactive") {
       syncSelectionToIframe(nextSelection, { scroll: options?.scrollPreview ?? true });
     }
   }
@@ -1296,6 +1314,10 @@ export function DesignerClient({
   }, [previewMode, selection, syncSelectionToIframe]);
 
   useEffect(() => {
+    if (previewMode === "edit") {
+      setIframeStatus("ready");
+      return;
+    }
     setIframeStatus((current) => (current === "ready" ? "ready" : "loading"));
     const earlyCheck = window.setTimeout(() => {
       checkIframePreviewHealth();
@@ -1416,7 +1438,7 @@ export function DesignerClient({
 
   function queuePreviewMutation(action: SaasThemeAction, fallbackMessage: string, delayMs = 420) {
     if (action.type === "change") {
-      setLastAction(`${fallbackMessage} 已更新本地草稿，保存草稿后刷新预览。`);
+      setLastAction(`${fallbackMessage} 已同步到左侧草稿预览；点击保存草稿保留后台草稿，发布后才上线。`);
       return;
     }
     const key = queuedActionKey(action);
@@ -2365,7 +2387,7 @@ export function DesignerClient({
           selectedPageId={selectedPageId}
           selectedPreviewBlockId={previewSelection && (previewSelection.kind === "block" || previewSelection.kind === "globalBlock") ? previewSelection.blockId : undefined}
           selectedPreviewSectionId={previewSelection ? previewSectionIdForSelection(previewSelection) : undefined}
-          site={site}
+          site={siteWithDesignerMedia}
           siteAiApps={siteAiApps}
           templateApplyControl={templateApplyControl}
           templateDisplayName={templateDisplayName}
@@ -2433,7 +2455,7 @@ export function DesignerClient({
           selection,
           selectionMeta,
           settingLinkString,
-          site,
+          site: siteWithDesignerMedia,
           siteAiApps,
           themeSettings,
           updateSaasGlobalSetting,

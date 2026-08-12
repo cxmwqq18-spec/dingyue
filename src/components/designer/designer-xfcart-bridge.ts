@@ -167,11 +167,15 @@ export async function sendXfcartAction({
     body: JSON.stringify(payload)
   });
   if (!response.ok) {
-    setLastAction(`SaaS action failed: ${fallbackMessage}`);
+    setLastAction(`${fallbackMessage} 左侧预览暂时没有同步成功，本地草稿未丢失；可以继续编辑或点击保存草稿后刷新预览。`);
     return undefined;
   }
   const result = (await response.json()) as XfcartActionResponse;
   if (previewMode === "edit") applyPreviewPatch(result, postPatch);
-  setLastAction(`${fallbackMessage} XFCart edit t=${payload.t} x=${payload.x ?? ""} returned ${result.types ?? result.state ?? "ok"}.`);
+  setLastAction(
+    previewMode === "edit"
+      ? `${fallbackMessage} 已同步到左侧草稿预览；发布整站快照后才上线。`
+      : `${fallbackMessage} 已更新草稿；真实交互预览不会自动拦截跳转，发布后才上线。`
+  );
   return result;
 }

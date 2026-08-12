@@ -132,7 +132,8 @@ export function PreviewFrame({
       : iframeStatus === "failed"
         ? "border-[#ffd0d0] bg-[#fff1f1] text-[#b42318]"
         : "border-[#f2d3a4] bg-[#fff4e6] text-[#b06d2c]";
-  const renderFallbackPreview = device === "desktop" && iframeStatus === "failed";
+  const renderDraftPreview = previewMode === "edit";
+  const showIframePreview = !renderDraftPreview;
   const previewViewport = previewViewportFor(device, previewViewportPreset);
   const previewStageRef = useRef<HTMLDivElement | null>(null);
   const [previewStageBounds, setPreviewStageBounds] = useState({ width: 0, height: 0 });
@@ -223,11 +224,22 @@ export function PreviewFrame({
 
   const onPreviewWheel = useMemo(() => {
     return (event: WheelEvent) => {
-      if (renderFallbackPreview) return;
-      const frameWindow = iframeRef.current?.contentWindow;
-      if (!frameWindow) return;
       const canScroll = Math.abs(event.deltaY) > 0 || Math.abs(event.deltaX) > 0;
       if (!canScroll) return;
+      if (!showIframePreview) {
+        const target = event.target instanceof Element ? event.target : null;
+        const draftPreview = target?.closest<HTMLElement>(".designer-live-preview") ?? previewStageRef.current?.querySelector<HTMLElement>(".designer-live-preview");
+        if (!draftPreview) return;
+        event.preventDefault();
+        draftPreview.scrollBy({
+          left: event.deltaX,
+          top: event.deltaY,
+          behavior: "auto"
+        });
+        return;
+      }
+      const frameWindow = iframeRef.current?.contentWindow;
+      if (!frameWindow) return;
       event.preventDefault();
       frameWindow.scrollBy({
         left: event.deltaX,
@@ -235,7 +247,7 @@ export function PreviewFrame({
         behavior: "auto"
       });
     };
-  }, [iframeRef, renderFallbackPreview]);
+  }, [iframeRef, showIframePreview]);
 
   useEffect(() => {
     const node = previewStageRef.current;
@@ -343,8 +355,8 @@ export function PreviewFrame({
             <span className="hidden h-[40px] items-center rounded-[10px] border border-[#d9dde4] bg-white px-3 text-[12px] text-[#667085] 2xl:inline-flex">
               当前主题 {activeThemeName}
             </span>
-            <span className={`inline-flex h-[40px] items-center rounded-[10px] border px-3 text-[12px] font-medium ${interactiveMode ? "border-[#d9dde4] bg-white text-[#667085]" : iframeStatusClass}`}>
-              {interactiveMode ? "真实交互预览" : iframeStatusLabel}
+            <span className={`inline-flex h-[40px] items-center rounded-[10px] border px-3 text-[12px] font-medium ${renderDraftPreview ? "border-[#cbe7d5] bg-[#edf7f0] text-[#18794e]" : interactiveMode ? "border-[#d9dde4] bg-white text-[#667085]" : iframeStatusClass}`}>
+              {renderDraftPreview ? "本地草稿实时预览" : interactiveMode ? "真实交互预览" : iframeStatusLabel}
             </span>
             <span
               className="inline-flex h-[40px] items-center rounded-[10px] border border-[#c9d8f7] bg-[#f4f7ff] px-3 text-[12px] font-medium text-[#2457c5]"
@@ -370,6 +382,12 @@ export function PreviewFrame({
         <div className="mt-2 grid gap-2 xl:grid-cols-[minmax(0,1fr)_auto]">
           <div className="flex min-w-0 items-center gap-2 rounded-[10px] border border-[#d9dde4] bg-white px-3 py-2 text-[12px] text-[#667085]">
             <span className="h-2 w-2 shrink-0 rounded-full bg-[#2f6fed]" />
+            <span className="hidden shrink-0 rounded-[7px] border border-[#c9d8f7] bg-[#f4f7ff] px-2 py-1 font-medium text-[#2457c5] lg:inline-flex">
+              自动草稿预览
+            </span>
+            <span className={`hidden shrink-0 rounded-[7px] border px-2 py-1 font-medium lg:inline-flex ${dirtyPagesCount || currentPageDirty ? "border-[#f2d3a4] bg-[#fff4e6] text-[#b06d2c]" : "border-[#cbe7d5] bg-[#edf7f0] text-[#18794e]"}`}>
+              {dirtyPagesCount || currentPageDirty ? "有草稿改动" : "无待发布改动"}
+            </span>
             <span className="truncate">{lastAction}</span>
             <span className="ml-auto hidden shrink-0 text-[11px] text-[#909294] xl:inline">
               草稿主题：{draftThemeName || templateDisplayName(draftThemeKey)}
@@ -420,7 +438,7 @@ export function PreviewFrame({
                 transformOrigin: "top left"
               }}
             >
-              {!renderFallbackPreview ? (
+              {showIframePreview ? (
                 <>
                   {iframeStatus === "loading" || iframeStatus === "recovering" ? (
                     <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex justify-center p-3">

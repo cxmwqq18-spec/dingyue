@@ -396,10 +396,10 @@ async function selectPreviewViewport(page, presetLabel) {
 
 async function getPreviewIframeMetrics(page) {
   const iframe = page.locator(".saas-designer-preview-frame iframe").first();
-  await iframe.waitFor({ state: "visible", timeout: 15000 });
   const canvas = page.locator('[data-designer-preview="saas-center-preview-canvas"]').first();
+  await canvas.waitFor({ state: "visible", timeout: 15000 });
   return {
-    src: await iframe.getAttribute("src") ?? "",
+    src: await iframe.count() ? await iframe.getAttribute("src") ?? "" : "",
     innerWidth: Number(await canvas.getAttribute("data-designer-preview-width") ?? 0),
     innerHeight: Number(await canvas.getAttribute("data-designer-preview-height") ?? 0)
   };
@@ -414,6 +414,28 @@ async function getIframeWindowMetrics(page) {
     scrollHeight: iframe.contentDocument?.documentElement?.scrollHeight ?? 0,
     clientHeight: iframe.contentDocument?.documentElement?.clientHeight ?? 0,
     innerHeight: iframe.contentWindow?.innerHeight ?? 0
+  }));
+}
+
+async function waitForDraftPreviewReady(page, { requireScrollable = true, timeoutMs = 20_000 } = {}) {
+  await page.waitForFunction(
+    (requireScrollable) => {
+      const preview = document.querySelector(".designer-live-preview");
+      if (!(preview instanceof HTMLElement)) return false;
+      if (!preview.querySelector("[data-theme-sections-root]")) return false;
+      if (requireScrollable && preview.scrollHeight <= preview.clientHeight + 20) return false;
+      return true;
+    },
+    requireScrollable,
+    { timeout: timeoutMs, polling: 100 }
+  );
+}
+
+async function getDraftPreviewMetrics(page) {
+  return page.locator(".designer-live-preview").first().evaluate((node) => ({
+    scrollTop: node.scrollTop,
+    scrollHeight: node.scrollHeight,
+    clientHeight: node.clientHeight
   }));
 }
 
@@ -556,6 +578,39 @@ async function markVisiblePreviewNavigationTarget(page, options = {}) {
   }, requireLink);
 }
 
+async function markVisibleDraftPreviewTarget(page) {
+  return page.evaluate(() => {
+    const root = document.querySelector(".designer-live-preview");
+    root?.querySelectorAll("[data-smoke-preview-target]").forEach((node) => node.removeAttribute("data-smoke-preview-target"));
+    const candidates = Array.from(root?.querySelectorAll('a[href]:not([href^="#"]), button:not([disabled])') ?? []);
+    const target = candidates.find((node) => {
+      const rect = node.getBoundingClientRect();
+      const style = window.getComputedStyle(node);
+      const viewportWidth = document.documentElement.clientWidth;
+      const viewportHeight = document.documentElement.clientHeight;
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const topElement = document.elementFromPoint(centerX, centerY);
+      return rect.width > 0 &&
+        rect.height > 0 &&
+        centerX >= 0 &&
+        centerY >= 0 &&
+        centerX <= viewportWidth &&
+        centerY <= viewportHeight &&
+        Boolean(topElement && (topElement === node || node.contains(topElement))) &&
+        style.display !== "none" &&
+        style.visibility !== "hidden";
+    });
+    if (!target) return null;
+    target.setAttribute("data-smoke-preview-target", "true");
+    return {
+      tag: target.tagName.toLowerCase(),
+      text: (target.textContent || target.getAttribute("aria-label") || target.getAttribute("title") || "").trim().replace(/\s+/g, " "),
+      href: target.tagName.toLowerCase() === "a" ? target.getAttribute("href") ?? "" : ""
+    };
+  });
+}
+
 async function markVisiblePropertyInputTarget(page) {
   return page.evaluate(() => {
     const pane = document.querySelector('[data-designer-layout="saas-right-editor-pane"]');
@@ -579,6 +634,76 @@ async function markVisiblePropertyInputTarget(page) {
       value: target.value ?? ""
     };
   });
+}
+
+function writeTinySmokePng() {
+  const filePath = path.join(outputDir, `designer-smoke-upload-${Date.now()}.png`);
+  const pngBase64 =
+    "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFUlEQVR42mP8z8BQz0AEYBxVSFUBACJ6A/3YWw5hAAAAAElFTkSuQmCC";
+  fs.writeFileSync(filePath, Buffer.from(pngBase64, "base64"));
+  return filePath;
+}
+
+async function openFirstMediaResourceSelectorIfPresent(page) {
+  const mediaSelector = page.locator('[data-designer-selector="saas-media-resource-selector"]').first();
+  async function tryOpenCurrentSelector() {
+    if ((await mediaSelector.count()) === 0) return false;
+    await mediaSelector.scrollIntoViewIfNeeded().catch(() => undefined);
+    await mediaSelector.locator("button").first().click();
+    await page.locator('[data-designer-modal="saas-resource-selector"]').waitFor({ state: "visible", timeout: 5000 });
+    return true;
+  }
+  if (await tryOpenCurrentSelector()) return true;
+  const treeCandidates = page.locator('[data-designer-layout="saas-page-card-tree"] button, [data-designer-tree-id] button');
+  const candidateCount = Math.min(await treeCandidates.count(), 24);
+  for (let index = 0; index < candidateCount; index += 1) {
+    await treeCandidates.nth(index).click().catch(() => undefined);
+    await page.waitForTimeout(160);
+    if (await tryOpenCurrentSelector()) return true;
+  }
+  if ((await mediaSelector.count()) === 0) {
+    await page.getByRole("button", { name: "全局页头/页脚", exact: true }).click().catch(() => undefined);
+    await page.waitForTimeout(250);
+  }
+  if (await tryOpenCurrentSelector()) return true;
+  const globalCandidates = page.locator('[data-designer-layout="saas-workspace-navigator-root"] button');
+  const globalCandidateCount = Math.min(await globalCandidates.count(), 32);
+  for (let index = 0; index < globalCandidateCount; index += 1) {
+    await globalCandidates.nth(index).click().catch(() => undefined);
+    await page.waitForTimeout(160);
+    if (await tryOpenCurrentSelector()) return true;
+  }
+  return false;
+}
+
+async function exerciseMediaResourceWorkflow(page, report, suiteReport) {
+  const opened = await openFirstMediaResourceSelectorIfPresent(page);
+  if (!opened) {
+    suiteReport.findings.push("当前选中模块没有媒体字段，已跳过素材上传/删除 UI 闭环测试。");
+    return;
+  }
+  const modal = page.locator('[data-designer-modal="saas-resource-selector"]').first();
+  assert(await modal.locator('[data-designer-media-library-actions]').count() === 1, "media selector missing upload action area");
+  assert(await modal.locator('[data-designer-media-upload-input]').count() === 1, "media selector missing upload input");
+  assert(await modal.getByRole("button", { name: "取消选择", exact: true }).count() === 1, "media selector missing clear-selection action");
+
+  const uploadPath = writeTinySmokePng();
+  const mediaRequestsBeforeUpload = report.apiRequests.filter((item) => item.method === "POST" && item.url.includes("/media-assets")).length;
+  const uploadStartedAt = performance.now();
+  await modal.locator('[data-designer-media-upload-input]').setInputFiles(uploadPath);
+  await page.waitForFunction(() => document.body.innerText.includes("已上传并选中素材"), { timeout: 20_000 });
+  suiteReport.performance.interactions.mediaUploadMs = roundMs(performance.now() - uploadStartedAt);
+  const mediaRequestsAfterUpload = report.apiRequests.filter((item) => item.method === "POST" && item.url.includes("/media-assets")).length;
+  assert(mediaRequestsAfterUpload - mediaRequestsBeforeUpload === 1, "media upload did not make exactly one media-assets POST");
+  assert(await modal.getByRole("button", { name: "删除素材", exact: true }).count() === 1, "media selector missing delete action after upload");
+
+  page.once("dialog", (dialog) => dialog.accept());
+  const deleteStartedAt = performance.now();
+  await modal.getByRole("button", { name: "删除素材", exact: true }).click();
+  await page.waitForFunction(() => document.body.innerText.includes("素材已删除"), { timeout: 20_000 });
+  suiteReport.performance.interactions.mediaDeleteMs = roundMs(performance.now() - deleteStartedAt);
+  fs.rmSync(uploadPath, { force: true });
+  await modal.getByRole("button", { name: "使用", exact: true }).click();
 }
 
 async function exerciseWorkbench(page, report, suiteReport) {
@@ -653,35 +778,36 @@ async function exerciseWorkbench(page, report, suiteReport) {
   await page.waitForTimeout(150);
 
   await selectPageOptionByPattern(pageSelect, page, /(?:^|[\s/])(?:首页|home)(?:[\s/]|$)|(?:^|\s)\/(?:\s|$)/i);
-  await waitForPreviewIframeReady(page);
-  const previewIframe = page.locator(".saas-designer-preview-frame iframe").first();
-  const frame = page.frameLocator(".saas-designer-preview-frame iframe").first();
-  const initialIframeMetrics = await getIframeWindowMetrics(page);
+  await waitForDraftPreviewReady(page);
+  const draftPreview = page.locator(".designer-live-preview").first();
+  const initialDraftMetrics = await getDraftPreviewMetrics(page);
   assert(
-    initialIframeMetrics.scrollY <= 4,
-    `preview iframe auto-scrolled away from the page top after load: ${initialIframeMetrics.scrollY}px`
+    initialDraftMetrics.scrollTop <= 4,
+    `draft preview auto-scrolled away from the page top after load: ${initialDraftMetrics.scrollTop}px`
   );
-  assert(initialIframeMetrics.scrollHeight > initialIframeMetrics.innerHeight + 20, `preview iframe is not vertically scrollable: ${initialIframeMetrics.scrollHeight}px <= ${initialIframeMetrics.innerHeight}px`);
-  await previewIframe.evaluate((iframe) => iframe.contentWindow?.scrollTo(0, 0));
+  assert(initialDraftMetrics.scrollHeight > initialDraftMetrics.clientHeight + 20, `draft preview is not vertically scrollable: ${initialDraftMetrics.scrollHeight}px <= ${initialDraftMetrics.clientHeight}px`);
+  await draftPreview.evaluate((node) => {
+    node.scrollTop = 0;
+  });
   const previewStageBox = await page.locator("[data-designer-preview-stage]").boundingBox();
-  const previewIframeBox = await previewIframe.boundingBox();
+  const previewBox = await draftPreview.boundingBox();
   const wheelPoint =
-    previewStageBox && previewIframeBox && previewIframeBox.y + previewIframeBox.height + 16 < previewStageBox.y + previewStageBox.height
-      ? { x: previewStageBox.x + 24, y: previewIframeBox.y + previewIframeBox.height + 24 }
+    previewStageBox && previewBox && previewBox.y + previewBox.height + 16 < previewStageBox.y + previewStageBox.height
+      ? { x: previewStageBox.x + 24, y: previewBox.y + previewBox.height + 24 }
       : {
-          x: (previewIframeBox?.x ?? 0) + (previewIframeBox?.width ?? 320) / 2,
-          y: (previewIframeBox?.y ?? 0) + (previewIframeBox?.height ?? 320) / 2
+          x: (previewBox?.x ?? 0) + (previewBox?.width ?? 320) / 2,
+          y: (previewBox?.y ?? 0) + (previewBox?.height ?? 320) / 2
         };
-  const iframeScrollBefore = await getIframeWindowMetrics(page);
+  const previewScrollBefore = await getDraftPreviewMetrics(page);
   const previewWheelStartedAt = performance.now();
   const outerScrollBeforePreviewWheel = await page.evaluate(() => window.scrollY);
   await page.mouse.move(wheelPoint.x, wheelPoint.y);
   await page.mouse.wheel(0, 900);
   await page.waitForTimeout(250);
-  const iframeScrollAfter = await getIframeWindowMetrics(page);
+  const previewScrollAfter = await getDraftPreviewMetrics(page);
   const outerScrollAfterPreviewWheel = await page.evaluate(() => window.scrollY);
   assert(outerScrollAfterPreviewWheel === outerScrollBeforePreviewWheel, `preview wheel moved the outer workbench: ${outerScrollBeforePreviewWheel} -> ${outerScrollAfterPreviewWheel}`);
-  assert(iframeScrollAfter.scrollY > iframeScrollBefore.scrollY, `preview wheel did not scroll iframe content: ${iframeScrollBefore.scrollY} -> ${iframeScrollAfter.scrollY}`);
+  assert(previewScrollAfter.scrollTop > previewScrollBefore.scrollTop, `preview wheel did not scroll draft preview content: ${previewScrollBefore.scrollTop} -> ${previewScrollAfter.scrollTop}`);
   suiteReport.performance.interactions.previewWheelScrollMs = roundMs(performance.now() - previewWheelStartedAt);
 
   const rightPane = page.locator('[data-designer-layout="saas-right-editor-pane"]');
@@ -698,30 +824,34 @@ async function exerciseWorkbench(page, report, suiteReport) {
     node.scrollTop = 0;
   });
 
-  await previewIframe.evaluate((iframe) => iframe.contentWindow?.scrollTo(0, 0));
+  await draftPreview.evaluate((node) => {
+    node.scrollTop = 0;
+  });
   await page.waitForTimeout(120);
-  const editTarget = await markVisiblePreviewNavigationTarget(page);
+  const editTarget = await markVisibleDraftPreviewTarget(page);
   assert(editTarget, "edit-mode preview did not expose a visible same-origin link or button");
-  const editHrefBefore = (await getIframeWindowMetrics(page)).href;
-  const editScrollBefore = (await getIframeWindowMetrics(page)).scrollY;
+  const urlBeforeEditClick = page.url();
+  const editScrollBefore = (await getDraftPreviewMetrics(page)).scrollTop;
   const editClickStartedAt = performance.now();
-  await frame.locator('[data-smoke-preview-target="true"]').click({ force: true });
+  await page.locator('.designer-live-preview [data-smoke-preview-target="true"]').first().click({ force: true });
   await page.waitForTimeout(250);
-  const editMetricsAfter = await getIframeWindowMetrics(page);
-  const editHrefAfter = editMetricsAfter.href;
-  assert(editHrefAfter === editHrefBefore, `edit定位 mode unexpectedly navigated preview: ${editHrefBefore} -> ${editHrefAfter}`);
+  const editScrollAfter = (await getDraftPreviewMetrics(page)).scrollTop;
+  assert(page.url() === urlBeforeEditClick, `edit定位 mode unexpectedly navigated page: ${urlBeforeEditClick} -> ${page.url()}`);
   assert(
-    Math.abs(editMetricsAfter.scrollY - editScrollBefore) <= 8,
-    `edit定位 click unexpectedly moved iframe scroll: ${editScrollBefore} -> ${editMetricsAfter.scrollY}`
+    Math.abs(editScrollAfter - editScrollBefore) <= 8,
+    `edit定位 click unexpectedly moved draft preview scroll: ${editScrollBefore} -> ${editScrollAfter}`
   );
   const editClickBody = await page.locator("body").innerText();
   assert(editClickBody.includes("已从编辑定位预览选中"), "edit定位 click did not select a preview source");
   suiteReport.performance.interactions.editModePreviewClickMs = roundMs(performance.now() - editClickStartedAt);
+  await exerciseMediaResourceWorkflow(page, report, suiteReport);
 
   const interactiveToggle = page.getByRole("button", { name: "真实交互", exact: true });
   await interactiveToggle.click();
   await waitForPreviewIframeReady(page, { requireScrollable: false });
   assert((await getPreviewIframeMetrics(page)).src.includes("previewMode=interactive"), "real interaction mode did not update iframe query");
+  const previewIframe = page.locator(".saas-designer-preview-frame iframe").first();
+  const frame = page.frameLocator(".saas-designer-preview-frame iframe").first();
   await previewIframe.evaluate((iframe) => iframe.contentWindow?.scrollTo(0, 0));
   await page.waitForTimeout(120);
   const interactiveTarget = await markVisiblePreviewNavigationTarget(page, { requireLink: true });
@@ -754,7 +884,7 @@ async function exerciseWorkbench(page, report, suiteReport) {
     suiteReport.performance.interactions.interactivePreviewNavigationMs = roundMs(performance.now() - interactiveClickStartedAt);
   }
   await page.getByRole("button", { name: "编辑定位", exact: true }).click();
-  await waitForPreviewIframeReady(page, { requireScrollable: false });
+  await waitForDraftPreviewReady(page, { requireScrollable: false });
 
   const typingTargetInfo = await markVisiblePropertyInputTarget(page);
   if (!typingTargetInfo) {
@@ -1269,10 +1399,11 @@ async function run() {
     "",
     "## 关键检查",
     "- 后台首页无 pageerror、console error、network error 和 4xx/5xx 资源。",
-    "- 外层工作台保持锁定，滚轮会滚动 iframe 内网页，右侧属性区独立滚动。",
-    "- 编辑定位模式点击链接/按钮只选中内容来源，不发生业务跳转。",
+    "- 外层工作台保持锁定，滚轮会滚动左侧草稿预览，右侧属性区独立滚动。",
+    "- 编辑定位模式使用本地草稿实时预览，点击链接/按钮只选中内容来源，不发生业务跳转。",
     "- 真实交互预览允许站内链接在 iframe 中正常跳转。",
     "- 连续输入会被防抖合并，不会逐字符调用 xfcart mutation。",
+    "- 媒体字段支持上传图片/视频入口、选中预览、取消选择和删除素材。",
     "- 工作台 Tab 重复点击不会触发 mutation API。",
     "- 保存草稿双击不会产生两批完整保存请求。",
     "- 发布确认展示隐藏草稿和线上版本。",

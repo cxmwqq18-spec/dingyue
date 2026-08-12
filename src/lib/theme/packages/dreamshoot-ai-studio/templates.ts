@@ -7,6 +7,7 @@ export type MydreamShootsAiStudioTemplateKey =
   | "tools"
   | "workflow"
   | "help"
+  | "faq"
   | "creators-circle"
   | "partner-registration"
   | "about-us"
@@ -2550,6 +2551,16 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     },
     1
   ),
+  faq: page(
+    "help",
+    ["intro_1", "faq_1", "plan_rules_1"],
+    {
+      intro_1: section("rich_text", { eyebrow: "FAQ", title: "Frequently asked questions", body: "Find practical answers about photo uploads, AI package selection, credits, billing, refunds, privacy, cookies, and private album delivery.", headingLevel: "h1" }),
+      faq_1: aidreamcapesTemplateSite ? aidreamcapesPageFaqSection("help") : mydreamshootsPageFaqSection("help"),
+      plan_rules_1: homeSections.plan_rules_1
+    },
+    1
+  ),
   policy: page(
     "policy",
     ["policy_1"],
@@ -2776,6 +2787,7 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
   album: "Album",
   "account-billing": "Account Billing",
   help: "Help Center",
+  faq: "FAQ",
   policy: "Policy",
   "blog-list": "Blog List",
   "blog-detail": "Blog Detail",
@@ -2931,6 +2943,12 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       skin_text_font_family: "var(--font-sans-ui), Helvetica Neue, ui-sans-serif, system-ui, sans-serif",
       general_layout_width: 1280,
       general_layout_spacing: 56,
+      instagram_url: "https://www.instagram.com/blydey_inc",
+      facebook_url: "https://www.facebook.com/blydeyinc",
+      threads_url: "https://www.threads.com/@blydey_inc",
+      pinterest_url: "https://www.pinterest.com/Blydeyinc",
+      youtube_url: "https://www.youtube.com/@blydey-inc",
+      twitter_url: "",
       sections: {
         header_plus: {
           type: "header_plus",
@@ -2952,7 +2970,19 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
             footer_bg_color: "#111114",
             footer_text_color: "#d8d0c7"
           },
-          blocks: []
+          blocks: [
+            {
+              type: "social",
+              settings: {
+                instagram_url: true,
+                facebook_url: true,
+                threads_url: true,
+                twitter_url: false,
+                pinterest_url: true,
+                youtube_url: true
+              }
+            }
+          ]
         }
       }
     }

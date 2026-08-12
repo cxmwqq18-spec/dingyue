@@ -1,8 +1,20 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import Module from "node:module";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import createJiti from "jiti";
+
+const repoRoot = process.cwd();
+const sourceRoot = path.join(repoRoot, "src");
+const originalResolveFilename = Module._resolveFilename;
+Module._resolveFilename = function resolveFilename(request, ...args) {
+  const resolvedRequest = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request;
+  return originalResolveFilename.call(this, resolvedRequest, ...args);
+};
+const jiti = createJiti(import.meta.url);
+const { buildSaasThemeDraft, buildSaasThemePublication } = jiti("../src/lib/theme/saas-theme-model.ts");
 
 const sourceSiteId = process.env.GROWNSTRIDE_SOURCE_SITE_ID || "site_dreamshoot";
 const targetSiteId = process.env.GROWNSTRIDE_TARGET_SITE_ID || "site_grownstride_test";
@@ -17,6 +29,20 @@ const shouldNoIndex = !["0", "false", "off", "no"].includes(String(process.env.G
 const statePath = path.join(process.cwd(), "data", "platform-state.json");
 const resetFlag = "--reset-test-from-production";
 const resetConfirmPhrase = "reset-grownstride-test";
+const blydeySocialLinks = {
+  instagramUrl: "https://www.instagram.com/blydey_inc",
+  facebookUrl: "https://www.facebook.com/blydeyinc",
+  threadsUrl: "https://www.threads.com/@blydey_inc",
+  pinterestUrl: "https://www.pinterest.com/Blydeyinc",
+  youtubeUrl: "https://www.youtube.com/@blydey-inc",
+  twitterUrl: "",
+  instagram_url: "https://www.instagram.com/blydey_inc",
+  facebook_url: "https://www.facebook.com/blydeyinc",
+  threads_url: "https://www.threads.com/@blydey_inc",
+  pinterest_url: "https://www.pinterest.com/Blydeyinc",
+  youtube_url: "https://www.youtube.com/@blydey-inc",
+  twitter_url: ""
+};
 
 const prisma = new PrismaClient();
 const targetDomainIds = new Map([
@@ -28,7 +54,7 @@ const targetDomains = Array.from(targetDomainIds.keys());
 
 function usage() {
   console.log(
-    "Usage: node scripts/sync-grownstride-test-store.mjs --reset-test-from-production --confirm reset-grownstride-test [--json] [--database] [--all]\n" +
+    "Usage: node scripts/sync-grownstride-test-store.mjs --reset-test-from-production --confirm reset-grownstride-test [--json] [--database] [--all] [--json-from-database]\n" +
       "High-risk bootstrap/reset only. This copies site_dreamshoot into site_grownstride_test and must not be used for routine promotion."
   );
 }
@@ -48,6 +74,102 @@ function argValue(name) {
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function asArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function cloneHelpAsFaqPage(site) {
+  const pages = asArray(site.pages);
+  if (pages.some((page) => page.slug === "/faq")) return pages;
+  const helpPage = pages.find((page) => page.slug === "/help");
+  if (!helpPage) return pages;
+  const page = clone(helpPage);
+  page.id = `${site.id}_faq`;
+  page.siteId = site.id;
+  page.slug = "/faq";
+  page.title = "FAQ";
+  page.pageType = "help";
+  page.templateKey = "help";
+  const rewrite = (json, eyebrow, title) => {
+    if (!json || typeof json !== "object" || Array.isArray(json)) return json;
+    const intro = json.sections?.intro_1;
+    if (intro?.settings && typeof intro.settings === "object") {
+      intro.settings.eyebrow = eyebrow;
+      intro.settings.title = title;
+    }
+    if (json.seo && typeof json.seo === "object") {
+      json.seo.canonicalPath = "/faq";
+      json.seo.title = json.seo.title || "Frequently asked questions";
+    }
+    return json;
+  };
+  page.draftJson = rewrite(page.draftJson, "FAQ", "Frequently asked questions");
+  page.publishedJson = rewrite(page.publishedJson, "FAQ", "Frequently asked questions");
+  return [...pages, page].sort((a, b) => String(a.slug).localeCompare(String(b.slug)));
+}
+
+function applyDreamshootFooterSocialSettings(themeSettings) {
+  if (!themeSettings || typeof themeSettings !== "object" || Array.isArray(themeSettings)) return themeSettings;
+  for (const bucketName of ["draftJson", "publishedJson"]) {
+    const bucket = themeSettings[bucketName];
+    if (!bucket || typeof bucket !== "object" || Array.isArray(bucket)) continue;
+    bucket.saasSettingsCurrent = {
+      ...(bucket.saasSettingsCurrent && typeof bucket.saasSettingsCurrent === "object" && !Array.isArray(bucket.saasSettingsCurrent)
+        ? bucket.saasSettingsCurrent
+        : {}),
+      ...blydeySocialLinks
+    };
+    const sections = bucket.saasSettingsCurrent.sections && typeof bucket.saasSettingsCurrent.sections === "object" && !Array.isArray(bucket.saasSettingsCurrent.sections)
+      ? bucket.saasSettingsCurrent.sections
+      : {};
+    bucket.saasSettingsCurrent.sections = sections;
+    const footerPlus = sections.footer_plus && typeof sections.footer_plus === "object" && !Array.isArray(sections.footer_plus)
+      ? sections.footer_plus
+      : { type: "footer_plus", version: "1", card_name: "myDreamshoots footer", settings: {}, blocks: [] };
+    sections.footer_plus = footerPlus;
+    footerPlus.settings = {
+      ...(footerPlus.settings && typeof footerPlus.settings === "object" && !Array.isArray(footerPlus.settings) ? footerPlus.settings : {}),
+      footer_bg_color: footerPlus.settings?.footer_bg_color ?? "#111114",
+      footer_text_color: footerPlus.settings?.footer_text_color ?? "#d8d0c7"
+    };
+    const blocks = Array.isArray(footerPlus.blocks) ? footerPlus.blocks.filter((block) => block?.type !== "social") : [];
+    footerPlus.blocks = [
+      {
+        type: "social",
+        settings: {
+          instagram_url: true,
+          facebook_url: true,
+          threads_url: true,
+          twitter_url: false,
+          pinterest_url: true,
+          youtube_url: true
+        }
+      },
+      ...blocks
+    ];
+    for (const footerKey of ["footer", "globalSections"]) {
+      const footer = footerKey === "footer" ? bucket.footer : bucket.globalSections?.footer;
+      if (!footer?.settings || typeof footer.settings !== "object") continue;
+      Object.assign(footer.settings, {
+        instagramUrl: blydeySocialLinks.instagramUrl,
+        facebookUrl: blydeySocialLinks.facebookUrl,
+        threadsUrl: blydeySocialLinks.threadsUrl,
+        pinterestUrl: blydeySocialLinks.pinterestUrl,
+        youtubeUrl: blydeySocialLinks.youtubeUrl,
+        twitterUrl: ""
+      });
+    }
+  }
+  return themeSettings;
+}
+
+function normalizeDreamshootSourceSite(source) {
+  const site = clone(source);
+  site.themeSettings = applyDreamshootFooterSocialSettings(site.themeSettings ?? { draftJson: {}, publishedJson: {} });
+  site.pages = cloneHelpAsFaqPage(site);
+  return site;
 }
 
 function sha256Password(password) {
@@ -172,7 +294,7 @@ function remapThemeJson(value, idMap) {
 function sourceCollectionsFromState(state) {
   const source = state.sites?.find((site) => site.id === sourceSiteId);
   if (!source) throw new Error(`source site not found in JSON state: ${sourceSiteId}`);
-  return {
+  return withCurrentThemeSnapshots(normalizeDreamshootSourceSite({
     ...clone(source),
     siteDomains: (state.siteDomains ?? []).filter((row) => row.siteId === sourceSiteId),
     siteAiApps: (state.siteAiApps ?? []).filter((row) => row.siteId === sourceSiteId),
@@ -188,6 +310,151 @@ function sourceCollectionsFromState(state) {
     videoThemeCategories: (state.videoThemeCategories ?? []).filter((row) => row.siteId === sourceSiteId),
     videoThemes: (state.videoThemes ?? []).filter((row) => row.siteId === sourceSiteId),
     products: (state.products ?? []).filter((row) => row.siteId === sourceSiteId)
+  }));
+}
+
+async function sourceCollectionsFromDatabase() {
+  const source = await prisma.site.findUnique({
+    where: { id: sourceSiteId },
+    include: {
+      domains: { orderBy: { domain: "asc" } },
+      pages: { orderBy: { slug: "asc" } },
+      settings: true,
+      connect: true,
+      products: { include: { prices: true }, orderBy: { createdAt: "asc" } },
+      aiApps: { include: { aiApp: true }, orderBy: { routeKey: "asc" } },
+      gatewayGroups: { orderBy: { name: "asc" } },
+      creativePackCategories: { orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { slug: "asc" }] },
+      creativePacks: { orderBy: { createdAt: "asc" } },
+      mediaAssets: { orderBy: { createdAt: "asc" } },
+      siteThemes: { orderBy: { updatedAt: "asc" } },
+      themeCopies: { orderBy: { updatedAt: "asc" } },
+      publications: { orderBy: { version: "asc" } },
+      toolCategories: { orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { slug: "asc" }] },
+      toolMenuItems: { orderBy: [{ sortOrder: "asc" }, { slug: "asc" }] },
+      videoThemeCategories: { orderBy: [{ sortOrder: "asc" }, { slug: "asc" }] },
+      videoThemes: { orderBy: [{ createdAt: "asc" }, { slug: "asc" }] }
+    }
+  });
+  if (!source) throw new Error(`source site not found in database: ${sourceSiteId}`);
+
+  const {
+    domains,
+    settings,
+    aiApps,
+    gatewayGroups,
+    publications,
+    ...site
+  } = source;
+
+  return withCurrentThemeSnapshots(normalizeDreamshootSourceSite(clone({
+    ...site,
+    themeSettings: settings ? { draftJson: settings.draftJson, publishedJson: settings.publishedJson } : undefined,
+    siteDomains: domains,
+    siteAiApps: aiApps,
+    aiGatewayGroups: gatewayGroups,
+    themePublications: publications
+  })));
+}
+
+function publicationSectionCount(site) {
+  return asArray(site.pages).reduce((sum, page) => sum + Object.keys(page.publishedJson?.sections ?? {}).length, 0);
+}
+
+function siteThemeFromSaasRecord(existing, record, fallbackId, fallbackCreatedBy) {
+  return {
+    ...(existing ? clone(existing) : {}),
+    id: existing?.id ?? fallbackId,
+    siteId: existing?.siteId ?? sourceSiteId,
+    name: existing?.name ?? record.name,
+    themeId: existing?.themeId ?? record.themeId,
+    themeKey: record.themeKey,
+    status: record.status,
+    templates: clone(record.templates),
+    settings: clone(record.settings),
+    source: existing?.source ?? "site",
+    createdBy: existing?.createdBy ?? fallbackCreatedBy,
+    createdAt: existing?.createdAt ?? record.updatedAt,
+    updatedAt: existing?.updatedAt ?? record.updatedAt
+  };
+}
+
+function withCurrentThemeSnapshots(source) {
+  const site = {
+    ...source,
+    themeSettings: source.themeSettings ?? { draftJson: {}, publishedJson: {} },
+    pages: asArray(source.pages)
+  };
+  const existingThemes = asArray(source.siteThemes);
+  const existingDraft = existingThemes.find((theme) => theme.status === "draft") ?? existingThemes.find((theme) => theme.id === `theme_${source.id}_draft`);
+  const existingActive = existingThemes.find((theme) => theme.status === "active") ?? existingThemes.find((theme) => theme.id === `theme_${source.id}_active`);
+  const publications = asArray(source.themePublications);
+  const latestVersion = Math.max(
+    1,
+    ...publications.map((publication) => Number(publication.version ?? 0)),
+    ...site.pages.map((page) => Number(page.publishedJson?.version ?? 0))
+  );
+  const draftThemeKey = existingDraft?.themeKey ?? "ai_subscription_theme1";
+  const activeThemeKey = existingActive?.themeKey ?? "dreamshoot-ai-studio";
+  const draftRecord = buildSaasThemeDraft(site, draftThemeKey);
+  const activeRecord = buildSaasThemePublication(site, latestVersion, activeThemeKey).theme;
+  const fallbackCreatedBy = existingActive?.createdBy ?? existingDraft?.createdBy ?? "sync-grownstride-test-store";
+  const siteThemes = [
+    siteThemeFromSaasRecord(
+      existingDraft,
+      { ...draftRecord, name: existingDraft?.name ?? draftRecord.name, themeId: existingDraft?.themeId ?? draftRecord.themeId },
+      `theme_${source.id}_draft`,
+      fallbackCreatedBy
+    ),
+    siteThemeFromSaasRecord(
+      existingActive,
+      { ...activeRecord, name: existingActive?.name ?? activeRecord.name, themeId: existingActive?.themeId ?? activeRecord.themeId },
+      `theme_${source.id}_active`,
+      fallbackCreatedBy
+    )
+  ];
+
+  const sourcePublications = publications.length
+    ? publications
+    : [{
+        id: `pub_${source.id}_v${latestVersion}`,
+        siteId: source.id,
+        version: latestVersion,
+        publishedBy: fallbackCreatedBy,
+        publishedAt: new Date().toISOString()
+      }];
+  const themePublications = sourcePublications.map((publication) => {
+    const version = Number(publication.version ?? latestVersion) || latestVersion;
+    const built = buildSaasThemePublication(site, version, activeThemeKey);
+    const snapshot = {
+      ...(publication.snapshot ? clone(publication.snapshot) : {}),
+      pages: clone(built.pages),
+      themeSettings: clone(built.themeSettings),
+      saasTheme: {
+        ...clone(built.theme),
+        name: publication.snapshot?.saasTheme?.name ?? existingActive?.name ?? built.theme.name,
+        themeId: publication.snapshot?.saasTheme?.themeId ?? `${source.id}_active_v${version}`,
+        updatedAt: publication.publishedAt ?? built.theme.updatedAt
+      }
+    };
+    return {
+      ...(publication ? clone(publication) : {}),
+      id: publication.id ?? `pub_${source.id}_v${version}`,
+      siteId: source.id,
+      version,
+      snapshot,
+      pageCount: built.pages.length,
+      sectionCount: publicationSectionCount(site),
+      snapshotBytes: Buffer.byteLength(JSON.stringify(snapshot), "utf8"),
+      publishedBy: publication.publishedBy ?? fallbackCreatedBy,
+      publishedAt: publication.publishedAt ?? new Date().toISOString()
+    };
+  });
+
+  return {
+    ...source,
+    siteThemes,
+    themePublications
   };
 }
 
@@ -326,8 +593,50 @@ function replaceSiteRows(state, key, rows) {
   state[key] = [...state[key].filter((row) => row?.siteId !== targetSiteId), ...rows];
 }
 
-function syncJsonState(state) {
-  const source = sourceCollectionsFromState(state);
+function replaceRowsForSite(state, siteId, key, rows) {
+  if (!Array.isArray(state[key])) state[key] = [];
+  state[key] = [...state[key].filter((row) => row?.siteId !== siteId), ...clone(rows)];
+}
+
+function writeSourceToJsonState(state, source) {
+  const sourceSite = {
+    ...clone(source),
+    siteDomains: clone(source.siteDomains ?? []),
+    siteAiApps: clone(source.siteAiApps ?? []),
+    aiGatewayGroups: clone(source.aiGatewayGroups ?? []),
+    creativePackCategories: clone(source.creativePackCategories ?? []),
+    creativePacks: clone(source.creativePacks ?? []),
+    mediaAssets: clone(source.mediaAssets ?? []),
+    siteThemes: clone(source.siteThemes ?? []),
+    themeCopies: clone(source.themeCopies ?? []),
+    themePublications: clone(source.themePublications ?? []),
+    toolCategories: clone(source.toolCategories ?? []),
+    toolMenuItems: clone(source.toolMenuItems ?? []),
+    videoThemeCategories: clone(source.videoThemeCategories ?? []),
+    videoThemes: clone(source.videoThemes ?? []),
+    products: clone(source.products ?? [])
+  };
+  state.sites = Array.isArray(state.sites) ? state.sites : [];
+  const sourceIndex = state.sites.findIndex((site) => site.id === source.id);
+  if (sourceIndex >= 0) state.sites[sourceIndex] = sourceSite;
+  else state.sites.push(sourceSite);
+  replaceRowsForSite(state, source.id, "siteDomains", source.siteDomains ?? []);
+  replaceRowsForSite(state, source.id, "products", source.products ?? []);
+  replaceRowsForSite(state, source.id, "siteAiApps", source.siteAiApps ?? []);
+  replaceRowsForSite(state, source.id, "aiGatewayGroups", source.aiGatewayGroups ?? []);
+  replaceRowsForSite(state, source.id, "creativePackCategories", source.creativePackCategories ?? []);
+  replaceRowsForSite(state, source.id, "creativePacks", source.creativePacks ?? []);
+  replaceRowsForSite(state, source.id, "mediaAssets", source.mediaAssets ?? []);
+  replaceRowsForSite(state, source.id, "siteThemes", source.siteThemes ?? []);
+  replaceRowsForSite(state, source.id, "themeCopies", source.themeCopies ?? []);
+  replaceRowsForSite(state, source.id, "themePublications", source.themePublications ?? []);
+  replaceRowsForSite(state, source.id, "toolCategories", source.toolCategories ?? []);
+  replaceRowsForSite(state, source.id, "toolMenuItems", source.toolMenuItems ?? []);
+  replaceRowsForSite(state, source.id, "videoThemeCategories", source.videoThemeCategories ?? []);
+  replaceRowsForSite(state, source.id, "videoThemes", source.videoThemes ?? []);
+}
+
+function syncJsonStateFromSource(state, source) {
   const idMap = createIdMap(source);
   const rows = buildJsonRows(source, idMap);
   rows.site.siteDomains = clone(rows.siteDomains);
@@ -393,11 +702,20 @@ function syncJsonState(state) {
   };
 }
 
-async function syncJsonFile() {
+function syncJsonState(state) {
+  return syncJsonStateFromSource(state, sourceCollectionsFromState(state));
+}
+
+async function syncJsonFile({ sourceFromDatabase = false } = {}) {
   const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
-  const result = syncJsonState(state);
+  const source = sourceFromDatabase ? await sourceCollectionsFromDatabase() : sourceCollectionsFromState(state);
+  if (sourceFromDatabase) writeSourceToJsonState(state, source);
+  const result = syncJsonStateFromSource(state, source);
   fs.writeFileSync(statePath, `${JSON.stringify(result.state, null, 2)}\n`);
-  return result.summary;
+  return {
+    ...result.summary,
+    source: sourceFromDatabase ? "database" : "json"
+  };
 }
 
 function asInputJson(value) {
@@ -850,8 +1168,9 @@ async function main() {
   }
   const runJson = wants("--json") || wants("--all") || (!wants("--database") && !wants("--all"));
   const runDatabase = wants("--database") || wants("--all");
+  const sourceFromDatabase = wants("--json-from-database");
   const results = {};
-  if (runJson) results.json = await syncJsonFile();
+  if (runJson) results.json = await syncJsonFile({ sourceFromDatabase });
   if (runDatabase) results.database = await syncDatabase();
   console.log(JSON.stringify({
     ok: true,
