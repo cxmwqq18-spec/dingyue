@@ -2548,7 +2548,7 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
 export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawSlug: string): Metadata {
   const item = getSeoDirectoryContentForSite(site, kind, rawSlug);
   const spanishXby = isSpanishXbySite(site);
-  const canonicalPath = kind === "tool" && !item.explicit && !spanishXby ? "/tools" : item.canonicalPath;
+  const canonicalPath = item.canonicalPath;
   const canonical = seoDirectoryCanonicalUrl(site, canonicalPath);
   const ogImage = absoluteSeoImageUrl(site, site.themeSettings.publishedJson.seo?.defaultOgImage);
   const siteName = fallbackRouteSiteName(site.slug, { primaryDomain: site.primaryDomain, siteName: site.branding.logoText || site.name });

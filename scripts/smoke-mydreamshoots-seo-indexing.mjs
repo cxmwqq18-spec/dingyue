@@ -42,6 +42,7 @@ function walk(value, visit, pathSegments = []) {
 
 const seoIndexing = readText("src/lib/seo-indexing.ts");
 const jsonLd = readText("src/lib/theme/json-ld.ts");
+const dreamshootSeoContent = readText("src/lib/dreamshoot-seo-content.ts");
 const robots = readText("src/app/robots.ts");
 const nextConfig = readText("next.config.mjs");
 const sitemapRoute = readText("src/app/sitemap.xml/route.ts");
@@ -104,6 +105,11 @@ assert(
 assert(
   Boolean(headshotSlugOwner),
   "canonical headshot tool page must expose /tools/headshot and remain indexable"
+);
+assert(
+  !dreamshootSeoContent.includes('kind === "tool" && !item.explicit') &&
+    dreamshootSeoContent.includes("const canonicalPath = item.canonicalPath"),
+  "tool detail metadata must self-canonicalize to /tools/<slug>, including non-explicit fallback tools"
 );
 assert(
   !slugRows.some((row) => row.slug === "/app/legacy-ai-image-studio" && row.index !== false),
