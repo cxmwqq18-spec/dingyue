@@ -120,25 +120,25 @@ function coverPath(slug) {
 }
 
 const galleryAltScenes = [
-  "close portrait with clear face detail",
-  "half-body editorial pose in themed lighting",
-  "group-friendly scene with polished composition",
-  "wide environmental frame showing the setting",
-  "expressive candid moment for social sharing",
-  "detail crop for a private album gallery",
-  "vertical profile crop for mobile channels",
-  "cinematic scene with richer color contrast",
-  "album cover style crop with strong subject focus",
-  "lifestyle frame prepared for download",
-  "event-style portrait with polished lighting",
-  "finished gallery example with a distinct pose"
+  "close-up portrait crop",
+  "half-body editorial pose",
+  "group-friendly composition",
+  "wide environmental setting",
+  "candid social-ready moment",
+  "detail crop for review",
+  "vertical profile crop",
+  "cinematic color treatment",
+  "strong album cover crop",
+  "download-ready lifestyle crop",
+  "polished event lighting",
+  "distinct portrait pose"
 ];
 
 function galleryImageAltForPack(pack, slug, index) {
   const direction = themeDirections[slug] ?? pack.description ?? pack.headline ?? pack.name;
   const subject = String(direction).split(";")[0].replace(/\s+/g, " ").trim() || `${pack.name} AI photo package`;
   const scene = galleryAltScenes[index % galleryAltScenes.length];
-  return `${subject}, ${scene}, ${pack.name} package gallery example for MyDreamShoots.`;
+  return `${subject}, ${scene}.`;
 }
 
 function galleryImageAltsForPack(pack, slug, count) {

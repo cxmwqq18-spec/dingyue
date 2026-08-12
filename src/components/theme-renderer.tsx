@@ -1085,10 +1085,10 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
         : `${readableBrandTitle} home`;
   const logoAlt = spanishXby
     ? isAidreamcapes
-      ? `${readableBrandTitle} logo para albumes privados de fans y recuerdos festivos`
-      : `${readableBrandTitle} logo para paquetes de fotos con IA y galerias privadas`
+      ? `${readableBrandTitle} logo`
+      : `${readableBrandTitle} logo`
     : isDreamShoot
-      ? "myDreamshoots heart camera logo for AI shoot packages, creator portraits, headshots, fan photos, and private albums"
+      ? "myDreamshoots heart camera logo"
       : isAidreamcapes
         ? header ? setting(header, "logoAlt", "Aidreamcapes logo for private fan-scene and holiday photo albums") : "Aidreamcapes logo for private fan-scene and holiday photo albums"
         : header
@@ -1588,14 +1588,14 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const defaultAidreamcapesFooterLogo = isAidreamcapesFooter ? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c" : "";
   const logoImageUrl = configuredFooterLogoImageUrl || brandingFooterLogoImageUrl || defaultDreamShootFooterLogo || defaultAidreamcapesFooterLogo;
   const defaultFooterLogoAlt = isDreamShootFooter
-    ? "myDreamshoots heart camera logo for AI photo packages, personal models, studio tools, credits, and private gallery delivery"
+    ? "myDreamshoots heart camera logo"
     : isAidreamcapesFooter
       ? "Aidreamcapes logo for private fan-scene and holiday photo albums"
       : `${readableFooterTitle} logo`;
   const logoAlt = spanishXbyFooter
     ? isAidreamcapesFooter
-      ? `${readableFooterTitle} logo en el pie de pagina para albumes privados de fans y recuerdos festivos`
-      : `${readableFooterTitle} logo en el pie de pagina para paquetes de fotos con IA y galerias privadas`
+      ? `${readableFooterTitle} logo`
+      : `${readableFooterTitle} logo`
     : isDreamShootFooter || isAidreamcapesFooter
       ? defaultFooterLogoAlt
       : footer ? setting(footer, "logoAlt", defaultFooterLogoAlt) : defaultFooterLogoAlt;
@@ -2820,78 +2820,78 @@ function imageBasename(src = ""): string {
 }
 
 const dreamshootManualImageAltByFile: Record<string, string> = {
-  "hero-grid-business": "Scrolling hero portrait of a man in a polished business headshot style for professional AI profile photos",
-  "hero-grid-beauty": "Scrolling hero portrait of a woman with beauty lighting and hairstyle styling for AI profile photo collections",
-  "hero-grid-cyber": "Scrolling hero portrait in a neon cyberpunk city scene for creative AI photo packages",
-  "hero-grid-travel": "Scrolling hero portrait in a travel lifestyle scene for destination-style AI photo packages",
-  "hero-grid-sports": "Scrolling hero portrait of a football fan in a stadium scene for sports AI photo packages",
-  "hero-grid-avatar": "Scrolling hero image of a stylized avatar portrait for social profile photo packages",
-  "hero-grid-product": "Scrolling hero image of a creator product-style photo for commerce-ready AI image packages",
-  "hero-grid-video": "Scrolling hero preview showing a motion-ready AI photo result for video add-ons",
+  "hero-grid-business": "Business headshot portrait with polished office styling",
+  "hero-grid-beauty": "Beauty portrait with styled hair and soft studio light",
+  "hero-grid-cyber": "Neon cyberpunk portrait in a city scene",
+  "hero-grid-travel": "Travel lifestyle portrait in a destination setting",
+  "hero-grid-sports": "Football fan portrait in a stadium crowd",
+  "hero-grid-avatar": "Stylized avatar portrait for a social profile",
+  "hero-grid-product": "Creator product-style portrait for commerce content",
+  "hero-grid-video": "Motion-ready portrait preview for video add-ons",
   "hero-grid-social": "Scrolling hero portrait for a social-ready creator profile update",
   "hero-grid-noir": "Scrolling hero portrait with cinematic noir lighting for character photo packages",
   "hero-grid-gala": "Editorial fashion portrait with formal gala styling for a polished AI photo package",
   "hero-grid-upscale": "Scrolling hero preview of an AI-enhanced portrait for image upscaling tools",
-  "hero-credit-studio-card": "Credit studio preview card showing AI photo package creation and private album delivery",
-  "hero-package-wall": "Homepage photo package wall showing multiple AI portrait outcomes",
-  "proof-worldcup-gallery": "Collage of football fans cheering in a stadium with confetti for a World Cup fan photo package",
-  "proof-business-founder": "Business portrait of a man in an office for a professional AI headshot package",
+  "hero-credit-studio-card": "Credit studio preview card with package and album options",
+  "hero-package-wall": "Homepage wall showing multiple portrait outcomes",
+  "proof-worldcup-gallery": "Collage of football fans cheering in a stadium with confetti",
+  "proof-business-founder": "Business portrait of a man in an office",
   "proof-beauty-hair": "Beauty portrait collage showing hairstyle and polished profile preview looks",
   "proof-cinematic-worlds": "Cinematic neon city portrait of a man for a creative AI photo package",
   "proof-couple-engagement": "Couple posing in front of a city skyline for a travel-style portrait package",
-  "stadium-portrait": "Single football fan portrait under stadium floodlights for a World Cup match-day photo package",
-  "friend-fan-photos": "Group of friends in football fan outfits celebrating together for a World Cup fan photo package",
+  "stadium-portrait": "Single football fan portrait under stadium floodlights",
+  "friend-fan-photos": "Friends in football fan outfits celebrating together",
   "match-day-avatar": "Square match-day football fan avatar portrait for social profiles",
   "fan-poster": "Football fan poster artwork with stadium lighting for match-day sharing",
   "social-story": "Vertical World Cup fan photo story layout for mobile social sharing",
   "banner-cover": "Wide football fan banner image for World Cup cover and campaign posts",
-  "catalog-worldcup-card": "Football fans celebrating in a stadium for the World Cup fan photos package",
-  "catalog-headshot-card": "Professional business headshot portrait for LinkedIn and resume photo packages",
+  "catalog-worldcup-card": "Football fans celebrating in a stadium",
+  "catalog-headshot-card": "Professional business headshot portrait",
   "catalog-hairstyle-card": "Hairstyle preview portrait showing polished hair and beauty styling",
   "cyberpunk-solo-city-v1": "Neon city cyberpunk portrait for a futuristic AI photo package",
   "catalog-gala-card": "Formal gala portrait with editorial lighting for a night-out photo package",
-  "sample-professional-headshot": "Professional studio headshot sample for business profile photo packages",
+  "sample-professional-headshot": "Professional studio headshot sample",
   "story-beauty-portrait": "Stylized beauty portrait for an anime avatar package",
   "sample-wedding-trip": "Couple wedding-style portrait scene for a private AI photo album",
   "beauty-portrait-gpt2": "Soft studio beauty portrait for a boudoir-inspired photo package",
-  "sample-christmas-couple": "Festive couple portrait for a Christmas photo package",
-  "mafia-noir-single-v1": "Noir character portrait in dramatic lighting for a cinematic photo package",
+  "sample-christmas-couple": "Festive couple portrait for a Christmas card",
+  "mafia-noir-single-v1": "Noir character portrait in dramatic lighting",
   "tab-virtual-looks": "Fashion try-on preview showing outfit and styling options on a portrait",
   "virtual-try-on": "Virtual try-on preview showing outfit styling ideas on a portrait",
   "fashion-editorial": "Editorial fashion portrait preview for outfit styling concepts",
   "beauty-portrait": "Soft studio beauty portrait for consenting adult style previews",
-  "avatar-nora-gpt2": "Creator profile portrait for a personal-brand photo package",
-  "nature-adventure-solo-v1": "Outdoor adventure portrait in a natural landscape for a nature photo package",
+  "avatar-nora-gpt2": "Creator profile portrait with personal-brand styling",
+  "nature-adventure-solo-v1": "Outdoor adventure portrait in a natural landscape",
   "holiday-portrait-v1": "Profile-card portrait designed for social and creator use",
   "upscaler-utility-v1": "Product-style utility preview for polished AI image enhancement",
-  "holiday-card-gpt2": "Holiday card style portrait for social sharing",
+  "holiday-card-gpt2": "Holiday card style portrait",
   "story-wedding-look": "Traditional Indian wedding-style portrait with ornate celebration styling",
   "city-date-night-v1": "Romantic city date-night couple portrait for a Valentine photo package",
   "sample-engagement": "Engagement-style couple portrait for announcement-ready photo sets",
   "magic-upscaler-pack": "AI image upscaler preview showing enhanced portrait detail",
-  "holiday-travel-pack": "Holiday travel portrait scene for seasonal AI photo packages",
+  "holiday-travel-pack": "Holiday travel portrait scene",
   "christmas-solo-card-v1": "Solo festive Christmas portrait for greeting-card style images",
   "ai-video-addons-pack": "AI video add-on preview card for motion-ready photo outputs",
   "desi-wedding-pack": "Desi wedding-style portrait package with traditional celebration styling",
-  "cliffside-holiday-v1": "Cliffside travel portrait scene for destination-inspired photo packages",
+  "cliffside-holiday-v1": "Cliffside travel portrait scene",
   "workflow-upload-source": "Source photo upload example used before creating an AI photo album",
-  "faq-intro-portrait": "Customer source-photo portrait beside the myDreamshoots FAQ, showing a clear upload example for private AI photo package guidance",
-  "world-cup-fan-star-clean-v1": "Football fan stadium photo concept for a match-day AI image package",
-  "world-cup-fan-star-v1": "Football fan celebration concept for a sports AI photo package",
+  "faq-intro-portrait": "Source-photo portrait used in the FAQ upload example",
+  "world-cup-fan-star-clean-v1": "Football fan stadium portrait concept",
+  "world-cup-fan-star-v1": "Football fan celebration portrait concept",
   "date-night-gpt2": "Romantic date-night portrait sample for couple photo packages",
-  "hero-gpt2": "myDreamshoots hero portrait collage preview for private AI photo packages",
-  "hero-gpt2-fast": "myDreamshoots fast-loading hero portrait collage preview for AI photo packages",
-  "game-day-group-portraits-01": "Cheering football fan in a packed stadium crowd, game-day group portrait example for private AIdreamcapes event keepsakes",
-  "game-day-group-portraits-02": "Close supporter portrait under stadium lights, game-day group album scene for private AIdreamcapes event keepsakes",
-  "game-day-group-portraits-03": "Group-friendly stadium celebration with fan crowd energy, game-day portrait gallery example for AIdreamcapes",
-  "game-day-group-portraits-04": "Wide album crop of a private stadium celebration, game-day group portrait scene for AIdreamcapes event keepsakes",
-  "new-year-countdown-group-album": "AIdreamcapes New Year countdown group album cover showing a seasonal celebration portrait for private midnight keepsakes",
+  "hero-gpt2": "Hero portrait collage preview",
+  "hero-gpt2-fast": "Fast-loading hero portrait collage preview",
+  "game-day-group-portraits-01": "Cheering football fan in a packed stadium crowd",
+  "game-day-group-portraits-02": "Close supporter portrait under stadium lights",
+  "game-day-group-portraits-03": "Group-friendly stadium celebration with fan energy",
+  "game-day-group-portraits-04": "Wide crop of a stadium celebration",
+  "new-year-countdown-group-album": "New Year countdown group portrait",
   "flow-before-upload": "Original source photo upload before AI photo generation",
   "hairstyle-preview-v1": "Generated hairstyle portrait after AI photo processing",
   "flow-private-album-workspace": "Private album workspace showing delivered AI portraits organized for customer review and download",
   "editorial-headshot-gpt2": "Professional headshot result inside a private AI photo album",
   "sample-cyberpunk": "Cyberpunk portrait result inside a private AI photo album",
-  "pricing-credits-visual": "AI photo subscription pricing panel with credits and private album package options",
+  "pricing-credits-visual": "Subscription pricing panel with credits and album options",
   "review-ava-avatar": "Casual customer avatar for Ava's LinkedIn refresh review",
   "review-ava-result-gala": "Formal gala-style AI portrait result from Ava's LinkedIn refresh review",
   "review-lucas-avatar": "Casual customer avatar for Lucas's match-day fan photo review",
@@ -3090,7 +3090,7 @@ function fallbackAltFromImageSrc(src: string): string {
     .replace(/[-_]+/g, " ")
     .replace(/\b\w/g, (letter) => letter.toUpperCase())
     .trim();
-  return readable ? `${readable} visual frame for a private storefront gallery` : "Site image visual frame for a private storefront gallery";
+  return readable ? `${readable} image` : "Storefront image";
 }
 
 function StorefrontImage({
@@ -8342,11 +8342,11 @@ function SectionView({
       const authPrimaryUsesGoogle = /google/i.test(authPrimaryLabel);
       const motionHeroAltPrefix = isAidreamcapesSite(site)
         ? isSpanishXbySite(site)
-          ? "Retrato de categoria de AIdreamcapes que muestra el ambiente y el escenario de un album privado de fans o festivo"
-          : "Aidreamcapes category portrait showing the visual mood and setting for a private fan-scene or holiday album"
+          ? "Retrato de categoria para un album privado"
+          : "Category portrait for a private album"
         : isSpanishXbySite(site)
-          ? "Retrato hero de paquete de fotos IA que muestra el sujeto, el estilo y el uso en una galeria privada de AIdreamshoots"
-          : "myDreamshoots AI photo package hero portrait showing the subject, styling, and intended private gallery use";
+          ? "Retrato principal con estilo de galeria privada"
+          : "Hero portrait with private gallery styling";
       const motionHeroTileCount = isAidreamcapesSite(site) && !isSpanishXbySite(site) ? gridImages.length : Math.max(8, gridImages.length);
       return (
         <section className="dreamshoot-hero-motion relative isolate overflow-hidden border-b border-white/10 bg-[#05070E] px-5 text-white">
@@ -11936,7 +11936,7 @@ function SectionView({
             {kind === "video" ? (
               videoCards.length ? (
                 <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" data-dreamshoot-media-gallery-grid="video">
-	                  {videoCards.map((card, index) => (
+	                  {videoCards.map((card) => (
 	                    <figure
 	                      aria-label={videoPlaybackAriaLabelForSite(site, videoPosterAltForSite(site, { meta: card.meta, title: card.title }))}
                       className="group relative min-w-0 cursor-pointer overflow-hidden rounded-[8px] border border-white/12 bg-black text-white shadow-[0_28px_84px_-66px_rgba(0,0,0,0.92)] transition hover:-translate-y-0.5 hover:border-white/24 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
@@ -12085,8 +12085,8 @@ function SectionView({
 	                  ? withStorefrontPublicWatermarkCacheVersion(logoPublicImage)
 	                  : "";
 	                const logoAlt = isSpanishStorefrontSite(site)
-	                  ? `${logoName} logo de marca mostrado en la franja de confianza de la pagina principal de ${storefrontMediaBrandName(site)}.`
-	                  : `${logoName} brand logo displayed in the ${storefrontMediaBrandName(site)} homepage trust strip.`;
+	                  ? `${logoName} logo de marca`
+	                  : `${logoName} brand logo`;
 	                return (
 	                  <div
 	                    aria-label={logoAlt}
@@ -12317,7 +12317,7 @@ function SectionView({
                       tabIndex={0}
                     >
                       <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
-                      <figcaption className="sr-only">{`${card.meta} gallery video example.`}</figcaption>
+                      <figcaption className="sr-only">{`${card.meta} video preview.`}</figcaption>
                     </figure>
                   ))}
                 </DreamshootShowcaseRail>

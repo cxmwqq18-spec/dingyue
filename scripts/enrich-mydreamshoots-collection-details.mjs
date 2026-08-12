@@ -545,7 +545,7 @@ function galleryImageAltsForProfile(profile, pack, slug, count) {
     .replace(/\s+/g, " ")
     .trim() || `${pack.name} AI photo package`;
   return Array.from({ length: count }, (_, index) =>
-    `${subject}, ${galleryAltScenes[index % galleryAltScenes.length]}, ${pack.name} package gallery example for MyDreamShoots.`
+    `${subject}, ${galleryAltScenes[index % galleryAltScenes.length]}.`
   );
 }
 

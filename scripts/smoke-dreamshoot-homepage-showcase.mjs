@@ -649,7 +649,7 @@ assert(!videoShowcaseRenderer.includes("{String(card.index + 1).padStart"), "sho
 assert(videoShowcaseRenderer.includes("<figcaption") && videoShowcaseRenderer.includes("{card.title}</span>") && videoShowcaseRenderer.includes("{card.meta}"), "MyDreamShoots homepage video grid cards should show visible title and category copy");
 assert(!videoShowcaseRenderer.includes("Motion clip"), "showcase video cards should not show visible motion labels");
 assert(!showcaseRenderer.includes("autoLoad={railIndex"), "showcase videos must not leave most rail cards poster-only behind an index gate");
-assert(showcaseRenderer.includes("gallery video example"), "showcase videos should have accessible labels");
+assert(showcaseRenderer.includes("video preview"), "showcase videos should have concise accessible labels");
 assert(!showcaseRenderer.includes("[...imageCards, ...imageCards]"), "showcase image wall must not duplicate the full product data array");
 assert(!showcaseRenderer.includes("[...videoCards, ...videoCards]"), "showcase video rail must not duplicate the data array");
 assert(!showcaseRenderer.includes("dreamshoot-showcase-marquee"), "showcase rails should not use duplicated marquee animation");

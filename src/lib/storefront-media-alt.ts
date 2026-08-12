@@ -22,36 +22,38 @@ type PackAltInput = {
 
 const weakAltPattern = /^(?:image|photo|picture|preview|thumbnail|hero|featured image|featured pack image|package image|product image|gallery image|story image|destination|example|sample|undefined|null|n\/a)$/i;
 const weakAltPhrasePattern = /\b(?:private album workspace preview|private fan-scene album preview|featured pack image|package image|gallery image|gallery preview|image preview|photo preview)\b/i;
+const legacyTemplateAltPattern = /\b(?:package gallery example|gallery scene example|package showcase frame|package cover frame|featured package scene|related package scene|private gallery visual frame|private storefront gallery|visual frame|finished gallery example|private AI photo example)\b/i;
+const brandPlacementAltPattern = /\b(?:on|for)\s+(?:mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes)\b/i;
 const urlLikePattern = /\bhttps?:\/\/\S+|(?:^|\s)\/assets\/\S+/gi;
 
-const englishSceneVariants = [
-  "close portrait with clear facial detail",
-  "half-body editorial portrait in themed lighting",
-  "two-person keepsake moment in a styled scene",
-  "wide scene showing the setting and mood",
-  "candid smile prepared for social sharing",
-  "detail crop for a private album preview",
-  "group-friendly pose with polished composition",
-  "evening-light portrait with cinematic color",
-  "vertical profile crop for mobile sharing",
-  "lifestyle frame for a download-ready gallery",
-  "soft flash portrait with event-style energy",
-  "album cover crop for the finished gallery"
+const englishImageDetails = [
+  "close-up facial framing",
+  "half-body editorial pose",
+  "two-person keepsake composition",
+  "wide environmental setting",
+  "candid social-ready smile",
+  "detail crop for review",
+  "group-friendly composition",
+  "evening cinematic color",
+  "vertical profile crop",
+  "lifestyle download crop",
+  "soft event-style flash",
+  "album cover crop"
 ];
 
-const spanishSceneVariants = [
-  "retrato cercano con detalle facial claro",
-  "retrato editorial de medio cuerpo con luz tematica",
-  "momento de dos personas en una escena preparada",
-  "escena amplia que muestra ambiente y contexto",
-  "sonrisa natural lista para compartir",
-  "recorte de detalle para vista previa de album privado",
-  "pose de grupo con composicion pulida",
-  "retrato con luz de tarde y color cinematografico",
-  "recorte vertical para compartir en movil",
-  "escena de estilo de vida lista para descargar",
-  "retrato con flash suave y energia de evento",
-  "recorte de portada para la galeria final"
+const spanishImageDetails = [
+  "encuadre cercano del rostro",
+  "pose editorial de medio cuerpo",
+  "composicion de recuerdo en pareja",
+  "escena amplia con contexto",
+  "sonrisa natural para compartir",
+  "recorte de detalle para revisar",
+  "composicion pensada para grupo",
+  "color cinematografico de tarde",
+  "recorte vertical para perfil",
+  "recorte de estilo de vida",
+  "flash suave de evento",
+  "recorte de portada de album"
 ];
 
 const spanishVideoAltTitles: Record<string, string> = {
@@ -125,56 +127,15 @@ function imageSlugParts(imageUrl: string | undefined): string[] {
     .filter(Boolean);
 }
 
-function imageSequenceCue(imageUrl: string | undefined, locale: StorefrontMediaAltLocale): string {
-  const value = String(imageUrl ?? "").trim();
-  if (!value) return "";
-  const path = value.split("#")[0]?.split("?")[0] ?? "";
-  const filename = path.split("/").filter(Boolean).at(-1) ?? "";
-  const basename = filename.replace(/\.(?:png|jpe?g|webp|avif|svg)$/i, "");
-  const match = basename.match(/(?:^|[-_])(\d{1,3})$/);
-  const numeric = match ? Number(match[1]) : 0;
-  if (!Number.isFinite(numeric) || numeric <= 0) return "";
-  return locale === "es" ? `, fotograma ${numeric}` : `, frame ${numeric}`;
-}
-
-function readableImageCue(imageUrl: string | undefined, locale: StorefrontMediaAltLocale): string {
-  const parts = imageSlugParts(imageUrl);
-  const key = parts.join(" ");
-  const sequenceCue = imageSequenceCue(imageUrl, locale);
-  const withSequence = (cue: string) => `${cue}${sequenceCue}`;
-  if (!key) return withSequence(locale === "es" ? "encuadre visual de galeria privada" : "private gallery visual frame");
-
-  if (locale === "es") {
-    if (/game-day-group-photos/.test(key)) return withSequence("portada de categoria con grupo de aficionados en dia de partido");
-    if (/game-day-group-portraits/.test(key)) return withSequence("portada de retratos grupales para dia de partido");
-    if (/anime-avatar/.test(key)) return withSequence("encuadre de avatar anime para perfil creativo");
-    if (/product-style/.test(key)) return withSequence("encuadre de retrato de estilo de producto para comercio social");
-    if (/premiere|red-carpet|flash/.test(key)) return withSequence("encuadre de retrato de estreno con luz de evento");
-    if (/christmas|holiday|seasonal|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume|cozy|winter|new-year|family-occasion/.test(key)) return withSequence("encuadre de celebracion festiva para album privado");
-    if (/travel|coastal|route|postcard|island|mountain|cafe|street|destination/.test(key)) return withSequence("encuadre de retrato de viaje para galeria privada");
-    if (/fan-scene|supporter-photo|fan-keepsake|fan-letter|birthday-fan|spooky-fan|backstage-meetup/.test(key)) return withSequence("portada de album privado con escenas de aficionados");
-    if (/world-cup|stadium|football|watch-party|championship|tunnel-entrance|match-day|game-day|(?:^|-)fan(?:-|$)/.test(key)) return withSequence("encuadre de aficionado de futbol en ambiente de estadio");
-    return withSequence("encuadre visual de galeria privada con estilo tematico");
-  }
-
-  if (/game-day-group-photos/.test(key)) return withSequence("game-day crowd category cover frame");
-  if (/game-day-group-portraits/.test(key)) return withSequence("game-day group portrait cover frame");
-  if (/anime-avatar/.test(key)) return withSequence("anime avatar portrait frame for a creative profile");
-  if (/product-style/.test(key)) return withSequence("product-style portrait frame for creator commerce");
-  if (/premiere|red-carpet|flash/.test(key)) return withSequence("premiere event portrait cover frame");
-  if (/christmas|holiday|seasonal|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume|cozy|winter|new-year|family-occasion/.test(key)) return withSequence("seasonal celebration album cover frame");
-  if (/travel|coastal|route|postcard|island|mountain|cafe|street|destination/.test(key)) return withSequence("destination portrait gallery cover frame");
-  if (/fan-scene|supporter-photo|fan-keepsake|fan-letter|birthday-fan|spooky-fan|backstage-meetup/.test(key)) return withSequence("private fan-scene album cover frame");
-  if (/world-cup|stadium|football|watch-party|championship|tunnel-entrance|match-day|game-day|(?:^|-)fan(?:-|$)/.test(key)) return withSequence("stadium supporter cover frame");
-  return withSequence(`${parts.at(-1)?.replace(/-/g, " ") ?? "private gallery"} visual frame`);
-}
-
 function meaningfulAlt(value: string | undefined): string {
   const cleaned = cleanAltText(value);
   if (!cleaned) return "";
+  const wordCount = cleaned.split(/\s+/).filter(Boolean).length;
   if (weakAltPattern.test(cleaned)) return "";
-  if (cleaned.split(/\s+/).length < 8 && weakAltPhrasePattern.test(cleaned)) return "";
-  if (cleaned.split(/\s+/).length < 8) return "";
+  if (legacyTemplateAltPattern.test(cleaned)) return "";
+  if (brandPlacementAltPattern.test(cleaned.toLowerCase()) && wordCount > 6) return "";
+  if (wordCount < 4 && weakAltPhrasePattern.test(cleaned)) return "";
+  if (wordCount < 3) return "";
   return cleaned;
 }
 
@@ -323,134 +284,133 @@ function contextualThemeKey(input: Pick<PackAltInput, "category" | "description"
 }
 
 function genericSceneSubject(value: string | undefined): boolean {
-  return /\b(?:AI image result preview|creator profile portrait|supporter portrait in a private fan-scene album|vista previa de resultado|retrato de creador|retrato de seguidor en un album privado)\b/i.test(String(value ?? ""));
+  return /\b(?:creator profile portrait|styled portrait prepared for a private gallery|enhanced image preview|vista previa de resultado|retrato de creador|retrato estilizado para una galeria privada)\b/i.test(String(value ?? ""));
 }
 
 function imageSlugHasSpecificTheme(key: string): boolean {
-  return /(?:anime-avatar|profile-cards|product-style|world-cup|stadium|football|soccer|watch-party|championship|tunnel-entrance|game-day-group|premiere|red-carpet|christmas|holiday|thanksgiving|friendsgiving|halloween|spooky|travel|coastal|route|destination|wedding|engagement|beauty|hairstyle|fashion|boudoir)/.test(key);
+  return /(?:anime-avatar|profile-cards|social-cards|product-style|world-cup|stadium|football|soccer|watch-party|championship|tunnel-entrance|game-day-group|premiere|red-carpet|gala|mafia|cyberpunk|noir|christmas|holiday|thanksgiving|friendsgiving|halloween|spooky|travel|coastal|route|destination|nature|outdoor|wedding|engagement|valentine|desi|indian|beauty|hairstyle|fashion|boudoir|creator|try-on|upscaler)/.test(key);
 }
 
 function englishThemeSubject(key: string): string | undefined {
   if (/\b(?:credit|subscription|plan|pricing|checkout)\b/.test(key)) {
-    return "AI photo credit plan visual for private gallery workflows";
+    return "Credit plan panel for private photo galleries";
   }
   if (/(christmas|holiday|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume-cast|cozy-card|family-occasion|seasonal|winter|new-year)/.test(key)) {
-    return "seasonal celebration portrait in a private holiday album";
+    return "Seasonal celebration portrait";
   }
   if (/(gala|red-carpet|premiere|vip|award|award-night|spotlight|formal|evening)/.test(key)) {
-    return "red-carpet style event portrait with polished evening lighting";
+    return "Red-carpet event portrait";
   }
   if (/(fan-scene|supporter-wall|supporter-photo|supporter-set|fan-wall|fan-photo|fan-collection|fan-letter|fan-keepsake|backstage|meetup|birthday-fan|fan-card)/.test(key)) {
-    return "supporter portrait in a private fan-scene album";
+    return "Supporter portrait for a fan album";
   }
   if (/(anime-avatar)/.test(key)) {
-    return "anime avatar portrait with stylized character lighting for a creative profile";
+    return "Stylized anime avatar portrait";
   }
   if (/(cyberpunk|neon|noir|mafia|anime|avatar|fantasy)/.test(key)) {
-    return "stylized creative portrait in an original themed scene";
+    return "Cinematic character portrait";
   }
   if (/(profile-cards|social-cards|avatar-card)/.test(key)) {
-    return "social profile card portrait with clean avatar framing and personal-brand styling";
+    return "Social profile card portrait";
   }
   if (/(headshot|professional|business|linkedin|executive)/.test(key)) {
-    return "professional AI headshot with clean studio lighting";
+    return "Professional studio headshot";
   }
   if (/(video|motion|clip|animation|add-ons?|addon|teaser)/.test(key)) {
-    return "AI video add-on visual for a private gallery workflow";
+    return "Motion-ready portrait preview";
   }
   if (/(product-style)/.test(key)) {
-    return "product-style lifestyle portrait with clean studio lighting and creator-commerce framing";
+    return "Product-style lifestyle portrait";
   }
   if (/(product-style|product|upscaler|enhance|utility)/.test(key)) {
-    return "AI image result preview for a creator workflow";
+    return "Enhanced image preview";
   }
   if (/(creator|profile|social|thumbnail|media-kit|personal-brand)/.test(key)) {
-    return "creator profile portrait for social and personal-brand use";
+    return "Creator profile portrait";
   }
   if (/(world-cup|football|soccer|stadium|match-day|game-day|match|watch-party|championship|tunnel-entrance)/.test(key)) {
-    return "football fan portrait in a stadium crowd";
+    return "Football fan portrait in a stadium";
   }
   if (/(wedding|engagement|couple|valentine|desi|indian)/.test(key)) {
-    return "couple or wedding-inspired portrait for a private keepsake gallery";
+    return "Couple keepsake portrait";
   }
   if (/(travel|nature|route|coastal|destination|outdoor|road|mountain|cafe|island|villa)/.test(key)) {
-    return "travel-style portrait in a scenic destination setting";
+    return "Travel portrait in a scenic setting";
   }
   if (/(beauty|hairstyle|hair|try-on|fashion|boudoir)/.test(key)) {
-    return "beauty and styling portrait with editorial lighting";
+    return "Beauty portrait with editorial lighting";
   }
   return undefined;
 }
 
 function spanishThemeSubject(key: string): string | undefined {
   if (/\b(?:credit|subscription|plan|pricing|checkout|credito|suscripcion|plan)\b/.test(key)) {
-    return "visual de plan de creditos de fotos IA para flujos de galeria privada";
+    return "panel de creditos para galerias privadas";
   }
   if (/(christmas|holiday|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume-cast|cozy-card|family-occasion|seasonal|winter|new-year|navidad|temporada)/.test(key)) {
-    return "retrato de celebracion de temporada para un album privado";
+    return "retrato de celebracion de temporada";
   }
   if (/(gala|red-carpet|premiere|vip|award|award-night|spotlight|formal|evening)/.test(key)) {
-    return "retrato de evento estilo alfombra roja con luz nocturna pulida";
+    return "retrato de evento estilo alfombra roja";
   }
   if (/(fan-scene|muro de seguidores|seguidores|aficion|fan-letter|fan-keepsake|backstage|meetup|birthday-fan|fan-card)/.test(key)) {
-    return "retrato de seguidor en un album privado de escenas de aficionados";
+    return "retrato de aficionado para album privado";
   }
   if (/(anime-avatar|avatar-anime)/.test(key)) {
-    return "avatar anime estilizado con luz de personaje para un perfil creativo";
+    return "avatar anime estilizado";
   }
   if (/(cyberpunk|neon|noir|mafia|anime|avatar|fantasy)/.test(key)) {
-    return "retrato creativo estilizado en una escena tematica original";
+    return "retrato de personaje cinematografico";
   }
   if (/(profile-cards|social-cards|avatar-card|tarjetas-de-perfil)/.test(key)) {
-    return "retrato para tarjeta de perfil social con encuadre de avatar y marca personal";
+    return "retrato para tarjeta de perfil social";
   }
   if (/(headshot|professional|business|linkedin|executive|profesional)/.test(key)) {
-    return "retrato profesional con IA y luz limpia de estudio";
+    return "retrato profesional con luz de estudio";
   }
   if (/(video|motion|clip|animation|add-ons?|addon|teaser|video adicional)/.test(key)) {
-    return "vista previa de complemento de video IA para una galeria privada";
+    return "retrato listo para video";
   }
   if (/(product-style|estilo-de-producto)/.test(key)) {
-    return "retrato de estilo de producto con luz limpia de estudio y enfoque de comercio social";
+    return "retrato de estilo de producto";
   }
   if (/(product-style|product|upscaler|enhance|utility)/.test(key)) {
-    return "vista previa de resultado con IA para un flujo creativo";
+    return "vista previa de imagen mejorada";
   }
   if (/(creator|profile|social|thumbnail|media-kit|personal-brand|creador)/.test(key)) {
-    return "retrato de creador para perfil social y marca personal";
+    return "retrato de creador para perfil social";
   }
   if (/(world-cup|football|soccer|stadium|match-day|game-day|watch-party|championship|tunnel-entrance|deportes)/.test(key)) {
-    return "retrato de aficionado de futbol en una escena de estadio";
+    return "retrato de aficionado en estadio";
   }
   if (/(wedding|engagement|couple|valentine|desi|indian|boda|pareja)/.test(key)) {
-    return "retrato de pareja o boda para una galeria privada";
+    return "retrato de pareja para recuerdo";
   }
   if (/(travel|nature|route|coastal|destination|outdoor|road|mountain|cafe|island|villa|viaje|ruta)/.test(key)) {
-    return "retrato de viaje con una escena de destino cinematografica";
+    return "retrato de viaje en destino";
   }
   if (/(beauty|hairstyle|hair|try-on|fashion|boudoir|belleza)/.test(key)) {
-    return "retrato de belleza y estilo con luz editorial";
+    return "retrato de belleza con luz editorial";
   }
   return undefined;
 }
 
-function rolePhrase(role: PackAltInput["role"], locale: StorefrontMediaAltLocale): string {
-  if (locale === "es") {
-    if (role === "cover") return "portada del paquete";
-    if (role === "card") return "visual del paquete";
-    if (role === "featured") return "escena destacada del paquete";
-    if (role === "related") return "escena de paquete relacionado";
-    if (role === "poster") return "fotograma de video";
-    if (role === "article") return "portada del articulo";
-    return "escena de galeria";
-  }
-  if (role === "cover") return "package cover frame";
-  if (role === "card") return "package showcase frame";
-  if (role === "featured") return "featured package scene";
-  if (role === "related") return "related package scene";
-  if (role === "poster") return "video poster frame";
-  if (role === "article") return "article cover frame";
-  return "gallery scene example";
+function conciseImageDetail(index: number | undefined, locale: StorefrontMediaAltLocale): string {
+  const details = locale === "es" ? spanishImageDetails : englishImageDetails;
+  return details[Math.max(0, index ?? 0) % details.length];
+}
+
+function compactAltSentence(value: string, locale: StorefrontMediaAltLocale): string {
+  const cleaned = cleanAltText(value)
+    .replace(/\s*,\s*,/g, ",")
+    .replace(/\s+/g, " ")
+    .trim();
+  const sentence = cleaned.endsWith(".") ? cleaned : `${cleaned}.`;
+  const maxLength = locale === "es" ? 118 : 112;
+  if (sentence.length <= maxLength) return sentence;
+  const firstClause = sentence.split(",")[0]?.trim();
+  if (firstClause && firstClause.length >= 12 && firstClause.length <= maxLength) return firstClause.endsWith(".") ? firstClause : `${firstClause}.`;
+  return `${sentence.slice(0, maxLength - 1).replace(/\s+\S*$/, "").replace(/[,\s]+$/g, "")}.`;
 }
 
 export function storefrontPackMediaAlt(input: PackAltInput): string {
@@ -463,7 +423,6 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
     : "";
   if (galleryAlt) return galleryAlt;
 
-  const title = cleanAltText(input.title) || (locale === "es" ? "paquete de fotos con IA" : "AI photo package");
   const specificKey = themeKey(input);
   const imageKey = themeImageSlugParts(input.imageUrl).join(" ");
   const contextKey = contextualThemeKey(input);
@@ -476,15 +435,16 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
       ?? imageScene
       ?? contextScene
       ?? (locale === "es"
-        ? "escena de retrato generada con IA para un paquete de fotos privado"
-        : "AI portrait subject in a styled scene for a private photo package");
-  const variants = locale === "es" ? spanishSceneVariants : englishSceneVariants;
-  const variant = variants[Math.max(0, input.index ?? 0) % variants.length];
-  const imageCue = readableImageCue(input.imageUrl, locale);
-  const role = rolePhrase(input.role, locale);
+        ? "retrato estilizado para una galeria privada"
+        : "Styled portrait prepared for a private gallery");
+  const detail = conciseImageDetail(input.index, locale);
+  const fallbackScene = locale === "es"
+    ? "retrato estilizado para una galeria privada"
+    : "Styled portrait prepared for a private gallery";
+  const naturalScene = scene || fallbackScene;
   return locale === "es"
-    ? `${scene}, ${variant}, ${imageCue}, ${role} de ${title} en ${brand}.`
-    : `${scene}, ${variant}, ${imageCue}, ${role} for ${title} on ${brand}.`;
+    ? compactAltSentence(`${naturalScene}, ${detail}`, locale)
+    : compactAltSentence(`${naturalScene}, ${detail}`, locale);
 }
 
 export function storefrontCreativePackImageAlt({
@@ -560,9 +520,7 @@ export function storefrontCardImageAlt({
 }
 
 export function storefrontVideoPosterAlt({
-  brand,
   locale = "en",
-  meta,
   title
 }: {
   brand?: string;
@@ -573,11 +531,7 @@ export function storefrontVideoPosterAlt({
   const cleanTitle = locale === "es"
     ? spanishVideoAltPhrase(title, "video con IA")
     : cleanAltText(title) || "AI video";
-  const cleanMeta = locale === "es"
-    ? spanishVideoAltPhrase(meta, "")
-    : cleanAltText(meta);
-  const cleanBrand = cleanAltText(brand) || (locale === "es" ? "AIdreamshoots" : "MyDreamShoots");
   return locale === "es"
-    ? `Poster de video generado con IA para ${cleanTitle}${cleanMeta ? `, ${cleanMeta}` : ""}, vista previa de galeria privada en ${cleanBrand}.`
-    : `AI-generated video poster for ${cleanTitle}${cleanMeta ? `, ${cleanMeta.toLowerCase()}` : ""}, private gallery preview on ${cleanBrand}.`;
+    ? compactAltSentence(`Imagen de portada para ${cleanTitle}`, locale)
+    : compactAltSentence(`Poster frame for ${cleanTitle}`, locale);
 }

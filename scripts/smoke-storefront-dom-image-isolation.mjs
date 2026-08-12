@@ -141,7 +141,7 @@ function assertUnique(label, values) {
 async function auditCatalogRoute(page, siteId, route) {
   const images = await imageSnapshot(page);
   const cardImages = images
-    .filter((image) => /\b(?:package showcase frame|gallery scene example|package cover frame|visual del paquete|escena de galeria|portada del paquete)\b/i.test(image.alt))
+    .filter((image) => /\/collections(?:\/|$)/.test(image.href) && /\/(?:pack-covers|pack-galleries|fan-holiday-theme\/(?:covers|categories|gallery))\//i.test(image.url))
     .filter((image) => !/background layer|cover preview/i.test(image.alt));
   const cardGroups = new Map();
   for (const image of cardImages) {
@@ -196,7 +196,7 @@ async function auditAidreamcapesHomepageShowcase(page, route) {
     cards.map((card) => (card.textContent || "").trim()).filter(Boolean)
   );
   const heroImages = images.filter((image) =>
-    /Aidreamcapes category portrait showing|Retrato de categoria de AIdreamcapes/i.test(image.alt)
+    /\/assets\/sites\/site_aidreamcapes\/fan-holiday-theme\/(?:categories|showcase)\//.test(image.url)
   );
   const heroUrls = [...new Set(heroImages.map((image) => image.url))];
   if (!heroImages.length) failures.push(`aidreamcapes_home_hero_grid_missing:${route}`);
