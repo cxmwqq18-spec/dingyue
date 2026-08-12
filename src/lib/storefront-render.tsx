@@ -57,11 +57,6 @@ const dreamshootPartnerTemplateSlugs = new Set([
   "/best-ai-video"
 ]);
 
-function isGrownstrideTestStorefront(site: Pick<Site, "id" | "slug" | "primaryDomain">): boolean {
-  const domain = (site.primaryDomain || "").toLowerCase();
-  return site.id === "site_grownstride_test" || site.slug === "grownstride" || domain === "grownstride.com" || domain === "www.grownstride.com" || domain === "test.grownstride.com";
-}
-
 type SiteRenderData = {
   creativePackCategories: CreativePackCategory[];
   creativePacks: ReturnType<typeof getSiteCreativePacksFromState>;
@@ -2431,7 +2426,7 @@ function renderThemePage({
   jsonLd?: JsonLdNode[];
   lightweightChrome?: boolean;
 }) {
-  const jsonLdNodes = isGrownstrideTestStorefront(currentSite) ? undefined : jsonLd;
+  const jsonLdNodes = jsonLd;
 
   return (
     <div style={themeStyleVars(settings)}>
