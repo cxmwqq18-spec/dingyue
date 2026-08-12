@@ -1253,7 +1253,7 @@ function mydreamshootsFaqSection(): SectionInstance {
       subtitle: "Clear answers about source photos, packages, credits, AI images, short videos, styling tools, privacy, publishing, and delivery.",
       layout: "visual_faq",
       imageUrl: assets.galleryChristmasCoupleCover,
-      imageAlt: "myDreamshoots holiday album cover showing a warmly lit festive portrait prepared for seasonal cards and private celebration galleries",
+      imageAlt: "Warm festive portrait for a seasonal card album",
       imageList: [
         assets.galleryChristmasCover,
         assets.galleryChristmasPhotosThree,
@@ -1263,12 +1263,12 @@ function mydreamshootsFaqSection(): SectionInstance {
         assets.gallerySeasonalFallback
       ].join("|"),
       imageListAlt: [
-        "myDreamshoots holiday album cover showing a festive portrait and warm seasonal styling",
-        "myDreamshoots snowy Christmas portrait showing a couple in a winter holiday scene",
-        "myDreamshoots Christmas couple portrait showing festive lights and gift-ready framing",
-        "myDreamshoots Thanksgiving group album cover showing a warm family table scene",
-        "myDreamshoots Halloween party portrait cover showing a cinematic costume scene",
-        "myDreamshoots seasonal holiday album cover showing a private festive portrait set"
+        "Festive portrait with warm seasonal styling",
+        "Snowy Christmas couple portrait in a winter scene",
+        "Christmas couple portrait with gift-ready framing",
+        "Thanksgiving group portrait around a warm table",
+        "Halloween party portrait with cinematic costume styling",
+        "Seasonal holiday portrait set with festive lighting"
       ].join("|"),
       journeyTitle: "Your photo flow",
       journeyTitles: "Upload|Choose Pack|Generate|Download",
@@ -1282,7 +1282,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         bulletList: "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
         linkList: "Browse photo collections::/collections|Explore creative tools::/tools",
         imageUrl: assets.headshotLifestyle,
-        imageAlt: "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
+        imageAlt: "Lifestyle headshot with natural profile framing"
       }),
       block("faq_use", "faq_item", {
         question: "How do I use myDreamshoots?",
@@ -1326,7 +1326,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         bulletList: "Use clear focus and even lighting|Include front, three-quarter, and natural-expression views|Avoid sunglasses, extreme filters, heavy blur, and cropped faces|Include wardrobe or hairstyle variety when the package calls for it",
         linkList: "Review the upload workflow::/workflow",
         imageUrl: assets.upload,
-        imageAlt: "Clear source portrait showing the sharp lighting and visible face recommended for myDreamshoots AI photo uploads"
+        imageAlt: "Clear source portrait with sharp lighting and visible face"
       }),
       block("faq_couples", "faq_item", {
         question: "Can I create couple or group photos?",
@@ -1335,7 +1335,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         bulletList: "Get permission from every person shown|Use clear group and individual reference photos|Choose a package that supports the number of subjects|Review faces and hands before sharing",
         linkList: "Browse couple and group themes::/collections",
         imageUrl: assets.galleryChristmasCoupleTwo,
-        imageAlt: "myDreamshoots couple portrait showing two people in a softly lit seasonal setting for a private keepsake photo collection"
+        imageAlt: "Couple portrait in a softly lit seasonal setting"
       }),
       block("faq_photo_generator", "faq_item", {
         question: "How does the AI photo generator work?",
@@ -1344,7 +1344,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         bulletList: "Choose a visual direction|Upload the source material|Review the request and credits|Inspect the delivered gallery and keep the strongest results",
         linkList: "Explore photo collections::/collections",
         imageUrl: assets.galleryCreatorOne,
-        imageAlt: "myDreamshoots creator portrait with polished framing and social-ready styling for an AI personal-brand photo collection"
+        imageAlt: "Creator portrait with polished social-ready framing"
       }),
       block("faq_video", "faq_item", {
         question: "How does the AI video workflow work?",
@@ -1353,7 +1353,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         bulletList: "Choose a video-capable theme or add-on|Use a clean source image or finished still|Confirm the duration, format, and credits shown|Download the completed motion output from the private workspace",
         linkList: "See video-capable tools::/tools|Review the workflow::/workflow",
         imageUrl: assets.aiVideoAddonsPack,
-        imageAlt: "myDreamshoots motion-ready portrait example showing how an approved still can become a short AI video add-on"
+        imageAlt: "Motion-ready portrait prepared for a short video add-on"
       }),
       block("faq_styling", "faq_item", {
         question: "How do virtual looks, hairstyle, and styling tools work?",
@@ -1362,7 +1362,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         bulletList: "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
         linkList: "Open styling tools::/tools",
         imageUrl: assets.virtualLooks,
-        imageAlt: "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
+        imageAlt: "Virtual styling portrait with hairstyle and outfit concept"
       }),
       block("faq_operator", "faq_item", {
         question: "Who operates myDreamshoots?",
@@ -1448,7 +1448,7 @@ function aidreamcapesFaqSection(): SectionInstance {
         bulletList: "Fan-scene and supporter moments|Game-day group portraits|Premiere-inspired flash looks|Christmas, Thanksgiving, Halloween, and seasonal keepsakes",
         linkList: "Explore album collections::/collections|Open occasion tools::/tools",
         imageUrl: aidreamcapesPublicAssets.gallery,
-        imageAlt: "Aidreamcapes finished fan-scene album showing approved supporters in an original celebration setting inside a private gallery"
+        imageAlt: "Finished supporter album in an original celebration setting"
       }),
       block("aidream_faq_use", "faq_item", {
         question: "How do I build a private occasion album?",

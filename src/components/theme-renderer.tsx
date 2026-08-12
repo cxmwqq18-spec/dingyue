@@ -2044,6 +2044,15 @@ function blockValue(block: SectionBlockInstance, key: string, fallback = ""): st
   return value.trim() ? value : fallback;
 }
 
+function compactFallbackAltFromImageSrc(src: string | undefined): string {
+  const readable = imageBasename(src || "")
+    .replace(/[-_]+/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase())
+    .trim();
+  const fallback = readable ? `${readable} image` : "Storefront image";
+  return storefrontMeaningfulAlt(fallback) || fallback;
+}
+
 function manualImageAlt({
   explicitAlt,
   id,
@@ -2059,7 +2068,9 @@ function manualImageAlt({
   if (explicit) return explicit;
   const mapped = storefrontMeaningfulAlt(manualAltForImage({ id, src }));
   if (mapped) return mapped;
-  return storefrontMeaningfulAlt(fallback) || fallback;
+  const safeFallback = storefrontMeaningfulAlt(fallback);
+  if (safeFallback) return safeFallback;
+  return compactFallbackAltFromImageSrc(src);
 }
 
 function runtimeGeneratedAssetAlt(

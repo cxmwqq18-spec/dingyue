@@ -32,7 +32,7 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-const blockedPattern = /\b(?:package gallery example|gallery scene example|package showcase frame|package cover frame|featured package scene|related package scene|private gallery visual frame|private storefront gallery|visual frame|finished gallery example|private AI photo example|on MyDreamShoots|on myDreamshoots|on AIdreamcapes|AI-generated video poster)\b/i;
+const blockedPattern = /\b(?:package gallery example|gallery scene example|package showcase frame|package cover frame|featured package scene|related package scene|private gallery visual frame|private storefront gallery|private gallery workflow|private AI album workflow|visual frame|detailed storefront visual|storefront visual showing|finished gallery example|private AI photo example|how to plan this|on MyDreamShoots|on myDreamshoots|on AIdreamcapes|AI-generated video poster)\b/i;
 
 const samples = [
   storefrontCardImageAlt({
@@ -99,6 +99,16 @@ for (const alt of samples) {
 assert(
   storefrontMeaningfulAlt("professional AI headshot with clean studio lighting, close portrait with clear facial detail, Professional Headshots package gallery example for myDreamshoots.") === "",
   "legacy stored MyDreamShoots gallery alt should be rejected"
+);
+
+assert(
+  storefrontMeaningfulAlt("Photo AI hero image showing a private gallery workflow for MyDreamShoots.") === "",
+  "stored tool hero workflow alt should be rejected"
+);
+
+assert(
+  storefrontMeaningfulAlt("AI creator workflow result with polished studio presentation, detailed storefront visual showing the subject, setting, and intended gallery use, AI Video Add-ons: how to plan this myDreamshoots photo package category for myDreamshoots.") === "",
+  "long stored category SEO alt should be rejected"
 );
 
 assert(

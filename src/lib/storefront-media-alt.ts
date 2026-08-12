@@ -22,8 +22,9 @@ type PackAltInput = {
 
 const weakAltPattern = /^(?:image|photo|picture|preview|thumbnail|hero|featured image|featured pack image|package image|product image|gallery image|story image|destination|example|sample|undefined|null|n\/a)$/i;
 const weakAltPhrasePattern = /\b(?:private album workspace preview|private fan-scene album preview|featured pack image|package image|gallery image|gallery preview|image preview|photo preview)\b/i;
-const legacyTemplateAltPattern = /\b(?:package gallery example|gallery scene example|package showcase frame|package cover frame|featured package scene|related package scene|private gallery visual frame|private storefront gallery|visual frame|finished gallery example|private AI photo example)\b/i;
+const legacyTemplateAltPattern = /\b(?:package gallery example|gallery scene example|package showcase frame|package cover frame|featured package scene|related package scene|private gallery visual frame|private storefront gallery|private gallery workflow|private AI album workflow|visual frame|detailed storefront visual|storefront visual showing|finished gallery example|private AI photo example|how to plan this)\b/i;
 const brandPlacementAltPattern = /\b(?:on|for)\s+(?:mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes)\b/i;
+const storefrontBrandNamePattern = /\b(?:mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes)\b/gi;
 const urlLikePattern = /\bhttps?:\/\/\S+|(?:^|\s)\/assets\/\S+/gi;
 
 const englishImageDetails = [
@@ -134,6 +135,9 @@ function meaningfulAlt(value: string | undefined): string {
   if (weakAltPattern.test(cleaned)) return "";
   if (legacyTemplateAltPattern.test(cleaned)) return "";
   if (brandPlacementAltPattern.test(cleaned.toLowerCase()) && wordCount > 6) return "";
+  const brandMentions = cleaned.match(storefrontBrandNamePattern)?.length ?? 0;
+  if (brandMentions > 1) return "";
+  if (brandMentions > 0 && wordCount > 9) return "";
   if (wordCount < 4 && weakAltPhrasePattern.test(cleaned)) return "";
   if (wordCount < 3) return "";
   return cleaned;
