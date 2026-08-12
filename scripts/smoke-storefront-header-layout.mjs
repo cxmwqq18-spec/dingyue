@@ -1,6 +1,14 @@
 import { chromium } from "playwright";
 
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(/\/$/, "");
+const baseHost = (() => {
+  try {
+    return new URL(baseUrl).hostname.toLowerCase();
+  } catch {
+    return "";
+  }
+})();
+const isGrownstrideTestBase = baseHost === "test.grownstride.com";
 const pageTimeoutMs = Number(process.env.STOREFRONT_HEADER_PAGE_TIMEOUT_MS ?? 60_000);
 const stores = [
   {
@@ -28,6 +36,20 @@ const stores = [
       },
       { email: "1621417163@qq.com", password: process.env.SMOKE_AIDREAMCAPES_CUSTOMER_PASSWORD || "aidreamcapes123" }
     ]
+  },
+  {
+    slug: "grownstride",
+    siteId: "site_grownstride_test",
+    routePrefix: isGrownstrideTestBase ? "" : "/site/grownstride",
+    testHostOnly: true,
+    publicLabels: [["AI Photoshoot", "Photoshoot Studio"], "Tools", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"],
+    appLabels: [["AI Photoshoot", "Photoshoot Studio"], "Tools", "Best Packages", "How it works", "Workspace", "Pricing"],
+    credentials: [
+      {
+        email: process.env.SMOKE_GROWNSTRIDE_CUSTOMER_EMAIL || process.env.GROWNSTRIDE_TEST_CUSTOMER_EMAIL || "nora@grownstride.localhost",
+        password: process.env.SMOKE_GROWNSTRIDE_CUSTOMER_PASSWORD || process.env.GROWNSTRIDE_TEST_CUSTOMER_PASSWORD || "grownstride123"
+      }
+    ]
   }
 ];
 const viewports = [
@@ -44,7 +66,10 @@ const requestedStoreSlugs = new Set(
     .map((item) => item.trim())
     .filter(Boolean)
 );
-const selectedStores = requestedStoreSlugs.size ? stores.filter((store) => requestedStoreSlugs.has(store.slug)) : stores;
+const defaultStores = isGrownstrideTestBase
+  ? stores.filter((store) => store.slug === "grownstride")
+  : stores.filter((store) => !store.testHostOnly);
+const selectedStores = requestedStoreSlugs.size ? stores.filter((store) => requestedStoreSlugs.has(store.slug)) : defaultStores;
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -59,8 +84,12 @@ function matchesLabel(text, expected) {
   return new RegExp(escapeRegExp(expected), "i").test(text);
 }
 
-async function gotoPath(page, slug, path = "") {
-  const route = `${baseUrl}/site/${slug}${path}`;
+function routePrefixForStore(store) {
+  return store.routePrefix ?? `/site/${store.slug}`;
+}
+
+async function gotoPath(page, store, path = "") {
+  const route = `${baseUrl}${routePrefixForStore(store)}${path}`;
   for (let attempt = 0; attempt < 3; attempt += 1) {
     try {
       await page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
@@ -182,6 +211,7 @@ async function assertAuthenticatedInlineAccount(page, store, viewport, { scope =
 
 async function main() {
   assert(selectedStores.length, `No storefront header smoke stores matched SMOKE_STORE_SLUGS=${[...requestedStoreSlugs].join(",")}`);
+  const requireAuthenticatedHeader = process.env.STOREFRONT_HEADER_REQUIRE_AUTH === "1" || selectedStores.some((store) => store.slug === "grownstride");
   const browser = await chromium.launch({ headless: true });
   try {
     for (const store of selectedStores) {
@@ -190,7 +220,7 @@ async function main() {
       try {
         for (const viewport of viewports) {
           await guestPage.setViewportSize({ width: viewport.width, height: viewport.height });
-          await gotoPath(guestPage, store.slug);
+          await gotoPath(guestPage, store);
           await assertHeaderLayout(guestPage, store, viewport);
         }
         console.log(`✓ ${store.slug} guest header full visibility checked`);
@@ -202,19 +232,20 @@ async function main() {
       try {
         const email = await loginCustomer(authenticatedContext, store);
         if (!email) {
+          assert(!requireAuthenticatedHeader, `${store.slug}: demo customer login is unavailable, so authenticated header could not be checked`);
           console.log(`↷ ${store.slug} authenticated header check skipped because demo customer login is unavailable`);
           continue;
         }
         const authenticatedPage = await authenticatedContext.newPage();
         for (const viewport of viewports.filter((item) => item.width >= 1280)) {
           await authenticatedPage.setViewportSize({ width: viewport.width, height: viewport.height });
-          await gotoPath(authenticatedPage, store.slug);
+          await gotoPath(authenticatedPage, store);
           await assertHeaderLayout(authenticatedPage, store, viewport);
           await assertAuthenticatedInlineAccount(authenticatedPage, store, viewport, { email });
         }
         for (const viewport of viewports.filter((item) => item.width >= 1280)) {
           await authenticatedPage.setViewportSize({ width: viewport.width, height: viewport.height });
-          await gotoPath(authenticatedPage, store.slug, "/app/create");
+          await gotoPath(authenticatedPage, store, "/app/create");
           await assertHeaderLayout(authenticatedPage, store, viewport, { scope: "app", expectedLabels: store.appLabels });
           await assertAuthenticatedInlineAccount(authenticatedPage, store, viewport, { scope: "app", email });
         }
