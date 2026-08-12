@@ -45,6 +45,8 @@ export function PreviewFrame({
   currentPageDirty,
   changedSectionCount,
   dirtyPagesCount,
+  saveState,
+  lastSavedAt,
   publishedVersion,
   activeThemeName,
   draftThemeName,
@@ -82,6 +84,8 @@ export function PreviewFrame({
   currentPageDirty: boolean;
   changedSectionCount: number;
   dirtyPagesCount: number;
+  saveState?: "idle" | "dirty" | "saving" | "saved" | "error" | "conflict";
+  lastSavedAt?: string;
   publishedVersion: number;
   activeThemeName: string;
   draftThemeName: string;
@@ -115,6 +119,16 @@ export function PreviewFrame({
   const toolbarLeadingNodes = Children.toArray(toolbarLeading);
   const toolbarTrailingNodes = Children.toArray(toolbarTrailing);
   const interactiveMode = previewMode === "interactive";
+  const saveButtonLabel =
+    saveState === "saving"
+      ? "保存中"
+      : saveState === "saved"
+        ? "已保存"
+        : saveState === "error"
+          ? "重试保存"
+          : saveState === "conflict"
+            ? "刷新后保存"
+            : "保存草稿";
   const syncStateClass = currentPageDirty
     ? "border-[#f2d3a4] bg-[#fff4e6] text-[#b06d2c]"
     : "border-[#cbe7d5] bg-[#edf7f0] text-[#18794e]";
@@ -264,7 +278,7 @@ export function PreviewFrame({
     <section className="saas-designer-preview-frame flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-[#d7dce4]">
       <DesignerTopbarShell data-designer-toolbar="saas-top-editor-toolbar">
         <DesignerTopbarRow>
-          <div className="flex h-[64px] min-w-[240px] flex-1 items-center overflow-hidden">
+          <div className="flex h-[64px] min-w-0 items-center overflow-hidden">
             {toolbarLeadingNodes}
           </div>
 
@@ -281,7 +295,7 @@ export function PreviewFrame({
             </DesignerToolbarSegmented>
           </div>
 
-          <div className="ml-auto flex h-[64px] min-w-0 shrink items-center justify-end gap-2 overflow-x-auto overflow-y-hidden py-2">
+          <div className="flex h-[64px] min-w-0 items-center justify-end gap-2 overflow-x-auto overflow-y-hidden py-2">
             <ToolbarGroup label="查看">
               <DesignerToolbarButton className="min-w-[72px]" onClick={onReloadPreview} title="刷新预览画面">
                 <RefreshCw className="h-[15px] w-[15px]" strokeWidth={1.8} />
@@ -293,9 +307,17 @@ export function PreviewFrame({
               </DesignerToolbarButton>
             </ToolbarGroup>
             <ToolbarGroup label="编辑">
-              <DesignerToolbarButton aria-label="保存草稿" className="min-w-[78px]" data-designer-action="save-draft" onClick={onSaveDraft} title="保存草稿不会上线，只写入后台草稿区">
+              <DesignerToolbarButton
+                aria-label="保存草稿"
+                className="min-w-[96px]"
+                data-designer-action="save-draft"
+                data-designer-save-state={saveState ?? "idle"}
+                disabled={saveState === "saving"}
+                onClick={onSaveDraft}
+                title="保存草稿不会上线，只写入后台草稿区"
+              >
                 <Save className="h-[15px] w-[15px]" strokeWidth={1.8} />
-                保存
+                {saveButtonLabel}
               </DesignerToolbarButton>
               <DesignerToolbarButton className="min-w-[78px]" data-designer-action="rollback-draft" onClick={onRollback} title="恢复整站草稿到最近一次线上发布版本">
                 <RotateCcw className="h-[15px] w-[15px]" strokeWidth={1.8} />
@@ -376,6 +398,11 @@ export function PreviewFrame({
             <span className="inline-flex h-[40px] items-center rounded-[10px] border border-[#d9dde4] bg-white px-3">
               线上版本 v{publishedVersion}
             </span>
+            {saveState === "saved" && lastSavedAt ? (
+              <span className="hidden h-[40px] items-center rounded-[10px] border border-[#cbe7d5] bg-[#edf7f0] px-3 text-[#18794e] 2xl:inline-flex">
+                最近保存 {lastSavedAt}
+              </span>
+            ) : null}
           </div>
         </div>
 
@@ -470,15 +497,6 @@ export function PreviewFrame({
                 </>
               ) : (
                 <div className="designer-live-preview h-full overflow-y-auto bg-white" onClickCapture={interactiveMode ? undefined : onLivePreviewClick}>
-                  {previewMode === "edit" && iframeStatus === "failed" ? (
-                    <div className="sticky top-0 z-50 flex items-center gap-2 border-b border-[#f2d3a4] bg-[#fff7ed] px-4 py-2 text-[12px] text-[#9a5a1f]">
-                      <span className="h-2 w-2 rounded-full bg-current opacity-70" />
-                      <span>iframe 预览未完成载入，已临时切换为实时预览。</span>
-                      <button className="ml-auto rounded-[8px] border border-[#d8a45d] bg-white px-2 py-1 font-medium" onClick={onIframeRetry} type="button">
-                        重试 iframe
-                      </button>
-                    </div>
-                  ) : null}
                   <style
                     dangerouslySetInnerHTML={{
                       __html: `
@@ -567,7 +585,7 @@ function isPreviewViewportPreset(value: string): value is PreviewViewportPreset 
 function ToolbarGroup({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="flex h-10 shrink-0 items-center gap-1 rounded-[10px] border border-white/10 bg-white/[0.03] px-1" data-designer-layout="saas-toolbar-action-group">
-      <span className="hidden h-full items-center px-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-white/38 2xl:inline-flex">
+      <span className="hidden h-full items-center px-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-white/38 min-[1800px]:inline-flex">
         {label}
       </span>
       <div className="flex h-full items-center gap-1">{children}</div>

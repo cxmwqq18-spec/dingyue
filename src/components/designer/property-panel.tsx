@@ -18,8 +18,7 @@ export function PropertyPanelHeader({
 }) {
   return (
     <div
-      className="widget_back flex h-[56px] shrink-0 items-center border-b border-[#c4c7cc] bg-white px-0 text-[#212121]"
-      aria-hidden={!onBack}
+      className="widget_back flex min-h-[64px] shrink-0 items-center border-b border-[#c4c7cc] bg-white px-0 text-[#212121]"
       data-designer-layout="saas-property-header"
     >
       {onBack ? (
@@ -36,8 +35,8 @@ export function PropertyPanelHeader({
       )}
       <div className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-4">
         <div className="min-w-0">
-          <h3 className="truncate text-[16px] font-medium leading-5 text-[#212121]">{title}</h3>
-          {subtitle ? <p className="mt-0.5 truncate text-[11px] leading-4 text-[#7c8087]">{subtitle}</p> : null}
+          <h3 className="break-words text-[16px] font-medium leading-5 text-[#212121]">{title}</h3>
+          {subtitle ? <p className="mt-0.5 line-clamp-2 break-words text-[11px] leading-4 text-[#7c8087]">{subtitle}</p> : null}
         </div>
         {modeLabel ? <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.08em] text-[#909294]">{modeLabel}</span> : null}
       </div>
@@ -58,7 +57,7 @@ export function PropertyPanelBody({
 }) {
   return (
     <div
-      className={cx("widget_settings min-h-0 flex-1 overflow-y-auto bg-white text-[#212121]", className)}
+      className={cx("widget_settings min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain bg-white pb-20 text-[#212121]", className)}
       data-designer-layout="saas-property-body"
       {...props}
     >
@@ -229,7 +228,7 @@ export function PropertyActionRow({
   const actionClass = "inline-flex h-8 items-center rounded-[8px] border border-[#cfd4da] bg-white px-2.5 text-xs font-medium text-[#17181a] transition hover:border-[#479dff] hover:text-[#479dff] active:scale-[0.98]";
   return (
     <div
-      className="block__remove sticky bottom-0 z-10 flex min-h-[56px] w-full items-center gap-1 border-t border-[#c4c7cc] bg-white px-5 py-2 text-sm font-medium text-[#212121]"
+      className="block__remove sticky bottom-0 z-10 flex min-h-[56px] w-full items-center gap-1 border-t border-[#c4c7cc] bg-white px-5 py-2 text-sm font-medium text-[#212121] [isolation:isolate]"
       data-designer-layout="saas-property-actions"
     >
       <div className="flex items-center gap-0.5">

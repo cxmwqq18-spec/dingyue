@@ -166,6 +166,8 @@ type XfcartMutationContext = {
   previewMode: PreviewMode;
 };
 
+type DesignerSaveState = "idle" | "dirty" | "saving" | "saved" | "error" | "conflict";
+
 function templatePackageKeyForPage(page: ThemePage, templateName: string): ThemePackageTemplateKey | undefined {
   const normalizedTemplate = templateName.replace(/\.liquid$/, "");
   const byPageType: Record<string, ThemePackageTemplateKey> = {
@@ -433,6 +435,8 @@ export function DesignerClient({
   const [previewViewportPreset, setPreviewViewportPreset] = useState<PreviewViewportPreset>("desktop-1440");
   const [activeTab, setActiveTab] = useState<DesignerWorkspaceTab>("templates");
   const [previewMode, setPreviewMode] = useState<PreviewMode>("edit");
+  const [saveState, setSaveState] = useState<DesignerSaveState>("idle");
+  const [lastSavedAt, setLastSavedAt] = useState("");
   const [iframeReloadKey, setIframeReloadKey] = useState(0);
   const [iframeStatus, setIframeStatus] = useState<"loading" | "ready" | "recovering" | "failed">("loading");
   const iframeRecoveryCount = useRef(0);
@@ -1067,11 +1071,13 @@ export function DesignerClient({
   function updateDraft(next: ThemePageJson, action: string) {
     setDrafts((current) => ({ ...current, [selectedPageId]: next }));
     dirtyPageIdsRef.current.add(selectedPageId);
+    setSaveState("dirty");
     setLastAction(action);
   }
 
   function markThemeSettingsDirty() {
     themeSettingsDirtyRef.current = true;
+    setSaveState("dirty");
   }
 
   const postPatchToIframe = useCallback((payload: IframePatchPayload) => {
@@ -1082,6 +1088,15 @@ export function DesignerClient({
     iframeRecoveryCount.current = 0;
     setIframeStatus("loading");
     setIframeReloadKey((current) => current + 1);
+  }
+
+  function reloadPreviewIfInteractive() {
+    if (previewMode === "interactive") {
+      reloadIframePreview();
+    } else {
+      iframeRecoveryCount.current = 0;
+      setIframeStatus("ready");
+    }
   }
 
   function changePreviewDevice(nextDevice: "desktop" | "mobile") {
@@ -1098,15 +1113,20 @@ export function DesignerClient({
         ? "已切换到真实交互预览：点击会按正常网站行为跳转。"
         : "已切换到编辑定位模式：点击只选中文案和模块，不执行业务跳转。"
     );
-    reloadIframePreview();
+    if (nextMode === "interactive") {
+      reloadIframePreview();
+    } else {
+      iframeRecoveryCount.current = 0;
+      setIframeStatus("ready");
+    }
   }
 
   function handleIframeLoad() {
     if (previewMode === "interactive") {
-      setIframeStatus("ready");
+      window.setTimeout(checkIframePreviewHealth, 240);
       return;
     }
-    window.setTimeout(checkIframePreviewHealth, 240);
+    setIframeStatus("ready");
   }
 
   const syncSelectionToIframe = useCallback((nextSelection = selection, options?: { scroll?: boolean }) => {
@@ -1160,15 +1180,15 @@ export function DesignerClient({
       chooseSelection(nextSelection, { scrollPreview: false });
       return;
     }
-    if (nextTab === "publish") {
+    if (nextTab === "publish" && previewMode === "interactive") {
       postPatchToIframe({ act: "clearSelection" });
       return;
     }
     if (selectionBelongsToEditorTab(selection, nextTab)) {
-      syncSelectionToIframe(selection, { scroll: false });
+      if (previewMode === "interactive") syncSelectionToIframe(selection, { scroll: false });
       return;
     }
-    postPatchToIframe({ act: "clearSelection" });
+    if (previewMode === "interactive") postPatchToIframe({ act: "clearSelection" });
   }
 
   function chooseCopyQuickTarget(target: DesignerCopyLocatorQuickTarget) {
@@ -1255,20 +1275,17 @@ export function DesignerClient({
         }
         return;
       }
-      if (previewMode !== "edit") return;
-      if (Date.now() < previewSelectionLockUntilRef.current) return;
-      const nextState = selectionFromPreviewMessage({ message: event.data, draft, themeSettings });
-      if (!nextState) return;
-      setActiveTab(nextState.tab);
-      setSelection(nextState.selection);
-      setLastAction(nextState.actionLabel);
     }
 
     window.addEventListener("message", onPreviewMessage);
     return () => window.removeEventListener("message", onPreviewMessage);
-  }, [draft, interactivePreviewUrlForPage, pageForInteractivePath, previewMode, site.slug, themeSettings]);
+  }, [interactivePreviewUrlForPage, pageForInteractivePath, previewMode, site.slug]);
 
   const checkIframePreviewHealth = useCallback(() => {
+    if (previewMode !== "interactive") {
+      setIframeStatus("ready");
+      return true;
+    }
     const iframe = iframeRef.current;
     const iframeDocument = iframe?.contentDocument;
     const iframeSrc = iframe?.src ?? iframe?.getAttribute("src") ?? "";
@@ -1286,12 +1303,10 @@ export function DesignerClient({
     const iframeDocumentMatchesSrc = Boolean(iframeSrc) && Boolean(iframeHref) && normalizePreviewUrl(iframeSrc) === normalizePreviewUrl(iframeHref);
     const documentReady = iframeDocument?.readyState === "complete" || iframeDocument?.readyState === "interactive";
     const hasPreviewRoot = Boolean(iframeDocument?.querySelector("[data-theme-sections-root]"));
-    const editListenerReady = previewMode !== "edit" || iframeDocument?.documentElement.getAttribute("data-xfcart-preview-listener-ready") === "true";
     const interactiveNavigationReady = previewMode !== "interactive" || iframeDocument?.documentElement.getAttribute("data-xfcart-interactive-navigation-ready") === "true";
-    if (documentReady && iframeDocumentMatchesSrc && (previewMode === "interactive" ? interactiveNavigationReady : hasPreviewRoot && editListenerReady)) {
+    if (documentReady && iframeDocumentMatchesSrc && interactiveNavigationReady && hasPreviewRoot) {
       iframeRecoveryCount.current = 0;
       setIframeStatus("ready");
-      if (previewMode === "edit") syncSelectionToIframe(selection, { scroll: false });
       return true;
     }
     const stillNavigating =
@@ -1311,7 +1326,7 @@ export function DesignerClient({
     }
     setIframeStatus("failed");
     return false;
-  }, [previewMode, selection, syncSelectionToIframe]);
+  }, [previewMode]);
 
   useEffect(() => {
     if (previewMode === "edit") {
@@ -1481,8 +1496,11 @@ export function DesignerClient({
     setActiveTab("templates");
     setLocatorBreadcrumb(undefined);
     iframeRecoveryCount.current = 0;
-    setIframeStatus("loading");
-    setIframeReloadKey((current) => current + 1);
+    if (previewMode === "interactive") {
+      reloadIframePreview();
+    } else {
+      setIframeStatus("ready");
+    }
   }
 
   function moveSection(id: string, direction: -1 | 1) {
@@ -1849,6 +1867,7 @@ export function DesignerClient({
       };
     }
     mutationBusyRef.current = true;
+    setSaveState("saving");
     try {
       const flushedPreviewVersions = await flushPreviewMutationQueues();
       const pageVersionsBeforeSave = {
@@ -1859,6 +1878,8 @@ export function DesignerClient({
       const dirtyPageIds = Array.from(dirtyPageIdsRef.current).filter((pageId) => pages.some((page) => page.id === pageId));
       const shouldSaveThemeSettings = themeSettingsDirtyRef.current;
       if (!dirtyPageIds.length && !shouldSaveThemeSettings) {
+        setSaveState("saved");
+        setLastSavedAt(new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
         setLastAction("没有需要保存的草稿改动：当前页面和全局设置已在后台草稿区。");
         return { ok: true, pageVersions: pageVersionsBeforeSave, settingsVersion: settingsVersionBeforeSave };
       }
@@ -1889,13 +1910,25 @@ export function DesignerClient({
       const nextPageVersions = { ...pageVersionsBeforeSave, ...pagesSaved.draftVersions };
       if (!settingsSaved.ok || !pagesSaved.ok) {
         const conflict = pagesSaved.errors.some((item) => item.status === 409) || settingsSaved.status === 409;
+        setSaveState(conflict ? "conflict" : "error");
         setLastAction(conflict ? "草稿保存被拦截：页面或全局设置版本已变化，请刷新后重新检查。" : "草稿保存失败，请检查页面配置后重试。");
         return { ok: false, pageVersions: nextPageVersions, settingsVersion: settingsSaved.draftVersion };
       }
       if (settingsSaved.ok) themeSettingsDirtyRef.current = false;
-      reloadIframePreview();
+      setSaveState("saved");
+      setLastSavedAt(new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
+      reloadPreviewIfInteractive();
       setLastAction(`草稿已保存但不会上线：${dirtyPageIds.length} 个已编辑页面与全局设置已写入后台草稿区，发布整站快照后前台才会读取。`);
       return { ok: true, pageVersions: nextPageVersions, settingsVersion: settingsSaved.draftVersion };
+    } catch (error) {
+      setSaveState("error");
+      setLastAction(error instanceof Error ? `草稿保存失败：${error.message}` : "草稿保存失败，请稍后重试。");
+      return {
+        ok: false,
+        pageVersions: currentPageDraftVersions(),
+        settingsVersion: themeSettingsDraftVersion,
+        status: 500
+      };
     } finally {
       mutationBusyRef.current = false;
     }
@@ -1980,7 +2013,9 @@ export function DesignerClient({
       const firstSectionId = selectedDraft.sectionsOrder[0] ?? "";
       setExpandedSections(expansionStateForPage(selectedDraft, firstSectionId));
       setSelection({ kind: "section", sectionId: firstSectionId });
-      reloadIframePreview();
+      setSaveState("saved");
+      setLastSavedAt(new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
+      reloadPreviewIfInteractive();
       setLastAction(`整站草稿已恢复到线上发布版本 v${result.sourceVersion ?? publishedVersion}，所有页面与全局设置同步回线上基线。`);
     } finally {
       mutationBusyRef.current = false;
@@ -2013,7 +2048,9 @@ export function DesignerClient({
       setDraftVersions((current) => ({ ...current, [selectedPageId]: draftVersion }));
     }
     dirtyPageIdsRef.current.delete(selectedPageId);
-    reloadIframePreview();
+    setSaveState("saved");
+    setLastSavedAt(new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
+    reloadPreviewIfInteractive();
     setLastAction(`已套用「${option.label}」到当前页面草稿，线上页面仍需发布后生效。`);
   }
 
@@ -2078,7 +2115,9 @@ export function DesignerClient({
     }
     themeSettingsDirtyRef.current = false;
 
-    reloadIframePreview();
+    setSaveState("saved");
+    setLastSavedAt(new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
+    reloadPreviewIfInteractive();
     setLastAction(`已套用「${themePackage.name}」到 ${nextDraftEntries.length} 个页面草稿，并同步品牌、导航、页眉、页脚、SEO 全局装修；线上页面仍需发布后生效。`);
   }
 
@@ -2366,6 +2405,7 @@ export function DesignerClient({
           iframeReloadKey={iframeReloadKey}
           iframeStatus={iframeStatus}
           lastAction={lastAction}
+          lastSavedAt={lastSavedAt}
           pageMenuOptions={pageMenuOptions}
           onDeviceChange={changePreviewDevice}
           onIframeLoad={handleIframeLoad}
@@ -2384,6 +2424,7 @@ export function DesignerClient({
           previewViewportPreset={previewViewportPreset}
           products={products}
           publishedVersion={publishedVersion}
+          saveState={saveState}
           selectedPageId={selectedPageId}
           selectedPreviewBlockId={previewSelection && (previewSelection.kind === "block" || previewSelection.kind === "globalBlock") ? previewSelection.blockId : undefined}
           selectedPreviewSectionId={previewSelection ? previewSectionIdForSelection(previewSelection) : undefined}

@@ -41,7 +41,7 @@ export function DesignerTopbarRow({
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cx("relative flex min-h-[64px] items-center gap-3 overflow-hidden px-3 py-0", className)} {...props}>
+    <div className={cx("relative grid min-h-[64px] grid-cols-[minmax(170px,240px)_96px_minmax(0,1fr)] items-center gap-3 overflow-hidden px-3 py-0", className)} {...props}>
       {children}
     </div>
   );

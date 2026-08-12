@@ -20,7 +20,7 @@ export function DesignerWorkspaceShell({
 }: HTMLAttributes<HTMLElement>) {
   return (
     <aside
-      className={cx("designer-workbench-inspector flex h-full min-h-0 w-[clamp(420px,28vw,520px)] shrink-0 flex-col overflow-hidden border-l border-[#c4c7cc] bg-[#eef1f5] shadow-none", className)}
+      className={cx("designer-workbench-inspector isolate flex h-full min-h-0 w-[clamp(440px,30vw,560px)] shrink-0 flex-col overflow-hidden border-l border-[#c4c7cc] bg-[#eef1f5] shadow-none", className)}
       data-designer-layout="saas-right-editor-pane"
       {...props}
     >
@@ -55,7 +55,7 @@ export function DesignerWorkspaceSplit({
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cx("designer-workbench-split flex h-full min-h-0 flex-col", className)} data-designer-layout="saas-editor-split" {...props}>
+    <div className={cx("designer-workbench-split grid h-full min-h-0 grid-rows-[minmax(420px,42%)_minmax(0,1fr)]", className)} data-designer-layout="saas-editor-split" {...props}>
       {children}
     </div>
   );
@@ -67,7 +67,7 @@ export function DesignerWorkspaceRail({
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cx("designer-workbench-rail flex min-h-[220px] shrink-0 basis-[38%] flex-col overflow-hidden border-b border-[#d0d5dd] bg-[#eef1f5]", className)} data-designer-layout="saas-editor-rail" {...props}>
+    <div className={cx("designer-workbench-rail flex min-h-0 min-w-0 flex-col overflow-hidden border-b border-[#d0d5dd] bg-[#eef1f5]", className)} data-designer-layout="saas-editor-rail" {...props}>
       {children}
     </div>
   );

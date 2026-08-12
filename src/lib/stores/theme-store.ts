@@ -937,7 +937,7 @@ export async function saveThemePageDraftRelational(params: {
   title?: string;
   actor?: string;
   expected?: { expectedRevision?: number; expectedEtag?: string };
-}): Promise<{ page: ThemePage; draftVersion: ThemeDraftMeta }> {
+}): Promise<{ draftVersion: ThemeDraftMeta }> {
   clearSiteThemeReadCache(params.siteId);
   const pageRecord = await prisma.themePage.findFirst({ where: { siteId: params.siteId, id: params.pageId } });
   if (!pageRecord) throw new RelationalStoreError("theme_page_not_found", 404);
@@ -946,14 +946,14 @@ export async function saveThemePageDraftRelational(params: {
   page.draftJson = cloneJson(params.draftJson);
   page.draftMeta = makeThemeDraftMeta(page);
   if (params.title !== undefined) page.title = params.title.trim() || page.title;
-  const updated = await prisma.themePage.update({
+  await prisma.themePage.update({
     where: { id: page.id },
     data: {
       title: page.title,
       draftJson: draftJsonWithMeta(page)
     }
   });
-  return { page: toThemePage(updated), draftVersion: page.draftMeta };
+  return { draftVersion: page.draftMeta };
 }
 
 type ThemeDraftVersionExpectation = { expectedRevision?: number; expectedEtag?: string };
@@ -968,7 +968,7 @@ export async function saveThemeSettingsDraftRelational(params: {
   actor?: string;
   expected?: ThemeDraftVersionExpectation;
   requireExpected?: boolean;
-}): Promise<{ site: Site; draftVersion: ThemeDraftMeta }> {
+}): Promise<{ draftVersion: ThemeDraftMeta }> {
   clearSiteThemeReadCache(params.siteId);
   return prisma.$transaction(async (tx) => {
     const current = await tx.themeSettings.findUnique({ where: { siteId: params.siteId } });
@@ -994,7 +994,7 @@ export async function saveThemeSettingsDraftRelational(params: {
         draftJson: themeSettingsDraftJsonWithMeta(nextSettings)
       }
     });
-    return { site: toSite(await getSiteWithThemeRecords(tx, params.siteId)), draftVersion: nextSettings.draftMeta };
+    return { draftVersion: nextSettings.draftMeta };
   }, { timeout: 60000 });
 }
 

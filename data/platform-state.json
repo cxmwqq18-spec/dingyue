@@ -210591,7 +210591,7 @@
       "source": "site",
       "createdBy": "admin_lumen_owner",
       "createdAt": "2026-06-06T00:00:00.000Z",
-      "updatedAt": "2026-08-12T05:12:44.577Z"
+      "updatedAt": "2026-08-12T08:54:02.142Z"
     },
     {
       "id": "theme_site_lumen_active",
@@ -217281,7 +217281,7 @@
       "source": "site",
       "createdBy": "system",
       "createdAt": "2026-06-08T01:48:15.330Z",
-      "updatedAt": "2026-08-12T05:12:44.580Z"
+      "updatedAt": "2026-08-12T08:54:02.145Z"
     },
     {
       "id": "theme_site_atlas_active",
@@ -219543,7 +219543,7 @@
       "source": "site",
       "createdBy": "system",
       "createdAt": "2026-06-08T01:48:15.330Z",
-      "updatedAt": "2026-08-12T05:12:44.580Z"
+      "updatedAt": "2026-08-12T08:54:02.145Z"
     },
     {
       "id": "theme_site_aidreamcapes_draft",
@@ -220698,6 +220698,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "eyebrow": "Questions before upload",
@@ -220890,24 +220892,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "hero_1",
-            "brand_strip_1",
-            "visual_proof_1",
-            "featured_thanksgiving_1",
-            "package_catalog_1",
-            "generation_showcase_1",
-            "tutorial_video_1",
-            "tutorial_video_2",
-            "mobile_video_1",
-            "flow_bridge_1",
-            "pricing_1",
-            "proof_1",
-            "trust_1",
-            "conversion_1",
-            "faq_1"
-          ]
+          }
         },
         "best-ai-video": {
           "content_for_page": [
@@ -220933,6 +220918,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -220994,11 +220981,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "best_ai_video_1",
-            "faq_1"
-          ]
+          }
         },
         "best-ai-image": {
           "content_for_page": [
@@ -221024,6 +221007,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -221085,11 +221070,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "best_ai_image_1",
-            "faq_1"
-          ]
+          }
         },
         "best-packages": {
           "content_for_page": [
@@ -221390,6 +221371,8 @@
             },
             "intro_1": {
               "type": "rich_text",
+              "version": "1",
+              "card_name": "Rich Text",
               "settings": {
                 "anchor": "best-packages",
                 "eyebrow": "Best occasion albums",
@@ -221402,6 +221385,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -221463,14 +221448,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "intro_1",
-            "featured_pack_1",
-            "featured_christmas_1",
-            "featured_thanksgiving_1",
-            "faq_1"
-          ]
+          }
         },
         "page": {
           "content_for_page": [
@@ -221614,6 +221592,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -221675,15 +221655,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "pricing_intro_1",
-            "pricing_1",
-            "plan_rules_1",
-            "trust_1",
-            "conversion_1",
-            "faq_1"
-          ]
+          }
         },
         "collection": {
           "content_for_page": [
@@ -222033,6 +222005,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -222094,18 +222068,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "taxonomy_1",
-            "packages_1",
-            "sample_strip_1",
-            "proof_pairs_1",
-            "packages_strip_1",
-            "feature_tabs_1",
-            "trust_1",
-            "conversion_1",
-            "faq_1"
-          ]
+          }
         },
         "tools": {
           "content_for_page": [
@@ -222348,6 +222311,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -222409,17 +222374,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "free_tools_1",
-            "feature_tabs_1",
-            "plan_rules_1",
-            "packages_1",
-            "trust_1",
-            "pricing_1",
-            "conversion_1",
-            "faq_1"
-          ]
+          }
         },
         "login": {
           "content_for_page": [
@@ -223232,6 +223187,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -223293,12 +223250,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "intro_1",
-            "plan_rules_1",
-            "faq_1"
-          ]
+          }
         },
         "blog": {
           "content_for_page": [
@@ -223585,13 +223537,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "about_intro_1",
-            "about_values_1",
-            "trust_1",
-            "conversion_1"
-          ]
+          }
         },
         "contact-us": {
           "content_for_page": [
@@ -223691,12 +223637,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "contact_intro_1",
-            "contact_details_1",
-            "conversion_1"
-          ]
+          }
         },
         "search": {
           "content_for_page": [
@@ -224248,16 +224189,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "workflow_intro_1",
-            "tutorial_video_1",
-            "tutorial_image_video_1",
-            "mobile_video_1",
-            "workflow_1",
-            "plan_rules_1",
-            "conversion_1"
-          ]
+          }
         },
         "tool-detail": {
           "content_for_page": [
@@ -224385,78 +224317,70 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
-                "eyebrow": "Tool detail FAQ",
-                "title": "Aidreamcapes occasion tool questions",
-                "subtitle": "A fallback FAQ for new Aidreamcapes tool pages before the page-specific FAQ sync writes questions based on the occasion, source-photo needs, and private album output.",
+                "eyebrow": "Permission-Safe Photo Planner FAQ",
+                "title": "Permission-Safe Photo Planner FAQ",
+                "subtitle": "Specific answers about Permission-Safe Photo Planner, source-photo preparation, credits, private delivery, and quality review.",
                 "journeyTitle": "Before you create",
-                "journeyTitles": "Plan|Upload|Review|Download",
-                "journeyDescriptions": "Choose the right page path.|Use approved source photos.|Check credits before generation.|Keep results in your private gallery."
+                "journeyTitles": "Goal|Upload|Credits|Review",
+                "journeyDescriptions": "Choose the private AI image set.|Prepare approved photos.|Check costs before generation.|Download from your private gallery."
               },
               "blocks": [
                 {
-                  "id": "aidreamcapes_tool_detail_faq_1",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_1",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How should I choose an Aidreamcapes occasion tool?",
-                    "answer": "Choose the tool that matches the private album moment you want to create, such as fan-scene atmosphere, game-day group energy, holiday cards, travel-style portraits, premiere-inspired photos, or a short motion concept from an approved still image."
+                    "question": "What is Permission-Safe Photo Planner best for?",
+                    "answer": "Permission-Safe Photo Planner is best for creating a private AI image set from approved source photos. Check source-photo permissions, protected mark boundaries, credit cost, and album intent before generation. The page is meant for customers who want to compare the expected output, privacy path, and credit requirement before starting generation."
                   }
                 },
                 {
-                  "id": "aidreamcapes_tool_detail_faq_2",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_2",
                   "type": "faq_item",
                   "settings": {
-                    "question": "Which source photos are best for occasion tools?",
-                    "answer": "Use clear, well-lit photos with permission from everyone shown. Group tools work better with visible faces and less overlap, while motion tools usually need one strong still image with a clear subject and room for movement."
+                    "question": "Which photos should I upload for Permission-Safe Photo Planner?",
+                    "answer": "Use clear source photos or references you own or have permission to process, with the subject visible and the intended edit easy to understand. Better source material usually improves identity consistency, crop quality, background realism, and the number of usable results in the finished private gallery."
                   }
                 },
                 {
-                  "id": "aidreamcapes_tool_detail_faq_3",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_3",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How should I describe a fan-scene or holiday request?",
-                    "answer": "Keep the direction original and practical: describe mood, crop, setting, colors, group size, and album use. Avoid unauthorized public-figure likenesses, official team logos, venue marks, brand logos, trademarks, or captions that imply a real endorsement."
+                    "question": "How should I write direction for Permission-Safe Photo Planner?",
+                    "answer": "Give practical direction about the final use, crop, mood, scene, outfit, background, or motion goal instead of asking for a vague makeover. Keep requests original, avoid unauthorized public-figure likenesses, official team marks, protected logos, venue marks, trademarks, and captions that imply a real endorsement."
                   }
                 },
                 {
-                  "id": "aidreamcapes_tool_detail_faq_4",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_4",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How do credits work for Aidreamcapes tools?",
-                    "answer": "Supported tools show the credit requirement before an album or motion request starts. Credits can be reserved during processing and settled or released according to the recorded request status, which helps customers compare still image and motion options."
+                    "question": "How are credits handled when using Permission-Safe Photo Planner?",
+                    "answer": "Aidreamcapes shows the credit requirement before a supported Permission-Safe Photo Planner request starts. Credits can be reserved while processing runs, then settled or released according to the recorded job status, so you can compare this tool with other paid AI photo and video options before committing."
                   }
                 },
                 {
-                  "id": "aidreamcapes_tool_detail_faq_5",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_5",
                   "type": "faq_item",
                   "settings": {
-                    "question": "Where are occasion tool results delivered?",
-                    "answer": "Finished images or motion outputs stay inside the signed-in Aidreamcapes account and private gallery for review, download, and account history rather than appearing as a public listing by default."
+                    "question": "Where do Permission-Safe Photo Planner results appear?",
+                    "answer": "Finished Permission-Safe Photo Planner outputs stay connected to the signed-in account and appear in the Aidreamcapes private gallery for review, download, and account history. Results are not public by default, but you control anything you download, publish, or send outside the workspace."
                   }
                 },
                 {
-                  "id": "aidreamcapes_tool_detail_faq_6",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_6",
                   "type": "faq_item",
                   "settings": {
-                    "question": "What should I inspect before sharing results?",
-                    "answer": "Check subject permission, face consistency, hands, marks, captions, crops, background details, logos, AI disclosure needs, and any wording that might suggest an official relationship before posting or using an output in a campaign."
+                    "question": "What should I review before publishing Permission-Safe Photo Planner outputs?",
+                    "answer": "Inspect faces, hands, eyes, background artifacts, crop quality, text-like marks, logos, and realism before using a result publicly. Also confirm subject permission, destination platform rules, AI disclosure needs, and any sensitive context before using the output on profiles, creator channels, ads, websites, printed material, or social posts."
                   }
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "tool_banner_1",
-            "entry_1",
-            "upload_1",
-            "form_1",
-            "progress_1",
-            "album_1",
-            "trust_1",
-            "faq_1"
-          ]
+          }
         },
         "blog-detail": {
           "content_for_page": [
@@ -225399,7 +225323,7 @@
       "source": "site",
       "createdBy": "admin_aidreamcapes_owner",
       "createdAt": "2026-06-27T00:00:00.000Z",
-      "updatedAt": "2026-08-12T05:12:44.603Z"
+      "updatedAt": "2026-08-12T08:54:02.169Z"
     },
     {
       "id": "theme_site_aidreamcapes_active",
@@ -226554,6 +226478,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "eyebrow": "Questions before upload",
@@ -226746,24 +226672,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "hero_1",
-            "brand_strip_1",
-            "visual_proof_1",
-            "featured_thanksgiving_1",
-            "package_catalog_1",
-            "generation_showcase_1",
-            "tutorial_video_1",
-            "tutorial_video_2",
-            "mobile_video_1",
-            "flow_bridge_1",
-            "pricing_1",
-            "proof_1",
-            "trust_1",
-            "conversion_1",
-            "faq_1"
-          ]
+          }
         },
         "best-ai-video": {
           "content_for_page": [
@@ -226789,6 +226698,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -226850,11 +226761,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "best_ai_video_1",
-            "faq_1"
-          ]
+          }
         },
         "best-ai-image": {
           "content_for_page": [
@@ -226880,6 +226787,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -226941,11 +226850,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "best_ai_image_1",
-            "faq_1"
-          ]
+          }
         },
         "best-packages": {
           "content_for_page": [
@@ -227246,6 +227151,8 @@
             },
             "intro_1": {
               "type": "rich_text",
+              "version": "1",
+              "card_name": "Rich Text",
               "settings": {
                 "anchor": "best-packages",
                 "eyebrow": "Best occasion albums",
@@ -227258,6 +227165,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -227319,14 +227228,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "intro_1",
-            "featured_pack_1",
-            "featured_christmas_1",
-            "featured_thanksgiving_1",
-            "faq_1"
-          ]
+          }
         },
         "page": {
           "content_for_page": [
@@ -227470,6 +227372,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -227531,15 +227435,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "pricing_intro_1",
-            "pricing_1",
-            "plan_rules_1",
-            "trust_1",
-            "conversion_1",
-            "faq_1"
-          ]
+          }
         },
         "collection": {
           "content_for_page": [
@@ -227889,6 +227785,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -227950,18 +227848,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "taxonomy_1",
-            "packages_1",
-            "sample_strip_1",
-            "proof_pairs_1",
-            "packages_strip_1",
-            "feature_tabs_1",
-            "trust_1",
-            "conversion_1",
-            "faq_1"
-          ]
+          }
         },
         "tools": {
           "content_for_page": [
@@ -228204,6 +228091,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -228265,17 +228154,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "free_tools_1",
-            "feature_tabs_1",
-            "plan_rules_1",
-            "packages_1",
-            "trust_1",
-            "pricing_1",
-            "conversion_1",
-            "faq_1"
-          ]
+          }
         },
         "login": {
           "content_for_page": [
@@ -229088,6 +228967,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -229149,12 +229030,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "intro_1",
-            "plan_rules_1",
-            "faq_1"
-          ]
+          }
         },
         "blog": {
           "content_for_page": [
@@ -229441,13 +229317,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "about_intro_1",
-            "about_values_1",
-            "trust_1",
-            "conversion_1"
-          ]
+          }
         },
         "contact-us": {
           "content_for_page": [
@@ -229547,12 +229417,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "contact_intro_1",
-            "contact_details_1",
-            "conversion_1"
-          ]
+          }
         },
         "search": {
           "content_for_page": [
@@ -230104,16 +229969,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "workflow_intro_1",
-            "tutorial_video_1",
-            "tutorial_image_video_1",
-            "mobile_video_1",
-            "workflow_1",
-            "plan_rules_1",
-            "conversion_1"
-          ]
+          }
         },
         "tool-detail": {
           "content_for_page": [
@@ -230241,78 +230097,70 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
-                "eyebrow": "Tool detail FAQ",
-                "title": "Aidreamcapes occasion tool questions",
-                "subtitle": "A fallback FAQ for new Aidreamcapes tool pages before the page-specific FAQ sync writes questions based on the occasion, source-photo needs, and private album output.",
+                "eyebrow": "Permission-Safe Photo Planner FAQ",
+                "title": "Permission-Safe Photo Planner FAQ",
+                "subtitle": "Specific answers about Permission-Safe Photo Planner, source-photo preparation, credits, private delivery, and quality review.",
                 "journeyTitle": "Before you create",
-                "journeyTitles": "Plan|Upload|Review|Download",
-                "journeyDescriptions": "Choose the right page path.|Use approved source photos.|Check credits before generation.|Keep results in your private gallery."
+                "journeyTitles": "Goal|Upload|Credits|Review",
+                "journeyDescriptions": "Choose the private AI image set.|Prepare approved photos.|Check costs before generation.|Download from your private gallery."
               },
               "blocks": [
                 {
-                  "id": "aidreamcapes_tool_detail_faq_1",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_1",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How should I choose an Aidreamcapes occasion tool?",
-                    "answer": "Choose the tool that matches the private album moment you want to create, such as fan-scene atmosphere, game-day group energy, holiday cards, travel-style portraits, premiere-inspired photos, or a short motion concept from an approved still image."
+                    "question": "What is Permission-Safe Photo Planner best for?",
+                    "answer": "Permission-Safe Photo Planner is best for creating a private AI image set from approved source photos. Check source-photo permissions, protected mark boundaries, credit cost, and album intent before generation. The page is meant for customers who want to compare the expected output, privacy path, and credit requirement before starting generation."
                   }
                 },
                 {
-                  "id": "aidreamcapes_tool_detail_faq_2",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_2",
                   "type": "faq_item",
                   "settings": {
-                    "question": "Which source photos are best for occasion tools?",
-                    "answer": "Use clear, well-lit photos with permission from everyone shown. Group tools work better with visible faces and less overlap, while motion tools usually need one strong still image with a clear subject and room for movement."
+                    "question": "Which photos should I upload for Permission-Safe Photo Planner?",
+                    "answer": "Use clear source photos or references you own or have permission to process, with the subject visible and the intended edit easy to understand. Better source material usually improves identity consistency, crop quality, background realism, and the number of usable results in the finished private gallery."
                   }
                 },
                 {
-                  "id": "aidreamcapes_tool_detail_faq_3",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_3",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How should I describe a fan-scene or holiday request?",
-                    "answer": "Keep the direction original and practical: describe mood, crop, setting, colors, group size, and album use. Avoid unauthorized public-figure likenesses, official team logos, venue marks, brand logos, trademarks, or captions that imply a real endorsement."
+                    "question": "How should I write direction for Permission-Safe Photo Planner?",
+                    "answer": "Give practical direction about the final use, crop, mood, scene, outfit, background, or motion goal instead of asking for a vague makeover. Keep requests original, avoid unauthorized public-figure likenesses, official team marks, protected logos, venue marks, trademarks, and captions that imply a real endorsement."
                   }
                 },
                 {
-                  "id": "aidreamcapes_tool_detail_faq_4",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_4",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How do credits work for Aidreamcapes tools?",
-                    "answer": "Supported tools show the credit requirement before an album or motion request starts. Credits can be reserved during processing and settled or released according to the recorded request status, which helps customers compare still image and motion options."
+                    "question": "How are credits handled when using Permission-Safe Photo Planner?",
+                    "answer": "Aidreamcapes shows the credit requirement before a supported Permission-Safe Photo Planner request starts. Credits can be reserved while processing runs, then settled or released according to the recorded job status, so you can compare this tool with other paid AI photo and video options before committing."
                   }
                 },
                 {
-                  "id": "aidreamcapes_tool_detail_faq_5",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_5",
                   "type": "faq_item",
                   "settings": {
-                    "question": "Where are occasion tool results delivered?",
-                    "answer": "Finished images or motion outputs stay inside the signed-in Aidreamcapes account and private gallery for review, download, and account history rather than appearing as a public listing by default."
+                    "question": "Where do Permission-Safe Photo Planner results appear?",
+                    "answer": "Finished Permission-Safe Photo Planner outputs stay connected to the signed-in account and appear in the Aidreamcapes private gallery for review, download, and account history. Results are not public by default, but you control anything you download, publish, or send outside the workspace."
                   }
                 },
                 {
-                  "id": "aidreamcapes_tool_detail_faq_6",
+                  "id": "aidreamcapes_permission_safe_photo_planner_faq_6",
                   "type": "faq_item",
                   "settings": {
-                    "question": "What should I inspect before sharing results?",
-                    "answer": "Check subject permission, face consistency, hands, marks, captions, crops, background details, logos, AI disclosure needs, and any wording that might suggest an official relationship before posting or using an output in a campaign."
+                    "question": "What should I review before publishing Permission-Safe Photo Planner outputs?",
+                    "answer": "Inspect faces, hands, eyes, background artifacts, crop quality, text-like marks, logos, and realism before using a result publicly. Also confirm subject permission, destination platform rules, AI disclosure needs, and any sensitive context before using the output on profiles, creator channels, ads, websites, printed material, or social posts."
                   }
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "tool_banner_1",
-            "entry_1",
-            "upload_1",
-            "form_1",
-            "progress_1",
-            "album_1",
-            "trust_1",
-            "faq_1"
-          ]
+          }
         },
         "blog-detail": {
           "content_for_page": [
@@ -243239,7 +243087,7 @@
       },
       "source": "site",
       "createdBy": "admin_aidreamcapes_owner",
-      "updatedAt": "2026-08-12T05:12:44.619Z"
+      "updatedAt": "2026-08-12T08:54:02.180Z"
     },
     {
       "id": "theme_site_mydreamshoots_xby_active",
@@ -254921,7 +254769,7 @@
       },
       "source": "site",
       "createdBy": "admin_dreamshoot_owner",
-      "updatedAt": "2026-08-12T05:12:44.608Z"
+      "updatedAt": "2026-08-12T08:54:02.173Z"
     },
     {
       "id": "theme_site_dreamshoot_draft",
@@ -255856,6 +255704,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "eyebrow": "Questions before upload",
@@ -256050,20 +255900,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "hero_1",
-            "proof_1",
-            "pricing_1",
-            "conversion_1",
-            "brand_strip_1",
-            "mobile_video_1",
-            "tutorial_video_1",
-            "tutorial_video_2",
-            "package_catalog_1",
-            "generation_showcase_1"
-          ]
+          }
         },
         "about-us": {
           "content_for_page": [
@@ -256249,13 +256086,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "trust_1",
-            "conversion_1",
-            "about_intro_1",
-            "about_values_1"
-          ]
+          }
         },
         "account-billing": {
           "content_for_page": [
@@ -256860,6 +256691,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -256921,11 +256754,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "best_ai_image_1",
-            "faq_1"
-          ]
+          }
         },
         "best-ai-video": {
           "content_for_page": [
@@ -256951,6 +256780,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -257012,11 +256843,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "best_ai_video_1",
-            "faq_1"
-          ]
+          }
         },
         "best-packages": {
           "content_for_page": [
@@ -257317,6 +257144,8 @@
             },
             "intro_1": {
               "type": "rich_text",
+              "version": "1",
+              "card_name": "Rich Text",
               "settings": {
                 "anchor": "best-packages",
                 "eyebrow": "Best AI photo packages",
@@ -257329,6 +257158,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -257390,14 +257221,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "intro_1",
-            "featured_pack_1",
-            "featured_christmas_1",
-            "featured_thanksgiving_1",
-            "faq_1"
-          ]
+          }
         },
         "blog": {
           "content_for_page": [
@@ -258125,6 +257949,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -258186,18 +258012,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "trust_1",
-            "packages_1",
-            "taxonomy_1",
-            "conversion_1",
-            "proof_pairs_1",
-            "feature_tabs_1",
-            "sample_strip_1",
-            "packages_strip_1"
-          ]
+          }
         },
         "contact-us": {
           "content_for_page": [
@@ -258306,12 +258121,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "conversion_1",
-            "contact_intro_1",
-            "contact_details_1"
-          ]
+          }
         },
         "cookies": {
           "content_for_page": [
@@ -258382,12 +258192,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "footer_1",
-            "header_1",
-            "policy_1"
-          ]
+          }
         },
         "help": {
           "content_for_page": [
@@ -258466,6 +258271,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -258527,12 +258334,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "intro_1",
-            "plan_rules_1"
-          ]
+          }
         },
         "login": {
           "content_for_page": [
@@ -258746,10 +258548,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "policy_1"
-          ]
+          }
         },
         "privacy": {
           "content_for_page": [
@@ -258768,10 +258567,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "policy_1"
-          ]
+          }
         },
         "refunds": {
           "content_for_page": [
@@ -258790,10 +258586,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "policy_1"
-          ]
+          }
         },
         "shipping": {
           "content_for_page": [
@@ -258875,10 +258668,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "policy_1"
-          ]
+          }
         },
         "page": {
           "content_for_page": [
@@ -259067,6 +258857,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -259128,15 +258920,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "trust_1",
-            "pricing_1",
-            "conversion_1",
-            "plan_rules_1",
-            "pricing_intro_1"
-          ]
+          }
         },
         "search": {
           "content_for_page": [
@@ -259880,6 +259664,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -259941,17 +259727,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "trust_1",
-            "pricing_1",
-            "packages_1",
-            "conversion_1",
-            "free_tools_1",
-            "plan_rules_1",
-            "feature_tabs_1"
-          ]
+          }
         },
         "product": {
           "content_for_page": [
@@ -260081,78 +259857,70 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
-                "eyebrow": "Tool detail FAQ",
-                "title": "AI tool questions for private generation",
-                "subtitle": "A fallback FAQ for new myDreamshoots tool pages before the page-specific FAQ sync writes questions based on the tool name, source-photo needs, and intended output.",
+                "eyebrow": "Professional headshot maker FAQ",
+                "title": "Professional headshot maker FAQ",
+                "subtitle": "Specific answers about Professional headshot maker, source-photo preparation, credits, private delivery, and quality review.",
                 "journeyTitle": "Before you create",
-                "journeyTitles": "Plan|Upload|Review|Download",
-                "journeyDescriptions": "Choose the right page path.|Use approved source photos.|Check credits before generation.|Keep results in your private gallery."
+                "journeyTitles": "Goal|Upload|Credits|Review",
+                "journeyDescriptions": "Choose the professional headshot set.|Prepare approved photos.|Check costs before generation.|Download from your private gallery."
               },
               "blocks": [
                 {
-                  "id": "mydreamshoots_tool_detail_faq_1",
+                  "id": "mydreamshoots_headshot_faq_1",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How should I choose a focused myDreamshoots AI tool?",
-                    "answer": "Choose the tool whose output matches the asset you need, such as a professional headshot, creator portrait, background edit, upscaled image, style preview, or short motion concept. Each tool page should explain the source-photo requirements, intended result, and private delivery path before credits are reserved."
+                    "question": "What is Professional headshot maker best for?",
+                    "answer": "Professional headshot maker is best for creating a professional headshot set from approved source photos. Input: clear selfies or portraits you own or have permission to use. The page is meant for customers who want to compare the expected output, privacy path, and credit requirement before starting generation."
                   }
                 },
                 {
-                  "id": "mydreamshoots_tool_detail_faq_2",
+                  "id": "mydreamshoots_headshot_faq_2",
                   "type": "faq_item",
                   "settings": {
-                    "question": "Which source photos help a tool perform well?",
-                    "answer": "Use clear, recent, well-lit photos or references you own or have permission to process. A strong upload usually shows the subject, face, product, outfit, or scene without heavy filters, tiny crops, screenshots, blur, sunglasses, or confusing background clutter."
+                    "question": "Which photos should I upload for Professional headshot maker?",
+                    "answer": "Use recent portraits with good light, a visible face, natural expression, and several angles if the page asks for more than one source image. Better source material usually improves identity consistency, crop quality, background realism, and the number of usable results in the finished private gallery."
                   }
                 },
                 {
-                  "id": "mydreamshoots_tool_detail_faq_3",
+                  "id": "mydreamshoots_headshot_faq_3",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How do prompts and settings affect tool results?",
-                    "answer": "Short, specific direction works better than vague requests. Mention the intended channel, crop, mood, background, outfit, or motion goal when the tool supports it, then avoid requests involving unauthorized people, protected logos, official marks, or misleading affiliations."
+                    "question": "How should I write direction for Professional headshot maker?",
+                    "answer": "Give practical direction about the final use, crop, mood, scene, outfit, background, or motion goal instead of asking for a vague makeover. Use only photos and references you own or have permission to process, and avoid unauthorized people, protected logos, official marks, or misleading commercial claims."
                   }
                 },
                 {
-                  "id": "mydreamshoots_tool_detail_faq_4",
+                  "id": "mydreamshoots_headshot_faq_4",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How are credits handled for paid tool requests?",
-                    "answer": "Supported tools show the credit requirement before generation starts. Credits can be reserved while the request runs, then settled or released according to the recorded job status, so customers can compare tools before starting a paid request."
+                    "question": "How are credits handled when using Professional headshot maker?",
+                    "answer": "myᕲreamshoots shows the credit requirement before a supported Professional headshot maker request starts. Credits can be reserved while processing runs, then settled or released according to the recorded job status, so you can compare this tool with other paid AI photo and video options before committing."
                   }
                 },
                 {
-                  "id": "mydreamshoots_tool_detail_faq_5",
+                  "id": "mydreamshoots_headshot_faq_5",
                   "type": "faq_item",
                   "settings": {
-                    "question": "Where do generated tool results appear?",
-                    "answer": "Finished images or clips stay connected to the signed-in myDreamshoots workspace or private gallery for review, download, and account history. Results are not public by default, but customers still control anything they download or share outside the workspace."
+                    "question": "Where do Professional headshot maker results appear?",
+                    "answer": "Finished Professional headshot maker outputs stay connected to the signed-in account and appear in the myᕲreamshoots private workspace for review, download, and account history. Results are not public by default, but you control anything you download, publish, or send outside the workspace."
                   }
                 },
                 {
-                  "id": "mydreamshoots_tool_detail_faq_6",
+                  "id": "mydreamshoots_headshot_faq_6",
                   "type": "faq_item",
                   "settings": {
-                    "question": "What quality checks matter before publishing?",
-                    "answer": "Review face consistency, hands, eyes, teeth, text-like marks, logos, background artifacts, crop quality, and any motion issues before using outputs on LinkedIn, creator profiles, websites, ads, printed material, or social media."
+                    "question": "What should I review before publishing Professional headshot maker outputs?",
+                    "answer": "Check identity consistency, eyes, teeth, hairline, skin texture, jacket edges, background realism, and professional suitability before posting. Also confirm subject permission, destination platform rules, AI disclosure needs, and any sensitive context before using the output on profiles, creator channels, ads, websites, printed material, or social posts."
                   }
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "form_1",
-            "album_1",
-            "entry_1",
-            "trust_1",
-            "upload_1",
-            "progress_1",
-            "tool_banner_1"
-          ]
+          }
         },
         "workflow": {
           "content_for_page": [
@@ -260387,17 +260155,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "footer_1",
-            "workflow_1",
-            "conversion_1",
-            "plan_rules_1",
-            "mobile_video_1",
-            "tutorial_video_1",
-            "workflow_intro_1",
-            "tutorial_image_video_1"
-          ]
+          }
         }
       },
       "settings": {
@@ -261763,7 +261521,7 @@
       "source": "site",
       "createdBy": "admin_dreamshoot_owner",
       "createdAt": "2026-06-18T00:00:00.000Z",
-      "updatedAt": "2026-08-12T05:12:44.592Z"
+      "updatedAt": "2026-08-12T08:54:02.152Z"
     },
     {
       "id": "theme_site_dreamshoot_active",
@@ -269504,6 +269262,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "eyebrow": "Questions before upload",
@@ -269698,20 +269458,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "hero_1",
-            "proof_1",
-            "pricing_1",
-            "conversion_1",
-            "brand_strip_1",
-            "mobile_video_1",
-            "tutorial_video_1",
-            "tutorial_video_2",
-            "package_catalog_1",
-            "generation_showcase_1"
-          ]
+          }
         },
         "about-us": {
           "content_for_page": [
@@ -269897,13 +269644,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "trust_1",
-            "conversion_1",
-            "about_intro_1",
-            "about_values_1"
-          ]
+          }
         },
         "account-billing": {
           "content_for_page": [
@@ -270508,6 +270249,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -270569,11 +270312,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "best_ai_image_1",
-            "faq_1"
-          ]
+          }
         },
         "best-ai-video": {
           "content_for_page": [
@@ -270599,6 +270338,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -270660,11 +270401,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "best_ai_video_1",
-            "faq_1"
-          ]
+          }
         },
         "best-packages": {
           "content_for_page": [
@@ -270965,6 +270702,8 @@
             },
             "intro_1": {
               "type": "rich_text",
+              "version": "1",
+              "card_name": "Rich Text",
               "settings": {
                 "anchor": "best-packages",
                 "eyebrow": "Best AI photo packages",
@@ -270977,6 +270716,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -271038,14 +270779,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "intro_1",
-            "featured_pack_1",
-            "featured_christmas_1",
-            "featured_thanksgiving_1",
-            "faq_1"
-          ]
+          }
         },
         "blog": {
           "content_for_page": [
@@ -271773,6 +271507,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -271834,18 +271570,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "trust_1",
-            "packages_1",
-            "taxonomy_1",
-            "conversion_1",
-            "proof_pairs_1",
-            "feature_tabs_1",
-            "sample_strip_1",
-            "packages_strip_1"
-          ]
+          }
         },
         "contact-us": {
           "content_for_page": [
@@ -271954,12 +271679,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "conversion_1",
-            "contact_intro_1",
-            "contact_details_1"
-          ]
+          }
         },
         "cookies": {
           "content_for_page": [
@@ -272030,12 +271750,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "footer_1",
-            "header_1",
-            "policy_1"
-          ]
+          }
         },
         "help": {
           "content_for_page": [
@@ -272114,6 +271829,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -272175,12 +271892,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "intro_1",
-            "plan_rules_1"
-          ]
+          }
         },
         "login": {
           "content_for_page": [
@@ -272394,10 +272106,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "policy_1"
-          ]
+          }
         },
         "privacy": {
           "content_for_page": [
@@ -272416,10 +272125,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "policy_1"
-          ]
+          }
         },
         "refunds": {
           "content_for_page": [
@@ -272438,10 +272144,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "policy_1"
-          ]
+          }
         },
         "shipping": {
           "content_for_page": [
@@ -272523,10 +272226,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "policy_1"
-          ]
+          }
         },
         "page": {
           "content_for_page": [
@@ -272715,6 +272415,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -272776,15 +272478,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "trust_1",
-            "pricing_1",
-            "conversion_1",
-            "plan_rules_1",
-            "pricing_intro_1"
-          ]
+          }
         },
         "search": {
           "content_for_page": [
@@ -273528,6 +273222,8 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
@@ -273589,17 +273285,7 @@
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "trust_1",
-            "pricing_1",
-            "packages_1",
-            "conversion_1",
-            "free_tools_1",
-            "plan_rules_1",
-            "feature_tabs_1"
-          ]
+          }
         },
         "product": {
           "content_for_page": [
@@ -273729,78 +273415,70 @@
             },
             "faq_1": {
               "type": "faq",
+              "version": "1",
+              "card_name": "FAQ",
               "settings": {
                 "anchor": "faq",
                 "layout": "visual_faq",
-                "eyebrow": "Tool detail FAQ",
-                "title": "AI tool questions for private generation",
-                "subtitle": "A fallback FAQ for new myDreamshoots tool pages before the page-specific FAQ sync writes questions based on the tool name, source-photo needs, and intended output.",
+                "eyebrow": "Professional headshot maker FAQ",
+                "title": "Professional headshot maker FAQ",
+                "subtitle": "Specific answers about Professional headshot maker, source-photo preparation, credits, private delivery, and quality review.",
                 "journeyTitle": "Before you create",
-                "journeyTitles": "Plan|Upload|Review|Download",
-                "journeyDescriptions": "Choose the right page path.|Use approved source photos.|Check credits before generation.|Keep results in your private gallery."
+                "journeyTitles": "Goal|Upload|Credits|Review",
+                "journeyDescriptions": "Choose the professional headshot set.|Prepare approved photos.|Check costs before generation.|Download from your private gallery."
               },
               "blocks": [
                 {
-                  "id": "mydreamshoots_tool_detail_faq_1",
+                  "id": "grownstride_test_headshot_faq_1",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How should I choose a focused myDreamshoots AI tool?",
-                    "answer": "Choose the tool whose output matches the asset you need, such as a professional headshot, creator portrait, background edit, upscaled image, style preview, or short motion concept. Each tool page should explain the source-photo requirements, intended result, and private delivery path before credits are reserved."
+                    "question": "What is Professional headshot maker best for?",
+                    "answer": "Professional headshot maker is best for creating a professional headshot set from approved source photos. Input: clear selfies or portraits you own or have permission to use. The page is meant for customers who want to compare the expected output, privacy path, and credit requirement before starting generation."
                   }
                 },
                 {
-                  "id": "mydreamshoots_tool_detail_faq_2",
+                  "id": "grownstride_test_headshot_faq_2",
                   "type": "faq_item",
                   "settings": {
-                    "question": "Which source photos help a tool perform well?",
-                    "answer": "Use clear, recent, well-lit photos or references you own or have permission to process. A strong upload usually shows the subject, face, product, outfit, or scene without heavy filters, tiny crops, screenshots, blur, sunglasses, or confusing background clutter."
+                    "question": "Which photos should I upload for Professional headshot maker?",
+                    "answer": "Use recent portraits with good light, a visible face, natural expression, and several angles if the page asks for more than one source image. Better source material usually improves identity consistency, crop quality, background realism, and the number of usable results in the finished private gallery."
                   }
                 },
                 {
-                  "id": "mydreamshoots_tool_detail_faq_3",
+                  "id": "grownstride_test_headshot_faq_3",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How do prompts and settings affect tool results?",
-                    "answer": "Short, specific direction works better than vague requests. Mention the intended channel, crop, mood, background, outfit, or motion goal when the tool supports it, then avoid requests involving unauthorized people, protected logos, official marks, or misleading affiliations."
+                    "question": "How should I write direction for Professional headshot maker?",
+                    "answer": "Give practical direction about the final use, crop, mood, scene, outfit, background, or motion goal instead of asking for a vague makeover. Use only photos and references you own or have permission to process, and avoid unauthorized people, protected logos, official marks, or misleading commercial claims."
                   }
                 },
                 {
-                  "id": "mydreamshoots_tool_detail_faq_4",
+                  "id": "grownstride_test_headshot_faq_4",
                   "type": "faq_item",
                   "settings": {
-                    "question": "How are credits handled for paid tool requests?",
-                    "answer": "Supported tools show the credit requirement before generation starts. Credits can be reserved while the request runs, then settled or released according to the recorded job status, so customers can compare tools before starting a paid request."
+                    "question": "How are credits handled when using Professional headshot maker?",
+                    "answer": "myᕲreamshoots shows the credit requirement before a supported Professional headshot maker request starts. Credits can be reserved while processing runs, then settled or released according to the recorded job status, so you can compare this tool with other paid AI photo and video options before committing."
                   }
                 },
                 {
-                  "id": "mydreamshoots_tool_detail_faq_5",
+                  "id": "grownstride_test_headshot_faq_5",
                   "type": "faq_item",
                   "settings": {
-                    "question": "Where do generated tool results appear?",
-                    "answer": "Finished images or clips stay connected to the signed-in myDreamshoots workspace or private gallery for review, download, and account history. Results are not public by default, but customers still control anything they download or share outside the workspace."
+                    "question": "Where do Professional headshot maker results appear?",
+                    "answer": "Finished Professional headshot maker outputs stay connected to the signed-in account and appear in the myᕲreamshoots private workspace for review, download, and account history. Results are not public by default, but you control anything you download, publish, or send outside the workspace."
                   }
                 },
                 {
-                  "id": "mydreamshoots_tool_detail_faq_6",
+                  "id": "grownstride_test_headshot_faq_6",
                   "type": "faq_item",
                   "settings": {
-                    "question": "What quality checks matter before publishing?",
-                    "answer": "Review face consistency, hands, eyes, teeth, text-like marks, logos, background artifacts, crop quality, and any motion issues before using outputs on LinkedIn, creator profiles, websites, ads, printed material, or social media."
+                    "question": "What should I review before publishing Professional headshot maker outputs?",
+                    "answer": "Check identity consistency, eyes, teeth, hairline, skin texture, jacket edges, background realism, and professional suitability before posting. Also confirm subject permission, destination platform rules, AI disclosure needs, and any sensitive context before using the output on profiles, creator channels, ads, websites, printed material, or social posts."
                   }
                 }
               ]
             }
-          },
-          "sectionsOrder": [
-            "faq_1",
-            "form_1",
-            "album_1",
-            "entry_1",
-            "trust_1",
-            "upload_1",
-            "progress_1",
-            "tool_banner_1"
-          ]
+          }
         },
         "workflow": {
           "content_for_page": [
@@ -274035,17 +273713,7 @@
               },
               "blocks": []
             }
-          },
-          "sectionsOrder": [
-            "footer_1",
-            "workflow_1",
-            "conversion_1",
-            "plan_rules_1",
-            "mobile_video_1",
-            "tutorial_video_1",
-            "workflow_intro_1",
-            "tutorial_image_video_1"
-          ]
+          }
         }
       },
       "settings": {
@@ -275411,7 +275079,7 @@
       "source": "site",
       "createdBy": "admin_dreamshoot_owner",
       "createdAt": "2026-06-18T00:00:00.000Z",
-      "updatedAt": "2026-08-12T05:12:44.598Z"
+      "updatedAt": "2026-08-12T08:54:02.163Z"
     },
     {
       "id": "theme_site_grownstride_test_active",

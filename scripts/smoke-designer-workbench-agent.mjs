@@ -661,13 +661,23 @@ async function openFirstMediaResourceSelectorIfPresent(page) {
     await page.waitForTimeout(160);
     if (await tryOpenCurrentSelector()) return true;
   }
-  if ((await mediaSelector.count()) === 0) {
-    await page.getByRole("button", { name: "全局页头/页脚", exact: true }).click().catch(() => undefined);
-    await page.waitForTimeout(250);
-  }
+
+  await page.getByRole("button", { name: "全局页头/页脚", exact: true }).click().catch(() => undefined);
+  await page.waitForTimeout(250);
   if (await tryOpenCurrentSelector()) return true;
-  const globalCandidates = page.locator('[data-designer-layout="saas-workspace-navigator-root"] button');
-  const globalCandidateCount = Math.min(await globalCandidates.count(), 32);
+
+  const globalSectionButtons = page.getByRole("button", { name: /页眉|页脚/ });
+  const globalSectionCount = Math.min(await globalSectionButtons.count(), 8);
+  for (let index = 0; index < globalSectionCount; index += 1) {
+    await globalSectionButtons.nth(index).click().catch(() => undefined);
+    await page.waitForTimeout(180);
+    if (await tryOpenCurrentSelector()) return true;
+  }
+
+  const globalCandidates = page.locator(
+    '.global_5bc8 button, [data-layout="xfcart-collapsible-global-block-tree"] button, [data-designer-layout="saas-right-editor-pane"] [data-designer-tree-id], [data-designer-layout="saas-right-editor-pane"] button'
+  );
+  const globalCandidateCount = Math.min(await globalCandidates.count(), 48);
   for (let index = 0; index < globalCandidateCount; index += 1) {
     await globalCandidates.nth(index).click().catch(() => undefined);
     await page.waitForTimeout(160);
@@ -957,6 +967,8 @@ async function exerciseWorkbench(page, report, suiteReport) {
   );
   const mutationAfterSave = report.apiRequests.filter((item) => ["POST", "PUT", "PATCH", "DELETE"].includes(item.method)).length;
   assert(mutationAfterSave - mutationBeforeSave <= 60, "double-click save triggered more than one full save batch");
+  const saveState = await saveButton.getAttribute("data-designer-save-state");
+  assert(["saved", "idle", "conflict", "error"].includes(saveState ?? ""), `save button did not expose a finished state: ${saveState}`);
   suiteReport.performance.interactions.saveDraftResultMs = roundMs(performance.now() - saveStartedAt);
 
   const publishButton = page.getByRole("button", { name: "发布", exact: true }).first();

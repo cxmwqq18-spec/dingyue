@@ -410,7 +410,8 @@ export function ResourceSelector({
         title={selectedItem?.title || currentLabel}
       />
       <DesignerResourceInlineSummary
-        data-designer-modal={open ? "saas-resource-selector-open" : "saas-resource-selector"}
+        data-designer-selector-summary={`saas-${kind}-resource-selector`}
+        data-designer-selector-open={open ? "true" : "false"}
         description={resourceStatus === "loading" ? `${modalLabel}加载中...` : resourceStatus === "error" ? `${modalLabel}加载失败，可重新打开重试。` : `${modalLabel}，共 ${items.length} 项。`}
         title="资源选择器"
       />

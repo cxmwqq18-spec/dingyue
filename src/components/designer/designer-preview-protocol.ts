@@ -77,7 +77,7 @@ export function syncSelectionToPreview({
   postPatch: (payload: IframePatchPayload) => void;
   scroll?: boolean;
 }) {
-  if (previewMode !== "edit") return;
+  if (previewMode !== "interactive") return;
   const previewId = previewSectionIdForSelection(selection);
   if (!previewId) {
     postPatch({ act: "clearSelection" });

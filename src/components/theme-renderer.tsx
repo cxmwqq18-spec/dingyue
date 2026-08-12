@@ -842,9 +842,11 @@ function AidreamcapesLogoMark({ ariaLabel = "Aidreamcapes logo for private fan-s
 }
 
 function DreamShootsWordmark({ className = "", label = "myDreamshoots" }: { className?: string; label?: string }) {
+  const configuredLabel = label.trim();
+  const visibleLabel = configuredLabel && configuredLabel !== "myDreamshoots" ? configuredLabel : dreamShootsVisibleTitle;
   return (
     <span aria-label={label} className={className} data-dreamshoot-wordmark="true" title={label}>
-      <span aria-hidden="true">{dreamShootsVisibleTitle}</span>
+      <span aria-hidden="true">{visibleLabel}</span>
       <span className="sr-only">{label}</span>
     </span>
   );
@@ -1063,7 +1065,13 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     : isDreamShoot
       ? configuredLogoImageUrl || brandingLogoImageUrl || dreamshootDefaultLogoImageUrl
       : configuredLogoImageUrl || brandingLogoImageUrl;
-  const readableBrandTitle = spanishXby ? site.branding.logoText || site.name : isDreamShoot ? "myDreamshoots" : isAidreamcapes ? "Aidreamcapes" : title;
+  const readableBrandTitle = spanishXby
+    ? site.branding.logoText || site.name
+    : isDreamShoot
+      ? title.trim() || "myDreamshoots"
+      : isAidreamcapes
+        ? "Aidreamcapes"
+        : title;
   const visualBrandTitle = spanishXby ? readableBrandTitle : isDreamShoot ? dreamShootsVisibleTitle : isAidreamcapes ? aidreamcapesVisibleTitle : readableBrandTitle;
   const brandDescription = spanishXby
     ? isAidreamcapes
@@ -1527,7 +1535,13 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
   const isDreamShootFooter = /dreamshoot/i.test(footerIdentity);
   const isAidreamcapesFooter = /aidreamcapes/i.test(footerIdentity);
   const spanishXbyFooter = isSpanishStorefrontSite(site);
-  const readableFooterTitle = spanishXbyFooter ? site.branding.logoText || site.name : isDreamShootFooter ? "myDreamshoots" : isAidreamcapesFooter ? "Aidreamcapes" : title;
+  const readableFooterTitle = spanishXbyFooter
+    ? site.branding.logoText || site.name
+    : isDreamShootFooter
+      ? title.trim() || "myDreamshoots"
+      : isAidreamcapesFooter
+        ? "Aidreamcapes"
+        : title;
   const visualFooterTitle = spanishXbyFooter ? readableFooterTitle : isDreamShootFooter
     ? dreamShootsVisibleTitle
     : isAidreamcapesFooter
