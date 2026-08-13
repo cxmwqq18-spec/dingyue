@@ -636,8 +636,12 @@ assert(!showcaseRenderer.includes("imageCards.slice(0, 12)"), "homepage showcase
 assert(showcaseRenderer.includes('data-dreamshoot-image-product-grid="true"'), "showcase should expose a stable image product grid marker");
 assert(showcaseRenderer.includes('data-dreamshoot-image-product-wall="true"'), "showcase should expose a stable four-row image product wall marker");
 assert(showcaseRenderer.includes('data-dreamshoot-image-product-card="true"'), "showcase should expose stable image product card markers");
-assert(showcaseRenderer.includes('fetchPriority={card.productIndex < 4 ? "high" : "low"}'), "showcase should prioritize initially visible image product cards");
-assert(showcaseRenderer.includes('loading={card.productIndex < 4 ? "eager" : "lazy"}'), "showcase should eagerly load initially visible image product cards");
+assert(themeRenderer.includes("function shouldPrioritizeStorefrontSectionImage"), "theme renderer should keep a route-aware image priority gate");
+assert(themeRenderer.includes('renderContext.pagePath === "/"') && themeRenderer.includes('sectionType === "hero_plus" || sectionType === "image_banner"'), "homepage image priority should stay limited to LCP-style hero/banner sections");
+assert(showcaseRenderer.includes('fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, card.productIndex) ? "high" : "low"}'), "showcase image product cards should use the route-aware priority gate");
+assert(showcaseRenderer.includes('loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, card.productIndex) ? "eager" : "lazy"}'), "showcase image product cards should use the route-aware loading gate");
+assert(!showcaseRenderer.includes('fetchPriority={card.productIndex < 4 ? "high" : "low"}'), "showcase should not eagerly prioritize non-LCP homepage image product cards");
+assert(!showcaseRenderer.includes('loading={card.productIndex < 4 ? "eager" : "lazy"}'), "showcase should not eagerly load non-LCP homepage image product cards");
 assert(!imageShowcaseRenderer.includes("{String(card.index + 1).padStart"), "showcase image cards should not show visible numbers");
 assert(showcaseRenderer.includes("DreamshootShowcaseVideo"), "showcase videos should render through the autoplay client component");
 assert(showcaseRenderer.includes("priority={false}"), "showcase video cards should stay poster-only by default and defer MP4 requests until near the viewport");

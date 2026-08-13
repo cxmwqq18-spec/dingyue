@@ -12,8 +12,7 @@ async function main() {
     throw new Error(`missing_trusted_logo_source:${sourceRoot}`);
   }
 
-  await fs.rm(targetRoot, { force: true, recursive: true });
-  await fs.mkdir(path.dirname(targetRoot), { recursive: true });
+  await fs.mkdir(targetRoot, { recursive: true });
   await fs.cp(sourceRoot, targetRoot, { recursive: true });
   console.log(JSON.stringify({
     ok: true,

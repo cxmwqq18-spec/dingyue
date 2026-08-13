@@ -184,6 +184,10 @@ function collectionSlugsForFeaturedSection(section) {
     .map((block) => String(block?.settings?.collectionSlug ?? "").trim());
 }
 
+function isFaqSection(section) {
+  return section?.type === "faq" || section?.type === "dreamshoot_theme_faq";
+}
+
 function requireHomeFeaturedPackBaseline(data, siteId, options = {}) {
   const { thanksgivingOnHome = false } = options;
   const homePage = data.pages.find((page) => page.slug === "/" || page.pageType === "home");
@@ -218,6 +222,9 @@ function requireBestPackagesPage(data, siteId, checks) {
   if (JSON.stringify(order) !== JSON.stringify(expectedBestPackagesOrder)) {
     fail(`${siteId}_best_packages_order:${order.join(",")}`);
   }
+  if (pageJson?.sections?.intro_1?.type !== "rich_text") fail(`${siteId}_best_packages_missing_intro`);
+  if (pageJson?.sections?.intro_1?.settings?.headingLevel !== "h1") fail(`${siteId}_best_packages_intro_not_h1`);
+  if (!isFaqSection(pageJson?.sections?.faq_1)) fail(`${siteId}_best_packages_missing_faq`);
   for (const id of expectedFeaturedPackageIds) {
     if (pageJson?.sections?.[id]?.type !== "dreamshoot_featured_pack") fail(`${siteId}_missing_best_package_section:${id}`);
   }
@@ -278,6 +285,9 @@ function requirePublishedSnapshotBestPackages(data, siteId, options = {}) {
     if (JSON.stringify(order) !== JSON.stringify(expectedBestPackagesOrder)) {
       fail(`${siteId}_publication_best_packages_order:${publication.id}:${order.join(",")}`);
     }
+    if (pageJson?.sections?.intro_1?.type !== "rich_text") fail(`${siteId}_publication_best_packages_missing_intro:${publication.id}`);
+    if (pageJson?.sections?.intro_1?.settings?.headingLevel !== "h1") fail(`${siteId}_publication_best_packages_intro_not_h1:${publication.id}`);
+    if (!isFaqSection(pageJson?.sections?.faq_1)) fail(`${siteId}_publication_best_packages_missing_faq:${publication.id}`);
     for (const id of expectedFeaturedPackageIds) {
       if (pageJson?.sections?.[id]?.type !== "dreamshoot_featured_pack") {
         fail(`${siteId}_publication_missing_best_package_section:${publication.id}:${id}`);

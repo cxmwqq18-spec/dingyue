@@ -168,6 +168,7 @@ function ReferencePackageCard({
   index,
   locale,
   packageAction,
+  prioritizeFirstImage = true,
   siteBasePath
 }: {
   brandName: string;
@@ -176,6 +177,7 @@ function ReferencePackageCard({
   index: number;
   locale: "en" | "es";
   packageAction: string;
+  prioritizeFirstImage?: boolean;
   siteBasePath: string;
 }) {
   const images = cardImageUrls(card);
@@ -193,11 +195,11 @@ function ReferencePackageCard({
           {images.slice(0, 2).map((image, imageIndex) => (
             <div className={images.length > 1 ? referenceImageFrameClass : referenceSingleImageFrameClass} key={`${card.id}_split_${imageIndex}`}>
 	              <SafeCatalogImage
-	                alt={imageAlt(card, image, imageIndex, locale, brandName)}
+                alt={imageAlt(card, image, imageIndex, locale, brandName)}
                 className="h-full object-cover transition duration-500"
                 decoding="async"
-                fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
-                loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
+                fetchPriority={prioritizeFirstImage && index === 0 && imageIndex === 0 ? "high" : "low"}
+                loading={prioritizeFirstImage && index === 0 && imageIndex === 0 ? "eager" : "lazy"}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12vw"
                 src={image}
               />
@@ -304,6 +306,7 @@ export function DreamshootPackageCatalogClient({
   featuredCount,
   initialCategory = "",
   openCollectionsHref,
+  prioritizeFirstImage = true,
   showDirectory = true,
   locale = "en",
   sectionId,
@@ -324,6 +327,7 @@ export function DreamshootPackageCatalogClient({
   featuredCount: number;
   initialCategory?: string;
   openCollectionsHref: string;
+  prioritizeFirstImage?: boolean;
   showDirectory?: boolean;
   locale?: "en" | "es";
   sectionId: string;
@@ -421,6 +425,7 @@ export function DreamshootPackageCatalogClient({
                 key={card.id}
                 locale={locale}
                 packageAction={choosePackageLabel}
+                prioritizeFirstImage={prioritizeFirstImage}
                 siteBasePath={siteBasePath}
               />
             ) : (
@@ -435,8 +440,8 @@ export function DreamshootPackageCatalogClient({
 		                  alt={imageAlt(card, card.imageUrl, 0, locale, brandName)}
                   className="transition duration-700"
                   decoding="async"
-                  fetchPriority={index === 0 ? "auto" : "low"}
-                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={prioritizeFirstImage && index === 0 ? "auto" : "low"}
+                  loading={prioritizeFirstImage && index === 0 ? "eager" : "lazy"}
                   sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 20vw"
                   src={card.imageUrl}
                 />
@@ -482,6 +487,7 @@ export function DreamshootPackageCatalogClient({
                     key={`rest_${card.id}`}
                     locale={locale}
                     packageAction={choosePackageLabel}
+                    prioritizeFirstImage={false}
                     siteBasePath={siteBasePath}
                   />
                 ) : (

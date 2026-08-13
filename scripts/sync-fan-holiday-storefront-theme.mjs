@@ -1319,8 +1319,8 @@ function applyHomePage(pageJson) {
   pageJson.version = pageJson.version ?? 1;
   pageJson.sectionsOrder = [
     "hero_1",
-    "featured_thanksgiving_1",
     "generation_showcase_1",
+    "featured_thanksgiving_1",
     "tutorial_video_1",
     "tutorial_video_2",
     "mobile_video_1",
@@ -1355,12 +1355,22 @@ function applyBestPackagesPage(pageJson) {
   const source = homeSections();
   pageJson.pageType = "content";
   pageJson.version = pageJson.version ?? 1;
+  const introSection = section("rich_text", {
+    anchor: "best-packages",
+    eyebrow: "Best occasion albums",
+    title: "Best Private Occasion Albums for Fan Scenes, Holiday Memories, and Group Portraits",
+    body: "Compare featured Aidreamcapes album directions for fan-scene portraits, game-day groups, Christmas cards, Thanksgiving memories, and private occasion sets before uploading approved source photos or spending credits.",
+    headingLevel: "h1",
+    layout: "compact"
+  });
   pageJson.sections = {
+    intro_1: introSection,
     featured_pack_1: clone(source.featured_pack_1),
     featured_christmas_1: clone(source.featured_christmas_1),
-    featured_thanksgiving_1: clone(source.featured_thanksgiving_1)
+    featured_thanksgiving_1: clone(source.featured_thanksgiving_1),
+    faq_1: bestPackagesFaqSection()
   };
-  pageJson.sectionsOrder = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
+  pageJson.sectionsOrder = ["intro_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "faq_1"];
   pageJson.seo = seo(
     "Best Packages | AIdreamcapes",
     "Compare AIdreamcapes recommended fan-scene, holiday, Thanksgiving, Christmas, and occasion album packages in one place.",
@@ -1368,6 +1378,26 @@ function applyBestPackagesPage(pageJson) {
     "private fan-scene albums, holiday memory sets, thanksgiving keepsake sets, best packages"
   );
   return pageJson;
+}
+
+function bestPackagesFaqSection() {
+  return section("faq", {
+    anchor: "faq",
+    layout: "visual_faq",
+    eyebrow: "Featured albums FAQ",
+    title: "Best Aidreamcapes album questions",
+    subtitle: "How featured Aidreamcapes private albums help customers compare occasion outputs, source-photo needs, credits, and safe use.",
+    journeyTitle: "Before you create",
+    journeyTitles: "Plan|Upload|Review|Download",
+    journeyDescriptions: "Choose the right album direction.|Use approved source photos.|Check credits before generation.|Keep results in your private gallery."
+  }, [
+    block("aidreamcapes_best_packages_faq_1", "faq_item", { question: "What appears on the best Aidreamcapes albums page?", answer: "The page highlights high-intent private album directions for fan moments, game-day groups, seasonal memories, holiday cards, premiere-inspired scenes, and creator-ready occasion photos." }),
+    block("aidreamcapes_best_packages_faq_2", "faq_item", { question: "How should I compare featured album directions?", answer: "Compare the occasion, sample imagery, source-photo needs, group size, visible credit cost, private delivery path, and intended channel before starting an album request." }),
+    block("aidreamcapes_best_packages_faq_3", "faq_item", { question: "Can featured albums change?", answer: "Yes. Featured selections can change as Aidreamcapes adds examples, seasonal directions, safer creative boundaries, and active album categories. The live page reflects the current storefront curation." }),
+    block("aidreamcapes_best_packages_faq_4", "faq_item", { question: "Do featured albums still require approved photos?", answer: "Yes. Every album request should use source photos you own or have permission to process, with consent from every person shown. Avoid protected marks, official logos, and misleading affiliation." }),
+    block("aidreamcapes_best_packages_faq_5", "faq_item", { question: "Can I compare albums before spending credits?", answer: "Yes. Review examples, use cases, upload guidance, policy boundaries, and pricing before starting a private request. This helps you choose the best album direction for the occasion." }),
+    block("aidreamcapes_best_packages_faq_6", "faq_item", { question: "Where do featured album results go?", answer: "Finished images or clips stay in the private Aidreamcapes gallery tied to the signed-in account, where you can review quality and download the results that fit your event or campaign." })
+  ]);
 }
 
 function applyBestMediaPage(pageJson, kind) {

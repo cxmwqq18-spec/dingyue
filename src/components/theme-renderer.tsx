@@ -2428,6 +2428,46 @@ function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   return `${prefix}${pathname}?${params.toString()}${hash}`;
 }
 
+const aidreamcapesMissingTrustedLogoFiles = new Set([
+  "azazie.png",
+  "bodas.png",
+  "bodasnet.png",
+  "bonprix.png",
+  "brides.png",
+  "chanel.png",
+  "davids.png",
+  "dior.png",
+  "green-wedding-shoes.png",
+  "linkedin.png",
+  "macys.png",
+  "marksandspencer.png",
+  "nextcouk.jpg",
+  "oscardelarenta.jpg",
+  "pinterest.png",
+  "pronovias.jpg",
+  "shein.png",
+  "starbucks.jpeg",
+  "style-me-pretty.png",
+  "the-knot.png",
+  "theknot2.png",
+  "verawang.png",
+  "vinted.png",
+  "vogue.svg",
+  "weddingwire.png",
+  "zalando.png",
+  "zara.png",
+  "zexy.svg",
+  "zola.png"
+]);
+
+function shouldRenderStorefrontTrustedLogoImage(site: Site, src: string): boolean {
+  const normalized = cleanStorefrontImageSrc(src).split("?")[0]?.split("#")[0] ?? "";
+  if (!normalized) return false;
+  if (!isAidreamcapesSite(site) || !normalized.includes("/assets/sites/site_aidreamcapes/trusted-logos/")) return true;
+  const filename = normalized.split("/").pop() ?? "";
+  return Boolean(filename) && !aidreamcapesMissingTrustedLogoFiles.has(filename);
+}
+
 function mediaAssetUrl(site: Site, value: string): string {
   const resolved = cleanStorefrontImageSrc(resolveMediaAssetUrl(site, value));
   const preferred = isAidreamcapesSite(site) ? preferAidreamcapesPhotoAsset(resolved) : preferDreamshootOptimizedImage(resolved);
@@ -3228,6 +3268,12 @@ function StorefrontNaturalImage({
       />
     </div>
   );
+}
+
+function shouldPrioritizeStorefrontSectionImage(renderContext: RenderContext, sectionType: string, index = 0): boolean {
+  if (index !== 0) return false;
+  if (renderContext.pagePath === "/") return sectionType === "hero_plus" || sectionType === "image_banner";
+  return true;
 }
 
 function featuredPackImageShape(block: SectionBlockInstance): "wide" | "tall" | "square" {
@@ -8505,7 +8551,7 @@ function SectionView({
                   <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))}>
                     {authPrimaryUsesGoogle ? (
                       <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white shadow-[0_8px_22px_-14px_rgba(9,11,19,0.45)] ring-1 ring-black/[0.06]">
-                        <img className="h-5 w-5" src={googleIconPath} alt="Google sign-in icon" />
+                        <img className="h-5 w-5" src={googleIconPath} alt="Google sign-in icon" loading="lazy" decoding="async" />
                       </span>
                     ) : (
                       <Mail className="h-5 w-5" strokeWidth={1.8} />
@@ -9508,9 +9554,14 @@ function SectionView({
           <div className="min-w-0 rounded-[28px] border border-white/10 bg-[#11131a] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:p-4 md:p-5">
             <div className="min-w-0 overflow-hidden rounded-[24px] border border-white/10 bg-[#0c0e13] shadow-[0_24px_80px_-58px_rgba(0,0,0,0.9)]">
               <div className="relative overflow-hidden border-b border-white/10 bg-[#10131a]">
-                <div className="relative aspect-[16/9] w-full md:aspect-[16/10]">
-                  <StorefrontImage className="h-full w-full object-cover" sizes="(max-width: 1024px) 100vw, 42vw" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, setting(section, "title"), { description: featureCaption, role: "featured" })} />
-                </div>
+                <StorefrontSafeImage
+                  alt={sectionVisualAltForSite(site, section, featureImage, setting(section, "title"), { description: featureCaption, role: "featured" })}
+                  backgroundClassName="opacity-[0.2] blur-xl"
+                  className="aspect-[16/9] w-full bg-[#14161a] md:aspect-[16/10]"
+                  imageClassName="drop-shadow-[0_18px_36px_rgba(0,0,0,0.42)]"
+                  sizes="(max-width: 1024px) 100vw, 42vw"
+                  src={featureImage}
+                />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,10,14,0.14)_0%,rgba(9,10,14,0.2)_38%,rgba(9,10,14,0.78)_100%)]" />
                 <div className="absolute left-4 top-4 rounded-full border border-white/12 bg-black/32 px-3 py-1.5 text-[11px] font-medium text-white/86 backdrop-blur">
                   {featureLabel}
@@ -9553,7 +9604,7 @@ function SectionView({
                           <span className="flex min-w-0 items-start gap-3">
                             {blockValue(method, "kind", "") === "google" ? (
                               <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white ring-1 ring-white/10">
-                                <img className="h-5 w-5" src={googleIconPath} alt={spanishXbyLogin ? "Icono de Google" : "Google sign-in icon"} />
+                                <img className="h-5 w-5" src={googleIconPath} alt={spanishXbyLogin ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" />
                               </span>
                             ) : null}
                             <span className="min-w-0">
@@ -10491,8 +10542,8 @@ function SectionView({
 	                        alt={galleryImageAltForPack(site, selectedPack, index, image)}
                         className="rounded-[1.4rem] bg-white/5"
                         imageClassName="transition duration-500"
-                        loading={index === 0 ? "eager" : "lazy"}
-                        fetchPriority={index === 0 ? "high" : "low"}
+                        loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
+                        fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
                         src={image}
                       />
                     </div>
@@ -10549,9 +10600,9 @@ function SectionView({
 	                              role: imageIndex === 0 ? "card" : "gallery",
 	                              title: card.title
 	                            })}
-                            fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
+                            fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) && imageIndex === 0 ? "high" : "low"}
                             imageClassName="transition duration-500"
-                            loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
+                            loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) && imageIndex === 0 ? "eager" : "lazy"}
                             src={image}
                           />
                         </div>
@@ -11054,10 +11105,10 @@ function SectionView({
 	                              title: localizedDynamicTitle
 	                            })}
                         className="rounded-[18px] bg-zinc-900"
-                        fetchPriority={index === 0 ? "high" : "low"}
+                        fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
                         imageClassName="transition duration-500"
                         key={`${image}_${index}_detail`}
-                        loading={index === 0 ? "eager" : "lazy"}
+                        loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
                         src={image}
                       />
                     ))}
@@ -11167,10 +11218,10 @@ function SectionView({
 	                              title: localizedDynamicTitle
 	                            })}
                         className="rounded-[18px] bg-zinc-900"
-                        fetchPriority={index < 4 ? "auto" : "low"}
+                        fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "auto" : "low"}
                         imageClassName="transition duration-500"
                         key={`${image}_${index}`}
-                        loading={index < 4 ? "eager" : "lazy"}
+                        loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
                         src={image}
                       />
                     ))}
@@ -11763,8 +11814,8 @@ function SectionView({
 	                              title: proofCard.title
 	                            })}
                             className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
-                            fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
-                            loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
+                            fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) && imageIndex === 0 ? "high" : "low"}
+                            loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) && imageIndex === 0 ? "eager" : "lazy"}
                             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12vw"
                             src={image}
                           />
@@ -12013,8 +12064,8 @@ function SectionView({
 	                          title: card.title
 	                        })}
                         className="h-full w-full bg-[#05070e] object-contain object-center transition duration-300 group-hover:brightness-105"
-                        fetchPriority={index < 4 ? "high" : "low"}
-                        loading={index < 4 ? "eager" : "lazy"}
+                        fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
+                        loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
                         preview={false}
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         src={mediaAssetUrl(site, card.imageUrl)}
@@ -12106,7 +12157,7 @@ function SectionView({
 	                const logoImage = blockValue(logo, "imageUrl", "");
 	                const resolvedLogoImage = cleanStorefrontImageSrc(resolveMediaAssetUrl(site, logoImage));
 	                const logoPublicImage = resolvedLogoImage;
-	                const logoSrc = logoImage
+	                const logoSrc = logoImage && shouldRenderStorefrontTrustedLogoImage(site, logoPublicImage)
 	                  ? withStorefrontPublicWatermarkCacheVersion(logoPublicImage)
 	                  : "";
 	                const logoAlt = isSpanishStorefrontSite(site)
@@ -12229,8 +12280,8 @@ function SectionView({
                             title: card.title
                           })}
                           className="h-full w-full max-w-full bg-[#05070e] object-contain object-center transition duration-300 group-hover:brightness-105"
-                          fetchPriority={card.productIndex < 4 ? "high" : "low"}
-                          loading={card.productIndex < 4 ? "eager" : "lazy"}
+                          fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, card.productIndex) ? "high" : "low"}
+                          loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, card.productIndex) ? "eager" : "lazy"}
                           preview={false}
                           sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
                           src={mediaAssetUrl(site, card.imageUrl)}
@@ -12280,8 +12331,8 @@ function SectionView({
                               title: card.title
                             })}
                             className="h-full w-full bg-[#05070e] object-contain object-center transition duration-300 group-hover:brightness-105"
-                            fetchPriority={card.productIndex < 4 ? "high" : "low"}
-                            loading={card.productIndex < 4 ? "eager" : "lazy"}
+                            fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, card.productIndex) ? "high" : "low"}
+                            loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, card.productIndex) ? "eager" : "lazy"}
                             preview={false}
                             sizes="(max-width: 640px) 78vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                             src={mediaAssetUrl(site, card.imageUrl)}
@@ -12479,9 +12530,9 @@ function SectionView({
 	                              title: label
 	                            })}
                             className="aspect-[4/3] rounded-[16px] border border-white/10 bg-[#080B12] shadow-[0_22px_62px_-48px_rgba(0,0,0,0.95)] transition duration-300 group-hover:border-white/22"
-                            fetchPriority={index < 2 ? "high" : "low"}
+                            fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
                             imageClassName="transition duration-500 group-hover:brightness-110"
-                            loading={index < 2 ? "eager" : "lazy"}
+                            loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
                             sizes="(max-width: 640px) 50vw, (max-width: 1280px) 22vw, 14rem"
                             src={rawImage}
                           />
@@ -12498,9 +12549,9 @@ function SectionView({
 	                              title: label
 	                            })}
                             className="rounded-[16px] border border-white/10 bg-[#080B12] shadow-[0_22px_62px_-48px_rgba(0,0,0,0.95)] transition duration-300 group-hover:border-white/22"
-                            fetchPriority={index < 2 ? "high" : "low"}
+                            fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
                             imageClassName="transition duration-500 group-hover:brightness-110"
-                            loading={index < 2 ? "eager" : "lazy"}
+                            loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
                             src={rawImage}
                           />
                         )}
@@ -12621,6 +12672,7 @@ function SectionView({
         initialCategory={selectedCategory || "all"}
         locale={spanishXbyCatalog ? "es" : "en"}
         openCollectionsHref={hrefFor(site, "/collections")}
+        prioritizeFirstImage={renderContext.pagePath !== "/"}
         showDirectory={renderContext.pagePath !== "/"}
         sectionId={sectionAnchor(section, "packages")}
         siteBasePath={routedSitePath(site, "")}
@@ -15648,7 +15700,13 @@ function SectionView({
             ) : null}
             {inlineImageSrc ? (
               <div className="mt-6 max-w-[34rem] overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-2" data-faq-item-image>
-                <img className="block h-auto w-full" src={inlineImageSrc} alt={inlineImageAlt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+                <img
+                  className="block h-auto w-full"
+                  src={inlineImageSrc}
+                  alt={inlineImageAlt}
+                  loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
+                  decoding="async"
+                />
               </div>
             ) : null}
           </div>
@@ -15675,7 +15733,13 @@ function SectionView({
                         : "aspect-[4/3]";
                     return (
                       <div className={`${tileClassName} overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-1 shadow-[0_20px_50px_-36px_rgba(0,0,0,0.9)]`} data-faq-feature-tile key={`${image.src}_${index}`}>
-                        <img className="block h-full w-full max-w-full object-contain object-center" src={image.src} alt={image.alt} loading="eager" decoding="async" />
+                        <img
+                          className="block h-full w-full max-w-full object-contain object-center"
+                          src={image.src}
+                          alt={image.alt}
+                          loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
+                          decoding="async"
+                        />
                       </div>
                     );
                   })}

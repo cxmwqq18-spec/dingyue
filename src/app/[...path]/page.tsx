@@ -213,6 +213,11 @@ const AIDREAMCAPES_LEGACY_BLOG_VIDEO_REDIRECTS: Record<string, string> = {
 };
 const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools", "/best-packages", "/best-ai-image", "/best-ai-video"]);
 const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us", "/best-packages", "/best-ai-image", "/best-ai-video"]);
+const STATIC_ASSET_REQUEST_SEGMENTS = new Set(["_next", "assets"]);
+
+function isStaticAssetCatchAllRequest(firstSegment: string): boolean {
+  return STATIC_ASSET_REQUEST_SEGMENTS.has(firstSegment);
+}
 
 async function hasAnyCustomerSessionCookie(): Promise<boolean> {
   return (await cookies()).getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
@@ -423,6 +428,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const { path } = resolvedParams;
   const firstSegment = path[0] ?? "";
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  if (isStaticAssetCatchAllRequest(firstSegment)) return {};
   if (firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard") {
     const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
     return { title: spanishTitle ? "Espacio privado" : "Workspace", robots: { index: false, follow: false } };
@@ -481,7 +487,7 @@ export default async function HostStorefrontCatchAllPage({
 }) {
   const [{ path }, headerStore] = await Promise.all([params, headers()]);
   const firstSegment = path[0] ?? "";
-  if (firstSegment === "platform" || firstSegment === "site" || firstSegment === "api" || firstSegment === "_next") {
+  if (firstSegment === "platform" || firstSegment === "site" || firstSegment === "api" || isStaticAssetCatchAllRequest(firstSegment)) {
     notFound();
   }
 

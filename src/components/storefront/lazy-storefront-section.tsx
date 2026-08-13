@@ -294,7 +294,7 @@ function LazySectionPlaceholder({
   const normalizedSectionType = sectionType.toLowerCase();
   const warmSurface = normalizedSectionType.includes("aidreamcapes");
   const busy = status === "loading";
-  const skeletonCards = normalizedSectionType.includes("pricing") ? 3 : 4;
+  const skeletonCards = normalizedSectionType.includes("pricing") ? 3 : 2;
 
   return (
     <div
@@ -304,7 +304,7 @@ function LazySectionPlaceholder({
     >
       <div className="mx-auto flex min-h-[inherit] max-w-[var(--site-content-width)] items-center">
         <div className="w-full">
-          <div className="grid gap-4 md:grid-cols-4" aria-hidden="true">
+          <div className="grid gap-4 md:grid-cols-2" aria-hidden="true">
             {Array.from({ length: skeletonCards }).map((_, index) => (
               <div className="overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_24px_72px_-58px_rgba(20,22,26,0.36)]" key={`lazy_section_skeleton_${index}`}>
                 <div className="aspect-[4/3] animate-pulse bg-[linear-gradient(110deg,#eef2f7_0%,#f8fafc_45%,#e8edf5_100%)]" />
