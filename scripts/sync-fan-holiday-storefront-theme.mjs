@@ -11,10 +11,27 @@ import {
   publicShowcaseVideoPath,
   showcaseStoreBySlug
 } from "./dreamshoot-homepage-showcase-data.mjs";
+import Module from "node:module";
+import createJiti from "jiti";
 
 const repoRoot = process.cwd();
 const statePath = path.join(repoRoot, "data", "platform-state.json");
+const sourceRoot = path.join(repoRoot, "src");
+const originalResolveFilename = Module._resolveFilename;
+Module._resolveFilename = function resolveFilename(request, ...args) {
+  const resolvedRequest = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request;
+  return originalResolveFilename.call(this, resolvedRequest, ...args);
+};
+const jiti = createJiti(import.meta.url);
+const { dreamshootAiStudioTemplatesForSite } = jiti("../src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const aidreamcapesSiteId = "site_aidreamcapes";
+const aidreamcapesTemplateSeed = {
+  slug: "aidreamcapes",
+  name: "Aidreamcapes",
+  primaryDomain: "www.aidreamcapes.com",
+  branding: { logoText: "Aidreamcapes" }
+};
+const aidreamcapesGeneratedTemplates = dreamshootAiStudioTemplatesForSite(aidreamcapesTemplateSeed);
 const assetVersion = "20260801visualfix2";
 const publicAssetBase = "/assets/sites/site_aidreamcapes/fan-holiday-theme";
 const localAssetRoot = path.join(repoRoot, "public", "assets", "sites", "site_aidreamcapes", "fan-holiday-theme");
@@ -605,6 +622,12 @@ function section(type, settings, blocks = []) {
 
 function block(id, type, settings) {
   return { id, type, settings };
+}
+
+function templateFaq(key) {
+  const faq = aidreamcapesGeneratedTemplates?.[key]?.sections?.faq_1;
+  if (faq?.type !== "faq" && faq?.type !== "dreamshoot_theme_faq") throw new Error(`missing_aidreamcapes_template_faq:${key}`);
+  return clone(faq);
 }
 
 function xmlEscape(value) {
@@ -1368,7 +1391,7 @@ function applyBestPackagesPage(pageJson) {
     featured_pack_1: clone(source.featured_pack_1),
     featured_christmas_1: clone(source.featured_christmas_1),
     featured_thanksgiving_1: clone(source.featured_thanksgiving_1),
-    faq_1: bestPackagesFaqSection()
+    faq_1: templateFaq("best-packages")
   };
   pageJson.sectionsOrder = ["intro_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "faq_1"];
   pageJson.seo = seo(
@@ -1380,31 +1403,12 @@ function applyBestPackagesPage(pageJson) {
   return pageJson;
 }
 
-function bestPackagesFaqSection() {
-  return section("faq", {
-    anchor: "faq",
-    layout: "visual_faq",
-    eyebrow: "Featured albums FAQ",
-    title: "Best Aidreamcapes album questions",
-    subtitle: "How featured Aidreamcapes private albums help customers compare occasion outputs, source-photo needs, credits, and safe use.",
-    journeyTitle: "Before you create",
-    journeyTitles: "Plan|Upload|Review|Download",
-    journeyDescriptions: "Choose the right album direction.|Use approved source photos.|Check credits before generation.|Keep results in your private gallery."
-  }, [
-    block("aidreamcapes_best_packages_faq_1", "faq_item", { question: "What appears on the best Aidreamcapes albums page?", answer: "The page highlights high-intent private album directions for fan moments, game-day groups, seasonal memories, holiday cards, premiere-inspired scenes, and creator-ready occasion photos." }),
-    block("aidreamcapes_best_packages_faq_2", "faq_item", { question: "How should I compare featured album directions?", answer: "Compare the occasion, sample imagery, source-photo needs, group size, visible credit cost, private delivery path, and intended channel before starting an album request." }),
-    block("aidreamcapes_best_packages_faq_3", "faq_item", { question: "Can featured albums change?", answer: "Yes. Featured selections can change as Aidreamcapes adds examples, seasonal directions, safer creative boundaries, and active album categories. The live page reflects the current storefront curation." }),
-    block("aidreamcapes_best_packages_faq_4", "faq_item", { question: "Do featured albums still require approved photos?", answer: "Yes. Every album request should use source photos you own or have permission to process, with consent from every person shown. Avoid protected marks, official logos, and misleading affiliation." }),
-    block("aidreamcapes_best_packages_faq_5", "faq_item", { question: "Can I compare albums before spending credits?", answer: "Yes. Review examples, use cases, upload guidance, policy boundaries, and pricing before starting a private request. This helps you choose the best album direction for the occasion." }),
-    block("aidreamcapes_best_packages_faq_6", "faq_item", { question: "Where do featured album results go?", answer: "Finished images or clips stay in the private Aidreamcapes gallery tied to the signed-in account, where you can review quality and download the results that fit your event or campaign." })
-  ]);
-}
-
 function applyBestMediaPage(pageJson, kind) {
   pageJson.pageType = "content";
   pageJson.version = pageJson.version ?? 1;
+  const sectionId = kind === "video" ? "best_ai_video_1" : "best_ai_image_1";
   pageJson.sections = {
-    [kind === "video" ? "best_ai_video_1" : "best_ai_image_1"]: section("dreamshoot_media_gallery", {
+    [sectionId]: section("dreamshoot_media_gallery", {
       anchor: kind === "video" ? "best-ai-video" : "best-ai-image",
       kind,
       headingLevel: "h1",
@@ -1416,9 +1420,10 @@ function applyBestMediaPage(pageJson, kind) {
         : "Browse Aidreamcapes fan-scene, game-day, holiday, and occasion image themes in one simple grid.",
       imageSlugs: "",
       videoSlugs: ""
-    })
+    }),
+    faq_1: templateFaq(kind === "video" ? "best-ai-video" : "best-ai-image")
   };
-  pageJson.sectionsOrder = [kind === "video" ? "best_ai_video_1" : "best_ai_image_1"];
+  pageJson.sectionsOrder = [sectionId, "faq_1"];
   pageJson.seo = seo(
     kind === "video" ? "Best AI video gallery | AIdreamcapes" : "Best AI image gallery | AIdreamcapes",
     kind === "video"
@@ -1433,7 +1438,7 @@ function applyBestMediaPage(pageJson, kind) {
 function applyCollectionPage(pageJson) {
   pageJson.pageType = "collection";
   pageJson.sections ??= {};
-  pageJson.sectionsOrder = Array.from(new Set(["taxonomy_1", "packages_1", "sample_strip_1", "proof_pairs_1", "packages_strip_1", "feature_tabs_1", "trust_1", "conversion_1"].filter(Boolean)));
+  pageJson.sectionsOrder = Array.from(new Set(["taxonomy_1", "packages_1", "sample_strip_1", "proof_pairs_1", "packages_strip_1", "feature_tabs_1", "trust_1", "faq_1", "conversion_1"].filter(Boolean)));
   pageJson.sections.taxonomy_1 = section("package_taxonomy", {
     anchor: "collections",
     eyebrow: "Occasion albums",
@@ -1475,6 +1480,7 @@ function applyCollectionPage(pageJson) {
     subtitle: "Choose the category that matches the final use case, then review credit cost and source guidance."
   }, parentCategories.slice(0, 4).map((category, index) => block(`tab_${category.slug}`, "tab", { title: category.label, text: category.description, imageUrl: asset("categories", category.slug), meta: `0${index + 1}` })));
   pageJson.sections.trust_1 = homeSections().trust_1;
+  pageJson.sections.faq_1 = templateFaq("packages");
   pageJson.sections.conversion_1 = homeSections().conversion_1;
   pageJson.seo = seo(
     "Fan-scene and holiday photo album categories | Aidreamcapes",
@@ -1519,7 +1525,7 @@ function applyToolsPage(pageJson) {
   pageJson.sections.packages_1 = section("photo_package_wall", { anchor: "packages", eyebrow: "Related albums", title: "Fan and holiday packages", subtitle: "Browse album categories before opening a tool.", source: "creative_packs", layout: "editorial", maxCount: "12" });
   pageJson.sections.trust_1 = homeSections().trust_1;
   pageJson.sections.pricing_1 = homeSections().pricing_1;
-  pageJson.sections.faq_1 = homeSections().faq_1;
+  pageJson.sections.faq_1 = templateFaq("tools");
   pageJson.sections.conversion_1 = homeSections().conversion_1;
   pageJson.seo = seo(
     "Aidreamcapes tools for fan-scene photo albums and holiday memory sets",
@@ -1552,7 +1558,7 @@ function applyPricingPage(pageJson) {
     secondaryHref: "/faq"
   });
   pageJson.sections.trust_1 = homeSections().trust_1;
-  pageJson.sections.faq_1 = homeSections().faq_1;
+  pageJson.sections.faq_1 = templateFaq("pricing");
   pageJson.sections.conversion_1 = homeSections().conversion_1;
   pageJson.seo = seo(
     "Aidreamcapes pricing for fan-scene and holiday photo albums",
@@ -1571,7 +1577,7 @@ function applyFaqPage(pageJson) {
     body: "Find practical answers about approved source photos, fan-scene styling, game-day groups, holiday albums, credit use, private delivery, and refunds.",
     headingLevel: "h1"
   });
-  pageJson.sections.faq_1 = homeSections().faq_1;
+  pageJson.sections.faq_1 = templateFaq("faq");
   pageJson.sections.plan_rules_1 = pageJson.sections.plan_rules_1 ?? homeSections().trust_1;
   pageJson.seo = seo(
     "Aidreamcapes FAQ for fan-scene and holiday photo albums",
@@ -1584,7 +1590,7 @@ function applyFaqPage(pageJson) {
 
 function applyWorkflowPage(pageJson) {
   pageJson.pageType = "content";
-  pageJson.sectionsOrder = ["workflow_intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "plan_rules_1", "faq_1", "conversion_1"];
+  pageJson.sectionsOrder = ["workflow_intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "plan_rules_1", "conversion_1"];
   pageJson.sections = {
     workflow_intro_1: section("rich_text", {
       eyebrow: "How it works",
@@ -1607,7 +1613,6 @@ function applyWorkflowPage(pageJson) {
     mobile_video_1: aidreamcapesMobileVideoShowcaseSection(),
     workflow_1: homeSections().flow_bridge_1,
     plan_rules_1: homeSections().trust_1,
-    faq_1: homeSections().faq_1,
     conversion_1: homeSections().conversion_1
   };
   pageJson.seo = seo(
@@ -1657,7 +1662,7 @@ function applyAboutPage(pageJson) {
 }
 
 function applyContactPage(pageJson) {
-  pageJson.sectionsOrder = ["contact_intro_1", "contact_details_1", "faq_1", "conversion_1"];
+  pageJson.sectionsOrder = ["contact_intro_1", "contact_details_1", "conversion_1"];
   pageJson.sections = {
     contact_intro_1: section("rich_text", {
       eyebrow: "Contact Aidreamcapes",
@@ -1681,7 +1686,6 @@ function applyContactPage(pageJson) {
       contactEmail: supportEmail,
       body: `<h3>Company</h3><p>Aidreamcapes</p><h3>Contact Us</h3><p><a href="mailto:${supportEmail}">${supportEmail}</a></p>`
     }),
-    faq_1: homeSections().faq_1,
     conversion_1: homeSections().conversion_1
   };
   pageJson.seo = seo(
@@ -1720,7 +1724,7 @@ function toolPageJson(tool, pack) {
       progress_1: section("job_progress", { title: "Generation progress" }),
       album_1: section("album_gallery", { title: "Private Aidreamcapes album", showDownloads: true }),
       trust_1: homeSections().trust_1,
-      faq_1: homeSections().faq_1
+      faq_1: templateFaq("tool-detail")
     },
     seo: seo(
       `${tool.title} | Aidreamcapes`,

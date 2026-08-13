@@ -22,7 +22,14 @@ const { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } 
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const updateDb = args.has("--db");
-const stores = [
+const siteFilterArg = process.argv.slice(2).find((arg) => arg.startsWith("--site="))?.split("=").slice(1).join("=");
+const siteFilters = new Set(
+  (siteFilterArg ?? "")
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean)
+);
+const allStores = [
   {
     key: "mydreamshoots",
     siteId: "site_dreamshoot",
@@ -52,6 +59,13 @@ const stores = [
     }
   }
 ];
+const stores = siteFilters.size
+  ? allStores.filter((store) => siteFilters.has(store.key) || siteFilters.has(store.siteId.toLowerCase()) || siteFilters.has(store.siteSlug.toLowerCase()))
+  : allStores;
+
+if (siteFilters.size && !stores.length) {
+  throw new Error(`no_matching_store_filter:${[...siteFilters].join(",")}`);
+}
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -74,7 +88,7 @@ function generatedTemplatesForStore(store) {
 
 function templateFaq(templates, key) {
   const faq = templates?.[key]?.sections?.faq_1;
-  return faq?.type === "faq" ? clone(faq) : null;
+  return isFaqSection(faq) ? clone(faq) : null;
 }
 
 function templateSection(templates, key, sectionId) {
@@ -251,22 +265,26 @@ function desiredFaqForTemplateKey(templates, key) {
   return undefined;
 }
 
+function isFaqSection(section) {
+  return section?.type === "faq" || section?.type === "dreamshoot_theme_faq";
+}
+
 function faqSectionIds(pageJson) {
   if (!pageJson || typeof pageJson !== "object" || !pageJson.sections || typeof pageJson.sections !== "object") return [];
   const orderedIds = Array.isArray(pageJson.sectionsOrder) ? pageJson.sectionsOrder : Object.keys(pageJson.sections);
   const ids = new Set();
   for (const id of orderedIds) {
-    if (id === "faq_1" || pageJson.sections[id]?.type === "faq") ids.add(id);
+    if (id === "faq_1" || isFaqSection(pageJson.sections[id])) ids.add(id);
   }
   for (const [id, section] of Object.entries(pageJson.sections)) {
-    if (id === "faq_1" || section?.type === "faq") ids.add(id);
+    if (id === "faq_1" || isFaqSection(section)) ids.add(id);
   }
   return [...ids];
 }
 
 function insertFaqId(pageJson, preferredIndex) {
   const order = Array.isArray(pageJson.sectionsOrder) ? pageJson.sectionsOrder : Object.keys(pageJson.sections ?? {});
-  const withoutFaq = order.filter((id) => id !== "faq_1" && pageJson.sections?.[id]?.type !== "faq");
+  const withoutFaq = order.filter((id) => id !== "faq_1" && !isFaqSection(pageJson.sections?.[id]));
   const conversionIndex = withoutFaq.indexOf("conversion_1");
   const insertionIndex = preferredIndex >= 0
     ? Math.min(preferredIndex, withoutFaq.length)

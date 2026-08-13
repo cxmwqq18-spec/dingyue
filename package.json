@@ -35,6 +35,7 @@
     "audit:storefront-watermarks": "node scripts/audit-storefront-watermarks.mjs",
     "watermark:storefront-public-media": "node scripts/apply-storefront-watermarks.mjs",
     "smoke:fan-holiday-storefront-theme": "node scripts/smoke-fan-holiday-storefront-theme.mjs",
+    "smoke:aidreamcapes-faq-rules": "node scripts/smoke-aidreamcapes-faq-rules.mjs",
     "smoke:aidreamcapes-before-after-assets": "node scripts/smoke-aidreamcapes-before-after-assets.mjs",
     "smoke:aidreamcapes-before-after-assets:db": "node scripts/smoke-aidreamcapes-before-after-assets.mjs --db",
     "smoke:storefront-seo-fingerprint": "node scripts/smoke-storefront-seo-fingerprint.mjs",
