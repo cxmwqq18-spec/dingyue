@@ -9,6 +9,22 @@ const siteCatchAll = readFileSync(new URL("../src/app/site/[siteSlug]/[...path]/
 const robotsRoute = readFileSync(new URL("../src/app/robots.ts", import.meta.url), "utf8");
 const sitemapRoute = readFileSync(new URL("../src/app/sitemap.xml/route.ts", import.meta.url), "utf8");
 const middleware = readFileSync(new URL("../src/middleware.ts", import.meta.url), "utf8");
+const packageJson = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+const publicStorefrontCdnCache = "public, s-maxage=300, stale-while-revalidate=1800";
+
+const legacyPolicyAliases = [
+  ["/policies/privacy-policy", "/privacy"],
+  ["/policies/terms-of-service", "/terms"],
+  ["/policies/cookie-policy", "/cookies"],
+  ["/policies/delivery", "/shipping"],
+  ["/policies/delivery-policy", "/shipping"],
+  ["/policies/children", "/children-privacy"],
+  ["/policies/children-privacy-policy", "/children-privacy"],
+  ["/policies/childrens-privacy", "/children-privacy"],
+  ["/policies/state-privacy-rights", "/state-privacy"],
+  ["/policies/california-privacy", "/state-privacy"],
+  ["/policies/ccpa", "/state-privacy"]
+];
 
 function assertMetadataSource(path) {
   const escapedPath = path.replace("/", "\\/");
@@ -45,8 +61,11 @@ async function assertHeaders() {
     "/site/:siteSlug/creators-circle",
     "/site/:siteSlug/partner-registration"
   ]) {
-    const cache = bySource.get(source)?.find((header) => header.key === "Cache-Control")?.value ?? "";
+    const headersForSource = bySource.get(source) ?? [];
+    const cache = headersForSource.find((header) => header.key === "Cache-Control")?.value ?? "";
     assert.match(cache, /^public,/, `${source} should use public cache headers`);
+    assert.equal(headersForSource.find((header) => header.key === "CDN-Cache-Control")?.value, publicStorefrontCdnCache, `${source} should expose CDN cache headers`);
+    assert.equal(headersForSource.find((header) => header.key === "Cloudflare-CDN-Cache-Control")?.value, publicStorefrontCdnCache, `${source} should expose Cloudflare cache headers`);
   }
   for (const source of [
     "/admin",
@@ -103,10 +122,19 @@ assertMetadataSource("/best-packages");
 assertMetadataSource("/best-ai-image");
 assertMetadataSource("/best-ai-video");
 await assertHeaders();
+assert.ok(middleware.includes("guardCookieEnabled !== true"), "storefront guard cookie should be opt-in so public HTML stays cacheable by default");
+assert.match(middleware, /cloudflare-cdn-cache-control/i, "HTML rewrite responses should keep Cloudflare CDN cache headers");
+assert.match(middleware, /rewriteStorefrontHtmlStream/i, "public HTML rewrite should stream after the head instead of buffering the full page");
 assertRedirectSource(hostCatchAll, "/refund-policy", 'redirect("/refunds")');
 assertRedirectSource(hostCatchAll, "/content-policy", 'redirect("/content")');
 assertRedirectSource(siteCatchAll, "/refund-policy", 'redirect(routePath("/refunds"))');
 assertRedirectSource(siteCatchAll, "/content-policy", 'redirect(routePath("/content"))');
+for (const [alias, target] of legacyPolicyAliases) {
+  assert.ok(hostCatchAll.includes(`slug === "${alias}"`), `host catch-all should redirect legacy policy alias ${alias}`);
+  assert.ok(siteCatchAll.includes(`slug === "${alias}"`), `site catch-all should redirect legacy policy alias ${alias}`);
+  assert.ok(middleware.includes(`"${alias}": "${target}"`), `middleware should redirect legacy policy alias ${alias} to ${target}`);
+  assert.ok(siteRouteCanonical.includes(`"${alias}"`), `canonical helpers should normalize legacy policy alias ${alias}`);
+}
 assert.match(
   robotsRoute,
   /hostCandidates\.some\(isGrownstrideHost\)/,
@@ -187,5 +215,20 @@ assert.ok(
   siteRouteCanonical.includes('requestedPath === "/how-it-works") return "/workflow"'),
   "/how-it-works should remain a legacy alias for /workflow"
 );
+for (const command of [
+  "npm run guard:storefront-launch-seo-contract",
+  "npm run guard:mydreamshoots-content"
+]) {
+  assert.ok(packageJson.scripts?.["deploy:precheck"]?.includes(command), `deploy:precheck should include ${command}`);
+}
+for (const command of [
+  "npm run guard:storefront-launch-seo-contract",
+  "npm run smoke:storefront-sitemap-directory-coverage",
+  "npm run smoke:storefront-head-title-order",
+  "npm run smoke:storefront-seo-fingerprint",
+  "npm run guard:mydreamshoots-content"
+]) {
+  assert.ok(packageJson.scripts?.["launch:storefront-precheck"]?.includes(command), `launch:storefront-precheck should include ${command}`);
+}
 
 console.log("public SEO policy smoke passed");

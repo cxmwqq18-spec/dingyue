@@ -6,6 +6,8 @@ import path from "node:path";
 const repoRoot = process.cwd();
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(/\/$/, "");
 const statePath = path.join(repoRoot, "data", "platform-state.json");
+const seoContentPath = path.join(repoRoot, "src", "lib", "dreamshoot-seo-content.ts");
+const sitemapRequestTimeoutMs = Number(process.env.SITEMAP_SMOKE_SITEMAP_TIMEOUT_MS ?? 120_000);
 
 const siteChecks = [
   {
@@ -20,8 +22,6 @@ const siteChecks = [
       "/best-ai-video",
       "/collections",
       "/collections/headshots",
-      "/collections/thanksgiving-group-photos",
-      "/collections/halloween-party-photos",
       "/tools",
       "/tools/headshot",
       "/tools/creator-portrait",
@@ -111,6 +111,7 @@ const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", 
 const NON_INDEXABLE_TOOL_PATHS = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/image-generator", "/tools/image_generator", "/tools/travel-portraits"]);
 const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"];
 const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us"];
+const DIRECTORY_KEY_RE = /(?:^|\n)\s*(?:"([^"]+)"|'([^']+)'|([a-z][a-z0-9-]*))\s*:\s*\{/gi;
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
   "/tools/headshot",
   "/tools/creator-portrait",
@@ -174,6 +175,58 @@ const CANONICAL_PUBLIC_PATHS = new Map([
   ["/ccpa", "/state-privacy"],
   ["/policies/state-privacy", "/state-privacy"]
 ]);
+
+function extractObjectBody(source, marker) {
+  const start = source.indexOf(marker);
+  if (start < 0) fail("SEO directory source marker missing", { marker });
+  const open = source.indexOf("{", start);
+  if (open < 0) fail("SEO directory object opening brace missing", { marker });
+  let depth = 0;
+  for (let index = open; index < source.length; index += 1) {
+    const char = source[index];
+    if (char === "{") depth += 1;
+    if (char === "}") {
+      depth -= 1;
+      if (depth === 0) return source.slice(open + 1, index);
+    }
+  }
+  fail("SEO directory object closing brace missing", { marker });
+}
+
+function extractDirectorySlugs(source, marker) {
+  const body = extractObjectBody(source, marker);
+  return new Set(Array.from(body.matchAll(DIRECTORY_KEY_RE)).map((match) => match[1] ?? match[2] ?? match[3]).filter(Boolean));
+}
+
+function extractGeneratedDirectoryDefSlugs(source, marker) {
+  const start = source.indexOf(marker);
+  if (start < 0) fail("SEO generated directory source marker missing", { marker });
+  const end = source.indexOf("] as const", start);
+  if (end < 0) fail("SEO generated directory source closing marker missing", { marker });
+  return new Set(Array.from(source.slice(start, end).matchAll(/\[\s*"([^"]+)"/g)).map((match) => match[1]).filter(Boolean));
+}
+
+function mergeSets(...sets) {
+  return new Set(sets.flatMap((set) => Array.from(set)));
+}
+
+const seoDirectorySource = fs.readFileSync(seoContentPath, "utf8");
+const explicitDirectorySlugs = {
+  site_dreamshoot: {
+    collections: extractDirectorySlugs(seoDirectorySource, "const collectionDirectory"),
+    tools: extractDirectorySlugs(seoDirectorySource, "const toolDirectory")
+  },
+  site_aidreamcapes: {
+    collections: mergeSets(
+      extractDirectorySlugs(seoDirectorySource, "const aidreamcapesCollectionDirectory"),
+      extractGeneratedDirectoryDefSlugs(seoDirectorySource, "const aidreamcapesGeneratedCollectionDefs")
+    ),
+    tools: mergeSets(
+      extractDirectorySlugs(seoDirectorySource, "const aidreamcapesToolDirectory"),
+      extractGeneratedDirectoryDefSlugs(seoDirectorySource, "const aidreamcapesGeneratedToolDefs")
+    )
+  }
+};
 
 const DREAMSHOOT_COLLECTION_ALIASES = new Map([
   ["christmas", "christmas-photos"],
@@ -323,6 +376,21 @@ function isIndexablePage(siteCheck, page) {
   return !isBlockedPublicPath(pathName);
 }
 
+function isIndexableDirectoryPath(siteCheck, pathName) {
+  const normalized = canonicalDirectoryPath(siteCheck, pathName);
+  if (isBlockedPublicPath(normalized)) return false;
+  const siteExplicitSlugs = explicitDirectorySlugs[siteCheck.siteId];
+  if (normalized.startsWith("/collections/")) {
+    const slug = slugifySegment(normalized.replace(/^\/collections\//, ""));
+    return Boolean(siteExplicitSlugs?.collections.has(slug));
+  }
+  if (normalized.startsWith("/tools/")) {
+    const slug = slugifySegment(normalized.replace(/^\/tools\//, ""));
+    return Boolean(siteExplicitSlugs?.tools.has(slug)) || siteCheck.siteId === "site_dreamshoot" && DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS.includes(normalized);
+  }
+  return true;
+}
+
 function addPath(paths, pathName, bucket) {
   const normalized = normalizePath(pathName);
   if (!normalized || isBlockedPublicPath(normalized)) return;
@@ -351,23 +419,30 @@ function expectedDirectoryPaths(state, siteCheck) {
   addPath(buckets, "/collections", "collections");
   for (const category of state.creativePackCategories || []) {
     if (category.siteId !== siteCheck.siteId || category.status !== "active") continue;
-    addPath(buckets, canonicalCollectionPath(siteCheck, category.slug || category.label), "collections");
+    const pathName = canonicalCollectionPath(siteCheck, category.slug || category.label);
+    if (isIndexableDirectoryPath(siteCheck, pathName)) addPath(buckets, pathName, "collections");
   }
   for (const pack of state.creativePacks || []) {
     if (pack.siteId !== siteCheck.siteId || pack.status !== "active") continue;
     const category = pack.categoryId ? byCategoryId.get(pack.categoryId) : undefined;
     for (const value of [category?.parent?.slug, category?.slug, pack.category, pack.name]) {
-      if (value) addPath(buckets, canonicalCollectionPath(siteCheck, pathFromSlug("/collections", value)), "collections");
+      if (!value) continue;
+      const pathName = canonicalCollectionPath(siteCheck, pathFromSlug("/collections", value));
+      if (isIndexableDirectoryPath(siteCheck, pathName)) addPath(buckets, pathName, "collections");
     }
   }
 
   addPath(buckets, "/tools", "tools");
   if (siteCheck.siteId === "site_dreamshoot") {
-    for (const pathName of DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS) addPath(buckets, canonicalToolPath(siteCheck, pathName), "tools");
+    for (const pathName of DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS) {
+      const canonicalPath = canonicalToolPath(siteCheck, pathName);
+      if (isIndexableDirectoryPath(siteCheck, canonicalPath)) addPath(buckets, canonicalPath, "tools");
+    }
   }
   for (const item of state.toolMenuItems || []) {
     if (item.siteId !== siteCheck.siteId || item.status !== "active") continue;
-    addPath(buckets, canonicalToolPath(siteCheck, item.href || pathFromSlug("/tools", item.slug)), "tools");
+    const pathName = canonicalToolPath(siteCheck, item.href || pathFromSlug("/tools", item.slug));
+    if (isIndexableDirectoryPath(siteCheck, pathName)) addPath(buckets, pathName, "tools");
   }
 
   return buckets;
@@ -377,7 +452,7 @@ function flattenBuckets(buckets) {
   return new Set(Array.from(buckets.values()).flatMap((bucket) => Array.from(bucket)));
 }
 
-function requestText(host, pathname) {
+function requestText(host, pathname, timeoutMs = sitemapRequestTimeoutMs) {
   return new Promise((resolve, reject) => {
     const url = new URL(pathname, baseUrl);
     const client = url.protocol === "https:" ? https : http;
@@ -401,6 +476,9 @@ function requestText(host, pathname) {
       }
     );
     request.on("error", reject);
+    request.setTimeout(timeoutMs, () => {
+      request.destroy(new Error(`request_timeout_${timeoutMs}ms:${host}${pathname}`));
+    });
     request.end();
   });
 }
@@ -431,6 +509,12 @@ function summarizeBuckets(expectedBuckets, sitemapPaths) {
   );
 }
 
+function nonIndexableDirectoryPathsFromSitemap(siteCheck, sitemapPaths) {
+  return Array.from(sitemapPaths)
+    .filter((pathName) => (pathName.startsWith("/collections/") || pathName.startsWith("/tools/")) && !isIndexableDirectoryPath(siteCheck, pathName))
+    .sort();
+}
+
 async function main() {
   const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
   const results = [];
@@ -447,6 +531,7 @@ async function main() {
     const { paths: sitemapPaths, foreignHosts } = sitemapPathsFromXml(response.body, siteCheck.host);
     const missing = Array.from(expectedPaths).filter((pathName) => !sitemapPaths.has(pathName)).sort();
     const oldInSitemap = siteCheck.oldPaths.filter((pathName) => sitemapPaths.has(pathName));
+    const noindexInSitemap = nonIndexableDirectoryPathsFromSitemap(siteCheck, sitemapPaths);
     const result = {
       site: siteCheck.slug,
       host: siteCheck.host,
@@ -455,14 +540,15 @@ async function main() {
       buckets: summarizeBuckets(expectedBuckets, sitemapPaths),
       missing: missing.slice(0, 40),
       oldInSitemap,
+      noindexInSitemap: noindexInSitemap.slice(0, 40),
       foreignHosts: foreignHosts.slice(0, 20)
     };
     results.push(result);
-    if (missing.length || oldInSitemap.length || foreignHosts.length) {
+    if (missing.length || oldInSitemap.length || noindexInSitemap.length || foreignHosts.length) {
       failures.push(result);
-      console.log(`✗ ${siteCheck.slug}: sitemap ${sitemapPaths.size}, expected ${expectedPaths.size}, missing ${missing.length}, old ${oldInSitemap.length}`);
+      console.log(`✗ ${siteCheck.slug}: sitemap ${sitemapPaths.size}, expected ${expectedPaths.size}, missing ${missing.length}, old ${oldInSitemap.length}, noindex ${noindexInSitemap.length}`);
     } else {
-      console.log(`✓ ${siteCheck.slug}: sitemap ${sitemapPaths.size}, expected ${expectedPaths.size}, all directory buckets covered`);
+      console.log(`✓ ${siteCheck.slug}: sitemap ${sitemapPaths.size}, expected ${expectedPaths.size}, all indexable directory buckets covered`);
     }
   }
 

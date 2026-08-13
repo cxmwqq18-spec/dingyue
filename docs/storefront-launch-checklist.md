@@ -28,14 +28,14 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 
 锁定来源：Postgres `site_dreamshoot` 的首页 `ThemePage.publishedJson`，并包含 guard 用于页面 SEO 对比的 `ThemeSettings.publishedJson` 记录。
 
-锁定时间：`2026-08-09T23:07:31.000+08:00`
+锁定时间：`2026-08-12T00:16:28.628+08:00`
 
 锁定指纹：
 
 | 范围 | SHA-256 |
 | --- | --- |
-| 首页完整 `publishedJson` | `3345350f7d3b158c0d46686baeef0f49fe1bd0e506270a3c1491a3e188dd9c60` |
-| 首页可见文案记录 | `072816d2cafb9d97ee1a5cbeae242b5926ae9f0cf94107dda2d9766aa726e7d6` |
+| 首页完整 `publishedJson` | `bd1ae831410f1cfd0de06f3b6dc72c49f9dd406487ee393e0a18f01d305cb1ab` |
+| 首页可见文案记录 | `bdfcbe2ce45e2d901d438e0e12ecc16fb126660351adf1559d547df763301f9d` |
 
 当前批准的首页关键文案：
 
@@ -265,17 +265,17 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 
 ## 8. Sitemap 与目录覆盖检查
 
-上线前必须确认每个对应网站的 `sitemap.xml` 按独立域名输出，并覆盖该网站全部可索引目录。检查不能只看 Header 菜单里当前露出的几个链接；必须覆盖公共基础页、policy 页、套餐目录、工具目录、博客目录和所有当前 active 的二级详情目录。
+上线前必须确认每个对应网站的 `sitemap.xml` 按独立域名输出，并覆盖该网站全部可索引目录。检查不能只看 Header 菜单里当前露出的几个链接；必须覆盖公共基础页、policy 页、套餐目录、工具目录、博客目录和所有当前可索引的二级详情目录。active 但当前 robots 为 `noindex` 的详情目录必须保留页面 `noindex`，并从 sitemap 排除。
 
 覆盖范围：
 
 - [ ] 使用对应生产 Host 单独请求 sitemap：`www.mydreamshoots.com/sitemap.xml` 只包含 MyDreamShoots URL，`www.aidreamcapes.com/sitemap.xml` 只包含 AIdreamcapes URL；后续 `.eu` 店铺上线时也按各自域名单独检查。
 - [ ] 基础公共页进入 sitemap：`/`、`/workflow`、`/pricing`、`/faq`、`/about-us`、`/contact-us`。
 - [ ] Policy 页进入 sitemap：`/privacy`、`/terms`、`/cookies`、`/refunds`、`/content`、`/shipping`、`/children-privacy`、`/state-privacy`。
-- [ ] 套餐目录完整覆盖：`/collections`、全部 active `creativePackCategories`、全部 active `creativePacks` 对应的 canonical `/collections/*` 路径。
-- [ ] 工具目录完整覆盖：`/tools`、全部 active `toolMenuItems`、MyDreamShoots 默认公开工具、所有 canonical `/tools/*` 路径。
+- [ ] 套餐目录完整覆盖：`/collections`、全部当前可索引 `creativePackCategories`、全部当前可索引 `creativePacks` 对应的 canonical `/collections/*` 路径；`noindex` collection 不得进入 sitemap。
+- [ ] 工具目录完整覆盖：`/tools`、全部当前可索引 `toolMenuItems`、MyDreamShoots 默认公开工具、所有 canonical `/tools/*` 路径；`noindex` tool 不得进入 sitemap。
 - [ ] 博客目录完整覆盖：`/blog`、全部可索引 `article` 页面对应的 `/blog/*` 路径。
-- [ ] Header 桌面 / 移动端 `Browse packages` / `Occasion Albums` / `Tools` 内链全部可以跳转，最终 canonical URL 为 200，并且最终路径存在于对应网站 sitemap。
+- [ ] Header 桌面 / 移动端 `Browse packages` / `Occasion Albums` / `Tools` 内链全部可以跳转，最终 canonical URL 为 200；可索引路径必须存在于对应网站 sitemap，`noindex` 路径必须不在 sitemap。
 - [ ] 旧路径、重定向路径、重复 policy 路径不得出现在 sitemap，例如旧工具、旧 travel blog、`/cookie-policy`、`/privacy-policy`、`/terms-of-service`。
 - [ ] 修改 `data/platform-state.json`、关系表、分类/工具菜单或 SEO 目录后，必须同步 platform-state 文档和关系表，再清理 `.next/cache/platform-state-postgres.json`。
 
@@ -289,12 +289,12 @@ npm run smoke:storefront-sitemap-directory-coverage
 自动化脚本说明：
 
 - `smoke:storefront-navigation-data`：确认不同页面上的套餐/工具弹层数据一致，避免局部页面读到旧分类或旧工具。
-- `smoke:storefront-sitemap-directory-coverage`：从 `data/platform-state.json` 推导对应站点全部可索引目录，使用 Host header 拉取各站 `sitemap.xml`，检查缺失目录、跨站域名、旧路径残留。
+- `smoke:storefront-sitemap-directory-coverage`：从 `data/platform-state.json` 与 SEO directory 元数据推导对应站点全部可索引目录，使用 Host header 拉取各站 `sitemap.xml`，检查缺失目录、跨站域名、旧路径残留，以及 sitemap 中是否误收录 `noindex` 页面。
 - `smoke:storefront-public-routes`：本次 Best 页面回归默认覆盖两个 `.com` 店铺；`.eu` 店铺保持原有西语结构，由公开 SEO/语言 smoke 独立覆盖。
 
 当前 `.com` 店铺目录口径：
 
 | 店铺 | 套餐目录 | 工具目录 | 博客 / 公共目录 |
 | --- | --- | --- | --- |
-| MyDreamShoots | `/collections`、40 个 active 分类、28 个 active pack 的 canonical collection 路径 | `/tools`、28 个 canonical 公开工具路径 | `/blog`、全部可索引 article、基础公共页、policy 页 |
-| AIdreamcapes | `/collections`、27 个 active 分类、28 个 active pack 的 canonical collection 路径 | `/tools`、20 个 active tool menu item 路径 | `/blog`、全部可索引 article、基础公共页、policy 页 |
+| MyDreamShoots | `/collections`、当前 11 个可索引 canonical collection 路径 | `/tools`、当前 29 个可索引 canonical 工具路径 | `/blog`、全部可索引 article、基础公共页、policy 页 |
+| AIdreamcapes | `/collections`、当前 28 个可索引 canonical collection 路径 | `/tools`、当前 21 个可索引 canonical 工具路径 | `/blog`、全部可索引 article、基础公共页、policy 页 |

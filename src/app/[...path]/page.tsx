@@ -501,14 +501,14 @@ export default async function HostStorefrontCatchAllPage({
   if (slug === "/contact") redirect("/contact-us");
   if (slug === "/examples") redirect("/collections");
   if (slug === "/packages") redirect("/collections");
-  if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect("/privacy");
-  if (slug === "/terms-of-service" || slug === "/policies/terms") redirect("/terms");
-  if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect("/cookies");
+  if (slug === "/privacy-policy" || slug === "/policies/privacy" || slug === "/policies/privacy-policy") redirect("/privacy");
+  if (slug === "/terms-of-service" || slug === "/policies/terms" || slug === "/policies/terms-of-service") redirect("/terms");
+  if (slug === "/cookie-policy" || slug === "/policies/cookies" || slug === "/policies/cookie-policy") redirect("/cookies");
   if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect("/refunds");
   if (slug === "/content-policy" || slug === "/policies/content") redirect("/content");
-  if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect("/shipping");
-  if (slug === "/children-privacy-policy" || slug === "/childrens-privacy" || slug === "/policies/children-privacy") redirect("/children-privacy");
-  if (slug === "/state-privacy-rights" || slug === "/california-privacy" || slug === "/ccpa" || slug === "/policies/state-privacy") redirect("/state-privacy");
+  if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping" || slug === "/policies/delivery" || slug === "/policies/delivery-policy") redirect("/shipping");
+  if (slug === "/children-privacy-policy" || slug === "/childrens-privacy" || slug === "/policies/children-privacy" || slug === "/policies/children" || slug === "/policies/children-privacy-policy" || slug === "/policies/childrens-privacy") redirect("/children-privacy");
+  if (slug === "/state-privacy-rights" || slug === "/california-privacy" || slug === "/ccpa" || slug === "/policies/state-privacy" || slug === "/policies/state-privacy-rights" || slug === "/policies/california-privacy" || slug === "/policies/ccpa") redirect("/state-privacy");
   if (slug === "/tool") redirect("/tools");
   if (slug === "/app" || slug === "/dashboard") {
     const query = searchParams ? await searchParams : {};

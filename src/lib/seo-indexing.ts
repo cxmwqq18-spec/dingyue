@@ -779,6 +779,46 @@ function isBlockedPublicPath(path: string): boolean {
   return NON_PAGE_PATH_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
 }
 
+function isIndexableSeoDirectoryPath(site: Site, path: string): boolean {
+  const normalized = canonicalDirectoryPathForSite(site, path);
+  if (normalized.startsWith("/collections/")) return isExplicitSeoDirectoryContentForSite(site, "collection", normalized);
+  if (normalized.startsWith("/tools/")) {
+    if (isExplicitSeoDirectoryContentForSite(site, "tool", normalized)) return true;
+    return isDreamshootSite(site) && DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS.includes(normalized);
+  }
+  return true;
+}
+
+function pageSeoForPath(site: Site, path: string) {
+  const normalized = canonicalPublicPath(normalizePath(path));
+  return pagesForSite(site)
+    .map((page) => {
+      const pageSeo = site.themeSettings.publishedJson.seo?.pages?.[page.id] ?? site.themeSettings.publishedJson.seo?.pages?.[page.slug];
+      const jsonSeo = page.publishedJson.seo;
+      const canonicalPath = canonicalPublicPath(normalizePath(pageSeo?.canonicalPath ?? jsonSeo?.canonical ?? jsonSeo?.canonicalPath ?? page.slug));
+      return canonicalDirectoryPathForSite(site, canonicalPath) === canonicalDirectoryPathForSite(site, normalized)
+        ? { page, pageSeo, jsonSeo }
+        : undefined;
+    })
+    .find((item): item is NonNullable<typeof item> => Boolean(item));
+}
+
+function isSitemapIndexablePath(site: Site, path: string): boolean {
+  const normalized = canonicalDirectoryPathForSite(site, canonicalPublicPath(normalizePath(path)));
+  if (isBlockedPublicPath(normalized)) return false;
+
+  const policySeo = policySeoForSite(site, normalized);
+  if (policySeo?.index === false) return false;
+
+  const pageMatch = pageSeoForPath(site, normalized);
+  if (pageMatch) {
+    if (!isIndexablePage(pageMatch.page)) return false;
+    if (pageMatch.jsonSeo?.robots?.index === false || pageMatch.jsonSeo?.index === false || pageMatch.pageSeo?.index === false) return false;
+  }
+
+  return isIndexableSeoDirectoryPath(site, normalized);
+}
+
 function sitePathFromHref(site: Site, href: string): string {
   const raw = href.trim();
   if (!raw || raw.startsWith("#") || /^(javascript|mailto|sms|tel):/i.test(raw)) return "";
@@ -1079,7 +1119,12 @@ function getSitemapUrlsForSite(state: PlatformState, site: Site): string[] {
     if (isDreamshootSite(site) || isAidreamcapesSite(site)) paths.push(policySeo.canonicalPath);
   }
 
-  return Array.from(new Set(paths.map((path) => sitemapUrl(site, path)))).sort((a, b) => {
+  return Array.from(
+    new Set(paths
+      .map((path) => canonicalDirectoryPathForSite(site, canonicalPublicPath(normalizePath(path))))
+      .filter((path) => isSitemapIndexablePath(site, path))
+      .map((path) => sitemapUrl(site, path)))
+  ).sort((a, b) => {
     const origin = siteOrigin(site) || MYDREAMSHOOTS_ORIGIN;
     if (a === origin) return -1;
     if (b === origin) return 1;

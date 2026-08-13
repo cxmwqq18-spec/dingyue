@@ -534,10 +534,16 @@ function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJs
   const needsVideoThemes = Array.from(sectionTypes).some((type) => videoThemeSectionTypes.has(type));
   const packLimit = usesFullMediaGallery
     ? undefined
+    : slug === "/"
+    ? publicHomePackLimit
     : slug === "/collections" || sectionTypes.has("dreamshoot_generation_showcase") || sectionTypes.has("dreamshoot_media_gallery") || sectionTypes.has("dreamshoot_featured_pack")
     ? publicDirectoryPackLimit
     : publicHomePackLimit;
-  const videoThemeLimit = sectionTypes.has("dreamshoot_media_gallery") ? usesFullMediaGallery ? undefined : publicDirectoryPackLimit : 32;
+  const videoThemeLimit = sectionTypes.has("dreamshoot_media_gallery")
+    ? usesFullMediaGallery ? undefined : publicDirectoryPackLimit
+    : sectionTypes.has("dreamshoot_generation_showcase")
+    ? 8
+    : 32;
   const siteAiAppLimit = slug === "/tools" ? publicToolLimit : 48;
   return {
     creativePackCategories: needsCreativePacks ? trimCreativePackCategoriesForStorefront(renderData) : [],
@@ -563,6 +569,8 @@ function trimRenderDataForSection(renderData: SiteRenderData, pageJson: ThemePag
   const hasPricingTable = sectionType === "pricing_table" || sectionType === "dreamshoot_generation_showcase";
   const packLimit = usesFullMediaGallery
     ? undefined
+    : slug === "/"
+    ? publicHomePackLimit
     : slug === "/collections" || sectionType === "dreamshoot_generation_showcase" || sectionType === "dreamshoot_media_gallery" || sectionType === "dreamshoot_featured_pack"
     ? publicDirectoryPackLimit
     : publicHomePackLimit;
@@ -2496,6 +2504,8 @@ export async function renderStorefrontPage({
   if (shouldCompletePublicPacks && pageNeedsPublicCreativePacks && pageRenderData.creativePacks.length > 0) {
     const directoryPackLimit = currentPageUsesFullMediaGallery
       ? undefined
+      : slug === "/"
+      ? publicHomePackLimit
       : pageUsesDirectoryPackLimit
       ? publicDirectoryPackLimit
       : publicHomePackLimit;
@@ -2507,6 +2517,8 @@ export async function renderStorefrontPage({
   if (shouldCompletePublicPacks && pageNeedsPublicCreativePacks && !pageRenderData.creativePacks.length) {
     const directoryPackLimit = currentPageUsesFullMediaGallery
       ? undefined
+      : slug === "/"
+      ? publicHomePackLimit
       : pageUsesDirectoryPackLimit
       ? publicDirectoryPackLimit
       : publicHomePackLimit;
@@ -2523,6 +2535,8 @@ export async function renderStorefrontPage({
   if (pageNeedsPublicVideoThemes && !pageRenderData.videoThemes.length) {
     const videoThemeLimit = currentPageSectionTypes.has("dreamshoot_media_gallery")
       ? currentPageUsesFullMediaGallery ? undefined : publicDirectoryPackLimit
+      : currentPageSectionTypes.has("dreamshoot_generation_showcase")
+      ? 8
       : 32;
     pageRenderData = {
       ...pageRenderData,
@@ -2715,7 +2729,7 @@ export async function renderStorefrontSectionPayloads({
       const sectionFullMediaGallery = sectionUsesFullMediaGallery(section);
       const directoryPackLimit = sectionFullMediaGallery
         ? undefined
-        : slug === "/" && section.type !== "dreamshoot_generation_showcase" && section.type !== "dreamshoot_media_gallery" && section.type !== "dreamshoot_featured_pack"
+        : slug === "/"
         ? publicHomePackLimit
         : publicDirectoryPackLimit;
       pageRenderData = {
@@ -2866,7 +2880,7 @@ export async function renderStorefrontSectionPayload({
     const sectionFullMediaGallery = sectionUsesFullMediaGallery(section);
     const directoryPackLimit = sectionFullMediaGallery
       ? undefined
-      : slug === "/" && section.type !== "dreamshoot_generation_showcase" && section.type !== "dreamshoot_media_gallery" && section.type !== "dreamshoot_featured_pack"
+      : slug === "/"
       ? publicHomePackLimit
       : publicDirectoryPackLimit;
     pageRenderData = {

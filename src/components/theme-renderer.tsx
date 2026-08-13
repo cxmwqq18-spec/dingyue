@@ -3151,6 +3151,12 @@ function StorefrontImage({
   );
 }
 
+function decorativeImageBackgroundStyle(src: string): CSSProperties {
+  return {
+    backgroundImage: `url("${src.replace(/["\\]/g, "\\$&")}")`
+  };
+}
+
 function StorefrontSafeImage({
   src,
   alt,
@@ -3167,14 +3173,10 @@ function StorefrontSafeImage({
   const safeAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAltFromImageSrc(resolvedSrc) });
   return (
     <div className={`relative overflow-hidden ${className}`}>
-      <img
-        alt=""
+      <span
         aria-hidden="true"
-        className={`absolute inset-0 h-full w-full scale-105 object-cover opacity-[0.24] blur-lg ${backgroundClassName}`}
-        decoding="async"
-        fetchPriority="low"
-        loading="lazy"
-        src={resolvedSrc}
+        className={`absolute inset-0 h-full w-full scale-105 bg-cover bg-center opacity-[0.24] blur-lg ${backgroundClassName}`}
+        style={decorativeImageBackgroundStyle(resolvedSrc)}
       />
       <StorefrontImage
         alt={safeAlt}
@@ -8503,7 +8505,7 @@ function SectionView({
                   <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))}>
                     {authPrimaryUsesGoogle ? (
                       <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white shadow-[0_8px_22px_-14px_rgba(9,11,19,0.45)] ring-1 ring-black/[0.06]">
-                        <img className="h-5 w-5" src={googleIconPath} alt="" aria-hidden="true" />
+                        <img className="h-5 w-5" src={googleIconPath} alt="Google sign-in icon" />
                       </span>
                     ) : (
                       <Mail className="h-5 w-5" strokeWidth={1.8} />
@@ -9102,7 +9104,13 @@ function SectionView({
                       />
                     ) : (
                       <div className="relative grid aspect-[9/16] h-full place-items-center overflow-hidden bg-[#05060a] px-8 text-center">
-                        {item.videoPoster ? <img className="absolute inset-0 h-full w-full object-cover opacity-25" src={item.videoPoster} alt="" /> : null}
+                        {item.videoPoster ? (
+                          <span
+                            aria-hidden="true"
+                            className="absolute inset-0 bg-cover bg-center opacity-25"
+                            style={decorativeImageBackgroundStyle(item.videoPoster)}
+                          />
+                        ) : null}
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,rgba(255,255,255,0.16),transparent_34%),linear-gradient(180deg,rgba(8,9,13,0.18),rgba(8,9,13,0.88))]" />
                         <div className="relative">
                           <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-white/92 text-[#07080c] shadow-[0_20px_64px_-36px_rgba(255,255,255,0.72)]">
@@ -9147,7 +9155,13 @@ function SectionView({
                       />
                     ) : (
                       <div className="relative grid h-full place-items-center overflow-hidden bg-[#05060a] px-8 text-center">
-                        {legacyVideoPoster ? <img className="absolute inset-0 h-full w-full object-cover opacity-25" src={legacyVideoPoster} alt="" /> : null}
+                        {legacyVideoPoster ? (
+                          <span
+                            aria-hidden="true"
+                            className="absolute inset-0 bg-cover bg-center opacity-25"
+                            style={decorativeImageBackgroundStyle(legacyVideoPoster)}
+                          />
+                        ) : null}
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,rgba(255,255,255,0.16),transparent_34%),linear-gradient(180deg,rgba(8,9,13,0.18),rgba(8,9,13,0.88))]" />
                         <div className="relative">
                           <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-white/92 text-[#07080c] shadow-[0_20px_64px_-36px_rgba(255,255,255,0.72)]">

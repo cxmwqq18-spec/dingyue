@@ -259,8 +259,10 @@ for (const pathName of ["/policies/privacy", "/policies/terms", "/policies/refun
 }
 
 assert(
-  seoIndexing.includes("new Set(paths.map((path) => sitemapUrl(site, path)))"),
-  "sitemap URL expansion must dedupe canonical paths after static, dynamic, and required paths are merged"
+  seoIndexing.includes("new Set(paths") &&
+    seoIndexing.includes(".filter((path) => isSitemapIndexablePath(site, path))") &&
+    seoIndexing.includes(".map((path) => sitemapUrl(site, path))"),
+  "sitemap URL expansion must filter noindex paths and dedupe canonical paths after static, dynamic, and required paths are merged"
 );
 assert(
   seoIndexing.includes("getExplicitSeoDirectorySlugsForSite") &&

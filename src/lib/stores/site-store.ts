@@ -992,7 +992,7 @@ function publicRuntimeLimits(profile: ReturnType<typeof publicRuntimeNeeds>["pro
   return {
     products: profile === "pricing" ? 12 : 8,
     siteAiApps: profile === "tools" ? 96 : profile === "home" ? 24 : 48,
-    creativePacks: profile === "collection-detail" ? 12 : profile === "best-media" ? undefined : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? undefined : 24,
+    creativePacks: profile === "collection-detail" ? 12 : profile === "best-media" ? undefined : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? 12 : 24,
     mediaAssets: profile === "home" ? 12 : profile === "workspace" ? 40 : 0
   };
 }
@@ -1962,6 +1962,40 @@ export const getStorefrontPublicRuntimeStateByHost = cache(async (host: string |
     async () => {
       const lookup = await getPublicRuntimeSiteLookupByHost(host);
       return lookup ? loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug) : undefined;
+    },
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+  );
+});
+
+export const getStorefrontPublicPageMetadataStateByHost = cache(async (host: string | null | undefined, pageSlug?: string): Promise<PlatformState | undefined> => {
+  const key = cleanHost(host) || "empty";
+  const normalizedPageSlug = pageSlug ? (pageSlug.startsWith("/") ? pageSlug : `/${pageSlug}`) : "";
+  return siteReadCache.get(
+    `public-page-metadata-host:${key}:${normalizedPageSlug || "site"}`,
+    async () => {
+      const lookup = await getPublicRuntimeSiteLookupByHost(host);
+      if (!lookup) return undefined;
+      const pageWhere = normalizedPageSlug ? { slug: { in: Array.from(new Set([normalizedPageSlug, "/404"])) } } : undefined;
+      const select = {
+        ...publicMetadataSiteSelect,
+        pages: pageWhere
+          ? {
+              ...publicMetadataSiteSelect.pages,
+              where: pageWhere
+            }
+          : publicMetadataSiteSelect.pages
+      } satisfies Prisma.SiteSelect;
+      const site = "id" in lookup
+        ? await prisma.site.findUnique({ where: { id: lookup.id }, select })
+        : await prisma.site.findFirst({
+            where: { slug: { in: lookup.slugCandidates } },
+            orderBy: { updatedAt: "desc" },
+            select
+          });
+      if (!site) return undefined;
+      return emptyPlatformState({
+        sites: [toPublicSiteShell(site)]
+      });
     },
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
   );

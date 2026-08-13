@@ -13,7 +13,10 @@ const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamsho
 const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
 const PUBLIC_STOREFRONT_CACHE_CONTROL = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
+const PUBLIC_STOREFRONT_CDN_CACHE_CONTROL = "public, s-maxage=300, stale-while-revalidate=1800";
 const PRIVATE_STOREFRONT_CACHE_CONTROL = "private, no-store, max-age=0, must-revalidate";
+const STOREFRONT_GUARD_COOKIE_NAME = "k";
+const STOREFRONT_GUARD_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 12;
 const HOP_BY_HOP_HEADERS = new Set([
   "connection",
   "keep-alive",
@@ -109,22 +112,40 @@ const AIDREAMCAPES_TOOL_REDIRECTS: Record<string, string> = {
 };
 const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/about": "/about-us",
+  "/california-privacy": "/state-privacy",
+  "/ccpa": "/state-privacy",
+  "/children-privacy-policy": "/children-privacy",
+  "/childrens-privacy": "/children-privacy",
   "/contact": "/contact-us",
   "/content-policy": "/content",
   "/cookie-policy": "/cookies",
   "/delivery-policy": "/shipping",
   "/examples": "/collections",
   "/packages": "/collections",
+  "/policies/california-privacy": "/state-privacy",
+  "/policies/ccpa": "/state-privacy",
+  "/policies/children": "/children-privacy",
+  "/policies/children-privacy": "/children-privacy",
+  "/policies/children-privacy-policy": "/children-privacy",
+  "/policies/childrens-privacy": "/children-privacy",
   "/policies/content": "/content",
+  "/policies/cookie-policy": "/cookies",
   "/policies/cookies": "/cookies",
+  "/policies/delivery": "/shipping",
+  "/policies/delivery-policy": "/shipping",
   "/policies/privacy": "/privacy",
+  "/policies/privacy-policy": "/privacy",
   "/policies/refund": "/refunds",
   "/policies/refunds": "/refunds",
   "/policies/shipping": "/shipping",
+  "/policies/state-privacy": "/state-privacy",
+  "/policies/state-privacy-rights": "/state-privacy",
   "/policies/terms": "/terms",
+  "/policies/terms-of-service": "/terms",
   "/privacy-policy": "/privacy",
   "/refund-policy": "/refunds",
   "/shipping-policy": "/shipping",
+  "/state-privacy-rights": "/state-privacy",
   "/terms-of-service": "/terms",
   "/tool": "/tools"
 };
@@ -159,6 +180,39 @@ function envSwitch(value: string | undefined): boolean | undefined {
   if (["0", "false", "off", "no"].includes(normalized)) return false;
   if (["1", "true", "on", "yes"].includes(normalized)) return true;
   return undefined;
+}
+
+function twoDigit(value: number): string {
+  return String(value).padStart(2, "0");
+}
+
+function storefrontGuardCookieValue(now = new Date()): string {
+  const shanghaiDate = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+  return `${twoDigit(shanghaiDate.getUTCFullYear() % 100)}${twoDigit(shanghaiDate.getUTCMonth() + 1)}${twoDigit(shanghaiDate.getUTCDate())}`;
+}
+
+function shouldSetStorefrontGuardCookie(request: NextRequest): boolean {
+  const guardCookieEnabled = envSwitch(process.env.STOREFRONT_GUARD_COOKIE);
+  if (guardCookieEnabled !== true) return false;
+  if (request.method !== "GET" && request.method !== "HEAD") return false;
+  if (request.headers.get(REORDER_SKIP_HEADER) === "1") return false;
+  if (INTERNAL_PATH_RE.test(request.nextUrl.pathname) || BROWSER_ICON_PATH_RE.test(request.nextUrl.pathname)) return false;
+  if (isPrivateStorefrontHtmlRequest(request)) return false;
+
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  if (!TARGET_SITE_PATH_RE.test(request.nextUrl.pathname) && !TARGET_HOST_RE.test(host)) return false;
+
+  const accept = request.headers.get("accept") ?? "";
+  return !accept || accept.includes("text/html");
+}
+
+function withStorefrontGuardCookie(response: Response, request: NextRequest): Response {
+  if (!shouldSetStorefrontGuardCookie(request)) return response;
+  response.headers.append(
+    "set-cookie",
+    `${STOREFRONT_GUARD_COOKIE_NAME}=${storefrontGuardCookieValue()}; Path=/; Max-Age=${STOREFRONT_GUARD_COOKIE_MAX_AGE_SECONDS}; SameSite=Lax`
+  );
+  return response;
 }
 
 function isEnglishPublicStorefrontHtmlRequest(request: NextRequest): boolean {
@@ -391,6 +445,18 @@ function storefrontHtmlCacheControl(request: NextRequest, upstreamHeaders: Heade
   return PUBLIC_STOREFRONT_CACHE_CONTROL;
 }
 
+function applyStorefrontHtmlCacheHeaders(headers: Headers, request: NextRequest, upstreamHeaders: Headers) {
+  const cacheControl = storefrontHtmlCacheControl(request, upstreamHeaders);
+  headers.set("cache-control", cacheControl);
+  if (!/(?:no-store|private)/i.test(cacheControl)) {
+    headers.set("cdn-cache-control", PUBLIC_STOREFRONT_CDN_CACHE_CONTROL);
+    headers.set("cloudflare-cdn-cache-control", PUBLIC_STOREFRONT_CDN_CACHE_CONTROL);
+  } else {
+    headers.delete("cdn-cache-control");
+    headers.delete("cloudflare-cdn-cache-control");
+  }
+}
+
 function withStorefrontLocale(html: string, request: NextRequest): string {
   if (!isSpanishXbyRequest(request)) return html;
   const withSpanishLang = html.replace(/<html\b([^>]*)>/i, (tag, attrs: string) => {
@@ -494,6 +560,84 @@ function withInlineAidreamcapesLogo(html: string, request: NextRequest): string 
   return html.replace(AIDREAMCAPES_LOGO_IMG_RE, AIDREAMCAPES_INLINE_LOGO);
 }
 
+function shouldInlineAidreamcapesLogo(request: NextRequest): boolean {
+  if (isSpanishXbyRequest(request)) return false;
+  return siteIconForRequest(request)?.png === AIDREAMCAPES_ICON;
+}
+
+function rewriteStorefrontHtmlHead(html: string, request: NextRequest, shouldReorder: boolean): string {
+  const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
+  return withStorefrontLocale(
+    withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)),
+    request
+  );
+}
+
+function rewriteStorefrontHtmlFull(html: string, request: NextRequest, shouldReorder: boolean): string {
+  const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
+  return withStorefrontLocale(
+    withInlineAidreamcapesLogo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request),
+    request
+  );
+}
+
+function rewriteStorefrontHtmlStream(body: ReadableStream<Uint8Array>, request: NextRequest, shouldReorder: boolean): ReadableStream<Uint8Array> {
+  return new ReadableStream<Uint8Array>({
+    async start(controller) {
+      const reader = body.getReader();
+      const decoder = new TextDecoder();
+      const encoder = new TextEncoder();
+      let buffer = "";
+      let emittedHead = false;
+
+      try {
+        while (!emittedHead) {
+          const { done, value } = await reader.read();
+          if (value) buffer += decoder.decode(value, { stream: !done });
+
+          const headCloseMatch = buffer.match(/<\/head>/i);
+          if (headCloseMatch?.index !== undefined) {
+            const headEnd = headCloseMatch.index + headCloseMatch[0].length;
+            const headPrefix = buffer.slice(0, headEnd);
+            const bodyRemainder = buffer.slice(headEnd);
+            controller.enqueue(encoder.encode(rewriteStorefrontHtmlHead(headPrefix, request, shouldReorder)));
+            if (bodyRemainder) controller.enqueue(encoder.encode(bodyRemainder));
+            buffer = "";
+            emittedHead = true;
+            break;
+          }
+
+          if (done) {
+            const tail = decoder.decode();
+            const rewritten = rewriteStorefrontHtmlFull(buffer + tail, request, shouldReorder);
+            controller.enqueue(encoder.encode(rewritten));
+            controller.close();
+            return;
+          }
+        }
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (value) {
+            const chunk = decoder.decode(value, { stream: !done });
+            if (chunk) controller.enqueue(encoder.encode(chunk));
+          }
+          if (done) {
+            const tail = decoder.decode();
+            if (tail) controller.enqueue(encoder.encode(tail));
+            controller.close();
+            return;
+          }
+        }
+      } catch (error) {
+        controller.error(error);
+      } finally {
+        reader.releaseLock();
+      }
+    }
+  });
+}
+
 function nextWithPathname(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-pathname", requestHeaders.get("x-pathname") || request.nextUrl.pathname || "/");
@@ -542,6 +686,10 @@ function isGrownstrideRequest(request: NextRequest): boolean {
 function applyGrownstrideNoindex(response: Response, request: NextRequest): Response {
   if (isGrownstrideRequest(request)) response.headers.set("X-Robots-Tag", "noindex, nofollow");
   return response;
+}
+
+function finalizeStorefrontResponse(response: Response, request: NextRequest): Response {
+  return applyGrownstrideNoindex(withStorefrontGuardCookie(response, request), request);
 }
 
 function sameServerStorefrontUrl(request: NextRequest): URL {
@@ -596,8 +744,8 @@ export async function middleware(request: NextRequest) {
   if (skipInternalRewrite) return applyGrownstrideNoindex(nextWithPathname(request), request);
 
   const redirectResponse = grownstrideLegacyHostRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
-  if (redirectResponse) return applyGrownstrideNoindex(redirectResponse, request);
-  if (!shouldRewriteStorefrontHtml(request)) return applyGrownstrideNoindex(nextWithPathname(request), request);
+  if (redirectResponse) return finalizeStorefrontResponse(redirectResponse, request);
+  if (!shouldRewriteStorefrontHtml(request)) return finalizeStorefrontResponse(nextWithPathname(request), request);
 
   const upstreamHeaders = new Headers(request.headers);
   upstreamHeaders.set(REORDER_SKIP_HEADER, "1");
@@ -626,20 +774,14 @@ export async function middleware(request: NextRequest) {
   const contentType = upstreamResponse.headers.get("content-type") ?? "";
   if (upstreamResponse.status >= 300 && upstreamResponse.status < 400) {
     const location = upstreamResponse.headers.get("location");
-    if (location) return applyGrownstrideNoindex(NextResponse.redirect(new URL(location, request.url), upstreamResponse.status), request);
+    if (location) return finalizeStorefrontResponse(NextResponse.redirect(new URL(location, request.url), upstreamResponse.status), request);
   }
   if (!upstreamResponse.ok || !contentType.includes("text/html")) return applyGrownstrideNoindex(upstreamResponse, request);
 
-  const html = await upstreamResponse.text();
   const shouldReorder = shouldReorderStorefrontHead(request);
-  const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
-  const rewrittenHtml = withStorefrontLocale(
-    withInlineAidreamcapesLogo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request),
-    request
-  );
   const headers = new Headers(upstreamResponse.headers);
   headers.delete("content-length");
-  headers.set("cache-control", storefrontHtmlCacheControl(request, upstreamResponse.headers));
+  applyStorefrontHtmlCacheHeaders(headers, request, upstreamResponse.headers);
   if (shouldReorder) headers.set("x-storefront-head-seo-reordered", "1");
   if (isSpanishXbyRequest(request)) {
     headers.set("x-storefront-locale", "es");
@@ -647,7 +789,16 @@ export async function middleware(request: NextRequest) {
   }
   if (isGrownstrideRequest(request)) headers.set("X-Robots-Tag", "noindex, nofollow");
 
-  return applyGrownstrideNoindex(new Response(rewrittenHtml, {
+  if (upstreamResponse.body && !shouldInlineAidreamcapesLogo(request)) {
+    return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlStream(upstreamResponse.body, request, shouldReorder), {
+      status: upstreamResponse.status,
+      statusText: upstreamResponse.statusText,
+      headers
+    }), request);
+  }
+
+  const html = await upstreamResponse.text();
+  return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlFull(html, request, shouldReorder), {
     status: upstreamResponse.status,
     statusText: upstreamResponse.statusText,
     headers

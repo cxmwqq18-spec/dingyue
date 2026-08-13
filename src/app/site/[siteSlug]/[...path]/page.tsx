@@ -210,14 +210,14 @@ export default async function SiteCatchAllPage({
   if (slug === "/how-it-works" && /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSlug)) redirect(routePath("/workflow"));
   if (slug === "/examples") redirect(routePath("/collections"));
   if (slug === "/packages") redirect(routePath("/collections"));
-  if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect(routePath("/privacy"));
-  if (slug === "/terms-of-service" || slug === "/policies/terms") redirect(routePath("/terms"));
-  if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect(routePath("/cookies"));
+  if (slug === "/privacy-policy" || slug === "/policies/privacy" || slug === "/policies/privacy-policy") redirect(routePath("/privacy"));
+  if (slug === "/terms-of-service" || slug === "/policies/terms" || slug === "/policies/terms-of-service") redirect(routePath("/terms"));
+  if (slug === "/cookie-policy" || slug === "/policies/cookies" || slug === "/policies/cookie-policy") redirect(routePath("/cookies"));
   if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect(routePath("/refunds"));
   if (slug === "/content-policy" || slug === "/policies/content") redirect(routePath("/content"));
-  if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect(routePath("/shipping"));
-  if (slug === "/children-privacy-policy" || slug === "/childrens-privacy" || slug === "/policies/children-privacy") redirect(routePath("/children-privacy"));
-  if (slug === "/state-privacy-rights" || slug === "/california-privacy" || slug === "/ccpa" || slug === "/policies/state-privacy") redirect(routePath("/state-privacy"));
+  if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping" || slug === "/policies/delivery" || slug === "/policies/delivery-policy") redirect(routePath("/shipping"));
+  if (slug === "/children-privacy-policy" || slug === "/childrens-privacy" || slug === "/policies/children-privacy" || slug === "/policies/children" || slug === "/policies/children-privacy-policy" || slug === "/policies/childrens-privacy") redirect(routePath("/children-privacy"));
+  if (slug === "/state-privacy-rights" || slug === "/california-privacy" || slug === "/ccpa" || slug === "/policies/state-privacy" || slug === "/policies/state-privacy-rights" || slug === "/policies/california-privacy" || slug === "/policies/ccpa") redirect(routePath("/state-privacy"));
   const aidreamcapesBlogRedirect = aidreamcapesLegacyBlogRedirectPath(publicSlug, slug);
   if (aidreamcapesBlogRedirect && aidreamcapesBlogRedirect !== slug) redirect(routePath(aidreamcapesBlogRedirect));
   if (slug === "/checkout") {
