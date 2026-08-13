@@ -12129,7 +12129,8 @@ function SectionView({
     }
     const videoRailCards = videoCards.map((card) => ({ ...card, railKey: `${card.id}-video` }));
     const trustedLogoBlocks = sectionBlocks(section, "logo");
-    const showTrustedLogoIntro = settingBool(section, "showTrustedLogoIntro", false) && trustedLogoBlocks.length > 0;
+    const hideTrustedLogoIntroOnHome = renderContext.pagePath === "/" && !isSpanishXbySite(site) && (mydreamProfileSite || aidreamcapes);
+    const showTrustedLogoIntro = !hideTrustedLogoIntroOnHome && settingBool(section, "showTrustedLogoIntro", false) && trustedLogoBlocks.length > 0;
     const trustedLogoSplitIndex = trustedLogoBlocks.length > 1
       ? Math.max(1, Math.min(trustedLogoBlocks.length - 1, Math.round(numberSetting(section, "trustedLogoSplitIndex", 15))))
       : trustedLogoBlocks.length;

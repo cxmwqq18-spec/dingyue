@@ -445,7 +445,7 @@ const homeSections: ThemePageJson["sections"] = {
     "dreamshoot_generation_showcase",
     {
       anchor: "generated-showcase",
-      showTrustedLogoIntro: true,
+      showTrustedLogoIntro: false,
       trustedLogoTitle: "Most Trusted Creators. | myDreamshoots",
       aboutTitle: "What is myDreamshoots?",
       aboutBody: mydreamshootsAboutBody,
@@ -1875,7 +1875,7 @@ function aidreamcapesWorkflowStepsSection(): SectionInstance {
 function aidreamcapesGenerationShowcaseSection(): SectionInstance {
   return section("dreamshoot_generation_showcase", {
     anchor: "generated-showcase",
-    showTrustedLogoIntro: true,
+    showTrustedLogoIntro: false,
     trustedLogoTitle: "Trusted by Aidreamcapes creators worldwide",
     aboutTitle: "What is Aidreamcapes?",
     aboutBody: aidreamcapesAboutBody,

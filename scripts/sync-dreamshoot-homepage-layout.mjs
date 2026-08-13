@@ -188,7 +188,7 @@ const stores = [
     },
     generationSettings: {
       anchor: "generated-showcase",
-      showTrustedLogoIntro: true,
+      showTrustedLogoIntro: false,
       trustedLogoTitle: "Most Trusted Creators. | myDreamshoots",
       aboutTitle: "What is myDreamshoots?",
       aboutBody: mydreamshootsAboutBody,
@@ -370,7 +370,7 @@ const stores = [
     },
     generationSettings: {
       anchor: "generated-showcase",
-      showTrustedLogoIntro: true,
+      showTrustedLogoIntro: false,
       trustedLogoTitle: "Trusted by Aidreamcapes creators worldwide",
       aboutTitle: "What is Aidreamcapes?",
       aboutBody: "Aidreamcapes is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.",
@@ -597,7 +597,7 @@ function applyAidreamcapesArchitectureOnly(pageJson, store, featuredSections = {
   const aboutTitle = settingText({ settings: generationSettings }, "aboutTitle");
   const aboutBody = settingText({ settings: generationSettings }, "aboutBody");
   if (trustedBlocks.length && aboutTitle && aboutBody) {
-    generationSettings.showTrustedLogoIntro = true;
+    generationSettings.showTrustedLogoIntro = generationSourceSettings.showTrustedLogoIntro !== false;
     generationSettings.trustedLogoTitle = settingText({ settings: generationSettings }, "trustedLogoTitle") || settingText(store.partnerStrip, "title");
     generationSettings.trustedLogoSplitIndex = Math.max(
       1,
