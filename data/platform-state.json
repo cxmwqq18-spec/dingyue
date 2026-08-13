@@ -14119,264 +14119,273 @@
                 "type": "dreamshoot_generation_showcase",
                 "blocks": [
                   {
-                    "id": "trusted_logo_wliano",
+                    "id": "trusted_logo_ikraddy",
                     "type": "logo",
                     "settings": {
-                      "name": "Wliano",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/39__wliano__wliano.com.png"
+                      "name": "iKraddy",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/01__ikraddy.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_hmaxio",
+                    "id": "trusted_logo_beer",
                     "type": "logo",
                     "settings": {
-                      "name": "Hmaxio",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/13__hmaxio__hmaxio.co.za.png"
+                      "name": "Beer",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/02__beer.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_invorae",
+                    "id": "trusted_logo_fumei",
                     "type": "logo",
                     "settings": {
-                      "name": "Invorae",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/14__invorae__invorae.com.png"
+                      "name": "FUMEI",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/03__fumei.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_bolvian",
+                    "id": "trusted_logo_mrlin",
                     "type": "logo",
                     "settings": {
-                      "name": "Bolvian",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/03__bolvian__bolvian.co.za.png"
+                      "name": "MRLIN",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/04__mrlin.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_ravinr",
+                    "id": "trusted_logo_popo",
                     "type": "logo",
                     "settings": {
-                      "name": "Ravinr",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/24__ravinr__ravinr.co.za.png"
+                      "name": "POPO",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/05__popo.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_luntra",
+                    "id": "trusted_logo_mr-sdm",
                     "type": "logo",
                     "settings": {
-                      "name": "Luntra",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/19__luntra__luntra.co.za.png"
+                      "name": "MR.SDM",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/06__mr-sdm.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_yaveno",
+                    "id": "trusted_logo_ezzy",
                     "type": "logo",
                     "settings": {
-                      "name": "Yaveno",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/44__yaveno__yaveno.co.za.png"
+                      "name": "EZZY",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/07__ezzy.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_vkovel",
+                    "id": "trusted_logo_xraz",
                     "type": "logo",
                     "settings": {
-                      "name": "Vkovel",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/37__vkovel__vkovel.com.webp"
+                      "name": "XRAZ",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/08__xraz.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_orvinoe",
+                    "id": "trusted_logo_giantdc",
                     "type": "logo",
                     "settings": {
-                      "name": "Orvinoe",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/21__orvinoe__orvinoe.com.png"
+                      "name": "Giantdc",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/09__giantdc.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_elvorae",
+                    "id": "trusted_logo_smart-check",
                     "type": "logo",
                     "settings": {
-                      "name": "Elvorae",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/06__elvorae__elvorae.co.za.png"
+                      "name": "SMART Check",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/10__smart-check.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_trovic",
+                    "id": "trusted_logo_jo",
                     "type": "logo",
                     "settings": {
-                      "name": "Trovic",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/31__trovic__trovic.co.za.png"
+                      "name": "JO",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/11__jo.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_aroveno",
+                    "id": "trusted_logo_mashtacore",
                     "type": "logo",
                     "settings": {
-                      "name": "Aroveno",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/02__aroveno__aroveno.co.za.png"
+                      "name": "Mashtacore",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/12__mashtacore.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_ulvanx",
+                    "id": "trusted_logo_fb",
                     "type": "logo",
                     "settings": {
-                      "name": "Ulvanx",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/33__ulvanx__ulvanx.com.png"
+                      "name": "FB",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/13__fb.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_kernivo",
+                    "id": "trusted_logo_shurong-lim",
                     "type": "logo",
                     "settings": {
-                      "name": "Kernivo",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/17__kernivo__kernivo.com.png"
+                      "name": "SHURONG LIM",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/14__shurong-lim.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_bpickr",
+                    "id": "trusted_logo_coffee-swap",
                     "type": "logo",
                     "settings": {
-                      "name": "Bpickr",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/04__bpickr__bpickr.co.za.png"
+                      "name": "COFFEE SWAP",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/15__coffee-swap.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_jurvina",
+                    "id": "trusted_logo_heart-beat",
                     "type": "logo",
                     "settings": {
-                      "name": "Jurvina",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/15__jurvina__jurvina.com.png"
+                      "name": "HEART BEAT",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/16__heart-beat.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_zervino",
+                    "id": "trusted_logo_chinawuzhougem",
                     "type": "logo",
                     "settings": {
-                      "name": "Zervino",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/45__zervino__zervino.co.za.png"
+                      "name": "CHINAWUZHOUGEM",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/17__chinawuzhougem.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_harlivo",
+                    "id": "trusted_logo_tosaco",
                     "type": "logo",
                     "settings": {
-                      "name": "Harlivo",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/12__harlivo__harlivo.com.png"
+                      "name": "TOSACO",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/18__tosaco.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_qervon",
+                    "id": "trusted_logo_monkey",
                     "type": "logo",
                     "settings": {
-                      "name": "Qervon",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/22__qervon__qervon.com.png"
+                      "name": "Monkey",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/19__monkey.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_zuvric",
+                    "id": "trusted_logo_yu-kidsrooms",
                     "type": "logo",
                     "settings": {
-                      "name": "Zuvric",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/46__zuvric__zuvric.com.png"
+                      "name": "YU kidsrooms",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/20__yu-kidsrooms.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_urmino",
+                    "id": "trusted_logo_yx",
                     "type": "logo",
                     "settings": {
-                      "name": "Urmino",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/34__urmino__urmino.com.png"
+                      "name": "YX",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/21__yx.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_wlivon",
+                    "id": "trusted_logo_laboom",
                     "type": "logo",
                     "settings": {
-                      "name": "Wlivon",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/41__wlivon__wlivon.com.png"
+                      "name": "LABOOM",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/22__laboom.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_rpfira",
+                    "id": "trusted_logo_moonpizza",
                     "type": "logo",
                     "settings": {
-                      "name": "Rpfira",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/25__rpfira__rpfira.com.png"
+                      "name": "MOONPIZZA",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/23__moonpizza.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_klnova",
+                    "id": "trusted_logo_observer",
                     "type": "logo",
                     "settings": {
-                      "name": "Klnova",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/42__klnova__klnova.com.png"
+                      "name": "OBSERVER",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/24__observer.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_qmarto",
+                    "id": "trusted_logo_anteater",
                     "type": "logo",
                     "settings": {
-                      "name": "Qmarto",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/47__qmarto__xn--qmarto-220j.co.za.png"
+                      "name": "Anteater",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/25__anteater.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_folvian",
+                    "id": "trusted_logo_prevence",
                     "type": "logo",
                     "settings": {
-                      "name": "Folvian",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/09__folvian__folvian.com.webp"
+                      "name": "Prevence",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/26__prevence.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_gmarto",
+                    "id": "trusted_logo_bison",
                     "type": "logo",
                     "settings": {
-                      "name": "Gmarto",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/10__gmarto__gmarto.co.za.png"
+                      "name": "BISON",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/27__bison.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_tuzemo",
+                    "id": "trusted_logo_hana-pet",
                     "type": "logo",
                     "settings": {
-                      "name": "Tuzemo",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/32__tuzemo__tuzemo.com.png"
+                      "name": "HANA PET",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/28__hana-pet.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_ervanoe",
+                    "id": "trusted_logo_oficina",
                     "type": "logo",
                     "settings": {
-                      "name": "Ervanoe",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/07__ervanoe__ervanoe.com.webp"
+                      "name": "Oficina",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/29__oficina.webp",
+                      "badge": "Creator proof"
+                    }
+                  },
+                  {
+                    "id": "trusted_logo_panda-ber",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Panda BER",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/30__panda-ber.webp",
+                      "badge": "Creator proof"
                     }
                   }
                 ],
@@ -15098,264 +15107,273 @@
                 "type": "dreamshoot_generation_showcase",
                 "blocks": [
                   {
-                    "id": "trusted_logo_wliano",
+                    "id": "trusted_logo_ikraddy",
                     "type": "logo",
                     "settings": {
-                      "name": "Wliano",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/39__wliano__wliano.com.png"
+                      "name": "iKraddy",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/01__ikraddy.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_hmaxio",
+                    "id": "trusted_logo_beer",
                     "type": "logo",
                     "settings": {
-                      "name": "Hmaxio",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/13__hmaxio__hmaxio.co.za.png"
+                      "name": "Beer",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/02__beer.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_invorae",
+                    "id": "trusted_logo_fumei",
                     "type": "logo",
                     "settings": {
-                      "name": "Invorae",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/14__invorae__invorae.com.png"
+                      "name": "FUMEI",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/03__fumei.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_bolvian",
+                    "id": "trusted_logo_mrlin",
                     "type": "logo",
                     "settings": {
-                      "name": "Bolvian",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/03__bolvian__bolvian.co.za.png"
+                      "name": "MRLIN",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/04__mrlin.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_ravinr",
+                    "id": "trusted_logo_popo",
                     "type": "logo",
                     "settings": {
-                      "name": "Ravinr",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/24__ravinr__ravinr.co.za.png"
+                      "name": "POPO",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/05__popo.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_luntra",
+                    "id": "trusted_logo_mr-sdm",
                     "type": "logo",
                     "settings": {
-                      "name": "Luntra",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/19__luntra__luntra.co.za.png"
+                      "name": "MR.SDM",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/06__mr-sdm.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_yaveno",
+                    "id": "trusted_logo_ezzy",
                     "type": "logo",
                     "settings": {
-                      "name": "Yaveno",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/44__yaveno__yaveno.co.za.png"
+                      "name": "EZZY",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/07__ezzy.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_vkovel",
+                    "id": "trusted_logo_xraz",
                     "type": "logo",
                     "settings": {
-                      "name": "Vkovel",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/37__vkovel__vkovel.com.webp"
+                      "name": "XRAZ",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/08__xraz.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_orvinoe",
+                    "id": "trusted_logo_giantdc",
                     "type": "logo",
                     "settings": {
-                      "name": "Orvinoe",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/21__orvinoe__orvinoe.com.png"
+                      "name": "Giantdc",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/09__giantdc.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_elvorae",
+                    "id": "trusted_logo_smart-check",
                     "type": "logo",
                     "settings": {
-                      "name": "Elvorae",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/06__elvorae__elvorae.co.za.png"
+                      "name": "SMART Check",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/10__smart-check.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_trovic",
+                    "id": "trusted_logo_jo",
                     "type": "logo",
                     "settings": {
-                      "name": "Trovic",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/31__trovic__trovic.co.za.png"
+                      "name": "JO",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/11__jo.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_aroveno",
+                    "id": "trusted_logo_mashtacore",
                     "type": "logo",
                     "settings": {
-                      "name": "Aroveno",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/02__aroveno__aroveno.co.za.png"
+                      "name": "Mashtacore",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/12__mashtacore.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_ulvanx",
+                    "id": "trusted_logo_fb",
                     "type": "logo",
                     "settings": {
-                      "name": "Ulvanx",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/33__ulvanx__ulvanx.com.png"
+                      "name": "FB",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/13__fb.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_kernivo",
+                    "id": "trusted_logo_shurong-lim",
                     "type": "logo",
                     "settings": {
-                      "name": "Kernivo",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/17__kernivo__kernivo.com.png"
+                      "name": "SHURONG LIM",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/14__shurong-lim.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_bpickr",
+                    "id": "trusted_logo_coffee-swap",
                     "type": "logo",
                     "settings": {
-                      "name": "Bpickr",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/04__bpickr__bpickr.co.za.png"
+                      "name": "COFFEE SWAP",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/15__coffee-swap.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_jurvina",
+                    "id": "trusted_logo_heart-beat",
                     "type": "logo",
                     "settings": {
-                      "name": "Jurvina",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/15__jurvina__jurvina.com.png"
+                      "name": "HEART BEAT",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/16__heart-beat.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_zervino",
+                    "id": "trusted_logo_chinawuzhougem",
                     "type": "logo",
                     "settings": {
-                      "name": "Zervino",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/45__zervino__zervino.co.za.png"
+                      "name": "CHINAWUZHOUGEM",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/17__chinawuzhougem.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_harlivo",
+                    "id": "trusted_logo_tosaco",
                     "type": "logo",
                     "settings": {
-                      "name": "Harlivo",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/12__harlivo__harlivo.com.png"
+                      "name": "TOSACO",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/18__tosaco.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_qervon",
+                    "id": "trusted_logo_monkey",
                     "type": "logo",
                     "settings": {
-                      "name": "Qervon",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/22__qervon__qervon.com.png"
+                      "name": "Monkey",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/19__monkey.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_zuvric",
+                    "id": "trusted_logo_yu-kidsrooms",
                     "type": "logo",
                     "settings": {
-                      "name": "Zuvric",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/46__zuvric__zuvric.com.png"
+                      "name": "YU kidsrooms",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/20__yu-kidsrooms.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_urmino",
+                    "id": "trusted_logo_yx",
                     "type": "logo",
                     "settings": {
-                      "name": "Urmino",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/34__urmino__urmino.com.png"
+                      "name": "YX",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/21__yx.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_wlivon",
+                    "id": "trusted_logo_laboom",
                     "type": "logo",
                     "settings": {
-                      "name": "Wlivon",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/41__wlivon__wlivon.com.png"
+                      "name": "LABOOM",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/22__laboom.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_rpfira",
+                    "id": "trusted_logo_moonpizza",
                     "type": "logo",
                     "settings": {
-                      "name": "Rpfira",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/25__rpfira__rpfira.com.png"
+                      "name": "MOONPIZZA",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/23__moonpizza.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_klnova",
+                    "id": "trusted_logo_observer",
                     "type": "logo",
                     "settings": {
-                      "name": "Klnova",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/42__klnova__klnova.com.png"
+                      "name": "OBSERVER",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/24__observer.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_qmarto",
+                    "id": "trusted_logo_anteater",
                     "type": "logo",
                     "settings": {
-                      "name": "Qmarto",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/47__qmarto__xn--qmarto-220j.co.za.png"
+                      "name": "Anteater",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/25__anteater.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_folvian",
+                    "id": "trusted_logo_prevence",
                     "type": "logo",
                     "settings": {
-                      "name": "Folvian",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/09__folvian__folvian.com.webp"
+                      "name": "Prevence",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/26__prevence.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_gmarto",
+                    "id": "trusted_logo_bison",
                     "type": "logo",
                     "settings": {
-                      "name": "Gmarto",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/10__gmarto__gmarto.co.za.png"
+                      "name": "BISON",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/27__bison.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_tuzemo",
+                    "id": "trusted_logo_hana-pet",
                     "type": "logo",
                     "settings": {
-                      "name": "Tuzemo",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/32__tuzemo__tuzemo.com.png"
+                      "name": "HANA PET",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/28__hana-pet.webp",
+                      "badge": "Creator proof"
                     }
                   },
                   {
-                    "id": "trusted_logo_ervanoe",
+                    "id": "trusted_logo_oficina",
                     "type": "logo",
                     "settings": {
-                      "name": "Ervanoe",
-                      "badge": "Creator proof",
-                      "imageUrl": "/assets/dreamshoot/generated/trusted-logos/07__ervanoe__ervanoe.com.webp"
+                      "name": "Oficina",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/29__oficina.webp",
+                      "badge": "Creator proof"
+                    }
+                  },
+                  {
+                    "id": "trusted_logo_panda-ber",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Panda BER",
+                      "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/30__panda-ber.webp",
+                      "badge": "Creator proof"
                     }
                   }
                 ],
@@ -255592,264 +255610,273 @@
               },
               "blocks": [
                 {
-                  "id": "trusted_logo_wliano",
+                  "id": "trusted_logo_ikraddy",
                   "type": "logo",
                   "settings": {
-                    "name": "Wliano",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/39__wliano__wliano.com.png"
+                    "name": "iKraddy",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/01__ikraddy.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_hmaxio",
+                  "id": "trusted_logo_beer",
                   "type": "logo",
                   "settings": {
-                    "name": "Hmaxio",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/13__hmaxio__hmaxio.co.za.png"
+                    "name": "Beer",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/02__beer.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_invorae",
+                  "id": "trusted_logo_fumei",
                   "type": "logo",
                   "settings": {
-                    "name": "Invorae",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/14__invorae__invorae.com.png"
+                    "name": "FUMEI",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/03__fumei.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_bolvian",
+                  "id": "trusted_logo_mrlin",
                   "type": "logo",
                   "settings": {
-                    "name": "Bolvian",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/03__bolvian__bolvian.co.za.png"
+                    "name": "MRLIN",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/04__mrlin.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_ravinr",
+                  "id": "trusted_logo_popo",
                   "type": "logo",
                   "settings": {
-                    "name": "Ravinr",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/24__ravinr__ravinr.co.za.png"
+                    "name": "POPO",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/05__popo.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_luntra",
+                  "id": "trusted_logo_mr-sdm",
                   "type": "logo",
                   "settings": {
-                    "name": "Luntra",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/19__luntra__luntra.co.za.png"
+                    "name": "MR.SDM",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/06__mr-sdm.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_yaveno",
+                  "id": "trusted_logo_ezzy",
                   "type": "logo",
                   "settings": {
-                    "name": "Yaveno",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/44__yaveno__yaveno.co.za.png"
+                    "name": "EZZY",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/07__ezzy.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_vkovel",
+                  "id": "trusted_logo_xraz",
                   "type": "logo",
                   "settings": {
-                    "name": "Vkovel",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/37__vkovel__vkovel.com.webp"
+                    "name": "XRAZ",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/08__xraz.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_orvinoe",
+                  "id": "trusted_logo_giantdc",
                   "type": "logo",
                   "settings": {
-                    "name": "Orvinoe",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/21__orvinoe__orvinoe.com.png"
+                    "name": "Giantdc",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/09__giantdc.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_elvorae",
+                  "id": "trusted_logo_smart-check",
                   "type": "logo",
                   "settings": {
-                    "name": "Elvorae",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/06__elvorae__elvorae.co.za.png"
+                    "name": "SMART Check",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/10__smart-check.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_trovic",
+                  "id": "trusted_logo_jo",
                   "type": "logo",
                   "settings": {
-                    "name": "Trovic",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/31__trovic__trovic.co.za.png"
+                    "name": "JO",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/11__jo.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_aroveno",
+                  "id": "trusted_logo_mashtacore",
                   "type": "logo",
                   "settings": {
-                    "name": "Aroveno",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/02__aroveno__aroveno.co.za.png"
+                    "name": "Mashtacore",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/12__mashtacore.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_ulvanx",
+                  "id": "trusted_logo_fb",
                   "type": "logo",
                   "settings": {
-                    "name": "Ulvanx",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/33__ulvanx__ulvanx.com.png"
+                    "name": "FB",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/13__fb.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_kernivo",
+                  "id": "trusted_logo_shurong-lim",
                   "type": "logo",
                   "settings": {
-                    "name": "Kernivo",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/17__kernivo__kernivo.com.png"
+                    "name": "SHURONG LIM",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/14__shurong-lim.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_bpickr",
+                  "id": "trusted_logo_coffee-swap",
                   "type": "logo",
                   "settings": {
-                    "name": "Bpickr",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/04__bpickr__bpickr.co.za.png"
+                    "name": "COFFEE SWAP",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/15__coffee-swap.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_jurvina",
+                  "id": "trusted_logo_heart-beat",
                   "type": "logo",
                   "settings": {
-                    "name": "Jurvina",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/15__jurvina__jurvina.com.png"
+                    "name": "HEART BEAT",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/16__heart-beat.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_zervino",
+                  "id": "trusted_logo_chinawuzhougem",
                   "type": "logo",
                   "settings": {
-                    "name": "Zervino",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/45__zervino__zervino.co.za.png"
+                    "name": "CHINAWUZHOUGEM",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/17__chinawuzhougem.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_harlivo",
+                  "id": "trusted_logo_tosaco",
                   "type": "logo",
                   "settings": {
-                    "name": "Harlivo",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/12__harlivo__harlivo.com.png"
+                    "name": "TOSACO",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/18__tosaco.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_qervon",
+                  "id": "trusted_logo_monkey",
                   "type": "logo",
                   "settings": {
-                    "name": "Qervon",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/22__qervon__qervon.com.png"
+                    "name": "Monkey",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/19__monkey.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_zuvric",
+                  "id": "trusted_logo_yu-kidsrooms",
                   "type": "logo",
                   "settings": {
-                    "name": "Zuvric",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/46__zuvric__zuvric.com.png"
+                    "name": "YU kidsrooms",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/20__yu-kidsrooms.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_urmino",
+                  "id": "trusted_logo_yx",
                   "type": "logo",
                   "settings": {
-                    "name": "Urmino",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/34__urmino__urmino.com.png"
+                    "name": "YX",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/21__yx.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_wlivon",
+                  "id": "trusted_logo_laboom",
                   "type": "logo",
                   "settings": {
-                    "name": "Wlivon",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/41__wlivon__wlivon.com.png"
+                    "name": "LABOOM",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/22__laboom.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_rpfira",
+                  "id": "trusted_logo_moonpizza",
                   "type": "logo",
                   "settings": {
-                    "name": "Rpfira",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/25__rpfira__rpfira.com.png"
+                    "name": "MOONPIZZA",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/23__moonpizza.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_klnova",
+                  "id": "trusted_logo_observer",
                   "type": "logo",
                   "settings": {
-                    "name": "Klnova",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/42__klnova__klnova.com.png"
+                    "name": "OBSERVER",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/24__observer.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_qmarto",
+                  "id": "trusted_logo_anteater",
                   "type": "logo",
                   "settings": {
-                    "name": "Qmarto",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/47__qmarto__xn--qmarto-220j.co.za.png"
+                    "name": "Anteater",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/25__anteater.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_folvian",
+                  "id": "trusted_logo_prevence",
                   "type": "logo",
                   "settings": {
-                    "name": "Folvian",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/09__folvian__folvian.com.webp"
+                    "name": "Prevence",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/26__prevence.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_gmarto",
+                  "id": "trusted_logo_bison",
                   "type": "logo",
                   "settings": {
-                    "name": "Gmarto",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/10__gmarto__gmarto.co.za.png"
+                    "name": "BISON",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/27__bison.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_tuzemo",
+                  "id": "trusted_logo_hana-pet",
                   "type": "logo",
                   "settings": {
-                    "name": "Tuzemo",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/32__tuzemo__tuzemo.com.png"
+                    "name": "HANA PET",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/28__hana-pet.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_ervanoe",
+                  "id": "trusted_logo_oficina",
                   "type": "logo",
                   "settings": {
-                    "name": "Ervanoe",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/07__ervanoe__ervanoe.com.webp"
+                    "name": "Oficina",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/29__oficina.webp",
+                    "badge": "Creator proof"
+                  }
+                },
+                {
+                  "id": "trusted_logo_panda-ber",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Panda BER",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/30__panda-ber.webp",
+                    "badge": "Creator proof"
                   }
                 }
               ]
@@ -262434,264 +262461,273 @@
               },
               "blocks": [
                 {
-                  "id": "trusted_logo_wliano",
+                  "id": "trusted_logo_ikraddy",
                   "type": "logo",
                   "settings": {
-                    "name": "Wliano",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/39__wliano__wliano.com.png"
+                    "name": "iKraddy",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/01__ikraddy.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_hmaxio",
+                  "id": "trusted_logo_beer",
                   "type": "logo",
                   "settings": {
-                    "name": "Hmaxio",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/13__hmaxio__hmaxio.co.za.png"
+                    "name": "Beer",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/02__beer.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_invorae",
+                  "id": "trusted_logo_fumei",
                   "type": "logo",
                   "settings": {
-                    "name": "Invorae",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/14__invorae__invorae.com.png"
+                    "name": "FUMEI",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/03__fumei.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_bolvian",
+                  "id": "trusted_logo_mrlin",
                   "type": "logo",
                   "settings": {
-                    "name": "Bolvian",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/03__bolvian__bolvian.co.za.png"
+                    "name": "MRLIN",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/04__mrlin.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_ravinr",
+                  "id": "trusted_logo_popo",
                   "type": "logo",
                   "settings": {
-                    "name": "Ravinr",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/24__ravinr__ravinr.co.za.png"
+                    "name": "POPO",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/05__popo.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_luntra",
+                  "id": "trusted_logo_mr-sdm",
                   "type": "logo",
                   "settings": {
-                    "name": "Luntra",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/19__luntra__luntra.co.za.png"
+                    "name": "MR.SDM",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/06__mr-sdm.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_yaveno",
+                  "id": "trusted_logo_ezzy",
                   "type": "logo",
                   "settings": {
-                    "name": "Yaveno",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/44__yaveno__yaveno.co.za.png"
+                    "name": "EZZY",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/07__ezzy.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_vkovel",
+                  "id": "trusted_logo_xraz",
                   "type": "logo",
                   "settings": {
-                    "name": "Vkovel",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/37__vkovel__vkovel.com.webp"
+                    "name": "XRAZ",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/08__xraz.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_orvinoe",
+                  "id": "trusted_logo_giantdc",
                   "type": "logo",
                   "settings": {
-                    "name": "Orvinoe",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/21__orvinoe__orvinoe.com.png"
+                    "name": "Giantdc",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/09__giantdc.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_elvorae",
+                  "id": "trusted_logo_smart-check",
                   "type": "logo",
                   "settings": {
-                    "name": "Elvorae",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/06__elvorae__elvorae.co.za.png"
+                    "name": "SMART Check",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/10__smart-check.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_trovic",
+                  "id": "trusted_logo_jo",
                   "type": "logo",
                   "settings": {
-                    "name": "Trovic",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/31__trovic__trovic.co.za.png"
+                    "name": "JO",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/11__jo.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_aroveno",
+                  "id": "trusted_logo_mashtacore",
                   "type": "logo",
                   "settings": {
-                    "name": "Aroveno",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/02__aroveno__aroveno.co.za.png"
+                    "name": "Mashtacore",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/12__mashtacore.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_ulvanx",
+                  "id": "trusted_logo_fb",
                   "type": "logo",
                   "settings": {
-                    "name": "Ulvanx",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/33__ulvanx__ulvanx.com.png"
+                    "name": "FB",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/13__fb.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_kernivo",
+                  "id": "trusted_logo_shurong-lim",
                   "type": "logo",
                   "settings": {
-                    "name": "Kernivo",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/17__kernivo__kernivo.com.png"
+                    "name": "SHURONG LIM",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/14__shurong-lim.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_bpickr",
+                  "id": "trusted_logo_coffee-swap",
                   "type": "logo",
                   "settings": {
-                    "name": "Bpickr",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/04__bpickr__bpickr.co.za.png"
+                    "name": "COFFEE SWAP",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/15__coffee-swap.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_jurvina",
+                  "id": "trusted_logo_heart-beat",
                   "type": "logo",
                   "settings": {
-                    "name": "Jurvina",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/15__jurvina__jurvina.com.png"
+                    "name": "HEART BEAT",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/16__heart-beat.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_zervino",
+                  "id": "trusted_logo_chinawuzhougem",
                   "type": "logo",
                   "settings": {
-                    "name": "Zervino",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/45__zervino__zervino.co.za.png"
+                    "name": "CHINAWUZHOUGEM",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/17__chinawuzhougem.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_harlivo",
+                  "id": "trusted_logo_tosaco",
                   "type": "logo",
                   "settings": {
-                    "name": "Harlivo",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/12__harlivo__harlivo.com.png"
+                    "name": "TOSACO",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/18__tosaco.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_qervon",
+                  "id": "trusted_logo_monkey",
                   "type": "logo",
                   "settings": {
-                    "name": "Qervon",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/22__qervon__qervon.com.png"
+                    "name": "Monkey",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/19__monkey.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_zuvric",
+                  "id": "trusted_logo_yu-kidsrooms",
                   "type": "logo",
                   "settings": {
-                    "name": "Zuvric",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/46__zuvric__zuvric.com.png"
+                    "name": "YU kidsrooms",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/20__yu-kidsrooms.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_urmino",
+                  "id": "trusted_logo_yx",
                   "type": "logo",
                   "settings": {
-                    "name": "Urmino",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/34__urmino__urmino.com.png"
+                    "name": "YX",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/21__yx.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_wlivon",
+                  "id": "trusted_logo_laboom",
                   "type": "logo",
                   "settings": {
-                    "name": "Wlivon",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/41__wlivon__wlivon.com.png"
+                    "name": "LABOOM",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/22__laboom.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_rpfira",
+                  "id": "trusted_logo_moonpizza",
                   "type": "logo",
                   "settings": {
-                    "name": "Rpfira",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/25__rpfira__rpfira.com.png"
+                    "name": "MOONPIZZA",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/23__moonpizza.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_klnova",
+                  "id": "trusted_logo_observer",
                   "type": "logo",
                   "settings": {
-                    "name": "Klnova",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/42__klnova__klnova.com.png"
+                    "name": "OBSERVER",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/24__observer.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_qmarto",
+                  "id": "trusted_logo_anteater",
                   "type": "logo",
                   "settings": {
-                    "name": "Qmarto",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/47__qmarto__xn--qmarto-220j.co.za.png"
+                    "name": "Anteater",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/25__anteater.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_folvian",
+                  "id": "trusted_logo_prevence",
                   "type": "logo",
                   "settings": {
-                    "name": "Folvian",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/09__folvian__folvian.com.webp"
+                    "name": "Prevence",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/26__prevence.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_gmarto",
+                  "id": "trusted_logo_bison",
                   "type": "logo",
                   "settings": {
-                    "name": "Gmarto",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/10__gmarto__gmarto.co.za.png"
+                    "name": "BISON",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/27__bison.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_tuzemo",
+                  "id": "trusted_logo_hana-pet",
                   "type": "logo",
                   "settings": {
-                    "name": "Tuzemo",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/32__tuzemo__tuzemo.com.png"
+                    "name": "HANA PET",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/28__hana-pet.webp",
+                    "badge": "Creator proof"
                   }
                 },
                 {
-                  "id": "trusted_logo_ervanoe",
+                  "id": "trusted_logo_oficina",
                   "type": "logo",
                   "settings": {
-                    "name": "Ervanoe",
-                    "badge": "Creator proof",
-                    "imageUrl": "/assets/dreamshoot/generated/trusted-logos/07__ervanoe__ervanoe.com.webp"
+                    "name": "Oficina",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/29__oficina.webp",
+                    "badge": "Creator proof"
+                  }
+                },
+                {
+                  "id": "trusted_logo_panda-ber",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Panda BER",
+                    "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/30__panda-ber.webp",
+                    "badge": "Creator proof"
                   }
                 }
               ]
@@ -354983,264 +355019,273 @@
                   "type": "dreamshoot_generation_showcase",
                   "blocks": [
                     {
-                      "id": "trusted_logo_wliano",
+                      "id": "trusted_logo_ikraddy",
                       "type": "logo",
                       "settings": {
-                        "name": "Wliano",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/39__wliano__wliano.com.png"
+                        "name": "iKraddy",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/01__ikraddy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_hmaxio",
+                      "id": "trusted_logo_beer",
                       "type": "logo",
                       "settings": {
-                        "name": "Hmaxio",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/13__hmaxio__hmaxio.co.za.png"
+                        "name": "Beer",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/02__beer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_invorae",
+                      "id": "trusted_logo_fumei",
                       "type": "logo",
                       "settings": {
-                        "name": "Invorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/14__invorae__invorae.com.png"
+                        "name": "FUMEI",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/03__fumei.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bolvian",
+                      "id": "trusted_logo_mrlin",
                       "type": "logo",
                       "settings": {
-                        "name": "Bolvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/03__bolvian__bolvian.co.za.png"
+                        "name": "MRLIN",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/04__mrlin.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ravinr",
+                      "id": "trusted_logo_popo",
                       "type": "logo",
                       "settings": {
-                        "name": "Ravinr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/24__ravinr__ravinr.co.za.png"
+                        "name": "POPO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/05__popo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_luntra",
+                      "id": "trusted_logo_mr-sdm",
                       "type": "logo",
                       "settings": {
-                        "name": "Luntra",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/19__luntra__luntra.co.za.png"
+                        "name": "MR.SDM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/06__mr-sdm.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_yaveno",
+                      "id": "trusted_logo_ezzy",
                       "type": "logo",
                       "settings": {
-                        "name": "Yaveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/44__yaveno__yaveno.co.za.png"
+                        "name": "EZZY",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/07__ezzy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_vkovel",
+                      "id": "trusted_logo_xraz",
                       "type": "logo",
                       "settings": {
-                        "name": "Vkovel",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/37__vkovel__vkovel.com.webp"
+                        "name": "XRAZ",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/08__xraz.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_orvinoe",
+                      "id": "trusted_logo_giantdc",
                       "type": "logo",
                       "settings": {
-                        "name": "Orvinoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/21__orvinoe__orvinoe.com.png"
+                        "name": "Giantdc",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/09__giantdc.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_elvorae",
+                      "id": "trusted_logo_smart-check",
                       "type": "logo",
                       "settings": {
-                        "name": "Elvorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/06__elvorae__elvorae.co.za.png"
+                        "name": "SMART Check",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/10__smart-check.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_trovic",
+                      "id": "trusted_logo_jo",
                       "type": "logo",
                       "settings": {
-                        "name": "Trovic",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/31__trovic__trovic.co.za.png"
+                        "name": "JO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/11__jo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_aroveno",
+                      "id": "trusted_logo_mashtacore",
                       "type": "logo",
                       "settings": {
-                        "name": "Aroveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/02__aroveno__aroveno.co.za.png"
+                        "name": "Mashtacore",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/12__mashtacore.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ulvanx",
+                      "id": "trusted_logo_fb",
                       "type": "logo",
                       "settings": {
-                        "name": "Ulvanx",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/33__ulvanx__ulvanx.com.png"
+                        "name": "FB",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/13__fb.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_kernivo",
+                      "id": "trusted_logo_shurong-lim",
                       "type": "logo",
                       "settings": {
-                        "name": "Kernivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/17__kernivo__kernivo.com.png"
+                        "name": "SHURONG LIM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/14__shurong-lim.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bpickr",
+                      "id": "trusted_logo_coffee-swap",
                       "type": "logo",
                       "settings": {
-                        "name": "Bpickr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/04__bpickr__bpickr.co.za.png"
+                        "name": "COFFEE SWAP",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/15__coffee-swap.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_jurvina",
+                      "id": "trusted_logo_heart-beat",
                       "type": "logo",
                       "settings": {
-                        "name": "Jurvina",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/15__jurvina__jurvina.com.png"
+                        "name": "HEART BEAT",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/16__heart-beat.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zervino",
+                      "id": "trusted_logo_chinawuzhougem",
                       "type": "logo",
                       "settings": {
-                        "name": "Zervino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/45__zervino__zervino.co.za.png"
+                        "name": "CHINAWUZHOUGEM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/17__chinawuzhougem.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_harlivo",
+                      "id": "trusted_logo_tosaco",
                       "type": "logo",
                       "settings": {
-                        "name": "Harlivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/12__harlivo__harlivo.com.png"
+                        "name": "TOSACO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/18__tosaco.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qervon",
+                      "id": "trusted_logo_monkey",
                       "type": "logo",
                       "settings": {
-                        "name": "Qervon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/22__qervon__qervon.com.png"
+                        "name": "Monkey",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/19__monkey.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zuvric",
+                      "id": "trusted_logo_yu-kidsrooms",
                       "type": "logo",
                       "settings": {
-                        "name": "Zuvric",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/46__zuvric__zuvric.com.png"
+                        "name": "YU kidsrooms",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/20__yu-kidsrooms.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_urmino",
+                      "id": "trusted_logo_yx",
                       "type": "logo",
                       "settings": {
-                        "name": "Urmino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/34__urmino__urmino.com.png"
+                        "name": "YX",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/21__yx.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_wlivon",
+                      "id": "trusted_logo_laboom",
                       "type": "logo",
                       "settings": {
-                        "name": "Wlivon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/41__wlivon__wlivon.com.png"
+                        "name": "LABOOM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/22__laboom.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_rpfira",
+                      "id": "trusted_logo_moonpizza",
                       "type": "logo",
                       "settings": {
-                        "name": "Rpfira",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/25__rpfira__rpfira.com.png"
+                        "name": "MOONPIZZA",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/23__moonpizza.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_klnova",
+                      "id": "trusted_logo_observer",
                       "type": "logo",
                       "settings": {
-                        "name": "Klnova",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/42__klnova__klnova.com.png"
+                        "name": "OBSERVER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/24__observer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qmarto",
+                      "id": "trusted_logo_anteater",
                       "type": "logo",
                       "settings": {
-                        "name": "Qmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/47__qmarto__xn--qmarto-220j.co.za.png"
+                        "name": "Anteater",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/25__anteater.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_folvian",
+                      "id": "trusted_logo_prevence",
                       "type": "logo",
                       "settings": {
-                        "name": "Folvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/09__folvian__folvian.com.webp"
+                        "name": "Prevence",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/26__prevence.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_gmarto",
+                      "id": "trusted_logo_bison",
                       "type": "logo",
                       "settings": {
-                        "name": "Gmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/10__gmarto__gmarto.co.za.png"
+                        "name": "BISON",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/27__bison.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_tuzemo",
+                      "id": "trusted_logo_hana-pet",
                       "type": "logo",
                       "settings": {
-                        "name": "Tuzemo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/32__tuzemo__tuzemo.com.png"
+                        "name": "HANA PET",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/28__hana-pet.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ervanoe",
+                      "id": "trusted_logo_oficina",
                       "type": "logo",
                       "settings": {
-                        "name": "Ervanoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/07__ervanoe__ervanoe.com.webp"
+                        "name": "Oficina",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/29__oficina.webp",
+                        "badge": "Creator proof"
+                      }
+                    },
+                    {
+                      "id": "trusted_logo_panda-ber",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Panda BER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/30__panda-ber.webp",
+                        "badge": "Creator proof"
                       }
                     }
                   ],
@@ -355962,264 +356007,273 @@
                   "type": "dreamshoot_generation_showcase",
                   "blocks": [
                     {
-                      "id": "trusted_logo_wliano",
+                      "id": "trusted_logo_ikraddy",
                       "type": "logo",
                       "settings": {
-                        "name": "Wliano",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/39__wliano__wliano.com.png"
+                        "name": "iKraddy",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/01__ikraddy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_hmaxio",
+                      "id": "trusted_logo_beer",
                       "type": "logo",
                       "settings": {
-                        "name": "Hmaxio",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/13__hmaxio__hmaxio.co.za.png"
+                        "name": "Beer",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/02__beer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_invorae",
+                      "id": "trusted_logo_fumei",
                       "type": "logo",
                       "settings": {
-                        "name": "Invorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/14__invorae__invorae.com.png"
+                        "name": "FUMEI",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/03__fumei.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bolvian",
+                      "id": "trusted_logo_mrlin",
                       "type": "logo",
                       "settings": {
-                        "name": "Bolvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/03__bolvian__bolvian.co.za.png"
+                        "name": "MRLIN",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/04__mrlin.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ravinr",
+                      "id": "trusted_logo_popo",
                       "type": "logo",
                       "settings": {
-                        "name": "Ravinr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/24__ravinr__ravinr.co.za.png"
+                        "name": "POPO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/05__popo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_luntra",
+                      "id": "trusted_logo_mr-sdm",
                       "type": "logo",
                       "settings": {
-                        "name": "Luntra",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/19__luntra__luntra.co.za.png"
+                        "name": "MR.SDM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/06__mr-sdm.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_yaveno",
+                      "id": "trusted_logo_ezzy",
                       "type": "logo",
                       "settings": {
-                        "name": "Yaveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/44__yaveno__yaveno.co.za.png"
+                        "name": "EZZY",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/07__ezzy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_vkovel",
+                      "id": "trusted_logo_xraz",
                       "type": "logo",
                       "settings": {
-                        "name": "Vkovel",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/37__vkovel__vkovel.com.webp"
+                        "name": "XRAZ",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/08__xraz.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_orvinoe",
+                      "id": "trusted_logo_giantdc",
                       "type": "logo",
                       "settings": {
-                        "name": "Orvinoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/21__orvinoe__orvinoe.com.png"
+                        "name": "Giantdc",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/09__giantdc.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_elvorae",
+                      "id": "trusted_logo_smart-check",
                       "type": "logo",
                       "settings": {
-                        "name": "Elvorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/06__elvorae__elvorae.co.za.png"
+                        "name": "SMART Check",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/10__smart-check.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_trovic",
+                      "id": "trusted_logo_jo",
                       "type": "logo",
                       "settings": {
-                        "name": "Trovic",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/31__trovic__trovic.co.za.png"
+                        "name": "JO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/11__jo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_aroveno",
+                      "id": "trusted_logo_mashtacore",
                       "type": "logo",
                       "settings": {
-                        "name": "Aroveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/02__aroveno__aroveno.co.za.png"
+                        "name": "Mashtacore",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/12__mashtacore.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ulvanx",
+                      "id": "trusted_logo_fb",
                       "type": "logo",
                       "settings": {
-                        "name": "Ulvanx",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/33__ulvanx__ulvanx.com.png"
+                        "name": "FB",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/13__fb.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_kernivo",
+                      "id": "trusted_logo_shurong-lim",
                       "type": "logo",
                       "settings": {
-                        "name": "Kernivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/17__kernivo__kernivo.com.png"
+                        "name": "SHURONG LIM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/14__shurong-lim.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bpickr",
+                      "id": "trusted_logo_coffee-swap",
                       "type": "logo",
                       "settings": {
-                        "name": "Bpickr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/04__bpickr__bpickr.co.za.png"
+                        "name": "COFFEE SWAP",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/15__coffee-swap.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_jurvina",
+                      "id": "trusted_logo_heart-beat",
                       "type": "logo",
                       "settings": {
-                        "name": "Jurvina",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/15__jurvina__jurvina.com.png"
+                        "name": "HEART BEAT",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/16__heart-beat.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zervino",
+                      "id": "trusted_logo_chinawuzhougem",
                       "type": "logo",
                       "settings": {
-                        "name": "Zervino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/45__zervino__zervino.co.za.png"
+                        "name": "CHINAWUZHOUGEM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/17__chinawuzhougem.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_harlivo",
+                      "id": "trusted_logo_tosaco",
                       "type": "logo",
                       "settings": {
-                        "name": "Harlivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/12__harlivo__harlivo.com.png"
+                        "name": "TOSACO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/18__tosaco.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qervon",
+                      "id": "trusted_logo_monkey",
                       "type": "logo",
                       "settings": {
-                        "name": "Qervon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/22__qervon__qervon.com.png"
+                        "name": "Monkey",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/19__monkey.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zuvric",
+                      "id": "trusted_logo_yu-kidsrooms",
                       "type": "logo",
                       "settings": {
-                        "name": "Zuvric",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/46__zuvric__zuvric.com.png"
+                        "name": "YU kidsrooms",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/20__yu-kidsrooms.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_urmino",
+                      "id": "trusted_logo_yx",
                       "type": "logo",
                       "settings": {
-                        "name": "Urmino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/34__urmino__urmino.com.png"
+                        "name": "YX",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/21__yx.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_wlivon",
+                      "id": "trusted_logo_laboom",
                       "type": "logo",
                       "settings": {
-                        "name": "Wlivon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/41__wlivon__wlivon.com.png"
+                        "name": "LABOOM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/22__laboom.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_rpfira",
+                      "id": "trusted_logo_moonpizza",
                       "type": "logo",
                       "settings": {
-                        "name": "Rpfira",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/25__rpfira__rpfira.com.png"
+                        "name": "MOONPIZZA",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/23__moonpizza.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_klnova",
+                      "id": "trusted_logo_observer",
                       "type": "logo",
                       "settings": {
-                        "name": "Klnova",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/42__klnova__klnova.com.png"
+                        "name": "OBSERVER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/24__observer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qmarto",
+                      "id": "trusted_logo_anteater",
                       "type": "logo",
                       "settings": {
-                        "name": "Qmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/47__qmarto__xn--qmarto-220j.co.za.png"
+                        "name": "Anteater",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/25__anteater.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_folvian",
+                      "id": "trusted_logo_prevence",
                       "type": "logo",
                       "settings": {
-                        "name": "Folvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/09__folvian__folvian.com.webp"
+                        "name": "Prevence",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/26__prevence.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_gmarto",
+                      "id": "trusted_logo_bison",
                       "type": "logo",
                       "settings": {
-                        "name": "Gmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/10__gmarto__gmarto.co.za.png"
+                        "name": "BISON",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/27__bison.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_tuzemo",
+                      "id": "trusted_logo_hana-pet",
                       "type": "logo",
                       "settings": {
-                        "name": "Tuzemo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/32__tuzemo__tuzemo.com.png"
+                        "name": "HANA PET",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/28__hana-pet.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ervanoe",
+                      "id": "trusted_logo_oficina",
                       "type": "logo",
                       "settings": {
-                        "name": "Ervanoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/07__ervanoe__ervanoe.com.webp"
+                        "name": "Oficina",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/29__oficina.webp",
+                        "badge": "Creator proof"
+                      }
+                    },
+                    {
+                      "id": "trusted_logo_panda-ber",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Panda BER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/30__panda-ber.webp",
+                        "badge": "Creator proof"
                       }
                     }
                   ],
@@ -369763,264 +369817,273 @@
                   },
                   "blocks": [
                     {
-                      "id": "trusted_logo_wliano",
+                      "id": "trusted_logo_ikraddy",
                       "type": "logo",
                       "settings": {
-                        "name": "Wliano",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/39__wliano__wliano.com.png"
+                        "name": "iKraddy",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/01__ikraddy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_hmaxio",
+                      "id": "trusted_logo_beer",
                       "type": "logo",
                       "settings": {
-                        "name": "Hmaxio",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/13__hmaxio__hmaxio.co.za.png"
+                        "name": "Beer",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/02__beer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_invorae",
+                      "id": "trusted_logo_fumei",
                       "type": "logo",
                       "settings": {
-                        "name": "Invorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/14__invorae__invorae.com.png"
+                        "name": "FUMEI",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/03__fumei.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bolvian",
+                      "id": "trusted_logo_mrlin",
                       "type": "logo",
                       "settings": {
-                        "name": "Bolvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/03__bolvian__bolvian.co.za.png"
+                        "name": "MRLIN",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/04__mrlin.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ravinr",
+                      "id": "trusted_logo_popo",
                       "type": "logo",
                       "settings": {
-                        "name": "Ravinr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/24__ravinr__ravinr.co.za.png"
+                        "name": "POPO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/05__popo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_luntra",
+                      "id": "trusted_logo_mr-sdm",
                       "type": "logo",
                       "settings": {
-                        "name": "Luntra",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/19__luntra__luntra.co.za.png"
+                        "name": "MR.SDM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/06__mr-sdm.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_yaveno",
+                      "id": "trusted_logo_ezzy",
                       "type": "logo",
                       "settings": {
-                        "name": "Yaveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/44__yaveno__yaveno.co.za.png"
+                        "name": "EZZY",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/07__ezzy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_vkovel",
+                      "id": "trusted_logo_xraz",
                       "type": "logo",
                       "settings": {
-                        "name": "Vkovel",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/37__vkovel__vkovel.com.webp"
+                        "name": "XRAZ",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/08__xraz.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_orvinoe",
+                      "id": "trusted_logo_giantdc",
                       "type": "logo",
                       "settings": {
-                        "name": "Orvinoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/21__orvinoe__orvinoe.com.png"
+                        "name": "Giantdc",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/09__giantdc.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_elvorae",
+                      "id": "trusted_logo_smart-check",
                       "type": "logo",
                       "settings": {
-                        "name": "Elvorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/06__elvorae__elvorae.co.za.png"
+                        "name": "SMART Check",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/10__smart-check.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_trovic",
+                      "id": "trusted_logo_jo",
                       "type": "logo",
                       "settings": {
-                        "name": "Trovic",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/31__trovic__trovic.co.za.png"
+                        "name": "JO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/11__jo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_aroveno",
+                      "id": "trusted_logo_mashtacore",
                       "type": "logo",
                       "settings": {
-                        "name": "Aroveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/02__aroveno__aroveno.co.za.png"
+                        "name": "Mashtacore",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/12__mashtacore.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ulvanx",
+                      "id": "trusted_logo_fb",
                       "type": "logo",
                       "settings": {
-                        "name": "Ulvanx",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/33__ulvanx__ulvanx.com.png"
+                        "name": "FB",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/13__fb.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_kernivo",
+                      "id": "trusted_logo_shurong-lim",
                       "type": "logo",
                       "settings": {
-                        "name": "Kernivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/17__kernivo__kernivo.com.png"
+                        "name": "SHURONG LIM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/14__shurong-lim.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bpickr",
+                      "id": "trusted_logo_coffee-swap",
                       "type": "logo",
                       "settings": {
-                        "name": "Bpickr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/04__bpickr__bpickr.co.za.png"
+                        "name": "COFFEE SWAP",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/15__coffee-swap.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_jurvina",
+                      "id": "trusted_logo_heart-beat",
                       "type": "logo",
                       "settings": {
-                        "name": "Jurvina",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/15__jurvina__jurvina.com.png"
+                        "name": "HEART BEAT",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/16__heart-beat.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zervino",
+                      "id": "trusted_logo_chinawuzhougem",
                       "type": "logo",
                       "settings": {
-                        "name": "Zervino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/45__zervino__zervino.co.za.png"
+                        "name": "CHINAWUZHOUGEM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/17__chinawuzhougem.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_harlivo",
+                      "id": "trusted_logo_tosaco",
                       "type": "logo",
                       "settings": {
-                        "name": "Harlivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/12__harlivo__harlivo.com.png"
+                        "name": "TOSACO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/18__tosaco.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qervon",
+                      "id": "trusted_logo_monkey",
                       "type": "logo",
                       "settings": {
-                        "name": "Qervon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/22__qervon__qervon.com.png"
+                        "name": "Monkey",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/19__monkey.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zuvric",
+                      "id": "trusted_logo_yu-kidsrooms",
                       "type": "logo",
                       "settings": {
-                        "name": "Zuvric",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/46__zuvric__zuvric.com.png"
+                        "name": "YU kidsrooms",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/20__yu-kidsrooms.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_urmino",
+                      "id": "trusted_logo_yx",
                       "type": "logo",
                       "settings": {
-                        "name": "Urmino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/34__urmino__urmino.com.png"
+                        "name": "YX",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/21__yx.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_wlivon",
+                      "id": "trusted_logo_laboom",
                       "type": "logo",
                       "settings": {
-                        "name": "Wlivon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/41__wlivon__wlivon.com.png"
+                        "name": "LABOOM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/22__laboom.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_rpfira",
+                      "id": "trusted_logo_moonpizza",
                       "type": "logo",
                       "settings": {
-                        "name": "Rpfira",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/25__rpfira__rpfira.com.png"
+                        "name": "MOONPIZZA",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/23__moonpizza.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_klnova",
+                      "id": "trusted_logo_observer",
                       "type": "logo",
                       "settings": {
-                        "name": "Klnova",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/42__klnova__klnova.com.png"
+                        "name": "OBSERVER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/24__observer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qmarto",
+                      "id": "trusted_logo_anteater",
                       "type": "logo",
                       "settings": {
-                        "name": "Qmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/47__qmarto__xn--qmarto-220j.co.za.png"
+                        "name": "Anteater",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/25__anteater.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_folvian",
+                      "id": "trusted_logo_prevence",
                       "type": "logo",
                       "settings": {
-                        "name": "Folvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/09__folvian__folvian.com.webp"
+                        "name": "Prevence",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/26__prevence.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_gmarto",
+                      "id": "trusted_logo_bison",
                       "type": "logo",
                       "settings": {
-                        "name": "Gmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/10__gmarto__gmarto.co.za.png"
+                        "name": "BISON",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/27__bison.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_tuzemo",
+                      "id": "trusted_logo_hana-pet",
                       "type": "logo",
                       "settings": {
-                        "name": "Tuzemo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/32__tuzemo__tuzemo.com.png"
+                        "name": "HANA PET",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/28__hana-pet.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ervanoe",
+                      "id": "trusted_logo_oficina",
                       "type": "logo",
                       "settings": {
-                        "name": "Ervanoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/07__ervanoe__ervanoe.com.webp"
+                        "name": "Oficina",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/29__oficina.webp",
+                        "badge": "Creator proof"
+                      }
+                    },
+                    {
+                      "id": "trusted_logo_panda-ber",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Panda BER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/30__panda-ber.webp",
+                        "badge": "Creator proof"
                       }
                     }
                   ]
@@ -377301,7 +377364,7 @@
       },
       "pageCount": 62,
       "sectionCount": 163,
-      "snapshotBytes": 1244997,
+      "snapshotBytes": 1245213,
       "publishedBy": "admin_dreamshoot_owner",
       "publishedAt": "2026-06-18T00:00:00.000Z"
     },
@@ -377802,264 +377865,273 @@
                   "type": "dreamshoot_generation_showcase",
                   "blocks": [
                     {
-                      "id": "trusted_logo_wliano",
+                      "id": "trusted_logo_ikraddy",
                       "type": "logo",
                       "settings": {
-                        "name": "Wliano",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/39__wliano__wliano.com.png"
+                        "name": "iKraddy",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/01__ikraddy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_hmaxio",
+                      "id": "trusted_logo_beer",
                       "type": "logo",
                       "settings": {
-                        "name": "Hmaxio",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/13__hmaxio__hmaxio.co.za.png"
+                        "name": "Beer",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/02__beer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_invorae",
+                      "id": "trusted_logo_fumei",
                       "type": "logo",
                       "settings": {
-                        "name": "Invorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/14__invorae__invorae.com.png"
+                        "name": "FUMEI",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/03__fumei.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bolvian",
+                      "id": "trusted_logo_mrlin",
                       "type": "logo",
                       "settings": {
-                        "name": "Bolvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/03__bolvian__bolvian.co.za.png"
+                        "name": "MRLIN",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/04__mrlin.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ravinr",
+                      "id": "trusted_logo_popo",
                       "type": "logo",
                       "settings": {
-                        "name": "Ravinr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/24__ravinr__ravinr.co.za.png"
+                        "name": "POPO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/05__popo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_luntra",
+                      "id": "trusted_logo_mr-sdm",
                       "type": "logo",
                       "settings": {
-                        "name": "Luntra",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/19__luntra__luntra.co.za.png"
+                        "name": "MR.SDM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/06__mr-sdm.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_yaveno",
+                      "id": "trusted_logo_ezzy",
                       "type": "logo",
                       "settings": {
-                        "name": "Yaveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/44__yaveno__yaveno.co.za.png"
+                        "name": "EZZY",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/07__ezzy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_vkovel",
+                      "id": "trusted_logo_xraz",
                       "type": "logo",
                       "settings": {
-                        "name": "Vkovel",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/37__vkovel__vkovel.com.webp"
+                        "name": "XRAZ",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/08__xraz.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_orvinoe",
+                      "id": "trusted_logo_giantdc",
                       "type": "logo",
                       "settings": {
-                        "name": "Orvinoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/21__orvinoe__orvinoe.com.png"
+                        "name": "Giantdc",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/09__giantdc.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_elvorae",
+                      "id": "trusted_logo_smart-check",
                       "type": "logo",
                       "settings": {
-                        "name": "Elvorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/06__elvorae__elvorae.co.za.png"
+                        "name": "SMART Check",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/10__smart-check.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_trovic",
+                      "id": "trusted_logo_jo",
                       "type": "logo",
                       "settings": {
-                        "name": "Trovic",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/31__trovic__trovic.co.za.png"
+                        "name": "JO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/11__jo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_aroveno",
+                      "id": "trusted_logo_mashtacore",
                       "type": "logo",
                       "settings": {
-                        "name": "Aroveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/02__aroveno__aroveno.co.za.png"
+                        "name": "Mashtacore",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/12__mashtacore.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ulvanx",
+                      "id": "trusted_logo_fb",
                       "type": "logo",
                       "settings": {
-                        "name": "Ulvanx",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/33__ulvanx__ulvanx.com.png"
+                        "name": "FB",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/13__fb.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_kernivo",
+                      "id": "trusted_logo_shurong-lim",
                       "type": "logo",
                       "settings": {
-                        "name": "Kernivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/17__kernivo__kernivo.com.png"
+                        "name": "SHURONG LIM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/14__shurong-lim.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bpickr",
+                      "id": "trusted_logo_coffee-swap",
                       "type": "logo",
                       "settings": {
-                        "name": "Bpickr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/04__bpickr__bpickr.co.za.png"
+                        "name": "COFFEE SWAP",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/15__coffee-swap.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_jurvina",
+                      "id": "trusted_logo_heart-beat",
                       "type": "logo",
                       "settings": {
-                        "name": "Jurvina",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/15__jurvina__jurvina.com.png"
+                        "name": "HEART BEAT",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/16__heart-beat.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zervino",
+                      "id": "trusted_logo_chinawuzhougem",
                       "type": "logo",
                       "settings": {
-                        "name": "Zervino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/45__zervino__zervino.co.za.png"
+                        "name": "CHINAWUZHOUGEM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/17__chinawuzhougem.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_harlivo",
+                      "id": "trusted_logo_tosaco",
                       "type": "logo",
                       "settings": {
-                        "name": "Harlivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/12__harlivo__harlivo.com.png"
+                        "name": "TOSACO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/18__tosaco.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qervon",
+                      "id": "trusted_logo_monkey",
                       "type": "logo",
                       "settings": {
-                        "name": "Qervon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/22__qervon__qervon.com.png"
+                        "name": "Monkey",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/19__monkey.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zuvric",
+                      "id": "trusted_logo_yu-kidsrooms",
                       "type": "logo",
                       "settings": {
-                        "name": "Zuvric",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/46__zuvric__zuvric.com.png"
+                        "name": "YU kidsrooms",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/20__yu-kidsrooms.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_urmino",
+                      "id": "trusted_logo_yx",
                       "type": "logo",
                       "settings": {
-                        "name": "Urmino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/34__urmino__urmino.com.png"
+                        "name": "YX",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/21__yx.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_wlivon",
+                      "id": "trusted_logo_laboom",
                       "type": "logo",
                       "settings": {
-                        "name": "Wlivon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/41__wlivon__wlivon.com.png"
+                        "name": "LABOOM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/22__laboom.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_rpfira",
+                      "id": "trusted_logo_moonpizza",
                       "type": "logo",
                       "settings": {
-                        "name": "Rpfira",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/25__rpfira__rpfira.com.png"
+                        "name": "MOONPIZZA",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/23__moonpizza.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_klnova",
+                      "id": "trusted_logo_observer",
                       "type": "logo",
                       "settings": {
-                        "name": "Klnova",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/42__klnova__klnova.com.png"
+                        "name": "OBSERVER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/24__observer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qmarto",
+                      "id": "trusted_logo_anteater",
                       "type": "logo",
                       "settings": {
-                        "name": "Qmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/47__qmarto__xn--qmarto-220j.co.za.png"
+                        "name": "Anteater",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/25__anteater.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_folvian",
+                      "id": "trusted_logo_prevence",
                       "type": "logo",
                       "settings": {
-                        "name": "Folvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/09__folvian__folvian.com.webp"
+                        "name": "Prevence",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/26__prevence.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_gmarto",
+                      "id": "trusted_logo_bison",
                       "type": "logo",
                       "settings": {
-                        "name": "Gmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/10__gmarto__gmarto.co.za.png"
+                        "name": "BISON",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/27__bison.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_tuzemo",
+                      "id": "trusted_logo_hana-pet",
                       "type": "logo",
                       "settings": {
-                        "name": "Tuzemo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/32__tuzemo__tuzemo.com.png"
+                        "name": "HANA PET",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/28__hana-pet.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ervanoe",
+                      "id": "trusted_logo_oficina",
                       "type": "logo",
                       "settings": {
-                        "name": "Ervanoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/07__ervanoe__ervanoe.com.webp"
+                        "name": "Oficina",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/29__oficina.webp",
+                        "badge": "Creator proof"
+                      }
+                    },
+                    {
+                      "id": "trusted_logo_panda-ber",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Panda BER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/30__panda-ber.webp",
+                        "badge": "Creator proof"
                       }
                     }
                   ],
@@ -378781,264 +378853,273 @@
                   "type": "dreamshoot_generation_showcase",
                   "blocks": [
                     {
-                      "id": "trusted_logo_wliano",
+                      "id": "trusted_logo_ikraddy",
                       "type": "logo",
                       "settings": {
-                        "name": "Wliano",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/39__wliano__wliano.com.png"
+                        "name": "iKraddy",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/01__ikraddy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_hmaxio",
+                      "id": "trusted_logo_beer",
                       "type": "logo",
                       "settings": {
-                        "name": "Hmaxio",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/13__hmaxio__hmaxio.co.za.png"
+                        "name": "Beer",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/02__beer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_invorae",
+                      "id": "trusted_logo_fumei",
                       "type": "logo",
                       "settings": {
-                        "name": "Invorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/14__invorae__invorae.com.png"
+                        "name": "FUMEI",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/03__fumei.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bolvian",
+                      "id": "trusted_logo_mrlin",
                       "type": "logo",
                       "settings": {
-                        "name": "Bolvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/03__bolvian__bolvian.co.za.png"
+                        "name": "MRLIN",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/04__mrlin.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ravinr",
+                      "id": "trusted_logo_popo",
                       "type": "logo",
                       "settings": {
-                        "name": "Ravinr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/24__ravinr__ravinr.co.za.png"
+                        "name": "POPO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/05__popo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_luntra",
+                      "id": "trusted_logo_mr-sdm",
                       "type": "logo",
                       "settings": {
-                        "name": "Luntra",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/19__luntra__luntra.co.za.png"
+                        "name": "MR.SDM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/06__mr-sdm.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_yaveno",
+                      "id": "trusted_logo_ezzy",
                       "type": "logo",
                       "settings": {
-                        "name": "Yaveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/44__yaveno__yaveno.co.za.png"
+                        "name": "EZZY",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/07__ezzy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_vkovel",
+                      "id": "trusted_logo_xraz",
                       "type": "logo",
                       "settings": {
-                        "name": "Vkovel",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/37__vkovel__vkovel.com.webp"
+                        "name": "XRAZ",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/08__xraz.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_orvinoe",
+                      "id": "trusted_logo_giantdc",
                       "type": "logo",
                       "settings": {
-                        "name": "Orvinoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/21__orvinoe__orvinoe.com.png"
+                        "name": "Giantdc",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/09__giantdc.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_elvorae",
+                      "id": "trusted_logo_smart-check",
                       "type": "logo",
                       "settings": {
-                        "name": "Elvorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/06__elvorae__elvorae.co.za.png"
+                        "name": "SMART Check",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/10__smart-check.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_trovic",
+                      "id": "trusted_logo_jo",
                       "type": "logo",
                       "settings": {
-                        "name": "Trovic",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/31__trovic__trovic.co.za.png"
+                        "name": "JO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/11__jo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_aroveno",
+                      "id": "trusted_logo_mashtacore",
                       "type": "logo",
                       "settings": {
-                        "name": "Aroveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/02__aroveno__aroveno.co.za.png"
+                        "name": "Mashtacore",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/12__mashtacore.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ulvanx",
+                      "id": "trusted_logo_fb",
                       "type": "logo",
                       "settings": {
-                        "name": "Ulvanx",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/33__ulvanx__ulvanx.com.png"
+                        "name": "FB",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/13__fb.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_kernivo",
+                      "id": "trusted_logo_shurong-lim",
                       "type": "logo",
                       "settings": {
-                        "name": "Kernivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/17__kernivo__kernivo.com.png"
+                        "name": "SHURONG LIM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/14__shurong-lim.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bpickr",
+                      "id": "trusted_logo_coffee-swap",
                       "type": "logo",
                       "settings": {
-                        "name": "Bpickr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/04__bpickr__bpickr.co.za.png"
+                        "name": "COFFEE SWAP",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/15__coffee-swap.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_jurvina",
+                      "id": "trusted_logo_heart-beat",
                       "type": "logo",
                       "settings": {
-                        "name": "Jurvina",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/15__jurvina__jurvina.com.png"
+                        "name": "HEART BEAT",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/16__heart-beat.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zervino",
+                      "id": "trusted_logo_chinawuzhougem",
                       "type": "logo",
                       "settings": {
-                        "name": "Zervino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/45__zervino__zervino.co.za.png"
+                        "name": "CHINAWUZHOUGEM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/17__chinawuzhougem.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_harlivo",
+                      "id": "trusted_logo_tosaco",
                       "type": "logo",
                       "settings": {
-                        "name": "Harlivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/12__harlivo__harlivo.com.png"
+                        "name": "TOSACO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/18__tosaco.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qervon",
+                      "id": "trusted_logo_monkey",
                       "type": "logo",
                       "settings": {
-                        "name": "Qervon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/22__qervon__qervon.com.png"
+                        "name": "Monkey",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/19__monkey.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zuvric",
+                      "id": "trusted_logo_yu-kidsrooms",
                       "type": "logo",
                       "settings": {
-                        "name": "Zuvric",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/46__zuvric__zuvric.com.png"
+                        "name": "YU kidsrooms",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/20__yu-kidsrooms.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_urmino",
+                      "id": "trusted_logo_yx",
                       "type": "logo",
                       "settings": {
-                        "name": "Urmino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/34__urmino__urmino.com.png"
+                        "name": "YX",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/21__yx.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_wlivon",
+                      "id": "trusted_logo_laboom",
                       "type": "logo",
                       "settings": {
-                        "name": "Wlivon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/41__wlivon__wlivon.com.png"
+                        "name": "LABOOM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/22__laboom.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_rpfira",
+                      "id": "trusted_logo_moonpizza",
                       "type": "logo",
                       "settings": {
-                        "name": "Rpfira",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/25__rpfira__rpfira.com.png"
+                        "name": "MOONPIZZA",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/23__moonpizza.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_klnova",
+                      "id": "trusted_logo_observer",
                       "type": "logo",
                       "settings": {
-                        "name": "Klnova",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/42__klnova__klnova.com.png"
+                        "name": "OBSERVER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/24__observer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qmarto",
+                      "id": "trusted_logo_anteater",
                       "type": "logo",
                       "settings": {
-                        "name": "Qmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/47__qmarto__xn--qmarto-220j.co.za.png"
+                        "name": "Anteater",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/25__anteater.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_folvian",
+                      "id": "trusted_logo_prevence",
                       "type": "logo",
                       "settings": {
-                        "name": "Folvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/09__folvian__folvian.com.webp"
+                        "name": "Prevence",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/26__prevence.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_gmarto",
+                      "id": "trusted_logo_bison",
                       "type": "logo",
                       "settings": {
-                        "name": "Gmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/10__gmarto__gmarto.co.za.png"
+                        "name": "BISON",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/27__bison.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_tuzemo",
+                      "id": "trusted_logo_hana-pet",
                       "type": "logo",
                       "settings": {
-                        "name": "Tuzemo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/32__tuzemo__tuzemo.com.png"
+                        "name": "HANA PET",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/28__hana-pet.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ervanoe",
+                      "id": "trusted_logo_oficina",
                       "type": "logo",
                       "settings": {
-                        "name": "Ervanoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/07__ervanoe__ervanoe.com.webp"
+                        "name": "Oficina",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/29__oficina.webp",
+                        "badge": "Creator proof"
+                      }
+                    },
+                    {
+                      "id": "trusted_logo_panda-ber",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Panda BER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/30__panda-ber.webp",
+                        "badge": "Creator proof"
                       }
                     }
                   ],
@@ -392582,264 +392663,273 @@
                   },
                   "blocks": [
                     {
-                      "id": "trusted_logo_wliano",
+                      "id": "trusted_logo_ikraddy",
                       "type": "logo",
                       "settings": {
-                        "name": "Wliano",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/39__wliano__wliano.com.png"
+                        "name": "iKraddy",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/01__ikraddy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_hmaxio",
+                      "id": "trusted_logo_beer",
                       "type": "logo",
                       "settings": {
-                        "name": "Hmaxio",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/13__hmaxio__hmaxio.co.za.png"
+                        "name": "Beer",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/02__beer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_invorae",
+                      "id": "trusted_logo_fumei",
                       "type": "logo",
                       "settings": {
-                        "name": "Invorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/14__invorae__invorae.com.png"
+                        "name": "FUMEI",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/03__fumei.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bolvian",
+                      "id": "trusted_logo_mrlin",
                       "type": "logo",
                       "settings": {
-                        "name": "Bolvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/03__bolvian__bolvian.co.za.png"
+                        "name": "MRLIN",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/04__mrlin.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ravinr",
+                      "id": "trusted_logo_popo",
                       "type": "logo",
                       "settings": {
-                        "name": "Ravinr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/24__ravinr__ravinr.co.za.png"
+                        "name": "POPO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/05__popo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_luntra",
+                      "id": "trusted_logo_mr-sdm",
                       "type": "logo",
                       "settings": {
-                        "name": "Luntra",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/19__luntra__luntra.co.za.png"
+                        "name": "MR.SDM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/06__mr-sdm.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_yaveno",
+                      "id": "trusted_logo_ezzy",
                       "type": "logo",
                       "settings": {
-                        "name": "Yaveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/44__yaveno__yaveno.co.za.png"
+                        "name": "EZZY",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/07__ezzy.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_vkovel",
+                      "id": "trusted_logo_xraz",
                       "type": "logo",
                       "settings": {
-                        "name": "Vkovel",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/37__vkovel__vkovel.com.webp"
+                        "name": "XRAZ",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/08__xraz.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_orvinoe",
+                      "id": "trusted_logo_giantdc",
                       "type": "logo",
                       "settings": {
-                        "name": "Orvinoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/21__orvinoe__orvinoe.com.png"
+                        "name": "Giantdc",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/09__giantdc.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_elvorae",
+                      "id": "trusted_logo_smart-check",
                       "type": "logo",
                       "settings": {
-                        "name": "Elvorae",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/06__elvorae__elvorae.co.za.png"
+                        "name": "SMART Check",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/10__smart-check.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_trovic",
+                      "id": "trusted_logo_jo",
                       "type": "logo",
                       "settings": {
-                        "name": "Trovic",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/31__trovic__trovic.co.za.png"
+                        "name": "JO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/11__jo.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_aroveno",
+                      "id": "trusted_logo_mashtacore",
                       "type": "logo",
                       "settings": {
-                        "name": "Aroveno",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/02__aroveno__aroveno.co.za.png"
+                        "name": "Mashtacore",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/12__mashtacore.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ulvanx",
+                      "id": "trusted_logo_fb",
                       "type": "logo",
                       "settings": {
-                        "name": "Ulvanx",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/33__ulvanx__ulvanx.com.png"
+                        "name": "FB",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/13__fb.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_kernivo",
+                      "id": "trusted_logo_shurong-lim",
                       "type": "logo",
                       "settings": {
-                        "name": "Kernivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/17__kernivo__kernivo.com.png"
+                        "name": "SHURONG LIM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/14__shurong-lim.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_bpickr",
+                      "id": "trusted_logo_coffee-swap",
                       "type": "logo",
                       "settings": {
-                        "name": "Bpickr",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/04__bpickr__bpickr.co.za.png"
+                        "name": "COFFEE SWAP",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/15__coffee-swap.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_jurvina",
+                      "id": "trusted_logo_heart-beat",
                       "type": "logo",
                       "settings": {
-                        "name": "Jurvina",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/15__jurvina__jurvina.com.png"
+                        "name": "HEART BEAT",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/16__heart-beat.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zervino",
+                      "id": "trusted_logo_chinawuzhougem",
                       "type": "logo",
                       "settings": {
-                        "name": "Zervino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/45__zervino__zervino.co.za.png"
+                        "name": "CHINAWUZHOUGEM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/17__chinawuzhougem.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_harlivo",
+                      "id": "trusted_logo_tosaco",
                       "type": "logo",
                       "settings": {
-                        "name": "Harlivo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/12__harlivo__harlivo.com.png"
+                        "name": "TOSACO",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/18__tosaco.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qervon",
+                      "id": "trusted_logo_monkey",
                       "type": "logo",
                       "settings": {
-                        "name": "Qervon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/22__qervon__qervon.com.png"
+                        "name": "Monkey",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/19__monkey.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_zuvric",
+                      "id": "trusted_logo_yu-kidsrooms",
                       "type": "logo",
                       "settings": {
-                        "name": "Zuvric",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/46__zuvric__zuvric.com.png"
+                        "name": "YU kidsrooms",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/20__yu-kidsrooms.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_urmino",
+                      "id": "trusted_logo_yx",
                       "type": "logo",
                       "settings": {
-                        "name": "Urmino",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/34__urmino__urmino.com.png"
+                        "name": "YX",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/21__yx.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_wlivon",
+                      "id": "trusted_logo_laboom",
                       "type": "logo",
                       "settings": {
-                        "name": "Wlivon",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/41__wlivon__wlivon.com.png"
+                        "name": "LABOOM",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/22__laboom.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_rpfira",
+                      "id": "trusted_logo_moonpizza",
                       "type": "logo",
                       "settings": {
-                        "name": "Rpfira",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/25__rpfira__rpfira.com.png"
+                        "name": "MOONPIZZA",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/23__moonpizza.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_klnova",
+                      "id": "trusted_logo_observer",
                       "type": "logo",
                       "settings": {
-                        "name": "Klnova",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/42__klnova__klnova.com.png"
+                        "name": "OBSERVER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/24__observer.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_qmarto",
+                      "id": "trusted_logo_anteater",
                       "type": "logo",
                       "settings": {
-                        "name": "Qmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/47__qmarto__xn--qmarto-220j.co.za.png"
+                        "name": "Anteater",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/25__anteater.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_folvian",
+                      "id": "trusted_logo_prevence",
                       "type": "logo",
                       "settings": {
-                        "name": "Folvian",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/09__folvian__folvian.com.webp"
+                        "name": "Prevence",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/26__prevence.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_gmarto",
+                      "id": "trusted_logo_bison",
                       "type": "logo",
                       "settings": {
-                        "name": "Gmarto",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/10__gmarto__gmarto.co.za.png"
+                        "name": "BISON",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/27__bison.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_tuzemo",
+                      "id": "trusted_logo_hana-pet",
                       "type": "logo",
                       "settings": {
-                        "name": "Tuzemo",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/32__tuzemo__tuzemo.com.png"
+                        "name": "HANA PET",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/28__hana-pet.webp",
+                        "badge": "Creator proof"
                       }
                     },
                     {
-                      "id": "trusted_logo_ervanoe",
+                      "id": "trusted_logo_oficina",
                       "type": "logo",
                       "settings": {
-                        "name": "Ervanoe",
-                        "badge": "Creator proof",
-                        "imageUrl": "/assets/dreamshoot/generated/trusted-logos/07__ervanoe__ervanoe.com.webp"
+                        "name": "Oficina",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/29__oficina.webp",
+                        "badge": "Creator proof"
+                      }
+                    },
+                    {
+                      "id": "trusted_logo_panda-ber",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Panda BER",
+                        "imageUrl": "/assets/dreamshoot/brand/trusted-creators-dark-v2/30__panda-ber.webp",
+                        "badge": "Creator proof"
                       }
                     }
                   ]
@@ -400120,7 +400210,7 @@
       },
       "pageCount": 62,
       "sectionCount": 163,
-      "snapshotBytes": 1244997,
+      "snapshotBytes": 1245213,
       "publishedBy": "codex_seo_sync_test",
       "publishedAt": "2026-07-05T05:32:28.146Z"
     },

@@ -107,9 +107,41 @@ const myAssets = {
   galleryHoliday: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1"
 };
 
-const trustedLogoAssetBase = "/assets/dreamshoot/generated/trusted-logos";
+const mydreamshootsTrustedLogoAssetBase = "/assets/dreamshoot/brand/trusted-creators-dark-v2";
 const aidreamTrustedLogoAssetBase = "/assets/sites/site_aidreamcapes/trusted-logos";
 const mydreamshootsAboutBody = "myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photo and video in seconds with myDreamshoots's: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. Plans start at $24.50/month, and every package shows the credit cost before generation.";
+const mydreamshootsTrustedLogoDefinitions = [
+  { key: "ikraddy", name: "iKraddy", file: "01__ikraddy.webp" },
+  { key: "beer", name: "Beer", file: "02__beer.webp" },
+  { key: "fumei", name: "FUMEI", file: "03__fumei.webp" },
+  { key: "mrlin", name: "MRLIN", file: "04__mrlin.webp" },
+  { key: "popo", name: "POPO", file: "05__popo.webp" },
+  { key: "mr-sdm", name: "MR.SDM", file: "06__mr-sdm.webp" },
+  { key: "ezzy", name: "EZZY", file: "07__ezzy.webp" },
+  { key: "xraz", name: "XRAZ", file: "08__xraz.webp" },
+  { key: "giantdc", name: "Giantdc", file: "09__giantdc.webp" },
+  { key: "smart-check", name: "SMART Check", file: "10__smart-check.webp" },
+  { key: "jo", name: "JO", file: "11__jo.webp" },
+  { key: "mashtacore", name: "Mashtacore", file: "12__mashtacore.webp" },
+  { key: "fb", name: "FB", file: "13__fb.webp" },
+  { key: "shurong-lim", name: "SHURONG LIM", file: "14__shurong-lim.webp" },
+  { key: "coffee-swap", name: "COFFEE SWAP", file: "15__coffee-swap.webp" },
+  { key: "heart-beat", name: "HEART BEAT", file: "16__heart-beat.webp" },
+  { key: "chinawuzhougem", name: "CHINAWUZHOUGEM", file: "17__chinawuzhougem.webp" },
+  { key: "tosaco", name: "TOSACO", file: "18__tosaco.webp" },
+  { key: "monkey", name: "Monkey", file: "19__monkey.webp" },
+  { key: "yu-kidsrooms", name: "YU kidsrooms", file: "20__yu-kidsrooms.webp" },
+  { key: "yx", name: "YX", file: "21__yx.webp" },
+  { key: "laboom", name: "LABOOM", file: "22__laboom.webp" },
+  { key: "moonpizza", name: "MOONPIZZA", file: "23__moonpizza.webp" },
+  { key: "observer", name: "OBSERVER", file: "24__observer.webp" },
+  { key: "anteater", name: "Anteater", file: "25__anteater.webp" },
+  { key: "prevence", name: "Prevence", file: "26__prevence.webp" },
+  { key: "bison", name: "BISON", file: "27__bison.webp" },
+  { key: "hana-pet", name: "HANA PET", file: "28__hana-pet.webp" },
+  { key: "oficina", name: "Oficina", file: "29__oficina.webp" },
+  { key: "panda-ber", name: "Panda BER", file: "30__panda-ber.webp" }
+];
 const trustedLogoDefinitions = [
   { key: "wliano", name: "Wliano", file: "39__wliano__wliano.com.png" },
   { key: "hmaxio", name: "Hmaxio", file: "13__hmaxio__hmaxio.co.za.png" },
@@ -142,14 +174,14 @@ const trustedLogoDefinitions = [
   { key: "ervanoe", name: "Ervanoe", file: "07__ervanoe__ervanoe.com.webp" }
 ];
 
-function trustedLogoBlocks(basePath, prefix) {
-  return trustedLogoDefinitions.map(({ key, name, file }) =>
+function trustedLogoBlocks(definitions, basePath, prefix) {
+  return definitions.map(({ key, name, file }) =>
     block(`${prefix}${key}`, "logo", { name, imageUrl: `${basePath}/${file}`, badge: "Creator proof" })
   );
 }
 
-const mydreamshootsTrustedLogoBlocks = trustedLogoBlocks(trustedLogoAssetBase, "trusted_logo_");
-const aidreamcapesTrustedLogoBlocks = trustedLogoBlocks(aidreamTrustedLogoAssetBase, "aidream_trusted_logo_");
+const mydreamshootsTrustedLogoBlocks = trustedLogoBlocks(mydreamshootsTrustedLogoDefinitions, mydreamshootsTrustedLogoAssetBase, "trusted_logo_");
+const aidreamcapesTrustedLogoBlocks = trustedLogoBlocks(trustedLogoDefinitions, aidreamTrustedLogoAssetBase, "aidream_trusted_logo_");
 
 const aidreamAssets = {
   hero: versioned("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp", aidreamAssetVersion),
@@ -188,7 +220,7 @@ const stores = [
     },
     generationSettings: {
       anchor: "generated-showcase",
-      showTrustedLogoIntro: false,
+      showTrustedLogoIntro: true,
       trustedLogoTitle: "Most Trusted Creators. | myDreamshoots",
       aboutTitle: "What is myDreamshoots?",
       aboutBody: mydreamshootsAboutBody,
@@ -370,7 +402,7 @@ const stores = [
     },
     generationSettings: {
       anchor: "generated-showcase",
-      showTrustedLogoIntro: false,
+      showTrustedLogoIntro: true,
       trustedLogoTitle: "Trusted by Aidreamcapes creators worldwide",
       aboutTitle: "What is Aidreamcapes?",
       aboutBody: "Aidreamcapes is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.",
@@ -597,7 +629,7 @@ function applyAidreamcapesArchitectureOnly(pageJson, store, featuredSections = {
   const aboutTitle = settingText({ settings: generationSettings }, "aboutTitle");
   const aboutBody = settingText({ settings: generationSettings }, "aboutBody");
   if (trustedBlocks.length && aboutTitle && aboutBody) {
-    generationSettings.showTrustedLogoIntro = generationSourceSettings.showTrustedLogoIntro !== false;
+    generationSettings.showTrustedLogoIntro = true;
     generationSettings.trustedLogoTitle = settingText({ settings: generationSettings }, "trustedLogoTitle") || settingText(store.partnerStrip, "title");
     generationSettings.trustedLogoSplitIndex = Math.max(
       1,

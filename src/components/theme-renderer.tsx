@@ -12129,14 +12129,46 @@ function SectionView({
     }
     const videoRailCards = videoCards.map((card) => ({ ...card, railKey: `${card.id}-video` }));
     const trustedLogoBlocks = sectionBlocks(section, "logo");
-    const hideTrustedLogoIntroOnHome = renderContext.pagePath === "/" && !isSpanishXbySite(site) && (mydreamProfileSite || aidreamcapes);
-    const showTrustedLogoIntro = !hideTrustedLogoIntroOnHome && settingBool(section, "showTrustedLogoIntro", false) && trustedLogoBlocks.length > 0;
+    const showTrustedLogoIntro = settingBool(section, "showTrustedLogoIntro", false) && trustedLogoBlocks.length > 0;
     const trustedLogoSplitIndex = trustedLogoBlocks.length > 1
       ? Math.max(1, Math.min(trustedLogoBlocks.length - 1, Math.round(numberSetting(section, "trustedLogoSplitIndex", 15))))
       : trustedLogoBlocks.length;
     const trustedLogoRows = showTrustedLogoIntro
       ? [trustedLogoBlocks.slice(0, trustedLogoSplitIndex), trustedLogoBlocks.slice(trustedLogoSplitIndex)].filter((row) => row.length > 0)
       : [];
+    const renderTrustedLogoCard = (logo: SectionBlockInstance, index: number) => {
+      const logoName = blockValue(logo, "name", `Creator logo ${index + 1}`);
+      const logoImage = blockValue(logo, "imageUrl", "");
+      const resolvedLogoImage = cleanStorefrontImageSrc(resolveMediaAssetUrl(site, logoImage));
+      const logoSrc = logoImage && shouldRenderStorefrontTrustedLogoImage(site, resolvedLogoImage)
+        ? withStorefrontPublicWatermarkCacheVersion(resolvedLogoImage)
+        : "";
+      const logoAlt = isSpanishStorefrontSite(site)
+        ? `${logoName} logo de marca`
+        : `${logoName} brand logo`;
+      return (
+        <div
+          aria-label={logoAlt}
+          className={mydreamProfileSite
+            ? "flex aspect-square w-[min(27vw,6.2rem)] shrink-0 items-center justify-center overflow-hidden rounded-[8px] border border-[#8291aa]/70 bg-[#162033] p-2 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.95)] ring-1 ring-white/12 sm:w-[5.7rem] md:w-[6.25rem]"
+            : "flex aspect-square w-[min(27vw,6.2rem)] shrink-0 items-center justify-center overflow-hidden rounded-[8px] border border-white/70 bg-white px-3 py-2.5 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.85)] ring-1 ring-black/10 sm:w-[5.7rem] md:w-[6.25rem]"}
+          key={instanceKey(logo, index, "trusted_logo")}
+          title={logoAlt}
+          {...xfcartBlockAttrs(logo, index, "trusted_logo")}
+        >
+          {logoSrc ? (
+            <img
+              alt={logoAlt}
+              className={mydreamProfileSite ? "h-full w-full object-contain" : "max-h-[3.25rem] max-w-[5.25rem] object-contain"}
+              loading="lazy"
+              src={logoSrc}
+            />
+          ) : (
+            <span className={`text-center text-sm font-semibold leading-tight ${mydreamProfileSite ? "text-white" : "text-[#14161a]"}`}>{logoName}</span>
+          )}
+        </div>
+      );
+    };
     const trustedProof = showTrustedLogoIntro ? (
       <div className="relative left-1/2 mb-12 w-[min(82vw,106rem)] -translate-x-1/2 border-b border-white/10 pb-10 md:mb-14 md:pb-14" data-dreamshoot-trusted-logos="true">
         <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
@@ -12153,38 +12185,7 @@ function SectionView({
               speed={rowIndex % 2 === 1 ? 17 : 15}
               trackClassName="dreamshoot-showcase-track flex w-max gap-3 px-0 md:gap-4"
             >
-	              {row.map((logo, index) => {
-	                const logoName = blockValue(logo, "name", `Creator logo ${index + 1}`);
-	                const logoImage = blockValue(logo, "imageUrl", "");
-	                const resolvedLogoImage = cleanStorefrontImageSrc(resolveMediaAssetUrl(site, logoImage));
-	                const logoPublicImage = resolvedLogoImage;
-	                const logoSrc = logoImage && shouldRenderStorefrontTrustedLogoImage(site, logoPublicImage)
-	                  ? withStorefrontPublicWatermarkCacheVersion(logoPublicImage)
-	                  : "";
-	                const logoAlt = isSpanishStorefrontSite(site)
-	                  ? `${logoName} logo de marca`
-	                  : `${logoName} brand logo`;
-	                return (
-	                  <div
-	                    aria-label={logoAlt}
-	                    className="flex aspect-square w-[min(27vw,6.2rem)] shrink-0 items-center justify-center overflow-hidden rounded-[8px] border border-white/70 bg-white px-3 py-2.5 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.85)] ring-1 ring-black/10 sm:w-[5.7rem] md:w-[6.25rem]"
-	                    key={instanceKey(logo, index, "trusted_logo")}
-	                    title={logoAlt}
-	                    {...xfcartBlockAttrs(logo, index, "trusted_logo")}
-	                  >
-	                    {logoSrc ? (
-	                      <img
-	                        alt={logoAlt}
-	                        className="max-h-[3.25rem] max-w-[5.25rem] object-contain"
-	                        loading="lazy"
-	                        src={logoSrc}
-                      />
-                    ) : (
-                      <span className="text-center text-sm font-semibold leading-tight text-[#14161a]">{logoName}</span>
-                    )}
-                  </div>
-                );
-              })}
+              {row.map(renderTrustedLogoCard)}
             </DreamshootShowcaseRail>
           ))}
         </div>

@@ -49,7 +49,8 @@ const expectedImageShowcasePriorityCount = 8;
 const expectedImageShowcaseCardCount = 28;
 const expectedHomepageImageGridCardCount = 16;
 const expectedHomepageVideoGridCardCount = 8;
-const expectedTrustedLogoCount = 29;
+const expectedTrustedLogoCount = 30;
+const expectedMydreamshootsTrustedLogoRoot = "/assets/dreamshoot/brand/trusted-creators-dark-v2/";
 const dreamshootHomepageSafeShowcaseImagePathBySlug = {
   "ai-video-add-ons": "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-06.webp",
   "anime-avatar": "/assets/dreamshoot/generated/pack-galleries/anime-avatar/anime-avatar-12.webp",
@@ -290,7 +291,11 @@ function assertPage(pageJson, label, storeKey) {
   assert(String(settings.aboutBody ?? "").startsWith("myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC"), `${label}: about body should describe myDreamshoots`);
   assert(settings.embeddedPricingSectionId === "pricing_1", `${label}: showcase should embed pricing_1`);
   assert(Number(settings.trustedLogoSplitIndex ?? 0) === 15, `${label}: trusted logo row split should stay at 15`);
-  assert((pageJson?.sections?.generation_showcase_1?.blocks ?? []).filter((block) => block?.type === "logo").length === expectedTrustedLogoCount, `${label}: expected ${expectedTrustedLogoCount} trusted logo blocks`);
+  const trustedLogoBlocks = (pageJson?.sections?.generation_showcase_1?.blocks ?? []).filter((block) => block?.type === "logo");
+  assert(trustedLogoBlocks.length === expectedTrustedLogoCount, `${label}: expected ${expectedTrustedLogoCount} trusted logo blocks`);
+  assert(trustedLogoBlocks.every((block) => String(block?.settings?.imageUrl ?? "").startsWith(expectedMydreamshootsTrustedLogoRoot)), `${label}: trusted logos should use the dark MyDreamShoots asset set`);
+  assert(trustedLogoBlocks[0]?.settings?.name === "iKraddy", `${label}: first trusted logo should be iKraddy`);
+  assert(trustedLogoBlocks.at(-1)?.settings?.name === "Panda BER", `${label}: last trusted logo should be Panda BER`);
   assert(!("itemLimit" in settings), `${label}: old image-limiting itemLimit should be removed`);
   const pricingSettings = pageJson?.sections?.pricing_1?.settings ?? {};
   assert(pricingSettings.subtitle === "Choose the plan that works for you", `${label}: pricing subtitle drifted`);
@@ -575,12 +580,14 @@ const videoShowcaseRenderer = showcaseRenderer.match(/<div className="mt-12">[\s
 const videoFeatureRenderer = themeRenderer.match(/if \(section\.type === "video_feature"\)[\s\S]*?if \(section\.type === "luxury_highlight"\)/)?.[0] ?? "";
 const testimonialRenderer = themeRenderer.match(/if \(section\.type === "testimonial_wall"\)[\s\S]*?if \(section\.type === "faq"\)/)?.[0] ?? "";
 const pricingBillingTable = fs.readFileSync(path.join(repoRoot, "src/components/storefront/pricing-billing-table.tsx"), "utf8");
-assert(showcaseRenderer.includes("hideTrustedLogoIntroOnHome"), "homepage trusted logo intro should have an explicit storefront hide gate");
-assert(showcaseRenderer.includes("renderContext.pagePath === \"/\""), "homepage trusted logo intro hide gate should be limited to the homepage");
+assert(!showcaseRenderer.includes("hideTrustedLogoIntroOnHome"), "homepage trusted logo intro should not be blocked by a storefront hide gate");
+assert(showcaseRenderer.includes('settingBool(section, "showTrustedLogoIntro", false)'), "homepage trusted logo intro should follow the published section setting");
 assert(videoFeatureRenderer.includes('setting(section, "videoUrl", "")') && videoFeatureRenderer.includes("<LazyStorefrontVideo"), "tutorial video feature should render a lazy videoUrl when configured");
 assert(videoFeatureRenderer.includes("poster={image || undefined}") && themeRenderer.includes("LazyStorefrontVideo"), "tutorial video feature should keep poster fallback while deferring mp4 loading");
 assert(showcaseRenderer.includes("dreamshoot-showcase-track"), "showcase should render horizontal showcase rails");
 assert(showcaseRenderer.includes("DreamshootShowcaseRail"), "showcase video rails should auto-scroll without duplicating card data");
+assert(!showcaseRenderer.includes('data-auto-scroll="disabled"'), "trusted logo rows should not disable the showcase rail auto-scroll");
+assert(!showcaseRenderer.includes("md:grid-cols-[repeat(15,minmax(0,1fr))]"), "trusted logo rows should not stretch into a static full-width 15-column grid");
 assert(showcaseRenderer.includes("<figure"), "showcase material cards should render as figures");
 assert(showcaseRenderer.includes("DreamshootShowcasePreview"), "showcase material cards should open an image/video preview lightbox");
 assert(showcaseRenderer.includes("canonicalGeneratorCopy"), "homepage showcase should force canonical Best Photo/Video Generator copy for .com stores");

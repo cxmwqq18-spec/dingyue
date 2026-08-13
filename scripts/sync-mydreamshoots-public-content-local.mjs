@@ -4,7 +4,6 @@ import path from "node:path";
 import { createHash } from "node:crypto";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const homepageLockPath = path.join(repoRoot, "docs", "content-locks", "mydreamshoots-homepage-approved.json");
 const rawArgs = process.argv.slice(2);
 const flags = new Set();
@@ -28,8 +27,10 @@ for (let index = 0; index < rawArgs.length; index += 1) {
 }
 
 const siteId = String(args.get("site-id") ?? process.env.MYDREAMSHOOTS_SITE_ID ?? "site_dreamshoot");
+const statePath = path.resolve(repoRoot, String(args.get("state-path") ?? path.join("data", "platform-state.json")));
 const writeJson = flags.has("write-json");
 const writeLock = flags.has("write-lock");
+const refreshHomepageLockOnly = flags.has("refresh-homepage-lock-only");
 const dryRun = flags.has("dry-run") || (!writeJson && !writeLock);
 const now = new Date();
 
@@ -689,7 +690,11 @@ function writeJsonFile(filePath, value) {
 function main() {
   if (!fs.existsSync(statePath)) throw new Error(`${statePath} does not exist`);
   const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
-  const { site, stats } = syncTargetState(state);
+  const site = asArray(state.sites).find((item) => item.id === siteId);
+  if (!site) throw new Error(`site ${siteId} not found in ${statePath}`);
+  const stats = refreshHomepageLockOnly
+    ? { stringsChanged: 0, sectionFieldsChanged: 0, siteThemeTemplatesChanged: 0, examples: [], issueGroups: createIssueGroups() }
+    : syncTargetState(state).stats;
   const previousLock = fs.existsSync(homepageLockPath)
     ? JSON.parse(fs.readFileSync(homepageLockPath, "utf8"))
     : undefined;
@@ -701,7 +706,7 @@ function main() {
   const jsonChanged = nextStateRaw !== existingStateRaw;
   const lockChanged = nextLockRaw !== existingLockRaw;
 
-  if (writeLock && !writeJson && jsonChanged) {
+  if (!refreshHomepageLockOnly && writeLock && !writeJson && jsonChanged) {
     throw new Error("--write-lock cannot be used by itself when data/platform-state.json would change. Re-run with --write-json --write-lock so the approved lock matches persisted local content.");
   }
 
@@ -715,6 +720,7 @@ function main() {
   console.log(JSON.stringify({
     ok: true,
     mode: dryRun ? "dry-run" : "write",
+    refreshHomepageLockOnly,
     siteId,
     writes: {
       json: writeJson && !dryRun,

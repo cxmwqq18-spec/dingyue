@@ -28,14 +28,14 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 
 锁定来源：Postgres `site_dreamshoot` 的首页 `ThemePage.publishedJson`，并包含 guard 用于页面 SEO 对比的 `ThemeSettings.publishedJson` 记录。
 
-锁定时间：`2026-08-12T00:16:28.628+08:00`
+锁定时间：`2026-08-14T00:45:27.263+08:00`
 
 锁定指纹：
 
 | 范围 | SHA-256 |
 | --- | --- |
-| 首页完整 `publishedJson` | `bd1ae831410f1cfd0de06f3b6dc72c49f9dd406487ee393e0a18f01d305cb1ab` |
-| 首页可见文案记录 | `bdfcbe2ce45e2d901d438e0e12ecc16fb126660351adf1559d547df763301f9d` |
+| 首页完整 `publishedJson` | `68cd99d39a0e64b02a730428faac09415fa196df49106fb07f0173d84d3807b5` |
+| 首页可见文案记录 | `88087264c7886c3b0961c3dc6ba5134694d254585007d5e8d3b86f28b643abfb` |
 
 当前批准的首页关键文案：
 

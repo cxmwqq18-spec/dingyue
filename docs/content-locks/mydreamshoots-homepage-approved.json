@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "lockedAt": "2026-08-12T00:16:28.628+08:00",
+  "lockedAt": "2026-08-14T00:45:27.263+08:00",
   "policy": {
     "owner": "myDreamshoots site owner",
     "rule": "This homepage copy baseline is locked. Do not modify, switch versions, import old JSON, or roll back production copy unless the site owner explicitly requests a homepage copy change.",
@@ -19,9 +19,9 @@
     "pageType": "home"
   },
   "latestPublication": {
-    "id": "pub_site_dreamshoot_v1",
-    "version": 1,
-    "publishedAt": "2026-06-18T00:00:00.000Z"
+    "id": "pub_site_dreamshoot_mr7ctxem",
+    "version": 2,
+    "publishedAt": "2026-07-05T05:32:28.146Z"
   },
   "seo": {
     "title": "Professional AI Photo Generator Online - myDreamshoots",
@@ -30,24 +30,24 @@
   },
   "hero": {
     "anchor": "home",
+    "layout": "immersive_dark",
     "eyebrow": "",
     "headline": "Upload selfies and create your own AI model - Professional headshots without a studio.",
-    "subheadline": "upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.",
     "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
-    "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
-    "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-    "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
-    "bulletList": "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy|AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.",
-    "highlightWord": "AI model",
     "heroBadge": "AI Headshot Generators",
     "authRibbon": "Plans start at $24.50/month",
-    "authPrimaryLabel": "Continue with Google",
-    "authEmailPlaceholder": "Email address",
-    "authButtonLabel": "Create my first photo set with Email",
+    "bulletList": "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy|AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.",
     "imageBadge": "15+ package categories",
+    "subheadline": "upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.",
     "imageCaption": "Generate your custom AI album Transform your favorite moments into professional-grade couple photos and stunning holiday memories.",
+    "highlightWord": "AI model",
+    "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
+    "authButtonLabel": "Create my first photo set with Email",
+    "authPrimaryLabel": "Continue with Google",
     "socialProofLabel": "Private uploads · Credit cost shown upfront · Download your favorites",
-    "layout": "immersive_dark"
+    "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
+    "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
+    "authEmailPlaceholder": "Email address"
   },
   "sectionsOrder": [
     "hero_1",
@@ -62,9 +62,9 @@
     "brand_strip_1"
   ],
   "fingerprints": {
-    "publishedJsonSha256": "bd1ae831410f1cfd0de06f3b6dc72c49f9dd406487ee393e0a18f01d305cb1ab",
-    "visibleTextSha256": "bdfcbe2ce45e2d901d438e0e12ecc16fb126660351adf1559d547df763301f9d",
-    "visibleRecordCount": 192
+    "publishedJsonSha256": "68cd99d39a0e64b02a730428faac09415fa196df49106fb07f0173d84d3807b5",
+    "visibleTextSha256": "88087264c7886c3b0961c3dc6ba5134694d254585007d5e8d3b86f28b643abfb",
+    "visibleRecordCount": 190
   },
   "visibleRecords": [
     {
@@ -859,10 +859,10 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[11]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[24]",
       "key": "name",
-      "text": "Aroveno",
-      "normalized": "aroveno",
+      "text": "Anteater",
+      "normalized": "anteater",
       "priority": 3
     },
     {
@@ -873,17 +873,17 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[3]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[1]",
       "key": "name",
-      "text": "Bolvian",
-      "normalized": "bolvian",
+      "text": "Beer",
+      "normalized": "beer",
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[14]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[26]",
       "key": "name",
-      "text": "Bpickr",
-      "normalized": "bpickr",
+      "text": "BISON",
+      "normalized": "bison",
       "priority": 3
     },
     {
@@ -891,6 +891,13 @@
       "key": "badge",
       "text": "Campaigns",
       "normalized": "campaigns",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[16]",
+      "key": "name",
+      "text": "CHINAWUZHOUGEM",
+      "normalized": "chinawuzhougem",
       "priority": 3
     },
     {
@@ -905,6 +912,13 @@
       "key": "location",
       "text": "Christmas album",
       "normalized": "christmas album",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[14]",
+      "key": "name",
+      "text": "COFFEE SWAP",
+      "normalized": "coffee swap",
       "priority": 3
     },
     {
@@ -992,24 +1006,17 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[9]",
-      "key": "name",
-      "text": "Elvorae",
-      "normalized": "elvorae",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[28]",
-      "key": "name",
-      "text": "Ervanoe",
-      "normalized": "ervanoe",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[4]",
       "key": "name",
       "text": "Event marketers",
       "normalized": "event marketers",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[6]",
+      "key": "name",
+      "text": "EZZY",
+      "normalized": "ezzy",
       "priority": 3
     },
     {
@@ -1034,17 +1041,17 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[25]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[2]",
       "key": "name",
-      "text": "Folvian",
-      "normalized": "folvian",
+      "text": "FUMEI",
+      "normalized": "fumei",
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[26]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[8]",
       "key": "name",
-      "text": "Gmarto",
-      "normalized": "gmarto",
+      "text": "Giantdc",
+      "normalized": "giantdc",
       "priority": 3
     },
     {
@@ -1062,10 +1069,10 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[17]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[27]",
       "key": "name",
-      "text": "Harlivo",
-      "normalized": "harlivo",
+      "text": "HANA PET",
+      "normalized": "hana pet",
       "priority": 3
     },
     {
@@ -1083,15 +1090,15 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[1]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[15]",
       "key": "name",
-      "text": "Hmaxio",
-      "normalized": "hmaxio",
+      "text": "HEART BEAT",
+      "normalized": "heart beat",
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[1]",
-      "key": "meta",
+      "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[2]",
+      "key": "role",
       "text": "Holiday cards",
       "normalized": "holiday cards",
       "priority": 3
@@ -1104,31 +1111,17 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[2]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[0]",
       "key": "name",
-      "text": "Invorae",
-      "normalized": "invorae",
+      "text": "iKraddy",
+      "normalized": "ikraddy",
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[15]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[21]",
       "key": "name",
-      "text": "Jurvina",
-      "normalized": "jurvina",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[13]",
-      "key": "name",
-      "text": "Kernivo",
-      "normalized": "kernivo",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[23]",
-      "key": "name",
-      "text": "Klnova",
-      "normalized": "klnova",
+      "text": "LABOOM",
+      "normalized": "laboom",
       "priority": 3
     },
     {
@@ -1146,10 +1139,10 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[5]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[11]",
       "key": "name",
-      "text": "Luntra",
-      "normalized": "luntra",
+      "text": "Mashtacore",
+      "normalized": "mashtacore",
       "priority": 3
     },
     {
@@ -1167,6 +1160,34 @@
       "priority": 3
     },
     {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[18]",
+      "key": "name",
+      "text": "Monkey",
+      "normalized": "monkey",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[22]",
+      "key": "name",
+      "text": "MOONPIZZA",
+      "normalized": "moonpizza",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[5]",
+      "key": "name",
+      "text": "MR.SDM",
+      "normalized": "mr sdm",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[3]",
+      "key": "name",
+      "text": "MRLIN",
+      "normalized": "mrlin",
+      "priority": 3
+    },
+    {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[3]",
       "key": "name",
       "text": "Noah P.",
@@ -1174,10 +1195,24 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[8]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[23]",
       "key": "name",
-      "text": "Orvinoe",
-      "normalized": "orvinoe",
+      "text": "OBSERVER",
+      "normalized": "observer",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[28]",
+      "key": "name",
+      "text": "Oficina",
+      "normalized": "oficina",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[29]",
+      "key": "name",
+      "text": "Panda BER",
+      "normalized": "panda ber",
       "priority": 3
     },
     {
@@ -1202,6 +1237,20 @@
       "priority": 3
     },
     {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[4]",
+      "key": "name",
+      "text": "POPO",
+      "normalized": "popo",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[25]",
+      "key": "name",
+      "text": "Prevence",
+      "normalized": "prevence",
+      "priority": 3
+    },
+    {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[3]",
       "key": "role",
       "text": "Private gallery user",
@@ -1216,38 +1265,10 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[18]",
-      "key": "name",
-      "text": "Qervon",
-      "normalized": "qervon",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[24]",
-      "key": "name",
-      "text": "Qmarto",
-      "normalized": "qmarto",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[4]",
-      "key": "name",
-      "text": "Ravinr",
-      "normalized": "ravinr",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[4]",
       "key": "meta",
       "text": "Red-carpet looks",
       "normalized": "red carpet looks",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[22]",
-      "key": "name",
-      "text": "Rpfira",
-      "normalized": "rpfira",
       "priority": 3
     },
     {
@@ -1272,6 +1293,13 @@
       "priority": 3
     },
     {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[13]",
+      "key": "name",
+      "text": "SHURONG LIM",
+      "normalized": "shurong lim",
+      "priority": 3
+    },
+    {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[5]",
       "key": "role",
       "text": "Small team admin",
@@ -1283,6 +1311,13 @@
       "key": "name",
       "text": "Small teams",
       "normalized": "small teams",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[9]",
+      "key": "name",
+      "text": "SMART Check",
+      "normalized": "smart check",
       "priority": 3
     },
     {
@@ -1321,24 +1356,10 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[10]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[17]",
       "key": "name",
-      "text": "Trovic",
-      "normalized": "trovic",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[27]",
-      "key": "name",
-      "text": "Tuzemo",
-      "normalized": "tuzemo",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[12]",
-      "key": "name",
-      "text": "Ulvanx",
-      "normalized": "ulvanx",
+      "text": "TOSACO",
+      "normalized": "tosaco",
       "priority": 3
     },
     {
@@ -1349,24 +1370,10 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[20]",
-      "key": "name",
-      "text": "Urmino",
-      "normalized": "urmino",
-      "priority": 3
-    },
-    {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[1]",
       "key": "location",
       "text": "VIP-style set",
       "normalized": "vip style set",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[7]",
-      "key": "name",
-      "text": "Vkovel",
-      "normalized": "vkovel",
       "priority": 3
     },
     {
@@ -1377,38 +1384,17 @@
       "priority": 3
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[0]",
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[7]",
       "key": "name",
-      "text": "Wliano",
-      "normalized": "wliano",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[21]",
-      "key": "name",
-      "text": "Wlivon",
-      "normalized": "wlivon",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[6]",
-      "key": "name",
-      "text": "Yaveno",
-      "normalized": "yaveno",
-      "priority": 3
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[16]",
-      "key": "name",
-      "text": "Zervino",
-      "normalized": "zervino",
+      "text": "XRAZ",
+      "normalized": "xraz",
       "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[19]",
       "key": "name",
-      "text": "Zuvric",
-      "normalized": "zuvric",
+      "text": "YU kidsrooms",
+      "normalized": "yu kidsrooms",
       "priority": 3
     }
   ]
