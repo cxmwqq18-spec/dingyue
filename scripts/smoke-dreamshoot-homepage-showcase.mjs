@@ -285,7 +285,6 @@ function assertPage(pageJson, label, storeKey) {
   assert((pageJson?.sections?.proof_1?.blocks ?? []).length >= 6, `${label}: expected at least 6 review cards`);
   assert((pageJson?.sections?.faq_1?.blocks ?? []).length >= 12, `${label}: expected expanded FAQ content`);
   assert(Number(settings.videoItemLimit ?? 0) === 8, `${label}: expected 8 video showcase items`);
-  assert(settings.showTrustedLogoIntro === true, `${label}: trusted logo intro should be enabled`);
   assert(settings.trustedLogoTitle === "Most Trusted Creators. | myDreamshoots", `${label}: trusted logo title drifted`);
   assert(settings.aboutTitle === "What is myDreamshoots?", `${label}: about title drifted`);
   assert(String(settings.aboutBody ?? "").startsWith("myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC"), `${label}: about body should describe myDreamshoots`);
@@ -560,6 +559,8 @@ for (const [hash, keys] of videoHashes.entries()) {
 }
 
 const storefrontRender = fs.readFileSync(path.join(repoRoot, "src/lib/storefront-render.tsx"), "utf8");
+const homePackLimitMatch = storefrontRender.match(/const publicHomePackLimit = (\d+);/);
+assert(homePackLimitMatch && Number(homePackLimitMatch[1]) >= expectedHomepageImageGridCardCount, `homepage storefront pack limit must cover the ${expectedHomepageImageGridCardCount}-card photo grid`);
 assert(storefrontRender.includes("prompt: \"\""), "storefront lazy payload should redact video theme prompts");
 assert(storefrontRender.includes("videoThemes: needsVideoThemes ? trimVideoThemesForStorefront"), "storefront lazy payload should request video themes only for showcase/media gallery sections");
 assert(storefrontRender.includes("const pageNeedsPublicVideoThemes = currentPageSectionTypes.has(\"dreamshoot_generation_showcase\") || currentPageSectionTypes.has(\"dreamshoot_media_gallery\")"), "full storefront page render should recover public video themes for showcase and media gallery pages when the lean runtime state omits them");
@@ -574,6 +575,8 @@ const videoShowcaseRenderer = showcaseRenderer.match(/<div className="mt-12">[\s
 const videoFeatureRenderer = themeRenderer.match(/if \(section\.type === "video_feature"\)[\s\S]*?if \(section\.type === "luxury_highlight"\)/)?.[0] ?? "";
 const testimonialRenderer = themeRenderer.match(/if \(section\.type === "testimonial_wall"\)[\s\S]*?if \(section\.type === "faq"\)/)?.[0] ?? "";
 const pricingBillingTable = fs.readFileSync(path.join(repoRoot, "src/components/storefront/pricing-billing-table.tsx"), "utf8");
+assert(showcaseRenderer.includes("hideTrustedLogoIntroOnHome"), "homepage trusted logo intro should have an explicit storefront hide gate");
+assert(showcaseRenderer.includes("renderContext.pagePath === \"/\""), "homepage trusted logo intro hide gate should be limited to the homepage");
 assert(videoFeatureRenderer.includes('setting(section, "videoUrl", "")') && videoFeatureRenderer.includes("<LazyStorefrontVideo"), "tutorial video feature should render a lazy videoUrl when configured");
 assert(videoFeatureRenderer.includes("poster={image || undefined}") && themeRenderer.includes("LazyStorefrontVideo"), "tutorial video feature should keep poster fallback while deferring mp4 loading");
 assert(showcaseRenderer.includes("dreamshoot-showcase-track"), "showcase should render horizontal showcase rails");

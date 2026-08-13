@@ -143,7 +143,7 @@ const creativePackSectionTypes = new Set(["aidreamcapes_package_catalog", "aidre
 const toolMenuItemSectionTypes = new Set(["aidreamcapes_tool_collection", "dreamshoot_tool_collection", "search_results"]);
 const videoThemeSectionTypes = new Set(["dreamshoot_generation_showcase", "dreamshoot_media_gallery"]);
 const customerRuntimeSectionTypes = new Set(["album_gallery", "cart_summary", "generation_form", "job_detail", "job_progress", "login_method_panel", "upload_panel"]);
-const publicHomePackLimit = 12;
+const publicHomePackLimit = 16;
 const publicDirectoryPackLimit = 128;
 const publicToolLimit = 96;
 
