@@ -86,6 +86,13 @@ for (const [pageName, html] of Object.entries(publicHtmlPages)) {
   }
 }
 assert.ok(pricing.includes("Starter") && (pricing.includes("$24.50") || pricing.includes("24.50")), "pricing HTML must contain real plan content");
+assert.ok(homepage.includes('data-dreamshoot-embedded-pricing="true"'), "homepage HTML must contain the embedded pricing section");
+assert.ok(
+  homepage.includes("price_dreamshoot_starter_monthly") &&
+    homepage.includes("price_dreamshoot_pro_monthly") &&
+    homepage.includes("price_dreamshoot_premium_monthly"),
+  "homepage embedded pricing must contain real plan cards and checkout links"
+);
 assert.equal(homepageVideos.length, 8, "homepage SSR must contain 8 VideoObject nodes");
 for (const video of homepageVideos) {
   assert.equal(video.encodingFormat, "video/mp4", "homepage VideoObject must expose video encodingFormat");

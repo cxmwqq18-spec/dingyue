@@ -988,7 +988,7 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
   const isWorkspace = primary === "/app";
   return {
     profile: isHome ? "home" : isPricing || isCart ? "pricing" : isTools ? "tools" : isCollectionDetail ? "collection-detail" : isBestMediaPage ? "best-media" : isCollections || isBestPackagePage ? "collections" : isWorkspace ? "workspace" : "page",
-    products: isPricing || isCart || isCollectionDetail,
+    products: isHome || isPricing || isCart || isCollectionDetail,
     siteAiApps: isTools || isWorkspace,
     creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isBestPackagePage || isBestMediaPage || isWorkspace,
     mediaAssets: isHome || isWorkspace,
