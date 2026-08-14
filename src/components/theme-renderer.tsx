@@ -38,6 +38,7 @@ import { isSpanishStorefrontSite, SPANISH_XBY_COLLECTION_ALIASES } from "@/lib/s
 import {
   storefrontCardImageAlt,
   storefrontCreativePackImageAlt,
+  storefrontAccessibleMediaAlt,
   storefrontMediaAltLocaleForSite,
   storefrontMediaBrandName,
   storefrontMeaningfulAlt,
@@ -2065,12 +2066,11 @@ function manualImageAlt({
   fallback: string;
 }): string {
   const explicit = storefrontMeaningfulAlt(explicitAlt);
-  if (explicit) return explicit;
   const mapped = storefrontMeaningfulAlt(manualAltForImage({ id, src }));
-  if (mapped) return mapped;
   const safeFallback = storefrontMeaningfulAlt(fallback);
-  if (safeFallback) return safeFallback;
-  return compactFallbackAltFromImageSrc(src);
+  const value = explicit || mapped || safeFallback || compactFallbackAltFromImageSrc(src);
+  const locale = /\/site_(?:aidreamshoots|aidreamcapes_eu)\//i.test(String(src ?? "")) ? "es" : "en";
+  return storefrontAccessibleMediaAlt({ imageUrl: src, locale, value });
 }
 
 function runtimeGeneratedAssetAlt(

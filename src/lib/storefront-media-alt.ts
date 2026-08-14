@@ -25,6 +25,7 @@ const weakAltPhrasePattern = /\b(?:private album workspace preview|private fan-s
 const legacyTemplateAltPattern = /\b(?:package gallery example|gallery scene example|package showcase frame|package cover frame|featured package scene|related package scene|private gallery visual frame|private storefront gallery|private gallery workflow|private AI album workflow|visual frame|detailed storefront visual|storefront visual showing|finished gallery example|private AI photo example|how to plan this)\b/i;
 const brandPlacementAltPattern = /\b(?:on|for)\s+(?:mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes)\b/i;
 const storefrontBrandNamePattern = /\b(?:mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes)\b/gi;
+const filenameLikeAltPattern = /^[a-z0-9][a-z0-9 -]{1,72}\s+image$/i;
 const urlLikePattern = /\bhttps?:\/\/\S+|(?:^|\s)\/assets\/\S+/gi;
 
 const englishImageDetails = [
@@ -125,6 +126,23 @@ function imageSlugParts(imageUrl: string | undefined): string[] {
   const basename = filename.replace(/\.(?:png|jpe?g|webp|avif|svg)$/i, "");
   return [parent, basename]
     .map((part) => normalizeSlug(part.replace(/(?:-\d+|-\d{8,}|-v\d+)$/i, "").replace(/-cover$/i, "")))
+    .filter(Boolean);
+}
+
+function imageContextSlugParts(imageUrl: string | undefined): string[] {
+  const value = String(imageUrl ?? "").trim();
+  if (!value) return [];
+  const path = value.split("#")[0]?.split("?")[0] ?? "";
+  const segments = path.split("/").filter(Boolean);
+  const filename = segments.at(-1) ?? "";
+  const parent = segments.at(-2) ?? "";
+  const basename = filename
+    .replace(/\.(?:png|jpe?g|webp|avif|svg)$/i, "")
+    .replace(/-\d{8,}$/i, "")
+    .replace(/-v\d+$/i, "")
+    .replace(/-cover$/i, "");
+  return [parent, basename]
+    .map((part) => normalizeSlug(part))
     .filter(Boolean);
 }
 
@@ -292,21 +310,24 @@ function genericSceneSubject(value: string | undefined): boolean {
 }
 
 function imageSlugHasSpecificTheme(key: string): boolean {
-  return /(?:anime-avatar|profile-cards|social-cards|product-style|world-cup|stadium|football|soccer|watch-party|championship|tunnel-entrance|game-day-group|premiere|red-carpet|gala|mafia|cyberpunk|noir|christmas|holiday|thanksgiving|friendsgiving|halloween|spooky|travel|coastal|route|destination|nature|outdoor|wedding|engagement|valentine|desi|indian|beauty|hairstyle|fashion|boudoir|creator|try-on|upscaler)/.test(key);
+  return /(?:anime-avatar|profile-cards|social-cards|product-style|world-cup|stadium|football|soccer|watch-party|championship|tunnel-entrance|game-day-group|premiere|red-carpet|gala|mafia|cyberpunk|noir|christmas|holiday|thanksgiving|friendsgiving|halloween|spooky|new-year|fan-scene|supporter-photo|supporter-set|fan-wall|fan-photo|birthday-fan|fan-card|private-fan|travel|coastal|route|destination|nature|outdoor|wedding|engagement|valentine|desi|indian|beauty|hairstyle|fashion|boudoir|creator|try-on|upscaler)/.test(key);
 }
 
 function englishThemeSubject(key: string): string | undefined {
   if (/\b(?:credit|subscription|plan|pricing|checkout)\b/.test(key)) {
     return "Credit plan panel for private photo galleries";
   }
-  if (/(christmas|holiday|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume-cast|cozy-card|family-occasion|seasonal|winter|new-year)/.test(key)) {
+  if (/(christmas|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume-cast|cozy-card|family-occasion|winter|new-year)/.test(key)) {
+    return "Seasonal celebration portrait";
+  }
+  if (/(fan-scene|supporter-wall|supporter-photo|supporter-set|fan-wall|fan-photo|fan-collection|fan-letter|fan-keepsake|backstage|meetup|birthday-fan|fan-card|private-fan)/.test(key)) {
+    return "Supporter portrait for a fan album";
+  }
+  if (/(holiday|seasonal)/.test(key)) {
     return "Seasonal celebration portrait";
   }
   if (/(gala|red-carpet|premiere|vip|award|award-night|spotlight|formal|evening)/.test(key)) {
     return "Red-carpet event portrait";
-  }
-  if (/(fan-scene|supporter-wall|supporter-photo|supporter-set|fan-wall|fan-photo|fan-collection|fan-letter|fan-keepsake|backstage|meetup|birthday-fan|fan-card)/.test(key)) {
-    return "Supporter portrait for a fan album";
   }
   if (/(anime-avatar)/.test(key)) {
     return "Stylized anime avatar portrait";
@@ -351,14 +372,17 @@ function spanishThemeSubject(key: string): string | undefined {
   if (/\b(?:credit|subscription|plan|pricing|checkout|credito|suscripcion|plan)\b/.test(key)) {
     return "panel de creditos para galerias privadas";
   }
-  if (/(christmas|holiday|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume-cast|cozy-card|family-occasion|seasonal|winter|new-year|navidad|temporada)/.test(key)) {
+  if (/(christmas|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume-cast|cozy-card|family-occasion|winter|new-year|navidad|temporada)/.test(key)) {
+    return "retrato de celebracion de temporada";
+  }
+  if (/(fan-scene|muro de seguidores|seguidores|aficion|fan-letter|fan-keepsake|backstage|meetup|birthday-fan|fan-card|private-fan)/.test(key)) {
+    return "retrato de aficionado para album privado";
+  }
+  if (/(holiday|seasonal)/.test(key)) {
     return "retrato de celebracion de temporada";
   }
   if (/(gala|red-carpet|premiere|vip|award|award-night|spotlight|formal|evening)/.test(key)) {
     return "retrato de evento estilo alfombra roja";
-  }
-  if (/(fan-scene|muro de seguidores|seguidores|aficion|fan-letter|fan-keepsake|backstage|meetup|birthday-fan|fan-card)/.test(key)) {
-    return "retrato de aficionado para album privado";
   }
   if (/(anime-avatar|avatar-anime)/.test(key)) {
     return "avatar anime estilizado";
@@ -417,15 +441,93 @@ function compactAltSentence(value: string, locale: StorefrontMediaAltLocale): st
   return `${sentence.slice(0, maxLength - 1).replace(/\s+\S*$/, "").replace(/[,\s]+$/g, "")}.`;
 }
 
+function imageContextLabel(imageUrl: string | undefined): string {
+  const parts = imageContextSlugParts(imageUrl)
+    .map((part) => part.replace(/^\d{8,}-/, ""))
+    .filter((part) => part && !/^(?:assets|generated|visuals|sites|site|homepage-unique|fan-holiday-theme|creative-packs|pack-galleries|categories|covers|gallery|showcase)$/i.test(part));
+  return Array.from(new Set(parts.slice(-2))).join(" ").replace(/-/g, " ").trim();
+}
+
+function trimWordsToLength(value: string, maxLength: number): string {
+  const words = value.split(/\s+/).filter(Boolean);
+  while (words.length && words.join(" ").length > maxLength) words.pop();
+  return words.join(" ");
+}
+
+function compactMediaAltSentence(
+  value: string,
+  locale: StorefrontMediaAltLocale,
+  imageUrl?: string,
+  index?: number
+): string {
+  const base = cleanAltText(value).replace(/\s*,\s*,/g, ",").replace(/\s+/g, " ").trim();
+  const maxLength = locale === "es" ? 118 : 112;
+  const sourceLabel = imageContextLabel(imageUrl);
+  const normalizedBase = base.toLowerCase();
+  const indexPhrase = typeof index === "number"
+    ? locale === "es" ? `imagen ${index + 1}` : `gallery image ${index + 1}`
+    : "";
+  const sourcePhrase = sourceLabel && !normalizedBase.includes(sourceLabel.toLowerCase())
+    ? locale === "es"
+      ? `referencia visual ${sourceLabel}${indexPhrase ? ` ${indexPhrase}` : ""}`
+      : `${sourceLabel}${indexPhrase ? ` ${indexPhrase}` : ""} visual reference`
+    : indexPhrase && !normalizedBase.includes(indexPhrase.toLowerCase())
+      ? indexPhrase
+    : "";
+  const minimumPhrase = locale === "es"
+    ? `detalle ${conciseImageDetail(index, locale)} para explorar el catalogo`
+    : `detail ${conciseImageDetail(index, locale)} for storefront browsing`;
+  const baseWithSource = [base, sourcePhrase].filter(Boolean).join(", ");
+  const needsMinimumPhrase = baseWithSource.split(/\s+/).filter(Boolean).length < 8;
+  const full = [baseWithSource, needsMinimumPhrase ? minimumPhrase : ""]
+    .filter(Boolean)
+    .join(", ");
+  const fullSentence = full.endsWith(".") ? full : `${full}.`;
+  if (fullSentence.length <= maxLength && fullSentence.split(/\s+/).filter(Boolean).length >= 8) return fullSentence;
+
+  const suffix = [sourcePhrase, needsMinimumPhrase ? minimumPhrase : ""].filter(Boolean).join(", ");
+  const suffixWithPeriod = suffix ? `${suffix}.` : "";
+  const baseBudget = Math.max(24, maxLength - suffixWithPeriod.length - 2);
+  const trimmedBase = trimWordsToLength(base || minimumPhrase, baseBudget);
+  const result = suffix ? `${trimmedBase}, ${suffixWithPeriod}` : `${trimmedBase}.`;
+  if (result.length <= maxLength && result.split(/\s+/).filter(Boolean).length >= 8) return result;
+  return compactAltSentence(full, locale);
+}
+
+export function storefrontAccessibleMediaAlt({
+  fallback,
+  imageUrl,
+  index,
+  locale = "en",
+  value
+}: {
+  fallback?: string;
+  imageUrl?: string;
+  index?: number;
+  locale?: StorefrontMediaAltLocale;
+  value?: string;
+}): string {
+  const explicit = meaningfulAlt(value);
+  const fallbackAlt = meaningfulAlt(fallback);
+  const imageThemeKey = themeImageSlugParts(imageUrl).join(" ");
+  const themedAlt = locale === "es" ? spanishThemeSubject(imageThemeKey) : englishThemeSubject(imageThemeKey);
+  const genericFileAlt = explicit && filenameLikeAltPattern.test(explicit);
+  const shortContextAlt = explicit && explicit.split(/\s+/).filter(Boolean).length < 8;
+  const base = genericFileAlt || shortContextAlt
+    ? themedAlt || explicit
+    : explicit || fallbackAlt || themedAlt || (locale === "es" ? "imagen de escaparate" : "Storefront image");
+  return compactMediaAltSentence(base, locale, imageUrl, index);
+}
+
 export function storefrontPackMediaAlt(input: PackAltInput): string {
   const locale = input.locale ?? "en";
   const brand = cleanAltText(input.brand) || (locale === "es" ? "AIdreamshoots" : "MyDreamShoots");
   const explicit = meaningfulThemeAlignedAltForStorefront(input.explicitAlt, locale, brand, input.imageUrl);
-  if (explicit) return explicit;
+  if (explicit) return compactMediaAltSentence(explicit, locale, input.imageUrl, input.index);
   const galleryAlt = input.role === "gallery" && typeof input.index === "number"
     ? meaningfulThemeAlignedAltForStorefront(input.galleryImageAlts?.[input.index], locale, brand, input.imageUrl)
     : "";
-  if (galleryAlt) return galleryAlt;
+  if (galleryAlt) return compactMediaAltSentence(galleryAlt, locale, input.imageUrl, input.index);
 
   const specificKey = themeKey(input);
   const imageKey = themeImageSlugParts(input.imageUrl).join(" ");
@@ -446,9 +548,7 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
     ? "retrato estilizado para una galeria privada"
     : "Styled portrait prepared for a private gallery";
   const naturalScene = scene || fallbackScene;
-  return locale === "es"
-    ? compactAltSentence(`${naturalScene}, ${detail}`, locale)
-    : compactAltSentence(`${naturalScene}, ${detail}`, locale);
+  return compactMediaAltSentence(`${naturalScene}, ${detail}`, locale, input.imageUrl, input.index);
 }
 
 export function storefrontCreativePackImageAlt({
@@ -535,7 +635,8 @@ export function storefrontVideoPosterAlt({
   const cleanTitle = locale === "es"
     ? spanishVideoAltPhrase(title, "video con IA")
     : cleanAltText(title) || "AI video";
-  return locale === "es"
-    ? compactAltSentence(`Imagen de portada para ${cleanTitle}`, locale)
-    : compactAltSentence(`Poster frame for ${cleanTitle}`, locale);
+  return compactMediaAltSentence(
+    locale === "es" ? `Imagen de portada para ${cleanTitle}` : `Poster frame for ${cleanTitle}`,
+    locale
+  );
 }

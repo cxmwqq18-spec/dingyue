@@ -142,7 +142,9 @@ function isDecorativeImage(attrs) {
 }
 
 function isSeoMediaImage(src) {
-  return /\/assets\/(?:dreamshoot\/generated|sites\/site_aidreamcapes(?:_eu)?\/(?:creative-packs|fan-holiday-theme)|sites\/site_mydreamshoots|sites\/site_aidreamshoots)/i.test(String(src ?? ""));
+  const normalized = String(src ?? "");
+  if (/\/brand(?:\/|$)/i.test(normalized)) return false;
+  return /\/assets\/(?:dreamshoot\/generated|sites\/site_aidreamcapes(?:_eu)?\/(?:creative-packs|fan-holiday-theme)|sites\/site_mydreamshoots|sites\/site_aidreamshoots)/i.test(normalized);
 }
 
 function altWordCount(value) {
