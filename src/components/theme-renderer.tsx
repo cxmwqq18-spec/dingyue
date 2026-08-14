@@ -9554,21 +9554,16 @@ function SectionView({
           <div className="min-w-0 rounded-[28px] border border-white/10 bg-[#11131a] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:p-4 md:p-5">
             <div className="min-w-0 overflow-hidden rounded-[24px] border border-white/10 bg-[#0c0e13] shadow-[0_24px_80px_-58px_rgba(0,0,0,0.9)]">
               <div className="relative overflow-hidden border-b border-white/10 bg-[#10131a]">
-                <StorefrontSafeImage
-                  alt={sectionVisualAltForSite(site, section, featureImage, setting(section, "title"), { description: featureCaption, role: "featured" })}
-                  backgroundClassName="opacity-[0.2] blur-xl"
-                  className="aspect-[16/9] w-full bg-[#14161a] md:aspect-[16/10]"
-                  imageClassName="drop-shadow-[0_18px_36px_rgba(0,0,0,0.42)]"
-                  sizes="(max-width: 1024px) 100vw, 42vw"
-                  src={featureImage}
-                />
+                <div className="relative aspect-[16/9] w-full md:aspect-[16/10]">
+                  <StorefrontImage className="h-full w-full object-cover object-[50%_18%]" sizes="(max-width: 1024px) 100vw, 42vw" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, setting(section, "title"), { description: featureCaption, role: "featured" })} />
+                </div>
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,10,14,0.14)_0%,rgba(9,10,14,0.2)_38%,rgba(9,10,14,0.78)_100%)]" />
                 <div className="absolute left-4 top-4 rounded-full border border-white/12 bg-black/32 px-3 py-1.5 text-[11px] font-medium text-white/86 backdrop-blur">
                   {featureLabel}
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-white md:p-5">
-                  <p className="max-w-lg text-[1rem] font-semibold leading-tight md:text-[1.15rem]">{featureCaption}</p>
-                  <p className="mt-2 max-w-lg text-xs leading-5 text-white/72 md:text-sm md:leading-6">{featureMeta}</p>
+                  <p className="max-w-lg text-[1rem] font-semibold leading-tight md:max-w-[calc(100%-8.5rem)] md:text-[1.15rem]">{featureCaption}</p>
+                  <p className="mt-2 max-w-lg text-xs leading-5 text-white/72 md:max-w-[calc(100%-8.5rem)] md:text-sm md:leading-6">{featureMeta}</p>
                 </div>
                 <div className="absolute bottom-4 right-4 hidden w-[108px] overflow-hidden rounded-[18px] border border-white/12 bg-black/28 shadow-[0_18px_48px_-36px_rgba(0,0,0,0.8)] backdrop-blur-sm md:block">
                   <div className="relative aspect-[4/5] w-full">

@@ -15,6 +15,28 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+async function assertLoginMediaLayout(page) {
+  const primaryImage = page.locator('section[id="start"] img').first();
+  await primaryImage.waitFor({ state: "visible", timeout: 30000 });
+  const layout = await primaryImage.evaluate((image) => {
+    const imageRect = image.getBoundingClientRect();
+    const frame = image.closest("div.relative");
+    const frameRect = frame?.getBoundingClientRect();
+    return {
+      objectFit: window.getComputedStyle(image).objectFit,
+      imageWidth: imageRect.width,
+      imageHeight: imageRect.height,
+      frameWidth: frameRect?.width ?? 0,
+      frameHeight: frameRect?.height ?? 0
+    };
+  });
+  assert(layout.objectFit === "cover", `login media image should use object-fit: cover, received ${layout.objectFit}`);
+  assert(
+    layout.imageWidth >= layout.frameWidth - 2 && layout.imageHeight >= layout.frameHeight - 2,
+    `login media image should fill its frame: image ${layout.imageWidth}x${layout.imageHeight}, frame ${layout.frameWidth}x${layout.frameHeight}`
+  );
+}
+
 async function waitForWorkspaceUi(page, contextLabel) {
   await page.waitForFunction(
     () => /Generate Image|Create New AI Model|Pick Package|source photos/i.test(document.body.innerText),
@@ -72,6 +94,7 @@ async function smokeLoginRedirect() {
     });
 
     await page.goto(`/site/${siteSlug}/login`, { waitUntil: "networkidle" });
+    await assertLoginMediaLayout(page);
     await page.getByLabel("Email").fill(smoke.email);
     await page.getByLabel("Password").fill(smoke.password);
     await page.locator('form button[type="submit"]').last().click({ noWaitAfter: true });

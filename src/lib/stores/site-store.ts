@@ -299,15 +299,24 @@ type StorefrontPublicNavigationData = {
   toolMenuItems: NonNullable<PlatformState["toolMenuItems"]>;
 };
 
-export const getStorefrontPublicNavigationDataForSite = cache(async (siteId: string): Promise<StorefrontPublicNavigationData> => {
+type StorefrontPublicNavigationDataOptions = {
+  creativePackTake?: number;
+  toolMenuTake?: number;
+};
+
+export const getStorefrontPublicNavigationDataForSite = cache(async (siteId: string, options: StorefrontPublicNavigationDataOptions = {}): Promise<StorefrontPublicNavigationData> => {
+  const creativePackTake = Number.isFinite(options.creativePackTake) ? Math.max(0, Math.floor(options.creativePackTake ?? 0)) : undefined;
+  const toolMenuTake = Number.isFinite(options.toolMenuTake) ? Math.max(0, Math.floor(options.toolMenuTake ?? 0)) : undefined;
+  const creativePackTakeKey = creativePackTake ?? "all";
+  const toolMenuTakeKey = toolMenuTake ?? "all";
   return siteReadCache.get(
-    `public-navigation:${siteId}`,
+    `public-navigation:${siteId}:packs-${creativePackTakeKey}:tools-${toolMenuTakeKey}`,
     async () => {
       const [creativePacks, creativePackCategories, toolCategories, toolMenuItems] = await runDbTasks([
-        () => getStorefrontPublicCreativePacksForSite(siteId),
+        () => creativePackTake === 0 ? Promise.resolve([]) : getStorefrontPublicCreativePacksForSite(siteId, creativePackTake),
         () => getStorefrontPublicCreativePackCategoriesForSite(siteId),
         () => loadToolCategoriesForSite(siteId, { activeOnly: true }),
-        () => loadToolMenuItemsForSite(siteId, { activeOnly: true })
+        () => toolMenuTake === 0 ? Promise.resolve([]) : loadToolMenuItemsForSite(siteId, { activeOnly: true, take: toolMenuTake })
       ]);
       return {
         creativePackCategories,
@@ -979,8 +988,8 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
   const isWorkspace = primary === "/app";
   return {
     profile: isHome ? "home" : isPricing || isCart ? "pricing" : isTools ? "tools" : isCollectionDetail ? "collection-detail" : isBestMediaPage ? "best-media" : isCollections || isBestPackagePage ? "collections" : isWorkspace ? "workspace" : "page",
-    products: isHome || isPricing || isCart || isCollectionDetail,
-    siteAiApps: isHome || isTools || isWorkspace,
+    products: isPricing || isCart || isCollectionDetail,
+    siteAiApps: isTools || isWorkspace,
     creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isBestPackagePage || isBestMediaPage || isWorkspace,
     mediaAssets: isHome || isWorkspace,
     toolMenus: true,
@@ -992,7 +1001,7 @@ function publicRuntimeLimits(profile: ReturnType<typeof publicRuntimeNeeds>["pro
   return {
     products: profile === "pricing" ? 12 : 8,
     siteAiApps: profile === "tools" ? 96 : profile === "home" ? 24 : 48,
-    creativePacks: profile === "collection-detail" ? 12 : profile === "best-media" ? undefined : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? 12 : 24,
+    creativePacks: profile === "collection-detail" ? 12 : profile === "best-media" ? undefined : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? 8 : 24,
     mediaAssets: profile === "home" ? 12 : profile === "workspace" ? 40 : 0
   };
 }
@@ -1530,7 +1539,8 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
       : () => Promise.resolve([]),
     needs.toolMenus && !useSharedNavigationData ? () => loadToolCategoriesForSite(siteId, { activeOnly: true, take: 80 }) : () => Promise.resolve([]),
     needs.toolMenus && !useSharedNavigationData ? () => loadToolMenuItemsForSite(siteId, { activeOnly: true, take: 80 }) : () => Promise.resolve([]),
-    useSharedNavigationData ? () => getStorefrontPublicNavigationDataForSite(siteId) : () => Promise.resolve(undefined)
+    useSharedNavigationData ? () => getStorefrontPublicNavigationDataForSite(siteId)
+      : () => Promise.resolve(undefined)
   ]);
   const runtimeCreativePackCategories = navigationData?.creativePackCategories ?? creativePackCategories;
   const runtimeCreativePacks = navigationData?.creativePacks ?? creativePacks.map(toPublicRuntimeCreativePack);

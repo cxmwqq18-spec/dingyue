@@ -7,7 +7,7 @@ import { findPage, getPage } from "@/lib/data";
 import { authMessageForCode } from "@/lib/auth-messages";
 import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
 import { prisma } from "@/lib/prisma";
-import { preferLocalPathModeState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
+import { preferLocalPathModeState, readPathModePublicMetadataState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
 import { isMydreamshootsContentSourceSite, isMydreamshootsContentSourceSlug } from "@/lib/storefront-content-source-policy";
 import {
   getCustomerBySessionFromState,
@@ -26,6 +26,7 @@ import { customerSessionCookie } from "@/lib/session";
 import {
   readStorefrontCustomerRuntimeStateForSiteFromDatabase,
   readStorefrontPlatformState,
+  readStorefrontPublicPageMetadataStateBySlugFromDatabase,
   readStorefrontPublicRuntimeStateBySlugFromDatabase,
   readStorefrontRuntimeStateForSiteFromDatabase
 } from "@/lib/storefront-state";
@@ -974,7 +975,60 @@ async function getStateForStorefrontRender(site: Site, routeMode: "host" | "path
   return readStorefrontPlatformState();
 }
 
-async function getPublicSectionStateForRoute(publicSlug: string, slug: string, routeMode: "host" | "path"): Promise<PlatformState | undefined> {
+async function getPublicSectionShellStateForRoute(publicSlug: string, slug: string, routeMode: "host" | "path"): Promise<PlatformState | undefined> {
+  if (routeMode === "path") return readPathModePublicMetadataState(publicSlug, slug);
+  try {
+    const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(publicSlug, slug);
+    if (state) return state;
+  } catch (error) {
+    if (isMydreamshootsContentSourceSlug(publicSlug)) {
+      throw new Error(
+        `MyDreamShoots section metadata for ${publicSlug}${slug} must read Postgres published content. ` +
+        "Refusing to fall back to legacy state because that can reintroduce stale copy. " +
+        `Original error: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
+  }
+  if (isMydreamshootsContentSourceSlug(publicSlug)) {
+    throw new Error(`MyDreamShoots section metadata for ${publicSlug}${slug} was not found in Postgres. Refusing to fall back to legacy state.`);
+  }
+  return readStorefrontPlatformState();
+}
+
+function sectionIdsNeedPublicRuntime(pageJson: ThemePageJson, slug: string, sectionIds: string[], query: Record<string, string | string[] | undefined>): boolean {
+  if (slug === "/account" || slug === "/login" || slug.startsWith("/app/") || slug.startsWith("/tools/")) return true;
+  if (slug === "/cart" || slug === "/pricing") return true;
+  if (slug === "/collections" && typeof query.category === "string" && query.category) return true;
+  return sectionIds.some((sectionId) => {
+    const sectionType = pageJson.sections[sectionId]?.type;
+    return Boolean(sectionType && (
+      productSectionTypes.has(sectionType) ||
+      siteAiAppSectionTypes.has(sectionType) ||
+      creativePackSectionTypes.has(sectionType) ||
+      toolMenuItemSectionTypes.has(sectionType) ||
+      videoThemeSectionTypes.has(sectionType) ||
+      customerRuntimeSectionTypes.has(sectionType)
+    ));
+  });
+}
+
+async function getPublicSectionStateForRoute(
+  publicSlug: string,
+  slug: string,
+  routeMode: "host" | "path",
+  sectionIds: string[],
+  query: Record<string, string | string[] | undefined>
+): Promise<PlatformState | undefined> {
+  const shellState = await getPublicSectionShellStateForRoute(publicSlug, slug, routeMode);
+  const shellSite = shellState?.sites.find((item) =>
+    publicSiteSlug(item.slug) === publicSlug ||
+    canonicalSiteSlug(item.slug) === canonicalSiteSlug(publicSlug)
+  );
+  const shellPage = shellSite
+    ? findPage(shellSite, slug) ?? syntheticStorefrontPolicyPage(shellSite, slug) ?? syntheticDreamShootPartnerPage(shellSite, slug)
+    : undefined;
+  if (!shellState || !shellSite || !shellPage) return shellState;
+  if (!sectionIdsNeedPublicRuntime(shellPage.publishedJson, slug, sectionIds, query)) return shellState;
   if (routeMode === "path") return readPathModePublicRuntimeState(publicSlug, slug);
   try {
     const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, slug);
@@ -2642,7 +2696,7 @@ export async function renderStorefrontSectionPayloads({
   if (!requestedSectionIds.length) return [];
   const publicSlug = publicSiteSlug(siteSlug);
   const shouldCompletePublicPacks = !(routeMode === "path" && preferLocalPathModeState(publicSlug));
-  const state = await getPublicSectionStateForRoute(publicSlug, slug, routeMode);
+  const state = await getPublicSectionStateForRoute(publicSlug, slug, routeMode, requestedSectionIds, query);
   if (!state) return [];
   const currentSite = state.sites.find((item) =>
     item.slug === siteSlug ||
@@ -2815,7 +2869,7 @@ export async function renderStorefrontSectionPayload({
 }): Promise<StorefrontSectionPayload | undefined> {
   const publicSlug = publicSiteSlug(siteSlug);
   const shouldCompletePublicPacks = !(routeMode === "path" && preferLocalPathModeState(publicSlug));
-  const state = await getPublicSectionStateForRoute(publicSlug, slug, routeMode);
+  const state = await getPublicSectionStateForRoute(publicSlug, slug, routeMode, [sectionId], query);
   if (!state) return undefined;
   const currentSite = state.sites.find((item) =>
     item.slug === siteSlug ||
@@ -3003,7 +3057,9 @@ export async function renderStorefrontLoginPage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const state = await getStateForStorefrontRender(site, routeMode, providedState);
+  const state = providedState
+    ?? (routeMode === "path" ? await readPathModePublicRuntimeState(publicSiteSlug(site.slug), "/login") : undefined)
+    ?? await getStateForStorefrontRender(site, routeMode);
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   const page = getPage(currentSite, "/login");
