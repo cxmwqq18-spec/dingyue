@@ -296,6 +296,35 @@ export async function createAssetDownloadLinkRelational(
   };
 }
 
+export async function recordCustomerAssetDownloadRelational(
+  params: { siteId: string; customerId: string; asset: AssetUpload; source?: string },
+  client: DbClient = prisma
+): Promise<void> {
+  await requireModelFields(client, "CustomerAssetDownload", ["id", "siteId", "customerId", "assetId", "createdAt"]);
+  const album = params.asset.jobId
+    ? await client.album.findFirst({
+        where: {
+          siteId: params.siteId,
+          customerId: params.customerId,
+          sourceJobId: params.asset.jobId
+        },
+        select: { id: true },
+        orderBy: { updatedAt: "desc" }
+      })
+    : undefined;
+  await client.customerAssetDownload.create({
+    data: compactObject({
+      id: relationalUid("dl"),
+      siteId: params.siteId,
+      customerId: params.customerId,
+      assetId: params.asset.id,
+      jobId: params.asset.jobId,
+      albumId: album?.id,
+      source: params.source ?? "asset"
+    } as Record<string, unknown>) as never
+  });
+}
+
 export async function readCustomerAssetFileByStorageKey(params: {
   siteId: string;
   customerId: string;

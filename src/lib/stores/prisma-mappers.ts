@@ -260,6 +260,22 @@ export function toIsoString(value: Date | string | null | undefined): string | u
   return value instanceof Date ? value.toISOString() : value;
 }
 
+function publicCustomerProfileRuntime(customer: Record<string, unknown>): PublicCustomer["profile"] {
+  const profile = customer.profile && typeof customer.profile === "object" && !Array.isArray(customer.profile)
+    ? customer.profile as Record<string, unknown>
+    : undefined;
+  if (!profile) return undefined;
+  const avatarAsset = profile.avatarAsset && typeof profile.avatarAsset === "object" && !Array.isArray(profile.avatarAsset)
+    ? profile.avatarAsset as Record<string, unknown>
+    : undefined;
+  const storageKey = optionalString(avatarAsset?.storageKey)?.replace(/^customer-assets\//, "");
+  return {
+    avatarAssetId: optionalString(profile.avatarAssetId),
+    avatarUrl: storageKey ? `/api/local-assets/${storageKey}` : undefined,
+    updatedAt: toIsoString(profile.updatedAt as Date | string | undefined)
+  };
+}
+
 export function toPublicCustomerRelational(customer: Record<string, unknown>): PublicCustomer {
   return {
     id: String(customer.id),
@@ -270,7 +286,8 @@ export function toPublicCustomerRelational(customer: Record<string, unknown>): P
     balance: {
       available: numberFromUnknown((customer.balance as { balance?: unknown } | null | undefined)?.balance, 0),
       reserved: numberFromUnknown((customer.balance as { reserved?: unknown } | null | undefined)?.reserved, 0)
-    }
+    },
+    profile: publicCustomerProfileRuntime(customer)
   };
 }
 

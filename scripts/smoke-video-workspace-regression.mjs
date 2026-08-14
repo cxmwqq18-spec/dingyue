@@ -12,6 +12,7 @@ function assert(condition, message) {
 }
 
 const packageJson = read("package.json");
+const platformState = JSON.parse(read("data/platform-state.json"));
 const fixedPortDevScript = read("scripts/dev-fixed-port.mjs");
 const dbTunnelScript = read("scripts/start-remote-db-tunnel.mjs");
 const dbTunnelWatchScript = read("scripts/watch-remote-db-tunnel.mjs");
@@ -31,6 +32,8 @@ assert(videoLatencyReport.includes("scannedJobCount") && videoLatencyReport.incl
 assert(videoLatencyReport.includes("progressWindow="), "video latency text output should expose provider progress window timing");
 assert(fetchTimeout.includes("shouldRetryWithoutLocalProxy") && fetchTimeout.includes("AI_WORKER_PROXY_DIRECT_FALLBACK"), "provider fetches should fall back to direct connections when the configured local proxy is down");
 assert(fetchTimeout.includes('code === "ECONNREFUSED"') && fetchTimeout.includes("return fetch(input, requestInit)"), "local proxy connection failures should not block provider polling or result download");
+const dreamshootVideoSiteApp = platformState.siteAiApps.find((siteApp) => siteApp.siteId === "site_dreamshoot" && siteApp.aiAppId === "ai_video_generator");
+assert(dreamshootVideoSiteApp?.enabled === true, "MyDreamShoots video app should stay enabled so customer video jobs can be created");
 const videoRecovery = read("src/lib/video-provider-result-recovery.ts");
 const videoRecoveryRoute = read("src/app/api/internal/ai-worker/recover-video-output/route.ts");
 const videoRecoveryScript = read("scripts/recover-video-provider-output.mjs");
@@ -94,6 +97,7 @@ assert(videoWorkspace.includes("Your secure session expired. Refresh the page, t
 assert(videoWorkspace.includes("function isCsrfError"), "video workspace should centralize CSRF error detection");
 assert(videoWorkspace.includes("refresh=csrf-"), "video workspace should refresh customer runtime to self-heal stale CSRF cookies");
 assert(videoWorkspace.includes("response = await submitRequest();"), "video workspace should retry video creation once after CSRF self-heal");
+assert(videoWorkspace.includes("ai_app_not_enabled_for_site"), "video workspace should explain disabled site video app errors instead of blaming frame images");
 assert(videoWorkspace.includes("const maxFrames = CUSTOMER_VIDEO_FRAME_LIMIT"), "video workspace should use the global customer video frame limit");
 assert(!videoWorkspace.includes("selectedTheme?.effectiveMaxFrames ?? selectedTheme?.maxFrames"), "video workspace should not let theme frame settings control the customer frame cap");
 assert(videoWorkspace.includes("trimVideoFrameSelection(current, maxFrames)"), "video workspace should trim over-limit selections by keeping the latest clicked frames");

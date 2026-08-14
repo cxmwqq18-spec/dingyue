@@ -4,7 +4,8 @@ import { StoreError } from "@/lib/server-store";
 import {
   createAssetDownloadLinkRelational,
   getCustomerAssetRelational,
-  readCustomerAssetFileByStorageKey
+  readCustomerAssetFileByStorageKey,
+  recordCustomerAssetDownloadRelational
 } from "@/lib/stores/asset-store";
 import { generateVideoPosterBytes } from "@/lib/media-watermark";
 import { signWorkerAssetDownload } from "@/lib/worker";
@@ -85,6 +86,7 @@ export async function GET(
     }
     const extension = mimeType.split("/")[1]?.replace(/[^a-z0-9]+/gi, "") || "bin";
     const range = parseByteRange(request.headers.get("range"), result.bytes.length);
+    const shouldRecordCustomerDownload = customerSessionValid && !workerSignatureValid && !siteAdminSessionValid && !isInlinePreview && !wantsPoster && !range;
     if (range === "unsatisfiable") {
       return new Response(null, {
         status: 416,
@@ -107,6 +109,11 @@ export async function GET(
           "Content-Disposition": contentDisposition,
           ...(isInlinePreview ? { "Cache-Control": "private, max-age=600" } : {})
         }
+      });
+    }
+    if (shouldRecordCustomerDownload) {
+      await recordCustomerAssetDownloadRelational({ siteId, customerId, asset: result.asset, source: "download" }).catch((error) => {
+        console.error("customer_asset_download_record_failed", error);
       });
     }
     return new Response(new Uint8Array(result.bytes), {

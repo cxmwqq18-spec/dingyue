@@ -3,13 +3,39 @@
     "headline": "AI Professional Headshot Generator",
     "cardDescription": "Refresh work profiles with clean studio lighting, polished wardrobe direction, and crops that feel ready for LinkedIn, resumes, and team pages.",
     "metaLabel": "Work profiles",
-    "tags": ["AI Headshots", "LinkedIn Photos", "Work Profiles"],
-    "detailTags": ["AI Headshots", "LinkedIn Photos", "Resume Photos", "Founder Bios", "Team Pages", "Speaker Profiles", "Clean Lighting", "Private Gallery"],
+    "tags": [
+      "AI Headshots",
+      "LinkedIn Photos",
+      "Work Profiles"
+    ],
+    "detailTags": [
+      "AI Headshots",
+      "LinkedIn Photos",
+      "Resume Photos",
+      "Founder Bios",
+      "Team Pages",
+      "Speaker Profiles",
+      "Clean Lighting",
+      "Private Gallery"
+    ],
     "detailIntro": "Build work-ready portraits with believable lighting, simple backgrounds, and face-forward crops. This package keeps the mood professional without making every image feel like the same studio template.",
     "whatCreates": "A private gallery of polished headshots, profile crops, and business-ready portraits for public bios, resumes, speaker pages, and team directories.",
-    "bestFor": ["LinkedIn refreshes", "Resume and CV portraits", "Founder and speaker bios", "Team directory pages"],
-    "workflow": ["Upload clear portraits with visible faces and simple lighting.", "Choose the professional direction and review the credit cost before generation.", "Save a private gallery and download the strongest business crops."],
-    "styleNotes": ["Neutral office or studio backdrops", "Clean face-forward compositions", "Natural retouching with professional contrast"],
+    "bestFor": [
+      "LinkedIn refreshes",
+      "Resume and CV portraits",
+      "Founder and speaker bios",
+      "Team directory pages"
+    ],
+    "workflow": [
+      "Upload clear portraits with visible faces and simple lighting.",
+      "Choose the professional direction and review the credit cost before generation.",
+      "Save a private gallery and download the strongest business crops."
+    ],
+    "styleNotes": [
+      "Neutral office or studio backdrops",
+      "Clean face-forward compositions",
+      "Natural retouching with professional contrast"
+    ],
     "coverNote": "Use the cover mood to judge lighting, wardrobe polish, and how direct the portrait crop should feel.",
     "safetyNote": "Do not use this package for official IDs, passports, impersonation, or representing another person without permission."
   },
@@ -17,13 +43,39 @@
     "headline": "AI Football Fan Photo Generator",
     "cardDescription": "Create sports fan photos, sports-idol style meetups, stadium group shots, match-day posters, and social-ready supporter portraits from your own selfies.",
     "metaLabel": "Fan meetups",
-    "tags": ["Fan Photos", "Sports-idol Style", "Group Shots"],
-    "detailTags": ["Fan Photos", "Sports-idol Style", "Fan Meetups", "Match Day Portraits", "Stadium Mood", "Group Photos", "Social Banners", "Private Gallery"],
+    "tags": [
+      "Fan Photos",
+      "Sports-idol Style",
+      "Group Shots"
+    ],
+    "detailTags": [
+      "Fan Photos",
+      "Sports-idol Style",
+      "Fan Meetups",
+      "Match Day Portraits",
+      "Stadium Mood",
+      "Group Photos",
+      "Social Banners",
+      "Private Gallery"
+    ],
     "detailIntro": "Create permission-safe sports fan photos that feel loud, cinematic, and made for match-day sharing. The look is inspired by stadium energy, fan meetup moments, floodlights, and supporter emotion rather than official event branding or real player likenesses.",
     "whatCreates": "A private set of fan meetup photos, stadium-style group shots, supporter posters, avatars, and social crops based on photos you own or have permission to use.",
-    "bestFor": ["Fan meetup portraits", "Match-day group photos", "Tournament watch-party graphics", "Sports-idol style personal albums"],
-    "workflow": ["Upload personal source photos with clear faces and no protected third-party imagery.", "Pick the fan-photo direction and review the credit cost before generation.", "Download private favorites for personal posts, group albums, avatars, or keepsakes."],
-    "styleNotes": ["Floodlight glow and stadium atmosphere", "Supporter-color styling without protected logos", "Group-friendly framing for fan meetups"],
+    "bestFor": [
+      "Fan meetup portraits",
+      "Match-day group photos",
+      "Tournament watch-party graphics",
+      "Sports-idol style personal albums"
+    ],
+    "workflow": [
+      "Upload personal source photos with clear faces and no protected third-party imagery.",
+      "Pick the fan-photo direction and review the credit cost before generation.",
+      "Download private favorites for personal posts, group albums, avatars, or keepsakes."
+    ],
+    "styleNotes": [
+      "Floodlight glow and stadium atmosphere",
+      "Supporter-color styling without protected logos",
+      "Group-friendly framing for fan meetups"
+    ],
     "coverNote": "Use the preview to check supporter mood, crowd energy, and whether the final image should feel like a fan meetup, avatar, group shot, or poster.",
     "safetyNote": "Fan-safe styling only; do not request real player or celebrity likenesses, official team logos, event marks, protected brand assets, or unauthorized third-party portraits."
   },
@@ -31,120 +83,355 @@
     "headline": "AI Hairstyle Photo Generator",
     "cardDescription": "Explore hair color, cut, texture, and beauty portrait ideas before a salon visit or content refresh.",
     "metaLabel": "Hair previews",
-    "tags": ["Hairstyle Ideas", "Hair Color", "Beauty Portraits"],
-    "detailTags": ["Hairstyle Ideas", "Hair Color Preview", "Beauty Portraits", "Salon Inspiration", "Profile Refresh", "Texture Tests", "Private Gallery", "Visual Planning"],
+    "tags": [
+      "Hairstyle Ideas",
+      "Hair Color",
+      "Beauty Portraits"
+    ],
+    "detailTags": [
+      "Hairstyle Ideas",
+      "Hair Color Preview",
+      "Beauty Portraits",
+      "Salon Inspiration",
+      "Profile Refresh",
+      "Texture Tests",
+      "Private Gallery",
+      "Visual Planning"
+    ],
     "detailIntro": "Preview hairstyle directions in polished portraits before committing to a real-world change. The package is built for visual planning, salon inspiration, and creator beauty content.",
     "whatCreates": "A private gallery of hairstyle concepts, beauty portraits, color directions, and profile-ready crops that help compare looks side by side.",
-    "bestFor": ["Hair color planning", "Salon consultation ideas", "Beauty profile refreshes", "Creator styling tests"],
-    "workflow": ["Upload clear selfies with hair and face visible.", "Select the hairstyle direction and compare the preview against your real-world plans.", "Download favorites for consultation, moodboards, or personal content."],
-    "styleNotes": ["Face-framing hair detail", "Soft beauty lighting", "Readable color and texture changes"],
+    "bestFor": [
+      "Hair color planning",
+      "Salon consultation ideas",
+      "Beauty profile refreshes",
+      "Creator styling tests"
+    ],
+    "workflow": [
+      "Upload clear selfies with hair and face visible.",
+      "Select the hairstyle direction and compare the preview against your real-world plans.",
+      "Download favorites for consultation, moodboards, or personal content."
+    ],
+    "styleNotes": [
+      "Face-framing hair detail",
+      "Soft beauty lighting",
+      "Readable color and texture changes"
+    ],
     "coverNote": "Use the examples to compare silhouette, face framing, and whether the style still feels like you.",
     "safetyNote": "Results are visual inspiration and not a guaranteed salon outcome."
   },
   "cyberpunk": {
-    "headline": "AI Cyberpunk Photo Generator",
-    "cardDescription": "Step into neon city portraits with high-tech fashion, rain-lit streets, electric color, and poster-ready contrast.",
-    "metaLabel": "Neon portraits",
-    "tags": ["Cyberpunk", "Neon Portraits", "Sci-Fi Style"],
-    "detailTags": ["Cyberpunk Portraits", "Neon City", "Sci-Fi Fashion", "Rain Streets", "Gaming Avatars", "Music Visuals", "Poster Crops", "Private Gallery"],
-    "detailIntro": "Enter a cyberpunk world of neon streets, high-tech wardrobe cues, and cinematic night-city light. This package turns simple portraits into futuristic images with bold contrast and urban atmosphere.",
-    "whatCreates": "A private gallery of neon portraits, sci-fi avatar crops, dramatic poster images, and creator visuals with a consistent futuristic mood.",
-    "bestFor": ["Gaming profiles", "Music and creator visuals", "Dramatic avatars", "Sci-fi social posts"],
-    "workflow": ["Upload portraits with clear facial detail and strong source quality.", "Review the cyberpunk direction, credit cost, and private-gallery flow.", "Generate neon city variations and download the strongest cinematic crops."],
-    "styleNotes": ["Magenta and cyan light accents", "Rainy city backgrounds", "High-tech fashion and sharp contrast"],
-    "coverNote": "Use the cover direction to judge whether the final gallery should lean poster-like, avatar-ready, or fashion-forward."
+    "headline": "AI Cyberpunk Generator",
+    "cardDescription": "Turn portraits into neon cyberpunk city images with futuristic wardrobe, cinematic lighting, and poster-ready crops.",
+    "metaLabel": "Cyberpunk",
+    "tags": [
+      "Cyberpunk",
+      "Neon",
+      "Cinematic"
+    ],
+    "detailTags": [
+      "Cyberpunk",
+      "Neon",
+      "Cinematic",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Cyberpunk helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of cyberpunk images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Cyberpunk photo sets from approved source photos",
+      "Neon concepts with clear credit cost before generation",
+      "Cinematic images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Cyberpunk direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Cyberpunk instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Cyberpunk works best when the source photos are current, sharp, and matched to the final use case."
   },
   "gala-photos": {
     "headline": "AI Gala Photo Generator",
     "cardDescription": "Create formal evening portraits with black-tie styling, red-carpet polish, warm flash, and elegant event energy.",
     "metaLabel": "Evening portraits",
-    "tags": ["Gala Photos", "Formal Portraits", "Red Carpet"],
-    "detailTags": ["Gala Photos", "Formal Portraits", "Red Carpet Mood", "Evening Wear", "Event Concepts", "Creator Campaigns", "Private Album", "Polished Lighting"],
+    "tags": [
+      "Gala Photos",
+      "Formal Portraits",
+      "Red Carpet"
+    ],
+    "detailTags": [
+      "Gala Photos",
+      "Formal Portraits",
+      "Red Carpet Mood",
+      "Evening Wear",
+      "Event Concepts",
+      "Creator Campaigns",
+      "Private Album",
+      "Polished Lighting"
+    ],
     "detailIntro": "Turn portraits into formal evening images with refined wardrobe styling, warm event light, and red-carpet atmosphere. The mood is elevated, polished, and made for announcement-worthy visuals.",
     "whatCreates": "A private album of gala-style portraits, formal profile crops, event-inspired images, and creator visuals with a black-tie finish.",
-    "bestFor": ["Formal portraits", "Event concepts", "Announcement visuals", "Polished creator campaigns"],
-    "workflow": ["Upload portraits that show face shape, posture, and wardrobe references clearly.", "Review the gala direction and decide whether you want soft elegance or stronger red-carpet drama.", "Generate a private gallery and download the most polished formal crops."],
-    "styleNotes": ["Black-tie wardrobe cues", "Warm flash and elegant venue light", "Confident red-carpet composition"],
+    "bestFor": [
+      "Formal portraits",
+      "Event concepts",
+      "Announcement visuals",
+      "Polished creator campaigns"
+    ],
+    "workflow": [
+      "Upload portraits that show face shape, posture, and wardrobe references clearly.",
+      "Review the gala direction and decide whether you want soft elegance or stronger red-carpet drama.",
+      "Generate a private gallery and download the most polished formal crops."
+    ],
+    "styleNotes": [
+      "Black-tie wardrobe cues",
+      "Warm flash and elegant venue light",
+      "Confident red-carpet composition"
+    ],
     "coverNote": "Use the preview to judge how formal, glamorous, and event-ready the package should feel."
   },
   "mafia": {
-    "headline": "AI Noir Portrait Generator",
-    "cardDescription": "Build cinematic noir character portraits with tailored styling, moody interiors, low-key light, and film-still drama.",
-    "metaLabel": "Noir portraits",
-    "tags": ["Noir Portraits", "Cinematic Style", "Character Photos"],
-    "detailTags": ["Noir Portraits", "Cinematic Style", "Character Photos", "Moody Interiors", "Tailored Wardrobe", "Story Concepts", "Poster Crops", "Private Gallery"],
-    "detailIntro": "Create a private character-led album with moody interiors, tailored wardrobe cues, and dramatic film light. The result feels like a premium noir still rather than a generic costume filter.",
-    "whatCreates": "A focused gallery of noir portraits, story-led profile images, dramatic poster crops, and cinematic character concepts.",
-    "bestFor": ["Noir portraits", "Story-led profile images", "Character concepts", "Dramatic social campaigns"],
-    "workflow": ["Upload portraits with expressive angles and clear facial detail.", "Review the noir direction, wardrobe mood, and credit cost before generating.", "Download the character crops that feel strongest for your intended channel."],
-    "styleNotes": ["Low-key lighting and smoke-free atmosphere", "Tailored wardrobe and vintage interiors", "Film-still framing with restrained color"],
-    "coverNote": "Use the cover mood to decide whether the final set should feel classic, dramatic, or more editorial.",
-    "safetyNote": "Use only consented source images and avoid presenting real people as involved in crime or harmful activity."
+    "headline": "AI Mafia Generator",
+    "cardDescription": "Create cinematic mafia-inspired noir portraits with tailored wardrobe, moody light, character energy, and private albums.",
+    "metaLabel": "Mafia",
+    "tags": [
+      "Noir",
+      "Character",
+      "Cinematic"
+    ],
+    "detailTags": [
+      "Noir",
+      "Character",
+      "Cinematic",
+      "Mafia",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Mafia helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of mafia images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Noir photo sets from approved source photos",
+      "Character concepts with clear credit cost before generation",
+      "Cinematic images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Mafia direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Mafia instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Mafia works best when the source photos are current, sharp, and matched to the final use case."
   },
   "nature": {
     "headline": "AI Nature Adventure Photo Generator",
     "cardDescription": "Turn portraits into outdoor adventure scenes with alpine trails, lake light, forest paths, and grounded creator mood.",
     "metaLabel": "Outdoor portraits",
-    "tags": ["Nature Photography", "Outdoor Portraits", "Adventure Photos"],
-    "detailTags": ["Nature Photography", "Outdoor Portraits", "Adventure Photos", "Alpine Trails", "Forest Mood", "Creator Profiles", "Lifestyle Gallery", "Private Album"],
+    "tags": [
+      "Nature Photography",
+      "Outdoor Portraits",
+      "Adventure Photos"
+    ],
+    "detailTags": [
+      "Nature Photography",
+      "Outdoor Portraits",
+      "Adventure Photos",
+      "Alpine Trails",
+      "Forest Mood",
+      "Creator Profiles",
+      "Lifestyle Gallery",
+      "Private Album"
+    ],
     "detailIntro": "Create outdoor portraits with alpine trails, forest paths, mountain lakes, and natural lifestyle energy. This package is built for grounded adventure photos that still keep the subject recognizable.",
     "whatCreates": "A private nature gallery with scenic portraits, adventure crops, creator profile images, and lifestyle visuals for personal profiles, creator posts, or keepsake albums.",
-    "bestFor": ["Outdoor profile photos", "Adventure portraits", "Creator moodboards", "Lifestyle galleries"],
-    "workflow": ["Upload clear portraits with natural expressions and usable lighting.", "Review the outdoor direction, image count, and credit cost before generating.", "Download the scenic crops that best match your profile, post, or album plan."],
-    "styleNotes": ["Alpine trails and lake reflections", "Natural jackets, backpacks, and outdoor posture", "Soft daylight with scenic depth"],
+    "bestFor": [
+      "Outdoor profile photos",
+      "Adventure portraits",
+      "Creator moodboards",
+      "Lifestyle galleries"
+    ],
+    "workflow": [
+      "Upload clear portraits with natural expressions and usable lighting.",
+      "Review the outdoor direction, image count, and credit cost before generating.",
+      "Download the scenic crops that best match your profile, post, or album plan."
+    ],
+    "styleNotes": [
+      "Alpine trails and lake reflections",
+      "Natural jackets, backpacks, and outdoor posture",
+      "Soft daylight with scenic depth"
+    ],
     "coverNote": "Use the representative image to judge terrain, weather mood, and how close the subject should sit in the frame."
   },
   "outdoor-creator-scenes": {
     "headline": "AI Outdoor Creator Scene Photo Generator",
     "cardDescription": "Place portraits into creator-ready scenes with beaches, cities, cliffs, date-night walks, and golden-hour outdoor light.",
     "metaLabel": "Creator scenes",
-    "tags": ["Creator Scenes", "Outdoor Portraits", "Lifestyle Albums"],
-    "detailTags": ["Creator Scenes", "Outdoor Portraits", "Lifestyle Albums", "City Walks", "Beach Light", "Dating Profiles", "Golden Hour Mood", "Private Gallery"],
+    "tags": [
+      "Creator Scenes",
+      "Outdoor Portraits",
+      "Lifestyle Albums"
+    ],
+    "detailTags": [
+      "Creator Scenes",
+      "Outdoor Portraits",
+      "Lifestyle Albums",
+      "City Walks",
+      "Beach Light",
+      "Dating Profiles",
+      "Golden Hour Mood",
+      "Private Gallery"
+    ],
     "detailIntro": "Compare outdoor creator moods before spending credits: coastal walks, city streets, scenic cliffs, soft evening light, and relaxed profile portraits. The package helps make personal photos feel like a curated creator album.",
     "whatCreates": "A private gallery of creator-scene portraits, profile crops, dating-profile images, and outdoor personal-brand visuals.",
-    "bestFor": ["Dating profile refreshes", "Personal-brand creator visuals", "Outdoor album concepts", "Golden-hour social posts"],
-    "workflow": ["Upload portraits with clear faces and a few expression options.", "Choose the creator-scene direction and review the credit cost before generation.", "Keep the strongest outdoor crops for profiles, posts, or private albums."],
-    "styleNotes": ["Golden-hour creator light", "Beach, city, and scenic outdoor backgrounds", "Relaxed posture and creator wardrobe cues"],
+    "bestFor": [
+      "Dating profile refreshes",
+      "Personal-brand creator visuals",
+      "Outdoor album concepts",
+      "Golden-hour social posts"
+    ],
+    "workflow": [
+      "Upload portraits with clear faces and a few expression options.",
+      "Choose the creator-scene direction and review the credit cost before generation.",
+      "Keep the strongest outdoor crops for profiles, posts, or private albums."
+    ],
+    "styleNotes": [
+      "Golden-hour creator light",
+      "Beach, city, and scenic outdoor backgrounds",
+      "Relaxed posture and creator wardrobe cues"
+    ],
     "coverNote": "Use the examples to decide whether you want the final gallery to feel romantic, scenic, urban, or resort-like."
   },
   "virtual-try-on": {
-    "headline": "AI Virtual Try-On Photo Generator",
-    "cardDescription": "Preview outfit and styling directions for creator looks, fashion tests, wardrobe moodboards, and personal photo planning.",
-    "metaLabel": "Style previews",
-    "tags": ["Virtual Try-On", "Outfit Preview", "Fashion Planning"],
-    "detailTags": ["Virtual Try-On", "Outfit Preview", "Fashion Planning", "Creator Styling", "Wardrobe Moodboard", "Profile Refresh", "Visual Preview", "Private Gallery"],
-    "detailIntro": "Use AI try-on as a visual planning tool for outfits, creator looks, and fashion content directions. The package helps compare styling ideas before ordering a larger shoot or making a real-world purchase.",
-    "whatCreates": "A private set of outfit previews, wardrobe moodboard images, creator styling tests, and profile-ready fashion crops.",
-    "bestFor": ["Outfit moodboards", "Fashion content planning", "Creator styling tests", "Profile-refresh ideas"],
-    "workflow": ["Upload clear source photos and any clothing references you have permission to use.", "Review the try-on direction as a visual preview rather than a fit guarantee.", "Download favorite styling images for planning, posts, or moodboards."],
-    "styleNotes": ["Readable outfit shape and color", "Fashion-forward portrait lighting", "Clean comparison-friendly crops"],
-    "coverNote": "Use the gallery examples to compare silhouette, color mood, and whether the styling direction matches your real use case.",
-    "safetyNote": "Visual preview only; results are not exact garment fit, sizing, fabric behavior, or purchase guarantees."
+    "headline": "AI Virtual Try-On Generator",
+    "cardDescription": "Preview outfit directions, wardrobe moodboards, fashion looks, and creator styling ideas from private source photos.",
+    "metaLabel": "Virtual Try-On",
+    "tags": [
+      "Virtual Try-On",
+      "Outfit",
+      "Fashion"
+    ],
+    "detailTags": [
+      "Virtual Try-On",
+      "Outfit",
+      "Fashion",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Virtual Try-On helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of virtual try-on images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Virtual Try-On photo sets from approved source photos",
+      "Outfit concepts with clear credit cost before generation",
+      "Fashion images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Virtual Try-On direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Virtual Try-On instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Virtual Try-On works best when the source photos are current, sharp, and matched to the final use case."
   },
   "profile-cards": {
     "headline": "AI Profile Card Generator",
     "cardDescription": "Build clean social profile cards, avatar crops, intro visuals, and personal identity updates for bios and small landing pages.",
     "metaLabel": "Profile cards",
-    "tags": ["Profile Cards", "Avatar Crops", "Personal Bio"],
-    "detailTags": ["Profile Cards", "Avatar Crops", "Personal Bio", "Intro Visuals", "Social Profiles", "Newsletter Images", "Contact Pages", "Private Gallery"],
+    "tags": [
+      "Profile Cards",
+      "Avatar Crops",
+      "Personal Bio"
+    ],
+    "detailTags": [
+      "Profile Cards",
+      "Avatar Crops",
+      "Personal Bio",
+      "Intro Visuals",
+      "Social Profiles",
+      "Newsletter Images",
+      "Contact Pages",
+      "Private Gallery"
+    ],
     "detailIntro": "Create profile-ready visuals that work across bios, social accounts, newsletters, and personal pages. The package favors clean identity design over heavy fantasy styling.",
     "whatCreates": "A private set of profile cards, avatar crops, intro visuals, and personal-brand images that can be reused across lightweight public channels.",
-    "bestFor": ["Social profile updates", "Personal landing pages", "Newsletter identity blocks", "Contact-page visuals"],
-    "workflow": ["Upload a clear portrait and choose the card mood you want.", "Review the image count, private-gallery flow, and credit cost before generating.", "Download profile crops and card-style images sized for your channels."],
-    "styleNotes": ["Clean framing and readable face crops", "Modern personal-brand color accents", "Simple layouts that work at small sizes"],
+    "bestFor": [
+      "Social profile updates",
+      "Personal landing pages",
+      "Newsletter identity blocks",
+      "Contact-page visuals"
+    ],
+    "workflow": [
+      "Upload a clear portrait and choose the card mood you want.",
+      "Review the image count, private-gallery flow, and credit cost before generating.",
+      "Download profile crops and card-style images sized for your channels."
+    ],
+    "styleNotes": [
+      "Clean framing and readable face crops",
+      "Modern personal-brand color accents",
+      "Simple layouts that work at small sizes"
+    ],
     "coverNote": "Use the preview to decide whether your profile set should feel minimal, creator-led, or more polished."
   },
   "creator-portraits": {
     "headline": "AI Creator Portrait Generator",
     "cardDescription": "Create VIP-style creator portraits, red-carpet fan snapshots, media-kit images, thumbnails, and polished personal-brand photos without a full studio day.",
     "metaLabel": "Red-carpet looks",
-    "tags": ["Creator Portraits", "VIP-style Looks", "Red-carpet Style"],
-    "detailTags": ["Creator Portraits", "VIP-style Looks", "Red-carpet Style", "Media Kit", "Personal Brand", "Thumbnail Crops", "Founder Images", "Private Gallery"],
+    "tags": [
+      "Creator Portraits",
+      "VIP-style Looks",
+      "Red-carpet Style"
+    ],
+    "detailTags": [
+      "Creator Portraits",
+      "VIP-style Looks",
+      "Red-carpet Style",
+      "Media Kit",
+      "Personal Brand",
+      "Thumbnail Crops",
+      "Founder Images",
+      "Private Gallery"
+    ],
     "detailIntro": "Build a consistent set of creator portraits with polished VIP-style lighting, red-carpet mood, and personal-brand flexibility. The look feels elevated without implying access to a real event or public figure.",
     "whatCreates": "A private gallery of creator portraits, red-carpet style fan snapshots, thumbnail-ready crops, website portraits, and personal-brand images with consistent lighting and mood.",
-    "bestFor": ["VIP-style creator portraits", "Red-carpet fan moments", "Media kits", "Thumbnail and landing-page visuals"],
-    "workflow": ["Upload source portraits that show your face and expression clearly.", "Pick the creator portrait direction and review credits before generation.", "Download the strongest crops for public pages, posts, and media assets."],
-    "styleNotes": ["VIP-style editorial lighting", "Red-carpet mood without protected brand claims", "Flexible crops for square, vertical, and banner use"],
+    "bestFor": [
+      "VIP-style creator portraits",
+      "Red-carpet fan moments",
+      "Media kits",
+      "Thumbnail and landing-page visuals"
+    ],
+    "workflow": [
+      "Upload source portraits that show your face and expression clearly.",
+      "Pick the creator portrait direction and review credits before generation.",
+      "Download the strongest crops for public pages, posts, and media assets."
+    ],
+    "styleNotes": [
+      "VIP-style editorial lighting",
+      "Red-carpet mood without protected brand claims",
+      "Flexible crops for square, vertical, and banner use"
+    ],
     "coverNote": "Use the examples to check whether the set should feel approachable, premium, red-carpet styled, or highly editorial.",
     "safetyNote": "Use only approved source photos and avoid implying endorsement, attendance, or association with a real celebrity, brand, venue, or event without permission."
   },
@@ -152,13 +439,39 @@
     "headline": "AI Fashion Editorial Photo Generator",
     "cardDescription": "Explore wardrobe-led portraits with magazine lighting, refined posing, outfit direction, and polished editorial crops.",
     "metaLabel": "Editorial looks",
-    "tags": ["Fashion Editorial", "Outfit Direction", "Magazine Portraits"],
-    "detailTags": ["Fashion Editorial", "Outfit Direction", "Magazine Portraits", "Wardrobe Tests", "Campaign Moodboard", "Creator Styling", "Studio Light", "Private Gallery"],
+    "tags": [
+      "Fashion Editorial",
+      "Outfit Direction",
+      "Magazine Portraits"
+    ],
+    "detailTags": [
+      "Fashion Editorial",
+      "Outfit Direction",
+      "Magazine Portraits",
+      "Wardrobe Tests",
+      "Campaign Moodboard",
+      "Creator Styling",
+      "Studio Light",
+      "Private Gallery"
+    ],
     "detailIntro": "Create fashion-forward portraits with wardrobe direction, magazine-style lighting, and editorial composition. This package helps test a visual world before a campaign, profile refresh, or style-led post.",
     "whatCreates": "A private gallery of fashion editorial portraits, outfit concepts, magazine crops, and campaign moodboard images.",
-    "bestFor": ["Fashion creators", "Outfit tests", "Editorial profile photos", "Campaign moodboards"],
-    "workflow": ["Upload portraits or style references you have permission to use.", "Review wardrobe mood, credit cost, and intended publishing use before generation.", "Download the strongest editorial crops for planning or content."],
-    "styleNotes": ["Magazine lighting and confident posing", "Wardrobe as the visual anchor", "Polished color grading with clean crops"],
+    "bestFor": [
+      "Fashion creators",
+      "Outfit tests",
+      "Editorial profile photos",
+      "Campaign moodboards"
+    ],
+    "workflow": [
+      "Upload portraits or style references you have permission to use.",
+      "Review wardrobe mood, credit cost, and intended publishing use before generation.",
+      "Download the strongest editorial crops for planning or content."
+    ],
+    "styleNotes": [
+      "Magazine lighting and confident posing",
+      "Wardrobe as the visual anchor",
+      "Polished color grading with clean crops"
+    ],
     "coverNote": "Use the cover direction to decide whether the final gallery should feel studio, street-style, or campaign-led.",
     "safetyNote": "Use consented source photos and avoid implying brand endorsement without permission."
   },
@@ -166,13 +479,39 @@
     "headline": "AI Anime Avatar Generator",
     "cardDescription": "Turn portraits into stylized anime-inspired avatars, character profile art, playful identity images, and fan-community visuals.",
     "metaLabel": "Anime avatars",
-    "tags": ["Anime Avatars", "Character Art", "Profile Icons"],
-    "detailTags": ["Anime Avatars", "Character Art", "Profile Icons", "Fan Communities", "Stylized Portraits", "Gaming Profiles", "Playful Identity", "Private Gallery"],
+    "tags": [
+      "Anime Avatars",
+      "Character Art",
+      "Profile Icons"
+    ],
+    "detailTags": [
+      "Anime Avatars",
+      "Character Art",
+      "Profile Icons",
+      "Fan Communities",
+      "Stylized Portraits",
+      "Gaming Profiles",
+      "Playful Identity",
+      "Private Gallery"
+    ],
     "detailIntro": "Transform a private portrait into anime-inspired avatar directions with expressive styling and profile-friendly crops. The goal is playful identity design, not a one-click copy of a specific copyrighted character.",
     "whatCreates": "A private gallery of stylized avatars, character profile crops, fan-community images, and playful social identity visuals.",
-    "bestFor": ["Anime avatars", "Gaming profiles", "Fan community visuals", "Playful social identities"],
-    "workflow": ["Upload a clear portrait with permission to use it.", "Choose the anime-inspired direction and review the credit cost before generation.", "Download avatar crops and character images that fit your profile use."],
-    "styleNotes": ["Expressive eyes and clean character silhouette", "Profile-icon readability", "Stylized color without copying protected characters"],
+    "bestFor": [
+      "Anime avatars",
+      "Gaming profiles",
+      "Fan community visuals",
+      "Playful social identities"
+    ],
+    "workflow": [
+      "Upload a clear portrait with permission to use it.",
+      "Choose the anime-inspired direction and review the credit cost before generation.",
+      "Download avatar crops and character images that fit your profile use."
+    ],
+    "styleNotes": [
+      "Expressive eyes and clean character silhouette",
+      "Profile-icon readability",
+      "Stylized color without copying protected characters"
+    ],
     "coverNote": "Use the preview to judge how stylized, cute, dramatic, or profile-icon friendly the final set should be.",
     "safetyNote": "Avoid requesting direct copies of copyrighted characters or using another person's likeness without permission."
   },
@@ -180,13 +519,39 @@
     "headline": "AI Product Style Photo Generator",
     "cardDescription": "Draft creator-led product scenes, lifestyle images, simple social-commerce visuals, and campaign moodboards from approved references.",
     "metaLabel": "Product scenes",
-    "tags": ["Product Style", "Lifestyle Photos", "Commerce Visuals"],
-    "detailTags": ["Product Style", "Lifestyle Photos", "Commerce Visuals", "Creator Product Posts", "Campaign Moodboard", "Social Commerce", "Reference Images", "Private Gallery"],
+    "tags": [
+      "Product Style",
+      "Lifestyle Photos",
+      "Commerce Visuals"
+    ],
+    "detailTags": [
+      "Product Style",
+      "Lifestyle Photos",
+      "Commerce Visuals",
+      "Creator Product Posts",
+      "Campaign Moodboard",
+      "Social Commerce",
+      "Reference Images",
+      "Private Gallery"
+    ],
     "detailIntro": "Plan product-style visuals with lifestyle context, creator framing, and simple campaign direction. The package is useful for drafts, moodboards, and social content planning before production work.",
     "whatCreates": "A private set of product-style scene drafts, creator-product portraits, lifestyle crops, and social commerce moodboard images.",
-    "bestFor": ["Social commerce concepts", "Product lifestyle drafts", "Creator product posts", "Campaign moodboards"],
-    "workflow": ["Upload product references and source photos you own or have permission to use.", "Review the visual direction, credit cost, and publishing needs before generation.", "Download drafts for planning, testing, or content direction."],
-    "styleNotes": ["Readable product placement", "Creator-led lifestyle context", "Clean crops for social and storefront planning"],
+    "bestFor": [
+      "Social commerce concepts",
+      "Product lifestyle drafts",
+      "Creator product posts",
+      "Campaign moodboards"
+    ],
+    "workflow": [
+      "Upload product references and source photos you own or have permission to use.",
+      "Review the visual direction, credit cost, and publishing needs before generation.",
+      "Download drafts for planning, testing, or content direction."
+    ],
+    "styleNotes": [
+      "Readable product placement",
+      "Creator-led lifestyle context",
+      "Clean crops for social and storefront planning"
+    ],
     "coverNote": "Use the examples to judge product visibility, lifestyle mood, and how polished the scene needs to be.",
     "safetyNote": "Generated images are planning visuals; verify product claims, packaging, and commercial permissions before publishing."
   },
@@ -194,144 +559,432 @@
     "headline": "AI Social Card Generator",
     "cardDescription": "Generate share-ready cards, announcement visuals, profile banners, keepsake images, and polished story post crops.",
     "metaLabel": "Social cards",
-    "tags": ["Social Cards", "Story Posts", "Announcement Visuals"],
-    "detailTags": ["Social Cards", "Story Posts", "Announcement Visuals", "Profile Banners", "Keepsake Images", "Creator Updates", "Personal News", "Private Gallery"],
+    "tags": [
+      "Social Cards",
+      "Story Posts",
+      "Announcement Visuals"
+    ],
+    "detailTags": [
+      "Social Cards",
+      "Story Posts",
+      "Announcement Visuals",
+      "Profile Banners",
+      "Keepsake Images",
+      "Creator Updates",
+      "Personal News",
+      "Private Gallery"
+    ],
     "detailIntro": "Create lightweight publishing visuals for moments that need to look polished without becoming a full photo shoot. The package works for announcements, stories, banners, and personal keepsakes.",
     "whatCreates": "A private gallery of share-ready cards, story images, profile banners, announcement crops, and personal update visuals.",
-    "bestFor": ["Announcement cards", "Story posts", "Profile banners", "Creator updates"],
-    "workflow": ["Upload the portraits or references you want to anchor the card set.", "Choose the social-card direction and review credits before generation.", "Download the strongest crops for the channels you plan to post on."],
-    "styleNotes": ["Clear subject hierarchy", "Readable small-format crops", "Polished but lightweight publishing style"],
+    "bestFor": [
+      "Announcement cards",
+      "Story posts",
+      "Profile banners",
+      "Creator updates"
+    ],
+    "workflow": [
+      "Upload the portraits or references you want to anchor the card set.",
+      "Choose the social-card direction and review credits before generation.",
+      "Download the strongest crops for the channels you plan to post on."
+    ],
+    "styleNotes": [
+      "Clear subject hierarchy",
+      "Readable small-format crops",
+      "Polished but lightweight publishing style"
+    ],
     "coverNote": "Use the preview to check whether the set should feel celebratory, clean, personal, or creator-led."
   },
   "wedding-portraits": {
     "headline": "AI Wedding Portrait Generator",
     "cardDescription": "Create romantic wedding-inspired portraits, couple album ideas, save-the-date visuals, and warm ceremony scenes.",
     "metaLabel": "Wedding portraits",
-    "tags": ["Wedding Portraits", "Couple Photos", "Save the Date"],
-    "detailTags": ["Wedding Portraits", "Couple Photos", "Save the Date", "Wedding Website", "Romantic Scenes", "Keepsake Album", "Engagement Mood", "Private Gallery"],
+    "tags": [
+      "Wedding Portraits",
+      "Couple Photos",
+      "Save the Date"
+    ],
+    "detailTags": [
+      "Wedding Portraits",
+      "Couple Photos",
+      "Save the Date",
+      "Wedding Website",
+      "Romantic Scenes",
+      "Keepsake Album",
+      "Engagement Mood",
+      "Private Gallery"
+    ],
     "detailIntro": "Build wedding-inspired portraits for planning, keepsakes, announcements, and couple albums. The package emphasizes romantic light, flattering poses, and album-ready composition.",
     "whatCreates": "A private gallery of wedding-style couple portraits, save-the-date concepts, romantic scenes, and announcement-ready crops.",
-    "bestFor": ["Wedding websites", "Save-the-date concepts", "Couple portraits", "Private romantic albums"],
-    "workflow": ["Upload approved couple photos with clear faces and natural expressions.", "Review the wedding direction, image count, and credit cost before generation.", "Download favorite portraits for planning, private albums, or announcement concepts."],
-    "styleNotes": ["Warm ceremony light and soft backgrounds", "Couple-centered composition", "Album-ready romance without heavy clutter"],
+    "bestFor": [
+      "Wedding websites",
+      "Save-the-date concepts",
+      "Couple portraits",
+      "Private romantic albums"
+    ],
+    "workflow": [
+      "Upload approved couple photos with clear faces and natural expressions.",
+      "Review the wedding direction, image count, and credit cost before generation.",
+      "Download favorite portraits for planning, private albums, or announcement concepts."
+    ],
+    "styleNotes": [
+      "Warm ceremony light and soft backgrounds",
+      "Couple-centered composition",
+      "Album-ready romance without heavy clutter"
+    ],
     "coverNote": "Use the preview to decide whether the set should feel classic, cinematic, intimate, or announcement-ready."
   },
   "indian-wedding": {
     "headline": "AI Indian Wedding Photo Generator",
     "cardDescription": "Create Indian wedding-inspired portraits with rich textiles, jewelry detail, ceremony light, and album-ready celebration mood.",
     "metaLabel": "Ceremony portraits",
-    "tags": ["Indian Wedding", "Ceremony Portraits", "Bridal Style"],
-    "detailTags": ["Indian Wedding", "Ceremony Portraits", "Bridal Style", "Saree Looks", "Lehenga Looks", "Sherwani Style", "Jewelry Detail", "Private Gallery"],
+    "tags": [
+      "Indian Wedding",
+      "Ceremony Portraits",
+      "Bridal Style"
+    ],
+    "detailTags": [
+      "Indian Wedding",
+      "Ceremony Portraits",
+      "Bridal Style",
+      "Saree Looks",
+      "Lehenga Looks",
+      "Sherwani Style",
+      "Jewelry Detail",
+      "Private Gallery"
+    ],
     "detailIntro": "Build respectful Indian wedding-inspired portraits around textiles, ceremony light, jewelry detail, and celebration styling. The package is designed for private concepts, keepsakes, and wedding-album imagination.",
     "whatCreates": "A private gallery of Indian wedding-style portraits, couple images, bridal and groom styling concepts, and celebration-ready crops.",
-    "bestFor": ["Indian wedding concepts", "Celebration portraits", "Traditional outfit inspiration", "Private family albums"],
-    "workflow": ["Upload approved portraits or couple photos with clear facial detail.", "Review the cultural styling direction, credit cost, and private-gallery flow.", "Download favorite ceremony-inspired images for planning, keepsakes, or albums."],
-    "styleNotes": ["Rich textiles and jewelry detail", "Warm mandap or ceremony lighting", "Respectful couple and family portrait composition"],
+    "bestFor": [
+      "Indian wedding concepts",
+      "Celebration portraits",
+      "Traditional outfit inspiration",
+      "Private family albums"
+    ],
+    "workflow": [
+      "Upload approved portraits or couple photos with clear facial detail.",
+      "Review the cultural styling direction, credit cost, and private-gallery flow.",
+      "Download favorite ceremony-inspired images for planning, keepsakes, or albums."
+    ],
+    "styleNotes": [
+      "Rich textiles and jewelry detail",
+      "Warm mandap or ceremony lighting",
+      "Respectful couple and family portrait composition"
+    ],
     "coverNote": "Use the cover direction to check textile color, jewelry emphasis, and ceremony mood before starting."
   },
   "desi-wedding": {
     "headline": "AI Desi Wedding Photo Generator",
     "cardDescription": "Design festive Desi wedding portraits with rich color, ceremony atmosphere, couple posing, and joyful album energy.",
     "metaLabel": "Festive portraits",
-    "tags": ["Desi Wedding", "Wedding Photography", "Bridal Photos"],
-    "detailTags": ["Desi Wedding", "Wedding Photography", "Bridal Photos", "Festive Color", "Couple Portraits", "Family Keepsakes", "Ceremony Mood", "Private Gallery"],
+    "tags": [
+      "Desi Wedding",
+      "Wedding Photography",
+      "Bridal Photos"
+    ],
+    "detailTags": [
+      "Desi Wedding",
+      "Wedding Photography",
+      "Bridal Photos",
+      "Festive Color",
+      "Couple Portraits",
+      "Family Keepsakes",
+      "Ceremony Mood",
+      "Private Gallery"
+    ],
     "detailIntro": "Create Desi wedding-inspired images with festive color, ceremony atmosphere, and couple-ready album composition. The mood is celebratory, warm, and rooted in private keepsake planning.",
     "whatCreates": "A private gallery of Desi wedding portraits, bridal and couple concepts, festive scenes, and wedding website visuals.",
-    "bestFor": ["Desi wedding concepts", "Family keepsakes", "Wedding website visuals", "Festive couple portraits"],
-    "workflow": ["Upload approved source photos with clear faces and natural expressions.", "Review the festive styling direction and credit cost before generating.", "Download the strongest images for private planning, albums, or announcement drafts."],
-    "styleNotes": ["Warm ceremony glow", "Festive color and textile detail", "Couple-centered album composition"],
+    "bestFor": [
+      "Desi wedding concepts",
+      "Family keepsakes",
+      "Wedding website visuals",
+      "Festive couple portraits"
+    ],
+    "workflow": [
+      "Upload approved source photos with clear faces and natural expressions.",
+      "Review the festive styling direction and credit cost before generating.",
+      "Download the strongest images for private planning, albums, or announcement drafts."
+    ],
+    "styleNotes": [
+      "Warm ceremony glow",
+      "Festive color and textile detail",
+      "Couple-centered album composition"
+    ],
     "coverNote": "Use the preview to decide whether the final set should feel intimate, festive, traditional, or editorial."
   },
   "valentine-photos": {
     "headline": "AI Valentine Photo Generator",
     "cardDescription": "Make romantic Valentine portraits, couple cards, giftable keepsakes, and warm social images with soft date-night mood.",
     "metaLabel": "Romantic cards",
-    "tags": ["Valentine Photos", "Romantic Cards", "Couple Portraits"],
-    "detailTags": ["Valentine Photos", "Romantic Cards", "Couple Portraits", "Gift Keepsakes", "Date Night", "Love Notes", "Social Posts", "Private Gallery"],
+    "tags": [
+      "Valentine Photos",
+      "Romantic Cards",
+      "Couple Portraits"
+    ],
+    "detailTags": [
+      "Valentine Photos",
+      "Romantic Cards",
+      "Couple Portraits",
+      "Gift Keepsakes",
+      "Date Night",
+      "Love Notes",
+      "Social Posts",
+      "Private Gallery"
+    ],
     "detailIntro": "Create Valentine-ready portraits and romantic card visuals with soft light, date-night energy, and giftable composition. The package keeps the mood intimate and polished.",
     "whatCreates": "A private set of romantic portraits, Valentine cards, couple keepsakes, and share-ready images for personal gifts or social posts.",
-    "bestFor": ["Valentine gifts", "Couple keepsakes", "Romantic social posts", "Private love-note cards"],
-    "workflow": ["Upload approved solo or couple photos with clear faces.", "Review the Valentine direction, credits, and private album flow.", "Download favorite romantic crops for cards, posts, or keepsakes."],
-    "styleNotes": ["Soft warm light and romantic color", "Giftable card composition", "Gentle couple or solo portrait mood"],
+    "bestFor": [
+      "Valentine gifts",
+      "Couple keepsakes",
+      "Romantic social posts",
+      "Private love-note cards"
+    ],
+    "workflow": [
+      "Upload approved solo or couple photos with clear faces.",
+      "Review the Valentine direction, credits, and private album flow.",
+      "Download favorite romantic crops for cards, posts, or keepsakes."
+    ],
+    "styleNotes": [
+      "Soft warm light and romantic color",
+      "Giftable card composition",
+      "Gentle couple or solo portrait mood"
+    ],
     "coverNote": "Use the preview to judge whether the final set should feel cute, romantic, cinematic, or keepsake-focused."
   },
   "engagement": {
     "headline": "AI Engagement Photo Generator",
     "cardDescription": "Create proposal scenes, engagement portraits, announcement images, and romantic album concepts with cinematic light.",
     "metaLabel": "Engagement photos",
-    "tags": ["Engagement Photos", "Proposal Scene", "Announcement Cards"],
-    "detailTags": ["Engagement Photos", "Proposal Scene", "Announcement Cards", "Couple Portraits", "Ring Moment", "Romantic Album", "Wedding Planning", "Private Gallery"],
+    "tags": [
+      "Engagement Photos",
+      "Proposal Scene",
+      "Announcement Cards"
+    ],
+    "detailTags": [
+      "Engagement Photos",
+      "Proposal Scene",
+      "Announcement Cards",
+      "Couple Portraits",
+      "Ring Moment",
+      "Romantic Album",
+      "Wedding Planning",
+      "Private Gallery"
+    ],
     "detailIntro": "Build engagement-inspired images for proposal concepts, announcement drafts, and private couple albums. The package focuses on emotional light, ring-moment composition, and romantic storytelling.",
     "whatCreates": "A private gallery of engagement portraits, proposal scenes, announcement-card crops, and romantic planning visuals.",
-    "bestFor": ["Proposal concepts", "Engagement announcements", "Couple albums", "Wedding planning visuals"],
-    "workflow": ["Upload approved couple photos with clear expressions and posture.", "Review the engagement direction and credit cost before generating.", "Download favorite crops for private planning, social drafts, or keepsake albums."],
-    "styleNotes": ["Golden-hour romance", "Ring and hand-detail moments", "Couple-centered cinematic framing"],
+    "bestFor": [
+      "Proposal concepts",
+      "Engagement announcements",
+      "Couple albums",
+      "Wedding planning visuals"
+    ],
+    "workflow": [
+      "Upload approved couple photos with clear expressions and posture.",
+      "Review the engagement direction and credit cost before generating.",
+      "Download favorite crops for private planning, social drafts, or keepsake albums."
+    ],
+    "styleNotes": [
+      "Golden-hour romance",
+      "Ring and hand-detail moments",
+      "Couple-centered cinematic framing"
+    ],
     "coverNote": "Use the examples to decide whether the set should feel proposal-focused, candid, cinematic, or announcement-ready."
   },
   "boudoir": {
-    "headline": "AI Boudoir Portrait Generator",
-    "cardDescription": "Create tasteful non-explicit boudoir-inspired portraits for consenting adults with soft light, privacy, and elegant mood.",
-    "metaLabel": "Intimate portraits",
-    "tags": ["Boudoir Portraits", "Tasteful Photos", "Private Album"],
-    "detailTags": ["Boudoir Portraits", "Tasteful Photos", "Private Album", "Consenting Adults", "Soft Light", "Elegant Mood", "Gift Keepsakes", "Non-Explicit"],
-    "detailIntro": "Create tasteful boudoir-inspired portraits for consenting adults with privacy, soft light, and elegant composition. The package is intimate without being explicit.",
-    "whatCreates": "A private gallery of non-explicit intimate portraits, elegant keepsake crops, and soft-light images for adult personal use.",
-    "bestFor": ["Private adult keepsakes", "Tasteful gift albums", "Soft intimate portraits", "Confidence-focused images"],
-    "workflow": ["Upload only consented adult source photos that you own or have permission to use.", "Review the tasteful boudoir direction, safety boundary, and credit cost.", "Keep results in a private gallery and download only the images you want to use."],
-    "styleNotes": ["Soft window light and elegant shadows", "Non-explicit posing", "Private album mood with restrained styling"],
-    "coverNote": "Use the preview to judge privacy, softness, and whether the mood stays tasteful.",
-    "safetyNote": "Consenting adults only. This package is for non-explicit imagery and should not be used with minors, non-consensual images, or explicit requests."
+    "headline": "AI Boudoir Generator",
+    "cardDescription": "Create tasteful private boudoir-inspired portraits with soft editorial light, elegant styling, and consent-first review.",
+    "metaLabel": "Boudoir",
+    "tags": [
+      "Boudoir",
+      "Private",
+      "Editorial"
+    ],
+    "detailTags": [
+      "Boudoir",
+      "Private",
+      "Editorial",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Boudoir helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of boudoir images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Boudoir photo sets from approved source photos",
+      "Private concepts with clear credit cost before generation",
+      "Editorial images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Boudoir direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Boudoir instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Boudoir works best when the source photos are current, sharp, and matched to the final use case.",
+    "safetyNote": "For consenting adults only. Do not upload minors, non-consenting people, stolen images, or explicit requests."
   },
   "holiday": {
-    "headline": "AI Holiday Photo Generator",
-    "cardDescription": "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, friend groups, and private holiday albums.",
-    "metaLabel": "Seasonal albums",
-    "tags": ["Holiday Photos", "Group Portraits", "Seasonal Cards"],
-    "detailTags": ["Holiday Photos", "Group Portraits", "Christmas Cards", "Thanksgiving Portraits", "Halloween Albums", "Family Keepsakes", "Greeting Images", "Private Gallery"],
-    "detailIntro": "Turn portraits into flexible holiday scenes with warm seasonal styling, greeting-card composition, and group-photo energy for Christmas, Thanksgiving, Halloween, and winter albums.",
-    "whatCreates": "A private gallery of holiday portraits, seasonal group cards, winter scenes, family-style keepsake crops, and festive images for personal albums.",
-    "bestFor": ["Seasonal greeting cards", "Christmas group portraits", "Thanksgiving albums", "Halloween party keepsakes"],
-    "workflow": ["Upload clear portraits or family photos you have permission to use.", "Choose the holiday direction and review credit cost before generation.", "Download favorite festive crops for cards, posts, or private albums."],
-    "styleNotes": ["Seasonal glow and holiday decoration", "Warm family or friend-group mood", "Greeting-card friendly composition"],
-    "coverNote": "Use the preview to decide whether the final set should feel Christmas-ready, Thanksgiving-warm, Halloween-dramatic, or card-first."
+    "headline": "AI Holiday Generator",
+    "cardDescription": "Plan holiday portraits, seasonal cards, warm family-style albums, festive creator images, and private keepsakes.",
+    "metaLabel": "Holiday",
+    "tags": [
+      "Holiday",
+      "Seasonal",
+      "Cards"
+    ],
+    "detailTags": [
+      "Holiday",
+      "Seasonal",
+      "Cards",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Holiday helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of holiday images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Holiday photo sets from approved source photos",
+      "Seasonal concepts with clear credit cost before generation",
+      "Cards images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Holiday direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Holiday instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Holiday works best when the source photos are current, sharp, and matched to the final use case."
   },
   "christmas-couple": {
     "headline": "AI Christmas Couple Photo Generator",
     "cardDescription": "Make cozy Christmas couple portraits, friend-card moments, festive greeting images, and giftable holiday keepsakes.",
     "metaLabel": "Couple cards",
-    "tags": ["Christmas Couple", "Holiday Cards", "Friend Cards"],
-    "detailTags": ["Christmas Couple", "Holiday Cards", "Cozy Portraits", "Friend Cards", "Gift Keepsakes", "Greeting Images", "Festive Couple", "Private Gallery"],
+    "tags": [
+      "Christmas Couple",
+      "Holiday Cards",
+      "Friend Cards"
+    ],
+    "detailTags": [
+      "Christmas Couple",
+      "Holiday Cards",
+      "Cozy Portraits",
+      "Friend Cards",
+      "Gift Keepsakes",
+      "Greeting Images",
+      "Festive Couple",
+      "Private Gallery"
+    ],
     "detailIntro": "Create cozy Christmas couple portraits with warm interiors, winter light, festive decor, and card-ready composition. The package works for romantic keepsakes, friend-card moments, and seasonal greetings.",
     "whatCreates": "A private gallery of Christmas couple portraits, friend-card images, holiday cards, cozy seasonal scenes, and giftable festive images.",
-    "bestFor": ["Couple holiday cards", "Friend-card moments", "Gift keepsakes", "Festive social posts"],
-    "workflow": ["Upload approved couple photos with clear faces and natural expressions.", "Review the Christmas couple direction and credit cost before generation.", "Download card-ready favorites or private keepsake images."],
-    "styleNotes": ["Warm fireplaces, lights, and cozy decor", "Romantic but natural couple posing", "Greeting-card framing"],
+    "bestFor": [
+      "Couple holiday cards",
+      "Friend-card moments",
+      "Gift keepsakes",
+      "Festive social posts"
+    ],
+    "workflow": [
+      "Upload approved couple photos with clear faces and natural expressions.",
+      "Review the Christmas couple direction and credit cost before generation.",
+      "Download card-ready favorites or private keepsake images."
+    ],
+    "styleNotes": [
+      "Warm fireplaces, lights, and cozy decor",
+      "Romantic but natural couple posing",
+      "Greeting-card framing"
+    ],
     "coverNote": "Use the cover mood to decide whether the set should feel cozy, romantic, playful, or card-first."
   },
   "christmas-photos": {
     "headline": "AI Christmas Photo Generator",
     "cardDescription": "Create Christmas group portraits with festive decor, winter glow, greeting-card layouts, cozy couple scenes, and cheerful seasonal atmosphere.",
     "metaLabel": "Holiday cards",
-    "tags": ["Christmas Photos", "Group Portraits", "Greeting Cards"],
-    "detailTags": ["Christmas Photos", "Group Portraits", "Greeting Cards", "Family Holiday", "Winter Glow", "Gift Images", "Cozy Scenes", "Private Gallery"],
+    "tags": [
+      "Christmas Photos",
+      "Group Portraits",
+      "Greeting Cards"
+    ],
+    "detailTags": [
+      "Christmas Photos",
+      "Group Portraits",
+      "Greeting Cards",
+      "Family Holiday",
+      "Winter Glow",
+      "Gift Images",
+      "Cozy Scenes",
+      "Private Gallery"
+    ],
     "detailIntro": "Turn portraits into Christmas-ready images with decorated interiors, winter glow, cheerful color, and greeting-card polish. It works for solo, couple, family-style, creator, and friend-group moments.",
     "whatCreates": "A private set of Christmas group portraits, greeting-card images, festive profile crops, and cozy winter keepsakes.",
-    "bestFor": ["Christmas cards", "Family-style holiday images", "Friend-group portraits", "Giftable keepsakes"],
-    "workflow": ["Upload source photos with clear faces and permission to use them.", "Pick the Christmas direction and review credits before generation.", "Download favorite festive crops for cards, posts, or private albums."],
-    "styleNotes": ["Christmas lights and warm interior glow", "Cheerful seasonal styling", "Card-friendly composition with clear faces"],
+    "bestFor": [
+      "Christmas cards",
+      "Family-style holiday images",
+      "Friend-group portraits",
+      "Giftable keepsakes"
+    ],
+    "workflow": [
+      "Upload source photos with clear faces and permission to use them.",
+      "Pick the Christmas direction and review credits before generation.",
+      "Download favorite festive crops for cards, posts, or private albums."
+    ],
+    "styleNotes": [
+      "Christmas lights and warm interior glow",
+      "Cheerful seasonal styling",
+      "Card-friendly composition with clear faces"
+    ],
     "coverNote": "Use the preview to decide whether the set should feel classic, cozy, cheerful, or more cinematic."
   },
   "thanksgiving-group-photos": {
     "headline": "AI Thanksgiving Group Photo Generator",
     "cardDescription": "Create warm Thanksgiving group portraits, dinner-table keepsakes, gratitude cards, family-style albums, and cozy seasonal social images.",
     "metaLabel": "Group portraits",
-    "tags": ["Thanksgiving", "Group Portraits", "Gratitude Cards"],
-    "detailTags": ["Thanksgiving Photos", "Group Portraits", "Family-style Albums", "Dinner-table Keepsakes", "Gratitude Cards", "Warm Interiors", "Seasonal Sharing", "Private Gallery"],
+    "tags": [
+      "Thanksgiving",
+      "Group Portraits",
+      "Gratitude Cards"
+    ],
+    "detailTags": [
+      "Thanksgiving Photos",
+      "Group Portraits",
+      "Family-style Albums",
+      "Dinner-table Keepsakes",
+      "Gratitude Cards",
+      "Warm Interiors",
+      "Seasonal Sharing",
+      "Private Gallery"
+    ],
     "detailIntro": "Create Thanksgiving group photos with warm interiors, harvest color, dinner-table atmosphere, and card-ready composition. The package is designed for private family-style albums, friend gatherings, and gratitude posts.",
     "whatCreates": "A private gallery of Thanksgiving group portraits, gratitude cards, cozy dinner-table scenes, and seasonal keepsake images based on photos you own or have permission to use.",
-    "bestFor": ["Thanksgiving cards", "Family-style group portraits", "Friend gathering albums", "Warm seasonal posts"],
-    "workflow": ["Upload clear solo or group photos you own or have permission to use.", "Choose the Thanksgiving direction and review the credit cost before generation.", "Download card-ready favorites or keep the set in your private holiday album."],
-    "styleNotes": ["Warm dining-room light", "Harvest colors and cozy seasonal decor", "Group-friendly framing with clear faces"],
+    "bestFor": [
+      "Thanksgiving cards",
+      "Family-style group portraits",
+      "Friend gathering albums",
+      "Warm seasonal posts"
+    ],
+    "workflow": [
+      "Upload clear solo or group photos you own or have permission to use.",
+      "Choose the Thanksgiving direction and review the credit cost before generation.",
+      "Download card-ready favorites or keep the set in your private holiday album."
+    ],
+    "styleNotes": [
+      "Warm dining-room light",
+      "Harvest colors and cozy seasonal decor",
+      "Group-friendly framing with clear faces"
+    ],
     "coverNote": "Use the preview to decide whether the set should feel family-style, friend-group, card-ready, or dinner-table warm.",
     "safetyNote": "Use only photos you own or have permission to use; do not imply attendance by a real public figure without authorization."
   },
@@ -339,13 +992,39 @@
     "headline": "AI Halloween Party Photo Generator",
     "cardDescription": "Create Halloween party photos with costume energy, spooky group cards, cinematic VIP looks, and dramatic seasonal social images.",
     "metaLabel": "Party albums",
-    "tags": ["Halloween Photos", "Party Portraits", "Spooky Cards"],
-    "detailTags": ["Halloween Photos", "Party Portraits", "Costume Looks", "Spooky Cards", "VIP-style Scenes", "Group Albums", "Cinematic Lighting", "Private Gallery"],
+    "tags": [
+      "Halloween Photos",
+      "Party Portraits",
+      "Spooky Cards"
+    ],
+    "detailTags": [
+      "Halloween Photos",
+      "Party Portraits",
+      "Costume Looks",
+      "Spooky Cards",
+      "VIP-style Scenes",
+      "Group Albums",
+      "Cinematic Lighting",
+      "Private Gallery"
+    ],
     "detailIntro": "Create Halloween party photos with costume energy, dramatic lighting, playful spooky styling, and group-card composition. The package is built for private albums, party keepsakes, and seasonal social posts.",
     "whatCreates": "A private set of Halloween party portraits, spooky group cards, VIP-style costume looks, dramatic poster crops, and seasonal social images.",
-    "bestFor": ["Halloween party albums", "Costume portraits", "Spooky group cards", "Seasonal social posts"],
-    "workflow": ["Upload clear portraits or group photos you own or have permission to use.", "Choose the Halloween party direction and review credits before generation.", "Download favorites for cards, posts, party albums, or private keepsakes."],
-    "styleNotes": ["Dramatic color and cinematic shadows", "Costume-party energy without explicit content", "Group-friendly framing for cards and posts"],
+    "bestFor": [
+      "Halloween party albums",
+      "Costume portraits",
+      "Spooky group cards",
+      "Seasonal social posts"
+    ],
+    "workflow": [
+      "Upload clear portraits or group photos you own or have permission to use.",
+      "Choose the Halloween party direction and review credits before generation.",
+      "Download favorites for cards, posts, party albums, or private keepsakes."
+    ],
+    "styleNotes": [
+      "Dramatic color and cinematic shadows",
+      "Costume-party energy without explicit content",
+      "Group-friendly framing for cards and posts"
+    ],
     "coverNote": "Use the preview to decide whether the set should feel playful, spooky, VIP-style, or cinematic.",
     "safetyNote": "Use only photos you own or have permission to use; do not imply attendance by a real public figure without authorization."
   },
@@ -353,13 +1032,39 @@
     "headline": "AI Video Add-On Generator",
     "cardDescription": "Extend photo sets into motion-ready concepts with cinematic frame ideas, couple clips, creator teasers, and album video direction.",
     "metaLabel": "Motion add-ons",
-    "tags": ["AI Video", "Motion Clips", "Cinematic Frames"],
-    "detailTags": ["AI Video", "Motion Clips", "Cinematic Frames", "Couple Videos", "Creator Teasers", "Album Motion", "Story Concepts", "Private Gallery"],
+    "tags": [
+      "AI Video",
+      "Motion Clips",
+      "Cinematic Frames"
+    ],
+    "detailTags": [
+      "AI Video",
+      "Motion Clips",
+      "Cinematic Frames",
+      "Couple Videos",
+      "Creator Teasers",
+      "Album Motion",
+      "Story Concepts",
+      "Private Gallery"
+    ],
     "detailIntro": "Use video add-ons to plan motion around an existing or upcoming photo package. The package helps bridge still portraits into short cinematic ideas, teaser frames, and motion-ready story direction.",
     "whatCreates": "A private set of video concept frames, motion-ready portrait directions, short clip ideas, and cinematic add-on visuals tied to your photo style.",
-    "bestFor": ["Couple clip concepts", "Creator teasers", "Album motion ideas", "Cinematic social previews"],
-    "workflow": ["Start with clear source portraits or a finished package direction.", "Review the video add-on scope, credit cost, and intended clip use.", "Save the motion-ready frames and use them to guide the next creative step."],
-    "styleNotes": ["Cinematic pose continuity", "Frame sequences that suggest motion", "Story-friendly crops for short clips"],
+    "bestFor": [
+      "Couple clip concepts",
+      "Creator teasers",
+      "Album motion ideas",
+      "Cinematic social previews"
+    ],
+    "workflow": [
+      "Start with clear source portraits or a finished package direction.",
+      "Review the video add-on scope, credit cost, and intended clip use.",
+      "Save the motion-ready frames and use them to guide the next creative step."
+    ],
+    "styleNotes": [
+      "Cinematic pose continuity",
+      "Frame sequences that suggest motion",
+      "Story-friendly crops for short clips"
+    ],
     "coverNote": "Use the examples to judge pacing mood, cinematic framing, and whether your add-on should feel romantic, creator-led, or dramatic.",
     "safetyNote": "This package creates planning visuals and motion concepts; it does not submit real provider video jobs from the public CTA."
   },
@@ -367,14 +1072,1364 @@
     "headline": "AI Magic Upscaler",
     "cardDescription": "Improve preview clarity for favorite generated photos, profile images, and larger downloads while keeping the original mood intact.",
     "metaLabel": "Image enhancer",
-    "tags": ["Image Upscaler", "Sharper Downloads", "Photo Enhancer"],
-    "detailTags": ["Image Upscaler", "Sharper Downloads", "Photo Enhancer", "Profile Images", "Large Files", "Gallery Favorites", "Preview Clarity", "Private Gallery"],
+    "tags": [
+      "Image Upscaler",
+      "Sharper Downloads",
+      "Photo Enhancer"
+    ],
+    "detailTags": [
+      "Image Upscaler",
+      "Sharper Downloads",
+      "Photo Enhancer",
+      "Profile Images",
+      "Large Files",
+      "Gallery Favorites",
+      "Preview Clarity",
+      "Private Gallery"
+    ],
     "detailIntro": "Use Magic Upscaler when a favorite image needs clearer detail for a profile, album, post, or larger download. The tool focuses on practical enhancement rather than changing the theme world.",
     "whatCreates": "A private set of sharper versions, clearer profile crops, and enhanced favorites based on images you already have permission to use.",
-    "bestFor": ["Sharper profile images", "Larger downloads", "Gallery favorites", "Before publishing previews"],
-    "workflow": ["Choose a favorite generated or uploaded image that you can use.", "Review the enhancement direction and credit cost before processing.", "Download the clearer version for your profile, post, album, or website."],
-    "styleNotes": ["Preserve original mood and composition", "Sharper detail without over-stylizing", "Cleaner previews for larger displays"],
+    "bestFor": [
+      "Sharper profile images",
+      "Larger downloads",
+      "Gallery favorites",
+      "Before publishing previews"
+    ],
+    "workflow": [
+      "Choose a favorite generated or uploaded image that you can use.",
+      "Review the enhancement direction and credit cost before processing.",
+      "Download the clearer version for your profile, post, album, or website."
+    ],
+    "styleNotes": [
+      "Preserve original mood and composition",
+      "Sharper detail without over-stylizing",
+      "Cleaner previews for larger displays"
+    ],
     "coverNote": "Use the examples to decide whether you need subtle clarity, stronger detail, or a cleaner download version.",
     "safetyNote": "Enhancement cannot guarantee perfect restoration, identity accuracy, or permission to publish images you do not own."
+  },
+  "engagement-photo": {
+    "headline": "AI Engagement Photo Generator",
+    "cardDescription": "Create romantic engagement-style portraits, proposal keepsakes, announcement photos, and private couple albums from approved uploads.",
+    "metaLabel": "Engagement Photo",
+    "tags": [
+      "Engagement",
+      "Couple",
+      "Announcement"
+    ],
+    "detailTags": [
+      "Engagement",
+      "Couple",
+      "Announcement",
+      "Engagement Photo",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Engagement Photo helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of engagement photo images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Engagement photo sets from approved source photos",
+      "Couple concepts with clear credit cost before generation",
+      "Announcement images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Engagement Photo direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Engagement Photo instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Engagement Photo works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "wedding-photo": {
+    "headline": "AI Wedding Photo Generator",
+    "cardDescription": "Generate wedding-inspired portraits, save-the-date images, romantic ceremony scenes, and private keepsake albums.",
+    "metaLabel": "Wedding Photo",
+    "tags": [
+      "Wedding",
+      "Couple",
+      "Keepsake"
+    ],
+    "detailTags": [
+      "Wedding",
+      "Couple",
+      "Keepsake",
+      "Wedding Photo",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Wedding Photo helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of wedding photo images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Wedding photo sets from approved source photos",
+      "Couple concepts with clear credit cost before generation",
+      "Keepsake images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Wedding Photo direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Wedding Photo instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Wedding Photo works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "valentines-photo": {
+    "headline": "AI Valentines Photo Generator",
+    "cardDescription": "Build romantic Valentine's Day portraits, date-night cards, gift-ready couple images, and private seasonal albums.",
+    "metaLabel": "Valentines Photo",
+    "tags": [
+      "Valentines",
+      "Date Night",
+      "Romance"
+    ],
+    "detailTags": [
+      "Valentines",
+      "Date Night",
+      "Romance",
+      "Valentines Photo",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Valentines Photo helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of valentines photo images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Valentines photo sets from approved source photos",
+      "Date Night concepts with clear credit cost before generation",
+      "Romance images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Valentines Photo direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Valentines Photo instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Valentines Photo works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "christmas-photo": {
+    "headline": "AI Christmas Photo Generator",
+    "cardDescription": "Create festive Christmas portraits, greeting-card images, cozy winter scenes, and private holiday albums.",
+    "metaLabel": "Christmas Photo",
+    "tags": [
+      "Christmas",
+      "Holiday Card",
+      "Winter"
+    ],
+    "detailTags": [
+      "Christmas",
+      "Holiday Card",
+      "Winter",
+      "Christmas Photo",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Christmas Photo helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of christmas photo images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Christmas photo sets from approved source photos",
+      "Holiday Card concepts with clear credit cost before generation",
+      "Winter images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Christmas Photo direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Christmas Photo instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Christmas Photo works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "halloween-photo": {
+    "headline": "AI Halloween Photo Generator",
+    "cardDescription": "Make Halloween party portraits, costume-friendly character images, moody seasonal cards, and private spooky albums.",
+    "metaLabel": "Halloween Photo",
+    "tags": [
+      "Halloween",
+      "Party",
+      "Seasonal"
+    ],
+    "detailTags": [
+      "Halloween",
+      "Party",
+      "Seasonal",
+      "Halloween Photo",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Halloween Photo helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of halloween photo images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Halloween photo sets from approved source photos",
+      "Party concepts with clear credit cost before generation",
+      "Seasonal images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Halloween Photo direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Halloween Photo instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Halloween Photo works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "thanksgiving-photo": {
+    "headline": "AI Thanksgiving Photo Generator",
+    "cardDescription": "Create warm Thanksgiving portraits, gratitude cards, dinner-table keepsakes, and private family-style albums.",
+    "metaLabel": "Thanksgiving Photo",
+    "tags": [
+      "Thanksgiving",
+      "Gratitude",
+      "Group Portraits"
+    ],
+    "detailTags": [
+      "Thanksgiving",
+      "Gratitude",
+      "Group Portraits",
+      "Thanksgiving Photo",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Thanksgiving Photo helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of thanksgiving photo images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Thanksgiving photo sets from approved source photos",
+      "Gratitude concepts with clear credit cost before generation",
+      "Group Portraits images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Thanksgiving Photo direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Thanksgiving Photo instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Thanksgiving Photo works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "avatar": {
+    "headline": "AI Avatar Generator",
+    "cardDescription": "Design polished AI avatars, profile crops, personal bio visuals, and clean social identity images from private uploads.",
+    "metaLabel": "Avatar",
+    "tags": [
+      "Avatar",
+      "Profile",
+      "Social"
+    ],
+    "detailTags": [
+      "Avatar",
+      "Profile",
+      "Social",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Avatar helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of avatar images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Avatar photo sets from approved source photos",
+      "Profile concepts with clear credit cost before generation",
+      "Social images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Avatar direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Avatar instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Avatar works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "headshot": {
+    "headline": "AI Headshot Generator",
+    "cardDescription": "Generate realistic AI headshots for LinkedIn, resumes, founder bios, speaker pages, and professional team profiles.",
+    "metaLabel": "Headshot",
+    "tags": [
+      "Headshot",
+      "LinkedIn",
+      "Professional"
+    ],
+    "detailTags": [
+      "Headshot",
+      "LinkedIn",
+      "Professional",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Headshot helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of headshot images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Headshot photo sets from approved source photos",
+      "LinkedIn concepts with clear credit cost before generation",
+      "Professional images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Headshot direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Headshot instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Headshot works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "gala-photo": {
+    "headline": "AI Gala Photo Generator",
+    "cardDescription": "Create gala-night portraits with formal styling, polished event lighting, red-carpet mood, and private album delivery.",
+    "metaLabel": "Gala Photo",
+    "tags": [
+      "Gala",
+      "Formal",
+      "Event"
+    ],
+    "detailTags": [
+      "Gala",
+      "Formal",
+      "Event",
+      "Gala Photo",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Gala Photo helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of gala photo images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Gala photo sets from approved source photos",
+      "Formal concepts with clear credit cost before generation",
+      "Event images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Gala Photo direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Gala Photo instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Gala Photo works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "portrait-photo": {
+    "headline": "AI Portrait Photo Generator",
+    "cardDescription": "Build creator portraits, personal-brand images, media-kit photos, founder visuals, and polished profile albums.",
+    "metaLabel": "Portrait Photo",
+    "tags": [
+      "Portrait",
+      "Creator",
+      "Personal Brand"
+    ],
+    "detailTags": [
+      "Portrait",
+      "Creator",
+      "Personal Brand",
+      "Portrait Photo",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Portrait Photo helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of portrait photo images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Portrait photo sets from approved source photos",
+      "Creator concepts with clear credit cost before generation",
+      "Personal Brand images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Portrait Photo direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Portrait Photo instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Portrait Photo works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "black-friday": {
+    "headline": "AI Black Friday Generator",
+    "cardDescription": "Create bold Black Friday campaign portraits, sale-ready creator visuals, dark studio images, and seasonal promotional album concepts.",
+    "metaLabel": "Black Friday",
+    "tags": [
+      "Black Friday",
+      "Campaign",
+      "Promo"
+    ],
+    "detailTags": [
+      "Black Friday",
+      "Campaign",
+      "Promo",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Black Friday helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of black friday images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Black Friday photo sets from approved source photos",
+      "Campaign concepts with clear credit cost before generation",
+      "Promo images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Black Friday direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Black Friday instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Black Friday works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "only-fans": {
+    "headline": "AI Only Fans Generator",
+    "cardDescription": "Create creator subscription profile photos, tasteful promo portraits, bio images, and private content-safe visual sets for consenting adults.",
+    "metaLabel": "Only Fans",
+    "tags": [
+      "Creator",
+      "Subscription",
+      "Profile"
+    ],
+    "detailTags": [
+      "Creator",
+      "Subscription",
+      "Profile",
+      "Only Fans",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Only Fans helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of only fans images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Creator photo sets from approved source photos",
+      "Subscription concepts with clear credit cost before generation",
+      "Profile images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Only Fans direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Only Fans instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Only Fans works best when the source photos are current, sharp, and matched to the final use case.",
+    "safetyNote": "For consenting adults only. Keep requests non-explicit, permission-safe, and focused on profile, promo, or personal-brand imagery."
+  },
+  "singles-awareness-day": {
+    "headline": "AI Singles Awareness Day Generator",
+    "cardDescription": "Make confident solo portraits, self-love cards, dating-profile refreshes, and private Singles Awareness Day albums.",
+    "metaLabel": "Singles Awareness Day",
+    "tags": [
+      "Solo",
+      "Self Love",
+      "Profile"
+    ],
+    "detailTags": [
+      "Solo",
+      "Self Love",
+      "Profile",
+      "Singles Awareness Day",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Singles Awareness Day helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of singles awareness day images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Solo photo sets from approved source photos",
+      "Self Love concepts with clear credit cost before generation",
+      "Profile images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Singles Awareness Day direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Singles Awareness Day instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Singles Awareness Day works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "cannes": {
+    "headline": "AI Cannes Generator",
+    "cardDescription": "Create Cannes-inspired festival portraits with glamorous arrival energy, flash photography mood, and elegant editorial crops.",
+    "metaLabel": "Cannes",
+    "tags": [
+      "Cannes",
+      "Festival",
+      "Glamour"
+    ],
+    "detailTags": [
+      "Cannes",
+      "Festival",
+      "Glamour",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Cannes helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of cannes images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Cannes photo sets from approved source photos",
+      "Festival concepts with clear credit cost before generation",
+      "Glamour images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Cannes direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Cannes instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Cannes works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "nightlife": {
+    "headline": "AI Nightlife Generator",
+    "cardDescription": "Create nightlife portraits with city lights, evening wardrobe, lounge mood, and private after-dark creator albums.",
+    "metaLabel": "Nightlife",
+    "tags": [
+      "Nightlife",
+      "City",
+      "Evening"
+    ],
+    "detailTags": [
+      "Nightlife",
+      "City",
+      "Evening",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Nightlife helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of nightlife images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Nightlife photo sets from approved source photos",
+      "City concepts with clear credit cost before generation",
+      "Evening images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Nightlife direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Nightlife instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Nightlife works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "rich-lifestyle": {
+    "headline": "AI Rich Lifestyle Generator",
+    "cardDescription": "Build polished rich lifestyle portraits with luxury interiors, elevated wardrobe, travel mood, and premium creator crops.",
+    "metaLabel": "Rich Lifestyle",
+    "tags": [
+      "Luxury",
+      "Lifestyle",
+      "Premium"
+    ],
+    "detailTags": [
+      "Luxury",
+      "Lifestyle",
+      "Premium",
+      "Rich Lifestyle",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Rich Lifestyle helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of rich lifestyle images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Luxury photo sets from approved source photos",
+      "Lifestyle concepts with clear credit cost before generation",
+      "Premium images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Rich Lifestyle direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Rich Lifestyle instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Rich Lifestyle works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "bikini": {
+    "headline": "AI Bikini Generator",
+    "cardDescription": "Create beachwear-inspired bikini portraits with resort light, confident styling, private review, and consent-first image handling.",
+    "metaLabel": "Bikini",
+    "tags": [
+      "Beachwear",
+      "Resort",
+      "Portrait"
+    ],
+    "detailTags": [
+      "Beachwear",
+      "Resort",
+      "Portrait",
+      "Bikini",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Bikini helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of bikini images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Beachwear photo sets from approved source photos",
+      "Resort concepts with clear credit cost before generation",
+      "Portrait images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Bikini direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Bikini instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Bikini works best when the source photos are current, sharp, and matched to the final use case.",
+    "safetyNote": "For consenting adults only. Keep requests tasteful, non-explicit, and based on photos you own or have permission to use."
+  },
+  "swimsuit": {
+    "headline": "AI Swimsuit Generator",
+    "cardDescription": "Preview swimsuit and resort portrait ideas with beach lighting, wardrobe planning, creator crops, and private gallery review.",
+    "metaLabel": "Swimsuit",
+    "tags": [
+      "Swimsuit",
+      "Resort",
+      "Style"
+    ],
+    "detailTags": [
+      "Swimsuit",
+      "Resort",
+      "Style",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Swimsuit helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of swimsuit images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Swimsuit photo sets from approved source photos",
+      "Resort concepts with clear credit cost before generation",
+      "Style images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Swimsuit direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Swimsuit instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Swimsuit works best when the source photos are current, sharp, and matched to the final use case.",
+    "safetyNote": "For consenting adults only. Use approved source photos and keep styling requests non-explicit."
+  },
+  "travel": {
+    "headline": "AI Travel Generator",
+    "cardDescription": "Create travel portraits with scenic streets, coastal escapes, outdoor light, destination mood, and private creator albums.",
+    "metaLabel": "Travel",
+    "tags": [
+      "Travel",
+      "Destination",
+      "Lifestyle"
+    ],
+    "detailTags": [
+      "Travel",
+      "Destination",
+      "Lifestyle",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Travel helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of travel images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Travel photo sets from approved source photos",
+      "Destination concepts with clear credit cost before generation",
+      "Lifestyle images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Travel direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Travel instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Travel works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "soccer": {
+    "headline": "AI Soccer Generator",
+    "cardDescription": "Create soccer fan portraits, stadium-style posters, match-day profile images, and private supporter albums without official marks.",
+    "metaLabel": "Soccer",
+    "tags": [
+      "Soccer",
+      "Fan Photos",
+      "Match Day"
+    ],
+    "detailTags": [
+      "Soccer",
+      "Fan Photos",
+      "Match Day",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Soccer helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of soccer images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Soccer photo sets from approved source photos",
+      "Fan Photos concepts with clear credit cost before generation",
+      "Match Day images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Soccer direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Soccer instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Soccer works best when the source photos are current, sharp, and matched to the final use case.",
+    "safetyNote": "For personal fan creativity only. Avoid official team logos, league marks, player likenesses, celebrity faces, or protected brand assets unless you have permission."
+  },
+  "urban": {
+    "headline": "AI Urban Generator",
+    "cardDescription": "Build urban portraits with street scenes, city textures, modern wardrobe, creator energy, and private gallery delivery.",
+    "metaLabel": "Urban",
+    "tags": [
+      "Urban",
+      "City",
+      "Creator"
+    ],
+    "detailTags": [
+      "Urban",
+      "City",
+      "Creator",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Urban helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of urban images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Urban photo sets from approved source photos",
+      "City concepts with clear credit cost before generation",
+      "Creator images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Urban direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Urban instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Urban works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "street-style": {
+    "headline": "AI Street Style Generator",
+    "cardDescription": "Generate street style portraits with fashion-forward wardrobe, editorial poses, city backdrops, and creator-ready crops.",
+    "metaLabel": "Street Style",
+    "tags": [
+      "Street Style",
+      "Fashion",
+      "Editorial"
+    ],
+    "detailTags": [
+      "Street Style",
+      "Fashion",
+      "Editorial",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits",
+      "Download-ready Results"
+    ],
+    "detailIntro": "Street Style helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of street style images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Street Style photo sets from approved source photos",
+      "Fashion concepts with clear credit cost before generation",
+      "Editorial images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Street Style direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Street Style instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Street Style works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "hairstyle-generator": {
+    "headline": "AI Hairstyle Generator Generator",
+    "cardDescription": "Preview hairstyle, hair color, texture, and salon inspiration portraits before choosing a real-world look or creator refresh.",
+    "metaLabel": "Hairstyle Generator",
+    "tags": [
+      "Hairstyle",
+      "Hair Color",
+      "Preview"
+    ],
+    "detailTags": [
+      "Hairstyle",
+      "Hair Color",
+      "Preview",
+      "Hairstyle Generator",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Hairstyle Generator helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of hairstyle generator images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Hairstyle photo sets from approved source photos",
+      "Hair Color concepts with clear credit cost before generation",
+      "Preview images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Hairstyle Generator direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Hairstyle Generator instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Hairstyle Generator works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "motion-generator": {
+    "headline": "AI Motion Generator Generator",
+    "cardDescription": "Create motion-ready photo concepts, animated portrait frames, GIF-style direction, and short video starter images.",
+    "metaLabel": "Motion Generator",
+    "tags": [
+      "Motion",
+      "GIF",
+      "Video Starter"
+    ],
+    "detailTags": [
+      "Motion",
+      "GIF",
+      "Video Starter",
+      "Motion Generator",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Motion Generator helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of motion generator images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Motion photo sets from approved source photos",
+      "GIF concepts with clear credit cost before generation",
+      "Video Starter images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Motion Generator direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Motion Generator instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Motion Generator works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "background-changer": {
+    "headline": "AI Background Changer Generator",
+    "cardDescription": "Create collection-style background replacement concepts for portraits, products, profile photos, and private gallery images.",
+    "metaLabel": "Background Changer",
+    "tags": [
+      "Background",
+      "Edit",
+      "Scene"
+    ],
+    "detailTags": [
+      "Background",
+      "Edit",
+      "Scene",
+      "Background Changer",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Background Changer helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of background changer images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Background photo sets from approved source photos",
+      "Edit concepts with clear credit cost before generation",
+      "Scene images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Background Changer direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Background Changer instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Background Changer works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "background-remover": {
+    "headline": "AI Background Remover Generator",
+    "cardDescription": "Prepare clean background removal and cutout-style images for profiles, listings, creator graphics, and private downloads.",
+    "metaLabel": "Background Remover",
+    "tags": [
+      "Background",
+      "Cutout",
+      "Clean"
+    ],
+    "detailTags": [
+      "Background",
+      "Cutout",
+      "Clean",
+      "Background Remover",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Background Remover helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of background remover images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Background photo sets from approved source photos",
+      "Cutout concepts with clear credit cost before generation",
+      "Clean images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Background Remover direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Background Remover instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Background Remover works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "magic-eraser": {
+    "headline": "AI Magic Eraser Generator",
+    "cardDescription": "Remove distractions, small objects, clutter, and unwanted visual details while keeping the main photo natural.",
+    "metaLabel": "Magic Eraser",
+    "tags": [
+      "Erase",
+      "Cleanup",
+      "Edit"
+    ],
+    "detailTags": [
+      "Erase",
+      "Cleanup",
+      "Edit",
+      "Magic Eraser",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Magic Eraser helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of magic eraser images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Erase photo sets from approved source photos",
+      "Cleanup concepts with clear credit cost before generation",
+      "Edit images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Magic Eraser direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Magic Eraser instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Magic Eraser works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "photo-enhancer": {
+    "headline": "AI Photo Enhancer Generator",
+    "cardDescription": "Enhance soft, dark, compressed, or low-detail photos for clearer downloads, profile images, and private gallery review.",
+    "metaLabel": "Photo Enhancer",
+    "tags": [
+      "Enhance",
+      "Clarity",
+      "Sharpness"
+    ],
+    "detailTags": [
+      "Enhance",
+      "Clarity",
+      "Sharpness",
+      "Photo Enhancer",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Photo Enhancer helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of photo enhancer images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Enhance photo sets from approved source photos",
+      "Clarity concepts with clear credit cost before generation",
+      "Sharpness images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Photo Enhancer direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Photo Enhancer instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Photo Enhancer works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "portrait-retouch": {
+    "headline": "AI Portrait Retouch Generator",
+    "cardDescription": "Retouch portraits with natural skin texture, balanced light, cleaner crops, and private review-friendly realism.",
+    "metaLabel": "Portrait Retouch",
+    "tags": [
+      "Retouch",
+      "Portrait",
+      "Natural"
+    ],
+    "detailTags": [
+      "Retouch",
+      "Portrait",
+      "Natural",
+      "Portrait Retouch",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Portrait Retouch helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of portrait retouch images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Retouch photo sets from approved source photos",
+      "Portrait concepts with clear credit cost before generation",
+      "Natural images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Portrait Retouch direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Portrait Retouch instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Portrait Retouch works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "unblur-image": {
+    "headline": "AI Unblur Image Generator",
+    "cardDescription": "Improve blurred or soft images with clearer facial detail, sharper edges, and natural-looking private downloads.",
+    "metaLabel": "Unblur Image",
+    "tags": [
+      "Unblur",
+      "Sharpness",
+      "Restore"
+    ],
+    "detailTags": [
+      "Unblur",
+      "Sharpness",
+      "Restore",
+      "Unblur Image",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Unblur Image helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of unblur image images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Unblur photo sets from approved source photos",
+      "Sharpness concepts with clear credit cost before generation",
+      "Restore images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Unblur Image direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Unblur Image instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Unblur Image works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "color-correction": {
+    "headline": "AI Color Correction Generator",
+    "cardDescription": "Correct color casts, exposure imbalance, flat lighting, and dull tones while keeping portraits and scenes realistic.",
+    "metaLabel": "Color Correction",
+    "tags": [
+      "Color",
+      "Exposure",
+      "Tone"
+    ],
+    "detailTags": [
+      "Color",
+      "Exposure",
+      "Tone",
+      "Color Correction",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Color Correction helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of color correction images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Color photo sets from approved source photos",
+      "Exposure concepts with clear credit cost before generation",
+      "Tone images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Color Correction direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Color Correction instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Color Correction works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "old-photo-restoration": {
+    "headline": "AI Old Photo Restoration Generator",
+    "cardDescription": "Restore old or damaged photos with clearer detail, reduced scratches, improved tone, and respectful family keepsake handling.",
+    "metaLabel": "Old Photo Restoration",
+    "tags": [
+      "Restoration",
+      "Old Photos",
+      "Keepsake"
+    ],
+    "detailTags": [
+      "Restoration",
+      "Old Photos",
+      "Keepsake",
+      "Old Photo Restoration",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Old Photo Restoration helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of old photo restoration images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Restoration photo sets from approved source photos",
+      "Old Photos concepts with clear credit cost before generation",
+      "Keepsake images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Old Photo Restoration direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Old Photo Restoration instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Old Photo Restoration works best when the source photos are current, sharp, and matched to the final use case."
+  },
+  "edit-by-prompt": {
+    "headline": "AI Edit By Prompt Generator",
+    "cardDescription": "Use a written prompt to request safe photo edits, scene changes, style adjustments, and private image variations.",
+    "metaLabel": "Edit By Prompt",
+    "tags": [
+      "Prompt",
+      "Edit",
+      "Creative"
+    ],
+    "detailTags": [
+      "Prompt",
+      "Edit",
+      "Creative",
+      "Edit By Prompt",
+      "Private Gallery",
+      "AI Photos",
+      "Source Photo Guidance",
+      "Visible Credits"
+    ],
+    "detailIntro": "Edit By Prompt helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.",
+    "whatCreates": "A private gallery of edit by prompt images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.",
+    "bestFor": [
+      "Prompt photo sets from approved source photos",
+      "Edit concepts with clear credit cost before generation",
+      "Creative images for profiles, posts, cards, or creator pages",
+      "Private gallery review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload clear source photos you own or have permission to use.",
+      "Choose the Edit By Prompt direction and review the expected image count.",
+      "Confirm the visible credit cost before generation starts.",
+      "Review the private gallery, then download the images that match your use case."
+    ],
+    "styleNotes": [
+      "Keep the request focused on Edit By Prompt instead of mixing several unrelated looks into one job.",
+      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
+      "Review face, hands, background details, crop, and overall realism before using the result publicly."
+    ],
+    "coverNote": "Edit By Prompt works best when the source photos are current, sharp, and matched to the final use case."
   }
 }

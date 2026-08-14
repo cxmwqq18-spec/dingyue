@@ -64,16 +64,7 @@ const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   gala: "gala-night-portraits",
   heritage: "heritage-celebration-portraits"
 };
-const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {
-  deportes: "world-cup-fan-photos",
-  lifestyle: "outdoor-creator-scenes",
-  "professional-headshots": "headshots",
-  sports: "world-cup-fan-photos",
-  travel: "outdoor-creator-scenes",
-  viaje: "outdoor-creator-scenes",
-  "travel-scene-pack": "outdoor-creator-scenes",
-  video: "ai-video-add-ons"
-};
+const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {};
 const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "",
   "headshot-generator": "headshot",

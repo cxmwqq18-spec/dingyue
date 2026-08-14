@@ -323,11 +323,11 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
       title: "Browse private AI photo packages | myDreamshoots",
       description: "Browse myDreamshoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs."
     },
-    "/collections/headshots": {
+    "/collections/headshot": {
       title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | myDreamshoots",
       description: "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs."
     },
-    "/collections/world-cup-fan-photos": {
+    "/collections/soccer": {
       title: "AI World Cup Fan Photos & Match-Day Posters | myDreamshoots",
       description: "Create personal AI World Cup fan photos, match-day posters, and profile avatars from your own selfies for private fan use."
     },

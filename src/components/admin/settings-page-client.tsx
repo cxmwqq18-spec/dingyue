@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CreditCard, Globe2, ShieldCheck, Users } from "lucide-react";
-import { fetchAdminJson } from "@/components/admin/admin-api-client";
+import { fetchAdminJson, invalidateAdminJson } from "@/components/admin/admin-api-client";
 import { AuditFeedPanel } from "@/components/admin/audit-feed-panel";
 import { ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { SiteAdminsPanel } from "@/components/admin/site-admins-panel";
@@ -75,6 +75,7 @@ export function SettingsPageClient({ site }: { site: Site }) {
   useEffect(() => {
     let active = true;
     const controller = new AbortController();
+    invalidateAdminJson(`/api/sites/${site.id}/`);
     async function loadSettingsPage() {
       try {
         setError(null);
@@ -112,7 +113,10 @@ export function SettingsPageClient({ site }: { site: Site }) {
     ) {
       setState({ data: null, error: null, loading: true });
       try {
-        const response = await fetchAdminJson<T & { error?: string }>(`/api/sites/${site.id}/admin/settings-page?section=${section}`, { init: { signal: controller.signal } });
+        const response = await fetchAdminJson<T & { error?: string }>(
+          `/api/sites/${site.id}/admin/settings-page?section=${section}`,
+          { init: { signal: controller.signal }, ttlMs: section === "admins" ? 0 : undefined }
+        );
         const result = response.data;
         if (!active) return;
         if (!response.ok) {

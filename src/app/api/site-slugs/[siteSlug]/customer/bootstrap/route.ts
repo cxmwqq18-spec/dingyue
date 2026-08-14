@@ -8,6 +8,7 @@ import {
   getCustomerWorkspaceSiteShellRelational,
   getSiteIdBySlugRelational
 } from "@/lib/stores/site-store";
+import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/customer-account-runtime";
 import { getThemeRuntimeForCustomer } from "@/lib/server-store";
 import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
 import type { NextRequest } from "next/server";
@@ -125,21 +126,14 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   }
 
   if (includeMode === "account") {
-    const [site, accountState, bootstrap] = await Promise.all([
+    const [site, accountRuntime, bootstrap] = await Promise.all([
       getCustomerWorkspaceSiteShellRelational(siteSlug),
-      readStorefrontCustomerRuntimeStateForSiteFromDatabase({
-        siteId,
-        sessionId: current.sessionId,
-        profile: "account"
-      }),
+      getCustomerAccountSummaryRuntimeRelational({ customer: current.customer, siteId }),
       getCustomerWorkspaceBootstrapRelational(siteSlug)
     ]);
     if (!site) {
       return NextResponse.json({ ok: false, error: "site_not_found" }, { status: 404 });
     }
-    const accountRuntime = accountState
-      ? getThemeRuntimeForCustomer(accountState, site.id, current.customer.id)
-      : undefined;
 
     return ensureCustomerCsrfCookie(NextResponse.json(
       {

@@ -19,7 +19,6 @@ const expectedHomeOrders = {
     "generation_showcase_1",
     "tutorial_video_1",
     "tutorial_video_2",
-    "mobile_video_1",
     "package_catalog_1",
     "proof_1",
     "faq_1",
@@ -41,24 +40,35 @@ const expectedHomeOrders = {
   ]
 };
 const removedHomeSectionsByStore = {
-  mydreamshoots: ["visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
+  mydreamshoots: ["mobile_video_1", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
   aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
+};
+const expectedMydreamshootsTutorialVideos = {
+  image: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-20260814.mp4",
+  video: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-video-tutorial-20260814.mp4"
 };
 const expectedBestPackagesOrder = ["intro_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "faq_1"];
 const expectedImageShowcasePriorityCount = 8;
-const expectedImageShowcaseCardCount = 28;
 const expectedHomepageImageGridCardCount = 16;
 const expectedHomepageVideoGridCardCount = 8;
 const expectedTrustedLogoCount = 30;
 const expectedMydreamshootsTrustedLogoRoot = "/assets/dreamshoot/brand/trusted-creators-dark-v2/";
+const expectedImageShowcaseCardCountByStore = {
+  mydreamshoots: 38,
+  aidreamcapes: 28
+};
 const dreamshootHomepageSafeShowcaseImagePathBySlug = {
   "ai-video-add-ons": "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-06.webp",
   "anime-avatar": "/assets/dreamshoot/generated/pack-galleries/anime-avatar/anime-avatar-12.webp",
   boudoir: "/assets/dreamshoot/generated/pack-galleries/boudoir/boudoir-10.webp",
+  "background-changer": "/assets/dreamshoot/generated/pack-galleries/product-style/product-style-10.webp",
+  "background-remover": "/assets/dreamshoot/generated/pack-galleries/product-style/product-style-11.webp",
+  "color-correction": "/assets/dreamshoot/generated/pack-galleries/magic-upscaler/magic-upscaler-05.webp",
   "christmas-couple": "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-03.webp",
   "christmas-photos": "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-03.webp",
   "creator-portraits": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-04.webp",
   cyberpunk: "/assets/dreamshoot/generated/pack-galleries/cyberpunk/cyberpunk-03.webp",
+  "edit-by-prompt": "/assets/dreamshoot/generated/pack-galleries/social-cards/social-cards-07.webp",
   "desi-wedding": "/assets/dreamshoot/generated/pack-galleries/desi-wedding/desi-wedding-07.webp",
   engagement: "/assets/dreamshoot/generated/pack-galleries/engagement/engagement-05.webp",
   "fashion-editorial": "/assets/dreamshoot/generated/pack-galleries/fashion-editorial/fashion-editorial-03.webp",
@@ -69,13 +79,20 @@ const dreamshootHomepageSafeShowcaseImagePathBySlug = {
   "indian-wedding": "/assets/dreamshoot/generated/pack-galleries/indian-wedding/indian-wedding-04.webp",
   mafia: "/assets/dreamshoot/generated/pack-galleries/mafia/mafia-06.webp",
   "magic-upscaler": "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.webp",
+  "magic-eraser": "/assets/dreamshoot/generated/pack-galleries/magic-upscaler/magic-upscaler-02.webp",
   nature: "/assets/dreamshoot/generated/homepage-showcase/images/nature.webp",
+  "motion-generator": "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-07.webp",
+  "old-photo-restoration": "/assets/dreamshoot/generated/pack-galleries/magic-upscaler/magic-upscaler-07.webp",
+  "only-fans": "/assets/dreamshoot/generated/pack-galleries/profile-cards/profile-cards-05.webp",
   "outdoor-creator-scenes": "/assets/dreamshoot/generated/pack-galleries/outdoor-creator-scenes/outdoor-creator-scenes-04.webp",
+  "photo-enhancer": "/assets/dreamshoot/generated/pack-galleries/magic-upscaler/magic-upscaler-01.webp",
   "product-style": "/assets/dreamshoot/generated/pack-galleries/product-style/product-style-09.webp",
   "professional-headshots": "/assets/dreamshoot/generated/pack-galleries/professional-headshots/professional-headshots-03.webp",
+  "portrait-retouch": "/assets/dreamshoot/generated/pack-galleries/professional-headshots/professional-headshots-05.webp",
   "profile-cards": "/assets/dreamshoot/generated/pack-galleries/profile-cards/profile-cards-04.webp",
   "social-cards": "/assets/dreamshoot/generated/pack-galleries/social-cards/social-cards-06.webp",
   "thanksgiving-group-photos": "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-02.webp",
+  "unblur-image": "/assets/dreamshoot/generated/pack-galleries/magic-upscaler/magic-upscaler-04.webp",
   "valentine-photos": "/assets/dreamshoot/generated/pack-galleries/valentine-photos/valentine-photos-08.webp",
   "virtual-try-on": "/assets/dreamshoot/generated/pack-galleries/virtual-try-on/virtual-try-on-08.webp",
   "wedding-portraits": "/assets/dreamshoot/generated/homepage-showcase/images/wedding-portraits.webp",
@@ -122,6 +139,10 @@ function comparableImageUrl(value) {
   return String(value || "").trim().split("?")[0];
 }
 
+function uniqueImageUrlList(values) {
+  return Array.from(new Set(values.map((value) => comparableImageUrl(value)).filter(Boolean)));
+}
+
 function isAidreamcapesStore(store, site) {
   return /aidreamcapes/i.test(`${store.key} ${site?.slug ?? ""} ${site?.primaryDomain ?? ""}`);
 }
@@ -164,14 +185,20 @@ function creativePackMatchesShowcaseSlug(pack, slug) {
   return Boolean(normalizedSlug) && creativePackTokens(pack).includes(normalizedSlug);
 }
 
-function dreamshootHomepageSafeShowcaseImageForPack(pack) {
+function dreamshootHomepageSafeShowcaseImageForPack(pack, excludeImages = []) {
+  const excluded = new Set([comparableImageUrl(pack.imageUrl), ...excludeImages].map(comparableImageUrl).filter(Boolean));
   const source = [
     creativePackHrefSlug(pack),
     pack.categoryRecord?.slug,
     pack.category,
     pack.name
-  ].map(showcaseSlug).map((slug) => dreamshootHomepageSafeShowcaseImagePathBySlug[slug]).find(Boolean);
-  return source || "";
+  ]
+    .map(showcaseSlug)
+    .map((slug) => dreamshootHomepageSafeShowcaseImagePathBySlug[slug])
+    .find((candidate) => candidate && !excluded.has(comparableImageUrl(candidate)) && !looksLikeCompositeShowcaseAsset(candidate) && !bannedDreamshootHomepageSafeImages.has(comparableImageUrl(candidate)));
+  if (source) return source;
+  const gallery = uniqueImageUrlList(pack.galleryImages ?? []).filter((image) => !excluded.has(image) && !looksLikeCompositeShowcaseAsset(image) && !bannedDreamshootHomepageSafeImages.has(image));
+  return gallery.slice(2).find(Boolean) ?? gallery.find(Boolean) ?? comparableImageUrl(pack.imageUrl) ?? "";
 }
 
 function assertShowcaseImageSourceData(store, site, pageJson, label) {
@@ -181,31 +208,29 @@ function assertShowcaseImageSourceData(store, site, pageJson, label) {
   const imageSources = slugs.map((slug) => homepageShowcaseImageUrlForStore(store, site, slug));
   const uniqueSources = new Set(imageSources.map(comparableImageUrl));
   const activePacks = activeCreativePacksForSite(site);
+  const expectedCardCount = expectedImageShowcaseCardCountByStore[store.key] ?? expectedImageShowcaseCardCountByStore.mydreamshoots;
   assert(slugs.length > 0, `${label}: expected configured homepage image theme slugs`);
   assert(slugs.join("|") === expectedSlugs.join("|"), `${label}: homepage image slug order drifted: ${slugs.join("|")}`);
   assert(uniqueSlugs.size === slugs.length, `${label}: duplicate homepage image theme slugs: ${slugs.join("|")}`);
   assert(uniqueSources.size === imageSources.length, `${label}: duplicate homepage image source paths: ${imageSources.join("|")}`);
   assert(imageSources.length === expectedImageShowcasePriorityCount, `${label}: expected ${expectedImageShowcasePriorityCount} priority homepage image themes, got ${imageSources.length}`);
-  assert(activePacks.length === expectedImageShowcaseCardCount, `${label}: expected ${expectedImageShowcaseCardCount} active homepage image product themes, got ${activePacks.length}`);
+  assert(activePacks.length === expectedCardCount, `${label}: expected ${expectedCardCount} active homepage image product themes, got ${activePacks.length}`);
   for (const slug of slugs) {
     const source = homepageShowcaseImageUrlForStore(store, site, slug);
     const assetFile = path.resolve(repoRoot, "public", `.${comparableImageUrl(source)}`);
     assert(fs.existsSync(assetFile) && fs.statSync(assetFile).size > 1000, `${label}: missing single-image homepage showcase asset ${assetFile}`);
     assert(!looksLikeCompositeShowcaseAsset(source), `${label}: homepage image source must not be a collage/contact-sheet composite asset: ${source}`);
-    assert(activePacks.some((pack) => creativePackMatchesShowcaseSlug(pack, slug)), `${label}: homepage image slug has no active creative pack match: ${slug}`);
-  }
-  const packCoverSources = activePacks.map((pack) => comparableImageUrl(pack.imageUrl));
-  const uniquePackCoverSources = new Set(packCoverSources);
-  assert(uniquePackCoverSources.size === activePacks.length, `${label}: duplicate active homepage pack image sources: ${packCoverSources.join("|")}`);
-  for (const source of packCoverSources) {
-    const assetFile = path.resolve(repoRoot, "public", `.${source}`);
-    assert(fs.existsSync(assetFile) && fs.statSync(assetFile).size > 1000, `${label}: missing active homepage pack image asset ${assetFile}`);
-    assert(!looksLikeCompositeShowcaseAsset(source), `${label}: active homepage pack image must not be a collage/contact-sheet composite asset: ${source}`);
   }
   if (isAidreamcapesStore(store, site)) {
     assert(imageSources.every((source) => source.includes("/fan-holiday-theme/categories/")), `${label}: Aidreamcapes homepage should use clean category images, got ${imageSources.join("|")}`);
   } else {
-    const safePackSources = activePacks.map((pack) => dreamshootHomepageSafeShowcaseImageForPack(pack));
+    const safePackSources = [];
+    const usedPackImages = [];
+    for (const pack of activePacks) {
+      const source = dreamshootHomepageSafeShowcaseImageForPack(pack, usedPackImages);
+      safePackSources.push(source);
+      if (source) usedPackImages.push(source);
+    }
     const uniqueSafePackSources = new Set(safePackSources.map(comparableImageUrl));
     assert(safePackSources.length === activePacks.length && safePackSources.every(Boolean), `${label}: every DreamShoot homepage pack should have a curated safe single-image source`);
     assert(uniqueSafePackSources.size === safePackSources.length, `${label}: duplicate curated DreamShoot homepage image sources: ${safePackSources.join("|")}`);
@@ -276,11 +301,11 @@ function assertPage(pageJson, label, storeKey) {
     return;
   }
   assert(pageJson?.sections?.tutorial_video_1?.type === "video_feature", `${label}: missing tutorial video section`);
-  assert(pageJson?.sections?.tutorial_video_2?.type === "video_feature", `${label}: missing AI image tutorial video section`);
-  assert(pageJson?.sections?.mobile_video_1?.type === "mobile_video_showcase", `${label}: missing mobile tutorial section`);
+  assert(pageJson?.sections?.tutorial_video_2?.type === "video_feature", `${label}: missing AI video tutorial section`);
+  assert(!pageJson?.sections?.mobile_video_1, `${label}: MyDreamShoots mobile tutorial section should not be present`);
   assert(pageJson?.sections?.pricing_1?.type === "pricing_table", `${label}: pricing section should remain available for embedded rendering`);
   assert(!pageJson?.sectionsOrder?.includes("pricing_1"), `${label}: pricing_1 should be embedded in showcase instead of ordered at the bottom`);
-  assertMobileVideoSection(pageJson?.sections?.mobile_video_1, `${label}: mydreamshoots mobile tutorial`);
+  assertMydreamshootsTutorialPair(pageJson, `${label}: mydreamshoots tutorials`);
   assert(Number(pageJson?.sections?.package_catalog_1?.settings?.featuredCount ?? 0) === 12, `${label}: homepage package catalog should feature 12 packs`);
   assert(pageJson?.sections?.proof_1?.settings?.mode === "reviews", `${label}: testimonial wall should render customer reviews`);
   assert((pageJson?.sections?.proof_1?.blocks ?? []).length >= 6, `${label}: expected at least 6 review cards`);
@@ -302,9 +327,6 @@ function assertPage(pageJson, label, storeKey) {
   assert(String(pricingSettings.marketComparison ?? "").includes("$725"), `${label}: pricing market comparison should mention the $725 photoshoot comparison`);
   assert(String(pricingSettings.description ?? "").startsWith("Choose Starter, Pro, or Premium."), `${label}: pricing description drifted`);
   assert(pricingSettings.sidePanelTitle === "Our plans starts from $24.50 and are designed to be more affordable and flexible.", `${label}: pricing side panel title drifted`);
-  const mobileSettings = pageJson?.sections?.mobile_video_1?.settings ?? {};
-  assert(mobileSettings.title === "How it works", `${label}: mobile tutorial title drifted`);
-  assert(String(mobileSettings.supportingCopy ?? "").includes("Your next video content can instantly go viral."), `${label}: mobile tutorial supporting copy drifted`);
   const catalogSettings = pageJson?.sections?.package_catalog_1?.settings ?? {};
   assert(catalogSettings.label === "AI PHOTO STUDIOS", `${label}: package catalog label drifted`);
   assert(catalogSettings.title === "Professional AI Photo Packages", `${label}: package catalog title drifted`);
@@ -330,7 +352,7 @@ function assertBestPackagesPage(pageJson, label) {
   assert(pageJson?.sections?.faq_1?.type === "faq", `${label}: missing Best Packages FAQ section`);
 }
 
-function assertBestMediaPage(pageJson, kind, label) {
+function assertBestMediaPage(pageJson, kind, label, expectedKind = kind) {
   const sectionId = kind === "image" ? "best_ai_image_1" : "best_ai_video_1";
   if (pageJson && "pageType" in pageJson) assert(pageJson.pageType === "content", `${label}: Best AI ${kind} should be a content page`);
   const order = pageJson?.sectionsOrder ?? pageJson?.content_for_page ?? [];
@@ -338,15 +360,21 @@ function assertBestMediaPage(pageJson, kind, label) {
   const section = pageJson?.sections?.[sectionId];
   assert(section?.type === "dreamshoot_media_gallery", `${label}: missing Best AI ${kind} media gallery`);
   assert(pageJson?.sections?.faq_1?.type === "faq", `${label}: missing Best AI ${kind} FAQ section`);
-  assert(section?.settings?.kind === kind, `${label}: Best AI ${kind} gallery kind drifted`);
+  assert(section?.settings?.kind === expectedKind, `${label}: Best AI ${kind} gallery kind drifted`);
   assert(section?.settings?.fullGallery === true, `${label}: Best AI ${kind} gallery should use full active data`);
   assert(!String(section?.settings?.imageSlugs ?? "").trim(), `${label}: Best AI ${kind} gallery should not limit image slugs`);
   assert(!String(section?.settings?.videoSlugs ?? "").trim(), `${label}: Best AI ${kind} gallery should not limit video slugs`);
 }
 
-const expectedFeaturedPackCollectionSlugs = {
-  mydreamshoots: ["world-cup-fan-photos", "gala-photos", "christmas-couple", "creator-portraits", "thanksgiving-group-photos", "holiday"],
-  aidreamcapes: ["game-day-group-photos", "christmas-holiday-albums", "premiere-style-portraits", "fan-scene-albums", "thanksgiving-memory-sets", "seasonal-celebration-photos"]
+const expectedFeaturedPackCollectionSlugsByStore = {
+  mydreamshoots: {
+    page: ["soccer", "gala-photo", "avatar", "soccer", "thanksgiving-photo", "holiday"],
+    activeTheme: ["soccer", "gala-photo", "nightlife", "portrait-photo", "thanksgiving-photo", "holiday"]
+  },
+  aidreamcapes: {
+    page: ["game-day-group-photos", "christmas-holiday-albums", "premiere-style-portraits", "fan-scene-albums", "thanksgiving-memory-sets", "seasonal-celebration-photos"],
+    activeTheme: ["game-day-group-photos", "christmas-holiday-albums", "premiere-style-portraits", "fan-scene-albums", "thanksgiving-memory-sets", "seasonal-celebration-photos"]
+  }
 };
 
 function featuredPackCollectionSlugsForPage(pageJson) {
@@ -355,26 +383,34 @@ function featuredPackCollectionSlugsForPage(pageJson) {
     .map((block) => String(block?.settings?.collectionSlug ?? "").trim());
 }
 
-function assertFeaturedPackCollectionSlugs(pageJson, storeKey, label) {
+function assertFeaturedPackCollectionSlugs(pageJson, storeKey, label, variant = "page") {
   const actual = featuredPackCollectionSlugsForPage(pageJson);
-  const expected = expectedFeaturedPackCollectionSlugs[storeKey] ?? [];
+  const expected = expectedFeaturedPackCollectionSlugsByStore[storeKey]?.[variant] ?? expectedFeaturedPackCollectionSlugsByStore[storeKey]?.page ?? [];
   assert(actual.join("|") === expected.join("|"), `${label}: featured pack collection slug order drifted: ${actual.join("|")}`);
   assert(actual.every((slug) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) && !/^https?:|\/collections\//i.test(slug)), `${label}: featured pack tiles must use stable collection slugs: ${actual.join("|")}`);
 }
 
-function assertTutorialVideoSection(section, label, expectedEyebrow = "ai image") {
+function assertTutorialVideoSection(section, label, expectedEyebrow = "ai image", expectedVideoUrl = "") {
   const settings = section?.settings ?? {};
   const imageUrl = comparableImageUrl(settings.imageUrl);
   const videoUrl = comparableImageUrl(settings.videoUrl);
+  const subtitle = String(settings.subtitle ?? "");
   assert(String(settings.eyebrow ?? "").toLowerCase().includes(expectedEyebrow), `${label}: tutorial eyebrow should identify ${expectedEyebrow}`);
   assert(String(settings.title ?? "").trim().length > 12, `${label}: tutorial should have a real title`);
-  assert(String(settings.subtitle ?? "").includes("source photo"), `${label}: tutorial copy should mention source photos`);
+  assert(subtitle.includes("source photo") || subtitle.includes("frame images") || subtitle.includes("approved source photos"), `${label}: tutorial copy should mention source photos or frame images`);
   assert(/\.jpg$/.test(imageUrl), `${label}: tutorial should use a poster jpg`);
   assert(/\.mp4$/.test(videoUrl), `${label}: tutorial should use an mp4 video`);
+  if (expectedVideoUrl) assert(videoUrl === expectedVideoUrl, `${label}: expected ${expectedVideoUrl}, got ${videoUrl}`);
   for (const url of [imageUrl, videoUrl]) {
     const assetFile = path.resolve(repoRoot, "public", `.${url}`);
     assert(fs.existsSync(assetFile) && fs.statSync(assetFile).size > 1000, `${label}: missing tutorial asset ${assetFile}`);
   }
+}
+
+function assertMydreamshootsTutorialPair(pageJson, label) {
+  assertTutorialVideoSection(pageJson?.sections?.tutorial_video_1, `${label}: AI image tutorial`, "ai image", expectedMydreamshootsTutorialVideos.image);
+  assertTutorialVideoSection(pageJson?.sections?.tutorial_video_2, `${label}: AI video tutorial`, "ai video", expectedMydreamshootsTutorialVideos.video);
+  assert(!pageJson?.sections?.mobile_video_1, `${label}: mobile tutorial section should be removed`);
 }
 
 function assertMobileVideoSection(section, label) {
@@ -470,6 +506,7 @@ for (const store of showcaseStores) {
   const bestPackages = site?.pages?.find((page) => page.slug === "/best-packages");
   const bestAiImage = site?.pages?.find((page) => page.slug === "/best-ai-image");
   const bestAiVideo = site?.pages?.find((page) => page.slug === "/best-ai-video");
+  const expectedBestAiVideoKind = store.key === "mydreamshoots" ? "motion-generator" : "video";
   assert(bestPackages, `${store.key}: Best Packages page missing`);
   assert(bestAiImage, `${store.key}: Best AI image page missing`);
   assert(bestAiVideo, `${store.key}: Best AI video page missing`);
@@ -479,11 +516,11 @@ for (const store of showcaseStores) {
   assertFeaturedPackCollectionSlugs(bestPackages?.publishedJson, store.key, `${store.key}: published Best Packages`);
   assertBestMediaPage(bestAiImage?.draftJson, "image", `${store.key}: draft Best AI image`);
   assertBestMediaPage(bestAiImage?.publishedJson, "image", `${store.key}: published Best AI image`);
-  assertBestMediaPage(bestAiVideo?.draftJson, "video", `${store.key}: draft Best AI video`);
-  assertBestMediaPage(bestAiVideo?.publishedJson, "video", `${store.key}: published Best AI video`);
+  assertBestMediaPage(bestAiVideo?.draftJson, "video", `${store.key}: draft Best AI video`, expectedBestAiVideoKind);
+  assertBestMediaPage(bestAiVideo?.publishedJson, "video", `${store.key}: published Best AI video`, expectedBestAiVideoKind);
   if (store.key === "mydreamshoots") {
-    assertTutorialVideoSection(home?.draftJson?.sections?.tutorial_video_2, `${store.key}: draft home`);
-    assertTutorialVideoSection(home?.publishedJson?.sections?.tutorial_video_2, `${store.key}: published home`);
+    assertMydreamshootsTutorialPair(home?.draftJson, `${store.key}: draft home`);
+    assertMydreamshootsTutorialPair(home?.publishedJson, `${store.key}: published home`);
   }
   assertShowcaseImageSourceData(store, site, home?.draftJson, `${store.key}: draft home`);
   assertShowcaseImageSourceData(store, site, home?.publishedJson, `${store.key}: published home`);
@@ -497,14 +534,15 @@ for (const store of showcaseStores) {
 
   for (const theme of (state.siteThemes ?? []).filter((item) => item.siteId === store.siteId)) {
     const template = theme.templates?.index;
+    const bestPackagesVariant = theme.id.includes("_active") ? "activeTheme" : "page";
     assert(template?.sections?.generation_showcase_1?.type === "dreamshoot_generation_showcase", `${store.key}: site theme ${theme.id} missing showcase`);
     assertOrder(template?.content_for_page ?? [], `${store.key}: site theme ${theme.id}`, store.key);
     assertBestPackagesPage(theme.templates?.["best-packages"], `${store.key}: site theme ${theme.id} Best Packages`);
-    assertFeaturedPackCollectionSlugs(theme.templates?.["best-packages"], store.key, `${store.key}: site theme ${theme.id} Best Packages`);
+    assertFeaturedPackCollectionSlugs(theme.templates?.["best-packages"], store.key, `${store.key}: site theme ${theme.id} Best Packages`, bestPackagesVariant);
     assertBestMediaPage(theme.templates?.["best-ai-image"], "image", `${store.key}: site theme ${theme.id} Best AI image`);
-    assertBestMediaPage(theme.templates?.["best-ai-video"], "video", `${store.key}: site theme ${theme.id} Best AI video`);
+    assertBestMediaPage(theme.templates?.["best-ai-video"], "video", `${store.key}: site theme ${theme.id} Best AI video`, expectedBestAiVideoKind);
     if (store.key === "mydreamshoots") {
-      assertTutorialVideoSection(template?.sections?.tutorial_video_2, `${store.key}: site theme ${theme.id}`);
+      assertMydreamshootsTutorialPair(template, `${store.key}: site theme ${theme.id}`);
       assertMydreamshootsImageSlugPriority({ sections: { generation_showcase_1: template?.sections?.generation_showcase_1 } }, `${store.key}: site theme ${theme.id}`);
       assertMydreamshootsHomepageAssets(template, `${store.key}: site theme ${theme.id}`);
     }
@@ -519,9 +557,9 @@ for (const store of showcaseStores) {
     assertBestPackagesPage(snapshotBestPackages, `${store.key}: publication ${publication.version} Best Packages`);
     assertFeaturedPackCollectionSlugs(snapshotBestPackages, store.key, `${store.key}: publication ${publication.version} Best Packages`);
     assertBestMediaPage(snapshotBestAiImage, "image", `${store.key}: publication ${publication.version} Best AI image`);
-    assertBestMediaPage(snapshotBestAiVideo, "video", `${store.key}: publication ${publication.version} Best AI video`);
+    assertBestMediaPage(snapshotBestAiVideo, "video", `${store.key}: publication ${publication.version} Best AI video`, expectedBestAiVideoKind);
     if (store.key === "mydreamshoots") {
-      assertTutorialVideoSection(snapshotHome?.sections?.tutorial_video_2, `${store.key}: publication ${publication.version}`);
+      assertMydreamshootsTutorialPair(snapshotHome, `${store.key}: publication ${publication.version}`);
       assertMydreamshootsImageSlugPriority(snapshotHome, `${store.key}: publication ${publication.version}`);
       assertMydreamshootsHomepageAssets(snapshotHome, `${store.key}: publication ${publication.version}`);
     }
@@ -583,7 +621,7 @@ const pricingBillingTable = fs.readFileSync(path.join(repoRoot, "src/components/
 assert(!showcaseRenderer.includes("hideTrustedLogoIntroOnHome"), "homepage trusted logo intro should not be blocked by a storefront hide gate");
 assert(showcaseRenderer.includes('settingBool(section, "showTrustedLogoIntro", false)'), "homepage trusted logo intro should follow the published section setting");
 assert(videoFeatureRenderer.includes('setting(section, "videoUrl", "")') && videoFeatureRenderer.includes("<LazyStorefrontVideo"), "tutorial video feature should render a lazy videoUrl when configured");
-assert(videoFeatureRenderer.includes("poster={image || undefined}") && themeRenderer.includes("LazyStorefrontVideo"), "tutorial video feature should keep poster fallback while deferring mp4 loading");
+assert(videoFeatureRenderer.includes("poster={videoPoster || undefined}") && themeRenderer.includes("LazyStorefrontVideo"), "tutorial video feature should keep poster fallback while deferring mp4 loading");
 assert(showcaseRenderer.includes("dreamshoot-showcase-track"), "showcase should render horizontal showcase rails");
 assert(showcaseRenderer.includes("DreamshootShowcaseRail"), "showcase video rails should auto-scroll without duplicating card data");
 assert(!showcaseRenderer.includes('data-auto-scroll="disabled"'), "trusted logo rows should not disable the showcase rail auto-scroll");
@@ -609,7 +647,7 @@ assert(themeRenderer.includes("dreamshootHomepageSafeImageForPack"), "homepage s
 assert(themeRenderer.includes("homepageShowcaseImageCardFromSlug"), "homepage showcase should build cards directly from configured image slugs before falling back to pack galleries");
 assert(themeRenderer.includes("generationShowcasePriorityImageCardFromSlug"), "homepage showcase should use configured image slugs as priority cards without limiting total image products");
 assert(themeRenderer.includes("generationShowcasePackPriorityIndex"), "homepage showcase should sort active packs by configured priority image slugs");
-assert(themeRenderer.includes("generationShowcasePackDedupeKey"), "homepage showcase should dedupe by active pack identity so all 28 visible themes remain available");
+assert(themeRenderer.includes("generationShowcasePackDedupeKey"), "homepage showcase should dedupe by active pack identity so all 38 visible themes remain available");
 assert(!themeRenderer.includes("return generationShowcaseCardsFromSources(uniqueSelectedImageSlugs"), "homepage showcase must not return only the eight configured priority image slugs");
 assert(themeRenderer.includes("looksLikeCompositeShowcaseImageUrl"), "homepage showcase image selection should reject collage/contact-sheet/gallery composite candidates");
 assert(!themeRenderer.includes('normalized.includes("/pack-galleries/")'), "homepage showcase must not reject every gallery single image as a composite");

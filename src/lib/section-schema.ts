@@ -1112,7 +1112,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           anchor: "packages",
           eyebrow: "Photo packages",
           title: "A package catalog built for AI photo subscriptions.",
-          subtitle: "Show scene, style, creator, sports, and headshot collections with clear credit costs and delivery promises.",
+          subtitle: "Show scene, style, portrait photo, soccer, and headshot collections with clear credit costs and delivery promises.",
           source: "creative_packs",
           layout: "editorial"
         },
@@ -1126,7 +1126,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
             href: "/tools/creator-portrait"
           }),
           block("pkg_headshots", "package", {
-            title: "Professional Headshots",
+            title: "Headshot",
             description: "LinkedIn-ready portraits for founders, operators, and consultants.",
             meta: "Private gallery",
             credits: "16 credits",
@@ -1439,11 +1439,11 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           layout: "seo_grid"
         },
         blocks: [
-          block("taxonomy_core", "taxonomy_card", { title: "Photo package studio", description: "Headshot, gala, sports, beauty, lifestyle, and creator scenes.", meta: "Core", keywords: "headshots|gala photos|creator portraits", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/collections/creative" }),
-          block("taxonomy_headshot", "taxonomy_card", { title: "Professional headshots", description: "Profile photos for LinkedIn, founders, resumes, and teams. Not for official IDs or impersonation.", meta: "Professional", keywords: "headshot|profile|linkedin", imageUrl: "/assets/dreamshoot/editorial-headshot-gpt2.png", href: "/collections/headshots" }),
-          block("taxonomy_gala", "taxonomy_card", { title: "Gala and night-out", description: "Formal looks, evening styling, and red-carpet style portraits.", meta: "Style", keywords: "gala|formal|night out", imageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", href: "/collections/gala" }),
+          block("taxonomy_core", "taxonomy_card", { title: "Lifestyle & Creative", description: "Headshot, gala photo, soccer, hairstyle generator, lifestyle, and portrait photo scenes.", meta: "Core", keywords: "headshot|gala photo|portrait photo", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/collections/lifestyle-creative" }),
+          block("taxonomy_headshot", "taxonomy_card", { title: "Headshot", description: "Profile photos for LinkedIn, founders, resumes, and teams. Not for official IDs or impersonation.", meta: "Professional", keywords: "headshot|profile|linkedin", imageUrl: "/assets/dreamshoot/editorial-headshot-gpt2.png", href: "/collections/headshot" }),
+          block("taxonomy_gala", "taxonomy_card", { title: "Gala Photo", description: "Formal looks, evening styling, and red-carpet style portraits.", meta: "Professional", keywords: "gala photo|formal|night out", imageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", href: "/collections/gala-photo" }),
           block("taxonomy_travel", "taxonomy_card", { title: "Lifestyle scenes", description: "Outdoor profile portraits and creator looks without booking a photographer.", meta: "Lifestyle", keywords: "lifestyle|outdoor|creator", imageUrl: "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png", href: "/collections/travel" }),
-          block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium fan scenes, fan posters, and match-day profile photos for personal fan use without official logos or player likenesses.", meta: "Sports", keywords: "world cup|football fan|match day avatar", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png", href: "/collections/sports" }),
+          block("taxonomy_sports", "taxonomy_card", { title: "Soccer", description: "Stadium fan scenes, fan posters, and match-day profile photos for personal fan use without official logos or player likenesses.", meta: "Lifestyle & Creative", keywords: "soccer|football fan|match day avatar", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png", href: "/collections/soccer" }),
           block("taxonomy_tryon", "taxonomy_card", { title: "Virtual try-on", description: "Preview wardrobe, styling, and creator outfits before generation. Visual preview only; not an exact fit guarantee.", meta: "Try-on", keywords: "try on|outfit|style", imageUrl: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png", href: "/tools/virtual-try-on" })
         ]
       }
@@ -1480,10 +1480,10 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           primaryHref: "/login"
         },
         blocks: [
-          block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Fan Photos", badge: "Featured", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp", href: "/collections/world-cup-fan-photos" }),
-          block("proof_sports_meetup", "proof_card", { title: "Sports idol-style meetups", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Sports Stars", badge: "Sports Stars", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-02.webp", href: "/collections/world-cup-fan-photos" }),
-          block("proof_vip", "proof_card", { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp", href: "/collections/gala-photos" }),
-          block("proof_christmas", "proof_card", { title: "Christmas group photos", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Christmas", badge: "Christmas", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photos" }),
+          block("proof_worldcup", "proof_card", { title: "Soccer", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Lifestyle & Creative", badge: "Featured", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp", href: "/collections/soccer" }),
+          block("proof_sports_meetup", "proof_card", { title: "Soccer fan scenes", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Lifestyle & Creative", badge: "Soccer", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-02.webp", href: "/collections/soccer" }),
+          block("proof_vip", "proof_card", { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp", href: "/collections/gala-photo" }),
+          block("proof_christmas", "proof_card", { title: "Christmas Photo", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Best Themes & Presets", badge: "Christmas", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photo" }),
           block("proof_seasonal", "proof_card", { title: "Seasonal holiday albums", description: "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.", category: "Seasonal", badge: "Seasonal", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: "/collections/holiday" })
         ]
       }
@@ -1623,7 +1623,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("anchor", "Anchor", "featured-pack"),
       text("label", "Small label", "Featured seasonal pack"),
       text("badge", "Offer badge", "Match-day pack"),
-      text("title", "Title", "World Cup fan photos for sports-idol style moments."),
+      text("title", "Title", "Soccer fan photos for match-day style moments."),
       textarea("subtitle", "Subtitle", "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing."),
       text("primaryCta", "Primary CTA", "Create Fan Photos"),
       url("primaryHref", "Primary link", "/login"),
@@ -1635,11 +1635,11 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("includedTitle", "Included title", "Included outputs"),
       textarea("includedOutputs", "Included outputs", "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing"),
       textarea("safetyCopy", "Safety copy", "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission."),
-      text("overlayTitle", "Overlay title", "World Cup Pack"),
+      text("overlayTitle", "Overlay title", "Soccer Pack"),
       text("overlaySubtitle", "Overlay subtitle", "Sports-idol style fan photos without a studio."),
       textarea("overlayChips", "Overlay chips", "fan meetup|group shot|stadium|social-ready"),
       textarea("bottomNote", "Bottom note", "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments."),
-      text("campaignLabel", "Campaign label", "Current campaign: World Cup Fan Photos"),
+      text("campaignLabel", "Campaign label", "Current campaign: Soccer"),
       text("nextCampaignLabel", "Next campaign label", "Next: Christmas / Thanksgiving / Halloween")
     ],
     blocks: [dreamshootSeasonalImageBlock],
@@ -1650,7 +1650,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           anchor: "featured-pack",
           label: "Featured seasonal pack",
           badge: "Match-day pack",
-          title: "World Cup fan photos for sports-idol style moments.",
+          title: "Soccer fan photos for match-day style moments.",
           subtitle: "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing.",
           primaryCta: "Create Fan Photos",
           primaryHref: "/login",
@@ -1662,11 +1662,11 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           includedTitle: "Included outputs",
           includedOutputs: "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
           safetyCopy: "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission.",
-          overlayTitle: "World Cup Pack",
+          overlayTitle: "Soccer Pack",
           overlaySubtitle: "Sports-idol style fan photos without a studio.",
           overlayChips: "fan meetup|group shot|stadium|social-ready",
           bottomNote: "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments.",
-          campaignLabel: "Current campaign: World Cup Fan Photos",
+          campaignLabel: "Current campaign: Soccer",
           nextCampaignLabel: "Next: Christmas / Thanksgiving / Halloween"
         },
         blocks: [
@@ -1723,13 +1723,13 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           featuredCount: 12
         },
         blocks: [
-          block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Create fan meetup portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Fan Photos", meta: "Fan meetups", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-04.webp", href: "/collections/world-cup-fan-photos" }),
-          block("catalog_christmas", "catalog_pack", { title: "Christmas Photos", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Christmas", meta: "Holiday cards", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photos" }),
-          block("catalog_christmas_couple", "catalog_pack", { title: "Christmas Couple", description: "Create cozy Christmas couple portraits, friend-card moments, and giftable holiday keepsakes.", category: "Christmas", meta: "Couple cards", credits: "22 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp", href: "/collections/christmas-couple" }),
+          block("catalog_worldcup", "catalog_pack", { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-04.webp", href: "/collections/soccer" }),
+          block("catalog_christmas", "catalog_pack", { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photo" }),
+          block("catalog_nightlife", "catalog_pack", { title: "Nightlife", description: "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", category: "Lifestyle & Creative", meta: "Night-out looks", credits: "22 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp", href: "/collections/nightlife" }),
           block("catalog_holiday", "catalog_pack", { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: "/collections/holiday" }),
-          block("catalog_creator_vip", "catalog_pack", { title: "Creator red-carpet style", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "VIP Looks", meta: "Red-carpet looks", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp", href: "/collections/creator-portraits" }),
-          block("catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving Group Photos", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", category: "Thanksgiving", meta: "Group portraits", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1", href: "/collections/thanksgiving-group-photos" }),
-          block("catalog_halloween", "catalog_pack", { title: "Halloween Party Photos", description: "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", category: "Halloween", meta: "Party albums", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1", href: "/collections/halloween-party-photos" })
+          block("catalog_creator_vip", "catalog_pack", { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp", href: "/collections/portrait-photo" }),
+          block("catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving Photo", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", category: "Best Themes & Presets", meta: "Group portraits", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1", href: "/collections/thanksgiving-photo" }),
+          block("catalog_halloween", "catalog_pack", { title: "Halloween Photo", description: "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", category: "Best Themes & Presets", meta: "Party albums", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1", href: "/collections/halloween-photo" })
         ]
       }
     ]
@@ -1850,8 +1850,8 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         type: "package",
         label: "Pack tile",
         settings: [
-          text("title", "Title", "Creator Portraits"),
-          textarea("description", "Description", "Polished creator and sports fan portraits."),
+          text("title", "Title", "Portrait Photo"),
+          textarea("description", "Description", "Polished portrait photo and soccer fan portraits."),
           text("meta", "Meta", "Private gallery"),
           text("credits", "Credits", "24 credits"),
           image("imageUrl", "Image URL", "/assets/dreamshoot/travel-card.svg"),
@@ -1860,8 +1860,8 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         preset: {
           label: "Pack tile",
           settings: {
-            title: "Creator Portraits",
-            description: "Polished creator and sports fan portraits.",
+            title: "Portrait Photo",
+            description: "Polished portrait photo and soccer fan portraits.",
             meta: "Private gallery",
             credits: "24 credits",
             imageUrl: "/assets/dreamshoot/travel-card.svg",
@@ -1877,13 +1877,13 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           anchor: "packs",
           eyebrow: "Popular packs",
           title: "Sell clear photo packages.",
-          subtitle: "Photo, creator, lifestyle, gala, sports, headshot, beauty, and editorial packs become clear shoppable outcomes.",
+          subtitle: "Photo, portrait, lifestyle, gala, soccer, headshot, magic, and editorial packs become clear shoppable outcomes.",
           source: "creative_packs"
         },
         blocks: [
           block("marquee_photo", "package", { title: "AI Photo Sets", description: "Announcement, profile, and scene visuals.", meta: "Private gallery", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/creator-portrait" }),
-          block("marquee_sports", "package", { title: "World Cup Fan Photos", description: "Stadium fan scenes, fan posters, and creator portrait sets.", meta: "Private gallery", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png", href: "/tools/world-cup-fan-photos" }),
-          block("marquee_gala", "package", { title: "Gala Photos", description: "Formal editorial night-out imagery.", meta: "Private gallery", credits: "22 credits", imageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", href: "/tools/gala-photo" })
+          block("marquee_sports", "package", { title: "Soccer", description: "Stadium fan scenes, fan posters, and portrait photo sets.", meta: "Private gallery", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png", href: "/tools/world-cup-fan-photos" }),
+          block("marquee_gala", "package", { title: "Gala Photo", description: "Formal editorial night-out imagery.", meta: "Private gallery", credits: "22 credits", imageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", href: "/tools/gala-photo" })
         ]
       }
     ]

@@ -57,7 +57,6 @@ const expectedHomeOrder = [
   "generation_showcase_1",
   "tutorial_video_1",
   "tutorial_video_2",
-  "mobile_video_1",
   "package_catalog_1",
   "proof_1",
   "faq_1",
@@ -367,14 +366,14 @@ const christmasPack = bestPackagesPage.publishedJson.sections?.featured_christma
 assert(christmasPack?.type === "dreamshoot_featured_pack", "Best Packages page missing Christmas featured pack renderer");
 const christmasPackText = JSON.stringify(christmasPack);
 assert(
-  featuredCollectionSlugs(christmasPack).join("|") === "christmas-photos|christmas-photos|christmas-couple|christmas-photos|christmas-photos|christmas-couple",
+  featuredCollectionSlugs(christmasPack).join("|") === "christmas-photo|christmas-photo|christmas-photo|christmas-photo|christmas-photo|christmas-photo",
   `Christmas featured pack stable collection slugs drifted: ${featuredCollectionSlugs(christmasPack).join("|")}`
 );
 for (const phrase of [
   "Christmas group photos for cards, posts, and private albums.",
-  "Create Christmas Photos",
-  "Current campaign: Christmas Photos",
-  "/collections/christmas-photos"
+  "Create Christmas Photo",
+  "Current campaign: Christmas Photo",
+  "/collections/christmas-photo"
 ]) {
   assert(christmasPackText.includes(phrase), `Christmas featured pack missing required copy or link: ${phrase}`);
 }
@@ -392,14 +391,14 @@ const thanksgivingPack = bestPackagesPage.publishedJson.sections?.featured_thank
 assert(thanksgivingPack?.type === "dreamshoot_featured_pack", "Best Packages page missing Thanksgiving featured pack renderer");
 const thanksgivingPackText = JSON.stringify(thanksgivingPack);
 assert(
-  featuredCollectionSlugs(thanksgivingPack).join("|") === "thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos|thanksgiving-group-photos",
+  featuredCollectionSlugs(thanksgivingPack).join("|") === "thanksgiving-photo|thanksgiving-photo|thanksgiving-photo|thanksgiving-photo|thanksgiving-photo|thanksgiving-photo",
   `Thanksgiving featured pack stable collection slugs drifted: ${featuredCollectionSlugs(thanksgivingPack).join("|")}`
 );
 for (const phrase of [
-  "Thanksgiving group photos for warm private albums.",
+  "Thanksgiving Photo for warm private albums.",
   "Create Thanksgiving Photos",
-  "Current campaign: Thanksgiving Group Photos",
-  "/collections/thanksgiving-group-photos"
+  "Current campaign: Thanksgiving Photo",
+  "/collections/thanksgiving-photo"
 ]) {
   assert(thanksgivingPackText.includes(phrase), `Thanksgiving featured pack missing required copy or link: ${phrase}`);
 }

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { KeyRound, Plus, Save, Trash2 } from "lucide-react";
+import { fetchAdminJson } from "@/components/admin/admin-api-client";
 import type { PublicSiteAdmin, SiteAdmin } from "@/lib/types";
 import { AdminPagination, clampPage, pageItems } from "@/components/admin/admin-pagination";
 import {
@@ -13,6 +14,8 @@ import {
   ErpSelect
 } from "@/components/admin/erp-primitives";
 import { siteAdminJsonHeaders } from "@/lib/client-csrf";
+
+const mutationTimeoutMs = 8_000;
 
 type AdminDraft = {
   displayName: string;
@@ -33,6 +36,13 @@ function adminErrorMessage(code?: string) {
     site_requires_owner: "当前站点至少需要保留一个 owner。",
     site_admin_update_empty: "没有可保存的修改。"
   }[code ?? ""] ?? code ?? "unknown error";
+}
+
+function adminRequestExceptionMessage(action: string, error: unknown) {
+  const aborted =
+    error instanceof DOMException && error.name === "AbortError"
+    || error instanceof Error && error.name === "AbortError";
+  return `${action}失败：${aborted ? "请求超时，请稍后重试。" : "网络异常，请稍后重试。"}`;
 }
 
 export function SiteAdminsPanel({
@@ -99,68 +109,92 @@ export function SiteAdminsPanel({
 
   async function createAdmin() {
     setBusyId("create");
-    const response = await fetch(`/api/sites/${siteId}/admins`, {
-      method: "POST",
-      headers: siteAdminJsonHeaders(siteId),
-      body: JSON.stringify({
-        ...createForm,
-        actor: "site_admin_demo"
-      })
-    });
-    const result = (await response.json().catch(() => ({}))) as { admin?: PublicSiteAdmin; error?: string };
-    setBusyId(null);
-    if (!response.ok || !result.admin) {
-      setMessage(`创建管理员失败：${adminErrorMessage(result.error)}`);
-      return;
+    try {
+      const response = await fetchAdminJson<{ admin?: PublicSiteAdmin; error?: string }>(`/api/sites/${siteId}/admins`, {
+        timeoutMs: mutationTimeoutMs,
+        init: {
+          method: "POST",
+          headers: siteAdminJsonHeaders(siteId),
+          body: JSON.stringify({
+            ...createForm,
+            actor: "site_admin_demo"
+          })
+        }
+      });
+      const result = response.data;
+      if (!response.ok || !result.admin) {
+        setMessage(`创建管理员失败：${adminErrorMessage(result.error)}`);
+        return;
+      }
+      setItems((current) => [...current, result.admin as PublicSiteAdmin]);
+      setCreateForm({ email: "", displayName: "", role: "admin", password: "" });
+      setMessage(`${result.admin.email} 已加入当前站点后台。`);
+      router.refresh();
+    } catch (error) {
+      setMessage(adminRequestExceptionMessage("创建管理员", error));
+    } finally {
+      setBusyId(null);
     }
-    setItems((current) => [...current, result.admin as PublicSiteAdmin]);
-    setCreateForm({ email: "", displayName: "", role: "admin", password: "" });
-    setMessage(`${result.admin.email} 已加入当前站点后台。`);
-    router.refresh();
   }
 
   async function saveAdmin(admin: PublicSiteAdmin) {
     const draft = drafts[admin.id];
     if (!draft) return;
     setBusyId(admin.id);
-    const response = await fetch(`/api/sites/${siteId}/admins/${admin.id}`, {
-      method: "PATCH",
-      headers: siteAdminJsonHeaders(siteId),
-      body: JSON.stringify({
-        displayName: draft.displayName,
-        role: draft.role,
-        password: draft.password || undefined,
-        actor: "site_admin_demo"
-      })
-    });
-    const result = (await response.json().catch(() => ({}))) as { admin?: PublicSiteAdmin; error?: string };
-    setBusyId(null);
-    if (!response.ok || !result.admin) {
-      setMessage(`保存管理员失败：${adminErrorMessage(result.error)}`);
-      return;
+    try {
+      const response = await fetchAdminJson<{ admin?: PublicSiteAdmin; error?: string }>(`/api/sites/${siteId}/admins/${admin.id}`, {
+        timeoutMs: mutationTimeoutMs,
+        init: {
+          method: "PATCH",
+          headers: siteAdminJsonHeaders(siteId),
+          body: JSON.stringify({
+            displayName: draft.displayName,
+            role: draft.role,
+            password: draft.password || undefined,
+            actor: "site_admin_demo"
+          })
+        }
+      });
+      const result = response.data;
+      if (!response.ok || !result.admin) {
+        setMessage(`保存管理员失败：${adminErrorMessage(result.error)}`);
+        return;
+      }
+      setItems((current) => current.map((item) => (item.id === admin.id ? result.admin ?? item : item)));
+      patchDraft(admin.id, { password: "", displayName: result.admin.displayName, role: result.admin.role });
+      setMessage(`${result.admin.email} 已更新。`);
+      router.refresh();
+    } catch (error) {
+      setMessage(adminRequestExceptionMessage("保存管理员", error));
+    } finally {
+      setBusyId(null);
     }
-    setItems((current) => current.map((item) => (item.id === admin.id ? result.admin ?? item : item)));
-    patchDraft(admin.id, { password: "", displayName: result.admin.displayName, role: result.admin.role });
-    setMessage(`${result.admin.email} 已更新。`);
-    router.refresh();
   }
 
   async function removeAdmin(admin: PublicSiteAdmin) {
     setBusyId(`delete:${admin.id}`);
-    const response = await fetch(`/api/sites/${siteId}/admins/${admin.id}`, {
-      method: "DELETE",
-      headers: siteAdminJsonHeaders(siteId),
-      body: JSON.stringify({ actor: "site_admin_demo" })
-    });
-    const result = (await response.json().catch(() => ({}))) as { deletedAdmin?: PublicSiteAdmin; error?: string };
-    setBusyId(null);
-    if (!response.ok || !result.deletedAdmin) {
-      setMessage(`删除管理员失败：${adminErrorMessage(result.error)}`);
-      return;
+    try {
+      const response = await fetchAdminJson<{ deletedAdmin?: PublicSiteAdmin; error?: string }>(`/api/sites/${siteId}/admins/${admin.id}`, {
+        timeoutMs: mutationTimeoutMs,
+        init: {
+          method: "DELETE",
+          headers: siteAdminJsonHeaders(siteId),
+          body: JSON.stringify({ actor: "site_admin_demo" })
+        }
+      });
+      const result = response.data;
+      if (!response.ok || !result.deletedAdmin) {
+        setMessage(`删除管理员失败：${adminErrorMessage(result.error)}`);
+        return;
+      }
+      setItems((current) => current.filter((item) => item.id !== admin.id));
+      setMessage(`${result.deletedAdmin.email} 已移出当前站点后台。`);
+      router.refresh();
+    } catch (error) {
+      setMessage(adminRequestExceptionMessage("删除管理员", error));
+    } finally {
+      setBusyId(null);
     }
-    setItems((current) => current.filter((item) => item.id !== admin.id));
-    setMessage(`${result.deletedAdmin.email} 已移出当前站点后台。`);
-    router.refresh();
   }
 
   return (

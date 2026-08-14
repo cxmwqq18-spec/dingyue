@@ -80,16 +80,9 @@ const aidreamcapesCollectionHrefSlugAliases: Record<string, string> = {
   "travel-journal-covers": "seasonal-celebration-photos"
 };
 
-const dreamshootCollectionHrefSlugAliases: Record<string, string> = {
-  "professional-headshots": "headshots",
-  "premiere-style-portraits": "gala-photos",
-  "thanksgiving": "thanksgiving-group-photos",
-  "halloween": "halloween-party-photos"
-};
+const dreamshootCollectionHrefSlugAliases: Record<string, string> = {};
 
-const dreamshootPackageGroupSlugOverrides: Record<string, string> = {
-  "christmas-couple": "seasonal"
-};
+const dreamshootPackageGroupSlugOverrides: Record<string, string> = {};
 
 function shouldUseAidreamcapesCollectionAliases(siteIds: Array<string | undefined>): boolean {
   return siteIds.some((siteId) => (siteId ?? "").toLowerCase().includes("aidreamcapes"));
@@ -165,18 +158,11 @@ function sortValue(value: unknown): number {
 }
 
 const dreamshootPackageGroupOrder = new Map([
-  "creator",
-  "avatar",
-  "wedding",
-  "cultural",
-  "couple",
-  "creative",
-  "beauty",
-  "sports",
-  "video",
-  "utility",
-  "headshots",
-  "seasonal"
+  "best-themes-presets",
+  "professional",
+  "lifestyle-creative",
+  "magic",
+  "photo-tools"
 ].map((slug, index) => [slug, index]));
 
 function groupOrderValue(group: Pick<PhotoPackageMegaGroup, "label" | "slug" | "sortOrder">): number {

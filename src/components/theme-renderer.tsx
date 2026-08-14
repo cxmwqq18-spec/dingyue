@@ -459,7 +459,7 @@ type PhotoPackageMegaGroup = {
 };
 
 function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>, pagePath: string, site: Site): Array<[string, SectionInstance]> {
-  if (pagePath === "/" && !isSpanishXbySite(site) && (isMyDreamShootsProfileSite(site) || isAidreamcapesSite(site))) {
+  if (pagePath === "/" && !isSpanishXbySite(site) && isAidreamcapesSite(site)) {
     return entries.filter(([, section]) => canonicalSectionType(section.type) !== "video_feature");
   }
   if (pagePath === "/collections") {
@@ -1313,9 +1313,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
         <div className={darkHeaderControls ? (unifiedDreamShootHeader ? "order-3 ml-auto flex min-w-0 shrink-0 items-center justify-end gap-1 rounded-full border border-white/10 bg-transparent p-1 lg:gap-1.5 xl:rounded-none xl:border-0 xl:p-0 min-[1800px]:gap-3" : "flex items-center justify-end gap-1.5 rounded-full border border-white/10 bg-transparent p-1 lg:gap-3 lg:border-0 lg:p-0") : unifiedDreamShootHeader ? "order-3 ml-auto flex min-w-0 shrink-0 items-center justify-end gap-1 rounded-full border border-black/10 bg-transparent p-1 lg:gap-1.5 xl:rounded-none xl:border-0 xl:p-0 min-[1800px]:gap-3" : "flex items-center justify-end gap-1.5 rounded-full border border-black/10 bg-transparent p-1 lg:gap-3 lg:border-0 lg:p-0"} data-storefront-header-controls="">
           {customer ? (
             <div className={signedInClassName}>
-              <HeaderLink aria-label={spanishXby ? "Abrir espacio privado" : "Open workspace"} className="inline-flex min-w-0 items-center gap-2 rounded-full pr-1 transition hover:opacity-80 min-[1800px]:gap-3" href={hrefFor(site, "/app/create")} prefetch={!disablePublicSeoPrefetch}>
+              <HeaderLink aria-label={spanishXby ? "Abrir cuenta" : "Open account"} className="inline-flex min-w-0 items-center gap-2 rounded-full pr-1 transition hover:opacity-80 min-[1800px]:gap-3" href={hrefFor(site, "/account")} prefetch={!disablePublicSeoPrefetch}>
                 <span className={darkHeaderControls ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white text-[#101114] min-[1800px]:h-9 min-[1800px]:w-9" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#15171a] text-white min-[1800px]:h-9 min-[1800px]:w-9"}>
-                  <UserRound className="h-4 w-4" strokeWidth={1.8} />
+                  {customer.profile?.avatarUrl ? <img className="h-full w-full rounded-full object-cover" src={customer.profile.avatarUrl} alt="" /> : <UserRound className="h-4 w-4" strokeWidth={1.8} />}
                 </span>
                 <span className="hidden min-w-0 text-left lg:block">
                   <span className="block max-w-[8rem] truncate text-[0.82rem] font-semibold min-[1800px]:max-w-[10rem] min-[1800px]:text-sm">{customer.name}</span>
@@ -1328,7 +1328,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
             </div>
           ) : shouldClientBootstrapCustomer ? (
             <CustomerHeaderBootstrapControls
-              accountHref={hrefFor(site, "/app/create")}
+              accountHref={hrefFor(site, "/account")}
               dark={darkHeaderControls}
               loginHref={hrefFor(site, "/login")}
               logoutHref={`/api/sites/${site.id}/auth/logout`}
@@ -1474,7 +1474,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                     <p className="truncate text-sm font-semibold">{customer.name}</p>
                     <p className={darkHeaderControls ? "mt-0.5 truncate text-xs text-white/58" : "mt-0.5 truncate text-xs text-[#64605a]"}>{customer.email}</p>
                     <div className="mt-3 grid gap-2">
-                      <HeaderLink className={dark ? "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={hrefFor(site, "/app/create")}>
+                      <HeaderLink className={dark ? "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={hrefFor(site, "/account")}>
                         {spanishXby ? "Cuenta" : "Account"}
                       </HeaderLink>
                     </div>
@@ -1482,7 +1482,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                   </div>
                 ) : shouldClientBootstrapCustomer ? (
                   <CustomerHeaderBootstrapControls
-                    accountHref={hrefFor(site, "/app/create")}
+                    accountHref={hrefFor(site, "/account")}
                     dark={darkHeaderControls}
                     loginHref={hrefFor(site, "/login")}
                     logoutHref={`/api/sites/${site.id}/auth/logout`}
@@ -3705,6 +3705,10 @@ function creativePackCollectionHref(pack: CreativePack): string {
 }
 
 function creativePackCreateHref(pack: CreativePack, site?: Site): string {
+  if (site && isMyDreamShootsProfileSite(site)) {
+    const categorySlug = creativePackCollectionHref(pack).replace(/^\/collections\//, "");
+    return `/app/create?category=${encodeURIComponent(categorySlug || pack.category || pack.id)}`;
+  }
   const params = new URLSearchParams();
   params.set("pack", site && isSpanishXbySite(site) ? publicCreativePackToken(pack) : pack.id);
   if (pack.aiAppSlug) params.set("tool_id", pack.aiAppSlug);
@@ -4894,16 +4898,21 @@ const aidreamcapesFallbackCatalogCardsSeed: Array<{ id: string; title: string; c
 
 const myDreamShootsCatalogCategoryHrefOverrides: DreamshootCategoryHrefOverrides = {
   all: "/collections",
-  "fan-photos": "/collections/world-cup-fan-photos",
-  "sports-stars": "/collections/world-cup-fan-photos",
-  "vip-looks": "/collections/gala-photos",
-  christmas: "/collections/christmas-photos",
-  thanksgiving: "/collections/thanksgiving-group-photos",
-  halloween: "/collections/halloween-party-photos",
+  "best-themes-presets": "/collections/best-themes-presets",
+  professional: "/collections/professional",
+  "lifestyle-creative": "/collections/lifestyle-creative",
+  magic: "/collections/magic",
+  "photo-tools": "/collections/photo-tools",
+  "fan-photos": "/collections/soccer",
+  "sports-stars": "/collections/soccer",
+  "vip-looks": "/collections/gala-photo",
+  christmas: "/collections/christmas-photo",
+  thanksgiving: "/collections/thanksgiving-photo",
+  halloween: "/collections/halloween-photo",
   seasonal: "/collections/holiday",
-  creator: "/collections/creator-portraits",
-  video: "/collections/ai-video-add-ons",
-  utility: "/collections/magic-upscaler"
+  creator: "/collections/portrait-photo",
+  video: "/collections/motion-generator",
+  utility: "/collections/photo-enhancer"
 };
 
 const aidreamcapesCatalogCategoryHrefOverrides: DreamshootCategoryHrefOverrides = {
@@ -4976,7 +4985,7 @@ const aidreamcapesCatalogCardHrefOverrides: DreamshootCategoryHrefOverrides = {
 };
 
 const accentBlue = "#2f6fed";
-const accentBlueSoft = "#dbe7ff";
+const _accentBlueSoft = "#dbe7ff";
 const _accentBlueDeep = "#173a8a";
 const accentCopper = "#b9773f";
 const accentForest = "#3f6b50";
@@ -5973,59 +5982,76 @@ function getPhotoPackageMegaGroupsFromBlocks(blocks: SectionBlockInstance[] | un
 
 const dreamshootFallbackPhotoPackageGroups: PhotoPackageMegaGroup[] = [
   {
-    label: "Avatar",
-    slug: "avatar",
-    icon: "Image",
-    items: [
-      { label: "Anime Avatar", slug: "anime-avatar", href: "/collections/anime-avatar" }
-    ]
-  },
-  {
-    label: "Beauty",
-    slug: "beauty",
+    label: "Best Themes & Presets",
+    slug: "best-themes-presets",
     icon: "Sparkles",
     items: [
-      { label: "Hairstyle", slug: "hairstyle", href: "/collections/hairstyle" },
-      { label: "Virtual Try-On", slug: "virtual-try-on", href: "/collections/virtual-try-on" }
+      { label: "Engagement Photo", slug: "engagement-photo", href: "/collections/engagement-photo" },
+      { label: "Wedding Photo", slug: "wedding-photo", href: "/collections/wedding-photo" },
+      { label: "Valentines Photo", slug: "valentines-photo", href: "/collections/valentines-photo" },
+      { label: "Christmas Photo", slug: "christmas-photo", href: "/collections/christmas-photo" },
+      { label: "Halloween Photo", slug: "halloween-photo", href: "/collections/halloween-photo" },
+      { label: "Thanksgiving Photo", slug: "thanksgiving-photo", href: "/collections/thanksgiving-photo" }
     ]
   },
   {
-    label: "Creative",
-    slug: "creative",
+    label: "Professional",
+    slug: "professional",
+    icon: "Users",
+    items: [
+      { label: "Avatar", slug: "avatar", href: "/collections/avatar" },
+      { label: "Headshot", slug: "headshot", href: "/collections/headshot" },
+      { label: "Gala Photo", slug: "gala-photo", href: "/collections/gala-photo" },
+      { label: "Portrait Photo", slug: "portrait-photo", href: "/collections/portrait-photo" },
+      { label: "Black Friday", slug: "black-friday", href: "/collections/black-friday" },
+      { label: "Only Fans", slug: "only-fans", href: "/collections/only-fans" },
+      { label: "Singles Awareness Day", slug: "singles-awareness-day", href: "/collections/singles-awareness-day" }
+    ]
+  },
+  {
+    label: "Lifestyle & Creative",
+    slug: "lifestyle-creative",
     icon: "Camera",
     items: [
       { label: "Cyberpunk", slug: "cyberpunk", href: "/collections/cyberpunk" },
-      { label: "Gala Photos", slug: "gala-photos", href: "/collections/gala-photos" },
-      { label: "Mafia", slug: "mafia", href: "/collections/mafia" },
-      { label: "Nature", slug: "nature", href: "/collections/nature" }
+      { label: "Boudoir", slug: "boudoir", href: "/collections/boudoir" },
+      { label: "Holiday", slug: "holiday", href: "/collections/holiday" },
+      { label: "Cannes", slug: "cannes", href: "/collections/cannes" },
+      { label: "Nightlife", slug: "nightlife", href: "/collections/nightlife" },
+      { label: "Rich Lifestyle", slug: "rich-lifestyle", href: "/collections/rich-lifestyle" },
+      { label: "Bikini", slug: "bikini", href: "/collections/bikini" },
+      { label: "Swimsuit", slug: "swimsuit", href: "/collections/swimsuit" },
+      { label: "Travel", slug: "travel", href: "/collections/travel" },
+      { label: "Soccer", slug: "soccer", href: "/collections/soccer" },
+      { label: "Urban", slug: "urban", href: "/collections/urban" },
+      { label: "Street Style", slug: "street-style", href: "/collections/street-style" },
+      { label: "Mafia", slug: "mafia", href: "/collections/mafia" }
     ]
   },
   {
-    label: "Creator",
-    slug: "creator",
-    icon: "Users",
+    label: "Magic",
+    slug: "magic",
+    icon: "Sparkles",
     items: [
-      { label: "Creator Portraits", slug: "creator-portraits", href: "/collections/creator-portraits" },
-      { label: "Fashion Editorial", slug: "fashion-editorial", href: "/collections/fashion-editorial" },
-      { label: "Product Style", slug: "product-style", href: "/collections/product-style" }
+      { label: "Hairstyle Generator", slug: "hairstyle-generator", href: "/collections/hairstyle-generator" },
+      { label: "Virtual Try-On", slug: "virtual-try-on", href: "/collections/virtual-try-on" },
+      { label: "Motion Generator", slug: "motion-generator", href: "/collections/motion-generator" }
     ]
   },
   {
-    label: "Couple",
-    slug: "couple",
-    icon: "Heart",
+    label: "Photo Tools",
+    slug: "photo-tools",
+    icon: "Scissors",
     items: [
-      { label: "Christmas Couple", slug: "christmas-couple", href: "/collections/christmas-couple" },
-      { label: "Engagement", slug: "engagement", href: "/collections/engagement" },
-      { label: "Wedding Portraits", slug: "wedding-portraits", href: "/collections/wedding-portraits" }
-    ]
-  },
-  {
-    label: "Sports",
-    slug: "sports",
-    icon: "PlayCircle",
-    items: [
-      { label: "World Cup Fan Photos", slug: "world-cup-fan-photos", href: "/collections/world-cup-fan-photos" }
+      { label: "Background Changer", slug: "background-changer", href: "/collections/background-changer" },
+      { label: "Background Remover", slug: "background-remover", href: "/collections/background-remover" },
+      { label: "Magic Eraser", slug: "magic-eraser", href: "/collections/magic-eraser" },
+      { label: "Photo Enhancer", slug: "photo-enhancer", href: "/collections/photo-enhancer" },
+      { label: "Portrait Retouch", slug: "portrait-retouch", href: "/collections/portrait-retouch" },
+      { label: "Unblur Image", slug: "unblur-image", href: "/collections/unblur-image" },
+      { label: "Color Correction", slug: "color-correction", href: "/collections/color-correction" },
+      { label: "Old Photo Restoration", slug: "old-photo-restoration", href: "/collections/old-photo-restoration" },
+      { label: "Edit By Prompt", slug: "edit-by-prompt", href: "/collections/edit-by-prompt" }
     ]
   }
 ];
@@ -6790,28 +6816,28 @@ function defaultDreamshootCatalogCards(site: Site): DreamShootCatalogCard[] {
   const card = (id: string, title: string, category: string, description: string, meta: string, credits: string, imageUrl: string, href: string) =>
     dreamshootCatalogCardFromBlock(site, { id, type: "catalog_pack", settings: { title, category, description, meta, credits, imageUrl, href } });
   return [
-    card("catalog_worldcup", "World Cup fan photos", "Fan Photos", "Create fan meetup portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", "Fan meetups", "26 credits", packImages.sports, "/collections/world-cup-fan-photos"),
-    card("catalog_christmas", "Christmas Photos", "Christmas", "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", "Holiday cards", "20 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", "/collections/christmas-photos"),
-    card("catalog_christmas_couple", "Christmas Couple", "Christmas", "Create cozy Christmas couple portraits, friend-card moments, and giftable holiday keepsakes.", "Couple cards", "22 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp", "/collections/christmas-couple"),
+    card("catalog_worldcup", "Soccer", "Lifestyle & Creative", "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", "Fan meetups", "26 credits", packImages.sports, "/collections/soccer"),
+    card("catalog_christmas", "Christmas Photos", "Christmas", "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", "Holiday cards", "20 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", "/collections/christmas-photo"),
+    card("catalog_nightlife", "Nightlife", "Lifestyle & Creative", "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", "Night-out looks", "22 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp", "/collections/nightlife"),
     card("catalog_holiday", "Holiday", "Seasonal", "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", "Seasonal albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", "/collections/holiday"),
-    card("catalog_creator_vip", "Creator red-carpet style", "VIP Looks", "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", "Red-carpet looks", "24 credits", "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", "/collections/creator-portraits"),
-    card("catalog_thanksgiving", "Thanksgiving Group Photos", "Thanksgiving", "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", "Group portraits", "20 credits", "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1", "/collections/thanksgiving-group-photos"),
-    card("catalog_halloween", "Halloween Party Photos", "Halloween", "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", "Party albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1", "/collections/halloween-party-photos"),
-    card("catalog_headshot", "Professional Headshots", "Headshots", "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Not for passports, official IDs, impersonation, or representing someone without permission.", "Work profiles", "20 credits", packImages.headshots, "/collections/headshots"),
-    card("catalog_hairstyle", "Hairstyle", "Beauty", "Preview haircut, color, and styling ideas before you commit to a salon change or full image package. Visual preview only; not an exact real-world result guarantee.", "Style preview", "18 credits", packImages.beauty, "/collections/hairstyle"),
+    card("catalog_creator_vip", "Portrait Photo", "Professional", "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", "Red-carpet looks", "24 credits", "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", "/collections/portrait-photo"),
+    card("catalog_thanksgiving", "Thanksgiving Photo", "Best Themes & Presets", "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", "Group portraits", "20 credits", "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1", "/collections/thanksgiving-photo"),
+    card("catalog_halloween", "Halloween Photo", "Best Themes & Presets", "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", "Party albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1", "/collections/halloween-photo"),
+    card("catalog_headshot", "Headshot", "Professional", "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Not for passports, official IDs, impersonation, or representing someone without permission.", "Work profiles", "20 credits", packImages.headshots, "/collections/headshot"),
+    card("catalog_hairstyle", "Hairstyle Generator", "Magic", "Preview haircut, color, and styling ideas before you commit to a salon change or full image package. Visual preview only; not an exact real-world result guarantee.", "Style preview", "18 credits", packImages.beauty, "/collections/hairstyle-generator"),
     card("catalog_cyberpunk", "Cyberpunk", "Creative", "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.", "Neon portraits", "26 credits", packImages.creative, "/collections/cyberpunk"),
-    card("catalog_gala", "Gala Photos", "VIP Looks", "Create formal evening portraits with black-tie styling and red-carpet-style lighting from your own photos.", "Evening portraits", "24 credits", packImages.gala, "/collections/gala-photos"),
-    card("catalog_travel", "Lifestyle portrait pack", "Lifestyle", "Create outdoor profile photos, creator scenes, and personal-brand images from your own photos.", "Lifestyle scenes", "24 credits", packImages.travel, "/collections/travel"),
-    card("catalog_wedding", "Wedding portraits", "Wedding", "Create wedding-inspired portraits, couple-style scenes, and save-the-date visuals for personal ideas and albums.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/collections/wedding-portraits"),
-    card("catalog_indian_wedding", "Indian Wedding", "Cultural", "Create wedding-inspired cultural portraits from photos you own or have permission to use.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/story-wedding-look.png", "/collections/indian-wedding"),
-    card("catalog_christmas", "Christmas Photos", "Seasonal", "Create festive portraits for holiday cards, profile photos, family-style posts, and seasonal albums.", "Seasonal album", "20 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", "/collections/christmas-photos"),
-    card("catalog_creator", "Creator Portraits", "Creator", "Generate fresh profile portraits for newsletters, landing pages, thumbnails, media kits, and social profiles.", "Creator profiles", "24 credits", packImages.creator, "/collections/creator-portraits"),
-    card("catalog_avatar", "Anime Avatar", "Avatar", "Create stylized avatar concepts for profiles, fan communities, and playful identity updates.", "Avatar concepts", "24 credits", packImages.avatar, "/collections/anime-avatar"),
-    card("catalog_fashion", "Fashion Editorial", "Beauty", "Preview outfit and styling directions on your own image before choosing a full photo set. Visual preview only; not an exact fit guarantee.", "Style preview", "24 credits", packImages.fashion, "/collections/fashion-editorial"),
-    card("catalog_nature", "Nature adventure", "Outdoor", "Place your portrait into outdoor scenes such as beaches, mountains, city streets, and scenic backdrops.", "Outdoor-inspired", "18 credits", packImages.travel, "/collections/nature"),
+    card("catalog_gala", "Gala Photo", "Professional", "Create formal evening portraits with black-tie styling and red-carpet-style lighting from your own photos.", "Evening portraits", "24 credits", packImages.gala, "/collections/gala-photo"),
+    card("catalog_travel", "Travel", "Lifestyle & Creative", "Create outdoor profile photos, creator scenes, and personal-brand images from your own photos.", "Lifestyle scenes", "24 credits", packImages.travel, "/collections/travel"),
+    card("catalog_wedding", "Wedding Photo", "Best Themes & Presets", "Create wedding-inspired portraits, couple-style scenes, and save-the-date visuals for personal ideas and albums.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/collections/wedding-photo"),
+    card("catalog_rich_lifestyle", "Rich Lifestyle", "Lifestyle & Creative", "Create upscale lifestyle portraits from photos you own or have permission to use.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/story-wedding-look.png", "/collections/rich-lifestyle"),
+    card("catalog_christmas", "Christmas Photos", "Seasonal", "Create festive portraits for holiday cards, profile photos, family-style posts, and seasonal albums.", "Seasonal album", "20 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", "/collections/christmas-photo"),
+    card("catalog_creator", "Portrait Photo", "Professional", "Generate fresh profile portraits for newsletters, landing pages, thumbnails, media kits, and social profiles.", "Creator profiles", "24 credits", packImages.creator, "/collections/portrait-photo"),
+    card("catalog_avatar", "Avatar", "Professional", "Create stylized avatar concepts for profiles, fan communities, and playful identity updates.", "Avatar concepts", "24 credits", packImages.avatar, "/collections/avatar"),
+    card("catalog_fashion", "Fashion Editorial", "Beauty", "Preview outfit and styling directions on your own image before choosing a full photo set. Visual preview only; not an exact fit guarantee.", "Style preview", "24 credits", packImages.fashion, "/collections/street-style"),
+    card("catalog_nature", "Nature adventure", "Outdoor", "Place your portrait into outdoor scenes such as beaches, mountains, city streets, and scenic backdrops.", "Outdoor-inspired", "18 credits", packImages.travel, "/collections/travel"),
     card("catalog_mafia", "Noir portraits", "Creative", "Create dramatic noir-style character portraits from photos you own or have permission to use.", "Character scenes", "22 credits", packImages.gala, "/collections/mafia"),
-    card("catalog_profile", "Profile Cards", "Creator", "Social profile cards, avatar crops, and clean personal introduction visuals.", "Profile cards", "20 credits", packImages.headshots, "/collections/profile-cards"),
-    card("catalog_product", "Product lifestyle", "Utility", "Product-style scenes and creator-led lifestyle images for simple campaigns.", "Product scenes", "22 credits", packImages.copy, "/collections/product-style")
+    card("catalog_profile", "Avatar", "Professional", "Social profile cards, avatar crops, and clean personal introduction visuals.", "Profile cards", "20 credits", packImages.headshots, "/collections/avatar"),
+    card("catalog_product", "Background Changer", "Photo Tools", "Product-style scenes and creator-led lifestyle images for simple campaigns.", "Product scenes", "22 credits", packImages.copy, "/collections/background-changer")
   ];
 }
 
@@ -6847,11 +6873,11 @@ function defaultAidreamcapesCatalogCards(
 function dreamshootFeaturedCatalogScore(card: DreamShootCatalogCard): number {
   const title = card.title.toLowerCase();
   const category = card.category.toLowerCase();
-  if (title.includes("world cup")) return 0;
+  if (title.includes("soccer") || title.includes("world cup")) return 0;
   if (title.includes("christmas photos")) return 1;
-  if (title.includes("christmas couple")) return 2;
+  if (title.includes("nightlife")) return 2;
   if (title.includes("holiday") || category.includes("holiday") || category.includes("seasonal")) return 3;
-  if (category.includes("creator") || title.includes("creator")) return 4;
+  if (title.includes("portrait photo") || category.includes("creator") || title.includes("creator")) return 4;
   if (title.includes("gala") || category.includes("gala") || category.includes("red carpet") || category.includes("vip")) return 5;
   if (title.includes("thanksgiving") || category.includes("thanksgiving")) return 6;
   if (title.includes("halloween") || category.includes("halloween")) return 7;
@@ -9027,31 +9053,38 @@ function SectionView({
     const image = mediaAssetUrl(site, setting(section, "imageUrl", fallbackHeroImages[0]));
     const videoUrlSetting = setting(section, "videoUrl", "");
     const videoUrl = videoUrlSetting ? mediaAssetUrl(site, videoUrlSetting) : "";
+    const videoPoster = videoUrl.includes("mydreamshoots-ai-image-tutorial-20260814.mp4")
+      ? mediaAssetUrl(site, "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814-cover-v2.jpg")
+      : videoUrl.includes("mydreamshoots-ai-video-tutorial-20260814.mp4")
+        ? mediaAssetUrl(site, "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814-cover-v2.jpg")
+        : image;
     return (
-      <section className="bg-[#0a0a0b] px-5 py-16 text-white" id={sectionAnchor(section, "how-it-works")}>
+      <section className="bg-[#0a0a0b] px-5 py-14 text-white md:py-20" id={sectionAnchor(section, "how-it-works")}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="font-mono text-xs uppercase tracking-[0.22em]" style={{ color: accentBlue }}>{setting(section, "eyebrow", "Tutorial")}</p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{sectionHeading(section, "Photo tools")}</h2>
-            <p className="mt-4 text-sm leading-7 text-white/72">{setting(section, "subtitle")}</p>
+          <div className="mx-auto max-w-[52rem] text-center">
+            <p className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]" style={{ color: accentBlue }}>{setting(section, "eyebrow", "Tutorial")}</p>
+            <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "Photo tools")}</h2>
+            <p className="mx-auto mt-4 max-w-[44rem] text-sm leading-7 text-white/70">{setting(section, "subtitle")}</p>
           </div>
-          <div className="mt-8 overflow-hidden rounded-[26px] p-[3px] shadow-[0_28px_90px_-52px_rgba(47,111,237,0.24)]" style={{ borderColor: "rgba(47,111,237,0.3)", background: `linear-gradient(180deg, ${accentBlueSoft}, ${accentBlue})` }}>
-            <div className="relative overflow-hidden rounded-[24px] bg-[#121216]">
+          <div className="mt-9 overflow-hidden rounded-[18px] border border-white/10 bg-[#101217] p-2 shadow-[0_30px_90px_-58px_rgba(0,0,0,0.88),0_0_0_1px_rgba(47,111,237,0.16)] sm:p-3">
+            <div className="pointer-events-none h-1 rounded-full" style={{ background: dreamshootBrandGradient }} />
+            <div className="relative mt-2 overflow-hidden rounded-[12px] bg-black">
               {videoUrl ? (
                 <LazyStorefrontVideo
                   aria-label={setting(section, "playLabel", "Watch tutorial")}
                   autoPlayOnInteraction
-                  className="aspect-[16/9] w-full object-cover"
+                  className="aspect-[16/9] w-full bg-black object-contain"
                   controls
                   playsInline
-                  poster={image || undefined}
+                  poster={videoPoster || undefined}
+                  posterOverlay
                   src={videoUrl}
                 />
               ) : (
-                <img className="aspect-[16/9] w-full object-cover opacity-80" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", "Video feature"), { role: "poster" })} />
+                <img className="aspect-[16/9] w-full bg-black object-contain opacity-90" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", "Video feature"), { role: "poster" })} />
               )}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-              <div className="pointer-events-none absolute left-4 top-4 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white" style={{ background: accentForest }}>
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0)_46%,rgba(0,0,0,0.48)_100%)]" />
+              <div className="pointer-events-none absolute left-4 top-4 z-20 rounded-full border border-white/16 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_18px_42px_-30px_rgba(0,0,0,0.9)] backdrop-blur" style={{ background: accentForest }}>
                 {setting(section, "videoBadge", "HAPPY NEW YEAR")}
               </div>
               {!videoUrl ? (
@@ -9793,9 +9826,9 @@ function SectionView({
       section,
       "items",
       [
-        `Creator studio|Profile, travel, and editorial creator looks.|Creator|${packImages.creator}|/collections/creator`,
-        `World Cup fan photos|Stadium portraits, fan posters, and match-day profile scenes.|Sports|${packImages.sports}|/collections/world-cup-fan-photos`,
-        `Headshots|Professional photos for founders, job search, and teams.|Professional|${packImages.headshots}|/collections/headshots`
+        `Portrait Photo|Profile, travel, and editorial creator looks.|Professional|${packImages.creator}|/collections/portrait-photo`,
+        `Soccer|Stadium portraits, fan posters, and match-day profile scenes.|Lifestyle & Creative|${packImages.sports}|/collections/soccer`,
+        `Headshot|Professional photos for founders, job search, and teams.|Professional|${packImages.headshots}|/collections/headshot`
       ],
       (item, index) => {
         const [title, description, tag, imageUrl, href] = item.split("|");
@@ -10130,7 +10163,7 @@ function SectionView({
                     })}
                   </div>
                   {runtime?.customer ? (
-                    <CustomerAccountDataIsland activeSection="plan" customerId={runtime.customer.id} siteId={site.id} siteSlug={site.slug} />
+                    <CustomerAccountDataIsland activeSection="subscription" basePath={hrefFor(site, "/").replace(/\/$/, "")} customer={runtime.customer} initialRuntime={runtime} siteId={site.id} siteSlug={site.slug} />
                   ) : null}
                 </div>
               </div>
@@ -10704,36 +10737,36 @@ function SectionView({
         id: "taxonomy_creator",
         type: "taxonomy_card",
         settings: {
-          title: "Creator portraits",
+          title: "Portrait Photo",
           description: "Profile, founder, newsletter, social, and personal-brand image sets.",
-          meta: "Creator",
-          keywords: "creator portraits|profile photos|personal brand",
+          meta: "Professional",
+          keywords: "portrait photo|profile photos|personal brand",
           imageUrl: packImages.creator,
-          href: "/collections/creator"
+          href: "/collections/portrait-photo"
         }
       },
       {
         id: "taxonomy_headshot",
         type: "taxonomy_card",
         settings: {
-          title: "Professional headshots",
+          title: "Headshot",
           description: "Profile photos for LinkedIn, founders, resumes, and teams.",
           meta: "Professional",
           keywords: "headshot|profile|linkedin",
           imageUrl: packImages.headshots,
-          href: "/collections/headshots"
+          href: "/collections/headshot"
         }
       },
       {
         id: "taxonomy_creative",
         type: "taxonomy_card",
         settings: {
-          title: "Cinematic worlds",
+          title: "Lifestyle & Creative",
           description: "Cyberpunk, mafia, nature, travel, gala, and dramatic themed photos.",
           meta: "Creative",
           keywords: "cyberpunk|mafia|nature|gala",
           imageUrl: packImages.sports,
-          href: "/collections/creative"
+          href: "/collections/lifestyle-creative"
         }
       }
     ];
@@ -11613,10 +11646,10 @@ function SectionView({
     const spanishXbyVisualProof = isSpanishXbySite(site);
     const blocks = sectionBlocks(section, "proof_card");
     const fallbackCards: SectionBlockInstance[] = [
-      { id: "proof_worldcup", type: "proof_card", settings: { title: "World Cup fan photos", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Fan Photos", badge: "Featured", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp", href: "/collections/world-cup-fan-photos" } },
-      { id: "proof_sports_meetup", type: "proof_card", settings: { title: "Sports idol-style meetups", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Sports Stars", badge: "Sports Stars", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-02.webp", href: "/collections/world-cup-fan-photos" } },
-      { id: "proof_vip", type: "proof_card", settings: { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp", href: "/collections/gala-photos" } },
-      { id: "proof_christmas", type: "proof_card", settings: { title: "Christmas group photos", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Christmas", badge: "Christmas", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photos" } },
+      { id: "proof_worldcup", type: "proof_card", settings: { title: "Soccer", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Lifestyle & Creative", badge: "Featured", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp", href: "/collections/soccer" } },
+      { id: "proof_sports_meetup", type: "proof_card", settings: { title: "Soccer fan scenes", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Lifestyle & Creative", badge: "Soccer", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-02.webp", href: "/collections/soccer" } },
+      { id: "proof_vip", type: "proof_card", settings: { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp", href: "/collections/gala-photo" } },
+      { id: "proof_christmas", type: "proof_card", settings: { title: "Christmas Photo", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Best Themes & Presets", badge: "Christmas", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photo" } },
       { id: "proof_seasonal", type: "proof_card", settings: { title: "Seasonal holiday albums", description: "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.", category: "Seasonal", badge: "Seasonal", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: "/collections/holiday" } }
     ];
     const tabs = listLines(setting(section, "tabs", "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal"));
@@ -12451,7 +12484,7 @@ function SectionView({
                 {setting(section, "badge", "Match-day pack")}
               </span>
               <h2 className="mt-5 max-w-xl text-[clamp(2rem,3.1vw,3.2rem)] font-semibold leading-[1.04] tracking-normal text-balance [font-family:var(--site-title-font)]">
-                {setting(section, "title", "World Cup fan photos for sports-idol style moments.")}
+                {setting(section, "title", "Soccer fan photos for match-day style moments.")}
               </h2>
               <p className="mt-4 max-w-lg text-[0.96rem] leading-[1.5] text-white/72">
                 {setting(section, "subtitle", "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing.")}
@@ -12565,7 +12598,7 @@ function SectionView({
                 })}
               </div>
               <div className="mt-3 rounded-[20px] border border-white/14 bg-[#11121C]/86 p-3 shadow-[0_24px_72px_-48px_rgba(0,0,0,0.98)] backdrop-blur-xl md:p-4">
-                <p className="text-xs font-semibold text-white/58">{setting(section, "overlayTitle", aidreamcapes ? "Route Atlas" : "World Cup Pack")}</p>
+                <p className="text-xs font-semibold text-white/58">{setting(section, "overlayTitle", aidreamcapes ? "Route Atlas" : "Soccer Pack")}</p>
                 <h3 className="mt-1.5 text-lg font-semibold tracking-normal text-white md:text-xl">{setting(section, "overlaySubtitle", aidreamcapes ? "Route portraits from private uploads." : "Sports-idol style fan photos without a studio.")}</h3>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {overlayChips.map((chip, index) => (
@@ -12580,7 +12613,7 @@ function SectionView({
                   {spanishXbyFeaturedPack ? spanishFeaturedPackLabel(setting(section, "bottomNote", aidreamcapes ? "Occasion albums rotate around fan-scene moments, game-day groups, premiere looks, Christmas, Thanksgiving, and Halloween." : "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments."), aidreamcapes) : setting(section, "bottomNote", aidreamcapes ? "Occasion albums rotate around fan-scene moments, game-day groups, premiere looks, Christmas, Thanksgiving, and Halloween." : "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments.")}
                 </p>
                 <div className="flex h-full flex-col justify-center rounded-[18px] border border-white/10 bg-white/[0.055] p-3">
-                  <p className="text-xs font-semibold text-white">{setting(section, "campaignLabel", aidreamcapes ? "Current theme: Fan-scene album sets" : "Current campaign: World Cup Fan Photos")}</p>
+                  <p className="text-xs font-semibold text-white">{setting(section, "campaignLabel", aidreamcapes ? "Current theme: Fan-scene album sets" : "Current campaign: Soccer")}</p>
                   <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
                     <span className="block h-full w-[72%] rounded-full" style={{ background: aidreamcapes ? aidreamcapesAccent : dreamshootBrandGradient }} />
                   </div>
@@ -12631,10 +12664,10 @@ function SectionView({
       ? isMyDreamShootsProfileSite(site) || (aidreamcapes && !spanishXbyCatalog) ? packItems : [...packItems, ...categoryItems]
       : [];
     const fallbackCards: DreamShootCatalogCard[] = [
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "World Cup fan photos", description: "Create fan meetup portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Fan Photos", meta: "Fan meetups", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_christmas", type: "catalog_pack", settings: { title: "Christmas Photos", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Christmas", meta: "Holiday cards", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photos" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/soccer" } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_christmas", type: "catalog_pack", settings: { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photo" } }),
       dreamshootCatalogCardFromBlock(site, { id: "catalog_holiday", type: "catalog_pack", settings: { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: "/collections/holiday" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_creator_vip", type: "catalog_pack", settings: { title: "Creator red-carpet style", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "VIP Looks", meta: "Red-carpet looks", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", href: "/collections/creator-portraits" } })
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_creator_vip", type: "catalog_pack", settings: { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", href: "/collections/portrait-photo" } })
     ];
     const defaultCatalogCards = aidreamcapes ? defaultAidreamcapesCatalogCards(site, creativePacks, creativePackCategories) : defaultDreamshootCatalogCards(site);
     const seededCards = manualCards.length ? manualCards : defaultCatalogCards;
@@ -13098,14 +13131,14 @@ function SectionView({
         }));
     const fallbackCards = [
       spanishXbyMarquee
-        ? { id: "worldcup", title: "Fotos de aficion mundial", description: "Retratos de fan, carteles de partido y avatares desde tus selfies.", meta: "Galeria privada", credits: "26 creditos", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" }
-        : { id: "worldcup", title: "World Cup Fan Photos", description: "Personal fan portraits, match-day posters, and profile avatars from your own selfies.", meta: "Private gallery", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/world-cup-fan-photos" },
+        ? { id: "worldcup", title: "Fotos de aficion mundial", description: "Retratos de fan, carteles de partido y avatares desde tus selfies.", meta: "Galeria privada", credits: "26 creditos", imageUrl: packImages.sports, href: "/collections/soccer" }
+        : { id: "worldcup", title: "Soccer", description: "Personal fan portraits, match-day posters, and profile avatars from your own selfies.", meta: "Private gallery", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/soccer" },
       spanishXbyMarquee
-        ? { id: "creator_portraits", title: "Retratos de creador", description: "Fotos para perfil, pagina personal, boletin y kit de medios.", meta: "Perfiles de creador", credits: "16 creditos", imageUrl: packImages.creator, href: "/collections/creator-portraits" }
-        : { id: "creator_portraits", title: "Creator Portraits", description: "Profile, landing-page, newsletter, and media-kit portraits from your own photos.", meta: "Creator profiles", credits: "16 credits", imageUrl: packImages.creator, href: "/collections/creator-portraits" },
+        ? { id: "creator_portraits", title: "Retratos de creador", description: "Fotos para perfil, pagina personal, boletin y kit de medios.", meta: "Perfiles de creador", credits: "16 creditos", imageUrl: packImages.creator, href: "/collections/portrait-photo" }
+        : { id: "creator_portraits", title: "Portrait Photo", description: "Profile, landing-page, newsletter, and media-kit portraits from your own photos.", meta: "Creator profiles", credits: "16 credits", imageUrl: packImages.creator, href: "/collections/portrait-photo" },
       spanishXbyMarquee
-        ? { id: "gala", title: "Fotos de gala", description: "Retratos formales con estilo de noche, traje elegante e iluminacion de alfombra roja.", meta: "Retratos de noche", credits: "22 creditos", imageUrl: packImages.gala, href: "/collections/gala-photos" }
-        : { id: "gala", title: "Gala Photos", description: "Formal evening portraits with black-tie styling and red-carpet-style lighting.", meta: "Evening portraits", credits: "22 credits", imageUrl: packImages.gala, href: "/collections/gala-photos" }
+        ? { id: "gala", title: "Fotos de gala", description: "Retratos formales con estilo de noche, traje elegante e iluminacion de alfombra roja.", meta: "Retratos de noche", credits: "22 creditos", imageUrl: packImages.gala, href: "/collections/gala-photo" }
+        : { id: "gala", title: "Gala Photo", description: "Formal evening portraits with black-tie styling and red-carpet-style lighting.", meta: "Evening portraits", credits: "22 credits", imageUrl: packImages.gala, href: "/collections/gala-photo" }
     ];
     const displayCards = [...(cards.length ? cards : fallbackCards), ...(cards.length ? cards : fallbackCards)];
     return (
@@ -14486,6 +14519,10 @@ function SectionView({
     }
 
     if (section.type === "generation_form") {
+      const initialCategorySlug = queryValue(renderContext.query.category);
+      const initialCategoryPackId = initialCategorySlug
+        ? activeCreativePackForCollectionSlug(creativePacks, initialCategorySlug)?.id
+        : undefined;
       return (
         <section className={`${sectionTheme.shell} scroll-mt-28 px-5 py-8 ${sectionText}`} id="create">
           <div className={`mx-auto overflow-hidden rounded-[32px] border ${sectionTheme.border} ${sectionTheme.panel} shadow-[0_24px_72px_-58px_rgba(20,22,26,0.3)]`}>
@@ -14526,7 +14563,7 @@ function SectionView({
                   siteSlug={site.slug}
                   siteAiApps={formApps}
                   creativePacks={creativePacks.map((pack) => ({ ...pack, prompt: undefined }))}
-                  initialCreativePackId={queryValue(renderContext.query.pack)}
+                  initialCreativePackId={queryValue(renderContext.query.pack) || initialCategoryPackId}
                   initialToolId={queryValue(renderContext.query.tool_id) || setting(section, "toolSlug", "")}
                 />
               </div>

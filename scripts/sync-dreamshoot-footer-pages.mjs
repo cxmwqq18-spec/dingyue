@@ -155,12 +155,12 @@ function workflowTutorialSections(profile) {
         playLabel: "Watch the Aidreamcapes workflow"
       }
     : {
-        title: "Watch the private photo package workflow.",
-        subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-        imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-55s.jpg?v=20260805i2vselect3",
-        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4?v=20260805i2vselect3",
-        videoBadge: "Private gallery workflow",
-        playLabel: "Watch the MyDreamShoots workflow"
+        title: "Turn selected images into a private AI video.",
+        subtitle: "Watch the image-to-video flow: upload frame images, choose the video mode, set the aspect ratio and duration, generate the clip, and preview the finished motion result.",
+        imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814.jpg",
+        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-video-tutorial-20260814.mp4",
+        videoBadge: "AI image-to-video",
+        playLabel: "Watch the MyDreamShoots AI video tutorial"
       };
   const imageTutorial = isAidreamcapes
     ? {
@@ -174,8 +174,8 @@ function workflowTutorialSections(profile) {
     : {
         title: "Create an AI photo set from source photos.",
         subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-        imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260806chooserfix1",
-        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260806chooserfix1",
+        imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
+        videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-20260814.mp4",
         videoBadge: "AI photo generation",
         playLabel: "Watch the MyDreamShoots AI image tutorial"
       };
@@ -217,14 +217,21 @@ function workflowTutorialSections(profile) {
         rightPlayLabel: "Watch the video tutorial"
       };
 
-  return {
+  const firstTutorial = isAidreamcapes ? tutorial : imageTutorial;
+  const secondTutorial = isAidreamcapes ? imageTutorial : tutorial;
+  const firstTutorialMeta = isAidreamcapes
+    ? { anchor: "how-it-works", eyebrow: "How it works" }
+    : { anchor: "ai-image-tutorial", eyebrow: "AI image tutorial" };
+  const secondTutorialMeta = isAidreamcapes
+    ? { anchor: "ai-image-tutorial", eyebrow: "AI image tutorial" }
+    : { anchor: "ai-video-tutorial", eyebrow: "AI video tutorial" };
+  const sections = {
     tutorial_video_1: {
       id: "tutorial_video_1",
       type: "video_feature",
       settings: {
-        anchor: "how-it-works",
-        eyebrow: "How it works",
-        ...tutorial
+        ...firstTutorialMeta,
+        ...firstTutorial
       },
       blocks: []
     },
@@ -232,12 +239,15 @@ function workflowTutorialSections(profile) {
       id: "tutorial_image_video_1",
       type: "video_feature",
       settings: {
-        anchor: "ai-image-tutorial",
-        eyebrow: "AI image tutorial",
-        ...imageTutorial
+        ...secondTutorialMeta,
+        ...secondTutorial
       },
       blocks: []
-    },
+    }
+  };
+  if (!isAidreamcapes) return sections;
+  return {
+    ...sections,
     mobile_video_1: {
       id: "mobile_video_1",
       type: "mobile_video_showcase",
@@ -292,7 +302,7 @@ function pageJson(profile, page) {
     return {
       version: 1,
       pageType: "content",
-      sectionsOrder: ["intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "rules_1", "faq_1", "conversion_1", "footer_1"],
+      sectionsOrder: ["intro_1", "tutorial_video_1", "tutorial_image_video_1", ...(isAidreamcapes ? ["mobile_video_1"] : []), "workflow_1", "rules_1", "faq_1", "conversion_1", "footer_1"],
       sections: {
         intro_1: {
           id: "intro_1",
@@ -304,12 +314,14 @@ function pageJson(profile, page) {
             headingLevel: "h1",
             tone: "dark",
             primaryCta: "Headshot Generator",
-            primaryHref: "/collections/headshots",
+            primaryHref: "/collections/headshot",
             secondaryCta: "View pricing",
             secondaryHref: "/pricing"
           },
           blocks: [
-            { id: "workflow_private", type: "rich_text_card", settings: { meta: "Private", title: "Account-scoped uploads", description: "Source photos, requests, credit history, and finished galleries stay tied to the signed-in customer account." } },
+            { id: "workflow_private", type: "rich_text_card", settings: isAidreamcapes
+              ? { meta: "Private", title: "Account-scoped albums", description: "Source photos, album briefs, credit history, and finished galleries stay tied to the signed-in Aidreamcapes account." }
+              : { meta: "Private", title: "Private source-photo workspace", description: "Uploads, generation requests, credit history, and finished galleries stay inside the customer's signed-in MyDreamShoots account." } },
             { id: "workflow_credits", type: "rich_text_card", settings: { meta: "Credits", title: "Visible cost before generation", description: "Customers can review the package credit cost before a generation request begins." } },
             { id: "workflow_gallery", type: "rich_text_card", settings: { meta: "Gallery", title: "Private delivery", description: "Finished results return to the customer gallery instead of a public showcase." } }
           ]
@@ -398,7 +410,7 @@ function pageJson(profile, page) {
             title: "Choose a package and create a private set.",
             subtitle: "Open the Headshot Generator, compare credit costs, then sign in to upload photos and start the generation request.",
             primaryCta: "Headshot Generator",
-            primaryHref: "/collections/headshots",
+            primaryHref: "/collections/headshot",
             secondaryCta: "View pricing",
             secondaryHref: "/pricing"
           },

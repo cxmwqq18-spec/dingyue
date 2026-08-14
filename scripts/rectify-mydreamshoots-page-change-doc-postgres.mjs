@@ -20,7 +20,7 @@ function contentOverwriteGuardPayload() {
   };
 }
 const headshotGeneratorLabel = "Headshot Generator";
-const headshotGeneratorHref = "/collections/headshots";
+const headshotGeneratorHref = "/collections/headshot";
 const policyLastUpdated = "August 5, 2026";
 const policyKeywords = "MyDreamShoots policy, AI photo privacy, AI portrait terms, photo upload privacy, private AI albums, AI photo credits, no AI training, 30-day auto-delete, AES-256";
 const policyDescriptions = {
@@ -71,9 +71,9 @@ const policyCanonicalPathBySlug = {
 };
 
 const replacements = new Map([
-  ["For broader browsing, open <a href=\"/collections\">Browse packages</a> and compare", "Start with <a href=\"/collections/headshots\">Headshot Generator</a>, then compare"],
-  ["For broader browsing, open <a href=\"/collections\">Photo Packages</a> and compare", "Start with <a href=\"/collections/headshots\">Headshot Generator</a>, then compare"],
-  ["<a href=\"/collections\">Browse packages</a>", "<a href=\"/collections/headshots\">Headshot Generator</a>"],
+  ["For broader browsing, open <a href=\"/collections\">Browse packages</a> and compare", "Start with <a href=\"/collections/headshot\">Headshot</a>, then compare"],
+  ["For broader browsing, open <a href=\"/collections\">Photo Packages</a> and compare", "Start with <a href=\"/collections/headshot\">Headshot</a>, then compare"],
+  ["<a href=\"/collections\">Browse packages</a>", "<a href=\"/collections/headshot\">Headshot</a>"],
   ["Browse packages, compare credit costs, then sign in to upload photos and start the generation request.", "Open the Headshot Generator, compare credit costs, then sign in to upload photos and start the generation request."],
   ["MyDreamShoots Pricing | Credits for Private AI Browse packages", "MyDreamShoots Pricing | Credits for Private AI Headshot Generator"],
   ["Terms of Service for MyDreamShoots AI Browse packages", "Terms of Service for MyDreamShoots AI Headshot Generator"],
@@ -343,7 +343,7 @@ async function main() {
       draftJson = setPageSeo(draftJson, "Browse private AI photo packages | MyDreamShoots", "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs.");
       publishedJson = setPageSeo(publishedJson, "Browse private AI photo packages | MyDreamShoots", "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs.");
     }
-    if (page.slug === "/tools/headshot" || page.slug === "/collections/headshots") {
+    if (page.slug === "/tools/headshot" || page.slug === "/collections/headshot") {
       draftJson = setPageSeo(draftJson, "AI Headshot Generator for LinkedIn, Resumes & Team Photos | MyDreamShoots", "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs.");
       publishedJson = setPageSeo(publishedJson, "AI Headshot Generator for LinkedIn, Resumes & Team Photos | MyDreamShoots", "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs.");
     }

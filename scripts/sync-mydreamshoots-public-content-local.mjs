@@ -52,9 +52,6 @@ const copyTargets = {
   pricingSidePanelEyebrow: "Why people subscribe",
   pricingSidePanelTitle: "Our plans starts from $24.50 and are designed to be more affordable and flexible.",
   pricingSidePanelBody: "Credits stay predictable while packs stay flexible. You can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.",
-  mobileTitle: "How it works",
-  mobileSubtitle: "Upload selfies and start creating your AI photshoot now",
-  mobileSupportingCopy: `Use ${brand}'s AI Video design your videos with your own creativity. Your next video content can instantly go viral.`,
   packageLabel: "AI PHOTO STUDIOS",
   packageTitle: "Professional AI Photo Packages",
   packageSubtitle: `Whether solo or with a partner, you can create stunning AI photo albums in just one click with ${brand}'s themed photo packs. We've curated the best poses, outfit ideas, and hairstyles for you. Plus, we're always adding new photo packs to our collection. Send a ❤️ to a special someone. Or use it just for fun!`,
@@ -72,7 +69,6 @@ const issueGroupOrder = [
   "02_generator_headings_links",
   "03_pricing_heading",
   "04_pricing_copy_order",
-  "05_mobile_tutorial",
   "06_package_catalog",
   "07_theme_directory",
   "08_reviews",
@@ -457,14 +453,6 @@ function syncKnownMydreamSections(pageJson, stats, source) {
   }
 
   for (const [key, value] of [
-    ["title", copyTargets.mobileTitle],
-    ["subtitle", copyTargets.mobileSubtitle],
-    ["supportingCopy", copyTargets.mobileSupportingCopy]
-  ]) {
-    setSectionSetting(sections, "mobile_video_1", key, value, stats, "05_mobile_tutorial", source);
-  }
-
-  for (const [key, value] of [
     ["label", copyTargets.packageLabel],
     ["title", copyTargets.packageTitle],
     ["subtitle", copyTargets.packageSubtitle]
@@ -559,7 +547,7 @@ function siteThemeNeedsTemplateRebuild(theme) {
   const templates = theme?.templates && typeof theme.templates === "object" ? theme.templates : {};
   const home = templates.index;
   if (home?.sections?.generation_showcase_1?.type !== "dreamshoot_generation_showcase") return true;
-  if (home?.sections?.mobile_video_1?.settings?.title !== copyTargets.mobileTitle) return true;
+  if (home?.sections?.mobile_video_1) return true;
   if (templates["best-packages"]?.sections?.featured_pack_1?.type !== "dreamshoot_featured_pack") return true;
   if (templates["best-ai-image"]?.sections?.best_ai_image_1?.type !== "dreamshoot_media_gallery") return true;
   if (templates["best-ai-video"]?.sections?.best_ai_video_1?.type !== "dreamshoot_media_gallery") return true;

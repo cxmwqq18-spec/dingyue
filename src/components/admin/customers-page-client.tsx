@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { GalleryVerticalEnd, Sparkles, UploadCloud, Users } from "lucide-react";
-import { fetchAdminJson } from "@/components/admin/admin-api-client";
+import { fetchAdminJson, invalidateAdminJson } from "@/components/admin/admin-api-client";
 import { AlbumDeliveryPanel } from "@/components/admin/album-delivery-panel";
 import type { AlbumDeliveryPagination } from "@/components/admin/album-delivery-panel";
 import { CustomerAdminPanel } from "@/components/admin/customer-admin-panel";
@@ -137,6 +137,7 @@ export function CustomersPageClient({
   useEffect(() => {
     let active = true;
     const controllers = new Set<AbortController>();
+    invalidateAdminJson(`/api/sites/${siteId}/`);
     function nextController() {
       const controller = new AbortController();
       controllers.add(controller);
@@ -147,6 +148,7 @@ export function CustomersPageClient({
       try {
         const response = await fetchAdminJson<CustomersPagePayload>(`/api/sites/${siteId}/admin/customers-page?detail=${detail}`, {
           timeoutMs: customersPageRequestTimeoutMs,
+          ttlMs: detail === "customers" ? 0 : undefined,
           init: { signal: controller.signal }
         });
         const result = response.data;

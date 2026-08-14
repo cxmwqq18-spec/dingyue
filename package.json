@@ -68,6 +68,8 @@
     "generate:aidreamcapes-fan-holiday-assets": "node scripts/generate-aidreamcapes-fan-holiday-assets.mjs",
     "sync:storefront-category-use-cases": "node scripts/sync-storefront-category-use-cases.mjs",
     "sync:storefront-category-use-cases:db": "node scripts/sync-storefront-category-use-cases.mjs --db",
+    "sync:mydreamshoots-theme-taxonomy": "node scripts/sync-mydreamshoots-theme-taxonomy.mjs",
+    "sync:mydreamshoots-theme-taxonomy:db": "node scripts/sync-mydreamshoots-theme-taxonomy.mjs --db",
     "smoke:worker-provider-fallback": "node scripts/smoke-worker-provider-fallback.mjs",
     "smoke:video-provider-priority-fallback": "node --no-warnings --experimental-strip-types scripts/smoke-video-provider-priority-fallback.mjs",
     "smoke:dreamshoot-public-seo-templates": "node scripts/smoke-dreamshoot-public-seo-templates.mjs",

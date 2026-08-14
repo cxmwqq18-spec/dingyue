@@ -29,7 +29,6 @@ const approvedHomeOrders = {
     "generation_showcase_1",
     "tutorial_video_1",
     "tutorial_video_2",
-    "mobile_video_1",
     "package_catalog_1",
     "proof_1",
     "faq_1",

@@ -23,7 +23,8 @@ export function AccessRoutePrefetcher({ paths }: AccessRoutePrefetcherProps) {
   useEffect(() => {
     if (!pathKey || process.env.NEXT_PUBLIC_ACCESS_ROUTE_PREFETCH === "0") return;
 
-    const parsedLimit = Number(process.env.NEXT_PUBLIC_ACCESS_ROUTE_PREFETCH_LIMIT ?? 8);
+    const defaultLimit = process.env.NODE_ENV === "development" ? 0 : 8;
+    const parsedLimit = Number(process.env.NEXT_PUBLIC_ACCESS_ROUTE_PREFETCH_LIMIT ?? defaultLimit);
     const limit = Number.isFinite(parsedLimit) ? Math.max(0, parsedLimit) : 8;
     const prefetchPaths = pathKey.split("|").slice(0, limit);
     if (!prefetchPaths.length) return;

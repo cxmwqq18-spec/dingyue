@@ -17,7 +17,6 @@ const expectedMydreamshootsHomeOrder = [
   "generation_showcase_1",
   "tutorial_video_1",
   "tutorial_video_2",
-  "mobile_video_1",
   "package_catalog_1",
   "proof_1",
   "faq_1",
@@ -334,8 +333,8 @@ requireHomeFeaturedPackBaseline(mydreamshootsData, mydreamshootsSiteId, { thanks
 requireBestPackagesPage(mydreamshootsData, mydreamshootsSiteId, [
   {
     id: "featured_christmas_1",
-    requiredPhrases: ["Christmas group photos for cards, posts, and private albums.", "Create Christmas Photos", "/collections/christmas-photos"],
-    collectionSlugs: ["christmas-photos", "christmas-photos", "christmas-couple", "christmas-photos", "christmas-photos", "christmas-couple"],
+    requiredPhrases: ["Christmas group photos for cards, posts, and private albums.", "Create Christmas Photo", "/collections/christmas-photo"],
+    collectionSlugs: ["christmas-photo", "christmas-photo", "christmas-photo", "christmas-photo", "christmas-photo", "christmas-photo"],
     requiredAssets: [
       "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp",
       "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp",
@@ -348,8 +347,8 @@ requireBestPackagesPage(mydreamshootsData, mydreamshootsSiteId, [
   },
   {
     id: "featured_thanksgiving_1",
-    requiredPhrases: ["Thanksgiving group photos for warm private albums.", "Create Thanksgiving Photos", "/collections/thanksgiving-group-photos"],
-    collectionSlugs: ["thanksgiving-group-photos", "thanksgiving-group-photos", "thanksgiving-group-photos", "thanksgiving-group-photos", "thanksgiving-group-photos", "thanksgiving-group-photos"],
+    requiredPhrases: ["Thanksgiving Photo for warm private albums.", "Create Thanksgiving Photos", "/collections/thanksgiving-photo"],
+    collectionSlugs: ["thanksgiving-photo", "thanksgiving-photo", "thanksgiving-photo", "thanksgiving-photo", "thanksgiving-photo", "thanksgiving-photo"],
     requiredAssets: [
       "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp",
       "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp",

@@ -95,6 +95,7 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 - [ ] 首页展示模块文案固定为 `Best Photo Generator`、`Best Video Generator`、`View all photos`、`View all videos`；首页和独立媒体页都不得恢复 `Customer image themes`、`Customer video themes`、`28 EXAMPLES`、`8 CLIPS`。
 - [ ] `/best-ai-image` 与 `/best-ai-video` 的页面说明和 SEO description 不得再出现 `customer` / `customer-created`，统一使用无客户表述的营销文案，例如 `Browse every AI image theme in one simple grid.`、`Browse every AI video case in one simple grid.`。
 - [ ] `Start with your photos` 固定跳转 `/app/create`，不得改回 `/login`；未登录引导由工作台鉴权流程处理。
+- [ ] 登录态头像/账号信息区域固定跳转 `/account` 个人中心；独立 `Workspace` 导航与开始创作类 CTA 继续跳转 `/app/create`，不得互相回退。
 - [ ] 公共首页、`/best-ai-video`、SEO JSON-LD 和 sitemap 可见数据不得出现 `Creator Scene Motion` / `creator-scene-motion`；该内部工作台主题可以保留，但不能进入公共展示。
 - [ ] 桌面 `1280px+` header 必须同一行展示全部导航、账号信息、邮箱和 `Sign out`，不得引入 `More`、账号下拉收纳或隐藏入口；如需微调，只能调整间距、字号、内边距和 logo 占用宽度。
 - [ ] 改动这些页面前必须先更新本节基线并获得明确批准；改动后必须重新刷新 `data/platform-state.json`、`ThemePublication.snapshot`、主题模板、同步脚本和 smoke 断言，避免发布或同步时回退。
@@ -105,7 +106,7 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 
 - [ ] `1280px` 及以上保持完整桌面导航常驻可见且单行展示，不再使用 `More` 收纳，也不隐藏 `How it works` / `Blog` / 其他入口。
 - [ ] `Best Packages` 固定在 `Tools` 后面，`Workspace` 保持右侧常驻。
-- [ ] 登录态顶部继续展示姓名、邮箱与 `Sign out`；账号信息区域保持可点击进入 `Workspace`，不要改成头像下拉菜单。
+- [ ] 登录态顶部继续展示姓名、邮箱与 `Sign out`；账号信息区域保持可点击进入 `/account` 个人中心，独立 `Workspace` 入口继续进入 `/app/create`，不要改成头像下拉菜单。
 - [ ] 公开页 CTA 继续常驻可见，仅通过间距、字号和换行优化，不能把文案缩成隐藏入口。
 - [ ] `ThemeGlobalHeader` 与 `CustomerShellHeader` 必须同步保持全量展示和间距优化，不能只改单个入口。
 - [ ] 上线前执行 `npm run smoke:storefront-header-layout`，检查两个店铺的游客态/登录态、1280/1440/1536/1920/2048 和手机宽度，确认 header 无横向溢出、无遮挡、无重叠。

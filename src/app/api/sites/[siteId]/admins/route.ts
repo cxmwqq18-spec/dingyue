@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
+import { invalidateAdminCustomersPageCache } from "@/lib/admin-customers-page-cache";
+import { invalidateAdminSettingsPageCache } from "@/lib/admin-settings-page-cache";
 import { requireSiteMutation } from "@/lib/api-auth";
+import { clearCustomerAdminAccessCache } from "@/lib/customer-admin-access";
 import { StoreError, toPublicSiteAdmin } from "@/lib/server-store";
 import { createSiteAdminRelational } from "@/lib/stores/site-store";
 import type { SiteAdmin } from "@/lib/types";
@@ -33,6 +36,9 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       role: body.role,
       actor: body.actor
     });
+    clearCustomerAdminAccessCache(siteId, result.admin.email);
+    invalidateAdminCustomersPageCache(siteId);
+    invalidateAdminSettingsPageCache(siteId);
     return NextResponse.json({ ok: true, admin: toPublicSiteAdmin(result.admin) });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

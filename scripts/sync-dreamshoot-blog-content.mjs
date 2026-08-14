@@ -167,8 +167,8 @@ function makeCategoryArticle(input) {
   const isVideoTheme = kind === "video-theme";
   const articleKind = isTool ? "tool category" : isVideoTheme ? "video theme category" : "package category";
   const pluralKind = isTool ? "tools" : isVideoTheme ? "video themes" : "packages";
-  const directoryHref = isTool || isVideoTheme ? "/tools" : isAidreamcapes ? "/collections" : "/collections/headshots";
-  const directoryLabel = isTool || isVideoTheme ? "Tools" : isAidreamcapes ? "Browse packages" : "Headshot Generator";
+  const directoryHref = isTool || isVideoTheme ? "/tools" : isAidreamcapes ? "/collections" : "/collections/headshot";
+  const directoryLabel = isTool || isVideoTheme ? "Tools" : isAidreamcapes ? "Browse packages" : "Headshot";
   const sourceTerm = input.sourceTerm ?? (isVideoTheme ? "source frames" : isAidreamcapes ? "source portraits" : "source photos");
   const setTerm = isVideoTheme ? "video clip" : isAidreamcapes ? "album" : "photo set";
   const brandNiche = isAidreamcapes ? "fan and holiday" : "AI photo";
@@ -181,8 +181,8 @@ function makeCategoryArticle(input) {
   const faqIntro = input.faqIntro ?? `${label} questions usually come down to source quality, scope, credit planning, and whether the finished images match the intended use.`;
   const targetHref = input.targetHref ?? directoryHref;
   const targetLabel = input.targetLabel ?? (isTool ? `Open ${label} tool` : isVideoTheme ? `Open ${label} video themes` : `Open ${label} package`);
-  const primaryCta = input.primaryCta ?? (isTool || isVideoTheme ? "Open Tools" : isAidreamcapes ? "Browse packages" : "Headshot Generator");
-  const primaryHref = input.primaryHref ?? (isTool || isVideoTheme || isAidreamcapes ? directoryHref : "/collections/headshots");
+  const primaryCta = input.primaryCta ?? (isTool || isVideoTheme ? "Open Tools" : isAidreamcapes ? "Browse packages" : "Open Headshot");
+  const primaryHref = input.primaryHref ?? (isTool || isVideoTheme || isAidreamcapes ? directoryHref : "/collections/headshot");
   const openingLead = isAidreamcapes
     ? `The ${label} ${articleKind} gives ${brand} customers one clear private album direction to compare before credits are spent.`
     : `The ${label} ${articleKind} helps ${brand} customers choose a clear package direction before they spend credits.`;
@@ -296,7 +296,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/creator-photo-package-guide",
     description: "Creator portraits, profile cards, product-style scenes, social cards, and private personal-brand albums.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp?v=20260715b",
-    targetHref: "/collections/creator",
+    targetHref: "/collections/portrait-photo",
     examples: ["creator portraits", "profile cards", "product-style scenes", "social cards"],
     bestFor: "Use Creator when the finished images need to support a personal brand, creator profile, campaign draft, or social-facing album.",
     sourceFocus: "Prepare clear face photos plus one or two frames that show posture, shoulders, and the kind of outfit tone you want the creator set to follow.",
@@ -361,7 +361,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/creative-photo-package-guide",
     description: "Cinematic worlds, noir portraits, cyberpunk scenes, gala looks, nature images, and editorial private albums.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/cyberpunk/cyberpunk-01.webp?v=20260715b",
-    targetHref: "/collections/creative",
+    targetHref: "/collections/lifestyle-creative",
     examples: ["cyberpunk scenes", "noir portraits", "gala looks", "nature images"],
     bestFor: "Use Creative when the gallery can carry stronger mood, scene design, and dramatic styling than a work profile or simple social crop.",
     sourceFocus: "Start with stable identity photos, then add one clear story world such as neon city, formal night, outdoor portrait, or noir character mood.",
@@ -374,7 +374,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/beauty-style-photo-guide",
     description: "Hairstyle previews, try-on directions, soft glam portraits, and private style-planning galleries.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/hairstyle/hairstyle-01.webp?v=20260715b",
-    targetHref: "/collections/beauty",
+    targetHref: "/collections/hairstyle-generator",
     examples: ["hairstyle previews", "virtual try-on looks", "soft glam portraits", "style-planning galleries"],
     bestFor: "Use Beauty when the customer wants to compare style direction, hair mood, makeup tone, or outfit framing in a private gallery.",
     sourceFocus: "Use current portraits with visible hairline, face shape, and natural lighting so style changes have a clear person to follow.",
@@ -387,7 +387,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/sports-fan-photo-guide",
     description: "Personal fan portraits, match-day posters, profile avatars, and stadium-inspired images.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp?v=20260715b",
-    targetHref: "/collections/sports",
+    targetHref: "/collections/soccer",
     examples: ["fan portraits", "match-day posters", "profile avatars", "stadium-inspired images"],
     bestFor: "Use Sports when the finished images should feel like personal fan content, match-day profile material, or a private themed keepsake.",
     sourceFocus: "Use a clear portrait and describe fan mood, colors, crop need, and personal use without relying on official logos or player likenesses.",
@@ -400,7 +400,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/video-photo-package-guide",
     description: "Motion-ready image frames and short-video add-on directions for private albums.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp?v=20260715b",
-    targetHref: "/collections/video",
+    targetHref: "/collections/motion-generator",
     examples: ["motion-ready frames", "image-to-video concepts", "profile clips", "album story videos"],
     bestFor: "Use Video when a finished image should become a short motion concept, profile clip, fan poster motion, or private album add-on.",
     sourceFocus: "Choose the clearest finished image or frame sequence, then define one movement idea such as slow camera drift, soft reveal, or profile clip pacing.",
@@ -426,7 +426,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/headshot-photo-package-guide",
     description: "Professional headshots for LinkedIn, resumes, teams, founders, and polished work profiles.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/professional-headshots/professional-headshots-01.webp?v=20260715b",
-    targetHref: "/collections/headshots",
+    targetHref: "/collections/headshot",
     examples: ["LinkedIn portraits", "resume photos", "founder profiles", "team-ready headshots"],
     bestFor: "Use Headshots when the finished images need to feel clear, restrained, current, and appropriate for work-facing profiles.",
     sourceFocus: "Use recent face-forward portraits with neutral lighting, readable hair and shoulders, and clothing that does not distract from the person.",

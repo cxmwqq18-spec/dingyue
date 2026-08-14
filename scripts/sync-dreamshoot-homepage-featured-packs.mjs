@@ -79,7 +79,7 @@ function dreamshootFeaturedSections() {
         primaryCta: "Create Christmas Photos",
         primaryHref: "/login",
         secondaryCta: "View Christmas Photos",
-        secondaryHref: "/collections/christmas-photos",
+        secondaryHref: "/collections/christmas-photo",
         photos: "Holiday cards",
         credits: "20 credits",
         privacy: "Private album",
@@ -94,12 +94,12 @@ function dreamshootFeaturedSections() {
         nextCampaignLabel: "Next: Thanksgiving / Halloween / Seasonal"
       },
       [
-      block("seasonal_christmas_1", "seasonal_image", { label: "Christmas Portraits", meta: "Card-ready mood", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp"), collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_2", "seasonal_image", { label: "Greeting Card Scene", meta: "Festive group crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp"), collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_3", "seasonal_image", { label: "Cozy Couple", meta: "Warm keepsake", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-04.webp"), collectionSlug: "christmas-couple", shape: "square" }),
-      block("seasonal_christmas_4", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/christmas-photos/christmas-photos-cover.webp"), collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_5", "seasonal_image", { label: "Seasonal Album", meta: "Family-style glow", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-08.webp"), collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_6", "seasonal_image", { label: "Giftable Keepsake", meta: "Social-ready crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-05.webp"), collectionSlug: "christmas-couple", shape: "square" })
+      block("seasonal_christmas_1", "seasonal_image", { label: "Christmas Portraits", meta: "Card-ready mood", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp"), collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_2", "seasonal_image", { label: "Greeting Card Scene", meta: "Festive group crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp"), collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_3", "seasonal_image", { label: "Cozy Couple", meta: "Warm keepsake", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-04.webp"), collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_4", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/christmas-photos/christmas-photos-cover.webp"), collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_5", "seasonal_image", { label: "Seasonal Album", meta: "Family-style glow", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-08.webp"), collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_6", "seasonal_image", { label: "Giftable Keepsake", meta: "Social-ready crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-05.webp"), collectionSlug: "christmas-photo", shape: "square" })
       ]
     ),
     featured_thanksgiving_1: section(
@@ -113,7 +113,7 @@ function dreamshootFeaturedSections() {
         primaryCta: "Create Thanksgiving Photos",
         primaryHref: "/login",
         secondaryCta: "View Thanksgiving Photos",
-        secondaryHref: "/collections/thanksgiving-group-photos",
+        secondaryHref: "/collections/thanksgiving-photo",
         photos: "Group portraits",
         credits: "20 credits",
         privacy: "Private gallery",
@@ -128,12 +128,12 @@ function dreamshootFeaturedSections() {
         nextCampaignLabel: "Next: Christmas / Halloween / Seasonal"
       },
       [
-      block("seasonal_thanksgiving_1", "seasonal_image", { label: "Dinner Portraits", meta: "Warm table scene", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_2", "seasonal_image", { label: "Friendsgiving Set", meta: "Group-friendly crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_3", "seasonal_image", { label: "Gratitude Card", meta: "Seasonal note", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_4", "seasonal_image", { label: "Keepsake Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_5", "seasonal_image", { label: "Family-style Album", meta: "Harvest warmth", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_6", "seasonal_image", { label: "Host Story", meta: "Download-ready image", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" })
+      block("seasonal_thanksgiving_1", "seasonal_image", { label: "Dinner Portraits", meta: "Warm table scene", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_2", "seasonal_image", { label: "Friendsgiving Set", meta: "Group-friendly crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_3", "seasonal_image", { label: "Gratitude Card", meta: "Seasonal note", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_4", "seasonal_image", { label: "Keepsake Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_5", "seasonal_image", { label: "Family-style Album", meta: "Harvest warmth", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_6", "seasonal_image", { label: "Host Story", meta: "Download-ready image", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp"), collectionSlug: "thanksgiving-photo", shape: "square" })
       ]
     )
   };
@@ -265,7 +265,7 @@ function applyDreamshootVisualProofIsolation(sections) {
     title: "Christmas group photos",
     description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.",
     imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp"),
-    href: "/collections/christmas-photos",
+    href: "/collections/christmas-photo",
     previewImages: `${dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-04.webp")}|${dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-03.webp")}`
   });
   updateBlock(blocks, "proof_seasonal", {

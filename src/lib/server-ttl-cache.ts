@@ -50,6 +50,12 @@ export function createServerTtlCache(scope: string, defaultTtlMs: number) {
         return;
       }
       store.delete(keyFor(key));
+    },
+    clearPrefix(prefix: string): void {
+      const scopedPrefix = keyFor(prefix);
+      for (const key of store.keys()) {
+        if (key.startsWith(scopedPrefix)) store.delete(key);
+      }
     }
   };
 }

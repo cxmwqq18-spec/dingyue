@@ -1016,7 +1016,7 @@ const helpJson: ThemePageJson = {
 const workflowJson: ThemePageJson = {
   pageType: "content",
   version: 1,
-  sectionsOrder: ["intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "rules_1", "faq_1", "conversion_1", "footer_1"],
+  sectionsOrder: ["intro_1", "tutorial_video_1", "tutorial_image_video_1", "workflow_1", "rules_1", "faq_1", "conversion_1", "footer_1"],
   sections: {
     intro_1: section("rich_text", {
       eyebrow: "How it works",
@@ -1026,51 +1026,29 @@ const workflowJson: ThemePageJson = {
       tone: "dark",
       imageUrl: "/assets/dreamshoot/frames/workflow-upload-source.png",
       primaryCta: "Headshot Generator",
-      primaryHref: "/collections/headshots",
+      primaryHref: "/collections/headshot",
       secondaryCta: "View pricing",
       secondaryHref: "/pricing"
     }),
     tutorial_video_1: section("video_feature", {
-      anchor: "how-it-works",
-      eyebrow: "How it works",
-      title: "Watch the private photo package workflow.",
-      subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private gallery.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-55s.jpg?v=20260805i2vselect3",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4?v=20260805i2vselect3",
-      videoBadge: "Private gallery workflow",
-      playLabel: "Watch the private photo package workflow"
-    }),
-    tutorial_image_video_1: section("video_feature", {
       anchor: "ai-image-tutorial",
       eyebrow: "AI image tutorial",
       title: "Create an AI photo set from source photos.",
-      subtitle: "Choose a package, upload a clear source photo, review credits, start generation, and open the finished private image.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260806chooserfix1",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260806chooserfix1",
+      subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-20260814.mp4",
       videoBadge: "AI photo generation",
       playLabel: "Watch the AI image tutorial"
     }),
-    mobile_video_1: section("mobile_video_showcase", {
-      anchor: "mobile-video-tutorial",
-      eyebrow: "Mobile tutorial",
-      title: "Mobile workflow preview.",
-      subtitle: "Compare image setup and motion-preview steps in a vertical phone view.",
-      imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
-      imageAlt: "Private album workspace view showing source-photo intake, credit review, and finished gallery delivery steps.",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",
-      videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260806mobile45a",
-      videoBadge: "Mobile workflow",
-      playLabel: "Watch the video tutorial",
-      leftTitle: "AI image tutorial",
-      leftVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4?v=20260806chooserfix1",
-      leftVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg?v=20260806chooserfix1",
-      leftPlayLabel: "Watch the image tutorial",
-      rightTitle: "AI video tutorial",
-      rightVideoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4?v=20260806mobile55a",
-      rightVideoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg?v=20260806mobile55a",
-      rightPlayLabel: "Watch the video tutorial",
-      placeholderTitle: "Mobile tutorial coming soon",
-      placeholderBody: "The vertical mobile walkthrough will appear here when the final video is ready."
+    tutorial_image_video_1: section("video_feature", {
+      anchor: "ai-video-tutorial",
+      eyebrow: "AI video tutorial",
+      title: "Turn selected images into a private AI video.",
+      subtitle: "Watch the image-to-video flow: upload frame images, choose the video mode, set the aspect ratio and duration, generate the clip, and preview the finished motion result.",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814.jpg",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-video-tutorial-20260814.mp4",
+      videoBadge: "AI image-to-video",
+      playLabel: "Watch the AI video tutorial"
     }),
     workflow_1: section("studio_steps", {
       anchor: "workflow",
@@ -1093,7 +1071,7 @@ const workflowJson: ThemePageJson = {
       secondaryCta: "Read FAQ",
       secondaryHref: "/faq"
     }, [
-      { id: "workflow_rule_private", type: "rich_text_card", settings: { meta: "Private", title: "Account-scoped uploads", description: "Source photos and generated outputs stay connected to the signed-in customer account." } },
+      { id: "workflow_rule_private", type: "rich_text_card", settings: { meta: "Private", title: "Private source-photo workspace", description: "Source photos and generated outputs stay connected to the signed-in MyDreamShoots customer account." } },
       { id: "workflow_rule_credit", type: "rich_text_card", settings: { meta: "Credits", title: "Visible credit cost", description: "Customers see the credit cost before each package request begins." } },
       { id: "workflow_rule_delivery", type: "rich_text_card", settings: { meta: "Gallery", title: "Private delivery", description: "Finished results appear in the customer gallery instead of a public showcase." } }
     ]),
@@ -1109,7 +1087,7 @@ const workflowJson: ThemePageJson = {
       title: "Choose a photo package and create a private set.",
       subtitle: "Open the Headshot Generator, compare credit costs, then sign in to upload photos and start the generation request.",
       primaryCta: "Headshot Generator",
-      primaryHref: "/collections/headshots",
+      primaryHref: "/collections/headshot",
       secondaryCta: "View pricing",
       secondaryHref: "/pricing"
     }),

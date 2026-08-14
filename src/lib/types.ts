@@ -343,9 +343,16 @@ export interface Customer {
     available: number;
     reserved: number;
   };
+  profile?: CustomerProfileRuntime;
 }
 
 export type PublicCustomer = Omit<Customer, "passwordHash">;
+
+export interface CustomerProfileRuntime {
+  avatarAssetId?: string;
+  avatarUrl?: string;
+  updatedAt?: string;
+}
 
 export interface PlatformAdmin {
   id: string;
@@ -908,6 +915,9 @@ export interface ThemeRuntimeLedgerEntry {
   id: string;
   amount: number;
   type: LedgerType;
+  sourceType?: string;
+  sourceId?: string;
+  sourceLabel?: string;
   createdAt: string;
 }
 
@@ -926,7 +936,13 @@ export interface ThemeRuntimeSubscription {
   id: string;
   productId: string;
   priceId: string;
+  productName?: string;
+  priceLabel?: string;
+  interval?: Price["interval"];
+  amountCents?: number;
+  currency?: string;
   status: Subscription["status"];
+  currentPeriodStart?: string;
   currentPeriodEnd: string;
   creditsPerCycle: number;
   createdAt: string;
@@ -942,15 +958,30 @@ export interface ThemeRuntimeOrder {
   createdAt: string;
 }
 
+export interface ThemeRuntimeDownloadEntry {
+  id: string;
+  assetId: string;
+  jobId?: string;
+  albumId?: string;
+  source: string;
+  label: string;
+  previewUrl?: string;
+  downloadUrl?: string;
+  mimeType?: string;
+  createdAt: string;
+}
+
 export interface ThemeRuntimeData {
   customer?: PublicCustomer;
   adminAccess?: CustomerAdminAccess;
+  profile?: CustomerProfileRuntime;
   jobs: ThemeRuntimeJob[];
   assets: ThemeRuntimeAsset[];
   albums: ThemeRuntimeAlbum[];
   ledger: ThemeRuntimeLedgerEntry[];
   subscriptions?: ThemeRuntimeSubscription[];
   orders?: ThemeRuntimeOrder[];
+  downloads?: ThemeRuntimeDownloadEntry[];
   jobDetail?: {
     job: ThemeRuntimeJob;
     ledger: ThemeRuntimeLedgerEntry[];

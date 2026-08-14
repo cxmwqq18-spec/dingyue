@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { invalidateAdminCustomersPageCache } from "@/lib/admin-customers-page-cache";
+import { invalidateAdminSettingsPageCache } from "@/lib/admin-settings-page-cache";
 import { requireSiteMutation } from "@/lib/api-auth";
 import { clearCustomerAdminAccessCache } from "@/lib/customer-admin-access";
 import { StoreError } from "@/lib/server-store";
@@ -44,6 +45,7 @@ export async function PATCH(
       });
       clearCustomerAdminAccessCache(siteId, customer.email);
       invalidateAdminCustomersPageCache(siteId);
+      invalidateAdminSettingsPageCache(siteId);
       return NextResponse.json({ ok: true, admin: result.admin, created: false });
     }
 
@@ -58,6 +60,7 @@ export async function PATCH(
     });
     clearCustomerAdminAccessCache(siteId, customer.email);
     invalidateAdminCustomersPageCache(siteId);
+    invalidateAdminSettingsPageCache(siteId);
     return NextResponse.json({ ok: true, admin: result.admin, created: true, temporaryPassword });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

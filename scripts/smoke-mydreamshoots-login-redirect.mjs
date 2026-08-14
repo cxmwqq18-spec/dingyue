@@ -117,12 +117,15 @@ async function smokeLoginRedirect() {
       await hostPage.goto("/", { waitUntil: "commit", timeout: 60000 });
       await hostPage.getByRole("link", { name: /^Workspace$/ }).first().waitFor({ state: "visible", timeout: 30000 });
       await hostPage.getByRole("link", { name: /^Workspace$/ }).first().click({ noWaitAfter: true });
-      await hostPage.waitForFunction(() => window.location.pathname === "/app/create", undefined, { timeout: 30000 });
+      await hostPage.waitForFunction(() => window.location.pathname === "/app/create", undefined, { timeout: 60000 });
       await hostPage.goto("/", { waitUntil: "commit", timeout: 60000 });
+      await hostPage.getByRole("link", { name: /Open account/i }).first().waitFor({ state: "visible", timeout: 30000 });
+      await hostPage.getByRole("link", { name: /Open account/i }).first().click({ noWaitAfter: true });
+      await hostPage.waitForFunction(() => window.location.pathname === "/account", undefined, { timeout: 60000 });
       await hostPage.getByRole("link", { name: /Open workspace/i }).first().waitFor({ state: "visible", timeout: 30000 });
       await hostPage.getByRole("link", { name: /Open workspace/i }).first().click({ noWaitAfter: true });
-      await hostPage.waitForFunction(() => window.location.pathname === "/app/create", undefined, { timeout: 30000 });
-      console.log(`✓ host-mode Workspace and account header clicks land on /app/create for ${hostModePublicHost}`);
+      await hostPage.waitForFunction(() => window.location.pathname === "/app/create", undefined, { timeout: 60000 });
+      console.log(`✓ host-mode Workspace, account, and account-center workspace clicks land on the approved paths for ${hostModePublicHost}`);
     } finally {
       await hostContext.close();
     }

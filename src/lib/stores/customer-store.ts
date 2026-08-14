@@ -22,6 +22,13 @@ function isUniqueConstraintError(error: unknown): boolean {
   return error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002";
 }
 
+function isMissingCustomerProfileTableError(error: unknown): boolean {
+  if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== "P2021") return false;
+  const meta = error.meta && typeof error.meta === "object" ? error.meta as { table?: unknown } : undefined;
+  const table = typeof meta?.table === "string" ? meta.table : "";
+  return table.includes("CustomerProfile") || error.message.includes("CustomerProfile");
+}
+
 export async function listSiteCustomersRelational(
   siteId: string,
   client: DbClient = prisma
@@ -196,7 +203,7 @@ export async function getCustomerBySessionRelational(
   if (!params.sessionId) return undefined;
   let session;
   try {
-    const readSession = async () => {
+    const readSession = async (includeProfile: boolean) => {
       await requireDelegate(client, "customerSession");
       return (client as unknown as {
         customerSession: { findFirst(args: unknown): Promise<(Record<string, unknown> & { customer?: Record<string, unknown> }) | null> };
@@ -206,14 +213,21 @@ export async function getCustomerBySessionRelational(
           siteId: params.siteId,
           expiresAt: { gt: new Date() }
         },
-        include: {
-          customer: { include: { balance: true } }
-        }
+        include: includeProfile
+          ? { customer: { include: { balance: true, profile: { include: { avatarAsset: true } } } } }
+          : { customer: { include: { balance: true } } }
       });
     };
-    session = client === prisma
-      ? await runPrismaReadWithReconnect(readSession, { label: "customer session lookup" })
-      : await readSession();
+    const readSessionWithReconnect = (includeProfile: boolean, label: string) => client === prisma
+      ? runPrismaReadWithReconnect(() => readSession(includeProfile), { label })
+      : readSession(includeProfile);
+    try {
+      session = await readSessionWithReconnect(true, "customer session lookup");
+    } catch (error) {
+      if (!isMissingCustomerProfileTableError(error)) throw error;
+      warnRelationalFallback("customer session profile lookup", error);
+      session = await readSessionWithReconnect(false, "customer session lookup without profile");
+    }
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
     warnRelationalFallback("customer session lookup", error);

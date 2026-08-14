@@ -18,12 +18,11 @@ type MenuGroupEntry = { label: string; accent: string; icon: LucideIcon; items: 
 type MenuGroup = MenuGroupEntry[];
 
 const packageGroups = [
-  { label: "Avatar", accent: "#c958f2", icon: ImageIcon, items: [{ label: "Anime Avatar", href: "/collections/anime-avatar" }] },
-  { label: "Beauty", accent: "#ff7b2f", icon: Sparkles, items: [{ label: "Hairstyle", href: "/collections/hairstyle" }, { label: "Virtual Try-On", href: "/collections/virtual-try-on" }] },
-  { label: "Creative", accent: "#38a8ff", icon: Camera, items: [{ label: "Cyberpunk", href: "/collections/cyberpunk" }, { label: "Gala Photos", href: "/collections/gala-photos" }, { label: "Mafia", href: "/collections/mafia" }, { label: "Nature", href: "/collections/nature" }] },
-  { label: "Creator", accent: "#36d399", icon: Users, items: [{ label: "Creator Portraits", href: "/collections/creator-portraits" }, { label: "Fashion Editorial", href: "/collections/fashion-editorial" }, { label: "Product Style", href: "/collections/product-style" }] },
-  { label: "Couple", accent: "#ff5f8f", icon: Heart, items: [{ label: "Christmas Couple", href: "/collections/christmas-couple" }, { label: "Engagement", href: "/collections/engagement" }, { label: "Wedding Portraits", href: "/collections/wedding-portraits" }] },
-  { label: "Sports", accent: "#f4c542", icon: PlayCircle, items: [{ label: "World Cup Fan Photos", href: "/collections/world-cup-fan-photos" }] }
+  { label: "Best Themes & Presets", accent: "#c958f2", icon: Heart, items: [{ label: "Engagement Photo", href: "/collections/engagement-photo" }, { label: "Wedding Photo", href: "/collections/wedding-photo" }, { label: "Valentines Photo", href: "/collections/valentines-photo" }, { label: "Christmas Photo", href: "/collections/christmas-photo" }, { label: "Halloween Photo", href: "/collections/halloween-photo" }, { label: "Thanksgiving Photo", href: "/collections/thanksgiving-photo" }] },
+  { label: "Professional", accent: "#ff7b2f", icon: Users, items: [{ label: "Avatar", href: "/collections/avatar" }, { label: "Headshot", href: "/collections/headshot" }, { label: "Gala Photo", href: "/collections/gala-photo" }, { label: "Portrait Photo", href: "/collections/portrait-photo" }, { label: "Black Friday", href: "/collections/black-friday" }, { label: "Only Fans", href: "/collections/only-fans" }, { label: "Singles Awareness Day", href: "/collections/singles-awareness-day" }] },
+  { label: "Lifestyle & Creative", accent: "#38a8ff", icon: Camera, items: [{ label: "Cyberpunk", href: "/collections/cyberpunk" }, { label: "Boudoir", href: "/collections/boudoir" }, { label: "Holiday", href: "/collections/holiday" }, { label: "Cannes", href: "/collections/cannes" }, { label: "Nightlife", href: "/collections/nightlife" }, { label: "Rich Lifestyle", href: "/collections/rich-lifestyle" }, { label: "Bikini", href: "/collections/bikini" }, { label: "Swimsuit", href: "/collections/swimsuit" }, { label: "Travel", href: "/collections/travel" }, { label: "Soccer", href: "/collections/soccer" }, { label: "Urban", href: "/collections/urban" }, { label: "Street Style", href: "/collections/street-style" }, { label: "Mafia", href: "/collections/mafia" }] },
+  { label: "Magic", accent: "#36d399", icon: Sparkles, items: [{ label: "Hairstyle Generator", href: "/collections/hairstyle-generator" }, { label: "Virtual Try-On", href: "/collections/virtual-try-on" }, { label: "Motion Generator", href: "/collections/motion-generator" }] },
+  { label: "Photo Tools", accent: "#f4c542", icon: Scissors, items: [{ label: "Background Changer", href: "/collections/background-changer" }, { label: "Background Remover", href: "/collections/background-remover" }, { label: "Magic Eraser", href: "/collections/magic-eraser" }, { label: "Photo Enhancer", href: "/collections/photo-enhancer" }, { label: "Portrait Retouch", href: "/collections/portrait-retouch" }, { label: "Unblur Image", href: "/collections/unblur-image" }, { label: "Color Correction", href: "/collections/color-correction" }, { label: "Old Photo Restoration", href: "/collections/old-photo-restoration" }, { label: "Edit By Prompt", href: "/collections/edit-by-prompt" }] }
 ];
 
 const aidreamcapesPackageGroups = [
@@ -209,15 +208,17 @@ export function CustomerShellHeader({
     ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white text-[#101114] min-[1800px]:h-9 min-[1800px]:w-9"
     : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#15171a] text-white min-[1800px]:h-9 min-[1800px]:w-9";
   const accountTextClassName = dark
-    ? "block max-w-[8rem] truncate text-[0.82rem] font-semibold min-[1800px]:max-w-[10rem] min-[1800px]:text-sm"
-    : "block max-w-[8rem] truncate text-[0.82rem] font-semibold min-[1800px]:max-w-[10rem] min-[1800px]:text-sm";
+    ? "hidden max-w-[8rem] truncate text-[0.82rem] font-semibold sm:block min-[1800px]:max-w-[10rem] min-[1800px]:text-sm"
+    : "hidden max-w-[8rem] truncate text-[0.82rem] font-semibold sm:block min-[1800px]:max-w-[10rem] min-[1800px]:text-sm";
   const accountEmailClassName = dark
-    ? "block max-w-[8.5rem] truncate text-[11px] text-white/72 min-[1800px]:max-w-[11rem] min-[1800px]:text-xs"
-    : "block max-w-[8.5rem] truncate text-[11px] text-[#706961] min-[1800px]:max-w-[11rem] min-[1800px]:text-xs";
+    ? "hidden max-w-[8.5rem] truncate text-[11px] text-white/72 sm:block min-[1800px]:max-w-[11rem] min-[1800px]:text-xs"
+    : "hidden max-w-[8.5rem] truncate text-[11px] text-[#706961] sm:block min-[1800px]:max-w-[11rem] min-[1800px]:text-xs";
+  const accountHref = `${basePath}/account`;
+  const accountAvatarUrl = customer.profile?.avatarUrl;
 
   return (
     <header className={`sticky top-0 z-50 border-b font-sans backdrop-blur ${dark ? "border-white/10 bg-[#05070E]/[0.94] text-white" : "border-[#eadfce] bg-[#fbf6ee]/[0.96] text-[#171514]"}`}>
-      <div className="mx-auto grid max-w-[1680px] gap-2 px-5 py-2">
+      <div className="mx-auto grid min-w-0 max-w-[1680px] gap-2 px-5 py-2">
         <p className={`text-center text-xs font-semibold ${dark ? "text-white/80" : "text-[#171514]/68"}`}>
           {isSpanishXby
             ? isAidreamcapes
@@ -225,7 +226,7 @@ export function CustomerShellHeader({
               : "Crea sets privados de fotos con IA desde selfies cotidianos."
             : isAidreamcapes ? "Create private fan-scene and holiday albums from approved photos." : "Create private AI photo sets from everyday selfies."}
         </p>
-        <div className="flex h-[72px] flex-nowrap items-center justify-between gap-1.5 xl:gap-2 min-[1536px]:gap-2.5 min-[1800px]:h-[76px] min-[1800px]:gap-5">
+        <div className="flex h-[72px] min-w-0 flex-nowrap items-center justify-between gap-1.5 xl:gap-2 min-[1536px]:gap-2.5 min-[1800px]:h-[76px] min-[1800px]:gap-5">
           <StorefrontInstantLink aria-label={`${readableLogoText} home`} className="order-1 flex min-w-0 max-w-[13.2rem] shrink items-center gap-2 min-[1536px]:max-w-[16rem] min-[1800px]:max-w-[24rem] min-[1800px]:gap-3" href={homeHref} title={`${readableLogoText} home`}>
             <span className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-[13px] bg-transparent min-[1800px]:h-12 min-[1800px]:w-12 min-[1800px]:rounded-[15px]">
               <img className="h-10 w-10 object-contain min-[1800px]:h-12 min-[1800px]:w-12" src={logoSrc} alt={logoAlt} width={48} height={48} />
@@ -287,11 +288,15 @@ export function CustomerShellHeader({
             ) : null}
           </nav>
 
-          <div className="order-3 ml-auto shrink-0 min-[1800px]:ml-0" data-storefront-header-controls="">
+          <div className="order-3 ml-auto min-w-0 shrink-0 min-[1800px]:ml-0" data-storefront-header-controls="">
             <div className={signedInClassName}>
-              <StorefrontInstantLink aria-label={isSpanishXby ? "Abrir espacio privado" : "Open workspace"} className="inline-flex min-w-0 items-center gap-2 rounded-full pr-1 transition hover:opacity-80 min-[1800px]:gap-3" href={`${basePath}/app/create`} prefetch>
+              <StorefrontInstantLink aria-label={isSpanishXby ? "Abrir cuenta" : "Open account"} className="inline-flex min-w-0 items-center gap-2 rounded-full pr-1 transition hover:opacity-80 min-[1800px]:gap-3" href={accountHref} prefetch>
                 <span className={accountIconClassName}>
-                  <Users className="h-4 w-4" strokeWidth={1.8} />
+                  {accountAvatarUrl ? (
+                    <img className="h-full w-full rounded-full object-cover" src={accountAvatarUrl} alt="" />
+                  ) : (
+                    <Users className="h-4 w-4" strokeWidth={1.8} />
+                  )}
                 </span>
                 <span className="min-w-0 text-left">
                   <span className={accountTextClassName}>{customer.name}</span>

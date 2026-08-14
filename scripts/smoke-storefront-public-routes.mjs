@@ -4,11 +4,11 @@ const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(
 const base = new URL(baseUrl);
 // This change set is scoped to the two .com storefronts; .eu remains covered by the language/SSR smokes.
 const routeChecks = [
-  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/collections", "/collections/creator-portraits", "/tools", "/best-packages", "/best-ai-image", "/best-ai-video", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] },
+  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/collections", "/collections/portrait-photo", "/collections/headshot", "/collections/avatar", "/collections/background-changer", "/collections/motion-generator", "/tools", "/best-packages", "/best-ai-image", "/best-ai-video", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] },
   { host: "www.aidreamcapes.com", paths: ["/", "/workflow", "/collections", "/collections/fan-scene-albums", "/collections/private-fan-scene-albums", "/collections/game-day-group-photos", "/collections/game-day-group-portraits", "/collections/christmas-holiday-albums", "/collections/christmas-group-albums", "/collections/new-year-countdown-albums", "/tools", "/tools/fan-scene-album-builder", "/tools/game-day-group-portrait-maker", "/tools/christmas-group-album-studio", "/tools/new-year-countdown-album-maker", "/tools/permission-safe-photo-planner", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog/private-fan-scene-album-photo-package-guide", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] }
 ];
 const imageAltRouteChecks = [
-  { host: "www.mydreamshoots.com", paths: ["/", "/collections", "/collections/world-cup-fan-photos", "/collections/christmas-photos", "/collections/anime-avatar", "/collections/profile-cards", "/collections/product-style", "/collections/ai-video-add-ons", "/collections/cyberpunk", "/tools", "/tools/world-cup-fan-photos", "/best-packages", "/best-ai-image", "/best-ai-video"] },
+  { host: "www.mydreamshoots.com", paths: ["/", "/collections", "/collections/soccer", "/collections/christmas-photo", "/collections/avatar", "/collections/portrait-photo", "/collections/background-changer", "/collections/motion-generator", "/collections/cyberpunk", "/tools", "/tools/world-cup-fan-photos", "/best-packages", "/best-ai-image", "/best-ai-video"] },
   { host: "www.aidreamcapes.com", paths: ["/", "/collections", "/collections/fan-scene-albums", "/collections/private-fan-scene-albums", "/collections/game-day-group-photos", "/collections/stadium-night-fan-sets", "/collections/christmas-group-albums", "/collections/christmas-holiday-albums", "/collections/premiere-style-portraits", "/tools", "/tools/fan-scene-album-builder", "/tools/new-year-countdown-album-maker", "/best-packages", "/best-ai-image", "/best-ai-video"] },
   { host: "aidreamshoots.eu", paths: ["/", "/collections", "/collections/world-cup-fan-photos", "/collections/anime-avatar", "/collections/profile-cards", "/collections/product-style", "/collections/ai-video-add-ons", "/tools"] },
   { host: "aidreamcapes.eu", paths: ["/", "/collections", "/collections/fan-scene-albums", "/collections/game-day-group-photos", "/collections/christmas-group-albums", "/collections/premiere-style-portraits", "/tools"] }
@@ -33,6 +33,12 @@ const legacyRedirectChecks = [
   { host: "www.aidreamcapes.com", path: "/blog/fan-scene-photo-albums-guide", target: "/blog/private-fan-scene-album-photo-package-guide" },
   { host: "www.aidreamcapes.com", path: "/blog/game-day-group-portraits-guide", target: "/blog/game-day-group-portraits-photo-package-guide" },
   { host: "www.aidreamcapes.com", path: "/blog/holiday-memory-albums-guide", target: "/blog/christmas-group-album-photo-package-guide" }
+];
+const legacyGoneChecks = [
+  { host: "www.mydreamshoots.com", path: "/collections/wedding-portraits" },
+  { host: "www.mydreamshoots.com", path: "/collections/profile-cards" },
+  { host: "www.mydreamshoots.com", path: "/collections/headshots" },
+  { host: "www.mydreamshoots.com", path: "/collections/ai-video-add-ons" }
 ];
 
 function assert(condition, message) {
@@ -187,7 +193,7 @@ const themedSeoAltRules = [
   },
   {
     forbidden: /\b(?:product-style|anime|wedding)\b/i,
-    required: /\b(?:world cup|football|stadium|fan|supporter|mundial|futbol|hincha|aficionado)\b/i,
+    required: /\b(?:soccer|world cup|football|stadium|fan|supporter|mundial|futbol|hincha|aficionado)\b/i,
     source: /world-cup-fan-photos/i
   },
   {
@@ -372,6 +378,15 @@ async function smokeStorefrontPublicRoutes() {
         console.log(`✗ ${check.host}${check.path} -> ${status} ${location}`);
       } else {
         console.log(`✓ ${check.host}${check.path} -> ${status} ${location}`);
+      }
+    }
+    for (const check of legacyGoneChecks) {
+      const status = await statusForPath(request, check.host, check.path).catch(() => 599);
+      if (status !== 404) {
+        failures.push({ host: check.host, path: check.path, status, expected: 404 });
+        console.log(`✗ ${check.host}${check.path} -> ${status}`);
+      } else {
+        console.log(`✓ ${check.host}${check.path} -> 404`);
       }
     }
     for (const check of pathModeRouteChecks) {

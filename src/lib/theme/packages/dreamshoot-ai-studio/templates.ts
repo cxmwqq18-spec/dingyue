@@ -310,7 +310,7 @@ const homeSections: ThemePageJson["sections"] = {
     },
     [
       block("hero_cta_primary", "cta", { label: "Create Now", href: "/login", style: "primary" }),
-      block("hero_cta_secondary", "cta", { label: "Headshot Generator", href: "/collections/headshots", style: "secondary" }),
+      block("hero_cta_secondary", "cta", { label: "Headshot Generator", href: "/collections/headshot", style: "secondary" }),
       block("hero_stat_credits", "stat", { value: "Credits", label: "shown before generation" }),
       block("hero_stat_packs", "stat", { value: "15+", label: "photo package themes" }),
       block("hero_stat_private", "stat", { value: "Private", label: "model, uploads, albums" })
@@ -340,10 +340,10 @@ const homeSections: ThemePageJson["sections"] = {
       primaryHref: "/login"
     },
     [
-      block("proof_worldcup", "proof_card", { title: "World Cup fan photos", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Fan Photos", badge: "Featured", imageUrl: assets.galleryWorldCupFanOne, href: "/collections/world-cup-fan-photos" }),
-      block("proof_sports_meetup", "proof_card", { title: "Sports idol-style meetups", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Sports Stars", badge: "Sports Stars", imageUrl: assets.galleryWorldCupFanTwo, href: "/collections/world-cup-fan-photos" }),
-      block("proof_vip", "proof_card", { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: assets.galleryGalaOne, href: "/collections/gala-photos" }),
-      block("proof_christmas", "proof_card", { title: "Christmas group photos", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Christmas", badge: "Christmas", imageUrl: assets.galleryChristmasPhotosOne, href: "/collections/christmas-photos" }),
+      block("proof_worldcup", "proof_card", { title: "Soccer", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Lifestyle & Creative", badge: "Featured", imageUrl: assets.galleryWorldCupFanOne, href: "/collections/soccer" }),
+      block("proof_sports_meetup", "proof_card", { title: "Soccer fan scenes", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Lifestyle & Creative", badge: "Soccer", imageUrl: assets.galleryWorldCupFanTwo, href: "/collections/soccer" }),
+      block("proof_vip", "proof_card", { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: assets.galleryGalaOne, href: "/collections/gala-photo" }),
+      block("proof_christmas", "proof_card", { title: "Christmas Photo", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Best Themes & Presets", badge: "Christmas", imageUrl: assets.galleryChristmasPhotosOne, href: "/collections/christmas-photo" }),
       block("proof_seasonal", "proof_card", { title: "Seasonal holiday albums", description: "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.", category: "Seasonal", badge: "Seasonal", imageUrl: assets.gallerySeasonalFallback, href: "/collections/holiday" })
     ]
   ),
@@ -353,7 +353,7 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "featured-pack",
       label: "Featured seasonal pack",
       badge: "Match-day pack",
-      title: "World Cup fan photos for sports-idol style moments.",
+      title: "Soccer fan photos for match-day style moments.",
       subtitle: "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing.",
       primaryCta: "Create Fan Photos",
       primaryHref: "/login",
@@ -365,19 +365,19 @@ const homeSections: ThemePageJson["sections"] = {
       includedTitle: "Included outputs",
       includedOutputs: "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
       safetyCopy: "Fan-safe styling: no real player or celebrity likenesses, official team logos, event marks, or protected brand assets without permission.",
-      overlayTitle: "World Cup Pack",
+      overlayTitle: "Soccer Pack",
       overlaySubtitle: "Sports-idol style fan photos without a studio.",
       overlayChips: "fan meetup|group shot|stadium|social-ready",
       bottomNote: "Seasonal packs rotate around tournaments, Christmas, Thanksgiving, Halloween, and personal fan-photo moments.",
-      campaignLabel: "Current campaign: World Cup Fan Photos",
+      campaignLabel: "Current campaign: Soccer",
       nextCampaignLabel: "Next: Christmas / Thanksgiving / Halloween"
     },
     [
-      block("seasonal_worldcup_1", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: assets.worldCupStadiumPortrait, collectionSlug: "world-cup-fan-photos", shape: "tall" }),
-      block("seasonal_worldcup_2", "seasonal_image", { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: assets.worldCupFriendFans, collectionSlug: "gala-photos", shape: "wide" }),
-      block("seasonal_worldcup_3", "seasonal_image", { label: "Match-day Avatar", meta: "Profile-ready crop", imageUrl: assets.worldCupAvatar, collectionSlug: "christmas-couple", shape: "square" }),
-      block("seasonal_worldcup_4", "seasonal_image", { label: "Fan Poster", meta: "Story and feed artwork", imageUrl: assets.worldCupFanPoster, collectionSlug: "creator-portraits", shape: "tall" }),
-      block("seasonal_worldcup_5", "seasonal_image", { label: "Social Story", meta: "Mobile-first layout", imageUrl: assets.worldCupSocialStory, collectionSlug: "thanksgiving-group-photos", shape: "tall" }),
+      block("seasonal_worldcup_1", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: assets.worldCupStadiumPortrait, collectionSlug: "soccer", shape: "tall" }),
+      block("seasonal_worldcup_2", "seasonal_image", { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: assets.worldCupFriendFans, collectionSlug: "gala-photo", shape: "wide" }),
+      block("seasonal_worldcup_3", "seasonal_image", { label: "Match-day Avatar", meta: "Profile-ready crop", imageUrl: assets.worldCupAvatar, collectionSlug: "avatar", shape: "square" }),
+      block("seasonal_worldcup_4", "seasonal_image", { label: "Fan Poster", meta: "Story and feed artwork", imageUrl: assets.worldCupFanPoster, collectionSlug: "soccer", shape: "tall" }),
+      block("seasonal_worldcup_5", "seasonal_image", { label: "Social Story", meta: "Mobile-first layout", imageUrl: assets.worldCupSocialStory, collectionSlug: "thanksgiving-photo", shape: "tall" }),
       block("seasonal_worldcup_6", "seasonal_image", { label: "Banner / Cover", meta: "Wide campaign image", imageUrl: assets.worldCupBanner, collectionSlug: "holiday", shape: "wide" })
     ]
   ),
@@ -392,7 +392,7 @@ const homeSections: ThemePageJson["sections"] = {
       primaryCta: "Create Christmas Photos",
       primaryHref: "/login",
       secondaryCta: "View Christmas Photos",
-      secondaryHref: "/collections/christmas-photos",
+      secondaryHref: "/collections/christmas-photo",
       photos: "Holiday cards",
       credits: "20 credits",
       privacy: "Private album",
@@ -407,12 +407,12 @@ const homeSections: ThemePageJson["sections"] = {
       nextCampaignLabel: "Next: Thanksgiving / Halloween / Seasonal"
     },
     [
-      block("seasonal_christmas_1", "seasonal_image", { label: "Christmas Portraits", meta: "Card-ready mood", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp", collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_2", "seasonal_image", { label: "Greeting Card Scene", meta: "Festive group crop", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp", collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_3", "seasonal_image", { label: "Cozy Couple", meta: "Warm keepsake", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-04.webp", collectionSlug: "christmas-couple", shape: "square" }),
-      block("seasonal_christmas_4", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: assets.galleryChristmasCover, collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_5", "seasonal_image", { label: "Seasonal Album", meta: "Family-style glow", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-08.webp", collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_6", "seasonal_image", { label: "Giftable Keepsake", meta: "Social-ready crop", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-05.webp", collectionSlug: "christmas-couple", shape: "square" })
+      block("seasonal_christmas_1", "seasonal_image", { label: "Christmas Portraits", meta: "Card-ready mood", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp", collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_2", "seasonal_image", { label: "Greeting Card Scene", meta: "Festive group crop", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp", collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_3", "seasonal_image", { label: "Cozy Couple", meta: "Warm keepsake", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-04.webp", collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_4", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: assets.galleryChristmasCover, collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_5", "seasonal_image", { label: "Seasonal Album", meta: "Family-style glow", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-08.webp", collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_6", "seasonal_image", { label: "Giftable Keepsake", meta: "Social-ready crop", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-05.webp", collectionSlug: "christmas-photo", shape: "square" })
     ]
   ),
   featured_thanksgiving_1: section(
@@ -426,7 +426,7 @@ const homeSections: ThemePageJson["sections"] = {
       primaryCta: "Create Thanksgiving Photos",
       primaryHref: "/login",
       secondaryCta: "View Thanksgiving Photos",
-      secondaryHref: "/collections/thanksgiving-group-photos",
+      secondaryHref: "/collections/thanksgiving-photo",
       photos: "Group portraits",
       credits: "20 credits",
       privacy: "Private gallery",
@@ -437,16 +437,16 @@ const homeSections: ThemePageJson["sections"] = {
       overlaySubtitle: "Warm gratitude scenes from approved photos.",
       overlayChips: "group portraits|gratitude cards|Friendsgiving|private",
       bottomNote: "Thanksgiving packs work best with clear group photos, warm setting cues, and simple album goals.",
-      campaignLabel: "Current campaign: Thanksgiving Group Photos",
+      campaignLabel: "Current campaign: Thanksgiving Photo",
       nextCampaignLabel: "Next: Christmas / Halloween / Seasonal"
     },
     [
-      block("seasonal_thanksgiving_1", "seasonal_image", { label: "Dinner Portraits", meta: "Warm table scene", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_2", "seasonal_image", { label: "Friendsgiving Set", meta: "Group-friendly crop", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_3", "seasonal_image", { label: "Gratitude Card", meta: "Seasonal note", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_4", "seasonal_image", { label: "Keepsake Cover", meta: "Private album art", imageUrl: assets.galleryThanksgivingFallback, collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_5", "seasonal_image", { label: "Family-style Album", meta: "Harvest warmth", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_6", "seasonal_image", { label: "Host Story", meta: "Download-ready image", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" })
+      block("seasonal_thanksgiving_1", "seasonal_image", { label: "Dinner Portraits", meta: "Warm table scene", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_2", "seasonal_image", { label: "Friendsgiving Set", meta: "Group-friendly crop", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_3", "seasonal_image", { label: "Gratitude Card", meta: "Seasonal note", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_4", "seasonal_image", { label: "Keepsake Cover", meta: "Private album art", imageUrl: assets.galleryThanksgivingFallback, collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_5", "seasonal_image", { label: "Family-style Album", meta: "Harvest warmth", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_6", "seasonal_image", { label: "Host Story", meta: "Download-ready image", imageUrl: versionedAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp"), collectionSlug: "thanksgiving-photo", shape: "square" })
     ]
   ),
   package_catalog_1: section(
@@ -464,13 +464,13 @@ const homeSections: ThemePageJson["sections"] = {
       featuredCount: 12
     },
     [
-      block("catalog_worldcup", "catalog_pack", { title: "World Cup fan photos", description: "Create fan meetup portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Fan Photos", meta: "Fan meetups", credits: "26 credits", imageUrl: assets.galleryWorldCupFanFour, href: "/collections/world-cup-fan-photos" }),
-      block("catalog_christmas", "catalog_pack", { title: "Christmas Photos", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Christmas", meta: "Holiday cards", credits: "20 credits", imageUrl: assets.galleryChristmasPhotosOne, href: "/collections/christmas-photos" }),
-      block("catalog_christmas_couple", "catalog_pack", { title: "Christmas Couple", description: "Create cozy Christmas couple portraits, friend-card moments, and giftable holiday keepsakes.", category: "Christmas", meta: "Couple cards", credits: "22 credits", imageUrl: assets.galleryChristmasCoupleOne, href: "/collections/christmas-couple" }),
+      block("catalog_worldcup", "catalog_pack", { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "26 credits", imageUrl: assets.galleryWorldCupFanFour, href: "/collections/soccer" }),
+      block("catalog_christmas", "catalog_pack", { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "20 credits", imageUrl: assets.galleryChristmasPhotosOne, href: "/collections/christmas-photo" }),
+      block("catalog_nightlife", "catalog_pack", { title: "Nightlife", description: "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", category: "Lifestyle & Creative", meta: "Night-out looks", credits: "22 credits", imageUrl: assets.galleryChristmasCoupleOne, href: "/collections/nightlife" }),
       block("catalog_holiday", "catalog_pack", { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: assets.galleryHolidayFallback, href: "/collections/holiday" }),
-      block("catalog_creator_vip", "catalog_pack", { title: "Creator red-carpet style", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "VIP Looks", meta: "Red-carpet looks", credits: "24 credits", imageUrl: assets.galleryGalaOne, href: "/collections/creator-portraits" }),
-      block("catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving Group Photos", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", category: "Thanksgiving", meta: "Group portraits", credits: "20 credits", imageUrl: assets.galleryThanksgivingFallback, href: "/collections/thanksgiving-group-photos" }),
-      block("catalog_halloween", "catalog_pack", { title: "Halloween Party Photos", description: "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", category: "Halloween", meta: "Party albums", credits: "20 credits", imageUrl: assets.galleryHalloweenFallback, href: "/collections/halloween-party-photos" })
+      block("catalog_creator_vip", "catalog_pack", { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "24 credits", imageUrl: assets.galleryGalaOne, href: "/collections/portrait-photo" }),
+      block("catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving Photo", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", category: "Best Themes & Presets", meta: "Group portraits", credits: "20 credits", imageUrl: assets.galleryThanksgivingFallback, href: "/collections/thanksgiving-photo" }),
+      block("catalog_halloween", "catalog_pack", { title: "Halloween Photo", description: "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", category: "Best Themes & Presets", meta: "Party albums", credits: "20 credits", imageUrl: assets.galleryHalloweenFallback, href: "/collections/halloween-photo" })
     ]
   ),
   generation_showcase_1: section(
@@ -528,17 +528,17 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "package-taxonomy",
       eyebrow: "Photo package library",
       title: "AI photo packages by style, use case, and delivery goal.",
-      subtitle: "Compare AI headshots, hairstyle previews, World Cup fan photos, fashion previews, adult consensual boudoir-inspired sets, and video add-ons before you spend credits. Your uploads stay private by default.",
+      subtitle: "Compare headshot, hairstyle generator, soccer, street style, boudoir, and motion generator themes before you spend credits. Your uploads stay private by default.",
       layout: "editorial"
     },
     [
-      block("taxonomy_headshot", "taxonomy_card", { title: "Professional headshots", description: "Profile photos for LinkedIn, founders, resumes, and teams. Not for official IDs or impersonation.", meta: "Professional", keywords: "headshot|linkedin|resume", imageUrl: assets.manPortrait, href: "/collections/headshots" }),
-      block("taxonomy_style", "taxonomy_card", { title: "Style and beauty", description: "Hairstyles, beauty portraits, virtual try-on, and polished creator looks with visual previews, not exact fit guarantees.", meta: "Beauty", keywords: "hairstyle|beauty|virtual try-on", imageUrl: assets.womanPortrait, href: "/collections/beauty" }),
+      block("taxonomy_headshot", "taxonomy_card", { title: "Headshot", description: "Profile photos for LinkedIn, founders, resumes, and teams. Not for official IDs or impersonation.", meta: "Professional", keywords: "headshot|linkedin|resume", imageUrl: assets.manPortrait, href: "/collections/headshot" }),
+      block("taxonomy_style", "taxonomy_card", { title: "Hairstyle Generator", description: "Hairstyles, beauty portraits, virtual try-on, and polished creator looks with visual previews, not exact fit guarantees.", meta: "Magic", keywords: "hairstyle|beauty|virtual try-on", imageUrl: assets.womanPortrait, href: "/collections/hairstyle-generator" }),
       block("taxonomy_boudoir", "taxonomy_card", { title: "Boudoir", description: "Tasteful, private, non-explicit portrait concepts for consenting adults only. Do not upload minors, non-consenting people, stolen images, or unauthorized portraits.", meta: "Adult consent", keywords: "boudoir|private portraits|consent", imageUrl: assets.womanPortrait, href: "/collections/boudoir" }),
-      block("taxonomy_worlds", "taxonomy_card", { title: "Cinematic worlds", description: "Cyberpunk, mafia, nature, gala, and dramatic themed photos.", meta: "Creative", keywords: "cyberpunk|mafia|nature|gala", imageUrl: assets.cyberpunkSample, href: "/collections/creative" }),
-      block("taxonomy_sports", "taxonomy_card", { title: "World Cup fan photos", description: "Stadium fan scenes, fan posters, and match-day profile photos for personal fan use without official logos or player likenesses.", meta: "Sports", keywords: "world cup photos|football fan photo|match day avatar", imageUrl: assets.worldCupStadiumPortrait, href: "/collections/sports" }),
-      block("taxonomy_video", "taxonomy_card", { title: "AI video add-ons", description: "Turn finished package outputs into short social-friendly motion concepts.", meta: "Video", keywords: "image to video|motion|social", imageUrl: assets.upscaler, href: "/collections/video" }),
-      block("taxonomy_creator", "taxonomy_card", { title: "Creator lifestyle", description: "Portfolio, creator, campaign, and personal-brand scenes for everyday buyers.", meta: "Creator", keywords: "creator portraits|portfolio|personal brand", imageUrl: assets.avatarPortrait, href: "/collections/creator" })
+      block("taxonomy_worlds", "taxonomy_card", { title: "Lifestyle & Creative", description: "Cyberpunk, mafia, travel, gala, and dramatic themed photos.", meta: "Creative", keywords: "cyberpunk|mafia|travel|gala", imageUrl: assets.cyberpunkSample, href: "/collections/lifestyle-creative" }),
+      block("taxonomy_sports", "taxonomy_card", { title: "Soccer", description: "Stadium fan scenes, fan posters, and match-day profile photos for personal fan use without official logos or player likenesses.", meta: "Lifestyle & Creative", keywords: "soccer photos|football fan photo|match day avatar", imageUrl: assets.worldCupStadiumPortrait, href: "/collections/soccer" }),
+      block("taxonomy_video", "taxonomy_card", { title: "Motion Generator", description: "Turn finished package outputs into short social-friendly motion concepts.", meta: "Magic", keywords: "image to video|motion|social", imageUrl: assets.upscaler, href: "/collections/motion-generator" }),
+      block("taxonomy_creator", "taxonomy_card", { title: "Portrait Photo", description: "Portfolio, creator, campaign, and personal-brand scenes for everyday buyers.", meta: "Professional", keywords: "portrait photo|portfolio|personal brand", imageUrl: assets.avatarPortrait, href: "/collections/portrait-photo" })
     ]
   ),
   sample_strip_1: section(
@@ -594,7 +594,7 @@ const homeSections: ThemePageJson["sections"] = {
       block("tab_packages", "feature_tab", {
         label: "Photo packages",
         title: "Pick a finished outcome",
-        description: "Start from a guided package like headshots, World Cup fan photos, cyberpunk, gala, nature, beauty, creator, or product-style scenes with credits shown before generation.",
+        description: "Start from a guided theme like headshot, soccer, cyberpunk, gala photo, travel, hairstyle generator, portrait photo, or photo-tool collections with credits shown before generation.",
         imageUrl: assets.worldCupFan,
         href: "/collections"
       }),
@@ -875,7 +875,7 @@ const templateSections = {
     subtitle: "See the style, source-photo needs, credit cost, and private album delivery flow before starting generation.",
     imageUrl: assets.headshotLifestyle,
     ctaLabel: "Headshot Generator",
-    ctaHref: "/collections/headshots"
+    ctaHref: "/collections/headshot"
   }),
   package_before_after_1: section(
     "before_after_gallery",
@@ -1092,14 +1092,14 @@ function aidreamcapesPackageCatalogSection(): SectionInstance {
 
 function mydreamshootsTutorialVideoSection(): SectionInstance {
   return section("video_feature", {
-    anchor: "how-it-works",
-    eyebrow: "How it works",
-    title: "Watch the private photo package workflow.",
-    subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private myDreamshoots gallery.",
-    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-55s.jpg?v=20260805i2vselect3",
-    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4?v=20260805i2vselect3",
-    videoBadge: "Private gallery workflow",
-    playLabel: "Watch the myDreamshoots workflow"
+    anchor: "ai-video-tutorial",
+    eyebrow: "AI video tutorial",
+    title: "Turn selected images into a private AI video.",
+    subtitle: "Watch the image-to-video flow: upload frame images, choose the video mode, set the aspect ratio and duration, generate the clip, and preview the finished motion result.",
+    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814.jpg",
+    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-video-tutorial-20260814.mp4",
+    videoBadge: "AI image-to-video",
+    playLabel: "Watch the myDreamshoots AI video tutorial"
   });
 }
 
@@ -1109,8 +1109,8 @@ function mydreamshootsImageTutorialVideoSection(): SectionInstance {
     eyebrow: "AI image tutorial",
     title: "Create an AI photo set from source photos.",
     subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260806chooserfix1",
-    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260806chooserfix1",
+    imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
+    videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-20260814.mp4",
     videoBadge: "AI photo generation",
     playLabel: "Watch the myDreamshoots AI image tutorial"
   });
@@ -1142,7 +1142,7 @@ function aidreamcapesImageTutorialVideoSection(): SectionInstance {
   });
 }
 
-function mydreamshootsMobileVideoShowcaseSection(): SectionInstance {
+function _mydreamshootsMobileVideoShowcaseSection(): SectionInstance {
   return section("mobile_video_showcase", {
     anchor: "mobile-video-tutorial",
     eyebrow: "Mobile tutorial",
@@ -2337,9 +2337,9 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const featuredChristmasSection = aidreamcapesTemplateSite ? aidreamcapesFeaturedChristmasSection() : homeSections.featured_christmas_1;
   const featuredThanksgivingSection = aidreamcapesTemplateSite ? aidreamcapesFeaturedThanksgivingSection() : homeSections.featured_thanksgiving_1;
   const generationShowcaseSection = aidreamcapesTemplateSite ? aidreamcapesGenerationShowcaseSection() : homeSections.generation_showcase_1;
-  const tutorialVideoSection = aidreamcapesTemplateSite ? aidreamcapesTutorialVideoSection() : mydreamshootsTutorialVideoSection();
-  const imageTutorialVideoSection = aidreamcapesTemplateSite ? aidreamcapesImageTutorialVideoSection() : mydreamshootsImageTutorialVideoSection();
-  const mobileVideoSection = aidreamcapesTemplateSite ? aidreamcapesMobileVideoShowcaseSection() : mydreamshootsMobileVideoShowcaseSection();
+  const firstTutorialVideoSection = aidreamcapesTemplateSite ? aidreamcapesTutorialVideoSection() : mydreamshootsImageTutorialVideoSection();
+  const secondTutorialVideoSection = aidreamcapesTemplateSite ? aidreamcapesImageTutorialVideoSection() : mydreamshootsTutorialVideoSection();
+  const mobileVideoSection = aidreamcapesTemplateSite ? aidreamcapesMobileVideoShowcaseSection() : undefined;
   const packageCatalogSection = aidreamcapesTemplateSite ? aidreamcapesPackageCatalogSection() : homeSections.package_catalog_1;
   const reviewSection = aidreamcapesTemplateSite ? aidreamcapesReviewSection() : mydreamshootsReviewSection();
   const faqSection = aidreamcapesTemplateSite ? aidreamcapesFaqSection() : mydreamshootsFaqSection();
@@ -2347,14 +2347,14 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const conversionSection = aidreamcapesTemplateSite ? aidreamcapesConversionSection() : homeSections.conversion_1;
   const homeSectionsOrder = aidreamcapesTemplateSite
     ? ["hero_1", "generation_showcase_1", "featured_thanksgiving_1", "tutorial_video_1", "tutorial_video_2", "mobile_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"]
-    : ["hero_1", "generation_showcase_1", "tutorial_video_1", "tutorial_video_2", "mobile_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"];
+    : ["hero_1", "generation_showcase_1", "tutorial_video_1", "tutorial_video_2", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"];
   const homePageSections: ThemePageJson["sections"] = {
     hero_1: homeHeroSection,
     generation_showcase_1: generationShowcaseSection,
     ...(aidreamcapesTemplateSite ? { featured_thanksgiving_1: featuredThanksgivingSection } : {}),
-    tutorial_video_1: tutorialVideoSection,
-    tutorial_video_2: imageTutorialVideoSection,
-    mobile_video_1: mobileVideoSection,
+    tutorial_video_1: firstTutorialVideoSection,
+    tutorial_video_2: secondTutorialVideoSection,
+    ...(mobileVideoSection ? { mobile_video_1: mobileVideoSection } : {}),
     package_catalog_1: packageCatalogSection,
     proof_1: reviewSection,
     pricing_1: homeSections.pricing_1,
@@ -2418,7 +2418,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   ),
   workflow: page(
     "content",
-    ["workflow_intro_1", "tutorial_video_1", "tutorial_image_video_1", "mobile_video_1", "workflow_1", "plan_rules_1", "conversion_1"],
+    ["workflow_intro_1", "tutorial_video_1", "tutorial_image_video_1", "workflow_1", "plan_rules_1", "conversion_1"],
     {
       workflow_intro_1: section("rich_text", {
         eyebrow: "How it works",
@@ -2428,17 +2428,16 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         tone: "dark",
         imageUrl: assets.heroPackageWall,
         primaryCta: "Headshot Generator",
-        primaryHref: "/collections/headshots",
+        primaryHref: "/collections/headshot",
         secondaryCta: "View pricing",
         secondaryHref: "/pricing"
       }, [
-        block("workflow_intro_private", "rich_text_card", { meta: "Private", title: "Account-scoped uploads", description: "Source photos, jobs, credits, and albums stay attached to the signed-in customer account." }),
+        block("workflow_intro_private", "rich_text_card", { meta: "Private", title: "Private source-photo workspace", description: "Uploads, generation requests, credits, and finished albums stay inside the customer's signed-in myDreamshoots account." }),
         block("workflow_intro_credits", "rich_text_card", { meta: "Credits", title: "Visible cost before generation", description: "Customers see the package cost before a private request reserves credits." }),
         block("workflow_intro_gallery", "rich_text_card", { meta: "Gallery", title: "Finished albums", description: "Generated images return to a private gallery for review and download." })
       ]),
-      tutorial_video_1: mydreamshootsTutorialVideoSection(),
-      tutorial_image_video_1: mydreamshootsImageTutorialVideoSection(),
-      mobile_video_1: mydreamshootsMobileVideoShowcaseSection(),
+      tutorial_video_1: mydreamshootsImageTutorialVideoSection(),
+      tutorial_image_video_1: mydreamshootsTutorialVideoSection(),
       workflow_1: homeSections.workflow_1,
       plan_rules_1: homeSections.plan_rules_1,
       conversion_1: homeSections.conversion_1
@@ -2868,7 +2867,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
     },
     navigation: {
       headerLinks: [
-        { label: "AI Photoshoot", href: "/collections/headshots" },
+        { label: "AI Photoshoot", href: "/collections/headshot" },
         { label: "AI Tools", href: "/tools" },
         { label: "Best Packages", href: "/best-packages" },
         { label: "How it works", href: "/workflow" },
@@ -2908,7 +2907,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           logoAlt: "myDreamshoots heart camera logo"
         },
         blocks: [
-          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "AI Photoshoot", href: "/collections/headshots" } },
+          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "AI Photoshoot", href: "/collections/headshot" } },
           { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "AI Tools", href: "/tools" } },
           { id: "dreamshoot_header_best_packages", type: "menu_link", settings: { label: "Best Packages", href: "/best-packages" } },
           { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },

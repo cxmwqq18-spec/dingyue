@@ -15,7 +15,7 @@ const toolsMenuLabel = /^Tools$|^Herramientas$/i;
 const anonymousEntries = [
   { label: "MyDreamShoots home", path: `/site/${siteSlug}` },
   { label: "MyDreamShoots collections", path: `/site/${siteSlug}/collections` },
-  { label: "MyDreamShoots package detail", path: `/site/${siteSlug}/collections/creator-portraits` },
+  { label: "MyDreamShoots package detail", path: `/site/${siteSlug}/collections/portrait-photo` },
   { label: "MyDreamShoots tools", path: `/site/${siteSlug}/tools` },
   { label: "Aidreamcapes collections", path: "/site/aidreamcapes/collections" },
   { label: "Aidreamcapes package detail", path: "/site/aidreamcapes/collections/cinematic-travel" },
@@ -154,7 +154,7 @@ async function smokeStorefrontMegaMenuPosition() {
     for (const entry of anonymousEntries) {
       await assertMegaMenuPosition(anonymousContext, entry);
     }
-    await assertMegaMenuPosition(anonymousContext, { label: "MyDreamShoots package detail tools", path: `/site/${siteSlug}/collections/creator-portraits` }, "tools");
+    await assertMegaMenuPosition(anonymousContext, { label: "MyDreamShoots package detail tools", path: `/site/${siteSlug}/collections/portrait-photo` }, "tools");
     await assertMegaMenuPosition(anonymousContext, { label: "Aidreamcapes package detail tools", path: "/site/aidreamcapes/collections/cinematic-travel" }, "tools");
 
     const customerContext = await browser.newContext({

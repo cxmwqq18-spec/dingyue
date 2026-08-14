@@ -429,7 +429,11 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const firstSegment = path[0] ?? "";
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
   if (isStaticAssetCatchAllRequest(firstSegment)) return {};
-  if (firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard") {
+  if (firstSegment === "account") {
+    const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
+    return { title: spanishTitle ? "Cuenta" : "Account", robots: { index: false, follow: false } };
+  }
+  if (firstSegment === "app" || firstSegment === "dashboard") {
     const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
     return { title: spanishTitle ? "Espacio privado" : "Workspace", robots: { index: false, follow: false } };
   }

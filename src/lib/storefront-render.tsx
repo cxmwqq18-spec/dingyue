@@ -173,14 +173,31 @@ function publicCreativePackToken(pack: CreativePack): string {
   return publicStorefrontToken(pack.id || pack.name, ["pack_mydreamshoots_xby", "pack_aidreamcapes_xby", "pack_dreamshoot", "pack_aidreamcapes"]);
 }
 
-function resolveInitialCreativePackId(rawPack: string | undefined, packs: CreativePack[]): string | undefined {
-  if (!rawPack) return undefined;
-  const normalized = publicStorefrontToken(rawPack, []);
-  const match = packs.find((pack) => {
+function creativePackMatchesInitialCategory(pack: CreativePack, rawCategory: string | undefined): boolean {
+  if (!rawCategory || pack.status !== "active") return false;
+  const normalizedCategory = normalizePublicSlug(rawCategory);
+  if (!normalizedCategory) return false;
+  return [
+    pack.categoryRecord?.slug,
+    pack.categoryRecord?.label,
+    pack.categoryRecord?.parent?.slug,
+    pack.categoryRecord?.parent?.label,
+    pack.category,
+    pack.name
+  ].some((value) => value ? normalizePublicSlug(String(value)) === normalizedCategory : false);
+}
+
+function resolveInitialCreativePackId(rawPack: string | undefined, packs: CreativePack[], rawCategory?: string): string | undefined {
+  const normalizedPack = rawPack ? publicStorefrontToken(rawPack, []) : "";
+  const packMatch = rawPack ? packs.find((pack) => {
     if (pack.status !== "active") return false;
-    return pack.id === rawPack || publicStorefrontToken(pack.id, []) === normalized || publicCreativePackToken(pack) === normalized;
-  });
-  return match?.id ?? rawPack;
+    return pack.id === rawPack || publicStorefrontToken(pack.id, []) === normalizedPack || publicCreativePackToken(pack) === normalizedPack;
+  }) : undefined;
+  if (packMatch) return packMatch.id;
+
+  const categoryMatch = packs.find((pack) => creativePackMatchesInitialCategory(pack, rawCategory));
+  if (categoryMatch) return categoryMatch.id;
+  return rawPack;
 }
 
 function limitedCreativePacks(packs: SiteRenderData["creativePacks"], limit?: number): SiteRenderData["creativePacks"] {
@@ -3112,6 +3129,23 @@ export async function renderCustomerWorkspacePage({
 
   const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
+  if (slug === "/account") {
+    const [bootstrap, accountRuntime] = await Promise.all([
+      getCustomerWorkspaceBootstrapRelational(currentSite.slug),
+      getCustomerAccountSummaryRuntimeRelational({ customer: current.customer, siteId: currentSite.id })
+    ]);
+    return (
+      <CustomerAccountClientPage
+        initialCreativePackCategories={bootstrap?.creativePackCategories ?? []}
+        initialCreativePacks={bootstrap?.creativePacks ?? []}
+        initialCustomer={accountRuntime.customer ?? current.customer}
+        initialRuntime={accountRuntime}
+        initialSite={currentSite}
+        initialToolMenuItems={bootstrap?.toolMenuItems ?? []}
+        siteSlug={publicSiteSlug(currentSite.slug)}
+      />
+    );
+  }
   const page = getPage(currentSite, slug);
   const settings = currentSite.themeSettings.publishedJson;
   const adminAccess = await getCustomerAdminAccessForSite({ siteId: currentSite.id, customer: current.customer });
@@ -3231,7 +3265,11 @@ export async function renderCustomerWorkspacePageBySlug({
           customer: current.customer,
           ...(initialWorkspaceRuntime ? { workspaceRuntime: initialWorkspaceRuntime } : {})
         }}
-        initialCreativePackId={resolveInitialCreativePackId(typeof query.pack === "string" ? query.pack : undefined, bootstrap.creativePacks)}
+        initialCreativePackId={resolveInitialCreativePackId(
+          typeof query.pack === "string" ? query.pack : undefined,
+          bootstrap.creativePacks,
+          typeof query.category === "string" ? query.category : undefined
+        )}
         initialPanel={initialWorkspacePanel}
         initialToolId={typeof query.tool_id === "string" ? query.tool_id : undefined}
         siteSlug={routeSlug}

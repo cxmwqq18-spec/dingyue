@@ -397,12 +397,13 @@ export function CustomerHeaderBootstrapControls({
       </div>
     );
   }
-  const workspaceLabel = signOutLabel === "Sign out" ? "Open workspace" : "Abrir espacio privado";
+  const accountLabel = signOutLabel === "Sign out" ? "Open account" : "Abrir cuenta";
+  const avatarUrl = customer.profile?.avatarUrl;
   return (
     <div className={signedInClassName}>
-      <StorefrontInstantLink aria-label={workspaceLabel} className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={accountHref} prefetch>
+      <StorefrontInstantLink aria-label={accountLabel} className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={accountHref} prefetch>
         <span className={dark ? "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#101114]" : "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#15171a] text-white"}>
-          <UserRound className="h-4 w-4" strokeWidth={1.8} />
+          {avatarUrl ? <img className="h-full w-full rounded-full object-cover" src={avatarUrl} alt="" /> : <UserRound className="h-4 w-4" strokeWidth={1.8} />}
         </span>
         <span className="hidden min-w-0 text-left lg:block">
           <span className="block max-w-[8.5rem] truncate text-sm font-semibold xl:max-w-[10rem]">{customer.name}</span>

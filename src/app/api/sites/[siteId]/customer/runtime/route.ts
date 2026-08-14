@@ -2,14 +2,21 @@ import { NextResponse } from "next/server";
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
 import { ensureCustomerCsrfCookie } from "@/lib/customer-csrf";
+import { customerRuntimeApiCache, customerRuntimeApiCacheKey } from "@/lib/customer-runtime-api-cache";
 import { isTransientPrismaConnectionError, prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getThemeRuntimeForCustomer } from "@/lib/server-store";
 import { customerSessionCookie } from "@/lib/session";
 import { readStorefrontCustomerRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
 import { releaseStaleActiveGenerationJobsRelational } from "@/lib/stores/job-store";
-import { toAssetUploadRelational, toCustomerModelRelational, toCustomerSessionRelational, toPublicCustomerRelational } from "@/lib/stores/prisma-mappers";
+import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
 import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
+import {
+  getCustomerAccountSectionRuntimeRelational,
+  selectCustomerAccountRuntimeSection,
+  type CustomerAccountRuntimeSection
+} from "@/lib/stores/customer-account-runtime";
+import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
 import { cookies } from "next/headers";
 import type { CustomerAdminAccess, CustomerSession, PublicCustomer, ThemeRuntimeData } from "@/lib/types";
@@ -17,10 +24,6 @@ import type { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-const customerRuntimeCache = createServerTtlCache(
-  "customer-runtime-api",
-  Number(process.env.STOREFRONT_CUSTOMER_RUNTIME_API_TTL_MS ?? 30_000)
-);
 const staleActiveJobReleaseCache = createServerTtlCache(
   "customer-runtime-stale-active-release",
   Number(process.env.STOREFRONT_CUSTOMER_RUNTIME_STALE_RELEASE_TTL_MS ?? 30_000)
@@ -40,7 +43,7 @@ function emptyRuntime(): ThemeRuntimeData {
   };
 }
 
-type CustomerRuntimeSection = "summary" | "plan" | "orders" | "jobs" | "albums" | "credits";
+type CustomerRuntimeSection = CustomerAccountRuntimeSection;
 type RuntimeSubscription = NonNullable<ThemeRuntimeData["subscriptions"]>[number];
 type RuntimeOrder = NonNullable<ThemeRuntimeData["orders"]>[number];
 type RuntimeJob = ThemeRuntimeData["jobs"][number];
@@ -376,19 +379,7 @@ async function readWorkspaceRuntimeSegmented(
   const customer = current?.sessionId === sessionId && current.customer.siteId === siteId
     ? current.customer
     : undefined;
-  const resolvedCustomer = customer ?? await (async () => {
-    const session = await prisma.customerSession.findFirst({
-      where: {
-        id: sessionId,
-        siteId,
-        expiresAt: { gt: new Date() }
-      },
-      include: {
-        customer: { include: { balance: true } }
-      }
-    });
-    return session?.customer ? toPublicCustomerRelational(session.customer as Record<string, unknown>) : undefined;
-  })();
+  const resolvedCustomer = customer ?? (await getCustomerBySessionRelational({ siteId, sessionId }))?.customer;
   if (!resolvedCustomer) return undefined;
 
   const [recentJobs, recentAssets, videoFrameAssets, subscriptions, customerModels] = await Promise.all([
@@ -556,50 +547,26 @@ async function getSafeCustomerAdminAccess(params: { siteId: string; customer: Pu
 }
 
 function normalizeSection(value: string | null): CustomerRuntimeSection {
-  if (value === "plan" || value === "orders" || value === "jobs" || value === "albums" || value === "credits") return value;
+  if (
+    value === "overview" ||
+    value === "profile" ||
+    value === "security" ||
+    value === "subscription" ||
+    value === "plan" ||
+    value === "credits" ||
+    value === "purchases" ||
+    value === "orders" ||
+    value === "generation" ||
+    value === "jobs" ||
+    value === "downloads" ||
+    value === "albums" ||
+    value === "models"
+  ) return value;
   return "summary";
 }
 
 function sectionRuntime(runtime: ThemeRuntimeData, section: CustomerRuntimeSection): ThemeRuntimeData {
-  const base = emptyRuntime();
-  if (section === "plan") {
-    return {
-      ...base,
-      customer: runtime.customer,
-      subscriptions: runtime.subscriptions ?? []
-    };
-  }
-  if (section === "orders") {
-    return {
-      ...base,
-      orders: runtime.orders ?? [],
-      jobs: runtime.jobs ?? []
-    };
-  }
-  if (section === "jobs") {
-    return {
-      ...base,
-      jobs: runtime.jobs ?? [],
-      assets: runtime.assets ?? [],
-      albums: runtime.albums ?? []
-    };
-  }
-  if (section === "albums") {
-    return {
-      ...base,
-      albums: runtime.albums ?? [],
-      assets: runtime.assets ?? [],
-      ledger: runtime.ledger ?? []
-    };
-  }
-  if (section === "credits") {
-    return {
-      ...base,
-      customer: runtime.customer,
-      ledger: runtime.ledger ?? []
-    };
-  }
-  return runtime;
+  return selectCustomerAccountRuntimeSection(runtime, section);
 }
 
 function trimRuntime(runtime: ThemeRuntimeData, profile: string, section: CustomerRuntimeSection): ThemeRuntimeData {
@@ -759,64 +726,6 @@ async function _readAccountSectionRuntime({
   };
 }
 
-function accountSectionInclude(section: CustomerRuntimeSection) {
-  const customerBase = {
-    balance: true
-  };
-  if (section === "plan") {
-    return {
-      customer: {
-        include: {
-          ...customerBase,
-          subscriptions: { orderBy: { createdAt: "desc" as const }, take: 2 }
-        }
-      }
-    };
-  }
-  if (section === "orders") {
-    return {
-      customer: {
-        include: {
-          ...customerBase,
-          orders: { orderBy: { createdAt: "desc" as const }, take: 12 }
-        }
-      }
-    };
-  }
-  if (section === "jobs") {
-    return {
-      customer: {
-        include: {
-          ...customerBase,
-          jobs: { orderBy: { updatedAt: "desc" as const }, take: 12 }
-        }
-      }
-    };
-  }
-  if (section === "albums") {
-    return {
-      customer: {
-        include: {
-          ...customerBase,
-          albums: { orderBy: { updatedAt: "desc" as const }, take: 12 },
-          ledger: { orderBy: { createdAt: "desc" as const }, take: 4 }
-        }
-      }
-    };
-  }
-  if (section === "credits") {
-    return {
-      customer: {
-        include: {
-          ...customerBase,
-          ledger: { orderBy: { createdAt: "desc" as const }, take: 16 }
-        }
-      }
-    };
-  }
-  return { customer: { include: customerBase } };
-}
-
 async function readAccountSectionRuntimeForSession({
   section,
   sessionId,
@@ -826,133 +735,17 @@ async function readAccountSectionRuntimeForSession({
   sessionId: string;
   siteId: string;
 }): Promise<{ current: AccountCurrentCustomer; runtime: ThemeRuntimeData } | undefined> {
-  const session = await prisma.customerSession.findFirst({
-    where: {
-      id: sessionId,
-      siteId,
-      expiresAt: { gt: new Date() }
-    },
-    include: accountSectionInclude(section)
-  });
+  const session = await getCustomerBySessionRelational({ siteId, sessionId });
   if (!session?.customer) return undefined;
-  const customer = toPublicCustomerRelational(session.customer as Record<string, unknown>);
+  const customer = session.customer;
   const current = {
     customer,
-    session: toCustomerSessionRelational(session as Record<string, unknown>),
-    sessionId: session.id
+    session: session.session,
+    sessionId: session.session.id
   };
-  const base = emptyRuntime();
-  const customerRecord = session.customer as {
-    albums?: Array<RuntimeAlbum & { createdAt: Date | string; updatedAt: Date | string }>;
-    jobs?: Array<RuntimeJob & { createdAt: Date | string; updatedAt: Date | string; requestJson?: unknown }>;
-    ledger?: Array<RuntimeLedgerEntry & { createdAt: Date | string }>;
-    orders?: Array<RuntimeOrder & { createdAt: Date | string }>;
-    subscriptions?: Array<RuntimeSubscription & { createdAt: Date | string; currentPeriodEnd: Date | string }>;
-  };
-
-  if (section === "plan") {
-    return {
-      current,
-      runtime: {
-        ...base,
-        customer,
-        subscriptions: (customerRecord.subscriptions ?? []).map((subscription) => ({
-          id: subscription.id,
-          productId: subscription.productId,
-          priceId: subscription.priceId,
-          status: subscription.status as RuntimeSubscription["status"],
-          currentPeriodEnd: iso(subscription.currentPeriodEnd),
-          creditsPerCycle: subscription.creditsPerCycle,
-          createdAt: iso(subscription.createdAt)
-        }))
-      }
-    };
-  }
-  if (section === "orders") {
-    return {
-      current,
-      runtime: {
-        ...base,
-        orders: (customerRecord.orders ?? []).map((order) => ({
-          id: order.id,
-          status: order.status as RuntimeOrder["status"],
-          amountCents: order.amountCents,
-          currency: order.currency,
-          credits: order.credits,
-          sourceId: order.sourceId,
-          createdAt: iso(order.createdAt)
-        }))
-      }
-    };
-  }
-  if (section === "jobs") {
-    return {
-      current,
-      runtime: {
-        ...base,
-        jobs: (customerRecord.jobs ?? []).map((job) => ({
-          id: job.id,
-          aiAppId: job.aiAppId,
-          status: job.status as RuntimeJob["status"],
-          creditsReserved: job.creditsReserved,
-          createdAt: iso(job.createdAt),
-          updatedAt: iso(job.updatedAt),
-          requestJson: job.requestJson && typeof job.requestJson === "object" && !Array.isArray(job.requestJson)
-            ? job.requestJson as Record<string, unknown>
-            : undefined,
-          resultJson: job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson)
-            ? job.resultJson as Record<string, unknown>
-            : undefined
-        }))
-      }
-    };
-  }
-  if (section === "albums") {
-    return {
-      current,
-      runtime: {
-        ...base,
-        albums: (customerRecord.albums ?? []).map((album) => ({
-          id: album.id,
-          title: album.title,
-          sourceJobId: album.sourceJobId ?? undefined,
-          creativePackId: album.creativePackId ?? undefined,
-          status: album.status as RuntimeAlbum["status"],
-          outputCount: album.outputCount,
-          coverAssetId: album.coverAssetId ?? undefined,
-          createdAt: iso(album.createdAt),
-          updatedAt: iso(album.updatedAt)
-        })),
-        ledger: (customerRecord.ledger ?? []).map((entry) => ({
-          id: entry.id,
-          amount: entry.amount,
-          type: entry.type as RuntimeLedgerEntry["type"],
-          createdAt: iso(entry.createdAt)
-        }))
-      }
-    };
-  }
-  if (section === "credits") {
-    return {
-      current,
-      runtime: {
-        ...base,
-        customer,
-        ledger: (customerRecord.ledger ?? []).map((entry) => ({
-          id: entry.id,
-          amount: entry.amount,
-          type: entry.type as RuntimeLedgerEntry["type"],
-          createdAt: iso(entry.createdAt)
-        }))
-      }
-    };
-  }
   return {
     current,
-    runtime: {
-      ...base,
-      customer
-    }
+    runtime: await getCustomerAccountSectionRuntimeRelational({ customer, section, siteId })
   };
 }
 
@@ -979,8 +772,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   }
   let result: { customer: NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>>["customer"]; runtime: ThemeRuntimeData } | undefined;
   try {
-    result = await customerRuntimeCache.get(
-      `${siteId}:${sessionId}:${normalizedProfile}:${section}:${refreshToken}`,
+    result = await customerRuntimeApiCache.get(
+      customerRuntimeApiCacheKey({ profile: normalizedProfile, refreshToken, section, sessionId, siteId }),
       async (): Promise<{ customer: NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>>["customer"]; runtime: ThemeRuntimeData } | undefined> => {
         if (normalizedProfile === "account") {
           const accountRuntime = await readAccountSectionRuntimeForSession({ section, sessionId, siteId });

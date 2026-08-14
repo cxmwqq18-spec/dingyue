@@ -22,7 +22,6 @@ const homeOrderByStore = {
     "generation_showcase_1",
     "tutorial_video_1",
     "tutorial_video_2",
-    "mobile_video_1",
     "package_catalog_1",
     "proof_1",
     "faq_1",
@@ -44,7 +43,7 @@ const homeOrderByStore = {
   ]
 };
 const removedHomeSectionsByStore = {
-  mydreamshoots: ["visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
+  mydreamshoots: ["mobile_video_1", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
   aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
 };
 const bestPageTemplateKeys = ["best-packages", "best-ai-image", "best-ai-video"];
@@ -265,32 +264,32 @@ const stores = [
       campaignLabel: "Current recommendation: World Cup Fan Photos",
       nextCampaignLabel: "Next: Christmas / Thanksgiving / Halloween"
     }, [
-      block("featured_worldcup_stadium", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: myAssets.galleryWorldCupFanThree, collectionSlug: "world-cup-fan-photos", shape: "square" }),
-      block("featured_worldcup_gala", "seasonal_image", { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: myAssets.galleryGalaTwo, collectionSlug: "gala-photos", shape: "square" }),
-      block("featured_worldcup_christmas", "seasonal_image", { label: "Seasonal Card Direction", meta: "Holiday campaign option", imageUrl: myAssets.galleryChristmasCoupleTwo, collectionSlug: "christmas-couple", shape: "square" }),
-      block("featured_worldcup_creator", "seasonal_image", { label: "Creator Profile Crop", meta: "Social-ready portrait", imageUrl: myAssets.galleryCreatorOne, collectionSlug: "creator-portraits", shape: "square" }),
-      block("featured_worldcup_thanksgiving", "seasonal_image", { label: "Thanksgiving Keepsake", meta: "Warm group album", imageUrl: myAssets.galleryThanksgiving, collectionSlug: "thanksgiving-group-photos", shape: "square" }),
+      block("featured_worldcup_stadium", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: myAssets.galleryWorldCupFanThree, collectionSlug: "soccer", shape: "square" }),
+      block("featured_worldcup_gala", "seasonal_image", { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: myAssets.galleryGalaTwo, collectionSlug: "gala-photo", shape: "square" }),
+      block("featured_worldcup_christmas", "seasonal_image", { label: "Seasonal Card Direction", meta: "Holiday campaign option", imageUrl: myAssets.galleryChristmasCoupleTwo, collectionSlug: "christmas-photo", shape: "square" }),
+      block("featured_worldcup_creator", "seasonal_image", { label: "Creator Profile Crop", meta: "Social-ready portrait", imageUrl: myAssets.galleryCreatorOne, collectionSlug: "portrait-photo", shape: "square" }),
+      block("featured_worldcup_thanksgiving", "seasonal_image", { label: "Thanksgiving Keepsake", meta: "Warm group album", imageUrl: myAssets.galleryThanksgiving, collectionSlug: "thanksgiving-photo", shape: "square" }),
       block("featured_worldcup_holiday", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: myAssets.galleryHoliday, collectionSlug: "holiday", shape: "square" })
     ]),
     tutorial: section("video_feature", {
-      anchor: "how-it-works",
-      eyebrow: "How it works",
-      title: "Watch the private photo package workflow.",
-      subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private myDreamshoots gallery.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-55s.jpg?v=20260805i2vselect3",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4?v=20260805i2vselect3",
-      videoBadge: "Private gallery workflow",
-      playLabel: "Watch the myDreamshoots workflow"
-    }),
-    imageTutorial: section("video_feature", {
       anchor: "ai-image-tutorial",
       eyebrow: "AI image tutorial",
       title: "Create an AI photo set from source photos.",
       subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260806chooserfix1",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260806chooserfix1",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-20260814.mp4",
       videoBadge: "AI photo generation",
       playLabel: "Watch the myDreamshoots AI image tutorial"
+    }),
+    imageTutorial: section("video_feature", {
+      anchor: "ai-video-tutorial",
+      eyebrow: "AI video tutorial",
+      title: "Turn selected images into a private AI video.",
+      subtitle: "Watch the image-to-video flow: upload frame images, choose the video mode, set the aspect ratio and duration, generate the clip, and preview the finished motion result.",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814.jpg",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-video-tutorial-20260814.mp4",
+      videoBadge: "AI image-to-video",
+      playLabel: "Watch the myDreamshoots AI video tutorial"
     }),
     mobile: section("mobile_video_showcase", {
       anchor: "mobile-video-tutorial",
@@ -700,6 +699,7 @@ function applyStoreSpecificExistingSections(pageJson, store, featuredSections = 
   if (!pageJson?.sections) return false;
   if (store.preserveExistingCopy) return applyAidreamcapesArchitectureOnly(pageJson, store, featuredSections);
   const sections = pageJson.sections;
+  const removedHomeSections = removedHomeSectionsByStore[store.key] ?? [];
   if (store.heroSettings && sections.hero_1) {
     sections.hero_1 = {
       ...sections.hero_1,
@@ -737,7 +737,11 @@ function applyStoreSpecificExistingSections(pageJson, store, featuredSections = 
   };
   sections.tutorial_video_1 = clone(store.tutorial);
   sections.tutorial_video_2 = clone(store.imageTutorial);
-  sections.mobile_video_1 = clone(store.mobile);
+  if (store.mobile && !removedHomeSections.includes("mobile_video_1")) {
+    sections.mobile_video_1 = clone(store.mobile);
+  } else {
+    delete sections.mobile_video_1;
+  }
   sections.proof_1 = clone(store.reviews);
   sections.faq_1 = clone(store.faq);
   if (store.conversion) {
@@ -745,7 +749,6 @@ function applyStoreSpecificExistingSections(pageJson, store, featuredSections = 
   }
   sections.brand_strip_1 = clone(store.partnerStrip);
   applyFeaturedThanksgivingToHomeSections(sections, featuredSections);
-  const removedHomeSections = removedHomeSectionsByStore[store.key] ?? [];
   for (const sectionId of removedHomeSections) delete sections[sectionId];
   const homeOrder = homeOrderByStore[store.key] ?? homeOrderByStore.mydreamshoots;
   pageJson.sectionsOrder = homeOrder.filter((sectionId) => Boolean(sections[sectionId]));

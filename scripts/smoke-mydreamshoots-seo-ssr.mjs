@@ -33,6 +33,24 @@ function fetchText(pathname, accept, redirectCount = 0) {
   });
 }
 
+function fetchStatusNoRedirect(pathname, accept = "text/html") {
+  return new Promise((resolve, reject) => {
+    const url = new URL(pathname, `${baseUrl}/`);
+    const transport = url.protocol === "https:" ? https : http;
+    const request = transport.request(url, {
+      headers: { accept, host }
+    }, (response) => {
+      response.resume();
+      response.on("end", () => resolve({
+        headers: response.headers,
+        status: response.statusCode || 0
+      }));
+    });
+    request.on("error", reject);
+    request.end();
+  });
+}
+
 async function fetchHtml(pathname) {
   const response = await fetchText(pathname, "text/html");
   assert.equal(response.status, 200, `${pathname} should return HTTP 200`);
@@ -53,10 +71,14 @@ function graphNodes(html) {
 
 const homepage = await fetchHtml("/");
 const pricing = await fetchHtml("/pricing");
-const collection = await fetchHtml("/collections/professional-headshots");
+const collection = await fetchHtml("/collections/headshot");
 const workflow = await fetchHtml("/workflow");
 const faq = await fetchHtml("/faq");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
+const legacyCollectionStatuses = await Promise.all(
+  ["/collections/wedding-portraits", "/collections/profile-cards", "/collections/headshots", "/collections/ai-video-add-ons"]
+    .map(async (pathname) => ({ pathname, ...(await fetchStatusNoRedirect(pathname)) }))
+);
 const homepageGraph = graphNodes(homepage);
 const collectionGraph = graphNodes(collection);
 const homepageVideos = homepageGraph.filter((node) => node?.["@type"] === "VideoObject");
@@ -124,11 +146,15 @@ assert.ok(
   "collection Product must expose output count"
 );
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/pricing"), "sitemap must contain the canonical pricing URL");
-assert.ok(sitemap.includes("https://www.mydreamshoots.com/collections/headshots"), "sitemap must contain the canonical headshots URL");
+assert.ok(sitemap.includes("https://www.mydreamshoots.com/collections/headshot"), "sitemap must contain the canonical headshot collection URL");
+for (const legacyStatus of legacyCollectionStatuses) {
+  assert.equal(legacyStatus.status, 404, `${legacyStatus.pathname} should return HTTP 404 after the collection slug migration`);
+}
 
 console.log(JSON.stringify({
   ok: true,
-  pages: ["/", "/pricing", "/collections/professional-headshots", "/workflow", "/faq"],
+  pages: ["/", "/pricing", "/collections/headshot", "/workflow", "/faq"],
+  legacy404s: legacyCollectionStatuses.map(({ pathname, status }) => ({ pathname, status })),
   placeholders: 0,
   homepageVideoObjects: homepageVideos.length,
   collectionProductObjects: collectionProducts.length,

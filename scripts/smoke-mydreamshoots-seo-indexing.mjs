@@ -57,6 +57,16 @@ const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/template
 const platformState = readJson("data/platform-state.json");
 const mydreamshootsSite = platformState.sites.find((site) => site.id === "site_dreamshoot");
 const aidreamcapesSite = platformState.sites.find((site) => site.id === "site_aidreamcapes");
+const activeDreamshootCategorySlugs = new Set(
+  (platformState.creativePackCategories ?? [])
+    .filter((category) => category.siteId === "site_dreamshoot" && category.status === "active")
+    .map((category) => category.slug)
+);
+const activeDreamshootPackCategories = new Set(
+  (platformState.creativePacks ?? [])
+    .filter((pack) => pack.siteId === "site_dreamshoot" && pack.status === "active")
+    .map((pack) => pack.category)
+);
 
 assert(mydreamshootsSite, "MyDreamShoots site must exist in platform state");
 assert(aidreamcapesSite, "AIDreamCapes site must exist in platform state");
@@ -132,11 +142,24 @@ const headerHrefs = headerLinks.map((link) => link.href);
 const footerProductLinks = (mydreamshootsSite.themeSettings?.publishedJson?.navigation?.footerLinks ?? []).filter((link) => link.group === "product");
 const footerProductLabels = footerProductLinks.map((link) => link.label);
 const badLegacyHrefHits = hrefHits.filter((hit) => ["/cookie-policy", "/privacy-policy", "/terms-of-service"].includes(hit.href));
-const badLegacyCollectionHrefHits = hrefHits.filter((hit) => hit.href === "/collections/professional-headshots");
+const legacyCollectionHrefs = new Set([
+  "/collections/wedding-portraits",
+  "/collections/profile-cards",
+  "/collections/headshots",
+  "/collections/professional-headshots",
+  "/collections/ai-video-add-ons",
+  "/collections/world-cup-fan-photos",
+  "/collections/christmas-photos",
+  "/collections/halloween-party-photos",
+  "/collections/thanksgiving-group-photos",
+  "/collections/hairstyle"
+]);
+const requiredCollectionSlugs = ["headshot", "avatar", "background-changer", "motion-generator", "soccer"];
+const badLegacyCollectionHrefHits = hrefHits.filter((hit) => legacyCollectionHrefs.has(hit.href));
 assert(!badLegacyHrefHits.length, "MyDreamShoots internal hrefs must use canonical policy paths to avoid redirects", { badLegacyHrefHits });
 assert(
   !badLegacyCollectionHrefHits.length,
-  "MyDreamShoots internal hrefs must use /collections/headshots instead of the legacy professional-headshots redirect",
+  "MyDreamShoots internal hrefs must not keep legacy collection slugs after the taxonomy migration",
   { badLegacyCollectionHrefHits }
 );
 assert(
@@ -144,8 +167,13 @@ assert(
   "MyDreamShoots navigation/footer data must link directly to /cookies"
 );
 assert(
-  hrefHits.some((hit) => hit.href === "/collections/headshots"),
-  "MyDreamShoots must preserve canonical headshot collection links to /collections/headshots"
+  requiredCollectionSlugs.every((slug) => activeDreamshootCategorySlugs.has(slug) && activeDreamshootPackCategories.has(slug)),
+  "MyDreamShoots active taxonomy must expose key migrated collection slugs",
+  {
+    requiredCollectionSlugs,
+    missingCategories: requiredCollectionSlugs.filter((slug) => !activeDreamshootCategorySlugs.has(slug)),
+    missingPacks: requiredCollectionSlugs.filter((slug) => !activeDreamshootPackCategories.has(slug))
+  }
 );
 assert(
   headerLabels.includes("Best Packages") && headerHrefs[headerLabels.indexOf("Best Packages")] === "/best-packages",
@@ -201,7 +229,10 @@ assert(
   "Creators Circle must be backed by the synthetic DreamShoot template in both host and site routes"
 );
 assert(!templates.includes('href: "/cookie-policy"'), "MyDreamShoots templates must not generate /cookie-policy links");
-assert(templates.includes('href: "/collections/headshots"'), "MyDreamShoots templates must preserve canonical links to /collections/headshots");
+assert(templates.includes('href: "/collections/headshot"'), "MyDreamShoots templates must preserve canonical links to /collections/headshot");
+for (const legacyHref of legacyCollectionHrefs) {
+  assert(!templates.includes(`href: "${legacyHref}"`), "MyDreamShoots templates must not keep legacy collection hrefs", { legacyHref });
+}
 for (const [label, href] of [["Best Packages", "/best-packages"], ["Best AI image", "/best-ai-image"], ["Best AI video", "/best-ai-video"]]) {
   assert(
     templates.includes(`label: "${label}"`) && templates.includes(`href: "${href}"`),

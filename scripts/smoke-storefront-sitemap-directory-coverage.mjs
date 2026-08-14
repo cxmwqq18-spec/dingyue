@@ -7,6 +7,7 @@ const repoRoot = process.cwd();
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(/\/$/, "");
 const statePath = path.join(repoRoot, "data", "platform-state.json");
 const seoContentPath = path.join(repoRoot, "src", "lib", "dreamshoot-seo-content.ts");
+const mydreamshootsTaxonomyPath = path.join(repoRoot, "src", "lib", "mydreamshoots-theme-taxonomy.json");
 const sitemapRequestTimeoutMs = Number(process.env.SITEMAP_SMOKE_SITEMAP_TIMEOUT_MS ?? 120_000);
 
 const siteChecks = [
@@ -21,7 +22,11 @@ const siteChecks = [
       "/best-ai-image",
       "/best-ai-video",
       "/collections",
-      "/collections/headshots",
+      "/collections/headshot",
+      "/collections/avatar",
+      "/collections/background-changer",
+      "/collections/motion-generator",
+      "/collections/soccer",
       "/tools",
       "/tools/headshot",
       "/tools/creator-portrait",
@@ -37,7 +42,12 @@ const siteChecks = [
       "/state-privacy"
     ],
     oldPaths: [
-      "/collections/premiere-style-portraits",
+      "/collections/wedding-portraits",
+      "/collections/profile-cards",
+      "/collections/headshots",
+      "/collections/professional-headshots",
+      "/collections/ai-video-add-ons",
+      "/collections/world-cup-fan-photos",
       "/tools/headshot-generator",
       "/tools/wedding-portraits"
     ]
@@ -211,9 +221,14 @@ function mergeSets(...sets) {
 }
 
 const seoDirectorySource = fs.readFileSync(seoContentPath, "utf8");
+const mydreamshootsTaxonomy = JSON.parse(fs.readFileSync(mydreamshootsTaxonomyPath, "utf8"));
+const mydreamshootsCollectionSlugs = new Set([
+  ...(mydreamshootsTaxonomy.roots || []).map((root) => root.slug),
+  ...(mydreamshootsTaxonomy.items || []).map((item) => item.slug)
+]);
 const explicitDirectorySlugs = {
   site_dreamshoot: {
-    collections: extractDirectorySlugs(seoDirectorySource, "const collectionDirectory"),
+    collections: mydreamshootsCollectionSlugs,
     tools: extractDirectorySlugs(seoDirectorySource, "const toolDirectory")
   },
   site_aidreamcapes: {
@@ -228,23 +243,7 @@ const explicitDirectorySlugs = {
   }
 };
 
-const DREAMSHOOT_COLLECTION_ALIASES = new Map([
-  ["christmas", "christmas-photos"],
-  ["deportes", "world-cup-fan-photos"],
-  ["fan-photos", "world-cup-fan-photos"],
-  ["halloween", "halloween-party-photos"],
-  ["premiere-style-portraits", "gala-photos"],
-  ["sports-stars", "world-cup-fan-photos"],
-  ["sports", "world-cup-fan-photos"],
-  ["thanksgiving", "thanksgiving-group-photos"],
-  ["travel", "outdoor-creator-scenes"],
-  ["viaje", "outdoor-creator-scenes"],
-  ["travel-scene-pack", "outdoor-creator-scenes"],
-  ["vip-looks", "gala-photos"],
-  ["video", "ai-video-add-ons"],
-  ["lifestyle", "outdoor-creator-scenes"],
-  ["professional-headshots", "headshots"]
-]);
+const DREAMSHOOT_COLLECTION_ALIASES = new Map([]);
 const AIDREAMCAPES_COLLECTION_ALIASES = new Map([
   ["adventure", "game-day-group-photos"],
   ["city", "premiere-style-portraits"],

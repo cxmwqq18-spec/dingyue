@@ -152,7 +152,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const collectionCategory = path[0] === "collections" && path[1] ? path[1] : "";
   const slug = collectionCategory ? "/collections" : publicContentPageSlug(requestedSlug);
   if (slug === "/account") {
-    return { title: isSpanishStorefrontSite({ slug: siteSlug, name: siteSlug, branding: { logoText: siteSlug } }) ? "Espacio privado" : "Workspace", robots: { index: false, follow: false } };
+    return { title: isSpanishStorefrontSite({ slug: siteSlug, name: siteSlug, branding: { logoText: siteSlug } }) ? "Cuenta" : "Account", robots: { index: false, follow: false } };
   }
   const state = collectionCategory
     ? await readCollectionRouteState(siteSlug, collectionCategory)
@@ -234,7 +234,10 @@ export default async function SiteCatchAllPage({
   if (slug === "/dashboard") {
     redirect(routePath("/app/create"));
   }
-  if (slug === "/account") redirect(routePath("/app/create"));
+  if (slug === "/account") {
+    const query = searchParams ? await searchParams : {};
+    return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode });
+  }
   if (path[0] === "app") {
     if (slug === "/app") redirect(routePath("/app/create"));
     const query = searchParams ? await searchParams : {};

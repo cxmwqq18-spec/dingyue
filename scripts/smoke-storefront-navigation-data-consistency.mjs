@@ -30,7 +30,7 @@ const siteChecks = [
     routes: [
       "/site/mydreamshoots",
       "/site/mydreamshoots/collections",
-      "/site/mydreamshoots/collections/creator-portraits",
+      "/site/mydreamshoots/collections/portrait-photo",
       "/site/mydreamshoots/tools",
       "/site/mydreamshoots/best-packages",
       "/site/mydreamshoots/best-ai-image",
@@ -70,7 +70,7 @@ const workspaceChecks = [
   {
     slug: "mydreamshoots",
     siteId: "site_dreamshoot",
-    expectedPackageCount: 28,
+    expectedPackageCount: 38,
     expectedToolCount: 28,
     credentials: [
       {
@@ -88,13 +88,13 @@ const focusedVisualRoutes = [
     route: "/site/mydreamshoots",
     footerText: "© 2026 myDreamshoots.com. All rights reserved.",
     categoryHrefs: {
-      Christmas: "/site/mydreamshoots/collections/christmas-photos",
-      Thanksgiving: "/site/mydreamshoots/collections/thanksgiving-group-photos",
-      Halloween: "/site/mydreamshoots/collections/halloween-party-photos",
+      Christmas: "/site/mydreamshoots/collections/christmas-photo",
+      Thanksgiving: "/site/mydreamshoots/collections/thanksgiving-photo",
+      Halloween: "/site/mydreamshoots/collections/halloween-photo",
       Seasonal: "/site/mydreamshoots/collections/holiday",
-      Creator: "/site/mydreamshoots/collections/creator-portraits",
-      Video: "/site/mydreamshoots/collections/ai-video-add-ons",
-      Utility: "/site/mydreamshoots/collections/magic-upscaler"
+      Creator: "/site/mydreamshoots/collections/portrait-photo",
+      Video: "/site/mydreamshoots/collections/motion-generator",
+      Utility: "/site/mydreamshoots/collections/photo-enhancer"
     }
   },
   {
@@ -103,7 +103,7 @@ const focusedVisualRoutes = [
   },
   {
     site: "mydreamshoots",
-    route: "/site/mydreamshoots/collections/thanksgiving-group-photos"
+    route: "/site/mydreamshoots/collections/thanksgiving-photo"
   },
   {
     site: "aidreamcapes",
@@ -332,14 +332,28 @@ async function smokeWorkspaceOptionConsistency(context, failures) {
 }
 
 async function scrollThroughPage(page) {
-  await page.evaluate(async () => {
-    const height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-    const stops = [0, 0.28, 0.56, 0.84, 1];
-    for (const stop of stops) {
-      window.scrollTo(0, Math.max(0, Math.round((height - window.innerHeight) * stop)));
-      await new Promise((resolve) => window.setTimeout(resolve, 350));
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      await page.evaluate(async () => {
+        const height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        const stops = [0, 0.28, 0.56, 0.84, 1];
+        for (const stop of stops) {
+          window.scrollTo(0, Math.max(0, Math.round((height - window.innerHeight) * stop)));
+          await new Promise((resolve) => window.setTimeout(resolve, 350));
+        }
+      });
+      return;
+    } catch (error) {
+      const message = String(error?.message ?? "");
+      const retryable =
+        message.includes("Execution context was destroyed") ||
+        message.includes("Cannot find context") ||
+        message.includes("Most likely because of a navigation");
+      if (!retryable || page.isClosed() || attempt === 2) throw error;
+      await page.waitForLoadState("domcontentloaded", { timeout: pageTimeoutMs }).catch(() => undefined);
+      await page.waitForTimeout(500 + attempt * 500);
     }
-  });
+  }
 }
 
 async function gotoRoute(page, route) {

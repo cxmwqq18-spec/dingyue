@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
 import { publicSiteUrlFromParts } from "@/lib/domain-routing";
 import { dreamshootPackProfileForSlug, type DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
+import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import {
   aidreamcapesCategoryUseCaseProfileForSlug,
   mydreamshootsCategoryUseCaseProfileForSlug,
@@ -44,6 +45,26 @@ type DreamshootRouteMetadataSeed = {
 };
 
 type SeoDirectoryMap = Record<string, SeoDirectorySeed>;
+
+type MyDreamshootsThemeTaxonomy = {
+  roots: Array<{
+    slug: string;
+    label: string;
+    description: string;
+    tags: string[];
+  }>;
+  items: Array<{
+    slug: string;
+    groupSlug: string;
+    label: string;
+    description: string;
+    reusePackId?: string;
+    tags: string[];
+    safetyNote?: string;
+  }>;
+};
+
+const mydreamshootsThemeTaxonomyData = mydreamshootsThemeTaxonomy as MyDreamshootsThemeTaxonomy;
 
 function isAidreamcapesSite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }): boolean {
   if (!site) return false;
@@ -1003,6 +1024,71 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
   }
 };
 
+function mydreamshootsCollectionSeedForRoot(root: MyDreamshootsThemeTaxonomy["roots"][number]): SeoDirectorySeed {
+  return {
+    label: root.label,
+    title: `${root.label} AI Photo Packages | myDreamshoots`,
+    description: root.description,
+    keywords: Array.from(new Set([root.label, ...root.tags, "AI photo packages", "myDreamshoots", "private AI photo albums"])).join(", "),
+    h2: root.label.toLowerCase(),
+    h3: ["Compare package directions", "Private source-photo workflow", "Visible credits and gallery review"],
+    intro: `${root.label} helps customers compare focused myDreamshoots photo package directions before uploading source photos and spending credits.`,
+    details: [
+      root.description,
+      "Open a specific theme when the final use case is clear, then review source-photo guidance, credit cost, and output count before generation.",
+      "Finished results stay in the signed-in private gallery so customers can review identity, realism, crops, and sharing fit before download."
+    ],
+    useCases: root.tags.map((tag) => `${tag} photo package planning`),
+    workflow: ["Compare the themes in this category.", "Open the closest collection page.", "Upload approved source photos.", "Generate and review a private gallery."],
+    internalLinks: [
+      { label: "Browse all photo packages", href: "/collections" },
+      { label: "Review pricing and credits", href: "/pricing" }
+    ],
+    ctaLabel: `Browse ${root.label}`,
+    ctaHref: "/collections"
+  };
+}
+
+function mydreamshootsCollectionSeedForItem(item: MyDreamshootsThemeTaxonomy["items"][number]): SeoDirectorySeed {
+  const group = mydreamshootsThemeTaxonomyData.roots.find((root) => root.slug === item.groupSlug);
+  const subject = item.label;
+  const lower = subject.toLowerCase();
+  return {
+    label: subject,
+    title: `AI ${subject} Generator | myDreamshoots`,
+    description: `${item.description} Use private uploads, visible credits, and account-only gallery delivery.`,
+    keywords: Array.from(new Set([`AI ${subject} generator`, `${lower} AI photo`, ...item.tags, "myDreamshoots", "private AI photo package"])).join(", "),
+    h2: `AI ${lower} generator`,
+    h3: [`${subject} source-photo guide`, `${subject} output ideas`, "Private gallery review"],
+    intro: `${subject} gives myDreamshoots customers a focused collection page for turning approved source photos into ${lower} images with clear credit cost and private review.`,
+    details: [
+      item.description,
+      `Use ${subject} when this exact theme matches the final profile, creator, card, album, edit, or social-ready photo goal.`,
+      "Upload clear photos you own or have permission to use, then keep the brief focused so the finished gallery has one recognizable direction.",
+      item.safetyNote ?? "Avoid protected logos, public-figure likenesses, unauthorized brand marks, and images of people who have not consented."
+    ],
+    useCases: item.tags.map((tag) => `${tag} images`),
+    workflow: [
+      "Upload clear source photos you own or have permission to use.",
+      `Choose the ${subject} package direction.`,
+      "Confirm credit cost before generation starts.",
+      "Review the private gallery and download the best results."
+    ],
+    internalLinks: [
+      { label: group ? `Explore ${group.label}` : "Browse photo packages", href: group ? `/collections/${group.slug}` : "/collections" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Browse all packages", href: "/collections" }
+    ],
+    ctaLabel: `Create ${subject}`,
+    ctaHref: `/app/create?category=${encodeURIComponent(item.slug)}`
+  };
+}
+
+const mydreamshootsCollectionDirectory = {
+  ...Object.fromEntries(mydreamshootsThemeTaxonomyData.roots.map((root) => [root.slug, mydreamshootsCollectionSeedForRoot(root)])),
+  ...Object.fromEntries(mydreamshootsThemeTaxonomyData.items.map((item) => [item.slug, mydreamshootsCollectionSeedForItem(item)]))
+} as SeoDirectoryMap;
+
 const dreamshootDefaultPublicToolSlugs = new Set([
   "headshot",
   "creator-portrait",
@@ -1655,23 +1741,7 @@ export function canonicalAidreamcapesDirectorySlug(kind: SeoDirectoryKind, slug:
   return aidreamcapesCollectionAliases[slug] ?? slug;
 }
 
-const dreamshootCollectionAliases: Record<string, string> = {
-  christmas: "christmas-photos",
-  deportes: "world-cup-fan-photos",
-  "fan-photos": "world-cup-fan-photos",
-  halloween: "halloween-party-photos",
-  "premiere-style-portraits": "gala-photos",
-  "sports-stars": "world-cup-fan-photos",
-  sports: "world-cup-fan-photos",
-  thanksgiving: "thanksgiving-group-photos",
-  travel: "outdoor-creator-scenes",
-  viaje: "outdoor-creator-scenes",
-  "travel-scene-pack": "outdoor-creator-scenes",
-  "vip-looks": "gala-photos",
-  video: "ai-video-add-ons",
-  lifestyle: "outdoor-creator-scenes",
-  "professional-headshots": "headshots"
-};
+const dreamshootCollectionAliases: Record<string, string> = {};
 
 const dreamshootToolAliases: Record<string, string> = {
   "headshot-generator": "headshot"
@@ -2099,13 +2169,16 @@ function normalizeDirectorySlug(value: string): string {
 
 export function isExplicitSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: string): boolean {
   const slug = normalizeDirectorySlug(rawSlug);
-  return kind === "collection" ? Boolean(collectionDirectory[slug]) : Boolean(toolDirectory[slug]);
+  return kind === "collection" ? Boolean(mydreamshootsCollectionDirectory[slug]) : Boolean(toolDirectory[slug]);
 }
 
 export function isExplicitSeoDirectoryContentForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): boolean {
   const slug = canonicalSeoDirectorySlugForSite(site, kind, rawSlug);
   if (isAidreamcapesSite(site)) {
     return kind === "collection" ? Boolean(aidreamcapesCollectionDirectory[slug]) : Boolean(aidreamcapesToolDirectory[slug]);
+  }
+  if (isSpanishXbySite(site)) {
+    return kind === "collection" ? Boolean(collectionDirectory[slug]) : Boolean(toolDirectory[slug]);
   }
   return isExplicitSeoDirectoryContent(kind, slug);
 }
@@ -2114,7 +2187,10 @@ export function getExplicitSeoDirectorySlugsForSite(site: Site | undefined, kind
   if (isAidreamcapesSite(site)) {
     return Object.keys(kind === "collection" ? aidreamcapesCollectionDirectory : aidreamcapesToolDirectory);
   }
-  return Object.keys(kind === "collection" ? collectionDirectory : toolDirectory);
+  if (isSpanishXbySite(site)) {
+    return Object.keys(kind === "collection" ? collectionDirectory : toolDirectory);
+  }
+  return Object.keys(kind === "collection" ? mydreamshootsCollectionDirectory : toolDirectory);
 }
 
 function absoluteSeoImageUrl(site: Site, imagePath = ""): string {
@@ -2670,7 +2746,7 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
   const slug = normalizeDirectorySlug(rawSlug);
   const aidreamcapes = isAidreamcapesSite(site);
   const spanishXby = isSpanishXbySite(site);
-  const collectionSource = aidreamcapes ? aidreamcapesCollectionDirectory : collectionDirectory;
+  const collectionSource = aidreamcapes ? aidreamcapesCollectionDirectory : spanishXby ? collectionDirectory : mydreamshootsCollectionDirectory;
   const toolSource = aidreamcapes ? aidreamcapesToolDirectory : toolDirectory;
   const brandName = spanishXby ? spanishXbyBrandName(site) : aidreamcapes ? "Aidreamcapes" : "myDreamshoots";
   const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, slug);
@@ -2698,7 +2774,7 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
     explicit,
     canonicalPath,
     internalLinks: normalizeSeoDirectoryInternalLinks(enrichedSource.internalLinks),
-    ctaHref: kind === "collection" ? `/app/create?tool_id=${canonicalSlug}` : enrichedSource.ctaHref
+    ctaHref: enrichedSource.ctaHref
   };
 }
 
