@@ -83,6 +83,19 @@ function normalizeCanonicalPath(value: string | undefined, fallbackSlug: string)
   return `/${trimmed}`;
 }
 
+function normalizeLaunchSeoPath(value: string | undefined): string {
+  const trimmed = cleanText(value);
+  if (!trimmed) return "/";
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    try {
+      return new URL(trimmed).pathname.replace(/\/+$/, "") || "/";
+    } catch {
+      return trimmed;
+    }
+  }
+  return `/${trimmed.replace(/^\/+|\/+$/g, "")}` || "/";
+}
+
 function defaultRobotsForPage(page: Pick<ThemePage, "slug" | "pageType">): { index: boolean; follow: boolean } {
   const slug = page.slug || "/";
   const blockedTypes = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
@@ -113,7 +126,7 @@ function isAidreamcapesSeoSite(site: Site): boolean {
 
 function isMyDreamShootsSeoSite(site: Site): boolean {
   const token = `${site.id} ${site.slug} ${site.primaryDomain} ${site.name} ${site.branding.logoText}`.toLowerCase();
-  return token.includes("mydreamshoots") || site.id === "site_dreamshoot";
+  return token.includes("mydreamshoots") || token.includes("dreamshoot") || site.id === "site_dreamshoot";
 }
 
 function isSpanishXbySeoSite(site: Site): boolean {
@@ -238,7 +251,8 @@ function storefrontLaunchChecklistSeo(
   slug: string,
   seo: Pick<PageSeo, "title" | "description" | "keywords">
 ): Pick<PageSeo, "title" | "description" | "keywords"> {
-  if (slug !== "/") return seo;
+  const normalizedSlug = normalizeLaunchSeoPath(slug);
+  if (normalizedSlug !== "/") return seo;
   if (isSpanishAidreamcapesXbySeoSite(site)) {
     const brand = spanishXbyBrandName(site);
     return {
@@ -519,7 +533,7 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || seo.defaultOgImage);
   const icons = siteIcons(site);
-  const launchChecklistSeo = storefrontLaunchChecklistSeo(site, page.slug, { title, description, keywords: pageSeo.keywords });
+  const launchChecklistSeo = storefrontLaunchChecklistSeo(site, canonicalPath, { title, description, keywords: pageSeo.keywords });
   const finalTitle = launchChecklistSeo.title;
   const finalDescription = launchChecklistSeo.description;
   const finalKeywords = launchChecklistSeo.keywords;
@@ -586,7 +600,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || defaultOgImage);
   const icons = siteIcons(site);
-  const launchChecklistSeo = storefrontLaunchChecklistSeo(site, page.slug, { title, description, keywords: pageSeo.keywords });
+  const launchChecklistSeo = storefrontLaunchChecklistSeo(site, canonicalPath, { title, description, keywords: pageSeo.keywords });
   const finalTitle = launchChecklistSeo.title;
   const finalDescription = launchChecklistSeo.description;
   const finalKeywords = launchChecklistSeo.keywords;
