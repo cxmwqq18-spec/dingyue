@@ -25,6 +25,7 @@ export function LazyStorefrontVideo({
   onPointerEnter,
   onTouchStart,
   onPlay,
+  onPlaying,
   onPause,
   onCanPlay,
   onError,
@@ -42,6 +43,13 @@ export function LazyStorefrontVideo({
   const [hasPlayableVideo, setHasPlayableVideo] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const markVideoPlaying = useCallback(() => {
+    setPosterOverlayLoading(false);
+    setPosterOverlayDismissed(true);
+    setHasPlayableVideo(true);
+    setIsPlaying(true);
+  }, []);
+
   const requestLoad = useCallback((mode: "metadata" | "auto", shouldPlay = false) => {
     const video = videoRef.current;
     if (video && !video.getAttribute("src")) {
@@ -52,10 +60,10 @@ export function LazyStorefrontVideo({
     setPreloadMode((current) => (current === "auto" ? current : mode));
     if (!shouldPlay) return;
     setPosterOverlayLoading(true);
-    void video?.play().catch(() => {
+    void video?.play().then(markVideoPlaying).catch(() => {
       setPosterOverlayLoading(false);
     });
-  }, [src]);
+  }, [markVideoPlaying, src]);
 
   useEffect(() => {
     setShouldLoad(false);
@@ -101,8 +109,12 @@ export function LazyStorefrontVideo({
         onFocus?.(event);
       }}
       onPlay={(event) => {
-        setIsPlaying(true);
+        markVideoPlaying();
         onPlay?.(event);
+      }}
+      onPlaying={(event) => {
+        markVideoPlaying();
+        onPlaying?.(event);
       }}
       onPause={(event) => {
         setIsPlaying(false);
