@@ -135,7 +135,9 @@
     "release:precheck": "node scripts/release-precheck.mjs",
     "smoke:database-target-isolation": "node scripts/smoke-database-target-isolation.mjs",
     "smoke:postgres-state": "node scripts/smoke-postgres-platform-state.mjs",
-    "seed:aidreamcapes": "node scripts/migrate-aidreamcapes-demo.mjs"
+    "seed:aidreamcapes": "node scripts/migrate-aidreamcapes-demo.mjs",
+    "clean:mydreamshoots-legacy-routes": "node scripts/clean-mydreamshoots-legacy-routes.mjs",
+    "smoke:mydreamshoots-public-routes": "node scripts/smoke-mydreamshoots-public-routes.mjs"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
