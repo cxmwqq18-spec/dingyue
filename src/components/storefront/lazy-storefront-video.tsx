@@ -27,6 +27,7 @@ export function LazyStorefrontVideo({
   onPlay,
   onPlaying,
   onPause,
+  onEnded,
   onCanPlay,
   onError,
   "aria-label": ariaLabel,
@@ -44,6 +45,12 @@ export function LazyStorefrontVideo({
   const [isPlaying, setIsPlaying] = useState(false);
 
   const markVideoPlaying = useCallback(() => {
+    const video = videoRef.current;
+    if (!video || video.paused || video.ended) {
+      setPosterOverlayLoading(false);
+      setIsPlaying(false);
+      return;
+    }
     setPosterOverlayLoading(false);
     setPosterOverlayDismissed(true);
     setHasPlayableVideo(true);
@@ -94,6 +101,18 @@ export function LazyStorefrontVideo({
     return () => observer.disconnect();
   }, [nearViewportPreload, observerRootMargin, requestLoad, src]);
 
+  useEffect(() => {
+    if (!pauseOverlay) return;
+    const video = videoRef.current;
+    if (!video) return;
+    const syncPlaybackState = () => {
+      setIsPlaying(!video.paused && !video.ended);
+    };
+    syncPlaybackState();
+    const interval = window.setInterval(syncPlaybackState, 400);
+    return () => window.clearInterval(interval);
+  }, [pauseOverlay, src]);
+
   const video = (
     <video
       {...props}
@@ -120,9 +139,12 @@ export function LazyStorefrontVideo({
         setIsPlaying(false);
         onPause?.(event);
       }}
+      onEnded={(event) => {
+        setIsPlaying(false);
+        onEnded?.(event);
+      }}
       onCanPlay={(event) => {
         setPosterOverlayLoading(false);
-        setPosterOverlayDismissed(true);
         setHasPlayableVideo(true);
         onCanPlay?.(event);
       }}
