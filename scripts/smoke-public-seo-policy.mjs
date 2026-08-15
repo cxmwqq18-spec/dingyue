@@ -38,6 +38,10 @@ async function assertHeaders() {
   for (const source of [
     "/collections",
     "/collections/:path*",
+    "/ai-image-generation",
+    "/ai-image-generation/:path*",
+    "/ai-video-generation",
+    "/ai-video-generation/:path*",
     "/tools",
     "/tools/:path*",
     "/pricing",
@@ -51,6 +55,10 @@ async function assertHeaders() {
     "/site/:siteSlug/policies/:path*",
     "/site/:siteSlug/collections",
     "/site/:siteSlug/collections/:path*",
+    "/site/:siteSlug/ai-image-generation",
+    "/site/:siteSlug/ai-image-generation/:path*",
+    "/site/:siteSlug/ai-video-generation",
+    "/site/:siteSlug/ai-video-generation/:path*",
     "/site/:siteSlug/tools",
     "/site/:siteSlug/tools/:path*",
     "/site/:siteSlug/pricing",
@@ -172,18 +180,33 @@ assert.match(
 );
 assert.match(
   hostCatchAll,
-  /PUBLIC_DIRECTORY_PAGE_SLUGS\s*=\s*new Set\(\["\/collections", "\/tools", "\/best-packages", "\/best-ai-image", "\/best-ai-video"\]\)/,
-  "host catch-all should treat collections, tools, and Best pages as public directory pages"
+  /const collectionRootPageSlug = fallbackCollectionRootPathForHost\(host\);[\s\S]*const publicPageSlug = isCollectionRequest[\s\S]*\? collectionRootPageSlug/,
+  "host catch-all should route validated collection requests through the host-aware collection directory context"
 );
 assert.match(
   hostCatchAll,
-  /const publicPageSlug = firstSegment === "collections" && path\[1\] \? "\/collections" : firstSegment === "tools" && path\[1\] \? `\/tools\/\$\{path\[1\]\}` : publicContentPageSlug\(`\/\$\{path\.join\("\/"\)\}`\);/,
-  "host catch-all should keep directory roots canonical while routing detail pages through their directory contexts"
+  /const collectionRoute = isCollectionRequest \? parsePublicCollectionRouteForSite\(site, path\) : undefined;/,
+  "host catch-all should validate root and leaf collection route combinations"
 );
 assert.match(
   hostCatchAll,
-  /PUBLIC_DIRECTORY_PAGE_SLUGS\.has\(publicPageSlug\)[\s\S]*Boolean\(resolvedToolPage\)[\s\S]*firstSegment === "collections" && Boolean\(path\[1\]\)/,
-  "host catch-all should allow /collections and /tools roots plus validated directory detail pages"
+  /const videoGenerationRoute = isVideoGenerationRequest \? parsePublicVideoGenerationRouteForSite\(site, path\) : undefined;/,
+  "host catch-all should validate ai-video-generation root and detail routes"
+);
+assert.match(
+  hostCatchAll,
+  /const hasKnownPublicRoute =[\s\S]*Boolean\(collectionRoute\)[\s\S]*;/,
+  "host catch-all should allow validated ai-image-generation routes"
+);
+assert.match(
+  hostCatchAll,
+  /const hasKnownPublicRoute =[\s\S]*Boolean\(videoGenerationRoute\)[\s\S]*;/,
+  "host catch-all should allow validated ai-video-generation routes"
+);
+assert.match(
+  hostCatchAll,
+  /const hasKnownPublicRoute =[\s\S]*Boolean\(findPage\(site, publicPageSlug\)\)[\s\S]*;/,
+  "host catch-all should still allow normal published pages"
 );
 assert.match(
   hostCatchAll,

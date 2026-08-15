@@ -8,6 +8,12 @@ import {
   mydreamshootsCategoryUseCaseProfileForSlug,
   type PhotoPackageUseCaseProfile
 } from "@/lib/photo-package-use-case-profiles";
+import {
+  MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH,
+  isMydreamshootsVideoGenerationSlug,
+  publicCollectionPathForSite,
+  publicVideoGenerationPathForSite
+} from "@/lib/photo-package-taxonomy";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
 export type SeoDirectoryKind = "collection" | "tool";
@@ -74,6 +80,12 @@ function isAidreamcapesSite(site?: Pick<Site, "id" | "slug" | "name" | "primaryD
 
 function isSpanishXbySite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }): boolean {
   return isSpanishStorefrontSite(site);
+}
+
+function isPrimaryMydreamshootsSite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }): boolean {
+  if (!site || isAidreamcapesSite(site) || isSpanishXbySite(site)) return false;
+  const value = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding?.logoText ?? ""}`.toLowerCase();
+  return value.includes("site_dreamshoot") || value.includes("mydreamshoots") || value.includes("dreamshoot");
 }
 
 function spanishXbyBrandName(site?: Pick<Site, "name"> & { branding?: Pick<Site["branding"], "logoText"> }): string {
@@ -149,12 +161,12 @@ const dreamshootFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSee
     index: true,
     follow: true
   },
-  "/tools": {
-    title: "myDreamshoots AI Photo Tools",
+  "/ai-video-generation": {
+    title: "AI Video Generation for Private Motion Clips | myDreamshoots",
     description:
-      "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, credits, and album-ready results.",
-    keywords: "myDreamshoots tools, AI photo tools, AI headshot tool, background changer, image to video AI, virtual try-on",
-    canonicalPath: "/tools",
+      "Explore myDreamshoots AI Video Generation for image-to-video clips, profile motion, creator intros, product teasers, animated avatars, fashion reels, and private album stories.",
+    keywords: "myDreamshoots AI video generation, image to video AI, creator intro video, animated avatar, private video generator",
+    canonicalPath: "/ai-video-generation",
     index: true,
     follow: true
   }
@@ -637,7 +649,7 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     useCases: ["Creator portraits and profile cards", "Social announcements and banners", "Product-style lifestyle images", "Newsletter and media-kit visuals"],
     workflow: ["Upload source photos you own.", "Choose the creator package direction.", "Review credit cost and image count.", "Generate a private album and download favorites."],
     ctaLabel: "Browse Creator Packages",
-    ctaHref: "/collections/creator"
+    ctaHref: "/ai-image-generation/portrait-photo"
   },
   nature: {
     label: "Nature",
@@ -673,7 +685,7 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     useCases: ["Holiday cards", "Christmas portraits", "Festive profile images", "Private seasonal keepsakes"],
     workflow: ["Upload clear source photos.", "Choose a holiday or Christmas package.", "Review credits and image count.", "Generate a private festive album."],
     ctaLabel: "Browse Seasonal Packages",
-    ctaHref: "/collections/seasonal"
+    ctaHref: "/ai-image-generation/christmas-photo"
   },
   hairstyle: {
     label: "Hairstyle",
@@ -810,11 +822,11 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     ctaHref: "/app/create?tool_id=photo-ai"
   },
   "video-ai": {
-    label: "Video AI",
-    title: "Video AI Tools - image to video and creator clips | myDreamshoots",
-    description: "Use myDreamshoots Video AI tools to turn finished images into private motion concepts, short clips, creator intros, product teasers, and album story videos.",
-    keywords: "Video AI, image to video AI, AI video tools, creator intro video, private AI video generator, myDreamshoots Video AI",
-    h2: "video ai tools for private motion concepts",
+    label: "AI Video Generation",
+    title: "AI Video Generation - image to video and creator clips | myDreamshoots",
+    description: "Use myDreamshoots AI Video Generation to turn finished images into private motion concepts, short clips, creator intros, product teasers, and album story videos.",
+    keywords: "AI Video Generation, image to video AI, AI video tools, creator intro video, private AI video generator, myDreamshoots Video AI",
+    h2: "ai video generation for private motion concepts",
     h3: ["Still-image input guide", "Short video output examples", "Private video review workflow"],
     intro: "Video AI is for customers who already have a strong still image or generated visual and want to test motion before planning a larger video package. It keeps the short clip, credit review, and download path inside the private workspace.",
     details: [
@@ -825,11 +837,11 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     useCases: ["Image-to-video social drafts", "Creator intro clips", "Product teaser motion", "Album story previews from approved stills"],
     workflow: ["Choose a Video AI format.", "Upload or select one finished visual.", "Describe motion, pacing, and final channel.", "Review the private clip and download or plan the next video."],
     internalLinks: [
-      { label: "Open image to video", href: "/tools/image-to-video" },
+      { label: "Open image to video", href: "/ai-video-generation/image-to-video" },
       { label: "Browse video examples", href: "/best-ai-video" },
       { label: "Review pricing and credits", href: "/pricing" }
     ],
-    ctaLabel: "Start Video AI",
+    ctaLabel: "Start AI Video Generation",
     ctaHref: "/app/create#step-video"
   },
   "ai-photo-edit": {
@@ -867,7 +879,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     useCases: ["LinkedIn and resume portraits", "Founder and consultant bios", "Team profile image refreshes", "Speaker page and creator profile photos"],
     workflow: ["Upload varied source portraits.", "Choose professional styling and final channel.", "Generate headshot options after reviewing credits.", "Download profile-ready images from your private workspace."],
     internalLinks: [
-      { label: "Compare headshot packages", href: "/collections/headshots" },
+      { label: "Compare headshot packages", href: "/ai-image-generation/headshot" },
       { label: "Enhance source photos first", href: "/tools/photo-enhancer" },
       { label: "Review pricing and credits", href: "/pricing" }
     ],
@@ -982,7 +994,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     useCases: ["Creator intro clips", "Product teaser videos", "Social motion posts", "Campaign video previews from approved stills"],
     workflow: ["Upload one finished image.", "Choose the motion idea and clip use case.", "Generate a private short video draft.", "Download or use the result to plan the next video package."],
     internalLinks: [
-      { label: "Browse Video AI tools", href: "/tools/video-ai" },
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
       { label: "See video examples", href: "/best-ai-video" },
       { label: "Review pricing and credits", href: "/pricing" }
     ],
@@ -1015,7 +1027,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     useCases: ["Outfit previews", "Hairstyle concepts", "Beauty profile refreshes", "Fashion editorial tests before a larger photo package"],
     workflow: ["Upload clear source portraits.", "Choose outfit, hairstyle, or fashion direction.", "Generate try-on images.", "Review fit, identity, and style details.", "Save favorites for a full package."],
     internalLinks: [
-      { label: "Browse beauty packages", href: "/collections/beauty" },
+      { label: "Browse hairstyle themes", href: "/ai-image-generation/hairstyle-generator" },
       { label: "Enhance a source portrait", href: "/tools/photo-enhancer" },
       { label: "Compare all AI tools", href: "/tools" }
     ],
@@ -1025,6 +1037,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
 };
 
 function mydreamshootsCollectionSeedForRoot(root: MyDreamshootsThemeTaxonomy["roots"][number]): SeoDirectorySeed {
+  const rootHref = publicCollectionPathForSite({ id: "site_dreamshoot" }, root.slug);
   return {
     label: root.label,
     title: `${root.label} AI Photo Packages | myDreamshoots`,
@@ -1041,11 +1054,11 @@ function mydreamshootsCollectionSeedForRoot(root: MyDreamshootsThemeTaxonomy["ro
     useCases: root.tags.map((tag) => `${tag} photo package planning`),
     workflow: ["Compare the themes in this category.", "Open the closest collection page.", "Upload approved source photos.", "Generate and review a private gallery."],
     internalLinks: [
-      { label: "Browse all photo packages", href: "/collections" },
+      { label: "Browse all photo packages", href: MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH },
       { label: "Review pricing and credits", href: "/pricing" }
     ],
     ctaLabel: `Browse ${root.label}`,
-    ctaHref: "/collections"
+    ctaHref: rootHref
   };
 }
 
@@ -1053,12 +1066,13 @@ function mydreamshootsCollectionSeedForItem(item: MyDreamshootsThemeTaxonomy["it
   const group = mydreamshootsThemeTaxonomyData.roots.find((root) => root.slug === item.groupSlug);
   const subject = item.label;
   const lower = subject.toLowerCase();
+  const itemSubject = /\bphotos?\b/i.test(subject) ? `${subject} Package` : `${subject} Photo Package`;
   return {
     label: subject,
-    title: `AI ${subject} Generator | myDreamshoots`,
+    title: `AI ${itemSubject} | myDreamshoots`,
     description: `${item.description} Use private uploads, visible credits, and account-only gallery delivery.`,
-    keywords: Array.from(new Set([`AI ${subject} generator`, `${lower} AI photo`, ...item.tags, "myDreamshoots", "private AI photo package"])).join(", "),
-    h2: `AI ${lower} generator`,
+    keywords: Array.from(new Set([`AI ${itemSubject}`, `${lower} AI photo`, ...item.tags, "myDreamshoots", "private AI photo package"])).join(", "),
+    h2: `AI ${itemSubject.toLowerCase()}`,
     h3: [`${subject} source-photo guide`, `${subject} output ideas`, "Private gallery review"],
     intro: `${subject} gives myDreamshoots customers a focused collection page for turning approved source photos into ${lower} images with clear credit cost and private review.`,
     details: [
@@ -1075,9 +1089,9 @@ function mydreamshootsCollectionSeedForItem(item: MyDreamshootsThemeTaxonomy["it
       "Review the private gallery and download the best results."
     ],
     internalLinks: [
-      { label: group ? `Explore ${group.label}` : "Browse photo packages", href: group ? `/collections/${group.slug}` : "/collections" },
+      { label: group ? `Explore ${group.label}` : "Browse photo packages", href: group ? publicCollectionPathForSite({ id: "site_dreamshoot" }, group.slug) : MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH },
       { label: "Review pricing and credits", href: "/pricing" },
-      { label: "Browse all packages", href: "/collections" }
+      { label: "Browse all packages", href: MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH }
     ],
     ctaLabel: `Create ${subject}`,
     ctaHref: `/app/create?category=${encodeURIComponent(item.slug)}`
@@ -1758,9 +1772,26 @@ export function canonicalSeoDirectorySlugForSite(site: Site | undefined, kind: S
   return canonicalDreamshootDirectorySlug(kind, slug);
 }
 
+function isDirectoryRootPath(kind: SeoDirectoryKind, rawSlug: string): boolean {
+  const normalized = rawSlug.trim().toLowerCase().replace(/^\/+|\/+$/g, "");
+  if (!normalized) return true;
+  return kind === "collection"
+    ? normalized === "collections" || normalized === "ai-image-generation"
+    : normalized === "tools" || normalized === "ai-video-generation";
+}
+
 export function canonicalSeoDirectoryPathForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): string {
+  if (isDirectoryRootPath(kind, rawSlug)) {
+    if (kind === "collection") return publicCollectionPathForSite(site, "");
+    return isPrimaryMydreamshootsSite(site) ? publicVideoGenerationPathForSite(site, "") : "/tools";
+  }
   const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, rawSlug);
-  return `/${kind === "collection" ? "collections" : "tools"}/${canonicalSlug}`;
+  if (kind === "collection") return publicCollectionPathForSite(site, canonicalSlug);
+  if (!canonicalSlug) return isPrimaryMydreamshootsSite(site) ? publicVideoGenerationPathForSite(site, "") : "/tools";
+  if (isPrimaryMydreamshootsSite(site) && isMydreamshootsVideoGenerationSlug(canonicalSlug)) {
+    return publicVideoGenerationPathForSite(site, canonicalSlug);
+  }
+  return `/tools/${canonicalSlug}`;
 }
 
 export function canonicalAidreamcapesCollectionPath(rawSlug: string): string {
@@ -2155,12 +2186,16 @@ function normalizeDirectorySlug(value: string): string {
       return value;
     }
   })();
-  return decoded
+  const normalizedPath = decoded
     .trim()
     .toLowerCase()
     .replace(/^\/+|\/+$/g, "")
+    .replace(/^ai-image-generation\//, "")
+    .replace(/^ai-video-generation\//, "")
     .replace(/^collections\//, "")
-    .replace(/^tools\//, "")
+    .replace(/^tools\//, "");
+  const lastSegment = normalizedPath.includes("/") ? normalizedPath.split("/").filter(Boolean).pop() ?? normalizedPath : normalizedPath;
+  return lastSegment
     .replace(/[_\s]+/g, "-")
     .replace(/[^a-z0-9-]+/g, "-")
     .replace(/-+/g, "-")
@@ -2530,7 +2565,7 @@ function collectionSeedWithUseCaseProfile(
   const title = titleScenario
     ? `${profile.metaLabel} for ${titleScenario} | ${brandName}`
     : `${profile.metaLabel} | ${brandName}`;
-  const description = truncateSeoDescription(`${profile.cardDescription} ${profile.whatCreates}`);
+  const description = truncateSeoDescription(profile.cardDescription);
   const keywordParts = [
     ...seed.keywords.split(",").map((keyword) => keyword.trim()),
     profile.metaLabel,
@@ -2767,7 +2802,7 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
   const enrichedSource = kind === "collection" && !spanishXby
     ? enrichCollectionGuide(sourceWithProfile, brandName)
     : sourceWithProfile;
-  const canonicalPath = `/${kind === "collection" ? "collections" : "tools"}/${canonicalSlug}`;
+  const canonicalPath = canonicalSeoDirectoryPathForSite(site, kind, canonicalSlug);
   return {
     ...enrichedSource,
     slug: canonicalSlug,
@@ -2852,7 +2887,7 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
       title: "Related photo packages",
       subtitle: "Keep exploring adjacent package themes before you upload source photos or spend credits.",
       ctaLabel: "View all packages",
-      ctaHref: "/collections"
+      ctaHref: kind === "collection" ? publicCollectionPathForSite(options.site, "") : "/tools"
     },
     blocks: []
   };

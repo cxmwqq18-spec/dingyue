@@ -63,6 +63,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           creativePackCategories: [],
           creativePacks: [],
           toolMenuItems: [],
+          videoThemeCategories: [],
           videoThemes: []
         },
         { headers: { "Cache-Control": PUBLIC_EMPTY_SHELL_CACHE_CONTROL, Vary: "Cookie" } }
@@ -90,6 +91,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           creativePackCategories: [],
           creativePacks: [],
           toolMenuItems: [],
+          videoThemeCategories: [],
           videoThemes: []
         },
         { headers: { "Cache-Control": "private, max-age=8" } }
@@ -119,6 +121,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         creativePackCategories: bootstrap?.creativePackCategories ?? [],
         creativePacks: bootstrap?.creativePacks ?? [],
         toolMenuItems: bootstrap?.toolMenuItems ?? [],
+        videoThemeCategories: bootstrap?.videoThemeCategories ?? [],
         videoThemes: bootstrap?.videoThemes ?? []
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
@@ -144,6 +147,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         creativePackCategories: bootstrap?.creativePackCategories ?? [],
         creativePacks: bootstrap?.creativePacks ?? [],
         toolMenuItems: bootstrap?.toolMenuItems ?? [],
+        videoThemeCategories: bootstrap?.videoThemeCategories ?? [],
         videoThemes: bootstrap?.videoThemes ?? [],
         accountRuntime
       },
@@ -186,6 +190,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       creativePackCategories: bootstrap.creativePackCategories,
       creativePacks: bootstrap.creativePacks,
       toolMenuItems: bootstrap.toolMenuItems,
+      videoThemeCategories: bootstrap.videoThemeCategories,
       videoThemes: bootstrap.videoThemes,
       ...(workspaceRuntime ? { workspaceRuntime: {
         ...workspaceRuntime,

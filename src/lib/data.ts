@@ -1026,7 +1026,7 @@ const workflowJson: ThemePageJson = {
       tone: "dark",
       imageUrl: "/assets/dreamshoot/frames/workflow-upload-source.png",
       primaryCta: "Headshot Generator",
-      primaryHref: "/collections/headshot",
+      primaryHref: "/ai-image-generation/headshot",
       secondaryCta: "View pricing",
       secondaryHref: "/pricing"
     }),
@@ -1087,7 +1087,7 @@ const workflowJson: ThemePageJson = {
       title: "Choose a photo package and create a private set.",
       subtitle: "Open the Headshot Generator, compare credit costs, then sign in to upload photos and start the generation request.",
       primaryCta: "Headshot Generator",
-      primaryHref: "/collections/headshot",
+      primaryHref: "/ai-image-generation/headshot",
       secondaryCta: "View pricing",
       secondaryHref: "/pricing"
     }),

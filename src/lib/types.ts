@@ -966,9 +966,23 @@ export interface ThemeRuntimeDownloadEntry {
   source: string;
   label: string;
   previewUrl?: string;
+  previewStatus?: ThemeRuntimeAsset["previewStatus"];
   downloadUrl?: string;
+  fileAvailable?: boolean;
   mimeType?: string;
   createdAt: string;
+}
+
+export interface ThemeRuntimePagination {
+  list: string;
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  hasPrevious: boolean;
+  hasNext: boolean;
+  firstItem: number;
+  lastItem: number;
 }
 
 export interface ThemeRuntimeData {
@@ -994,6 +1008,7 @@ export interface ThemeRuntimeData {
     defaultName?: string;
     initialMessage?: string;
   };
+  pagination?: ThemeRuntimePagination;
   isPreview?: boolean;
   clientBootstrapCustomer?: boolean;
 }

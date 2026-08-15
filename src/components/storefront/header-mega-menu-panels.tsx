@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight, PlayCircle } from "lucide-react";
+import { creativePackIconByName, suggestedCreativePackIconName } from "@/lib/creative-pack-icons";
 
 export type HeaderPhotoPackageMegaGroup = {
   label: string;
   slug: string;
+  accent?: string;
+  icon?: string;
   items: Array<{
     label: string;
     slug: string;
@@ -19,6 +22,13 @@ export type HeaderToolMegaItem = {
   href: string;
   category: string;
   categoryTitle: string;
+};
+
+export type HeaderVideoGenerationCategory = {
+  id: string;
+  slug: string;
+  label: string;
+  href: string;
 };
 
 function splitColumns<T>(items: T[], columnCount = 3): T[][] {
@@ -42,6 +52,29 @@ function themeCountLabel(count: number, spanish: boolean): string {
 function packagePanelTitle(aidreamcapes: boolean, spanish: boolean): string {
   if (spanish) return aidreamcapes ? "Estudios de albumes de ocasion" : "Estudios de paquetes de fotos";
   return aidreamcapes ? "Occasion album studios" : "AI photo package studios";
+}
+
+const photoPackageAccentPalette = ["#c958f2", "#ff7b2f", "#38a8ff", "#36d399", "#f4c542", "#ff5f8f"];
+
+function photoPackageGroupVisual(group: HeaderPhotoPackageMegaGroup, index: number) {
+  const normalized = `${group.slug} ${group.label}`.toLowerCase();
+  const knownVisual = normalized.includes("best-themes") || normalized.includes("best themes") || normalized.includes("preset")
+    ? { accent: "#c958f2", icon: "heart" }
+    : normalized.includes("professional")
+      ? { accent: "#ff7b2f", icon: "users" }
+      : normalized.includes("lifestyle") || normalized.includes("creative")
+        ? { accent: "#38a8ff", icon: "camera" }
+        : normalized.includes("magic")
+          ? { accent: "#36d399", icon: "sparkles" }
+          : normalized.includes("photo-tools") || normalized.includes("photo tools")
+            ? { accent: "#f4c542", icon: "scissors" }
+            : null;
+  const accent = group.accent || knownVisual?.accent || photoPackageAccentPalette[index % photoPackageAccentPalette.length];
+  const iconName = knownVisual?.icon || group.icon || suggestedCreativePackIconName(normalized);
+  return {
+    accent,
+    Icon: creativePackIconByName(iconName).icon
+  };
 }
 
 export function HeaderPhotoPackageMegaPanel({
@@ -75,9 +108,14 @@ export function HeaderPhotoPackageMegaPanel({
       <div className={warm ? "mt-4 grid min-h-0 flex-1 gap-3 overflow-y-auto border-t border-[#eadfce] pt-5 pr-1 lg:grid-cols-3" : "mt-4 grid min-h-0 flex-1 gap-3 overflow-y-auto border-t border-[#263247] pt-5 pr-1 lg:grid-cols-3"}>
         {columns.map((column, columnIndex) => (
           <div className="grid content-start gap-3" key={`package_column_${columnIndex}`}>
-            {column.map((group) => (
+            {column.map((group, groupIndex) => {
+              const { accent, Icon } = photoPackageGroupVisual(group, columnIndex + groupIndex);
+              return (
               <details className={warm ? "group/category rounded-[14px] border border-[#eadfce] bg-white p-3 open:border-[#d8b17e] open:bg-[#fff8ed]" : "group/category rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]"} key={group.slug} open>
-                <summary className={warm ? "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold text-[#b86e36] marker:hidden group-open/category:border-b group-open/category:border-[#eadfce] group-open/category:pb-2" : "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold text-[#ff8a2f] marker:hidden group-open/category:border-b group-open/category:border-white/10 group-open/category:pb-2"}>
+                <summary className={warm ? "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold text-[#b86e36] marker:hidden group-open/category:border-b group-open/category:border-[#eadfce] group-open/category:pb-2" : "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold marker:hidden group-open/category:border-b group-open/category:border-white/10 group-open/category:pb-2"} style={{ color: warm ? "#b86e36" : accent }}>
+                  <span className={warm ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f6eadc] text-[#b86e36]" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]"} style={{ color: warm ? "#b86e36" : accent }}>
+                    <Icon className="h-4 w-4" strokeWidth={1.9} />
+                  </span>
                   <span className="min-w-0 truncate text-[0.94rem] font-semibold leading-none">{group.label}</span>
                   <span className={warm ? "ml-auto text-[11px] font-medium text-[#9b8877]" : "ml-auto text-[11px] font-medium text-white/36"}>{group.items.length}</span>
                   <ChevronRight className={warm ? "h-3.5 w-3.5 shrink-0 rotate-90 text-[#9b8877] transition group-open/category:-rotate-90" : "h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/category:-rotate-90"} strokeWidth={2} />
@@ -89,9 +127,10 @@ export function HeaderPhotoPackageMegaPanel({
                       <ChevronRight className={warm ? "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-[#b99675] transition group-hover/package:translate-x-0.5 group-hover/package:text-[#8f5327]" : "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56"} strokeWidth={2} />
                     </Link>
                   ))}
-                </div>
-              </details>
-            ))}
+                  </div>
+                </details>
+              );
+            })}
           </div>
         ))}
       </div>
@@ -168,6 +207,56 @@ export function HeaderToolsMegaPanel({
   );
 }
 
+export function HeaderVideoGenerationMegaPanel({
+  categories,
+  ctaHref,
+  ctaLabel = "Open video workspace",
+  variantTone = "dark"
+}: {
+  categories: HeaderVideoGenerationCategory[];
+  ctaHref?: string;
+  ctaLabel?: string;
+  variantTone?: "dark" | "warm";
+}) {
+  const warm = variantTone === "warm";
+  const columns = splitColumns(categories, Math.min(2, Math.max(1, categories.length)));
+  return (
+    <div className={warm ? "overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)] ring-1 ring-[#d8b17e]/20 backdrop-blur-xl" : "overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl"}>
+      <div className="mb-4 flex items-center justify-center gap-3 text-center">
+        <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
+        <div>
+          <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>AI Video Generation</span>
+          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{categories.length} categories</p>
+        </div>
+        <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
+      </div>
+      <div className={warm ? "mt-4 grid gap-4 border-t border-[#eadfce] pt-5" : "mt-4 grid gap-4 border-t border-[#263247] pt-5"} style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(18rem, 100%), 1fr))" }}>
+        {columns.map((column, columnIndex) => (
+          <div className="grid content-start gap-3" key={`video_generation_column_${columnIndex}`}>
+            {column.map((category) => (
+              <Link className={warm ? "group/video flex min-h-16 items-center gap-3 rounded-[14px] border border-[#eadfce] bg-white px-4 py-4 text-left transition hover:border-[#d8b17e] hover:bg-[#fff8ed] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/video flex min-h-16 items-center gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"} href={category.href} key={category.id} prefetch={false}>
+                <span className={warm ? "grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#f5eadf] text-[#b86e36]" : "grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white/[0.06] text-[#38a8ff]"}>
+                  <PlayCircle className="h-4.5 w-4.5" strokeWidth={1.9} />
+                </span>
+                <span className={warm ? "min-w-0 flex-1 text-[0.98rem] font-semibold leading-6 text-[#1e1712]" : "min-w-0 flex-1 text-[0.98rem] font-semibold leading-6 text-white"}>{category.label}</span>
+                <ChevronRight className={warm ? "h-4 w-4 shrink-0 text-[#b99675] transition group-hover/video:translate-x-0.5 group-hover/video:text-[#8f5327]" : "h-4 w-4 shrink-0 text-white/28 transition group-hover/video:translate-x-0.5 group-hover/video:text-white/56"} strokeWidth={2} />
+              </Link>
+            ))}
+          </div>
+        ))}
+      </div>
+      {ctaHref ? (
+        <div className={warm ? "mt-5 border-t border-[#eadfce] pt-3 text-center" : "mt-5 border-t border-[#263247] pt-3 text-center"}>
+          <Link className={warm ? "inline-flex items-center gap-2 text-sm font-semibold text-[#b86e36] transition hover:text-[#8f5327]" : "inline-flex items-center gap-2 text-sm font-semibold text-[#ff8a2f] transition hover:text-[#ffa45d]"} href={ctaHref} prefetch={false}>
+            {ctaLabel}
+            <ArrowRight className="h-4 w-4" strokeWidth={1.9} />
+          </Link>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function mobileSummaryClass(dark: boolean): string {
   return dark
     ? "flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-[16px] px-4 py-3 text-sm font-semibold text-white marker:hidden transition hover:bg-white/[0.08]"
@@ -227,21 +316,27 @@ export function HeaderMobilePhotoPackagesMenu({
 }
 
 export function HeaderMobileToolsMenu({
+  ctaLabel,
   ctaHref,
   dark,
+  menuLabel,
   spanish = false,
   tools
 }: {
+  ctaLabel?: string;
   ctaHref: string;
   dark: boolean;
+  menuLabel?: string;
   spanish?: boolean;
   tools: HeaderToolMegaItem[];
 }) {
   const groups = groupedTools(tools);
+  const resolvedMenuLabel = menuLabel ?? (spanish ? "Herramientas" : "Tools");
+  const resolvedCtaLabel = ctaLabel ?? (spanish ? "Ver todas las herramientas" : "View all tools");
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileSummaryClass(dark)}>
-        <span className="min-w-0 flex-1">{spanish ? "Herramientas" : "Tools"}</span>
+        <span className="min-w-0 flex-1">{resolvedMenuLabel}</span>
         <span className={dark ? "rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] text-white/48" : "rounded-full bg-[#f3ede5] px-2 py-0.5 text-[11px] text-[#7c7268]"}>{tools.length}</span>
         <ChevronRight className={dark ? "h-4 w-4 rotate-90 text-white/42 transition group-open/mobile:-rotate-90" : "h-4 w-4 rotate-90 text-[#7c7268] transition group-open/mobile:-rotate-90"} strokeWidth={2} />
       </summary>
@@ -265,9 +360,49 @@ export function HeaderMobileToolsMenu({
           ))}
         </div>
         <Link className={dark ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-white/12 px-3 py-2.5 text-sm font-semibold text-white" : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-[#ded5ca] bg-white px-3 py-2.5 text-sm font-semibold text-[#171514]"} href={ctaHref} prefetch={false}>
-          {spanish ? "Ver todas las herramientas" : "View all tools"}
+          {resolvedCtaLabel}
           <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
         </Link>
+      </div>
+    </details>
+  );
+}
+
+export function HeaderMobileVideoGenerationMenu({
+  categories,
+  ctaHref,
+  ctaLabel = "Open video workspace",
+  menuLabel = "AI Tools",
+  dark
+}: {
+  categories: HeaderVideoGenerationCategory[];
+  ctaHref?: string;
+  ctaLabel?: string;
+  menuLabel?: string;
+  dark: boolean;
+}) {
+  return (
+    <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
+      <summary className={mobileSummaryClass(dark)}>
+        <span className="min-w-0 flex-1">{menuLabel}</span>
+        <span className={dark ? "rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] text-white/48" : "rounded-full bg-[#f3ede5] px-2 py-0.5 text-[11px] text-[#7c7268]"}>{categories.length}</span>
+        <ChevronRight className={dark ? "h-4 w-4 rotate-90 text-white/42 transition group-open/mobile:-rotate-90" : "h-4 w-4 rotate-90 text-[#7c7268] transition group-open/mobile:-rotate-90"} strokeWidth={2} />
+      </summary>
+      <div className={dark ? "max-h-[48vh] overflow-y-auto border-t border-white/10 px-2 pb-3 pt-2" : "max-h-[48vh] overflow-y-auto border-t border-[#eadfce] px-2 pb-3 pt-2"}>
+        <div className="grid gap-1">
+          {categories.map((category) => (
+            <Link className={dark ? "flex items-center gap-2 rounded-[10px] px-2 py-2 text-sm text-white/74 hover:bg-white/[0.06] hover:text-white" : "flex items-center gap-2 rounded-[10px] px-2 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={category.href} key={category.id} prefetch={false}>
+              <PlayCircle className={dark ? "h-4 w-4 text-[#38a8ff]" : "h-4 w-4 text-[#b86e36]"} strokeWidth={1.9} />
+              <span className="text-sm font-semibold leading-5">{category.label}</span>
+            </Link>
+          ))}
+        </div>
+        {ctaHref ? (
+          <Link className={dark ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-white/12 px-3 py-2.5 text-sm font-semibold text-white" : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-[#ded5ca] bg-white px-3 py-2.5 text-sm font-semibold text-[#171514]"} href={ctaHref} prefetch={false}>
+            {ctaLabel}
+            <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+          </Link>
+        ) : null}
       </div>
     </details>
   );

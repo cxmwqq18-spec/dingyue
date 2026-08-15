@@ -310,7 +310,7 @@ const homeSections: ThemePageJson["sections"] = {
     },
     [
       block("hero_cta_primary", "cta", { label: "Create Now", href: "/login", style: "primary" }),
-      block("hero_cta_secondary", "cta", { label: "Headshot Generator", href: "/collections/headshot", style: "secondary" }),
+      block("hero_cta_secondary", "cta", { label: "Headshot Generator", href: "/ai-image-generation/headshot", style: "secondary" }),
       block("hero_stat_credits", "stat", { value: "Credits", label: "shown before generation" }),
       block("hero_stat_packs", "stat", { value: "15+", label: "photo package themes" }),
       block("hero_stat_private", "stat", { value: "Private", label: "model, uploads, albums" })
@@ -340,11 +340,11 @@ const homeSections: ThemePageJson["sections"] = {
       primaryHref: "/login"
     },
     [
-      block("proof_worldcup", "proof_card", { title: "Soccer", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Lifestyle & Creative", badge: "Featured", imageUrl: assets.galleryWorldCupFanOne, href: "/collections/soccer" }),
-      block("proof_sports_meetup", "proof_card", { title: "Soccer fan scenes", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Lifestyle & Creative", badge: "Soccer", imageUrl: assets.galleryWorldCupFanTwo, href: "/collections/soccer" }),
-      block("proof_vip", "proof_card", { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: assets.galleryGalaOne, href: "/collections/gala-photo" }),
-      block("proof_christmas", "proof_card", { title: "Christmas Photo", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Best Themes & Presets", badge: "Christmas", imageUrl: assets.galleryChristmasPhotosOne, href: "/collections/christmas-photo" }),
-      block("proof_seasonal", "proof_card", { title: "Seasonal holiday albums", description: "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.", category: "Seasonal", badge: "Seasonal", imageUrl: assets.gallerySeasonalFallback, href: "/collections/holiday" })
+      block("proof_worldcup", "proof_card", { title: "Soccer", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Lifestyle & Creative", badge: "Featured", imageUrl: assets.galleryWorldCupFanOne, href: "/ai-image-generation/soccer" }),
+      block("proof_sports_meetup", "proof_card", { title: "Soccer fan scenes", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Lifestyle & Creative", badge: "Soccer", imageUrl: assets.galleryWorldCupFanTwo, href: "/ai-image-generation/soccer" }),
+      block("proof_vip", "proof_card", { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: assets.galleryGalaOne, href: "/ai-image-generation/gala-photo" }),
+      block("proof_christmas", "proof_card", { title: "Christmas Photo", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Best Themes & Presets", badge: "Christmas", imageUrl: assets.galleryChristmasPhotosOne, href: "/ai-image-generation/christmas-photo" }),
+      block("proof_seasonal", "proof_card", { title: "Seasonal holiday albums", description: "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.", category: "Seasonal", badge: "Seasonal", imageUrl: assets.gallerySeasonalFallback, href: "/ai-image-generation/holiday" })
     ]
   ),
   featured_pack_1: section(
@@ -358,7 +358,7 @@ const homeSections: ThemePageJson["sections"] = {
       primaryCta: "Create Fan Photos",
       primaryHref: "/login",
       secondaryCta: "View Sports Packs",
-      secondaryHref: "/collections",
+      secondaryHref: "/ai-image-generation",
       photos: "Private gallery",
       credits: "26 credits",
       privacy: "Private album",
@@ -392,7 +392,7 @@ const homeSections: ThemePageJson["sections"] = {
       primaryCta: "Create Christmas Photos",
       primaryHref: "/login",
       secondaryCta: "View Christmas Photos",
-      secondaryHref: "/collections/christmas-photo",
+      secondaryHref: "/ai-image-generation/christmas-photo",
       photos: "Holiday cards",
       credits: "20 credits",
       privacy: "Private album",
@@ -426,7 +426,7 @@ const homeSections: ThemePageJson["sections"] = {
       primaryCta: "Create Thanksgiving Photos",
       primaryHref: "/login",
       secondaryCta: "View Thanksgiving Photos",
-      secondaryHref: "/collections/thanksgiving-photo",
+      secondaryHref: "/ai-image-generation/thanksgiving-photo",
       photos: "Group portraits",
       credits: "20 credits",
       privacy: "Private gallery",
@@ -464,13 +464,13 @@ const homeSections: ThemePageJson["sections"] = {
       featuredCount: 12
     },
     [
-      block("catalog_worldcup", "catalog_pack", { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "26 credits", imageUrl: assets.galleryWorldCupFanFour, href: "/collections/soccer" }),
-      block("catalog_christmas", "catalog_pack", { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "20 credits", imageUrl: assets.galleryChristmasPhotosOne, href: "/collections/christmas-photo" }),
-      block("catalog_nightlife", "catalog_pack", { title: "Nightlife", description: "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", category: "Lifestyle & Creative", meta: "Night-out looks", credits: "22 credits", imageUrl: assets.galleryChristmasCoupleOne, href: "/collections/nightlife" }),
-      block("catalog_holiday", "catalog_pack", { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: assets.galleryHolidayFallback, href: "/collections/holiday" }),
-      block("catalog_creator_vip", "catalog_pack", { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "24 credits", imageUrl: assets.galleryGalaOne, href: "/collections/portrait-photo" }),
-      block("catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving Photo", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", category: "Best Themes & Presets", meta: "Group portraits", credits: "20 credits", imageUrl: assets.galleryThanksgivingFallback, href: "/collections/thanksgiving-photo" }),
-      block("catalog_halloween", "catalog_pack", { title: "Halloween Photo", description: "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", category: "Best Themes & Presets", meta: "Party albums", credits: "20 credits", imageUrl: assets.galleryHalloweenFallback, href: "/collections/halloween-photo" })
+      block("catalog_worldcup", "catalog_pack", { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "26 credits", imageUrl: assets.galleryWorldCupFanFour, href: "/ai-image-generation/soccer" }),
+      block("catalog_christmas", "catalog_pack", { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "20 credits", imageUrl: assets.galleryChristmasPhotosOne, href: "/ai-image-generation/christmas-photo" }),
+      block("catalog_nightlife", "catalog_pack", { title: "Nightlife", description: "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", category: "Lifestyle & Creative", meta: "Night-out looks", credits: "22 credits", imageUrl: assets.galleryChristmasCoupleOne, href: "/ai-image-generation/nightlife" }),
+      block("catalog_holiday", "catalog_pack", { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: assets.galleryHolidayFallback, href: "/ai-image-generation/holiday" }),
+      block("catalog_creator_vip", "catalog_pack", { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "24 credits", imageUrl: assets.galleryGalaOne, href: "/ai-image-generation/portrait-photo" }),
+      block("catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving Photo", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", category: "Best Themes & Presets", meta: "Group portraits", credits: "20 credits", imageUrl: assets.galleryThanksgivingFallback, href: "/ai-image-generation/thanksgiving-photo" }),
+      block("catalog_halloween", "catalog_pack", { title: "Halloween Photo", description: "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", category: "Best Themes & Presets", meta: "Party albums", credits: "20 credits", imageUrl: assets.galleryHalloweenFallback, href: "/ai-image-generation/halloween-photo" })
     ]
   ),
   generation_showcase_1: section(
@@ -532,13 +532,13 @@ const homeSections: ThemePageJson["sections"] = {
       layout: "editorial"
     },
     [
-      block("taxonomy_headshot", "taxonomy_card", { title: "Headshot", description: "Profile photos for LinkedIn, founders, resumes, and teams. Not for official IDs or impersonation.", meta: "Professional", keywords: "headshot|linkedin|resume", imageUrl: assets.manPortrait, href: "/collections/headshot" }),
-      block("taxonomy_style", "taxonomy_card", { title: "Hairstyle Generator", description: "Hairstyles, beauty portraits, virtual try-on, and polished creator looks with visual previews, not exact fit guarantees.", meta: "Magic", keywords: "hairstyle|beauty|virtual try-on", imageUrl: assets.womanPortrait, href: "/collections/hairstyle-generator" }),
-      block("taxonomy_boudoir", "taxonomy_card", { title: "Boudoir", description: "Tasteful, private, non-explicit portrait concepts for consenting adults only. Do not upload minors, non-consenting people, stolen images, or unauthorized portraits.", meta: "Adult consent", keywords: "boudoir|private portraits|consent", imageUrl: assets.womanPortrait, href: "/collections/boudoir" }),
-      block("taxonomy_worlds", "taxonomy_card", { title: "Lifestyle & Creative", description: "Cyberpunk, mafia, travel, gala, and dramatic themed photos.", meta: "Creative", keywords: "cyberpunk|mafia|travel|gala", imageUrl: assets.cyberpunkSample, href: "/collections/lifestyle-creative" }),
-      block("taxonomy_sports", "taxonomy_card", { title: "Soccer", description: "Stadium fan scenes, fan posters, and match-day profile photos for personal fan use without official logos or player likenesses.", meta: "Lifestyle & Creative", keywords: "soccer photos|football fan photo|match day avatar", imageUrl: assets.worldCupStadiumPortrait, href: "/collections/soccer" }),
-      block("taxonomy_video", "taxonomy_card", { title: "Motion Generator", description: "Turn finished package outputs into short social-friendly motion concepts.", meta: "Magic", keywords: "image to video|motion|social", imageUrl: assets.upscaler, href: "/collections/motion-generator" }),
-      block("taxonomy_creator", "taxonomy_card", { title: "Portrait Photo", description: "Portfolio, creator, campaign, and personal-brand scenes for everyday buyers.", meta: "Professional", keywords: "portrait photo|portfolio|personal brand", imageUrl: assets.avatarPortrait, href: "/collections/portrait-photo" })
+      block("taxonomy_headshot", "taxonomy_card", { title: "Headshot", description: "Profile photos for LinkedIn, founders, resumes, and teams. Not for official IDs or impersonation.", meta: "Professional", keywords: "headshot|linkedin|resume", imageUrl: assets.manPortrait, href: "/ai-image-generation/headshot" }),
+      block("taxonomy_style", "taxonomy_card", { title: "Hairstyle Generator", description: "Hairstyles, beauty portraits, virtual try-on, and polished creator looks with visual previews, not exact fit guarantees.", meta: "Magic", keywords: "hairstyle|beauty|virtual try-on", imageUrl: assets.womanPortrait, href: "/ai-image-generation/hairstyle-generator" }),
+      block("taxonomy_boudoir", "taxonomy_card", { title: "Boudoir", description: "Tasteful, private, non-explicit portrait concepts for consenting adults only. Do not upload minors, non-consenting people, stolen images, or unauthorized portraits.", meta: "Adult consent", keywords: "boudoir|private portraits|consent", imageUrl: assets.womanPortrait, href: "/ai-image-generation/boudoir" }),
+      block("taxonomy_worlds", "taxonomy_card", { title: "Lifestyle & Creative", description: "Cyberpunk, mafia, travel, gala, and dramatic themed photos.", meta: "Creative", keywords: "cyberpunk|mafia|travel|gala", imageUrl: assets.cyberpunkSample, href: "/ai-image-generation" }),
+      block("taxonomy_sports", "taxonomy_card", { title: "Soccer", description: "Stadium fan scenes, fan posters, and match-day profile photos for personal fan use without official logos or player likenesses.", meta: "Lifestyle & Creative", keywords: "soccer photos|football fan photo|match day avatar", imageUrl: assets.worldCupStadiumPortrait, href: "/ai-image-generation/soccer" }),
+      block("taxonomy_video", "taxonomy_card", { title: "Motion Generator", description: "Turn finished package outputs into short social-friendly motion concepts.", meta: "Magic", keywords: "image to video|motion|social", imageUrl: assets.upscaler, href: "/ai-image-generation/motion-generator" }),
+      block("taxonomy_creator", "taxonomy_card", { title: "Portrait Photo", description: "Portfolio, creator, campaign, and personal-brand scenes for everyday buyers.", meta: "Professional", keywords: "portrait photo|portfolio|personal brand", imageUrl: assets.avatarPortrait, href: "/ai-image-generation/portrait-photo" })
     ]
   ),
   sample_strip_1: section(
@@ -596,7 +596,7 @@ const homeSections: ThemePageJson["sections"] = {
         title: "Pick a finished outcome",
         description: "Start from a guided theme like headshot, soccer, cyberpunk, gala photo, travel, hairstyle generator, portrait photo, or photo-tool collections with credits shown before generation.",
         imageUrl: assets.worldCupFan,
-        href: "/collections"
+        href: "/ai-image-generation"
       }),
       block("tab_video", "feature_tab", {
         label: "AI video",
@@ -875,7 +875,7 @@ const templateSections = {
     subtitle: "See the style, source-photo needs, credit cost, and private album delivery flow before starting generation.",
     imageUrl: assets.headshotLifestyle,
     ctaLabel: "Headshot Generator",
-    ctaHref: "/collections/headshot"
+    ctaHref: "/ai-image-generation/headshot"
   }),
   package_before_after_1: section(
     "before_after_gallery",
@@ -948,7 +948,7 @@ const templateSections = {
     primaryCta: "Apply as a partner",
     primaryHref: "/partner-registration",
     secondaryCta: "Explore photo packages",
-    secondaryHref: "/collections"
+    secondaryHref: "/ai-image-generation"
   }, [
     block("creator_intro_commission", "rich_text_card", { meta: "Channel", title: "Creator-ready campaigns", description: "Launch content around headshots, fan photos, gala portraits, avatars, and seasonal photo packs without building a photo product yourself." }),
     block("creator_intro_privacy", "rich_text_card", { meta: "Trust", title: "Private customer flow", description: "Followers sign in, upload, pay, generate, and download inside myDreamshoots, so you promote the experience without handling personal photos." }),
@@ -1313,7 +1313,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         answer: "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
         body: "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
         bulletList: "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-        linkList: "Browse photo collections::/collections|Explore creative tools::/tools",
+        linkList: "Browse photo collections::/ai-image-generation|Explore creative tools::/tools",
         imageUrl: assets.headshotLifestyle,
         imageAlt: "Lifestyle headshot with natural profile framing"
       }),
@@ -1329,7 +1329,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         answer: "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
         body: "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
         bulletList: "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-        linkList: "Compare package themes::/collections|View video tools::/tools"
+        linkList: "Compare package themes::/ai-image-generation|View video tools::/tools"
       }),
       block("faq_free", "faq_item", {
         question: "Is myDreamshoots free?",
@@ -1366,7 +1366,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         answer: "Yes. Couple, friend, and group results work best when every person is clearly visible in approved source photos and the chosen package is designed for more than one subject.",
         body: "For a group set, keep the source images organized and make sure each person has given permission for the intended use. Results can vary when faces are small, hidden, or heavily overlapping.",
         bulletList: "Get permission from every person shown|Use clear group and individual reference photos|Choose a package that supports the number of subjects|Review faces and hands before sharing",
-        linkList: "Browse couple and group themes::/collections",
+        linkList: "Browse couple and group themes::/ai-image-generation",
         imageUrl: assets.galleryChristmasCoupleTwo,
         imageAlt: "Couple portrait in a softly lit seasonal setting"
       }),
@@ -1375,7 +1375,7 @@ function mydreamshootsFaqSection(): SectionInstance {
         answer: "The generator combines your approved source photos with the selected package direction, then creates a new set of images that follows the package composition, styling, and scene cues.",
         body: "The examples show the intended visual language, but they are not a guarantee of an identical result. Source quality, pose, lighting, subject count, and model behavior all affect the finished images.",
         bulletList: "Choose a visual direction|Upload the source material|Review the request and credits|Inspect the delivered gallery and keep the strongest results",
-        linkList: "Explore photo collections::/collections",
+        linkList: "Explore photo collections::/ai-image-generation",
         imageUrl: assets.galleryCreatorOne,
         imageAlt: "Creator portrait with polished social-ready framing"
       }),
@@ -1479,7 +1479,7 @@ function aidreamcapesFaqSection(): SectionInstance {
         answer: "Aidreamcapes is a private occasion-album studio for creating original fan-scene, game-day, premiere-inspired, and holiday images from approved source photos.",
         body: "The service is organized around an album direction rather than a single generic prompt. You choose the mood, upload photos you own or have permission to use, review credits, and receive the finished set in a private gallery.",
         bulletList: "Fan-scene and supporter moments|Game-day group portraits|Premiere-inspired flash looks|Christmas, Thanksgiving, Halloween, and seasonal keepsakes",
-        linkList: "Explore album collections::/collections|Open occasion tools::/tools",
+        linkList: "Explore album collections::/ai-image-generation|Open occasion tools::/tools",
         imageUrl: aidreamcapesPublicAssets.gallery,
         imageAlt: "Finished supporter album in an original celebration setting"
       }),
@@ -1495,7 +1495,7 @@ function aidreamcapesFaqSection(): SectionInstance {
         answer: "Current directions include private fan-scene albums, game-day group portraits, premiere-inspired portraits, Christmas albums, Thanksgiving keepsakes, Halloween party portraits, and rotating seasonal celebrations.",
         body: "Each category changes the setting, lighting, wardrobe cues, composition, and delivery goal. Browse the examples to choose a direction that fits a personal memory, community event, creator post, or seasonal shop.",
         bulletList: "Fan-scene supporter moments|Game-day and watch-party group photos|Premiere and spotlight arrivals|Christmas and Thanksgiving memory sets|Halloween and seasonal celebration portraits",
-        linkList: "Compare album categories::/collections"
+        linkList: "Compare album categories::/ai-image-generation"
       }),
       block("aidream_faq_credits", "faq_item", {
         question: "Do Aidreamcapes albums require credits?",
@@ -1518,7 +1518,7 @@ function aidreamcapesFaqSection(): SectionInstance {
         answer: "Yes. Aidreamcapes can support couple, family, friend, and community groups when the selected album direction fits the number of people and everyone shown has approved the use.",
         body: "Group results are more reliable when faces are not blocked and the source set includes consistent views of each person. Review the delivered images carefully before sharing them outside the private gallery.",
         bulletList: "Get permission from every person shown|Choose an album built for the group size|Use clear individual references for small faces|Check the final gallery before publishing",
-        linkList: "Explore group album directions::/collections",
+        linkList: "Explore group album directions::/ai-image-generation",
         imageUrl: aidreamcapesPublicAssets.gameDay,
         imageAlt: "Aidreamcapes game-day group portrait showing friends gathered under energetic stadium lighting for a private album"
       }),
@@ -1550,7 +1550,7 @@ function aidreamcapesFaqSection(): SectionInstance {
         answer: "Choose the direction based on the moment you want to communicate: energetic supporter scenes for game day, flash-lit arrival portraits for premiere styling, or warmer compositions for holiday memories.",
         body: "The category examples are useful for comparing background treatment, wardrobe cues, group composition, and the crop you may need for a card, post, invitation, or private album.",
         bulletList: "Game day: supporter energy and group framing|Premiere: flash, arrival, and spotlight styling|Holiday: warmth, cards, tables, and keepsake layouts",
-        linkList: "Browse album examples::/collections",
+        linkList: "Browse album examples::/ai-image-generation",
         imageUrl: aidreamcapesPublicAssets.premiere,
         imageAlt: "Aidreamcapes premiere-inspired portrait showing flash-lit arrival styling for an original private occasion album"
       }),
@@ -2429,7 +2429,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         tone: "dark",
         imageUrl: assets.heroPackageWall,
         primaryCta: "Headshot Generator",
-        primaryHref: "/collections/headshot",
+        primaryHref: "/ai-image-generation/headshot",
         secondaryCta: "View pricing",
         secondaryHref: "/pricing"
       }, [
@@ -2673,7 +2673,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         tone: "dark",
         imageUrl: assets.heroPackageWall,
         primaryCta: "Explore photo packages",
-        primaryHref: "/collections",
+        primaryHref: "/ai-image-generation",
         secondaryCta: "Contact us",
         secondaryHref: "/contact-us"
       }, [
@@ -2792,7 +2792,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         primaryCta: "Return home",
         primaryHref: "/",
         secondaryCta: "View packages",
-        secondaryHref: "/collections"
+        secondaryHref: "/ai-image-generation"
       }),
       packages_1: homeSections.packages_1,
       packages_strip_1: homeSections.packages_strip_1,
@@ -2868,18 +2868,20 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
     },
     navigation: {
       headerLinks: [
-        { label: "AI Photoshoot", href: "/collections/headshot" },
-        { label: "AI Tools", href: "/tools" },
+        { label: "AI Image Generation", href: "/ai-image-generation" },
+        { label: "AI Video Generation", href: "/ai-video-generation" },
         { label: "Best Packages", href: "/best-packages" },
         { label: "How it works", href: "/workflow" },
         { label: "Blog", href: "/blog" },
-        { label: "Pricing", href: "/pricing" }
+        { label: "Pricing", href: "/pricing" },
+        { label: "Workspace", href: "/app/create" }
       ],
       footerLinks: [
+        { label: "AI Image Generation", href: "/ai-image-generation", group: "product" },
+        { label: "AI Video Generation", href: "/ai-video-generation", group: "product" },
         { label: "Best Packages", href: "/best-packages", group: "product" },
         { label: "Best AI image", href: "/best-ai-image", group: "product" },
         { label: "Best AI video", href: "/best-ai-video", group: "product" },
-        { label: "AI Tools", href: "/tools", group: "product" },
         { label: "Pricing", href: "/pricing", group: "product" },
         { label: "Privacy Policy", href: "/privacy", group: "support" },
         { label: "Terms of Service", href: "/terms", group: "support" },
@@ -2908,12 +2910,13 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           logoAlt: "myDreamshoots heart camera logo"
         },
         blocks: [
-          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "AI Photoshoot", href: "/collections/headshot" } },
-          { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "AI Tools", href: "/tools" } },
+          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "AI Image Generation", href: "/ai-image-generation" } },
+          { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "AI Video Generation", href: "/ai-video-generation" } },
           { id: "dreamshoot_header_best_packages", type: "menu_link", settings: { label: "Best Packages", href: "/best-packages" } },
           { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
           { id: "dreamshoot_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } },
           { id: "dreamshoot_header_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing" } },
+          { id: "dreamshoot_header_workspace", type: "menu_link", settings: { label: "Workspace", href: "/app/create" } },
           ...dreamshootMegaTools
         ]
       },
@@ -2947,12 +2950,13 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           copyright: "© 2026 myDreamshoots.com. All rights reserved."
         },
         blocks: [
+          { id: "dreamshoot_footer_ai_image_generation", type: "menu_link", settings: { label: "AI Image Generation", href: "/ai-image-generation", group: "product" } },
+          { id: "dreamshoot_footer_ai_video_generation", type: "menu_link", settings: { label: "AI Video Generation", href: "/ai-video-generation", group: "product" } },
           { id: "dreamshoot_footer_best_packages", type: "menu_link", settings: { label: "Best Packages", href: "/best-packages", group: "product" } },
           { id: "dreamshoot_footer_best_ai_image", type: "menu_link", settings: { label: "Best AI image", href: "/best-ai-image", group: "product" } },
           { id: "dreamshoot_footer_best_ai_video", type: "menu_link", settings: { label: "Best AI video", href: "/best-ai-video", group: "product" } },
-          { id: "dreamshoot_footer_tools", type: "menu_link", settings: { label: "AI Tools", href: "/tools", group: "product" } },
           { id: "dreamshoot_footer_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing", group: "product" } },
-          { id: "dreamshoot_footer_tool", type: "menu_link", settings: { label: "Headshot maker", href: toolHref("headshot"), group: "product" } },
+          { id: "dreamshoot_footer_headshot", type: "menu_link", settings: { label: "Headshot", href: "/ai-image-generation/headshot", group: "product" } },
           { id: "dreamshoot_footer_help", type: "menu_link", settings: { label: "FAQ", href: "/faq", group: "company" } },
           { id: "dreamshoot_footer_privacy", type: "menu_link", settings: { label: "Privacy Policy", href: "/privacy", group: "support" } },
           { id: "dreamshoot_footer_terms", type: "menu_link", settings: { label: "Terms of Service", href: "/terms", group: "support" } },

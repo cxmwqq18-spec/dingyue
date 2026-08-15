@@ -21,16 +21,21 @@ const siteChecks = [
       "/best-packages",
       "/best-ai-image",
       "/best-ai-video",
-      "/collections",
-      "/collections/headshot",
-      "/collections/avatar",
-      "/collections/background-changer",
-      "/collections/motion-generator",
-      "/collections/soccer",
-      "/tools",
-      "/tools/headshot",
-      "/tools/creator-portrait",
-      "/tools/magic-upscaler",
+      "/ai-image-generation",
+      "/ai-image-generation/headshot",
+      "/ai-image-generation/avatar",
+      "/ai-image-generation/background-changer",
+      "/ai-image-generation/motion-generator",
+      "/ai-image-generation/soccer",
+      "/ai-video-generation",
+      "/ai-video-generation/image-to-video",
+      "/ai-video-generation/profile-clip",
+      "/ai-video-generation/fan-poster-motion",
+      "/ai-video-generation/creator-intro-video",
+      "/ai-video-generation/product-teaser-clip",
+      "/ai-video-generation/animated-avatar",
+      "/ai-video-generation/fashion-reel",
+      "/ai-video-generation/album-story-video",
       "/blog",
       "/privacy",
       "/terms",
@@ -48,6 +53,12 @@ const siteChecks = [
       "/collections/professional-headshots",
       "/collections/ai-video-add-ons",
       "/collections/world-cup-fan-photos",
+      "/ai-photoshoot",
+      "/ai-photoshoot/professional/headshot",
+      "/ai-image-generation/professional",
+      "/ai-image-generation/professional/headshot",
+      "/tools",
+      "/tools/image-to-video",
       "/tools/headshot-generator",
       "/tools/wedding-portraits"
     ]
@@ -123,35 +134,16 @@ const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/ref
 const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us"];
 const DIRECTORY_KEY_RE = /(?:^|\n)\s*(?:"([^"]+)"|'([^']+)'|([a-z][a-z0-9-]*))\s*:\s*\{/gi;
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
-  "/tools/headshot",
-  "/tools/creator-portrait",
-  "/tools/world-cup-fan-photos",
-  "/tools/cyberpunk-portrait",
-  "/tools/gala-photo",
-  "/tools/noir-portrait",
-  "/tools/anime-avatar",
-  "/tools/nature-adventure",
-  "/tools/fashion-editorial",
-  "/tools/product-lifestyle",
-  "/tools/image-to-video",
-  "/tools/profile-clip",
-  "/tools/fan-poster-motion",
-  "/tools/creator-intro-video",
-  "/tools/product-teaser-clip",
-  "/tools/animated-avatar",
-  "/tools/fashion-reel",
-  "/tools/album-story-video",
-  "/tools/background-changer",
-  "/tools/background-remover",
-  "/tools/magic-eraser",
-  "/tools/photo-enhancer",
-  "/tools/portrait-retouch",
-  "/tools/unblur-image",
-  "/tools/color-correction",
-  "/tools/old-photo-restoration",
-  "/tools/edit-by-prompt",
-  "/tools/magic-upscaler"
+  "/ai-video-generation/image-to-video",
+  "/ai-video-generation/profile-clip",
+  "/ai-video-generation/fan-poster-motion",
+  "/ai-video-generation/creator-intro-video",
+  "/ai-video-generation/product-teaser-clip",
+  "/ai-video-generation/animated-avatar",
+  "/ai-video-generation/fashion-reel",
+  "/ai-video-generation/album-story-video"
 ];
+const DREAMSHOOT_VIDEO_GENERATION_SLUGS = new Set(DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS.map((pathName) => pathName.split("/").pop()));
 
 const CANONICAL_PUBLIC_PATHS = new Map([
   ["/about", "/about-us"],
@@ -226,6 +218,12 @@ const mydreamshootsCollectionSlugs = new Set([
   ...(mydreamshootsTaxonomy.roots || []).map((root) => root.slug),
   ...(mydreamshootsTaxonomy.items || []).map((item) => item.slug)
 ]);
+const mydreamshootsCollectionPaths = new Map([
+  ["", "/ai-image-generation"],
+  ...(mydreamshootsTaxonomy.roots || []).map((root) => [root.slug, "/ai-image-generation"]),
+  ...(mydreamshootsTaxonomy.items || []).map((item) => [item.slug, `/ai-image-generation/${item.slug}`])
+]);
+const mydreamshootsCollectionPathSet = new Set(mydreamshootsCollectionPaths.values());
 const explicitDirectorySlugs = {
   site_dreamshoot: {
     collections: mydreamshootsCollectionSlugs,
@@ -336,7 +334,15 @@ function isAidreamcapesSite(siteCheck) {
 }
 
 function canonicalCollectionPath(siteCheck, pathName) {
-  const slug = slugifySegment(String(pathName || "").replace(/^\/?collections\//, ""));
+  const normalized = normalizePath(pathName);
+  if (siteCheck.siteId === "site_dreamshoot") {
+    if (normalized === "/collections" || normalized === "/ai-image-generation") return "/ai-image-generation";
+    const raw = normalized.replace(/^\/(?:collections|ai-image-generation)(?:\/|$)/, "");
+    const slug = slugifySegment(raw.split("/").filter(Boolean).at(-1) || raw);
+    return mydreamshootsCollectionPaths.get(slug) ?? `/ai-image-generation/${slug}`;
+  }
+  if (normalized === "/collections") return "/collections";
+  const slug = slugifySegment(normalized.replace(/^\/collections\//, ""));
   if (!slug) return "/collections";
   const aliases = isAidreamcapesSite(siteCheck) ? AIDREAMCAPES_COLLECTION_ALIASES : DREAMSHOOT_COLLECTION_ALIASES;
   return `/collections/${aliases.get(slug) ?? slug}`;
@@ -344,8 +350,15 @@ function canonicalCollectionPath(siteCheck, pathName) {
 
 function canonicalToolPath(siteCheck, pathName) {
   const normalized = normalizePath(pathName);
+  if (siteCheck.siteId === "site_dreamshoot") {
+    if (normalized === "/tools" || normalized === "/ai-video-generation") return "/ai-video-generation";
+    const rawSlug = normalized.replace(/^\/(?:tools|ai-video-generation)\//, "");
+    const slug = slugifySegment(rawSlug);
+    return DREAMSHOOT_VIDEO_GENERATION_SLUGS.has(slug) ? `/ai-video-generation/${slug}` : normalized;
+  }
+  const toolPath = normalized === "/tools" || normalized.startsWith("/tools/") ? normalized : pathFromSlug("/tools", normalized);
   const aliases = isAidreamcapesSite(siteCheck) ? AIDREAMCAPES_TOOL_ALIASES : DREAMSHOOT_TOOL_ALIASES;
-  return aliases.get(normalized) ?? normalized;
+  return aliases.get(toolPath) ?? toolPath;
 }
 
 function canonicalPublicPath(pathName) {
@@ -355,8 +368,10 @@ function canonicalPublicPath(pathName) {
 
 function canonicalDirectoryPath(siteCheck, pathName) {
   const normalized = canonicalPublicPath(pathName);
-  if (normalized.startsWith("/collections/")) return canonicalCollectionPath(siteCheck, normalized);
-  if (normalized.startsWith("/tools/")) return canonicalToolPath(siteCheck, normalized);
+  if (normalized === "/collections" || normalized.startsWith("/collections/") || normalized === "/ai-image-generation" || normalized.startsWith("/ai-image-generation/")) {
+    return canonicalCollectionPath(siteCheck, normalized);
+  }
+  if (normalized === "/tools" || normalized.startsWith("/tools/") || normalized === "/ai-video-generation" || normalized.startsWith("/ai-video-generation/")) return canonicalToolPath(siteCheck, normalized);
   return normalized;
 }
 
@@ -379,6 +394,14 @@ function isIndexableDirectoryPath(siteCheck, pathName) {
   const normalized = canonicalDirectoryPath(siteCheck, pathName);
   if (isBlockedPublicPath(normalized)) return false;
   const siteExplicitSlugs = explicitDirectorySlugs[siteCheck.siteId];
+  if (siteCheck.siteId === "site_dreamshoot" && (normalized === "/ai-image-generation" || normalized.startsWith("/ai-image-generation/"))) {
+    return mydreamshootsCollectionPathSet.has(normalized);
+  }
+  if (siteCheck.siteId === "site_dreamshoot" && (normalized === "/tools" || normalized.startsWith("/tools/"))) return false;
+  if (siteCheck.siteId === "site_dreamshoot" && (normalized === "/ai-video-generation" || normalized.startsWith("/ai-video-generation/"))) {
+    const slug = slugifySegment(normalized.replace(/^\/ai-video-generation\//, ""));
+    return normalized === "/ai-video-generation" || DREAMSHOOT_VIDEO_GENERATION_SLUGS.has(slug);
+  }
   if (normalized.startsWith("/collections/")) {
     const slug = slugifySegment(normalized.replace(/^\/collections\//, ""));
     return Boolean(siteExplicitSlugs?.collections.has(slug));
@@ -411,11 +434,17 @@ function expectedDirectoryPaths(state, siteCheck) {
   for (const page of site.pages || []) {
     if (!isIndexablePage(siteCheck, page)) continue;
     const pathName = canonicalDirectoryPath(siteCheck, page.slug);
-    const bucket = pathName.startsWith("/blog") ? "blog" : pathName.startsWith("/collections") ? "collections" : pathName.startsWith("/tools") ? "tools" : "public";
+    const bucket = pathName.startsWith("/blog")
+      ? "blog"
+      : pathName.startsWith("/collections") || pathName.startsWith("/ai-image-generation")
+        ? "collections"
+        : pathName.startsWith("/tools")
+          ? "tools"
+          : "public";
     addPath(buckets, pathName, bucket);
   }
 
-  addPath(buckets, "/collections", "collections");
+  addPath(buckets, siteCheck.siteId === "site_dreamshoot" ? "/ai-image-generation" : "/collections", "collections");
   for (const category of state.creativePackCategories || []) {
     if (category.siteId !== siteCheck.siteId || category.status !== "active") continue;
     const pathName = canonicalCollectionPath(siteCheck, category.slug || category.label);
@@ -431,12 +460,14 @@ function expectedDirectoryPaths(state, siteCheck) {
     }
   }
 
-  addPath(buckets, "/tools", "tools");
   if (siteCheck.siteId === "site_dreamshoot") {
+    addPath(buckets, "/ai-video-generation", "tools");
     for (const pathName of DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS) {
       const canonicalPath = canonicalToolPath(siteCheck, pathName);
       if (isIndexableDirectoryPath(siteCheck, canonicalPath)) addPath(buckets, canonicalPath, "tools");
     }
+  } else {
+    addPath(buckets, "/tools", "tools");
   }
   for (const item of state.toolMenuItems || []) {
     if (item.siteId !== siteCheck.siteId || item.status !== "active") continue;
@@ -510,7 +541,7 @@ function summarizeBuckets(expectedBuckets, sitemapPaths) {
 
 function nonIndexableDirectoryPathsFromSitemap(siteCheck, sitemapPaths) {
   return Array.from(sitemapPaths)
-    .filter((pathName) => (pathName.startsWith("/collections/") || pathName.startsWith("/tools/")) && !isIndexableDirectoryPath(siteCheck, pathName))
+    .filter((pathName) => (pathName.startsWith("/collections/") || pathName.startsWith("/ai-image-generation/") || pathName.startsWith("/tools/") || pathName.startsWith("/ai-video-generation/")) && !isIndexableDirectoryPath(siteCheck, pathName))
     .sort();
 }
 

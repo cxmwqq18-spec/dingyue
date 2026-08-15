@@ -1,7 +1,15 @@
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPlatformStateFromLegacyJson } from "@/lib/storefront-state";
 import { getSiteByHostCandidatesFromState } from "@/lib/domain-routing";
 import { canonicalSeoDirectoryPathForSite, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
-import { creativePackCollectionHref } from "@/lib/photo-package-taxonomy";
+import {
+  MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS,
+  creativePackCollectionHref,
+  isMydreamshootsVideoGenerationSlug,
+  parsePublicCollectionRouteForSite,
+  parsePublicVideoGenerationRouteForSite,
+  publicCollectionPathForSite,
+  publicVideoGenerationPathForSite
+} from "@/lib/photo-package-taxonomy";
 import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo } from "@/lib/theme/policy-seo";
@@ -27,18 +35,9 @@ const FALLBACK_INDEXABLE_PATHS = [
   "/",
   "/pricing",
   "/workflow",
-  "/collections",
-  "/tools",
-  "/tools/photo-ai",
-  "/tools/video-ai",
-  "/tools/ai-photo-edit",
-  "/tools/headshot",
-  "/tools/background-changer",
-  "/tools/image-to-video",
-  "/tools/background-remover",
-  "/tools/photo-enhancer",
-  "/tools/magic-upscaler",
-  "/tools/virtual-try-on",
+  "/ai-image-generation",
+  "/ai-video-generation",
+  ...MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS.map((slug) => `/ai-video-generation/${slug}`),
   "/privacy",
   "/terms",
   "/cookies",
@@ -153,34 +152,7 @@ const REQUIRED_INDEXABLE_TOOL_PATHS = [
   "/tools/virtual-try-on"
 ];
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
-  "/tools/headshot",
-  "/tools/creator-portrait",
-  "/tools/world-cup-fan-photos",
-  "/tools/cyberpunk-portrait",
-  "/tools/gala-photo",
-  "/tools/noir-portrait",
-  "/tools/anime-avatar",
-  "/tools/nature-adventure",
-  "/tools/fashion-editorial",
-  "/tools/product-lifestyle",
-  "/tools/image-to-video",
-  "/tools/profile-clip",
-  "/tools/fan-poster-motion",
-  "/tools/creator-intro-video",
-  "/tools/product-teaser-clip",
-  "/tools/animated-avatar",
-  "/tools/fashion-reel",
-  "/tools/album-story-video",
-  "/tools/background-changer",
-  "/tools/background-remover",
-  "/tools/magic-eraser",
-  "/tools/photo-enhancer",
-  "/tools/portrait-retouch",
-  "/tools/unblur-image",
-  "/tools/color-correction",
-  "/tools/old-photo-restoration",
-  "/tools/edit-by-prompt",
-  "/tools/magic-upscaler"
+  ...MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS.map((slug) => `/ai-video-generation/${slug}`)
 ];
 const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/best-packages", "/best-ai-image", "/best-ai-video"];
 const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"];
@@ -390,9 +362,17 @@ function sitemapPathFromUrl(loc: string): string {
   }
 }
 
+function isCollectionDirectoryPath(path: string): boolean {
+  return path === "/collections" || path.startsWith("/collections/") || path === "/ai-image-generation" || path.startsWith("/ai-image-generation/");
+}
+
+function isVideoGenerationDirectoryPath(site: Site, path: string): boolean {
+  return Boolean(parsePublicVideoGenerationRouteForSite(site, path));
+}
+
 function sitemapChangeFrequencyForPath(path: string): SitemapEntry["changefreq"] {
   const normalized = normalizePath(path);
-  if (normalized === "/" || normalized === "/collections" || normalized === "/tools" || normalized === "/blog") return "daily";
+  if (normalized === "/" || normalized === "/collections" || normalized === "/ai-image-generation" || normalized === "/ai-video-generation" || normalized === "/tools" || normalized === "/blog") return "daily";
   if (REQUIRED_INDEXABLE_POLICY_PATHS.includes(normalized)) return "monthly";
   return "weekly";
 }
@@ -400,8 +380,8 @@ function sitemapChangeFrequencyForPath(path: string): SitemapEntry["changefreq"]
 function sitemapPriorityForPath(path: string): string {
   const normalized = normalizePath(path);
   if (normalized === "/") return "1.0";
-  if (normalized === "/tools" || normalized === "/collections" || normalized === "/blog") return "0.9";
-  if (normalized.startsWith("/tools/") || normalized.startsWith("/collections/")) return "0.8";
+  if (normalized === "/tools" || normalized === "/collections" || normalized === "/ai-image-generation" || normalized === "/ai-video-generation" || normalized === "/blog") return "0.9";
+  if (normalized.startsWith("/tools/") || normalized.startsWith("/collections/") || normalized.startsWith("/ai-image-generation/") || normalized.startsWith("/ai-video-generation/")) return "0.8";
   return "0.7";
 }
 
@@ -437,8 +417,8 @@ function sitemapLastmodForPath(
   const pageLastmod = matchingPage ? latestSitemapDate([matchingPage.updatedAt, matchingPage.createdAt]) : undefined;
   if (pageLastmod) return pageLastmod;
 
-  if (normalizedPath === "/collections" || normalizedPath.startsWith("/collections/")) {
-    const categorySlug = normalizedPath === "/collections"
+  if (isCollectionDirectoryPath(normalizedPath)) {
+    const categorySlug = normalizedPath === publicCollectionPathForSite(site, "")
       ? ""
       : canonicalSeoDirectorySlugForSite(site, "collection", normalizedPath);
     const matchingCategory = (state.creativePackCategories ?? []).find((category) => {
@@ -446,7 +426,7 @@ function sitemapLastmodForPath(
       if (!categorySlug) return true;
       return canonicalSeoDirectorySlugForSite(site, "collection", category.slug || category.label) === categorySlug;
     });
-    const matchingPacks = activePacks.filter((pack) => normalizedPath === "/collections" || collectionSlugsForPack(site, pack).includes(categorySlug));
+    const matchingPacks = activePacks.filter((pack) => normalizedPath === publicCollectionPathForSite(site, "") || collectionSlugsForPack(site, pack).includes(categorySlug));
     const collectionLastmod = latestSitemapDate([
       matchingCategory?.createdAt,
       ...matchingPacks.map((pack) => pack.createdAt)
@@ -454,13 +434,14 @@ function sitemapLastmodForPath(
     if (collectionLastmod) return collectionLastmod;
   }
 
-  if (normalizedPath === "/tools" || normalizedPath.startsWith("/tools/")) {
-    const toolSlug = normalizedPath.startsWith("/tools/") ? normalizedPath.slice("/tools/".length) : "";
+  if (normalizedPath === "/tools" || normalizedPath.startsWith("/tools/") || isVideoGenerationDirectoryPath(site, normalizedPath)) {
+    const videoRoute = parsePublicVideoGenerationRouteForSite(site, normalizedPath);
+    const toolSlug = videoRoute?.itemSlug ?? (normalizedPath.startsWith("/tools/") ? normalizedPath.slice("/tools/".length) : "");
     const matchingTools = (state.toolMenuItems ?? []).filter((item) => {
       if (item.siteId !== site.id || item.status !== "active") return false;
       if (!toolSlug) return true;
       const itemPath = sitePathFromHref(site, item.href || pathFromSlug("/tools", item.slug));
-      return itemPath === normalizedPath || slugifySegment(item.slug) === slugifySegment(toolSlug);
+      return itemPath === normalizedPath || slugifySegment(item.slug) === slugifySegment(toolSlug) || slugifySegment(item.slug) === slugifySegment(String(videoRoute?.itemSlug ?? ""));
     });
     const matchingCategoryIds = new Set(matchingTools.map((item) => item.categoryId).filter(Boolean));
     const matchingCategories = (state.toolCategories ?? []).filter((category) => {
@@ -591,10 +572,17 @@ function imageSitemapUrl(site: Site, value: string | undefined): string {
   return /\.(?:avif|jpe?g|png|webp)(?:$)/i.test(pathname) ? resolved : "";
 }
 
+function sitemapImageTitleForPage(page: ThemePage): string {
+  const seoTitle = cleanText(page.publishedJson.seo?.title)
+    .replace(/\s*[|-]\s*(?:myDreamshoots|MyDreamShoots|Aidreamcapes)\s*$/i, "")
+    .trim();
+  return cleanText(seoTitle, cleanText(page.title, "MyDreamShoots page image"));
+}
+
 function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): SitemapImageEntry[] {
   const images: SitemapImageEntry[] = [];
   const seen = new Set<string>();
-  const title = cleanText(page.title, "MyDreamShoots page image");
+  const title = sitemapImageTitleForPage(page);
   const caption = cleanText(page.publishedJson.seo?.description, title);
 
   const pushImage = (value: string | undefined, imageTitle = "", imageCaption = "") => {
@@ -603,10 +591,12 @@ function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): Sitem
     const comparable = comparableSitemapImageUrl(loc);
     if (!comparable || seen.has(comparable)) return;
     seen.add(comparable);
+    const finalTitle = cleanText(imageTitle, title);
+    const finalCaption = cleanText(imageCaption, caption);
     images.push({
       loc,
-      ...(imageTitle ? { title: imageTitle } : {}),
-      ...(imageCaption ? { caption: imageCaption } : {})
+      ...(finalTitle ? { title: finalTitle } : {}),
+      ...(finalCaption ? { caption: finalCaption } : {})
     });
   };
 
@@ -646,7 +636,7 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   const policySeo = policySeoForSite(site, page.slug);
   const canonicalPath = canonicalPublicPath(normalizePath(policySeo?.canonicalPath ?? pageSeo?.canonicalPath ?? page.slug));
   const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug));
-  return isIndexablePage(page) && !isLegacyDuplicate && !isBlockedPublicPath(canonicalPath) && pageSeo?.index !== false && policySeo?.index !== false
+  return isIndexablePage(page) && !isLegacyDuplicate && !isBlockedPublicPathForSite(site, canonicalPath) && pageSeo?.index !== false && policySeo?.index !== false
     ? canonicalDirectoryPathForSite(site, canonicalPath)
     : "";
 }
@@ -658,7 +648,7 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
   const sitePages = pagesForSite(site);
   const sitePublicationLastmod = latestThemePublicationLastmod(state, site.id);
 
-  const collectionsEntry = entries.get(sitemapUrl(site, "/collections"));
+  const collectionsEntry = entries.get(sitemapUrl(site, publicCollectionPathForSite(site, "")));
   if (collectionsEntry) {
     appendSitemapImages(
       collectionsEntry,
@@ -705,6 +695,16 @@ function pathFromSlug(prefix: "/collections" | "/tools", slug: string): string {
   return normalized ? `${prefix}/${normalized}` : "";
 }
 
+function collectionSlugFromDirectoryPath(site: Site, path: string): string {
+  const route = parsePublicCollectionRouteForSite(site, path);
+  if (route) return route.collectionSlug;
+  const normalized = normalizePath(path);
+  if (normalized === "/collections" || normalized === "/ai-image-generation") return "";
+  if (normalized.startsWith("/collections/")) return slugifySegment(normalized.slice("/collections/".length));
+  if (normalized.startsWith("/ai-image-generation/")) return slugifySegment(normalized.split("/").filter(Boolean).at(-1) ?? "");
+  return "";
+}
+
 function stripQueryAndHash(value: string): { pathname: string; search: string } {
   const hashIndex = value.indexOf("#");
   const beforeHash = hashIndex >= 0 ? value.slice(0, hashIndex) : value;
@@ -721,6 +721,12 @@ function canonicalPublicPath(path: string): string {
 }
 
 function canonicalToolPathForSite(site: Site, path: string): string {
+  const normalizedPath = normalizePath(path);
+  if (isDreamshootSite(site) && (normalizedPath === "/tools" || normalizedPath.startsWith("/tools/"))) {
+    const toolSlug = normalizedPath.startsWith("/tools/") ? normalizedPath.slice("/tools/".length) : "";
+    if (!toolSlug) return publicVideoGenerationPathForSite(site, "");
+    if (isMydreamshootsVideoGenerationSlug(toolSlug)) return publicVideoGenerationPathForSite(site, toolSlug);
+  }
   const normalized = canonicalSeoDirectoryPathForSite(site, "tool", path);
   if (isAidreamcapesSite(site)) return AIDREAMCAPES_LEGACY_TOOL_CANONICAL_PATHS.get(normalized) ?? normalized;
   if (isDreamshootSite(site)) return DREAMSHOOT_LEGACY_TOOL_CANONICAL_PATHS.get(normalized) ?? normalized;
@@ -761,8 +767,10 @@ function canonicalBlogPathForSite(site: Site, path: string): string {
 
 function canonicalDirectoryPathForSite(site: Site, path: string): string {
   const normalized = normalizePath(path);
-  if (normalized.startsWith("/collections/")) return canonicalSeoDirectoryPathForSite(site, "collection", normalized);
+  if (isCollectionDirectoryPath(normalized)) return publicCollectionPathForSite(site, collectionSlugFromDirectoryPath(site, normalized));
+  if (isVideoGenerationDirectoryPath(site, normalized)) return parsePublicVideoGenerationRouteForSite(site, normalized)?.canonicalPath ?? normalized;
   if (normalized.startsWith("/tools/")) return canonicalToolPathForSite(site, normalized);
+  if (normalized === "/tools") return canonicalToolPathForSite(site, normalized);
   if (normalized.startsWith("/blog/")) return canonicalBlogPathForSite(site, normalized);
   return normalized;
 }
@@ -779,12 +787,27 @@ function isBlockedPublicPath(path: string): boolean {
   return NON_PAGE_PATH_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
 }
 
+function isBlockedPublicPathForSite(site: Site, path: string): boolean {
+  if (isDreamshootSite(site)) {
+    if (path === "/collections" || path.startsWith("/collections/") || path === "/tools" || path.startsWith("/tools/") || path === "/ai-photoshoot" || path.startsWith("/ai-photoshoot/")) return true;
+    if (path.startsWith("/ai-image-generation/") && !parsePublicCollectionRouteForSite(site, path)) return true;
+    if (path.startsWith("/ai-video-generation/") && !parsePublicVideoGenerationRouteForSite(site, path)) return true;
+  }
+  return isBlockedPublicPath(path);
+}
+
 function isIndexableSeoDirectoryPath(site: Site, path: string): boolean {
   const normalized = canonicalDirectoryPathForSite(site, path);
-  if (normalized.startsWith("/collections/")) return isExplicitSeoDirectoryContentForSite(site, "collection", normalized);
+  if (isCollectionDirectoryPath(normalized)) {
+    const route = parsePublicCollectionRouteForSite(site, normalized);
+    if (route?.kind === "directory") return true;
+    return isExplicitSeoDirectoryContentForSite(site, "collection", normalized);
+  }
+  if (isVideoGenerationDirectoryPath(site, normalized)) return true;
   if (normalized.startsWith("/tools/")) {
+    if (isDreamshootSite(site)) return false;
     if (isExplicitSeoDirectoryContentForSite(site, "tool", normalized)) return true;
-    return isDreamshootSite(site) && DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS.includes(normalized);
+    return false;
   }
   return true;
 }
@@ -805,7 +828,7 @@ function pageSeoForPath(site: Site, path: string) {
 
 function isSitemapIndexablePath(site: Site, path: string): boolean {
   const normalized = canonicalDirectoryPathForSite(site, canonicalPublicPath(normalizePath(path)));
-  if (isBlockedPublicPath(normalized)) return false;
+  if (isBlockedPublicPathForSite(site, normalized)) return false;
 
   const policySeo = policySeoForSite(site, normalized);
   if (policySeo?.index === false) return false;
@@ -845,13 +868,13 @@ function sitePathFromHref(site: Site, href: string): string {
   const sitePrefix = `/site/${site.slug}`;
   if (normalized === sitePrefix) normalized = "/";
   if (normalized.startsWith(`${sitePrefix}/`)) normalized = normalizePath(normalized.slice(sitePrefix.length));
-  if (normalized === "/collections" && search) {
+  if ((normalized === "/collections" || normalized === "/ai-image-generation") && search) {
     const category = new URLSearchParams(search).get("category");
-    if (category) normalized = pathFromSlug("/collections", category);
+    if (category) normalized = publicCollectionPathForSite(site, category);
   }
 
   normalized = canonicalDirectoryPathForSite(site, canonicalPublicPath(normalized));
-  return isBlockedPublicPath(normalized) ? "" : normalized;
+  return isBlockedPublicPathForSite(site, normalized) ? "" : normalized;
 }
 
 function stringSetting(value: ThemeSettingValue | undefined): string {
@@ -930,21 +953,27 @@ function isIndexablePage(page: ThemePage): boolean {
 
 function isIndexableToolPath(site: Site, path: string): boolean {
   const normalized = canonicalToolPathForSite(site, path);
+  if (isDreamshootSite(site)) return false;
   return (normalized === "/tools" || normalized.startsWith("/tools/")) && !isBlockedPublicPath(normalized);
 }
 
 function addToolPath(site: Site, paths: Set<string>, path: string): void {
   const normalized = canonicalToolPathForSite(site, path);
+  if (isVideoGenerationDirectoryPath(site, normalized)) {
+    paths.add(normalized);
+    return;
+  }
   if (isIndexableToolPath(site, normalized)) paths.add(normalized);
 }
 
 function collectionPathsForPack(pack: CreativePack): string[] {
   return Array.from(new Set([
+    creativePackCollectionHref(pack),
     pack.categoryRecord?.parent?.slug,
     pack.categoryRecord?.slug,
     pack.category,
     pack.name
-  ].filter(Boolean).map((slug) => pathFromSlug("/collections", String(slug))).filter(Boolean)));
+  ].filter(Boolean).map((slug) => publicCollectionPathForSite(pack, String(slug))).filter(Boolean)));
 }
 
 function collectionSlugsForPack(site: Site, pack: CreativePack): string[] {
@@ -953,7 +982,9 @@ function collectionSlugsForPack(site: Site, pack: CreativePack): string[] {
 
 function canResolveCollectionPath(state: PlatformState, site: Site, path: string): boolean {
   const normalized = canonicalDirectoryPathForSite(site, path);
-  if (!normalized.startsWith("/collections/")) return false;
+  if (!isCollectionDirectoryPath(normalized)) return false;
+  const route = parsePublicCollectionRouteForSite(site, normalized);
+  if (route?.kind === "directory") return true;
   if (isExplicitSeoDirectoryContentForSite(site, "collection", normalized)) return true;
   const canonicalSlug = canonicalSeoDirectorySlugForSite(site, "collection", normalized);
   if ((state.creativePackCategories ?? []).some((category) => {
@@ -965,7 +996,7 @@ function canResolveCollectionPath(state: PlatformState, site: Site, path: string
 
 function addCollectionPath(state: PlatformState, site: Site, paths: Set<string>, path: string): void {
   const normalized = canonicalDirectoryPathForSite(site, path);
-  if (normalized.startsWith("/collections/") && !isBlockedPublicPath(normalized) && canResolveCollectionPath(state, site, normalized)) {
+  if (isCollectionDirectoryPath(normalized) && !isBlockedPublicPathForSite(site, normalized) && canResolveCollectionPath(state, site, normalized)) {
     paths.add(normalized);
   }
 }
@@ -973,7 +1004,7 @@ function addCollectionPath(state: PlatformState, site: Site, paths: Set<string>,
 function addPublicPath(state: PlatformState, site: Site, paths: Set<string>, href: string): void {
   const normalized = sitePathFromHref(site, href);
   if (!normalized) return;
-  if (normalized.startsWith("/collections/")) {
+  if (isCollectionDirectoryPath(normalized)) {
     addCollectionPath(state, site, paths, normalized);
     return;
   }
@@ -1001,7 +1032,9 @@ function collectInternalHrefPaths(state: PlatformState, site: Site, paths: Set<s
 
 function collectExplicitSeoDirectoryPaths(site: Site): string[] {
   const collections = getExplicitSeoDirectorySlugsForSite(site, "collection").map((slug) => canonicalSeoDirectoryPathForSite(site, "collection", slug));
-  const tools = getExplicitSeoDirectorySlugsForSite(site, "tool").map((slug) => canonicalToolPathForSite(site, `/tools/${slug}`));
+  const tools = getExplicitSeoDirectorySlugsForSite(site, "tool")
+    .map((slug) => canonicalToolPathForSite(site, `/tools/${slug}`))
+    .filter((path) => !isDreamshootSite(site) || isVideoGenerationDirectoryPath(site, path));
   return Array.from(new Set([...collections, ...tools]));
 }
 
@@ -1018,12 +1051,16 @@ function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[
 
   for (const category of state.creativePackCategories ?? []) {
     if (category.siteId === site.id && category.status === "active") {
-      addCollectionPath(state, site, paths, pathFromSlug("/collections", category.slug || category.label));
+      addCollectionPath(state, site, paths, publicCollectionPathForSite(category, category.slug || category.label));
     }
   }
 
   for (const siteApp of state.siteAiApps.filter((app) => app.siteId === site.id && app.enabled)) {
-    if (isExplicitSeoDirectoryContentForSite(site, "tool", siteApp.aiApp.slug)) addToolPath(site, paths, pathFromSlug("/tools", siteApp.aiApp.slug));
+    if (isDreamshootSite(site)) {
+      if (isMydreamshootsVideoGenerationSlug(siteApp.aiApp.slug)) addToolPath(site, paths, publicVideoGenerationPathForSite(site, siteApp.aiApp.slug));
+    } else if (isExplicitSeoDirectoryContentForSite(site, "tool", siteApp.aiApp.slug)) {
+      addToolPath(site, paths, pathFromSlug("/tools", siteApp.aiApp.slug));
+    }
   }
 
   for (const item of state.toolMenuItems ?? []) {
@@ -1032,7 +1069,7 @@ function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[
     }
   }
   if (isDreamshootSite(site)) {
-    for (const path of DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS) addToolPath(site, paths, path);
+    for (const path of DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS) paths.add(path);
   }
 
   const toolBlocks = sitePages.flatMap((page) => blocksFromPage(page.publishedJson, new Set(["tool_card", "catalog_pack", "feature_tab", "occasion", "package"])));
@@ -1101,8 +1138,10 @@ function getSitemapUrlsForSite(state: PlatformState, site: Site): string[] {
   paths.push(...collectExplicitSeoDirectoryPaths(site));
   paths.push(...collectDynamicIndexablePaths(state, site));
 
-  for (const path of REQUIRED_INDEXABLE_TOOL_PATHS) {
-    if (isExplicitSeoDirectoryContentForSite(site, "tool", path)) paths.push(canonicalToolPathForSite(site, path));
+  if (!isDreamshootSite(site)) {
+    for (const path of REQUIRED_INDEXABLE_TOOL_PATHS) {
+      if (isExplicitSeoDirectoryContentForSite(site, "tool", path)) paths.push(canonicalToolPathForSite(site, path));
+    }
   }
 
   if (isDreamshootSite(site) || isAidreamcapesSite(site)) {

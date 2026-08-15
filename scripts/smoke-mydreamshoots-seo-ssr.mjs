@@ -1,54 +1,81 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
-import http from "node:http";
-import https from "node:https";
 
-const baseUrl = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3010").replace(/\/+$/, "");
+const baseUrl = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/+$/, "");
 const host = process.env.MYDREAMSHOOTS_HOST || "www.mydreamshoots.com";
+const requestTimeoutMs = Number(process.env.MYDREAMSHOOTS_SEO_SSR_TIMEOUT_MS || 30_000);
+const requestAttempts = Number(process.env.MYDREAMSHOOTS_SEO_SSR_ATTEMPTS || 3);
 
-function fetchText(pathname, accept, redirectCount = 0) {
-  return new Promise((resolve, reject) => {
-    const url = new URL(pathname, `${baseUrl}/`);
-    const transport = url.protocol === "https:" ? https : http;
-    const request = transport.request(url, {
-      headers: { accept, host }
-    }, (response) => {
-      const chunks = [];
-      response.setEncoding("utf8");
-      response.on("data", (chunk) => chunks.push(chunk));
-      response.on("end", async () => {
-        const status = response.statusCode || 0;
-        const location = response.headers.location;
-        if (status >= 300 && status < 400 && location && redirectCount < 5) {
-          const nextUrl = new URL(location, url);
-          const nextPath = `${nextUrl.pathname}${nextUrl.search}`;
-          resolve(await fetchText(nextPath, accept, redirectCount + 1));
-          return;
-        }
-        resolve({ body: chunks.join(""), headers: response.headers, status });
-      });
-    });
-    request.on("error", reject);
-    request.end();
-  });
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function fetchStatusNoRedirect(pathname, accept = "text/html") {
-  return new Promise((resolve, reject) => {
-    const url = new URL(pathname, `${baseUrl}/`);
-    const transport = url.protocol === "https:" ? https : http;
-    const request = transport.request(url, {
-      headers: { accept, host }
-    }, (response) => {
-      response.resume();
-      response.on("end", () => resolve({
-        headers: response.headers,
-        status: response.statusCode || 0
-      }));
+async function fetchTextOnce(pathname, accept, redirectCount = 0) {
+  const url = new URL(pathname, `${baseUrl}/`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(new Error(`${pathname} timed out after ${requestTimeoutMs}ms`)), requestTimeoutMs);
+  try {
+    const response = await fetch(url, {
+      headers: { accept, "x-forwarded-host": host },
+      redirect: "manual",
+      signal: controller.signal
     });
-    request.on("error", reject);
-    request.end();
-  });
+    const body = await response.text();
+    const location = response.headers.get("location");
+    if (response.status >= 300 && response.status < 400 && location && redirectCount < 5) {
+      const nextUrl = new URL(location, url);
+      return fetchTextOnce(`${nextUrl.pathname}${nextUrl.search}`, accept, redirectCount + 1);
+    }
+    return {
+      body,
+      headers: Object.fromEntries(response.headers.entries()),
+      status: response.status
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function withRetry(label, operation) {
+  let lastError;
+  for (let attempt = 1; attempt <= requestAttempts; attempt += 1) {
+    try {
+      return await operation();
+    } catch (error) {
+      lastError = error;
+      if (attempt === requestAttempts) break;
+      await wait(400 * attempt);
+    }
+  }
+  throw lastError ?? new Error(`${label} failed`);
+}
+
+async function fetchText(pathname, accept) {
+  return withRetry(`fetch ${pathname}`, () => fetchTextOnce(pathname, accept));
+}
+
+async function fetchStatusNoRedirectOnce(pathname, accept = "text/html") {
+  const url = new URL(pathname, `${baseUrl}/`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(new Error(`${pathname} timed out after ${requestTimeoutMs}ms`)), requestTimeoutMs);
+  try {
+    const response = await fetch(url, {
+      headers: { accept, "x-forwarded-host": host },
+      redirect: "manual",
+      signal: controller.signal
+    });
+    await response.arrayBuffer();
+    return {
+      headers: Object.fromEntries(response.headers.entries()),
+      status: response.status
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function fetchStatusNoRedirect(pathname, accept = "text/html") {
+  return withRetry(`fetch status ${pathname}`, () => fetchStatusNoRedirectOnce(pathname, accept));
 }
 
 async function fetchHtml(pathname) {
@@ -69,20 +96,62 @@ function graphNodes(html) {
     });
 }
 
+function firstMatch(html, pattern) {
+  return html.match(pattern)?.[1] ?? "";
+}
+
+function metaDescription(html) {
+  return firstMatch(html, /<meta\s+name=["']description["']\s+content=["']([^"']*)["']/i);
+}
+
+function canonicalHref(html) {
+  return firstMatch(html, /<link\s+rel=["']canonical["']\s+href=["']([^"']*)["']/i);
+}
+
+function pageTitle(html) {
+  return firstMatch(html, /<title>([\s\S]*?)<\/title>/i).replace(/\s+/g, " ").trim();
+}
+
 const homepage = await fetchHtml("/");
 const pricing = await fetchHtml("/pricing");
-const collection = await fetchHtml("/collections/headshot");
+const collection = await fetchHtml("/ai-image-generation/headshot");
+const focusCollectionPaths = [
+  "/ai-image-generation/motion-generator",
+  "/ai-image-generation/avatar",
+  "/ai-image-generation/black-friday",
+  "/ai-image-generation/only-fans",
+  "/ai-image-generation/singles-awareness-day"
+];
+const focusCollections = {};
+for (const pathname of focusCollectionPaths) {
+  focusCollections[pathname] = await fetchHtml(pathname);
+}
+const videoGeneration = await fetchHtml("/ai-video-generation/image-to-video");
 const workflow = await fetchHtml("/workflow");
 const faq = await fetchHtml("/faq");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
-const legacyCollectionStatuses = await Promise.all(
-  ["/collections/wedding-portraits", "/collections/profile-cards", "/collections/headshots", "/collections/ai-video-add-ons"]
-    .map(async (pathname) => ({ pathname, ...(await fetchStatusNoRedirect(pathname)) }))
-);
+const legacyCollectionStatuses = [];
+for (const pathname of [
+  "/collections/wedding-portraits",
+  "/collections/profile-cards",
+  "/collections/headshots",
+  "/collections/ai-video-add-ons",
+  "/ai-photoshoot",
+  "/ai-photoshoot/professional/headshot",
+  "/ai-image-generation/professional",
+  "/ai-image-generation/professional/headshot",
+  "/tools",
+  "/tools/image-to-video",
+  "/tool"
+]) {
+  legacyCollectionStatuses.push({ pathname, ...(await fetchStatusNoRedirect(pathname)) });
+}
 const homepageGraph = graphNodes(homepage);
 const collectionGraph = graphNodes(collection);
+const videoGenerationGraph = graphNodes(videoGeneration);
 const homepageVideos = homepageGraph.filter((node) => node?.["@type"] === "VideoObject");
 const collectionProducts = collectionGraph.filter((node) => node?.["@type"] === "Product");
+const videoGenerationProducts = videoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const collectionProduct = collectionProducts[0];
 const collectionOffer = collectionProduct?.offers;
 const forbiddenLoadingCopy = [
@@ -94,10 +163,19 @@ const forbiddenLoadingCopy = [
   "Helpful details are being loaded for this section.",
   "Loading section"
 ];
+const forbiddenGenericThemeCopy = [
+  "turn approved uploads into a focused private photo set",
+  "A private gallery of",
+  "works best when the source photos are current, sharp",
+  "Keep the request focused on",
+  "Confirm the visible credit cost before generation starts"
+];
 const publicHtmlPages = {
   homepage,
   pricing,
   collection,
+  ...focusCollections,
+  videoGeneration,
   workflow,
   faq
 };
@@ -105,6 +183,29 @@ const publicHtmlPages = {
 for (const [pageName, html] of Object.entries(publicHtmlPages)) {
   for (const copy of forbiddenLoadingCopy) {
     assert.equal(html.includes(copy), false, `${pageName} must not SSR loading placeholder copy: ${copy}`);
+  }
+}
+const focusTopicNeedles = {
+  "/ai-image-generation/motion-generator": ["image-to-video", "pan", "tilt", "orbit", "storyboard"],
+  "/ai-image-generation/avatar": ["profile icons", "gaming", "discord", "square crops"],
+  "/ai-image-generation/black-friday": ["sale banners", "social ads", "shopping", "campaign"],
+  "/ai-image-generation/only-fans": ["subscription", "feed teasers", "non-explicit", "creator"],
+  "/ai-image-generation/singles-awareness-day": ["self-love", "solo", "dating profile", "confidence"]
+};
+for (const [pathname, html] of Object.entries(focusCollections)) {
+  const title = pageTitle(html);
+  const description = metaDescription(html);
+  const canonical = canonicalHref(html);
+  const normalizedHtml = html.toLowerCase();
+  assert.equal(canonical, `https://www.mydreamshoots.com${pathname}`, `${pathname} must expose the canonical AI Image Generation URL`);
+  assert.ok(title.includes("myDreamshoots"), `${pathname} must expose branded title metadata`);
+  assert.ok(description.length >= 90 && description.length <= 220, `${pathname} must expose a useful meta description`, { description });
+  assert.match(description, /[.!?]$/, `${pathname} meta description must end as a complete sentence`);
+  for (const copy of forbiddenGenericThemeCopy) {
+    assert.equal(normalizedHtml.includes(copy.toLowerCase()), false, `${pathname} must not SSR generic theme copy: ${copy}`);
+  }
+  for (const needle of focusTopicNeedles[pathname]) {
+    assert.ok(normalizedHtml.includes(needle), `${pathname} must contain topic-specific SEO copy: ${needle}`);
   }
 }
 assert.ok(pricing.includes("Starter") && (pricing.includes("$24.50") || pricing.includes("24.50")), "pricing HTML must contain real plan content");
@@ -115,15 +216,9 @@ assert.ok(
     homepage.includes("price_dreamshoot_premium_monthly"),
   "homepage embedded pricing must contain real plan cards and checkout links"
 );
-assert.equal(homepageVideos.length, 8, "homepage SSR must contain 8 VideoObject nodes");
-for (const video of homepageVideos) {
-  assert.equal(video.encodingFormat, "video/mp4", "homepage VideoObject must expose video encodingFormat");
-  assert.equal(video.publisher?.["@id"], "https://www.mydreamshoots.com#organization", "homepage VideoObject must connect to the Organization publisher");
-  assert.equal(video.potentialAction?.["@type"], "WatchAction", "homepage VideoObject must expose WatchAction");
-  assert.match(video.potentialAction?.target ?? "", /^https:\/\/www\.mydreamshoots\.com\/assets\/.+\.mp4(?:[?#].*)?$/, "homepage VideoObject WatchAction target must be an absolute MP4 asset");
-  assert.equal(video.thumbnail?.["@type"], "ImageObject", "homepage VideoObject must include an ImageObject thumbnail");
-  assert.equal(video.thumbnail?.contentUrl, video.thumbnailUrl?.[0], "homepage VideoObject thumbnail ImageObject must reuse thumbnailUrl");
-}
+assert.equal(homepageVideos.length, 0, "homepage SSR must not expose legacy video theme VideoObject nodes after the AI Video Generation route migration");
+assert.match(videoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/image-to-video/, "video generation detail SSR must expose the canonical video generation URL");
+assert.ok(videoGenerationProducts.length >= 1, "video generation detail SSR must expose product or service JSON-LD");
 assert.equal(collectionProducts.length, 1, "collection SSR must contain one Product node");
 assert.ok(Array.isArray(collectionProduct?.image) && collectionProduct.image.length === 8, "collection Product must contain cover plus gallery image URLs");
 assert.equal(new Set(collectionProduct.image).size, collectionProduct.image.length, "collection Product image URLs must be unique");
@@ -146,17 +241,22 @@ assert.ok(
   "collection Product must expose output count"
 );
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/pricing"), "sitemap must contain the canonical pricing URL");
-assert.ok(sitemap.includes("https://www.mydreamshoots.com/collections/headshot"), "sitemap must contain the canonical headshot collection URL");
+assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-image-generation/headshot"), "sitemap must contain the canonical headshot collection URL");
+assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/image-to-video"), "sitemap must contain the canonical image-to-video URL");
+for (const forbidden of ["/collections/headshots", "/ai-photoshoot", "/tools/image-to-video"]) {
+  assert.equal(sitemap.includes(`https://www.mydreamshoots.com${forbidden}`), false, `sitemap must not contain ${forbidden}`);
+}
 for (const legacyStatus of legacyCollectionStatuses) {
   assert.equal(legacyStatus.status, 404, `${legacyStatus.pathname} should return HTTP 404 after the collection slug migration`);
 }
 
 console.log(JSON.stringify({
   ok: true,
-  pages: ["/", "/pricing", "/collections/headshot", "/workflow", "/faq"],
+  pages: ["/", "/pricing", "/ai-image-generation/headshot", "/ai-video-generation/image-to-video", "/workflow", "/faq"],
   legacy404s: legacyCollectionStatuses.map(({ pathname, status }) => ({ pathname, status })),
   placeholders: 0,
   homepageVideoObjects: homepageVideos.length,
+  videoGenerationSchemaObjects: videoGenerationProducts.length,
   collectionProductObjects: collectionProducts.length,
   collectionOfferPrice: collectionOffer.price
 }, null, 2));

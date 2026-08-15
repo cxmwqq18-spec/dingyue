@@ -118,11 +118,18 @@ function cleanSchemaText(site: Site, value: unknown, fallback = ""): string {
 }
 
 function schemaPathLabel(site: Site, part: string): string {
-  if (!isSpanishXbySite(site)) return part.replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
   const normalized = part.toLowerCase();
+  if (!isSpanishXbySite(site)) {
+    const englishLabels: Record<string, string> = {
+      "ai-image-generation": "AI Image Generation",
+      "ai-video-generation": "AI Video Generation"
+    };
+    return englishLabels[normalized] ?? part.replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+  }
   const labels: Record<string, string> = {
     tools: "Herramientas",
     collections: "Colecciones",
+    "ai-image-generation": "AI Photoshoot",
     pricing: "Precios",
     login: "Acceso",
     cart: "Carrito",
@@ -536,7 +543,7 @@ function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string,
 
 function serviceOrProductSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
   const path = input.pagePath;
-  if (path.startsWith("/tools/")) {
+  if (path.startsWith("/tools/") || path.startsWith("/ai-video-generation/")) {
     return [{
       "@type": "Service",
       name: title,
@@ -883,71 +890,13 @@ function isBlockedPublicVideoTheme(site: Site, theme: VideoTheme): boolean {
 
 function homeVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
   if (!isPrimaryMyDreamShootsSite(input.site)) return [];
-  if (input.pagePath !== "/" && input.page.slug !== "/") return [];
-  const selectedSlugs = showcaseVideoSlugs(input.pageJson).filter((slug) => !blockedPublicVideoThemeSlugs.has(slug));
-  const videoBySlug = new Map<string, VideoTheme>();
-  (input.videoThemes ?? [])
-    .filter((theme) => theme.siteId === input.site.id && theme.status === "active" && !isBlockedPublicVideoTheme(input.site, theme))
-    .forEach((theme) => videoBySlug.set(slugifySchemaPart(theme.slug), theme));
-  const orderedThemes = [
-    ...selectedSlugs.map((slug) => videoBySlug.get(slug)).filter((theme): theme is VideoTheme => Boolean(theme)),
-    ...(input.videoThemes ?? []).filter((theme) => theme.siteId === input.site.id && theme.status === "active" && !isBlockedPublicVideoTheme(input.site, theme))
-  ];
-  const seen = new Set<string>();
-  const homeUrl = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, "/"));
-  return orderedThemes
-    .filter((theme) => {
-      if (seen.has(theme.id)) return false;
-      seen.add(theme.id);
-      return Boolean(
-        videoMediaPath((theme.galleryImages ?? []).find((item) => videoMediaPath(item))) &&
-        imageMediaPath(theme.imageUrl) &&
-        normalizedUploadDate(theme.createdAt)
-      );
-    })
-    .slice(0, 8)
-    .map((theme) => {
-      const videoUrl = videoMediaPath((theme.galleryImages ?? []).find((item) => videoMediaPath(item)));
-      const thumbnailUrl = imageMediaPath(theme.imageUrl);
-      const uploadDate = normalizedUploadDate(theme.createdAt);
-      const slug = slugifySchemaPart(theme.slug || theme.id);
-      const name = cleanSchemaText(input.site, theme.name, "MyDreamShoots AI motion example");
-      const videoContentUrl = absoluteUrl(input.site, input.routeMode, videoUrl);
-      const thumbnailContentUrl = absoluteUrl(input.site, input.routeMode, thumbnailUrl || theme.imageUrl);
-      const thumbnailDimensions = imageDimensions(thumbnailUrl || theme.imageUrl);
-      return {
-        "@type": "VideoObject",
-        "@id": `${homeUrl}#video-${slug}`,
-        name,
-        description: cleanSchemaText(input.site, theme.description, `Watch ${name} as a MyDreamShoots AI video example.`),
-        thumbnailUrl: [thumbnailContentUrl],
-        uploadDate,
-        duration: iso8601Duration(theme.durationSeconds || 1),
-        contentUrl: videoContentUrl,
-        encodingFormat: mediaEncodingFormat(videoUrl),
-        url: `${homeUrl}#video-${slug}`,
-        mainEntityOfPage: homeUrl,
-        isPartOf: { "@id": `${siteBaseUrl(input.site, input.routeMode)}#website` },
-        publisher: { "@id": `${siteBaseUrl(input.site, input.routeMode)}#organization` },
-        thumbnail: {
-          "@type": "ImageObject",
-          "@id": `${homeUrl}#video-${slug}-thumbnail`,
-          url: thumbnailContentUrl,
-          contentUrl: thumbnailContentUrl,
-          name: `${name} video thumbnail`,
-          encodingFormat: mediaEncodingFormat(thumbnailUrl),
-          ...(thumbnailDimensions ? thumbnailDimensions : {})
-        },
-        potentialAction: {
-          "@type": "WatchAction",
-          target: videoContentUrl
-        }
-      };
-    });
+  // MyDreamShoots video content now has dedicated /ai-video-generation pages.
+  // Keep homepage JSON-LD focused on the storefront instead of emitting legacy theme video objects.
+  return [];
 }
 
 function collectionPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
-  if (!input.pagePath.startsWith("/collections")) return [];
+  if (!input.pagePath.startsWith("/collections") && !input.pagePath.startsWith("/ai-image-generation")) return [];
   const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
   const url = absoluteUrl(input.site, input.routeMode, path);
   const activePacks = (input.creativePacks ?? []).filter((pack) => pack.status === "active").slice(0, 24);
@@ -1060,14 +1009,16 @@ function toolDirectoryFaqSchema(site: Site, item: ReturnType<typeof getSeoDirect
 export function buildToolDirectoryJsonLd({
   site,
   toolSlug,
+  publicPath,
   routeMode
 }: {
   site: Site;
   toolSlug: string;
+  publicPath?: string;
   routeMode: "host" | "path";
 }): JsonLdNode[] {
   const item = getSeoDirectoryContentForSite(site, "tool", toolSlug);
-  const pagePath = item.canonicalPath;
+  const pagePath = publicPath ?? item.canonicalPath;
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
   const siteName = siteBrandName(site);
@@ -1128,7 +1079,7 @@ export function buildCollectionDirectoryJsonLd({
   products?: Product[];
 }): JsonLdNode[] {
   const pageSlug = canonicalCollectionSlugForCandidate(site, collectionSlug) || slugifySchemaPart(collectionSlug);
-  const pagePath = `/collections/${pageSlug || "all"}`;
+  const pagePath = pageSlug ? canonicalSeoDirectoryPathForSite(site, "collection", pageSlug) : canonicalSeoDirectoryPathForSite(site, "collection", "");
   const collectionLabel = cleanText(collectionSlug, pageSlug).replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()) || "Photo Packages";
   const fallbackCollectionLabel = isSpanishXbySite(site) ? "Paquetes de fotos" : collectionLabel;
   const item = (() => {
@@ -1196,7 +1147,7 @@ export function buildCollectionDirectoryJsonLd({
     const name = cleanText(pack.name, item.useCases[index] ?? item.label);
     const image = cleanText(pack.imageUrl);
     const entrySlug = canonicalCollectionSlugForCandidate(site, pack.categoryRecord?.slug || pack.category || pack.name);
-    const entryPagePath = hasMatchingPacks && entrySlug ? `/collections/${entrySlug}` : pagePath;
+    const entryPagePath = hasMatchingPacks && entrySlug ? canonicalSeoDirectoryPathForSite(site, "collection", entrySlug) : pagePath;
     const entryPath = schemaPagePath(site, routeMode, entryPagePath);
     return {
       "@type": "ListItem",

@@ -2,13 +2,15 @@ import { chromium } from "playwright";
 
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(/\/$/, "");
 const base = new URL(baseUrl);
+const focusHost = process.env.STOREFRONT_PUBLIC_ROUTES_FOCUS_HOST || "";
+const skipMediaChecks = process.env.STOREFRONT_PUBLIC_ROUTES_SKIP_MEDIA === "1";
 // This change set is scoped to the two .com storefronts; .eu remains covered by the language/SSR smokes.
 const routeChecks = [
-  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/collections", "/collections/portrait-photo", "/collections/headshot", "/collections/avatar", "/collections/background-changer", "/collections/motion-generator", "/tools", "/best-packages", "/best-ai-image", "/best-ai-video", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] },
+  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/ai-image-generation", "/ai-image-generation/portrait-photo", "/ai-image-generation/headshot", "/ai-image-generation/avatar", "/ai-image-generation/background-changer", "/ai-image-generation/motion-generator", "/ai-video-generation", "/ai-video-generation/image-to-video", "/ai-video-generation/profile-clip", "/best-packages", "/best-ai-image", "/best-ai-video", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] },
   { host: "www.aidreamcapes.com", paths: ["/", "/workflow", "/collections", "/collections/fan-scene-albums", "/collections/private-fan-scene-albums", "/collections/game-day-group-photos", "/collections/game-day-group-portraits", "/collections/christmas-holiday-albums", "/collections/christmas-group-albums", "/collections/new-year-countdown-albums", "/tools", "/tools/fan-scene-album-builder", "/tools/game-day-group-portrait-maker", "/tools/christmas-group-album-studio", "/tools/new-year-countdown-album-maker", "/tools/permission-safe-photo-planner", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog/private-fan-scene-album-photo-package-guide", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] }
 ];
 const imageAltRouteChecks = [
-  { host: "www.mydreamshoots.com", paths: ["/", "/collections", "/collections/soccer", "/collections/christmas-photo", "/collections/avatar", "/collections/portrait-photo", "/collections/background-changer", "/collections/motion-generator", "/collections/cyberpunk", "/tools", "/tools/world-cup-fan-photos", "/best-packages", "/best-ai-image", "/best-ai-video"] },
+  { host: "www.mydreamshoots.com", paths: ["/", "/ai-image-generation", "/ai-image-generation/soccer", "/ai-image-generation/christmas-photo", "/ai-image-generation/avatar", "/ai-image-generation/portrait-photo", "/ai-image-generation/background-changer", "/ai-image-generation/motion-generator", "/ai-image-generation/cyberpunk", "/ai-video-generation", "/ai-video-generation/image-to-video", "/best-packages", "/best-ai-image", "/best-ai-video"] },
   { host: "www.aidreamcapes.com", paths: ["/", "/collections", "/collections/fan-scene-albums", "/collections/private-fan-scene-albums", "/collections/game-day-group-photos", "/collections/stadium-night-fan-sets", "/collections/christmas-group-albums", "/collections/christmas-holiday-albums", "/collections/premiere-style-portraits", "/tools", "/tools/fan-scene-album-builder", "/tools/new-year-countdown-album-maker", "/best-packages", "/best-ai-image", "/best-ai-video"] },
   { host: "aidreamshoots.eu", paths: ["/", "/collections", "/collections/world-cup-fan-photos", "/collections/anime-avatar", "/collections/profile-cards", "/collections/product-style", "/collections/ai-video-add-ons", "/tools"] },
   { host: "aidreamcapes.eu", paths: ["/", "/collections", "/collections/fan-scene-albums", "/collections/game-day-group-photos", "/collections/christmas-group-albums", "/collections/premiere-style-portraits", "/tools"] }
@@ -24,6 +26,9 @@ const pathModeRouteChecks = [
   { host: "localhost", paths: ["/site/aidreamcapes/best-packages", "/site/aidreamcapes/best-ai-image", "/site/aidreamcapes/best-ai-video"] }
 ];
 const legacyRedirectChecks = [
+  { host: "www.mydreamshoots.com", path: "/collections", target: "/ai-image-generation" },
+  { host: "www.mydreamshoots.com", path: "/collections/engagement-photo", target: "/ai-image-generation/engagement-photo" },
+  { host: "www.mydreamshoots.com", path: "/collections/headshot", target: "/ai-image-generation/headshot" },
   { host: "www.aidreamcapes.com", path: "/collections/route-portrait-albums", target: "/collections/fan-scene-albums" },
   { host: "www.aidreamcapes.com", path: "/collections/coastal-light-sets", target: "/collections/christmas-group-albums" },
   { host: "www.aidreamcapes.com", path: "/collections/old-quarter-walks", target: "/collections/premiere-style-portraits" },
@@ -38,7 +43,14 @@ const legacyGoneChecks = [
   { host: "www.mydreamshoots.com", path: "/collections/wedding-portraits" },
   { host: "www.mydreamshoots.com", path: "/collections/profile-cards" },
   { host: "www.mydreamshoots.com", path: "/collections/headshots" },
-  { host: "www.mydreamshoots.com", path: "/collections/ai-video-add-ons" }
+  { host: "www.mydreamshoots.com", path: "/collections/ai-video-add-ons" },
+  { host: "www.mydreamshoots.com", path: "/ai-photoshoot" },
+  { host: "www.mydreamshoots.com", path: "/ai-photoshoot/professional/headshot" },
+  { host: "www.mydreamshoots.com", path: "/ai-image-generation/professional" },
+  { host: "www.mydreamshoots.com", path: "/ai-image-generation/professional/headshot" },
+  { host: "www.mydreamshoots.com", path: "/tools" },
+  { host: "www.mydreamshoots.com", path: "/tools/image-to-video" },
+  { host: "www.mydreamshoots.com", path: "/tool" }
 ];
 
 function assert(condition, message) {
@@ -47,6 +59,17 @@ function assert(condition, message) {
 
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function hostMatchesFocus(host) {
+  return !focusHost || host === focusHost;
+}
+
+function pathModeMatchesFocus(pathName) {
+  if (!focusHost) return true;
+  if (focusHost === "www.mydreamshoots.com") return pathName.startsWith("/site/mydreamshoots/");
+  if (focusHost === "www.aidreamcapes.com") return pathName.startsWith("/site/aidreamcapes/");
+  return true;
 }
 
 function requestHeadersForHost(host) {
@@ -351,7 +374,7 @@ async function smokeStorefrontPublicRoutes() {
     const context = await browser.newContext({ baseURL: baseUrl, viewport: { width: 1440, height: 900 } });
     const request = context.request;
 
-    for (const check of routeChecks) {
+    for (const check of routeChecks.filter((item) => hostMatchesFocus(item.host))) {
       const paths = new Set(check.paths);
       for (const path of check.paths.slice(0, 6)) {
         for (const linkPath of await collectInternalLinks(request, check.host, path).catch(() => [])) {
@@ -369,7 +392,7 @@ async function smokeStorefrontPublicRoutes() {
         }
       }
     }
-    for (const check of legacyRedirectChecks) {
+    for (const check of legacyRedirectChecks.filter((item) => hostMatchesFocus(item.host))) {
       const response = await redirectForPath(request, check.host, check.path).catch(() => undefined);
       const status = response?.status() ?? 599;
       const location = response?.headers().location ?? "";
@@ -380,7 +403,7 @@ async function smokeStorefrontPublicRoutes() {
         console.log(`✓ ${check.host}${check.path} -> ${status} ${location}`);
       }
     }
-    for (const check of legacyGoneChecks) {
+    for (const check of legacyGoneChecks.filter((item) => hostMatchesFocus(item.host))) {
       const status = await statusForPath(request, check.host, check.path).catch(() => 599);
       if (status !== 404) {
         failures.push({ host: check.host, path: check.path, status, expected: 404 });
@@ -389,8 +412,8 @@ async function smokeStorefrontPublicRoutes() {
         console.log(`✓ ${check.host}${check.path} -> 404`);
       }
     }
-    for (const check of pathModeRouteChecks) {
-      for (const path of check.paths) {
+    for (const check of pathModeRouteChecks.filter((item) => hostMatchesFocus(item.host) || item.host === "localhost")) {
+      for (const path of check.paths.filter(pathModeMatchesFocus)) {
         const status = await statusForPath(request, check.host, path).catch(() => 599);
         if (status >= 400 && ![401].includes(status)) failures.push({ host: check.host, path, status });
         if (status < 400 || status === 401) {
@@ -400,25 +423,27 @@ async function smokeStorefrontPublicRoutes() {
         }
       }
     }
-    for (const check of imageAltRouteChecks) {
-      for (const path of check.paths) {
-        const imageFailures = await imageAltFailuresForPath(request, check.host, path).catch((error) => [{ host: check.host, path, status: 599, reason: error.message }]);
-        failures.push(...imageFailures);
-        if (imageFailures.length) {
-          console.log(`✗ ${check.host}${path} image alt -> ${imageFailures.length} failure(s)`);
-        } else {
-          console.log(`✓ ${check.host}${path} image alt`);
+    if (!skipMediaChecks) {
+      for (const check of imageAltRouteChecks.filter((item) => hostMatchesFocus(item.host))) {
+        for (const path of check.paths) {
+          const imageFailures = await imageAltFailuresForPath(request, check.host, path).catch((error) => [{ host: check.host, path, status: 599, reason: error.message }]);
+          failures.push(...imageFailures);
+          if (imageFailures.length) {
+            console.log(`✗ ${check.host}${path} image alt -> ${imageFailures.length} failure(s)`);
+          } else {
+            console.log(`✓ ${check.host}${path} image alt`);
+          }
         }
       }
-    }
-    for (const check of videoLabelRouteChecks) {
-      for (const path of check.paths) {
-        const videoFailures = await videoLabelFailuresForPath(request, check.host, path).catch((error) => [{ host: check.host, path, status: 599, reason: error.message }]);
-        failures.push(...videoFailures);
-        if (videoFailures.length) {
-          console.log(`✗ ${check.host}${path} video label -> ${videoFailures.length} failure(s)`);
-        } else {
-          console.log(`✓ ${check.host}${path} video label`);
+      for (const check of videoLabelRouteChecks.filter((item) => hostMatchesFocus(item.host))) {
+        for (const path of check.paths) {
+          const videoFailures = await videoLabelFailuresForPath(request, check.host, path).catch((error) => [{ host: check.host, path, status: 599, reason: error.message }]);
+          failures.push(...videoFailures);
+          if (videoFailures.length) {
+            console.log(`✗ ${check.host}${path} video label -> ${videoFailures.length} failure(s)`);
+          } else {
+            console.log(`✓ ${check.host}${path} video label`);
+          }
         }
       }
     }

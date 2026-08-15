@@ -54,7 +54,11 @@ const storefrontRender = readText("src/lib/storefront-render.tsx");
 const storefrontStateRelational = readText("src/lib/storefront-state-relational.ts");
 const themeRenderer = readText("src/components/theme-renderer.tsx");
 const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
+const photoPackageTaxonomy = readText("src/lib/photo-package-taxonomy.ts");
 const platformState = readJson("data/platform-state.json");
+const mydreamshootsTaxonomy = readJson("src/lib/mydreamshoots-theme-taxonomy.json");
+const photoPackageUseCaseProfiles = readJson("src/lib/photo-package-use-case-profiles.json");
+const dreamshootPackProfiles = readJson("src/lib/dreamshoot-pack-profiles.json");
 const mydreamshootsSite = platformState.sites.find((site) => site.id === "site_dreamshoot");
 const aidreamcapesSite = platformState.sites.find((site) => site.id === "site_aidreamcapes");
 const activeDreamshootCategorySlugs = new Set(
@@ -67,9 +71,101 @@ const activeDreamshootPackCategories = new Set(
     .filter((pack) => pack.siteId === "site_dreamshoot" && pack.status === "active")
     .map((pack) => pack.category)
 );
+const mydreamshootsTaxonomyPathBySlug = new Map([
+  ["", "/ai-image-generation"],
+  ...(mydreamshootsTaxonomy.roots ?? []).map((root) => [root.slug, "/ai-image-generation"]),
+  ...(mydreamshootsTaxonomy.items ?? []).map((item) => [item.slug, `/ai-image-generation/${item.slug}`])
+]);
+const mydreamshootsUseCaseProfiles = photoPackageUseCaseProfiles.mydreamshootsCategories ?? {};
+const requiredUseCaseProfileFields = [
+  "headline",
+  "cardDescription",
+  "metaLabel",
+  "tags",
+  "detailTags",
+  "detailIntro",
+  "whatCreates",
+  "bestFor",
+  "workflow",
+  "styleNotes",
+  "coverNote",
+  "safetyNote"
+];
+const bannedTemplateProfilePhrases = [
+  "turn approved uploads into a focused private photo set",
+  "A private gallery of",
+  "works best when the source photos are current, sharp",
+  "Keep the request focused on",
+  "Confirm the visible credit cost before generation starts"
+];
+const profileMissingRows = [];
+const profileInvalidRows = [];
+const packProfileInvalidRows = [];
+const profileTemplateRows = [];
+const profileTopicRows = [];
+for (const item of mydreamshootsTaxonomy.items ?? []) {
+  const profile = mydreamshootsUseCaseProfiles[item.slug];
+  if (!profile) {
+    profileMissingRows.push(item.slug);
+    continue;
+  }
+  const profileText = JSON.stringify(profile);
+  const invalidFields = requiredUseCaseProfileFields.filter((field) => {
+    const value = profile[field];
+    return Array.isArray(value) ? value.length === 0 : typeof value !== "string" || !value.trim();
+  });
+  if (invalidFields.length) {
+    profileInvalidRows.push({ slug: item.slug, invalidFields });
+  }
+  const packProfile = dreamshootPackProfiles[item.slug];
+  if (!packProfile) {
+    packProfileInvalidRows.push({ slug: item.slug, reason: "missing" });
+  } else {
+    const packTemplateHits = bannedTemplateProfilePhrases.filter((phrase) => JSON.stringify(packProfile).toLowerCase().includes(phrase.toLowerCase()));
+    if (packTemplateHits.length) {
+      packProfileInvalidRows.push({ slug: item.slug, reason: "generic template copy", packTemplateHits });
+    }
+  }
+  const templateHits = bannedTemplateProfilePhrases.filter((phrase) => profileText.toLowerCase().includes(phrase.toLowerCase()));
+  if (templateHits.length) {
+    profileTemplateRows.push({ slug: item.slug, templateHits });
+  }
+  const normalizedProfileText = profileText.toLowerCase();
+  const topicTokens = Array.from(new Set([item.label, item.slug, ...(item.tags ?? [])]
+    .flatMap((value) => String(value).toLowerCase().split(/[^a-z0-9]+/))
+    .filter((token) => token.length >= 4 && !["photo", "photos", "image", "images", "private", "style"].includes(token))));
+  if (!topicTokens.some((token) => normalizedProfileText.includes(token))) {
+    profileTopicRows.push({ slug: item.slug, topicTokens });
+  }
+}
 
 assert(mydreamshootsSite, "MyDreamShoots site must exist in platform state");
 assert(aidreamcapesSite, "AIDreamCapes site must exist in platform state");
+assert(
+  !profileMissingRows.length,
+  "Every MyDreamShoots AI Image Generation leaf theme must have a direct SEO use-case profile",
+  { profileMissingRows }
+);
+assert(
+  !profileInvalidRows.length,
+  "MyDreamShoots direct theme SEO profiles must include the complete customer-facing profile shape",
+  { profileInvalidRows }
+);
+assert(
+  !packProfileInvalidRows.length,
+  "MyDreamShoots direct pack profiles must stay theme-specific because they feed the visible detail-page hero and workflow copy",
+  { packProfileInvalidRows }
+);
+assert(
+  !profileTemplateRows.length,
+  "MyDreamShoots direct theme SEO profiles must not fall back to generic template copy",
+  { profileTemplateRows }
+);
+assert(
+  !profileTopicRows.length,
+  "MyDreamShoots direct theme SEO profiles must contain topic-specific vocabulary",
+  { profileTopicRows }
+);
 
 const slugRows = mydreamshootsSite.pages.map((page) => ({
   id: page.id,
@@ -81,7 +177,8 @@ const slugRows = mydreamshootsSite.pages.map((page) => ({
 const duplicateSlugRows = Array.from(
   slugRows.reduce((map, row) => map.set(row.slug, [...(map.get(row.slug) ?? []), row]), new Map())
 ).filter(([, rows]) => rows.length > 1);
-const headshotSlugOwner = slugRows.find((row) => row.slug === "/tools/headshot" && row.index === true);
+const imageRootPage = slugRows.find((row) => row.slug === "/ai-image-generation" && row.index === true);
+const videoRootPage = slugRows.find((row) => row.slug === "/ai-video-generation" && row.index === true);
 const mydreamshootsWorkflow = slugRows.find((row) => row.slug === "/workflow");
 const aidreamcapesWorkflow = aidreamcapesSite.pages.find((page) => normalizePath(page.slug) === "/workflow");
 
@@ -113,13 +210,19 @@ assert(
   "/how-it-works should canonicalize to /workflow for legacy compatibility"
 );
 assert(
-  Boolean(headshotSlugOwner),
-  "canonical headshot tool page must expose /tools/headshot and remain indexable"
+  Boolean(imageRootPage) && imageRootPage.pageType === "collection",
+  "MyDreamShoots must expose /ai-image-generation as the public image directory root",
+  { imageRootPage }
+);
+assert(
+  Boolean(videoRootPage) && videoRootPage.pageType === "tools",
+  "MyDreamShoots must expose /ai-video-generation as the public video directory root",
+  { videoRootPage }
 );
 assert(
   !dreamshootSeoContent.includes('kind === "tool" && !item.explicit') &&
     dreamshootSeoContent.includes("const canonicalPath = item.canonicalPath"),
-  "tool detail metadata must self-canonicalize to /tools/<slug>, including non-explicit fallback tools"
+  "tool detail metadata must self-canonicalize from the canonical directory content"
 );
 assert(
   !slugRows.some((row) => row.slug === "/app/legacy-ai-image-studio" && row.index !== false),
@@ -155,6 +258,23 @@ const legacyCollectionHrefs = new Set([
   "/collections/hairstyle"
 ]);
 const requiredCollectionSlugs = ["headshot", "avatar", "background-changer", "motion-generator", "soccer"];
+const requiredCollectionPaths = [
+  "/ai-image-generation",
+  "/ai-image-generation/headshot",
+  "/ai-image-generation/avatar",
+  "/ai-image-generation/background-changer",
+  "/ai-image-generation/motion-generator",
+  "/ai-image-generation/soccer"
+];
+function requiredCollectionPathIsCovered(requiredPath) {
+  if (hrefHits.some((hit) => hit.href === requiredPath)) return true;
+  if (requiredPath === "/ai-image-generation") return Boolean(imageRootPage);
+  const parts = requiredPath.split("/").filter(Boolean);
+  if (parts[0] !== "ai-image-generation") return false;
+  const slug = parts.at(-1) ?? "";
+  if (mydreamshootsTaxonomyPathBySlug.get(slug) !== requiredPath) return false;
+  return activeDreamshootCategorySlugs.has(slug) && activeDreamshootPackCategories.has(slug);
+}
 const badLegacyCollectionHrefHits = hrefHits.filter((hit) => legacyCollectionHrefs.has(hit.href));
 assert(!badLegacyHrefHits.length, "MyDreamShoots internal hrefs must use canonical policy paths to avoid redirects", { badLegacyHrefHits });
 assert(
@@ -175,19 +295,31 @@ assert(
     missingPacks: requiredCollectionSlugs.filter((slug) => !activeDreamshootPackCategories.has(slug))
   }
 );
+for (const requiredPath of requiredCollectionPaths) {
+  assert(
+    requiredCollectionPathIsCovered(requiredPath),
+    "MyDreamShoots data must expose the new ai-image-generation public route shape",
+    { requiredPath }
+  );
+}
 assert(
   headerLabels.includes("Best Packages") && headerHrefs[headerLabels.indexOf("Best Packages")] === "/best-packages",
   "MyDreamShoots header must expose Best Packages at /best-packages",
   { headerLinks }
 );
 assert(
-  headerLabels.includes("AI Tools") && headerHrefs[headerLabels.indexOf("AI Tools")] === "/tools",
-  "MyDreamShoots header must expose AI Tools at /tools",
+  headerLabels.includes("AI Image Generation") && headerHrefs[headerLabels.indexOf("AI Image Generation")] === "/ai-image-generation",
+  "MyDreamShoots header must expose AI Image Generation at /ai-image-generation",
   { headerLinks }
 );
 assert(
-  headerLabels.indexOf("Best Packages") === headerLabels.indexOf("AI Tools") + 1,
-  "MyDreamShoots header must place Best Packages immediately after AI Tools",
+  headerLabels.includes("AI Video Generation") && headerHrefs[headerLabels.indexOf("AI Video Generation")] === "/ai-video-generation",
+  "MyDreamShoots header must expose AI Video Generation at /ai-video-generation",
+  { headerLinks }
+);
+assert(
+  JSON.stringify(headerLabels) === JSON.stringify(["AI Image Generation", "AI Video Generation", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"]),
+  "MyDreamShoots header labels must use the fixed shared navigation order",
   { headerLinks }
 );
 assert(
@@ -229,7 +361,7 @@ assert(
   "Creators Circle must be backed by the synthetic DreamShoot template in both host and site routes"
 );
 assert(!templates.includes('href: "/cookie-policy"'), "MyDreamShoots templates must not generate /cookie-policy links");
-assert(templates.includes('href: "/collections/headshot"'), "MyDreamShoots templates must preserve canonical links to /collections/headshot");
+assert(templates.includes('href: "/ai-image-generation/headshot"'), "MyDreamShoots templates must preserve canonical links to /ai-image-generation/headshot");
 for (const legacyHref of legacyCollectionHrefs) {
   assert(!templates.includes(`href: "${legacyHref}"`), "MyDreamShoots templates must not keep legacy collection hrefs", { legacyHref });
 }
@@ -251,12 +383,15 @@ for (const pathName of ["/cookie-policy", "/privacy-policy", "/terms-of-service"
   assert(seoIndexing.includes(`"${pathName}"`), "sitemap legacy duplicate exclusions must include old policy paths", { pathName });
 }
 
-for (const pathName of ["/tools/image-studio", "/tools/ai-image-studio", "/tools/travel-portraits"]) {
-  assert(seoIndexing.includes(`"${pathName}"`), "sitemap non-indexable tool exclusions must include blocked legacy paths", { pathName });
+for (const pathName of ["/tools", "/tools/image-studio", "/tools/ai-image-studio", "/tools/travel-portraits", "/ai-photoshoot"]) {
+  assert(seoIndexing.includes(`"${pathName}"`) || seoIndexing.includes(`path === "${pathName}"`), "sitemap blockers must include old MyDreamShoots public route shapes", { pathName });
 }
 
-for (const pathName of ["/tools/headshot", "/tools/background-changer", "/tools/image-to-video"]) {
-  assert(seoIndexing.includes(`"${pathName}"`), "sitemap required indexable tool paths must include primary static tool pages", { pathName });
+for (const pathName of ["/ai-video-generation"]) {
+  assert(seoIndexing.includes(`"${pathName}"`), "sitemap required video paths must use /ai-video-generation", { pathName });
+}
+for (const slug of ["image-to-video", "profile-clip", "fashion-reel"]) {
+  assert(photoPackageTaxonomy.includes(`"${slug}"`), "MyDreamShoots video slug list must include the required public video slug", { slug });
 }
 
 assert(
@@ -296,19 +431,19 @@ assert(
   "sitemap URL expansion must filter noindex paths and dedupe canonical paths after static, dynamic, and required paths are merged"
 );
 assert(
-  seoIndexing.includes("getExplicitSeoDirectorySlugsForSite") &&
+    seoIndexing.includes("getExplicitSeoDirectorySlugsForSite") &&
     seoIndexing.includes("canonicalSeoDirectoryPathForSite") &&
     seoIndexing.includes("collectExplicitSeoDirectoryPaths(site)") &&
     seoIndexing.includes('canonicalSeoDirectoryPathForSite(site, "collection", slug)') &&
-    seoIndexing.includes('canonicalSeoDirectoryPathForSite(site, "collection", normalized)') &&
-    seoIndexing.includes('`/tools/${slug}`'),
-  "sitemap URL expansion must include explicit SEO directory pages using canonical collection paths"
+    seoIndexing.includes('canonicalToolPathForSite(site, `/tools/${slug}`)') &&
+    seoIndexing.includes("publicVideoGenerationPathForSite(site, toolSlug)") &&
+    seoIndexing.includes("publicCollectionPathForSite(site, collectionSlugFromDirectoryPath(site, normalized))"),
+  "sitemap URL expansion must include explicit SEO directory pages using canonical collection and video paths"
 );
 assert(
   seoIndexing.includes("DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS") &&
-    seoIndexing.includes('"/tools/creator-portrait"') &&
-    seoIndexing.includes('"/tools/background-remover"') &&
-    seoIndexing.includes('"/tools/fashion-reel"') &&
+    seoIndexing.includes('`/ai-video-generation/${slug}`') &&
+    seoIndexing.includes("MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS") &&
     seoIndexing.includes("state.toolMenuItems ?? []") &&
     seoIndexing.includes("state.creativePackCategories ?? []") &&
     seoIndexing.includes("collectInternalHrefPaths(state, site, paths, site.themeSettings.publishedJson)") &&
@@ -316,15 +451,15 @@ assert(
     seoIndexing.includes('"/contact-us"') &&
     seoIndexing.includes('"/children-privacy"') &&
     seoIndexing.includes('"/state-privacy"'),
-  "sitemap URL expansion must cover storefront menu tools, package categories, theme hrefs, and canonical public support pages"
+  "sitemap URL expansion must cover video generators, package categories, theme hrefs, and canonical public support pages"
 );
 assert(
   dreamshootSeoContent.includes("dreamshootDefaultPublicToolSlugs") &&
-    dreamshootSeoContent.includes('"creator-portrait"') &&
-    dreamshootSeoContent.includes('"magic-upscaler"') &&
+    dreamshootSeoContent.includes('"image-to-video"') &&
+    dreamshootSeoContent.includes('"album-story-video"') &&
     dreamshootSeoContent.includes("indexableDreamshootDefaultTool") &&
     dreamshootSeoContent.includes("item.explicit || indexableDreamshootDefaultTool"),
-  "default public MyDreamShoots tool detail pages must be indexable when they are included in sitemap coverage"
+  "default public MyDreamShoots video detail pages must be indexable when they are included in sitemap coverage"
 );
 assert(
   storefrontStateRelational.includes("creativePackCategories.map(toCreativePackCategory)") &&
@@ -387,24 +522,19 @@ for (const { site, ownHost, forbiddenHost } of sitemapDomains) {
   );
 }
 assert(
-  siteToolPage.includes("legacyToolRedirectPath(publicSiteSlug, toolSlug)") &&
-    siteToolPage.includes("permanentRedirect(storefrontPathForRouteMode(publicSiteSlug, redirectPath, routeMode))") &&
-    hostCatchAllPage.includes("permanentRedirect(redirectPath)") &&
-    siteToolPage.includes('"ai-image-studio": "/tools"') &&
-    hostCatchAllPage.includes('"ai-image-studio": "/tools"'),
-  "legacy image studio tool paths must continue to permanently redirect to /tools"
+  siteToolPage.includes('if (normalizePublicSiteSlug(siteSlug) === "mydreamshoots") notFound()') &&
+    hostCatchAllPage.includes('if (firstSegment === "tools" && isMydreamshootsSite(site) && !isAidreamcapesSite(site)) notFound()') &&
+    hostCatchAllPage.includes("const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {}") &&
+    !siteToolPage.includes('publicSlug === "mydreamshoots") return DREAMSHOOT'),
+  "legacy MyDreamShoots tool paths must be blocked with 404 instead of redirected"
 );
 
 console.log(JSON.stringify({
   ok: true,
   mydreamshootsPageSlugCount: slugRows.length,
   duplicateSlugCount: duplicateSlugRows.length,
-  headshotSlugOwner: headshotSlugOwner?.id,
-  legacyToolPage: {
-    id: "site_dreamshoot_tool_image",
-    slug: "/app/legacy-ai-image-studio",
-    index: false
-  },
+  imageRootPage: imageRootPage?.id,
+  videoRootPage: videoRootPage?.id,
   canonicalInternalLinks: {
     cookies: "/cookies",
     forbiddenLegacyPolicyHrefs: badLegacyHrefHits.length

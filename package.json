@@ -32,6 +32,7 @@
     "smoke:storefront-dom-image-isolation": "node scripts/smoke-storefront-dom-image-isolation.mjs",
     "smoke:storefront-media-alt": "node scripts/smoke-storefront-media-alt.mjs",
     "smoke:storefront-watermarks": "node scripts/smoke-storefront-watermarks.mjs",
+    "smoke:customer-account-center": "node scripts/smoke-customer-account-center.mjs",
     "audit:storefront-watermarks": "node scripts/audit-storefront-watermarks.mjs",
     "watermark:storefront-public-media": "node scripts/apply-storefront-watermarks.mjs",
     "smoke:fan-holiday-storefront-theme": "node scripts/smoke-fan-holiday-storefront-theme.mjs",

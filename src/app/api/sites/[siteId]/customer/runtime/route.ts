@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
 import { ensureCustomerCsrfCookie } from "@/lib/customer-csrf";
-import { customerRuntimeApiCache, customerRuntimeApiCacheKey } from "@/lib/customer-runtime-api-cache";
+import {
+  customerRuntimeApiCache,
+  customerRuntimeApiCacheKey,
+  customerRuntimeSessionCache,
+  customerRuntimeSessionCacheKey
+} from "@/lib/customer-runtime-api-cache";
 import { isTransientPrismaConnectionError, prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getThemeRuntimeForCustomer } from "@/lib/server-store";
@@ -14,6 +19,7 @@ import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
 import {
   getCustomerAccountSectionRuntimeRelational,
   selectCustomerAccountRuntimeSection,
+  type CustomerAccountRuntimeList,
   type CustomerAccountRuntimeSection
 } from "@/lib/stores/customer-account-runtime";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
@@ -39,6 +45,7 @@ function emptyRuntime(): ThemeRuntimeData {
     ledger: [],
     subscriptions: [],
     orders: [],
+    downloads: [],
     customerModels: []
   };
 }
@@ -50,6 +57,12 @@ type RuntimeJob = ThemeRuntimeData["jobs"][number];
 type RuntimeAlbum = ThemeRuntimeData["albums"][number];
 type RuntimeLedgerEntry = ThemeRuntimeData["ledger"][number];
 type AccountCurrentCustomer = { customer: PublicCustomer; session: CustomerSession; sessionId: string };
+type RuntimeMeasure = <T>(name: string, operation: () => Promise<T>) => Promise<T>;
+type RuntimeApiResult = {
+  current?: AccountCurrentCustomer;
+  customer: NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>>["customer"];
+  runtime: ThemeRuntimeData;
+};
 type WorkspaceRuntimeQueryRow = {
   customer: unknown;
   jobs: unknown;
@@ -57,6 +70,25 @@ type WorkspaceRuntimeQueryRow = {
   subscriptions: unknown;
   customerModels: unknown;
 };
+
+function createRuntimeTiming() {
+  const entries: { duration: number; name: string }[] = [];
+  return {
+    async measure<T>(name: string, operation: () => Promise<T>): Promise<T> {
+      const startedAt = performance.now();
+      try {
+        return await operation();
+      } finally {
+        entries.push({ name, duration: performance.now() - startedAt });
+      }
+    },
+    header(): string {
+      return entries
+        .map((entry) => `${entry.name};dur=${Math.max(0, entry.duration).toFixed(1)}`)
+        .join(", ");
+    }
+  };
+}
 
 function objectFromJson(value: unknown): Record<string, unknown> | undefined {
   if (value && typeof value === "object" && !Array.isArray(value)) return value as Record<string, unknown>;
@@ -565,6 +597,34 @@ function normalizeSection(value: string | null): CustomerRuntimeSection {
   return "summary";
 }
 
+function normalizeList(value: string | null): CustomerAccountRuntimeList | undefined {
+  if (
+    value === "subscriptions" ||
+    value === "orders" ||
+    value === "ledger" ||
+    value === "jobs" ||
+    value === "downloads" ||
+    value === "albums" ||
+    value === "models" ||
+    value === "assets" ||
+    value === "avatars"
+  ) return value;
+  return undefined;
+}
+
+function normalizePage(value: string | null): number {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return 1;
+  return Math.max(1, Math.trunc(parsed));
+}
+
+function normalizePageSize(value: string | null): number {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return 20;
+  const pageSize = Math.trunc(parsed);
+  return pageSize === 10 || pageSize === 20 || pageSize === 50 ? pageSize : 20;
+}
+
 function sectionRuntime(runtime: ThemeRuntimeData, section: CustomerRuntimeSection): ThemeRuntimeData {
   return selectCustomerAccountRuntimeSection(runtime, section);
 }
@@ -727,15 +787,27 @@ async function _readAccountSectionRuntime({
 }
 
 async function readAccountSectionRuntimeForSession({
+  list,
+  measure,
+  page,
+  pageSize,
   section,
   sessionId,
   siteId
 }: {
+  list?: CustomerAccountRuntimeList;
+  measure?: RuntimeMeasure;
+  page: number;
+  pageSize: number;
   section: CustomerRuntimeSection;
   sessionId: string;
   siteId: string;
 }): Promise<{ current: AccountCurrentCustomer; runtime: ThemeRuntimeData } | undefined> {
-  const session = await getCustomerBySessionRelational({ siteId, sessionId });
+  const measured: RuntimeMeasure = measure ?? ((_name, operation) => operation());
+  const session = await measured("session", () => customerRuntimeSessionCache.get(
+    customerRuntimeSessionCacheKey({ siteId, sessionId }),
+    () => getCustomerBySessionRelational({ siteId, sessionId })
+  ));
   if (!session?.customer) return undefined;
   const customer = session.customer;
   const current = {
@@ -745,24 +817,31 @@ async function readAccountSectionRuntimeForSession({
   };
   return {
     current,
-    runtime: await getCustomerAccountSectionRuntimeRelational({ customer, section, siteId })
+    runtime: await getCustomerAccountSectionRuntimeRelational({ customer, list, measure, page, pageSize, section, siteId })
   };
 }
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
+  const timing = createRuntimeTiming();
   const sessionId = (await cookies()).get(customerSessionCookie(siteId))?.value;
   if (!sessionId) {
-    return NextResponse.json({ ok: false, error: "customer_login_required", runtime: emptyRuntime() }, { status: 401 });
+    return NextResponse.json(
+      { ok: false, error: "customer_login_required", runtime: emptyRuntime() },
+      { status: 401, headers: { "Server-Timing": timing.header() } }
+    );
   }
 
   const searchParams = new URL(request.url).searchParams;
   const profile = searchParams.get("profile") ?? "account";
   const section = normalizeSection(searchParams.get("section"));
+  const list = normalizeList(searchParams.get("list"));
+  const page = normalizePage(searchParams.get("page"));
+  const pageSize = normalizePageSize(searchParams.get("pageSize"));
   const refreshToken = searchParams.get("refresh") ?? "";
   const normalizedProfile = profile === "workspace" ? "workspace" : profile === "account" ? "account" : "full";
   const currentForRefresh = normalizedProfile === "workspace" || refreshToken
-    ? await getCurrentCustomerForRuntimeRefresh(siteId)
+    ? await timing.measure("session", () => getCurrentCustomerForRuntimeRefresh(siteId))
     : undefined;
   if (currentForRefresh) {
     await releaseStaleActiveJobsForRuntimeRefresh({
@@ -770,62 +849,81 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       customerId: currentForRefresh.customer.id
     });
   }
-  let result: { customer: NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>>["customer"]; runtime: ThemeRuntimeData } | undefined;
+  let runtimeCacheHit = true;
+  let result: RuntimeApiResult | undefined;
   try {
-    result = await customerRuntimeApiCache.get(
-      customerRuntimeApiCacheKey({ profile: normalizedProfile, refreshToken, section, sessionId, siteId }),
-      async (): Promise<{ customer: NonNullable<Awaited<ReturnType<typeof getCurrentCustomerForSite>>>["customer"]; runtime: ThemeRuntimeData } | undefined> => {
-        if (normalizedProfile === "account") {
-          const accountRuntime = await readAccountSectionRuntimeForSession({ section, sessionId, siteId });
-          if (!accountRuntime) return undefined;
+    result = await timing.measure(
+      "runtime-cache",
+      () => customerRuntimeApiCache.get(
+        customerRuntimeApiCacheKey({ list, page, pageSize, profile: normalizedProfile, refreshToken, section, sessionId, siteId }),
+        async (): Promise<RuntimeApiResult | undefined> => {
+          runtimeCacheHit = false;
+          if (normalizedProfile === "account") {
+            const accountRuntime = await readAccountSectionRuntimeForSession({ list, measure: timing.measure, page, pageSize, section, sessionId, siteId });
+            if (!accountRuntime) return undefined;
+            return {
+              current: accountRuntime.current,
+              customer: accountRuntime.current.customer,
+              runtime: accountRuntime.runtime
+            };
+          }
+          if (normalizedProfile === "workspace") {
+            return readWorkspaceRuntime(siteId, sessionId, currentForRefresh);
+          }
+          const current = await timing.measure("session", () => getCurrentCustomerForSite(siteId));
+          if (!current) return undefined;
+          const state = await readStorefrontCustomerRuntimeStateForSiteFromDatabase({
+            siteId,
+            sessionId: current.sessionId,
+            profile: normalizedProfile
+          });
+          if (!state) return undefined;
           return {
-            customer: accountRuntime.current.customer,
-            runtime: accountRuntime.runtime
+            customer: current.customer,
+            runtime: trimRuntime(getThemeRuntimeForCustomer(state, siteId, current.customer.id), normalizedProfile, section)
           };
-        }
-        if (normalizedProfile === "workspace") {
-          return readWorkspaceRuntime(siteId, sessionId, currentForRefresh);
-        }
-        const current = await getCurrentCustomerForSite(siteId);
-        if (!current) return undefined;
-        const state = await readStorefrontCustomerRuntimeStateForSiteFromDatabase({
-          siteId,
-          sessionId: current.sessionId,
-          profile: normalizedProfile
-        });
-        if (!state) return undefined;
-        return {
-          customer: current.customer,
-          runtime: trimRuntime(getThemeRuntimeForCustomer(state, siteId, current.customer.id), normalizedProfile, section)
-        };
-      },
-      normalizedProfile === "workspace" ? 8_000 : normalizedProfile === "account" ? 30_000 : 12_000
+        },
+        normalizedProfile === "workspace" ? 8_000 : normalizedProfile === "account" ? 30_000 : 12_000
+      )
     );
   } catch (error) {
     const transient = isTransientPrismaConnectionError(error);
     console.error("customer_runtime_load_failed", error);
     return NextResponse.json(
       { ok: false, error: transient ? "customer_runtime_db_unavailable" : "customer_runtime_unavailable", runtime: emptyRuntime() },
-      { status: transient ? 503 : 500 }
+      { status: transient ? 503 : 500, headers: { "Server-Timing": timing.header() } }
     );
   }
   if (!result) {
-    return NextResponse.json({ ok: false, error: "customer_runtime_unavailable", runtime: emptyRuntime() }, { status: 404 });
+    return NextResponse.json(
+      { ok: false, error: "customer_runtime_unavailable", runtime: emptyRuntime() },
+      { status: 404, headers: { "Server-Timing": timing.header(), "X-Account-Runtime-Cache": runtimeCacheHit ? "hit" : "miss" } }
+    );
   }
 
-  const [adminAccess, current] = await Promise.all([
-    getSafeCustomerAdminAccess({ siteId, customer: result.customer }),
-    currentForRefresh ? Promise.resolve(currentForRefresh) : getCurrentCustomerForRuntimeRefresh(siteId)
-  ]);
+  const adminAccess = normalizedProfile === "account"
+    ? undefined
+    : await timing.measure("adminAccess", () => getSafeCustomerAdminAccess({ siteId, customer: result.customer }));
+  const current = normalizedProfile === "account"
+    ? result.current ?? currentForRefresh
+    : currentForRefresh ?? await timing.measure("session", () => getCurrentCustomerForRuntimeRefresh(siteId));
   const response = NextResponse.json({
     ok: true,
+    pagination: result.runtime.pagination,
     runtime: {
       ...result.runtime,
       customer: result.customer,
       adminAccess
     }
   }, {
-    headers: { "Cache-Control": refreshToken ? "private, no-store" : "private, max-age=20" }
+    headers: {
+      "Cache-Control": refreshToken ? "private, no-store" : "private, max-age=20",
+      "X-Account-Runtime-Cache": runtimeCacheHit ? "hit" : "miss"
+    }
   });
-  return current ? ensureCustomerCsrfCookie(response, request, siteId, current) : response;
+  const finalResponse = current
+    ? await timing.measure("csrf", async () => ensureCustomerCsrfCookie(response, request, siteId, current))
+    : response;
+  finalResponse.headers.set("Server-Timing", timing.header());
+  return finalResponse;
 }

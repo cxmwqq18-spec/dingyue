@@ -7,8 +7,23 @@ type CacheEntry<T> = {
   value: Promise<T>;
 };
 
+type ServerTtlCacheGlobal = typeof globalThis & {
+  __mydreamshootsServerTtlCacheStores?: Map<string, Map<string, CacheEntry<unknown>>>;
+};
+
+function cacheStoreForScope(scope: string): Map<string, CacheEntry<unknown>> {
+  const globalStore = globalThis as ServerTtlCacheGlobal;
+  globalStore.__mydreamshootsServerTtlCacheStores ??= new Map();
+  let scopedStore = globalStore.__mydreamshootsServerTtlCacheStores.get(scope);
+  if (!scopedStore) {
+    scopedStore = new Map();
+    globalStore.__mydreamshootsServerTtlCacheStores.set(scope, scopedStore);
+  }
+  return scopedStore;
+}
+
 export function createServerTtlCache(scope: string, defaultTtlMs: number) {
-  const store = new Map<string, CacheEntry<unknown>>();
+  const store = cacheStoreForScope(scope);
 
   function keyFor(key: string): string {
     return `${scope}:${key}`;

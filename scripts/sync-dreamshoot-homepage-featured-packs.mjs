@@ -79,7 +79,7 @@ function dreamshootFeaturedSections() {
         primaryCta: "Create Christmas Photos",
         primaryHref: "/login",
         secondaryCta: "View Christmas Photos",
-        secondaryHref: "/collections/christmas-photo",
+        secondaryHref: "/ai-image-generation/christmas-photo",
         photos: "Holiday cards",
         credits: "20 credits",
         privacy: "Private album",
@@ -113,7 +113,7 @@ function dreamshootFeaturedSections() {
         primaryCta: "Create Thanksgiving Photos",
         primaryHref: "/login",
         secondaryCta: "View Thanksgiving Photos",
-        secondaryHref: "/collections/thanksgiving-photo",
+        secondaryHref: "/ai-image-generation/thanksgiving-photo",
         photos: "Group portraits",
         credits: "20 credits",
         privacy: "Private gallery",
@@ -265,7 +265,7 @@ function applyDreamshootVisualProofIsolation(sections) {
     title: "Christmas group photos",
     description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.",
     imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp"),
-    href: "/collections/christmas-photo",
+    href: "/ai-image-generation/christmas-photo",
     previewImages: `${dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-04.webp")}|${dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-03.webp")}`
   });
   updateBlock(blocks, "proof_seasonal", {

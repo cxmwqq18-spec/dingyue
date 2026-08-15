@@ -13,6 +13,87 @@ const packProfilesPath = path.join(repoRoot, "src", "lib", "dreamshoot-pack-prof
 const useCaseProfilesPath = path.join(repoRoot, "src", "lib", "photo-package-use-case-profiles.json");
 const SITE_ID = "site_dreamshoot";
 const UPDATE_TIMESTAMP = "2026-08-14T00:00:00.000Z";
+const AI_IMAGE_GENERATION_ROOT = "/ai-image-generation";
+const AI_VIDEO_GENERATION_ROOT = "/ai-video-generation";
+const MYDREAMSHOOTS_ORIGIN_PATTERN = "https?:\\/\\/(?:www\\.)?mydreamshoots\\.com";
+const videoGenerationCategories = [
+  {
+    slug: "text-to-video",
+    label: "Text to video",
+    description: "Video themes created from written prompts.",
+    sortOrder: 10
+  },
+  {
+    slug: "image-to-video",
+    label: "Image to Video",
+    description: "Video themes created from uploaded or selected images.",
+    sortOrder: 20
+  }
+];
+const videoGenerationSlugs = new Set(videoGenerationCategories.map((category) => category.slug));
+const imageThemeSlugByLegacyTool = new Map([
+  ["photo-ai", ""],
+  ["ai-photo-edit", ""],
+  ["ai-image-studio", ""],
+  ["image-studio", ""],
+  ["headshot", "headshot"],
+  ["creator-portrait", "portrait-photo"],
+  ["creator-portraits", "portrait-photo"],
+  ["world-cup-fan-photos", "soccer"],
+  ["cyberpunk-portrait", "cyberpunk"],
+  ["gala-photo", "gala-photo"],
+  ["noir-portrait", "mafia"],
+  ["anime-avatar", "avatar"],
+  ["nature-adventure", "travel"],
+  ["fashion-editorial", "street-style"],
+  ["product-lifestyle", "background-changer"],
+  ["background-changer", "background-changer"],
+  ["background-remover", "background-remover"],
+  ["magic-eraser", "magic-eraser"],
+  ["photo-enhancer", "photo-enhancer"],
+  ["portrait-retouch", "portrait-retouch"],
+  ["unblur-image", "unblur-image"],
+  ["color-correction", "color-correction"],
+  ["old-photo-restoration", "old-photo-restoration"],
+  ["edit-by-prompt", "edit-by-prompt"],
+  ["magic-upscaler", "photo-enhancer"],
+  ["virtual-try-on", "virtual-try-on"]
+]);
+const legacySlugReplacements = new Map([
+  ["professional-headshots", "headshot"],
+  ["headshots", "headshot"],
+  ["engagement", "engagement-photo"],
+  ["wedding-portraits", "wedding-photo"],
+  ["valentine-photos", "valentines-photo"],
+  ["christmas-photos", "christmas-photo"],
+  ["halloween-party-photos", "halloween-photo"],
+  ["thanksgiving-group-photos", "thanksgiving-photo"],
+  ["profile-cards", "avatar"],
+  ["anime-avatar", "avatar"],
+  ["creator-portraits", "portrait-photo"],
+  ["gala-photos", "gala-photo"],
+  ["gala", "gala-photo"],
+  ["world-cup-fan-photos", "soccer"],
+  ["sports", "soccer"],
+  ["beauty", "hairstyle-generator"],
+  ["creative", "lifestyle-creative"],
+  ["video", "motion-generator"],
+  ["creator", "portrait-photo"],
+  ["hairstyle", "hairstyle-generator"],
+  ["ai-video-add-ons", "motion-generator"],
+  ["outdoor-creator-scenes", "urban"],
+  ["nature", "travel"],
+  ["fashion-editorial", "street-style"],
+  ["product-style", "background-changer"],
+  ["social-cards", "edit-by-prompt"],
+  ["magic-upscaler", "photo-enhancer"],
+  ["indian-wedding", "rich-lifestyle"],
+  ["desi-wedding", "cannes"],
+  ["christmas-couple", "nightlife"]
+]);
+let collectionPathBySlug = new Map();
+let collectionRootSlugs = new Set();
+let mydreamshootsDirectProfiles = {};
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
@@ -27,11 +108,14 @@ function slugUnderscore(slug) {
 }
 
 function normalizeSlug(value) {
-  return String(value || "")
+  const withoutDirectoryRoot = String(value || "")
     .trim()
     .toLowerCase()
     .replace(/^\/+|\/+$/g, "")
     .replace(/^collections\//, "")
+    .replace(/^ai-image-generation\//, "");
+  const finalSegment = withoutDirectoryRoot.split("/").filter(Boolean).pop() || withoutDirectoryRoot;
+  return finalSegment
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
@@ -44,8 +128,12 @@ function categoryIdForSlug(slug) {
   return `pack_cat_dreamshoot_${slugUnderscore(slug)}`;
 }
 
-function titleForItem(item) {
-  return `AI ${item.label} Generator`;
+function videoCategoryIdForSlug(slug) {
+  return `video_cat_dreamshoot_${slugUnderscore(slug)}`;
+}
+
+function toolMenuItemIdForSlug(slug) {
+  return `tool_menu_dreamshoot_video_${slugUnderscore(slug)}`;
 }
 
 function promptForItem(item) {
@@ -57,56 +145,12 @@ function promptForItem(item) {
   ].join(" ");
 }
 
-function detailTagsForItem(item) {
-  return Array.from(new Set([
-    ...item.tags,
-    item.label,
-    "Private Gallery",
-    "AI Photos",
-    "Source Photo Guidance",
-    "Visible Credits",
-    "Download-ready Results"
-  ])).slice(0, 8);
-}
-
-function bestForItem(item) {
-  const [primary = item.label, secondary = "private albums", tertiary = "profile updates"] = item.tags;
-  return [
-    `${primary} photo sets from approved source photos`,
-    `${secondary} concepts with clear credit cost before generation`,
-    `${tertiary} images for profiles, posts, cards, or creator pages`,
-    "Private gallery review before downloading favorites"
-  ];
-}
-
-function workflowForItem(item) {
-  return [
-    "Upload clear source photos you own or have permission to use.",
-    `Choose the ${item.label} direction and review the expected image count.`,
-    "Confirm the visible credit cost before generation starts.",
-    "Review the private gallery, then download the images that match your use case."
-  ];
-}
-
 function profileForItem(item) {
-  return {
-    headline: titleForItem(item),
-    cardDescription: item.description,
-    metaLabel: item.label,
-    tags: item.tags,
-    detailTags: detailTagsForItem(item),
-    detailIntro: `${item.label} helps myDreamshoots customers turn approved uploads into a focused private photo set with a clear style, visible credit cost, and download-ready review.`,
-    whatCreates: `A private gallery of ${item.label.toLowerCase()} images, alternate crops, and polished visual directions based on photos the customer owns or has permission to use.`,
-    bestFor: bestForItem(item),
-    workflow: workflowForItem(item),
-    styleNotes: [
-      `Keep the request focused on ${item.label} instead of mixing several unrelated looks into one job.`,
-      "Use source photos with clear subject detail, natural lighting, and permission from every person shown.",
-      "Review face, hands, background details, crop, and overall realism before using the result publicly."
-    ],
-    coverNote: `${item.label} works best when the source photos are current, sharp, and matched to the final use case.`,
-    ...(item.safetyNote ? { safetyNote: item.safetyNote } : {})
-  };
+  const profile = mydreamshootsDirectProfiles[item.slug];
+  if (!profile) {
+    throw new Error(`Missing direct MyDreamShoots SEO profile for ${item.slug}. Add it to photo-package-use-case-profiles.json before syncing.`);
+  }
+  return structuredClone(profile);
 }
 
 function profileForRoot(root) {
@@ -174,6 +218,89 @@ function updatePack(pack, fields, changes) {
   }
 }
 
+function updateRecord(record, fields, changes, targetType) {
+  for (const [field, value] of Object.entries(fields)) {
+    const previous = JSON.stringify(record[field]);
+    const next = JSON.stringify(value);
+    if (previous === next) continue;
+    changes.push({ targetType, id: record.id, field, before: record[field], after: value });
+    record[field] = value;
+  }
+}
+
+function syncVideoThemeCategories(state, changes) {
+  const records = state.videoThemeCategories ?? (state.videoThemeCategories = []);
+  const targetSlugs = new Set(videoGenerationCategories.map((category) => category.slug));
+  const existingBySlug = new Map(records.filter((record) => record.siteId === SITE_ID).map((record) => [normalizeSlug(record.slug), record]));
+
+  for (const category of videoGenerationCategories) {
+    let record = existingBySlug.get(category.slug);
+    if (!record) {
+      record = {
+        id: videoCategoryIdForSlug(category.slug),
+        siteId: SITE_ID,
+        slug: category.slug,
+        createdAt: UPDATE_TIMESTAMP
+      };
+      records.push(record);
+      changes.push({ targetType: "VideoThemeCategory", id: record.id, field: "create", after: category.slug });
+    }
+    updateRecord(record, {
+      siteId: SITE_ID,
+      slug: category.slug,
+      label: category.label,
+      description: category.description,
+      sortOrder: category.sortOrder,
+      status: "active"
+    }, changes, "VideoThemeCategory");
+  }
+
+  for (const record of records) {
+    if (record.siteId !== SITE_ID || targetSlugs.has(normalizeSlug(record.slug))) continue;
+    updateRecord(record, { status: "paused" }, changes, "VideoThemeCategory");
+  }
+}
+
+function videoToolMenuDetail(category) {
+  return {
+    eyebrow: "AI Video Generation",
+    title: category.label,
+    subtitle: category.description,
+    ctaLabel: "Create a video concept",
+    guideTitle: `${category.label} guide`,
+    guideBody: `${category.label} turns approved MyDreamShoots photo outputs or uploads into short private motion concepts with credits shown before generation.`,
+    useCases: [
+      "Private motion previews",
+      "Short social or album clips",
+      "Video concepts from approved images"
+    ],
+    workflow: [
+      "Choose a finished photo or upload an approved image.",
+      "Select the video generation direction.",
+      "Review credits before generation.",
+      "Save the private video concept in your workspace."
+    ]
+  };
+}
+
+function syncToolMenuItems(state, changes) {
+  const records = state.toolMenuItems ?? (state.toolMenuItems = []);
+  for (let index = records.length - 1; index >= 0; index -= 1) {
+    const record = records[index];
+    if (record.siteId !== SITE_ID) continue;
+    records.splice(index, 1);
+    changes.push({ targetType: "ToolMenuItem", id: record.id, field: "delete", before: record.slug });
+  }
+
+  const categories = state.toolCategories ?? (state.toolCategories = []);
+  for (let index = categories.length - 1; index >= 0; index -= 1) {
+    const category = categories[index];
+    if (category.siteId !== SITE_ID) continue;
+    categories.splice(index, 1);
+    changes.push({ targetType: "ToolCategory", id: category.id, field: "delete", before: category.slug });
+  }
+}
+
 function categoryFieldsForRoot(root) {
   return {
     siteId: SITE_ID,
@@ -191,14 +318,15 @@ function categoryFieldsForRoot(root) {
 }
 
 function categoryFieldsForItem(item, parentId, sortOrder) {
+  const profile = profileForItem(item);
   return {
     siteId: SITE_ID,
     parentId,
     slug: item.slug,
     label: item.label,
     description: item.description,
-    heroTitle: titleForItem(item),
-    heroSubtitle: profileForItem(item).detailIntro,
+    heroTitle: profile.headline,
+    heroSubtitle: profile.detailIntro,
     icon: item.icon,
     sortOrder,
     status: "active",
@@ -230,51 +358,84 @@ function packFieldsForItem(item, categoryId, sourcePack) {
   };
 }
 
+function buildCollectionPathMap(taxonomy) {
+  const paths = new Map([["", AI_IMAGE_GENERATION_ROOT]]);
+  collectionRootSlugs = new Set();
+  for (const root of taxonomy.roots || []) {
+    const rootSlug = normalizeSlug(root.slug);
+    collectionRootSlugs.add(rootSlug);
+    paths.set(rootSlug, AI_IMAGE_GENERATION_ROOT);
+  }
+  for (const item of taxonomy.items || []) {
+    const itemSlug = normalizeSlug(item.slug);
+    paths.set(itemSlug, `${AI_IMAGE_GENERATION_ROOT}/${itemSlug}`);
+  }
+  return paths;
+}
+
+function collectionPathForSlug(value) {
+  const canonicalSlug = legacySlugReplacements.get(normalizeSlug(value)) || normalizeSlug(value);
+  if (!canonicalSlug || canonicalSlug === "collections" || canonicalSlug === "ai-image-generation" || collectionRootSlugs.has(canonicalSlug)) return AI_IMAGE_GENERATION_ROOT;
+  return collectionPathBySlug.get(canonicalSlug) || `${AI_IMAGE_GENERATION_ROOT}/${canonicalSlug}`;
+}
+
 function replaceCollectionHrefs(value) {
   if (typeof value !== "string") return value;
-  const replacements = new Map([
-    ["professional-headshots", "headshot"],
-    ["headshots", "headshot"],
-    ["engagement", "engagement-photo"],
-    ["wedding-portraits", "wedding-photo"],
-    ["valentine-photos", "valentines-photo"],
-    ["christmas-photos", "christmas-photo"],
-    ["halloween-party-photos", "halloween-photo"],
-    ["thanksgiving-group-photos", "thanksgiving-photo"],
-    ["profile-cards", "avatar"],
-    ["anime-avatar", "avatar"],
-    ["creator-portraits", "portrait-photo"],
-    ["gala-photos", "gala-photo"],
-    ["gala", "gala-photo"],
-    ["world-cup-fan-photos", "soccer"],
-    ["sports", "soccer"],
-    ["beauty", "hairstyle-generator"],
-    ["creative", "lifestyle-creative"],
-    ["video", "motion-generator"],
-    ["creator", "portrait-photo"],
-    ["hairstyle", "hairstyle-generator"],
-    ["ai-video-add-ons", "motion-generator"],
-    ["outdoor-creator-scenes", "urban"],
-    ["nature", "travel"],
-    ["fashion-editorial", "street-style"],
-    ["product-style", "background-changer"],
-    ["social-cards", "edit-by-prompt"],
-    ["magic-upscaler", "photo-enhancer"],
-    ["indian-wedding", "rich-lifestyle"],
-    ["desi-wedding", "cannes"],
-    ["christmas-couple", "nightlife"]
-  ]);
-  const wholeValueReplacement = replacements.get(value);
+  const normalizedValue = normalizeSlug(value);
+  const wholeValueReplacement = legacySlugReplacements.get(normalizedValue);
   if (wholeValueReplacement) return wholeValueReplacement;
-  return value.replace(/\/collections\/([a-z0-9-]+)/g, (match, slug) => {
-    const next = replacements.get(slug);
-    return next ? `/collections/${next}` : match;
+  const collectionHrefPattern = new RegExp(`(${MYDREAMSHOOTS_ORIGIN_PATTERN})?\\/collections(?:\\/([a-z0-9-]+))?(\\?[^"'\\s<)]*)?`, "g");
+  const replaceHref = (origin = "", slug = "", query = "") => {
+    const params = new URLSearchParams(query.startsWith("?") ? query.slice(1) : query);
+    const queryCategory = params.get("category") || "";
+    params.delete("category");
+    const targetSlug = slug || queryCategory;
+    const nextPath = collectionPathForSlug(targetSlug);
+    const nextQuery = params.toString();
+    return `${origin}${nextPath}${nextQuery ? `?${nextQuery}` : ""}`;
+  };
+  let nextValue = value.replace(collectionHrefPattern, (_match, origin = "", slug = "", query = "") => replaceHref(origin, slug, query));
+  const imageGenerationHrefPattern = new RegExp(`(${MYDREAMSHOOTS_ORIGIN_PATTERN})?\\/ai-image-generation(?:\\/([a-z0-9-]+))?(?:\\/([a-z0-9-]+))?(\\?[^"'\\s<)]*)?`, "g");
+  nextValue = nextValue.replace(imageGenerationHrefPattern, (_match, origin = "", firstSlug = "", secondSlug = "", query = "") => replaceHref(origin, secondSlug || firstSlug, query));
+  const toolHrefPattern = new RegExp(`(${MYDREAMSHOOTS_ORIGIN_PATTERN})?\\/tools(?:\\/([a-z0-9-]+))?(\\?[^"'\\s<)]*)?`, "g");
+  nextValue = nextValue.replace(toolHrefPattern, (_match, origin = "", slug = "", query = "") => {
+    const canonicalSlug = normalizeSlug(slug);
+    const nextPath = !canonicalSlug
+      ? AI_VIDEO_GENERATION_ROOT
+      : videoGenerationSlugs.has(canonicalSlug)
+        ? `${AI_VIDEO_GENERATION_ROOT}/${canonicalSlug}`
+        : imageThemeSlugByLegacyTool.has(canonicalSlug)
+          ? collectionPathForSlug(imageThemeSlugByLegacyTool.get(canonicalSlug))
+          : AI_IMAGE_GENERATION_ROOT;
+    return `${origin}${nextPath}${query || ""}`;
   });
+  return nextValue
+    .replace(/\bAI Photoshoot\b/g, "AI Image Generation")
+    .replace(/\bAI Tools\b/g, "AI Video Generation")
+    .replace(/\bPhotoshoot Studio\b/g, "AI Image Generation");
 }
 
 function replaceThemeText(value) {
   if (typeof value !== "string") return value;
   const replacements = [
+    ["AI Headshot Generators", "AI Headshot Photo Packages"],
+    ["AI Headshot Generator", "AI Headshot Photo Package"],
+    ["Headshot Generators", "Headshot Photo Packages"],
+    ["Headshot Generator", "Headshot Photo Package"],
+    ["AI tools", "AI Video Generation"],
+    ["AI tool", "AI Video Generation"],
+    ["Free AI tools", "AI Video Generation"],
+    ["Free AI Tools", "AI Video Generation"],
+    ["AI Photo Tools with Free Previews | Background, Headshots & Try-ons | myDreamshoots", "AI Video Generation for Private Motion Clips | myDreamshoots"],
+    ["Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.", "Explore myDreamshoots AI Video Generation for image-to-video clips, profile motion, creator intros, product teasers, animated avatars, fashion reels, and private album stories."],
+    ["myDreamshoots AI Photo Tools", "myDreamshoots AI Video Generation"],
+    ["Photo AI Tools - portraits, headshots, and creator photos | myDreamshoots", "AI Image Generation Themes - portraits, headshots, and creator photos | myDreamshoots"],
+    ["Video AI Tools - image to video and creator clips | myDreamshoots", "AI Video Generation - image to video and creator clips | myDreamshoots"],
+    ["Video AI tools", "AI Video Generation"],
+    ["Video AI", "AI Video Generation"],
+    ["AI Tools Collection", "AI Video Generation"],
+    ["Compare all AI tools", "Browse AI Image Generation themes"],
+    ["Browse edit tools", "Browse Photo Tools themes"],
     ["World Cup Fan Photos", "Soccer"],
     ["World Cup fan photos", "Soccer"],
     ["world cup fan photos", "soccer"],
@@ -371,22 +532,105 @@ function isDreamshootOwnedRecord(record) {
   return record.id === SITE_ID || record.siteId === SITE_ID || record.targetId === SITE_ID || record.sourceSiteId === SITE_ID;
 }
 
-function applyScopedHrefReplacements(state) {
+function recordJsonChange(changes, targetType, record, before) {
+  const after = JSON.stringify(record);
+  if (before === after) return;
+  changes.push({
+    targetType,
+    id: record.id || record.slug || record.siteId || "unknown",
+    field: "storedJson",
+    before: "legacy public route/text references",
+    after: "normalized MyDreamShoots public route/text references"
+  });
+}
+
+function setDreamshootNavigationLinks(site) {
+  const fixedHeaderLinks = [
+    { label: "AI Image Generation", href: AI_IMAGE_GENERATION_ROOT },
+    { label: "AI Video Generation", href: AI_VIDEO_GENERATION_ROOT },
+    { label: "Best Packages", href: "/best-packages" },
+    { label: "How it works", href: "/workflow" },
+    { label: "Blog", href: "/blog" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Workspace", href: "/app/create" }
+  ];
+  const fixedFooterLinks = [
+    { label: "AI Image Generation", href: AI_IMAGE_GENERATION_ROOT, group: "product" },
+    { label: "AI Video Generation", href: AI_VIDEO_GENERATION_ROOT, group: "product" },
+    { label: "Best Packages", href: "/best-packages", group: "product" },
+    { label: "Best AI image", href: "/best-ai-image", group: "product" },
+    { label: "Best AI video", href: "/best-ai-video", group: "product" },
+    { label: "How it works", href: "/workflow", group: "product" },
+    { label: "Pricing", href: "/pricing", group: "product" },
+    { label: "Blog", href: "/blog", group: "company" },
+    { label: "About us", href: "/about-us", group: "company" },
+    { label: "Contact us", href: "/contact-us", group: "company" },
+    { label: "Creators Circle", href: "/creators-circle", group: "company" },
+    { label: "Refund Policy", href: "/refunds", group: "company" },
+    { label: "FAQ", href: "/faq", group: "company" },
+    { label: "Privacy Policy", href: "/privacy", group: "support" },
+    { label: "Content policy", href: "/content", group: "support" },
+    { label: "Terms of Service", href: "/terms", group: "support" },
+    { label: "Cookie Policy", href: "/cookies", group: "support" }
+  ];
+  for (const settings of [site.themeSettings?.draftJson, site.themeSettings?.publishedJson]) {
+    if (!settings?.navigation) continue;
+    settings.navigation.headerLinks = fixedHeaderLinks;
+    settings.navigation.footerLinks = fixedFooterLinks;
+  }
+}
+
+function applyScopedHrefReplacements(state, changes) {
   for (const key of Object.keys(state)) {
     const value = state[key];
     if (!Array.isArray(value)) continue;
     if (key === "creativePackCategories" || key === "creativePacks") continue;
     for (const record of value) {
       if (!isDreamshootOwnedRecord(record)) continue;
+      const before = JSON.stringify(record);
       deepReplaceStrings(record);
       normalizeFeaturedSectionCollectionSlugs(record);
       normalizeDreamshootHomeFeaturedSections(record);
+      if (key === "sites" && record.id === SITE_ID) setDreamshootNavigationLinks(record);
+      recordJsonChange(changes, `PlatformState.${key}`, record, before);
     }
   }
 }
 
 function toPrismaJson(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function rewriteStoredJson(value) {
+  if (value === null || value === undefined) return value;
+  return toPrismaJson(deepReplaceStrings(toPrismaJson(value)));
+}
+
+function jsonEquals(left, right) {
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
+async function rewriteThemeJsonRows(tx, modelName, fields) {
+  const model = tx[modelName];
+  const select = Object.fromEntries(["id", ...fields].map((field) => [field, true]));
+  const rows = await model.findMany({ where: { siteId: SITE_ID }, select });
+  let updates = 0;
+  for (const row of rows) {
+    const data = {};
+    for (const field of fields) {
+      if (row[field] === null || row[field] === undefined) continue;
+      const nextValue = rewriteStoredJson(row[field]);
+      if (jsonEquals(row[field], nextValue)) continue;
+      data[field] = nextValue;
+    }
+    if (!Object.keys(data).length) continue;
+    await model.update({
+      where: { id: row.id },
+      data
+    });
+    updates += 1;
+  }
+  return updates;
 }
 
 function clearPlatformStateCaches() {
@@ -404,6 +648,7 @@ async function updateDatabase({ state, categories, packs }) {
   const { PrismaClient } = await import("@prisma/client");
   const prisma = new PrismaClient();
   const stateJson = toPrismaJson(state);
+  const siteRecord = (state.sites ?? []).find((site) => site.id === SITE_ID);
   try {
     const existingCategories = await prisma.creativePackCategory.findMany({
       where: { siteId: SITE_ID },
@@ -505,12 +750,68 @@ async function updateDatabase({ state, categories, packs }) {
           updatedAt: new Date(UPDATE_TIMESTAMP)
         }
       });
+      for (const category of videoGenerationCategories) {
+        await tx.videoThemeCategory.upsert({
+          where: { siteId_slug: { siteId: SITE_ID, slug: category.slug } },
+          create: {
+            id: videoCategoryIdForSlug(category.slug),
+            siteId: SITE_ID,
+            slug: category.slug,
+            label: category.label,
+            description: category.description,
+            sortOrder: category.sortOrder,
+            status: "active",
+            createdAt: new Date(UPDATE_TIMESTAMP)
+          },
+          update: {
+            label: category.label,
+            description: category.description,
+            sortOrder: category.sortOrder,
+            status: "active"
+          }
+        });
+      }
+      await tx.videoThemeCategory.updateMany({
+        where: {
+          siteId: SITE_ID,
+          slug: { notIn: Array.from(videoGenerationSlugs) }
+        },
+        data: {
+          status: "paused"
+        }
+      });
+      await tx.toolMenuItem.deleteMany({ where: { siteId: SITE_ID } });
+      await tx.toolCategory.deleteMany({ where: { siteId: SITE_ID } });
+      for (const page of siteRecord?.pages ?? []) {
+        const pageData = {
+          siteId: SITE_ID,
+          pageType: page.pageType || "page",
+          templateKey: page.templateKey ?? null,
+          slug: page.slug,
+          title: page.title || page.slug,
+          draftJson: toPrismaJson(page.draftJson),
+          publishedJson: toPrismaJson(page.publishedJson),
+          draftMeta: page.draftMeta === undefined ? null : toPrismaJson(page.draftMeta)
+        };
+        await tx.themePage.upsert({
+          where: { id: page.id },
+          create: {
+            id: page.id,
+            ...pageData
+          },
+          update: pageData
+        });
+      }
+      await rewriteThemeJsonRows(tx, "themePage", ["draftJson", "publishedJson", "draftMeta"]);
+      await rewriteThemeJsonRows(tx, "themeSettings", ["draftJson", "publishedJson"]);
+      await rewriteThemeJsonRows(tx, "themePublication", ["snapshot"]);
+      await rewriteThemeJsonRows(tx, "siteTheme", ["templates", "settings"]);
       await tx.platformStateDocument.upsert({
         where: { id: "platform" },
         create: { id: "platform", state: stateJson },
         update: { state: stateJson }
       });
-    }, { timeout: 60_000 });
+    }, { timeout: 180_000 });
     clearPlatformStateCaches();
   } finally {
     await prisma.$disconnect();
@@ -519,8 +820,10 @@ async function updateDatabase({ state, categories, packs }) {
 
 const state = readJson(statePath);
 const taxonomy = readJson(taxonomyPath);
+collectionPathBySlug = buildCollectionPathMap(taxonomy);
 const packProfiles = readJson(packProfilesPath);
 const useCaseProfiles = readJson(useCaseProfilesPath);
+mydreamshootsDirectProfiles = useCaseProfiles.mydreamshootsCategories || {};
 const categories = state.creativePackCategories ?? [];
 const packs = state.creativePacks ?? [];
 const originalPackById = new Map(packs.filter((pack) => pack.siteId === SITE_ID).map((pack) => [pack.id, structuredClone(pack)]));
@@ -530,6 +833,7 @@ const targetPackIds = new Set();
 const syncedCategories = [];
 const syncedPacks = [];
 const rootIdBySlug = new Map();
+const taxonomyItemBySlug = new Map(taxonomy.items.map((item) => [normalizeSlug(item.slug), item]));
 
 for (const root of taxonomy.roots) {
   const targetSlug = normalizeSlug(root.slug);
@@ -589,12 +893,36 @@ for (const [index, item] of taxonomy.items.entries()) {
 
 for (const category of categories) {
   if (category.siteId !== SITE_ID || targetCategoryIds.has(category.id)) continue;
-  updateCategory(category, { status: "inactive", updatedAt: UPDATE_TIMESTAMP }, changes);
+  const inactiveItem = taxonomyItemBySlug.get(normalizeSlug(category.slug));
+  const inactiveProfile = inactiveItem ? profileForItem(inactiveItem) : undefined;
+  updateCategory(category, {
+    ...(inactiveItem ? {
+      label: inactiveItem.label,
+      description: inactiveItem.description,
+      heroTitle: inactiveProfile.headline,
+      heroSubtitle: inactiveProfile.detailIntro,
+      icon: inactiveItem.icon
+    } : {}),
+    status: "inactive",
+    updatedAt: UPDATE_TIMESTAMP
+  }, changes);
 }
 
 for (const pack of packs) {
   if (pack.siteId !== SITE_ID || targetPackIds.has(pack.id)) continue;
-  updatePack(pack, { status: "inactive", updatedAt: UPDATE_TIMESTAMP }, changes);
+  const inactiveItem = taxonomyItemBySlug.get(normalizeSlug(pack.category || pack.slug || pack.name));
+  const inactiveProfile = inactiveItem ? profileForItem(inactiveItem) : undefined;
+  updatePack(pack, {
+    ...(inactiveItem ? {
+      name: inactiveItem.label,
+      headline: inactiveProfile.headline,
+      description: profileDescription(inactiveProfile),
+      prompt: promptForItem(inactiveItem),
+      category: inactiveItem.slug
+    } : {}),
+    status: "inactive",
+    updatedAt: UPDATE_TIMESTAMP
+  }, changes);
 }
 
 useCaseProfiles.mydreamshootsCategories = {
@@ -602,7 +930,9 @@ useCaseProfiles.mydreamshootsCategories = {
   ...Object.fromEntries(taxonomy.roots.map((root) => [root.slug, profileForRoot(root)]))
 };
 
-applyScopedHrefReplacements(state);
+syncVideoThemeCategories(state, changes);
+syncToolMenuItems(state, changes);
+applyScopedHrefReplacements(state, changes);
 
 if (!dryRun) {
   writeJson(statePath, state);

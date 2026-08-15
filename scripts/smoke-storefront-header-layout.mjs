@@ -14,8 +14,8 @@ const stores = [
   {
     slug: "mydreamshoots",
     siteId: "site_dreamshoot",
-    publicLabels: [["AI Photoshoot", "Photoshoot Studio"], "Tools", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"],
-    appLabels: [["AI Photoshoot", "Photoshoot Studio"], "Tools", "Best Packages", "How it works", "Workspace", "Pricing"],
+    publicLabels: ["AI Image Generation", "AI Video Generation", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"],
+    appLabels: ["AI Image Generation", "AI Video Generation", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"],
     credentials: [
       {
         email: process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_EMAIL || process.env.SMOKE_CUSTOMER_EMAIL || "nora@mydreamshoots.localhost",
@@ -42,8 +42,8 @@ const stores = [
     siteId: "site_grownstride_test",
     routePrefix: isGrownstrideTestBase ? "" : "/site/grownstride",
     testHostOnly: true,
-    publicLabels: [["AI Photoshoot", "Photoshoot Studio"], "Tools", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"],
-    appLabels: [["AI Photoshoot", "Photoshoot Studio"], "Tools", "Best Packages", "How it works", "Workspace", "Pricing"],
+    publicLabels: ["AI Image Generation", "AI Video Generation", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"],
+    appLabels: ["AI Image Generation", "AI Video Generation", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"],
     credentials: [
       {
         email: process.env.SMOKE_GROWNSTRIDE_CUSTOMER_EMAIL || process.env.GROWNSTRIDE_TEST_CUSTOMER_EMAIL || "nora@grownstride.localhost",

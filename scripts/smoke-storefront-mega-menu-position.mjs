@@ -10,13 +10,17 @@ const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(
 const siteSlug = process.env.SMOKE_SITE_SLUG || "mydreamshoots";
 const siteId = process.env.SMOKE_SITE_ID || "site_dreamshoot";
 const hostName = new URL(baseUrl).hostname;
-const packageMenuLabel = /Headshot Generator|Occasion Albums|Browse occasion albums|Browse packages|Travel Packages|Ver paquetes|Paquetes de viaje|Paquetes de ocasion/i;
-const toolsMenuLabel = /^Tools$|^Herramientas$/i;
+const focusSiteSlug = process.env.STOREFRONT_MEGA_MENU_FOCUS_SITE || "";
+const skipCustomerEntries = process.env.STOREFRONT_MEGA_MENU_SKIP_CUSTOMER === "1";
+const pageLoadTimeoutMs = Number(process.env.STOREFRONT_MEGA_MENU_PAGE_TIMEOUT_MS ?? 60_000);
+const interactionTimeoutMs = Number(process.env.STOREFRONT_MEGA_MENU_INTERACTION_TIMEOUT_MS ?? 20_000);
+const packageMenuLabel = /AI Image Generation|AI Photoshoot|Headshot Generator|Occasion Albums|Browse occasion albums|Browse packages|Travel Packages|Ver paquetes|Paquetes de viaje|Paquetes de ocasion/i;
+const toolsMenuLabel = /^(AI Video Generation|AI Tools|Tools|Herramientas)$/i;
 const anonymousEntries = [
   { label: "MyDreamShoots home", path: `/site/${siteSlug}` },
-  { label: "MyDreamShoots collections", path: `/site/${siteSlug}/collections` },
-  { label: "MyDreamShoots package detail", path: `/site/${siteSlug}/collections/portrait-photo` },
-  { label: "MyDreamShoots tools", path: `/site/${siteSlug}/tools` },
+  { label: "MyDreamShoots collections", path: `/site/${siteSlug}/ai-image-generation` },
+  { label: "MyDreamShoots package detail", path: `/site/${siteSlug}/ai-image-generation/portrait-photo` },
+  { label: "MyDreamShoots video generation", path: `/site/${siteSlug}/ai-video-generation` },
   { label: "Aidreamcapes collections", path: "/site/aidreamcapes/collections" },
   { label: "Aidreamcapes package detail", path: "/site/aidreamcapes/collections/cinematic-travel" },
   { label: "Aidreamcapes tools", path: "/site/aidreamcapes/tools" }
@@ -25,7 +29,7 @@ const customerEntries = [
   { label: "MyDreamShoots workspace create", path: `/site/${siteSlug}/app/create` },
   { label: "MyDreamShoots workspace create step", path: `/site/${siteSlug}/app/create#step-create` },
   { label: "MyDreamShoots account", path: `/site/${siteSlug}/account` },
-  { label: "MyDreamShoots signed-in collections", path: `/site/${siteSlug}/collections` }
+  { label: "MyDreamShoots signed-in collections", path: `/site/${siteSlug}/ai-image-generation` }
 ];
 const compactCustomerEntries = [
   { label: "MyDreamShoots compact workspace create", path: `/site/${siteSlug}/app/create` }
@@ -37,6 +41,11 @@ function assert(condition, message) {
 
 function uid(prefix) {
   return `${prefix}_${Date.now().toString(36)}_${crypto.randomBytes(4).toString("hex")}`;
+}
+
+function entryMatchesFocusSite(entry) {
+  if (!focusSiteSlug) return true;
+  return entry.path === `/site/${focusSiteSlug}` || entry.path.startsWith(`/site/${focusSiteSlug}/`);
 }
 
 async function createSmokeSession() {
@@ -61,18 +70,18 @@ async function createSmokeSession() {
 async function assertMegaMenuPosition(context, entry, menu = "packages") {
   const page = await context.newPage();
   try {
-    await page.goto(entry.path, { waitUntil: "domcontentloaded", timeout: 20000 });
-    await page.waitForLoadState("networkidle", { timeout: 20000 }).catch(() => undefined);
+    await page.goto(entry.path, { waitUntil: "domcontentloaded", timeout: pageLoadTimeoutMs });
+    await page.waitForLoadState("networkidle", { timeout: interactionTimeoutMs }).catch(() => undefined);
     const labelPattern = menu === "tools" ? toolsMenuLabel : packageMenuLabel;
     const browseButton = page.getByRole("button", { name: labelPattern }).first();
-    await browseButton.waitFor({ state: "visible", timeout: 20000 });
+    await browseButton.waitFor({ state: "visible", timeout: interactionTimeoutMs });
     const buttonLabel = (await browseButton.textContent())?.trim().replace(/\s+/g, " ") || "package menu";
     await page.waitForTimeout(750);
     await browseButton.click({ force: true });
     await page.waitForFunction(
       () => Boolean(document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]')),
       undefined,
-      { timeout: 10000 }
+      { timeout: interactionTimeoutMs }
     );
 
     const metrics = await page.evaluate(() => {
@@ -93,7 +102,12 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
       const packageGridStyle = packageGrid ? getComputedStyle(packageGrid) : null;
       const text = panelElement?.textContent ?? "";
       const packageCounts = text.match(/(\d+)\s+CATEGOR(?:Y|IES)\s+·\s+(\d+)\s+THEME(?:S)?/i);
-      const toolLinkCount = panelElement ? Array.from(panelElement.querySelectorAll('a[href*="/tools"]')).length : 0;
+      const toolLinkCount = panelElement ? Array.from(panelElement.querySelectorAll('a[href*="/tools"], a[href*="/ai-video-generation"]')).length : 0;
+      const videoFrameworkLinks = panelElement ? Array.from(panelElement.querySelectorAll('a[href*="/app/create#step-video"]')).map((anchor) => ({
+        text: (anchor.textContent || "").replace(/\s+/g, " ").trim(),
+        href: anchor.getAttribute("href") || ""
+      })) : [];
+      const panelText = panelElement?.textContent || "";
       return {
         headerBottom: header?.bottom ?? null,
         panelTop: panel?.top ?? null,
@@ -107,9 +121,11 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
         viewportWidth: window.innerWidth,
         viewportHeight: window.innerHeight,
         packageCounts: packageCounts ? { categories: Number(packageCounts[1]), themes: Number(packageCounts[2]) } : null,
-        route: location.pathname
-        ,
-        toolLinkCount
+        route: location.pathname,
+        toolLinkCount,
+        videoFrameworkLinks,
+        hasLegacyVideoToolLabels: /Profile Clip|Fan Poster Motion|Creator Intro Video|Product Teaser Clip|Animated Avatar|Fashion Reel|Album Story Video/.test(panelText),
+        hasTwoVideoCategoriesLabel: /2\s+CATEGOR(?:Y|IES)/i.test(panelText)
       };
     });
 
@@ -131,11 +147,19 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
       const responsiveCap = Math.min(760, Math.max(260, Math.floor(metrics.viewportHeight * 0.72)));
       assert(Number.parseFloat(metrics.panelMaxHeight) <= responsiveCap + 1, `${entry.label} ${entry.path}: package panel max-height ${metrics.panelMaxHeight} ignored responsive cap ${responsiveCap}px`);
       assert(metrics.packageGridMaxHeight === "none", `${entry.label} ${entry.path}: package list still uses fixed max-height ${metrics.packageGridMaxHeight}`);
+    } else if (entry.path.includes(`/site/${siteSlug}/`)) {
+      const videoLabels = metrics.videoFrameworkLinks.map((link) => link.text);
+      assert(metrics.videoFrameworkLinks.length === 2, `${entry.label} ${entry.path}: AI Video Generation menu should expose 2 video framework links, found ${metrics.videoFrameworkLinks.length}`);
+      assert(JSON.stringify(videoLabels) === JSON.stringify(["Text to video", "Image to Video"]), `${entry.label} ${entry.path}: AI Video Generation menu labels changed to ${JSON.stringify(videoLabels)}`);
+      assert(metrics.hasTwoVideoCategoriesLabel, `${entry.label} ${entry.path}: AI Video Generation menu should report 2 categories`);
+      assert(!metrics.hasLegacyVideoToolLabels, `${entry.label} ${entry.path}: AI Video Generation menu still exposes legacy video tool labels`);
     } else {
       assert(metrics.toolLinkCount >= 6, `${entry.label} ${entry.path}: tools menu shrank to ${metrics.toolLinkCount} tool links`);
     }
     const summary = menu === "packages" && metrics.packageCounts
       ? `${metrics.packageCounts.categories} categories / ${metrics.packageCounts.themes} themes`
+      : entry.path.includes(`/site/${siteSlug}/`)
+      ? `${metrics.videoFrameworkLinks.length} video framework links`
       : `${metrics.toolLinkCount} tool links`;
     console.log(`✓ ${entry.label} (${metrics.route}) ${buttonLabel}: gap ${gap}px, width ${Math.round(metrics.panelWidth)}px, ${summary}`);
   } finally {
@@ -151,12 +175,18 @@ async function smokeStorefrontMegaMenuPosition() {
       baseURL: baseUrl,
       viewport: { width: 2048, height: 1180 }
     });
-    for (const entry of anonymousEntries) {
+    for (const entry of anonymousEntries.filter(entryMatchesFocusSite)) {
       await assertMegaMenuPosition(anonymousContext, entry);
     }
-    await assertMegaMenuPosition(anonymousContext, { label: "MyDreamShoots package detail tools", path: `/site/${siteSlug}/collections/portrait-photo` }, "tools");
-    await assertMegaMenuPosition(anonymousContext, { label: "Aidreamcapes package detail tools", path: "/site/aidreamcapes/collections/cinematic-travel" }, "tools");
+    const toolEntries = [
+      { label: "MyDreamShoots package detail tools", path: `/site/${siteSlug}/ai-image-generation/portrait-photo` },
+      { label: "Aidreamcapes package detail tools", path: "/site/aidreamcapes/collections/cinematic-travel" }
+    ].filter(entryMatchesFocusSite);
+    for (const entry of toolEntries) {
+      await assertMegaMenuPosition(anonymousContext, entry, "tools");
+    }
 
+    if (skipCustomerEntries) return;
     const customerContext = await browser.newContext({
       baseURL: baseUrl,
       viewport: { width: 2048, height: 1180 }
@@ -169,7 +199,7 @@ async function smokeStorefrontMegaMenuPosition() {
       httpOnly: true,
       sameSite: "Lax"
     }]);
-    for (const entry of customerEntries) {
+    for (const entry of customerEntries.filter(entryMatchesFocusSite)) {
       await assertMegaMenuPosition(customerContext, entry);
     }
     const compactCustomerContext = await browser.newContext({
@@ -184,7 +214,7 @@ async function smokeStorefrontMegaMenuPosition() {
       httpOnly: true,
       sameSite: "Lax"
     }]);
-    for (const entry of compactCustomerEntries) {
+    for (const entry of compactCustomerEntries.filter(entryMatchesFocusSite)) {
       await assertMegaMenuPosition(compactCustomerContext, entry);
     }
   } finally {

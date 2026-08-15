@@ -16,7 +16,7 @@ import { DreamshootShowcaseRail } from "@/components/storefront/dreamshoot-showc
 import { DreamshootShowcaseVideo } from "@/components/storefront/dreamshoot-showcase-video";
 import { DreamshootToolDirectoryClient, type DreamshootToolDirectoryCard } from "@/components/storefront/dreamshoot-tool-directory-client";
 import { DreamShootMegaToolsPanel as SharedDreamShootMegaToolsPanel, getToolBlocksFromMenuItems as getSharedToolBlocksFromMenuItems } from "@/components/storefront/dreamshoot-tools-mega-menu";
-import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem } from "@/components/storefront/header-mega-menu-panels";
+import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderMobileVideoGenerationMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem, type HeaderVideoGenerationCategory } from "@/components/storefront/header-mega-menu-panels";
 import { LazyStorefrontSection } from "@/components/storefront/lazy-storefront-section";
 import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
@@ -103,12 +103,12 @@ const dreamShootsVisibleTitle = "myᕲreamshoots";
 const aidreamcapesVisibleTitle = "ልiጋreamርapes";
 
 function publicPrefetchCandidatesForPath(path: string) {
-  if (path === "/") return ["/login", "/tools", "/collections", "/pricing"];
-  if (path === "/collections" || path.startsWith("/collections/")) return ["/", "/pricing", "/tools"];
-  if (path === "/tools" || path.startsWith("/tools/")) return ["/", "/pricing", "/collections"];
-  if (path === "/pricing") return ["/", "/collections", "/tools", "/faq"];
-  if (path === "/faq" || path === "/help") return ["/", "/collections", "/tools", "/pricing"];
-  return ["/", "/collections", "/tools", "/pricing"];
+  if (path === "/") return ["/login", "/ai-image-generation", "/ai-video-generation", "/pricing"];
+  if (path === "/collections" || path.startsWith("/collections/") || path === "/ai-image-generation" || path.startsWith("/ai-image-generation/")) return ["/", "/pricing", "/ai-video-generation"];
+  if (path === "/ai-video-generation" || path.startsWith("/ai-video-generation/") || path === "/tools" || path.startsWith("/tools/")) return ["/", "/pricing", "/ai-image-generation"];
+  if (path === "/pricing") return ["/", "/ai-image-generation", "/ai-video-generation", "/faq"];
+  if (path === "/faq" || path === "/help") return ["/", "/ai-image-generation", "/ai-video-generation", "/pricing"];
+  return ["/", "/ai-image-generation", "/ai-video-generation", "/pricing"];
 }
 
 import { getSectionSchema, getThemeBlockSchema, readThemeFieldValue, resolveThemeFieldSchema } from "@/lib/section-schema";
@@ -120,9 +120,14 @@ import {
   creativePackCategoryTokens as sharedCreativePackCategoryTokens,
   creativePackCollectionHref as sharedCreativePackCollectionHref,
   getPhotoPackageMegaGroups as sharedPhotoPackageMegaGroups,
+  isMydreamshootsVideoGenerationSlug,
+  publicCollectionPathForSite,
+  publicCollectionSlugFromPath,
+  publicVideoGenerationPathForSite,
   photoPackageLabel,
   photoPackageSlug
 } from "@/lib/photo-package-taxonomy";
+import { activeVideoGenerationCategories, isMydreamshootsVideoFrameworkSite } from "@/lib/mydreamshoots-video-framework";
 import { themeValueToList, themeValueToString } from "@/lib/theme-values";
 import type {
   CreativePack,
@@ -137,7 +142,8 @@ import type {
   ThemeSettings,
   ThemeSettingValue,
   ToolMenuItem,
-  VideoTheme
+  VideoTheme,
+  VideoThemeCategory
 } from "@/lib/types";
 
 type StorefrontRouteMode = "host" | "path";
@@ -179,9 +185,11 @@ export function ThemeRenderer({
   creativePackCategories = [],
   creativePacks = [],
   videoThemes = [],
+  videoThemeCategories = [],
   navigationCreativePackCategories,
   navigationCreativePacks,
   navigationToolMenuItems,
+  navigationVideoThemeCategories,
   toolMenuItems = [],
   runtime,
   mode = "published",
@@ -200,9 +208,11 @@ export function ThemeRenderer({
   creativePackCategories?: CreativePackCategory[];
   creativePacks?: CreativePack[];
   videoThemes?: VideoTheme[];
+  videoThemeCategories?: VideoThemeCategory[];
   navigationCreativePackCategories?: CreativePackCategory[];
   navigationCreativePacks?: CreativePack[];
   navigationToolMenuItems?: ToolMenuItem[];
+  navigationVideoThemeCategories?: VideoThemeCategory[];
   toolMenuItems?: ToolMenuItem[];
   runtime?: ThemeRuntimeData;
   mode?: "published" | "preview";
@@ -239,7 +249,7 @@ export function ThemeRenderer({
     pages: pageNeedsSearchEntries(displayPage) ? searchPageEntriesForSite(displaySite) : []
   };
   const previewHasEmptyBody = mode === "preview" && entries.length === 0;
-  const focusedCollectionRoute = Boolean(collectionSlugFromPath(normalizedPath) || (normalizedPath === "/collections" && typeof query.category === "string" && query.category));
+  const focusedCollectionRoute = Boolean(collectionSlugFromPath(normalizedPath) || ((normalizedPath === "/collections" || normalizedPath === "/ai-image-generation") && typeof query.category === "string" && query.category));
   return (
     <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
       <div
@@ -273,6 +283,7 @@ export function ThemeRenderer({
             settings={settings}
             pagePath={normalizedPath}
             toolMenuItems={navigationToolMenuItems ?? toolMenuItems}
+            videoThemeCategories={navigationVideoThemeCategories ?? videoThemeCategories}
           />
         </div>
         <main className={previewHasEmptyBody ? "flex min-h-0 flex-1 flex-col" : undefined} data-theme-sections-root="">
@@ -313,6 +324,7 @@ export function ThemeRenderer({
                 site={routedSite}
                 siteAiApps={siteAiApps}
                 toolMenuItems={toolMenuItems}
+                videoThemeCategories={videoThemeCategories}
                 videoThemes={videoThemes}
               />
             );
@@ -361,6 +373,7 @@ type ThemeSectionFrameProps = {
   toolMenuItems: ToolMenuItem[];
   creativePackCategories: CreativePackCategory[];
   creativePacks: CreativePack[];
+  videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
   runtime?: ThemeRuntimeData;
   lazyRender?: boolean;
@@ -391,6 +404,7 @@ export type StorefrontSectionPayload = {
     products: ReturnType<typeof import("@/lib/data").getSiteProducts>;
     siteAiApps: ReturnType<typeof import("@/lib/data").getSiteAiApps>;
     toolMenuItems: ToolMenuItem[];
+    videoThemeCategories?: VideoThemeCategory[];
     videoThemes?: VideoTheme[];
   };
   renderContext: RenderContext;
@@ -462,7 +476,7 @@ function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>
   if (pagePath === "/" && !isSpanishXbySite(site) && isAidreamcapesSite(site)) {
     return entries.filter(([, section]) => canonicalSectionType(section.type) !== "video_feature");
   }
-  if (pagePath === "/collections") {
+  if (pagePath === "/collections" || pagePath === "/ai-image-generation") {
     let keptTaxonomy = false;
     return entries.filter(([, section]) => {
       const sectionType = canonicalSectionType(section.type);
@@ -527,10 +541,10 @@ function sectionRendersMainHeading(sectionId: string, section: SectionInstance, 
     return normalizedHeadingLevel(setting(section, "headingLevel"), renderContext.pagePath === "/login" ? "h1" : "h2") === "h1";
   }
   if (sectionType === "dreamshoot_package_taxonomy" || sectionType === "aidreamcapes_package_taxonomy") {
-    return normalizedHeadingLevel(setting(section, "headingLevel"), renderContext.pagePath === "/collections" ? "h1" : "h2") === "h1";
+    return normalizedHeadingLevel(setting(section, "headingLevel"), renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation" ? "h1" : "h2") === "h1";
   }
   if (sectionType === "dreamshoot_tool_collection" || sectionType === "aidreamcapes_tool_collection") {
-    return normalizedHeadingLevel(setting(section, "headingLevel"), renderContext.pagePath === "/tools" ? "h1" : "h2") === "h1";
+    return normalizedHeadingLevel(setting(section, "headingLevel"), renderContext.pagePath === "/tools" || renderContext.pagePath === "/ai-video-generation" ? "h1" : "h2") === "h1";
   }
   if (sectionType === "dreamshoot_media_gallery") {
     return normalizedHeadingLevel(setting(section, "headingLevel"), "h1") === "h1";
@@ -638,7 +652,7 @@ function runtimeWithOnlyShellState(runtime: ThemeRuntimeData): ThemeRuntimeData 
   };
 }
 
-export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemes, runtime, lazyRender = false, mode, renderContext, previewSelection }: ThemeSectionFrameProps) {
+export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, runtime, lazyRender = false, mode, renderContext, previewSelection }: ThemeSectionFrameProps) {
   const sectionType = canonicalSectionType(section.type);
   const lazyStyle: CSSProperties | undefined = lazyRender
     ? {
@@ -669,6 +683,7 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
           site={site}
           siteAiApps={sectionTypesUsingSiteAiApps.has(sectionType) ? siteAiApps : []}
           toolMenuItems={sectionTypesUsingToolMenuItems.has(sectionType) ? toolMenuItems : []}
+          videoThemeCategories={videoThemeCategories}
           videoThemes={sectionTypesUsingVideoThemes.has(sectionType) ? videoThemes : []}
         />
       </DreamshootShowcasePreview>
@@ -683,6 +698,7 @@ export function LazyStorefrontSectionMount(payload: StorefrontSectionPayload) {
     products: [],
     siteAiApps: [],
     toolMenuItems: [],
+    videoThemeCategories: [],
     videoThemes: []
   };
   const site = payload.clientSite ?? payload.site;
@@ -700,6 +716,7 @@ export function LazyStorefrontSectionMount(payload: StorefrontSectionPayload) {
       site={site}
       siteAiApps={renderData.siteAiApps}
       toolMenuItems={renderData.toolMenuItems}
+      videoThemeCategories={renderData.videoThemeCategories ?? []}
       videoThemes={renderData.videoThemes ?? []}
     />
   );
@@ -735,7 +752,9 @@ function isPublicSeoRoute(pagePath: string): boolean {
   return pagePath === "/" ||
     pagePath === "/pricing" ||
     pagePath === "/collections" ||
+    pagePath === "/ai-image-generation" ||
     pagePath === "/tools" ||
+    pagePath === "/ai-video-generation" ||
     pagePath === "/workflow" ||
     pagePath === "/faq" ||
     pagePath === "/blog" ||
@@ -763,7 +782,9 @@ function isPublicSeoRoute(pagePath: string): boolean {
     pagePath === "/state-privacy" ||
     pagePath === "/policies/state-privacy" ||
     pagePath.startsWith("/collections/") ||
+    pagePath.startsWith("/ai-image-generation/") ||
     pagePath.startsWith("/tools/") ||
+    pagePath.startsWith("/ai-video-generation/") ||
     pagePath.startsWith("/blog/");
 }
 
@@ -780,7 +801,7 @@ function shouldServerRenderPublicSeoSection(pagePath: string, sectionType: strin
   if (pagePath === "/best-ai-image" || pagePath === "/best-ai-video") {
     return sectionType === "dreamshoot_media_gallery";
   }
-  if (pagePath === "/collections") {
+  if (pagePath === "/collections" || pagePath === "/ai-image-generation") {
     return sectionType === "rich_text" ||
       sectionType === "dreamshoot_package_taxonomy";
   }
@@ -858,6 +879,7 @@ function headerPhotoPackageMegaGroupsForClient(site: Site, groups: PhotoPackageM
   return groups.map((group) => ({
     label: group.label,
     slug: group.slug,
+    icon: group.icon,
     items: group.items.map((item) => ({
       label: item.label,
       slug: item.slug,
@@ -880,7 +902,16 @@ function headerToolMegaItemsForClient(site: Site, tools: SectionBlockInstance[],
   });
 }
 
-export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [] }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[] }) {
+function headerVideoGenerationCategoriesForClient(site: Site, categories: VideoThemeCategory[]): HeaderVideoGenerationCategory[] {
+  return activeVideoGenerationCategories(categories).map((category) => ({
+    id: category.id,
+    slug: category.slug,
+    label: category.label,
+    href: hrefFor(site, category.href)
+  }));
+}
+
+export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [] }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[] }) {
   const HeaderLink = StorefrontInstantLink;
   const header = settings.globalSections?.header;
   const saasHeader = saasGlobalSection(settings, "header_plus");
@@ -891,6 +922,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const dreamShootIdentity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText} ${title}`;
   const isDreamShoot = /mydreamshoots|dreamshoot/i.test(dreamShootIdentity);
   const isAidreamcapes = isAidreamcapesSite(site);
+  const isMyDreamShootsCom = isDreamShoot && !isAidreamcapes && !spanishXby;
   const disablePublicSeoPrefetch = disablePrefetch || isPublicSeoRoute(pagePath);
   const pricingLabel = spanishXby ? "Precios" : "Pricing";
   const pricingHeaderHref = pagePath === "/" && !spanishXby && isMyDreamShootsProfileSite(site) ? "#plans" : "/pricing";
@@ -967,7 +999,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     const toolsIndex = filtered.findIndex((link) => {
       const normalizedLabel = link.label.trim().toLowerCase();
       const normalizedHref = link.href.trim().replace(/\/+$/, "") || "/";
-      return normalizedLabel === "tools" || normalizedHref === "/tools";
+      return normalizedLabel === "tools" || normalizedLabel === "ai video generation" || normalizedHref === "/tools" || normalizedHref === "/ai-video-generation";
     });
     const insertIndex = toolsIndex >= 0 ? toolsIndex + 1 : Math.min(2, filtered.length);
     return [...filtered.slice(0, insertIndex), { ...bestPackagesLink, label: "Best Packages", href: "/best-packages" }, ...filtered.slice(insertIndex)];
@@ -986,6 +1018,15 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   };
   const workspaceLabel = spanishXby ? "Espacio privado" : "Workspace";
   const workspaceLink = { label: workspaceLabel, href: "/app/create", block: { id: "header_nav_workspace", type: "menu_link", settings: { label: workspaceLabel, href: "/app/create" } } as SectionBlockInstance };
+  const myDreamShootsHeaderLinks = [
+    { label: "AI Image Generation", href: "/ai-image-generation", block: { id: "dreamshoot_header_ai_image_generation", type: "menu_link", settings: { label: "AI Image Generation", href: "/ai-image-generation" } } as SectionBlockInstance },
+    { label: "AI Video Generation", href: "/ai-video-generation", block: { id: "dreamshoot_header_ai_video_generation", type: "menu_link", settings: { label: "AI Video Generation", href: "/ai-video-generation" } } as SectionBlockInstance },
+    { label: "Best Packages", href: "/best-packages", block: { id: "dreamshoot_header_best_packages", type: "menu_link", settings: { label: "Best Packages", href: "/best-packages" } } as SectionBlockInstance },
+    { label: "How it works", href: "/workflow", block: { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } } as SectionBlockInstance },
+    { label: "Blog", href: "/blog", block: { id: "dreamshoot_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } } as SectionBlockInstance },
+    { label: pricingLabel, href: pricingHeaderHref, block: { id: "dreamshoot_header_pricing", type: "menu_link", settings: { label: pricingLabel, href: pricingHeaderHref } } as SectionBlockInstance },
+    workspaceLink
+  ];
   const configuredLinks = (header?.blocks?.filter((block) => block.type === "menu_link").map((block) => ({ label: blockValue(block, "label"), href: blockValue(block, "href", "#"), block }))
     ?? settings.navigation.headerLinks.map((link, index) => ({
       ...link,
@@ -1012,7 +1053,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const rawLinksBase = requiredLinks.some((link) => isWorkspaceNavLink(link.label, link.href))
     ? requiredLinks.map((link) => isWorkspaceNavLink(link.label, link.href) ? { ...link, label: workspaceLabel, href: "/app/create" } : link)
     : [...requiredLinks, workspaceLink];
-  const rawLinks = orderBestPackagesHeaderLink(rawLinksBase);
+  const rawLinks = isMyDreamShootsCom ? myDreamShootsHeaderLinks : orderBestPackagesHeaderLink(rawLinksBase);
   const seenHeaderHrefs = new Set<string>();
   const links = rawLinks.filter((link) => {
     if (!spanishXby) return true;
@@ -1025,15 +1066,38 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const lightCommerce = style === "light_commerce";
   const darkHeaderControls = dark || isDreamShoot || isAidreamcapes;
   const airyCommerceHeader = lightCommerce && !isAidreamcapes;
+  const useVideoGenerationToolsMenu = isMydreamshootsVideoFrameworkSite(site) && !spanishXby && !isAidreamcapes;
+  const videoGenerationMenuCategories = useVideoGenerationToolsMenu ? headerVideoGenerationCategoriesForClient(site, videoThemeCategories) : [];
   const dynamicToolBlocks = getSharedToolBlocksFromMenuItems(toolMenuItems);
-  const configuredToolBlocks = dynamicToolBlocks.length ? dynamicToolBlocks : getDreamshootToolBlocks(header?.blocks);
+  const configuredToolBlocks = useVideoGenerationToolsMenu
+    ? []
+      : dynamicToolBlocks.length
+        ? dynamicToolBlocks
+      : getDreamshootToolBlocks(header?.blocks);
   const aidreamcapesToolBlocks = isAidreamcapes
     ? configuredToolBlocks.filter((tool) => !["headshot", "background-changer", "world-cup-fan-photos", "anime-avatar", "image-to-video"].includes(toolBlockSlug(tool)))
     : configuredToolBlocks;
-  const rawToolMegaBlocks = isAidreamcapes ? aidreamcapesToolBlocks : mergeDreamshootToolBlocks(configuredToolBlocks);
+  const dreamshootMergedToolBlocks = useVideoGenerationToolsMenu
+    ? []
+    : mergeDreamshootToolBlocks(configuredToolBlocks);
+  const rawToolMegaBlocks = isAidreamcapes
+    ? aidreamcapesToolBlocks
+    : isMyDreamShootsCom
+    ? dreamshootMergedToolBlocks
+        .filter((tool) => {
+          const slug = toolBlockSlug(tool);
+          const category = blockValue(tool, "category", "").toLowerCase();
+          return category === "video ai" || isMydreamshootsVideoGenerationSlug(slug);
+        })
+        .map((tool) => {
+          const slug = toolBlockSlug(tool);
+          return { ...tool, settings: { ...tool.settings, href: publicVideoGenerationPathForSite(site, slug) } };
+        })
+    : dreamshootMergedToolBlocks;
   const fullToolMegaBlocks = spanishXby ? spanishToolBlocks(rawToolMegaBlocks, isAidreamcapes) : rawToolMegaBlocks;
   const toolMegaBlocks = fullToolMegaBlocks;
-  const showDreamShootToolsMega = !lightweight && (isDreamShoot || isAidreamcapes) && toolMegaBlocks.length > 0;
+  const showVideoGenerationMega = !lightweight && useVideoGenerationToolsMenu && videoGenerationMenuCategories.length > 0;
+  const showDreamShootToolsMega = !lightweight && !showVideoGenerationMega && (isDreamShoot || isAidreamcapes) && toolMegaBlocks.length > 0;
   const dynamicPhotoPackageMegaGroups = lightweight ? [] : getPhotoPackageMegaGroups(creativePacks, creativePackCategories);
   const configuredPhotoPackageMegaGroups = isAidreamcapes ? getPhotoPackageMegaGroupsFromBlocks(header?.blocks) : [];
   const hasCatalogData = creativePacks.length > 0 || creativePackCategories.length > 0;
@@ -1048,11 +1112,13 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const clientPhotoPackageMegaGroups = deferMegaMenuPanels ? headerPhotoPackageMegaGroupsForClient(site, photoPackageMegaGroups) : [];
   const clientToolMegaItems = deferMegaMenuPanels ? headerToolMegaItemsForClient(site, toolMegaBlocks, spanishXby) : [];
   const photoPackageMegaPrefetchPaths = [
-    hrefFor(site, "/collections"),
+    hrefFor(site, publicCollectionPathForSite(site, "")),
     ...photoPackageMegaGroups.flatMap((group) => group.items.map((item) => hrefFor(site, item.href)))
   ].slice(0, 10);
   const toolsMegaPrefetchPaths = showDreamShootToolsMega
-    ? [hrefFor(site, "/tools"), ...toolMegaBlocks.slice(0, 6).map((tool) => hrefFor(site, blockValue(tool, "href", "/tools")))]
+    ? [hrefFor(site, isMyDreamShootsCom ? "/ai-video-generation" : "/tools"), ...toolMegaBlocks.slice(0, 6).map((tool) => hrefFor(site, blockValue(tool, "href", isMyDreamShootsCom ? "/ai-video-generation" : "/tools")))]
+    : showVideoGenerationMega
+    ? [hrefFor(site, "/ai-video-generation"), ...videoGenerationMenuCategories.map((category) => category.href)]
     : [];
   const market = site.branding.market || "AI photo subscriptions, private uploads, and customer galleries";
   const ctaLabel = spanishXby ? "Comenzar" : header ? setting(header, "ctaLabel", "Get Started") : "Get Started";
@@ -1246,8 +1312,8 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
             const normalizedLinkHref = link.href.trim().replace(/\/+$/, "") || "/";
             const linkIdentity = `${link.label} ${link.href}`;
             const isBestPackagesLink = normalizedLinkHref === "/best-packages";
-            const isToolsLink = showDreamShootToolsMega && /tools|herramientas/i.test(linkIdentity);
-            const isPackagesLink = showPhotoPackageMega && !isBestPackagesLink && (/route portrait packages|packages|paquetes/i.test(linkIdentity) || /collections/i.test(link.href));
+            const isToolsLink = (showDreamShootToolsMega || showVideoGenerationMega) && (/tools|herramientas|video generation/i.test(linkIdentity) || normalizedLinkHref === "/ai-video-generation");
+            const isPackagesLink = showPhotoPackageMega && !isBestPackagesLink && (/route portrait packages|packages|paquetes|photoshoot|image generation/i.test(linkIdentity) || /collections|ai-image-generation/i.test(link.href));
             const isMegaLink = isToolsLink || isPackagesLink;
 	            const linkNode = isMegaLink ? null : (
 		              <HeaderLink
@@ -1278,9 +1344,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	              >
 	                  {isPackagesLink ? (
 	                    deferMegaMenuPanels ? (
-	                      <HeaderPhotoPackageMegaPanel
+	                    <HeaderPhotoPackageMegaPanel
 	                        aidreamcapes={isAidreamcapes}
-	                        collectionsHref={hrefFor(site, "/collections")}
+	                        collectionsHref={hrefFor(site, publicCollectionPathForSite(site, ""))}
 	                        groups={clientPhotoPackageMegaGroups}
 	                        spanish={spanishXby}
 	                        variant="dark"
@@ -1288,18 +1354,23 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                    ) : (
 	                      <PhotoPackageMegaPanel groups={photoPackageMegaGroups} site={site} variant="dark" />
 	                    )
+	                  ) : showVideoGenerationMega ? (
+	                    <HeaderVideoGenerationMegaPanel
+	                      categories={videoGenerationMenuCategories}
+	                      variantTone="dark"
+	                    />
 	                  ) : deferMegaMenuPanels ? (
 	                    <HeaderToolsMegaPanel
-	                      ctaHref={hrefFor(site, "/tools")}
-	                      ctaLabel={spanishXby ? "Ver todas las herramientas" : "View all tools"}
+	                      ctaHref={hrefFor(site, isMyDreamShootsCom ? "/ai-video-generation" : "/tools")}
+	                      ctaLabel={spanishXby ? "Ver todas las herramientas" : isMyDreamShootsCom ? "View all video generators" : "View all tools"}
 	                      spanish={spanishXby}
 	                      tools={clientToolMegaItems}
 	                      variantTone="dark"
 	                    />
 	                  ) : (
 	                    <SharedDreamShootMegaToolsPanel
-	                      ctaHref="/tools"
-	                      ctaLabel={spanishXby ? "Ver todas las herramientas" : "View all tools"}
+	                      ctaHref={isMyDreamShootsCom ? "/ai-video-generation" : "/tools"}
+	                      ctaLabel={spanishXby ? "Ver todas las herramientas" : isMyDreamShootsCom ? "View all video generators" : "View all tools"}
 	                      site={site}
 	                      tools={toolMegaBlocks}
 	                      variantTone="dark"
@@ -1413,18 +1484,18 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                     const normalizedLinkHref = link.href.trim().replace(/\/+$/, "") || "/";
                     const linkIdentity = `${link.label} ${link.href}`;
                     const isBestPackagesLink = normalizedLinkHref === "/best-packages";
-                    const isToolsLink = showDreamShootToolsMega && /tools|herramientas/i.test(linkIdentity);
-                    const isPackagesLink = showPhotoPackageMega && !isBestPackagesLink && (/route portrait packages|packages|paquetes/i.test(linkIdentity) || /collections/i.test(link.href));
+                    const isToolsLink = (showDreamShootToolsMega || showVideoGenerationMega) && (/tools|herramientas|video generation/i.test(linkIdentity) || normalizedLinkHref === "/ai-video-generation");
+                    const isPackagesLink = showPhotoPackageMega && !isBestPackagesLink && (/route portrait packages|packages|paquetes|photoshoot|image generation/i.test(linkIdentity) || /collections|ai-image-generation/i.test(link.href));
 	                    if (isPackagesLink) {
 	                      return (
 	                        deferMegaMenuPanels ? (
 	                          <HeaderMobilePhotoPackagesMenu
 	                            aidreamcapes={isAidreamcapes}
-	                            collectionsHref={hrefFor(site, "/collections")}
+	                            collectionsHref={hrefFor(site, publicCollectionPathForSite(site, ""))}
 	                            dark={dark}
 	                            groups={clientPhotoPackageMegaGroups}
 	                            key={`mobile_${link.label}_${link.href}`}
-	                            menuLabel={isDreamShoot && !spanishXby && !isAidreamcapes ? "AI Photoshoot" : undefined}
+	                            menuLabel={isMyDreamShootsCom ? "AI Image Generation" : undefined}
 	                            spanish={spanishXby}
 	                          />
 	                        ) : (
@@ -1439,11 +1510,20 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                    }
 	                    if (isToolsLink) {
 	                      return (
-	                        deferMegaMenuPanels ? (
+	                        showVideoGenerationMega ? (
+                          <HeaderMobileVideoGenerationMenu
+                            categories={videoGenerationMenuCategories}
+                            dark={dark}
+                            key={`mobile_${link.label}_${link.href}`}
+                            menuLabel="AI Video Generation"
+                          />
+	                        ) : deferMegaMenuPanels ? (
 	                          <HeaderMobileToolsMenu
-	                            ctaHref={hrefFor(site, "/tools")}
+	                            ctaLabel={isMyDreamShootsCom ? "View all video generators" : undefined}
+	                            ctaHref={hrefFor(site, isMyDreamShootsCom ? "/ai-video-generation" : "/tools")}
 	                            dark={dark}
 	                            key={`mobile_${link.label}_${link.href}`}
+	                            menuLabel={isMyDreamShootsCom ? "AI Video Generation" : undefined}
 	                            spanish={spanishXby}
 	                            tools={clientToolMegaItems}
 	                          />
@@ -1615,14 +1695,21 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
           { label: "Precios", href: "/pricing" },
           { label: "Preguntas", href: "/faq" }
         ]
-      : [
-          { label: "Best Packages", href: "/best-packages" },
-          { label: "Best AI image", href: "/best-ai-image" },
-          { label: "Best AI video", href: "/best-ai-video" },
-          { label: "AI Tools", href: "/tools" },
-          { label: "Pricing", href: "/pricing" },
-          { label: "FAQ", href: "/faq" }
-        ];
+      : isDreamShootFooter
+        ? [
+            { label: "AI Image Generation", href: "/ai-image-generation" },
+            { label: "AI Video Generation", href: "/ai-video-generation" },
+            { label: "Best Packages", href: "/best-packages" },
+            { label: "Pricing", href: "/pricing" }
+          ]
+        : [
+            { label: "Best Packages", href: "/best-packages" },
+            { label: "Best AI image", href: "/best-ai-image" },
+            { label: "Best AI video", href: "/best-ai-video" },
+            { label: "AI Tools", href: "/tools" },
+            { label: "Pricing", href: "/pricing" },
+            { label: "FAQ", href: "/faq" }
+          ];
     return (
       <footer className={dark ? "border-t border-white/8 px-5 py-8" : "border-t border-[#e7dccf] px-5 py-8"} style={{ background: footerBg, color: footerTextColor }}>
         <div className="mx-auto flex max-w-[var(--site-content-width)] flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
@@ -1710,24 +1797,41 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
             ["Terms of Service", "/terms", "support"],
             ["Cookie Policy", "/cookies", "support"]
           ]
-        : [
-            ["Best Packages", "/best-packages", "product"],
-            ["Best AI image", "/best-ai-image", "product"],
-            ["Best AI video", "/best-ai-video", "product"],
-            ["AI Tools", "/tools", "product"],
-            ["How it works", "/workflow", "product"],
-            ["Pricing", "/pricing", "product"],
-            ["FAQ", "/faq", "company"],
-            ["Blog", "/blog", "company"],
-            ["About us", "/about-us", "company"],
-            ["Contact us", "/contact-us", "company"],
-            ["Creators Circle", "/creators-circle", "company"],
-            ["Refund Policy", "/refunds", "company"],
-            ["Privacy Policy", "/privacy", "support"],
-            ["Content policy", "/content", "support"],
-            ["Terms of Service", "/terms", "support"],
-            ["Cookie Policy", "/cookies", "support"]
-          ]).map(([label, href, group], index) => ({
+        : isDreamShootFooter
+          ? [
+              ["AI Image Generation", "/ai-image-generation", "product"],
+              ["AI Video Generation", "/ai-video-generation", "product"],
+              ["Best Packages", "/best-packages", "product"],
+              ["How it works", "/workflow", "product"],
+              ["Pricing", "/pricing", "product"],
+              ["Blog", "/blog", "company"],
+              ["About us", "/about-us", "company"],
+              ["Contact us", "/contact-us", "company"],
+              ["Creators Circle", "/creators-circle", "company"],
+              ["Refund Policy", "/refunds", "company"],
+              ["Privacy Policy", "/privacy", "support"],
+              ["Content policy", "/content", "support"],
+              ["Terms of Service", "/terms", "support"],
+              ["Cookie Policy", "/cookies", "support"]
+            ]
+          : [
+              ["Best Packages", "/best-packages", "product"],
+              ["Best AI image", "/best-ai-image", "product"],
+              ["Best AI video", "/best-ai-video", "product"],
+              ["AI Tools", "/tools", "product"],
+              ["How it works", "/workflow", "product"],
+              ["Pricing", "/pricing", "product"],
+              ["FAQ", "/faq", "company"],
+              ["Blog", "/blog", "company"],
+              ["About us", "/about-us", "company"],
+              ["Contact us", "/contact-us", "company"],
+              ["Creators Circle", "/creators-circle", "company"],
+              ["Refund Policy", "/refunds", "company"],
+              ["Privacy Policy", "/privacy", "support"],
+              ["Content policy", "/content", "support"],
+              ["Terms of Service", "/terms", "support"],
+              ["Cookie Policy", "/cookies", "support"]
+            ]).map(([label, href, group], index) => ({
             label,
             href,
             block: { id: `${isAidreamcapesFooter ? "aidreamcapes" : "dreamshoot"}_footer_${group}_${index + 1}`, type: "menu_link", settings: { label, href, group } } as SectionBlockInstance
@@ -2615,7 +2719,7 @@ function dreamshootHomepageSafeImageForPack(site: Site, pack: CreativePack): str
 }
 
 function generationShowcaseThemeSlugForPack(pack: CreativePack): string {
-  return dreamshootCategorySlug(creativePackCollectionHref(pack).replace(/^\/collections\//, "") || pack.categoryRecord?.slug || pack.category || pack.name || pack.id);
+  return dreamshootCategorySlug(creativePackCollectionSlug(pack) || pack.categoryRecord?.slug || pack.category || pack.name || pack.id);
 }
 
 function generationShowcasePackDedupeKey(pack: CreativePack): string {
@@ -2632,7 +2736,7 @@ function creativePackMatchesShowcaseSlug(pack: CreativePack, slug: string): bool
     pack.categoryRecord?.label,
     pack.category,
     pack.name,
-    creativePackCollectionHref(pack).replace(/^\/collections\//, "")
+    creativePackCollectionSlug(pack)
   ].filter(Boolean).map((value) => dreamshootCategorySlug(String(value))).includes(normalizedSlug);
 }
 
@@ -2700,7 +2804,7 @@ function creativePackCategoryMatchScore(pack: CreativePack, category: CreativePa
     pack.categoryRecord?.slug,
     pack.category,
     pack.name,
-    creativePackCollectionHref(pack).replace(/^\/collections\//, "")
+    creativePackCollectionSlug(pack)
   ].filter(Boolean).map((value) => dreamshootCategorySlug(String(value)));
   if (pack.categoryRecord?.id && String(pack.categoryRecord.id) === category.id) return 0;
   if (directSlugs.includes(categorySlug)) return 1;
@@ -3304,8 +3408,10 @@ function collectionSlugFromHrefValue(value: string): string {
       pathname = trimmed;
     }
   }
-  const match = pathname.match(/\/collections\/([^/?#]+)/);
-  return match?.[1] ? normalizedFeaturedPackCollectionSlug(decodeURIComponent(match[1])) : "";
+  const parts = pathname.split(/[?#]/)[0]?.split("/").filter(Boolean) ?? [];
+  if (parts[0] === "collections") return parts[1] ? normalizedFeaturedPackCollectionSlug(decodeURIComponent(parts[1])) : "";
+  if (parts[0] === "ai-image-generation") return parts[2] ? normalizedFeaturedPackCollectionSlug(decodeURIComponent(parts[2])) : parts[1] ? normalizedFeaturedPackCollectionSlug(decodeURIComponent(parts[1])) : "";
+  return "";
 }
 
 function featuredPackSlugRefs(value: string): string[] {
@@ -3352,7 +3458,7 @@ function featuredPackCreativePackSlugTokens(pack: CreativePack): string[] {
     pack.category,
     pack.name,
     pack.aiAppSlug,
-    creativePackCollectionHref(pack).replace(/^\/collections\//, "")
+    creativePackCollectionSlug(pack)
   ].map((value) => normalizedFeaturedPackCollectionSlug(value ?? "")).filter(Boolean));
 }
 
@@ -3522,6 +3628,7 @@ function hrefFor(site: Site, href: string): string {
   if (href === "javascript:void(0);") return "#";
   if (/^(mailto|tel|sms):/i.test(href)) return href;
   const pairedStore = /mydreamshoots|dreamshoot|aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  const primaryMyDreamShoots = /mydreamshoots|dreamshoot/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`) && !/aidreamcapes|aidreamshoots/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
   if (href.startsWith("http")) {
     try {
       const url = new URL(href);
@@ -3536,8 +3643,11 @@ function hrefFor(site: Site, href: string): string {
               ? "/workflow"
               : url.pathname
         );
+        const canonicalPath = normalizedPath === "/collections" || normalizedPath.startsWith("/collections/") || normalizedPath === "/ai-image-generation" || normalizedPath.startsWith("/ai-image-generation/")
+          ? canonicalCollectionHrefForSite(site, normalizedPath)
+          : normalizedPath;
         const normalizedHash = url.hash === "#workflow" ? "" : url.hash;
-        return `${routedSitePath(site, normalizedPath)}${url.search}${normalizedHash}`;
+        return `${routedSitePath(site, canonicalPath)}${url.search}${normalizedHash}`;
       }
       const normalizedPolicyPath = shortPolicyPath(url.pathname);
       if (normalizedPolicyPath !== url.pathname) {
@@ -3566,12 +3676,42 @@ function hrefFor(site: Site, href: string): string {
   if (href.startsWith(`${legacyPrefix}/`)) return routedSitePath(site, href.slice(legacyPrefix.length));
   if (href.startsWith("/collections?")) {
     const category = new URLSearchParams(href.slice(href.indexOf("?") + 1)).get("category") ?? "";
-    return routedSitePath(site, collectionHref(category));
+    return routedSitePath(site, canonicalCollectionHrefForSite(site, collectionHref(category)));
   }
-  if (href.startsWith("/collections/")) return routedSitePath(site, canonicalCollectionHrefForSite(site, href));
+  if (href === "/collections" || href.startsWith("/collections/") || href === "/ai-image-generation" || href.startsWith("/ai-image-generation/")) return routedSitePath(site, canonicalCollectionHrefForSite(site, href));
   if (href.startsWith("/cart?")) return routedSitePath(site, href);
+  if (primaryMyDreamShoots && (href === "/tools" || href.startsWith("/tools/"))) {
+    const toolSlug = href.slice("/tools/".length).split(/[?#]/)[0] ?? "";
+    if (!toolSlug || toolSlug === "video-ai") return routedSitePath(site, "/ai-video-generation");
+    if (isMydreamshootsVideoGenerationSlug(toolSlug)) return routedSitePath(site, publicVideoGenerationPathForSite(site, toolSlug));
+    const imageSlugByLegacyTool: Record<string, string> = {
+      headshot: "headshot",
+      "creator-portrait": "portrait-photo",
+      "creator-portraits": "portrait-photo",
+      "world-cup-fan-photos": "soccer",
+      "cyberpunk-portrait": "cyberpunk",
+      "gala-photo": "gala-photo",
+      "noir-portrait": "mafia",
+      "anime-avatar": "avatar",
+      "nature-adventure": "travel",
+      "fashion-editorial": "street-style",
+      "product-lifestyle": "background-changer",
+      "background-changer": "background-changer",
+      "background-remover": "background-remover",
+      "magic-eraser": "magic-eraser",
+      "photo-enhancer": "photo-enhancer",
+      "portrait-retouch": "portrait-retouch",
+      "unblur-image": "unblur-image",
+      "color-correction": "color-correction",
+      "old-photo-restoration": "old-photo-restoration",
+      "edit-by-prompt": "edit-by-prompt",
+      "magic-upscaler": "photo-enhancer",
+      "virtual-try-on": "virtual-try-on"
+    };
+    return routedSitePath(site, imageSlugByLegacyTool[toolSlug] ? `/ai-image-generation/${imageSlugByLegacyTool[toolSlug]}` : "/ai-image-generation");
+  }
   if ((href === "/tools/image-studio" || href === "/tools/ai-image-studio") && /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) {
-    return routedSitePath(site, "/tools");
+    return routedSitePath(site, "/ai-image-generation");
   }
   return routedSitePath(site, href);
 }
@@ -3686,6 +3826,14 @@ const spanishXbyCatalogCategoryHrefOverrides: DreamshootCategoryHrefOverrides = 
   )
 };
 
+function collectionSlugFromHrefForCanonical(site: Site, href: string): string {
+  const path = href.split(/[?#]/)[0] ?? "";
+  if (path === "/collections" || path === "/ai-image-generation") return "";
+  if (path.startsWith("/ai-image-generation/")) return publicCollectionSlugFromPath(site, path) || dreamshootCategorySlug(path.split("/").filter(Boolean).at(-1) ?? "");
+  if (path.startsWith("/collections/")) return dreamshootCategorySlug(path.replace(/^\/collections\//, ""));
+  return dreamshootCategorySlug(path);
+}
+
 function canonicalCollectionHrefForSite(site: Site, href: string): string {
   if (!isAidreamcapesSite(site)) {
     if (isSpanishXbySite(site)) {
@@ -3693,7 +3841,10 @@ function canonicalCollectionHrefForSite(site: Site, href: string): string {
       const canonicalSlug = spanishXbyCollectionCanonicalSlugs[slug];
       return canonicalSlug ? `/collections/${canonicalSlug}` : href;
     }
-    return isMyDreamShootsProfileSite(site) ? canonicalSeoDirectoryPathForSite(site, "collection", href) : href;
+    if (isMyDreamShootsProfileSite(site)) {
+      return publicCollectionPathForSite(site, collectionSlugFromHrefForCanonical(site, href));
+    }
+    return href;
   }
   const slug = dreamshootCategorySlug(href.replace(/^\/collections\//, ""));
   const canonicalSlug = aidreamcapesCollectionCanonicalSlugs[slug];
@@ -3704,9 +3855,13 @@ function creativePackCollectionHref(pack: CreativePack): string {
   return sharedCreativePackCollectionHref(pack);
 }
 
+function creativePackCollectionSlug(pack: CreativePack): string {
+  return publicCollectionSlugFromPath(pack, creativePackCollectionHref(pack));
+}
+
 function creativePackCreateHref(pack: CreativePack, site?: Site): string {
   if (site && isMyDreamShootsProfileSite(site)) {
-    const categorySlug = creativePackCollectionHref(pack).replace(/^\/collections\//, "");
+    const categorySlug = publicCollectionSlugFromPath(pack, creativePackCollectionHref(pack));
     return `/app/create?category=${encodeURIComponent(categorySlug || pack.category || pack.id)}`;
   }
   const params = new URLSearchParams();
@@ -4375,11 +4530,13 @@ function _dreamshootDefaultToolBlocks(): SectionBlockInstance[] {
 
 function toolBlockSlug(block: SectionBlockInstance): string {
   const href = blockValue(block, "href", "");
-  const pathSlug = href.split("?")[0]?.split("#")[0]?.split("/tools/")[1] ?? "";
+  const cleanPath = href.split("?")[0]?.split("#")[0] ?? "";
+  const pathSlug = cleanPath.split("/tools/")[1] ?? cleanPath.split("/ai-video-generation/")[1] ?? "";
   return dreamshootToolLookupKey(pathSlug || block.id || blockValue(block, "title", ""));
 }
 
-function mergeDreamshootToolBlocks(blocks: SectionBlockInstance[]): SectionBlockInstance[] {
+function mergeDreamshootToolBlocks(blocks: SectionBlockInstance[], site?: Site): SectionBlockInstance[] {
+  if (site && isMydreamshootsVideoFrameworkSite(site)) return [];
   const merged = new Map<string, SectionBlockInstance>();
   for (const block of dreamshootDefaultMegaToolBlocks()) {
     merged.set(toolBlockSlug(block), normalizeToolMenuBlockTitle(block));
@@ -4463,8 +4620,10 @@ function queryValue(value: string | string[] | undefined): string {
 }
 
 function collectionSlugFromPath(pagePath: string): string {
-  const match = pagePath.match(/^\/collections\/([^/?#]+)/);
-  return match?.[1] ? dreamshootCategorySlug(decodeURIComponent(match[1])) : "";
+  const parts = pagePath.split(/[?#]/)[0]?.split("/").filter(Boolean) ?? [];
+  if (parts[0] === "collections") return parts[1] ? dreamshootCategorySlug(decodeURIComponent(parts[1])) : "";
+  if (parts[0] === "ai-image-generation") return parts[2] ? dreamshootCategorySlug(decodeURIComponent(parts[2])) : parts[1] ? dreamshootCategorySlug(decodeURIComponent(parts[1])) : "";
+  return "";
 }
 
 function selectedCollectionSlugFromRenderContext(renderContext: RenderContext): string {
@@ -4897,22 +5056,22 @@ const aidreamcapesFallbackCatalogCardsSeed: Array<{ id: string; title: string; c
 ];
 
 const myDreamShootsCatalogCategoryHrefOverrides: DreamshootCategoryHrefOverrides = {
-  all: "/collections",
-  "best-themes-presets": "/collections/best-themes-presets",
-  professional: "/collections/professional",
-  "lifestyle-creative": "/collections/lifestyle-creative",
-  magic: "/collections/magic",
-  "photo-tools": "/collections/photo-tools",
-  "fan-photos": "/collections/soccer",
-  "sports-stars": "/collections/soccer",
-  "vip-looks": "/collections/gala-photo",
-  christmas: "/collections/christmas-photo",
-  thanksgiving: "/collections/thanksgiving-photo",
-  halloween: "/collections/halloween-photo",
-  seasonal: "/collections/holiday",
-  creator: "/collections/portrait-photo",
-  video: "/collections/motion-generator",
-  utility: "/collections/photo-enhancer"
+  all: "/ai-image-generation",
+  "best-themes-presets": "/ai-image-generation",
+  professional: "/ai-image-generation",
+  "lifestyle-creative": "/ai-image-generation",
+  magic: "/ai-image-generation",
+  "photo-tools": "/ai-image-generation",
+  "fan-photos": "/ai-image-generation/soccer",
+  "sports-stars": "/ai-image-generation/soccer",
+  "vip-looks": "/ai-image-generation/gala-photo",
+  christmas: "/ai-image-generation/christmas-photo",
+  thanksgiving: "/ai-image-generation/thanksgiving-photo",
+  halloween: "/ai-image-generation/halloween-photo",
+  seasonal: "/ai-image-generation/holiday",
+  creator: "/ai-image-generation/portrait-photo",
+  video: "/ai-image-generation/motion-generator",
+  utility: "/ai-image-generation/photo-enhancer"
 };
 
 const aidreamcapesCatalogCategoryHrefOverrides: DreamshootCategoryHrefOverrides = {
@@ -5080,7 +5239,7 @@ function normalizeStorefrontCatalogCards(
     const href = card.href?.trim() ?? "";
     const pathname = href.replace(/^https?:\/\/[^/]+/i, "");
     if (href && !/(?:^|\/)login(?:[/?#]|$)/i.test(pathname)) {
-      if (isSpanishXbySite(site) && pathname.startsWith("/collections/")) {
+      if (pathname === "/collections" || pathname.startsWith("/collections/") || pathname === "/ai-image-generation" || pathname.startsWith("/ai-image-generation/")) {
         const canonicalHref = canonicalCollectionHrefForSite(site, pathname);
         return canonicalHref !== pathname ? { ...card, href: canonicalHref } : card;
       }
@@ -5088,7 +5247,7 @@ function normalizeStorefrontCatalogCards(
     }
     const candidates = [card.id, card.title, card.category, card.meta, ...(card.filterTokens ?? [])]
       .filter(Boolean)
-      .map((value) => dreamshootCategorySlug(String(value).replace(/^\/?collections\/?/, "")));
+      .map((value) => dreamshootCategorySlug(String(value).replace(/^\/?(?:collections|ai-image-generation)\/?/, "")));
     const lookup = isAidreamcapesSite(site)
       ? { ...categoryHrefOverrides, ...aidreamcapesCatalogCardHrefOverrides }
       : categoryHrefOverrides;
@@ -5264,12 +5423,13 @@ function aidreamcapesMetaLabel(title: string, category = "", description = ""): 
 }
 
 function relatedPacksForTaxonomyCard(
+  site: Site,
   creativePacks: CreativePack[],
   creativePackCategories: CreativePackCategory[],
   cardId: string,
   href: string
 ): CreativePack[] {
-  const selectedSlug = dreamshootCategorySlug(href.replace(/^\/collections\//, ""));
+  const selectedSlug = collectionSlugFromHrefForCanonical(site, href);
   const category = creativePackCategories.find((item) =>
     item.id === cardId || dreamshootCategorySlug(item.slug || item.label) === selectedSlug
   );
@@ -5920,7 +6080,8 @@ function dreamshootDefaultMegaToolBlocks(): SectionBlockInstance[] {
   ];
 }
 
-function getDreamshootToolBlocks(blocks: SectionBlockInstance[] | undefined): SectionBlockInstance[] {
+function getDreamshootToolBlocks(blocks: SectionBlockInstance[] | undefined, site?: Site): SectionBlockInstance[] {
+  if (site && isMydreamshootsVideoFrameworkSite(site)) return [];
   const configured = (blocks ?? []).filter((block) => block.type === "tool_card");
   return configured.length ? configured : dreamshootDefaultMegaToolBlocks();
 }
@@ -5980,18 +6141,18 @@ function getPhotoPackageMegaGroupsFromBlocks(blocks: SectionBlockInstance[] | un
   ];
 }
 
-const dreamshootFallbackPhotoPackageGroups: PhotoPackageMegaGroup[] = [
+const dreamshootFallbackPhotoPackageGroups: PhotoPackageMegaGroup[] = ([
   {
     label: "Best Themes & Presets",
     slug: "best-themes-presets",
     icon: "Sparkles",
     items: [
-      { label: "Engagement Photo", slug: "engagement-photo", href: "/collections/engagement-photo" },
-      { label: "Wedding Photo", slug: "wedding-photo", href: "/collections/wedding-photo" },
-      { label: "Valentines Photo", slug: "valentines-photo", href: "/collections/valentines-photo" },
-      { label: "Christmas Photo", slug: "christmas-photo", href: "/collections/christmas-photo" },
-      { label: "Halloween Photo", slug: "halloween-photo", href: "/collections/halloween-photo" },
-      { label: "Thanksgiving Photo", slug: "thanksgiving-photo", href: "/collections/thanksgiving-photo" }
+      { label: "Engagement Photo", slug: "engagement-photo", href: "/ai-image-generation/engagement-photo" },
+      { label: "Wedding Photo", slug: "wedding-photo", href: "/ai-image-generation/wedding-photo" },
+      { label: "Valentines Photo", slug: "valentines-photo", href: "/ai-image-generation/valentines-photo" },
+      { label: "Christmas Photo", slug: "christmas-photo", href: "/ai-image-generation/christmas-photo" },
+      { label: "Halloween Photo", slug: "halloween-photo", href: "/ai-image-generation/halloween-photo" },
+      { label: "Thanksgiving Photo", slug: "thanksgiving-photo", href: "/ai-image-generation/thanksgiving-photo" }
     ]
   },
   {
@@ -5999,13 +6160,13 @@ const dreamshootFallbackPhotoPackageGroups: PhotoPackageMegaGroup[] = [
     slug: "professional",
     icon: "Users",
     items: [
-      { label: "Avatar", slug: "avatar", href: "/collections/avatar" },
-      { label: "Headshot", slug: "headshot", href: "/collections/headshot" },
-      { label: "Gala Photo", slug: "gala-photo", href: "/collections/gala-photo" },
-      { label: "Portrait Photo", slug: "portrait-photo", href: "/collections/portrait-photo" },
-      { label: "Black Friday", slug: "black-friday", href: "/collections/black-friday" },
-      { label: "Only Fans", slug: "only-fans", href: "/collections/only-fans" },
-      { label: "Singles Awareness Day", slug: "singles-awareness-day", href: "/collections/singles-awareness-day" }
+      { label: "Avatar", slug: "avatar", href: "/ai-image-generation/avatar" },
+      { label: "Headshot", slug: "headshot", href: "/ai-image-generation/headshot" },
+      { label: "Gala Photo", slug: "gala-photo", href: "/ai-image-generation/gala-photo" },
+      { label: "Portrait Photo", slug: "portrait-photo", href: "/ai-image-generation/portrait-photo" },
+      { label: "Black Friday", slug: "black-friday", href: "/ai-image-generation/black-friday" },
+      { label: "Only Fans", slug: "only-fans", href: "/ai-image-generation/only-fans" },
+      { label: "Singles Awareness Day", slug: "singles-awareness-day", href: "/ai-image-generation/singles-awareness-day" }
     ]
   },
   {
@@ -6013,19 +6174,19 @@ const dreamshootFallbackPhotoPackageGroups: PhotoPackageMegaGroup[] = [
     slug: "lifestyle-creative",
     icon: "Camera",
     items: [
-      { label: "Cyberpunk", slug: "cyberpunk", href: "/collections/cyberpunk" },
-      { label: "Boudoir", slug: "boudoir", href: "/collections/boudoir" },
-      { label: "Holiday", slug: "holiday", href: "/collections/holiday" },
-      { label: "Cannes", slug: "cannes", href: "/collections/cannes" },
-      { label: "Nightlife", slug: "nightlife", href: "/collections/nightlife" },
-      { label: "Rich Lifestyle", slug: "rich-lifestyle", href: "/collections/rich-lifestyle" },
-      { label: "Bikini", slug: "bikini", href: "/collections/bikini" },
-      { label: "Swimsuit", slug: "swimsuit", href: "/collections/swimsuit" },
-      { label: "Travel", slug: "travel", href: "/collections/travel" },
-      { label: "Soccer", slug: "soccer", href: "/collections/soccer" },
-      { label: "Urban", slug: "urban", href: "/collections/urban" },
-      { label: "Street Style", slug: "street-style", href: "/collections/street-style" },
-      { label: "Mafia", slug: "mafia", href: "/collections/mafia" }
+      { label: "Cyberpunk", slug: "cyberpunk", href: "/ai-image-generation/cyberpunk" },
+      { label: "Boudoir", slug: "boudoir", href: "/ai-image-generation/boudoir" },
+      { label: "Holiday", slug: "holiday", href: "/ai-image-generation/holiday" },
+      { label: "Cannes", slug: "cannes", href: "/ai-image-generation/cannes" },
+      { label: "Nightlife", slug: "nightlife", href: "/ai-image-generation/nightlife" },
+      { label: "Rich Lifestyle", slug: "rich-lifestyle", href: "/ai-image-generation/rich-lifestyle" },
+      { label: "Bikini", slug: "bikini", href: "/ai-image-generation/bikini" },
+      { label: "Swimsuit", slug: "swimsuit", href: "/ai-image-generation/swimsuit" },
+      { label: "Travel", slug: "travel", href: "/ai-image-generation/travel" },
+      { label: "Soccer", slug: "soccer", href: "/ai-image-generation/soccer" },
+      { label: "Urban", slug: "urban", href: "/ai-image-generation/urban" },
+      { label: "Street Style", slug: "street-style", href: "/ai-image-generation/street-style" },
+      { label: "Mafia", slug: "mafia", href: "/ai-image-generation/mafia" }
     ]
   },
   {
@@ -6033,9 +6194,9 @@ const dreamshootFallbackPhotoPackageGroups: PhotoPackageMegaGroup[] = [
     slug: "magic",
     icon: "Sparkles",
     items: [
-      { label: "Hairstyle Generator", slug: "hairstyle-generator", href: "/collections/hairstyle-generator" },
-      { label: "Virtual Try-On", slug: "virtual-try-on", href: "/collections/virtual-try-on" },
-      { label: "Motion Generator", slug: "motion-generator", href: "/collections/motion-generator" }
+      { label: "Hairstyle Generator", slug: "hairstyle-generator", href: "/ai-image-generation/hairstyle-generator" },
+      { label: "Virtual Try-On", slug: "virtual-try-on", href: "/ai-image-generation/virtual-try-on" },
+      { label: "Motion Generator", slug: "motion-generator", href: "/ai-image-generation/motion-generator" }
     ]
   },
   {
@@ -6043,18 +6204,24 @@ const dreamshootFallbackPhotoPackageGroups: PhotoPackageMegaGroup[] = [
     slug: "photo-tools",
     icon: "Scissors",
     items: [
-      { label: "Background Changer", slug: "background-changer", href: "/collections/background-changer" },
-      { label: "Background Remover", slug: "background-remover", href: "/collections/background-remover" },
-      { label: "Magic Eraser", slug: "magic-eraser", href: "/collections/magic-eraser" },
-      { label: "Photo Enhancer", slug: "photo-enhancer", href: "/collections/photo-enhancer" },
-      { label: "Portrait Retouch", slug: "portrait-retouch", href: "/collections/portrait-retouch" },
-      { label: "Unblur Image", slug: "unblur-image", href: "/collections/unblur-image" },
-      { label: "Color Correction", slug: "color-correction", href: "/collections/color-correction" },
-      { label: "Old Photo Restoration", slug: "old-photo-restoration", href: "/collections/old-photo-restoration" },
-      { label: "Edit By Prompt", slug: "edit-by-prompt", href: "/collections/edit-by-prompt" }
+      { label: "Background Changer", slug: "background-changer", href: "/ai-image-generation/background-changer" },
+      { label: "Background Remover", slug: "background-remover", href: "/ai-image-generation/background-remover" },
+      { label: "Magic Eraser", slug: "magic-eraser", href: "/ai-image-generation/magic-eraser" },
+      { label: "Photo Enhancer", slug: "photo-enhancer", href: "/ai-image-generation/photo-enhancer" },
+      { label: "Portrait Retouch", slug: "portrait-retouch", href: "/ai-image-generation/portrait-retouch" },
+      { label: "Unblur Image", slug: "unblur-image", href: "/ai-image-generation/unblur-image" },
+      { label: "Color Correction", slug: "color-correction", href: "/ai-image-generation/color-correction" },
+      { label: "Old Photo Restoration", slug: "old-photo-restoration", href: "/ai-image-generation/old-photo-restoration" },
+      { label: "Edit By Prompt", slug: "edit-by-prompt", href: "/ai-image-generation/edit-by-prompt" }
     ]
   }
-];
+] as PhotoPackageMegaGroup[]).map((group) => ({
+  ...group,
+  items: group.items.map((item) => ({
+    ...item,
+    href: publicCollectionPathForSite({ id: "site_dreamshoot" }, item.slug)
+  }))
+}));
 
 const photoPackageAccentPalette = ["#c958f2", "#ff7b2f", "#38a8ff", "#36d399", "#f4c542", "#ff5f8f"];
 
@@ -6282,7 +6449,9 @@ function DreamShootMegaToolsPanel({
       <div className="flex flex-wrap items-stretch gap-3">
         {summaryGroups.map((group, index) => {
           const Icon = group.meta.icon;
-          const categoryHref = aidreamcapes
+          const categoryHref = isMyDreamShootsProfileSite(site)
+            ? hrefFor(site, "/ai-video-generation")
+            : aidreamcapes
             ? hrefFor(site, `/tools#tools-${slugify(group.category)}`)
             : hrefFor(site, dreamshootToolCategoryHref(group.category));
           return (
@@ -6359,7 +6528,7 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
   const spanishXby = isSpanishXbySite(site);
   const aidreamcapes = isAidreamcapesSite(site);
-  const menuLabel = spanishXby ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : isMyDreamShootsProfileSite(site) ? "AI Photoshoot" : "Browse packages";
+  const menuLabel = spanishXby ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : isMyDreamShootsProfileSite(site) ? "AI Image Generation" : "Browse packages";
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileMenuSummaryClass(dark)}>
@@ -6393,7 +6562,7 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
             );
           })}
         </div>
-        <Link className={dark ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-white/12 px-3 py-2.5 text-sm font-semibold text-white" : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-[#ded5ca] bg-white px-3 py-2.5 text-sm font-semibold text-[#171514]"} href={hrefFor(site, "/collections")}>
+        <Link className={dark ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-white/12 px-3 py-2.5 text-sm font-semibold text-white" : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-[#ded5ca] bg-white px-3 py-2.5 text-sm font-semibold text-[#171514]"} href={hrefFor(site, publicCollectionPathForSite(site, ""))}>
           {spanishXby ? "Ver todos los paquetes" : "View all packages"}
           <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
         </Link>
@@ -6405,6 +6574,7 @@ function MobilePhotoPackagesMenu({ dark, groups, site }: { dark: boolean; groups
 function MobileToolsMenu({ dark, site, tools }: { dark: boolean; site: Site; tools: SectionBlockInstance[] }) {
   const spanishXby = isSpanishXbySite(site);
   const aidreamcapes = isAidreamcapesSite(site);
+  const myDreamShootsCom = isMyDreamShootsProfileSite(site) && !aidreamcapes && !spanishXby;
   const categories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", "Photo AI"))));
   const orderedCategories = ["Photo AI", "AI Photo Edit", "Video AI"].filter((category) => categories.includes(category));
   const displayCategories = [...orderedCategories, ...categories.filter((category) => !orderedCategories.includes(category))];
@@ -6430,7 +6600,7 @@ function MobileToolsMenu({ dark, site, tools }: { dark: boolean; site: Site; too
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileMenuSummaryClass(dark)}>
-        <span className="min-w-0 flex-1">{spanishXby ? "Herramientas" : "AI Tools"}</span>
+        <span className="min-w-0 flex-1">{spanishXby ? "Herramientas" : myDreamShootsCom ? "AI Video Generation" : "AI Tools"}</span>
         <span className={dark ? "rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] text-white/48" : "rounded-full bg-[#f3ede5] px-2 py-0.5 text-[11px] text-[#7c7268]"}>{totalItems}</span>
         <ChevronRight className={dark ? "h-4 w-4 rotate-90 text-white/42 transition group-open/mobile:-rotate-90" : "h-4 w-4 rotate-90 text-[#7c7268] transition group-open/mobile:-rotate-90"} strokeWidth={2} />
       </summary>
@@ -6462,8 +6632,8 @@ function MobileToolsMenu({ dark, site, tools }: { dark: boolean; site: Site; too
             );
           })}
         </div>
-        <Link className={dark ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-white/12 px-3 py-2.5 text-sm font-semibold text-white" : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-[#ded5ca] bg-white px-3 py-2.5 text-sm font-semibold text-[#171514]"} href={hrefFor(site, "/tools")}>
-          {spanishXby ? "Ver todas las herramientas" : "View all tools"}
+        <Link className={dark ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-white/12 px-3 py-2.5 text-sm font-semibold text-white" : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-[#ded5ca] bg-white px-3 py-2.5 text-sm font-semibold text-[#171514]"} href={hrefFor(site, myDreamShootsCom ? "/ai-video-generation" : "/tools")}>
+          {spanishXby ? "Ver todas las herramientas" : myDreamShootsCom ? "View all video generators" : "View all tools"}
           <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
         </Link>
       </div>
@@ -6754,7 +6924,7 @@ function dreamshootCatalogCardFromCategory(site: Site, category: CreativePackCat
 	    imageUrl,
 	    imageUrls: dreamshootCategoryPreviewImageSet(site, imageUrl, matchingPacks, 2),
 	    imageAlts: matchingPack?.galleryImageAlts,
-	    href: `/collections/${categorySlug}`,
+	    href: publicCollectionPathForSite(site, categorySlug),
     kind: matchingPack ? "package" : "collection",
     metaLabel: profile?.metaLabel,
     photoCountLabel: matchingPack && profile ? dreamshootPackPhotoCountLabel(matchingPack) : undefined,
@@ -6816,28 +6986,28 @@ function defaultDreamshootCatalogCards(site: Site): DreamShootCatalogCard[] {
   const card = (id: string, title: string, category: string, description: string, meta: string, credits: string, imageUrl: string, href: string) =>
     dreamshootCatalogCardFromBlock(site, { id, type: "catalog_pack", settings: { title, category, description, meta, credits, imageUrl, href } });
   return [
-    card("catalog_worldcup", "Soccer", "Lifestyle & Creative", "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", "Fan meetups", "26 credits", packImages.sports, "/collections/soccer"),
-    card("catalog_christmas", "Christmas Photos", "Christmas", "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", "Holiday cards", "20 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", "/collections/christmas-photo"),
-    card("catalog_nightlife", "Nightlife", "Lifestyle & Creative", "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", "Night-out looks", "22 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp", "/collections/nightlife"),
-    card("catalog_holiday", "Holiday", "Seasonal", "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", "Seasonal albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", "/collections/holiday"),
-    card("catalog_creator_vip", "Portrait Photo", "Professional", "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", "Red-carpet looks", "24 credits", "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", "/collections/portrait-photo"),
-    card("catalog_thanksgiving", "Thanksgiving Photo", "Best Themes & Presets", "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", "Group portraits", "20 credits", "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1", "/collections/thanksgiving-photo"),
-    card("catalog_halloween", "Halloween Photo", "Best Themes & Presets", "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", "Party albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1", "/collections/halloween-photo"),
-    card("catalog_headshot", "Headshot", "Professional", "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Not for passports, official IDs, impersonation, or representing someone without permission.", "Work profiles", "20 credits", packImages.headshots, "/collections/headshot"),
-    card("catalog_hairstyle", "Hairstyle Generator", "Magic", "Preview haircut, color, and styling ideas before you commit to a salon change or full image package. Visual preview only; not an exact real-world result guarantee.", "Style preview", "18 credits", packImages.beauty, "/collections/hairstyle-generator"),
-    card("catalog_cyberpunk", "Cyberpunk", "Creative", "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.", "Neon portraits", "26 credits", packImages.creative, "/collections/cyberpunk"),
-    card("catalog_gala", "Gala Photo", "Professional", "Create formal evening portraits with black-tie styling and red-carpet-style lighting from your own photos.", "Evening portraits", "24 credits", packImages.gala, "/collections/gala-photo"),
-    card("catalog_travel", "Travel", "Lifestyle & Creative", "Create outdoor profile photos, creator scenes, and personal-brand images from your own photos.", "Lifestyle scenes", "24 credits", packImages.travel, "/collections/travel"),
-    card("catalog_wedding", "Wedding Photo", "Best Themes & Presets", "Create wedding-inspired portraits, couple-style scenes, and save-the-date visuals for personal ideas and albums.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/collections/wedding-photo"),
-    card("catalog_rich_lifestyle", "Rich Lifestyle", "Lifestyle & Creative", "Create upscale lifestyle portraits from photos you own or have permission to use.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/story-wedding-look.png", "/collections/rich-lifestyle"),
-    card("catalog_christmas", "Christmas Photos", "Seasonal", "Create festive portraits for holiday cards, profile photos, family-style posts, and seasonal albums.", "Seasonal album", "20 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", "/collections/christmas-photo"),
-    card("catalog_creator", "Portrait Photo", "Professional", "Generate fresh profile portraits for newsletters, landing pages, thumbnails, media kits, and social profiles.", "Creator profiles", "24 credits", packImages.creator, "/collections/portrait-photo"),
-    card("catalog_avatar", "Avatar", "Professional", "Create stylized avatar concepts for profiles, fan communities, and playful identity updates.", "Avatar concepts", "24 credits", packImages.avatar, "/collections/avatar"),
-    card("catalog_fashion", "Fashion Editorial", "Beauty", "Preview outfit and styling directions on your own image before choosing a full photo set. Visual preview only; not an exact fit guarantee.", "Style preview", "24 credits", packImages.fashion, "/collections/street-style"),
-    card("catalog_nature", "Nature adventure", "Outdoor", "Place your portrait into outdoor scenes such as beaches, mountains, city streets, and scenic backdrops.", "Outdoor-inspired", "18 credits", packImages.travel, "/collections/travel"),
-    card("catalog_mafia", "Noir portraits", "Creative", "Create dramatic noir-style character portraits from photos you own or have permission to use.", "Character scenes", "22 credits", packImages.gala, "/collections/mafia"),
-    card("catalog_profile", "Avatar", "Professional", "Social profile cards, avatar crops, and clean personal introduction visuals.", "Profile cards", "20 credits", packImages.headshots, "/collections/avatar"),
-    card("catalog_product", "Background Changer", "Photo Tools", "Product-style scenes and creator-led lifestyle images for simple campaigns.", "Product scenes", "22 credits", packImages.copy, "/collections/background-changer")
+    card("catalog_worldcup", "Soccer", "Lifestyle & Creative", "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", "Fan meetups", "26 credits", packImages.sports, "/ai-image-generation/soccer"),
+    card("catalog_christmas", "Christmas Photos", "Christmas", "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", "Holiday cards", "20 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", "/ai-image-generation/christmas-photo"),
+    card("catalog_nightlife", "Nightlife", "Lifestyle & Creative", "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", "Night-out looks", "22 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp", "/ai-image-generation/nightlife"),
+    card("catalog_holiday", "Holiday", "Seasonal", "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", "Seasonal albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", "/ai-image-generation/holiday"),
+    card("catalog_creator_vip", "Portrait Photo", "Professional", "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", "Red-carpet looks", "24 credits", "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", "/ai-image-generation/portrait-photo"),
+    card("catalog_thanksgiving", "Thanksgiving Photo", "Best Themes & Presets", "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", "Group portraits", "20 credits", "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1", "/ai-image-generation/thanksgiving-photo"),
+    card("catalog_halloween", "Halloween Photo", "Best Themes & Presets", "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", "Party albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1", "/ai-image-generation/halloween-photo"),
+    card("catalog_headshot", "Headshot", "Professional", "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Not for passports, official IDs, impersonation, or representing someone without permission.", "Work profiles", "20 credits", packImages.headshots, "/ai-image-generation/headshot"),
+    card("catalog_hairstyle", "Hairstyle Generator", "Magic", "Preview haircut, color, and styling ideas before you commit to a salon change or full image package. Visual preview only; not an exact real-world result guarantee.", "Style preview", "18 credits", packImages.beauty, "/ai-image-generation/hairstyle-generator"),
+    card("catalog_cyberpunk", "Cyberpunk", "Creative", "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.", "Neon portraits", "26 credits", packImages.creative, "/ai-image-generation/cyberpunk"),
+    card("catalog_gala", "Gala Photo", "Professional", "Create formal evening portraits with black-tie styling and red-carpet-style lighting from your own photos.", "Evening portraits", "24 credits", packImages.gala, "/ai-image-generation/gala-photo"),
+    card("catalog_travel", "Travel", "Lifestyle & Creative", "Create outdoor profile photos, creator scenes, and personal-brand images from your own photos.", "Lifestyle scenes", "24 credits", packImages.travel, "/ai-image-generation/travel"),
+    card("catalog_wedding", "Wedding Photo", "Best Themes & Presets", "Create wedding-inspired portraits, couple-style scenes, and save-the-date visuals for personal ideas and albums.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/ai-image-generation/wedding-photo"),
+    card("catalog_rich_lifestyle", "Rich Lifestyle", "Lifestyle & Creative", "Create upscale lifestyle portraits from photos you own or have permission to use.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/story-wedding-look.png", "/ai-image-generation/rich-lifestyle"),
+    card("catalog_christmas", "Christmas Photos", "Seasonal", "Create festive portraits for holiday cards, profile photos, family-style posts, and seasonal albums.", "Seasonal album", "20 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", "/ai-image-generation/christmas-photo"),
+    card("catalog_creator", "Portrait Photo", "Professional", "Generate fresh profile portraits for newsletters, landing pages, thumbnails, media kits, and social profiles.", "Creator profiles", "24 credits", packImages.creator, "/ai-image-generation/portrait-photo"),
+    card("catalog_avatar", "Avatar", "Professional", "Create stylized avatar concepts for profiles, fan communities, and playful identity updates.", "Avatar concepts", "24 credits", packImages.avatar, "/ai-image-generation/avatar"),
+    card("catalog_fashion", "Fashion Editorial", "Beauty", "Preview outfit and styling directions on your own image before choosing a full photo set. Visual preview only; not an exact fit guarantee.", "Style preview", "24 credits", packImages.fashion, "/ai-image-generation/street-style"),
+    card("catalog_nature", "Nature adventure", "Outdoor", "Place your portrait into outdoor scenes such as beaches, mountains, city streets, and scenic backdrops.", "Outdoor-inspired", "18 credits", packImages.travel, "/ai-image-generation/travel"),
+    card("catalog_mafia", "Noir portraits", "Creative", "Create dramatic noir-style character portraits from photos you own or have permission to use.", "Character scenes", "22 credits", packImages.gala, "/ai-image-generation/mafia"),
+    card("catalog_profile", "Avatar", "Professional", "Social profile cards, avatar crops, and clean personal introduction visuals.", "Profile cards", "20 credits", packImages.headshots, "/ai-image-generation/avatar"),
+    card("catalog_product", "Background Changer", "Photo Tools", "Product-style scenes and creator-led lifestyle images for simple campaigns.", "Product scenes", "22 credits", packImages.copy, "/ai-image-generation/background-changer")
   ];
 }
 
@@ -6860,7 +7030,7 @@ function defaultAidreamcapesCatalogCards(
         href: card.href
       }
     });
-    const relatedPacks = relatedPacksForTaxonomyCard(creativePacks, creativePackCategories, catalogCard.id, catalogCard.href);
+    const relatedPacks = relatedPacksForTaxonomyCard(site, creativePacks, creativePackCategories, catalogCard.id, catalogCard.href);
     const imageUrls = dreamshootCategoryPreviewImageSet(site, catalogCard.imageUrl, relatedPacks, 2);
     return {
       ...catalogCard,
@@ -8218,6 +8388,7 @@ function SectionView({
   toolMenuItems,
   creativePackCategories,
   creativePacks,
+  videoThemeCategories,
   videoThemes,
   runtime,
   mode,
@@ -8231,6 +8402,7 @@ function SectionView({
   toolMenuItems: ToolMenuItem[];
   creativePackCategories: CreativePackCategory[];
   creativePacks: CreativePack[];
+  videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
   runtime?: ThemeRuntimeData;
   mode: "published" | "preview";
@@ -8251,6 +8423,7 @@ function SectionView({
         site={site}
         siteAiApps={siteAiApps}
         toolMenuItems={toolMenuItems}
+        videoThemeCategories={videoThemeCategories}
         videoThemes={videoThemes}
       />
     );
@@ -9768,7 +9941,7 @@ function SectionView({
             { id: "tab_video", type: "feature_tab", settings: { label: "Video", title: "Crear escenas cortas", description: "Convierte resultados generados en ideas de movimiento listas para revisar.", imageUrl: dreamshootToolSceneDefaults.progress, href: "/tools/image-to-video" } }
           ]
         : [
-            { id: "tab_packages", type: "feature_tab", settings: { label: "Photo packages", title: "Pick a finished outcome", description: "Start from a guided package like headshots, World Cup fan photos, creator portraits, gala, or cyberpunk with credits shown before generation.", imageUrl: dreamshootToolSceneDefaults.banner, href: "/collections" } },
+            { id: "tab_packages", type: "feature_tab", settings: { label: "Photo packages", title: "Pick a finished outcome", description: "Start from a guided package like headshots, World Cup fan photos, creator portraits, gala, or cyberpunk with credits shown before generation.", imageUrl: dreamshootToolSceneDefaults.banner, href: "/ai-image-generation" } },
             { id: "tab_tryon", type: "feature_tab", settings: { label: "Try-on and style", title: "Preview themed looks", description: "Simulate wardrobe, hairstyle, beauty, or gala directions before full-package generation.", imageUrl: "/assets/dreamshoot/editorial-headshot.svg", href: "/tools/virtual-try-on" } },
             { id: "tab_video", type: "feature_tab", settings: { label: "Video scenes", title: "Short-form delivery packs", description: "Turn generated package results into campaign-ready motion ideas.", imageUrl: dreamshootToolSceneDefaults.progress, href: "/tools/image-to-video" } }
           ];
@@ -9832,9 +10005,9 @@ function SectionView({
       section,
       "items",
       [
-        `Portrait Photo|Profile, travel, and editorial creator looks.|Professional|${packImages.creator}|/collections/portrait-photo`,
-        `Soccer|Stadium portraits, fan posters, and match-day profile scenes.|Lifestyle & Creative|${packImages.sports}|/collections/soccer`,
-        `Headshot|Professional photos for founders, job search, and teams.|Professional|${packImages.headshots}|/collections/headshot`
+        `Portrait Photo|Profile, travel, and editorial creator looks.|Professional|${packImages.creator}|${publicCollectionPathForSite(site, "portrait-photo")}`,
+        `Soccer|Stadium portraits, fan posters, and match-day profile scenes.|Lifestyle & Creative|${packImages.sports}|${publicCollectionPathForSite(site, "soccer")}`,
+        `Headshot|Professional photos for founders, job search, and teams.|Professional|${packImages.headshots}|${publicCollectionPathForSite(site, "headshot")}`
       ],
       (item, index) => {
         const [title, description, tag, imageUrl, href] = item.split("|");
@@ -10748,7 +10921,7 @@ function SectionView({
           meta: "Professional",
           keywords: "portrait photo|profile photos|personal brand",
           imageUrl: packImages.creator,
-          href: "/collections/portrait-photo"
+          href: publicCollectionPathForSite(site, "portrait-photo")
         }
       },
       {
@@ -10760,7 +10933,7 @@ function SectionView({
           meta: "Professional",
           keywords: "headshot|profile|linkedin",
           imageUrl: packImages.headshots,
-          href: "/collections/headshot"
+          href: publicCollectionPathForSite(site, "headshot")
         }
       },
       {
@@ -10772,7 +10945,7 @@ function SectionView({
           meta: "Creative",
           keywords: "cyberpunk|mafia|nature|gala",
           imageUrl: packImages.sports,
-          href: "/collections/lifestyle-creative"
+          href: publicCollectionPathForSite(site, "lifestyle-creative")
         }
       }
     ];
@@ -10813,7 +10986,7 @@ function SectionView({
 	          photoCountLabel: matchingPack && profile ? dreamshootPackPhotoCountLabel(matchingPack) : undefined,
           tags: profile?.tags ?? [],
           usesLabel: matchingPack && profile ? dreamshootPackActivityLabel(site, matchingPack, profile) : undefined,
-          href: `/collections/${category.slug}`,
+          href: publicCollectionPathForSite(site, category.slug),
           block: undefined as SectionBlockInstance | undefined
         };
       });
@@ -10845,7 +11018,7 @@ function SectionView({
     const activePackageThemeCards = isMyDreamShootsProfileSite(site) && activePackThemeCards.length
       ? activePackThemeCards
       : categoryThemeCards.length ? categoryThemeCards : activePackThemeCards;
-    const taxonomyCards = renderContext.pagePath === "/collections" && activePackageThemeCards.length
+    const taxonomyCards = (renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation") && activePackageThemeCards.length
       ? activePackageThemeCards
       : cards.map((card) => ({
           id: card.id,
@@ -10865,12 +11038,12 @@ function SectionView({
         }));
     const taxonomyClientCards: PackageTaxonomyCard[] = taxonomyCards.map((card) => {
       const matchingPack = creativePacks.find((pack) => creativePackCollectionHref(pack) === card.href || pack.id === card.id);
-      const cardSlug = card.href.replace(/^\/collections\//, "");
+      const cardSlug = publicCollectionSlugFromPath(site, card.href) || card.href.replace(/^\/collections\//, "").split("/").filter(Boolean).at(-1) || "";
       const profile = aidreamcapes && !spanishXbyTaxonomy
         ? aidreamcapesProfileForSlug(site, cardSlug) ?? (matchingPack ? aidreamcapesProfileForPack(site, matchingPack) : undefined)
         : matchingPack ? myDreamShootsProfileForPack(site, matchingPack) : myDreamShootsProfileForSlug(site, cardSlug);
       const relatedAidreamcapesPacks = aidreamcapes && !spanishXbyTaxonomy
-        ? relatedPacksForTaxonomyCard(creativePacks, creativePackCategories, card.id, card.href)
+        ? relatedPacksForTaxonomyCard(site, creativePacks, creativePackCategories, card.id, card.href)
         : [];
       const relatedProfilePacks = relatedAidreamcapesPacks.length ? relatedAidreamcapesPacks : matchingPack ? [matchingPack] : [];
       const profileDetailFields = profile ? profileTaxonomyDetailFields(profile, relatedProfilePacks) : {};
@@ -10949,7 +11122,7 @@ function SectionView({
       };
     });
     const _editorial = setting(section, "layout", "seo_grid") === "editorial";
-    const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/collections" ? "h1" : "h2") === "h1" ? "h1" : "h2";
+    const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation" ? "h1" : "h2") === "h1" ? "h1" : "h2";
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
     const selectedPacks = activeCreativePacksForCollectionSlug(creativePacks, selectedCollectionSlug);
     const selectedPack = selectedPacks.length === 1 ? selectedPacks[0] : undefined;
@@ -11652,11 +11825,11 @@ function SectionView({
     const spanishXbyVisualProof = isSpanishXbySite(site);
     const blocks = sectionBlocks(section, "proof_card");
     const fallbackCards: SectionBlockInstance[] = [
-      { id: "proof_worldcup", type: "proof_card", settings: { title: "Soccer", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Lifestyle & Creative", badge: "Featured", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp", href: "/collections/soccer" } },
-      { id: "proof_sports_meetup", type: "proof_card", settings: { title: "Soccer fan scenes", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Lifestyle & Creative", badge: "Soccer", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-02.webp", href: "/collections/soccer" } },
-      { id: "proof_vip", type: "proof_card", settings: { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp", href: "/collections/gala-photo" } },
-      { id: "proof_christmas", type: "proof_card", settings: { title: "Christmas Photo", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Best Themes & Presets", badge: "Christmas", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photo" } },
-      { id: "proof_seasonal", type: "proof_card", settings: { title: "Seasonal holiday albums", description: "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.", category: "Seasonal", badge: "Seasonal", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: "/collections/holiday" } }
+      { id: "proof_worldcup", type: "proof_card", settings: { title: "Soccer", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Lifestyle & Creative", badge: "Featured", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp", href: publicCollectionPathForSite(site, "soccer") } },
+      { id: "proof_sports_meetup", type: "proof_card", settings: { title: "Soccer fan scenes", description: "Create fan meetup scenes, tunnel portraits, and group-photo moments with permission-safe sports styling.", category: "Lifestyle & Creative", badge: "Soccer", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-02.webp", href: publicCollectionPathForSite(site, "soccer") } },
+      { id: "proof_vip", type: "proof_card", settings: { title: "Red-carpet fan moments", description: "VIP-style portraits, creator gala looks, and red-carpet fan snapshots from approved source photos.", category: "VIP Looks", badge: "VIP Looks", imageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp", href: publicCollectionPathForSite(site, "gala-photo") } },
+      { id: "proof_christmas", type: "proof_card", settings: { title: "Christmas Photo", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Best Themes & Presets", badge: "Christmas", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: publicCollectionPathForSite(site, "christmas-photo") } },
+      { id: "proof_seasonal", type: "proof_card", settings: { title: "Seasonal holiday albums", description: "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.", category: "Seasonal", badge: "Seasonal", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: publicCollectionPathForSite(site, "holiday") } }
     ];
     const tabs = listLines(setting(section, "tabs", "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal"));
     const aidreamcapesProofTabHrefByLabel: Record<string, string> = {
@@ -11735,7 +11908,7 @@ function SectionView({
           : configuredHref;
         const hrefSlug = dreamshootCategorySlug(href.replace(/^\/collections\//, ""));
         const titleSlug = dreamshootCategorySlug(title);
-        const taxonomyPacks = relatedPacksForTaxonomyCard(creativePacks, creativePackCategories, card.id, href);
+        const taxonomyPacks = relatedPacksForTaxonomyCard(site, creativePacks, creativePackCategories, card.id, href);
         const hrefPacks = activeCreativePacksForCollectionSlug(creativePacks, hrefSlug);
         const titlePacks = creativePacks.filter((pack) =>
           pack.status === "active" &&
@@ -12634,7 +12807,7 @@ function SectionView({
   }
 
   if (section.type === "dreamshoot_package_catalog" || section.type === "aidreamcapes_package_catalog") {
-    if (renderContext.pagePath === "/collections") return null;
+    if (renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation") return null;
     const aidreamcapes = isAidreamcapesSite(site);
     const spanishXbyCatalog = isSpanishXbySite(site);
     const usePacks = setting(section, "source", "creative_packs") === "creative_packs";
@@ -12670,10 +12843,10 @@ function SectionView({
       ? isMyDreamShootsProfileSite(site) || (aidreamcapes && !spanishXbyCatalog) ? packItems : [...packItems, ...categoryItems]
       : [];
     const fallbackCards: DreamShootCatalogCard[] = [
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/soccer" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_christmas", type: "catalog_pack", settings: { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/collections/christmas-photo" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_holiday", type: "catalog_pack", settings: { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: "/collections/holiday" } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_creator_vip", type: "catalog_pack", settings: { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", href: "/collections/portrait-photo" } })
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "26 credits", imageUrl: packImages.sports, href: publicCollectionPathForSite(site, "soccer") } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_christmas", type: "catalog_pack", settings: { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: publicCollectionPathForSite(site, "christmas-photo") } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_holiday", type: "catalog_pack", settings: { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: publicCollectionPathForSite(site, "holiday") } }),
+      dreamshootCatalogCardFromBlock(site, { id: "catalog_creator_vip", type: "catalog_pack", settings: { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", href: publicCollectionPathForSite(site, "portrait-photo") } })
     ];
     const defaultCatalogCards = aidreamcapes ? defaultAidreamcapesCatalogCards(site, creativePacks, creativePackCategories) : defaultDreamshootCatalogCards(site);
     const seededCards = manualCards.length ? manualCards : defaultCatalogCards;
@@ -12908,6 +13081,31 @@ function SectionView({
 
   if (section.type === "dreamshoot_tool_collection" || section.type === "aidreamcapes_tool_collection") {
     const aidreamcapes = isAidreamcapesSite(site);
+    const primaryMyDreamShoots = isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) && !aidreamcapes;
+    const mydreamshootsVideoFramework = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXbySite(site) && !aidreamcapes && !primaryMyDreamShoots;
+    if (mydreamshootsVideoFramework) {
+      const categories = headerVideoGenerationCategoriesForClient(site, videoThemeCategories);
+      return (
+        <section className="relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14" id={sectionAnchor(section, "video-generation")}>
+          <div className="mx-auto max-w-[1180px]">
+            <div className="mx-auto mb-6 max-w-4xl text-center">
+              <h1 className="text-[clamp(2.25rem,5vw,4.35rem)] font-bold leading-[1.02] text-balance text-white [font-family:var(--site-title-font)]">
+                AI Video Generation
+              </h1>
+              <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-white/64">
+                Choose a video generation mode. Themes will appear here as they are added.
+              </p>
+            </div>
+            <HeaderVideoGenerationMegaPanel
+              categories={categories}
+              ctaHref={hrefFor(site, "/app/create#step-video")}
+              ctaLabel="Open video workspace"
+              variantTone="dark"
+            />
+          </div>
+        </section>
+      );
+    }
     const dynamicToolBlocks = getToolBlocksFromMenuItems(toolMenuItems);
     const blocks = sectionBlocks(section, "tool_card");
     const fallbackTools: SectionBlockInstance[] = [
@@ -12948,7 +13146,19 @@ function SectionView({
         }
       }
     ];
-    const rawTools = dynamicToolBlocks.length ? dynamicToolBlocks : blocks.length ? blocks : fallbackTools;
+    const baseTools = dynamicToolBlocks.length ? dynamicToolBlocks : blocks.length ? blocks : fallbackTools;
+    const rawTools = primaryMyDreamShoots
+      ? mergeDreamshootToolBlocks(baseTools.length ? baseTools : getDreamshootToolBlocks(undefined))
+          .filter((tool) => {
+            const slug = toolBlockSlug(tool);
+            const category = blockValue(tool, "category", "").toLowerCase();
+            return category === "video ai" || isMydreamshootsVideoGenerationSlug(slug);
+          })
+          .map((tool) => {
+            const slug = toolBlockSlug(tool);
+            return { ...tool, settings: { ...tool.settings, href: publicVideoGenerationPathForSite(site, slug) } };
+          })
+      : baseTools;
     const spanishXbyTools = isSpanishXbySite(site);
     const tools = spanishXbyTools ? spanishToolBlocks(rawTools, aidreamcapes) : rawTools;
     const configuredCategories = listLines(setting(section, "categories", aidreamcapes ? "Route Portrait Edit|Route Portrait|Video AI" : "Photo AI|AI Photo Edit|Video AI"));
@@ -12956,14 +13166,18 @@ function SectionView({
     const rawCategories = Array.from(new Set([...configuredCategories, ...toolCategories]));
     const layout = setting(section, "layout", "directory");
     const dark = layout === "dark";
-    const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/tools" ? "h1" : "h2") === "h1" ? "h1" : "h2";
+    const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/tools" || renderContext.pagePath === "/ai-video-generation" ? "h1" : "h2") === "h1" ? "h1" : "h2";
     const categories = spanishXbyTools ? Array.from(new Set(rawCategories.map((category) => spanishToolCategoryLabel(category, aidreamcapes)))) : rawCategories;
-    const toolDirectoryTitle = spanishXbyTools
+    const toolDirectoryTitle = primaryMyDreamShoots
+      ? "AI Video Generation"
+      : spanishXbyTools
       ? aidreamcapes
         ? "Herramientas de retratos de viaje con IA"
         : "Herramientas de fotos con IA"
       : "AI Tools Collection";
-    const toolDirectorySubtitle = spanishXbyTools
+    const toolDirectorySubtitle = primaryMyDreamShoots
+      ? "Choose a video generation mode for turning finished photo sets, portraits, posters, product visuals, and album images into short motion concepts."
+      : spanishXbyTools
       ? aidreamcapes
         ? "Elige una herramienta para retratos de destino, luz costera, rutas, postales y galerias privadas con creditos visibles."
         : "Elige una herramienta para retratos profesionales, fondos, retoque, video, probador virtual y albumes privados con creditos visibles."
@@ -13015,8 +13229,8 @@ function SectionView({
               </p>
             </div>
             <DreamShootMegaToolsPanel
-              ctaHref={setting(section, "secondaryHref", "/tools")}
-              ctaLabel={spanishXbyTools ? "Ver todas las herramientas" : setting(section, "secondaryCta", "View all tools")}
+              ctaHref={primaryMyDreamShoots ? "/ai-video-generation" : setting(section, "secondaryHref", "/tools")}
+              ctaLabel={spanishXbyTools ? "Ver todas las herramientas" : primaryMyDreamShoots ? "View all video generators" : setting(section, "secondaryCta", "View all tools")}
               site={site}
               tools={tools}
               variantTone="dark"
@@ -13138,13 +13352,13 @@ function SectionView({
     const fallbackCards = [
       spanishXbyMarquee
         ? { id: "worldcup", title: "Fotos de aficion mundial", description: "Retratos de fan, carteles de partido y avatares desde tus selfies.", meta: "Galeria privada", credits: "26 creditos", imageUrl: packImages.sports, href: "/collections/soccer" }
-        : { id: "worldcup", title: "Soccer", description: "Personal fan portraits, match-day posters, and profile avatars from your own selfies.", meta: "Private gallery", credits: "26 credits", imageUrl: packImages.sports, href: "/collections/soccer" },
+        : { id: "worldcup", title: "Soccer", description: "Personal fan portraits, match-day posters, and profile avatars from your own selfies.", meta: "Private gallery", credits: "26 credits", imageUrl: packImages.sports, href: publicCollectionPathForSite(site, "soccer") },
       spanishXbyMarquee
         ? { id: "creator_portraits", title: "Retratos de creador", description: "Fotos para perfil, pagina personal, boletin y kit de medios.", meta: "Perfiles de creador", credits: "16 creditos", imageUrl: packImages.creator, href: "/collections/portrait-photo" }
-        : { id: "creator_portraits", title: "Portrait Photo", description: "Profile, landing-page, newsletter, and media-kit portraits from your own photos.", meta: "Creator profiles", credits: "16 credits", imageUrl: packImages.creator, href: "/collections/portrait-photo" },
+        : { id: "creator_portraits", title: "Portrait Photo", description: "Profile, landing-page, newsletter, and media-kit portraits from your own photos.", meta: "Creator profiles", credits: "16 credits", imageUrl: packImages.creator, href: publicCollectionPathForSite(site, "portrait-photo") },
       spanishXbyMarquee
         ? { id: "gala", title: "Fotos de gala", description: "Retratos formales con estilo de noche, traje elegante e iluminacion de alfombra roja.", meta: "Retratos de noche", credits: "22 creditos", imageUrl: packImages.gala, href: "/collections/gala-photo" }
-        : { id: "gala", title: "Gala Photo", description: "Formal evening portraits with black-tie styling and red-carpet-style lighting.", meta: "Evening portraits", credits: "22 credits", imageUrl: packImages.gala, href: "/collections/gala-photo" }
+        : { id: "gala", title: "Gala Photo", description: "Formal evening portraits with black-tie styling and red-carpet-style lighting.", meta: "Evening portraits", credits: "22 credits", imageUrl: packImages.gala, href: publicCollectionPathForSite(site, "gala-photo") }
     ];
     const displayCards = [...(cards.length ? cards : fallbackCards), ...(cards.length ? cards : fallbackCards)];
     return (
@@ -13486,7 +13700,7 @@ function SectionView({
       siteAiApps.find((app) => app.enabled) ??
       siteAiApps[0];
     const customerSignedIn = Boolean(runtime?.customer) && !runtime?.isPreview;
-    const isToolLanding = renderContext.pagePath.startsWith("/tools/");
+    const isToolLanding = renderContext.pagePath.startsWith("/tools/") || renderContext.pagePath.startsWith("/ai-video-generation/");
     const spanishXbyToolEntry = isSpanishXbySite(site);
     const actionHref = hrefFor(site, isToolLanding ? setting(section, "ctaHref", "/dashboard") : customerSignedIn ? setting(section, "ctaHref", "/app") : "/login");
     const actionLabel = spanishXbyToolEntry

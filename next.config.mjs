@@ -128,6 +128,22 @@ const nextConfig = {
         headers: publicStorefrontHeaders
       },
       {
+        source: "/ai-image-generation",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/ai-image-generation/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/ai-video-generation",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/ai-video-generation/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
         source: "/tools",
         headers: publicStorefrontHeaders
       },
@@ -281,6 +297,22 @@ const nextConfig = {
       },
       {
         source: "/site/:siteSlug/collections/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/ai-image-generation",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/ai-image-generation/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/ai-video-generation",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/ai-video-generation/:path*",
         headers: publicStorefrontHeaders
       },
       {

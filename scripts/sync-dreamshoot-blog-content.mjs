@@ -3,6 +3,7 @@ import path from "path";
 import crypto from "crypto";
 
 const statePath = path.join(process.cwd(), "data/platform-state.json");
+const mydreamshootsTaxonomyPath = path.join(process.cwd(), "src", "lib", "mydreamshoots-theme-taxonomy.json");
 
 function clone(value) {
   return value === undefined ? undefined : JSON.parse(JSON.stringify(value));
@@ -167,7 +168,7 @@ function makeCategoryArticle(input) {
   const isVideoTheme = kind === "video-theme";
   const articleKind = isTool ? "tool category" : isVideoTheme ? "video theme category" : "package category";
   const pluralKind = isTool ? "tools" : isVideoTheme ? "video themes" : "packages";
-  const directoryHref = isTool || isVideoTheme ? "/tools" : isAidreamcapes ? "/collections" : "/collections/headshot";
+  const directoryHref = isTool || isVideoTheme ? "/tools" : isAidreamcapes ? "/collections" : packageDirectoryHrefForSite(input.sitePrefix, "headshot");
   const directoryLabel = isTool || isVideoTheme ? "Tools" : isAidreamcapes ? "Browse packages" : "Headshot";
   const sourceTerm = input.sourceTerm ?? (isVideoTheme ? "source frames" : isAidreamcapes ? "source portraits" : "source photos");
   const setTerm = isVideoTheme ? "video clip" : isAidreamcapes ? "album" : "photo set";
@@ -182,7 +183,7 @@ function makeCategoryArticle(input) {
   const targetHref = input.targetHref ?? directoryHref;
   const targetLabel = input.targetLabel ?? (isTool ? `Open ${label} tool` : isVideoTheme ? `Open ${label} video themes` : `Open ${label} package`);
   const primaryCta = input.primaryCta ?? (isTool || isVideoTheme ? "Open Tools" : isAidreamcapes ? "Browse packages" : "Open Headshot");
-  const primaryHref = input.primaryHref ?? (isTool || isVideoTheme || isAidreamcapes ? directoryHref : "/collections/headshot");
+  const primaryHref = input.primaryHref ?? (isTool || isVideoTheme || isAidreamcapes ? directoryHref : packageDirectoryHrefForSite(input.sitePrefix, "headshot"));
   const openingLead = isAidreamcapes
     ? `The ${label} ${articleKind} gives ${brand} customers one clear private album direction to compare before credits are spent.`
     : `The ${label} ${articleKind} helps ${brand} customers choose a clear package direction before they spend credits.`;
@@ -296,7 +297,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/creator-photo-package-guide",
     description: "Creator portraits, profile cards, product-style scenes, social cards, and private personal-brand albums.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp?v=20260715b",
-    targetHref: "/collections/portrait-photo",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "portrait-photo"),
     examples: ["creator portraits", "profile cards", "product-style scenes", "social cards"],
     bestFor: "Use Creator when the finished images need to support a personal brand, creator profile, campaign draft, or social-facing album.",
     sourceFocus: "Prepare clear face photos plus one or two frames that show posture, shoulders, and the kind of outfit tone you want the creator set to follow.",
@@ -309,7 +310,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/avatar-photo-package-guide",
     description: "Stylized avatar, anime-inspired profile, and character-concept packages for playful private galleries.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/anime-avatar/anime-avatar-01.webp?v=20260715b",
-    targetHref: "/collections/avatar",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "avatar"),
     examples: ["anime avatars", "stylized profile icons", "character concepts", "playful social crops"],
     bestFor: "Use Avatar when the image can be more stylized than a normal portrait while still staying recognizable as the person.",
     sourceFocus: "Use sharp, recent portraits without heavy filters so the stylized result has a stable identity base before character details are added.",
@@ -322,7 +323,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/wedding-photo-package-guide",
     description: "Wedding portraits, couple albums, save-the-date concepts, and announcement-ready visuals.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/wedding-portraits/wedding-portraits-01.webp?v=20260715b",
-    targetHref: "/collections/wedding",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "wedding"),
     examples: ["wedding portraits", "save-the-date concepts", "couple albums", "announcement visuals"],
     bestFor: "Use Wedding when the finished images need a romantic, announcement-ready, or keepsake mood for a couple or ceremony-inspired album.",
     sourceFocus: "Prepare clear portraits for each person and include simple notes about formal tone, outfit direction, and whether the set should feel quiet or celebratory.",
@@ -335,7 +336,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/cultural-wedding-photo-guide",
     description: "Indian and Desi Wedding-inspired portraits with respectful styling and private gallery delivery.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/desi-wedding/desi-wedding-01.webp?v=20260715b",
-    targetHref: "/collections/cultural",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "cultural"),
     examples: ["Indian wedding looks", "Desi wedding portraits", "formal celebration images", "private cultural keepsakes"],
     bestFor: "Use Cultural when the customer wants a celebration-inspired portrait direction with clear styling notes and careful private review.",
     sourceFocus: "Prepare current portraits and write respectful styling notes around outfit tone, color, formality, and album use without inventing personal traditions.",
@@ -348,7 +349,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/couple-photo-package-guide",
     description: "Keepsake couple portraits, engagement concepts, Valentine visuals, and festive relationship keepsakes.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/engagement/engagement-01.webp?v=20260715b",
-    targetHref: "/collections/couple",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "couple"),
     examples: ["couple portraits", "engagement concepts", "Valentine visuals", "relationship keepsakes"],
     bestFor: "Use Couple when the finished set should read as a shared portrait, private keepsake, or relationship announcement.",
     sourceFocus: "Use permission-safe photos for both people, ideally with clear faces and at least one frame that shows how they look together.",
@@ -361,7 +362,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/creative-photo-package-guide",
     description: "Cinematic worlds, noir portraits, cyberpunk scenes, gala looks, nature images, and editorial private albums.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/cyberpunk/cyberpunk-01.webp?v=20260715b",
-    targetHref: "/collections/lifestyle-creative",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "lifestyle-creative"),
     examples: ["cyberpunk scenes", "noir portraits", "gala looks", "nature images"],
     bestFor: "Use Creative when the gallery can carry stronger mood, scene design, and dramatic styling than a work profile or simple social crop.",
     sourceFocus: "Start with stable identity photos, then add one clear story world such as neon city, formal night, outdoor portrait, or noir character mood.",
@@ -374,7 +375,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/beauty-style-photo-guide",
     description: "Hairstyle previews, try-on directions, soft glam portraits, and private style-planning galleries.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/hairstyle/hairstyle-01.webp?v=20260715b",
-    targetHref: "/collections/hairstyle-generator",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "hairstyle-generator"),
     examples: ["hairstyle previews", "virtual try-on looks", "soft glam portraits", "style-planning galleries"],
     bestFor: "Use Beauty when the customer wants to compare style direction, hair mood, makeup tone, or outfit framing in a private gallery.",
     sourceFocus: "Use current portraits with visible hairline, face shape, and natural lighting so style changes have a clear person to follow.",
@@ -387,7 +388,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/sports-fan-photo-guide",
     description: "Personal fan portraits, match-day posters, profile avatars, and stadium-inspired images.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp?v=20260715b",
-    targetHref: "/collections/soccer",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "soccer"),
     examples: ["fan portraits", "match-day posters", "profile avatars", "stadium-inspired images"],
     bestFor: "Use Sports when the finished images should feel like personal fan content, match-day profile material, or a private themed keepsake.",
     sourceFocus: "Use a clear portrait and describe fan mood, colors, crop need, and personal use without relying on official logos or player likenesses.",
@@ -400,7 +401,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/video-photo-package-guide",
     description: "Motion-ready image frames and short-video add-on directions for private albums.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp?v=20260715b",
-    targetHref: "/collections/motion-generator",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "motion-generator"),
     examples: ["motion-ready frames", "image-to-video concepts", "profile clips", "album story videos"],
     bestFor: "Use Video when a finished image should become a short motion concept, profile clip, fan poster motion, or private album add-on.",
     sourceFocus: "Choose the clearest finished image or frame sequence, then define one movement idea such as slow camera drift, soft reveal, or profile clip pacing.",
@@ -413,7 +414,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/utility-image-prep-guide",
     description: "Upscaling and image-prep packages for cleaner private gallery downloads.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/magic-upscaler/magic-upscaler-01.webp?v=20260715b",
-    targetHref: "/collections/utility",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "utility"),
     examples: ["magic upscaling", "image prep", "cleaner downloads", "gallery finishing"],
     bestFor: "Use Utility when the main job is preparing, enlarging, or cleaning an image rather than changing the whole portrait style.",
     sourceFocus: "Start with the best available image and decide whether the goal is clarity, crop readiness, or download quality before spending credits.",
@@ -426,7 +427,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/headshot-photo-package-guide",
     description: "Professional headshots for LinkedIn, resumes, teams, founders, and polished work profiles.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/professional-headshots/professional-headshots-01.webp?v=20260715b",
-    targetHref: "/collections/headshot",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "headshot"),
     examples: ["LinkedIn portraits", "resume photos", "founder profiles", "team-ready headshots"],
     bestFor: "Use Headshots when the finished images need to feel clear, restrained, current, and appropriate for work-facing profiles.",
     sourceFocus: "Use recent face-forward portraits with neutral lighting, readable hair and shoulders, and clothing that does not distract from the person.",
@@ -439,7 +440,7 @@ const mydreamshootsThemeArticles = [
     blogSlug: "/blog/seasonal-photo-package-guide",
     description: "Holiday portraits, Christmas cards, festive social visuals, and private seasonal albums.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp?v=20260715b",
-    targetHref: "/collections/seasonal",
+    targetHref: packageDirectoryHrefForSite("site_dreamshoot", "seasonal"),
     examples: ["holiday portraits", "Christmas cards", "festive social visuals", "seasonal private albums"],
     bestFor: "Use Seasonal when the finished set should carry a holiday, greeting-card, or festive keepsake mood.",
     sourceFocus: "Use clear portraits and name the season, card crop, warmth level, and whether the result is for one person, a couple, or a small group.",
@@ -554,6 +555,7 @@ const aidreamcapesThemeArticles = [
 }));
 
 const sourceState = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const mydreamshootsTaxonomy = JSON.parse(fs.readFileSync(mydreamshootsTaxonomyPath, "utf8"));
 
 function slugifySegment(value) {
   return String(value ?? "")
@@ -563,6 +565,37 @@ function slugifySegment(value) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 72);
+}
+
+const mydreamshootsCollectionHrefBySlug = new Map([
+  ["", "/ai-image-generation"],
+  ...mydreamshootsTaxonomy.roots.map((root) => [root.slug, `/ai-image-generation/${root.slug}`]),
+  ...mydreamshootsTaxonomy.items.map((item) => [item.slug, `/ai-image-generation/${item.groupSlug}/${item.slug}`]),
+  ["creator", "/ai-image-generation/portrait-photo"],
+  ["creator-portraits", "/ai-image-generation/portrait-photo"],
+  ["profile-cards", "/ai-image-generation/avatar"],
+  ["wedding", "/ai-image-generation/wedding-photo"],
+  ["wedding-portraits", "/ai-image-generation/wedding-photo"],
+  ["cultural", "/ai-image-generation/wedding-photo"],
+  ["couple", "/ai-image-generation/engagement-photo"],
+  ["creative", "/ai-image-generation"],
+  ["beauty", "/ai-image-generation/hairstyle-generator"],
+  ["sports", "/ai-image-generation/soccer"],
+  ["world-cup-fan-photos", "/ai-image-generation/soccer"],
+  ["video", "/ai-image-generation/motion-generator"],
+  ["ai-video-add-ons", "/ai-image-generation/motion-generator"],
+  ["utility", "/ai-image-generation/photo-enhancer"],
+  ["headshots", "/ai-image-generation/headshot"],
+  ["professional-headshots", "/ai-image-generation/headshot"],
+  ["seasonal", "/ai-image-generation/holiday"]
+]);
+
+function packageDirectoryHrefForSite(siteId, slug = "") {
+  const normalizedSlug = slugifySegment(slug);
+  if (siteId === "site_dreamshoot") {
+    return mydreamshootsCollectionHrefBySlug.get(normalizedSlug) ?? "/ai-image-generation";
+  }
+  return normalizedSlug ? `/collections/${normalizedSlug}` : "/collections";
 }
 
 function activeItems(state, key, siteId) {
@@ -645,7 +678,7 @@ function makeCreativeCategoryArticle(state, siteId, brand, category, parent, pac
     imageUrl: category.imageUrl || packs.find((pack) => pack.imageUrl)?.imageUrl || parent?.imageUrl || defaultSiteImage(brand),
     imageAlt: `${brand} ${label} package category cover`,
     targetLabel: `Open ${label} package`,
-    targetHref: `/collections/${slugifySegment(category.slug || label)}`,
+    targetHref: packageDirectoryHrefForSite(siteId, category.slug || label),
     examples,
     bestFor: `Use ${label} when ${parentLabel} is the right broad direction but the next ${routeNoun} needs a more specific mood, format, or use case.`,
     sourceFocus: brand === "Aidreamcapes"
@@ -699,7 +732,7 @@ function buildCreativePackCoverageArticles(state, siteId, brand) {
       const categoryLabel = category?.label || pack.category || label;
       const parentLabel = parent?.label || categoryLabel || "fan and holiday albums";
       const examples = compactList([label, categoryLabel, parentLabel], label);
-      const targetHref = `/collections/${slug}`;
+      const targetHref = packageDirectoryHrefForSite(siteId, slug);
       return makeCategoryArticle({
         sitePrefix: siteId,
         brand,
@@ -841,7 +874,7 @@ const siteConfigs = [
         primaryCta: "Create my first photo set",
         primaryHref: "/login",
         secondaryCta: "Compare packages",
-        secondaryHref: "/collections",
+        secondaryHref: packageDirectoryHrefForSite("site_dreamshoot"),
         seoTitle: "How to prepare source photos for better AI photo packages",
         seoDescription:
           "Learn how to choose selfies, lighting, angles, wardrobe variety, and permission-safe uploads before starting MyDreamShoots AI photo packages.",
@@ -891,11 +924,11 @@ const siteConfigs = [
         imageAlt: "MyDreamShoots package wall with AI portrait styles",
         tags: "Photo packages|Credits|Portrait planning|Private workflow",
         primaryCta: "Compare packages",
-        primaryHref: "/collections",
+        primaryHref: packageDirectoryHrefForSite("site_dreamshoot"),
         secondaryCta: "View pricing",
         secondaryHref: "/pricing",
         targetLabel: "Browse photo packages",
-        targetHref: "/collections",
+        targetHref: packageDirectoryHrefForSite("site_dreamshoot"),
         seoTitle: "How to choose AI photo packages before spending credits",
         seoDescription:
           "Compare MyDreamShoots AI photo packages by final use, source-photo fit, style risk, output needs, private delivery, and visible credit cost.",
@@ -917,7 +950,7 @@ const siteConfigs = [
           <h2 id="quick-comparison">Quick comparison</h2>
           <table><thead><tr><th>Package goal</th><th>Best source-photo match</th><th>Review focus</th></tr></thead><tbody><tr><td>Professional headshots</td><td>Clear face detail, neutral clothing, low visual clutter.</td><td>Identity, crop, expression, and background restraint.</td></tr><tr><td>Creator portraits</td><td>Several expressions, some outfit variety, natural body posture.</td><td>Personality, usable crops, and social profile fit.</td></tr><tr><td>Themed albums</td><td>Stable identity photos plus one clear mood direction.</td><td>Scene consistency, costume fit, and artifact checks.</td></tr><tr><td>Small test set</td><td>Your sharpest two or three current portraits.</td><td>Whether the direction is worth a larger credit spend.</td></tr></tbody></table>
           <h2 id="use-related-guides">Use related guides as planning tools</h2>
-          <p>Before starting, read source-photo guidance and private gallery notes. Then open <a href="/collections">packages</a> and compare the package description, credit cost, and intended output. That creates a simple decision path: purpose first, source-photo fit second, credits third.</p>
+          <p>Before starting, read source-photo guidance and private gallery notes. Then open <a href="${packageDirectoryHrefForSite("site_dreamshoot")}">packages</a> and compare the package description, credit cost, and intended output. That creates a simple decision path: purpose first, source-photo fit second, credits third.</p>
           <h2 id="package-choice-framework">A simple package-choice framework</h2>
           <ul><li><strong>Need one polished identity look?</strong> Choose headshots or profile portraits.</li><li><strong>Need expressive social content?</strong> Choose creator, lifestyle, beauty, or themed album sets.</li><li><strong>Need a specific event mood?</strong> Choose holiday, sports, wedding, fan, or cinematic packages.</li><li><strong>Need to test first?</strong> Start smaller, review privately, then spend more credits when the direction is clear.</li></ul>
           <h2 id="package-planning-faq">Package planning FAQ</h2>

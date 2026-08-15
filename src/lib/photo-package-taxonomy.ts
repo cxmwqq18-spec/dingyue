@@ -1,4 +1,5 @@
-import type { CreativePack, CreativePackCategory } from "@/lib/types";
+import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
+import type { CreativePack, CreativePackCategory, Site } from "@/lib/types";
 
 export type PhotoPackageMegaGroup = {
   label: string;
@@ -21,6 +22,203 @@ export type PhotoPackageCategoryOption = {
   slug: string;
   sortOrder?: number;
 };
+
+type CollectionRouteSiteIdentity = Partial<Pick<Site, "id" | "slug" | "name" | "primaryDomain">> & {
+  siteId?: string;
+  branding?: Partial<Pick<Site["branding"], "logoText">>;
+};
+
+type MyDreamShootsThemeTaxonomy = {
+  roots: Array<{ slug: string; label: string }>;
+  items: Array<{ slug: string; groupSlug: string; label: string }>;
+};
+
+export type PublicCollectionRoute = {
+  root: "ai-image-generation" | "collections";
+  rootSlug?: string;
+  itemSlug?: string;
+  collectionSlug: string;
+  canonicalPath: string;
+  kind: "directory" | "group" | "item";
+};
+
+const mydreamshootsThemeTaxonomyData = mydreamshootsThemeTaxonomy as MyDreamShootsThemeTaxonomy;
+export const MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT = "ai-image-generation";
+export const MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH = `/${MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT}`;
+export const MYDREAMSHOOTS_AI_PHOTOSHOOT_ROOT = MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT;
+export const MYDREAMSHOOTS_AI_PHOTOSHOOT_ROOT_PATH = MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH;
+export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT = "ai-video-generation";
+export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH = `/${MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT}`;
+export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS = [
+  "image-to-video",
+  "profile-clip",
+  "fan-poster-motion",
+  "creator-intro-video",
+  "product-teaser-clip",
+  "animated-avatar",
+  "fashion-reel",
+  "album-story-video"
+] as const;
+
+export type MyDreamShootsVideoGenerationSlug = typeof MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS[number];
+
+export type PublicVideoGenerationRoute = {
+  root: "ai-video-generation";
+  itemSlug?: MyDreamShootsVideoGenerationSlug;
+  canonicalPath: string;
+  kind: "directory" | "item";
+};
+const COLLECTIONS_ROOT_PATH = "/collections";
+
+const mydreamshootsThemeRootSlugs = new Set(mydreamshootsThemeTaxonomyData.roots.map((root) => root.slug));
+const mydreamshootsThemeItemsBySlug = new Map(mydreamshootsThemeTaxonomyData.items.map((item) => [item.slug, item]));
+const mydreamshootsVideoGenerationSlugs = new Set<string>(MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS);
+
+function siteIdentityToken(site: CollectionRouteSiteIdentity | undefined): string {
+  if (!site) return "";
+  return `${site.id ?? ""} ${site.siteId ?? ""} ${site.slug ?? ""} ${site.name ?? ""} ${site.primaryDomain ?? ""} ${site.branding?.logoText ?? ""}`.toLowerCase();
+}
+
+function isAidreamcapesRouteSite(site: CollectionRouteSiteIdentity | undefined): boolean {
+  return siteIdentityToken(site).includes("aidreamcapes");
+}
+
+export function isMydreamshootsCollectionRouteSite(site: CollectionRouteSiteIdentity | undefined): boolean {
+  const token = siteIdentityToken(site);
+  if (!token || isAidreamcapesRouteSite(site)) return false;
+  if (token.includes("site_mydreamshoots_xby") || token.includes("aidreamshoots.eu")) return false;
+  return token.includes("site_dreamshoot") || token.includes("mydreamshoots") || token.includes("dreamshoot");
+}
+
+export function mydreamshootsCollectionGroupSlugForItem(slug: string | undefined): string | undefined {
+  return mydreamshootsThemeItemsBySlug.get(photoPackageSlug(slug))?.groupSlug;
+}
+
+export function isMydreamshootsCollectionRootSlug(slug: string | undefined): boolean {
+  return mydreamshootsThemeRootSlugs.has(photoPackageSlug(slug));
+}
+
+export function isMydreamshootsCollectionItemSlug(slug: string | undefined): boolean {
+  return mydreamshootsThemeItemsBySlug.has(photoPackageSlug(slug));
+}
+
+export function isMydreamshootsVideoGenerationSlug(slug: string | undefined): slug is MyDreamShootsVideoGenerationSlug {
+  return mydreamshootsVideoGenerationSlugs.has(photoPackageSlug(slug));
+}
+
+export function publicCollectionRootPathForSite(site: CollectionRouteSiteIdentity | undefined): string {
+  return isMydreamshootsCollectionRouteSite(site) ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH : COLLECTIONS_ROOT_PATH;
+}
+
+export function publicCollectionPathForSite(site: CollectionRouteSiteIdentity | undefined, rawSlug?: string): string {
+  const rootPath = publicCollectionRootPathForSite(site);
+  const slug = photoPackageSlug(rawSlug);
+  if (!slug || slug === "all" || slug === "todo" || slug === "todos") return rootPath;
+  if (!isMydreamshootsCollectionRouteSite(site)) return `${rootPath}/${slug}`;
+  if (isMydreamshootsCollectionRootSlug(slug)) return rootPath;
+  return `${rootPath}/${slug}`;
+}
+
+export function publicVideoGenerationPathForSite(site: CollectionRouteSiteIdentity | undefined, rawSlug?: string): string {
+  const slug = photoPackageSlug(rawSlug);
+  if (!slug || slug === "all" || slug === "todo" || slug === "todos") return MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH;
+  return isMydreamshootsVideoGenerationSlug(slug) ? `${MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH}/${slug}` : MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH;
+}
+
+export function publicCollectionSlugFromPath(site: CollectionRouteSiteIdentity | undefined, rawPath: string): string {
+  return parsePublicCollectionRouteForSite(site, rawPath)?.collectionSlug ?? "";
+}
+
+export function isPublicCollectionPathForSite(site: CollectionRouteSiteIdentity | undefined, rawPath: string): boolean {
+  return Boolean(parsePublicCollectionRouteForSite(site, rawPath));
+}
+
+export function isPublicVideoGenerationPathForSite(site: CollectionRouteSiteIdentity | undefined, rawPath: string): boolean {
+  return Boolean(parsePublicVideoGenerationRouteForSite(site, rawPath));
+}
+
+function pathSegments(rawPath: string): string[] {
+  const path = rawPath.split(/[?#]/)[0] ?? "";
+  return path
+    .split("/")
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+export function parsePublicCollectionRouteForSite(site: CollectionRouteSiteIdentity | undefined, rawPath: string | string[]): PublicCollectionRoute | undefined {
+  const segments = Array.isArray(rawPath) ? rawPath.filter(Boolean) : pathSegments(rawPath);
+  if (isMydreamshootsCollectionRouteSite(site)) {
+    const isCanonicalRoot = segments[0] === MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT;
+    const isLegacyRoot = segments[0] === "collections";
+    if (!isCanonicalRoot && !isLegacyRoot) return undefined;
+    if (segments.length === 1) {
+      return {
+        root: isCanonicalRoot ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT : "collections",
+        collectionSlug: "",
+        canonicalPath: isCanonicalRoot ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH : COLLECTIONS_ROOT_PATH,
+        kind: "directory"
+      };
+    }
+    if (segments.length === 2) {
+      const itemSlug = photoPackageSlug(segments[1]);
+      const item = mydreamshootsThemeItemsBySlug.get(itemSlug);
+      if (item) {
+        return {
+          root: isCanonicalRoot ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT : "collections",
+          rootSlug: item.groupSlug,
+          itemSlug,
+          collectionSlug: itemSlug,
+          canonicalPath: isCanonicalRoot ? publicCollectionPathForSite(site, itemSlug) : `${COLLECTIONS_ROOT_PATH}/${itemSlug}`,
+          kind: "item"
+        };
+      }
+    }
+    return undefined;
+  }
+  if (segments[0] !== "collections") return undefined;
+  if (segments.length === 1) {
+    return {
+      root: "collections",
+      collectionSlug: "",
+      canonicalPath: COLLECTIONS_ROOT_PATH,
+      kind: "directory"
+    };
+  }
+  if (segments.length === 2) {
+    const itemSlug = photoPackageSlug(segments[1]);
+    return {
+      root: "collections",
+      itemSlug,
+      collectionSlug: itemSlug,
+      canonicalPath: `${COLLECTIONS_ROOT_PATH}/${itemSlug}`,
+      kind: "item"
+    };
+  }
+  return undefined;
+}
+
+export function parsePublicVideoGenerationRouteForSite(site: CollectionRouteSiteIdentity | undefined, rawPath: string | string[]): PublicVideoGenerationRoute | undefined {
+  const segments = Array.isArray(rawPath) ? rawPath.filter(Boolean) : pathSegments(rawPath);
+  if (!isMydreamshootsCollectionRouteSite(site)) return undefined;
+  if (segments[0] !== MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT) return undefined;
+  if (segments.length === 1) {
+    return {
+      root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT,
+      canonicalPath: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH,
+      kind: "directory"
+    };
+  }
+  if (segments.length === 2 && isMydreamshootsVideoGenerationSlug(segments[1])) {
+    const itemSlug = photoPackageSlug(segments[1]) as MyDreamShootsVideoGenerationSlug;
+    return {
+      root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT,
+      itemSlug,
+      canonicalPath: publicVideoGenerationPathForSite(site, itemSlug),
+      kind: "item"
+    };
+  }
+  return undefined;
+}
 
 export function photoPackageSlug(value: string | undefined): string {
   return (value ?? "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "all";
@@ -88,15 +286,19 @@ function shouldUseAidreamcapesCollectionAliases(siteIds: Array<string | undefine
   return siteIds.some((siteId) => (siteId ?? "").toLowerCase().includes("aidreamcapes"));
 }
 
-function photoPackageCollectionHrefForSlug(slug: string | undefined, aliases: Record<string, string> = dreamshootCollectionHrefSlugAliases): string {
+export function photoPackageCollectionHrefForSlug(
+  slug: string | undefined,
+  aliases: Record<string, string> = dreamshootCollectionHrefSlugAliases,
+  site?: CollectionRouteSiteIdentity
+): string {
   const normalizedSlug = photoPackageSlug(slug);
   const hrefSlug = aliases[normalizedSlug] ?? normalizedSlug;
-  return hrefSlug ? `/collections/${hrefSlug}` : "/collections";
+  return publicCollectionPathForSite(site, hrefSlug);
 }
 
 export function creativePackCollectionHref(pack: CreativePack, aliases?: Record<string, string>): string {
   const scopedAliases = aliases ?? (shouldUseAidreamcapesCollectionAliases([pack.siteId, pack.categoryRecord?.siteId]) ? aidreamcapesCollectionHrefSlugAliases : dreamshootCollectionHrefSlugAliases);
-  return photoPackageCollectionHrefForSlug(pack.categoryRecord?.slug || pack.category || pack.name, scopedAliases);
+  return photoPackageCollectionHrefForSlug(pack.categoryRecord?.slug || pack.category || pack.name, scopedAliases, pack);
 }
 
 export function creativePackCategoryOption(pack: CreativePack): PhotoPackageCategoryOption {
@@ -121,7 +323,7 @@ export function creativePackCategoryTokens(pack: CreativePack): string[] {
     pack.category,
     pack.name,
     pack.aiAppSlug,
-    creativePackCollectionHref(pack).replace(/^\/collections\//, "")
+    publicCollectionSlugFromPath(pack, creativePackCollectionHref(pack))
   ].filter(Boolean).map((value) => photoPackageSlug(String(value)))));
 }
 
@@ -255,7 +457,7 @@ export function getPhotoPackageMegaGroups(
         const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
         const group = ensureGroup(groupSlug, groupLabel, parent?.description || category.description, parent?.icon ?? parent?.iconName ?? category.icon ?? category.iconName, sortValue(parent?.sortOrder));
         const itemSlug = category.slug || photoPackageSlug(category.label);
-        addGroupItem(group, { label: photoPackageMenuLabel(category.label), slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug, collectionHrefAliases), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
+        addGroupItem(group, { label: photoPackageMenuLabel(category.label), slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug, collectionHrefAliases, category), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
       });
     addActivePackItems();
     return sortedMegaGroups(groups);
@@ -269,7 +471,7 @@ export function getPhotoPackageMegaGroups(
       const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
       const group = ensureGroup(groupSlug, groupLabel, parent?.description || category.description, parent?.icon ?? parent?.iconName ?? category.icon ?? category.iconName, sortValue(parent?.sortOrder ?? category.sortOrder));
       const itemSlug = category.slug || photoPackageSlug(category.label);
-      addGroupItem(group, { label: photoPackageMenuLabel(category.label), slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug, collectionHrefAliases), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
+      addGroupItem(group, { label: photoPackageMenuLabel(category.label), slug: itemSlug, href: photoPackageCollectionHrefForSlug(itemSlug, collectionHrefAliases, category), icon: category.icon ?? category.iconName, sortOrder: sortValue(category.sortOrder) });
     });
   }
   return sortedMegaGroups(groups);

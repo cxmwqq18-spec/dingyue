@@ -10,12 +10,14 @@ import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
-  const state = await readPathModePublicRuntimeState(publicSiteSlug(siteSlug), "/tools");
+  const publicSlug = publicSiteSlug(siteSlug);
+  if (publicSlug === "mydreamshoots") return {};
+  const state = await readPathModePublicRuntimeState(publicSlug, "/tools");
   const site = state?.sites[0];
   const page = site?.pages.find((item) => item.slug === "/tools");
   return site && page
     ? metadataForSingleThemePage(site, page)
-    : metadataForDreamshootFallbackRoute(publicSiteSlug(siteSlug), "/tools", {
+    : metadataForDreamshootFallbackRoute(publicSlug, "/tools", {
         primaryDomain: site?.primaryDomain,
         ogImage: site?.themeSettings.publishedJson.seo?.defaultOgImage,
         siteName: site?.branding.logoText || site?.name
@@ -31,6 +33,7 @@ export default async function SiteToolsPage({
 }) {
   const { siteSlug } = await params;
   const publicSlug = publicSiteSlug(siteSlug);
+  if (publicSlug === "mydreamshoots") notFound();
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const query = searchParams ? await searchParams : {};

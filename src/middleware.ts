@@ -65,12 +65,7 @@ const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   heritage: "heritage-celebration-portraits"
 };
 const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {};
-const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {
-  "ai-image-studio": "",
-  "headshot-generator": "headshot",
-  "image-studio": "",
-  "travel-portraits": "nature-adventure"
-};
+const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {};
 const AIDREAMCAPES_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "",
   "background-changer": "fan-scene-album-builder",
@@ -140,7 +135,10 @@ const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/terms-of-service": "/terms",
   "/tool": "/tools"
 };
-const LOCAL_DEFAULT_STOREFRONT_PATHS = new Set(["/collections", "/tools", "/pricing", "/help"]);
+const MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
+  "/headshot": "/ai-image-generation/headshot"
+};
+const LOCAL_DEFAULT_STOREFRONT_PATHS = new Set(["/ai-image-generation", "/ai-video-generation", "/pricing", "/help"]);
 const LOCAL_DEFAULT_STOREFRONT_PREFIXES = ["/account", "/app", "/dashboard", "/login"];
 
 const SEO_HEAD_TAG_RE =
@@ -306,7 +304,7 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
       : siteFamily === "mydreamshoots" && kind === "collections"
         ? MYDREAMSHOOTS_COLLECTION_REDIRECTS
         : siteFamily === "mydreamshoots" && kind === "tools"
-          ? MYDREAMSHOOTS_TOOL_REDIRECTS
+          ? undefined
           : siteFamily === "aidreamcapes" && kind === "tools"
             ? AIDREAMCAPES_TOOL_REDIRECTS
           : undefined;
@@ -330,8 +328,19 @@ function legacyPublicPathRedirect(request: NextRequest): NextResponse | undefine
   const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)(\/.*)$/i);
   const scopedPath = pathMatch?.[2]?.toLowerCase() ?? "";
   const hostPath = TARGET_HOST_RE.test(host) ? pathname.toLowerCase() : "";
-  const targetPath = LEGACY_PUBLIC_PATH_REDIRECTS[scopedPath] ?? LEGACY_PUBLIC_PATH_REDIRECTS[hostPath];
+  const siteSlug = pathMatch?.[1]?.toLowerCase() ?? (String(host).toLowerCase().includes("mydreamshoots") ? "mydreamshoots" : "");
+  const isPrimaryDreamshoot = /dreamshoot/i.test(siteSlug) && !/aidreamshoots|aidreamcapes/i.test(siteSlug);
+  let targetPath = isPrimaryDreamshoot
+    ? MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS[scopedPath] ?? MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS[hostPath]
+    : undefined;
+  targetPath ??= LEGACY_PUBLIC_PATH_REDIRECTS[scopedPath] ?? LEGACY_PUBLIC_PATH_REDIRECTS[hostPath];
   if (!targetPath) return undefined;
+  if (targetPath === "/tools" && isPrimaryDreamshoot) {
+    return undefined;
+  }
+  if (targetPath === "/collections" && isPrimaryDreamshoot) {
+    targetPath = "/ai-image-generation";
+  }
 
   const nextUrl = request.nextUrl.clone();
   nextUrl.pathname = pathMatch ? `/site/${pathMatch[1].toLowerCase()}${targetPath}` : targetPath;

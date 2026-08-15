@@ -76,7 +76,15 @@ function sourceAssetIdsFromJobRequest(value: unknown): string[] {
     .filter((item): item is string => typeof item === "string" && item.trim().length > 0);
 }
 
-function customerAssetPreviewUrl(asset: Pick<AssetUpload, "storageKey">): string {
+function customerAssetDownloadUrl(asset: Pick<AssetUpload, "customerId" | "id" | "siteId">): string {
+  return `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`;
+}
+
+function customerAssetPreviewUrl(asset: Pick<AssetUpload, "customerId" | "id" | "mimeType" | "role" | "siteId" | "storageKey">): string {
+  if (asset.role === "output") {
+    const previewUrl = `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download?preview=1`;
+    return asset.mimeType.startsWith("video/") ? `${previewUrl}&poster=1` : previewUrl;
+  }
   const storageKey = normalizeCustomerAssetStorageKey(asset.storageKey);
   return `/api/local-assets/${storageKey}`;
 }
@@ -365,7 +373,7 @@ export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeA
     storageKey,
     previewUrl: customerAssetPreviewUrl(asset),
     previewStatus: hasReadablePreview ? "ready" : "loading",
-    downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
+    downloadUrl: customerAssetDownloadUrl(asset),
     mimeType: asset.mimeType,
     role: asset.role,
     reviewStatus: asset.reviewStatus,

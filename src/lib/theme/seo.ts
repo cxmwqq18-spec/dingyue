@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { Site, ThemePage, ThemeSettings } from "@/lib/types";
+import { isMydreamshootsVideoGenerationSlug, publicCollectionPathForSite, publicVideoGenerationPathForSite } from "@/lib/photo-package-taxonomy";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo } from "@/lib/theme/policy-seo";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
@@ -81,6 +82,19 @@ function normalizeCanonicalPath(value: string | undefined, fallbackSlug: string)
   if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) return trimmed;
   if (trimmed.startsWith("/")) return trimmed;
   return `/${trimmed}`;
+}
+
+function canonicalizeCollectionPathForSite(site: Site, path: string): string {
+  if (path === "/collections") return publicCollectionPathForSite(site, "");
+  if (path.startsWith("/collections/")) return publicCollectionPathForSite(site, path.slice("/collections/".length));
+  if (path === "/ai-image-generation") return publicCollectionPathForSite(site, "");
+  if (path.startsWith("/ai-image-generation/")) return publicCollectionPathForSite(site, path.slice("/ai-image-generation/".length));
+  if (isMyDreamShootsSeoSite(site) && path === "/tools") return publicVideoGenerationPathForSite(site, "");
+  if (isMyDreamShootsSeoSite(site) && path.startsWith("/tools/")) {
+    const slug = path.slice("/tools/".length);
+    if (isMydreamshootsVideoGenerationSlug(slug)) return publicVideoGenerationPathForSite(site, slug);
+  }
+  return path;
 }
 
 function normalizeLaunchSeoPath(value: string | undefined): string {
@@ -323,7 +337,15 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
       title: "Browse private AI photo packages | myDreamshoots",
       description: "Browse myDreamshoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs."
     },
+    "/ai-image-generation": {
+      title: "AI Image Generation Packages | myDreamshoots",
+      description: "Browse private AI image generation packages for headshots, couple photos, creator portraits, seasonal themes, creative looks, and photo editing."
+    },
     "/collections/headshot": {
+      title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | myDreamshoots",
+      description: "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs."
+    },
+    "/ai-image-generation/headshot": {
       title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | myDreamshoots",
       description: "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs."
     },
@@ -529,7 +551,7 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   const defaultRobots = defaultRobotsForPage(page);
   const title = applyTitleTemplate(normalizeStorefrontBrandText(site, pageSeo.title || seo.siteTitle), seo.titleTemplate, site);
   const description = normalizeStorefrontBrandText(site, pageSeo.description, seo.siteDescription);
-  const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
+  const canonicalPath = canonicalizeCollectionPathForSite(site, normalizeCanonicalPath(pageSeo.canonicalPath, page.slug));
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || seo.defaultOgImage);
   const icons = siteIcons(site);
@@ -596,7 +618,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
   };
   const title = applyTitleTemplate(normalizeStorefrontBrandText(site, pageSeo.title || siteTitle), titleTemplate, site);
   const description = normalizeStorefrontBrandText(site, pageSeo.description, siteDescription);
-  const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
+  const canonicalPath = canonicalizeCollectionPathForSite(site, normalizeCanonicalPath(pageSeo.canonicalPath, page.slug));
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || defaultOgImage);
   const icons = siteIcons(site);

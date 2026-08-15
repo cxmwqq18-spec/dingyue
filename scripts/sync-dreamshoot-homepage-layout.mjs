@@ -249,7 +249,7 @@ const stores = [
       primaryCta: "Create Fan Photos",
       primaryHref: "/login",
       secondaryCta: "View all themes",
-      secondaryHref: "/collections",
+      secondaryHref: "/ai-image-generation",
       photos: "Private gallery",
       credits: "26 credits",
       privacy: "Approved uploads",

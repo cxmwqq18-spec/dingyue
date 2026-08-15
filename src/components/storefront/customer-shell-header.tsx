@@ -1,14 +1,16 @@
 "use client";
 
-import { ArrowRight, Camera, ChevronRight, Coffee, Heart, ImageIcon, Map as MapIcon, Mountain, PlayCircle, Scissors, Sparkles, Sun, Users } from "lucide-react";
+import { Camera, Coffee, Heart, ImageIcon, Map as MapIcon, Mountain, PlayCircle, Scissors, Sparkles, Sun, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
+import { HeaderPhotoPackageMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup } from "@/components/storefront/header-mega-menu-panels";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
+import { activeVideoGenerationCategories, isMydreamshootsVideoFrameworkSite, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { getPhotoPackageMegaGroups } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
-import type { CreativePack, CreativePackCategory, PublicCustomer, Site, ToolMenuItem } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, PublicCustomer, Site, ToolMenuItem, VideoThemeCategory } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 
@@ -18,11 +20,11 @@ type MenuGroupEntry = { label: string; accent: string; icon: LucideIcon; items: 
 type MenuGroup = MenuGroupEntry[];
 
 const packageGroups = [
-  { label: "Best Themes & Presets", accent: "#c958f2", icon: Heart, items: [{ label: "Engagement Photo", href: "/collections/engagement-photo" }, { label: "Wedding Photo", href: "/collections/wedding-photo" }, { label: "Valentines Photo", href: "/collections/valentines-photo" }, { label: "Christmas Photo", href: "/collections/christmas-photo" }, { label: "Halloween Photo", href: "/collections/halloween-photo" }, { label: "Thanksgiving Photo", href: "/collections/thanksgiving-photo" }] },
-  { label: "Professional", accent: "#ff7b2f", icon: Users, items: [{ label: "Avatar", href: "/collections/avatar" }, { label: "Headshot", href: "/collections/headshot" }, { label: "Gala Photo", href: "/collections/gala-photo" }, { label: "Portrait Photo", href: "/collections/portrait-photo" }, { label: "Black Friday", href: "/collections/black-friday" }, { label: "Only Fans", href: "/collections/only-fans" }, { label: "Singles Awareness Day", href: "/collections/singles-awareness-day" }] },
-  { label: "Lifestyle & Creative", accent: "#38a8ff", icon: Camera, items: [{ label: "Cyberpunk", href: "/collections/cyberpunk" }, { label: "Boudoir", href: "/collections/boudoir" }, { label: "Holiday", href: "/collections/holiday" }, { label: "Cannes", href: "/collections/cannes" }, { label: "Nightlife", href: "/collections/nightlife" }, { label: "Rich Lifestyle", href: "/collections/rich-lifestyle" }, { label: "Bikini", href: "/collections/bikini" }, { label: "Swimsuit", href: "/collections/swimsuit" }, { label: "Travel", href: "/collections/travel" }, { label: "Soccer", href: "/collections/soccer" }, { label: "Urban", href: "/collections/urban" }, { label: "Street Style", href: "/collections/street-style" }, { label: "Mafia", href: "/collections/mafia" }] },
-  { label: "Magic", accent: "#36d399", icon: Sparkles, items: [{ label: "Hairstyle Generator", href: "/collections/hairstyle-generator" }, { label: "Virtual Try-On", href: "/collections/virtual-try-on" }, { label: "Motion Generator", href: "/collections/motion-generator" }] },
-  { label: "Photo Tools", accent: "#f4c542", icon: Scissors, items: [{ label: "Background Changer", href: "/collections/background-changer" }, { label: "Background Remover", href: "/collections/background-remover" }, { label: "Magic Eraser", href: "/collections/magic-eraser" }, { label: "Photo Enhancer", href: "/collections/photo-enhancer" }, { label: "Portrait Retouch", href: "/collections/portrait-retouch" }, { label: "Unblur Image", href: "/collections/unblur-image" }, { label: "Color Correction", href: "/collections/color-correction" }, { label: "Old Photo Restoration", href: "/collections/old-photo-restoration" }, { label: "Edit By Prompt", href: "/collections/edit-by-prompt" }] }
+  { label: "Best Themes & Presets", accent: "#c958f2", icon: Heart, items: [{ label: "Engagement Photo", href: "/ai-image-generation/engagement-photo" }, { label: "Wedding Photo", href: "/ai-image-generation/wedding-photo" }, { label: "Valentines Photo", href: "/ai-image-generation/valentines-photo" }, { label: "Christmas Photo", href: "/ai-image-generation/christmas-photo" }, { label: "Halloween Photo", href: "/ai-image-generation/halloween-photo" }, { label: "Thanksgiving Photo", href: "/ai-image-generation/thanksgiving-photo" }] },
+  { label: "Professional", accent: "#ff7b2f", icon: Users, items: [{ label: "Avatar", href: "/ai-image-generation/avatar" }, { label: "Headshot", href: "/ai-image-generation/headshot" }, { label: "Gala Photo", href: "/ai-image-generation/gala-photo" }, { label: "Portrait Photo", href: "/ai-image-generation/portrait-photo" }, { label: "Black Friday", href: "/ai-image-generation/black-friday" }, { label: "Only Fans", href: "/ai-image-generation/only-fans" }, { label: "Singles Awareness Day", href: "/ai-image-generation/singles-awareness-day" }] },
+  { label: "Lifestyle & Creative", accent: "#38a8ff", icon: Camera, items: [{ label: "Cyberpunk", href: "/ai-image-generation/cyberpunk" }, { label: "Boudoir", href: "/ai-image-generation/boudoir" }, { label: "Holiday", href: "/ai-image-generation/holiday" }, { label: "Cannes", href: "/ai-image-generation/cannes" }, { label: "Nightlife", href: "/ai-image-generation/nightlife" }, { label: "Rich Lifestyle", href: "/ai-image-generation/rich-lifestyle" }, { label: "Bikini", href: "/ai-image-generation/bikini" }, { label: "Swimsuit", href: "/ai-image-generation/swimsuit" }, { label: "Travel", href: "/ai-image-generation/travel" }, { label: "Soccer", href: "/ai-image-generation/soccer" }, { label: "Urban", href: "/ai-image-generation/urban" }, { label: "Street Style", href: "/ai-image-generation/street-style" }, { label: "Mafia", href: "/ai-image-generation/mafia" }] },
+  { label: "Magic", accent: "#36d399", icon: Sparkles, items: [{ label: "Hairstyle Generator", href: "/ai-image-generation/hairstyle-generator" }, { label: "Virtual Try-On", href: "/ai-image-generation/virtual-try-on" }, { label: "Motion Generator", href: "/ai-image-generation/motion-generator" }] },
+  { label: "Photo Tools", accent: "#f4c542", icon: Scissors, items: [{ label: "Background Changer", href: "/ai-image-generation/background-changer" }, { label: "Background Remover", href: "/ai-image-generation/background-remover" }, { label: "Magic Eraser", href: "/ai-image-generation/magic-eraser" }, { label: "Photo Enhancer", href: "/ai-image-generation/photo-enhancer" }, { label: "Portrait Retouch", href: "/ai-image-generation/portrait-retouch" }, { label: "Unblur Image", href: "/ai-image-generation/unblur-image" }, { label: "Color Correction", href: "/ai-image-generation/color-correction" }, { label: "Old Photo Restoration", href: "/ai-image-generation/old-photo-restoration" }, { label: "Edit By Prompt", href: "/ai-image-generation/edit-by-prompt" }] }
 ];
 
 const aidreamcapesPackageGroups = [
@@ -88,60 +90,26 @@ function dynamicPackageGroupsFromPacks(creativePacks?: CreativePack[], creativeP
     .filter((group) => group.items.length > 0);
 }
 
-function packageMegaColumns(groups: MenuGroup): MenuGroup[] {
-  const columns: MenuGroup[] = [[], [], []];
-  groups.forEach((group, index) => {
-    columns[index % columns.length]?.push(group);
-  });
-  return columns;
+function headerPackageGroupsForClient(basePath: string, groups: MenuGroup): HeaderPhotoPackageMegaGroup[] {
+  return groups.map((group) => ({
+    label: group.label,
+    slug: group.label.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    accent: group.accent,
+    items: group.items.map((item) => ({
+      label: item.label,
+      slug: `${group.label}-${item.href}`,
+      href: `${basePath}${item.href}`
+    }))
+  }));
 }
 
-function PackageMegaPanel({ basePath, groups = packageGroups, title = "Photo package studios" }: { basePath: string; groups?: MenuGroup; title?: string }) {
-  const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
-  const columns = packageMegaColumns(groups);
-  return (
-    <div className="flex max-h-[var(--storefront-mega-panel-max-height,calc(100dvh-6.5rem))] flex-col overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl">
-      <div className="mb-4 text-center">
-        <span className="block text-[1.02rem] font-semibold tracking-tight">{title}</span>
-        <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38">{groups.length} categories · {totalItems} themes</p>
-      </div>
-      <div className="grid min-h-0 flex-1 gap-3 overflow-y-auto border-t border-[#263247] pt-5 pr-1 lg:grid-cols-3">
-        {columns.map((column, columnIndex) => (
-          <div className="grid content-start gap-3" key={`package_column_${columnIndex}`}>
-            {column.map((group) => {
-              const Icon = group.icon;
-              return (
-                <details className="group/category rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]" key={group.label} open>
-                  <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold marker:hidden group-open/category:border-b group-open/category:border-white/10 group-open/category:pb-2" style={{ color: group.accent }}>
-                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]">
-                      <Icon className="h-4 w-4" strokeWidth={1.9} />
-                    </span>
-                    <span className="min-w-0 truncate text-[0.94rem] font-semibold leading-none">{group.label}</span>
-                    <span className="ml-auto text-[11px] font-medium text-white/36">{group.items.length}</span>
-                    <ChevronRight className="h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/category:-rotate-90" strokeWidth={2} />
-                  </summary>
-                  <div className="mt-3 grid gap-2">
-                    {group.items.map((item, itemIndex) => (
-                      <StorefrontInstantLink className="group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white" href={`${basePath}${item.href}`} key={`${group.label}-${item.href}-${itemIndex}`}>
-                        <span className="text-[0.94rem] font-semibold leading-6">{item.label}</span>
-                        <ChevronRight className="ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56" strokeWidth={2} />
-                      </StorefrontInstantLink>
-                    ))}
-                  </div>
-                </details>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-      <div className="mt-5 border-t border-[#263247] pt-3 text-center">
-        <StorefrontInstantLink className="inline-flex items-center gap-2 text-sm font-semibold text-[#ff8a2f] transition hover:text-[#ffa45d]" href={`${basePath}/collections`}>
-          View all packages
-          <ArrowRight className="h-4 w-4" strokeWidth={1.9} />
-        </StorefrontInstantLink>
-      </div>
-    </div>
-  );
+function videoGenerationCategoriesForMenu(basePath: string, categories: VideoThemeCategory[]) {
+  return activeVideoGenerationCategories(categories).map((category) => ({
+    id: category.id,
+    slug: category.slug,
+    label: category.label,
+    href: `${basePath}${category.href}`
+  }));
 }
 
 export function CustomerShellHeader({
@@ -150,7 +118,8 @@ export function CustomerShellHeader({
   tone = "dark",
   creativePackCategories = [],
   creativePacks = [],
-  toolMenuItems = []
+  toolMenuItems = [],
+  videoThemeCategories = []
 }: {
   site: CustomerShellHeaderSite;
   customer: PublicCustomer;
@@ -158,6 +127,7 @@ export function CustomerShellHeader({
   creativePackCategories?: CreativePackCategory[];
   creativePacks?: CreativePack[];
   toolMenuItems?: ToolMenuItem[];
+  videoThemeCategories?: VideoThemeCategory[];
 }) {
   const pathname = usePathname();
   const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
@@ -184,15 +154,22 @@ export function CustomerShellHeader({
   const hasCatalogData = creativePacks.length > 0 || creativePackCategories.length > 0;
   const activePackageGroups = hasCatalogData ? dynamicPackageGroups : fallbackPackageGroups;
   const menuSite = { ...site, __storefrontBasePath: basePath };
-  const activeToolBlocks = getToolBlocksForMenu(menuSite, toolMenuItems);
+  const primaryMyDreamShoots = isMyDreamShoots && !isSpanishXby;
+  const useVideoGenerationToolsMenu = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXby;
+  const videoGenerationMenuCategories = useVideoGenerationToolsMenu ? videoGenerationCategoriesForMenu(basePath, videoThemeCategories) : [];
+  const videoGenerationMenuHref = `${basePath}${videoGenerationCreatePath()}`;
+  const activeToolBlocks = useVideoGenerationToolsMenu ? [] : getToolBlocksForMenu(menuSite, toolMenuItems);
+  const packageRootHref = isMyDreamShoots && !isSpanishXby ? "/ai-image-generation" : "/collections";
+  const toolRootHref = useVideoGenerationToolsMenu ? videoGenerationCreatePath() : primaryMyDreamShoots ? "/ai-video-generation" : "/tools";
   const packagePrefetchPaths = Array.from(new Set([
-    `${basePath}/collections`,
+    `${basePath}${packageRootHref}`,
     ...activePackageGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`))
   ])).slice(0, 10);
   const toolPrefetchPaths = Array.from(new Set([
-    `${basePath}/tools`,
-    ...activeToolBlocks.map((tool) => `${basePath}${String(tool.settings.href ?? "/tools")}`)
+    useVideoGenerationToolsMenu ? videoGenerationMenuHref : `${basePath}${toolRootHref}`,
+    ...(useVideoGenerationToolsMenu ? videoGenerationMenuCategories.map((category) => category.href) : activeToolBlocks.map((tool) => `${basePath}${String(tool.settings.href ?? toolRootHref)}`))
   ])).slice(0, 8);
+  const headerPackageGroups = headerPackageGroupsForClient(basePath, activePackageGroups);
   const dark = tone === "dark";
   const navClass = dark
     ? "inline-flex items-center gap-2 whitespace-nowrap border-white/16 bg-white/[0.035] text-white hover:border-white/28 hover:bg-white/[0.08]"
@@ -242,30 +219,39 @@ export function CustomerShellHeader({
           <nav className="order-2 hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-1 text-[0.78rem] font-semibold xl:flex min-[1440px]:gap-1.5 min-[1536px]:gap-2 min-[1800px]:gap-2.5">
             <ClickMegaMenu
               buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`}
-              label={isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : isAidreamcapes ? "Occasion Albums" : isMyDreamShoots ? "Photoshoot Studio" : "Browse packages"}
+              label={isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : isAidreamcapes ? "Occasion Albums" : primaryMyDreamShoots ? "AI Image Generation" : "Browse packages"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={packagePrefetchPaths}
             >
-              <PackageMegaPanel
-                basePath={basePath}
-                groups={activePackageGroups}
-                title={isSpanishXby ? isAidreamcapes ? "Estudios de albumes de ocasion" : "Estudios de paquetes de fotos" : isAidreamcapes ? "Occasion album studios" : "AI photo package studios"}
+              <HeaderPhotoPackageMegaPanel
+                aidreamcapes={isAidreamcapes}
+                collectionsHref={`${basePath}${packageRootHref}`}
+                groups={headerPackageGroups}
+                spanish={isSpanishXby}
+                variant="dark"
               />
             </ClickMegaMenu>
             <ClickMegaMenu
               buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`}
-              label={isSpanishXby ? "Herramientas" : "Tools"}
+              label={isSpanishXby ? "Herramientas" : useVideoGenerationToolsMenu ? "AI Video Generation" : primaryMyDreamShoots ? "AI Video Generation" : "Tools"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={toolPrefetchPaths}
             >
-              <DreamShootMegaToolsPanel
-                ctaHref="/tools"
-                ctaLabel={isSpanishXby ? "Ver todas las herramientas" : "View all tools"}
-                site={menuSite}
-                tools={activeToolBlocks}
-                variant="popover"
-                variantTone="dark"
-              />
+              {useVideoGenerationToolsMenu ? (
+                <HeaderVideoGenerationMegaPanel
+                  categories={videoGenerationMenuCategories}
+                  variantTone="dark"
+                />
+              ) : (
+                <DreamShootMegaToolsPanel
+                  ctaHref={toolRootHref}
+                  ctaLabel={isSpanishXby ? "Ver todas las herramientas" : primaryMyDreamShoots ? "View all video generators" : "View all tools"}
+                  site={menuSite}
+                  tools={activeToolBlocks}
+                  variant="popover"
+                  variantTone="dark"
+                />
+              )}
             </ClickMegaMenu>
             {!isSpanishXby ? (
               <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/best-packages`}>
@@ -275,11 +261,16 @@ export function CustomerShellHeader({
             <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={workflowHref}>
               {isSpanishXby ? "Como funciona" : "How it works"}
             </StorefrontInstantLink>
-            <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/app/create`} prefetch>
-              {isSpanishXby ? "Espacio privado" : "Workspace"}
-            </StorefrontInstantLink>
+            {!isSpanishXby ? (
+              <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/blog`}>
+                Blog
+              </StorefrontInstantLink>
+            ) : null}
             <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/pricing`}>
               {isSpanishXby ? "Precios" : "Pricing"}
+            </StorefrontInstantLink>
+            <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/app/create`} prefetch>
+              {isSpanishXby ? "Espacio privado" : "Workspace"}
             </StorefrontInstantLink>
             {isSpanishXby ? (
               <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/faq`}>

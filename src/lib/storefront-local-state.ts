@@ -158,7 +158,7 @@ export async function readPathModePublicRuntimeState(siteSlug: string, pageSlug:
   const requiresPublishedSource = requiresMydreamshootsPublishedSource(siteSlug, pathModeReadPreference());
   if (preferLocalPathModeState(siteSlug)) return readLocalState(siteSlug);
   try {
-    const state = pageSlug === "/collections"
+    const state = pageSlug === "/collections" || pageSlug === "/ai-image-generation"
       ? await readStorefrontPublicCollectionDirectoryStateBySlugFromDatabase(siteSlug)
       : await readStorefrontPublicRuntimeStateBySlugFromDatabase(siteSlug, pageSlug, contextSlug);
     if (state?.sites[0]) return state;

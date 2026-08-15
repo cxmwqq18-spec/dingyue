@@ -291,6 +291,8 @@ function pageJson(profile, page) {
   const isChildrenPrivacy = page === "childrenPrivacy";
   const isStatePrivacy = page === "statePrivacy";
   const isAidreamcapes = profile.brand === "Aidreamcapes";
+  const primaryPackageCta = isAidreamcapes ? "Browse albums" : "Headshot Generator";
+  const primaryPackageHref = isAidreamcapes ? "/collections/fan-scene-albums" : "/ai-image-generation/headshot";
   const title = isWorkflow
     ? profile.workflowTitle
     : isChildrenPrivacy
@@ -313,8 +315,8 @@ function pageJson(profile, page) {
             body: profile.workflowIntro,
             headingLevel: "h1",
             tone: "dark",
-            primaryCta: "Headshot Generator",
-            primaryHref: "/collections/headshot",
+            primaryCta: primaryPackageCta,
+            primaryHref: primaryPackageHref,
             secondaryCta: "View pricing",
             secondaryHref: "/pricing"
           },
@@ -409,8 +411,8 @@ function pageJson(profile, page) {
             eyebrow: "Start the workflow",
             title: "Choose a package and create a private set.",
             subtitle: "Open the Headshot Generator, compare credit costs, then sign in to upload photos and start the generation request.",
-            primaryCta: "Headshot Generator",
-            primaryHref: "/collections/headshot",
+            primaryCta: primaryPackageCta,
+            primaryHref: primaryPackageHref,
             secondaryCta: "View pricing",
             secondaryHref: "/pricing"
           },
