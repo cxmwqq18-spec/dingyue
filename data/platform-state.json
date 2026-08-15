@@ -80829,7 +80829,7 @@
                       "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                       "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                       "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                      "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                      "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                       "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                       "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                     }
@@ -80853,7 +80853,7 @@
                       "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                       "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                       "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                      "linkList": "Compare package themes::/collections|View video tools::/tools"
+                      "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                     }
                   },
                   {
@@ -80864,7 +80864,7 @@
                       "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                       "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                       "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                      "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                      "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                     }
                   },
                   {
@@ -80949,7 +80949,7 @@
                       "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                       "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                       "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                      "linkList": "Open styling tools::/tools",
+                      "linkList": "Open styling tools::/ai-video-generation",
                       "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                       "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                     }
@@ -81808,7 +81808,7 @@
                       "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                       "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                       "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                      "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                      "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                       "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                       "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                     }
@@ -81832,7 +81832,7 @@
                       "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                       "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                       "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                      "linkList": "Compare package themes::/collections|View video tools::/tools"
+                      "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                     }
                   },
                   {
@@ -81843,7 +81843,7 @@
                       "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                       "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                       "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                      "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                      "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                     }
                   },
                   {
@@ -81928,7 +81928,7 @@
                       "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                       "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                       "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                      "linkList": "Open styling tools::/tools",
+                      "linkList": "Open styling tools::/ai-video-generation",
                       "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                       "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                     }
@@ -82814,7 +82814,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "billing_intro_1": {
@@ -82958,7 +82958,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "billing_intro_1": {
@@ -88458,7 +88458,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               }
             },
@@ -88617,7 +88617,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               }
             },
@@ -90062,7 +90062,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "faq_1": {
@@ -90211,7 +90211,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "faq_1": {
@@ -90371,7 +90371,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "faq_1": {
@@ -90520,7 +90520,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "faq_1": {
@@ -90752,7 +90752,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               }
             },
@@ -90910,7 +90910,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               }
             },
@@ -91966,7 +91966,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "pricing_intro_1": {
@@ -92219,7 +92219,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "pricing_intro_1": {
@@ -92771,7 +92771,7 @@
           "siteId": "site_grownstride_test",
           "pageType": "tools",
           "templateKey": "tools",
-          "slug": "/tools",
+          "slug": "/ai-video-generation",
           "title": "Free AI tools",
           "draftJson": {
             "seo": {
@@ -92781,7 +92781,7 @@
                 "follow": true
               },
               "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-              "canonicalPath": "/tools",
+              "canonicalPath": "/ai-video-generation",
               "index": false,
               "follow": true
             },
@@ -93253,7 +93253,7 @@
                   "primaryHref": "/login",
                   "headingLevel": "h1",
                   "secondaryCta": "View all tools",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "plan_rules_1": {
@@ -93307,7 +93307,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "feature_tabs_1": {
@@ -93438,7 +93438,7 @@
                 "follow": true
               },
               "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-              "canonicalPath": "/tools",
+              "canonicalPath": "/ai-video-generation",
               "index": false,
               "follow": true
             },
@@ -93910,7 +93910,7 @@
                   "primaryHref": "/login",
                   "headingLevel": "h1",
                   "secondaryCta": "View all tools",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "plan_rules_1": {
@@ -93964,7 +93964,7 @@
                   "primaryCta": "Choose a plan",
                   "primaryHref": "/pricing",
                   "secondaryCta": "Try a photo tool",
-                  "secondaryHref": "/tools"
+                  "secondaryHref": "/ai-video-generation"
                 }
               },
               "feature_tabs_1": {
@@ -98660,7 +98660,7 @@
                         "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                         "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                         "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                        "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                        "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                         "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                       }
@@ -98684,7 +98684,7 @@
                         "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                         "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                         "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                        "linkList": "Compare package themes::/collections|View video tools::/tools"
+                        "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                       }
                     },
                     {
@@ -98695,7 +98695,7 @@
                         "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                         "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                         "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                        "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                        "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                       }
                     },
                     {
@@ -98780,7 +98780,7 @@
                         "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                         "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                         "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                        "linkList": "Open styling tools::/tools",
+                        "linkList": "Open styling tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                         "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                       }
@@ -99123,7 +99123,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -100456,7 +100456,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -101204,7 +101204,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -101423,7 +101423,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -101793,7 +101793,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -102215,7 +102215,7 @@
                     "primaryHref": "/login",
                     "headingLevel": "h1",
                     "secondaryCta": "View all tools",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -102571,7 +102571,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -103279,7 +103279,7 @@
                         "id": "global_header_2",
                         "type": "menu_link",
                         "settings": {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "label": "AI Tools"
                         }
                       },
@@ -103717,7 +103717,7 @@
                         "id": "global_footer_4",
                         "type": "menu_link",
                         "settings": {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "group": "product",
                           "label": "AI Tools"
                         }
@@ -103856,7 +103856,7 @@
                       "label": "AI Photoshoot"
                     },
                     {
-                      "href": "/tools",
+                      "href": "/ai-video-generation",
                       "label": "AI Tools"
                     },
                     {
@@ -103893,7 +103893,7 @@
                       "label": "Best AI video"
                     },
                     {
-                      "href": "/tools",
+                      "href": "/ai-video-generation",
                       "group": "product",
                       "label": "AI Tools"
                     },
@@ -104045,7 +104045,7 @@
                       "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
                       "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                       "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                      "canonicalPath": "/tools"
+                      "canonicalPath": "/ai-video-generation"
                     },
                     "site_grownstride_test_search": {
                       "index": true,
@@ -105466,7 +105466,7 @@
                         "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                         "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                         "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                        "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                        "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                         "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                       }
@@ -105490,7 +105490,7 @@
                         "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                         "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                         "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                        "linkList": "Compare package themes::/collections|View video tools::/tools"
+                        "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                       }
                     },
                     {
@@ -105501,7 +105501,7 @@
                         "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                         "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                         "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                        "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                        "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                       }
                     },
                     {
@@ -105586,7 +105586,7 @@
                         "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                         "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                         "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                        "linkList": "Open styling tools::/tools",
+                        "linkList": "Open styling tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                         "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                       }
@@ -105929,7 +105929,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -107262,7 +107262,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -108010,7 +108010,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -108229,7 +108229,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -108599,7 +108599,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -109021,7 +109021,7 @@
                     "primaryHref": "/login",
                     "headingLevel": "h1",
                     "secondaryCta": "View all tools",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -109377,7 +109377,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -110085,7 +110085,7 @@
                         "id": "global_header_2",
                         "type": "menu_link",
                         "settings": {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "label": "AI Tools"
                         }
                       },
@@ -110523,7 +110523,7 @@
                         "id": "global_footer_4",
                         "type": "menu_link",
                         "settings": {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "group": "product",
                           "label": "AI Tools"
                         }
@@ -110662,7 +110662,7 @@
                       "label": "AI Photoshoot"
                     },
                     {
-                      "href": "/tools",
+                      "href": "/ai-video-generation",
                       "label": "AI Tools"
                     },
                     {
@@ -110699,7 +110699,7 @@
                       "label": "Best AI video"
                     },
                     {
-                      "href": "/tools",
+                      "href": "/ai-video-generation",
                       "group": "product",
                       "label": "AI Tools"
                     },
@@ -110851,7 +110851,7 @@
                       "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
                       "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                       "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                      "canonicalPath": "/tools"
+                      "canonicalPath": "/ai-video-generation"
                     },
                     "site_grownstride_test_search": {
                       "index": true,
@@ -113486,7 +113486,7 @@
                 "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
                 "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
-                "canonicalPath": "/tools",
+                "canonicalPath": "/ai-video-generation",
                 "index": false,
                 "follow": true
               },
@@ -113539,7 +113539,7 @@
               },
               {
                 "label": "AI Tools",
-                "href": "/tools",
+                "href": "/ai-video-generation",
                 "group": "product"
               },
               {
@@ -113615,7 +113615,7 @@
               },
               {
                 "label": "AI Tools",
-                "href": "/tools"
+                "href": "/ai-video-generation"
               },
               {
                 "label": "Best Packages",
@@ -113666,7 +113666,7 @@
                   "type": "menu_link",
                   "settings": {
                     "label": "AI Tools",
-                    "href": "/tools"
+                    "href": "/ai-video-generation"
                   }
                 },
                 {
@@ -114102,7 +114102,7 @@
                   "type": "menu_link",
                   "settings": {
                     "label": "AI Tools",
-                    "href": "/tools",
+                    "href": "/ai-video-generation",
                     "group": "product"
                   }
                 },
@@ -114887,7 +114887,7 @@
                 "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
                 "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
-                "canonicalPath": "/tools",
+                "canonicalPath": "/ai-video-generation",
                 "index": false,
                 "follow": true
               },
@@ -114940,7 +114940,7 @@
               },
               {
                 "label": "AI Tools",
-                "href": "/tools",
+                "href": "/ai-video-generation",
                 "group": "product"
               },
               {
@@ -115016,7 +115016,7 @@
               },
               {
                 "label": "AI Tools",
-                "href": "/tools"
+                "href": "/ai-video-generation"
               },
               {
                 "label": "Best Packages",
@@ -115067,7 +115067,7 @@
                   "type": "menu_link",
                   "settings": {
                     "label": "AI Tools",
-                    "href": "/tools"
+                    "href": "/ai-video-generation"
                   }
                 },
                 {
@@ -115503,7 +115503,7 @@
                   "type": "menu_link",
                   "settings": {
                     "label": "AI Tools",
-                    "href": "/tools",
+                    "href": "/ai-video-generation",
                     "group": "product"
                   }
                 },
@@ -116712,7 +116712,7 @@
                             "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                             "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                             "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                            "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                            "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                             "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                             "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                           }
@@ -116736,7 +116736,7 @@
                             "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                             "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                             "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                            "linkList": "Compare package themes::/collections|View video tools::/tools"
+                            "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                           }
                         },
                         {
@@ -116747,7 +116747,7 @@
                             "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                             "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                             "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                            "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                            "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                           }
                         },
                         {
@@ -116832,7 +116832,7 @@
                             "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                             "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                             "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                            "linkList": "Open styling tools::/tools",
+                            "linkList": "Open styling tools::/ai-video-generation",
                             "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                             "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                           }
@@ -117359,7 +117359,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "billing_intro_1": {
@@ -120063,7 +120063,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     }
                   },
@@ -120815,7 +120815,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "faq_1": {
@@ -120966,7 +120966,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "faq_1": {
@@ -121189,7 +121189,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     }
                   },
@@ -121779,7 +121779,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "pricing_intro_1": {
@@ -122090,7 +122090,7 @@
               },
               {
                 "id": "site_grownstride_test_tools",
-                "slug": "/tools",
+                "slug": "/ai-video-generation",
                 "publishedJson": {
                   "seo": {
                     "title": "AI Photo Tools with Free Previews | Background, Headshots & Try-ons | myDreamshoots",
@@ -122099,7 +122099,7 @@
                       "follow": true
                     },
                     "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                    "canonicalPath": "/tools"
+                    "canonicalPath": "/ai-video-generation"
                   },
                   "version": 1,
                   "pageType": "tools",
@@ -122569,7 +122569,7 @@
                         "primaryHref": "/login",
                         "headingLevel": "h1",
                         "secondaryCta": "View all tools",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "plan_rules_1": {
@@ -122623,7 +122623,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "feature_tabs_1": {
@@ -124133,7 +124133,7 @@
                             "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                             "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                             "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                            "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                            "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                             "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                             "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                           }
@@ -124157,7 +124157,7 @@
                             "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                             "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                             "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                            "linkList": "Compare package themes::/collections|View video tools::/tools"
+                            "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                           }
                         },
                         {
@@ -124168,7 +124168,7 @@
                             "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                             "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                             "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                            "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                            "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                           }
                         },
                         {
@@ -124253,7 +124253,7 @@
                             "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                             "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                             "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                            "linkList": "Open styling tools::/tools",
+                            "linkList": "Open styling tools::/ai-video-generation",
                             "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                             "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                           }
@@ -124596,7 +124596,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -125929,7 +125929,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -126677,7 +126677,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -126896,7 +126896,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -127266,7 +127266,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -127688,7 +127688,7 @@
                         "primaryHref": "/login",
                         "headingLevel": "h1",
                         "secondaryCta": "View all tools",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -128044,7 +128044,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -128752,7 +128752,7 @@
                             "id": "global_header_2",
                             "type": "menu_link",
                             "settings": {
-                              "href": "/tools",
+                              "href": "/ai-video-generation",
                               "label": "AI Tools"
                             }
                           },
@@ -129190,7 +129190,7 @@
                             "id": "global_footer_4",
                             "type": "menu_link",
                             "settings": {
-                              "href": "/tools",
+                              "href": "/ai-video-generation",
                               "group": "product",
                               "label": "AI Tools"
                             }
@@ -129329,7 +129329,7 @@
                           "label": "AI Photoshoot"
                         },
                         {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "label": "AI Tools"
                         },
                         {
@@ -129366,7 +129366,7 @@
                           "label": "Best AI video"
                         },
                         {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "group": "product",
                           "label": "AI Tools"
                         },
@@ -129518,7 +129518,7 @@
                           "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
                           "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                           "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                          "canonicalPath": "/tools"
+                          "canonicalPath": "/ai-video-generation"
                         },
                         "site_grownstride_test_search": {
                           "index": true,
@@ -130062,7 +130062,7 @@
                     "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
                     "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                     "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                    "canonicalPath": "/tools"
+                    "canonicalPath": "/ai-video-generation"
                   },
                   "site_grownstride_test_search": {
                     "index": true,
@@ -130544,7 +130544,7 @@
                     "label": "Best AI video"
                   },
                   {
-                    "href": "/tools",
+                    "href": "/ai-video-generation",
                     "group": "product",
                     "label": "AI Tools"
                   },
@@ -130620,7 +130620,7 @@
                     "label": "AI Photoshoot"
                   },
                   {
-                    "href": "/tools",
+                    "href": "/ai-video-generation",
                     "label": "AI Tools"
                   },
                   {
@@ -130680,7 +130680,7 @@
                       "id": "global_footer_4",
                       "type": "menu_link",
                       "settings": {
-                        "href": "/tools",
+                        "href": "/ai-video-generation",
                         "group": "product",
                         "label": "AI Tools"
                       }
@@ -130847,7 +130847,7 @@
                       "id": "global_header_2",
                       "type": "menu_link",
                       "settings": {
-                        "href": "/tools",
+                        "href": "/ai-video-generation",
                         "label": "AI Tools"
                       }
                     },
@@ -132155,7 +132155,7 @@
                             "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                             "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                             "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                            "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                            "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                             "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                             "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                           }
@@ -132179,7 +132179,7 @@
                             "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                             "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                             "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                            "linkList": "Compare package themes::/collections|View video tools::/tools"
+                            "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                           }
                         },
                         {
@@ -132190,7 +132190,7 @@
                             "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                             "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                             "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                            "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                            "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                           }
                         },
                         {
@@ -132275,7 +132275,7 @@
                             "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                             "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                             "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                            "linkList": "Open styling tools::/tools",
+                            "linkList": "Open styling tools::/ai-video-generation",
                             "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                             "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                           }
@@ -132802,7 +132802,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "billing_intro_1": {
@@ -135506,7 +135506,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     }
                   },
@@ -136258,7 +136258,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "faq_1": {
@@ -136409,7 +136409,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "faq_1": {
@@ -136632,7 +136632,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     }
                   },
@@ -137222,7 +137222,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "pricing_intro_1": {
@@ -137533,7 +137533,7 @@
               },
               {
                 "id": "site_grownstride_test_tools",
-                "slug": "/tools",
+                "slug": "/ai-video-generation",
                 "publishedJson": {
                   "seo": {
                     "title": "AI Photo Tools with Free Previews | Background, Headshots & Try-ons | myDreamshoots",
@@ -137542,7 +137542,7 @@
                       "follow": true
                     },
                     "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                    "canonicalPath": "/tools"
+                    "canonicalPath": "/ai-video-generation"
                   },
                   "version": 1,
                   "pageType": "tools",
@@ -138012,7 +138012,7 @@
                         "primaryHref": "/login",
                         "headingLevel": "h1",
                         "secondaryCta": "View all tools",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "plan_rules_1": {
@@ -138066,7 +138066,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       }
                     },
                     "feature_tabs_1": {
@@ -139576,7 +139576,7 @@
                             "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                             "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                             "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                            "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                            "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                             "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                             "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                           }
@@ -139600,7 +139600,7 @@
                             "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                             "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                             "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                            "linkList": "Compare package themes::/collections|View video tools::/tools"
+                            "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                           }
                         },
                         {
@@ -139611,7 +139611,7 @@
                             "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                             "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                             "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                            "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                            "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                           }
                         },
                         {
@@ -139696,7 +139696,7 @@
                             "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                             "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                             "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                            "linkList": "Open styling tools::/tools",
+                            "linkList": "Open styling tools::/ai-video-generation",
                             "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                             "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                           }
@@ -140039,7 +140039,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -141372,7 +141372,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -142120,7 +142120,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -142339,7 +142339,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -142709,7 +142709,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -143131,7 +143131,7 @@
                         "primaryHref": "/login",
                         "headingLevel": "h1",
                         "secondaryCta": "View all tools",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -143487,7 +143487,7 @@
                         "primaryCta": "Choose a plan",
                         "primaryHref": "/pricing",
                         "secondaryCta": "Try a photo tool",
-                        "secondaryHref": "/tools"
+                        "secondaryHref": "/ai-video-generation"
                       },
                       "blocks": [
                         {
@@ -144195,7 +144195,7 @@
                             "id": "global_header_2",
                             "type": "menu_link",
                             "settings": {
-                              "href": "/tools",
+                              "href": "/ai-video-generation",
                               "label": "AI Tools"
                             }
                           },
@@ -144633,7 +144633,7 @@
                             "id": "global_footer_4",
                             "type": "menu_link",
                             "settings": {
-                              "href": "/tools",
+                              "href": "/ai-video-generation",
                               "group": "product",
                               "label": "AI Tools"
                             }
@@ -144772,7 +144772,7 @@
                           "label": "AI Photoshoot"
                         },
                         {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "label": "AI Tools"
                         },
                         {
@@ -144809,7 +144809,7 @@
                           "label": "Best AI video"
                         },
                         {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "group": "product",
                           "label": "AI Tools"
                         },
@@ -144961,7 +144961,7 @@
                           "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
                           "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                           "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                          "canonicalPath": "/tools"
+                          "canonicalPath": "/ai-video-generation"
                         },
                         "site_grownstride_test_search": {
                           "index": true,
@@ -145505,7 +145505,7 @@
                     "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
                     "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                     "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                    "canonicalPath": "/tools"
+                    "canonicalPath": "/ai-video-generation"
                   },
                   "site_grownstride_test_search": {
                     "index": true,
@@ -145987,7 +145987,7 @@
                     "label": "Best AI video"
                   },
                   {
-                    "href": "/tools",
+                    "href": "/ai-video-generation",
                     "group": "product",
                     "label": "AI Tools"
                   },
@@ -146063,7 +146063,7 @@
                     "label": "AI Photoshoot"
                   },
                   {
-                    "href": "/tools",
+                    "href": "/ai-video-generation",
                     "label": "AI Tools"
                   },
                   {
@@ -146123,7 +146123,7 @@
                       "id": "global_footer_4",
                       "type": "menu_link",
                       "settings": {
-                        "href": "/tools",
+                        "href": "/ai-video-generation",
                         "group": "product",
                         "label": "AI Tools"
                       }
@@ -146290,7 +146290,7 @@
                       "id": "global_header_2",
                       "type": "menu_link",
                       "settings": {
-                        "href": "/tools",
+                        "href": "/ai-video-generation",
                         "label": "AI Tools"
                       }
                     },
@@ -269627,7 +269627,7 @@
                     "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                     "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                     "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                    "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                    "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                     "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                     "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                   }
@@ -269651,7 +269651,7 @@
                     "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                     "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                     "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                    "linkList": "Compare package themes::/collections|View video tools::/tools"
+                    "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                   }
                 },
                 {
@@ -269662,7 +269662,7 @@
                     "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                     "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                     "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                    "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                    "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                   }
                 },
                 {
@@ -269747,7 +269747,7 @@
                     "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                     "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                     "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                    "linkList": "Open styling tools::/tools",
+                    "linkList": "Open styling tools::/ai-video-generation",
                     "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                     "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                   }
@@ -270071,7 +270071,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -271397,7 +271397,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -272126,7 +272126,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -272342,7 +272342,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -272700,7 +272700,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -273116,7 +273116,7 @@
                 "primaryHref": "/login",
                 "headingLevel": "h1",
                 "secondaryCta": "View all tools",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -273472,7 +273472,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -274155,7 +274155,7 @@
                     "type": "menu_link",
                     "settings": {
                       "label": "AI Tools",
-                      "href": "/tools"
+                      "href": "/ai-video-generation"
                     }
                   },
                   {
@@ -274593,7 +274593,7 @@
                     "type": "menu_link",
                     "settings": {
                       "label": "AI Tools",
-                      "href": "/tools",
+                      "href": "/ai-video-generation",
                       "group": "product"
                     }
                   },
@@ -274732,7 +274732,7 @@
                 },
                 {
                   "label": "AI Tools",
-                  "href": "/tools"
+                  "href": "/ai-video-generation"
                 },
                 {
                   "label": "Best Packages",
@@ -274769,7 +274769,7 @@
                 },
                 {
                   "label": "AI Tools",
-                  "href": "/tools",
+                  "href": "/ai-video-generation",
                   "group": "product"
                 },
                 {
@@ -275386,7 +275386,7 @@
                   "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
                   "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                   "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
-                  "canonicalPath": "/tools",
+                  "canonicalPath": "/ai-video-generation",
                   "index": false,
                   "follow": true
                 },
@@ -276377,7 +276377,7 @@
                     "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                     "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                     "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                    "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                    "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                     "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                     "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                   }
@@ -276401,7 +276401,7 @@
                     "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                     "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                     "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                    "linkList": "Compare package themes::/collections|View video tools::/tools"
+                    "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                   }
                 },
                 {
@@ -276412,7 +276412,7 @@
                     "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                     "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                     "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                    "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                    "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                   }
                 },
                 {
@@ -276497,7 +276497,7 @@
                     "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                     "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                     "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                    "linkList": "Open styling tools::/tools",
+                    "linkList": "Open styling tools::/ai-video-generation",
                     "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                     "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                   }
@@ -276840,7 +276840,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -278173,7 +278173,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -278921,7 +278921,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -279140,7 +279140,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -279510,7 +279510,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -279932,7 +279932,7 @@
                 "primaryHref": "/login",
                 "headingLevel": "h1",
                 "secondaryCta": "View all tools",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -280288,7 +280288,7 @@
                 "primaryCta": "Choose a plan",
                 "primaryHref": "/pricing",
                 "secondaryCta": "Try a photo tool",
-                "secondaryHref": "/tools"
+                "secondaryHref": "/ai-video-generation"
               },
               "blocks": [
                 {
@@ -280996,7 +280996,7 @@
                     "id": "global_header_2",
                     "type": "menu_link",
                     "settings": {
-                      "href": "/tools",
+                      "href": "/ai-video-generation",
                       "label": "AI Tools"
                     }
                   },
@@ -281434,7 +281434,7 @@
                     "id": "global_footer_4",
                     "type": "menu_link",
                     "settings": {
-                      "href": "/tools",
+                      "href": "/ai-video-generation",
                       "group": "product",
                       "label": "AI Tools"
                     }
@@ -281573,7 +281573,7 @@
                   "label": "AI Photoshoot"
                 },
                 {
-                  "href": "/tools",
+                  "href": "/ai-video-generation",
                   "label": "AI Tools"
                 },
                 {
@@ -281610,7 +281610,7 @@
                   "label": "Best AI video"
                 },
                 {
-                  "href": "/tools",
+                  "href": "/ai-video-generation",
                   "group": "product",
                   "label": "AI Tools"
                 },
@@ -281762,7 +281762,7 @@
                   "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
                   "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                   "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                  "canonicalPath": "/tools"
+                  "canonicalPath": "/ai-video-generation"
                 },
                 "site_grownstride_test_search": {
                   "index": true,
@@ -400829,7 +400829,7 @@
                         "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                         "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                         "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                        "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                        "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                         "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                       }
@@ -400853,7 +400853,7 @@
                         "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                         "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                         "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                        "linkList": "Compare package themes::/collections|View video tools::/tools"
+                        "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                       }
                     },
                     {
@@ -400864,7 +400864,7 @@
                         "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                         "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                         "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                        "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                        "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                       }
                     },
                     {
@@ -400949,7 +400949,7 @@
                         "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                         "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                         "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                        "linkList": "Open styling tools::/tools",
+                        "linkList": "Open styling tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                         "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                       }
@@ -401808,7 +401808,7 @@
                         "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                         "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                         "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                        "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                        "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                         "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                       }
@@ -401832,7 +401832,7 @@
                         "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                         "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                         "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                        "linkList": "Compare package themes::/collections|View video tools::/tools"
+                        "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                       }
                     },
                     {
@@ -401843,7 +401843,7 @@
                         "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                         "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                         "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                        "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                        "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                       }
                     },
                     {
@@ -401928,7 +401928,7 @@
                         "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                         "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                         "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                        "linkList": "Open styling tools::/tools",
+                        "linkList": "Open styling tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                         "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                       }
@@ -402808,7 +402808,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "billing_intro_1": {
@@ -402952,7 +402952,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "billing_intro_1": {
@@ -408378,7 +408378,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 }
               },
@@ -408537,7 +408537,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 }
               },
@@ -409974,7 +409974,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "faq_1": {
@@ -410123,7 +410123,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "faq_1": {
@@ -410281,7 +410281,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "faq_1": {
@@ -410430,7 +410430,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "faq_1": {
@@ -410660,7 +410660,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 }
               },
@@ -410818,7 +410818,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 }
               },
@@ -411856,7 +411856,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "pricing_intro_1": {
@@ -412109,7 +412109,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "pricing_intro_1": {
@@ -412653,7 +412653,7 @@
             "siteId": "site_grownstride_test",
             "pageType": "tools",
             "templateKey": "tools",
-            "slug": "/tools",
+            "slug": "/ai-video-generation",
             "title": "Free AI tools",
             "draftJson": {
               "seo": {
@@ -412663,7 +412663,7 @@
                   "follow": true
                 },
                 "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                "canonicalPath": "/tools",
+                "canonicalPath": "/ai-video-generation",
                 "index": false,
                 "follow": true
               },
@@ -413135,7 +413135,7 @@
                     "primaryHref": "/login",
                     "headingLevel": "h1",
                     "secondaryCta": "View all tools",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "plan_rules_1": {
@@ -413189,7 +413189,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "feature_tabs_1": {
@@ -413320,7 +413320,7 @@
                   "follow": true
                 },
                 "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                "canonicalPath": "/tools",
+                "canonicalPath": "/ai-video-generation",
                 "index": false,
                 "follow": true
               },
@@ -413792,7 +413792,7 @@
                     "primaryHref": "/login",
                     "headingLevel": "h1",
                     "secondaryCta": "View all tools",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "plan_rules_1": {
@@ -413846,7 +413846,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "feature_tabs_1": {
@@ -415798,7 +415798,7 @@
                         "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                         "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                         "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                        "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                        "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                         "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                       }
@@ -415822,7 +415822,7 @@
                         "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                         "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                         "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                        "linkList": "Compare package themes::/collections|View video tools::/tools"
+                        "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                       }
                     },
                     {
@@ -415833,7 +415833,7 @@
                         "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                         "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                         "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                        "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                        "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                       }
                     },
                     {
@@ -415918,7 +415918,7 @@
                         "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                         "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                         "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                        "linkList": "Open styling tools::/tools",
+                        "linkList": "Open styling tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                         "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                       }
@@ -416261,7 +416261,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -417594,7 +417594,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -418342,7 +418342,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -418561,7 +418561,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -418931,7 +418931,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -419353,7 +419353,7 @@
                     "primaryHref": "/login",
                     "headingLevel": "h1",
                     "secondaryCta": "View all tools",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -419709,7 +419709,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -420417,7 +420417,7 @@
                         "id": "global_header_2",
                         "type": "menu_link",
                         "settings": {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "label": "AI Tools"
                         }
                       },
@@ -420855,7 +420855,7 @@
                         "id": "global_footer_4",
                         "type": "menu_link",
                         "settings": {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "group": "product",
                           "label": "AI Tools"
                         }
@@ -420994,7 +420994,7 @@
                       "label": "AI Photoshoot"
                     },
                     {
-                      "href": "/tools",
+                      "href": "/ai-video-generation",
                       "label": "AI Tools"
                     },
                     {
@@ -421031,7 +421031,7 @@
                       "label": "Best AI video"
                     },
                     {
-                      "href": "/tools",
+                      "href": "/ai-video-generation",
                       "group": "product",
                       "label": "AI Tools"
                     },
@@ -421183,7 +421183,7 @@
                       "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
                       "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                       "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                      "canonicalPath": "/tools"
+                      "canonicalPath": "/ai-video-generation"
                     },
                     "site_grownstride_test_search": {
                       "index": true,
@@ -422193,7 +422193,7 @@
                 "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
                 "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
-                "canonicalPath": "/tools",
+                "canonicalPath": "/ai-video-generation",
                 "index": false,
                 "follow": true
               },
@@ -422246,7 +422246,7 @@
               },
               {
                 "label": "AI Tools",
-                "href": "/tools",
+                "href": "/ai-video-generation",
                 "group": "product"
               },
               {
@@ -422322,7 +422322,7 @@
               },
               {
                 "label": "AI Tools",
-                "href": "/tools"
+                "href": "/ai-video-generation"
               },
               {
                 "label": "Best Packages",
@@ -422373,7 +422373,7 @@
                   "type": "menu_link",
                   "settings": {
                     "label": "AI Tools",
-                    "href": "/tools"
+                    "href": "/ai-video-generation"
                   }
                 },
                 {
@@ -422809,7 +422809,7 @@
                   "type": "menu_link",
                   "settings": {
                     "label": "AI Tools",
-                    "href": "/tools",
+                    "href": "/ai-video-generation",
                     "group": "product"
                   }
                 },
@@ -423860,7 +423860,7 @@
                         "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                         "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                         "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                        "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                        "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                         "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                       }
@@ -423884,7 +423884,7 @@
                         "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                         "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                         "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                        "linkList": "Compare package themes::/collections|View video tools::/tools"
+                        "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                       }
                     },
                     {
@@ -423895,7 +423895,7 @@
                         "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                         "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                         "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                        "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                        "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                       }
                     },
                     {
@@ -423980,7 +423980,7 @@
                         "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                         "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                         "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                        "linkList": "Open styling tools::/tools",
+                        "linkList": "Open styling tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                         "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                       }
@@ -424839,7 +424839,7 @@
                         "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                         "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                         "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                        "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                        "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                         "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                       }
@@ -424863,7 +424863,7 @@
                         "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                         "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                         "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                        "linkList": "Compare package themes::/collections|View video tools::/tools"
+                        "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                       }
                     },
                     {
@@ -424874,7 +424874,7 @@
                         "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                         "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                         "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                        "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                        "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                       }
                     },
                     {
@@ -424959,7 +424959,7 @@
                         "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                         "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                         "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                        "linkList": "Open styling tools::/tools",
+                        "linkList": "Open styling tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                         "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                       }
@@ -425839,7 +425839,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "billing_intro_1": {
@@ -425983,7 +425983,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "billing_intro_1": {
@@ -431409,7 +431409,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 }
               },
@@ -431568,7 +431568,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 }
               },
@@ -433005,7 +433005,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "faq_1": {
@@ -433154,7 +433154,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "faq_1": {
@@ -433312,7 +433312,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "faq_1": {
@@ -433461,7 +433461,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "faq_1": {
@@ -433691,7 +433691,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 }
               },
@@ -433849,7 +433849,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 }
               },
@@ -434887,7 +434887,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "pricing_intro_1": {
@@ -435140,7 +435140,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "pricing_intro_1": {
@@ -435684,7 +435684,7 @@
             "siteId": "site_grownstride_test",
             "pageType": "tools",
             "templateKey": "tools",
-            "slug": "/tools",
+            "slug": "/ai-video-generation",
             "title": "Free AI tools",
             "draftJson": {
               "seo": {
@@ -435694,7 +435694,7 @@
                   "follow": true
                 },
                 "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                "canonicalPath": "/tools",
+                "canonicalPath": "/ai-video-generation",
                 "index": false,
                 "follow": true
               },
@@ -436166,7 +436166,7 @@
                     "primaryHref": "/login",
                     "headingLevel": "h1",
                     "secondaryCta": "View all tools",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "plan_rules_1": {
@@ -436220,7 +436220,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "feature_tabs_1": {
@@ -436351,7 +436351,7 @@
                   "follow": true
                 },
                 "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                "canonicalPath": "/tools",
+                "canonicalPath": "/ai-video-generation",
                 "index": false,
                 "follow": true
               },
@@ -436823,7 +436823,7 @@
                     "primaryHref": "/login",
                     "headingLevel": "h1",
                     "secondaryCta": "View all tools",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "plan_rules_1": {
@@ -436877,7 +436877,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   }
                 },
                 "feature_tabs_1": {
@@ -438829,7 +438829,7 @@
                         "answer": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
                         "body": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.|It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
                         "bulletList": "Private source-photo workflow|Package and tool choices before generation|Finished work organized in your account",
-                        "linkList": "Browse photo collections::/collections|Explore creative tools::/tools",
+                        "linkList": "Browse photo collections::/collections|Explore creative tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
                         "imageAlt": "AI-generated lifestyle headshot with natural framing for a myDreamshoots creator and professional profile photo package"
                       }
@@ -438853,7 +438853,7 @@
                         "answer": "The catalog covers personal portraits, professional headshots, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected AI video add-ons.",
                         "body": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
                         "bulletList": "Profile and professional headshots|Creator and social content|Couple, friend, and group portraits|Christmas, Thanksgiving, Halloween, and seasonal albums|Short motion or video-ready add-ons",
-                        "linkList": "Compare package themes::/collections|View video tools::/tools"
+                        "linkList": "Compare package themes::/collections|View video tools::/ai-video-generation"
                       }
                     },
                     {
@@ -438864,7 +438864,7 @@
                         "answer": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
                         "body": "The request screen is the source of truth for what is available to your account and what a generation will cost.|There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
                         "bulletList": "Check the current plan and tool availability|Review credit cost before generation|Use the pricing page for current plan details",
-                        "linkList": "View pricing and plans::/pricing|Review available tools::/tools"
+                        "linkList": "View pricing and plans::/pricing|Review available tools::/ai-video-generation"
                       }
                     },
                     {
@@ -438949,7 +438949,7 @@
                         "answer": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
                         "body": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
                         "bulletList": "Upload a well-lit, unobstructed source image|Choose one styling direction at a time|Compare the result with the original before making decisions|Treat the output as a concept preview, not a product or fit guarantee",
-                        "linkList": "Open styling tools::/tools",
+                        "linkList": "Open styling tools::/ai-video-generation",
                         "imageUrl": "/assets/dreamshoot/frames/tab-virtual-looks.png",
                         "imageAlt": "myDreamshoots virtual styling portrait showing a hairstyle and outfit concept for comparing an editorial look"
                       }
@@ -439292,7 +439292,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -440625,7 +440625,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -441373,7 +441373,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -441592,7 +441592,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -441962,7 +441962,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -442384,7 +442384,7 @@
                     "primaryHref": "/login",
                     "headingLevel": "h1",
                     "secondaryCta": "View all tools",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -442740,7 +442740,7 @@
                     "primaryCta": "Choose a plan",
                     "primaryHref": "/pricing",
                     "secondaryCta": "Try a photo tool",
-                    "secondaryHref": "/tools"
+                    "secondaryHref": "/ai-video-generation"
                   },
                   "blocks": [
                     {
@@ -443448,7 +443448,7 @@
                         "id": "global_header_2",
                         "type": "menu_link",
                         "settings": {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "label": "AI Tools"
                         }
                       },
@@ -443886,7 +443886,7 @@
                         "id": "global_footer_4",
                         "type": "menu_link",
                         "settings": {
-                          "href": "/tools",
+                          "href": "/ai-video-generation",
                           "group": "product",
                           "label": "AI Tools"
                         }
@@ -444025,7 +444025,7 @@
                       "label": "AI Photoshoot"
                     },
                     {
-                      "href": "/tools",
+                      "href": "/ai-video-generation",
                       "label": "AI Tools"
                     },
                     {
@@ -444062,7 +444062,7 @@
                       "label": "Best AI video"
                     },
                     {
-                      "href": "/tools",
+                      "href": "/ai-video-generation",
                       "group": "product",
                       "label": "AI Tools"
                     },
@@ -444214,7 +444214,7 @@
                       "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
                       "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                       "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
-                      "canonicalPath": "/tools"
+                      "canonicalPath": "/ai-video-generation"
                     },
                     "site_grownstride_test_search": {
                       "index": true,
@@ -445224,7 +445224,7 @@
                 "description": "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.",
                 "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
                 "ogImage": "/assets/sites/site_grownstride_test/generated/20260619/cyberpunk-solo-city-v1.png",
-                "canonicalPath": "/tools",
+                "canonicalPath": "/ai-video-generation",
                 "index": false,
                 "follow": true
               },
@@ -445277,7 +445277,7 @@
               },
               {
                 "label": "AI Tools",
-                "href": "/tools",
+                "href": "/ai-video-generation",
                 "group": "product"
               },
               {
@@ -445353,7 +445353,7 @@
               },
               {
                 "label": "AI Tools",
-                "href": "/tools"
+                "href": "/ai-video-generation"
               },
               {
                 "label": "Best Packages",
@@ -445404,7 +445404,7 @@
                   "type": "menu_link",
                   "settings": {
                     "label": "AI Tools",
-                    "href": "/tools"
+                    "href": "/ai-video-generation"
                   }
                 },
                 {
@@ -445840,7 +445840,7 @@
                   "type": "menu_link",
                   "settings": {
                     "label": "AI Tools",
-                    "href": "/tools",
+                    "href": "/ai-video-generation",
                     "group": "product"
                   }
                 },
