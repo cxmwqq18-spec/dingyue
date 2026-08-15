@@ -32,7 +32,44 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-const blockedPattern = /\b(?:package gallery example|gallery scene example|package showcase frame|package cover frame|featured package scene|related package scene|private gallery visual frame|private storefront gallery|private gallery workflow|private AI album workflow|visual frame|detailed storefront visual|storefront visual showing|finished gallery example|private AI photo example|how to plan this|on MyDreamShoots|on myDreamshoots|on AIdreamcapes|AI-generated video poster)\b/i;
+const blockedPattern = /\b(?:visual reference|source reference|gallery image|gallery example|package gallery|image\s+\d+|for browsing|for review|storefront browsing|package gallery example|gallery scene example|package showcase frame|package cover frame|featured package scene|related package scene|private gallery visual frame|private storefront gallery|private gallery workflow|private AI album workflow|visual frame|detailed storefront visual|storefront visual showing|finished gallery example|private AI photo example|private AI photo package|how to plan this|mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes|AI-generated video poster)\b/i;
+const pathOrFilePattern = /https?:\/\/|\/assets\/|(?:^|\s)sites\/|(?:^|\s)[\w./-]+\.(?:png|jpe?g|webp|avif|svg)(?:\?\S+)?/i;
+const repeatedPhrasePattern = /\b([a-z][a-z'-]*(?:\s+[a-z][a-z'-]*){1,3})\s+\1\b/i;
+const stopWords = new Set(["a", "an", "and", "for", "in", "of", "on", "the", "to", "with"]);
+
+function normalizeAlt(value) {
+  return String(value ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function altTokens(value) {
+  return new Set(normalizeAlt(value).split(" ").filter((token) => token.length > 2 && !stopWords.has(token)));
+}
+
+function altSimilarity(left, right) {
+  const leftTokens = altTokens(left);
+  const rightTokens = altTokens(right);
+  if (!leftTokens.size || !rightTokens.size) return 0;
+  let intersection = 0;
+  for (const token of leftTokens) {
+    if (rightTokens.has(token)) intersection += 1;
+  }
+  return intersection / (leftTokens.size + rightTokens.size - intersection);
+}
+
+function imageIdentity(value) {
+  return String(value ?? "").trim().split("#")[0].split("?")[0];
+}
+
+function assertCleanAlt(alt, context) {
+  assert(typeof alt === "string" && alt.trim(), `${context} is empty`);
+  assert(!blockedPattern.test(alt), `${context} uses blocked template copy: ${alt}`);
+  assert(!pathOrFilePattern.test(alt), `${context} includes a path, URL, or filename: ${alt}`);
+  assert(!repeatedPhrasePattern.test(alt), `${context} repeats a phrase: ${alt}`);
+}
 
 const samples = [
   storefrontCardImageAlt({
@@ -92,9 +129,25 @@ const samples = [
 
 for (const alt of samples) {
   assert(alt.length <= 118, `alt is too long: ${alt}`);
-  assert(!blockedPattern.test(alt), `alt uses blocked template copy: ${alt}`);
+  assertCleanAlt(alt, "sample alt");
   assert((alt.match(/\b(?:AI|photo|gallery|package|preview|portrait|video|MyDreamShoots)\b/gi) ?? []).length <= 4, `alt has dense repeated SEO terms: ${alt}`);
 }
+
+const virtualTryOnAlt = storefrontCardImageAlt({
+  brand: "MyDreamShoots",
+  category: "virtual-try-on",
+  description: "",
+  imageUrl: "/assets/dreamshoot/generated/pack-galleries/virtual-try-on/virtual-try-on-08.webp",
+  index: 15,
+  locale: "en",
+  meta: "AI Fashion",
+  role: "gallery",
+  title: "Virtual Try-On"
+});
+assert(
+  /^Beauty portrait with editorial lighting(?:, .+)?\.$/.test(virtualTryOnAlt),
+  `Virtual Try-On fallback should keep the real scene description: ${virtualTryOnAlt}`
+);
 
 assert(
   storefrontMeaningfulAlt("professional AI headshot with clean studio lighting, close portrait with clear facial detail, Professional Headshots package gallery example for myDreamshoots.") === "",
@@ -116,4 +169,54 @@ assert(
   "short natural alt should be accepted"
 );
 
-console.log(JSON.stringify({ ok: true, samples }, null, 2));
+assert(
+  storefrontMeaningfulAlt("Beauty portrait with editorial lighting, virtual try on 08 gallery image 16 visual reference.") === "",
+  "visual-reference and image-index suffixes should be rejected"
+);
+
+const state = JSON.parse(fs.readFileSync(path.join(repoRoot, "data/platform-state.json"), "utf8"));
+const myDreamShootsPacks = (state.creativePacks ?? []).filter((pack) => pack.siteId === "site_dreamshoot");
+const myDreamShootsAssets = (state.mediaAssets ?? []).filter((asset) => asset.siteId === "site_dreamshoot");
+const altByImage = new Map();
+const acceptedAlts = [];
+let galleryCount = 0;
+
+for (const pack of myDreamShootsPacks) {
+  const images = Array.isArray(pack.galleryImages) ? pack.galleryImages : [];
+  const alts = Array.isArray(pack.galleryImageAlts) ? pack.galleryImageAlts : [];
+  assert(images.length === alts.length, `${pack.id} gallery images and alts must have equal lengths`);
+  images.forEach((imageUrl, index) => {
+    galleryCount += 1;
+    const alt = String(alts[index] ?? "").trim();
+    const identity = imageIdentity(imageUrl);
+    assertCleanAlt(alt, `${pack.id} gallery alt ${index + 1}`);
+    const existing = altByImage.get(identity);
+    if (existing) {
+      assert(normalizeAlt(existing) === normalizeAlt(alt), `same image URL must keep the same alt: ${identity}`);
+      return;
+    }
+    assert(!acceptedAlts.some((item) => item.normalized === normalizeAlt(alt)), `different image URLs must not share an alt: ${identity}`);
+    assert(!acceptedAlts.some((item) => altSimilarity(item.alt, alt) >= 0.82), `different image URLs have near-duplicate alts: ${identity}`);
+    altByImage.set(identity, alt);
+    acceptedAlts.push({ alt, normalized: normalizeAlt(alt) });
+  });
+}
+
+assert(myDreamShootsPacks.length === 38, `expected 38 MyDreamShoots creative packs, found ${myDreamShootsPacks.length}`);
+assert(galleryCount === 456, `expected 456 MyDreamShoots gallery alts, found ${galleryCount}`);
+assert(myDreamShootsAssets.length === 23, `expected 23 MyDreamShoots media assets, found ${myDreamShootsAssets.length}`);
+for (const asset of myDreamShootsAssets) {
+  assertCleanAlt(String(asset.altText ?? ""), `media asset ${asset.id}`);
+}
+
+console.log(JSON.stringify({
+  ok: true,
+  samples,
+  virtualTryOnAlt,
+  myDreamShoots: {
+    creativePacks: myDreamShootsPacks.length,
+    galleryAlts: galleryCount,
+    uniqueGalleryImages: altByImage.size,
+    mediaAssets: myDreamShootsAssets.length
+  }
+}, null, 2));

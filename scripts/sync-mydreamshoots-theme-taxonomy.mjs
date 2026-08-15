@@ -13,6 +13,19 @@ const packProfilesPath = path.join(repoRoot, "src", "lib", "dreamshoot-pack-prof
 const useCaseProfilesPath = path.join(repoRoot, "src", "lib", "photo-package-use-case-profiles.json");
 const SITE_ID = "site_dreamshoot";
 const UPDATE_TIMESTAMP = "2026-08-14T00:00:00.000Z";
+const generatedThemeAssetVersion = process.env.THEME_ASSET_VERSION ?? "20260815unique1";
+const generatedThemeSlugs = new Set([
+  "only-fans",
+  "singles-awareness-day",
+  "bikini",
+  "swimsuit",
+  "background-remover",
+  "magic-eraser",
+  "portrait-retouch",
+  "unblur-image",
+  "color-correction",
+  "old-photo-restoration"
+]);
 const AI_IMAGE_GENERATION_ROOT = "/ai-image-generation";
 const AI_VIDEO_GENERATION_ROOT = "/ai-video-generation";
 const MYDREAMSHOOTS_ORIGIN_PATTERN = "https?:\\/\\/(?:www\\.)?mydreamshoots\\.com";
@@ -319,6 +332,7 @@ function categoryFieldsForRoot(root) {
 
 function categoryFieldsForItem(item, parentId, sortOrder) {
   const profile = profileForItem(item);
+  const generatedMedia = generatedThemeMediaForSlug(item.slug);
   return {
     siteId: SITE_ID,
     parentId,
@@ -330,12 +344,107 @@ function categoryFieldsForItem(item, parentId, sortOrder) {
     icon: item.icon,
     sortOrder,
     status: "active",
+    ...(generatedMedia ? { imageUrl: generatedMedia.imageUrl } : {}),
     updatedAt: UPDATE_TIMESTAMP
+  };
+}
+
+const taxonomyGalleryAltScenes = [
+  "close portrait framing with clear facial detail",
+  "half-body editorial pose with balanced crop",
+  "group-friendly composition with space around the subjects",
+  "wide environmental scene with contextual background",
+  "candid social-style expression with natural posture",
+  "detail portrait crop with polished styling",
+  "vertical profile crop with clean framing",
+  "cinematic color contrast with directional light",
+  "album-cover style crop with strong subject focus",
+  "lifestyle portrait framing with natural setting cues",
+  "event-style portrait under polished light",
+  "distinct themed pose with refined styling"
+];
+
+const taxonomyGalleryAltSubjects = {
+  "professional-headshots": "Professional studio headshot",
+  "world-cup-fan-photos": "Football fan portrait in a stadium",
+  hairstyle: "Hairstyle preview portrait with polished styling",
+  cyberpunk: "Neon cyberpunk portrait in a city scene",
+  "gala-photos": "Formal gala portrait with editorial lighting",
+  mafia: "Noir character portrait with dramatic contrast",
+  nature: "Outdoor adventure portrait in a natural landscape",
+  "outdoor-creator-scenes": "Urban lifestyle portrait in a city setting",
+  "virtual-try-on": "Beauty portrait with editorial lighting",
+  "profile-cards": "Social profile card portrait with clean avatar framing",
+  "creator-portraits": "Creator portrait with polished studio styling",
+  "fashion-editorial": "Editorial fashion portrait with refined wardrobe styling",
+  "anime-avatar": "Stylized anime-inspired avatar portrait",
+  "product-style": "Product-style lifestyle scene with clean studio lighting",
+  "social-cards": "Social card portrait with polished graphic framing",
+  "wedding-portraits": "Wedding-style couple portrait in soft ceremony light",
+  "indian-wedding": "Indian wedding-style portrait with rich celebration styling",
+  "desi-wedding": "Desi wedding-style portrait with traditional celebration styling",
+  "valentine-photos": "Romantic couple portrait with warm date-night light",
+  engagement: "Engagement-style couple portrait for an announcement",
+  boudoir: "Tasteful style portrait with soft studio lighting",
+  holiday: "Seasonal holiday portrait with warm festive styling",
+  "christmas-couple": "Christmas couple portrait with cozy festive light",
+  "christmas-photos": "Solo Christmas portrait with warm greeting-card styling",
+  "ai-video-add-ons": "Motion-ready portrait frame with cinematic lighting",
+  "magic-upscaler": "Enhanced portrait preview with crisp detail",
+  "thanksgiving-group-photos": "Thanksgiving group portrait at a warm dinner setting",
+  "halloween-party-photos": "Halloween party portrait with dramatic colored lighting",
+  "only-fans": "Adult creator lifestyle portrait with tasteful editorial styling",
+  "singles-awareness-day": "Solo celebration portrait with warm date-night styling",
+  bikini: "Adult resort swimwear fashion portrait with bright coastal light",
+  swimsuit: "Adult resort swimwear fashion preview with lookbook styling",
+  "background-remover": "Clean isolated portrait or product scene with crisp edges",
+  "magic-eraser": "Natural photo cleanup preview with a tidy background",
+  "portrait-retouch": "Natural professional portrait retouching preview",
+  "unblur-image": "Recovered-focus portrait with natural clarity",
+  "color-correction": "Balanced portrait color correction with accurate skin tones",
+  "old-photo-restoration": "Restored vintage family portrait with archival warmth"
+};
+
+function sourceSlugForGalleryImage(imageUrl) {
+  return String(imageUrl || "").split("?")[0].split("#")[0].split("/").filter(Boolean).at(-2) || "";
+}
+
+function galleryImageAltsForItem(item, sourcePack) {
+  const images = Array.isArray(sourcePack?.galleryImages) ? sourcePack.galleryImages : [];
+  return images.map((imageUrl, index) => {
+    const sourceSlug = sourceSlugForGalleryImage(imageUrl);
+    const subject = taxonomyGalleryAltSubjects[sourceSlug]
+      || `${item.label} portrait with polished editorial styling`;
+    const scene = taxonomyGalleryAltScenes[index % taxonomyGalleryAltScenes.length];
+    return `${subject}, ${scene}.`;
+  });
+}
+
+function generatedThemeMediaForSlug(rawSlug) {
+  const slug = normalizeSlug(rawSlug);
+  if (!generatedThemeSlugs.has(slug)) return undefined;
+  const coverFile = path.join(repoRoot, "public", "assets", "dreamshoot", "generated", "pack-covers", slug, `${slug}-cover.webp`);
+  const galleryFiles = Array.from({ length: 12 }, (_, index) => path.join(
+    repoRoot,
+    "public",
+    "assets",
+    "dreamshoot",
+    "generated",
+    "pack-galleries",
+    slug,
+    `${slug}-${String(index + 1).padStart(2, "0")}.webp`
+  ));
+  if (!fs.existsSync(coverFile) || galleryFiles.some((filePath) => !fs.existsSync(filePath))) return undefined;
+  return {
+    imageUrl: `/assets/dreamshoot/generated/pack-covers/${slug}/${slug}-cover.webp?v=${generatedThemeAssetVersion}`,
+    galleryImages: galleryFiles.map((_, index) => `/assets/dreamshoot/generated/pack-galleries/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp?v=${generatedThemeAssetVersion}`)
   };
 }
 
 function packFieldsForItem(item, categoryId, sourcePack) {
   const profile = profileForItem(item);
+  const generatedMedia = generatedThemeMediaForSlug(item.slug);
+  const galleryImages = generatedMedia?.galleryImages || sourcePack?.galleryImages || [];
   return {
     siteId: SITE_ID,
     categoryId,
@@ -351,9 +460,9 @@ function packFieldsForItem(item, categoryId, sourcePack) {
     trainingRequired: sourcePack?.trainingRequired ?? true,
     generationCount: sourcePack?.generationCount ?? 0,
     conversionRate: sourcePack?.conversionRate ?? 0,
-    imageUrl: sourcePack?.imageUrl || "/assets/dreamshoot/generated/pack-covers/professional-headshots/professional-headshots-cover.webp?v=20260731themeuniqueness1",
-    galleryImages: sourcePack?.galleryImages || [],
-    galleryImageAlts: (sourcePack?.galleryImages || []).map((_, index) => `${item.label} private AI photo package gallery example ${index + 1} for myDreamshoots customers.`),
+    imageUrl: generatedMedia?.imageUrl || sourcePack?.imageUrl || "/assets/dreamshoot/generated/pack-covers/professional-headshots/professional-headshots-cover.webp?v=20260731themeuniqueness1",
+    galleryImages,
+    galleryImageAlts: galleryImageAltsForItem(item, generatedMedia ? { ...sourcePack, galleryImages } : sourcePack),
     updatedAt: UPDATE_TIMESTAMP
   };
 }

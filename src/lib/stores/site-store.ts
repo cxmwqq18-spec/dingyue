@@ -4377,7 +4377,7 @@ export async function createSiteAdminRelational(params: {
     targetType: "site_admin",
     targetId: admin.id,
     metadata: { email, role: params.role }
-  });
+  }, { syncPlatformState: false });
   return { admin: toSiteAdmin(admin) };
 }
 
@@ -4419,7 +4419,7 @@ export async function updateSiteAdminRelational(params: {
     targetType: "site_admin",
     targetId: admin.id,
     metadata
-  });
+  }, { syncPlatformState: false });
   return { admin: toSiteAdmin(admin) };
 }
 
@@ -4443,7 +4443,7 @@ export async function deleteSiteAdminRelational(params: {
     targetType: "site_admin",
     targetId: admin.id,
     metadata: { email: admin.email, role: admin.role }
-  });
+  }, { syncPlatformState: false });
   return { deletedAdmin: toSiteAdmin(admin) };
 }
 

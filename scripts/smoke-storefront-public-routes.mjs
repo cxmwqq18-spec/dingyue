@@ -185,10 +185,6 @@ function isSeoMediaImage(src) {
   return /\/assets\/(?:dreamshoot\/generated|sites\/site_aidreamcapes(?:_eu)?\/(?:creative-packs|fan-holiday-theme)|sites\/site_mydreamshoots|sites\/site_aidreamshoots)/i.test(normalized);
 }
 
-function altWordCount(value) {
-  return String(value ?? "").split(/\s+/).filter(Boolean).length;
-}
-
 function isSpanishSeoHost(host) {
   return /\.eu$/i.test(String(host ?? ""));
 }
@@ -273,8 +269,9 @@ function invalidAltReason(host, attrs) {
   if (/https?:\/\/|\/assets\//i.test(normalized)) return "url_in_alt";
   if (/background layer/i.test(normalized)) return "decorative_background_alt";
   if (/^(?:image|photo|picture|preview|thumbnail|hero|undefined|null|n\/a)$/i.test(normalized)) return "placeholder_alt";
-  if (altWordCount(normalized) < 8 && /(?:featured pack image|package image|gallery image|image preview|photo preview|gallery preview|package preview|^.+\s+preview$)/i.test(normalized)) return "placeholder_alt";
-  if (seoMedia && altWordCount(normalized) < 8) return "short_media_alt";
+  if (/(?:^|,)\s*(?:featured pack image|package image|gallery image|image preview|photo preview|gallery preview|package preview)\s*\.?$/i.test(normalized)) return "placeholder_alt";
+  if (/\b(?:visual reference|gallery image|gallery example|package gallery|image\s+\d+|for browsing|for review)\b/i.test(normalized)) return "template_alt";
+  if (seoMedia && /\b(?:mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes)\b/i.test(normalized)) return "brand_in_alt";
   if (isSpanishSeoHost(host) && /\b(?:AI-generated|customer-created|featured package image|gallery example|package gallery example|package preview|private gallery)\b/i.test(normalized)) return "mixed_language_alt";
   if (host.includes("aidreamcapes") && /MyDreamShoots|DreamShootAI|DreamShoot/i.test(normalized)) return "cross_brand_alt";
   if (host.includes("aidreamshoots") && /MyDreamShoots|AIdreamcapes|Aidreamcapes|DreamShootAI/i.test(normalized)) return "cross_brand_alt";

@@ -21,41 +21,59 @@ type PackAltInput = {
 };
 
 const weakAltPattern = /^(?:image|photo|picture|preview|thumbnail|hero|featured image|featured pack image|package image|product image|gallery image|story image|destination|example|sample|undefined|null|n\/a)$/i;
-const weakAltPhrasePattern = /\b(?:private album workspace preview|private fan-scene album preview|featured pack image|package image|gallery image|gallery preview|image preview|photo preview)\b/i;
-const legacyTemplateAltPattern = /\b(?:package gallery example|gallery scene example|package showcase frame|package cover frame|featured package scene|related package scene|private gallery visual frame|private storefront gallery|private gallery workflow|private AI album workflow|visual frame|detailed storefront visual|storefront visual showing|finished gallery example|private AI photo example|how to plan this)\b/i;
+const weakAltPhrasePattern = /\b(?:private album workspace preview|private fan-scene album preview|featured pack image|package image|gallery image|gallery preview|image preview|photo preview|visual reference|source reference|storefront browsing|for browsing|for review)\b/i;
+const legacyTemplateAltPattern = /\b(?:package gallery|package gallery example|gallery image|gallery scene example|gallery example|package showcase frame|package cover frame|featured package scene|related package scene|private gallery visual frame|private storefront gallery|private gallery workflow|private AI album workflow|visual frame|visual reference|detailed storefront visual|storefront visual showing|finished gallery example|private AI photo example|private AI photo package|how to plan this|image\s+\d+|for mydreamshoots customers)\b/i;
 const brandPlacementAltPattern = /\b(?:on|for)\s+(?:mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes)\b/i;
 const storefrontBrandNamePattern = /\b(?:mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes)\b/gi;
 const filenameLikeAltPattern = /^[a-z0-9][a-z0-9 -]{1,72}\s+image$/i;
-const urlLikePattern = /\bhttps?:\/\/\S+|(?:^|\s)\/assets\/\S+/gi;
-
-const englishImageDetails = [
-  "close-up facial framing",
-  "half-body editorial pose",
-  "two-person keepsake composition",
-  "wide environmental setting",
-  "candid social-ready smile",
-  "detail crop for review",
-  "group-friendly composition",
-  "evening cinematic color",
-  "vertical profile crop",
-  "lifestyle download crop",
-  "soft event-style flash",
-  "album cover crop"
+const urlLikePattern = /\bhttps?:\/\/\S+|(?:^|\s)\/assets\/\S+|(?:^|\s)[\w./-]+\.(?:png|jpe?g|webp|avif|svg)(?:\?\S+)?/gi;
+const englishImageVariantCompositions = [
+  "close facial crop",
+  "balanced half-body pose",
+  "open group framing",
+  "wide environmental view",
+  "candid social pose",
+  "styled detail crop",
+  "clean vertical framing",
+  "cinematic contrast",
+  "album-cover crop",
+  "natural lifestyle framing",
+  "polished event lighting",
+  "distinct themed pose"
 ];
-
-const spanishImageDetails = [
-  "encuadre cercano del rostro",
-  "pose editorial de medio cuerpo",
-  "composicion de recuerdo en pareja",
-  "escena amplia con contexto",
-  "sonrisa natural para compartir",
-  "recorte de detalle para revisar",
-  "composicion pensada para grupo",
-  "color cinematografico de tarde",
-  "recorte vertical para perfil",
-  "recorte de estilo de vida",
-  "flash suave de evento",
-  "recorte de portada de album"
+const englishImageVariantLighting = [
+  "soft studio light",
+  "directional window light",
+  "warm ambient light",
+  "high-contrast rim light",
+  "natural daylight",
+  "muted evening light",
+  "bright editorial light",
+  "balanced front light"
+];
+const spanishImageVariantCompositions = [
+  "recorte facial cercano",
+  "pose equilibrada de medio cuerpo",
+  "encuadre abierto para grupo",
+  "vista amplia del entorno",
+  "pose social espontanea",
+  "recorte de detalle pulido",
+  "encuadre vertical limpio",
+  "contraste cinematografico",
+  "recorte de portada",
+  "encuadre de estilo de vida",
+  "luz pulida de evento",
+  "pose tematica distintiva"
+];
+const spanishImageVariantLighting = [
+  "luz suave de estudio",
+  "luz direccional de ventana",
+  "luz ambiental calida",
+  "luz de contorno contrastada",
+  "luz natural del dia",
+  "luz tenue de tarde",
+  "luz editorial brillante",
+  "luz frontal equilibrada"
 ];
 
 const spanishVideoAltTitles: Record<string, string> = {
@@ -108,6 +126,18 @@ function cleanAltText(value: string | undefined): string {
     .trim();
 }
 
+function imageVariantDetail(imageUrl: string | undefined, locale: StorefrontMediaAltLocale): string {
+  const identity = String(imageUrl ?? "").split("#")[0]?.split("?")[0] ?? "";
+  if (!identity) return "";
+  let hash = 0;
+  for (const character of identity) hash = (hash * 31 + character.charCodeAt(0)) >>> 0;
+  const compositions = locale === "es" ? spanishImageVariantCompositions : englishImageVariantCompositions;
+  const lighting = locale === "es" ? spanishImageVariantLighting : englishImageVariantLighting;
+  const composition = compositions[hash % compositions.length] ?? "";
+  const light = lighting[(hash >>> 8) % lighting.length] ?? "";
+  return [composition, light].filter(Boolean).join(locale === "es" ? " con " : " with ");
+}
+
 function spanishVideoAltPhrase(value: string | undefined, fallback: string): string {
   const cleaned = cleanAltText(value);
   if (!cleaned) return fallback;
@@ -129,33 +159,15 @@ function imageSlugParts(imageUrl: string | undefined): string[] {
     .filter(Boolean);
 }
 
-function imageContextSlugParts(imageUrl: string | undefined): string[] {
-  const value = String(imageUrl ?? "").trim();
-  if (!value) return [];
-  const path = value.split("#")[0]?.split("?")[0] ?? "";
-  const segments = path.split("/").filter(Boolean);
-  const filename = segments.at(-1) ?? "";
-  const parent = segments.at(-2) ?? "";
-  const basename = filename
-    .replace(/\.(?:png|jpe?g|webp|avif|svg)$/i, "")
-    .replace(/-\d{8,}$/i, "")
-    .replace(/-v\d+$/i, "")
-    .replace(/-cover$/i, "");
-  return [parent, basename]
-    .map((part) => normalizeSlug(part))
-    .filter(Boolean);
-}
-
 function meaningfulAlt(value: string | undefined): string {
   const cleaned = cleanAltText(value);
   if (!cleaned) return "";
   const wordCount = cleaned.split(/\s+/).filter(Boolean).length;
   if (weakAltPattern.test(cleaned)) return "";
   if (legacyTemplateAltPattern.test(cleaned)) return "";
-  if (brandPlacementAltPattern.test(cleaned.toLowerCase()) && wordCount > 6) return "";
   const brandMentions = cleaned.match(storefrontBrandNamePattern)?.length ?? 0;
-  if (brandMentions > 1) return "";
-  if (brandMentions > 0 && wordCount > 9) return "";
+  if (brandMentions > 0) return "";
+  if (brandPlacementAltPattern.test(cleaned.toLowerCase()) && wordCount > 6) return "";
   if (wordCount < 4 && weakAltPhrasePattern.test(cleaned)) return "";
   if (wordCount < 3) return "";
   return cleaned;
@@ -317,23 +329,38 @@ function englishThemeSubject(key: string): string | undefined {
   if (/\b(?:credit|subscription|plan|pricing|checkout)\b/.test(key)) {
     return "Credit plan panel for private photo galleries";
   }
-  if (/(christmas|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume-cast|cozy-card|family-occasion|winter|new-year)/.test(key)) {
-    return "Seasonal celebration portrait";
-  }
   if (/(fan-scene|supporter-wall|supporter-photo|supporter-set|fan-wall|fan-photo|fan-collection|fan-letter|fan-keepsake|backstage|meetup|birthday-fan|fan-card|private-fan)/.test(key)) {
     return "Supporter portrait for a fan album";
-  }
-  if (/(holiday|seasonal)/.test(key)) {
-    return "Seasonal celebration portrait";
   }
   if (/(gala|red-carpet|premiere|vip|award|award-night|spotlight|formal|evening)/.test(key)) {
     return "Red-carpet event portrait";
   }
+  if (/(christmas-couple)/.test(key)) {
+    return "Christmas couple portrait with cozy festive light";
+  }
+  if (/(christmas-photos)/.test(key)) {
+    return "Solo Christmas portrait with warm festive styling";
+  }
+  if (/(thanksgiving)/.test(key)) {
+    return "Thanksgiving group portrait at a warm dinner setting";
+  }
+  if (/(halloween)/.test(key)) {
+    return "Halloween party portrait with dramatic colored lighting";
+  }
+  if (/(holiday|seasonal)/.test(key)) {
+    return "Seasonal holiday portrait with warm festive styling";
+  }
+  if (/(cyberpunk|neon)/.test(key)) {
+    return "Neon cyberpunk portrait in a city scene";
+  }
+  if (/(mafia|noir)/.test(key)) {
+    return "Noir character portrait with dramatic contrast";
+  }
   if (/(anime-avatar)/.test(key)) {
     return "Stylized anime avatar portrait";
   }
-  if (/(cyberpunk|neon|noir|mafia|anime|avatar|fantasy)/.test(key)) {
-    return "Cinematic character portrait";
+  if (/(avatar)/.test(key)) {
+    return "Social avatar portrait with clean framing";
   }
   if (/(profile-cards|social-cards|avatar-card)/.test(key)) {
     return "Social profile card portrait";
@@ -345,16 +372,32 @@ function englishThemeSubject(key: string): string | undefined {
     return "Motion-ready portrait preview";
   }
   if (/(product-style)/.test(key)) {
-    return "Product-style lifestyle portrait";
+    return "Product-style lifestyle scene with clean studio lighting";
   }
   if (/(product-style|product|upscaler|enhance|utility)/.test(key)) {
-    return "Enhanced image preview";
+    return "Enhanced portrait preview with crisp detail";
   }
-  if (/(creator|profile|social|thumbnail|media-kit|personal-brand)/.test(key)) {
-    return "Creator profile portrait";
+  if (/(creator-portraits)/.test(key)) {
+    return "Creator portrait with polished studio styling";
+  }
+  if (/(creator|profile|thumbnail|media-kit|personal-brand)/.test(key)) {
+    return "Creator profile portrait with polished styling";
   }
   if (/(world-cup|football|soccer|stadium|match-day|game-day|match|watch-party|championship|tunnel-entrance)/.test(key)) {
     return "Football fan portrait in a stadium";
+  }
+  if (/(indian-wedding)/.test(key)) {
+    return "Indian wedding-style portrait with rich celebration styling";
+  }
+  if (/(desi-wedding)/.test(key)) {
+    return "Desi wedding-style portrait with traditional celebration styling";
+  }
+  if (/(christmas|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume-cast|cozy-card|family-occasion|winter|new-year)/.test(key)) {
+    if (/(christmas-couple)/.test(key)) return "Christmas couple portrait with cozy festive light";
+    if (/(christmas-photos)/.test(key)) return "Solo Christmas portrait with warm festive styling";
+    if (/(thanksgiving)/.test(key)) return "Thanksgiving group portrait at a warm dinner setting";
+    if (/(halloween)/.test(key)) return "Halloween party portrait with dramatic colored lighting";
+    return "Seasonal holiday portrait with warm festive styling";
   }
   if (/(wedding|engagement|couple|valentine|desi|indian)/.test(key)) {
     return "Couple keepsake portrait";
@@ -363,6 +406,8 @@ function englishThemeSubject(key: string): string | undefined {
     return "Travel portrait in a scenic setting";
   }
   if (/(beauty|hairstyle|hair|try-on|fashion|boudoir)/.test(key)) {
+    if (/(hairstyle)/.test(key)) return "Hairstyle preview portrait with polished styling";
+    if (/(fashion)/.test(key)) return "Editorial fashion portrait with refined wardrobe styling";
     return "Beauty portrait with editorial lighting";
   }
   return undefined;
@@ -423,11 +468,6 @@ function spanishThemeSubject(key: string): string | undefined {
   return undefined;
 }
 
-function conciseImageDetail(index: number | undefined, locale: StorefrontMediaAltLocale): string {
-  const details = locale === "es" ? spanishImageDetails : englishImageDetails;
-  return details[Math.max(0, index ?? 0) % details.length];
-}
-
 function compactAltSentence(value: string, locale: StorefrontMediaAltLocale): string {
   const cleaned = cleanAltText(value)
     .replace(/\s*,\s*,/g, ",")
@@ -441,63 +481,21 @@ function compactAltSentence(value: string, locale: StorefrontMediaAltLocale): st
   return `${sentence.slice(0, maxLength - 1).replace(/\s+\S*$/, "").replace(/[,\s]+$/g, "")}.`;
 }
 
-function imageContextLabel(imageUrl: string | undefined): string {
-  const parts = imageContextSlugParts(imageUrl)
-    .map((part) => part.replace(/^\d{8,}-/, ""))
-    .filter((part) => part && !/^(?:assets|generated|visuals|sites|site|homepage-unique|fan-holiday-theme|creative-packs|pack-galleries|categories|covers|gallery|showcase)$/i.test(part));
-  return Array.from(new Set(parts.slice(-2))).join(" ").replace(/-/g, " ").trim();
-}
-
-function trimWordsToLength(value: string, maxLength: number): string {
-  const words = value.split(/\s+/).filter(Boolean);
-  while (words.length && words.join(" ").length > maxLength) words.pop();
-  return words.join(" ");
-}
-
 function compactMediaAltSentence(
   value: string,
-  locale: StorefrontMediaAltLocale,
-  imageUrl?: string,
-  index?: number
+  locale: StorefrontMediaAltLocale
 ): string {
-  const base = cleanAltText(value).replace(/\s*,\s*,/g, ",").replace(/\s+/g, " ").trim();
-  const maxLength = locale === "es" ? 118 : 112;
-  const sourceLabel = imageContextLabel(imageUrl);
-  const normalizedBase = base.toLowerCase();
-  const indexPhrase = typeof index === "number"
-    ? locale === "es" ? `imagen ${index + 1}` : `gallery image ${index + 1}`
-    : "";
-  const sourcePhrase = sourceLabel && !normalizedBase.includes(sourceLabel.toLowerCase())
-    ? locale === "es"
-      ? `referencia visual ${sourceLabel}${indexPhrase ? ` ${indexPhrase}` : ""}`
-      : `${sourceLabel}${indexPhrase ? ` ${indexPhrase}` : ""} visual reference`
-    : indexPhrase && !normalizedBase.includes(indexPhrase.toLowerCase())
-      ? indexPhrase
-    : "";
-  const minimumPhrase = locale === "es"
-    ? `detalle ${conciseImageDetail(index, locale)} para explorar el catalogo`
-    : `detail ${conciseImageDetail(index, locale)} for storefront browsing`;
-  const baseWithSource = [base, sourcePhrase].filter(Boolean).join(", ");
-  const needsMinimumPhrase = baseWithSource.split(/\s+/).filter(Boolean).length < 8;
-  const full = [baseWithSource, needsMinimumPhrase ? minimumPhrase : ""]
-    .filter(Boolean)
-    .join(", ");
-  const fullSentence = full.endsWith(".") ? full : `${full}.`;
-  if (fullSentence.length <= maxLength && fullSentence.split(/\s+/).filter(Boolean).length >= 8) return fullSentence;
-
-  const suffix = [sourcePhrase, needsMinimumPhrase ? minimumPhrase : ""].filter(Boolean).join(", ");
-  const suffixWithPeriod = suffix ? `${suffix}.` : "";
-  const baseBudget = Math.max(24, maxLength - suffixWithPeriod.length - 2);
-  const trimmedBase = trimWordsToLength(base || minimumPhrase, baseBudget);
-  const result = suffix ? `${trimmedBase}, ${suffixWithPeriod}` : `${trimmedBase}.`;
-  if (result.length <= maxLength && result.split(/\s+/).filter(Boolean).length >= 8) return result;
-  return compactAltSentence(full, locale);
+  const fallback = locale === "es" ? "imagen de escaparate" : "Storefront image";
+  const base = cleanAltText(value)
+    .replace(/\s*,\s*,/g, ",")
+    .replace(/\s+/g, " ")
+    .trim();
+  return compactAltSentence(base || fallback, locale);
 }
 
 export function storefrontAccessibleMediaAlt({
   fallback,
   imageUrl,
-  index,
   locale = "en",
   value
 }: {
@@ -512,22 +510,22 @@ export function storefrontAccessibleMediaAlt({
   const imageThemeKey = themeImageSlugParts(imageUrl).join(" ");
   const themedAlt = locale === "es" ? spanishThemeSubject(imageThemeKey) : englishThemeSubject(imageThemeKey);
   const genericFileAlt = explicit && filenameLikeAltPattern.test(explicit);
-  const shortContextAlt = explicit && explicit.split(/\s+/).filter(Boolean).length < 8;
-  const base = genericFileAlt || shortContextAlt
+  const base = genericFileAlt
     ? themedAlt || explicit
     : explicit || fallbackAlt || themedAlt || (locale === "es" ? "imagen de escaparate" : "Storefront image");
-  return compactMediaAltSentence(base, locale, imageUrl, index);
+  return compactMediaAltSentence(base, locale);
 }
 
 export function storefrontPackMediaAlt(input: PackAltInput): string {
   const locale = input.locale ?? "en";
   const brand = cleanAltText(input.brand) || (locale === "es" ? "AIdreamshoots" : "MyDreamShoots");
   const explicit = meaningfulThemeAlignedAltForStorefront(input.explicitAlt, locale, brand, input.imageUrl);
-  if (explicit) return compactMediaAltSentence(explicit, locale, input.imageUrl, input.index);
-  const galleryAlt = input.role === "gallery" && typeof input.index === "number"
+  if (explicit) return compactMediaAltSentence(explicit, locale);
+  const galleryAlt = (input.role === "gallery" || /\/pack-galleries\//i.test(String(input.imageUrl ?? "")))
+    && typeof input.index === "number"
     ? meaningfulThemeAlignedAltForStorefront(input.galleryImageAlts?.[input.index], locale, brand, input.imageUrl)
     : "";
-  if (galleryAlt) return compactMediaAltSentence(galleryAlt, locale, input.imageUrl, input.index);
+  if (galleryAlt) return compactMediaAltSentence(galleryAlt, locale);
 
   const specificKey = themeKey(input);
   const imageKey = themeImageSlugParts(input.imageUrl).join(" ");
@@ -543,12 +541,12 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
       ?? (locale === "es"
         ? "retrato estilizado para una galeria privada"
         : "Styled portrait prepared for a private gallery");
-  const detail = conciseImageDetail(input.index, locale);
   const fallbackScene = locale === "es"
     ? "retrato estilizado para una galeria privada"
     : "Styled portrait prepared for a private gallery";
   const naturalScene = scene || fallbackScene;
-  return compactMediaAltSentence(`${naturalScene}, ${detail}`, locale, input.imageUrl, input.index);
+  const detail = imageVariantDetail(input.imageUrl, locale);
+  return compactMediaAltSentence([naturalScene, detail].filter(Boolean).join(", "), locale);
 }
 
 export function storefrontCreativePackImageAlt({

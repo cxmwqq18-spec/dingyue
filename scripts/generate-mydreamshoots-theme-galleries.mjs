@@ -37,11 +37,15 @@ const coverPublicVersionBySlug = {
   engagement: process.env.THEME_ENGAGEMENT_COVER_VERSION ?? "20260805uncropped1"
 };
 const force = flags.has("force") || process.env.THEME_GALLERY_FORCE === "1";
+const dryRun = flags.has("dry-run");
 const saveSheets = flags.has("save-sheets") || process.env.THEME_GALLERY_SAVE_SHEETS === "1";
 const concurrency = Math.max(1, Math.min(3, Number(args.get("concurrency") ?? process.env.THEME_GALLERY_CONCURRENCY ?? "1") || 1));
 const limit = Math.max(0, Number(args.get("limit") ?? process.env.THEME_GALLERY_LIMIT ?? "0") || 0);
 const timeoutMs = Math.max(30_000, Number(args.get("timeout-ms") ?? process.env.THEME_GALLERY_TIMEOUT_MS ?? "240000") || 240_000);
-const maxAttempts = Math.max(1, Number(args.get("attempts") ?? process.env.THEME_GALLERY_ATTEMPTS ?? "3") || 3);
+const maxAttempts = 1;
+const maxPaidCreates = Math.max(1, Number(args.get("max-paid-creates") ?? process.env.THEME_GALLERY_MAX_PAID_CREATES ?? "30") || 30);
+const manifestPath = args.get("manifest") ? path.resolve(process.cwd(), args.get("manifest")) : "";
+const requestSalt = args.get("request-salt") ?? process.env.THEME_GALLERY_REQUEST_SALT ?? "20260815";
 const onlySlugs = new Set(String(args.get("slugs") ?? process.env.THEME_GALLERY_SLUGS ?? "")
   .split(",")
   .map((slug) => slug.trim())
@@ -75,7 +79,17 @@ const themeDirections = {
   "christmas-couple": "Christmas couple portraits with cozy sweaters, warm lights, tree decor, snow-window mood, greeting-card compositions, and romantic holiday energy",
   "christmas-photos": "solo Christmas portraits with festive lights, tree decor, snow mood, warm sweaters, holiday cards, and seasonal profile images",
   "ai-video-add-ons": "motion-ready AI video starter frames, cinematic storyboard stills, dynamic poses, timeline-like visual rhythm, and short clip preview energy",
-  "magic-upscaler": "image upscaling and enhancement preview visuals, crisp portrait details, before-after clarity, magnified texture, sparkle-clean high-resolution delivery"
+  "magic-upscaler": "image upscaling and enhancement preview visuals, crisp portrait details, before-after clarity, magnified texture, sparkle-clean high-resolution delivery",
+  "only-fans": "fully clothed adult creator lifestyle portraits with confident poses, premium studio or lounge settings, fashion-forward styling, tasteful editorial lighting, and no explicit sexual content",
+  "singles-awareness-day": "warm solo celebration portraits for adults with expressive styling, flowers, date-night color, confident social-ready poses, and a polished personal gallery mood",
+  bikini: "fully clothed resort swimwear-inspired fashion portraits for adults with tasteful editorial styling, bright coastal light, confident poses, and no nudity or explicit content",
+  swimsuit: "fully clothed resort swimwear fashion previews for adults with lookbook styling, poolside light, wardrobe detail, confident poses, and no nudity or explicit content",
+  "background-remover": "clean portrait and product-isolation scenes with crisp subject edges, neutral studio backdrops, transparent-background preparation, and polished catalog framing",
+  "magic-eraser": "before-and-after photo cleanup scenes showing believable object removal, tidy backgrounds, crisp portrait detail, and natural-looking image restoration",
+  "portrait-retouch": "natural professional portrait retouching previews with balanced skin texture, clean eyes, subtle lighting polish, realistic detail, and no plastic-skin effect",
+  "unblur-image": "photo clarity restoration previews with readable facial detail, natural sharpening, recovered focus, believable texture, and clean before-and-after visual direction",
+  "color-correction": "professional photo color correction previews with balanced skin tones, recovered highlights, natural contrast, accurate wardrobe color, and polished editorial grading",
+  "old-photo-restoration": "respectful restoration previews for vintage family portraits with repaired scratches, recovered contrast, natural facial detail, archival warmth, and no invented text"
 };
 
 function normalizeBaseUrl(value) {
@@ -90,6 +104,25 @@ function imageBase64(body) {
     body?.output?.[0]?.b64_json ??
     body?.output?.[0]?.image_base64 ??
     body?.image_base64;
+}
+
+function imageUrl(body) {
+  return body?.data?.[0]?.url ??
+    body?.data?.[0]?.image_url ??
+    body?.output?.[0]?.url ??
+    body?.output?.[0]?.image_url ??
+    body?.url ??
+    body?.image_url;
+}
+
+async function imageBufferFromUrl(url) {
+  if (url.startsWith("data:")) {
+    const [, payload = ""] = url.split(",", 2);
+    return Buffer.from(payload, url.includes(";base64,") ? "base64" : "utf8");
+  }
+  const response = await fetch(url, { cache: "no-store" });
+  if (!response.ok) throw new Error(`image_url_fetch_failed_${response.status}`);
+  return Buffer.from(await response.arrayBuffer());
 }
 
 function slugify(value) {
@@ -120,23 +153,27 @@ function coverPath(slug) {
 }
 
 const galleryAltScenes = [
-  "close-up portrait crop",
-  "half-body editorial pose",
-  "group-friendly composition",
-  "wide environmental setting",
-  "candid social-ready moment",
-  "detail crop for review",
-  "vertical profile crop",
-  "cinematic color treatment",
-  "strong album cover crop",
-  "download-ready lifestyle crop",
-  "polished event lighting",
-  "distinct portrait pose"
+  "close portrait framing with clear facial detail",
+  "half-body editorial pose with balanced crop",
+  "group-friendly composition with space around the subjects",
+  "wide environmental scene with contextual background",
+  "candid social-style expression with natural posture",
+  "detail portrait crop with polished styling",
+  "vertical profile crop with clean framing",
+  "cinematic color contrast with directional light",
+  "album-cover style crop with strong subject focus",
+  "lifestyle portrait framing with natural setting cues",
+  "event-style portrait under polished light",
+  "distinct themed pose with refined styling"
 ];
 
 function galleryImageAltForPack(pack, slug, index) {
   const direction = themeDirections[slug] ?? pack.description ?? pack.headline ?? pack.name;
-  const subject = String(direction).split(";")[0].replace(/\s+/g, " ").trim() || `${pack.name} AI photo package`;
+  const subject = String(direction)
+    .split(";")[0]
+    .replace(/\b(?:private|package|gallery|customer-facing|AI photo subscription aesthetic)\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim() || "Portrait with polished editorial styling";
   const scene = galleryAltScenes[index % galleryAltScenes.length];
   return `${subject}, ${scene}.`;
 }
@@ -193,48 +230,40 @@ async function loadProvider() {
   };
 }
 
-async function sleep(ms) {
-  await new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 async function generateContactSheet({ pack, slug, provider, sheetIndex }) {
-  let lastError;
-  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), timeoutMs);
-    try {
-      const response = await fetch(`${provider.baseUrl}/images/generations`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${provider.apiKey}`
-        },
-        signal: controller.signal,
-        body: JSON.stringify({
-          model: provider.model,
-          prompt: buildPrompt(pack, slug, sheetIndex),
-          size: imageSize,
-          quality: imageQuality,
-          response_format: "b64_json"
-        })
-      });
-      const body = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(`${slug}: provider failed ${response.status} ${JSON.stringify(body).slice(0, 600)}`);
-      }
-      const b64 = imageBase64(body);
-      if (!b64) throw new Error(`${slug}: provider returned an empty image payload`);
-      return Buffer.from(b64, "base64");
-    } catch (error) {
-      lastError = error;
-      if (attempt >= maxAttempts) break;
-      console.log(`${slug}: attempt ${attempt} failed, retrying... ${error instanceof Error ? error.message : String(error)}`);
-      await sleep(10_000 * attempt);
-    } finally {
-      clearTimeout(timeout);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  const requestId = `mydreamshoots-theme-gallery:${requestSalt}:${slug}:${sheetIndex + 1}`.slice(0, 180);
+  try {
+    const response = await fetch(`${provider.baseUrl}/images/generations`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${provider.apiKey}`,
+        "Idempotency-Key": requestId,
+        "X-Client-Request-Id": requestId
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: provider.model,
+        prompt: buildPrompt(pack, slug, sheetIndex),
+        size: imageSize,
+        quality: imageQuality,
+        response_format: "b64_json"
+      })
+    });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(`${slug}: provider failed ${response.status} request=${requestId} ${JSON.stringify(body).slice(0, 600)}`);
     }
+    const b64 = imageBase64(body);
+    if (b64) return Buffer.from(b64, "base64");
+    const url = imageUrl(body);
+    if (url) return await imageBufferFromUrl(String(url));
+    throw new Error(`${slug}: provider returned an empty image payload request=${requestId}`);
+  } finally {
+    clearTimeout(timeout);
   }
-  throw lastError instanceof Error ? lastError : new Error(`${slug}: provider generation failed`);
 }
 
 async function cropContactSheet(buffer, slug, sheetIndex) {
@@ -332,14 +361,40 @@ async function mapLimit(items, workerCount, mapper) {
   return results;
 }
 
-async function main() {
-  const provider = await loadProvider();
-  console.log(`using platform AI provider: ${provider.label} (${provider.model})`);
-  const packs = await prisma.creativePack.findMany({
+async function activeThemePacksForSite() {
+  const databasePacks = await prisma.creativePack.findMany({
     where: { siteId, status: "active" },
     include: { categoryRecord: true },
     orderBy: { createdAt: "asc" }
   });
+  if (databasePacks.length) return { source: "database", packs: databasePacks };
+
+  const statePath = path.join(process.cwd(), "data", "platform-state.json");
+  const state = JSON.parse(await fs.readFile(statePath, "utf8"));
+  const categories = (state.creativePackCategories ?? []).filter((category) => category.siteId === siteId && category.status === "active");
+  const categoryById = new Map(categories.map((category) => [category.id, category]));
+  const parentById = new Map(categories.filter((category) => category.parentId).map((category) => [category.id, categoryById.get(category.parentId)]));
+  const packs = (state.creativePacks ?? [])
+    .filter((pack) => pack.siteId === siteId && pack.status === "active")
+    .sort((left, right) => String(left.createdAt ?? "").localeCompare(String(right.createdAt ?? "")))
+    .map((pack) => {
+      const category = categoryById.get(pack.categoryId);
+      return {
+        ...pack,
+        categoryRecord: category
+          ? {
+              ...category,
+              parent: parentById.get(category.id)
+            }
+          : undefined
+      };
+    });
+  return { source: "platform-state", packs };
+}
+
+async function main() {
+  const packSource = await activeThemePacksForSite();
+  const packs = packSource.packs;
   const selected = packs
     .filter((pack) => {
       const slug = pack.categoryRecord?.slug ?? slugify(pack.category || pack.name);
@@ -347,8 +402,39 @@ async function main() {
     })
     .slice(0, limit || undefined);
   if (!selected.length) throw new Error("No matching active theme packs found");
+  const plannedCreates = selected.length * 3;
+  if (plannedCreates > maxPaidCreates) {
+    throw new Error(`Refusing to exceed paid-create cap: planned=${plannedCreates}, cap=${maxPaidCreates}`);
+  }
+  if (dryRun) {
+    console.log(JSON.stringify({
+      dryRun: true,
+      siteId,
+      source: packSource.source,
+      model,
+      selectedSlugs: selected.map((pack) => pack.categoryRecord?.slug ?? slugify(pack.category || pack.name)),
+      plannedCreates,
+      maxPaidCreates,
+      maxAttempts
+    }, null, 2));
+    return;
+  }
+  const provider = await loadProvider();
+  console.log(`using ${packSource.source} theme data; platform AI provider: ${provider.label} (${provider.model}); paid create cap=${maxPaidCreates}; attempts per create=${maxAttempts}`);
   const results = await mapLimit(selected, concurrency, (pack) => generatePack(pack, provider));
-  console.log(JSON.stringify({ ok: true, count: results.length, results }, null, 2));
+  const manifest = {
+    ok: true,
+    siteId,
+    model: provider.model,
+    paidCreateCap: maxPaidCreates,
+    paidCreateAttempts: plannedCreates,
+    results
+  };
+  if (manifestPath) {
+    await fs.mkdir(path.dirname(manifestPath), { recursive: true });
+    await fs.writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+  }
+  console.log(JSON.stringify(manifest, null, 2));
 }
 
 main()

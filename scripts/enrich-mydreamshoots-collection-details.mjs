@@ -516,13 +516,13 @@ const galleryAltScenes = [
   "group-friendly pose with polished composition",
   "wide scene showing the package setting",
   "candid smile prepared for social sharing",
-  "detail crop for a private album gallery",
-  "vertical profile crop for mobile channels",
+  "detail portrait crop with polished styling",
+  "vertical profile crop with clean framing",
   "cinematic frame with richer color contrast",
   "album cover style crop with strong subject focus",
-  "lifestyle frame ready for download",
+  "lifestyle portrait framing with natural setting cues",
   "event-style portrait with polished lighting",
-  "finished gallery example with a distinct pose"
+  "distinct themed pose with refined styling"
 ];
 
 const gallerySubjectBySlug = {

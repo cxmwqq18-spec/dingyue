@@ -492,6 +492,7 @@ const specs = [
       storageKey: asset.storageKey,
       mimeType: asset.mimeType ?? "image/png",
       usageType: asset.usageType ?? asset.usage ?? "theme",
+      altText: asset.altText ?? null,
       createdAt: toDate(asset.createdAt)
     })
   },
