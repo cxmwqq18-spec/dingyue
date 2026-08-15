@@ -104,6 +104,15 @@ function normalizeHostPath(host, href) {
   }
 }
 
+function redirectLocationUsesPublicHost(host, location) {
+  if (!/^https?:\/\//i.test(location)) return true;
+  try {
+    return new URL(location).hostname === host;
+  } catch {
+    return false;
+  }
+}
+
 function canonicalMediaSrc(value) {
   const src = decodeHtmlAttribute(value);
   try {
@@ -396,7 +405,7 @@ async function smokeStorefrontPublicRoutes() {
       const response = await redirectForPath(request, check.host, check.path).catch(() => undefined);
       const status = response?.status() ?? 599;
       const location = response?.headers().location ?? "";
-      if (![301, 302, 307, 308].includes(status) || !location.includes(check.target)) {
+      if (![301, 302, 307, 308].includes(status) || !location.includes(check.target) || !redirectLocationUsesPublicHost(check.host, location)) {
         failures.push({ host: check.host, path: check.path, status, expectedRedirect: check.target, location });
         console.log(`✗ ${check.host}${check.path} -> ${status} ${location}`);
       } else {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
-import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost, siteAdminPathForHost } from "@/lib/domain-routing";
+import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost, publicSiteUrl, siteAdminPathForHost } from "@/lib/domain-routing";
 import { findPage } from "@/lib/data";
 import {
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
@@ -637,7 +637,7 @@ export default async function HostStorefrontCatchAllPage({
     redirectMydreamshootsLegacyTool(toolSite, path[1]);
     redirectAidreamcapesLegacyTool(toolSite, path[1]);
     const canonicalToolPath = canonicalSeoDirectoryPathForSite(toolSite, "tool", path[1]);
-    if (canonicalToolPath !== `/tools/${path[1]}`) permanentRedirect(canonicalToolPath);
+    if (canonicalToolPath !== `/tools/${path[1]}`) permanentRedirect(publicSiteUrl(toolSite, canonicalToolPath));
   }
   const hasKnownPublicRoute =
     PUBLIC_DIRECTORY_PAGE_SLUGS.has(publicPageSlug) ||
@@ -670,7 +670,7 @@ export default async function HostStorefrontCatchAllPage({
     if (videoGenerationRoute.itemSlug) {
       if (!resolvedVideoToolPage) notFound();
       const canonicalToolPath = canonicalSeoDirectoryPathForSite(resolvedVideoToolPage.site, "tool", videoGenerationRoute.itemSlug);
-      if (canonicalToolPath !== videoGenerationRoute.canonicalPath) permanentRedirect(canonicalToolPath);
+      if (canonicalToolPath !== videoGenerationRoute.canonicalPath) permanentRedirect(publicSiteUrl(resolvedVideoToolPage.site, canonicalToolPath));
       return renderToolPage({
         site: resolvedVideoToolPage.site,
         toolSlug: videoGenerationRoute.itemSlug,
@@ -699,7 +699,7 @@ export default async function HostStorefrontCatchAllPage({
   const collectionCategory = collectionRoute?.collectionSlug ?? "";
   if (collectionRoute) {
     const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(site, "collection", collectionRoute.collectionSlug);
-    if (canonicalCollectionPath !== collectionRoute.canonicalPath) permanentRedirect(canonicalCollectionPath);
+    if (canonicalCollectionPath !== collectionRoute.canonicalPath) permanentRedirect(publicSiteUrl(site, canonicalCollectionPath));
   }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, site, collectionCategory)) notFound();
   const pageSlug = collectionRoute ? publicCollectionRootPathForSite(site) : publicContentPageSlug(`/${path.join("/")}`);

@@ -666,6 +666,42 @@ function sameServerPort(request: NextRequest): string {
   return "3010";
 }
 
+function headerHost(value: string | null | undefined): string {
+  return String(value ?? "").split(",")[0]?.trim() ?? "";
+}
+
+function isInternalOriginHost(host: string): boolean {
+  return /^(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/i.test(host);
+}
+
+function isLocalStorefrontHost(host: string): boolean {
+  return /(?:^|\.)(?:localhost)(?::\d+)?$/i.test(host);
+}
+
+function publicOriginForRequest(request: NextRequest): URL {
+  const publicHost = [
+    headerHost(request.headers.get(STOREFRONT_PUBLIC_HOST_HEADER)),
+    headerHost(request.headers.get("x-forwarded-host")),
+    headerHost(request.headers.get("host"))
+  ].find((host) => TARGET_HOST_RE.test(host));
+  const host = publicHost || headerHost(request.headers.get("host")) || request.nextUrl.host;
+  const forwardedProto = headerHost(request.headers.get("x-forwarded-proto")).replace(/:$/, "");
+  const protocol = TARGET_HOST_RE.test(host) && !isInternalOriginHost(host) && !isLocalStorefrontHost(host)
+    ? "https"
+    : forwardedProto || request.nextUrl.protocol.replace(/:$/, "");
+  return new URL(`${protocol}://${host}`);
+}
+
+function publicRedirectUrlForRequest(request: NextRequest, location: string): URL {
+  const publicOrigin = publicOriginForRequest(request);
+  const target = new URL(location, publicOrigin);
+  if (isInternalOriginHost(target.host) || target.origin === request.nextUrl.origin) {
+    target.protocol = publicOrigin.protocol;
+    target.host = publicOrigin.host;
+  }
+  return target;
+}
+
 function storefrontSlugForHost(host: string | null | undefined): string | undefined {
   const normalized = String(host ?? "").toLowerCase();
   if (!TARGET_HOST_RE.test(normalized)) return undefined;
@@ -774,7 +810,7 @@ export async function middleware(request: NextRequest) {
   const contentType = upstreamResponse.headers.get("content-type") ?? "";
   if (upstreamResponse.status >= 300 && upstreamResponse.status < 400) {
     const location = upstreamResponse.headers.get("location");
-    if (location) return finalizeStorefrontResponse(NextResponse.redirect(new URL(location, request.url), upstreamResponse.status), request);
+    if (location) return finalizeStorefrontResponse(NextResponse.redirect(publicRedirectUrlForRequest(request, location), upstreamResponse.status), request);
   }
   if (!upstreamResponse.ok || !contentType.includes("text/html")) return applyGrownstrideNoindex(upstreamResponse, request);
 
