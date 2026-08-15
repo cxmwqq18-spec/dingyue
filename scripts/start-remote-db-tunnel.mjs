@@ -3,6 +3,16 @@ import fs from "node:fs";
 import net from "node:net";
 import "./load-runtime-env.mjs";
 
+if (!process.argv.includes("--readonly")) {
+  console.error("Remote database tunnels are disabled by default. Use `npm run db:tunnel -- --readonly` with a read-only database URL.");
+  process.exit(1);
+}
+
+if (!process.env.REMOTE_DB_READONLY_DATABASE_URL?.trim()) {
+  console.error("REMOTE_DB_READONLY_DATABASE_URL is required for remote audit tunnels.");
+  process.exit(1);
+}
+
 const localHost = process.env.REMOTE_DB_LOCAL_HOST || "127.0.0.1";
 const localPort = Number(process.env.REMOTE_DB_LOCAL_PORT || "15432");
 const remoteHost = process.env.REMOTE_DB_SSH_HOST || process.env.AI_PROJECT_SSH_HOST || "204.77.130.125";

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { assertNonProductionWriteTarget } from "./lib/database-target.mjs";
 import { assertRelationalReplaceSafety } from "./relational-import-safety.mjs";
 
 const prisma = new PrismaClient();
@@ -851,6 +852,7 @@ async function main() {
   const verifyOnly = path.basename(process.argv[1] ?? "") === "verify-relational-state.mjs";
   const shouldVerify = verifyOnly || process.argv.includes("--verify");
   assertRelationalReplaceSafety({ replace, dryRun, allowDataLoss });
+  if (!dryRun && !verifyOnly) assertNonProductionWriteTarget();
   const { state, source } = await loadState();
   const plan = buildPlan(state);
 

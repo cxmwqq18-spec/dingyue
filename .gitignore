@@ -24,3 +24,5 @@ tmp/
 public/current-*.png
 public/qa-*.png
 data/customer-assets/
+releases/backups/
+releases/.tmp/

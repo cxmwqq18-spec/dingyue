@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
+import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { argumentValue, assertAllowedSite, assertDatabaseTarget } from "./lib/database-target.mjs";
 
 const repoRoot = process.cwd();
 const stateFile = path.join(repoRoot, "data", "platform-state.json");
@@ -23,6 +25,9 @@ const categories = [
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const useDb = args.has("--db");
+const databaseTarget = argumentValue("--target") || process.env.DATABASE_TARGET || "local";
+
+for (const siteId of targetSiteIds) assertAllowedSite(siteId);
 
 function categoryId(siteId, slug) {
   return `video_cat_${siteId.replace(/^site_/, "")}_${slug.replaceAll("-", "_")}`;
@@ -119,8 +124,22 @@ function localReset() {
 }
 
 async function dbReset() {
+  if (databaseTarget === "production") {
+    throw new Error("Direct video framework reset is disabled for production. Use a reviewed release content manifest.");
+  }
+  assertDatabaseTarget({ expectedTarget: databaseTarget });
   const prisma = new PrismaClient();
   try {
+    const existingSites = new Set(
+      (await prisma.site.findMany({ where: { id: { in: targetSiteIds } }, select: { id: true } })).map((site) => site.id)
+    );
+    const missingSites = targetSiteIds.filter((siteId) => !existingSites.has(siteId));
+    if (missingSites.length && !dryRun) {
+      throw new Error(`Target site rows are missing in ${databaseTarget} database: ${missingSites.join(", ")}. Seed sites before resetting video categories.`);
+    }
+    if (missingSites.length) {
+      console.log(`Missing target sites in ${databaseTarget} database: ${missingSites.join(", ")}`);
+    }
     const beforeRows = await Promise.all(targetSiteIds.map(async (siteId) => {
       const [tools, toolItems, videoThemes, videoCategories] = await Promise.all([
         prisma.toolCategory.count({ where: { siteId } }),

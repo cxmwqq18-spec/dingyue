@@ -1003,3 +1003,24 @@ model AuditLog {
   @@index([targetType, targetId])
   @@index([createdAt])
 }
+
+model DeploymentRelease {
+  id                String    @id
+  releaseId         String
+  environment       String
+  siteId            String
+  codeCommit        String
+  manifestHash      String
+  schemaMigrations  Json
+  contentMigrations Json
+  scope             Json
+  status            String
+  details           Json?
+  appliedAt         DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@unique([environment, siteId, releaseId])
+  @@index([environment, siteId, appliedAt])
+  @@index([manifestHash])
+}
