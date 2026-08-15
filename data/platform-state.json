@@ -88887,7 +88887,7 @@
                     "id": "tab_video",
                     "type": "feature_tab",
                     "settings": {
-                      "href": "/tools/image-to-video",
+                      "href": "/ai-video-generation/image-to-video",
                       "label": "AI video",
                       "title": "Turn package results into motion",
                       "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -89354,7 +89354,7 @@
                     "id": "tab_video",
                     "type": "feature_tab",
                     "settings": {
-                      "href": "/tools/image-to-video",
+                      "href": "/ai-video-generation/image-to-video",
                       "label": "AI video",
                       "title": "Turn package results into motion",
                       "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -93149,7 +93149,7 @@
                     "id": "mega_video_image",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/image-to-video",
+                      "href": "/ai-video-generation/image-to-video",
                       "badge": "Preview",
                       "title": "Image to video concept",
                       "category": "Video AI",
@@ -93161,7 +93161,7 @@
                     "id": "mega_video_profile",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/profile-clip",
+                      "href": "/ai-video-generation/profile-clip",
                       "badge": "Social",
                       "title": "Profile clip maker",
                       "category": "Video AI",
@@ -93173,7 +93173,7 @@
                     "id": "mega_video_fan",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/fan-poster-motion",
+                      "href": "/ai-video-generation/fan-poster-motion",
                       "badge": "Sports",
                       "title": "Fan poster motion",
                       "category": "Video AI",
@@ -93185,7 +93185,7 @@
                     "id": "mega_video_intro",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/creator-intro-video",
+                      "href": "/ai-video-generation/creator-intro-video",
                       "badge": "Creator",
                       "title": "Creator intro video",
                       "category": "Video AI",
@@ -93197,7 +93197,7 @@
                     "id": "mega_video_product",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/product-teaser-clip",
+                      "href": "/ai-video-generation/product-teaser-clip",
                       "badge": "Commerce",
                       "title": "Product teaser clip",
                       "category": "Video AI",
@@ -93209,7 +93209,7 @@
                     "id": "mega_video_avatar",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/animated-avatar",
+                      "href": "/ai-video-generation/animated-avatar",
                       "badge": "Avatar",
                       "title": "Animated avatar preview",
                       "category": "Video AI",
@@ -93221,7 +93221,7 @@
                     "id": "mega_video_fashion",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/fashion-reel",
+                      "href": "/ai-video-generation/fashion-reel",
                       "badge": "Style",
                       "title": "Fashion reel starter",
                       "category": "Video AI",
@@ -93233,7 +93233,7 @@
                     "id": "mega_video_album",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/album-story-video",
+                      "href": "/ai-video-generation/album-story-video",
                       "badge": "Album",
                       "title": "Album story video",
                       "category": "Video AI",
@@ -93328,7 +93328,7 @@
                     "id": "tab_video",
                     "type": "feature_tab",
                     "settings": {
-                      "href": "/tools/image-to-video",
+                      "href": "/ai-video-generation/image-to-video",
                       "label": "AI video",
                       "title": "Turn package results into motion",
                       "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -93806,7 +93806,7 @@
                     "id": "mega_video_image",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/image-to-video",
+                      "href": "/ai-video-generation/image-to-video",
                       "badge": "Preview",
                       "title": "Image to video concept",
                       "category": "Video AI",
@@ -93818,7 +93818,7 @@
                     "id": "mega_video_profile",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/profile-clip",
+                      "href": "/ai-video-generation/profile-clip",
                       "badge": "Social",
                       "title": "Profile clip maker",
                       "category": "Video AI",
@@ -93830,7 +93830,7 @@
                     "id": "mega_video_fan",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/fan-poster-motion",
+                      "href": "/ai-video-generation/fan-poster-motion",
                       "badge": "Sports",
                       "title": "Fan poster motion",
                       "category": "Video AI",
@@ -93842,7 +93842,7 @@
                     "id": "mega_video_intro",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/creator-intro-video",
+                      "href": "/ai-video-generation/creator-intro-video",
                       "badge": "Creator",
                       "title": "Creator intro video",
                       "category": "Video AI",
@@ -93854,7 +93854,7 @@
                     "id": "mega_video_product",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/product-teaser-clip",
+                      "href": "/ai-video-generation/product-teaser-clip",
                       "badge": "Commerce",
                       "title": "Product teaser clip",
                       "category": "Video AI",
@@ -93866,7 +93866,7 @@
                     "id": "mega_video_avatar",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/animated-avatar",
+                      "href": "/ai-video-generation/animated-avatar",
                       "badge": "Avatar",
                       "title": "Animated avatar preview",
                       "category": "Video AI",
@@ -93878,7 +93878,7 @@
                     "id": "mega_video_fashion",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/fashion-reel",
+                      "href": "/ai-video-generation/fashion-reel",
                       "badge": "Style",
                       "title": "Fashion reel starter",
                       "category": "Video AI",
@@ -93890,7 +93890,7 @@
                     "id": "mega_video_album",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/album-story-video",
+                      "href": "/ai-video-generation/album-story-video",
                       "badge": "Album",
                       "title": "Album story video",
                       "category": "Video AI",
@@ -93985,7 +93985,7 @@
                     "id": "tab_video",
                     "type": "feature_tab",
                     "settings": {
-                      "href": "/tools/image-to-video",
+                      "href": "/ai-video-generation/image-to-video",
                       "label": "AI video",
                       "title": "Turn package results into motion",
                       "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -100761,7 +100761,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -102462,7 +102462,7 @@
                       "id": "mega_video_image",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "badge": "Preview",
                         "title": "Image to video concept",
                         "category": "Video AI",
@@ -102474,7 +102474,7 @@
                       "id": "mega_video_profile",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/profile-clip",
+                        "href": "/ai-video-generation/profile-clip",
                         "badge": "Social",
                         "title": "Profile clip maker",
                         "category": "Video AI",
@@ -102486,7 +102486,7 @@
                       "id": "mega_video_fan",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fan-poster-motion",
+                        "href": "/ai-video-generation/fan-poster-motion",
                         "badge": "Sports",
                         "title": "Fan poster motion",
                         "category": "Video AI",
@@ -102498,7 +102498,7 @@
                       "id": "mega_video_intro",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/creator-intro-video",
+                        "href": "/ai-video-generation/creator-intro-video",
                         "badge": "Creator",
                         "title": "Creator intro video",
                         "category": "Video AI",
@@ -102510,7 +102510,7 @@
                       "id": "mega_video_product",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/product-teaser-clip",
+                        "href": "/ai-video-generation/product-teaser-clip",
                         "badge": "Commerce",
                         "title": "Product teaser clip",
                         "category": "Video AI",
@@ -102522,7 +102522,7 @@
                       "id": "mega_video_avatar",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/animated-avatar",
+                        "href": "/ai-video-generation/animated-avatar",
                         "badge": "Avatar",
                         "title": "Animated avatar preview",
                         "category": "Video AI",
@@ -102534,7 +102534,7 @@
                       "id": "mega_video_fashion",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fashion-reel",
+                        "href": "/ai-video-generation/fashion-reel",
                         "badge": "Style",
                         "title": "Fashion reel starter",
                         "category": "Video AI",
@@ -102546,7 +102546,7 @@
                       "id": "mega_video_album",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/album-story-video",
+                        "href": "/ai-video-generation/album-story-video",
                         "badge": "Album",
                         "title": "Album story video",
                         "category": "Video AI",
@@ -102639,7 +102639,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -103559,7 +103559,7 @@
                         "id": "mega_video_image",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/image-to-video",
+                          "href": "/ai-video-generation/image-to-video",
                           "badge": "Preview",
                           "title": "Image to video concept",
                           "category": "Video AI",
@@ -103571,7 +103571,7 @@
                         "id": "mega_video_profile",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/profile-clip",
+                          "href": "/ai-video-generation/profile-clip",
                           "badge": "Social",
                           "title": "Profile clip maker",
                           "category": "Video AI",
@@ -103583,7 +103583,7 @@
                         "id": "mega_video_fan",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/fan-poster-motion",
+                          "href": "/ai-video-generation/fan-poster-motion",
                           "badge": "Sports",
                           "title": "Fan poster motion",
                           "category": "Video AI",
@@ -103595,7 +103595,7 @@
                         "id": "mega_video_intro",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/creator-intro-video",
+                          "href": "/ai-video-generation/creator-intro-video",
                           "badge": "Creator",
                           "title": "Creator intro video",
                           "category": "Video AI",
@@ -103607,7 +103607,7 @@
                         "id": "mega_video_product",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/product-teaser-clip",
+                          "href": "/ai-video-generation/product-teaser-clip",
                           "badge": "Commerce",
                           "title": "Product teaser clip",
                           "category": "Video AI",
@@ -103619,7 +103619,7 @@
                         "id": "mega_video_avatar",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/animated-avatar",
+                          "href": "/ai-video-generation/animated-avatar",
                           "badge": "Avatar",
                           "title": "Animated avatar preview",
                           "category": "Video AI",
@@ -103631,7 +103631,7 @@
                         "id": "mega_video_fashion",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/fashion-reel",
+                          "href": "/ai-video-generation/fashion-reel",
                           "badge": "Style",
                           "title": "Fashion reel starter",
                           "category": "Video AI",
@@ -103643,7 +103643,7 @@
                         "id": "mega_video_album",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/album-story-video",
+                          "href": "/ai-video-generation/album-story-video",
                           "badge": "Album",
                           "title": "Album story video",
                           "category": "Video AI",
@@ -107567,7 +107567,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -109268,7 +109268,7 @@
                       "id": "mega_video_image",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "badge": "Preview",
                         "title": "Image to video concept",
                         "category": "Video AI",
@@ -109280,7 +109280,7 @@
                       "id": "mega_video_profile",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/profile-clip",
+                        "href": "/ai-video-generation/profile-clip",
                         "badge": "Social",
                         "title": "Profile clip maker",
                         "category": "Video AI",
@@ -109292,7 +109292,7 @@
                       "id": "mega_video_fan",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fan-poster-motion",
+                        "href": "/ai-video-generation/fan-poster-motion",
                         "badge": "Sports",
                         "title": "Fan poster motion",
                         "category": "Video AI",
@@ -109304,7 +109304,7 @@
                       "id": "mega_video_intro",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/creator-intro-video",
+                        "href": "/ai-video-generation/creator-intro-video",
                         "badge": "Creator",
                         "title": "Creator intro video",
                         "category": "Video AI",
@@ -109316,7 +109316,7 @@
                       "id": "mega_video_product",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/product-teaser-clip",
+                        "href": "/ai-video-generation/product-teaser-clip",
                         "badge": "Commerce",
                         "title": "Product teaser clip",
                         "category": "Video AI",
@@ -109328,7 +109328,7 @@
                       "id": "mega_video_avatar",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/animated-avatar",
+                        "href": "/ai-video-generation/animated-avatar",
                         "badge": "Avatar",
                         "title": "Animated avatar preview",
                         "category": "Video AI",
@@ -109340,7 +109340,7 @@
                       "id": "mega_video_fashion",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fashion-reel",
+                        "href": "/ai-video-generation/fashion-reel",
                         "badge": "Style",
                         "title": "Fashion reel starter",
                         "category": "Video AI",
@@ -109352,7 +109352,7 @@
                       "id": "mega_video_album",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/album-story-video",
+                        "href": "/ai-video-generation/album-story-video",
                         "badge": "Album",
                         "title": "Album story video",
                         "category": "Video AI",
@@ -109445,7 +109445,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -110365,7 +110365,7 @@
                         "id": "mega_video_image",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/image-to-video",
+                          "href": "/ai-video-generation/image-to-video",
                           "badge": "Preview",
                           "title": "Image to video concept",
                           "category": "Video AI",
@@ -110377,7 +110377,7 @@
                         "id": "mega_video_profile",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/profile-clip",
+                          "href": "/ai-video-generation/profile-clip",
                           "badge": "Social",
                           "title": "Profile clip maker",
                           "category": "Video AI",
@@ -110389,7 +110389,7 @@
                         "id": "mega_video_fan",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/fan-poster-motion",
+                          "href": "/ai-video-generation/fan-poster-motion",
                           "badge": "Sports",
                           "title": "Fan poster motion",
                           "category": "Video AI",
@@ -110401,7 +110401,7 @@
                         "id": "mega_video_intro",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/creator-intro-video",
+                          "href": "/ai-video-generation/creator-intro-video",
                           "badge": "Creator",
                           "title": "Creator intro video",
                           "category": "Video AI",
@@ -110413,7 +110413,7 @@
                         "id": "mega_video_product",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/product-teaser-clip",
+                          "href": "/ai-video-generation/product-teaser-clip",
                           "badge": "Commerce",
                           "title": "Product teaser clip",
                           "category": "Video AI",
@@ -110425,7 +110425,7 @@
                         "id": "mega_video_avatar",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/animated-avatar",
+                          "href": "/ai-video-generation/animated-avatar",
                           "badge": "Avatar",
                           "title": "Animated avatar preview",
                           "category": "Video AI",
@@ -110437,7 +110437,7 @@
                         "id": "mega_video_fashion",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/fashion-reel",
+                          "href": "/ai-video-generation/fashion-reel",
                           "badge": "Style",
                           "title": "Fashion reel starter",
                           "category": "Video AI",
@@ -110449,7 +110449,7 @@
                         "id": "mega_video_album",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/album-story-video",
+                          "href": "/ai-video-generation/album-story-video",
                           "badge": "Album",
                           "title": "Album story video",
                           "category": "Video AI",
@@ -112392,7 +112392,7 @@
           "badge": "Preview",
           "icon": "camera",
           "imageUrl": "/assets/sites/site_grownstride_test/generated/20260622-homepage-unique/hero-grid-video.png",
-          "href": "/tools/image-to-video",
+          "href": "/ai-video-generation/image-to-video",
           "detailJson": {
             "title": "Image to video concept",
             "ctaLabel": "Preview motion",
@@ -112427,7 +112427,7 @@
           "badge": "Social",
           "icon": "image",
           "imageUrl": "/assets/sites/site_grownstride_test/generated/20260622-homepage-unique/review-lucas-result-headshot.png",
-          "href": "/tools/profile-clip",
+          "href": "/ai-video-generation/profile-clip",
           "detailJson": {
             "title": "Profile clip maker",
             "ctaLabel": "Preview motion",
@@ -112462,7 +112462,7 @@
           "badge": "Sports",
           "icon": "play-circle",
           "imageUrl": "/assets/sites/site_grownstride_test/generated/20260622-homepage-unique/catalog-worldcup-card.png",
-          "href": "/tools/fan-poster-motion",
+          "href": "/ai-video-generation/fan-poster-motion",
           "detailJson": {
             "title": "Fan poster motion",
             "ctaLabel": "Preview motion",
@@ -112497,7 +112497,7 @@
           "badge": "Creator",
           "icon": "users",
           "imageUrl": "/assets/sites/site_grownstride_test/generated/20260622-homepage-unique/review-noah-result-social-card.png",
-          "href": "/tools/creator-intro-video",
+          "href": "/ai-video-generation/creator-intro-video",
           "detailJson": {
             "title": "Creator intro video",
             "ctaLabel": "Preview motion",
@@ -112532,7 +112532,7 @@
           "badge": "Commerce",
           "icon": "sparkles",
           "imageUrl": "/assets/sites/site_grownstride_test/generated/20260622-pack-fill/ai-video-addons-pack.png",
-          "href": "/tools/product-teaser-clip",
+          "href": "/ai-video-generation/product-teaser-clip",
           "detailJson": {
             "title": "Product teaser clip",
             "ctaLabel": "Preview motion",
@@ -112567,7 +112567,7 @@
           "badge": "Avatar",
           "icon": "user-round",
           "imageUrl": "/assets/sites/site_grownstride_test/generated/20260622-homepage-unique/review-ava-avatar.png",
-          "href": "/tools/animated-avatar",
+          "href": "/ai-video-generation/animated-avatar",
           "detailJson": {
             "title": "Animated avatar preview",
             "ctaLabel": "Preview motion",
@@ -112602,7 +112602,7 @@
           "badge": "Style",
           "icon": "wand-sparkles",
           "imageUrl": "/assets/sites/site_grownstride_test/frames/tab-virtual-looks.png",
-          "href": "/tools/fashion-reel",
+          "href": "/ai-video-generation/fashion-reel",
           "detailJson": {
             "title": "Fashion reel starter",
             "ctaLabel": "Preview motion",
@@ -112637,7 +112637,7 @@
           "badge": "Album",
           "icon": "heart",
           "imageUrl": "/assets/sites/site_grownstride_test/generated/20260622-homepage-unique/flow-private-album-workspace.png",
-          "href": "/tools/album-story-video",
+          "href": "/ai-video-generation/album-story-video",
           "detailJson": {
             "title": "Album story video",
             "ctaLabel": "Preview motion",
@@ -113945,7 +113945,7 @@
                   "id": "mega_video_image",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/image-to-video",
+                    "href": "/ai-video-generation/image-to-video",
                     "badge": "Preview",
                     "title": "Image to video concept",
                     "category": "Video AI",
@@ -113957,7 +113957,7 @@
                   "id": "mega_video_profile",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/profile-clip",
+                    "href": "/ai-video-generation/profile-clip",
                     "badge": "Social",
                     "title": "Profile clip maker",
                     "category": "Video AI",
@@ -113969,7 +113969,7 @@
                   "id": "mega_video_fan",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fan-poster-motion",
+                    "href": "/ai-video-generation/fan-poster-motion",
                     "badge": "Sports",
                     "title": "Fan poster motion",
                     "category": "Video AI",
@@ -113981,7 +113981,7 @@
                   "id": "mega_video_intro",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/creator-intro-video",
+                    "href": "/ai-video-generation/creator-intro-video",
                     "badge": "Creator",
                     "title": "Creator intro video",
                     "category": "Video AI",
@@ -113993,7 +113993,7 @@
                   "id": "mega_video_product",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/product-teaser-clip",
+                    "href": "/ai-video-generation/product-teaser-clip",
                     "badge": "Commerce",
                     "title": "Product teaser clip",
                     "category": "Video AI",
@@ -114005,7 +114005,7 @@
                   "id": "mega_video_avatar",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/animated-avatar",
+                    "href": "/ai-video-generation/animated-avatar",
                     "badge": "Avatar",
                     "title": "Animated avatar preview",
                     "category": "Video AI",
@@ -114017,7 +114017,7 @@
                   "id": "mega_video_fashion",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fashion-reel",
+                    "href": "/ai-video-generation/fashion-reel",
                     "badge": "Style",
                     "title": "Fashion reel starter",
                     "category": "Video AI",
@@ -114029,7 +114029,7 @@
                   "id": "mega_video_album",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/album-story-video",
+                    "href": "/ai-video-generation/album-story-video",
                     "badge": "Album",
                     "title": "Album story video",
                     "category": "Video AI",
@@ -115346,7 +115346,7 @@
                   "id": "mega_video_image",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/image-to-video",
+                    "href": "/ai-video-generation/image-to-video",
                     "badge": "Preview",
                     "title": "Image to video concept",
                     "category": "Video AI",
@@ -115358,7 +115358,7 @@
                   "id": "mega_video_profile",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/profile-clip",
+                    "href": "/ai-video-generation/profile-clip",
                     "badge": "Social",
                     "title": "Profile clip maker",
                     "category": "Video AI",
@@ -115370,7 +115370,7 @@
                   "id": "mega_video_fan",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fan-poster-motion",
+                    "href": "/ai-video-generation/fan-poster-motion",
                     "badge": "Sports",
                     "title": "Fan poster motion",
                     "category": "Video AI",
@@ -115382,7 +115382,7 @@
                   "id": "mega_video_intro",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/creator-intro-video",
+                    "href": "/ai-video-generation/creator-intro-video",
                     "badge": "Creator",
                     "title": "Creator intro video",
                     "category": "Video AI",
@@ -115394,7 +115394,7 @@
                   "id": "mega_video_product",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/product-teaser-clip",
+                    "href": "/ai-video-generation/product-teaser-clip",
                     "badge": "Commerce",
                     "title": "Product teaser clip",
                     "category": "Video AI",
@@ -115406,7 +115406,7 @@
                   "id": "mega_video_avatar",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/animated-avatar",
+                    "href": "/ai-video-generation/animated-avatar",
                     "badge": "Avatar",
                     "title": "Animated avatar preview",
                     "category": "Video AI",
@@ -115418,7 +115418,7 @@
                   "id": "mega_video_fashion",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fashion-reel",
+                    "href": "/ai-video-generation/fashion-reel",
                     "badge": "Style",
                     "title": "Fashion reel starter",
                     "category": "Video AI",
@@ -115430,7 +115430,7 @@
                   "id": "mega_video_album",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/album-story-video",
+                    "href": "/ai-video-generation/album-story-video",
                     "badge": "Album",
                     "title": "Album story video",
                     "category": "Video AI",
@@ -120324,7 +120324,7 @@
                           "id": "tab_video",
                           "type": "feature_tab",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "label": "AI video",
                             "title": "Turn package results into motion",
                             "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -122465,7 +122465,7 @@
                           "id": "mega_video_image",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "badge": "Preview",
                             "title": "Image to video concept",
                             "category": "Video AI",
@@ -122477,7 +122477,7 @@
                           "id": "mega_video_profile",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/profile-clip",
+                            "href": "/ai-video-generation/profile-clip",
                             "badge": "Social",
                             "title": "Profile clip maker",
                             "category": "Video AI",
@@ -122489,7 +122489,7 @@
                           "id": "mega_video_fan",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/fan-poster-motion",
+                            "href": "/ai-video-generation/fan-poster-motion",
                             "badge": "Sports",
                             "title": "Fan poster motion",
                             "category": "Video AI",
@@ -122501,7 +122501,7 @@
                           "id": "mega_video_intro",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/creator-intro-video",
+                            "href": "/ai-video-generation/creator-intro-video",
                             "badge": "Creator",
                             "title": "Creator intro video",
                             "category": "Video AI",
@@ -122513,7 +122513,7 @@
                           "id": "mega_video_product",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/product-teaser-clip",
+                            "href": "/ai-video-generation/product-teaser-clip",
                             "badge": "Commerce",
                             "title": "Product teaser clip",
                             "category": "Video AI",
@@ -122525,7 +122525,7 @@
                           "id": "mega_video_avatar",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/animated-avatar",
+                            "href": "/ai-video-generation/animated-avatar",
                             "badge": "Avatar",
                             "title": "Animated avatar preview",
                             "category": "Video AI",
@@ -122537,7 +122537,7 @@
                           "id": "mega_video_fashion",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/fashion-reel",
+                            "href": "/ai-video-generation/fashion-reel",
                             "badge": "Style",
                             "title": "Fashion reel starter",
                             "category": "Video AI",
@@ -122549,7 +122549,7 @@
                           "id": "mega_video_album",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/album-story-video",
+                            "href": "/ai-video-generation/album-story-video",
                             "badge": "Album",
                             "title": "Album story video",
                             "category": "Video AI",
@@ -122644,7 +122644,7 @@
                           "id": "tab_video",
                           "type": "feature_tab",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "label": "AI video",
                             "title": "Turn package results into motion",
                             "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -126234,7 +126234,7 @@
                           "id": "tab_video",
                           "type": "feature_tab",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "label": "AI video",
                             "title": "Turn package results into motion",
                             "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -127935,7 +127935,7 @@
                           "id": "mega_video_image",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "badge": "Preview",
                             "title": "Image to video concept",
                             "category": "Video AI",
@@ -127947,7 +127947,7 @@
                           "id": "mega_video_profile",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/profile-clip",
+                            "href": "/ai-video-generation/profile-clip",
                             "badge": "Social",
                             "title": "Profile clip maker",
                             "category": "Video AI",
@@ -127959,7 +127959,7 @@
                           "id": "mega_video_fan",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/fan-poster-motion",
+                            "href": "/ai-video-generation/fan-poster-motion",
                             "badge": "Sports",
                             "title": "Fan poster motion",
                             "category": "Video AI",
@@ -127971,7 +127971,7 @@
                           "id": "mega_video_intro",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/creator-intro-video",
+                            "href": "/ai-video-generation/creator-intro-video",
                             "badge": "Creator",
                             "title": "Creator intro video",
                             "category": "Video AI",
@@ -127983,7 +127983,7 @@
                           "id": "mega_video_product",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/product-teaser-clip",
+                            "href": "/ai-video-generation/product-teaser-clip",
                             "badge": "Commerce",
                             "title": "Product teaser clip",
                             "category": "Video AI",
@@ -127995,7 +127995,7 @@
                           "id": "mega_video_avatar",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/animated-avatar",
+                            "href": "/ai-video-generation/animated-avatar",
                             "badge": "Avatar",
                             "title": "Animated avatar preview",
                             "category": "Video AI",
@@ -128007,7 +128007,7 @@
                           "id": "mega_video_fashion",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/fashion-reel",
+                            "href": "/ai-video-generation/fashion-reel",
                             "badge": "Style",
                             "title": "Fashion reel starter",
                             "category": "Video AI",
@@ -128019,7 +128019,7 @@
                           "id": "mega_video_album",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/album-story-video",
+                            "href": "/ai-video-generation/album-story-video",
                             "badge": "Album",
                             "title": "Album story video",
                             "category": "Video AI",
@@ -128112,7 +128112,7 @@
                           "id": "tab_video",
                           "type": "feature_tab",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "label": "AI video",
                             "title": "Turn package results into motion",
                             "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -129032,7 +129032,7 @@
                             "id": "mega_video_image",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/image-to-video",
+                              "href": "/ai-video-generation/image-to-video",
                               "badge": "Preview",
                               "title": "Image to video concept",
                               "category": "Video AI",
@@ -129044,7 +129044,7 @@
                             "id": "mega_video_profile",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/profile-clip",
+                              "href": "/ai-video-generation/profile-clip",
                               "badge": "Social",
                               "title": "Profile clip maker",
                               "category": "Video AI",
@@ -129056,7 +129056,7 @@
                             "id": "mega_video_fan",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/fan-poster-motion",
+                              "href": "/ai-video-generation/fan-poster-motion",
                               "badge": "Sports",
                               "title": "Fan poster motion",
                               "category": "Video AI",
@@ -129068,7 +129068,7 @@
                             "id": "mega_video_intro",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/creator-intro-video",
+                              "href": "/ai-video-generation/creator-intro-video",
                               "badge": "Creator",
                               "title": "Creator intro video",
                               "category": "Video AI",
@@ -129080,7 +129080,7 @@
                             "id": "mega_video_product",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/product-teaser-clip",
+                              "href": "/ai-video-generation/product-teaser-clip",
                               "badge": "Commerce",
                               "title": "Product teaser clip",
                               "category": "Video AI",
@@ -129092,7 +129092,7 @@
                             "id": "mega_video_avatar",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/animated-avatar",
+                              "href": "/ai-video-generation/animated-avatar",
                               "badge": "Avatar",
                               "title": "Animated avatar preview",
                               "category": "Video AI",
@@ -129104,7 +129104,7 @@
                             "id": "mega_video_fashion",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/fashion-reel",
+                              "href": "/ai-video-generation/fashion-reel",
                               "badge": "Style",
                               "title": "Fashion reel starter",
                               "category": "Video AI",
@@ -129116,7 +129116,7 @@
                             "id": "mega_video_album",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/album-story-video",
+                              "href": "/ai-video-generation/album-story-video",
                               "badge": "Album",
                               "title": "Album story video",
                               "category": "Video AI",
@@ -131127,7 +131127,7 @@
                       "id": "mega_video_image",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "badge": "Preview",
                         "title": "Image to video concept",
                         "category": "Video AI",
@@ -131139,7 +131139,7 @@
                       "id": "mega_video_profile",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/profile-clip",
+                        "href": "/ai-video-generation/profile-clip",
                         "badge": "Social",
                         "title": "Profile clip maker",
                         "category": "Video AI",
@@ -131151,7 +131151,7 @@
                       "id": "mega_video_fan",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fan-poster-motion",
+                        "href": "/ai-video-generation/fan-poster-motion",
                         "badge": "Sports",
                         "title": "Fan poster motion",
                         "category": "Video AI",
@@ -131163,7 +131163,7 @@
                       "id": "mega_video_intro",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/creator-intro-video",
+                        "href": "/ai-video-generation/creator-intro-video",
                         "badge": "Creator",
                         "title": "Creator intro video",
                         "category": "Video AI",
@@ -131175,7 +131175,7 @@
                       "id": "mega_video_product",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/product-teaser-clip",
+                        "href": "/ai-video-generation/product-teaser-clip",
                         "badge": "Commerce",
                         "title": "Product teaser clip",
                         "category": "Video AI",
@@ -131187,7 +131187,7 @@
                       "id": "mega_video_avatar",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/animated-avatar",
+                        "href": "/ai-video-generation/animated-avatar",
                         "badge": "Avatar",
                         "title": "Animated avatar preview",
                         "category": "Video AI",
@@ -131199,7 +131199,7 @@
                       "id": "mega_video_fashion",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fashion-reel",
+                        "href": "/ai-video-generation/fashion-reel",
                         "badge": "Style",
                         "title": "Fashion reel starter",
                         "category": "Video AI",
@@ -131211,7 +131211,7 @@
                       "id": "mega_video_album",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/album-story-video",
+                        "href": "/ai-video-generation/album-story-video",
                         "badge": "Album",
                         "title": "Album story video",
                         "category": "Video AI",
@@ -135767,7 +135767,7 @@
                           "id": "tab_video",
                           "type": "feature_tab",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "label": "AI video",
                             "title": "Turn package results into motion",
                             "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -137908,7 +137908,7 @@
                           "id": "mega_video_image",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "badge": "Preview",
                             "title": "Image to video concept",
                             "category": "Video AI",
@@ -137920,7 +137920,7 @@
                           "id": "mega_video_profile",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/profile-clip",
+                            "href": "/ai-video-generation/profile-clip",
                             "badge": "Social",
                             "title": "Profile clip maker",
                             "category": "Video AI",
@@ -137932,7 +137932,7 @@
                           "id": "mega_video_fan",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/fan-poster-motion",
+                            "href": "/ai-video-generation/fan-poster-motion",
                             "badge": "Sports",
                             "title": "Fan poster motion",
                             "category": "Video AI",
@@ -137944,7 +137944,7 @@
                           "id": "mega_video_intro",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/creator-intro-video",
+                            "href": "/ai-video-generation/creator-intro-video",
                             "badge": "Creator",
                             "title": "Creator intro video",
                             "category": "Video AI",
@@ -137956,7 +137956,7 @@
                           "id": "mega_video_product",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/product-teaser-clip",
+                            "href": "/ai-video-generation/product-teaser-clip",
                             "badge": "Commerce",
                             "title": "Product teaser clip",
                             "category": "Video AI",
@@ -137968,7 +137968,7 @@
                           "id": "mega_video_avatar",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/animated-avatar",
+                            "href": "/ai-video-generation/animated-avatar",
                             "badge": "Avatar",
                             "title": "Animated avatar preview",
                             "category": "Video AI",
@@ -137980,7 +137980,7 @@
                           "id": "mega_video_fashion",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/fashion-reel",
+                            "href": "/ai-video-generation/fashion-reel",
                             "badge": "Style",
                             "title": "Fashion reel starter",
                             "category": "Video AI",
@@ -137992,7 +137992,7 @@
                           "id": "mega_video_album",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/album-story-video",
+                            "href": "/ai-video-generation/album-story-video",
                             "badge": "Album",
                             "title": "Album story video",
                             "category": "Video AI",
@@ -138087,7 +138087,7 @@
                           "id": "tab_video",
                           "type": "feature_tab",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "label": "AI video",
                             "title": "Turn package results into motion",
                             "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -141677,7 +141677,7 @@
                           "id": "tab_video",
                           "type": "feature_tab",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "label": "AI video",
                             "title": "Turn package results into motion",
                             "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -143378,7 +143378,7 @@
                           "id": "mega_video_image",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "badge": "Preview",
                             "title": "Image to video concept",
                             "category": "Video AI",
@@ -143390,7 +143390,7 @@
                           "id": "mega_video_profile",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/profile-clip",
+                            "href": "/ai-video-generation/profile-clip",
                             "badge": "Social",
                             "title": "Profile clip maker",
                             "category": "Video AI",
@@ -143402,7 +143402,7 @@
                           "id": "mega_video_fan",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/fan-poster-motion",
+                            "href": "/ai-video-generation/fan-poster-motion",
                             "badge": "Sports",
                             "title": "Fan poster motion",
                             "category": "Video AI",
@@ -143414,7 +143414,7 @@
                           "id": "mega_video_intro",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/creator-intro-video",
+                            "href": "/ai-video-generation/creator-intro-video",
                             "badge": "Creator",
                             "title": "Creator intro video",
                             "category": "Video AI",
@@ -143426,7 +143426,7 @@
                           "id": "mega_video_product",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/product-teaser-clip",
+                            "href": "/ai-video-generation/product-teaser-clip",
                             "badge": "Commerce",
                             "title": "Product teaser clip",
                             "category": "Video AI",
@@ -143438,7 +143438,7 @@
                           "id": "mega_video_avatar",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/animated-avatar",
+                            "href": "/ai-video-generation/animated-avatar",
                             "badge": "Avatar",
                             "title": "Animated avatar preview",
                             "category": "Video AI",
@@ -143450,7 +143450,7 @@
                           "id": "mega_video_fashion",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/fashion-reel",
+                            "href": "/ai-video-generation/fashion-reel",
                             "badge": "Style",
                             "title": "Fashion reel starter",
                             "category": "Video AI",
@@ -143462,7 +143462,7 @@
                           "id": "mega_video_album",
                           "type": "tool_card",
                           "settings": {
-                            "href": "/tools/album-story-video",
+                            "href": "/ai-video-generation/album-story-video",
                             "badge": "Album",
                             "title": "Album story video",
                             "category": "Video AI",
@@ -143555,7 +143555,7 @@
                           "id": "tab_video",
                           "type": "feature_tab",
                           "settings": {
-                            "href": "/tools/image-to-video",
+                            "href": "/ai-video-generation/image-to-video",
                             "label": "AI video",
                             "title": "Turn package results into motion",
                             "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -144475,7 +144475,7 @@
                             "id": "mega_video_image",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/image-to-video",
+                              "href": "/ai-video-generation/image-to-video",
                               "badge": "Preview",
                               "title": "Image to video concept",
                               "category": "Video AI",
@@ -144487,7 +144487,7 @@
                             "id": "mega_video_profile",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/profile-clip",
+                              "href": "/ai-video-generation/profile-clip",
                               "badge": "Social",
                               "title": "Profile clip maker",
                               "category": "Video AI",
@@ -144499,7 +144499,7 @@
                             "id": "mega_video_fan",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/fan-poster-motion",
+                              "href": "/ai-video-generation/fan-poster-motion",
                               "badge": "Sports",
                               "title": "Fan poster motion",
                               "category": "Video AI",
@@ -144511,7 +144511,7 @@
                             "id": "mega_video_intro",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/creator-intro-video",
+                              "href": "/ai-video-generation/creator-intro-video",
                               "badge": "Creator",
                               "title": "Creator intro video",
                               "category": "Video AI",
@@ -144523,7 +144523,7 @@
                             "id": "mega_video_product",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/product-teaser-clip",
+                              "href": "/ai-video-generation/product-teaser-clip",
                               "badge": "Commerce",
                               "title": "Product teaser clip",
                               "category": "Video AI",
@@ -144535,7 +144535,7 @@
                             "id": "mega_video_avatar",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/animated-avatar",
+                              "href": "/ai-video-generation/animated-avatar",
                               "badge": "Avatar",
                               "title": "Animated avatar preview",
                               "category": "Video AI",
@@ -144547,7 +144547,7 @@
                             "id": "mega_video_fashion",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/fashion-reel",
+                              "href": "/ai-video-generation/fashion-reel",
                               "badge": "Style",
                               "title": "Fashion reel starter",
                               "category": "Video AI",
@@ -144559,7 +144559,7 @@
                             "id": "mega_video_album",
                             "type": "tool_card",
                             "settings": {
-                              "href": "/tools/album-story-video",
+                              "href": "/ai-video-generation/album-story-video",
                               "badge": "Album",
                               "title": "Album story video",
                               "category": "Video AI",
@@ -146570,7 +146570,7 @@
                       "id": "mega_video_image",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "badge": "Preview",
                         "title": "Image to video concept",
                         "category": "Video AI",
@@ -146582,7 +146582,7 @@
                       "id": "mega_video_profile",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/profile-clip",
+                        "href": "/ai-video-generation/profile-clip",
                         "badge": "Social",
                         "title": "Profile clip maker",
                         "category": "Video AI",
@@ -146594,7 +146594,7 @@
                       "id": "mega_video_fan",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fan-poster-motion",
+                        "href": "/ai-video-generation/fan-poster-motion",
                         "badge": "Sports",
                         "title": "Fan poster motion",
                         "category": "Video AI",
@@ -146606,7 +146606,7 @@
                       "id": "mega_video_intro",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/creator-intro-video",
+                        "href": "/ai-video-generation/creator-intro-video",
                         "badge": "Creator",
                         "title": "Creator intro video",
                         "category": "Video AI",
@@ -146618,7 +146618,7 @@
                       "id": "mega_video_product",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/product-teaser-clip",
+                        "href": "/ai-video-generation/product-teaser-clip",
                         "badge": "Commerce",
                         "title": "Product teaser clip",
                         "category": "Video AI",
@@ -146630,7 +146630,7 @@
                       "id": "mega_video_avatar",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/animated-avatar",
+                        "href": "/ai-video-generation/animated-avatar",
                         "badge": "Avatar",
                         "title": "Animated avatar preview",
                         "category": "Video AI",
@@ -146642,7 +146642,7 @@
                       "id": "mega_video_fashion",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fashion-reel",
+                        "href": "/ai-video-generation/fashion-reel",
                         "badge": "Style",
                         "title": "Fashion reel starter",
                         "category": "Video AI",
@@ -146654,7 +146654,7 @@
                       "id": "mega_video_album",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/album-story-video",
+                        "href": "/ai-video-generation/album-story-video",
                         "badge": "Album",
                         "title": "Album story video",
                         "category": "Video AI",
@@ -271702,7 +271702,7 @@
                   "id": "tab_video",
                   "type": "feature_tab",
                   "settings": {
-                    "href": "/tools/image-to-video",
+                    "href": "/ai-video-generation/image-to-video",
                     "label": "AI video",
                     "title": "Turn package results into motion",
                     "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -273363,7 +273363,7 @@
                   "id": "mega_video_image",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/image-to-video",
+                    "href": "/ai-video-generation/image-to-video",
                     "badge": "Preview",
                     "title": "Image to video concept",
                     "category": "Video AI",
@@ -273375,7 +273375,7 @@
                   "id": "mega_video_profile",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/profile-clip",
+                    "href": "/ai-video-generation/profile-clip",
                     "badge": "Social",
                     "title": "Profile clip maker",
                     "category": "Video AI",
@@ -273387,7 +273387,7 @@
                   "id": "mega_video_fan",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fan-poster-motion",
+                    "href": "/ai-video-generation/fan-poster-motion",
                     "badge": "Sports",
                     "title": "Fan poster motion",
                     "category": "Video AI",
@@ -273399,7 +273399,7 @@
                   "id": "mega_video_intro",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/creator-intro-video",
+                    "href": "/ai-video-generation/creator-intro-video",
                     "badge": "Creator",
                     "title": "Creator intro video",
                     "category": "Video AI",
@@ -273411,7 +273411,7 @@
                   "id": "mega_video_product",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/product-teaser-clip",
+                    "href": "/ai-video-generation/product-teaser-clip",
                     "badge": "Commerce",
                     "title": "Product teaser clip",
                     "category": "Video AI",
@@ -273423,7 +273423,7 @@
                   "id": "mega_video_avatar",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/animated-avatar",
+                    "href": "/ai-video-generation/animated-avatar",
                     "badge": "Avatar",
                     "title": "Animated avatar preview",
                     "category": "Video AI",
@@ -273435,7 +273435,7 @@
                   "id": "mega_video_fashion",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fashion-reel",
+                    "href": "/ai-video-generation/fashion-reel",
                     "badge": "Style",
                     "title": "Fashion reel starter",
                     "category": "Video AI",
@@ -273447,7 +273447,7 @@
                   "id": "mega_video_album",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/album-story-video",
+                    "href": "/ai-video-generation/album-story-video",
                     "badge": "Album",
                     "title": "Album story video",
                     "category": "Video AI",
@@ -273540,7 +273540,7 @@
                   "id": "tab_video",
                   "type": "feature_tab",
                   "settings": {
-                    "href": "/tools/image-to-video",
+                    "href": "/ai-video-generation/image-to-video",
                     "label": "AI video",
                     "title": "Turn package results into motion",
                     "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -274434,7 +274434,7 @@
                     "id": "mega_video_image",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/image-to-video",
+                      "href": "/ai-video-generation/image-to-video",
                       "badge": "Preview",
                       "title": "Image to video concept",
                       "category": "Video AI",
@@ -274446,7 +274446,7 @@
                     "id": "mega_video_profile",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/profile-clip",
+                      "href": "/ai-video-generation/profile-clip",
                       "badge": "Social",
                       "title": "Profile clip maker",
                       "category": "Video AI",
@@ -274458,7 +274458,7 @@
                     "id": "mega_video_fan",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/fan-poster-motion",
+                      "href": "/ai-video-generation/fan-poster-motion",
                       "badge": "Sports",
                       "title": "Fan poster motion",
                       "category": "Video AI",
@@ -274470,7 +274470,7 @@
                     "id": "mega_video_intro",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/creator-intro-video",
+                      "href": "/ai-video-generation/creator-intro-video",
                       "badge": "Creator",
                       "title": "Creator intro video",
                       "category": "Video AI",
@@ -274482,7 +274482,7 @@
                     "id": "mega_video_product",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/product-teaser-clip",
+                      "href": "/ai-video-generation/product-teaser-clip",
                       "badge": "Commerce",
                       "title": "Product teaser clip",
                       "category": "Video AI",
@@ -274494,7 +274494,7 @@
                     "id": "mega_video_avatar",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/animated-avatar",
+                      "href": "/ai-video-generation/animated-avatar",
                       "badge": "Avatar",
                       "title": "Animated avatar preview",
                       "category": "Video AI",
@@ -274506,7 +274506,7 @@
                     "id": "mega_video_fashion",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/fashion-reel",
+                      "href": "/ai-video-generation/fashion-reel",
                       "badge": "Style",
                       "title": "Fashion reel starter",
                       "category": "Video AI",
@@ -274518,7 +274518,7 @@
                     "id": "mega_video_album",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/album-story-video",
+                      "href": "/ai-video-generation/album-story-video",
                       "badge": "Album",
                       "title": "Album story video",
                       "category": "Video AI",
@@ -278478,7 +278478,7 @@
                   "id": "tab_video",
                   "type": "feature_tab",
                   "settings": {
-                    "href": "/tools/image-to-video",
+                    "href": "/ai-video-generation/image-to-video",
                     "label": "AI video",
                     "title": "Turn package results into motion",
                     "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -280179,7 +280179,7 @@
                   "id": "mega_video_image",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/image-to-video",
+                    "href": "/ai-video-generation/image-to-video",
                     "badge": "Preview",
                     "title": "Image to video concept",
                     "category": "Video AI",
@@ -280191,7 +280191,7 @@
                   "id": "mega_video_profile",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/profile-clip",
+                    "href": "/ai-video-generation/profile-clip",
                     "badge": "Social",
                     "title": "Profile clip maker",
                     "category": "Video AI",
@@ -280203,7 +280203,7 @@
                   "id": "mega_video_fan",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fan-poster-motion",
+                    "href": "/ai-video-generation/fan-poster-motion",
                     "badge": "Sports",
                     "title": "Fan poster motion",
                     "category": "Video AI",
@@ -280215,7 +280215,7 @@
                   "id": "mega_video_intro",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/creator-intro-video",
+                    "href": "/ai-video-generation/creator-intro-video",
                     "badge": "Creator",
                     "title": "Creator intro video",
                     "category": "Video AI",
@@ -280227,7 +280227,7 @@
                   "id": "mega_video_product",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/product-teaser-clip",
+                    "href": "/ai-video-generation/product-teaser-clip",
                     "badge": "Commerce",
                     "title": "Product teaser clip",
                     "category": "Video AI",
@@ -280239,7 +280239,7 @@
                   "id": "mega_video_avatar",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/animated-avatar",
+                    "href": "/ai-video-generation/animated-avatar",
                     "badge": "Avatar",
                     "title": "Animated avatar preview",
                     "category": "Video AI",
@@ -280251,7 +280251,7 @@
                   "id": "mega_video_fashion",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fashion-reel",
+                    "href": "/ai-video-generation/fashion-reel",
                     "badge": "Style",
                     "title": "Fashion reel starter",
                     "category": "Video AI",
@@ -280263,7 +280263,7 @@
                   "id": "mega_video_album",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/album-story-video",
+                    "href": "/ai-video-generation/album-story-video",
                     "badge": "Album",
                     "title": "Album story video",
                     "category": "Video AI",
@@ -280356,7 +280356,7 @@
                   "id": "tab_video",
                   "type": "feature_tab",
                   "settings": {
-                    "href": "/tools/image-to-video",
+                    "href": "/ai-video-generation/image-to-video",
                     "label": "AI video",
                     "title": "Turn package results into motion",
                     "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -281276,7 +281276,7 @@
                     "id": "mega_video_image",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/image-to-video",
+                      "href": "/ai-video-generation/image-to-video",
                       "badge": "Preview",
                       "title": "Image to video concept",
                       "category": "Video AI",
@@ -281288,7 +281288,7 @@
                     "id": "mega_video_profile",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/profile-clip",
+                      "href": "/ai-video-generation/profile-clip",
                       "badge": "Social",
                       "title": "Profile clip maker",
                       "category": "Video AI",
@@ -281300,7 +281300,7 @@
                     "id": "mega_video_fan",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/fan-poster-motion",
+                      "href": "/ai-video-generation/fan-poster-motion",
                       "badge": "Sports",
                       "title": "Fan poster motion",
                       "category": "Video AI",
@@ -281312,7 +281312,7 @@
                     "id": "mega_video_intro",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/creator-intro-video",
+                      "href": "/ai-video-generation/creator-intro-video",
                       "badge": "Creator",
                       "title": "Creator intro video",
                       "category": "Video AI",
@@ -281324,7 +281324,7 @@
                     "id": "mega_video_product",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/product-teaser-clip",
+                      "href": "/ai-video-generation/product-teaser-clip",
                       "badge": "Commerce",
                       "title": "Product teaser clip",
                       "category": "Video AI",
@@ -281336,7 +281336,7 @@
                     "id": "mega_video_avatar",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/animated-avatar",
+                      "href": "/ai-video-generation/animated-avatar",
                       "badge": "Avatar",
                       "title": "Animated avatar preview",
                       "category": "Video AI",
@@ -281348,7 +281348,7 @@
                     "id": "mega_video_fashion",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/fashion-reel",
+                      "href": "/ai-video-generation/fashion-reel",
                       "badge": "Style",
                       "title": "Fashion reel starter",
                       "category": "Video AI",
@@ -281360,7 +281360,7 @@
                     "id": "mega_video_album",
                     "type": "tool_card",
                     "settings": {
-                      "href": "/tools/album-story-video",
+                      "href": "/ai-video-generation/album-story-video",
                       "badge": "Album",
                       "title": "Album story video",
                       "category": "Video AI",
@@ -408805,7 +408805,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -409272,7 +409272,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -413031,7 +413031,7 @@
                       "id": "mega_video_image",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "badge": "Preview",
                         "title": "Image to video concept",
                         "category": "Video AI",
@@ -413043,7 +413043,7 @@
                       "id": "mega_video_profile",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/profile-clip",
+                        "href": "/ai-video-generation/profile-clip",
                         "badge": "Social",
                         "title": "Profile clip maker",
                         "category": "Video AI",
@@ -413055,7 +413055,7 @@
                       "id": "mega_video_fan",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fan-poster-motion",
+                        "href": "/ai-video-generation/fan-poster-motion",
                         "badge": "Sports",
                         "title": "Fan poster motion",
                         "category": "Video AI",
@@ -413067,7 +413067,7 @@
                       "id": "mega_video_intro",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/creator-intro-video",
+                        "href": "/ai-video-generation/creator-intro-video",
                         "badge": "Creator",
                         "title": "Creator intro video",
                         "category": "Video AI",
@@ -413079,7 +413079,7 @@
                       "id": "mega_video_product",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/product-teaser-clip",
+                        "href": "/ai-video-generation/product-teaser-clip",
                         "badge": "Commerce",
                         "title": "Product teaser clip",
                         "category": "Video AI",
@@ -413091,7 +413091,7 @@
                       "id": "mega_video_avatar",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/animated-avatar",
+                        "href": "/ai-video-generation/animated-avatar",
                         "badge": "Avatar",
                         "title": "Animated avatar preview",
                         "category": "Video AI",
@@ -413103,7 +413103,7 @@
                       "id": "mega_video_fashion",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fashion-reel",
+                        "href": "/ai-video-generation/fashion-reel",
                         "badge": "Style",
                         "title": "Fashion reel starter",
                         "category": "Video AI",
@@ -413115,7 +413115,7 @@
                       "id": "mega_video_album",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/album-story-video",
+                        "href": "/ai-video-generation/album-story-video",
                         "badge": "Album",
                         "title": "Album story video",
                         "category": "Video AI",
@@ -413210,7 +413210,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -413688,7 +413688,7 @@
                       "id": "mega_video_image",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "badge": "Preview",
                         "title": "Image to video concept",
                         "category": "Video AI",
@@ -413700,7 +413700,7 @@
                       "id": "mega_video_profile",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/profile-clip",
+                        "href": "/ai-video-generation/profile-clip",
                         "badge": "Social",
                         "title": "Profile clip maker",
                         "category": "Video AI",
@@ -413712,7 +413712,7 @@
                       "id": "mega_video_fan",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fan-poster-motion",
+                        "href": "/ai-video-generation/fan-poster-motion",
                         "badge": "Sports",
                         "title": "Fan poster motion",
                         "category": "Video AI",
@@ -413724,7 +413724,7 @@
                       "id": "mega_video_intro",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/creator-intro-video",
+                        "href": "/ai-video-generation/creator-intro-video",
                         "badge": "Creator",
                         "title": "Creator intro video",
                         "category": "Video AI",
@@ -413736,7 +413736,7 @@
                       "id": "mega_video_product",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/product-teaser-clip",
+                        "href": "/ai-video-generation/product-teaser-clip",
                         "badge": "Commerce",
                         "title": "Product teaser clip",
                         "category": "Video AI",
@@ -413748,7 +413748,7 @@
                       "id": "mega_video_avatar",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/animated-avatar",
+                        "href": "/ai-video-generation/animated-avatar",
                         "badge": "Avatar",
                         "title": "Animated avatar preview",
                         "category": "Video AI",
@@ -413760,7 +413760,7 @@
                       "id": "mega_video_fashion",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fashion-reel",
+                        "href": "/ai-video-generation/fashion-reel",
                         "badge": "Style",
                         "title": "Fashion reel starter",
                         "category": "Video AI",
@@ -413772,7 +413772,7 @@
                       "id": "mega_video_album",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/album-story-video",
+                        "href": "/ai-video-generation/album-story-video",
                         "badge": "Album",
                         "title": "Album story video",
                         "category": "Video AI",
@@ -413867,7 +413867,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -417899,7 +417899,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -419600,7 +419600,7 @@
                       "id": "mega_video_image",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "badge": "Preview",
                         "title": "Image to video concept",
                         "category": "Video AI",
@@ -419612,7 +419612,7 @@
                       "id": "mega_video_profile",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/profile-clip",
+                        "href": "/ai-video-generation/profile-clip",
                         "badge": "Social",
                         "title": "Profile clip maker",
                         "category": "Video AI",
@@ -419624,7 +419624,7 @@
                       "id": "mega_video_fan",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fan-poster-motion",
+                        "href": "/ai-video-generation/fan-poster-motion",
                         "badge": "Sports",
                         "title": "Fan poster motion",
                         "category": "Video AI",
@@ -419636,7 +419636,7 @@
                       "id": "mega_video_intro",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/creator-intro-video",
+                        "href": "/ai-video-generation/creator-intro-video",
                         "badge": "Creator",
                         "title": "Creator intro video",
                         "category": "Video AI",
@@ -419648,7 +419648,7 @@
                       "id": "mega_video_product",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/product-teaser-clip",
+                        "href": "/ai-video-generation/product-teaser-clip",
                         "badge": "Commerce",
                         "title": "Product teaser clip",
                         "category": "Video AI",
@@ -419660,7 +419660,7 @@
                       "id": "mega_video_avatar",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/animated-avatar",
+                        "href": "/ai-video-generation/animated-avatar",
                         "badge": "Avatar",
                         "title": "Animated avatar preview",
                         "category": "Video AI",
@@ -419672,7 +419672,7 @@
                       "id": "mega_video_fashion",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fashion-reel",
+                        "href": "/ai-video-generation/fashion-reel",
                         "badge": "Style",
                         "title": "Fashion reel starter",
                         "category": "Video AI",
@@ -419684,7 +419684,7 @@
                       "id": "mega_video_album",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/album-story-video",
+                        "href": "/ai-video-generation/album-story-video",
                         "badge": "Album",
                         "title": "Album story video",
                         "category": "Video AI",
@@ -419777,7 +419777,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -420697,7 +420697,7 @@
                         "id": "mega_video_image",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/image-to-video",
+                          "href": "/ai-video-generation/image-to-video",
                           "badge": "Preview",
                           "title": "Image to video concept",
                           "category": "Video AI",
@@ -420709,7 +420709,7 @@
                         "id": "mega_video_profile",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/profile-clip",
+                          "href": "/ai-video-generation/profile-clip",
                           "badge": "Social",
                           "title": "Profile clip maker",
                           "category": "Video AI",
@@ -420721,7 +420721,7 @@
                         "id": "mega_video_fan",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/fan-poster-motion",
+                          "href": "/ai-video-generation/fan-poster-motion",
                           "badge": "Sports",
                           "title": "Fan poster motion",
                           "category": "Video AI",
@@ -420733,7 +420733,7 @@
                         "id": "mega_video_intro",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/creator-intro-video",
+                          "href": "/ai-video-generation/creator-intro-video",
                           "badge": "Creator",
                           "title": "Creator intro video",
                           "category": "Video AI",
@@ -420745,7 +420745,7 @@
                         "id": "mega_video_product",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/product-teaser-clip",
+                          "href": "/ai-video-generation/product-teaser-clip",
                           "badge": "Commerce",
                           "title": "Product teaser clip",
                           "category": "Video AI",
@@ -420757,7 +420757,7 @@
                         "id": "mega_video_avatar",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/animated-avatar",
+                          "href": "/ai-video-generation/animated-avatar",
                           "badge": "Avatar",
                           "title": "Animated avatar preview",
                           "category": "Video AI",
@@ -420769,7 +420769,7 @@
                         "id": "mega_video_fashion",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/fashion-reel",
+                          "href": "/ai-video-generation/fashion-reel",
                           "badge": "Style",
                           "title": "Fashion reel starter",
                           "category": "Video AI",
@@ -420781,7 +420781,7 @@
                         "id": "mega_video_album",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/album-story-video",
+                          "href": "/ai-video-generation/album-story-video",
                           "badge": "Album",
                           "title": "Album story video",
                           "category": "Video AI",
@@ -422652,7 +422652,7 @@
                   "id": "mega_video_image",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/image-to-video",
+                    "href": "/ai-video-generation/image-to-video",
                     "badge": "Preview",
                     "title": "Image to video concept",
                     "category": "Video AI",
@@ -422664,7 +422664,7 @@
                   "id": "mega_video_profile",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/profile-clip",
+                    "href": "/ai-video-generation/profile-clip",
                     "badge": "Social",
                     "title": "Profile clip maker",
                     "category": "Video AI",
@@ -422676,7 +422676,7 @@
                   "id": "mega_video_fan",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fan-poster-motion",
+                    "href": "/ai-video-generation/fan-poster-motion",
                     "badge": "Sports",
                     "title": "Fan poster motion",
                     "category": "Video AI",
@@ -422688,7 +422688,7 @@
                   "id": "mega_video_intro",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/creator-intro-video",
+                    "href": "/ai-video-generation/creator-intro-video",
                     "badge": "Creator",
                     "title": "Creator intro video",
                     "category": "Video AI",
@@ -422700,7 +422700,7 @@
                   "id": "mega_video_product",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/product-teaser-clip",
+                    "href": "/ai-video-generation/product-teaser-clip",
                     "badge": "Commerce",
                     "title": "Product teaser clip",
                     "category": "Video AI",
@@ -422712,7 +422712,7 @@
                   "id": "mega_video_avatar",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/animated-avatar",
+                    "href": "/ai-video-generation/animated-avatar",
                     "badge": "Avatar",
                     "title": "Animated avatar preview",
                     "category": "Video AI",
@@ -422724,7 +422724,7 @@
                   "id": "mega_video_fashion",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fashion-reel",
+                    "href": "/ai-video-generation/fashion-reel",
                     "badge": "Style",
                     "title": "Fashion reel starter",
                     "category": "Video AI",
@@ -422736,7 +422736,7 @@
                   "id": "mega_video_album",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/album-story-video",
+                    "href": "/ai-video-generation/album-story-video",
                     "badge": "Album",
                     "title": "Album story video",
                     "category": "Video AI",
@@ -431836,7 +431836,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -432303,7 +432303,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -436062,7 +436062,7 @@
                       "id": "mega_video_image",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "badge": "Preview",
                         "title": "Image to video concept",
                         "category": "Video AI",
@@ -436074,7 +436074,7 @@
                       "id": "mega_video_profile",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/profile-clip",
+                        "href": "/ai-video-generation/profile-clip",
                         "badge": "Social",
                         "title": "Profile clip maker",
                         "category": "Video AI",
@@ -436086,7 +436086,7 @@
                       "id": "mega_video_fan",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fan-poster-motion",
+                        "href": "/ai-video-generation/fan-poster-motion",
                         "badge": "Sports",
                         "title": "Fan poster motion",
                         "category": "Video AI",
@@ -436098,7 +436098,7 @@
                       "id": "mega_video_intro",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/creator-intro-video",
+                        "href": "/ai-video-generation/creator-intro-video",
                         "badge": "Creator",
                         "title": "Creator intro video",
                         "category": "Video AI",
@@ -436110,7 +436110,7 @@
                       "id": "mega_video_product",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/product-teaser-clip",
+                        "href": "/ai-video-generation/product-teaser-clip",
                         "badge": "Commerce",
                         "title": "Product teaser clip",
                         "category": "Video AI",
@@ -436122,7 +436122,7 @@
                       "id": "mega_video_avatar",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/animated-avatar",
+                        "href": "/ai-video-generation/animated-avatar",
                         "badge": "Avatar",
                         "title": "Animated avatar preview",
                         "category": "Video AI",
@@ -436134,7 +436134,7 @@
                       "id": "mega_video_fashion",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fashion-reel",
+                        "href": "/ai-video-generation/fashion-reel",
                         "badge": "Style",
                         "title": "Fashion reel starter",
                         "category": "Video AI",
@@ -436146,7 +436146,7 @@
                       "id": "mega_video_album",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/album-story-video",
+                        "href": "/ai-video-generation/album-story-video",
                         "badge": "Album",
                         "title": "Album story video",
                         "category": "Video AI",
@@ -436241,7 +436241,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -436719,7 +436719,7 @@
                       "id": "mega_video_image",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "badge": "Preview",
                         "title": "Image to video concept",
                         "category": "Video AI",
@@ -436731,7 +436731,7 @@
                       "id": "mega_video_profile",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/profile-clip",
+                        "href": "/ai-video-generation/profile-clip",
                         "badge": "Social",
                         "title": "Profile clip maker",
                         "category": "Video AI",
@@ -436743,7 +436743,7 @@
                       "id": "mega_video_fan",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fan-poster-motion",
+                        "href": "/ai-video-generation/fan-poster-motion",
                         "badge": "Sports",
                         "title": "Fan poster motion",
                         "category": "Video AI",
@@ -436755,7 +436755,7 @@
                       "id": "mega_video_intro",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/creator-intro-video",
+                        "href": "/ai-video-generation/creator-intro-video",
                         "badge": "Creator",
                         "title": "Creator intro video",
                         "category": "Video AI",
@@ -436767,7 +436767,7 @@
                       "id": "mega_video_product",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/product-teaser-clip",
+                        "href": "/ai-video-generation/product-teaser-clip",
                         "badge": "Commerce",
                         "title": "Product teaser clip",
                         "category": "Video AI",
@@ -436779,7 +436779,7 @@
                       "id": "mega_video_avatar",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/animated-avatar",
+                        "href": "/ai-video-generation/animated-avatar",
                         "badge": "Avatar",
                         "title": "Animated avatar preview",
                         "category": "Video AI",
@@ -436791,7 +436791,7 @@
                       "id": "mega_video_fashion",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fashion-reel",
+                        "href": "/ai-video-generation/fashion-reel",
                         "badge": "Style",
                         "title": "Fashion reel starter",
                         "category": "Video AI",
@@ -436803,7 +436803,7 @@
                       "id": "mega_video_album",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/album-story-video",
+                        "href": "/ai-video-generation/album-story-video",
                         "badge": "Album",
                         "title": "Album story video",
                         "category": "Video AI",
@@ -436898,7 +436898,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -440930,7 +440930,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -442631,7 +442631,7 @@
                       "id": "mega_video_image",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "badge": "Preview",
                         "title": "Image to video concept",
                         "category": "Video AI",
@@ -442643,7 +442643,7 @@
                       "id": "mega_video_profile",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/profile-clip",
+                        "href": "/ai-video-generation/profile-clip",
                         "badge": "Social",
                         "title": "Profile clip maker",
                         "category": "Video AI",
@@ -442655,7 +442655,7 @@
                       "id": "mega_video_fan",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fan-poster-motion",
+                        "href": "/ai-video-generation/fan-poster-motion",
                         "badge": "Sports",
                         "title": "Fan poster motion",
                         "category": "Video AI",
@@ -442667,7 +442667,7 @@
                       "id": "mega_video_intro",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/creator-intro-video",
+                        "href": "/ai-video-generation/creator-intro-video",
                         "badge": "Creator",
                         "title": "Creator intro video",
                         "category": "Video AI",
@@ -442679,7 +442679,7 @@
                       "id": "mega_video_product",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/product-teaser-clip",
+                        "href": "/ai-video-generation/product-teaser-clip",
                         "badge": "Commerce",
                         "title": "Product teaser clip",
                         "category": "Video AI",
@@ -442691,7 +442691,7 @@
                       "id": "mega_video_avatar",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/animated-avatar",
+                        "href": "/ai-video-generation/animated-avatar",
                         "badge": "Avatar",
                         "title": "Animated avatar preview",
                         "category": "Video AI",
@@ -442703,7 +442703,7 @@
                       "id": "mega_video_fashion",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/fashion-reel",
+                        "href": "/ai-video-generation/fashion-reel",
                         "badge": "Style",
                         "title": "Fashion reel starter",
                         "category": "Video AI",
@@ -442715,7 +442715,7 @@
                       "id": "mega_video_album",
                       "type": "tool_card",
                       "settings": {
-                        "href": "/tools/album-story-video",
+                        "href": "/ai-video-generation/album-story-video",
                         "badge": "Album",
                         "title": "Album story video",
                         "category": "Video AI",
@@ -442808,7 +442808,7 @@
                       "id": "tab_video",
                       "type": "feature_tab",
                       "settings": {
-                        "href": "/tools/image-to-video",
+                        "href": "/ai-video-generation/image-to-video",
                         "label": "AI video",
                         "title": "Turn package results into motion",
                         "imageUrl": "/assets/sites/site_grownstride_test/generated/20260619/nature-adventure-solo-v1.png",
@@ -443728,7 +443728,7 @@
                         "id": "mega_video_image",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/image-to-video",
+                          "href": "/ai-video-generation/image-to-video",
                           "badge": "Preview",
                           "title": "Image to video concept",
                           "category": "Video AI",
@@ -443740,7 +443740,7 @@
                         "id": "mega_video_profile",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/profile-clip",
+                          "href": "/ai-video-generation/profile-clip",
                           "badge": "Social",
                           "title": "Profile clip maker",
                           "category": "Video AI",
@@ -443752,7 +443752,7 @@
                         "id": "mega_video_fan",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/fan-poster-motion",
+                          "href": "/ai-video-generation/fan-poster-motion",
                           "badge": "Sports",
                           "title": "Fan poster motion",
                           "category": "Video AI",
@@ -443764,7 +443764,7 @@
                         "id": "mega_video_intro",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/creator-intro-video",
+                          "href": "/ai-video-generation/creator-intro-video",
                           "badge": "Creator",
                           "title": "Creator intro video",
                           "category": "Video AI",
@@ -443776,7 +443776,7 @@
                         "id": "mega_video_product",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/product-teaser-clip",
+                          "href": "/ai-video-generation/product-teaser-clip",
                           "badge": "Commerce",
                           "title": "Product teaser clip",
                           "category": "Video AI",
@@ -443788,7 +443788,7 @@
                         "id": "mega_video_avatar",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/animated-avatar",
+                          "href": "/ai-video-generation/animated-avatar",
                           "badge": "Avatar",
                           "title": "Animated avatar preview",
                           "category": "Video AI",
@@ -443800,7 +443800,7 @@
                         "id": "mega_video_fashion",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/fashion-reel",
+                          "href": "/ai-video-generation/fashion-reel",
                           "badge": "Style",
                           "title": "Fashion reel starter",
                           "category": "Video AI",
@@ -443812,7 +443812,7 @@
                         "id": "mega_video_album",
                         "type": "tool_card",
                         "settings": {
-                          "href": "/tools/album-story-video",
+                          "href": "/ai-video-generation/album-story-video",
                           "badge": "Album",
                           "title": "Album story video",
                           "category": "Video AI",
@@ -445683,7 +445683,7 @@
                   "id": "mega_video_image",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/image-to-video",
+                    "href": "/ai-video-generation/image-to-video",
                     "badge": "Preview",
                     "title": "Image to video concept",
                     "category": "Video AI",
@@ -445695,7 +445695,7 @@
                   "id": "mega_video_profile",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/profile-clip",
+                    "href": "/ai-video-generation/profile-clip",
                     "badge": "Social",
                     "title": "Profile clip maker",
                     "category": "Video AI",
@@ -445707,7 +445707,7 @@
                   "id": "mega_video_fan",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fan-poster-motion",
+                    "href": "/ai-video-generation/fan-poster-motion",
                     "badge": "Sports",
                     "title": "Fan poster motion",
                     "category": "Video AI",
@@ -445719,7 +445719,7 @@
                   "id": "mega_video_intro",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/creator-intro-video",
+                    "href": "/ai-video-generation/creator-intro-video",
                     "badge": "Creator",
                     "title": "Creator intro video",
                     "category": "Video AI",
@@ -445731,7 +445731,7 @@
                   "id": "mega_video_product",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/product-teaser-clip",
+                    "href": "/ai-video-generation/product-teaser-clip",
                     "badge": "Commerce",
                     "title": "Product teaser clip",
                     "category": "Video AI",
@@ -445743,7 +445743,7 @@
                   "id": "mega_video_avatar",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/animated-avatar",
+                    "href": "/ai-video-generation/animated-avatar",
                     "badge": "Avatar",
                     "title": "Animated avatar preview",
                     "category": "Video AI",
@@ -445755,7 +445755,7 @@
                   "id": "mega_video_fashion",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/fashion-reel",
+                    "href": "/ai-video-generation/fashion-reel",
                     "badge": "Style",
                     "title": "Fashion reel starter",
                     "category": "Video AI",
@@ -445767,7 +445767,7 @@
                   "id": "mega_video_album",
                   "type": "tool_card",
                   "settings": {
-                    "href": "/tools/album-story-video",
+                    "href": "/ai-video-generation/album-story-video",
                     "badge": "Album",
                     "title": "Album story video",
                     "category": "Video AI",

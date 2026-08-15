@@ -77,6 +77,12 @@ function hasOldCollectionLink(text) {
     || /<loc>[^<]*\/collections(?:\/|[?#<]|$)/i.test(text);
 }
 
+function hasOldVideoToolLink(text) {
+  return /(?:href|content|url|@id|loc)=["'][^"']*\/tools\/(?:image-to-video|profile-clip|fan-poster-motion|creator-intro-video|product-teaser-clip|animated-avatar|fashion-reel|album-story-video)(?:[?#"']|$)/i.test(text)
+    || /https?:\/\/(?:www\.)?mydreamshoots\.com\/tools\/(?:image-to-video|profile-clip|fan-poster-motion|creator-intro-video|product-teaser-clip|animated-avatar|fashion-reel|album-story-video)(?:[?#<\s]|$)/i.test(text)
+    || /<loc>[^<]*\/tools\/(?:image-to-video|profile-clip|fan-poster-motion|creator-intro-video|product-teaser-clip|animated-avatar|fashion-reel|album-story-video)(?:[?#<]|$)/i.test(text);
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const baseUrl = normalizeBaseUrl(args["base-url"]);
@@ -84,6 +90,7 @@ async function main() {
   const canonicalImageRoutes = ["/ai-image-generation", ...imageSlugs.map((slug) => `/ai-image-generation/${slug}`)];
   const legacyImageRoutes = ["/collections", ...imageSlugs.map((slug) => `/collections/${slug}`)];
   const videoRoutes = ["/ai-video-generation", ...DEFAULT_VIDEO_SLUGS.map((slug) => `/ai-video-generation/${slug}`)];
+  const legacyVideoRoutes = ["/tools", ...DEFAULT_VIDEO_SLUGS.map((slug) => `/tools/${slug}`)];
   const keyRoutes = ["/", "/login", "/pricing", "/workflow", "/faq", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog"];
   const htmlScanRoutes = ["/", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog", "/sitemap.xml"];
   const failures = [];
@@ -111,6 +118,22 @@ async function main() {
     }
   }
 
+  for (const route of legacyVideoRoutes) {
+    const first = await fetchRoute(baseUrl, route, { redirect: "manual", readBody: false });
+    if (![301, 302, 307, 308].includes(first.status)) {
+      failures.push({ kind: "legacy_video_redirect_status", route, expected: "301/302/307/308", actual: first.status });
+      continue;
+    }
+    if (!String(first.location ?? "").includes("/ai-video-generation")) {
+      failures.push({ kind: "legacy_video_redirect_location", route, location: first.location });
+      continue;
+    }
+    const final = await fetchRoute(baseUrl, route, { readBody: false });
+    if (final.status !== 200) {
+      failures.push({ kind: "legacy_video_final_status", route, expected: 200, actual: final.status, finalUrl: final.finalUrl });
+    }
+  }
+
   for (const route of htmlScanRoutes) {
     const result = await fetchRoute(baseUrl, route);
     if (result.status !== 200) {
@@ -119,6 +142,9 @@ async function main() {
     }
     if (hasOldCollectionLink(result.text)) {
       failures.push({ kind: "html_old_collections_link", route });
+    }
+    if (hasOldVideoToolLink(result.text)) {
+      failures.push({ kind: "html_old_video_tool_link", route });
     }
     if (route === "/sitemap.xml" && !result.text.includes("/ai-image-generation")) {
       failures.push({ kind: "sitemap_missing_ai_image_generation", route });
@@ -133,6 +159,7 @@ async function main() {
       canonicalImageRoutes: canonicalImageRoutes.length,
       legacyImageRoutes: legacyImageRoutes.length,
       videoRoutes: videoRoutes.length,
+      legacyVideoRoutes: legacyVideoRoutes.length,
       htmlScanRoutes: htmlScanRoutes.length
     },
     failures

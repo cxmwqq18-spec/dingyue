@@ -65,7 +65,16 @@ const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   heritage: "heritage-celebration-portraits"
 };
 const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {};
-const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {};
+const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {
+  "image-to-video": "image-to-video",
+  "profile-clip": "profile-clip",
+  "fan-poster-motion": "fan-poster-motion",
+  "creator-intro-video": "creator-intro-video",
+  "product-teaser-clip": "product-teaser-clip",
+  "animated-avatar": "animated-avatar",
+  "fashion-reel": "fashion-reel",
+  "album-story-video": "album-story-video"
+};
 const AIDREAMCAPES_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "",
   "background-changer": "fan-scene-album-builder",
@@ -280,9 +289,9 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
 
-  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)\/(collections|tools)\/([^/]+)(\/)?$/i);
+  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)\/(collections|tools)(?:\/([^/]+))?(\/)?$/i);
   const hostMatch = TARGET_HOST_RE.test(host)
-    ? pathname.match(/^\/(collections|tools)\/([^/]+)(\/)?$/i)
+    ? pathname.match(/^\/(collections|tools)(?:\/([^/]+))?(\/)?$/i)
     : undefined;
   if (!pathMatch && !hostMatch) return undefined;
 
@@ -296,6 +305,14 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
   const spanishXbyCanonicalSlug = kind === "collections" && isSpanishStorefrontRequestIdentity(`${siteSlug} ${host}`)
     ? canonicalSpanishXbyCollectionSlug(currentSlug)
     : currentSlug;
+  const mydreamshootsToolTarget =
+    siteFamily === "mydreamshoots" && kind === "tools" ? MYDREAMSHOOTS_TOOL_REDIRECTS[currentSlug] : undefined;
+  if (siteFamily === "mydreamshoots" && kind === "tools" && (!currentSlug || mydreamshootsToolTarget)) {
+    const nextUrl = request.nextUrl.clone();
+    const targetPath = mydreamshootsToolTarget ? `/ai-video-generation/${mydreamshootsToolTarget}` : "/ai-video-generation";
+    nextUrl.pathname = pathMatch ? `/site/${siteSlug}${targetPath}` : targetPath;
+    return NextResponse.redirect(nextUrl, 308);
+  }
   const redirectMap =
     spanishXbyCanonicalSlug !== currentSlug
       ? undefined

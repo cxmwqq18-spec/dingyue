@@ -7,11 +7,26 @@ import { PrismaClient } from "@prisma/client";
 const CONFIRM_TOKEN = "clean-mydreamshoots-legacy-routes";
 const ALLOWED_SITE_IDS = new Set(["site_dreamshoot", "site_grownstride_test"]);
 const TARGET_DOMAINS = ["mydreamshoots.com", "www.mydreamshoots.com", "test.grownstride.com"];
+const MYDREAMSHOOTS_VIDEO_TOOL_SLUGS = [
+  "image-to-video",
+  "profile-clip",
+  "fan-poster-motion",
+  "creator-intro-video",
+  "product-teaser-clip",
+  "animated-avatar",
+  "fashion-reel",
+  "album-story-video"
+];
 const transactionTimeoutMs = Number(process.env.ROUTE_CLEANUP_TRANSACTION_TIMEOUT_MS ?? 600000);
 const RELATIVE_COLLECTIONS_RE = /(^|[\s"'=([{>:])\/collections(?=\/|[?#"'`<>)\]|&\s.,;:!]|$)/g;
 const ROUTE_BOUNDARY = String.raw`(?=\/|[?#"'` + "`" + String.raw`<>)\]|&\s.,;:!]|$)`;
 const RELATIVE_TOOLS_ROOT_RE = /(^|[\s"'=([{>:])\/tools(?=[?#"'`<>)\]|&\s.,;:!]|$)/g;
 const ROOT_ROUTE_BOUNDARY = String.raw`(?=[?#"'` + "`" + String.raw`<>)\]|&\s.,;:!]|$)`;
+const VIDEO_TOOL_SLUG_PATTERN = MYDREAMSHOOTS_VIDEO_TOOL_SLUGS.join("|");
+const RELATIVE_VIDEO_TOOLS_RE = new RegExp(
+  `(^|[\\s"'=([{>:])\\/tools\\/(${VIDEO_TOOL_SLUG_PATTERN})${ROUTE_BOUNDARY}`,
+  "gi"
+);
 const ABSOLUTE_COLLECTIONS_RES = TARGET_DOMAINS.map((domain) => {
   const escaped = domain.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return new RegExp(`(https?:\\/\\/${escaped})\\/collections${ROUTE_BOUNDARY}`, "gi");
@@ -19,6 +34,10 @@ const ABSOLUTE_COLLECTIONS_RES = TARGET_DOMAINS.map((domain) => {
 const ABSOLUTE_TOOLS_ROOT_RES = TARGET_DOMAINS.map((domain) => {
   const escaped = domain.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return new RegExp(`(https?:\\/\\/${escaped})\\/tools${ROOT_ROUTE_BOUNDARY}`, "gi");
+});
+const ABSOLUTE_VIDEO_TOOLS_RES = TARGET_DOMAINS.map((domain) => {
+  const escaped = domain.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(https?:\\/\\/${escaped})\\/tools\\/(${VIDEO_TOOL_SLUG_PATTERN})${ROUTE_BOUNDARY}`, "gi");
 });
 
 const SITE_ARRAY_KEYS = [
@@ -125,8 +144,12 @@ function rewriteRouteString(value) {
   for (const re of ABSOLUTE_TOOLS_ROOT_RES) {
     next = next.replace(re, "$1/ai-video-generation");
   }
+  for (const re of ABSOLUTE_VIDEO_TOOLS_RES) {
+    next = next.replace(re, "$1/ai-video-generation/$2");
+  }
   next = next.replace(RELATIVE_COLLECTIONS_RE, "$1/ai-image-generation");
   next = next.replace(RELATIVE_TOOLS_ROOT_RE, "$1/ai-video-generation");
+  next = next.replace(RELATIVE_VIDEO_TOOLS_RE, "$1/ai-video-generation/$2");
   return next;
 }
 
@@ -140,10 +163,16 @@ function countLegacyInString(value) {
     re.lastIndex = 0;
     while (re.exec(value)) count += 1;
   }
+  for (const re of ABSOLUTE_VIDEO_TOOLS_RES) {
+    re.lastIndex = 0;
+    while (re.exec(value)) count += 1;
+  }
   RELATIVE_COLLECTIONS_RE.lastIndex = 0;
   while (RELATIVE_COLLECTIONS_RE.exec(value)) count += 1;
   RELATIVE_TOOLS_ROOT_RE.lastIndex = 0;
   while (RELATIVE_TOOLS_ROOT_RE.exec(value)) count += 1;
+  RELATIVE_VIDEO_TOOLS_RE.lastIndex = 0;
+  while (RELATIVE_VIDEO_TOOLS_RE.exec(value)) count += 1;
   return count;
 }
 
@@ -423,7 +452,8 @@ async function main() {
     replacements: {
       relative: [
         "/collections -> /ai-image-generation",
-        "exact /tools -> /ai-video-generation"
+        "exact /tools -> /ai-video-generation",
+        "/tools/{video-slug} -> /ai-video-generation/{video-slug}"
       ],
       absoluteDomains: TARGET_DOMAINS
     },
