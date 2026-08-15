@@ -308,9 +308,10 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
   const mydreamshootsToolTarget =
     siteFamily === "mydreamshoots" && kind === "tools" ? MYDREAMSHOOTS_TOOL_REDIRECTS[currentSlug] : undefined;
   if (siteFamily === "mydreamshoots" && kind === "tools" && (!currentSlug || mydreamshootsToolTarget)) {
-    const nextUrl = request.nextUrl.clone();
+    const nextUrl = publicOriginForRequest(request);
     const targetPath = mydreamshootsToolTarget ? `/ai-video-generation/${mydreamshootsToolTarget}` : "/ai-video-generation";
     nextUrl.pathname = pathMatch ? `/site/${siteSlug}${targetPath}` : targetPath;
+    nextUrl.search = request.nextUrl.search;
     return NextResponse.redirect(nextUrl, 308);
   }
   const redirectMap =
