@@ -7,6 +7,7 @@ import { PrismaClient } from "@prisma/client";
 const CONFIRM_TOKEN = "clean-mydreamshoots-legacy-routes";
 const ALLOWED_SITE_IDS = new Set(["site_dreamshoot", "site_grownstride_test"]);
 const TARGET_DOMAINS = ["mydreamshoots.com", "www.mydreamshoots.com", "test.grownstride.com"];
+const transactionTimeoutMs = Number(process.env.ROUTE_CLEANUP_TRANSACTION_TIMEOUT_MS ?? 600000);
 const RELATIVE_COLLECTIONS_RE = /(^|[\s"'=([{>:])\/collections(?=\/|[?#"'`<>)\]\s.,;:!]|$)/g;
 const ROUTE_BOUNDARY = String.raw`(?=\/|[?#"'` + "`" + String.raw`<>)\]\s.,;:!]|$)`;
 const RELATIVE_TOOLS_ROOT_RE = /(^|[\s"'=([{>:])\/tools(?=[?#"'`<>)\]\s.,;:!]|$)/g;
@@ -360,6 +361,7 @@ async function processDb(options) {
 
     if (options.apply) {
       backupPath = await backupRows(rowsByLabel, options.backupDir, options.siteId);
+      const timeout = Number.isFinite(transactionTimeoutMs) && transactionTimeoutMs > 0 ? transactionTimeoutMs : 600000;
       await prisma.$transaction(async (tx) => {
         for (const spec of DB_SPECS) {
           const rows = rowsByLabel[spec.label] ?? [];
@@ -373,7 +375,7 @@ async function processDb(options) {
           if (!changed(document.state, state)) continue;
           await tx.platformStateDocument.update({ where: { id: document.id }, data: { state } });
         }
-      });
+      }, { timeout });
     }
 
     const clearedCaches = options.apply ? clearStateCaches(process.cwd()) : [];
