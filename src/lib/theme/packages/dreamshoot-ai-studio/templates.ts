@@ -1105,13 +1105,14 @@ function mydreamshootsTutorialVideoSection(): SectionInstance {
 
 function mydreamshootsImageTutorialVideoSection(): SectionInstance {
   return section("video_feature", {
-    anchor: "ai-image-tutorial",
-    eyebrow: "AI image tutorial",
-    title: "Create an AI photo set from source photos.",
-    subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
+    anchor: "how-it-works",
+    eyebrow: "How it works",
+    title: "How it works",
+    subtitle: "Upload selfies and start creating your AI photshoot now",
+    supportingCopy: "Use myDreamshoots's AI Video design your videos with your own creativity. Your next video content can instantly go viral.",
     imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
     videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-20260814.mp4",
-    videoBadge: "AI photo generation",
+    videoBadge: "",
     playLabel: "Watch the myDreamshoots AI image tutorial"
   });
 }
@@ -2347,13 +2348,13 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const conversionSection = aidreamcapesTemplateSite ? aidreamcapesConversionSection() : homeSections.conversion_1;
   const homeSectionsOrder = aidreamcapesTemplateSite
     ? ["hero_1", "generation_showcase_1", "featured_thanksgiving_1", "tutorial_video_1", "tutorial_video_2", "mobile_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"]
-    : ["hero_1", "generation_showcase_1", "tutorial_video_1", "tutorial_video_2", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"];
+    : ["hero_1", "generation_showcase_1", "tutorial_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"];
   const homePageSections: ThemePageJson["sections"] = {
     hero_1: homeHeroSection,
     generation_showcase_1: generationShowcaseSection,
     ...(aidreamcapesTemplateSite ? { featured_thanksgiving_1: featuredThanksgivingSection } : {}),
     tutorial_video_1: firstTutorialVideoSection,
-    tutorial_video_2: secondTutorialVideoSection,
+    ...(aidreamcapesTemplateSite ? { tutorial_video_2: secondTutorialVideoSection } : {}),
     ...(mobileVideoSection ? { mobile_video_1: mobileVideoSection } : {}),
     package_catalog_1: packageCatalogSection,
     proof_1: reviewSection,

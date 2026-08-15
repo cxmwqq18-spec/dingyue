@@ -9053,6 +9053,8 @@ function SectionView({
     const image = mediaAssetUrl(site, setting(section, "imageUrl", fallbackHeroImages[0]));
     const videoUrlSetting = setting(section, "videoUrl", "");
     const videoUrl = videoUrlSetting ? mediaAssetUrl(site, videoUrlSetting) : "";
+    const supportingCopy = setting(section, "supportingCopy", "");
+    const videoBadge = setting(section, "videoBadge", "");
     const videoPoster = videoUrl.includes("mydreamshoots-ai-image-tutorial-20260814.mp4")
       ? mediaAssetUrl(site, "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814-cover-v2.jpg")
       : videoUrl.includes("mydreamshoots-ai-video-tutorial-20260814.mp4")
@@ -9065,6 +9067,7 @@ function SectionView({
             <p className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]" style={{ color: accentBlue }}>{setting(section, "eyebrow", "Tutorial")}</p>
             <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "Photo tools")}</h2>
             <p className="mx-auto mt-4 max-w-[44rem] text-sm leading-7 text-white/70">{setting(section, "subtitle")}</p>
+            {supportingCopy ? <p className="mx-auto mt-2 max-w-[44rem] text-sm leading-7 text-white/70">{supportingCopy}</p> : null}
           </div>
           <div className="mt-9 overflow-hidden rounded-[18px] border border-white/10 bg-[#101217] p-2 shadow-[0_30px_90px_-58px_rgba(0,0,0,0.88),0_0_0_1px_rgba(47,111,237,0.16)] sm:p-3">
             <div className="pointer-events-none h-1 rounded-full" style={{ background: dreamshootBrandGradient }} />
@@ -9075,6 +9078,7 @@ function SectionView({
                   autoPlayOnInteraction
                   className="aspect-[16/9] w-full bg-black object-contain"
                   controls
+                  pauseOverlay
                   playsInline
                   poster={videoPoster || undefined}
                   posterOverlay
@@ -9084,9 +9088,11 @@ function SectionView({
                 <img className="aspect-[16/9] w-full bg-black object-contain opacity-90" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", "Video feature"), { role: "poster" })} />
               )}
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0)_46%,rgba(0,0,0,0.48)_100%)]" />
-              <div className="pointer-events-none absolute left-4 top-4 z-20 rounded-full border border-white/16 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_18px_42px_-30px_rgba(0,0,0,0.9)] backdrop-blur" style={{ background: accentForest }}>
-                {setting(section, "videoBadge", "HAPPY NEW YEAR")}
-              </div>
+              {videoBadge ? (
+                <div className="pointer-events-none absolute left-4 top-4 z-20 rounded-full border border-white/16 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_18px_42px_-30px_rgba(0,0,0,0.9)] backdrop-blur" style={{ background: accentForest }}>
+                  {videoBadge}
+                </div>
+              ) : null}
               {!videoUrl ? (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/90 text-zinc-950 shadow-[0_18px_60px_-28px_rgba(255,255,255,0.8)]">

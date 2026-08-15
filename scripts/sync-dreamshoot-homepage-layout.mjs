@@ -21,7 +21,6 @@ const homeOrderByStore = {
     "hero_1",
     "generation_showcase_1",
     "tutorial_video_1",
-    "tutorial_video_2",
     "package_catalog_1",
     "proof_1",
     "faq_1",
@@ -43,7 +42,7 @@ const homeOrderByStore = {
   ]
 };
 const removedHomeSectionsByStore = {
-  mydreamshoots: ["mobile_video_1", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
+  mydreamshoots: ["mobile_video_1", "tutorial_video_2", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
   aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
 };
 const bestPageTemplateKeys = ["best-packages", "best-ai-image", "best-ai-video"];
@@ -272,13 +271,14 @@ const stores = [
       block("featured_worldcup_holiday", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: myAssets.galleryHoliday, collectionSlug: "holiday", shape: "square" })
     ]),
     tutorial: section("video_feature", {
-      anchor: "ai-image-tutorial",
-      eyebrow: "AI image tutorial",
-      title: "Create an AI photo set from source photos.",
-      subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
+      anchor: "how-it-works",
+      eyebrow: "How it works",
+      title: "How it works",
+      subtitle: "Upload selfies and start creating your AI photshoot now",
+      supportingCopy: "Use myDreamshoots's AI Video design your videos with your own creativity. Your next video content can instantly go viral.",
       imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
       videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-20260814.mp4",
-      videoBadge: "AI photo generation",
+      videoBadge: "",
       playLabel: "Watch the myDreamshoots AI image tutorial"
     }),
     imageTutorial: section("video_feature", {

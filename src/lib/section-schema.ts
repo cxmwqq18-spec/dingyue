@@ -734,6 +734,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("eyebrow", "Eyebrow", "Tutorial"),
       text("title", "Title", "See how it works"),
       textarea("subtitle", "Subtitle", "Frame a featured photo story, collection, or sports campaign."),
+      textarea("supportingCopy", "Supporting copy", ""),
       image("imageUrl", "Poster image"),
       url("videoUrl", "Video URL", ""),
       text("videoBadge", "Video badge", "HAPPY NEW YEAR"),

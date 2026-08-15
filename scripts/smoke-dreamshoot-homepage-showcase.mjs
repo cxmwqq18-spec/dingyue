@@ -18,7 +18,6 @@ const expectedHomeOrders = {
     "hero_1",
     "generation_showcase_1",
     "tutorial_video_1",
-    "tutorial_video_2",
     "package_catalog_1",
     "proof_1",
     "faq_1",
@@ -301,7 +300,6 @@ function assertPage(pageJson, label, storeKey) {
     return;
   }
   assert(pageJson?.sections?.tutorial_video_1?.type === "video_feature", `${label}: missing tutorial video section`);
-  assert(pageJson?.sections?.tutorial_video_2?.type === "video_feature", `${label}: missing AI video tutorial section`);
   assert(!pageJson?.sections?.mobile_video_1, `${label}: MyDreamShoots mobile tutorial section should not be present`);
   assert(pageJson?.sections?.pricing_1?.type === "pricing_table", `${label}: pricing section should remain available for embedded rendering`);
   assert(!pageJson?.sectionsOrder?.includes("pricing_1"), `${label}: pricing_1 should be embedded in showcase instead of ordered at the bottom`);
@@ -396,8 +394,15 @@ function assertTutorialVideoSection(section, label, expectedEyebrow = "ai image"
   const videoUrl = comparableImageUrl(settings.videoUrl);
   const subtitle = String(settings.subtitle ?? "");
   assert(String(settings.eyebrow ?? "").toLowerCase().includes(expectedEyebrow), `${label}: tutorial eyebrow should identify ${expectedEyebrow}`);
-  assert(String(settings.title ?? "").trim().length > 12, `${label}: tutorial should have a real title`);
-  assert(subtitle.includes("source photo") || subtitle.includes("frame images") || subtitle.includes("approved source photos"), `${label}: tutorial copy should mention source photos or frame images`);
+  const isMydreamHowItWorks = expectedEyebrow === "how it works" && String(settings.supportingCopy ?? "").includes("mydreamshoots's AI Video");
+  if (isMydreamHowItWorks) {
+    assert(String(settings.title ?? "").trim() === "How it works", `${label}: tutorial title should be How it works`);
+    assert(subtitle.includes("Upload selfies"), `${label}: tutorial copy should mention selfie uploads`);
+    assert(String(settings.supportingCopy ?? "").includes("AI Video"), `${label}: tutorial copy should mention AI Video`);
+  } else {
+    assert(String(settings.title ?? "").trim().length > 12, `${label}: tutorial should have a real title`);
+    assert(subtitle.includes("source photo") || subtitle.includes("frame images") || subtitle.includes("approved source photos"), `${label}: tutorial copy should mention source photos or frame images`);
+  }
   assert(/\.jpg$/.test(imageUrl), `${label}: tutorial should use a poster jpg`);
   assert(/\.mp4$/.test(videoUrl), `${label}: tutorial should use an mp4 video`);
   if (expectedVideoUrl) assert(videoUrl === expectedVideoUrl, `${label}: expected ${expectedVideoUrl}, got ${videoUrl}`);
@@ -408,8 +413,13 @@ function assertTutorialVideoSection(section, label, expectedEyebrow = "ai image"
 }
 
 function assertMydreamshootsTutorialPair(pageJson, label) {
-  assertTutorialVideoSection(pageJson?.sections?.tutorial_video_1, `${label}: AI image tutorial`, "ai image", expectedMydreamshootsTutorialVideos.image);
-  assertTutorialVideoSection(pageJson?.sections?.tutorial_video_2, `${label}: AI video tutorial`, "ai video", expectedMydreamshootsTutorialVideos.video);
+  assertTutorialVideoSection(pageJson?.sections?.tutorial_video_1, `${label}: How it works tutorial`, "how it works", expectedMydreamshootsTutorialVideos.image);
+  const settings = pageJson?.sections?.tutorial_video_1?.settings ?? {};
+  assert(settings.title === "How it works", `${label}: homepage tutorial title should be How it works`);
+  assert(settings.subtitle === "Upload selfies and start creating your AI photshoot now", `${label}: homepage tutorial subtitle drifted`);
+  assert(settings.supportingCopy === "Use myDreamshoots's AI Video design your videos with your own creativity. Your next video content can instantly go viral.", `${label}: homepage tutorial supporting copy drifted`);
+  assert(!String(settings.videoBadge ?? "").trim(), `${label}: homepage tutorial video badge should be removed`);
+  assert(!pageJson?.sections?.tutorial_video_2, `${label}: AI video tutorial should be removed from the homepage`);
   assert(!pageJson?.sections?.mobile_video_1, `${label}: mobile tutorial section should be removed`);
 }
 
