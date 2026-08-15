@@ -276,6 +276,43 @@ async function extractWorkspacePackageSignature(page, siteSlug) {
   return signatureFromItems(items, siteSlug);
 }
 
+async function extractDirectoryPackageSignature(page, siteSlug) {
+  await gotoRoute(page, `/site/${siteSlug}/ai-image-generation`);
+  await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
+  await page.waitForFunction(
+    () => document.querySelectorAll('#package-taxonomy [data-package-taxonomy-client="ready"] a[href]').length > 0,
+    undefined,
+    { timeout: 30000 }
+  );
+  const items = await page.evaluate(() => [...document.querySelectorAll('#package-taxonomy [data-package-taxonomy-client="ready"] a[href]')]
+    .map((item) => ({
+      text: item.querySelector("h2")?.textContent || item.textContent || "",
+      href: item.getAttribute("href") || ""
+    })));
+  return signatureFromItems(items, siteSlug);
+}
+
+async function extractWorkspacePackageAssetState(page, siteSlug) {
+  await openWorkspaceCreate(page, siteSlug);
+  return page.evaluate(() => ({
+    packages: [...document.querySelectorAll("[data-workspace-package-option]")].map((item) => {
+      const image = item.querySelector("img");
+      return {
+        title: item.getAttribute("data-workspace-package-title") || "",
+        src: image?.getAttribute("src") || "",
+        complete: Boolean(image?.complete),
+        naturalWidth: image?.naturalWidth || 0,
+        naturalHeight: image?.naturalHeight || 0
+      };
+    }),
+    categories: [...document.querySelectorAll("[data-workspace-package-category-option]")]
+      .map((item) => ({
+        slug: item.getAttribute("data-workspace-package-category-option") || "",
+        count: Number(item.getAttribute("data-workspace-package-category-count") || 0)
+      }))
+  }));
+}
+
 async function extractWorkspaceToolSignature(page, siteSlug) {
   await openWorkspaceCreate(page, siteSlug);
   await page.locator("form").getByRole("button", { name: /^Tools$|^Herramientas$/ }).first().click({ timeout: 15000 });
@@ -321,7 +358,11 @@ async function smokeWorkspaceOptionConsistency(context, failures, checks = works
       await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
       const packageMenuSignature = await extractMenuSignature(page, workspaceCheck.slug, `/site/${workspaceCheck.slug}`, menuChecks[0]);
       const toolMenuSignature = await extractMenuSignature(page, workspaceCheck.slug, `/site/${workspaceCheck.slug}`, menuChecks[1]);
+      const directoryPackageSignature = workspaceCheck.slug === "mydreamshoots"
+        ? await extractDirectoryPackageSignature(page, workspaceCheck.slug)
+        : [];
       const workspacePackageSignature = await extractWorkspacePackageSignature(page, workspaceCheck.slug);
+      const workspacePackageAssetState = await extractWorkspacePackageAssetState(page, workspaceCheck.slug);
       const workspaceToolSignature = workspaceCheck.expectedToolCount > 0
         ? await extractWorkspaceToolSignature(page, workspaceCheck.slug)
         : [];
@@ -331,6 +372,50 @@ async function smokeWorkspaceOptionConsistency(context, failures, checks = works
       }
       if (workspaceToolSignature.length !== workspaceCheck.expectedToolCount) {
         failures.push({ site: workspaceCheck.slug, surface: "workspace_tools_count", expected: workspaceCheck.expectedToolCount, actual: workspaceToolSignature.length });
+      }
+      if (directoryPackageSignature.length !== workspaceCheck.expectedPackageCount && workspaceCheck.slug === "mydreamshoots") {
+        failures.push({ site: workspaceCheck.slug, surface: "directory_packages_count", expected: workspaceCheck.expectedPackageCount, actual: directoryPackageSignature.length });
+      }
+      if (workspaceCheck.slug === "mydreamshoots") {
+        pushSignatureFailure(failures, {
+          site: workspaceCheck.slug,
+          surface: "directory_packages",
+          expected: packageMenuSignature,
+          actual: directoryPackageSignature,
+          requireOrder: false,
+          normalizeItem: normalizeWorkspaceSignatureItem
+        });
+      }
+      const invalidWorkspaceImages = workspacePackageAssetState.packages.filter((item) =>
+        !item.src ||
+        !item.complete ||
+        item.naturalWidth < 64 ||
+        item.naturalHeight < 64 ||
+        !item.src.includes("/assets/")
+      );
+      if (workspacePackageAssetState.packages.length !== workspaceCheck.expectedPackageCount || invalidWorkspaceImages.length) {
+        failures.push({
+          site: workspaceCheck.slug,
+          surface: "workspace_package_images",
+          expectedCount: workspaceCheck.expectedPackageCount,
+          actualCount: workspacePackageAssetState.packages.length,
+          invalidImages: invalidWorkspaceImages.slice(0, 12)
+        });
+      }
+      if (workspaceCheck.slug === "mydreamshoots") {
+        const allPackages = workspacePackageAssetState.categories.find((item) => item.slug === "all");
+        const categoryTotal = workspacePackageAssetState.categories
+          .filter((item) => item.slug !== "all")
+          .reduce((total, item) => total + item.count, 0);
+        if (allPackages?.count !== workspaceCheck.expectedPackageCount || categoryTotal !== workspaceCheck.expectedPackageCount) {
+          failures.push({
+            site: workspaceCheck.slug,
+            surface: "workspace_package_category_counts",
+            expected: workspaceCheck.expectedPackageCount,
+            allPackages: allPackages?.count ?? 0,
+            categoryTotal
+          });
+        }
       }
       pushSignatureFailure(failures, {
         site: workspaceCheck.slug,

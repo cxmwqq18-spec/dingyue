@@ -1714,10 +1714,10 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         settings: {
           anchor: "packages",
           label: "AI PHOTO STUDIOS",
-          title: "Professional AI Photo Packages",
-          subtitle: "Whether solo or with a partner, you can create stunning AI photo albums in just one click with myDreamshoots's themed photo packs. We've curated the best poses, outfit ideas, and hairstyles for you. Plus, we're always adding new photo packs to our collection. Send a ❤️ to a special someone. Or use it just for fun!",
+          title: "AI Photo Packages by Style and Use Case",
+          subtitle: "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
           directoryLabel: "AI PHOTO THEMED",
-          directorySubtitle: "Use your own creativity surprise your partner with a romantic video or photo.",
+          directorySubtitle: "Compare every active theme by category, title, cover, and route before starting a private photo package.",
           tabs: "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal|Creator|Video|Utility",
           steps: "Pick pack|See credit cost|Generate album",
           source: "creative_packs",

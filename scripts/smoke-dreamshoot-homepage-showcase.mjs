@@ -327,8 +327,10 @@ function assertPage(pageJson, label, storeKey) {
   assert(pricingSettings.sidePanelTitle === "Our plans starts from $24.50 and are designed to be more affordable and flexible.", `${label}: pricing side panel title drifted`);
   const catalogSettings = pageJson?.sections?.package_catalog_1?.settings ?? {};
   assert(catalogSettings.label === "AI PHOTO STUDIOS", `${label}: package catalog label drifted`);
-  assert(catalogSettings.title === "Professional AI Photo Packages", `${label}: package catalog title drifted`);
+  assert(catalogSettings.title === "AI Photo Packages by Style and Use Case", `${label}: package catalog title drifted`);
+  assert(catalogSettings.subtitle === "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.", `${label}: package catalog subtitle drifted`);
   assert(catalogSettings.directoryLabel === "AI PHOTO THEMED", `${label}: theme directory label drifted`);
+  assert(catalogSettings.directorySubtitle === "Compare every active theme by category, title, cover, and route before starting a private photo package.", `${label}: theme directory subtitle drifted`);
   const proofSettings = pageJson?.sections?.proof_1?.settings ?? {};
   assert(proofSettings.title === "What Our Customers Say", `${label}: review title drifted`);
   assert(proofSettings.subtitle === "Our users love us and we love them!", `${label}: review subtitle drifted`);

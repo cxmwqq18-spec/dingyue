@@ -220,6 +220,23 @@ function trimCreativePackCategoriesForStorefront(renderData: SiteRenderData): Cr
     .filter((category): category is CreativePackCategory => Boolean(category));
 }
 
+function publicPackLimitForPage({
+  slug,
+  usesFullMediaGallery,
+  isDirectoryPage = false,
+  hasDirectorySections = false
+}: {
+  slug: string;
+  usesFullMediaGallery: boolean;
+  isDirectoryPage?: boolean;
+  hasDirectorySections?: boolean;
+}): number | undefined {
+  if (usesFullMediaGallery) return undefined;
+  if (slug === "/") return publicHomePackLimit;
+  if (isDirectoryPage || slug === "/collections" || hasDirectorySections) return publicDirectoryPackLimit;
+  return publicHomePackLimit;
+}
+
 async function completePublicCreativePacksForSite(site: Site, existing: SiteRenderData["creativePacks"], limit?: number): Promise<SiteRenderData["creativePacks"]> {
   const sanitizedExisting = existing.map(lightweightCreativePack);
   if (typeof limit === "number" && sanitizedExisting.length >= limit) return sanitizedExisting.slice(0, limit);
@@ -547,7 +564,12 @@ function trimMediaAssetsForPage(site: Site, pageJson: ThemePageJson, settings: S
   ).map(lightweightMediaAsset);
 }
 
-function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJson, slug: string): SiteRenderData {
+function trimRenderDataForPage(
+  renderData: SiteRenderData,
+  pageJson: ThemePageJson,
+  slug: string,
+  isDirectoryPage = false
+): SiteRenderData {
   const sectionTypes = pageSectionTypes(pageJson);
   const usesFullMediaGallery = pageUsesFullMediaGallery(pageJson);
   const needsProducts = slug === "/pricing" || slug === "/cart" || Array.from(sectionTypes).some((type) => productSectionTypes.has(type));
@@ -555,13 +577,12 @@ function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJs
   const needsSiteAiApps = slug === "/tools" || slug.startsWith("/tools/") || Array.from(sectionTypes).some((type) => siteAiAppSectionTypes.has(type));
   const needsCreativePacks = slug === "/" || slug === "/collections" || slug === "/tools" || Array.from(sectionTypes).some((type) => creativePackSectionTypes.has(type));
   const needsVideoThemes = Array.from(sectionTypes).some((type) => videoThemeSectionTypes.has(type));
-  const packLimit = usesFullMediaGallery
-    ? undefined
-    : slug === "/"
-    ? publicHomePackLimit
-    : slug === "/collections" || sectionTypes.has("dreamshoot_generation_showcase") || sectionTypes.has("dreamshoot_media_gallery") || sectionTypes.has("dreamshoot_featured_pack")
-    ? publicDirectoryPackLimit
-    : publicHomePackLimit;
+  const packLimit = publicPackLimitForPage({
+    slug,
+    usesFullMediaGallery,
+    isDirectoryPage,
+    hasDirectorySections: sectionTypes.has("dreamshoot_generation_showcase") || sectionTypes.has("dreamshoot_media_gallery") || sectionTypes.has("dreamshoot_featured_pack")
+  });
   const videoThemeLimit = sectionTypes.has("dreamshoot_media_gallery")
     ? usesFullMediaGallery ? undefined : publicDirectoryPackLimit
     : sectionTypes.has("dreamshoot_generation_showcase")
@@ -2615,34 +2636,26 @@ export async function renderStorefrontPage({
     currentSite,
     pageJson,
     settings,
-    trimRenderDataForPage(renderDataForPage, pageJson, slug)
+    trimRenderDataForPage(renderDataForPage, pageJson, slug, isCollectionDirectoryPage && !isFocusedCollectionPage)
   );
   const currentPageSectionTypes = pageSectionTypes(pageJson);
   const currentPageUsesFullMediaGallery = pageUsesFullMediaGallery(pageJson);
   const pageUsesDirectoryPackLimit = currentPageSectionTypes.has("dreamshoot_generation_showcase") || currentPageSectionTypes.has("dreamshoot_media_gallery") || currentPageSectionTypes.has("dreamshoot_featured_pack");
   const pageNeedsPublicCreativePacks = !isFocusedCollectionPage && (slug === "/" || isCollectionDirectoryPage || Array.from(currentPageSectionTypes).some((type) => creativePackSectionTypes.has(type)));
   const pageNeedsPublicVideoThemes = currentPageSectionTypes.has("dreamshoot_generation_showcase") || currentPageSectionTypes.has("dreamshoot_media_gallery");
+  const directoryPackLimit = publicPackLimitForPage({
+    slug,
+    usesFullMediaGallery: currentPageUsesFullMediaGallery,
+    isDirectoryPage: isCollectionDirectoryPage && !isFocusedCollectionPage,
+    hasDirectorySections: pageUsesDirectoryPackLimit
+  });
   if (shouldCompletePublicPacks && pageNeedsPublicCreativePacks && pageRenderData.creativePacks.length > 0) {
-    const directoryPackLimit = currentPageUsesFullMediaGallery
-      ? undefined
-      : slug === "/"
-      ? publicHomePackLimit
-      : pageUsesDirectoryPackLimit
-      ? publicDirectoryPackLimit
-      : publicHomePackLimit;
     pageRenderData = {
       ...pageRenderData,
       creativePacks: await completePublicCreativePacksForSite(currentSite, pageRenderData.creativePacks, directoryPackLimit)
     };
   }
   if (shouldCompletePublicPacks && pageNeedsPublicCreativePacks && !pageRenderData.creativePacks.length) {
-    const directoryPackLimit = currentPageUsesFullMediaGallery
-      ? undefined
-      : slug === "/"
-      ? publicHomePackLimit
-      : pageUsesDirectoryPackLimit
-      ? publicDirectoryPackLimit
-      : publicHomePackLimit;
     pageRenderData = {
       ...pageRenderData,
       creativePacks: (await getStorefrontPublicCreativePacksForSite(currentSite.id, directoryPackLimit)).map((pack) => ({

@@ -48,6 +48,10 @@ const removedHomeSectionsByStore = {
 const bestPageTemplateKeys = ["best-packages", "best-ai-image", "best-ai-video"];
 const assetVersion = "20260801visualfix1";
 const aidreamAssetVersion = "20260801visualfix2";
+const mydreamshootsPackageDirectoryCopy = {
+  title: "AI Photo Packages by Style and Use Case",
+  subtitle: "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
+};
 
 const rawArgs = process.argv.slice(2);
 const flags = new Set();
@@ -202,10 +206,10 @@ const stores = [
     packageSettings: {
       anchor: "packages",
       label: "AI PHOTO STUDIOS",
-      title: "Professional AI Photo Packages",
-      subtitle: "Whether solo or with a partner, you can create stunning AI photo albums in just one click with myDreamshoots's themed photo packs. We've curated the best poses, outfit ideas, and hairstyles for you. Plus, we're always adding new photo packs to our collection. Send a ❤️ to a special someone. Or use it just for fun!",
+      title: "AI Photo Packages by Style and Use Case",
+      subtitle: "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
       directoryLabel: "AI PHOTO THEMED",
-      directorySubtitle: "Use your own creativity surprise your partner with a romantic video or photo."
+      directorySubtitle: "Compare every active theme by category, title, cover, and route before starting a private photo package."
     },
     pricingSettings: {
       title: "Subscription Plans",
@@ -881,6 +885,17 @@ function refreshPublicationStats(publication) {
   }
 }
 
+function applyMydreamshootsPackageDirectoryCopy(pageJson, store) {
+  if (store.key !== "mydreamshoots" || !pageJson?.sections?.taxonomy_1) return false;
+  const section = pageJson.sections.taxonomy_1;
+  const settings = section.settings && typeof section.settings === "object" ? section.settings : (section.settings = {});
+  const changed = settings.title !== mydreamshootsPackageDirectoryCopy.title ||
+    settings.subtitle !== mydreamshootsPackageDirectoryCopy.subtitle;
+  settings.title = mydreamshootsPackageDirectoryCopy.title;
+  settings.subtitle = mydreamshootsPackageDirectoryCopy.subtitle;
+  return changed;
+}
+
 function applyStoreToState(state, store) {
   let pageUpdates = 0;
   let themeUpdates = 0;
@@ -891,6 +906,11 @@ function applyStoreToState(state, store) {
   const featuredSections = bestPageTemplatesForSite(site)["best-packages"]?.sections ?? {};
   if (applyStoreSpecificExistingSections(homePage.draftJson, store, featuredSections)) pageUpdates += 1;
   if (applyStoreSpecificExistingSections(homePage.publishedJson, store, featuredSections)) pageUpdates += 1;
+  for (const page of site.pages ?? []) {
+    if (page.slug !== "/ai-image-generation") continue;
+    if (applyMydreamshootsPackageDirectoryCopy(page.draftJson, store)) pageUpdates += 1;
+    if (applyMydreamshootsPackageDirectoryCopy(page.publishedJson, store)) pageUpdates += 1;
+  }
   pageUpdates += upsertBestPagesForSite(site);
 
   for (const theme of state.siteThemes ?? []) {
@@ -907,12 +927,17 @@ function applyStoreToState(state, store) {
     template.sectionsOrder = syntheticPage.sectionsOrder;
     template.content_for_page = syntheticPage.sectionsOrder;
     themeUpdates += 1;
+    if (applyMydreamshootsPackageDirectoryCopy(theme.templates?.packages, store)) themeUpdates += 1;
   }
 
   for (const publication of state.themePublications ?? []) {
     if (publication.siteId !== store.siteId) continue;
     const snapshotHome = publication.snapshot?.pages?.find((page) => page.slug === "/");
     if (snapshotHome?.publishedJson && applyStoreSpecificExistingSections(snapshotHome.publishedJson, store, featuredSections)) {
+      publicationUpdates += 1;
+    }
+    const snapshotDirectory = publication.snapshot?.pages?.find((page) => page.slug === "/ai-image-generation");
+    if (snapshotDirectory?.publishedJson && applyMydreamshootsPackageDirectoryCopy(snapshotDirectory.publishedJson, store)) {
       publicationUpdates += 1;
     }
     publicationUpdates += upsertBestPagesInPublication(publication, site);
