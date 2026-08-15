@@ -1015,7 +1015,11 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
   const isCart = primary === "/cart";
   const isTools = primary === "/tools" || primary.startsWith("/tools/");
   const isToolDetail = primary.startsWith("/tools/") && Boolean(contextSlug);
-  const isCollections = primary === "/collections" || primary.startsWith("/collections/");
+  const isCollections =
+    primary === "/collections" ||
+    primary.startsWith("/collections/") ||
+    primary === "/ai-image-generation" ||
+    primary.startsWith("/ai-image-generation/");
   const isCollectionDetail = isCollections && Boolean(contextSlug);
   const isBestPackagePage = primary === "/best-packages";
   const isBestMediaPage = primary === "/best-ai-image" || primary === "/best-ai-video";

@@ -272,7 +272,8 @@ function collectionRouteLookupSlug(path: string[]): string {
 }
 
 function isMydreamshootsPublicSlug(slug: string | undefined): boolean {
-  return /dreamshoot/i.test(slug ?? "") && !/aidreamcapes|aidreamshoots/i.test(slug ?? "");
+  const value = slug ?? "";
+  return (value === "grownstride" || /dreamshoot/i.test(value)) && !/aidreamcapes|aidreamshoots/i.test(value);
 }
 
 function fallbackCollectionRootPathForHost(host: string | null | undefined): string {

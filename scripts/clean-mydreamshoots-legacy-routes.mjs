@@ -8,10 +8,10 @@ const CONFIRM_TOKEN = "clean-mydreamshoots-legacy-routes";
 const ALLOWED_SITE_IDS = new Set(["site_dreamshoot", "site_grownstride_test"]);
 const TARGET_DOMAINS = ["mydreamshoots.com", "www.mydreamshoots.com", "test.grownstride.com"];
 const transactionTimeoutMs = Number(process.env.ROUTE_CLEANUP_TRANSACTION_TIMEOUT_MS ?? 600000);
-const RELATIVE_COLLECTIONS_RE = /(^|[\s"'=([{>:])\/collections(?=\/|[?#"'`<>)\]\s.,;:!]|$)/g;
-const ROUTE_BOUNDARY = String.raw`(?=\/|[?#"'` + "`" + String.raw`<>)\]\s.,;:!]|$)`;
-const RELATIVE_TOOLS_ROOT_RE = /(^|[\s"'=([{>:])\/tools(?=[?#"'`<>)\]\s.,;:!]|$)/g;
-const ROOT_ROUTE_BOUNDARY = String.raw`(?=[?#"'` + "`" + String.raw`<>)\]\s.,;:!]|$)`;
+const RELATIVE_COLLECTIONS_RE = /(^|[\s"'=([{>:])\/collections(?=\/|[?#"'`<>)\]|&\s.,;:!]|$)/g;
+const ROUTE_BOUNDARY = String.raw`(?=\/|[?#"'` + "`" + String.raw`<>)\]|&\s.,;:!]|$)`;
+const RELATIVE_TOOLS_ROOT_RE = /(^|[\s"'=([{>:])\/tools(?=[?#"'`<>)\]|&\s.,;:!]|$)/g;
+const ROOT_ROUTE_BOUNDARY = String.raw`(?=[?#"'` + "`" + String.raw`<>)\]|&\s.,;:!]|$)`;
 const ABSOLUTE_COLLECTIONS_RES = TARGET_DOMAINS.map((domain) => {
   const escaped = domain.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return new RegExp(`(https?:\\/\\/${escaped})\\/collections${ROUTE_BOUNDARY}`, "gi");
