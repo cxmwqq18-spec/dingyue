@@ -44,18 +44,27 @@ export function LazyStorefrontVideo({
   const [hasPlayableVideo, setHasPlayableVideo] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const syncPlaybackState = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    setIsPlaying(!video.paused && !video.ended);
+    if (video.readyState > 0 || video.currentSrc || video.getAttribute("src")) {
+      setHasPlayableVideo(true);
+    }
+  }, []);
+
   const markVideoPlaying = useCallback(() => {
     const video = videoRef.current;
     if (!video || video.paused || video.ended) {
       setPosterOverlayLoading(false);
-      setIsPlaying(false);
+      syncPlaybackState();
       return;
     }
     setPosterOverlayLoading(false);
     setPosterOverlayDismissed(true);
     setHasPlayableVideo(true);
     setIsPlaying(true);
-  }, []);
+  }, [syncPlaybackState]);
 
   const requestLoad = useCallback((mode: "metadata" | "auto", shouldPlay = false) => {
     const video = videoRef.current;
@@ -67,10 +76,15 @@ export function LazyStorefrontVideo({
     setPreloadMode((current) => (current === "auto" ? current : mode));
     if (!shouldPlay) return;
     setPosterOverlayLoading(true);
-    void video?.play().then(markVideoPlaying).catch(() => {
+    if (!video) return;
+    setPosterOverlayDismissed(true);
+    setHasPlayableVideo(true);
+    setIsPlaying(true);
+    void video.play().then(markVideoPlaying).catch(() => {
       setPosterOverlayLoading(false);
+      syncPlaybackState();
     });
-  }, [markVideoPlaying, src]);
+  }, [markVideoPlaying, src, syncPlaybackState]);
 
   useEffect(() => {
     setShouldLoad(false);
@@ -103,15 +117,10 @@ export function LazyStorefrontVideo({
 
   useEffect(() => {
     if (!pauseOverlay) return;
-    const video = videoRef.current;
-    if (!video) return;
-    const syncPlaybackState = () => {
-      setIsPlaying(!video.paused && !video.ended);
-    };
     syncPlaybackState();
     const interval = window.setInterval(syncPlaybackState, 400);
     return () => window.clearInterval(interval);
-  }, [pauseOverlay, src]);
+  }, [pauseOverlay, src, syncPlaybackState]);
 
   const video = (
     <video
@@ -172,19 +181,13 @@ export function LazyStorefrontVideo({
   const showPosterOverlay = Boolean(posterOverlay && poster && !posterOverlayDismissed);
   const showPauseOverlay = Boolean(pauseOverlay && hasPlayableVideo && !isPlaying && !showPosterOverlay);
 
-  if (!showPosterOverlay && !showPauseOverlay) return video;
+  if (!posterOverlay && !pauseOverlay) return video;
 
   return (
     <div className="relative block w-full">
       {video}
       {showPosterOverlay ? (
-        <button
-          aria-label={ariaLabel ? `Play ${ariaLabel.replace(/^Watch\s+/i, "")}` : "Play tutorial video"}
-          aria-busy={posterOverlayLoading}
-          className="absolute inset-0 z-10 flex items-center justify-center overflow-hidden rounded-[inherit] bg-black"
-          onClick={() => requestLoad(interactionPreload, true)}
-          type="button"
-        >
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center overflow-hidden rounded-[inherit] bg-black">
           <img
             alt=""
             aria-hidden="true"
@@ -192,22 +195,29 @@ export function LazyStorefrontVideo({
             decoding="async"
             src={poster}
           />
-          <span className={`relative flex h-16 w-16 items-center justify-center rounded-full border border-white/70 bg-black/45 text-white shadow-[0_18px_50px_-24px_rgba(0,0,0,0.9)] backdrop-blur-sm transition-transform hover:scale-105 ${posterOverlayLoading ? "animate-pulse" : ""}`}>
+          <button
+            aria-label={ariaLabel ? `Play ${ariaLabel.replace(/^Watch\s+/i, "")}` : "Play tutorial video"}
+            aria-busy={posterOverlayLoading}
+            className={`pointer-events-auto relative flex h-16 w-16 items-center justify-center rounded-full border border-white/70 bg-black/45 text-white shadow-[0_18px_50px_-24px_rgba(0,0,0,0.9)] backdrop-blur-sm transition-transform hover:scale-105 ${posterOverlayLoading ? "animate-pulse" : ""}`}
+            onClick={() => requestLoad(interactionPreload, true)}
+            type="button"
+          >
             <PlayCircle className="h-9 w-9" strokeWidth={1.7} />
-          </span>
-        </button>
-      ) : (
-        <button
-          aria-label={ariaLabel ? `Play ${ariaLabel.replace(/^Watch\s+/i, "")}` : "Play tutorial video"}
-          className="absolute inset-0 z-10 flex items-center justify-center"
-          onClick={() => requestLoad(interactionPreload, true)}
-          type="button"
-        >
-          <span className="flex h-20 w-20 items-center justify-center rounded-full bg-white/90 text-zinc-950 shadow-[0_18px_60px_-28px_rgba(255,255,255,0.8)] transition-transform hover:scale-105">
+          </button>
+        </div>
+      ) : null}
+      {showPauseOverlay ? (
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+          <button
+            aria-label={ariaLabel ? `Play ${ariaLabel.replace(/^Watch\s+/i, "")}` : "Play tutorial video"}
+            className="pointer-events-auto flex h-20 w-20 items-center justify-center rounded-full bg-white/90 text-zinc-950 shadow-[0_18px_60px_-28px_rgba(255,255,255,0.8)] transition-transform hover:scale-105"
+            onClick={() => requestLoad(interactionPreload, true)}
+            type="button"
+          >
             <PlayCircle className="h-11 w-11" strokeWidth={1.8} />
-          </span>
-        </button>
-      )}
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
