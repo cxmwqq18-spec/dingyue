@@ -3,8 +3,8 @@ import { publicSiteSlug } from "@/lib/domain-routing";
 const databasePreferences = new Set(["database", "db", "relational"]);
 const legacyLocalPreferences = new Set(["local", "json", "legacy", "file"]);
 const explicitLocalPreviewPreferences = new Set(["local-preview", "json-preview", "legacy-preview", "file-preview"]);
-const mydreamshootsSiteIds = new Set(["site_dreamshoot", "site_aidreamcapes"]);
-const mydreamshootsPublicSlugs = new Set(["mydreamshoots", "dreamshoot", "aidreamcapes"]);
+const mydreamshootsSiteIds = new Set(["site_dreamshoot", "site_aidreamcapes", "site_grownstride_test"]);
+const mydreamshootsPublicSlugs = new Set(["mydreamshoots", "dreamshoot", "aidreamcapes", "grownstride"]);
 
 export function normalizeStorefrontReadPreference(value: string | undefined): string {
   return String(value ?? "").trim().toLowerCase();

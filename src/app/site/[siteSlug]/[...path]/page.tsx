@@ -142,7 +142,9 @@ function collectionRouteLookupSlug(path: string[]): string {
 }
 
 function fallbackCollectionRootPathForPublicSlug(publicSlug: string): string {
-  return /dreamshoot/i.test(publicSlug) && !/aidreamcapes|aidreamshoots/i.test(publicSlug) ? "/ai-image-generation" : "/collections";
+  return (publicSlug === "grownstride" || /dreamshoot/i.test(publicSlug)) && !/aidreamcapes|aidreamshoots/i.test(publicSlug)
+    ? "/ai-image-generation"
+    : "/collections";
 }
 
 function storefrontPolicySeoForSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }, slug: string): PolicySeoCopy | undefined {
