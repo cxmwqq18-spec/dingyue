@@ -229,6 +229,7 @@ export function fieldDisplayLabel(field: Pick<ThemeFieldSchema, "id" | "label">)
     socialHeading: "社媒栏目标题",
     instagramUrl: "Instagram 链接",
     facebookUrl: "Facebook 链接",
+    threadsUrl: "Threads 链接",
     pinterestUrl: "Pinterest 链接",
     youtubeUrl: "YouTube 链接",
     backgroundImage: "背景图"
@@ -534,7 +535,7 @@ export const globalNodeBlueprints: GlobalSettingsNodeDefinition[] = [
     label: "社媒/链接",
     description: "社媒主页链接、分享图以及站点控件圆角等收口项。",
     badges: ["social", "surface"],
-    fieldIds: ["instagram_url", "facebook_url", "twitter_url", "pinterest_url", "youtube_url", "homepage_social_image"],
+    fieldIds: ["instagram_url", "facebook_url", "threads_url", "twitter_url", "pinterest_url", "youtube_url", "homepage_social_image"],
     localFields: [
       { id: "theme_section_radius", label: "卡片圆角", kind: "range", themeKey: "section", min: 0, max: 40 },
       { id: "theme_control_radius", label: "控件圆角", kind: "range", themeKey: "control", min: 0, max: 24 }

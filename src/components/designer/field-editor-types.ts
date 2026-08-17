@@ -11,6 +11,8 @@ export type FieldOptions = {
   mediaAssets: MediaAsset[];
   creativePacks: CreativePack[];
   requestResource?: (kind: DesignerResourceKind, options?: { signal?: AbortSignal }) => Promise<void>;
+  upsertMediaAsset?: (asset: MediaAsset) => void;
+  removeMediaAsset?: (assetId: string) => void;
   resourceStatus?: Partial<Record<DesignerResourceKind, DesignerResourceStatus>>;
 };
 
@@ -23,6 +25,7 @@ export type ResourceSelectorOption = {
   detail: string;
   value: string;
   preview?: string;
+  previewType?: "image" | "video";
   meta?: string[];
   tone?: "good" | "warn" | "neutral";
 };

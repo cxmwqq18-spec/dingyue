@@ -56,6 +56,7 @@ export default async function DesignNavigationPage({ params }: { params: Promise
           站点导航
         </div>
         <NavigationEditor
+          draftMeta={data.site.themeSettings.draftMeta}
           initialSettings={draftSettings}
           liveHref={modulePath(data.site, "")}
           publishHref={modulePath(data.site, "/admin/design/publications")}

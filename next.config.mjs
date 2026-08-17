@@ -1,9 +1,42 @@
+const devWatchIgnored = [
+  "**/.git/**",
+  "**/.codex/**",
+  "**/.codex-artifacts/**",
+  "**/.next*/**",
+  "**/node_modules/**",
+  "**/artifacts/**",
+  "**/backups/**",
+  "**/coverage/**",
+  "**/data/customer-assets/**",
+  "**/output/**",
+  "**/public/assets/**",
+  "**/tmp/**",
+  "**/work_pdf_translation/**"
+];
+
+function mergeWatchIgnored(existingIgnored) {
+  const existingGlobs = Array.isArray(existingIgnored)
+    ? existingIgnored.filter((value) => typeof value === "string" && value.length > 0)
+    : typeof existingIgnored === "string" && existingIgnored.length > 0
+      ? [existingIgnored]
+      : [];
+
+  return [...new Set([...existingGlobs, ...devWatchIgnored])];
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   distDir: process.env.NEXT_DIST_DIR || ".next",
   devIndicators: false,
   typedRoutes: false,
   htmlLimitedBots: /.*/,
+  experimental: {
+    webpackMemoryOptimizations: true
+  },
+  onDemandEntries: {
+    maxInactiveAge: 60_000,
+    pagesBufferLength: 2
+  },
   images: {
     localPatterns: [
       { pathname: "/assets/site-media/**" },
@@ -11,8 +44,19 @@ const nextConfig = {
       { pathname: "/assets/dreamshoot/**" }
     ]
   },
+  webpack(config, { dev }) {
+    if (dev) {
+      config.watchOptions = {
+        ...config.watchOptions,
+        ignored: mergeWatchIgnored(config.watchOptions?.ignored)
+      };
+    }
+    return config;
+  },
   async headers() {
     const publicStorefrontCache = { key: "Cache-Control", value: "public, max-age=60, s-maxage=300, stale-while-revalidate=1800" };
+    const publicStorefrontCdnCache = { key: "CDN-Cache-Control", value: "public, s-maxage=300, stale-while-revalidate=1800" };
+    const publicStorefrontCloudflareCache = { key: "Cloudflare-CDN-Cache-Control", value: "public, s-maxage=300, stale-while-revalidate=1800" };
     const privateStorefrontCache = { key: "Cache-Control", value: "private, no-store, max-age=0, must-revalidate" };
     const securityHeaders = [
       { key: "X-Content-Type-Options", value: "nosniff" },
@@ -35,7 +79,9 @@ const nextConfig = {
     ];
     const publicStorefrontHeaders = [
       ...securityHeaders,
-      publicStorefrontCache
+      publicStorefrontCache,
+      publicStorefrontCdnCache,
+      publicStorefrontCloudflareCache
     ];
 
     return [
@@ -79,6 +125,22 @@ const nextConfig = {
       },
       {
         source: "/collections/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/ai-image-generation",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/ai-image-generation/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/ai-video-generation",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/ai-video-generation/:path*",
         headers: publicStorefrontHeaders
       },
       {
@@ -235,6 +297,22 @@ const nextConfig = {
       },
       {
         source: "/site/:siteSlug/collections/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/ai-image-generation",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/ai-image-generation/:path*",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/ai-video-generation",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/ai-video-generation/:path*",
         headers: publicStorefrontHeaders
       },
       {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Film, ImageIcon, Pencil, Plus, Save, Search, Trash2, X } from "lucide-react";
+import { ExternalLink, FileSpreadsheet, Film, ImageIcon, Pencil, Plus, Save, Search, Trash2, UploadCloud, X } from "lucide-react";
 import { fetchAdminJson } from "@/components/admin/admin-api-client";
 import {
   ErpField,
@@ -56,6 +56,15 @@ type CategorySaveResult = {
   error?: string;
 };
 
+type ImportPreviewResult = {
+  ok?: boolean;
+  error?: string;
+  categories?: Array<{ slug: string; label: string }>;
+  themes?: Array<{ slug: string; name: string }>;
+  errors?: Array<{ row: number; field?: string; message: string }>;
+  imported?: { categories: number; themes: number };
+};
+
 const statusLabels: Record<Status, string> = {
   active: "已启用",
   draft: "草稿",
@@ -96,6 +105,7 @@ function newThemeDraft(categoryId?: string): Omit<VideoTheme, "id" | "siteId" | 
     modelPricing: defaultVideoModelPricing(24),
     durationSeconds: 6,
     maxFrames: DEFAULT_VIDEO_FRAME_LIMIT,
+    sortOrder: 0,
     imageUrl: "",
     galleryImages: []
   };
@@ -132,13 +142,29 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [editingTheme, setEditingTheme] = useState<VideoTheme | null>(null);
+  const [editingCategory, setEditingCategory] = useState<VideoThemeCategory | null>(null);
+  const [importFile, setImportFile] = useState<File | null>(null);
+  const [importPreview, setImportPreview] = useState<ImportPreviewResult | null>(null);
+  const [importing, setImporting] = useState(false);
   const [draftTheme, setDraftTheme] = useState(() => newThemeDraft());
-  const [categoryDraft, setCategoryDraft] = useState({ label: "", slug: "", description: "", imageUrl: "", sortOrder: 0, status: "active" as Status });
+  const [categoryDraft, setCategoryDraft] = useState({ label: "", slug: "", description: "", icon: "", accentColor: "", imageUrl: "", sortOrder: 0, status: "active" as Status });
+  const [siteBasePath, setSiteBasePath] = useState("");
 
   const categoryById = useMemo(() => new Map(categories.map((category) => [category.id, category])), [categories]);
   const categoryOptions = categories.length ? categories : [];
+  const adminPagesHref = siteBasePath ? `${siteBasePath}/admin/design/pages` : "/admin/design/pages";
+  const mediaLibraryHref = siteBasePath ? `${siteBasePath}/admin/media` : "/admin/media";
+  const themePreviewHref = useCallback((theme: Pick<VideoTheme, "slug">) => {
+    const slug = theme.slug?.trim();
+    return slug ? `${siteBasePath}/ai-video-generation/${slug}` : "";
+  }, [siteBasePath]);
   const themeFiltersRef = useRef({ query, statusFilter, categoryFilter });
   themeFiltersRef.current = { query, statusFilter, categoryFilter };
+
+  useEffect(() => {
+    const match = window.location.pathname.match(/^\/site\/[^/]+/);
+    setSiteBasePath(match?.[0] ?? "");
+  }, []);
 
   const loadCategories = useCallback(async (signal?: AbortSignal) => {
     const response = await fetchAdminJson<CategoryQueryResult>(`/api/sites/${siteId}/video-theme-categories?admin=1`, { init: { signal }, ttlMs: 0 });
@@ -195,6 +221,10 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
     setEditingTheme((current) => current ? { ...current, [key]: value } : current);
   }
 
+  function updateEditingCategory<K extends keyof VideoThemeCategory>(key: K, value: VideoThemeCategory[K]) {
+    setEditingCategory((current) => current ? { ...current, [key]: value } : current);
+  }
+
   async function createCategory() {
     if (!categoryDraft.label.trim()) {
       setMessage("请先填写分类名称。");
@@ -212,12 +242,88 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
       });
       if (!response.ok || !response.data.category) throw new Error(response.data.error ?? "分类创建失败。");
       setCategories((items) => updateListItem(items, response.data.category!));
-      setCategoryDraft({ label: "", slug: "", description: "", imageUrl: "", sortOrder: 0, status: "active" });
+      setCategoryDraft({ label: "", slug: "", description: "", icon: "", accentColor: "", imageUrl: "", sortOrder: 0, status: "active" });
       setMessage(`已创建视频分类：${response.data.category.label}`);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "分类创建失败。");
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function persistEditingCategory() {
+    if (!editingCategory) return;
+    setSaving(true);
+    try {
+      const response = await fetchAdminJson<CategorySaveResult>(`/api/sites/${siteId}/video-theme-categories/${editingCategory.id}`, {
+        init: {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(editingCategory)
+        },
+        ttlMs: 0
+      });
+      if (!response.ok || !response.data.category) throw new Error(response.data.error ?? "分类保存失败。");
+      setCategories((items) => updateListItem(items, response.data.category!));
+      setEditingCategory(response.data.category);
+      setMessage(`已保存视频分类：${response.data.category.label}`);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "分类保存失败。");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function deleteCategory(category: VideoThemeCategory) {
+    const themeCount = themes.filter((theme) => theme.categoryId === category.id).length;
+    if (!window.confirm(themeCount ? `分类「${category.label}」下有 ${themeCount} 个主题，删除后主题会变为未分类。确认继续吗？` : `确认删除分类「${category.label}」吗？`)) return;
+    setSaving(true);
+    try {
+      const response = await fetchAdminJson<{ deletedCategory?: VideoThemeCategory; error?: string }>(`/api/sites/${siteId}/video-theme-categories/${category.id}`, {
+        init: { method: "DELETE" },
+        ttlMs: 0
+      });
+      if (!response.ok) throw new Error(response.data.error ?? "分类删除失败。");
+      setCategories((items) => items.filter((item) => item.id !== category.id));
+      setThemes((items) => items.map((theme) => theme.categoryId === category.id ? { ...theme, categoryId: undefined, category: undefined } : theme));
+      setEditingCategory(null);
+      await loadThemes();
+      setMessage(`已删除视频分类：${category.label}`);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "分类删除失败。");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function runImport(mode: "preview" | "commit") {
+    if (!importFile) {
+      setMessage("请先选择 CSV 或 XLSX 文件。");
+      return;
+    }
+    setImporting(true);
+    try {
+      const form = new FormData();
+      form.set("file", importFile);
+      form.set("mode", mode);
+      const response = await fetch(`/api/sites/${siteId}/video-themes/import`, {
+        method: "POST",
+        body: form,
+        credentials: "same-origin"
+      });
+      const data = await response.json() as ImportPreviewResult;
+      setImportPreview(data);
+      if (!response.ok) throw new Error(data.error ?? "导入校验失败。");
+      if (mode === "commit") {
+        await Promise.all([loadCategories(), loadThemes()]);
+        setMessage(`导入完成：${data.imported?.categories ?? 0} 个分类，${data.imported?.themes ?? 0} 个主题。`);
+      } else {
+        setMessage(data.errors?.length ? `预览发现 ${data.errors.length} 个错误，请修正后再导入。` : `预览通过：${data.categories?.length ?? 0} 个分类，${data.themes?.length ?? 0} 个主题。`);
+      }
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "导入失败。");
+    } finally {
+      setImporting(false);
     }
   }
 
@@ -236,6 +342,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
       modelPricing: normalizeVideoModelPricing(theme.modelPricing, theme.creditCost),
       durationSeconds: Math.min(15, Math.max(1, Math.trunc(Number(theme.durationSeconds) || 6))),
       maxFrames: normalizeVideoFrameLimit(theme.maxFrames),
+      sortOrder: Math.trunc(Number(theme.sortOrder) || 0),
       imageUrl: theme.imageUrl || "",
       galleryImages: theme.galleryImages ?? []
     };
@@ -318,6 +425,8 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
     void loadThemes({ categoryFilter: nextCategory });
   }
 
+  const editingThemePreviewHref = editingTheme ? themePreviewHref(editingTheme) : "";
+
   if (loading) {
     return (
       <div className="rounded-[12px] border border-slate-200 bg-slate-50 p-5 text-sm text-slate-500">
@@ -368,6 +477,38 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
         </div>
       ) : null}
 
+      <details className="rounded-[12px] border border-slate-200 bg-white p-4">
+        <summary className="cursor-pointer text-sm font-semibold text-slate-900">导入分类和主题</summary>
+        <div className="mt-4 grid gap-3">
+          <label className="flex min-h-24 cursor-pointer items-center justify-center gap-3 rounded-[10px] border border-dashed border-slate-300 bg-slate-50 px-4 text-sm text-slate-500 hover:border-blue-300 hover:bg-blue-50/40">
+            <FileSpreadsheet className="h-5 w-5 text-emerald-600" strokeWidth={1.8} />
+            <span>{importFile ? importFile.name : "选择 CSV 或 XLSX 文件"}</span>
+            <input accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" className="sr-only" onChange={(event) => { setImportFile(event.target.files?.[0] ?? null); setImportPreview(null); }} type="file" />
+          </label>
+          <p className="text-xs leading-5 text-slate-500">每行可包含一个一级分类和一个二级主题。预览阶段会校验重复 slug、缺失分类、非法 slug 和必填字段；确认导入时先保存分类，再保存主题。</p>
+          <div className="flex flex-wrap gap-2">
+            <button className="input_btn inline-flex h-9 items-center px-4" disabled={importing || !importFile} onClick={() => runImport("preview")} type="button">
+              <UploadCloud className="mr-2 h-4 w-4" strokeWidth={1.8} />
+              预览校验
+            </button>
+            <button className="inline-flex h-9 items-center rounded-lg border border-blue-200 bg-blue-50 px-4 text-sm font-semibold text-blue-700 disabled:opacity-40" disabled={importing || !importFile || Boolean(importPreview?.errors?.length)} onClick={() => runImport("commit")} type="button">
+              确认导入
+            </button>
+          </div>
+          {importPreview ? (
+            <div className="grid gap-2 rounded-[10px] border border-slate-200 bg-slate-50 p-3 text-xs">
+              <p className="font-semibold text-slate-700">预览结果：{importPreview.categories?.length ?? 0} 个分类，{importPreview.themes?.length ?? 0} 个主题</p>
+              {importPreview.errors?.length ? (
+                <div className="grid gap-1 text-red-600">
+                  {importPreview.errors.slice(0, 12).map((item, index) => <p key={`${item.row}-${item.field}-${index}`}>第 {item.row} 行{item.field ? ` · ${item.field}` : ""}：{item.message}</p>)}
+                  {importPreview.errors.length > 12 ? <p>还有 {importPreview.errors.length - 12} 个错误未展开。</p> : null}
+                </div>
+              ) : <p className="text-emerald-700">校验通过，可以确认导入。</p>}
+            </div>
+          ) : null}
+        </div>
+      </details>
+
       <details className="rounded-[12px] border border-slate-200 bg-slate-50 p-4" open={!categories.length}>
         <summary className="cursor-pointer text-sm font-semibold text-slate-900">维护视频分类</summary>
         <ErpFormGrid className="mt-4" columns={2}>
@@ -379,6 +520,12 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
           </ErpField>
           <ErpField label="封面 URL">
             <ErpInput onChange={(event) => setCategoryDraft((current) => ({ ...current, imageUrl: event.target.value }))} value={categoryDraft.imageUrl} />
+          </ErpField>
+          <ErpField label="图标名称">
+            <ErpInput onChange={(event) => setCategoryDraft((current) => ({ ...current, icon: event.target.value }))} placeholder="camera" value={categoryDraft.icon} />
+          </ErpField>
+          <ErpField hint="支持 #RRGGBB。" label="主题色">
+            <ErpInput onChange={(event) => setCategoryDraft((current) => ({ ...current, accentColor: event.target.value }))} placeholder="#38a8ff" value={categoryDraft.accentColor} />
           </ErpField>
           <ErpField label="排序">
             <ErpInput onChange={(event) => setCategoryDraft((current) => ({ ...current, sortOrder: Number(event.target.value) }))} type="number" value={categoryDraft.sortOrder} />
@@ -399,6 +546,23 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
             <Plus className="mr-2 h-4 w-4" strokeWidth={1.8} />
             新建分类
           </button>
+        </div>
+        <div className="mt-5 grid gap-2 border-t border-slate-200 pt-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">已有分类</p>
+          {categories.map((category) => (
+            <div className="flex flex-wrap items-center gap-3 rounded-[10px] border border-slate-200 bg-white px-3 py-2" key={category.id}>
+              <span className="h-3 w-3 rounded-full border border-slate-200" style={{ backgroundColor: category.accentColor || "#cbd5e1" }} />
+              <span className="min-w-0 flex-1">
+                <strong className="block truncate text-sm text-slate-900">{category.label}</strong>
+                <span className="text-xs text-slate-500">{category.slug} · {themes.filter((theme) => theme.categoryId === category.id).length} 个主题</span>
+              </span>
+              <StatusPill label={statusLabels[category.status]} tone={statusTone(category.status)} />
+              <button className="inline-flex h-8 items-center rounded-lg border border-slate-200 px-3 text-xs font-semibold text-slate-600 hover:bg-slate-50" onClick={() => setEditingCategory({ ...category })} type="button">
+                <Pencil className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />
+                编辑
+              </button>
+            </div>
+          ))}
         </div>
       </details>
 
@@ -479,6 +643,67 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
         当前筛选共 {total} 个主题。前台只展示状态为“已启用”的主题；时长会作为供应商入参，最大帧图数上限固定为 {MAX_VIDEO_FRAME_LIMIT}。
       </div>
 
+      {editingCategory ? (
+        <div className="fixed inset-0 z-[240] flex items-center justify-center bg-black/40 px-4 py-8">
+          <div className="w-[min(680px,96vw)] rounded-2xl border border-slate-200 bg-white shadow-[0_34px_110px_-56px_rgba(0,0,0,0.75)]">
+            <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-400">Video category</p>
+                <h3 className="mt-1 text-lg font-semibold text-slate-900">{editingCategory.label}</h3>
+              </div>
+              <button className="grid h-9 w-9 place-items-center rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50" onClick={() => setEditingCategory(null)} type="button">
+                <X className="h-4 w-4" strokeWidth={1.8} />
+              </button>
+            </div>
+            <div className="grid gap-4 p-5">
+              <ErpFormGrid columns={2}>
+                <ErpField label="分类名称">
+                  <ErpInput onChange={(event) => updateEditingCategory("label", event.target.value)} value={editingCategory.label} />
+                </ErpField>
+                <ErpField label="Slug">
+                  <ErpInput onChange={(event) => updateEditingCategory("slug", event.target.value)} value={editingCategory.slug} />
+                </ErpField>
+                <ErpField label="图标名称">
+                  <ErpInput onChange={(event) => updateEditingCategory("icon", event.target.value)} value={editingCategory.icon ?? ""} />
+                </ErpField>
+                <ErpField label="主题色">
+                  <ErpInput onChange={(event) => updateEditingCategory("accentColor", event.target.value)} placeholder="#38a8ff" value={editingCategory.accentColor ?? ""} />
+                </ErpField>
+                <ErpField label="封面 URL" span="full">
+                  <ErpInput onChange={(event) => updateEditingCategory("imageUrl", event.target.value)} value={editingCategory.imageUrl ?? ""} />
+                </ErpField>
+                <ErpField label="排序">
+                  <ErpInput onChange={(event) => updateEditingCategory("sortOrder", Number(event.target.value))} type="number" value={editingCategory.sortOrder} />
+                </ErpField>
+                <ErpField label="状态">
+                  <ErpSelect onChange={(event) => updateEditingCategory("status", event.target.value as Status)} value={editingCategory.status}>
+                    <option value="active">已启用</option>
+                    <option value="draft">草稿</option>
+                    <option value="paused">已暂停</option>
+                  </ErpSelect>
+                </ErpField>
+                <ErpField label="描述" span="full">
+                  <ErpTextarea onChange={(event) => updateEditingCategory("description", event.target.value ?? "")} rows={3} value={editingCategory.description ?? ""} />
+                </ErpField>
+              </ErpFormGrid>
+              <div className="flex flex-wrap justify-between gap-3 border-t border-slate-100 pt-4">
+                <button className="inline-flex h-9 items-center rounded-lg border border-red-100 bg-white px-4 text-sm text-red-600 disabled:opacity-40" disabled={saving} onClick={() => deleteCategory(editingCategory)} type="button">
+                  <Trash2 className="mr-2 h-4 w-4" strokeWidth={1.8} />
+                  删除分类
+                </button>
+                <div className="flex gap-2">
+                  <ErpToolbarAction label="取消" onClick={() => setEditingCategory(null)} />
+                  <button className="input_btn inline-flex h-9 items-center px-4" disabled={saving} onClick={persistEditingCategory} type="button">
+                    <Save className="mr-2 h-4 w-4" strokeWidth={1.8} />
+                    保存分类
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       {editingTheme ? (
         <div className="fixed inset-0 z-[240] flex items-center justify-center bg-black/40 px-4 py-8">
           <div className="max-h-[90vh] w-[min(980px,96vw)] overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-[0_34px_110px_-56px_rgba(0,0,0,0.75)]">
@@ -486,6 +711,22 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-400">Video theme</p>
                 <h3 className="mt-1 text-lg font-semibold text-slate-900">{editingTheme.name}</h3>
+                <div className="mt-2 flex flex-wrap gap-2 text-xs">
+                  {editingThemePreviewHref ? (
+                    <a className="inline-flex items-center rounded-full border border-slate-200 px-2.5 py-1 text-slate-600 hover:border-blue-200 hover:text-blue-600" href={editingThemePreviewHref} rel="noreferrer" target="_blank">
+                      <ExternalLink className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />
+                      预览详情页
+                    </a>
+                  ) : null}
+                  <a className="inline-flex items-center rounded-full border border-slate-200 px-2.5 py-1 text-slate-600 hover:border-blue-200 hover:text-blue-600" href={adminPagesHref} rel="noreferrer" target="_blank">
+                    <ExternalLink className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />
+                    维护详情页面
+                  </a>
+                  <a className="inline-flex items-center rounded-full border border-slate-200 px-2.5 py-1 text-slate-600 hover:border-blue-200 hover:text-blue-600" href={mediaLibraryHref} rel="noreferrer" target="_blank">
+                    <ImageIcon className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />
+                    打开媒体库
+                  </a>
+                </div>
               </div>
               <button className="grid h-9 w-9 place-items-center rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50" onClick={() => setEditingTheme(null)} type="button">
                 <X className="h-4 w-4" strokeWidth={1.8} />
@@ -576,6 +817,9 @@ function ThemeForm<T extends Partial<VideoTheme>>({
         <ErpField label="视频时长（秒）">
           <ErpInput max={15} min={1} onChange={(event) => onChange("durationSeconds" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.durationSeconds ?? 6} />
         </ErpField>
+        <ErpField label="排序">
+          <ErpInput onChange={(event) => onChange("sortOrder" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.sortOrder ?? 0} />
+        </ErpField>
         <ErpField hint="前台自动按可用视频供应商候选中的最高配置价和时长扣费；旧积分消耗仅作为未配置时的兜底基准。" label="分模型用户扣费" span="full">
           <div className="grid gap-2 rounded-[10px] border border-slate-200 bg-slate-50 p-3 sm:grid-cols-4">
             {videoModelPricingInputs.map((item) => (
@@ -594,7 +838,7 @@ function ThemeForm<T extends Partial<VideoTheme>>({
         <ErpField hint={`最多可传 ${MAX_VIDEO_FRAME_LIMIT} 张，前台和后端会按此上限统一校验。`} label="最大帧图数">
           <ErpInput max={MAX_VIDEO_FRAME_LIMIT} min={1} onChange={(event) => onChange("maxFrames" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.maxFrames ?? DEFAULT_VIDEO_FRAME_LIMIT} />
         </ErpField>
-        <ErpField label="封面 URL">
+        <ErpField hint="可从媒体库复制资源 URL，也可填写外部图片地址。" label="封面 URL">
           <ErpInput onChange={(event) => onChange("imageUrl" as keyof T, event.target.value as T[keyof T])} value={theme.imageUrl ?? ""} />
         </ErpField>
         <ErpField label="卡片标题" span="full">

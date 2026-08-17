@@ -1,6 +1,7 @@
 import "server-only";
 
 import { normalizeCreativePackIconName, uniqueCreativePackIconName } from "@/lib/creative-pack-icons";
+import { isMydreamshootsVideoFrameworkSiteId } from "@/lib/mydreamshoots-video-framework";
 import { prisma } from "@/lib/prisma";
 import { uid } from "@/lib/stores/prisma-mappers";
 import type { SectionBlockInstance } from "@/lib/types";
@@ -98,6 +99,10 @@ type EnsureDefaultToolMenuTaxonomyOptions = {
 };
 
 export async function ensureDefaultToolMenuTaxonomy(siteId: string, options: EnsureDefaultToolMenuTaxonomyOptions = {}) {
+  if (isMydreamshootsVideoFrameworkSiteId(siteId)) {
+    preparedDefaultToolTaxonomySites.add(siteId);
+    return;
+  }
   if (!options.force && preparedDefaultToolTaxonomySites.has(siteId)) return;
   let existingCategories = 0;
   let existingMenuItems = 0;

@@ -21,6 +21,7 @@ function themeBody(body: Record<string, unknown>): Partial<VideoTheme> {
     modelPricing: normalizeVideoModelPricing(body.modelPricing, Number(body.creditCost)),
     durationSeconds: Number(body.durationSeconds),
     maxFrames: Number(body.maxFrames),
+    sortOrder: Number(body.sortOrder),
     imageUrl: typeof body.imageUrl === "string" ? body.imageUrl : undefined,
     galleryImages: Array.isArray(body.galleryImages)
       ? body.galleryImages.filter((item): item is string => typeof item === "string")
@@ -49,6 +50,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
       modelPricing: body.modelPricing,
       durationSeconds: Number(body.durationSeconds),
       maxFrames: Number(body.maxFrames),
+      sortOrder: Number(body.sortOrder),
       imageUrl: body.imageUrl,
       galleryImages: body.galleryImages
     });

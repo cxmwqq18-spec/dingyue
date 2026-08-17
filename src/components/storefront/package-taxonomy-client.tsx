@@ -3,14 +3,18 @@
 import { useMemo } from "react";
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
+import { storefrontCardImageAlt } from "@/lib/storefront-media-alt";
 
 export type PackageTaxonomyCard = {
+  brand?: string;
   id: string;
   title: string;
   description: string;
   meta: string;
   keywords: string[];
   imageUrl: string;
+  imageAlt?: string;
+  imageAlts?: string[];
   imageUrls?: string[];
   href: string;
   appHref: string;
@@ -30,9 +34,26 @@ function cardLinkLabel(action: string, title: string) {
   return `${action}: ${title || "this package"}`;
 }
 
-function isSpanishCard(card: PackageTaxonomyCard | null | undefined): boolean {
-  if (!card) return false;
-  return /\b(creditos?|galeria|retrato|retratos|viaje|ruta|album|paquete|fotos?|privad[oa])\b/i.test(`${card.title} ${card.description} ${card.meta} ${card.chips.join(" ")}`);
+function taxonomyImageAlt(
+  card: PackageTaxonomyCard,
+  imageUrl: string,
+  imageIndex: number,
+  locale: "en" | "es",
+  role: "cover" | "gallery" | "card" = "card"
+) {
+  return storefrontCardImageAlt({
+    brand: card.brand,
+    category: card.meta,
+    description: card.description,
+    explicitAlt: imageIndex === 0 ? card.imageAlt : undefined,
+    imageAlts: card.imageAlts,
+    imageUrl,
+    index: imageIndex,
+    locale,
+    meta: card.chips[0],
+    role,
+    title: card.title
+  });
 }
 
 function slugFromHref(href: string) {
@@ -76,7 +97,7 @@ function SafeTaxonomyImage({
   loading?: "eager" | "lazy";
   src: string;
 }) {
-  const safeAlt = alt.trim() || "Private photo package preview";
+  const safeAlt = alt.trim() || "AI-generated private package visual showing a styled subject and intended gallery use";
   return (
     <img
       alt={safeAlt}
@@ -110,7 +131,15 @@ const splitPhotoCountClass =
   "rounded-[8px] border border-cyan-200/18 bg-[#0D2B2C]/70 px-2.5 py-1 text-xs font-semibold leading-5 text-[#58E6D9] shadow-[inset_0_1px_0_rgba(255,255,255,0.10)]";
 const splitUsesClass = "truncate text-xs leading-5 text-slate-500";
 
-function SplitPackageTaxonomyCard({ card, index }: { card: PackageTaxonomyCard; index: number }) {
+function SplitPackageTaxonomyCard({
+  card,
+  index,
+  locale
+}: {
+  card: PackageTaxonomyCard;
+  index: number;
+  locale: "en" | "es";
+}) {
   const images = cardImageUrls(card);
   const tags = (card.tags?.length ? card.tags : card.keywords).filter(Boolean).slice(0, 3);
   return (
@@ -123,8 +152,8 @@ function SplitPackageTaxonomyCard({ card, index }: { card: PackageTaxonomyCard; 
         <div className={images.length > 1 ? "grid grid-cols-2 items-stretch gap-0.5 p-3" : "grid items-stretch p-3"}>
           {images.slice(0, 2).map((image, imageIndex) => (
             <div className={images.length > 1 ? splitImageFrameClass : splitSingleImageFrameClass} key={`${card.id}_taxonomy_${imageIndex}`}>
-              <SafeTaxonomyImage
-                alt={imageIndex === 0 ? `${card.title} preview` : `${card.title} gallery preview`}
+	              <SafeTaxonomyImage
+	                alt={taxonomyImageAlt(card, image, imageIndex, locale, imageIndex === 0 ? "card" : "gallery")}
                 className="h-full object-cover transition duration-500"
                 decoding="async"
                 fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
@@ -164,10 +193,12 @@ function SplitPackageTaxonomyCard({ card, index }: { card: PackageTaxonomyCard; 
 export function PackageTaxonomyClient({
   cards,
   initialSlug = "",
+  locale = "en",
   variant = "dark"
 }: {
   cards: PackageTaxonomyCard[];
   initialSlug?: string;
+  locale?: "en" | "es";
   variant?: "dark" | "cream";
 }) {
   const initialCard = useMemo(() => {
@@ -178,7 +209,7 @@ export function PackageTaxonomyClient({
   const selected = initialCard;
 
   if (selected) {
-    const spanish = isSpanishCard(selected);
+    const spanish = locale === "es";
     const detailBestFor = selected.detailBestFor ?? [];
     const detailReviewPoints = selected.detailReviewPoints ?? [];
     const detailStats = selected.detailStats ?? [];
@@ -233,8 +264,8 @@ export function PackageTaxonomyClient({
             <div className={selectedImages.length > 1 ? "grid grid-cols-2 items-start gap-3" : "grid items-start"}>
               {selectedImages.map((image, index) => (
                 <div className={`overflow-hidden rounded-[18px] ${selectedImageBgClass}`} key={`${selected.id}_detail_${image}_${index}`}>
-                  <SafeTaxonomyImage
-                    alt={spanish ? `${selected.title} vista previa privada ${index + 1}` : `${selected.title} preview ${index + 1}`}
+	                  <SafeTaxonomyImage
+	                    alt={taxonomyImageAlt(selected, image, index, locale, "cover")}
                     className="transition duration-500"
                     decoding="async"
                     fetchPriority={index === 0 ? "low" : "auto"}
@@ -317,7 +348,7 @@ export function PackageTaxonomyClient({
       <DreamshootShowcasePreview>
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-package-taxonomy-client="ready">
         {cards.map((card, index) => (
-          <SplitPackageTaxonomyCard card={card} index={index} key={card.id} />
+          <SplitPackageTaxonomyCard card={card} index={index} key={card.id} locale={locale} />
         ))}
       </div>
       </DreamshootShowcasePreview>
@@ -328,7 +359,7 @@ export function PackageTaxonomyClient({
     <DreamshootShowcasePreview>
     <div className="mt-10 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-12" data-package-taxonomy-client="ready">
       {cards.map((card, index) => {
-        const spanish = isSpanishCard(card);
+        const spanish = locale === "es";
         const mosaicVariant = index % 10;
         const cardSpanClass = mosaicVariant === 0
           ? "lg:col-span-7"
@@ -360,8 +391,8 @@ export function PackageTaxonomyClient({
             key={card.id}
           >
             <div className="relative overflow-hidden bg-white/[0.035]">
-              <SafeTaxonomyImage
-                alt={card.title}
+	              <SafeTaxonomyImage
+	                alt={taxonomyImageAlt(card, card.imageUrl, 0, locale, "card")}
                 className="transition duration-700"
                 decoding="async"
                 fetchPriority="low"

@@ -24,6 +24,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
     canPublish: preflight.canPublish,
     score: preflight.score,
     blockerCount: preflight.summary.blockers,
-    warningCount: preflight.summary.warnings
+    warningCount: preflight.summary.warnings,
+    globalVisualChanges: preflight.globalVisualChanges
   });
 }

@@ -12,6 +12,8 @@ function bodyFromRequest(body: Record<string, unknown>): Partial<VideoThemeCateg
     label: typeof body.label === "string" ? body.label : "",
     slug: typeof body.slug === "string" ? body.slug : undefined,
     description: typeof body.description === "string" ? body.description : undefined,
+    icon: typeof body.icon === "string" ? body.icon : undefined,
+    accentColor: typeof body.accentColor === "string" ? body.accentColor : undefined,
     imageUrl: typeof body.imageUrl === "string" ? body.imageUrl : undefined,
     sortOrder: Number.isFinite(Number(body.sortOrder)) ? Math.trunc(Number(body.sortOrder)) : 0,
     status: body.status === "draft" || body.status === "paused" || body.status === "active" ? body.status : "active"
@@ -31,6 +33,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
       label: body.label ?? "",
       slug: body.slug,
       description: body.description,
+      icon: body.icon,
+      accentColor: body.accentColor,
       imageUrl: body.imageUrl,
       sortOrder: body.sortOrder,
       status: body.status

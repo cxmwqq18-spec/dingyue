@@ -26,11 +26,16 @@ function previewFromTrigger(trigger: HTMLElement): ShowcasePreview | null {
   const src = trigger.dataset.dreamshootPreviewSrc;
   if ((kind !== "image" && kind !== "video") || !src) return null;
 
+  const embeddedImage = trigger.querySelector<HTMLImageElement>("img[alt]");
+  const embeddedVideo = trigger.querySelector<HTMLVideoElement>("video[aria-label], video[title]");
+  const embeddedTitle = kind === "image"
+    ? embeddedImage?.alt?.trim()
+    : embeddedVideo?.getAttribute("aria-label")?.trim() || embeddedVideo?.title?.trim();
   return {
     kind,
     src,
     poster: trigger.dataset.dreamshootPreviewPoster,
-    title: trigger.dataset.dreamshootPreviewTitle || (kind === "image" ? "Image example" : "Video example"),
+    title: trigger.dataset.dreamshootPreviewTitle || embeddedTitle || (kind === "image" ? "Image example preview" : "Video example preview"),
     meta: trigger.dataset.dreamshootPreviewMeta || ""
   };
 }

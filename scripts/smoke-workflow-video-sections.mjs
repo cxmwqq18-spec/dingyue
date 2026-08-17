@@ -6,17 +6,16 @@ const repoRoot = process.cwd();
 const state = JSON.parse(fs.readFileSync(path.join(repoRoot, "data", "platform-state.json"), "utf8"));
 const failures = [];
 
-const insertedOrder = ["tutorial_video_1", "tutorial_image_video_1", "mobile_video_1"];
+const insertedOrderBySite = {
+  site_dreamshoot: ["tutorial_video_1", "tutorial_image_video_1"],
+  site_aidreamcapes: ["tutorial_video_1", "tutorial_image_video_1", "mobile_video_1"]
+};
 const expected = {
   site_dreamshoot: {
     introImage: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
-    video: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4",
-    imageVideo: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4",
-    mobileImage: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png",
-    mobileLeftVideo: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-mobile-tutorial-55s.mp4",
-    mobileRightVideo: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-55s.mp4",
-    mobileLeftPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-mobile-tutorial-55s.jpg",
-    mobileRightPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-55s.jpg"
+    video: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-20260814.mp4",
+    imageVideo: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-video-tutorial-20260814.mp4",
+    mobileRemoved: true
   },
   site_aidreamcapes: {
     introImage: "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp",
@@ -67,6 +66,8 @@ function requireWorkflowJson(siteId, jsonName, json) {
     fail(`invalid_workflow_json:${siteId}:${jsonName}`);
     return;
   }
+  const expectedSite = expected[siteId];
+  const insertedOrder = insertedOrderBySite[siteId] ?? insertedOrderBySite.site_dreamshoot;
   const introIndex = json.sectionsOrder.indexOf("workflow_intro_1");
   const actualInsert = json.sectionsOrder.slice(introIndex + 1, introIndex + 1 + insertedOrder.length);
   if (introIndex === -1 || JSON.stringify(actualInsert) !== JSON.stringify(insertedOrder)) {
@@ -79,34 +80,44 @@ function requireWorkflowJson(siteId, jsonName, json) {
   const intro = json.sections.workflow_intro_1;
   if (tutorialVideo?.type !== "video_feature") fail(`bad_tutorial_video_type:${siteId}:${jsonName}:${tutorialVideo?.type}`);
   if (tutorialImageVideo?.type !== "video_feature") fail(`bad_tutorial_image_video_type:${siteId}:${jsonName}:${tutorialImageVideo?.type}`);
-  if (mobileVideo?.type !== "mobile_video_showcase") fail(`bad_mobile_video_type:${siteId}:${jsonName}:${mobileVideo?.type}`);
+  if (expectedSite?.mobileRemoved) {
+    if (mobileVideo) fail(`mobile_video_should_be_removed:${siteId}:${jsonName}`);
+    if (json.sectionsOrder.includes("mobile_video_1")) fail(`mobile_video_should_not_be_ordered:${siteId}:${jsonName}`);
+  } else if (mobileVideo?.type !== "mobile_video_showcase") {
+    fail(`bad_mobile_video_type:${siteId}:${jsonName}:${mobileVideo?.type}`);
+  }
 
   requireAsset(tutorialVideo?.settings?.imageUrl, `${siteId}:${jsonName}:tutorial_video_poster`);
   requireAsset(tutorialVideo?.settings?.videoUrl, `${siteId}:${jsonName}:tutorial_video_file`);
   requireAsset(tutorialImageVideo?.settings?.imageUrl, `${siteId}:${jsonName}:tutorial_image_video_poster`);
   requireAsset(tutorialImageVideo?.settings?.videoUrl, `${siteId}:${jsonName}:tutorial_image_video_file`);
-  requireAsset(mobileVideo?.settings?.imageUrl, `${siteId}:${jsonName}:mobile_left_image`);
-  requireAsset(mobileVideo?.settings?.leftVideoUrl, `${siteId}:${jsonName}:mobile_left_video`);
-  requireAsset(mobileVideo?.settings?.rightVideoUrl, `${siteId}:${jsonName}:mobile_right_video`);
-  requireAsset(mobileVideo?.settings?.leftVideoPoster, `${siteId}:${jsonName}:mobile_left_poster`);
-  requireAsset(mobileVideo?.settings?.rightVideoPoster, `${siteId}:${jsonName}:mobile_right_poster`);
-  requireAsset(mobileVideo?.settings?.videoUrl, `${siteId}:${jsonName}:mobile_legacy_video`);
-  requireAsset(mobileVideo?.settings?.videoPoster, `${siteId}:${jsonName}:mobile_video_poster`);
+  if (!expectedSite?.mobileRemoved) {
+    requireAsset(mobileVideo?.settings?.imageUrl, `${siteId}:${jsonName}:mobile_left_image`);
+    requireAsset(mobileVideo?.settings?.leftVideoUrl, `${siteId}:${jsonName}:mobile_left_video`);
+    requireAsset(mobileVideo?.settings?.rightVideoUrl, `${siteId}:${jsonName}:mobile_right_video`);
+    requireAsset(mobileVideo?.settings?.leftVideoPoster, `${siteId}:${jsonName}:mobile_left_poster`);
+    requireAsset(mobileVideo?.settings?.rightVideoPoster, `${siteId}:${jsonName}:mobile_right_poster`);
+    requireAsset(mobileVideo?.settings?.videoUrl, `${siteId}:${jsonName}:mobile_legacy_video`);
+    requireAsset(mobileVideo?.settings?.videoPoster, `${siteId}:${jsonName}:mobile_video_poster`);
+  }
 
-  const expectedSite = expected[siteId];
   if (expectedSite) {
     requireAsset(intro?.settings?.imageUrl || expectedSite.introImage, `${siteId}:${jsonName}:workflow_intro_image`);
     if (stripVersion(intro?.settings?.imageUrl || expectedSite.introImage) !== expectedSite.introImage) fail(`wrong_workflow_intro_image:${siteId}:${jsonName}`);
     if (stripVersion(tutorialVideo?.settings?.videoUrl) !== expectedSite.video) fail(`wrong_tutorial_video:${siteId}:${jsonName}`);
     if (stripVersion(tutorialImageVideo?.settings?.videoUrl) !== expectedSite.imageVideo) fail(`wrong_tutorial_image_video:${siteId}:${jsonName}`);
-    if (stripVersion(mobileVideo?.settings?.imageUrl) !== expectedSite.mobileImage) fail(`wrong_mobile_image:${siteId}:${jsonName}`);
-    if (stripVersion(mobileVideo?.settings?.leftVideoUrl) !== expectedSite.mobileLeftVideo) fail(`wrong_mobile_left_video:${siteId}:${jsonName}`);
-    if (stripVersion(mobileVideo?.settings?.rightVideoUrl) !== expectedSite.mobileRightVideo) fail(`wrong_mobile_right_video:${siteId}:${jsonName}`);
-    if (stripVersion(mobileVideo?.settings?.leftVideoPoster) !== expectedSite.mobileLeftPoster) fail(`wrong_mobile_left_poster:${siteId}:${jsonName}`);
-    if (stripVersion(mobileVideo?.settings?.rightVideoPoster) !== expectedSite.mobileRightPoster) fail(`wrong_mobile_right_poster:${siteId}:${jsonName}`);
+    if (!expectedSite.mobileRemoved) {
+      if (stripVersion(mobileVideo?.settings?.imageUrl) !== expectedSite.mobileImage) fail(`wrong_mobile_image:${siteId}:${jsonName}`);
+      if (stripVersion(mobileVideo?.settings?.leftVideoUrl) !== expectedSite.mobileLeftVideo) fail(`wrong_mobile_left_video:${siteId}:${jsonName}`);
+      if (stripVersion(mobileVideo?.settings?.rightVideoUrl) !== expectedSite.mobileRightVideo) fail(`wrong_mobile_right_video:${siteId}:${jsonName}`);
+      if (stripVersion(mobileVideo?.settings?.leftVideoPoster) !== expectedSite.mobileLeftPoster) fail(`wrong_mobile_left_poster:${siteId}:${jsonName}`);
+      if (stripVersion(mobileVideo?.settings?.rightVideoPoster) !== expectedSite.mobileRightPoster) fail(`wrong_mobile_right_poster:${siteId}:${jsonName}`);
+    }
   }
-  if (stripVersion(mobileVideo?.settings?.videoUrl) !== expectedSite?.mobileRightVideo) fail(`mobile_video_should_match_right_video:${siteId}:${jsonName}`);
-  if (stripVersion(mobileVideo?.settings?.videoPoster) !== expectedSite?.mobileRightPoster) fail(`mobile_video_poster_should_match_right_poster:${siteId}:${jsonName}`);
+  if (!expectedSite?.mobileRemoved) {
+    if (stripVersion(mobileVideo?.settings?.videoUrl) !== expectedSite?.mobileRightVideo) fail(`mobile_video_should_match_right_video:${siteId}:${jsonName}`);
+    if (stripVersion(mobileVideo?.settings?.videoPoster) !== expectedSite?.mobileRightPoster) fail(`mobile_video_poster_should_match_right_poster:${siteId}:${jsonName}`);
+  }
 }
 
 for (const siteId of Object.keys(expected)) {

@@ -8,6 +8,23 @@ const hostCatchAll = readFileSync(new URL("../src/app/[...path]/page.tsx", impor
 const siteCatchAll = readFileSync(new URL("../src/app/site/[siteSlug]/[...path]/page.tsx", import.meta.url), "utf8");
 const robotsRoute = readFileSync(new URL("../src/app/robots.ts", import.meta.url), "utf8");
 const sitemapRoute = readFileSync(new URL("../src/app/sitemap.xml/route.ts", import.meta.url), "utf8");
+const middleware = readFileSync(new URL("../src/middleware.ts", import.meta.url), "utf8");
+const packageJson = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+const publicStorefrontCdnCache = "public, s-maxage=300, stale-while-revalidate=1800";
+
+const legacyPolicyAliases = [
+  ["/policies/privacy-policy", "/privacy"],
+  ["/policies/terms-of-service", "/terms"],
+  ["/policies/cookie-policy", "/cookies"],
+  ["/policies/delivery", "/shipping"],
+  ["/policies/delivery-policy", "/shipping"],
+  ["/policies/children", "/children-privacy"],
+  ["/policies/children-privacy-policy", "/children-privacy"],
+  ["/policies/childrens-privacy", "/children-privacy"],
+  ["/policies/state-privacy-rights", "/state-privacy"],
+  ["/policies/california-privacy", "/state-privacy"],
+  ["/policies/ccpa", "/state-privacy"]
+];
 
 function assertMetadataSource(path) {
   const escapedPath = path.replace("/", "\\/");
@@ -21,6 +38,10 @@ async function assertHeaders() {
   for (const source of [
     "/collections",
     "/collections/:path*",
+    "/ai-image-generation",
+    "/ai-image-generation/:path*",
+    "/ai-video-generation",
+    "/ai-video-generation/:path*",
     "/tools",
     "/tools/:path*",
     "/pricing",
@@ -34,6 +55,10 @@ async function assertHeaders() {
     "/site/:siteSlug/policies/:path*",
     "/site/:siteSlug/collections",
     "/site/:siteSlug/collections/:path*",
+    "/site/:siteSlug/ai-image-generation",
+    "/site/:siteSlug/ai-image-generation/:path*",
+    "/site/:siteSlug/ai-video-generation",
+    "/site/:siteSlug/ai-video-generation/:path*",
     "/site/:siteSlug/tools",
     "/site/:siteSlug/tools/:path*",
     "/site/:siteSlug/pricing",
@@ -44,8 +69,11 @@ async function assertHeaders() {
     "/site/:siteSlug/creators-circle",
     "/site/:siteSlug/partner-registration"
   ]) {
-    const cache = bySource.get(source)?.find((header) => header.key === "Cache-Control")?.value ?? "";
+    const headersForSource = bySource.get(source) ?? [];
+    const cache = headersForSource.find((header) => header.key === "Cache-Control")?.value ?? "";
     assert.match(cache, /^public,/, `${source} should use public cache headers`);
+    assert.equal(headersForSource.find((header) => header.key === "CDN-Cache-Control")?.value, publicStorefrontCdnCache, `${source} should expose CDN cache headers`);
+    assert.equal(headersForSource.find((header) => header.key === "Cloudflare-CDN-Cache-Control")?.value, publicStorefrontCdnCache, `${source} should expose Cloudflare cache headers`);
   }
   for (const source of [
     "/admin",
@@ -98,15 +126,42 @@ function assertRedirectSource(source, from, to) {
 assertMetadataSource("/workflow");
 assertMetadataSource("/creators-circle");
 assertMetadataSource("/partner-registration");
+assertMetadataSource("/best-packages");
+assertMetadataSource("/best-ai-image");
+assertMetadataSource("/best-ai-video");
 await assertHeaders();
+assert.ok(middleware.includes("guardCookieEnabled !== true"), "storefront guard cookie should be opt-in so public HTML stays cacheable by default");
+assert.match(middleware, /cloudflare-cdn-cache-control/i, "HTML rewrite responses should keep Cloudflare CDN cache headers");
+assert.match(middleware, /rewriteStorefrontHtmlStream/i, "public HTML rewrite should stream after the head instead of buffering the full page");
 assertRedirectSource(hostCatchAll, "/refund-policy", 'redirect("/refunds")');
 assertRedirectSource(hostCatchAll, "/content-policy", 'redirect("/content")');
 assertRedirectSource(siteCatchAll, "/refund-policy", 'redirect(routePath("/refunds"))');
 assertRedirectSource(siteCatchAll, "/content-policy", 'redirect(routePath("/content"))');
-assert.doesNotMatch(
+for (const [alias, target] of legacyPolicyAliases) {
+  assert.ok(hostCatchAll.includes(`slug === "${alias}"`), `host catch-all should redirect legacy policy alias ${alias}`);
+  assert.ok(siteCatchAll.includes(`slug === "${alias}"`), `site catch-all should redirect legacy policy alias ${alias}`);
+  assert.ok(middleware.includes(`"${alias}": "${target}"`), `middleware should redirect legacy policy alias ${alias} to ${target}`);
+  assert.ok(siteRouteCanonical.includes(`"${alias}"`), `canonical helpers should normalize legacy policy alias ${alias}`);
+}
+assert.match(
   robotsRoute,
-  /disallow|Disallow/,
-  "robots.txt should not block private UI paths because Google must be able to see noindex headers"
+  /hostCandidates\.some\(isGrownstrideHost\)/,
+  "grownstride robots.txt must apply its disallow rule behind a host guard"
+);
+assert.match(
+  robotsRoute,
+  /test\.grownstride\.com/,
+  "robots.txt should recognize the grownstride test subdomain"
+);
+assert.match(
+  robotsRoute,
+  /grownstride\.com/,
+  "robots.txt should recognize the grownstride test host"
+);
+assert.match(
+  robotsRoute,
+  /disallow:\s*"\/"/,
+  "grownstride robots.txt should disallow crawling"
 );
 assert.match(
   sitemapRoute,
@@ -119,19 +174,39 @@ assert.match(
   "sitemap route should expose the image sitemap namespace"
 );
 assert.match(
-  hostCatchAll,
-  /PUBLIC_DIRECTORY_PAGE_SLUGS\s*=\s*new Set\(\["\/collections", "\/tools"\]\)/,
-  "host catch-all should treat /collections and /tools roots as public directory pages"
+  middleware,
+  /function canonicalPublicHostSitePathRedirect[\s\S]*PRIVATE_STORE_PATH_RE\.test\(pathname\)\) return undefined;/,
+  "public host canonical redirects must preserve site-scoped private routes such as the store admin login"
 );
 assert.match(
   hostCatchAll,
-  /const publicPageSlug = firstSegment === "collections" && path\[1\] \? "\/collections" : firstSegment === "tools" && path\[1\] \? `\/tools\/\$\{path\[1\]\}` : publicContentPageSlug\(`\/\$\{path\.join\("\/"\)\}`\);/,
-  "host catch-all should keep directory roots canonical while routing detail pages through their directory contexts"
+  /const collectionRootPageSlug = fallbackCollectionRootPathForHost\(host\);[\s\S]*const publicPageSlug = isCollectionRequest[\s\S]*\? collectionRootPageSlug/,
+  "host catch-all should route validated collection requests through the host-aware collection directory context"
 );
 assert.match(
   hostCatchAll,
-  /PUBLIC_DIRECTORY_PAGE_SLUGS\.has\(publicPageSlug\)[\s\S]*Boolean\(resolvedToolPage\)[\s\S]*firstSegment === "collections" && Boolean\(path\[1\]\)/,
-  "host catch-all should allow /collections and /tools roots plus validated directory detail pages"
+  /const collectionRoute = isCollectionRequest \? parsePublicCollectionRouteForSite\(site, path\) : undefined;/,
+  "host catch-all should validate root and leaf collection route combinations"
+);
+assert.match(
+  hostCatchAll,
+  /const videoGenerationRoute = isVideoGenerationRequest \? parsePublicVideoGenerationRouteForSite\(site, path\) : undefined;/,
+  "host catch-all should validate ai-video-generation root and detail routes"
+);
+assert.match(
+  hostCatchAll,
+  /const hasKnownPublicRoute =[\s\S]*Boolean\(collectionRoute\)[\s\S]*;/,
+  "host catch-all should allow validated ai-image-generation routes"
+);
+assert.match(
+  hostCatchAll,
+  /const hasKnownPublicRoute =[\s\S]*Boolean\(videoGenerationRoute\)[\s\S]*;/,
+  "host catch-all should allow validated ai-video-generation routes"
+);
+assert.match(
+  hostCatchAll,
+  /const hasKnownPublicRoute =[\s\S]*Boolean\(findPage\(site, publicPageSlug\)\)[\s\S]*;/,
+  "host catch-all should still allow normal published pages"
 );
 assert.match(
   hostCatchAll,
@@ -163,5 +238,20 @@ assert.ok(
   siteRouteCanonical.includes('requestedPath === "/how-it-works") return "/workflow"'),
   "/how-it-works should remain a legacy alias for /workflow"
 );
+for (const command of [
+  "npm run guard:storefront-launch-seo-contract",
+  "npm run guard:mydreamshoots-content"
+]) {
+  assert.ok(packageJson.scripts?.["deploy:precheck"]?.includes(command), `deploy:precheck should include ${command}`);
+}
+for (const command of [
+  "npm run guard:storefront-launch-seo-contract",
+  "npm run smoke:storefront-sitemap-directory-coverage",
+  "npm run smoke:storefront-head-title-order",
+  "npm run smoke:storefront-seo-fingerprint",
+  "npm run guard:mydreamshoots-content"
+]) {
+  assert.ok(packageJson.scripts?.["launch:storefront-precheck"]?.includes(command), `launch:storefront-precheck should include ${command}`);
+}
 
 console.log("public SEO policy smoke passed");

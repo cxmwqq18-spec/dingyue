@@ -39,7 +39,7 @@ export function createDesignerPreviewToken(input: {
 
 export function verifyDesignerPreviewToken(
   token: string | undefined,
-  expected: { siteId: string; siteSlug: string }
+  expected?: { siteId: string; siteSlug: string }
 ): DesignerPreviewTokenPayload | undefined {
   if (!token) return undefined;
   const [encodedPayload, signature] = token.split(".");
@@ -48,11 +48,10 @@ export function verifyDesignerPreviewToken(
   try {
     const payload = JSON.parse(Buffer.from(encodedPayload, "base64url").toString("utf8")) as DesignerPreviewTokenPayload;
     if (
-      payload.siteId !== expected.siteId ||
-      payload.siteSlug !== expected.siteSlug ||
       typeof payload.sessionId !== "string" ||
       typeof payload.exp !== "number" ||
-      payload.exp <= Date.now()
+      payload.exp <= Date.now() ||
+      (expected && (payload.siteId !== expected.siteId || payload.siteSlug !== expected.siteSlug))
     ) {
       return undefined;
     }

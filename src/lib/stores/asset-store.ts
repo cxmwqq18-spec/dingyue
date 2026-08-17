@@ -76,11 +76,16 @@ function sourceAssetIdsFromJobRequest(value: unknown): string[] {
     .filter((item): item is string => typeof item === "string" && item.trim().length > 0);
 }
 
-function customerAssetPreviewUrl(asset: Pick<AssetUpload, "id" | "siteId" | "customerId" | "role" | "storageKey">): string {
-  const storageKey = normalizeCustomerAssetStorageKey(asset.storageKey);
+function customerAssetDownloadUrl(asset: Pick<AssetUpload, "customerId" | "id" | "siteId">): string {
+  return `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`;
+}
+
+function customerAssetPreviewUrl(asset: Pick<AssetUpload, "customerId" | "id" | "mimeType" | "role" | "siteId" | "storageKey">): string {
   if (asset.role === "output") {
-    return `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download?preview=1`;
+    const previewUrl = `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download?preview=1`;
+    return asset.mimeType.startsWith("video/") ? `${previewUrl}&poster=1` : previewUrl;
   }
+  const storageKey = normalizeCustomerAssetStorageKey(asset.storageKey);
   return `/api/local-assets/${storageKey}`;
 }
 
@@ -299,6 +304,35 @@ export async function createAssetDownloadLinkRelational(
   };
 }
 
+export async function recordCustomerAssetDownloadRelational(
+  params: { siteId: string; customerId: string; asset: AssetUpload; source?: string },
+  client: DbClient = prisma
+): Promise<void> {
+  await requireModelFields(client, "CustomerAssetDownload", ["id", "siteId", "customerId", "assetId", "createdAt"]);
+  const album = params.asset.jobId
+    ? await client.album.findFirst({
+        where: {
+          siteId: params.siteId,
+          customerId: params.customerId,
+          sourceJobId: params.asset.jobId
+        },
+        select: { id: true },
+        orderBy: { updatedAt: "desc" }
+      })
+    : undefined;
+  await client.customerAssetDownload.create({
+    data: compactObject({
+      id: relationalUid("dl"),
+      siteId: params.siteId,
+      customerId: params.customerId,
+      assetId: params.asset.id,
+      jobId: params.asset.jobId,
+      albumId: album?.id,
+      source: params.source ?? "asset"
+    } as Record<string, unknown>) as never
+  });
+}
+
 export async function readCustomerAssetFileByStorageKey(params: {
   siteId: string;
   customerId: string;
@@ -339,7 +373,7 @@ export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeA
     storageKey,
     previewUrl: customerAssetPreviewUrl(asset),
     previewStatus: hasReadablePreview ? "ready" : "loading",
-    downloadUrl: `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`,
+    downloadUrl: customerAssetDownloadUrl(asset),
     mimeType: asset.mimeType,
     role: asset.role,
     reviewStatus: asset.reviewStatus,

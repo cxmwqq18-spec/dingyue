@@ -1638,7 +1638,7 @@ async function showSyntheticSuccessState(page, asset) {
         </div>
         <div class="tutorial-success-output" role="status">
           <button class="tutorial-synthetic-preview-button" type="button" aria-label="Open preview">
-            <img alt="Generated Valentine Photos image" src="${asset.previewUrl}">
+            <img alt="AI-generated Valentine couple portrait in a romantic date-night setting for a MyDreamShoots keepsake photo package" src="${asset.previewUrl}">
             <span>Open preview</span>
           </button>
           <div class="tutorial-success-output-meta">
@@ -1732,7 +1732,7 @@ async function showSyntheticGeneratedPreview(page, asset) {
     preview.setAttribute("aria-label", "Generated asset preview");
     preview.innerHTML = `
       <div class="tutorial-generated-preview-inner">
-        <div class="tutorial-generated-preview-media"><img src="${asset.previewUrl}" alt="Generated Valentine Photos image"></div>
+        <div class="tutorial-generated-preview-media"><img src="${asset.previewUrl}" alt="AI-generated Valentine couple portrait in a romantic date-night setting for a MyDreamShoots keepsake photo package"></div>
         <aside>
           <button aria-label="Close preview">×</button>
           <p>Generated output</p>

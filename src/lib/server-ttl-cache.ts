@@ -7,8 +7,23 @@ type CacheEntry<T> = {
   value: Promise<T>;
 };
 
+type ServerTtlCacheGlobal = typeof globalThis & {
+  __mydreamshootsServerTtlCacheStores?: Map<string, Map<string, CacheEntry<unknown>>>;
+};
+
+function cacheStoreForScope(scope: string): Map<string, CacheEntry<unknown>> {
+  const globalStore = globalThis as ServerTtlCacheGlobal;
+  globalStore.__mydreamshootsServerTtlCacheStores ??= new Map();
+  let scopedStore = globalStore.__mydreamshootsServerTtlCacheStores.get(scope);
+  if (!scopedStore) {
+    scopedStore = new Map();
+    globalStore.__mydreamshootsServerTtlCacheStores.set(scope, scopedStore);
+  }
+  return scopedStore;
+}
+
 export function createServerTtlCache(scope: string, defaultTtlMs: number) {
-  const store = new Map<string, CacheEntry<unknown>>();
+  const store = cacheStoreForScope(scope);
 
   function keyFor(key: string): string {
     return `${scope}:${key}`;
@@ -28,7 +43,9 @@ export function createServerTtlCache(scope: string, defaultTtlMs: number) {
       const value = perf.measure("cache_loader", loader, { hit: false })
         .then((result) => {
           const current = store.get(scopedKey);
-          if (current?.value === value) {
+          if (result === undefined) {
+            store.delete(scopedKey);
+          } else if (current?.value === value) {
             store.set(scopedKey, { expiresAt: Date.now() + ttlMs, value });
           }
           perf.finish({ hit: false });
@@ -48,6 +65,12 @@ export function createServerTtlCache(scope: string, defaultTtlMs: number) {
         return;
       }
       store.delete(keyFor(key));
+    },
+    clearPrefix(prefix: string): void {
+      const scopedPrefix = keyFor(prefix);
+      for (const key of store.keys()) {
+        if (key.startsWith(scopedPrefix)) store.delete(key);
+      }
     }
   };
 }

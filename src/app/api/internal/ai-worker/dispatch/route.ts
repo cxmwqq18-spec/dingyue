@@ -932,16 +932,18 @@ function buildLk888MediaVideoPrompt(payload: WorkerPayload, referenceAssets = vi
   return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
 }
 
-function _buildSingleReferenceDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
+function buildSingleReferenceDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
   return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
 }
 
-function _buildDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
+function buildDirectJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
   return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
 }
 
 function buildOpenAiJsonVideoPrompt(payload: WorkerPayload, referenceAssets = videoFrameAssets(payload), videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {
-  return buildMinimalVideoProviderPrompt(payload, referenceAssets, videoParams);
+  return referenceAssets.length === 1
+    ? buildSingleReferenceDirectJsonVideoPrompt(payload, referenceAssets, videoParams)
+    : buildDirectJsonVideoPrompt(payload, referenceAssets, videoParams);
 }
 
 function buildTextToVideoPrompt(payload: WorkerPayload, videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }) {

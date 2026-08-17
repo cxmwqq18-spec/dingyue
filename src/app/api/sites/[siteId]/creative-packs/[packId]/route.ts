@@ -30,7 +30,8 @@ export async function PUT(
       trainingRequired: Boolean(body.trainingRequired),
       imageUrl: body.imageUrl,
       categoryId: body.categoryId,
-      galleryImages: body.galleryImages
+      galleryImages: body.galleryImages,
+      galleryImageAlts: body.galleryImageAlts
     });
     clearPublicCreativePacksCache();
     return NextResponse.json({ ok: true, pack: result.pack, created: result.created });

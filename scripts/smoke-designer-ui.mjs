@@ -81,13 +81,14 @@ function textIncludes(haystack, marker, context) {
   assert(String(haystack).includes(marker), `${context} missing ${marker}`);
 }
 
-async function request(pathname, { method = "GET", body, cookie, allowFailure = false } = {}) {
+async function request(pathname, { method = "GET", body, cookie, csrf, allowFailure = false } = {}) {
   const response = await fetch(`${base}${pathname}`, {
     method,
     redirect: "manual",
     headers: {
       ...(body ? { "Content-Type": "application/json" } : {}),
-      ...(cookie ? { cookie } : {})
+      ...(cookie ? { cookie } : {}),
+      ...(csrf ? { "x-csrf-token": csrf } : {})
     },
     body: body ? JSON.stringify(body) : undefined
   });
@@ -105,6 +106,30 @@ function cookieFrom(response, name) {
   const cookie = match.split(";")[0];
   assert(cookie.includes("="), `missing cookie ${name}`);
   return cookie;
+}
+
+function cookieValue(cookie, name) {
+  return cookie.split(";").map((part) => part.trim()).find((part) => part.startsWith(`${name}=`))?.slice(name.length + 1);
+}
+
+function draftMetaFrom(value) {
+  const draftMeta = value?.draftMeta ?? value?.draftJson?.draftMeta;
+  if (draftMeta?.revision && draftMeta?.etag) return draftMeta;
+  const revision = Math.max(1, Number(value?.draftJson?.version ?? 1));
+  return { revision, etag: `W/"${revision}-legacy"` };
+}
+
+function publishedVersionFromSite(site) {
+  return Math.max(1, ...(site?.pages ?? []).map((page) => Number(page?.publishedJson?.version ?? 1)));
+}
+
+function publishSnapshotPayload(site, actor) {
+  return {
+    actor,
+    expectedPageVersions: Object.fromEntries((site?.pages ?? []).map((page) => [page.id, draftMetaFrom(page)])),
+    expectedSettingsVersion: draftMetaFrom(site?.themeSettings),
+    expectedPublishedVersion: publishedVersionFromSite(site)
+  };
 }
 
 async function ensureServer() {
@@ -167,7 +192,11 @@ async function run() {
     method: "POST",
     body: { email: adminEmail, password: adminPassword }
   });
-  const adminCookie = cookieFrom(loginResponse, `site_admin_session_${siteId}`);
+  const adminSessionCookie = cookieFrom(loginResponse, `site_admin_session_${siteId}`);
+  const adminCsrfCookie = cookieFrom(loginResponse, `site_admin_csrf_${siteId}`);
+  const adminCsrf = cookieValue(adminCsrfCookie, `site_admin_csrf_${siteId}`);
+  assert(adminCsrf, "missing site admin CSRF cookie");
+  const adminCookie = [adminSessionCookie, adminCsrfCookie].join("; ");
 
   let rightPaneWidth = 0;
   const browser = await chromium.launch({ headless: true });
@@ -305,7 +334,12 @@ async function run() {
   const { json: draftSave } = await request(`/api/sites/${siteId}/theme/pages/${pageId}/draft`, {
     method: "PUT",
     cookie: adminCookie,
-    body: { draftJson: nextDraft }
+    csrf: adminCsrf,
+    body: {
+      draftJson: nextDraft,
+      expectedRevision: draftMetaFrom(homeForDraft).revision,
+      expectedEtag: draftMetaFrom(homeForDraft).etag
+    }
   });
   assert(draftSave.ok, "designer UI smoke draft save failed");
 
@@ -315,10 +349,19 @@ async function run() {
   const previewAfterDraft = await (await request(`/site/${siteSlug}/admin/design/preview/${pageId}`, { cookie: adminCookie })).text();
   textIncludes(previewAfterDraft, marker, "designer draft preview");
 
+  const stateForPublish = readState();
+  const publishPayload = publishSnapshotPayload(siteFromState(stateForPublish), "smoke_designer_ui");
+  if (draftSave.draftVersion?.revision && draftSave.draftVersion?.etag) {
+    publishPayload.expectedPageVersions[pageId] = {
+      revision: draftSave.draftVersion.revision,
+      etag: draftSave.draftVersion.etag
+    };
+  }
   const { json: publish } = await request(`/api/sites/${siteId}/theme/pages/${pageId}/publish`, {
     method: "POST",
     cookie: adminCookie,
-    body: { actor: "smoke_designer_ui" }
+    csrf: adminCsrf,
+    body: publishPayload
   });
   assert(publish.publishedVersion, "designer UI smoke publish did not create a version");
 
@@ -334,7 +377,12 @@ async function run() {
   await request(`/api/sites/${siteId}/theme/pages/${pageId}/draft`, {
     method: "PUT",
     cookie: adminCookie,
-    body: { draftJson: rollbackDraft }
+    csrf: adminCsrf,
+    body: {
+      draftJson: rollbackDraft,
+      expectedRevision: draftMetaFrom(homeForRollback).revision,
+      expectedEtag: draftMetaFrom(homeForRollback).etag
+    }
   });
 
   const liveBeforeRollback = await (await request(`/site/${siteSlug}`)).text();
@@ -343,6 +391,7 @@ async function run() {
   const { json: rollback } = await request(`/api/sites/${siteId}/theme/pages/${pageId}/rollback`, {
     method: "POST",
     cookie: adminCookie,
+    csrf: adminCsrf,
     body: { actor: "smoke_designer_ui" }
   });
   assert(rollback.ok, "designer UI smoke rollback failed");

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { assertNonProductionWriteTarget } from "./lib/database-target.mjs";
 import { assertRelationalReplaceSafety } from "./relational-import-safety.mjs";
 
 const prisma = new PrismaClient();
@@ -36,6 +37,11 @@ function json(value, fallback = {}) {
 
 function stripUndefined(record) {
   return Object.fromEntries(Object.entries(record).filter(([, value]) => value !== undefined));
+}
+
+function optionalStateId(state, key, id) {
+  if (!id) return id;
+  return asArray(state[key]).some((item) => item.id === id) ? id : null;
 }
 
 function delegateFor(model) {
@@ -135,6 +141,76 @@ function siteAiApps(state) {
     ...siteAiApp,
     aiAppId: siteAiApp.aiAppId ?? siteAiApp.aiApp?.id
   }));
+}
+
+function creativePackCategoryIdentity(category) {
+  return `${category.siteId}::${category.slug}`;
+}
+
+function creativePackCategoryItems(state) {
+  const items = asArray(state.creativePackCategories);
+  const byId = new Map(items.map((item) => [item.id, item]));
+  const originalIndex = new Map(items.map((item, index) => [item.id, index]));
+  const referenceCounts = new Map();
+  const preferredByIdentity = new Map();
+  const preferredIdById = new Map();
+  const visited = new Set();
+  const visiting = new Set();
+  const ordered = [];
+
+  function addReference(id) {
+    if (!id) return;
+    referenceCounts.set(id, (referenceCounts.get(id) ?? 0) + 1);
+  }
+
+  for (const pack of asArray(state.creativePacks)) addReference(pack.categoryId);
+  for (const category of items) addReference(category.parentId);
+
+  function preferenceScore(item) {
+    return (referenceCounts.get(item.id) ?? 0) * 1000 + (item.status === "active" ? 100 : 0);
+  }
+
+  for (const item of items) {
+    const identity = creativePackCategoryIdentity(item);
+    const preferred = preferredByIdentity.get(identity);
+    if (
+      !preferred ||
+      preferenceScore(item) > preferenceScore(preferred) ||
+      (preferenceScore(item) === preferenceScore(preferred) &&
+        (originalIndex.get(item.id) ?? 0) < (originalIndex.get(preferred.id) ?? 0))
+    ) {
+      preferredByIdentity.set(identity, item);
+    }
+  }
+
+  for (const item of items) {
+    const preferred = preferredByIdentity.get(creativePackCategoryIdentity(item));
+    preferredIdById.set(item.id, preferred?.id ?? item.id);
+  }
+
+  function resolvedParentId(item) {
+    const parentId = item.parentId ?? null;
+    return parentId ? (preferredIdById.get(parentId) ?? parentId) : parentId;
+  }
+
+  function visit(item) {
+    if (!item || visited.has(item.id) || visiting.has(item.id)) return;
+    const preferred = preferredByIdentity.get(creativePackCategoryIdentity(item));
+    if (preferred && preferred.id !== item.id) visit(preferred);
+    visiting.add(item.id);
+    const parentId = resolvedParentId(item);
+    if (parentId && byId.has(parentId)) {
+      visit(byId.get(parentId));
+    }
+    visiting.delete(item.id);
+    if (!visited.has(item.id)) {
+      visited.add(item.id);
+      ordered.push(parentId === (item.parentId ?? null) ? item : { ...item, parentId });
+    }
+  }
+
+  for (const item of items) visit(item);
+  return ordered;
 }
 
 function summaryCounts(state) {
@@ -436,7 +512,8 @@ const specs = [
   {
     key: "creativePackCategories",
     model: "creativePackCategory",
-    items: (state) => asArray(state.creativePackCategories),
+    items: creativePackCategoryItems,
+    identity: creativePackCategoryIdentity,
     data: (category) => ({
       id: category.id,
       siteId: category.siteId,
@@ -475,6 +552,7 @@ const specs = [
       conversionRate: pack.conversionRate ?? 0,
       imageUrl: pack.imageUrl,
       galleryImages: json(pack.galleryImages, undefined),
+      galleryImageAlts: json(pack.galleryImageAlts, undefined),
       createdAt: toDate(pack.createdAt)
     })
   },
@@ -490,6 +568,7 @@ const specs = [
       storageKey: asset.storageKey,
       mimeType: asset.mimeType ?? "image/png",
       usageType: asset.usageType ?? asset.usage ?? "theme",
+      altText: asset.altText ?? null,
       createdAt: toDate(asset.createdAt)
     })
   },
@@ -598,16 +677,16 @@ const specs = [
     key: "albums",
     model: "album",
     items: (state) => asArray(state.albums),
-    data: (album) => ({
+    data: (album, state) => ({
       id: album.id,
       siteId: album.siteId,
       customerId: album.customerId,
       title: album.title,
-      sourceJobId: album.sourceJobId,
-      creativePackId: album.creativePackId,
+      sourceJobId: optionalStateId(state, "jobs", album.sourceJobId),
+      creativePackId: optionalStateId(state, "creativePacks", album.creativePackId),
       status: album.status,
       outputCount: album.outputCount ?? 0,
-      coverAssetId: album.coverAssetId,
+      coverAssetId: optionalStateId(state, "assetUploads", album.coverAssetId),
       createdAt: toDate(album.createdAt),
       updatedAt: toDate(album.updatedAt)
     })
@@ -704,6 +783,7 @@ const importOrder = [
   "gatewayGroups",
   "toolCategories",
   "toolMenuItems",
+  "creativePackCategories",
   "creativePacks",
   "mediaAssets",
   "themePages",
@@ -850,6 +930,7 @@ async function main() {
   const verifyOnly = path.basename(process.argv[1] ?? "") === "verify-relational-state.mjs";
   const shouldVerify = verifyOnly || process.argv.includes("--verify");
   assertRelationalReplaceSafety({ replace, dryRun, allowDataLoss });
+  if (!dryRun && !verifyOnly) assertNonProductionWriteTarget();
   const { state, source } = await loadState();
   const plan = buildPlan(state);
 

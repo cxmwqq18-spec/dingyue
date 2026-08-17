@@ -43,6 +43,8 @@ export type SectionType =
   | "blog_article"
   | "rich_text"
   | "media_banner"
+  | "talking_photo_landing"
+  | "ai_video_topic_landing"
   | "before_after_gallery"
   | "header"
   | "footer"
@@ -110,6 +112,8 @@ export interface ThemePage {
   draftJson: ThemePageJson;
   publishedJson: ThemePageJson;
   draftMeta?: ThemeDraftMeta;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ThemeSettings {
@@ -159,6 +163,7 @@ export interface ThemeSettings {
     >;
   };
   saasSettingsCurrent?: Record<string, ThemeSettingValue>;
+  draftMeta?: ThemeDraftMeta;
 }
 
 export type ThemeFieldType =
@@ -195,6 +200,7 @@ export interface ThemeFieldOption {
 
 export interface ThemeFieldSchema {
   id: string;
+  aliases?: string[];
   label: string;
   type: ThemeFieldType;
   default?: ThemeSettingValue;
@@ -209,6 +215,7 @@ export interface ThemeFieldSchema {
 
 export interface ThemeBlockSchema {
   type: string;
+  aliases?: string[];
   label: string;
   maxBlocks?: number;
   sourceName?: string;
@@ -221,6 +228,7 @@ export interface ThemeBlockSchema {
 
 export interface ThemeSectionSchema {
   type: SectionType;
+  aliases?: string[];
   label: string;
   category: "Storefront" | "AI business" | "Commerce" | "Content" | "Global";
   description: string;
@@ -264,6 +272,7 @@ export interface Site {
   themeSettings: {
     draftJson: ThemeSettings;
     publishedJson: ThemeSettings;
+    draftMeta?: ThemeDraftMeta;
   };
   pages: ThemePage[];
   mediaAssets?: MediaAsset[];
@@ -336,9 +345,16 @@ export interface Customer {
     available: number;
     reserved: number;
   };
+  profile?: CustomerProfileRuntime;
 }
 
 export type PublicCustomer = Omit<Customer, "passwordHash">;
+
+export interface CustomerProfileRuntime {
+  avatarAssetId?: string;
+  avatarUrl?: string;
+  updatedAt?: string;
+}
 
 export interface PlatformAdmin {
   id: string;
@@ -420,6 +436,8 @@ export interface CustomerSession {
   expiresAt: string;
 }
 
+export type PriceInterval = "month" | "quarter" | "half_year" | "year" | "one_time";
+
 export interface Price {
   id: string;
   siteId: string;
@@ -427,7 +445,7 @@ export interface Price {
   label: string;
   amountCents: number;
   currency: string;
-  interval: "month" | "year" | "one_time";
+  interval: PriceInterval;
   creditsGranted: number;
   stripePriceId: string;
   metadata?: Record<string, string | number | boolean>;
@@ -539,6 +557,7 @@ export interface ToolCategory {
   sortOrder: number;
   status: "active" | "draft" | "paused";
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface ToolMenuItem {
@@ -568,6 +587,7 @@ export interface ToolMenuItem {
   sortOrder: number;
   status: "active" | "draft" | "paused";
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface AiGatewayGroup {
@@ -677,6 +697,8 @@ export interface VideoThemeCategory {
   slug: string;
   label: string;
   description?: string;
+  icon?: string;
+  accentColor?: string;
   imageUrl?: string;
   sortOrder: number;
   status: "active" | "draft" | "paused";
@@ -698,6 +720,7 @@ export interface VideoTheme {
   modelPricing?: VideoModelPricing;
   durationSeconds: number;
   maxFrames: number;
+  sortOrder: number;
   effectiveMaxFrames?: number;
   providerMaxFrames?: number;
   providerModelFamilies?: VideoModelFamily[];
@@ -897,6 +920,9 @@ export interface ThemeRuntimeLedgerEntry {
   id: string;
   amount: number;
   type: LedgerType;
+  sourceType?: string;
+  sourceId?: string;
+  sourceLabel?: string;
   createdAt: string;
 }
 
@@ -915,7 +941,13 @@ export interface ThemeRuntimeSubscription {
   id: string;
   productId: string;
   priceId: string;
+  productName?: string;
+  priceLabel?: string;
+  interval?: Price["interval"];
+  amountCents?: number;
+  currency?: string;
   status: Subscription["status"];
+  currentPeriodStart?: string;
   currentPeriodEnd: string;
   creditsPerCycle: number;
   createdAt: string;
@@ -931,15 +963,44 @@ export interface ThemeRuntimeOrder {
   createdAt: string;
 }
 
+export interface ThemeRuntimeDownloadEntry {
+  id: string;
+  assetId: string;
+  jobId?: string;
+  albumId?: string;
+  source: string;
+  label: string;
+  previewUrl?: string;
+  previewStatus?: ThemeRuntimeAsset["previewStatus"];
+  downloadUrl?: string;
+  fileAvailable?: boolean;
+  mimeType?: string;
+  createdAt: string;
+}
+
+export interface ThemeRuntimePagination {
+  list: string;
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  hasPrevious: boolean;
+  hasNext: boolean;
+  firstItem: number;
+  lastItem: number;
+}
+
 export interface ThemeRuntimeData {
   customer?: PublicCustomer;
   adminAccess?: CustomerAdminAccess;
+  profile?: CustomerProfileRuntime;
   jobs: ThemeRuntimeJob[];
   assets: ThemeRuntimeAsset[];
   albums: ThemeRuntimeAlbum[];
   ledger: ThemeRuntimeLedgerEntry[];
   subscriptions?: ThemeRuntimeSubscription[];
   orders?: ThemeRuntimeOrder[];
+  downloads?: ThemeRuntimeDownloadEntry[];
   jobDetail?: {
     job: ThemeRuntimeJob;
     ledger: ThemeRuntimeLedgerEntry[];
@@ -952,6 +1013,7 @@ export interface ThemeRuntimeData {
     defaultName?: string;
     initialMessage?: string;
   };
+  pagination?: ThemeRuntimePagination;
   isPreview?: boolean;
   clientBootstrapCustomer?: boolean;
 }

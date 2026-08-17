@@ -3,11 +3,11 @@ import { primeSiteAdminSessionAuthCache } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { publicUrlForRequest, shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
-import { createSiteAdminSessionRelational, getSiteBySlugForAdmin } from "@/lib/stores/site-store";
+import { createSiteAdminSessionRelational, getSiteLoginShellBySlugForAdmin } from "@/lib/stores/site-store";
 
 export async function POST(request: Request, { params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
-  const site = await getSiteBySlugForAdmin(siteSlug);
+  const site = await getSiteLoginShellBySlugForAdmin(siteSlug);
   if (!site) return NextResponse.redirect(publicUrlForRequest(request, "/"), 303);
 
   const form = await request.formData();

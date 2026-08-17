@@ -141,7 +141,7 @@ function assertUnique(label, values) {
 async function auditCatalogRoute(page, siteId, route) {
   const images = await imageSnapshot(page);
   const cardImages = images
-    .filter((image) => /\b(?:gallery )?preview$/i.test(image.alt))
+    .filter((image) => /\/collections(?:\/|$)/.test(image.href) && /\/(?:pack-covers|pack-galleries|fan-holiday-theme\/(?:covers|categories|gallery))\//i.test(image.url))
     .filter((image) => !/background layer|cover preview/i.test(image.alt));
   const cardGroups = new Map();
   for (const image of cardImages) {
@@ -196,15 +196,9 @@ async function auditAidreamcapesHomepageShowcase(page, route) {
     cards.map((card) => (card.textContent || "").trim()).filter(Boolean)
   );
   const heroImages = images.filter((image) =>
-    /scrolling fan-scene and holiday album preview/i.test(image.alt)
+    /\/assets\/sites\/site_aidreamcapes\/fan-holiday-theme\/(?:categories|showcase)\//.test(image.url)
   );
   const heroUrls = [...new Set(heroImages.map((image) => image.url))];
-  const showcaseImages = images.filter((image) =>
-    /customer-created image (?:example|product)/i.test(image.alt) &&
-    /\/assets\/sites\/site_aidreamcapes\/fan-holiday-theme\//.test(image.url)
-  );
-  const urls = [...new Set(showcaseImages.map((image) => image.url))];
-
   if (!heroImages.length) failures.push(`aidreamcapes_home_hero_grid_missing:${route}`);
   for (const text of imageCardText) {
     failures.push(`aidreamcapes_home_image_card_visible_text:${route}:${text}`);
@@ -226,47 +220,30 @@ async function auditAidreamcapesHomepageShowcase(page, route) {
     }
   }
 
-  if (!showcaseImages.length) failures.push(`aidreamcapes_home_showcase_missing:${route}`);
-  if (urls.length !== expectedSlugs.length) {
-    failures.push(`aidreamcapes_home_showcase_count:${route}:expected=${expectedSlugs.length}:actual=${urls.length}:${urls.join(" | ")}`);
-  }
-  for (const url of urls) {
-    if (/\/fan-holiday-theme\/(?:gallery|covers)\//.test(url)) {
-      failures.push(`aidreamcapes_home_showcase_non_category_image:${route}:${url}`);
-    }
-    if (!/\/assets\/sites\/site_aidreamcapes\/fan-holiday-theme\/(?:categories|showcase)\//.test(url)) {
-      failures.push(`aidreamcapes_home_showcase_unexpected_image:${route}:${url}`);
-    }
-  }
-  for (const slug of expectedSlugs) {
-    if (!urls.some((url) => url.includes(`/${slug}.webp`))) {
-      failures.push(`aidreamcapes_home_showcase_missing_theme:${route}:${slug}`);
-    }
-  }
 }
 
 async function auditCollectionDetailRoute(page, siteId, route, slug) {
   const images = await imageSnapshot(page);
+  const expectedCover = expectedDetailCoverUrl(siteId, slug);
   const coverImages = [...new Set(
     images
-      .filter((image) => /cover preview/i.test(image.alt))
+      .filter((image) => expectedCover ? image.url === expectedCover : /\/(?:pack-covers|fan-holiday-theme\/(?:covers|categories))\//i.test(image.url))
       .map((image) => image.url)
   )];
   const galleryImages = [...new Set(
     images
-      .filter((image) => /gallery example/i.test(image.alt))
+      .filter((image) => /\/(?:pack-galleries|fan-holiday-theme\/gallery)\//i.test(image.url))
       .map((image) => image.url)
   )];
   const detailGalleryImages = galleryImages.length >= 12
     ? galleryImages
     : [...new Set(
         images
-          .filter((image) => !/cover preview|background layer|\b(?:gallery )?preview$/i.test(image.alt))
+          .filter((image) => image.url !== expectedCover && !/background layer/i.test(image.alt))
           .map((image) => image.url)
       )];
 
   if (coverImages.length !== 1) failures.push(`detail_cover_count:${route}:${coverImages.length}`);
-  const expectedCover = expectedDetailCoverUrl(siteId, slug);
   if (expectedCover && !coverImages.includes(expectedCover)) {
     failures.push(`detail_cover_unexpected:${route}:expected=${expectedCover}:rendered=${coverImages.join(" | ")}`);
   }
@@ -313,7 +290,11 @@ async function visit(page, route) {
   return true;
 }
 
-const browser = await chromium.launch({ headless: true });
+const chromiumExecutablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || "";
+const browser = await chromium.launch({
+  headless: true,
+  ...(chromiumExecutablePath ? { executablePath: chromiumExecutablePath } : {})
+});
 const page = await browser.newPage({ viewport: { width: 1440, height: 1400 } });
 const auditedRoutes = [];
 

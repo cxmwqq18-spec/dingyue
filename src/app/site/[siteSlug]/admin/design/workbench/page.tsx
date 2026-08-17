@@ -6,7 +6,11 @@ import Link from "next/link";
 import { ArrowLeft, Layers3 } from "lucide-react";
 import { createDesignerPreviewToken } from "@/lib/designer-preview-auth";
 import { getSiteAdminData } from "../../_lib/site-admin-context";
-import { getSiteSaasThemeLabelsRelational, getSiteThemePublicationCountRelational } from "@/lib/stores/theme-store";
+import {
+  getSiteSaasThemeLabelsRelational,
+  getSiteThemePublicationCountRelational,
+  getSiteThemeSiteRelational
+} from "@/lib/stores/theme-store";
 
 export default async function DesignPage({
   params,
@@ -17,23 +21,24 @@ export default async function DesignPage({
 }) {
   const { siteSlug } = await params;
   const query = searchParams ? await searchParams : {};
-  const data = await getSiteAdminData(siteSlug, { include: ["themePages"], take: 0, summary: false });
+  const data = await getSiteAdminData(siteSlug, { include: [], take: 0, summary: false });
   const { site, current } = data;
   if (!site) notFound();
   if (!current) redirect(`/site/${site.slug}/admin/login`);
+  const designerSite = await getSiteThemeSiteRelational(site.id);
   const previewToken = createDesignerPreviewToken({
     sessionId: current.session.id,
-    siteId: site.id,
-    siteSlug: site.slug
+    siteId: designerSite.id,
+    siteSlug: designerSite.slug
   });
   const [themeLabels, publicationCount] = await Promise.all([
-    getSiteSaasThemeLabelsRelational(site.id),
-    getSiteThemePublicationCountRelational(site.id)
+    getSiteSaasThemeLabelsRelational(designerSite.id),
+    getSiteThemePublicationCountRelational(designerSite.id)
   ]);
-  const activeThemeName = themeLabels.active?.name || `${site.name} live theme`;
-  const activeThemeKey = themeLabels.active?.themeKey || `${site.id}_active`;
-  const draftThemeName = themeLabels.draft?.name || `${site.name} draft theme`;
-  const draftThemeKey = themeLabels.draft?.themeKey || `${site.id}_draft`;
+  const activeThemeName = themeLabels.active?.name || `${designerSite.name} live theme`;
+  const activeThemeKey = themeLabels.active?.themeKey || `${designerSite.id}_active`;
+  const draftThemeName = themeLabels.draft?.name || `${designerSite.name} draft theme`;
+  const draftThemeKey = themeLabels.draft?.themeKey || `${designerSite.id}_draft`;
 
   return (
     <main
@@ -45,14 +50,15 @@ export default async function DesignPage({
         <DesignWorkspaceTabs
           activePath="/admin/design/workbench"
           mediaCount={data.mediaCount}
-          pageCount={site.pages.length}
+          pageCount={designerSite.pages.length}
           publicationCount={publicationCount}
-          seoReady={Boolean(site.themeSettings.draftJson.seo?.siteTitle && site.themeSettings.draftJson.seo?.siteDescription)}
-          siteSlug={site.slug}
+          seoReady={Boolean(designerSite.themeSettings.draftJson.seo?.siteTitle && designerSite.themeSettings.draftJson.seo?.siteDescription)}
+          siteSlug={designerSite.slug}
+          compact
           tone="dark"
         />
       </div>
-      <div className="min-h-0 flex-1 min-w-0" id="designer-workspace">
+      <div className="min-h-0 flex-1 min-w-0 overflow-hidden" id="designer-workspace">
         <DesignerClient
           activeThemeName={activeThemeName}
           activeThemeKey={activeThemeKey}
@@ -62,17 +68,17 @@ export default async function DesignPage({
           initialThemeKey={draftThemeKey}
           creativePacks={data.packs}
           mediaAssets={data.media}
-          pages={site.pages}
+          pages={designerSite.pages}
           previewToken={previewToken}
           products={data.products}
           publicationCount={publicationCount}
-          site={site}
+          site={designerSite}
           siteAiApps={data.apps}
           toolbarLeading={
-            <div className="flex min-w-0 items-center gap-3 pl-3">
+            <div className="flex min-w-0 items-center gap-3">
               <Link
                 className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border border-white/10 bg-white/[0.04] text-white/88 transition hover:bg-white/[0.1]"
-                href={`/site/${site.slug}/admin/design`}
+                href={`/site/${designerSite.slug}/admin/design`}
                 title="返回店铺装修"
               >
                 <ArrowLeft className="h-4 w-4" strokeWidth={1.8} />
@@ -80,7 +86,7 @@ export default async function DesignPage({
               <div className="min-w-0">
                 <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/34">visual store designer</div>
                 <div className="mt-0.5 flex min-w-0 items-center gap-2">
-                  <span className="truncate text-[16px] font-semibold leading-5 text-white/94">{site.name} 店铺装修</span>
+                  <span className="truncate text-[16px] font-semibold leading-5 text-white/94">{designerSite.name} 店铺装修</span>
                   <span className="inline-flex h-[22px] items-center rounded-[999px] border border-emerald-400/30 bg-emerald-400/12 px-2.5 text-[10px] font-medium uppercase tracking-[0.08em] text-emerald-200">
                     Live
                   </span>
@@ -91,24 +97,24 @@ export default async function DesignPage({
           toolbarTrailing={
             <>
               <Link
-                className="inline-flex h-[56px] items-center gap-2 border-l border-white/10 px-3 text-[13px] text-white/92 transition hover:bg-[#313747]"
-                href={`/site/${site.slug}/admin/themes`}
+                className="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-[8px] border border-white/10 bg-white/[0.04] px-3 text-[13px] font-medium text-white/88 transition hover:bg-white/[0.1]"
+                href={`/site/${designerSite.slug}/admin/themes`}
               >
                 <Layers3 className="h-[15px] w-[15px]" strokeWidth={1.8} />
                 主题库
               </Link>
               <Link
-                className="inline-flex h-[56px] items-center border-l border-white/10 px-3 text-[13px] text-white/92 transition hover:bg-[#313747]"
-                href={`/site/${site.slug}`}
+                className="inline-flex h-10 items-center whitespace-nowrap rounded-[8px] border border-white/10 bg-white/[0.04] px-3 text-[13px] font-medium text-white/88 transition hover:bg-white/[0.1]"
+                href={`/site/${designerSite.slug}`}
                 target="_blank"
                 rel="noreferrer"
               >
                 打开前台
               </Link>
               <LogoutActionButton
-                endpoint={`/api/sites/${site.id}/admin/auth/logout`}
+                endpoint={`/api/sites/${designerSite.id}/admin/auth/logout`}
                 label="退出"
-                redirectTo={`/site/${site.slug}/admin/login`}
+                redirectTo={`/site/${designerSite.slug}/admin/login`}
                 tone="dark"
               />
             </>

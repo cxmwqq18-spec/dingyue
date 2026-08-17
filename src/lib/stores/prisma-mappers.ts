@@ -28,6 +28,7 @@ import type {
 } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType } from "@/lib/ai-provider-type";
+import { storefrontGalleryMediaPairs } from "@/lib/storefront-media-alt";
 import { normalizeVideoFrameLimit, normalizeVideoModelPricing } from "@/lib/video-frame-config";
 
 type ProductWithPrices = Prisma.ProductGetPayload<{ include: { prices: true } }>;
@@ -64,6 +65,10 @@ function jsonArray<T>(value: Prisma.JsonValue | null | undefined): T[] {
 
 export function mapPrice(row: Prisma.PriceGetPayload<object>, fallback?: Partial<Price>): Price {
   const record = row as Prisma.PriceGetPayload<object> & { label?: string; metadata?: Prisma.JsonValue | null };
+  const interval: Price["interval"] =
+    row.interval === "year" || row.interval === "quarter" || row.interval === "half_year" || row.interval === "one_time"
+      ? row.interval
+      : "month";
   return {
     id: row.id,
     siteId: row.siteId,
@@ -71,7 +76,7 @@ export function mapPrice(row: Prisma.PriceGetPayload<object>, fallback?: Partial
     label: fallback?.label ?? record.label ?? row.id,
     amountCents: row.amountCents,
     currency: row.currency,
-    interval: row.interval === "year" ? "year" : row.interval === "one_time" ? "one_time" : "month",
+    interval,
     creditsGranted: row.creditsGranted,
     stripePriceId: row.stripePriceId ?? fallback?.stripePriceId ?? `manual_${row.id}`,
     metadata: fallback?.metadata ?? (jsonRecord(record.metadata) as Price["metadata"] | undefined)
@@ -255,6 +260,22 @@ export function toIsoString(value: Date | string | null | undefined): string | u
   return value instanceof Date ? value.toISOString() : value;
 }
 
+function publicCustomerProfileRuntime(customer: Record<string, unknown>): PublicCustomer["profile"] {
+  const profile = customer.profile && typeof customer.profile === "object" && !Array.isArray(customer.profile)
+    ? customer.profile as Record<string, unknown>
+    : undefined;
+  if (!profile) return undefined;
+  const avatarAsset = profile.avatarAsset && typeof profile.avatarAsset === "object" && !Array.isArray(profile.avatarAsset)
+    ? profile.avatarAsset as Record<string, unknown>
+    : undefined;
+  const storageKey = optionalString(avatarAsset?.storageKey)?.replace(/^customer-assets\//, "");
+  return {
+    avatarAssetId: optionalString(profile.avatarAssetId),
+    avatarUrl: storageKey ? `/api/local-assets/${storageKey}` : undefined,
+    updatedAt: toIsoString(profile.updatedAt as Date | string | undefined)
+  };
+}
+
 export function toPublicCustomerRelational(customer: Record<string, unknown>): PublicCustomer {
   return {
     id: String(customer.id),
@@ -265,7 +286,8 @@ export function toPublicCustomerRelational(customer: Record<string, unknown>): P
     balance: {
       available: numberFromUnknown((customer.balance as { balance?: unknown } | null | undefined)?.balance, 0),
       reserved: numberFromUnknown((customer.balance as { reserved?: unknown } | null | undefined)?.reserved, 0)
-    }
+    },
+    profile: publicCustomerProfileRuntime(customer)
   };
 }
 
@@ -482,8 +504,55 @@ export function slugify(input: string): string {
     .slice(0, 48);
 }
 
-export function makeThemeDraftMeta(page: Pick<import("@/lib/types").ThemePage, "draftJson" | "draftMeta">): import("@/lib/types").ThemeDraftMeta {
-  const revision = (page.draftMeta?.revision ?? page.draftJson.version ?? 0) + 1;
+function normalizeThemeDraftMeta(value: unknown, fallbackRevision = 1): import("@/lib/types").ThemeDraftMeta {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    const record = value as Partial<import("@/lib/types").ThemeDraftMeta>;
+    if (typeof record.revision === "number" && Number.isFinite(record.revision) && typeof record.updatedAt === "string" && typeof record.etag === "string") {
+      return {
+        revision: record.revision,
+        updatedAt: record.updatedAt,
+        etag: record.etag
+      };
+    }
+  }
+  const revision = Math.max(1, Math.trunc(fallbackRevision || 1));
+  return {
+    revision,
+    updatedAt: "1970-01-01T00:00:00.000Z",
+    etag: `W/"${revision}-legacy"`
+  };
+}
+
+function normalizeThemePageJson(value: unknown): import("@/lib/types").ThemePageJson {
+  const page = cloneJson(value ?? {}) as Partial<import("@/lib/types").ThemePageJson> & {
+    order?: unknown;
+    draftMeta?: unknown;
+  };
+  const sections = page.sections && typeof page.sections === "object" && !Array.isArray(page.sections)
+    ? page.sections as import("@/lib/types").ThemePageJson["sections"]
+    : {};
+  const rawOrder = Array.isArray(page.sectionsOrder)
+    ? page.sectionsOrder
+    : Array.isArray(page.order)
+      ? page.order
+      : Object.keys(sections);
+  const sectionsOrder = rawOrder.filter((sectionId): sectionId is string =>
+    typeof sectionId === "string" && Boolean(sections[sectionId])
+  );
+  return {
+    ...page,
+    pageType: typeof page.pageType === "string" && page.pageType.trim() ? page.pageType : "page",
+    version: typeof page.version === "number" && Number.isFinite(page.version) ? page.version : 1,
+    sections,
+    sectionsOrder
+  };
+}
+
+export function makeThemeDraftMeta(record: {
+  draftJson?: object & { version?: number };
+  draftMeta?: import("@/lib/types").ThemeDraftMeta;
+}): import("@/lib/types").ThemeDraftMeta {
+  const revision = (record.draftMeta?.revision ?? record.draftJson?.version ?? 0) + 1;
   const updatedAt = new Date().toISOString();
   return {
     revision,
@@ -496,12 +565,12 @@ export function assertThemeDraftVersion(
   page: Pick<import("@/lib/types").ThemePage, "draftMeta">,
   expected?: { expectedRevision?: number; expectedEtag?: string }
 ) {
-  if (!expected) return;
+  if (!expected || (expected.expectedRevision === undefined && expected.expectedEtag === undefined)) return;
   if (expected.expectedRevision !== undefined && page.draftMeta?.revision !== expected.expectedRevision) {
-    throw new StoreError("theme_draft_revision_conflict", 409);
+    throw new StoreError("theme_draft_conflict", 409);
   }
   if (expected.expectedEtag !== undefined && page.draftMeta?.etag !== expected.expectedEtag) {
-    throw new StoreError("theme_draft_etag_conflict", 409);
+    throw new StoreError("theme_draft_conflict", 409);
   }
 }
 
@@ -513,11 +582,14 @@ export function toThemePage(record: {
   title: string;
   draftJson: unknown;
   publishedJson: unknown;
+  draftMeta?: unknown;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
 }): import("@/lib/types").ThemePage {
-  const draftJson = cloneJson(record.draftJson) as import("@/lib/types").ThemePageJson & {
+  const draftJson = normalizeThemePageJson(record.draftJson) as import("@/lib/types").ThemePageJson & {
     draftMeta?: import("@/lib/types").ThemeDraftMeta;
   };
-  const draftMeta = draftJson.draftMeta;
+  const draftMeta = normalizeThemeDraftMeta(draftJson.draftMeta ?? record.draftMeta, draftJson.version ?? 1);
   if (draftMeta) delete draftJson.draftMeta;
   return {
     id: record.id,
@@ -526,8 +598,10 @@ export function toThemePage(record: {
     slug: record.slug,
     title: record.title,
     draftJson,
-    publishedJson: cloneJson(record.publishedJson) as import("@/lib/types").ThemePageJson,
-    draftMeta
+    publishedJson: normalizeThemePageJson(record.publishedJson),
+    draftMeta,
+    createdAt: toIsoString(record.createdAt),
+    updatedAt: toIsoString(record.updatedAt)
   };
 }
 
@@ -539,10 +613,21 @@ export function draftJsonWithMeta(page: import("@/lib/types").ThemePage): Prisma
 }
 
 export function toThemeSettings(record?: { draftJson: unknown; publishedJson: unknown } | null): import("@/lib/types").Site["themeSettings"] {
+  const draftJson = cloneJson(record?.draftJson ?? {}) as import("@/lib/types").ThemeSettings;
+  const draftMeta = normalizeThemeDraftMeta(draftJson.draftMeta, 1);
+  if (draftMeta) delete draftJson.draftMeta;
   return {
-    draftJson: cloneJson(record?.draftJson ?? {}) as import("@/lib/types").ThemeSettings,
-    publishedJson: cloneJson(record?.publishedJson ?? {}) as import("@/lib/types").ThemeSettings
+    draftJson,
+    publishedJson: cloneJson(record?.publishedJson ?? {}) as import("@/lib/types").ThemeSettings,
+    draftMeta
   };
+}
+
+export function themeSettingsDraftJsonWithMeta(settings: import("@/lib/types").Site["themeSettings"]): Prisma.InputJsonValue {
+  return cloneJson({
+    ...settings.draftJson,
+    draftMeta: settings.draftMeta
+  }) as unknown as Prisma.InputJsonValue;
 }
 
 export function toSite(record: {
@@ -637,6 +722,7 @@ export function toCreativePack(record: {
   conversionRate: number;
   imageUrl?: string | null;
   galleryImages?: unknown;
+  galleryImageAlts?: unknown;
   categoryRecord?: {
     id: string;
     siteId: string;
@@ -668,6 +754,9 @@ export function toCreativePack(record: {
   } | null;
   createdAt?: Date | string;
 }): CreativePack {
+  const galleryMedia = Array.isArray(record.galleryImages)
+    ? storefrontGalleryMediaPairs(record.galleryImages, record.galleryImageAlts, 24)
+    : undefined;
   return {
     id: record.id,
     siteId: record.siteId,
@@ -686,7 +775,8 @@ export function toCreativePack(record: {
     conversionRate: record.conversionRate,
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
     imageUrl: record.imageUrl ?? undefined,
-    galleryImages: Array.isArray(record.galleryImages) ? record.galleryImages.filter((item): item is string => typeof item === "string" && item.trim().length > 0) : undefined,
+    galleryImages: galleryMedia?.galleryImages,
+    galleryImageAlts: galleryMedia?.galleryImageAlts,
     categoryRecord: record.categoryRecord ? toCreativePackCategory(record.categoryRecord) : undefined
   };
 }
@@ -745,6 +835,8 @@ export function toVideoThemeCategory(record: {
   slug: string;
   label: string;
   description?: string | null;
+  icon?: string | null;
+  accentColor?: string | null;
   imageUrl?: string | null;
   sortOrder: number;
   status: string;
@@ -756,6 +848,8 @@ export function toVideoThemeCategory(record: {
     slug: record.slug,
     label: record.label,
     description: record.description ?? undefined,
+    icon: record.icon ?? undefined,
+    accentColor: record.accentColor ?? undefined,
     imageUrl: record.imageUrl ?? undefined,
     sortOrder: record.sortOrder,
     status: record.status as VideoThemeCategory["status"],
@@ -778,6 +872,7 @@ export function toVideoTheme(record: {
   modelPricing?: unknown;
   durationSeconds: number;
   maxFrames: number;
+  sortOrder: number;
   providerModelFamilies?: unknown;
   textToVideoProviderModelFamilies?: unknown;
   imageToVideoProviderModelFamilies?: unknown;
@@ -801,6 +896,7 @@ export function toVideoTheme(record: {
     modelPricing: normalizeVideoModelPricing(record.modelPricing, record.creditCost),
     durationSeconds: record.durationSeconds,
     maxFrames: normalizeVideoFrameLimit(record.maxFrames),
+    sortOrder: record.sortOrder,
     providerModelFamilies: Array.isArray(record.providerModelFamilies)
       ? record.providerModelFamilies.filter((item): item is "grok" | "gemini" => item === "grok" || item === "gemini")
       : undefined,
@@ -842,6 +938,7 @@ export function toToolCategory(record: {
   sortOrder: number;
   status: string;
   createdAt?: Date | string;
+  updatedAt?: Date | string;
 }): ToolCategory {
   return {
     id: record.id,
@@ -855,7 +952,8 @@ export function toToolCategory(record: {
     iconName: record.icon ?? undefined,
     sortOrder: record.sortOrder,
     status: record.status as ToolCategory["status"],
-    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(record.updatedAt)
   };
 }
 
@@ -875,6 +973,7 @@ export function toToolMenuItem(record: {
   sortOrder: number;
   status: string;
   createdAt?: Date | string;
+  updatedAt?: Date | string;
 }): ToolMenuItem {
   return {
     id: record.id,
@@ -891,7 +990,8 @@ export function toToolMenuItem(record: {
     detailJson: jsonObject<ToolMenuItem["detailJson"]>(record.detailJson as Prisma.JsonValue | null | undefined),
     sortOrder: record.sortOrder,
     status: record.status as ToolMenuItem["status"],
-    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(record.updatedAt)
   };
 }
 

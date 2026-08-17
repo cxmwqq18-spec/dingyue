@@ -2,7 +2,7 @@ import { safeBlocks } from "@/components/designer/designer-theme-utils";
 import type { IframePatchPayload, PreviewMode } from "@/components/designer/designer-preview-protocol";
 import type { GlobalType } from "@/components/designer/designer-types";
 import type { SaasThemeAction } from "@/lib/server-store";
-import type { ThemePage, ThemePageJson, ThemeSettings } from "@/lib/types";
+import type { ThemeDraftMeta, ThemePage, ThemePageJson, ThemeSettings } from "@/lib/types";
 
 type DesignerXfcartPayload = {
   t: string;
@@ -34,6 +34,8 @@ type XfcartActionResponse = {
   id?: string;
   html?: string;
   state?: string;
+  pageDraftVersions?: Record<string, ThemeDraftMeta>;
+  settingsDraftVersion?: ThemeDraftMeta;
 };
 
 export function resolvePageTemplateName(pageId: string, pages: ThemePage[]): string {
@@ -157,7 +159,7 @@ export async function sendXfcartAction({
   previewMode: PreviewMode;
   postPatch: (payload: IframePatchPayload) => void;
   setLastAction: (message: string) => void;
-}) {
+}): Promise<XfcartActionResponse | undefined> {
   const payload = buildXfcartPayload(action, context);
   const response = await fetch(`/api/sites/${siteId}/theme/xfcart-edit`, {
     method: "POST",
@@ -165,10 +167,15 @@ export async function sendXfcartAction({
     body: JSON.stringify(payload)
   });
   if (!response.ok) {
-    setLastAction(`SaaS action failed: ${fallbackMessage}`);
-    return;
+    setLastAction(`${fallbackMessage} 左侧预览暂时没有同步成功，本地草稿未丢失；可以继续编辑或点击保存草稿后刷新预览。`);
+    return undefined;
   }
   const result = (await response.json()) as XfcartActionResponse;
-  if (previewMode === "iframe") applyPreviewPatch(result, postPatch);
-  setLastAction(`${fallbackMessage} XFCart edit t=${payload.t} x=${payload.x ?? ""} returned ${result.types ?? result.state ?? "ok"}.`);
+  if (previewMode === "edit") applyPreviewPatch(result, postPatch);
+  setLastAction(
+    previewMode === "edit"
+      ? `${fallbackMessage} 已同步到左侧草稿预览；发布整站快照后才上线。`
+      : `${fallbackMessage} 已更新草稿；真实交互预览不会自动拦截跳转，发布后才上线。`
+  );
+  return result;
 }

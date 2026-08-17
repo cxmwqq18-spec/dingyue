@@ -7,7 +7,7 @@ import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out
 import { CustomerWorkspaceShell, type CustomerWorkspacePanel } from "@/components/storefront/customer-workspace-shell";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { UserRound } from "lucide-react";
-import type { CreativePack, CreativePackCategory, PublicCustomer, Site, SiteAiApp, ThemeRuntimeData, ToolMenuItem, VideoTheme } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, PublicCustomer, Site, SiteAiApp, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 type CustomerBootstrapSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 export type CustomerBootstrap = {
@@ -18,6 +18,7 @@ export type CustomerBootstrap = {
   creativePackCategories?: CreativePackCategory[];
   creativePacks: CreativePack[];
   toolMenuItems?: ToolMenuItem[];
+  videoThemeCategories?: VideoThemeCategory[];
   videoThemes?: VideoTheme[];
   accountRuntime?: ThemeRuntimeData;
   workspaceRuntime?: ThemeRuntimeData;
@@ -119,6 +120,7 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
       const creativePackCategories = bootstrapArray(data.creativePackCategories);
       const creativePacks = bootstrapArray(data.creativePacks);
       const toolMenuItems = bootstrapArray(data.toolMenuItems);
+      const videoThemeCategories = bootstrapArray(data.videoThemeCategories);
       const videoThemes = bootstrapArray(data.videoThemes);
       if (mode === "shell" && isLoginRequiredBootstrapError(response, data)) {
         const bootstrap = {
@@ -127,6 +129,7 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
           creativePackCategories,
           creativePacks,
           toolMenuItems,
+          videoThemeCategories,
           videoThemes
         };
         bootstrapCache.set(cacheKey, bootstrap);
@@ -146,6 +149,7 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
         creativePackCategories,
         creativePacks,
         toolMenuItems,
+        videoThemeCategories,
         videoThemes,
         accountRuntime: data.accountRuntime,
         workspaceRuntime: data.workspaceRuntime
@@ -397,12 +401,13 @@ export function CustomerHeaderBootstrapControls({
       </div>
     );
   }
-  const workspaceLabel = signOutLabel === "Sign out" ? "Open workspace" : "Abrir espacio privado";
+  const accountLabel = signOutLabel === "Sign out" ? "Open account" : "Abrir cuenta";
+  const avatarUrl = customer.profile?.avatarUrl;
   return (
     <div className={signedInClassName}>
-      <StorefrontInstantLink aria-label={workspaceLabel} className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={accountHref} prefetch>
+      <StorefrontInstantLink aria-label={accountLabel} className="inline-flex min-w-0 items-center gap-3 rounded-full pr-1 transition hover:opacity-80" href={accountHref} prefetch>
         <span className={dark ? "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#101114]" : "grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#15171a] text-white"}>
-          <UserRound className="h-4 w-4" strokeWidth={1.8} />
+          {avatarUrl ? <img className="h-full w-full rounded-full object-cover" src={avatarUrl} alt="" /> : <UserRound className="h-4 w-4" strokeWidth={1.8} />}
         </span>
         <span className="hidden min-w-0 text-left lg:block">
           <span className="block max-w-[8.5rem] truncate text-sm font-semibold xl:max-w-[10rem]">{customer.name}</span>
@@ -423,6 +428,7 @@ export function CustomerAccountClientPage({
   initialSite,
   initialCreativePacks = [],
   initialToolMenuItems = [],
+  initialVideoThemeCategories = [],
   siteSlug
 }: {
   initialCustomer?: PublicCustomer;
@@ -431,16 +437,17 @@ export function CustomerAccountClientPage({
   initialSite?: CustomerBootstrapSite;
   initialCreativePacks?: CreativePack[];
   initialToolMenuItems?: ToolMenuItem[];
+  initialVideoThemeCategories?: VideoThemeCategory[];
   siteSlug: string;
 }) {
   const hasInitialAccountData = Boolean(initialCustomer && initialSite);
   const state = useCustomerBootstrap(siteSlug, "account", !hasInitialAccountData);
-  if (initialCustomer && initialSite) return <CustomerAccountShell creativePackCategories={initialCreativePackCategories} creativePacks={initialCreativePacks} customer={initialCustomer} initialRuntime={initialRuntime} site={initialSite} toolMenuItems={initialToolMenuItems} />;
+  if (initialCustomer && initialSite) return <CustomerAccountShell creativePackCategories={initialCreativePackCategories} creativePacks={initialCreativePacks} customer={initialCustomer} initialRuntime={initialRuntime} site={initialSite} toolMenuItems={initialToolMenuItems} videoThemeCategories={initialVideoThemeCategories} />;
   if (state.status === "loading") return <CustomerPageLocalLoading title="Opening your account center." />;
   if (state.status === "error" && state.loginPath) return <CustomerPageRedirect loginPath={state.loginPath} />;
   if (state.status === "error") return <CustomerPageError message="Your account session could not be verified from this browser." />;
   if (!state.data.customer || !state.data.site) return <CustomerPageRedirect loginPath={`/site/${siteSlug}/login`} />;
-  return <CustomerAccountShell creativePackCategories={state.data.creativePackCategories} creativePacks={state.data.creativePacks} customer={state.data.customer} initialRuntime={state.data.accountRuntime} site={state.data.site} toolMenuItems={state.data.toolMenuItems} />;
+  return <CustomerAccountShell creativePackCategories={state.data.creativePackCategories} creativePacks={state.data.creativePacks} customer={state.data.customer} initialRuntime={state.data.accountRuntime} site={state.data.site} toolMenuItems={state.data.toolMenuItems} videoThemeCategories={state.data.videoThemeCategories} />;
 }
 
 export function CustomerWorkspaceClientPage({
@@ -471,6 +478,7 @@ export function CustomerWorkspaceClientPage({
         site={initialBootstrap.site}
         siteAiApps={initialBootstrap.siteAiApps}
         toolMenuItems={initialBootstrap.toolMenuItems}
+        videoThemeCategories={initialBootstrap.videoThemeCategories}
         videoThemes={initialBootstrap.videoThemes}
       />
     );
@@ -492,6 +500,7 @@ export function CustomerWorkspaceClientPage({
       site={state.data.site}
       siteAiApps={state.data.siteAiApps}
       toolMenuItems={state.data.toolMenuItems}
+      videoThemeCategories={state.data.videoThemeCategories}
       videoThemes={state.data.videoThemes}
     />
   );

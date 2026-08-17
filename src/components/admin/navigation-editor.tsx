@@ -18,7 +18,8 @@ import {
 } from "@/components/admin/design-workbench";
 import { downloadCsv } from "@/components/admin/export-utils";
 import { StatusPill } from "@/components/ui";
-import type { ThemeNavLink, ThemeSettings } from "@/lib/types";
+import { siteAdminJsonHeaders } from "@/lib/client-csrf";
+import type { ThemeDraftMeta, ThemeNavLink, ThemeSettings } from "@/lib/types";
 
 type NavLink = ThemeNavLink;
 type ActiveTab = "header" | "footer";
@@ -68,13 +69,15 @@ export function NavigationEditor({
   publishHref,
   liveHref,
   initialSettings,
-  publishedSettings
+  publishedSettings,
+  draftMeta
 }: {
   siteId: string;
   publishHref: string;
   liveHref: string;
   initialSettings: ThemeSettings;
   publishedSettings: ThemeSettings;
+  draftMeta?: ThemeDraftMeta;
 }) {
   const router = useRouter();
   const [headerLinks, setHeaderLinks] = useState<NavLink[]>(initialSettings.navigation.headerLinks);
@@ -83,6 +86,7 @@ export function NavigationEditor({
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState("导航草稿已载入。保存后仍需发布整站快照才会影响线上前台。");
   const [saving, setSaving] = useState(false);
+  const [draftVersion, setDraftVersion] = useState<ThemeDraftMeta | undefined>(draftMeta);
 
   const draftNavigation = useMemo(
     () => ({
@@ -131,6 +135,10 @@ export function NavigationEditor({
     setFooterLinks(initialSettings.navigation.footerLinks);
   }, [initialSettings.navigation.footerLinks, initialSettings.navigation.headerLinks]);
 
+  useEffect(() => {
+    setDraftVersion(draftMeta);
+  }, [draftMeta]);
+
   function updateActiveLinks(updater: (links: NavLink[]) => NavLink[]) {
     if (activeTab === "header") {
       setHeaderLinks((current) => updater(current));
@@ -143,15 +151,20 @@ export function NavigationEditor({
     setSaving(true);
     const response = await fetch(`/api/sites/${siteId}/theme/settings/draft`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ draftJson: draftSettings })
+      headers: siteAdminJsonHeaders(siteId),
+      body: JSON.stringify({
+        draftJson: draftSettings,
+        expectedRevision: draftVersion?.revision,
+        expectedEtag: draftVersion?.etag
+      })
     });
-    const json = await response.json().catch(() => ({}));
+    const json = (await response.json().catch(() => ({}))) as { draftVersion?: ThemeDraftMeta; error?: string };
     setSaving(false);
     if (!response.ok) {
-      setMessage(`保存失败：${json.error ?? "unknown error"}`);
+      setMessage(response.status === 409 ? "保存被拦截：导航草稿版本已变化，请刷新后重新检查。" : `保存失败：${json.error ?? "unknown error"}`);
       return;
     }
+    if (json.draftVersion) setDraftVersion(json.draftVersion);
     setMessage("导航草稿已保存。进入发布历史发布全站快照后，线上导航才会更新。");
     router.refresh();
   }

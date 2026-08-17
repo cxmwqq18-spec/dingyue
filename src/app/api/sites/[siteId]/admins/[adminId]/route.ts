@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
+import { invalidateAdminCustomersPageCache } from "@/lib/admin-customers-page-cache";
+import { invalidateAdminSettingsPageCache } from "@/lib/admin-settings-page-cache";
 import { hasSiteAdminSession } from "@/lib/api-auth";
+import { clearCustomerAdminAccessCache } from "@/lib/customer-admin-access";
 import { StoreError } from "@/lib/server-store";
 import { deleteSiteAdminRelational, updateSiteAdminRelational } from "@/lib/stores/site-store";
 import type { SiteAdmin } from "@/lib/types";
@@ -35,6 +38,9 @@ export async function PATCH(
       password: body.password,
       actor: body.actor
     });
+    clearCustomerAdminAccessCache(siteId, result.admin.email);
+    invalidateAdminCustomersPageCache(siteId);
+    invalidateAdminSettingsPageCache(siteId);
     return NextResponse.json({ ok: true, admin: result.admin });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
@@ -59,6 +65,9 @@ export async function DELETE(
       adminId,
       actor: body.actor
     });
+    clearCustomerAdminAccessCache(siteId, result.deletedAdmin.email);
+    invalidateAdminCustomersPageCache(siteId);
+    invalidateAdminSettingsPageCache(siteId);
     return NextResponse.json({ ok: true, deletedAdmin: result.deletedAdmin });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

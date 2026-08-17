@@ -217,6 +217,52 @@ async function previewTargetPath(storageKey) {
   return targetPath;
 }
 
+function normalizedRemoteAssetWriteBaseUrl() {
+  const rawBaseUrl = process.env.CUSTOMER_ASSET_WRITE_BASE_URL || process.env.CUSTOMER_ASSET_SHARED_BASE_URL || "";
+  try {
+    return rawBaseUrl ? new URL(rawBaseUrl).origin : "";
+  } catch {
+    return "";
+  }
+}
+
+function isLoopbackBaseUrl(baseUrl) {
+  if (!baseUrl) return false;
+  const { hostname } = new URL(baseUrl);
+  return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "0.0.0.0" || hostname.endsWith(".localhost");
+}
+
+async function uploadPreviewFileIfConfigured(storageKey, filePath, mimeType) {
+  if (process.env.CUSTOMER_ASSET_FORCE_LOCAL_WRITE === "1") return;
+  const baseUrl = normalizedRemoteAssetWriteBaseUrl();
+  if (!baseUrl || isLoopbackBaseUrl(baseUrl)) return;
+  const secret = process.env.CUSTOMER_ASSET_TRANSFER_SECRET || process.env.AI_WORKER_SECRET || "";
+  if (!secret || secret === "dev-worker-secret") {
+    throw new Error("tutorial_remote_asset_transfer_secret_required");
+  }
+  const bytes = await fs.readFile(filePath);
+  const url = new URL("/api/internal/customer-assets", baseUrl);
+  url.searchParams.set("storageKey", storageKey);
+  url.searchParams.set("mimeType", mimeType);
+  url.searchParams.set("purpose", "output");
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/octet-stream",
+      "X-Customer-Asset-Transfer-Secret": secret,
+      "X-Customer-Asset-Storage-Key": storageKey,
+      "X-Customer-Asset-Mime-Type": mimeType,
+      "X-Customer-Asset-Purpose": "output"
+    },
+    body: new Uint8Array(bytes),
+    cache: "no-store"
+  });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok || result.ok === false) {
+    throw new Error(`tutorial_remote_asset_upload_failed:${response.status}:${result.error || "unknown_error"}`);
+  }
+}
+
 async function upsertPreviewRecords({
   prisma,
   siteId,
@@ -326,6 +372,7 @@ export async function ensureMydreamshootsLocalPreviewVideo() {
     const sourceVideo = existingResultSourceFor(siteId, "video");
     const targetPath = await previewTargetPath(storageKey);
     const validation = await writeExistingResultVideo(sourceVideo, targetPath, { preserveSourceCanvas: true });
+    await uploadPreviewFileIfConfigured(storageKey, targetPath, "video/mp4");
     const promptText = process.env.TUTORIAL_PROMPT_TEXT || MYDREAMSHOOTS_HUG_TUTORIAL_PROMPT;
 
     const requestJson = {
@@ -461,6 +508,7 @@ export async function ensureAidreamcapesLocalPreviewVideo() {
     const sourceVideo = existingResultSourceFor(siteId, "video");
     const targetPath = await previewTargetPath(storageKey);
     const validation = await writeExistingResultVideo(sourceVideo, targetPath);
+    await uploadPreviewFileIfConfigured(storageKey, targetPath, "video/mp4");
     const promptText = process.env.TUTORIAL_PROMPT_TEXT || "Create a short motion concept from the selected source frame.";
     const requestJson = {
       mode: "video",
@@ -555,6 +603,7 @@ export async function ensureMydreamshootsLocalPreviewImage() {
     const sourceImage = existingResultSourceFor(siteId, "image");
     const targetPath = await previewTargetPath(storageKey);
     const validation = await writeExistingResultImage(sourceImage, targetPath);
+    await uploadPreviewFileIfConfigured(storageKey, targetPath, "image/webp");
 
     const promptNote = process.env.TUTORIAL_PROMPT_NOTE ||
       "Warm romantic portrait with soft date-night lighting, natural expression, clean face detail, polished private album finish, no logos, no text, no watermark.";
@@ -758,6 +807,7 @@ export async function ensureAidreamcapesLocalPreviewImage() {
     const sourceImage = existingResultSourceFor(siteId, "image");
     const targetPath = await previewTargetPath(storageKey);
     const validation = await writeExistingResultImage(sourceImage, targetPath);
+    await uploadPreviewFileIfConfigured(storageKey, targetPath, "image/webp");
 
     const promptNote = process.env.TUTORIAL_PROMPT_NOTE ||
       "Create a polished private fan-scene portrait album image from the selected approved source photo. Keep the adult subject natural, use warm cinematic event lighting, preserve clean facial detail, avoid logos, avoid public-figure resemblance, avoid text, and avoid watermarks.";

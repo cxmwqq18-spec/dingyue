@@ -1,8 +1,8 @@
 import { adminPerfJson, createAdminPerfTracker } from "@/lib/admin-perf";
 import { hasSiteAdminSession } from "@/lib/api-auth";
+import { settingsPageCache } from "@/lib/admin-settings-page-cache";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
-import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import {
   getSiteAuditLogsFromState,
   getSiteDomainsFromState,
@@ -12,8 +12,6 @@ import {
 } from "@/lib/server-store";
 import { latestActivity } from "@/lib/ops";
 import { toGatewayGroup, toSiteAdmin, toSiteDomain } from "@/lib/stores/prisma-mappers";
-
-const settingsPageCache = createServerTtlCache("site-admin-settings-page", Number(process.env.SITE_ADMIN_SETTINGS_PAGE_CACHE_TTL_MS ?? 15_000));
 
 function envInt(name: string, fallback: number): number {
   const parsed = Number(process.env[name]);

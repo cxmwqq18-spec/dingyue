@@ -3,15 +3,29 @@ import { NextResponse } from "next/server";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { STOREFRONT_PUBLIC_HOST_HEADER } from "@/lib/storefront-route-mode";
 
-const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?(?:\/|$)/i;
-const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
+const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
+const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
 const INTERNAL_PATH_RE = /^\/(?:api|assets|_next\/static|_next\/image|robots\.txt|sitemap\.xml)(?:\/|$)/i;
 const BROWSER_ICON_PATH_RE = /^\/(?:favicon\.ico|favicon\.svg|icon\.svg|apple-touch-icon(?:\.png)?)$/i;
-const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
+const GROWNSTRIDE_TEST_HOST = "test.grownstride.com";
+const GROWNSTRIDE_LEGACY_HOSTS = new Set(["grownstride.com", "www.grownstride.com"]);
+const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
 const PUBLIC_STOREFRONT_CACHE_CONTROL = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
+const PUBLIC_STOREFRONT_CDN_CACHE_CONTROL = "public, s-maxage=300, stale-while-revalidate=1800";
 const PRIVATE_STOREFRONT_CACHE_CONTROL = "private, no-store, max-age=0, must-revalidate";
+const STOREFRONT_GUARD_COOKIE_NAME = "k";
+const STOREFRONT_GUARD_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 12;
+const HOP_BY_HOP_HEADERS = new Set([
+  "connection",
+  "keep-alive",
+  "proxy-connection",
+  "transfer-encoding",
+  "upgrade",
+  "te",
+  "trailer"
+]);
 const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   adventure: "road-trip-frames",
   aventura: "game-day-group-photos",
@@ -50,21 +64,16 @@ const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
   gala: "gala-night-portraits",
   heritage: "heritage-celebration-portraits"
 };
-const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {
-  deportes: "world-cup-fan-photos",
-  lifestyle: "outdoor-creator-scenes",
-  "professional-headshots": "headshots",
-  sports: "world-cup-fan-photos",
-  travel: "outdoor-creator-scenes",
-  viaje: "outdoor-creator-scenes",
-  "travel-scene-pack": "outdoor-creator-scenes",
-  video: "ai-video-add-ons"
-};
+const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {};
 const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {
-  "ai-image-studio": "",
-  "headshot-generator": "headshot",
-  "image-studio": "",
-  "travel-portraits": "nature-adventure"
+  "talking-photo": "talking-photo",
+  "profile-clip": "profile-clip",
+  "fan-poster-motion": "fan-poster-motion",
+  "creator-intro-video": "creator-intro-video",
+  "product-teaser-clip": "product-teaser-clip",
+  "animated-avatar": "animated-avatar",
+  "fashion-reel": "fashion-reel",
+  "album-story-video": "album-story-video"
 };
 const AIDREAMCAPES_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "",
@@ -98,26 +107,47 @@ const AIDREAMCAPES_TOOL_REDIRECTS: Record<string, string> = {
 };
 const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/about": "/about-us",
+  "/california-privacy": "/state-privacy",
+  "/ccpa": "/state-privacy",
+  "/children-privacy-policy": "/children-privacy",
+  "/childrens-privacy": "/children-privacy",
   "/contact": "/contact-us",
   "/content-policy": "/content",
   "/cookie-policy": "/cookies",
   "/delivery-policy": "/shipping",
   "/examples": "/collections",
   "/packages": "/collections",
+  "/policies/california-privacy": "/state-privacy",
+  "/policies/ccpa": "/state-privacy",
+  "/policies/children": "/children-privacy",
+  "/policies/children-privacy": "/children-privacy",
+  "/policies/children-privacy-policy": "/children-privacy",
+  "/policies/childrens-privacy": "/children-privacy",
   "/policies/content": "/content",
+  "/policies/cookie-policy": "/cookies",
   "/policies/cookies": "/cookies",
+  "/policies/delivery": "/shipping",
+  "/policies/delivery-policy": "/shipping",
   "/policies/privacy": "/privacy",
+  "/policies/privacy-policy": "/privacy",
   "/policies/refund": "/refunds",
   "/policies/refunds": "/refunds",
   "/policies/shipping": "/shipping",
+  "/policies/state-privacy": "/state-privacy",
+  "/policies/state-privacy-rights": "/state-privacy",
   "/policies/terms": "/terms",
+  "/policies/terms-of-service": "/terms",
   "/privacy-policy": "/privacy",
   "/refund-policy": "/refunds",
   "/shipping-policy": "/shipping",
+  "/state-privacy-rights": "/state-privacy",
   "/terms-of-service": "/terms",
   "/tool": "/tools"
 };
-const LOCAL_DEFAULT_STOREFRONT_PATHS = new Set(["/collections", "/tools", "/pricing", "/help"]);
+const MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
+  "/headshot": "/ai-image-generation/headshot"
+};
+const LOCAL_DEFAULT_STOREFRONT_PATHS = new Set(["/ai-image-generation", "/ai-video-generation", "/pricing", "/help"]);
 const LOCAL_DEFAULT_STOREFRONT_PREFIXES = ["/account", "/app", "/dashboard", "/login"];
 
 const SEO_HEAD_TAG_RE =
@@ -148,6 +178,39 @@ function envSwitch(value: string | undefined): boolean | undefined {
   if (["0", "false", "off", "no"].includes(normalized)) return false;
   if (["1", "true", "on", "yes"].includes(normalized)) return true;
   return undefined;
+}
+
+function twoDigit(value: number): string {
+  return String(value).padStart(2, "0");
+}
+
+function storefrontGuardCookieValue(now = new Date()): string {
+  const shanghaiDate = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+  return `${twoDigit(shanghaiDate.getUTCFullYear() % 100)}${twoDigit(shanghaiDate.getUTCMonth() + 1)}${twoDigit(shanghaiDate.getUTCDate())}`;
+}
+
+function shouldSetStorefrontGuardCookie(request: NextRequest): boolean {
+  const guardCookieEnabled = envSwitch(process.env.STOREFRONT_GUARD_COOKIE);
+  if (guardCookieEnabled !== true) return false;
+  if (request.method !== "GET" && request.method !== "HEAD") return false;
+  if (request.headers.get(REORDER_SKIP_HEADER) === "1") return false;
+  if (INTERNAL_PATH_RE.test(request.nextUrl.pathname) || BROWSER_ICON_PATH_RE.test(request.nextUrl.pathname)) return false;
+  if (isPrivateStorefrontHtmlRequest(request)) return false;
+
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  if (!TARGET_SITE_PATH_RE.test(request.nextUrl.pathname) && !TARGET_HOST_RE.test(host)) return false;
+
+  const accept = request.headers.get("accept") ?? "";
+  return !accept || accept.includes("text/html");
+}
+
+function withStorefrontGuardCookie(response: Response, request: NextRequest): Response {
+  if (!shouldSetStorefrontGuardCookie(request)) return response;
+  response.headers.append(
+    "set-cookie",
+    `${STOREFRONT_GUARD_COOKIE_NAME}=${storefrontGuardCookieValue()}; Path=/; Max-Age=${STOREFRONT_GUARD_COOKIE_MAX_AGE_SECONDS}; SameSite=Lax`
+  );
+  return response;
 }
 
 function isEnglishPublicStorefrontHtmlRequest(request: NextRequest): boolean {
@@ -226,19 +289,31 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
 
-  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?)\/(collections|tools)\/([^/]+)(\/)?$/i);
+  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)\/(collections|tools)(?:\/([^/]+))?(\/)?$/i);
   const hostMatch = TARGET_HOST_RE.test(host)
-    ? pathname.match(/^\/(collections|tools)\/([^/]+)(\/)?$/i)
+    ? pathname.match(/^\/(collections|tools)(?:\/([^/]+))?(\/)?$/i)
     : undefined;
   if (!pathMatch && !hostMatch) return undefined;
 
-  const siteSlug = pathMatch?.[1]?.toLowerCase() ?? (host.toLowerCase().includes("aidreamcapes") ? "aidreamcapes" : "mydreamshoots");
+  const normalizedHost = host.toLowerCase();
+  const siteSlug =
+    pathMatch?.[1]?.toLowerCase() ??
+    (normalizedHost.includes("aidreamcapes") ? "aidreamcapes" : normalizedHost.includes("grownstride") ? "grownstride" : "mydreamshoots");
   const siteFamily = siteSlug.startsWith("aidreamcapes") ? "aidreamcapes" : "mydreamshoots";
   const kind = (pathMatch?.[2] ?? hostMatch?.[1] ?? "").toLowerCase();
   const currentSlug = normalizePathSlug(pathMatch?.[3] ?? hostMatch?.[2] ?? "");
   const spanishXbyCanonicalSlug = kind === "collections" && isSpanishStorefrontRequestIdentity(`${siteSlug} ${host}`)
     ? canonicalSpanishXbyCollectionSlug(currentSlug)
     : currentSlug;
+  const mydreamshootsToolTarget =
+    siteFamily === "mydreamshoots" && kind === "tools" ? MYDREAMSHOOTS_TOOL_REDIRECTS[currentSlug] : undefined;
+  if (siteFamily === "mydreamshoots" && kind === "tools" && (!currentSlug || mydreamshootsToolTarget)) {
+    const nextUrl = publicOriginForRequest(request);
+    const targetPath = mydreamshootsToolTarget ? `/ai-video-generation/${mydreamshootsToolTarget}` : "/ai-video-generation";
+    nextUrl.pathname = pathMatch ? `/site/${siteSlug}${targetPath}` : targetPath;
+    nextUrl.search = request.nextUrl.search;
+    return NextResponse.redirect(nextUrl, 308);
+  }
   const redirectMap =
     spanishXbyCanonicalSlug !== currentSlug
       ? undefined
@@ -247,7 +322,7 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
       : siteFamily === "mydreamshoots" && kind === "collections"
         ? MYDREAMSHOOTS_COLLECTION_REDIRECTS
         : siteFamily === "mydreamshoots" && kind === "tools"
-          ? MYDREAMSHOOTS_TOOL_REDIRECTS
+          ? undefined
           : siteFamily === "aidreamcapes" && kind === "tools"
             ? AIDREAMCAPES_TOOL_REDIRECTS
           : undefined;
@@ -268,11 +343,22 @@ function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefi
 function legacyPublicPathRedirect(request: NextRequest): NextResponse | undefined {
   const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?)(\/.*)$/i);
+  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)(\/.*)$/i);
   const scopedPath = pathMatch?.[2]?.toLowerCase() ?? "";
   const hostPath = TARGET_HOST_RE.test(host) ? pathname.toLowerCase() : "";
-  const targetPath = LEGACY_PUBLIC_PATH_REDIRECTS[scopedPath] ?? LEGACY_PUBLIC_PATH_REDIRECTS[hostPath];
+  const siteSlug = pathMatch?.[1]?.toLowerCase() ?? (String(host).toLowerCase().includes("mydreamshoots") ? "mydreamshoots" : "");
+  const isPrimaryDreamshoot = /dreamshoot/i.test(siteSlug) && !/aidreamshoots|aidreamcapes/i.test(siteSlug);
+  let targetPath = isPrimaryDreamshoot
+    ? MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS[scopedPath] ?? MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS[hostPath]
+    : undefined;
+  targetPath ??= LEGACY_PUBLIC_PATH_REDIRECTS[scopedPath] ?? LEGACY_PUBLIC_PATH_REDIRECTS[hostPath];
   if (!targetPath) return undefined;
+  if (targetPath === "/tools" && isPrimaryDreamshoot) {
+    return undefined;
+  }
+  if (targetPath === "/collections" && isPrimaryDreamshoot) {
+    targetPath = "/ai-image-generation";
+  }
 
   const nextUrl = request.nextUrl.clone();
   nextUrl.pathname = pathMatch ? `/site/${pathMatch[1].toLowerCase()}${targetPath}` : targetPath;
@@ -299,9 +385,10 @@ function localDefaultStorefrontRedirect(request: NextRequest): NextResponse | un
 
 function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse | undefined {
   const pathname = request.nextUrl.pathname;
+  if (PRIVATE_STORE_PATH_RE.test(pathname)) return undefined;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
   if (!TARGET_HOST_RE.test(host)) return undefined;
-  const match = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots)(?:-xby|-eu)?)(\/.*)?$/i);
+  const match = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)(\/.*)?$/i);
   if (!match) return undefined;
   const siteSlug = match[1]?.toLowerCase() ?? "";
   const normalizedHost = host.toLowerCase();
@@ -313,6 +400,21 @@ function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse
   const scopedPath = match[2] || "/";
   const nextUrl = request.nextUrl.clone();
   nextUrl.pathname = scopedPath === "/" ? "/" : scopedPath;
+  return NextResponse.redirect(nextUrl, 308);
+}
+
+function grownstrideLegacyHostRedirect(request: NextRequest): NextResponse | undefined {
+  const host = String(request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "")
+    .split(",")[0]
+    ?.trim()
+    .toLowerCase()
+    .split(":")[0] ?? "";
+  if (!GROWNSTRIDE_LEGACY_HOSTS.has(host)) return undefined;
+
+  const nextUrl = request.nextUrl.clone();
+  nextUrl.protocol = "https:";
+  nextUrl.hostname = GROWNSTRIDE_TEST_HOST;
+  nextUrl.port = "";
   return NextResponse.redirect(nextUrl, 308);
 }
 
@@ -359,6 +461,18 @@ function storefrontHtmlCacheControl(request: NextRequest, upstreamHeaders: Heade
   const upstreamCache = upstreamHeaders.get("cache-control") ?? "";
   if (upstreamCache && !/(?:no-store|private)/i.test(upstreamCache)) return upstreamCache;
   return PUBLIC_STOREFRONT_CACHE_CONTROL;
+}
+
+function applyStorefrontHtmlCacheHeaders(headers: Headers, request: NextRequest, upstreamHeaders: Headers) {
+  const cacheControl = storefrontHtmlCacheControl(request, upstreamHeaders);
+  headers.set("cache-control", cacheControl);
+  if (!/(?:no-store|private)/i.test(cacheControl)) {
+    headers.set("cdn-cache-control", PUBLIC_STOREFRONT_CDN_CACHE_CONTROL);
+    headers.set("cloudflare-cdn-cache-control", PUBLIC_STOREFRONT_CDN_CACHE_CONTROL);
+  } else {
+    headers.delete("cdn-cache-control");
+    headers.delete("cloudflare-cdn-cache-control");
+  }
 }
 
 function withStorefrontLocale(html: string, request: NextRequest): string {
@@ -464,9 +578,87 @@ function withInlineAidreamcapesLogo(html: string, request: NextRequest): string 
   return html.replace(AIDREAMCAPES_LOGO_IMG_RE, AIDREAMCAPES_INLINE_LOGO);
 }
 
+function shouldInlineAidreamcapesLogo(request: NextRequest): boolean {
+  if (isSpanishXbyRequest(request)) return false;
+  return siteIconForRequest(request)?.png === AIDREAMCAPES_ICON;
+}
+
+function rewriteStorefrontHtmlHead(html: string, request: NextRequest, shouldReorder: boolean): string {
+  const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
+  return withStorefrontLocale(
+    withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)),
+    request
+  );
+}
+
+function rewriteStorefrontHtmlFull(html: string, request: NextRequest, shouldReorder: boolean): string {
+  const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
+  return withStorefrontLocale(
+    withInlineAidreamcapesLogo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request),
+    request
+  );
+}
+
+function rewriteStorefrontHtmlStream(body: ReadableStream<Uint8Array>, request: NextRequest, shouldReorder: boolean): ReadableStream<Uint8Array> {
+  return new ReadableStream<Uint8Array>({
+    async start(controller) {
+      const reader = body.getReader();
+      const decoder = new TextDecoder();
+      const encoder = new TextEncoder();
+      let buffer = "";
+      let emittedHead = false;
+
+      try {
+        while (!emittedHead) {
+          const { done, value } = await reader.read();
+          if (value) buffer += decoder.decode(value, { stream: !done });
+
+          const headCloseMatch = buffer.match(/<\/head>/i);
+          if (headCloseMatch?.index !== undefined) {
+            const headEnd = headCloseMatch.index + headCloseMatch[0].length;
+            const headPrefix = buffer.slice(0, headEnd);
+            const bodyRemainder = buffer.slice(headEnd);
+            controller.enqueue(encoder.encode(rewriteStorefrontHtmlHead(headPrefix, request, shouldReorder)));
+            if (bodyRemainder) controller.enqueue(encoder.encode(bodyRemainder));
+            buffer = "";
+            emittedHead = true;
+            break;
+          }
+
+          if (done) {
+            const tail = decoder.decode();
+            const rewritten = rewriteStorefrontHtmlFull(buffer + tail, request, shouldReorder);
+            controller.enqueue(encoder.encode(rewritten));
+            controller.close();
+            return;
+          }
+        }
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (value) {
+            const chunk = decoder.decode(value, { stream: !done });
+            if (chunk) controller.enqueue(encoder.encode(chunk));
+          }
+          if (done) {
+            const tail = decoder.decode();
+            if (tail) controller.enqueue(encoder.encode(tail));
+            controller.close();
+            return;
+          }
+        }
+      } catch (error) {
+        controller.error(error);
+      } finally {
+        reader.releaseLock();
+      }
+    }
+  });
+}
+
 function nextWithPathname(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-pathname", request.nextUrl.pathname || "/");
+  requestHeaders.set("x-pathname", requestHeaders.get("x-pathname") || request.nextUrl.pathname || "/");
   return NextResponse.next({ request: { headers: requestHeaders } });
 }
 
@@ -492,6 +684,42 @@ function sameServerPort(request: NextRequest): string {
   return "3010";
 }
 
+function headerHost(value: string | null | undefined): string {
+  return String(value ?? "").split(",")[0]?.trim() ?? "";
+}
+
+function isInternalOriginHost(host: string): boolean {
+  return /^(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/i.test(host);
+}
+
+function isLocalStorefrontHost(host: string): boolean {
+  return /(?:^|\.)(?:localhost)(?::\d+)?$/i.test(host);
+}
+
+function publicOriginForRequest(request: NextRequest): URL {
+  const publicHost = [
+    headerHost(request.headers.get(STOREFRONT_PUBLIC_HOST_HEADER)),
+    headerHost(request.headers.get("x-forwarded-host")),
+    headerHost(request.headers.get("host"))
+  ].find((host) => TARGET_HOST_RE.test(host));
+  const host = publicHost || headerHost(request.headers.get("host")) || request.nextUrl.host;
+  const forwardedProto = headerHost(request.headers.get("x-forwarded-proto")).replace(/:$/, "");
+  const protocol = TARGET_HOST_RE.test(host) && !isInternalOriginHost(host) && !isLocalStorefrontHost(host)
+    ? "https"
+    : forwardedProto || request.nextUrl.protocol.replace(/:$/, "");
+  return new URL(`${protocol}://${host}`);
+}
+
+function publicRedirectUrlForRequest(request: NextRequest, location: string): URL {
+  const publicOrigin = publicOriginForRequest(request);
+  const target = new URL(location, publicOrigin);
+  if (isInternalOriginHost(target.host) || target.origin === request.nextUrl.origin) {
+    target.protocol = publicOrigin.protocol;
+    target.host = publicOrigin.host;
+  }
+  return target;
+}
+
 function storefrontSlugForHost(host: string | null | undefined): string | undefined {
   const normalized = String(host ?? "").toLowerCase();
   if (!TARGET_HOST_RE.test(normalized)) return undefined;
@@ -499,7 +727,23 @@ function storefrontSlugForHost(host: string | null | undefined): string | undefi
   if (normalized.includes("aidreamcapes.eu")) return "aidreamcapes-eu";
   if (normalized.includes("aidreamcapes")) return "aidreamcapes";
   if (normalized.includes("mydreamshoots")) return "mydreamshoots";
+  if (normalized.includes("grownstride")) return "grownstride";
   return undefined;
+}
+
+function isGrownstrideRequest(request: NextRequest): boolean {
+  return [request.headers.get("x-forwarded-host"), request.headers.get("host")].some(
+    (host) => storefrontSlugForHost(host) === "grownstride"
+  );
+}
+
+function applyGrownstrideNoindex(response: Response, request: NextRequest): Response {
+  if (isGrownstrideRequest(request)) response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  return response;
+}
+
+function finalizeStorefrontResponse(response: Response, request: NextRequest): Response {
+  return applyGrownstrideNoindex(withStorefrontGuardCookie(response, request), request);
 }
 
 function sameServerStorefrontUrl(request: NextRequest): URL {
@@ -508,6 +752,14 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   if (!hostSlug || upstreamUrl.pathname.startsWith("/site/")) return upstreamUrl;
   upstreamUrl.pathname = `/site/${hostSlug}${upstreamUrl.pathname === "/" ? "" : upstreamUrl.pathname}`;
   return upstreamUrl;
+}
+
+function sanitizeUpstreamHeaders(headers: Headers): Headers {
+  const next = new Headers(headers);
+  for (const header of HOP_BY_HOP_HEADERS) next.delete(header);
+  next.delete("content-length");
+  next.delete("host");
+  return next;
 }
 
 async function storefrontIconResponse(request: NextRequest): Promise<Response | undefined> {
@@ -521,7 +773,7 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
   upstreamUrl.search = "";
 
   const upstreamResponse = await fetch(upstreamUrl, {
-    headers: { [REORDER_SKIP_HEADER]: "1", "x-pathname": request.nextUrl.pathname || "/" }
+    headers: sanitizeUpstreamHeaders(new Headers({ [REORDER_SKIP_HEADER]: "1", "x-pathname": request.nextUrl.pathname || "/" }))
   });
   if (!upstreamResponse.ok) return undefined;
 
@@ -540,12 +792,14 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 
 export async function middleware(request: NextRequest) {
   const iconResponse = await storefrontIconResponse(request);
-  if (iconResponse) return iconResponse;
+  if (iconResponse) return applyGrownstrideNoindex(iconResponse, request);
 
   const skipInternalRewrite = request.headers.get(REORDER_SKIP_HEADER) === "1";
-  const redirectResponse = skipInternalRewrite ? undefined : canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
-  if (redirectResponse) return redirectResponse;
-  if (!shouldRewriteStorefrontHtml(request)) return nextWithPathname(request);
+  if (skipInternalRewrite) return applyGrownstrideNoindex(nextWithPathname(request), request);
+
+  const redirectResponse = grownstrideLegacyHostRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
+  if (redirectResponse) return finalizeStorefrontResponse(redirectResponse, request);
+  if (!shouldRewriteStorefrontHtml(request)) return finalizeStorefrontResponse(nextWithPathname(request), request);
 
   const upstreamHeaders = new Headers(request.headers);
   upstreamHeaders.set(REORDER_SKIP_HEADER, "1");
@@ -567,38 +821,42 @@ export async function middleware(request: NextRequest) {
   }
 
   const upstreamResponse = await fetch(upstreamUrl, {
-    headers: upstreamHeaders,
+    headers: sanitizeUpstreamHeaders(upstreamHeaders),
     redirect: "manual"
   });
 
   const contentType = upstreamResponse.headers.get("content-type") ?? "";
   if (upstreamResponse.status >= 300 && upstreamResponse.status < 400) {
     const location = upstreamResponse.headers.get("location");
-    if (location) return NextResponse.redirect(new URL(location, request.url), upstreamResponse.status);
+    if (location) return finalizeStorefrontResponse(NextResponse.redirect(publicRedirectUrlForRequest(request, location), upstreamResponse.status), request);
   }
-  if (!upstreamResponse.ok || !contentType.includes("text/html")) return upstreamResponse;
+  if (!upstreamResponse.ok || !contentType.includes("text/html")) return applyGrownstrideNoindex(upstreamResponse, request);
 
-  const html = await upstreamResponse.text();
   const shouldReorder = shouldReorderStorefrontHead(request);
-  const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
-  const rewrittenHtml = withStorefrontLocale(
-    withInlineAidreamcapesLogo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request),
-    request
-  );
   const headers = new Headers(upstreamResponse.headers);
   headers.delete("content-length");
-  headers.set("cache-control", storefrontHtmlCacheControl(request, upstreamResponse.headers));
+  applyStorefrontHtmlCacheHeaders(headers, request, upstreamResponse.headers);
   if (shouldReorder) headers.set("x-storefront-head-seo-reordered", "1");
   if (isSpanishXbyRequest(request)) {
     headers.set("x-storefront-locale", "es");
     headers.set("content-language", "es");
   }
+  if (isGrownstrideRequest(request)) headers.set("X-Robots-Tag", "noindex, nofollow");
 
-  return new Response(rewrittenHtml, {
+  if (upstreamResponse.body && !shouldInlineAidreamcapesLogo(request)) {
+    return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlStream(upstreamResponse.body, request, shouldReorder), {
+      status: upstreamResponse.status,
+      statusText: upstreamResponse.statusText,
+      headers
+    }), request);
+  }
+
+  const html = await upstreamResponse.text();
+  return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlFull(html, request, shouldReorder), {
     status: upstreamResponse.status,
     statusText: upstreamResponse.statusText,
     headers
-  });
+  }), request);
 }
 
 export const config = {

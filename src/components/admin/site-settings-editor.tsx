@@ -47,12 +47,14 @@ type SocialLinksForm = {
   facebookUrl: string;
   pinterestUrl: string;
   youtubeUrl: string;
+  threadsUrl: string;
   twitterUrl: string;
 };
 
 const socialLinkFields: Array<{ key: keyof SocialLinksForm; label: string; placeholder: string }> = [
   { key: "instagramUrl", label: "Instagram", placeholder: "https://www.instagram.com/yourbrand" },
   { key: "facebookUrl", label: "Facebook", placeholder: "https://www.facebook.com/yourbrand" },
+  { key: "threadsUrl", label: "Threads", placeholder: "https://www.threads.com/@yourbrand" },
   { key: "pinterestUrl", label: "Pinterest", placeholder: "https://www.pinterest.com/yourbrand" },
   { key: "youtubeUrl", label: "YouTube", placeholder: "https://www.youtube.com/@yourbrand" },
   { key: "twitterUrl", label: "X / Twitter", placeholder: "https://x.com/yourbrand" }
@@ -103,6 +105,7 @@ function createSocialLinksForm(site: Site): SocialLinksForm {
     socialBody: themeText(footerSettings.socialBody),
     instagramUrl: themeText(footerSettings.instagramUrl),
     facebookUrl: themeText(footerSettings.facebookUrl),
+    threadsUrl: themeText(footerSettings.threadsUrl),
     pinterestUrl: themeText(footerSettings.pinterestUrl),
     youtubeUrl: themeText(footerSettings.youtubeUrl),
     twitterUrl: themeText(footerSettings.twitterUrl)

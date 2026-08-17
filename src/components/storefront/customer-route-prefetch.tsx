@@ -7,6 +7,8 @@ const prefetchPriority = [
   "/",
   "/login",
   "/pricing",
+  "/ai-image-generation",
+  "/ai-video-generation",
   "/tools",
   "/collections",
   "/faq",
@@ -16,6 +18,8 @@ const prefetchPriority = [
 const warmFetchPathPrefixes = [
   "/",
   "/login",
+  "/ai-image-generation",
+  "/ai-video-generation",
   "/collections",
   "/tools",
   "/pricing",
@@ -64,6 +68,8 @@ function shouldWarmFetch(path: string) {
 function warmDelayForPath(path: string, index: number) {
   const pathname = normalizedPublicPath(path);
   if (pathname === "/") return 40;
+  if (pathname === "/ai-video-generation" || pathname.startsWith("/ai-video-generation/")) return 80;
+  if (pathname === "/ai-image-generation" || pathname.startsWith("/ai-image-generation/")) return 180;
   if (pathname === "/tools" || pathname.startsWith("/tools/")) return 80;
   if (pathname === "/collections" || pathname.startsWith("/collections/")) return 180;
   if (pathname === "/login") return 260;

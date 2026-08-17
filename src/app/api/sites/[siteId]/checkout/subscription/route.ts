@@ -11,7 +11,7 @@ import type { NextRequest } from "next/server";
 const CHECKOUT_RETRY_RATE_LIMIT = { windowMs: 60000, maxRequests: 12, keyPrefix: "checkout" };
 
 function checkoutModeForInterval(interval: string): "subscription" | "payment" {
-  return interval === "month" || interval === "year" ? "subscription" : "payment";
+  return interval === "one_time" ? "payment" : "subscription";
 }
 
 export async function HEAD() {

@@ -1,6 +1,7 @@
 "use client";
 
 import { type DragEvent, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { BookOpen, Menu, PanelBottom, PanelTop, SearchCheck } from "lucide-react";
 import { PreviewFrame } from "@/components/designer/preview-frame";
 import {
   type DesignerDragToken,
@@ -10,6 +11,7 @@ import {
 } from "@/components/designer/designer-drag-protocol";
 import {
   type PreviewMode,
+  type PreviewViewportPreset,
   type IframePatchPayload,
   type IframeDesignerMessage,
   previewSectionIdForSelection,
@@ -20,6 +22,7 @@ import {
 import {
   blockDisplayLabel,
   categoryLabel,
+  fieldDisplayLabel,
   globalNodeBlueprints,
   labelForSchema,
   pageOptionLabel,
@@ -30,6 +33,11 @@ import {
   templateDisplayName
 } from "@/components/designer/designer-metadata";
 import { DesignerWorkspacePane } from "@/components/designer/designer-workspace-pane";
+import {
+  type DesignerCopyLocatorItem,
+  type DesignerCopyLocatorQuickTarget
+} from "@/components/designer/designer-copy-locator";
+import { DesignerWorkbenchTutorial } from "@/components/designer/designer-workbench-tutorial";
 import {
   createGlobalTreeProps,
   createPageTreeProps,
@@ -85,6 +93,7 @@ import {
 import {
   type DesignerDragState,
   type GlobalLocalField,
+  type PropertyFieldFocusRequest,
   type Selection
 } from "@/components/designer/designer-types";
 import { fetchAdminJson } from "@/components/admin/admin-api-client";
@@ -92,9 +101,21 @@ import {
   groupFieldsByIds
 } from "@/components/designer/designer-types";
 import { parseFieldValue } from "@/components/designer/field-editor-registry";
+import {
+  isEditableTextPropertyField,
+  isLocatablePropertyField,
+  propertyFieldGroupFor
+} from "@/components/designer/designer-property-groups";
 import type { DesignerResourceKind, DesignerResourceStatus, FieldOptions } from "@/components/designer/field-editor-types";
 import type { DesignerToolbarMenuOption } from "@/components/designer/designer-toolbar-primitives";
-import { aiSubscriptionSectionSchemas, defaultBlock, defaultSection, getSectionSchema, sectionSchemas } from "@/lib/section-schema";
+import {
+  aiSubscriptionSectionSchemas,
+  defaultBlock,
+  defaultSection,
+  getSectionSchema,
+  readThemeFieldValue,
+  sectionSchemas
+} from "@/lib/section-schema";
 import { buildSaasThemeDraft } from "@/lib/theme/saas-theme-model";
 import { getThemePackages, themePackageTemplateToPageJson, type ThemePackageSiteSettings, type ThemePackageTemplateKey } from "@/lib/theme/registry";
 import {
@@ -111,14 +132,47 @@ import type {
   Site,
   SiteAiApp,
   ThemeBlockSchema,
+  ThemeDraftMeta,
   ThemeFieldSchema,
   ThemePage,
   ThemePageJson,
   ThemeSectionSchema,
+  ThemeSettingValue,
   ThemeSettings
 } from "@/lib/types";
 import type { SaasThemeAction } from "@/lib/server-store";
 import type { DesignerWorkspaceTab } from "@/components/designer/designer-workspace-pane";
+
+type XfcartVersionResult = {
+  pageDraftVersions?: Record<string, ThemeDraftMeta>;
+  settingsDraftVersion?: ThemeDraftMeta;
+};
+
+type QueuedXfcartAction = {
+  action: SaasThemeAction;
+  fallbackMessage: string;
+  sequence: number;
+};
+
+type QueuedXfcartActionRecord = {
+  inflight: boolean;
+  pending?: QueuedXfcartAction;
+  promise?: Promise<XfcartVersionResult | undefined>;
+  timerId?: number;
+};
+
+type XfcartMutationContext = {
+  pages: ThemePage[];
+  drafts: Record<string, ThemePageJson>;
+  selectedPageId: string;
+  draft: ThemePageJson;
+  themeSettings: ThemeSettings;
+  themeId: string;
+  themeKey: string;
+  previewMode: PreviewMode;
+};
+
+type DesignerSaveState = "idle" | "dirty" | "saving" | "saved" | "error" | "conflict";
 
 function templatePackageKeyForPage(page: ThemePage, templateName: string): ThemePackageTemplateKey | undefined {
   const normalizedTemplate = templateName.replace(/\.liquid$/, "");
@@ -242,6 +296,56 @@ function cloneDesignerJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
 }
 
+function stripLocatorText(value: string) {
+  return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function locatorTextFromValue(value: ThemeSettingValue | undefined): string {
+  if (value === undefined || value === null) return "";
+  if (typeof value === "string") return stripLocatorText(value);
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (Array.isArray(value)) return value.map(locatorTextFromValue).filter(Boolean).join(" / ");
+  const record = value as Record<string, ThemeSettingValue>;
+  const prioritized = ["label", "title", "headline", "name", "text", "description", "href", "url"];
+  const direct = prioritized.map((key) => locatorTextFromValue(record[key])).find(Boolean);
+  if (direct) return direct;
+  return Object.values(record).map(locatorTextFromValue).filter(Boolean).join(" / ");
+}
+
+function shouldIndexField(field: ThemeFieldSchema) {
+  return !["image_picker", "media_asset", "video_url", "color", "range", "font_picker"].includes(field.type);
+}
+
+function fallbackLocatorLabel(fieldId: string) {
+  return fieldDisplayLabel({ id: fieldId, label: fieldId });
+}
+
+function selectionScopeKey(selection: Selection): string {
+  if (selection.kind === "section") return `section:${selection.sectionId}`;
+  if (selection.kind === "block") return `block:${selection.sectionId}:${selection.blockId}`;
+  if (selection.kind === "global") return `global:${selection.globalType}`;
+  if (selection.kind === "globalBlock") return `globalBlock:${selection.globalType}:${selection.blockId}`;
+  return `globalSettings:${selection.node}`;
+}
+
+function normalizedPreviewMatchText(value: string) {
+  return stripLocatorText(value)
+    .toLowerCase()
+    .replace(/[“”‘’"'`]+/g, "")
+    .replace(/[，。！？；：、,.!?;:()[\]{}<>|/\\_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function previewTextLooksMatched(candidateText: string, clickedText: string) {
+  const candidate = normalizedPreviewMatchText(candidateText);
+  const clicked = normalizedPreviewMatchText(clickedText);
+  if (!candidate || !clicked) return false;
+  if (candidate === clicked) return true;
+  if (candidate.length >= 2 && clicked.includes(candidate)) return true;
+  return clicked.length >= 2 && candidate.includes(clicked);
+}
+
 function applyThemePackageSettingsToDraftSettings(base: ThemeSettings, siteSettings?: ThemePackageSiteSettings): ThemeSettings {
   const next = normalizeGlobalSections(cloneSettings(base));
   const packageSettings = siteSettings?.themeSettings;
@@ -360,8 +464,11 @@ export function DesignerClient({
   const [selectedPageId, setSelectedPageId] = useState(initialPage.id);
   const [selection, setSelection] = useState<Selection>(() => ({ kind: "section", sectionId: initialPage.draftJson.sectionsOrder[0] ?? "" }));
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop");
+  const [previewViewportPreset, setPreviewViewportPreset] = useState<PreviewViewportPreset>("desktop-1440");
   const [activeTab, setActiveTab] = useState<DesignerWorkspaceTab>("templates");
-  const [previewMode, setPreviewMode] = useState<PreviewMode>("iframe");
+  const [previewMode, setPreviewMode] = useState<PreviewMode>("edit");
+  const [saveState, setSaveState] = useState<DesignerSaveState>("idle");
+  const [lastSavedAt, setLastSavedAt] = useState("");
   const [iframeReloadKey, setIframeReloadKey] = useState(0);
   const [iframeStatus, setIframeStatus] = useState<"loading" | "ready" | "recovering" | "failed">("loading");
   const iframeRecoveryCount = useRef(0);
@@ -377,13 +484,31 @@ export function DesignerClient({
     Object.fromEntries(pages.map((page) => [page.id, clonePage(page.draftJson)]))
   );
   const [themeSettings, setThemeSettings] = useState<ThemeSettings>(normalizeGlobalSections(cloneSettings(site.themeSettings.draftJson)));
+  const [draftVersions, setDraftVersions] = useState<Record<string, ThemeDraftMeta>>(
+    Object.fromEntries(pages.flatMap((page) => page.draftMeta ? [[page.id, page.draftMeta] as const] : []))
+  );
+  const [themeSettingsDraftVersion, setThemeSettingsDraftVersion] = useState<ThemeDraftMeta | undefined>(site.themeSettings.draftMeta);
+  const [publishConfirmOpen, setPublishConfirmOpen] = useState(false);
+  const [publishBusy, setPublishBusy] = useState(false);
+  const [tutorialOpen, setTutorialOpen] = useState(false);
+  const [locatorBreadcrumb, setLocatorBreadcrumb] = useState<string | undefined>(undefined);
+  const [fieldFocusRequest, setFieldFocusRequest] = useState<PropertyFieldFocusRequest | undefined>(undefined);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>(() =>
     expansionStateForPage(initialPage?.draftJson, initialPage?.draftJson.sectionsOrder[0])
   );
   const [expandedGlobals, setExpandedGlobals] = useState<Record<"header" | "footer", boolean>>({ header: false, footer: false });
-  const [publishedVersion, setPublishedVersion] = useState(() => Math.max(publicationCount, ...pages.map((page) => page.publishedJson.version), 1));
-  const [lastAction, setLastAction] = useState("已载入当前页面草稿，可继续编辑并按需发布。");
+  const [publishedVersion, setPublishedVersion] = useState(() => Math.max(1, ...pages.map((page) => page.publishedJson.version ?? 0)));
+  const [lastAction, setLastAction] = useState("已载入后台草稿。输入字段会自动同步左侧草稿预览，点击发布后才上线。");
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const mutationBusyRef = useRef(false);
+  const previewMutationQueuesRef = useRef(new Map<string, QueuedXfcartActionRecord>());
+  const previewMutationSequenceRef = useRef(0);
+  const xfcartContextRef = useRef<XfcartMutationContext | null>(null);
+  const dirtyPageIdsRef = useRef<Set<string>>(new Set());
+  const themeSettingsDirtyRef = useRef(false);
+  const previewSelectionLockUntilRef = useRef(0);
+  const fieldFocusRequestIdRef = useRef(0);
+  const choosePreviewSelectionRef = useRef<(sectionId: string, blockId?: string, clickedText?: string, preferredFieldId?: string) => void>(() => undefined);
   const [publishedPages, setPublishedPages] = useState<Record<string, ThemePageJson>>(
     Object.fromEntries(pages.map((page) => [page.id, clonePage(page.publishedJson)]))
   );
@@ -405,6 +530,47 @@ export function DesignerClient({
   useEffect(() => {
     resourceStatusRef.current = resourceStatus;
   }, [resourceStatus]);
+
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const previous = {
+      htmlOverflow: html.style.overflow,
+      htmlHeight: html.style.height,
+      htmlOverscrollBehavior: html.style.overscrollBehavior,
+      bodyOverflow: body.style.overflow,
+      bodyHeight: body.style.height,
+      bodyOverscrollBehavior: body.style.overscrollBehavior
+    };
+    html.style.overflow = "hidden";
+    html.style.height = "100%";
+    html.style.overscrollBehavior = "none";
+    body.style.overflow = "hidden";
+    body.style.height = "100%";
+    body.style.overscrollBehavior = "none";
+    return () => {
+      html.style.overflow = previous.htmlOverflow;
+      html.style.height = previous.htmlHeight;
+      html.style.overscrollBehavior = previous.htmlOverscrollBehavior;
+      body.style.overflow = previous.bodyOverflow;
+      body.style.height = previous.bodyHeight;
+      body.style.overscrollBehavior = previous.bodyOverscrollBehavior;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 640px)").matches) {
+      setDevice("mobile");
+      setPreviewMode("edit");
+    }
+  }, []);
+
+  useEffect(() => {
+    setDraftVersions(Object.fromEntries(pages.flatMap((page) => (page.draftMeta ? [[page.id, page.draftMeta] as const] : []))));
+    setThemeSettingsDraftVersion(site.themeSettings.draftMeta);
+    setPublishedVersion(Math.max(1, ...pages.map((page) => page.publishedJson.version ?? 0)));
+  }, [pages, site.themeSettings.draftMeta]);
+
   const activePage = pages.find((page) => page.id === selectedPageId) ?? pages[0];
   const draft = drafts[selectedPageId];
   const livePage = publishedPages[selectedPageId] ?? activePage.publishedJson;
@@ -441,6 +607,21 @@ export function DesignerClient({
     }
   }, [site.id]);
 
+  const siteWithDesignerMedia = useMemo<Site>(() => ({
+    ...site,
+    mediaAssets
+  }), [site, mediaAssets]);
+
+  const upsertDesignerMediaAsset = useCallback((asset: MediaAsset) => {
+    setMediaAssets((current) => [asset, ...current.filter((item) => item.id !== asset.id)]);
+    setResourceStatus((current) => ({ ...current, mediaAssets: "ready" }));
+  }, []);
+
+  const removeDesignerMediaAsset = useCallback((assetId: string) => {
+    setMediaAssets((current) => current.filter((item) => item.id !== assetId));
+    setResourceStatus((current) => ({ ...current, mediaAssets: "ready" }));
+  }, []);
+
   const fieldOptions = useMemo<FieldOptions>(() => ({
     pages,
     products,
@@ -448,8 +629,10 @@ export function DesignerClient({
     mediaAssets,
     creativePacks,
     requestResource: loadDesignerResource,
+    upsertMediaAsset: upsertDesignerMediaAsset,
+    removeMediaAsset: removeDesignerMediaAsset,
     resourceStatus
-  }), [pages, products, siteAiApps, mediaAssets, creativePacks, loadDesignerResource, resourceStatus]);
+  }), [pages, products, siteAiApps, mediaAssets, creativePacks, loadDesignerResource, upsertDesignerMediaAsset, removeDesignerMediaAsset, resourceStatus]);
   const saasSettingsGroups = useMemo(() => getImportedSaasSettingsGroupsForTheme(selectedSaasThemeKey), [selectedSaasThemeKey]);
   const flattenedSaasFields = useMemo(() => saasSettingsGroups.flatMap((group) => group.fields), [saasSettingsGroups]);
   const globalNodes = useMemo(() => {
@@ -464,6 +647,13 @@ export function DesignerClient({
     () => draft.sectionsOrder.map((id) => ({ id, section: draft.sections[id] })).filter((item) => item.section),
     [draft]
   );
+  const copyLocatorSectionList = useMemo(() => {
+    const orderedIds = new Set(draft.sectionsOrder);
+    const unplacedSections = Object.entries(draft.sections)
+      .filter(([id, section]) => section && !orderedIds.has(id))
+      .map(([id, section]) => ({ id, section }));
+    return [...sectionList, ...unplacedSections];
+  }, [draft.sections, draft.sectionsOrder, sectionList]);
   const selectedSectionId = selection.kind === "section" || selection.kind === "block" ? selection.sectionId : "";
   const activeSectionId = selectedSectionId && draft.sections[selectedSectionId] ? selectedSectionId : sectionList[0]?.id;
   const activeGlobalNode = selection.kind === "globalSettings" ? globalNodes.find((node) => node.id === selection.node) : undefined;
@@ -480,11 +670,6 @@ export function DesignerClient({
   const selectedSaasSectionSchemas = useMemo(() => getImportedSaasSectionSchemasForTheme(selectedSaasThemeKey), [selectedSaasThemeKey]);
   const activeBlock = selection.kind === "block" && activeSection ? safeBlocks(activeSection).find((block) => block.id === selection.blockId) : undefined;
   const activeGlobalBlock = selection.kind === "globalBlock" && activeSection ? safeBlocks(activeSection).find((block) => block.id === selection.blockId) : undefined;
-  const activeSectionSchema = activeSection ? schemaForType(activeSection.type) : undefined;
-  const activeBlockSchema = activeSection && activeBlock ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, activeSection, activeBlock.type) : undefined;
-  const activeGlobalBlockSchema = activeSection && activeGlobalBlock ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, activeSection, activeGlobalBlock.type) : undefined;
-  const selectedBlockSchema = activeBlockSchema ?? activeGlobalBlockSchema;
-  const selectedBlockSettings = selectedBlockSchema?.settings ?? [];
   const activeGlobalNodeFields = useMemo(
     () => (activeGlobalNode?.fieldIds?.length ? groupFieldsByIds(flattenedSaasFields, activeGlobalNode.fieldIds) : []),
     [activeGlobalNode, flattenedSaasFields]
@@ -647,13 +832,83 @@ export function DesignerClient({
     return JSON.stringify(draftPage) !== JSON.stringify(pagePublished);
   }).length;
   const currentPageDirty = JSON.stringify(draft) !== JSON.stringify(livePage);
+  const globalSettingsDirty = JSON.stringify(themeSettings) !== JSON.stringify(publishedThemeSettings);
+  const wholeSiteDirtyCount = dirtyPagesCount + (globalSettingsDirty ? 1 : 0);
+  const hiddenDraftCount = Math.max(0, wholeSiteDirtyCount - (currentPageDirty ? 1 : 0));
   const currentSectionIds = Array.from(new Set([...draft.sectionsOrder, ...livePage.sectionsOrder]));
   const changedSectionCount =
     currentSectionIds.filter((sectionId) => JSON.stringify(draft.sections[sectionId] ?? null) !== JSON.stringify(livePage.sections[sectionId] ?? null)).length +
     (JSON.stringify(draft.sectionsOrder) === JSON.stringify(livePage.sectionsOrder) ? 0 : 1);
+  const pageIsEmpty = sectionList.length === 0;
 
-  function schemaForType(type: SectionType): ThemeSectionSchema {
+  const schemaForType = useCallback((type: SectionType): ThemeSectionSchema => {
     return selectedSaasSectionSchemas[type] ?? sectionSchemas[type] ?? getSectionSchema(type);
+  }, [selectedSaasSectionSchemas]);
+  const activeSectionSchema = activeSection ? schemaForType(activeSection.type) : undefined;
+  const activeBlockSchema = activeSection && activeBlock ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, activeSection, activeBlock.type) : undefined;
+  const activeGlobalBlockSchema = activeSection && activeGlobalBlock ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, activeSection, activeGlobalBlock.type) : undefined;
+  const selectedBlockSchema = activeBlockSchema ?? activeGlobalBlockSchema;
+  const selectedBlockSettings = selectedBlockSchema?.settings ?? [];
+
+  function fieldsForSelectionTarget(targetSelection: Selection): { fields: ThemeFieldSchema[]; values: Record<string, ThemeSettingValue> } | undefined {
+    if (targetSelection.kind === "section") {
+      const section = draft.sections[targetSelection.sectionId];
+      if (!section) return undefined;
+      return { fields: schemaForType(section.type).settings, values: section.settings };
+    }
+    if (targetSelection.kind === "block") {
+      const section = draft.sections[targetSelection.sectionId];
+      const block = safeBlocks(section).find((item) => item.id === targetSelection.blockId);
+      const blockSchema = section && block ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, section, block.type) : undefined;
+      if (!block || !blockSchema) return undefined;
+      return { fields: blockSchema.settings, values: block.settings };
+    }
+    if (targetSelection.kind === "global") {
+      const section = themeSettings.globalSections?.[targetSelection.globalType];
+      if (!section) return undefined;
+      return { fields: schemaForType(section.type).settings, values: section.settings };
+    }
+    if (targetSelection.kind === "globalBlock") {
+      const section = themeSettings.globalSections?.[targetSelection.globalType];
+      const block = safeBlocks(section).find((item) => item.id === targetSelection.blockId);
+      const blockSchema = section && block ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, section, block.type) : undefined;
+      if (!block || !blockSchema) return undefined;
+      return { fields: blockSchema.settings, values: block.settings };
+    }
+    return undefined;
+  }
+
+  function fieldFocusForSelection(
+    targetSelection: Selection,
+    clickedText = "",
+    preferredFieldId = ""
+  ): { fieldId: string; label: string } | undefined {
+    const fieldContext = fieldsForSelectionTarget(targetSelection);
+    if (!fieldContext) return undefined;
+    const entries = fieldContext.fields
+      .filter(isLocatablePropertyField)
+      .map((field) => ({
+        field,
+        text: locatorTextFromValue(readThemeFieldValue(fieldContext.values, field) ?? field.default)
+      }));
+    if (!entries.length) return undefined;
+    if (preferredFieldId) {
+      const preferred = entries.find((entry) => entry.field.id === preferredFieldId);
+      if (preferred) return { fieldId: preferred.field.id, label: fieldDisplayLabel(preferred.field) };
+    }
+    const normalizedClickedText = normalizedPreviewMatchText(clickedText);
+    if (normalizedClickedText) {
+      const exact = entries.find((entry) => normalizedPreviewMatchText(entry.text) === normalizedClickedText);
+      if (exact) return { fieldId: exact.field.id, label: fieldDisplayLabel(exact.field) };
+      const partial = entries.find((entry) => previewTextLooksMatched(entry.text, clickedText));
+      if (partial) return { fieldId: partial.field.id, label: fieldDisplayLabel(partial.field) };
+    }
+    const actionFallback = entries.find((entry) => propertyFieldGroupFor(entry.field) === "actions" && entry.text);
+    if (actionFallback) return { fieldId: actionFallback.field.id, label: fieldDisplayLabel(actionFallback.field) };
+    const contentFallback = entries.find((entry) => isEditableTextPropertyField(entry.field));
+    if (contentFallback) return { fieldId: contentFallback.field.id, label: fieldDisplayLabel(contentFallback.field) };
+    const firstEditable = entries[0];
+    return firstEditable ? { fieldId: firstEditable.field.id, label: fieldDisplayLabel(firstEditable.field) } : undefined;
   }
 
   function defaultSectionForType(type: SectionType): SectionInstance {
@@ -666,9 +921,263 @@ export function DesignerClient({
     };
   }
 
+  const copyLocatorItems = useMemo<DesignerCopyLocatorItem[]>(() => {
+    const items: DesignerCopyLocatorItem[] = [];
+    const seen = new Set<string>();
+
+    function pushItem(item: DesignerCopyLocatorItem) {
+      const dedupeKey = `${item.source}:${item.path}:${item.text}`;
+      if (seen.has(dedupeKey)) return;
+      seen.add(dedupeKey);
+      items.push(item);
+    }
+
+    function pushField({
+      idBase,
+      field,
+      values,
+      fallbackValue,
+      path,
+      source,
+      sourceLabel,
+      selection,
+      workspaceTab
+    }: {
+      idBase: string;
+      field: ThemeFieldSchema;
+      values?: Record<string, ThemeSettingValue>;
+      fallbackValue?: ThemeSettingValue;
+      path: string;
+      source: DesignerCopyLocatorItem["source"];
+      sourceLabel: string;
+      selection: Selection;
+      workspaceTab: DesignerWorkspaceTab;
+    }) {
+      if (!shouldIndexField(field)) return;
+      const text = locatorTextFromValue(readThemeFieldValue(values, field) ?? fallbackValue ?? field.default);
+      if (!text) return;
+      pushItem({
+        id: `${idBase}:${field.id}`,
+        fieldId: field.id,
+        label: fieldDisplayLabel(field),
+        path,
+        selection,
+        source,
+        sourceLabel,
+        text,
+        workspaceTab
+      });
+    }
+
+    copyLocatorSectionList.forEach(({ id, section }, sectionIndex) => {
+      const schema = schemaForType(section.type);
+      const sectionLabel = labelForSchema(section.type, selectedSaasSectionSchemas);
+      const sectionSchemaFieldIds = new Set(schema.settings.map((field) => field.id));
+      schema.settings.forEach((field) => {
+        pushField({
+          idBase: `page:${id}`,
+          field,
+          values: section.settings,
+          path: `${activePage.title} / ${sectionLabel} / ${fieldDisplayLabel(field)}`,
+          source: "page",
+          sourceLabel: "当前页面",
+          selection: { kind: "section", sectionId: id },
+          workspaceTab: "templates"
+        });
+      });
+      Object.entries(section.settings ?? {}).forEach(([fieldId, value]) => {
+        if (sectionSchemaFieldIds.has(fieldId)) return;
+        const text = locatorTextFromValue(value);
+        if (!text) return;
+        const label = fallbackLocatorLabel(fieldId);
+        pushItem({
+          id: `page:${id}:raw:${fieldId}`,
+          label,
+          path: `${activePage.title} / ${sectionIndex + 1}. ${sectionLabel} / ${label}`,
+          selection: { kind: "section", sectionId: id },
+          source: "page",
+          sourceLabel: "当前页面",
+          text,
+          workspaceTab: "templates"
+        });
+      });
+      safeBlocks(section).forEach((block, blockIndex) => {
+        const blockSchema = resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, section, block.type);
+        const blockLabel = blockDisplayLabel(blockSchema, block, blockIndex);
+        const blockSchemaFieldIds = new Set(blockSchema?.settings.map((field) => field.id) ?? []);
+        blockSchema?.settings.forEach((field) => {
+          pushField({
+            idBase: `page:${id}:${block.id}`,
+            field,
+            values: block.settings,
+            path: `${activePage.title} / ${sectionIndex + 1}. ${sectionLabel} / ${blockLabel} / ${fieldDisplayLabel(field)}`,
+            source: "page",
+            sourceLabel: "当前页面",
+            selection: { kind: "block", sectionId: id, blockId: block.id },
+            workspaceTab: "templates"
+          });
+        });
+        Object.entries(block.settings ?? {}).forEach(([fieldId, value]) => {
+          if (blockSchemaFieldIds.has(fieldId)) return;
+          const text = locatorTextFromValue(value);
+          if (!text) return;
+          const label = fallbackLocatorLabel(fieldId);
+          pushItem({
+            id: `page:${id}:${block.id}:raw:${fieldId}`,
+            label,
+            path: `${activePage.title} / ${sectionIndex + 1}. ${sectionLabel} / ${blockLabel} / ${label}`,
+            selection: { kind: "block", sectionId: id, blockId: block.id },
+            source: "page",
+            sourceLabel: "当前页面",
+            text,
+            workspaceTab: "templates"
+          });
+        });
+      });
+    });
+
+    (["header", "footer"] as const).forEach((globalType) => {
+      const section = themeSettings.globalSections?.[globalType];
+      if (!section) return;
+      const schema = schemaForType(section.type);
+      const globalLabel = globalType === "header" ? "全局页头" : "全局页脚";
+      const globalSchemaFieldIds = new Set(schema.settings.map((field) => field.id));
+      schema.settings.forEach((field) => {
+        pushField({
+          idBase: `global:${globalType}`,
+          field,
+          values: section.settings,
+          path: `${globalLabel} / ${fieldDisplayLabel(field)}`,
+          source: "global",
+          sourceLabel: "全局配置",
+          selection: { kind: "global", globalType },
+          workspaceTab: "global"
+        });
+      });
+      Object.entries(section.settings ?? {}).forEach(([fieldId, value]) => {
+        if (globalSchemaFieldIds.has(fieldId)) return;
+        const text = locatorTextFromValue(value);
+        if (!text) return;
+        const label = fallbackLocatorLabel(fieldId);
+        pushItem({
+          id: `global:${globalType}:raw:${fieldId}`,
+          label,
+          path: `${globalLabel} / ${label}`,
+          selection: { kind: "global", globalType },
+          source: "global",
+          sourceLabel: "全局配置",
+          text,
+          workspaceTab: "global"
+        });
+      });
+      safeBlocks(section).forEach((block, blockIndex) => {
+        const blockSchema = resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, section, block.type);
+        const blockLabel = blockDisplayLabel(blockSchema, block, blockIndex);
+        const blockSchemaFieldIds = new Set(blockSchema?.settings.map((field) => field.id) ?? []);
+        blockSchema?.settings.forEach((field) => {
+          pushField({
+            idBase: `global:${globalType}:${block.id}`,
+            field,
+            values: block.settings,
+            path: `${globalLabel} / ${blockLabel} / ${fieldDisplayLabel(field)}`,
+            source: "global",
+            sourceLabel: "全局配置",
+            selection: { kind: "globalBlock", globalType, blockId: block.id },
+            workspaceTab: "global"
+          });
+        });
+        Object.entries(block.settings ?? {}).forEach(([fieldId, value]) => {
+          if (blockSchemaFieldIds.has(fieldId)) return;
+          const text = locatorTextFromValue(value);
+          if (!text) return;
+          const label = fallbackLocatorLabel(fieldId);
+          pushItem({
+            id: `global:${globalType}:${block.id}:raw:${fieldId}`,
+            label,
+            path: `${globalLabel} / ${blockLabel} / ${label}`,
+            selection: { kind: "globalBlock", globalType, blockId: block.id },
+            source: "global",
+            sourceLabel: "全局配置",
+            text,
+            workspaceTab: "global"
+          });
+        });
+      });
+    });
+
+    themeSettings.navigation.headerLinks.forEach((link, index) => {
+      pushItem({
+        id: `navigation:header:${index}`,
+        label: "页眉导航",
+        path: `全局配置 / 导航 / 页眉导航 / ${index + 1}`,
+        selection: { kind: "globalSettings", node: "navigation" },
+        source: "navigation",
+        sourceLabel: "导航菜单",
+        text: [link.label, link.href, link.group].filter(Boolean).join(" / "),
+        fieldId: "header_links",
+        workspaceTab: "global"
+      });
+    });
+    themeSettings.navigation.footerLinks.forEach((link, index) => {
+      pushItem({
+        id: `navigation:footer:${index}`,
+        label: "页脚导航",
+        path: `全局配置 / 导航 / 页脚导航 / ${index + 1}`,
+        selection: { kind: "globalSettings", node: "navigation" },
+        source: "navigation",
+        sourceLabel: "导航菜单",
+        text: [link.label, link.href, link.group].filter(Boolean).join(" / "),
+        fieldId: "footer_links",
+        workspaceTab: "global"
+      });
+    });
+
+    const seoEntries = [
+      ["siteTitle", "站点标题", themeSettings.seo?.siteTitle],
+      ["siteDescription", "默认描述", themeSettings.seo?.siteDescription],
+      ["titleTemplate", "标题模板", themeSettings.seo?.titleTemplate],
+      ["defaultOgImage", "默认分享图", themeSettings.seo?.defaultOgImage]
+    ] as const;
+    seoEntries.forEach(([id, label, value]) => {
+      const text = locatorTextFromValue(value);
+      if (!text) return;
+      pushItem({
+        id: `seo:${id}`,
+        label,
+        path: `全局配置 / SEO 默认项 / ${label}`,
+        selection: { kind: "globalSettings", node: "seo" },
+        source: "seo",
+        sourceLabel: "SEO",
+        text,
+        fieldId: `seo_${id.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`)}`,
+        workspaceTab: "global"
+      });
+    });
+
+    pushItem({
+      id: "code:hardcoded",
+      label: "代码硬编码",
+      path: "代码 / 尚未迁移为后台字段",
+      readOnly: true,
+      source: "code",
+      sourceLabel: "代码硬编码",
+      text: "如果搜索不到预览文案，通常需要开发把这句文案迁移为可配置字段。",
+      hint: "只读提示"
+    });
+
+    return items;
+  }, [activePage.title, copyLocatorSectionList, schemaForType, selectedSaasSectionSchemas, themeSettings]);
+
   function updateDraft(next: ThemePageJson, action: string) {
     setDrafts((current) => ({ ...current, [selectedPageId]: next }));
+    dirtyPageIdsRef.current.add(selectedPageId);
+    setSaveState("dirty");
     setLastAction(action);
+  }
+
+  function markThemeSettingsDirty() {
+    themeSettingsDirtyRef.current = true;
+    setSaveState("dirty");
   }
 
   const postPatchToIframe = useCallback((payload: IframePatchPayload) => {
@@ -681,45 +1190,103 @@ export function DesignerClient({
     setIframeReloadKey((current) => current + 1);
   }
 
+  function reloadPreviewIfInteractive() {
+    if (previewMode === "interactive") {
+      reloadIframePreview();
+    } else {
+      iframeRecoveryCount.current = 0;
+      setIframeStatus("ready");
+    }
+  }
+
   function changePreviewDevice(nextDevice: "desktop" | "mobile") {
     setDevice(nextDevice);
-    if (nextDevice !== "mobile") return;
-    setPreviewMode("iframe");
-    setLastAction("手机预览已固定使用 iframe，按真实移动端宽度渲染，不使用桌面上下文兜底。");
-    reloadIframePreview();
+    setLastAction(nextDevice === "mobile" ? "手机预览使用真实移动端宽度渲染，默认仍是编辑定位模式。" : "已切换到桌面缩放预览，默认仍是编辑定位模式。");
+    if (previewMode === "interactive") reloadIframePreview();
   }
 
   function togglePreviewMode() {
-    if (device === "mobile") {
-      setPreviewMode("iframe");
-      setLastAction("手机预览保持 iframe 模式，避免实时预览误用桌面宽度。");
+    const nextMode: PreviewMode = previewMode === "edit" ? "interactive" : "edit";
+    setPreviewMode(nextMode);
+    setLastAction(
+      nextMode === "interactive"
+        ? "已切换到真实交互预览：点击会按正常网站行为跳转。"
+        : "已切换到编辑定位模式：点击只选中文案和模块，不执行业务跳转。"
+    );
+    if (nextMode === "interactive") {
       reloadIframePreview();
-      return;
+    } else {
+      iframeRecoveryCount.current = 0;
+      setIframeStatus("ready");
     }
-    setPreviewMode((current) => (current === "iframe" ? "live" : "iframe"));
   }
 
   function handleIframeLoad() {
-    window.setTimeout(checkIframePreviewHealth, 240);
+    if (previewMode === "interactive") {
+      window.setTimeout(checkIframePreviewHealth, 240);
+      return;
+    }
+    setIframeStatus("ready");
   }
 
-  const syncSelectionToIframe = useCallback((nextSelection = selection) => {
-    syncSelectionToPreview({ selection: nextSelection, previewMode, postPatch: postPatchToIframe });
+  const syncSelectionToIframe = useCallback((nextSelection = selection, options?: { scroll?: boolean }) => {
+    if (previewMode !== "interactive") return;
+    syncSelectionToPreview({
+      selection: nextSelection,
+      previewMode,
+      postPatch: postPatchToIframe,
+      scroll: options?.scroll
+    });
   }, [postPatchToIframe, previewMode, selection]);
 
-  function chooseSelection(nextSelection: Selection) {
+  function selectionBelongsToEditorTab(currentSelection: Selection, tab: DesignerWorkspaceTab) {
+    if (tab === "publish") return false;
+    if (tab === "global") {
+      return currentSelection.kind === "global" || currentSelection.kind === "globalBlock" || currentSelection.kind === "globalSettings";
+    }
+    return currentSelection.kind === "section" || currentSelection.kind === "block";
+  }
+
+  function lockPreviewSelectionUpdates(durationMs = 350) {
+    previewSelectionLockUntilRef.current = Date.now() + durationMs;
+  }
+
+  function chooseSelection(
+    nextSelection: Selection,
+    options?: {
+      syncPreview?: boolean;
+      scrollPreview?: boolean;
+      lockPreviewSelection?: boolean;
+      focusFieldId?: string;
+      clearFieldFocus?: boolean;
+    }
+  ) {
+    if (options?.lockPreviewSelection !== false) lockPreviewSelectionUpdates();
     if (nextSelection.kind === "section" || nextSelection.kind === "block") {
       setExpandedSections((current) => ({ ...current, [nextSelection.sectionId]: true }));
     }
     if (nextSelection.kind === "global" || nextSelection.kind === "globalBlock") {
       setExpandedGlobals((current) => ({ ...current, [nextSelection.globalType]: true }));
     }
+    setLocatorBreadcrumb(undefined);
     setSelection(nextSelection);
-    syncSelectionToIframe(nextSelection);
+    if (options?.focusFieldId) {
+      setFieldFocusRequest({
+        fieldId: options.focusFieldId,
+        requestId: ++fieldFocusRequestIdRef.current,
+        scopeKey: selectionScopeKey(nextSelection)
+      });
+    } else if (options?.clearFieldFocus !== false) {
+      setFieldFocusRequest(undefined);
+    }
+    if (options?.syncPreview !== false && previewMode === "interactive") {
+      syncSelectionToIframe(nextSelection, { scroll: options?.scrollPreview ?? true });
+    }
   }
 
   function switchEditorTab(nextTab: DesignerWorkspaceTab) {
     setActiveTab(nextTab);
+    setFieldFocusRequest(undefined);
     const nextSelection = selectionForEditorTab({
       nextTab,
       currentSelection: selection,
@@ -727,34 +1294,160 @@ export function DesignerClient({
       activeSectionId,
       firstSectionId: sectionList[0]?.id
     });
-    if (nextSelection) chooseSelection(nextSelection);
+    setLocatorBreadcrumb(undefined);
+    if (nextSelection) {
+      chooseSelection(nextSelection, { scrollPreview: false });
+      return;
+    }
+    if (nextTab === "publish" && previewMode === "interactive") {
+      postPatchToIframe({ act: "clearSelection" });
+      return;
+    }
+    if (selectionBelongsToEditorTab(selection, nextTab)) {
+      if (previewMode === "interactive") syncSelectionToIframe(selection, { scroll: false });
+      return;
+    }
+    if (previewMode === "interactive") postPatchToIframe({ act: "clearSelection" });
   }
+
+  function chooseCopyQuickTarget(target: DesignerCopyLocatorQuickTarget) {
+    const nextSelection: Selection =
+      target === "header"
+        ? { kind: "global", globalType: "header" }
+        : target === "footer"
+        ? { kind: "global", globalType: "footer" }
+        : target === "navigation"
+        ? { kind: "globalSettings", node: "navigation" }
+        : { kind: "globalSettings", node: "seo" };
+    const nextLabel =
+      target === "header"
+        ? "全局页头"
+        : target === "footer"
+        ? "全局页脚"
+        : target === "navigation"
+        ? "全局导航"
+        : "SEO 默认项";
+    setActiveTab("global");
+    chooseSelection(nextSelection);
+    setLocatorBreadcrumb(`${activePage.title} / ${nextLabel}`);
+    setLastAction(`已定位到${nextLabel}。保存草稿不会上线，发布整站快照后前台才会读取。`);
+  }
+
+  function chooseCopyLocatorItem(item: DesignerCopyLocatorItem) {
+    if (item.workspaceTab) setActiveTab(item.workspaceTab);
+    if (item.selection) chooseSelection(item.selection, { focusFieldId: item.fieldId });
+    setLocatorBreadcrumb(item.path);
+    setLastAction(
+      item.readOnly
+        ? `「${item.text}」属于${item.sourceLabel}，当前只能查看，需要开发迁移为可配置字段。`
+        : `已定位「${item.text}」：${item.path}`
+    );
+  }
+
+  const normalizedInteractivePath = useCallback((pathname: string) => {
+    const sitePrefix = `/site/${site.slug}`;
+    const rawPath = pathname === sitePrefix || pathname === `${sitePrefix}/`
+      ? "/"
+      : pathname.startsWith(`${sitePrefix}/`)
+        ? pathname.slice(sitePrefix.length)
+        : pathname;
+    const normalized = rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
+    return normalized.length > 1 ? normalized.replace(/\/+$/, "") : "/";
+  }, [site.slug]);
+
+  const pageForInteractivePath = useCallback((pathname: string) => {
+    const path = normalizedInteractivePath(pathname);
+    return pages.find((page) => normalizedInteractivePath(page.slug) === path);
+  }, [normalizedInteractivePath, pages]);
+
+  const interactivePreviewUrlForPage = useCallback((pageId: string) => {
+    const params = new URLSearchParams({
+      previewToken,
+      previewMode: "interactive",
+      reload: String(iframeReloadKey)
+    });
+    return new URL(`/site/${site.slug}/admin/design/preview/${pageId}?${params.toString()}`, window.location.origin).href;
+  }, [iframeReloadKey, previewToken, site.slug]);
 
   useEffect(() => {
     function onPreviewMessage(event: MessageEvent<IframeDesignerMessage>) {
       if (event.source !== iframeRef.current?.contentWindow) return;
-      const nextState = selectionFromPreviewMessage({ message: event.data, draft, themeSettings });
-      if (!nextState) return;
-      setActiveTab(nextState.tab);
-      setSelection(nextState.selection);
-      setLastAction(nextState.actionLabel);
+      if (event.data?.act === "previewSelect" && typeof event.data.id === "string") {
+        if (Date.now() < previewSelectionLockUntilRef.current) return;
+        choosePreviewSelectionRef.current(
+          event.data.id,
+          typeof event.data.blockId === "string" ? event.data.blockId : "",
+          typeof event.data.clickedText === "string" ? event.data.clickedText : "",
+          typeof event.data.fieldId === "string" ? event.data.fieldId : ""
+        );
+        return;
+      }
+      if (previewMode === "interactive" && event.data?.act === "previewNavigate" && typeof event.data.href === "string") {
+        try {
+          const targetUrl = new URL(event.data.href, window.location.origin);
+          const sameOrigin = targetUrl.origin === window.location.origin;
+          const sameSitePublicRoute =
+            (targetUrl.pathname === `/site/${site.slug}` || targetUrl.pathname.startsWith(`/site/${site.slug}/`)) &&
+            !targetUrl.pathname.startsWith(`/site/${site.slug}/admin`);
+          if (!sameOrigin || !sameSitePublicRoute) return;
+          iframeRecoveryCount.current = 0;
+          setIframeStatus("loading");
+          const targetPage = pageForInteractivePath(targetUrl.pathname);
+          if (iframeRef.current) iframeRef.current.src = targetPage ? interactivePreviewUrlForPage(targetPage.id) : targetUrl.href;
+          setLastAction(
+            targetPage
+              ? `真实交互预览已打开「${targetPage.title}」。切回编辑定位后可继续修改文案。`
+              : `真实交互预览已打开 ${targetUrl.pathname}。切回编辑定位后可继续修改文案。`
+          );
+        } catch {
+          return;
+        }
+        return;
+      }
     }
 
     window.addEventListener("message", onPreviewMessage);
     return () => window.removeEventListener("message", onPreviewMessage);
-  }, [draft, themeSettings]);
+  }, [interactivePreviewUrlForPage, pageForInteractivePath, previewMode, site.slug]);
 
   const checkIframePreviewHealth = useCallback(() => {
-    const iframeDocument = iframeRef.current?.contentDocument;
-    const hasPreviewRoot = Boolean(iframeDocument?.querySelector("[data-theme-sections-root]"));
-    const sectionCount = iframeDocument?.querySelectorAll(".xfcart-section").length ?? 0;
-    if (hasPreviewRoot && sectionCount > 0) {
-      iframeRecoveryCount.current = 0;
+    if (previewMode !== "interactive") {
       setIframeStatus("ready");
-      syncSelectionToIframe();
       return true;
     }
-    if (iframeRecoveryCount.current < 2) {
+    const iframe = iframeRef.current;
+    const iframeDocument = iframe?.contentDocument;
+    const iframeSrc = iframe?.src ?? iframe?.getAttribute("src") ?? "";
+    const iframeHref = iframeDocument?.location?.href ?? "";
+    const normalizePreviewUrl = (value: string) => {
+      try {
+        const url = new URL(value);
+        url.hash = "";
+        url.searchParams.delete("reload");
+        return url.href;
+      } catch {
+        return value.split("#", 1)[0];
+      }
+    };
+    const iframeDocumentMatchesSrc = Boolean(iframeSrc) && Boolean(iframeHref) && normalizePreviewUrl(iframeSrc) === normalizePreviewUrl(iframeHref);
+    const documentReady = iframeDocument?.readyState === "complete" || iframeDocument?.readyState === "interactive";
+    const hasPreviewRoot = Boolean(iframeDocument?.querySelector("[data-theme-sections-root]"));
+    const interactiveNavigationReady = previewMode !== "interactive" || iframeDocument?.documentElement.getAttribute("data-xfcart-interactive-navigation-ready") === "true";
+    if (documentReady && iframeDocumentMatchesSrc && interactiveNavigationReady && hasPreviewRoot) {
+      iframeRecoveryCount.current = 0;
+      setIframeStatus("ready");
+      return true;
+    }
+    const stillNavigating =
+      !iframeDocument ||
+      iframeDocument.readyState === "loading" ||
+      iframeHref === "about:blank" ||
+      !iframeDocumentMatchesSrc;
+    if (stillNavigating) {
+      setIframeStatus("loading");
+      return false;
+    }
+    if (iframeRecoveryCount.current < 1) {
       iframeRecoveryCount.current += 1;
       setIframeStatus("recovering");
       setIframeReloadKey((current) => current + 1);
@@ -762,44 +1455,166 @@ export function DesignerClient({
     }
     setIframeStatus("failed");
     return false;
-  }, [syncSelectionToIframe]);
+  }, [previewMode]);
 
   useEffect(() => {
-    if (previewMode !== "iframe") return;
+    if (previewMode === "edit") {
+      setIframeStatus("ready");
+      return;
+    }
     setIframeStatus((current) => (current === "ready" ? "ready" : "loading"));
     const earlyCheck = window.setTimeout(() => {
-      const iframeDocument = iframeRef.current?.contentDocument;
-      if (iframeDocument?.querySelector("[data-theme-sections-root]")) {
-        checkIframePreviewHealth();
-      }
-    }, 520);
+      checkIframePreviewHealth();
+    }, 900);
+    const slowCheck = window.setTimeout(() => {
+      checkIframePreviewHealth();
+    }, 4_000);
     const recoveryCheck = window.setTimeout(() => {
       checkIframePreviewHealth();
-    }, 1600);
+    }, 12_000);
     return () => {
       window.clearTimeout(earlyCheck);
+      window.clearTimeout(slowCheck);
       window.clearTimeout(recoveryCheck);
     };
   }, [previewMode, selectedPageId, iframeReloadKey, checkIframePreviewHealth]);
 
-  async function sendSaasAction(action: SaasThemeAction, fallbackMessage: string) {
-    await sendXfcartAction({
+  useEffect(() => {
+    xfcartContextRef.current = {
+      pages,
+      drafts,
+      selectedPageId,
+      draft,
+      themeSettings,
+      themeId: saasDraft.themeId,
+      themeKey: selectedSaasThemeKey,
+      previewMode
+    };
+  }, [draft, drafts, pages, previewMode, saasDraft.themeId, selectedPageId, selectedSaasThemeKey, themeSettings]);
+
+  function applyXfcartVersionResult(result?: XfcartVersionResult) {
+    if (!result) return;
+    if (result.pageDraftVersions && Object.keys(result.pageDraftVersions).length) {
+      setDraftVersions((current) => ({ ...current, ...result.pageDraftVersions }));
+    }
+    if (result.settingsDraftVersion) setThemeSettingsDraftVersion(result.settingsDraftVersion);
+  }
+
+  async function sendSaasAction(action: SaasThemeAction, fallbackMessage: string): Promise<XfcartVersionResult | undefined> {
+    const context = xfcartContextRef.current ?? {
+      pages,
+      drafts,
+      selectedPageId,
+      draft,
+      themeSettings,
+      themeId: saasDraft.themeId,
+      themeKey: selectedSaasThemeKey,
+      previewMode
+    };
+    const result = await sendXfcartAction({
       siteId: site.id,
       action,
       fallbackMessage,
       context: {
-        pages,
-        selectedPageId,
-        draft,
-        themeSettings,
-        themeId: saasDraft.themeId,
-        themeKey: selectedSaasThemeKey
+        pages: context.pages,
+        selectedPageId: context.selectedPageId,
+        draft: "pageId" in action ? context.drafts[action.pageId] ?? context.draft : context.draft,
+        themeSettings: context.themeSettings,
+        themeId: context.themeId,
+        themeKey: context.themeKey
       },
-      previewMode,
+      previewMode: context.previewMode,
       postPatch: postPatchToIframe,
       setLastAction
     });
+    applyXfcartVersionResult(result);
+    return result;
   }
+
+  function queuedActionKey(action: SaasThemeAction) {
+    const scope = "scope" in action ? action.scope : "page";
+    const pageId = "pageId" in action ? action.pageId : "";
+    const sectionId = "sectionId" in action ? action.sectionId ?? "" : "";
+    const blockId = "blockId" in action ? action.blockId : "";
+    const globalType = "globalType" in action ? action.globalType : "";
+    const name = "name" in action ? action.name : "";
+    return [action.type, scope, pageId, globalType, sectionId, blockId, name].join("|");
+  }
+
+  function mergeXfcartVersionResults(results: Array<XfcartVersionResult | undefined>): XfcartVersionResult | undefined {
+    const pageDraftVersions: Record<string, ThemeDraftMeta> = {};
+    let settingsDraftVersion: ThemeDraftMeta | undefined;
+    for (const result of results) {
+      if (result?.pageDraftVersions) Object.assign(pageDraftVersions, result.pageDraftVersions);
+      if (result?.settingsDraftVersion) settingsDraftVersion = result.settingsDraftVersion;
+    }
+    if (!Object.keys(pageDraftVersions).length && !settingsDraftVersion) return undefined;
+    return { pageDraftVersions, settingsDraftVersion };
+  }
+
+  async function drainPreviewMutationQueue(key: string): Promise<XfcartVersionResult | undefined> {
+    const record = previewMutationQueuesRef.current.get(key);
+    if (!record) return undefined;
+    if (record.timerId) {
+      window.clearTimeout(record.timerId);
+      record.timerId = undefined;
+    }
+    if (record.inflight && record.promise) return record.promise;
+    record.inflight = true;
+    record.promise = (async () => {
+      const results: Array<XfcartVersionResult | undefined> = [];
+      while (record.pending) {
+        const pending = record.pending;
+        record.pending = undefined;
+        results.push(await sendSaasAction(pending.action, pending.fallbackMessage));
+      }
+      return mergeXfcartVersionResults(results);
+    })();
+    try {
+      return await record.promise;
+    } finally {
+      record.inflight = false;
+      record.promise = undefined;
+      if (!record.pending) previewMutationQueuesRef.current.delete(key);
+      else void drainPreviewMutationQueue(key);
+    }
+  }
+
+  function queuePreviewMutation(action: SaasThemeAction, fallbackMessage: string, delayMs = 420) {
+    if (action.type === "change") {
+      setLastAction(`${fallbackMessage} 已同步到左侧草稿预览；点击保存草稿保留后台草稿，发布后才上线。`);
+      return;
+    }
+    const key = queuedActionKey(action);
+    const record = previewMutationQueuesRef.current.get(key) ?? { inflight: false };
+    if (record.timerId) window.clearTimeout(record.timerId);
+    record.pending = {
+      action,
+      fallbackMessage,
+      sequence: previewMutationSequenceRef.current += 1
+    };
+    if (!record.inflight) {
+      record.timerId = window.setTimeout(() => {
+        void drainPreviewMutationQueue(key);
+      }, delayMs);
+    }
+    previewMutationQueuesRef.current.set(key, record);
+  }
+
+  async function flushPreviewMutationQueues(): Promise<XfcartVersionResult | undefined> {
+    const keys = Array.from(previewMutationQueuesRef.current.keys());
+    const results = await Promise.all(keys.map((key) => drainPreviewMutationQueue(key)));
+    return mergeXfcartVersionResults(results);
+  }
+
+  function cancelPreviewMutationQueues() {
+    previewMutationQueuesRef.current.forEach((record) => {
+      if (record.timerId) window.clearTimeout(record.timerId);
+    });
+    previewMutationQueuesRef.current.clear();
+  }
+
+  useEffect(() => cancelPreviewMutationQueues, []);
 
   function selectPage(pageId: string) {
     setSelectedPageId(pageId);
@@ -807,9 +1622,14 @@ export function DesignerClient({
     const firstSectionId = nextPage?.sectionsOrder[0] ?? "";
     setExpandedSections(expansionStateForPage(nextPage, firstSectionId));
     setSelection({ kind: "section", sectionId: firstSectionId });
+    setActiveTab("templates");
+    setLocatorBreadcrumb(undefined);
     iframeRecoveryCount.current = 0;
-    setIframeStatus("loading");
-    setIframeReloadKey((current) => current + 1);
+    if (previewMode === "interactive") {
+      reloadIframePreview();
+    } else {
+      setIframeStatus("ready");
+    }
   }
 
   function moveSection(id: string, direction: -1 | 1) {
@@ -956,7 +1776,7 @@ export function DesignerClient({
     const next = updatePageSectionSetting(draft, id, field.id, parsed);
     if (!next) return;
     updateDraft(next, `已更新模块字段「${field.label}」。`);
-    void sendSaasAction({ type: "change", pageId: selectedPageId, scope: "page_section", sectionId: id, name: field.id, value: parsed }, `已更新模块字段「${field.label}」。`);
+    queuePreviewMutation({ type: "change", pageId: selectedPageId, scope: "page_section", sectionId: id, name: field.id, value: parsed }, `已更新模块字段「${field.label}」。`);
   }
 
   function addBlock(sectionId: string, blockSchema: ThemeBlockSchema) {
@@ -979,18 +1799,20 @@ export function DesignerClient({
     const next = updatePageBlockSetting(draft, sectionId, blockId, field.id, parsed);
     if (!next) return;
     updateDraft(next, `已更新子块字段「${field.label}」。`);
-    void sendSaasAction({ type: "change", pageId: selectedPageId, scope: "page_block", sectionId, blockId, name: field.id, value: parsed }, `已更新子块字段「${field.label}」。`);
+    queuePreviewMutation({ type: "change", pageId: selectedPageId, scope: "page_block", sectionId, blockId, name: field.id, value: parsed }, `已更新子块字段「${field.label}」。`);
   }
 
   function editGlobalSetting(globalType: "header" | "footer", field: ThemeFieldSchema, value: string) {
     const parsed = parseFieldValue(field, value);
+    markThemeSettingsDirty();
     setThemeSettings((current) => updateGlobalSectionSetting(current, globalType, field.id, parsed));
     setLastAction(`已更新${globalType === "header" ? "页眉" : "页脚"}字段「${field.label}」。`);
-    void sendSaasAction({ type: "change", scope: "global", globalType, name: field.id, value: parsed }, `已更新${globalType === "header" ? "页眉" : "页脚"}字段「${field.label}」。`);
+    queuePreviewMutation({ type: "change", scope: "global", globalType, name: field.id, value: parsed }, `已更新${globalType === "header" ? "页眉" : "页脚"}字段「${field.label}」。`);
   }
 
   function addGlobalBlock(globalType: "header" | "footer", blockSchema: ThemeBlockSchema) {
     const blockInstance = defaultBlock(blockSchema, safeBlocks(themeSettings.globalSections?.[globalType]).length + 1);
+    markThemeSettingsDirty();
     setThemeSettings((current) => appendGlobalBlock(current, globalType, blockInstance));
     chooseSelection({ kind: "globalBlock", globalType, blockId: blockInstance.id });
     setLastAction(`已向${globalType === "header" ? "页眉" : "页脚"}新增子块「${blockSchema.label}」。`);
@@ -999,13 +1821,15 @@ export function DesignerClient({
 
   function editGlobalBlockSetting(globalType: "header" | "footer", blockId: string, field: ThemeFieldSchema, value: string) {
     const parsed = parseFieldValue(field, value);
+    markThemeSettingsDirty();
     setThemeSettings((current) => updateGlobalBlockSettingInSettings(current, globalType, blockId, field.id, parsed));
     setLastAction(`已更新${globalType === "header" ? "页眉" : "页脚"}子块字段「${field.label}」。`);
-    void sendSaasAction({ type: "change", scope: "global_block", globalType, blockId, name: field.id, value: parsed }, `已更新${globalType === "header" ? "页眉" : "页脚"}子块字段「${field.label}」。`);
+    queuePreviewMutation({ type: "change", scope: "global_block", globalType, blockId, name: field.id, value: parsed }, `已更新${globalType === "header" ? "页眉" : "页脚"}子块字段「${field.label}」。`);
   }
 
   function moveGlobalBlock(globalType: "header" | "footer", blockId: string, direction: -1 | 1) {
     const nextSettings = moveGlobalBlockInSettings(themeSettings, globalType, blockId, direction);
+    markThemeSettingsDirty();
     setThemeSettings(nextSettings);
     setLastAction(`${globalType === "header" ? "页眉" : "页脚"}子块顺序已调整。`);
     const currentBlockIds = safeBlocks(nextSettings.globalSections?.[globalType]).map((block) => block.id);
@@ -1016,6 +1840,7 @@ export function DesignerClient({
 
   function reorderGlobalBlock(globalType: "header" | "footer", draggedBlockId: string, targetBlockId: string) {
     const nextSettings = reorderGlobalBlockInSettings(themeSettings, globalType, draggedBlockId, targetBlockId);
+    markThemeSettingsDirty();
     setThemeSettings(nextSettings);
     setLastAction(`${globalType === "header" ? "页眉" : "页脚"}子块顺序已拖拽更新。`);
     const currentBlockIds = safeBlocks(nextSettings.globalSections?.[globalType]).map((block) => block.id);
@@ -1042,6 +1867,7 @@ export function DesignerClient({
   }
 
   function deleteGlobalBlock(globalType: "header" | "footer", blockId: string) {
+    markThemeSettingsDirty();
     setThemeSettings((current) => removeGlobalBlock(current, globalType, blockId));
     chooseSelection({ kind: "global", globalType });
     setLastAction(`${globalType === "header" ? "页眉" : "页脚"}子块已移除。`);
@@ -1088,26 +1914,31 @@ export function DesignerClient({
   }
 
   function updateThemeColor(key: keyof ThemeSettings["colors"], value: string) {
+    markThemeSettingsDirty();
     setThemeSettings((current) => updateThemeColorValue(current, key, value, selectedSaasThemeKey));
     setLastAction(`已更新颜色项「${key}」。`);
   }
 
   function updateThemeTypography(key: keyof ThemeSettings["typography"], value: string) {
+    markThemeSettingsDirty();
     setThemeSettings((current) => updateThemeTypographyValue(current, key, value, selectedSaasThemeKey));
     setLastAction(`已更新字体项「${key}」。`);
   }
 
   function updateThemeRadii(key: keyof ThemeSettings["radii"], value: string) {
+    markThemeSettingsDirty();
     setThemeSettings((current) => updateThemeRadiiValue(current, key, value));
     setLastAction(`已更新圆角项「${key}」。`);
   }
 
   function updateThemeLinks(key: keyof ThemeSettings["navigation"], value: string) {
+    markThemeSettingsDirty();
     setThemeSettings((current) => updateThemeLinksValue(current, key, value));
     setLastAction(`已更新导航项「${key}」。`);
   }
 
   function updateThemeSeo(field: GlobalLocalField, value: string | boolean) {
+    markThemeSettingsDirty();
     setThemeSettings((current) => {
       const next = normalizeGlobalSections(cloneSettings(current));
       const seo = next.seo ?? {
@@ -1144,47 +1975,122 @@ export function DesignerClient({
 
   function updateSaasGlobalSetting(field: ThemeFieldSchema, value: string) {
     const parsed = parseFieldValue(field, value);
+    markThemeSettingsDirty();
     setThemeSettings((current) => updateThemeSettingFromSaasField(current, field.id, parsed, selectedSaasThemeKey));
     setLastAction(`已更新全局字段「${field.label}」。`);
-    void sendSaasAction({ type: "change", scope: "global_setting", name: field.id, value: parsed }, `已更新全局字段「${field.label}」。`);
+    queuePreviewMutation({ type: "change", scope: "global_setting", name: field.id, value: parsed }, `已更新全局字段「${field.label}」。`);
   }
 
-  async function saveThemeSettings() {
-    const ok = await saveThemeSettingsDraft(site.id, themeSettings);
-    if (!ok) {
-      setLastAction("全局设置保存失败，请检查配置内容。");
-      return false;
-    }
-    return true;
+  function currentPageDraftVersions(): Record<string, ThemeDraftMeta | undefined> {
+    return Object.fromEntries(pages.map((page) => [page.id, draftVersions[page.id] ?? page.draftMeta]));
   }
 
   async function saveDraft() {
-    const [settingsSaved, pagesSaved] = await Promise.all([
-      saveThemeSettings(),
-      saveAllThemePageDrafts(
-        site.id,
-        pages.map((page) => ({
-          pageId: page.id,
-          draftJson: drafts[page.id] ?? page.draftJson
-        }))
-      )
-    ]);
-    if (!settingsSaved || !pagesSaved) {
-      setLastAction("草稿保存失败，请检查页面配置后重试。");
-      return false;
+    if (mutationBusyRef.current) {
+      setLastAction("当前已有保存或发布操作正在处理，请等待完成后再操作。");
+      return {
+        ok: false,
+        pageVersions: currentPageDraftVersions(),
+        settingsVersion: themeSettingsDraftVersion,
+        status: 429
+      };
     }
-    setLastAction(`草稿已保存，${pages.length} 个页面与全局设置已写入草稿区。`);
-    return true;
+    mutationBusyRef.current = true;
+    setSaveState("saving");
+    try {
+      const flushedPreviewVersions = await flushPreviewMutationQueues();
+      const pageVersionsBeforeSave = {
+        ...currentPageDraftVersions(),
+        ...(flushedPreviewVersions?.pageDraftVersions ?? {})
+      };
+      const settingsVersionBeforeSave = flushedPreviewVersions?.settingsDraftVersion ?? themeSettingsDraftVersion;
+      const dirtyPageIds = Array.from(dirtyPageIdsRef.current).filter((pageId) => pages.some((page) => page.id === pageId));
+      const shouldSaveThemeSettings = themeSettingsDirtyRef.current;
+      if (!dirtyPageIds.length && !shouldSaveThemeSettings) {
+        setSaveState("saved");
+        setLastSavedAt(new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
+        setLastAction("没有需要保存的草稿改动：当前页面和全局设置已在后台草稿区。");
+        return { ok: true, pageVersions: pageVersionsBeforeSave, settingsVersion: settingsVersionBeforeSave };
+      }
+      const settingsSaved = shouldSaveThemeSettings
+        ? await saveThemeSettingsDraft(site.id, themeSettings, settingsVersionBeforeSave)
+        : { ok: true, draftVersion: settingsVersionBeforeSave, status: 200 };
+      if (settingsSaved.draftVersion) setThemeSettingsDraftVersion(settingsSaved.draftVersion);
+      const pagesSaved = dirtyPageIds.length
+        ? await saveAllThemePageDrafts(
+            site.id,
+            dirtyPageIds.map((pageId) => {
+              const page = pages.find((item) => item.id === pageId);
+              return {
+                pageId,
+                draftJson: drafts[pageId] ?? page?.draftJson ?? activePage.draftJson,
+                expected: pageVersionsBeforeSave[pageId]
+              };
+            })
+          )
+        : { ok: true, draftVersions: {}, errors: [] };
+      if (Object.keys(pagesSaved.draftVersions).length) {
+        setDraftVersions((current) => ({ ...current, ...pagesSaved.draftVersions }));
+      }
+      const failedPageIds = new Set(pagesSaved.errors.map((item) => item.pageId));
+      for (const pageId of dirtyPageIds) {
+        if (!failedPageIds.has(pageId)) dirtyPageIdsRef.current.delete(pageId);
+      }
+      const nextPageVersions = { ...pageVersionsBeforeSave, ...pagesSaved.draftVersions };
+      if (!settingsSaved.ok || !pagesSaved.ok) {
+        const conflict = pagesSaved.errors.some((item) => item.status === 409) || settingsSaved.status === 409;
+        setSaveState(conflict ? "conflict" : "error");
+        setLastAction(conflict ? "草稿保存被拦截：页面或全局设置版本已变化，请刷新后重新检查。" : "草稿保存失败，请检查页面配置后重试。");
+        return { ok: false, pageVersions: nextPageVersions, settingsVersion: settingsSaved.draftVersion };
+      }
+      if (settingsSaved.ok) themeSettingsDirtyRef.current = false;
+      setSaveState("saved");
+      setLastSavedAt(new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
+      reloadPreviewIfInteractive();
+      setLastAction(`草稿已保存但不会上线：${dirtyPageIds.length} 个已编辑页面与全局设置已写入后台草稿区，发布整站快照后前台才会读取。`);
+      return { ok: true, pageVersions: nextPageVersions, settingsVersion: settingsSaved.draftVersion };
+    } catch (error) {
+      setSaveState("error");
+      setLastAction(error instanceof Error ? `草稿保存失败：${error.message}` : "草稿保存失败，请稍后重试。");
+      return {
+        ok: false,
+        pageVersions: currentPageDraftVersions(),
+        settingsVersion: themeSettingsDraftVersion,
+        status: 500
+      };
+    } finally {
+      mutationBusyRef.current = false;
+    }
+  }
+
+  function requestPublishDraft() {
+    setActiveTab("publish");
+    setPublishConfirmOpen(true);
   }
 
   async function publishDraft() {
+    if (publishBusy) return;
+    setPublishBusy(true);
+    try {
     const saved = await saveDraft();
-    if (!saved) return;
-    const result = await publishThemePageDraft(site.id, selectedPageId, "site_admin_demo");
-    if (!result) {
-      setLastAction("发布失败，当前草稿仍已保留。");
+    if (!saved.ok) return;
+    const result = await publishThemePageDraft(site.id, selectedPageId, "site_admin_demo", {
+      pageVersions: saved.pageVersions,
+      settingsVersion: saved.settingsVersion,
+      publishedVersion
+    });
+    if (!result.ok) {
+      setLastAction(
+        result.status === 409 && result.error === "theme_publish_global_visual_changes_unacknowledged"
+          ? "发布已拦截：当前草稿包含全局视觉变化，请到发布历史页查看具体变化并勾选确认后再发布。"
+          : result.status === 409
+            ? "发布已拦截：你确认时看到的页面、全局设置或线上版本已经变化，请刷新后重新检查。"
+            : "发布失败，当前草稿仍已保留。"
+      );
       return;
     }
+    if (result.pageDraftVersions) setDraftVersions(result.pageDraftVersions);
+    if (result.settingsDraftVersion) setThemeSettingsDraftVersion(result.settingsDraftVersion);
     const nextVersion = result.publishedVersion ?? publishedVersion + 1;
     setPublishedPages(
       Object.fromEntries(
@@ -1206,32 +2112,55 @@ export function DesignerClient({
     );
     setPublishedThemeSettings(normalizeGlobalSections(cloneSettings(themeSettings)));
     setPublishedVersion(nextVersion);
-    setLastAction(`已发布到线上版本 v${nextVersion}，当前页与其他草稿页已同步为已发布状态。`);
+    dirtyPageIdsRef.current.clear();
+    themeSettingsDirtyRef.current = false;
+    setPublishConfirmOpen(false);
+    setLastAction(`已发布到线上版本 v${nextVersion}：当前页面、隐藏草稿页与全局设置已写入同一套线上快照。`);
+    } finally {
+      setPublishBusy(false);
+    }
   }
 
   async function rollback() {
-    const result = await resetThemeDraftFromActive(site.id, "site_admin_demo");
-    if (!result) {
-      setLastAction("回滚失败，请稍后重试。");
+    if (mutationBusyRef.current) {
+      setLastAction("当前已有保存或发布操作正在处理，请等待完成后再操作。");
       return;
     }
-    setDrafts(
-      Object.fromEntries(
-        pages.map((page) => [page.id, clonePage(publishedPages[page.id] ?? page.publishedJson)])
-      )
-    );
-    setThemeSettings(normalizeGlobalSections(cloneSettings(publishedThemeSettings)));
-    const selectedDraft = publishedPages[selectedPageId] ?? activePage.publishedJson;
-    const firstSectionId = selectedDraft.sectionsOrder[0] ?? "";
-    setExpandedSections(expansionStateForPage(selectedDraft, firstSectionId));
-    setSelection({ kind: "section", sectionId: firstSectionId });
-    reloadIframePreview();
-    setLastAction(`整站草稿已恢复到线上发布版本 v${result.sourceVersion ?? publishedVersion}，所有页面与全局设置同步回线上基线。`);
+    mutationBusyRef.current = true;
+    try {
+      cancelPreviewMutationQueues();
+      const result = await resetThemeDraftFromActive(site.id, "site_admin_demo");
+      if (!result) {
+        setLastAction("回滚失败，请稍后重试。");
+        return;
+      }
+      const refreshedSite = result.site ?? site;
+      dirtyPageIdsRef.current.clear();
+      themeSettingsDirtyRef.current = false;
+      setDrafts(Object.fromEntries(refreshedSite.pages.map((page) => [page.id, clonePage(page.draftJson)])));
+      setPublishedPages(Object.fromEntries(refreshedSite.pages.map((page) => [page.id, clonePage(page.publishedJson)])));
+      setDraftVersions(Object.fromEntries(refreshedSite.pages.flatMap((page) => (page.draftMeta ? [[page.id, page.draftMeta] as const] : []))));
+      setThemeSettings(normalizeGlobalSections(cloneSettings(refreshedSite.themeSettings.draftJson)));
+      setThemeSettingsDraftVersion(refreshedSite.themeSettings.draftMeta);
+      setPublishedThemeSettings(normalizeGlobalSections(cloneSettings(refreshedSite.themeSettings.publishedJson)));
+      setPublishedVersion(Math.max(1, ...refreshedSite.pages.map((page) => page.publishedJson.version ?? 0)));
+      const selectedDraft = clonePage(refreshedSite.pages.find((page) => page.id === selectedPageId)?.draftJson ?? activePage.publishedJson);
+      const firstSectionId = selectedDraft.sectionsOrder[0] ?? "";
+      setExpandedSections(expansionStateForPage(selectedDraft, firstSectionId));
+      setSelection({ kind: "section", sectionId: firstSectionId });
+      setSaveState("saved");
+      setLastSavedAt(new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
+      reloadPreviewIfInteractive();
+      setLastAction(`整站草稿已恢复到线上发布版本 v${result.sourceVersion ?? publishedVersion}，所有页面与全局设置同步回线上基线。`);
+    } finally {
+      mutationBusyRef.current = false;
+    }
   }
 
   async function applyIndustryTemplate(optionKey: string) {
     const option = templateApplyOptions.find((item) => item.key === optionKey);
     if (!option) return;
+    await flushPreviewMutationQueues();
     const nextPage = themePackageTemplateToPageJson(option.packageKey, option.templateKey, activePage.pageType, draft.version);
     if (!nextPage) {
       setLastAction("行业模板套用失败，当前页面没有匹配模板。");
@@ -1240,21 +2169,30 @@ export function DesignerClient({
     const nextDraft = specializeTemplateForPage(activePage, nextPage, option.packageKey);
     const firstSectionId = nextDraft.sectionsOrder[0] ?? "";
     setDrafts((current) => ({ ...current, [selectedPageId]: nextDraft }));
+    dirtyPageIdsRef.current.add(selectedPageId);
     setExpandedSections(expansionStateForPage(nextDraft, firstSectionId));
     setSelection({ kind: "section", sectionId: firstSectionId });
     setActiveTab("templates");
-    const saved = await saveThemePageDraft(site.id, selectedPageId, nextDraft);
-    if (!saved) {
+    const saved = await saveThemePageDraft(site.id, selectedPageId, nextDraft, draftVersions[selectedPageId] ?? activePage.draftMeta);
+    if (!saved.ok) {
       setLastAction("行业模板已放入本地草稿，但保存失败，请稍后再试。");
       return;
     }
-    reloadIframePreview();
+    if (saved.draftVersion) {
+      const draftVersion = saved.draftVersion;
+      setDraftVersions((current) => ({ ...current, [selectedPageId]: draftVersion }));
+    }
+    dirtyPageIdsRef.current.delete(selectedPageId);
+    setSaveState("saved");
+    setLastSavedAt(new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
+    reloadPreviewIfInteractive();
     setLastAction(`已套用「${option.label}」到当前页面草稿，线上页面仍需发布后生效。`);
   }
 
   async function applyIndustryPackageToAllPages(packageKey: string) {
     const themePackage = industryThemePackages.find((item) => item.key === packageKey);
     if (!themePackage) return;
+    await flushPreviewMutationQueues();
     const nextDraftEntries = pages
       .map((page) => {
         const templateName = page.templateKey ?? resolvePageTemplateName(page.id, pages);
@@ -1282,6 +2220,8 @@ export function DesignerClient({
     const nextDraftMap = Object.fromEntries(nextDraftEntries.map((entry) => [entry.pageId, entry.draftJson]));
     const nextThemeSettings = applyThemePackageSettingsToDraftSettings(themeSettings, themePackage.siteSettings);
     setDrafts((current) => ({ ...current, ...nextDraftMap }));
+    for (const entry of nextDraftEntries) dirtyPageIdsRef.current.add(entry.pageId);
+    markThemeSettingsDirty();
     setThemeSettings(nextThemeSettings);
 
     const selectedDraft = nextDraftMap[selectedPageId] ?? drafts[selectedPageId] ?? activePage.draftJson;
@@ -1290,30 +2230,46 @@ export function DesignerClient({
     setSelection({ kind: "section", sectionId: firstSectionId });
     setActiveTab("templates");
 
-    const [pagesSaved, settingsSaved] = await Promise.all([
-      saveAllThemePageDrafts(site.id, nextDraftEntries),
-      saveThemeSettingsDraft(site.id, nextThemeSettings)
-    ]);
-    if (!pagesSaved || !settingsSaved) {
+    const pageVersionsBeforeSave = currentPageDraftVersions();
+    const pagesSaved = await saveAllThemePageDrafts(
+      site.id,
+      nextDraftEntries.map((entry) => ({ ...entry, expected: pageVersionsBeforeSave[entry.pageId] }))
+    );
+    const settingsSaved = await saveThemeSettingsDraft(site.id, nextThemeSettings, themeSettingsDraftVersion);
+    if (Object.keys(pagesSaved.draftVersions).length) {
+      setDraftVersions((current) => ({ ...current, ...pagesSaved.draftVersions }));
+    }
+    if (settingsSaved.draftVersion) setThemeSettingsDraftVersion(settingsSaved.draftVersion);
+    const failedPageIds = new Set(pagesSaved.errors.map((item) => item.pageId));
+    for (const entry of nextDraftEntries) {
+      if (!failedPageIds.has(entry.pageId)) dirtyPageIdsRef.current.delete(entry.pageId);
+    }
+    if (!pagesSaved.ok || !settingsSaved.ok) {
       setLastAction(`「${themePackage.name}」全站页面与全局装修已放入本地草稿，但保存失败，请稍后再试。`);
       return;
     }
+    themeSettingsDirtyRef.current = false;
 
-    reloadIframePreview();
+    setSaveState("saved");
+    setLastSavedAt(new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
+    reloadPreviewIfInteractive();
     setLastAction(`已套用「${themePackage.name}」到 ${nextDraftEntries.length} 个页面草稿，并同步品牌、导航、页眉、页脚、SEO 全局装修；线上页面仍需发布后生效。`);
   }
 
-  function choosePreviewSelection(sectionId: string, blockId = "") {
+  function choosePreviewSelection(sectionId: string, blockId = "", clickedText = "", preferredFieldId = "") {
     const nextState = selectionFromPreviewMessage({
-      message: { act: "previewSelect", id: sectionId, blockId },
+      message: { act: "previewSelect", id: sectionId, blockId, clickedText, fieldId: preferredFieldId },
       draft,
       themeSettings
     });
     if (!nextState) return;
+    const focusTarget = fieldFocusForSelection(nextState.selection, clickedText, preferredFieldId);
     setActiveTab(nextState.tab);
-    chooseSelection(nextState.selection);
-    setLastAction(nextState.actionLabel.replace("iframe preview", "live preview"));
+    chooseSelection(nextState.selection, { lockPreviewSelection: false, focusFieldId: focusTarget?.fieldId });
+    const focusMessage = focusTarget ? `已聚焦「${focusTarget.label}」。` : "未匹配到具体字段，已定位到模块。";
+    setLastAction(`${nextState.actionLabel.replace("iframe preview", "编辑定位预览")} ${focusMessage}`);
   }
+  choosePreviewSelectionRef.current = choosePreviewSelection;
 
   const activePackageCard =
     themePackageApplyCards.find((item) => item.key === (activeIndustryThemeKey === "ai_subscription_theme1" ? "dreamshoot-ai-studio" : activeIndustryThemeKey)) ??
@@ -1321,7 +2277,7 @@ export function DesignerClient({
     themePackageApplyCards[0];
   const templateApplyControl = industryThemePackages.length ? (
     <div
-      className="flex h-[40px] min-w-[420px] max-w-[720px] flex-1 items-center overflow-hidden rounded-[10px] border border-white/10 bg-[#101722] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+      className="flex h-[40px] min-w-[360px] max-w-[560px] shrink-0 items-center overflow-hidden rounded-[10px] border border-white/10 bg-[#101722] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
       data-designer-layout="saas-theme-package-strip"
     >
       <div className="flex h-full min-w-0 flex-1 items-center gap-2 border-r border-white/10 px-3">
@@ -1409,6 +2365,61 @@ export function DesignerClient({
     themeSettings
   });
 
+  const publishSummary = {
+    activePageTitle: activePage.title,
+    currentPageDirty,
+    dirtyPagesCount,
+    hiddenDraftCount,
+    globalSettingsDirty,
+    publishedVersion,
+    publicationCount,
+    currentDraftRevision: draftVersions[selectedPageId]?.revision ?? draft?.version ?? 1,
+    themeSettingsRevision: themeSettingsDraftVersion?.revision ?? 1
+  };
+  const previewSelection =
+    activeTab === "publish"
+      ? undefined
+      : activeTab === "global"
+      ? selection.kind === "global" || selection.kind === "globalBlock"
+        ? selection
+        : undefined
+      : selection.kind === "section" || selection.kind === "block"
+      ? selection
+      : undefined;
+  const activeLocatorBreadcrumb = locatorBreadcrumb ?? `${activePage.title} / ${selectionMeta.scope}${selectionMeta.detail ? ` / ${selectionMeta.detail}` : ""}`;
+  const emptyPageGlobalShortcuts = (
+    <div className="grid gap-1.5" data-designer-layout="saas-empty-page-global-shortcuts">
+      <button className="inline-flex h-8 items-center gap-1.5 rounded-[6px] border border-[#d9dde4] bg-white px-2 text-[11px] font-medium text-[#344054] transition hover:border-[#2f6fed] hover:text-[#2f6fed]" onClick={() => chooseCopyQuickTarget("header")} type="button">
+        <PanelTop className="h-3.5 w-3.5" strokeWidth={1.8} />
+        编辑页头
+      </button>
+      <button className="inline-flex h-8 items-center gap-1.5 rounded-[6px] border border-[#d9dde4] bg-white px-2 text-[11px] font-medium text-[#344054] transition hover:border-[#2f6fed] hover:text-[#2f6fed]" onClick={() => chooseCopyQuickTarget("footer")} type="button">
+        <PanelBottom className="h-3.5 w-3.5" strokeWidth={1.8} />
+        编辑页脚
+      </button>
+      <button className="inline-flex h-8 items-center gap-1.5 rounded-[6px] border border-[#d9dde4] bg-white px-2 text-[11px] font-medium text-[#344054] transition hover:border-[#2f6fed] hover:text-[#2f6fed]" onClick={() => chooseCopyQuickTarget("navigation")} type="button">
+        <Menu className="h-3.5 w-3.5" strokeWidth={1.8} />
+        编辑导航
+      </button>
+      <button className="inline-flex h-8 items-center gap-1.5 rounded-[6px] border border-[#d9dde4] bg-white px-2 text-[11px] font-medium text-[#344054] transition hover:border-[#2f6fed] hover:text-[#2f6fed]" onClick={() => chooseCopyQuickTarget("seo")} type="button">
+        <SearchCheck className="h-3.5 w-3.5" strokeWidth={1.8} />
+        编辑 SEO
+      </button>
+    </div>
+  );
+  const workspaceHeaderActions = (
+    <button
+      data-designer-open-tutorial="true"
+      className="inline-flex h-8 shrink-0 items-center gap-1 whitespace-nowrap rounded-[8px] border border-[#d8dbe1] bg-white px-3 text-[11px] font-medium leading-none text-[#383838] transition hover:bg-[#f7f8fb] focus-visible:outline-none active:scale-[0.98]"
+      onClick={() => setTutorialOpen(true)}
+      title="打开装修器新手教程"
+      type="button"
+    >
+      <BookOpen className="h-3.5 w-3.5" strokeWidth={1.8} />
+      教程
+    </button>
+  );
+
   const sectionTreeProps = createSectionTreeProps({
     activePage,
     blockDisplayLabel,
@@ -1425,6 +2436,7 @@ export function DesignerClient({
     onCanvasEmptyDrop,
     onChooseSelection: chooseSelection,
     onAddBlock: addBlock,
+    emptyStateActions: emptyPageGlobalShortcuts,
     onInsertSection: insertSection,
     onLibrarySectionDragStart,
     onSectionDragEnd,
@@ -1446,10 +2458,11 @@ export function DesignerClient({
   });
 
   return (
-    <div
-      className="saas-designer-root flex h-full overflow-hidden bg-[#d7dce4]"
-      data-designer-contract="saas-store-builder xfcart-fullscreen-section-editor saas-three-pane-builder"
-    >
+	    <div
+	      className="saas-designer-root flex h-full overflow-hidden bg-[#d7dce4]"
+	      data-designer-contract="saas-store-builder xfcart-fullscreen-section-editor saas-three-pane-builder"
+	      data-designer-selected-page-id={selectedPageId}
+	    >
       <div className="hidden" aria-hidden="true">
         <span>高级：SaaS 原主题导入</span>
         <span>SaaS</span>
@@ -1530,6 +2543,7 @@ export function DesignerClient({
           iframeReloadKey={iframeReloadKey}
           iframeStatus={iframeStatus}
           lastAction={lastAction}
+          lastSavedAt={lastSavedAt}
           pageMenuOptions={pageMenuOptions}
           onDeviceChange={changePreviewDevice}
           onIframeLoad={handleIframeLoad}
@@ -1537,19 +2551,22 @@ export function DesignerClient({
           onLivePreviewSelect={choosePreviewSelection}
           onPageSelect={selectPage}
           onPreviewModeToggle={togglePreviewMode}
-          onPublishDraft={publishDraft}
+          onPreviewViewportChange={setPreviewViewportPreset}
+          onPublishDraft={requestPublishDraft}
           onReloadPreview={reloadIframePreview}
           onRollback={rollback}
           onSaveDraft={saveDraft}
           pages={pages}
           previewToken={previewToken}
           previewMode={previewMode}
+          previewViewportPreset={previewViewportPreset}
           products={products}
           publishedVersion={publishedVersion}
+          saveState={saveState}
           selectedPageId={selectedPageId}
-          selectedPreviewBlockId={selection.kind === "block" || selection.kind === "globalBlock" ? selection.blockId : undefined}
-          selectedPreviewSectionId={previewSectionIdForSelection(selection)}
-          site={site}
+          selectedPreviewBlockId={previewSelection && (previewSelection.kind === "block" || previewSelection.kind === "globalBlock") ? previewSelection.blockId : undefined}
+          selectedPreviewSectionId={previewSelection ? previewSectionIdForSelection(previewSelection) : undefined}
+          site={siteWithDesignerMedia}
           siteAiApps={siteAiApps}
           templateApplyControl={templateApplyControl}
           templateDisplayName={templateDisplayName}
@@ -1562,12 +2579,14 @@ export function DesignerClient({
       <DesignerWorkspacePane
         activeTab={activeTab}
         globalTreeProps={globalTreeProps}
+        headerActions={workspaceHeaderActions}
         mobileActions={{
           adminHref: `/site/${site.slug}/admin`,
           storefrontHref: `/site/${site.slug}`,
           currentPageDirty,
           dirtyPagesCount,
-          onPublishDraft: publishDraft,
+          publishedVersion,
+          onPublishDraft: requestPublishDraft,
           onRollback: rollback,
           onSaveDraft: saveDraft
         }}
@@ -1575,6 +2594,7 @@ export function DesignerClient({
         onTabChange={switchEditorTab}
         pageTreeProps={pageTreeProps}
         propertyPaneProps={{
+          activePageTitle: activePage.title,
           activeBlock,
           activeBlockSchema,
           activeGlobalBlock,
@@ -1586,6 +2606,7 @@ export function DesignerClient({
           activeSectionSchema,
           addBlock,
           addGlobalBlock,
+          copyLocatorItems,
           deleteBlock,
           deleteGlobalBlock,
           deleteSection,
@@ -1594,13 +2615,19 @@ export function DesignerClient({
           editGlobalBlockSetting,
           editGlobalSetting,
           editSectionSetting,
+          fieldFocusRequest,
           fieldOptions,
           labelForSchema,
           mediaAssets,
           moveBlock,
           moveGlobalBlock,
           moveSection,
+          locatorBreadcrumb: activeLocatorBreadcrumb,
           onChooseSelection: chooseSelection,
+          onCopyLocatorSelect: chooseCopyLocatorItem,
+          onCopyQuickSelect: chooseCopyQuickTarget,
+          pageIsEmpty,
+          publishSummary,
           products,
           safeBlocks,
           selectedBlockSettings,
@@ -1608,7 +2635,7 @@ export function DesignerClient({
           selection,
           selectionMeta,
           settingLinkString,
-          site,
+          site: siteWithDesignerMedia,
           siteAiApps,
           themeSettings,
           updateSaasGlobalSetting,
@@ -1616,10 +2643,107 @@ export function DesignerClient({
           updateThemeLinks,
           updateThemeRadii,
           updateThemeSeo,
-          updateThemeTypography
+          updateThemeTypography,
+          workspaceTab: activeTab
         }}
         sectionTreeProps={sectionTreeProps}
       />
+      <DesignerWorkbenchTutorial onClose={() => setTutorialOpen(false)} open={tutorialOpen} />
+      {publishConfirmOpen ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-4 py-6">
+          <div className="w-full max-w-[760px] rounded-[16px] border border-[#d9dde4] bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.45)]">
+            <div className="border-b border-[#e6e9ee] px-5 py-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <div className="text-[12px] font-medium uppercase tracking-[0.18em] text-[#667085]">确认发布</div>
+                  <h2 className="mt-1 text-[18px] font-semibold text-[#101828]">发布会更新整站线上快照</h2>
+                </div>
+                <button
+                  className="rounded-[10px] border border-[#d9dde4] px-3 py-1.5 text-sm text-[#344054] transition hover:border-[#98a2b3] hover:text-[#101828]"
+                  onClick={() => setPublishConfirmOpen(false)}
+                  type="button"
+                >
+                  取消
+                </button>
+              </div>
+            </div>
+            <div className="grid gap-4 px-5 py-4">
+              <p className="text-[13px] leading-6 text-[#475467]">
+                保存草稿不会上线。确认发布后，系统会先保存草稿，再把当前页面、隐藏草稿页和全局设置一起写入线上快照。
+              </p>
+              <div className="grid gap-3 md:grid-cols-2">
+                <div className="rounded-[12px] border border-[#e6e9ee] bg-[#fafbfc] p-4">
+                  <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-[#667085]">会一起上线的内容</p>
+                  <div className="mt-3 grid gap-2 text-[13px] text-[#344054]">
+                    <div className="flex items-center justify-between gap-3">
+                      <span>当前页面</span>
+                      <span className="font-medium">{activePage?.title ?? "未选择"}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>待发布页面</span>
+                      <span className="font-medium">{dirtyPagesCount}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>隐藏草稿</span>
+                      <span className="font-medium">{hiddenDraftCount}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>全局设置</span>
+                      <span className="font-medium">{globalSettingsDirty ? "有变更" : "无变更"}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="rounded-[12px] border border-[#e6e9ee] bg-[#fafbfc] p-4">
+                  <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-[#667085]">版本保护</p>
+                  <div className="mt-3 grid gap-2 text-[13px] text-[#344054]">
+                    <div className="flex items-center justify-between gap-3">
+                      <span>当前线上版本</span>
+                      <span className="font-medium">v{publishedVersion}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>最近一次发布版本</span>
+                      <span className="font-medium">v{publishedVersion}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>发布记录</span>
+                      <span className="font-medium">{publicationCount}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>当前草稿页版本</span>
+                      <span className="font-medium">v{draftVersions[selectedPageId]?.revision ?? draft?.version ?? 1}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>主题设置草稿版本</span>
+                      <span className="font-medium">v{themeSettingsDraftVersion?.revision ?? 1}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-[12px] border border-amber-200 bg-amber-50 px-4 py-3 text-[13px] leading-6 text-amber-900">
+                如果页面草稿、全局设置或线上版本在你确认前被别人改过，这次发布会被 409 拦住，避免把别人的文案静默覆盖掉。
+              </div>
+            </div>
+            <div className="flex flex-wrap items-center justify-end gap-2 border-t border-[#e6e9ee] px-5 py-4">
+              <button
+                className="rounded-[10px] border border-[#d9dde4] bg-white px-4 py-2 text-sm text-[#344054] transition hover:border-[#98a2b3] hover:text-[#101828] disabled:cursor-not-allowed disabled:opacity-55"
+                disabled={publishBusy}
+                onClick={() => setPublishConfirmOpen(false)}
+                type="button"
+              >
+                返回
+              </button>
+              <button
+                className="rounded-[10px] border border-[#f4a719] bg-[#f4a719] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#eb9a0e] disabled:cursor-not-allowed disabled:opacity-55"
+                disabled={publishBusy}
+                onClick={() => void publishDraft()}
+                type="button"
+              >
+                {publishBusy ? "发布中" : "确认发布"}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

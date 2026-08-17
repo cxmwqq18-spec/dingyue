@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { ArrowRight } from "lucide-react";
 import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 import { photoPackageLabel, photoPackageSlug } from "@/lib/photo-package-taxonomy";
+import { storefrontCardImageAlt } from "@/lib/storefront-media-alt";
 
 export type DreamshootPackageCatalogCard = {
   id: string;
@@ -12,6 +13,8 @@ export type DreamshootPackageCatalogCard = {
   category: string;
   meta: string;
   credits?: string;
+  imageAlt?: string;
+  imageAlts?: string[];
   imageUrl: string;
   imageUrls?: string[];
   href: string;
@@ -65,8 +68,20 @@ function cardActionLabel(card: DreamshootPackageCatalogCard, packageAction: stri
   return packageAction;
 }
 
-function imageAlt(card: DreamshootPackageCatalogCard) {
-  return `${card.title} preview`;
+function imageAlt(card: DreamshootPackageCatalogCard, imageUrl: string, imageIndex: number, locale: "en" | "es", brand: string) {
+  return storefrontCardImageAlt({
+    brand,
+    category: card.category,
+    description: card.description,
+    explicitAlt: imageIndex === 0 ? card.imageAlt : undefined,
+    imageAlts: card.imageAlts,
+    imageUrl,
+    index: imageIndex,
+    locale,
+    meta: card.metaLabel || card.meta,
+    role: imageIndex === 0 ? "card" : "gallery",
+    title: card.title
+  });
 }
 
 function comparableImageUrl(value: string): string {
@@ -109,7 +124,7 @@ function SafeCatalogImage({
   sizes?: string;
   src: string;
 }) {
-  const safeAlt = alt.trim() || "Private photo package preview";
+  const safeAlt = alt.trim() || "AI-generated private package visual showing a styled subject and intended gallery use";
   return (
     <img
       alt={safeAlt}
@@ -147,18 +162,22 @@ const referencePhotoCountClass =
 const referenceUsesClass = "truncate text-xs leading-5 text-slate-500";
 
 function ReferencePackageCard({
+  brandName,
   card,
   categoryHrefOverrides,
   index,
   locale,
   packageAction,
+  prioritizeFirstImage = true,
   siteBasePath
 }: {
+  brandName: string;
   card: DreamshootPackageCatalogCard;
   categoryHrefOverrides?: DreamshootCategoryHrefOverrides;
   index: number;
   locale: "en" | "es";
   packageAction: string;
+  prioritizeFirstImage?: boolean;
   siteBasePath: string;
 }) {
   const images = cardImageUrls(card);
@@ -175,12 +194,12 @@ function ReferencePackageCard({
         <div className={images.length > 1 ? "grid grid-cols-2 items-stretch gap-0.5 p-3" : "grid items-stretch p-3"}>
           {images.slice(0, 2).map((image, imageIndex) => (
             <div className={images.length > 1 ? referenceImageFrameClass : referenceSingleImageFrameClass} key={`${card.id}_split_${imageIndex}`}>
-              <SafeCatalogImage
-                alt={imageIndex === 0 ? imageAlt(card) : `${card.title} gallery preview`}
+	              <SafeCatalogImage
+                alt={imageAlt(card, image, imageIndex, locale, brandName)}
                 className="h-full object-cover transition duration-500"
                 decoding="async"
-                fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
-                loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
+                fetchPriority={prioritizeFirstImage && index === 0 && imageIndex === 0 ? "high" : "low"}
+                loading={prioritizeFirstImage && index === 0 && imageIndex === 0 ? "eager" : "lazy"}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12vw"
                 src={image}
               />
@@ -281,10 +300,13 @@ export function DreamshootPackageCatalogClient({
   cards,
   categoryHrefOverrides,
   creditLabel,
+  directoryLabel,
+  directorySubtitle,
   directoryTitle,
   featuredCount,
   initialCategory = "",
   openCollectionsHref,
+  prioritizeFirstImage = true,
   showDirectory = true,
   locale = "en",
   sectionId,
@@ -299,10 +321,13 @@ export function DreamshootPackageCatalogClient({
   cards: DreamshootPackageCatalogCard[];
   categoryHrefOverrides?: DreamshootCategoryHrefOverrides;
   creditLabel: string;
+  directoryLabel?: string;
+  directorySubtitle?: string;
   directoryTitle: string;
   featuredCount: number;
   initialCategory?: string;
   openCollectionsHref: string;
+  prioritizeFirstImage?: boolean;
   showDirectory?: boolean;
   locale?: "en" | "es";
   sectionId: string;
@@ -333,6 +358,9 @@ export function DreamshootPackageCatalogClient({
     ? "linear-gradient(90deg,#16dcf0,#D88A4B)"
     : brandGradient;
   const choosePackageLabel = locale === "es" ? "Elegir paquete" : "Choose package";
+  const brandName = aidreamcapes ? "AIdreamcapes" : locale === "es" ? "AIdreamshoots" : "myDreamshoots";
+  const resolvedDirectoryLabel = directoryLabel?.trim() || (locale === "es" ? "Directorio completo" : "Full theme directory");
+  const resolvedDirectorySubtitle = directorySubtitle?.trim() || (locale === "es" ? "Explora todas las categorias y temas disponibles." : "Browse every available theme by category on the full collections page.");
 
   return (
     <DreamshootShowcasePreview>
@@ -389,13 +417,15 @@ export function DreamshootPackageCatalogClient({
         <div className={useReferenceCards ? "mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" : aidreamcapes ? "mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" : "mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"}>
           {featured.map((card, index) => (
             useReferenceCards ? (
-              <ReferencePackageCard
-                card={card}
+	              <ReferencePackageCard
+	                brandName={brandName}
+	                card={card}
                 categoryHrefOverrides={categoryHrefOverrides}
                 index={index}
                 key={card.id}
                 locale={locale}
                 packageAction={choosePackageLabel}
+                prioritizeFirstImage={prioritizeFirstImage}
                 siteBasePath={siteBasePath}
               />
             ) : (
@@ -406,12 +436,12 @@ export function DreamshootPackageCatalogClient({
               key={card.id}
             >
               <div className="relative overflow-hidden bg-white/[0.04]">
-                <SafeCatalogImage
-                  alt={imageAlt(card)}
+	                <SafeCatalogImage
+		                  alt={imageAlt(card, card.imageUrl, 0, locale, brandName)}
                   className="transition duration-700"
                   decoding="async"
-                  fetchPriority={index === 0 ? "auto" : "low"}
-                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={prioritizeFirstImage && index === 0 ? "auto" : "low"}
+                  loading={prioritizeFirstImage && index === 0 ? "eager" : "lazy"}
                   sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 20vw"
                   src={card.imageUrl}
                 />
@@ -437,8 +467,9 @@ export function DreamshootPackageCatalogClient({
           <div className="mt-9">
             <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">{locale === "es" ? "Directorio completo" : "Full directory"}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">{resolvedDirectoryLabel}</p>
                 <h2 className="mt-2 text-[clamp(1.65rem,3vw,2.45rem)] font-semibold tracking-[-0.045em] text-white">{directoryTitle}</h2>
+                {resolvedDirectorySubtitle ? <p className="mt-2 max-w-2xl text-sm leading-6 text-white/56">{resolvedDirectorySubtitle}</p> : null}
               </div>
               <a className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" href={openCollectionsHref}>
                 {locale === "es" ? "Abrir colecciones" : "Open collections"}
@@ -448,13 +479,15 @@ export function DreamshootPackageCatalogClient({
             <div className={useReferenceCards ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3" : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"}>
               {directory.map((card, index) => (
                 useReferenceCards ? (
-                  <ReferencePackageCard
-                    card={card}
+	                  <ReferencePackageCard
+	                    brandName={brandName}
+	                    card={card}
                     categoryHrefOverrides={categoryHrefOverrides}
                     index={index}
                     key={`rest_${card.id}`}
                     locale={locale}
                     packageAction={choosePackageLabel}
+                    prioritizeFirstImage={false}
                     siteBasePath={siteBasePath}
                   />
                 ) : (
@@ -465,8 +498,8 @@ export function DreamshootPackageCatalogClient({
                   key={`rest_${card.id}`}
                 >
                   <div className="relative overflow-hidden bg-white/[0.04]">
-                    <SafeCatalogImage
-                      alt={imageAlt(card)}
+	                    <SafeCatalogImage
+	                      alt={imageAlt(card, card.imageUrl, 0, locale, brandName)}
                       className="transition duration-500"
                       decoding="async"
                       fetchPriority="low"
@@ -501,10 +534,10 @@ export function DreamshootPackageCatalogClient({
           <div className="mt-9 flex flex-col gap-4 rounded-[22px] border border-white/12 bg-white/[0.045] p-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/42">
-                {locale === "es" ? "Directorio completo" : "Full theme directory"}
+                {resolvedDirectoryLabel}
               </p>
               <p className="mt-2 text-sm leading-6 text-white/62">
-                {locale === "es" ? "Explora todas las categorias y temas disponibles." : "Browse every available theme by category on the full collections page."}
+                {resolvedDirectorySubtitle}
               </p>
             </div>
             <a className="inline-flex shrink-0 items-center justify-center gap-2 rounded-[16px] border border-white/14 px-4 py-3 text-sm font-semibold text-white/82 transition hover:border-white/28 hover:text-white" href={openCollectionsHref}>

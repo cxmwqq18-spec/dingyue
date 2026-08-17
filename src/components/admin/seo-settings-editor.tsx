@@ -16,7 +16,8 @@ import {
 } from "@/components/admin/design-workbench";
 import { downloadCsv } from "@/components/admin/export-utils";
 import { StatusPill } from "@/components/ui";
-import type { Site, ThemeSettings } from "@/lib/types";
+import { siteAdminJsonHeaders } from "@/lib/client-csrf";
+import type { Site, ThemeDraftMeta, ThemeSettings } from "@/lib/types";
 import { normalizeThemeSeo } from "@/lib/theme/seo";
 
 type PageSummary = {
@@ -60,12 +61,14 @@ export function SeoSettingsEditor({
   site,
   pages,
   initialSettings,
-  publishedSettings
+  publishedSettings,
+  draftMeta
 }: {
   site: Pick<Site, "id" | "name" | "slug" | "branding" | "primaryDomain" | "pages" | "themeSettings">;
   pages: PageSummary[];
   initialSettings: ThemeSettings;
   publishedSettings: ThemeSettings;
+  draftMeta?: ThemeDraftMeta;
 }) {
   const router = useRouter();
   const normalizedInitial = useMemo(
@@ -83,10 +86,15 @@ export function SeoSettingsEditor({
     "SEO 草稿已载入。保存后仍需发布整站快照，线上页面 metadata 才会更新。"
   );
   const [saving, setSaving] = useState(false);
+  const [draftVersion, setDraftVersion] = useState<ThemeDraftMeta | undefined>(draftMeta);
 
   useEffect(() => {
     setSeo(normalizedInitial);
   }, [normalizedInitial]);
+
+  useEffect(() => {
+    setDraftVersion(draftMeta);
+  }, [draftMeta]);
 
   useEffect(() => {
     if (!pages.some((page) => page.id === selectedPageId)) {
@@ -166,15 +174,20 @@ export function SeoSettingsEditor({
     setSaving(true);
     const response = await fetch(`/api/sites/${site.id}/theme/settings/draft`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ draftJson: draftSettings })
+      headers: siteAdminJsonHeaders(site.id),
+      body: JSON.stringify({
+        draftJson: draftSettings,
+        expectedRevision: draftVersion?.revision,
+        expectedEtag: draftVersion?.etag
+      })
     });
-    const json = await response.json().catch(() => ({}));
+    const json = (await response.json().catch(() => ({}))) as { draftVersion?: ThemeDraftMeta; error?: string };
     setSaving(false);
     if (!response.ok) {
-      setMessage(`保存失败：${json.error ?? "unknown error"}`);
+      setMessage(response.status === 409 ? "保存被拦截：SEO 草稿版本已变化，请刷新后重新检查。" : `保存失败：${json.error ?? "unknown error"}`);
       return;
     }
+    if (json.draftVersion) setDraftVersion(json.draftVersion);
     setMessage("SEO 草稿已保存。进入发布历史发布整站快照后，前台 metadata 才会更新。");
     router.refresh();
   }

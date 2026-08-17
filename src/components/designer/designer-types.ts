@@ -22,6 +22,12 @@ export type Selection =
   | { kind: "globalBlock"; globalType: GlobalType; blockId: string }
   | { kind: "globalSettings"; node: GlobalSettingsNode };
 
+export type PropertyFieldFocusRequest = {
+  scopeKey: string;
+  fieldId: string;
+  requestId: number;
+};
+
 export type DesignerDragState =
   | { kind: "section"; id: string; targetId?: string; position?: "before" | "after" }
   | { kind: "librarySection"; type: SectionType; targetId?: string; position?: "before" | "after" }

@@ -51,6 +51,17 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+html:has([data-admin-layout="saas-fullscreen-theme-designer"]),
+body:has([data-admin-layout="saas-fullscreen-theme-designer"]) {
+  height: 100%;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+body:has([data-admin-layout="saas-fullscreen-theme-designer"]) {
+  background: var(--designer-bg);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -2404,6 +2415,105 @@ textarea {
     gap: 4px;
   }
 
+  /*
+   * The workbench primitives intentionally use their own class namespace.
+   * Keep the legacy XFCart rules above available to older admin surfaces,
+   * but never let them resize the current designer command bar or inspector.
+   */
+  .saas-designer-root .designer-command-bar {
+    position: relative;
+    z-index: 40;
+    min-width: 0;
+    isolation: isolate;
+  }
+
+  .saas-designer-root [data-designer-toolbar="saas-top-editor-toolbar"] {
+    position: relative !important;
+    z-index: 50 !important;
+    isolation: isolate;
+  }
+
+  .saas-designer-root [data-designer-toolbar="saas-top-editor-toolbar"] > div {
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
+  }
+
+  .saas-designer-root [data-designer-toolbar="saas-top-editor-toolbar"] button {
+    position: relative !important;
+    z-index: 2 !important;
+    pointer-events: auto !important;
+  }
+
+  .saas-designer-root .designer-command-bar [data-designer-layout="saas-toolbar-action-group"] {
+    min-width: max-content;
+  }
+
+  .saas-designer-root .designer-workbench-inspector {
+    min-width: 420px;
+    max-width: 520px;
+    min-height: 0;
+  }
+
+  .saas-designer-root .designer-workbench-tabs {
+    min-width: 0;
+  }
+
+  .saas-designer-root .designer-workbench-split {
+    min-height: 0;
+  }
+
+  .saas-designer-root .designer-workbench-rail {
+    min-width: 0;
+  }
+
+  .saas-designer-root .designer-workbench-property {
+    min-width: 0;
+  }
+
+  .saas-designer-root [data-designer-layout="saas-editor-tabs-bar"] [data-designer-tab-key] {
+    min-width: 0;
+  }
+
+  @media (max-width: 920px) {
+    .saas-designer-root .saas-designer-preview-shell {
+      display: none !important;
+    }
+
+    .saas-designer-root .designer-workbench-inspector {
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+      border-left: 0;
+    }
+
+    .saas-designer-root .designer-workbench-split {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .saas-designer-root .designer-workbench-rail {
+      max-height: none;
+      min-height: 220px;
+      flex: 0 0 38%;
+      border-bottom: 1px solid #d0d5dd;
+    }
+
+    .saas-designer-root .designer-workbench-property {
+      flex: 1 1 auto;
+    }
+
+    .saas-designer-root .saas-mobile-workbench-actions {
+      flex-wrap: wrap;
+    }
+
+    .saas-designer-root .saas-mobile-workbench-actions > div:last-child {
+      width: 100%;
+      justify-content: flex-start;
+      overflow-x: auto;
+    }
+  }
+
   .saas-designer-root .resource-meta-list span {
     border-radius: 2px !important;
     border-color: #d7dce4 !important;
@@ -2501,5 +2611,112 @@ textarea {
 
   [data-admin-layout="saas-clean-admin-shell"] .right_main .list td {
     color: #344054;
+  }
+
+  /*
+   * The current SaaS designer owns its layout. These late overrides keep
+   * legacy XFCart selectors from imposing the old fixed 156px/298px split.
+   */
+  .saas-designer-root {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    isolation: isolate;
+  }
+
+  .saas-designer-root .wrapper_right,
+  .saas-designer-root .wrap-tabs-content,
+  .saas-designer-root .tools_tab,
+  .saas-designer-root .content_4d8e {
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  .saas-designer-root .wrapper_right {
+    width: auto !important;
+    position: static !important;
+    padding-left: 0 !important;
+    border-left: 0 !important;
+  }
+
+  .saas-designer-root .wrap-tabs-content {
+    display: block !important;
+    width: auto !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .saas-designer-root .wrap-tabs-content > div {
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  .saas-designer-root .tools_tab {
+    height: auto !important;
+  }
+
+  .saas-designer-root .tools_tab .wrap > div,
+  .saas-designer-root .tools_tab .wrap > button {
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  .saas-designer-root .designer-workbench-inspector {
+    width: clamp(440px, 30vw, 560px) !important;
+    min-width: 440px !important;
+    max-width: 560px !important;
+    position: relative !important;
+    z-index: 2;
+  }
+
+  .saas-designer-root .designer-workbench-split {
+    display: grid !important;
+    grid-template-rows: minmax(420px, 42%) minmax(0, 1fr) !important;
+    min-height: 0 !important;
+  }
+
+  .saas-designer-root .designer-workbench-rail {
+    min-height: 0 !important;
+    flex: none !important;
+    flex-basis: auto !important;
+  }
+
+  .saas-designer-root .designer-workbench-property,
+  .saas-designer-root [data-designer-layout="saas-property-body"] {
+    min-height: 0 !important;
+  }
+
+  .saas-designer-root [data-designer-layout="saas-property-body"] {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    padding-bottom: 80px !important;
+  }
+
+  .saas-designer-root [data-designer-layout="saas-property-actions"] {
+    isolation: isolate;
+  }
+
+  .saas-designer-root .editor_wrapper_cont {
+    align-items: flex-start;
+  }
+
+  @media (max-width: 920px) {
+    .saas-designer-root .designer-workbench-inspector {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: none !important;
+    }
+
+    .saas-designer-root .designer-workbench-split {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    .saas-designer-root .designer-workbench-rail {
+      min-height: 220px !important;
+      flex: 0 0 38% !important;
+    }
   }
 }

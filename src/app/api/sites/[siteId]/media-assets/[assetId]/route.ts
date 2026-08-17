@@ -1,8 +1,19 @@
+import { unlink } from "node:fs/promises";
+import { resolve, sep } from "node:path";
 import { NextResponse } from "next/server";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { deleteThemeMediaAssetRelational, upsertThemeMediaAssetRelational } from "@/lib/stores/theme-store";
 import type { MediaAsset } from "@/lib/types";
+
+async function deleteUploadedFileIfSiteScoped(siteId: string, asset: MediaAsset) {
+  if (asset.sourceType !== "site_upload" || !asset.storageKey.startsWith(`sites/${siteId}/`)) return;
+  const publicAssetsRoot = resolve(process.cwd(), "public", "assets");
+  const siteAssetsRoot = resolve(publicAssetsRoot, "sites", siteId);
+  const filePath = resolve(publicAssetsRoot, asset.storageKey);
+  if (filePath !== siteAssetsRoot && !filePath.startsWith(`${siteAssetsRoot}${sep}`)) return;
+  await unlink(filePath).catch(() => undefined);
+}
 
 export async function PUT(
   request: Request,
@@ -44,6 +55,7 @@ export async function DELETE(
   }
   try {
     const result = await deleteThemeMediaAssetRelational({ siteId, assetId });
+    await deleteUploadedFileIfSiteScoped(siteId, result.asset);
     return NextResponse.json({ ok: true, asset: result.asset });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

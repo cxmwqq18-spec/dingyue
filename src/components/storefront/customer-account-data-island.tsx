@@ -1,19 +1,87 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
-import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
-import type { ThemeRuntimeData } from "@/lib/types";
+// Customer media URLs are private account endpoints, so keep them as direct browser requests.
+/* eslint-disable @next/next/no-img-element */
 
-export type AccountSection = "plan" | "orders" | "jobs" | "albums" | "credits";
+import {
+  ArrowRight,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  CreditCard,
+  Download,
+  ImageIcon,
+  ImageOff,
+  KeyRound,
+  Layers3,
+  LockKeyhole,
+  PackageCheck,
+  PlayCircle,
+  ReceiptText,
+  ShieldCheck,
+  Sparkles,
+  Upload,
+  UserRound,
+  WalletCards
+} from "lucide-react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
+import { dispatchCustomerBootstrapInvalidation } from "@/components/storefront/customer-bootstrap-events";
+import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
+import type { PublicCustomer, ThemeRuntimeAsset, ThemeRuntimeData, ThemeRuntimePagination } from "@/lib/types";
+import type { LucideIcon } from "lucide-react";
+
+export type AccountSection =
+  | "overview"
+  | "profile"
+  | "security"
+  | "subscription"
+  | "credits"
+  | "purchases"
+  | "generation"
+  | "downloads"
+  | "albums"
+  | "models";
+
+type AccountList =
+  | "subscriptions"
+  | "orders"
+  | "ledger"
+  | "jobs"
+  | "downloads"
+  | "albums"
+  | "models"
+  | "assets"
+  | "avatars";
+
+type PageState = {
+  page: number;
+  pageSize: number;
+};
+
 type LoadState =
   | { status: "loading"; runtime?: undefined; error?: undefined }
   | { status: "ready"; runtime: ThemeRuntimeData; error?: undefined }
   | { status: "error"; runtime?: undefined; error: string };
 
+type ToastState = { tone: "success" | "error"; message: string } | undefined;
+
 const SECTION_CACHE_TTL_MS = 60_000;
+const defaultPageState: PageState = { page: 1, pageSize: 20 };
+const pageSizeOptions = [10, 20, 50] as const;
 const sectionCache = new Map<string, { cachedAt: number; runtime: ThemeRuntimeData }>();
 const sectionInflight = new Map<string, Promise<ThemeRuntimeData>>();
+const accountPrefetchTargets: Array<{ list?: AccountList; section: AccountSection }> = [
+  { section: "profile", list: "avatars" },
+  { section: "credits", list: "ledger" },
+  { section: "purchases", list: "orders" },
+  { section: "generation", list: "jobs" },
+  { section: "downloads", list: "downloads" },
+  { section: "downloads", list: "assets" },
+  { section: "albums", list: "albums" },
+  { section: "models", list: "models" },
+  { section: "subscription", list: "subscriptions" }
+];
 
 function readCachedSection(cacheKey: string): ThemeRuntimeData | undefined {
   const cached = sectionCache.get(cacheKey);
@@ -29,46 +97,56 @@ function writeCachedSection(cacheKey: string, runtime: ThemeRuntimeData) {
   sectionCache.set(cacheKey, { cachedAt: Date.now(), runtime });
 }
 
-function loadSectionRuntime(cacheKey: string, siteId: string, section: AccountSection): Promise<ThemeRuntimeData> {
-  const cached = readCachedSection(cacheKey);
+function loadSectionRuntime(params: {
+  cacheKey: string;
+  list?: AccountList;
+  page: number;
+  pageSize: number;
+  section: AccountSection;
+  siteId: string;
+}): Promise<ThemeRuntimeData> {
+  const cached = readCachedSection(params.cacheKey);
   if (cached) return Promise.resolve(cached);
-  const inflight = sectionInflight.get(cacheKey);
+  const inflight = sectionInflight.get(params.cacheKey);
   if (inflight) return inflight;
-  const request = fetch(`/api/sites/${siteId}/customer/runtime?profile=account&section=${section}`, {
+  const query = new URLSearchParams({
+    profile: "account",
+    section: params.section,
+    page: String(params.page),
+    pageSize: String(params.pageSize)
+  });
+  if (params.list) query.set("list", params.list);
+  const request = fetch(`/api/sites/${params.siteId}/customer/runtime?${query.toString()}`, {
     credentials: "same-origin"
   })
     .then(async (response) => {
-      const data = (await response.json().catch(() => ({}))) as { ok?: boolean; runtime?: ThemeRuntimeData; error?: string };
+      const data = (await response.json().catch(() => ({}))) as {
+        ok?: boolean;
+        pagination?: ThemeRuntimePagination;
+        runtime?: ThemeRuntimeData;
+        error?: string;
+      };
       if (!response.ok || !data.ok || !data.runtime) throw new Error(data.error || "account_data_unavailable");
-      writeCachedSection(cacheKey, data.runtime);
-      return data.runtime;
+      const runtime = data.pagination && !data.runtime.pagination
+        ? { ...data.runtime, pagination: data.pagination }
+        : data.runtime;
+      writeCachedSection(params.cacheKey, runtime);
+      return runtime;
     })
     .finally(() => {
-      sectionInflight.delete(cacheKey);
+      sectionInflight.delete(params.cacheKey);
     });
-  sectionInflight.set(cacheKey, request);
+  sectionInflight.set(params.cacheKey, request);
   return request;
 }
 
-function _emptyRuntime(): ThemeRuntimeData {
-  return {
-    jobs: [],
-    assets: [],
-    albums: [],
-    ledger: [],
-    subscriptions: [],
-    orders: [],
-    customerModels: []
-  };
-}
-
-function money(amountCents: number, currency: string) {
+function money(amountCents: number | undefined, currency: string | undefined) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: currency || "USD",
     minimumFractionDigits: 0,
     maximumFractionDigits: 2
-  }).format(amountCents / 100);
+  }).format((amountCents ?? 0) / 100);
 }
 
 function dateLabel(value: string | undefined) {
@@ -76,6 +154,14 @@ function dateLabel(value: string | undefined) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "Not started";
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+function statusLabel(value: string | undefined) {
+  if (!value) return "None";
+  return value
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }
 
 function jobStatusLabel(status: string) {
@@ -86,21 +172,6 @@ function jobStatusLabel(status: string) {
   return "Credits returned";
 }
 
-function orderStatusLabel(status: string) {
-  if (status === "paid") return "Paid";
-  if (status === "fulfilled") return "Fulfilled";
-  if (status === "checkout_started") return "Checkout started";
-  if (status === "refunded") return "Refunded";
-  if (status === "expired") return "Expired";
-  return "Created";
-}
-
-function albumStatusLabel(status: string) {
-  if (status === "ready") return "Ready";
-  if (status === "processing") return "Preparing";
-  return "Archived";
-}
-
 function ledgerLabel(type: string) {
   if (type === "grant") return "Credits added";
   if (type === "reserve") return "Credits held";
@@ -109,23 +180,58 @@ function ledgerLabel(type: string) {
   return "Balance adjusted";
 }
 
-function requestTitle(jobId: string, index: number) {
-  const suffix = jobId.split("_").filter(Boolean).at(-1);
-  return `Album request ${suffix ? suffix.toUpperCase() : String(index + 1).padStart(2, "0")}`;
+function albumStatusLabel(status: string) {
+  if (status === "ready") return "Ready";
+  if (status === "processing") return "Preparing";
+  return "Archived";
 }
 
-function useAccountSectionRuntime(customerId: string, siteId: string, section: AccountSection, initialRuntime?: ThemeRuntimeData): LoadState {
-  const cacheKey = `${siteId}:${customerId}:${section}`;
+function requestTitle(jobId: string, index: number) {
+  const suffix = jobId.split("_").filter(Boolean).at(-1);
+  return `Request ${suffix ? suffix.toUpperCase() : String(index + 1).padStart(2, "0")}`;
+}
+
+function apiErrorMessage(error: string) {
+  const messages: Record<string, string> = {
+    asset_file_required: "Choose an image before uploading.",
+    asset_file_must_be_image: "Profile avatars must be image files.",
+    asset_file_too_large: "That image is too large for this account.",
+    current_password_incorrect: "The current password is not correct.",
+    current_password_required: "Enter your current password.",
+    customer_name_required: "Enter a display name.",
+    password_confirmation_mismatch: "The password confirmation does not match.",
+    password_confirmation_required: "Confirm your new password.",
+    password_min_6_chars: "Password must be at least 6 characters.",
+    password_required: "Enter a new password.",
+    profile_avatar_asset_invalid: "Upload a profile avatar image before saving it."
+  };
+  return messages[error] ?? "The update could not be saved. Please try again.";
+}
+
+function listCacheKey(section: AccountSection, list?: AccountList) {
+  return `${section}:${list ?? "default"}`;
+}
+
+function useAccountSectionRuntime(params: {
+  customerId: string;
+  initialRuntime?: ThemeRuntimeData;
+  list?: AccountList;
+  page: number;
+  pageSize: number;
+  section: AccountSection;
+  siteId: string;
+}): LoadState {
+  const cacheKey = `${params.siteId}:${params.customerId}:${params.section}:${params.list ?? "default"}:${params.page}:${params.pageSize}`;
   const [state, setState] = useState<LoadState>(() => {
-    if (initialRuntime) return { status: "ready", runtime: initialRuntime };
+    if (params.initialRuntime) return { status: "ready", runtime: params.initialRuntime };
     const cached = readCachedSection(cacheKey);
     return cached ? { status: "ready", runtime: cached } : { status: "loading" };
   });
 
   useEffect(() => {
-    if (initialRuntime) {
-      writeCachedSection(cacheKey, initialRuntime);
-      setState({ status: "ready", runtime: initialRuntime });
+    if (params.initialRuntime) {
+      writeCachedSection(cacheKey, params.initialRuntime);
+      setState({ status: "ready", runtime: params.initialRuntime });
       return;
     }
     const cached = readCachedSection(cacheKey);
@@ -135,7 +241,14 @@ function useAccountSectionRuntime(customerId: string, siteId: string, section: A
     }
     let cancelled = false;
     setState({ status: "loading" });
-    loadSectionRuntime(cacheKey, siteId, section)
+    loadSectionRuntime({
+      cacheKey,
+      list: params.list,
+      page: params.page,
+      pageSize: params.pageSize,
+      section: params.section,
+      siteId: params.siteId
+    })
       .then((runtime) => {
         if (!cancelled) setState({ status: "ready", runtime });
       })
@@ -145,34 +258,51 @@ function useAccountSectionRuntime(customerId: string, siteId: string, section: A
     return () => {
       cancelled = true;
     };
-  }, [cacheKey, initialRuntime, section, siteId]);
+  }, [cacheKey, params.initialRuntime, params.list, params.page, params.pageSize, params.section, params.siteId]);
 
   return state;
 }
 
 function AccountCard({
   children,
-  initialRuntime,
+  customerId,
   id,
+  initialRuntime,
+  list,
   loadingTitle,
+  onPageChange,
+  pageState,
   section,
-  siteId,
-  customerId
+  siteId
 }: {
-  children: (runtime: ThemeRuntimeData) => ReactNode;
+  children: (runtime: ThemeRuntimeData, pagination?: ThemeRuntimePagination) => ReactNode;
   customerId: string;
   id: string;
   initialRuntime?: ThemeRuntimeData;
+  list?: AccountList;
   loadingTitle: string;
+  onPageChange?: (next: PageState) => void;
+  pageState?: PageState;
   section: AccountSection;
   siteId: string;
 }) {
-  const state = useAccountSectionRuntime(customerId, siteId, section, initialRuntime);
+  const state = useAccountSectionRuntime({
+    customerId,
+    initialRuntime,
+    list,
+    page: pageState?.page ?? 1,
+    pageSize: pageState?.pageSize ?? 20,
+    section,
+    siteId
+  });
   return (
-    <div className="scroll-mt-28 rounded-[18px] border border-[#dfd3c4] bg-white p-5" id={id}>
+    <div className="scroll-mt-28 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface)] p-4 shadow-[var(--account-shadow)] sm:p-5" id={id}>
       {state.status === "loading" ? <LoadingBlock title={loadingTitle} /> : null}
       {state.status === "error" ? <ErrorBlock /> : null}
-      {state.status === "ready" ? children(state.runtime) : null}
+      {state.status === "ready" ? children(state.runtime, state.runtime.pagination) : null}
+      {state.status === "ready" && state.runtime.pagination && onPageChange ? (
+        <PaginationControls onChange={onPageChange} pagination={state.runtime.pagination} />
+      ) : null}
     </div>
   );
 }
@@ -180,11 +310,11 @@ function AccountCard({
 function LoadingBlock({ title }: { title: string }) {
   return (
     <div aria-busy="true">
-      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">{title}</p>
+      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--account-faint)]">{title}</p>
       <div className="mt-5 grid gap-3">
-        <div className="h-6 w-32 rounded-full bg-[#eee5d9]" />
-        <div className="h-16 rounded-[18px] bg-[#fbf7f0]" />
-        <div className="h-16 rounded-[18px] bg-[#fbf7f0]" />
+        <div className="h-6 w-32 rounded-full bg-[var(--account-skeleton)]" />
+        <div className="h-20 rounded-[8px] bg-[var(--account-skeleton-soft)]" />
+        <div className="h-20 rounded-[8px] bg-[var(--account-skeleton-soft)]" />
       </div>
     </div>
   );
@@ -192,202 +322,913 @@ function LoadingBlock({ title }: { title: string }) {
 
 function ErrorBlock() {
   return (
-    <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">
+    <p className="rounded-[8px] border border-dashed border-[var(--account-border)] bg-[var(--account-panel)] p-4 text-sm text-[var(--account-muted)]">
       This account module could not load. Refresh the page or sign in again.
     </p>
   );
 }
 
-function PlanCard({ runtime }: { runtime: ThemeRuntimeData }) {
+function SectionHeader({ icon: Icon, kicker, title, subtitle }: { icon: LucideIcon; kicker: string; title: string; subtitle: string }) {
+  return (
+    <div className="flex items-start gap-3">
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[8px] bg-[var(--account-accent-bg)] text-[var(--account-accent-strong)]">
+        <Icon className="h-5 w-5" strokeWidth={1.9} />
+      </span>
+      <div>
+        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--account-faint)]">{kicker}</p>
+        <h2 className="mt-1 text-xl font-semibold tracking-normal text-[var(--account-strong)] sm:text-2xl">{title}</h2>
+        <p className="mt-1 max-w-2xl text-sm leading-6 text-[var(--account-muted)]">{subtitle}</p>
+      </div>
+    </div>
+  );
+}
+
+function StatTile({ label, value, hint }: { label: string; value: ReactNode; hint?: string }) {
+  return (
+    <div className="rounded-[8px] border border-[var(--account-border)] bg-[var(--account-panel)] p-4">
+      <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--account-faint)]">{label}</p>
+      <p className="mt-2 text-2xl font-semibold text-[var(--account-strong)]">{value}</p>
+      {hint ? <p className="mt-1 text-xs leading-5 text-[var(--account-muted)]">{hint}</p> : null}
+    </div>
+  );
+}
+
+function EmptyState({ children }: { children: ReactNode }) {
+  return (
+    <p className="rounded-[8px] border border-dashed border-[var(--account-border)] bg-[var(--account-panel)] p-4 text-sm leading-6 text-[var(--account-muted)]">{children}</p>
+  );
+}
+
+function StatusPill({ children, tone = "neutral" }: { children: ReactNode; tone?: "neutral" | "good" | "warn" }) {
+  const toneClass = tone === "good"
+    ? "border-[var(--account-success-border)] bg-[var(--account-success-bg)] text-[var(--account-success-text)]"
+    : tone === "warn"
+    ? "border-[var(--account-warn-border)] bg-[var(--account-warn-bg)] text-[var(--account-warn-text)]"
+    : "border-[var(--account-border)] bg-[var(--account-panel-soft)] text-[var(--account-muted)]";
+  return <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${toneClass}`}>{children}</span>;
+}
+
+function AccountToast({ state }: { state: ToastState }) {
+  if (!state) return null;
+  const className = state.tone === "success"
+    ? "border-[var(--account-success-border)] bg-[var(--account-success-bg)] text-[var(--account-success-text)]"
+    : "border-[var(--account-danger-border)] bg-[var(--account-danger-bg)] text-[var(--account-danger-text)]";
+  return <p className={`rounded-[8px] border p-3 text-sm ${className}`}>{state.message}</p>;
+}
+
+function paginationItems(page: number, totalPages: number): Array<number | "ellipsis-start" | "ellipsis-end"> {
+  if (totalPages <= 7) return Array.from({ length: totalPages }, (_, index) => index + 1);
+  const pages = new Set<number>([1, totalPages]);
+  for (let offset = -1; offset <= 1; offset += 1) {
+    const value = page + offset;
+    if (value > 1 && value < totalPages) pages.add(value);
+  }
+  if (page <= 3) {
+    pages.add(2);
+    pages.add(3);
+    pages.add(4);
+  }
+  if (page >= totalPages - 2) {
+    pages.add(totalPages - 1);
+    pages.add(totalPages - 2);
+    pages.add(totalPages - 3);
+  }
+  const sorted = Array.from(pages)
+    .filter((value) => value >= 1 && value <= totalPages)
+    .sort((left, right) => left - right);
+  const items: Array<number | "ellipsis-start" | "ellipsis-end"> = [];
+  sorted.forEach((value, index) => {
+    const previous = sorted[index - 1];
+    if (previous && value - previous > 1) {
+      items.push(previous === 1 ? "ellipsis-start" : "ellipsis-end");
+    }
+    items.push(value);
+  });
+  return items;
+}
+
+function PaginationControls({
+  onChange,
+  pagination
+}: {
+  onChange: (next: PageState) => void;
+  pagination: ThemeRuntimePagination;
+}) {
+  const items = paginationItems(pagination.page, pagination.totalPages);
+  return (
+    <div className="mt-5 flex flex-col gap-3 border-t border-[var(--account-border)] pt-4 text-sm text-[var(--account-muted)] sm:flex-row sm:items-center sm:justify-between">
+      <p>
+        Showing {pagination.firstItem}-{pagination.lastItem} of {pagination.total}
+      </p>
+      <div className="flex max-w-full items-center gap-2 overflow-x-auto pb-1">
+        <select
+          aria-label="Rows per page"
+          className="h-9 shrink-0 rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-2 text-sm font-semibold text-[var(--account-text)] outline-none transition focus:border-[var(--account-accent)]"
+          onChange={(event) => onChange({ page: 1, pageSize: Number(event.target.value) })}
+          value={pagination.pageSize}
+        >
+          {pageSizeOptions.map((size) => (
+            <option key={size} value={size}>{size} / page</option>
+          ))}
+        </select>
+        <button
+          className="inline-flex h-9 shrink-0 items-center gap-1 rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-3 text-sm font-semibold text-[var(--account-text)] transition hover:bg-[var(--account-hover-bg)] disabled:cursor-not-allowed disabled:opacity-45"
+          disabled={!pagination.hasPrevious}
+          onClick={() => onChange({ page: Math.max(1, pagination.page - 1), pageSize: pagination.pageSize })}
+          type="button"
+        >
+          <ChevronLeft className="h-4 w-4" strokeWidth={1.8} />
+          Prev
+        </button>
+        <div className="flex shrink-0 items-center gap-1" aria-label="Page numbers">
+          {items.map((item, index) => typeof item === "number" ? (
+            <button
+              aria-current={item === pagination.page ? "page" : undefined}
+              className={`grid h-9 min-w-9 place-items-center rounded-[8px] border px-2 text-sm font-semibold transition ${item === pagination.page ? "border-[var(--account-accent)] bg-[var(--account-accent-bg)] text-[var(--account-accent-strong)]" : "border-[var(--account-border-strong)] bg-[var(--account-field)] text-[var(--account-text)] hover:bg-[var(--account-hover-bg)]"}`}
+              key={item}
+              onClick={() => onChange({ page: item, pageSize: pagination.pageSize })}
+              type="button"
+            >
+              {item}
+            </button>
+          ) : (
+            <span className="grid h-9 min-w-7 place-items-center text-xs font-semibold text-[var(--account-faint)]" key={`${item}-${index}`}>...</span>
+          ))}
+        </div>
+        <button
+          className="inline-flex h-9 shrink-0 items-center gap-1 rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-3 text-sm font-semibold text-[var(--account-text)] transition hover:bg-[var(--account-hover-bg)] disabled:cursor-not-allowed disabled:opacity-45"
+          disabled={!pagination.hasNext}
+          onClick={() => onChange({ page: Math.min(pagination.totalPages, pagination.page + 1), pageSize: pagination.pageSize })}
+          type="button"
+        >
+          Next
+          <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function accountCustomer(runtime: ThemeRuntimeData, fallback: PublicCustomer): PublicCustomer {
+  return runtime.customer ?? fallback;
+}
+
+function isVideoMime(mimeType?: string) {
+  return Boolean(mimeType?.startsWith("video/"));
+}
+
+function isImageMime(mimeType?: string) {
+  return !mimeType || mimeType.startsWith("image/");
+}
+
+function MediaThumb({
+  alt,
+  className,
+  mimeType,
+  previewStatus,
+  previewUrl
+}: {
+  alt: string;
+  className: string;
+  mimeType?: string;
+  previewStatus?: ThemeRuntimeAsset["previewStatus"];
+  previewUrl?: string;
+}) {
+  const [failed, setFailed] = useState(false);
+  useEffect(() => setFailed(false), [previewUrl]);
+  const unavailable = !previewUrl || previewStatus === "loading" || failed;
+  if (unavailable) {
+    return (
+      <span className={`grid place-items-center bg-[var(--account-panel-soft)] text-[var(--account-subtle)] ${className}`}>
+        <span className="grid gap-1 text-center">
+          <ImageOff className="mx-auto h-5 w-5" strokeWidth={1.8} />
+          <span className="text-[11px] font-semibold">Preview unavailable</span>
+        </span>
+      </span>
+    );
+  }
+  return (
+    <span className={`relative block overflow-hidden bg-[var(--account-panel-soft)] ${className}`}>
+      <img alt={alt} className="h-full w-full object-cover" loading="lazy" onError={() => setFailed(true)} src={previewUrl} />
+      {isVideoMime(mimeType) ? (
+        <span className="absolute inset-0 grid place-items-center bg-[#111827]/18 text-white">
+          <PlayCircle className="h-8 w-8 drop-shadow" strokeWidth={1.7} />
+        </span>
+      ) : null}
+    </span>
+  );
+}
+
+function isPrimaryMyDreamShootsSlug(siteSlug: string): boolean {
+  return /mydreamshoots|dreamshoot/i.test(siteSlug) && !/aidreamcapes|aidreamshoots/i.test(siteSlug);
+}
+
+function OverviewCard({ basePath, fallbackCustomer, runtime, siteSlug }: { basePath: string; fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData; siteSlug: string }) {
+  const customer = accountCustomer(runtime, fallbackCustomer);
+  const activeSubscription = (runtime.subscriptions ?? []).find((subscription) => subscription.status === "active" || subscription.status === "trialing") ?? runtime.subscriptions?.[0];
+  const latestJob = runtime.jobs[0];
+  const latestOrder = runtime.orders?.[0];
+  const balance = customer.balance.available ?? 0;
+  const videoGenerationHref = isPrimaryMyDreamShootsSlug(siteSlug) ? "/ai-video-generation" : "/tools";
+  return (
+    <div className="grid gap-5">
+      <SectionHeader icon={WalletCards} kicker="Overview" title="Account command center" subtitle="Review your plan, credit balance, private requests, and delivered work from one place." />
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <StatTile label="Available credits" value={balance} hint={`${customer.balance.reserved ?? 0} credits reserved`} />
+        <StatTile label="Plan" value={activeSubscription?.productName ?? activeSubscription?.priceLabel ?? "No plan"} hint={activeSubscription ? `${statusLabel(activeSubscription.status)} - renews ${dateLabel(activeSubscription.currentPeriodEnd)}` : "Choose a package or subscription when ready"} />
+        <StatTile label="Recent request" value={latestJob ? jobStatusLabel(latestJob.status) : "None"} hint={latestJob ? dateLabel(latestJob.updatedAt) : "Generated photos will appear after your first request"} />
+        <StatTile label="Last checkout" value={latestOrder ? money(latestOrder.amountCents, latestOrder.currency) : "$0"} hint={latestOrder ? `${statusLabel(latestOrder.status)} - ${dateLabel(latestOrder.createdAt)}` : "No purchases yet"} />
+      </div>
+      <div className="grid gap-3 lg:grid-cols-3">
+        <StorefrontInstantLink className="inline-flex items-center justify-between rounded-[8px] border border-[var(--account-button-border)] bg-[var(--account-button-bg)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--account-button-hover)]" href={`${basePath}/app/create`}>
+          Open workspace
+          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+        </StorefrontInstantLink>
+        <StorefrontInstantLink className="inline-flex items-center justify-between rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-4 py-3 text-sm font-semibold text-[var(--account-text)] transition hover:bg-[var(--account-hover-bg)]" href={`${basePath}/pricing`}>
+          View pricing
+          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+        </StorefrontInstantLink>
+        <StorefrontInstantLink className="inline-flex items-center justify-between rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-4 py-3 text-sm font-semibold text-[var(--account-text)] transition hover:bg-[var(--account-hover-bg)]" href={`${basePath}${videoGenerationHref}`}>
+          {isPrimaryMyDreamShootsSlug(siteSlug) ? "Explore video generators" : "Explore tools"}
+          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+        </StorefrontInstantLink>
+      </div>
+    </div>
+  );
+}
+
+function ProfileAvatar({ customer, size = "large" }: { customer: PublicCustomer; size?: "large" | "small" }) {
+  const className = size === "large"
+    ? "h-20 w-20 rounded-[8px]"
+    : "h-11 w-11 rounded-[8px]";
+  return (
+    <span className={`grid shrink-0 place-items-center overflow-hidden border border-[var(--account-border-strong)] bg-[var(--account-panel)] text-[var(--account-muted)] ${className}`}>
+      {customer.profile?.avatarUrl ? (
+        <img className="h-full w-full object-cover" src={customer.profile.avatarUrl} alt="" />
+      ) : (
+        <UserRound className={size === "large" ? "h-8 w-8" : "h-5 w-5"} strokeWidth={1.8} />
+      )}
+    </span>
+  );
+}
+
+function ProfileCard({
+  fallbackCustomer,
+  pagination,
+  runtime,
+  siteId,
+  siteSlug
+}: {
+  fallbackCustomer: PublicCustomer;
+  pagination?: ThemeRuntimePagination;
+  runtime: ThemeRuntimeData;
+  siteId: string;
+  siteSlug: string;
+}) {
+  const customer = accountCustomer(runtime, fallbackCustomer);
+  const profileAssets = runtime.assets.filter((asset) => asset.subjectRole === "profile_avatar");
+  const [name, setName] = useState(customer.name);
+  const [avatarUrl, setAvatarUrl] = useState(customer.profile?.avatarUrl);
+  const [file, setFile] = useState<File | undefined>();
+  const [saving, setSaving] = useState(false);
+  const [toast, setToast] = useState<ToastState>();
+  const displayCustomer = {
+    ...customer,
+    name,
+    profile: {
+      ...customer.profile,
+      avatarUrl
+    }
+  };
+
+  useEffect(() => {
+    setName(customer.name);
+    setAvatarUrl(customer.profile?.avatarUrl);
+  }, [customer.name, customer.profile?.avatarUrl]);
+
+  async function uploadAvatar(): Promise<ThemeRuntimeAsset | undefined> {
+    if (!file) return undefined;
+    const formData = new FormData();
+    formData.set("file", file);
+    formData.set("label", file.name.replace(/\.[^.]+$/, "") || "Profile avatar");
+    formData.set("role", "input");
+    formData.set("subjectRole", "profile_avatar");
+    const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: csrfHeader(`customer_csrf_${siteId}`),
+      body: formData
+    });
+    const data = (await response.json().catch(() => ({}))) as { ok?: boolean; asset?: ThemeRuntimeAsset; error?: string };
+    if (!response.ok || !data.ok || !data.asset) throw new Error(data.error || "asset_create_failed");
+    return data.asset;
+  }
+
+  async function saveProfile(nextAvatarAssetId?: string | null) {
+    setSaving(true);
+    setToast(undefined);
+    try {
+      const uploaded = nextAvatarAssetId === undefined ? await uploadAvatar() : undefined;
+      const avatarAssetId = nextAvatarAssetId === undefined ? uploaded?.id : nextAvatarAssetId;
+      const response = await fetch(`/api/sites/${siteId}/customer/profile`, {
+        method: "PATCH",
+        credentials: "same-origin",
+        headers: customerJsonHeaders(siteId),
+        body: JSON.stringify({
+          name,
+          ...(avatarAssetId !== undefined ? { avatarAssetId } : {})
+        })
+      });
+      const data = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!response.ok || !data.ok) throw new Error(data.error || "profile_update_failed");
+      if (uploaded?.previewUrl) setAvatarUrl(uploaded.previewUrl);
+      if (typeof nextAvatarAssetId === "string") {
+        const selectedAvatar = profileAssets.find((asset) => asset.id === nextAvatarAssetId);
+        if (selectedAvatar) setAvatarUrl(selectedAvatar.previewUrl);
+      }
+      if (nextAvatarAssetId === null) setAvatarUrl(undefined);
+      setFile(undefined);
+      setToast({ tone: "success", message: "Profile updated." });
+      sectionCache.clear();
+      dispatchCustomerBootstrapInvalidation({ reason: "manual", siteSlug });
+    } catch (error) {
+      setToast({ tone: "error", message: apiErrorMessage(error instanceof Error ? error.message : "profile_update_failed") });
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="grid gap-5">
+      <SectionHeader icon={UserRound} kicker="Profile" title="Basic account information" subtitle="Update the name and avatar shown across your private workspace. Email changes are read-only in this version." />
+      <AccountToast state={toast} />
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <form
+          className="grid gap-4 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-panel)] p-4"
+          onSubmit={(event) => {
+            event.preventDefault();
+            void saveProfile();
+          }}
+        >
+          <div className="flex items-center gap-4">
+            <ProfileAvatar customer={displayCustomer} />
+            <label className="grid min-w-0 flex-1 gap-2 text-sm font-semibold text-[var(--account-text)]">
+              Profile avatar
+              <input
+                accept="image/*"
+                className="block w-full rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-3 py-2 text-sm font-medium text-[var(--account-text)] file:mr-3 file:rounded-full file:border-0 file:bg-[var(--account-button-bg)] file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white"
+                onChange={(event) => setFile(event.currentTarget.files?.[0])}
+                type="file"
+              />
+            </label>
+          </div>
+          <label className="grid gap-2 text-sm font-semibold text-[var(--account-text)]">
+            Display name
+            <input className="rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-3 py-2 text-sm font-medium text-[var(--account-text)] outline-none transition focus:border-[var(--account-accent)]" maxLength={80} onChange={(event) => setName(event.target.value)} value={name} />
+          </label>
+          <label className="grid gap-2 text-sm font-semibold text-[var(--account-muted)]">
+            Email address
+            <input className="rounded-[8px] border border-[var(--account-border)] bg-[var(--account-panel-soft)] px-3 py-2 text-sm font-medium text-[var(--account-muted)]" readOnly value={customer.email} />
+          </label>
+          <div className="flex flex-wrap gap-2">
+            <button className="inline-flex items-center gap-2 rounded-[8px] border border-[var(--account-button-border)] bg-[var(--account-button-bg)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[var(--account-button-hover)] disabled:cursor-not-allowed disabled:opacity-60" disabled={saving} type="submit">
+              <Upload className="h-4 w-4" strokeWidth={1.8} />
+              {saving ? "Saving..." : "Save profile"}
+            </button>
+            {displayCustomer.profile?.avatarUrl ? (
+              <button className="rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-4 py-2 text-sm font-semibold text-[var(--account-text)] transition hover:bg-[var(--account-hover-bg)] disabled:cursor-not-allowed disabled:opacity-60" disabled={saving} onClick={() => void saveProfile(null)} type="button">
+                Remove avatar
+              </button>
+            ) : null}
+          </div>
+        </form>
+        <div className="rounded-[8px] border border-[var(--account-border)] bg-[var(--account-panel)] p-4">
+          <div className="flex items-center justify-between gap-3">
+            <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--account-faint)]">Saved avatars</p>
+            {pagination ? <span className="text-xs font-semibold text-[var(--account-muted)]">{pagination.total} total</span> : null}
+          </div>
+          <div className="mt-4 grid grid-cols-4 gap-2">
+            {profileAssets.length ? profileAssets.map((asset) => (
+              <button className="aspect-square overflow-hidden rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] transition hover:border-[var(--account-accent)]" key={asset.id} onClick={() => void saveProfile(asset.id)} type="button">
+                <MediaThumb alt={asset.altText || asset.label} className="h-full w-full" mimeType={asset.mimeType} previewStatus={asset.previewStatus} previewUrl={asset.previewUrl} />
+              </button>
+            )) : (
+              <p className="col-span-4 text-sm leading-6 text-[var(--account-muted)]">Uploaded profile avatars will appear here for quick reuse.</p>
+            )}
+          </div>
+        </div>
+      </div>
+      <p className="text-xs leading-5 text-[var(--account-faint)]">Need to change your email? Contact support so ownership can be verified before the address is updated.</p>
+    </div>
+  );
+}
+
+function SecurityCard({ basePath, fallbackCustomer, runtime, siteId }: { basePath: string; fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData; siteId: string }) {
+  const customer = accountCustomer(runtime, fallbackCustomer);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [toast, setToast] = useState<ToastState>();
+
+  async function changePassword(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSaving(true);
+    setToast(undefined);
+    try {
+      const response = await fetch(`/api/sites/${siteId}/customer/profile/password`, {
+        method: "PATCH",
+        credentials: "same-origin",
+        headers: customerJsonHeaders(siteId),
+        body: JSON.stringify({ currentPassword, newPassword, confirmPassword })
+      });
+      const data = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string; reauthRequired?: boolean };
+      if (!response.ok || !data.ok) throw new Error(data.error || "password_update_failed");
+      setToast({ tone: "success", message: "Password updated. Redirecting you to sign in again." });
+      window.setTimeout(() => {
+        window.location.href = `${basePath}/login?next=${encodeURIComponent(`${basePath}/account`)}`;
+      }, 900);
+    } catch (error) {
+      setToast({ tone: "error", message: apiErrorMessage(error instanceof Error ? error.message : "password_update_failed") });
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="grid gap-5">
+      <SectionHeader icon={LockKeyhole} kicker="Security" title="Password and session protection" subtitle={`Change the password for ${customer.email}. For safety, all active sessions sign out after a password update.`} />
+      <AccountToast state={toast} />
+      <form className="grid max-w-xl gap-4 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-panel)] p-4" onSubmit={changePassword}>
+        <label className="grid gap-2 text-sm font-semibold text-[var(--account-text)]">
+          Current password
+          <input autoComplete="current-password" className="rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-3 py-2 text-sm font-medium text-[var(--account-text)] outline-none transition focus:border-[var(--account-accent)]" onChange={(event) => setCurrentPassword(event.target.value)} type="password" value={currentPassword} />
+        </label>
+        <label className="grid gap-2 text-sm font-semibold text-[var(--account-text)]">
+          New password
+          <input autoComplete="new-password" className="rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-3 py-2 text-sm font-medium text-[var(--account-text)] outline-none transition focus:border-[var(--account-accent)]" onChange={(event) => setNewPassword(event.target.value)} type="password" value={newPassword} />
+        </label>
+        <label className="grid gap-2 text-sm font-semibold text-[var(--account-text)]">
+          Confirm new password
+          <input autoComplete="new-password" className="rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-3 py-2 text-sm font-medium text-[var(--account-text)] outline-none transition focus:border-[var(--account-accent)]" onChange={(event) => setConfirmPassword(event.target.value)} type="password" value={confirmPassword} />
+        </label>
+        <button className="inline-flex w-fit items-center gap-2 rounded-[8px] border border-[var(--account-button-border)] bg-[var(--account-button-bg)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[var(--account-button-hover)] disabled:cursor-not-allowed disabled:opacity-60" disabled={saving} type="submit">
+          <KeyRound className="h-4 w-4" strokeWidth={1.8} />
+          {saving ? "Updating..." : "Update password"}
+        </button>
+      </form>
+    </div>
+  );
+}
+
+function SubscriptionCard({ basePath, runtime }: { basePath: string; runtime: ThemeRuntimeData }) {
   const subscriptions = runtime.subscriptions ?? [];
   const activeSubscription = subscriptions.find((subscription) => subscription.status === "active" || subscription.status === "trialing") ?? subscriptions[0];
-  const balance = runtime.customer?.balance.available ?? 0;
-  const reserved = runtime.customer?.balance.reserved ?? 0;
   return (
-    <>
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Plan</p>
-          <h3 className="mt-2 text-xl font-semibold text-[#171514]">{activeSubscription ? "Active photo plan" : "No active plan"}</h3>
-        </div>
-        <span className="rounded-full border border-[#e2d6c8] bg-[#fbf7f0] px-3 py-1 text-xs font-semibold text-[#7d6e61]">
-          {activeSubscription?.status ?? "none"}
-        </span>
+    <div className="grid gap-5">
+      <SectionHeader icon={PackageCheck} kicker="Subscription" title="Plan and billing status" subtitle="View the current subscription tier, renewal window, and credits granted by the plan." />
+      <div className="grid gap-3 sm:grid-cols-3">
+        <StatTile label="Current plan" value={activeSubscription?.productName ?? activeSubscription?.priceLabel ?? "No plan"} hint={activeSubscription ? statusLabel(activeSubscription.status) : "No active subscription"} />
+        <StatTile label="Credits per cycle" value={activeSubscription?.creditsPerCycle ?? 0} hint={activeSubscription?.interval ? `${statusLabel(activeSubscription.interval)} billing` : "Subscription credits"} />
+        <StatTile label="Period end" value={dateLabel(activeSubscription?.currentPeriodEnd)} hint={activeSubscription?.currentPeriodStart ? `Started ${dateLabel(activeSubscription.currentPeriodStart)}` : undefined} />
       </div>
-      <div className="mt-4 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Available</p>
-          <p className="mt-2 text-2xl font-semibold">{balance}</p>
-        </div>
-        <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Reserved</p>
-          <p className="mt-2 text-2xl font-semibold">{reserved}</p>
-        </div>
-        <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Period end</p>
-          <p className="mt-2 text-sm font-semibold">{dateLabel(activeSubscription?.currentPeriodEnd)}</p>
+      <div className="rounded-[8px] border border-[var(--account-border)] bg-[var(--account-panel)] p-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-sm font-semibold text-[var(--account-strong)]">Payment method</p>
+            <p className="mt-1 text-sm leading-6 text-[var(--account-muted)]">Cards are handled through secure checkout. This account center does not store or edit card numbers.</p>
+          </div>
+          <StorefrontInstantLink className="inline-flex items-center gap-2 rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-4 py-2 text-sm font-semibold text-[var(--account-text)] transition hover:bg-[var(--account-hover-bg)]" href={`${basePath}/pricing`}>
+            Manage through pricing
+            <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+          </StorefrontInstantLink>
         </div>
       </div>
-    </>
+      <div className="grid gap-3">
+        {subscriptions.length ? subscriptions.map((subscription) => (
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4" key={subscription.id}>
+            <div>
+              <p className="font-semibold text-[var(--account-strong)]">{subscription.productName ?? subscription.priceLabel ?? "Subscription"}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{subscription.creditsPerCycle} credits - {money(subscription.amountCents, subscription.currency)} - renews {dateLabel(subscription.currentPeriodEnd)}</p>
+            </div>
+            <StatusPill tone={subscription.status === "active" || subscription.status === "trialing" ? "good" : "neutral"}>{statusLabel(subscription.status)}</StatusPill>
+          </div>
+        )) : <EmptyState>No subscription is connected to this account yet.</EmptyState>}
+      </div>
+    </div>
   );
 }
 
-function OrdersCard({ runtime, siteSlug }: { runtime: ThemeRuntimeData; siteSlug: string }) {
+function CreditsCard({ fallbackCustomer, runtime }: { fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData }) {
+  const customer = accountCustomer(runtime, fallbackCustomer);
+  const ledger = runtime.ledger ?? [];
+  return (
+    <div className="grid gap-5">
+      <SectionHeader icon={CreditCard} kicker="Credits" title="Credit balance and activity" subtitle="Track credits added, held for generation, consumed, released, or adjusted by support." />
+      <div className="grid gap-3 sm:grid-cols-2">
+        <StatTile label="Available credits" value={customer.balance.available ?? 0} />
+        <StatTile label="Reserved credits" value={customer.balance.reserved ?? 0} hint="Reserved credits are held while a request is queued or running." />
+      </div>
+      <div className="grid gap-3">
+        {ledger.length ? ledger.map((entry) => (
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 text-sm" key={entry.id}>
+            <div>
+              <p className="font-semibold text-[var(--account-strong)]">{ledgerLabel(entry.type)}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{entry.sourceLabel ?? entry.sourceId ?? "Account activity"} - {dateLabel(entry.createdAt)}</p>
+            </div>
+            <span className={`font-mono text-sm font-semibold ${entry.amount >= 0 ? "text-[var(--account-success-text)]" : "text-[var(--account-danger-text)]"}`}>
+              {entry.amount >= 0 ? "+" : ""}{entry.amount}
+            </span>
+          </div>
+        )) : <EmptyState>Credit activity will appear here after checkout or generation.</EmptyState>}
+      </div>
+    </div>
+  );
+}
+
+function PurchasesCard({ runtime }: { runtime: ThemeRuntimeData }) {
   const orders = runtime.orders ?? [];
-  const jobs = runtime.jobs ?? [];
   return (
-    <>
-      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Orders</p>
-      <div className="mt-4 grid gap-3">
-        {orders.length ? orders.slice(0, 12).map((order) => (
-          <div className="flex items-center justify-between gap-3 rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={order.id}>
+    <div className="grid gap-5">
+      <SectionHeader icon={ReceiptText} kicker="Purchases" title="Recharge and checkout history" subtitle="Review top-ups, subscription checkout starts, credits purchased, and payment status." />
+      <div className="grid gap-3">
+        {orders.length ? orders.map((order) => (
+          <div className="grid gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center" key={order.id}>
             <div>
-              <p className="font-semibold text-[#171514]">{money(order.amountCents, order.currency)}</p>
-              <p className="mt-1 text-xs text-[#7d7064]">{order.credits} credits · {dateLabel(order.createdAt)}</p>
+              <p className="font-semibold text-[var(--account-strong)]">{money(order.amountCents, order.currency)}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{order.credits} credits - {dateLabel(order.createdAt)}</p>
+              <p className="mt-1 truncate text-xs text-[var(--account-subtle)]">Source {order.sourceId}</p>
             </div>
-            <span className="rounded-full border border-[#e2d6c8] bg-white px-3 py-1 text-xs font-semibold text-[#7d6e61]">{orderStatusLabel(order.status)}</span>
+            <StatusPill tone={order.status === "paid" || order.status === "fulfilled" ? "good" : order.status === "checkout_started" ? "warn" : "neutral"}>{statusLabel(order.status)}</StatusPill>
           </div>
-        )) : jobs.length ? jobs.slice(0, 12).map((job, index) => (
-          <StorefrontInstantLink className="flex items-center justify-between gap-3 rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm transition hover:bg-white" href={`/site/${siteSlug}/app/jobs/${job.id}`} key={job.id}>
-            <div>
-              <p className="font-semibold text-[#171514]">{requestTitle(job.id, index)}</p>
-              <p className="mt-1 text-xs text-[#7d7064]">{job.creditsReserved} credits · {dateLabel(job.createdAt)}</p>
-            </div>
-            <span className="rounded-full border border-[#e2d6c8] bg-white px-3 py-1 text-xs font-semibold text-[#7d6e61]">{jobStatusLabel(job.status)}</span>
-          </StorefrontInstantLink>
-        )) : (
-          <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">No orders recorded for this account yet.</p>
-        )}
+        )) : <EmptyState>No recharge or subscription checkout history yet.</EmptyState>}
       </div>
-    </>
+    </div>
   );
 }
 
-function JobsCard({ runtime, siteSlug }: { runtime: ThemeRuntimeData; siteSlug: string }) {
+function GenerationCard({ basePath, runtime }: { basePath: string; runtime: ThemeRuntimeData }) {
   const jobs = runtime.jobs ?? [];
   return (
-    <>
-      <div className="flex items-center justify-between gap-3">
-        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Generation progress</p>
-        <StorefrontInstantLink className="inline-flex items-center gap-1 text-xs font-semibold text-[#171514]" href={`/site/${siteSlug}/app/jobs/progress`}>
-          View all
-          <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.8} />
-        </StorefrontInstantLink>
-      </div>
-      <div className="mt-4 grid gap-3">
-        {jobs.length ? jobs.slice(0, 12).map((job, index) => (
-          <StorefrontInstantLink className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm transition hover:bg-white" href={`/site/${siteSlug}/app/jobs/${job.id}`} key={job.id}>
-            <p className="font-semibold text-[#171514]">{requestTitle(job.id, index)}</p>
-            <p className="mt-1 text-xs text-[#7d7064]">{jobStatusLabel(job.status)} · {job.creditsReserved} credits held</p>
+    <div className="grid gap-5">
+      <SectionHeader icon={Sparkles} kicker="Generation" title="AI photoshoot requests" subtitle="Follow queued, running, delivered, failed, and refunded generation work." />
+      <div className="grid gap-3">
+        {jobs.length ? jobs.map((job, index) => (
+          <StorefrontInstantLink className="grid gap-2 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 text-sm transition hover:border-[var(--account-border-strong)] hover:bg-[var(--account-hover-bg)] sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center" href={`${basePath}/app/jobs/${job.id}`} key={job.id}>
+            <div>
+              <p className="font-semibold text-[var(--account-strong)]">{requestTitle(job.id, index)}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{job.creditsReserved} credits held - updated {dateLabel(job.updatedAt)}</p>
+            </div>
+            <StatusPill tone={job.status === "succeeded" ? "good" : job.status === "failed" ? "warn" : "neutral"}>{jobStatusLabel(job.status)}</StatusPill>
           </StorefrontInstantLink>
-        )) : (
-          <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">No album requests yet.</p>
-        )}
+        )) : <EmptyState>No AI photoshoot requests yet.</EmptyState>}
       </div>
-    </>
+    </div>
   );
 }
 
-function AlbumsCard({ runtime, siteSlug }: { runtime: ThemeRuntimeData; siteSlug: string }) {
+function DownloadsHistoryCard({ runtime }: { runtime: ThemeRuntimeData }) {
+  const downloads = runtime.downloads ?? [];
+  return (
+    <div className="grid gap-5">
+      <SectionHeader icon={Download} kicker="Downloads" title="Download history" subtitle="Review files downloaded from this account. Preview, poster, and Range requests are not logged here." />
+      <div className="grid gap-3">
+        {downloads.length ? downloads.map((entry) => {
+          const fileAvailable = entry.fileAvailable !== false && Boolean(entry.downloadUrl);
+          return (
+            <div className="grid gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center" key={entry.id}>
+              <div className="flex min-w-0 items-center gap-3">
+                <MediaThumb alt="" className="h-14 w-14 rounded-[8px]" mimeType={entry.mimeType} previewStatus={entry.previewStatus} previewUrl={entry.previewUrl} />
+                <div className="min-w-0">
+                  <p className="truncate font-semibold text-[var(--account-strong)]">{entry.label}</p>
+                  <p className="mt-1 text-xs text-[var(--account-muted)]">{dateLabel(entry.createdAt)} - {entry.mimeType ?? "asset"}</p>
+                </div>
+              </div>
+              {fileAvailable && entry.downloadUrl ? (
+                <a className="inline-flex items-center justify-center gap-2 rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-3 py-2 text-xs font-semibold text-[var(--account-text)] transition hover:bg-[var(--account-hover-bg)]" download href={entry.downloadUrl}>
+                  Download
+                  <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+                </a>
+              ) : (
+                <span className="inline-flex items-center justify-center rounded-[8px] border border-[var(--account-border)] bg-[var(--account-panel-soft)] px-3 py-2 text-xs font-semibold text-[var(--account-subtle)]">
+                  File unavailable
+                </span>
+              )}
+            </div>
+          );
+        }) : <EmptyState>No downloads recorded yet. Full asset downloads will be logged here.</EmptyState>}
+      </div>
+    </div>
+  );
+}
+
+function ReadyAssetsCard({ runtime }: { runtime: ThemeRuntimeData }) {
+  const downloadableAssets = runtime.assets.filter((asset) => asset.role === "output");
+  return (
+    <div className="grid gap-5">
+      <SectionHeader icon={ImageIcon} kicker="Ready assets" title="Delivered files" subtitle="Download recently delivered images and videos from your private account." />
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {downloadableAssets.length ? downloadableAssets.map((asset) => {
+          const fileAvailable = asset.previewStatus === "ready" && Boolean(asset.downloadUrl);
+          const content = (
+            <>
+              <MediaThumb alt={asset.altText || asset.label} className="aspect-[4/3] w-full" mimeType={asset.mimeType} previewStatus={asset.previewStatus} previewUrl={asset.previewUrl} />
+              <div className="flex items-center justify-between gap-2 p-3">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-[var(--account-strong)]">{asset.label}</p>
+                  <p className="mt-0.5 truncate text-xs text-[var(--account-muted)]">{isVideoMime(asset.mimeType) ? "Video asset" : isImageMime(asset.mimeType) ? "Image asset" : asset.mimeType}</p>
+                </div>
+                {fileAvailable ? (
+                  <Download className="h-4 w-4 shrink-0 text-[var(--account-muted)]" strokeWidth={1.8} />
+                ) : (
+                  <span className="shrink-0 rounded-full bg-[var(--account-panel-soft)] px-2 py-1 text-[10px] font-semibold text-[var(--account-subtle)]">Unavailable</span>
+                )}
+              </div>
+            </>
+          );
+          return fileAvailable && asset.downloadUrl ? (
+            <a className="group overflow-hidden rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] transition hover:border-[var(--account-border-strong)] hover:bg-[var(--account-hover-bg)]" download href={asset.downloadUrl} key={asset.id}>
+              {content}
+            </a>
+          ) : (
+            <div className="overflow-hidden rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] opacity-80" key={asset.id}>
+              {content}
+            </div>
+          );
+        }) : <p className="rounded-[8px] border border-dashed border-[var(--account-border)] bg-[var(--account-panel)] p-4 text-sm leading-6 text-[var(--account-muted)] sm:col-span-2 xl:col-span-3">Delivered downloadable assets will appear here.</p>}
+      </div>
+    </div>
+  );
+}
+
+function AlbumsCard({ runtime }: { runtime: ThemeRuntimeData }) {
   const albums = runtime.albums ?? [];
-  const ledger = runtime.ledger ?? [];
   return (
-    <>
-      <div className="flex items-center justify-between gap-3">
-        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Albums</p>
-        <StorefrontInstantLink className="inline-flex items-center gap-1 text-xs font-semibold text-[#171514]" href={`/site/${siteSlug}/album`}>
-          Gallery
-          <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.8} />
-        </StorefrontInstantLink>
-      </div>
-      <div className="mt-4 grid gap-3">
-        {albums.length ? albums.slice(0, 12).map((album) => (
-          <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={album.id}>
-            <p className="font-semibold text-[#171514]">{album.title}</p>
-            <p className="mt-1 text-xs text-[#7d7064]">{albumStatusLabel(album.status)} · {album.outputCount} images</p>
+    <div className="grid gap-5">
+      <SectionHeader icon={Layers3} kicker="Albums" title="Delivered photo sets" subtitle="Browse completed private albums and the output count for each delivery." />
+      <div className="grid gap-3">
+        {albums.length ? albums.map((album) => (
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 text-sm" key={album.id}>
+            <div>
+              <p className="font-semibold text-[var(--account-strong)]">{album.title}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{album.outputCount} outputs - updated {dateLabel(album.updatedAt)}</p>
+            </div>
+            <StatusPill tone={album.status === "ready" ? "good" : "neutral"}>{albumStatusLabel(album.status)}</StatusPill>
           </div>
-        )) : ledger.length ? ledger.slice(0, 3).map((entry) => (
-          <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={entry.id}>
-            <p className="font-semibold text-[#171514]">{ledgerLabel(entry.type)}</p>
-            <p className="mt-1 text-xs text-[#7d7064]">{entry.amount} credits · {dateLabel(entry.createdAt)}</p>
-          </div>
-        )) : (
-          <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">Albums will appear here after your first photo set.</p>
-        )}
+        )) : <EmptyState>Albums will appear here after your first photo set is delivered.</EmptyState>}
       </div>
-    </>
+    </div>
   );
 }
 
-function CreditsCard({ runtime }: { runtime: ThemeRuntimeData }) {
-  const ledger = runtime.ledger ?? [];
-  const balance = runtime.customer?.balance.available ?? 0;
-  const reserved = runtime.customer?.balance.reserved ?? 0;
+function ModelsCard({ runtime }: { runtime: ThemeRuntimeData }) {
+  const models = runtime.customerModels ?? [];
   return (
-    <>
-      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Credits</p>
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Available credits</p>
-          <p className="mt-2 text-2xl font-semibold">{balance}</p>
-        </div>
-        <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9b8a79]">Reserved credits</p>
-          <p className="mt-2 text-2xl font-semibold">{reserved}</p>
-        </div>
-      </div>
-      <div className="mt-4 grid gap-3">
-        {ledger.length ? ledger.slice(0, 8).map((entry) => (
-          <div className="rounded-[18px] border border-[#eadfce] bg-[#fbf7f0] p-4 text-sm" key={entry.id}>
-            <p className="font-semibold text-[#171514]">{ledgerLabel(entry.type)}</p>
-            <p className="mt-1 text-xs text-[#7d7064]">{entry.amount} credits · {dateLabel(entry.createdAt)}</p>
+    <div className="grid gap-5">
+      <SectionHeader icon={ShieldCheck} kicker="Models" title="Private AI models" subtitle="Review trained or collecting models connected to this customer account." />
+      <div className="grid gap-3">
+        {models.length ? models.map((model) => (
+          <div className="grid gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center" key={model.id}>
+            <div>
+              <p className="font-semibold text-[var(--account-strong)]">{model.label}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{model.inputAssetCount}/{model.minInputAssets} inputs - updated {dateLabel(model.updatedAt)}</p>
+            </div>
+            <StatusPill tone={model.status === "ready" ? "good" : model.status === "failed" ? "warn" : "neutral"}>{statusLabel(model.status)}</StatusPill>
           </div>
-        )) : (
-          <p className="rounded-[18px] border border-dashed border-[#d8cab9] bg-[#fbf7f0] p-4 text-sm text-[#706961]">Credit activity will appear here after checkout or generation.</p>
-        )}
+        )) : <EmptyState>No private model has been trained for this account yet.</EmptyState>}
       </div>
-    </>
+    </div>
   );
 }
 
 export function CustomerAccountDataIsland({
   activeSection,
-  customerId,
+  basePath,
+  customer,
   initialRuntime,
   siteId,
   siteSlug
 }: {
   activeSection: AccountSection;
-  customerId: string;
+  basePath: string;
+  customer: PublicCustomer;
   initialRuntime?: ThemeRuntimeData;
   siteId: string;
   siteSlug: string;
 }) {
+  const [checkoutNotice, setCheckoutNotice] = useState<{ success: boolean; order: string }>({ success: false, order: "" });
+  const [pages, setPages] = useState<Record<string, PageState>>({});
+
+  function pageState(section: AccountSection, list?: AccountList): PageState {
+    return pages[listCacheKey(section, list)] ?? defaultPageState;
+  }
+
+  function updatePageState(section: AccountSection, list: AccountList | undefined, next: PageState) {
+    setPages((current) => ({
+      ...current,
+      [listCacheKey(section, list)]: next
+    }));
+  }
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setCheckoutNotice({
+      success: params.get("checkout") === "success",
+      order: params.get("order") ?? ""
+    });
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let cancelled = false;
+    let activeLoads = 0;
+    let targetIndex = 0;
+    const idleWindow = window as Window & {
+      cancelIdleCallback?: (handle: number) => void;
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+    };
+    const canUseIdleCallback = typeof idleWindow.requestIdleCallback === "function";
+    const targets = accountPrefetchTargets.filter((target) => target.section !== activeSection);
+    const pump = () => {
+      if (cancelled) return;
+      while (activeLoads < 2 && targetIndex < targets.length) {
+        const target = targets[targetIndex];
+        targetIndex += 1;
+        const cacheKey = `${siteId}:${customer.id}:${target.section}:${target.list ?? "default"}:${defaultPageState.page}:${defaultPageState.pageSize}`;
+        if (readCachedSection(cacheKey)) continue;
+        activeLoads += 1;
+        loadSectionRuntime({
+          cacheKey,
+          list: target.list,
+          page: defaultPageState.page,
+          pageSize: defaultPageState.pageSize,
+          section: target.section,
+          siteId
+        })
+          .catch(() => undefined)
+          .finally(() => {
+            activeLoads -= 1;
+            pump();
+          });
+      }
+    };
+    const run = () => pump();
+    const handle = canUseIdleCallback && idleWindow.requestIdleCallback
+      ? idleWindow.requestIdleCallback(run, { timeout: 1400 })
+      : window.setTimeout(run, 650);
+    return () => {
+      cancelled = true;
+      if (canUseIdleCallback && idleWindow.cancelIdleCallback) idleWindow.cancelIdleCallback(handle);
+      else window.clearTimeout(handle);
+    };
+  }, [activeSection, customer.id, siteId]);
+
   return (
-    <div className="min-w-0">
-      {activeSection === "plan" ? (
-        <AccountCard customerId={customerId} id="account-plan" initialRuntime={initialRuntime} loadingTitle="Plan" section="plan" siteId={siteId}>
-          {(runtime) => <PlanCard runtime={runtime} />}
+    <div className="grid min-w-0 gap-5">
+      {checkoutNotice.success ? (
+        <div className="rounded-[8px] border border-[var(--account-success-border)] bg-[var(--account-success-bg)] p-4 text-sm text-[var(--account-success-text)]">
+          <div className="flex items-start gap-3">
+            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" strokeWidth={1.8} />
+            <p>
+              Checkout is complete. Credits and subscriptions update after the payment webhook finishes{checkoutNotice.order ? ` for order ${checkoutNotice.order}` : ""}.
+            </p>
+          </div>
+        </div>
+      ) : null}
+      {activeSection === "overview" ? (
+        <AccountCard customerId={customer.id} id="account-overview" initialRuntime={initialRuntime} loadingTitle="Overview" section="overview" siteId={siteId}>
+          {(runtime) => <OverviewCard basePath={basePath} fallbackCustomer={customer} runtime={runtime} siteSlug={siteSlug} />}
         </AccountCard>
       ) : null}
-      {activeSection === "orders" ? (
-        <AccountCard customerId={customerId} id="account-orders" initialRuntime={initialRuntime} loadingTitle="Orders" section="orders" siteId={siteId}>
-          {(runtime) => <OrdersCard runtime={runtime} siteSlug={siteSlug} />}
+      {activeSection === "profile" ? (
+        <AccountCard
+          customerId={customer.id}
+          id="account-profile"
+          list="avatars"
+          loadingTitle="Profile"
+          onPageChange={(next) => updatePageState("profile", "avatars", next)}
+          pageState={pageState("profile", "avatars")}
+          section="profile"
+          siteId={siteId}
+        >
+          {(runtime, pagination) => <ProfileCard fallbackCustomer={customer} pagination={pagination} runtime={runtime} siteId={siteId} siteSlug={siteSlug} />}
         </AccountCard>
       ) : null}
-      {activeSection === "jobs" ? (
-        <AccountCard customerId={customerId} id="account-progress" initialRuntime={initialRuntime} loadingTitle="Generation progress" section="jobs" siteId={siteId}>
-          {(runtime) => <JobsCard runtime={runtime} siteSlug={siteSlug} />}
+      {activeSection === "security" ? (
+        <AccountCard customerId={customer.id} id="account-security" loadingTitle="Security" section="security" siteId={siteId}>
+          {(runtime) => <SecurityCard basePath={basePath} fallbackCustomer={customer} runtime={runtime} siteId={siteId} />}
         </AccountCard>
       ) : null}
-      {activeSection === "albums" ? (
-        <AccountCard customerId={customerId} id="account-albums" initialRuntime={initialRuntime} loadingTitle="Albums" section="albums" siteId={siteId}>
-          {(runtime) => <AlbumsCard runtime={runtime} siteSlug={siteSlug} />}
+      {activeSection === "subscription" ? (
+        <AccountCard
+          customerId={customer.id}
+          id="account-subscription"
+          list="subscriptions"
+          loadingTitle="Subscription"
+          onPageChange={(next) => updatePageState("subscription", "subscriptions", next)}
+          pageState={pageState("subscription", "subscriptions")}
+          section="subscription"
+          siteId={siteId}
+        >
+          {(runtime) => <SubscriptionCard basePath={basePath} runtime={runtime} />}
         </AccountCard>
       ) : null}
       {activeSection === "credits" ? (
-        <AccountCard customerId={customerId} id="account-credits" initialRuntime={initialRuntime} loadingTitle="Credits" section="credits" siteId={siteId}>
-          {(runtime) => <CreditsCard runtime={runtime} />}
+        <AccountCard
+          customerId={customer.id}
+          id="account-credits"
+          list="ledger"
+          loadingTitle="Credits"
+          onPageChange={(next) => updatePageState("credits", "ledger", next)}
+          pageState={pageState("credits", "ledger")}
+          section="credits"
+          siteId={siteId}
+        >
+          {(runtime) => <CreditsCard fallbackCustomer={customer} runtime={runtime} />}
+        </AccountCard>
+      ) : null}
+      {activeSection === "purchases" ? (
+        <AccountCard
+          customerId={customer.id}
+          id="account-purchases"
+          list="orders"
+          loadingTitle="Purchases"
+          onPageChange={(next) => updatePageState("purchases", "orders", next)}
+          pageState={pageState("purchases", "orders")}
+          section="purchases"
+          siteId={siteId}
+        >
+          {(runtime) => <PurchasesCard runtime={runtime} />}
+        </AccountCard>
+      ) : null}
+      {activeSection === "generation" ? (
+        <AccountCard
+          customerId={customer.id}
+          id="account-generation"
+          list="jobs"
+          loadingTitle="Generation"
+          onPageChange={(next) => updatePageState("generation", "jobs", next)}
+          pageState={pageState("generation", "jobs")}
+          section="generation"
+          siteId={siteId}
+        >
+          {(runtime) => <GenerationCard basePath={basePath} runtime={runtime} />}
+        </AccountCard>
+      ) : null}
+      {activeSection === "downloads" ? (
+        <>
+          <AccountCard
+            customerId={customer.id}
+            id="account-downloads"
+            list="downloads"
+            loadingTitle="Download history"
+            onPageChange={(next) => updatePageState("downloads", "downloads", next)}
+            pageState={pageState("downloads", "downloads")}
+            section="downloads"
+            siteId={siteId}
+          >
+            {(runtime) => <DownloadsHistoryCard runtime={runtime} />}
+          </AccountCard>
+          <AccountCard
+            customerId={customer.id}
+            id="account-ready-assets"
+            list="assets"
+            loadingTitle="Ready assets"
+            onPageChange={(next) => updatePageState("downloads", "assets", next)}
+            pageState={pageState("downloads", "assets")}
+            section="downloads"
+            siteId={siteId}
+          >
+            {(runtime) => <ReadyAssetsCard runtime={runtime} />}
+          </AccountCard>
+        </>
+      ) : null}
+      {activeSection === "albums" ? (
+        <AccountCard
+          customerId={customer.id}
+          id="account-albums"
+          list="albums"
+          loadingTitle="Albums"
+          onPageChange={(next) => updatePageState("albums", "albums", next)}
+          pageState={pageState("albums", "albums")}
+          section="albums"
+          siteId={siteId}
+        >
+          {(runtime) => <AlbumsCard runtime={runtime} />}
+        </AccountCard>
+      ) : null}
+      {activeSection === "models" ? (
+        <AccountCard
+          customerId={customer.id}
+          id="account-models"
+          list="models"
+          loadingTitle="Models"
+          onPageChange={(next) => updatePageState("models", "models", next)}
+          pageState={pageState("models", "models")}
+          section="models"
+          siteId={siteId}
+        >
+          {(runtime) => <ModelsCard runtime={runtime} />}
         </AccountCard>
       ) : null}
     </div>

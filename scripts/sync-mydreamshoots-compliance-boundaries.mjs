@@ -33,7 +33,7 @@ const trustCopy = {
 };
 
 const contentCopy = {
-  homeHeadline: "Upload selfies and create your own AI model - Professional headshots without a studio.",
+  homeHeadline: "Create Professional AI Headshots and Photo Sets Without a Studio",
   headshotToolEyebrow: "AI Headshot Generator",
   headshotToolTitle: "AI headshots for LinkedIn, resumes, and founder profiles.",
   headshotToolSubtitle:

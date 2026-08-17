@@ -7,7 +7,7 @@ import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapPaymentEvent, mapPrice, mapProduct } from "@/lib/stores/prisma-mappers";
 
 type Tx = Prisma.TransactionClient;
-const validPriceIntervals = ["month", "year", "one_time"] as const;
+const validPriceIntervals = ["month", "quarter", "half_year", "year", "one_time"] as const;
 const billingTransactionOptions = { maxWait: 10000, timeout: 20000 } as const;
 
 function uid(prefix: string): string {
@@ -15,13 +15,17 @@ function uid(prefix: string): string {
 }
 
 function isSubscriptionInterval(interval: Price["interval"] | string): boolean {
-  return interval === "month" || interval === "year";
+  return interval === "month" || interval === "quarter" || interval === "half_year" || interval === "year";
 }
 
 function periodEndForInterval(interval: Price["interval"] | string): Date {
   const periodEnd = new Date();
   if (interval === "year") {
     periodEnd.setFullYear(periodEnd.getFullYear() + 1);
+  } else if (interval === "half_year") {
+    periodEnd.setMonth(periodEnd.getMonth() + 6);
+  } else if (interval === "quarter") {
+    periodEnd.setMonth(periodEnd.getMonth() + 3);
   } else {
     periodEnd.setMonth(periodEnd.getMonth() + 1);
   }

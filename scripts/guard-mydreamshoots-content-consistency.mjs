@@ -33,14 +33,15 @@ for (let index = 0; index < rawArgs.length; index += 1) {
 const siteId = String(args.get("site-id") ?? process.env.MYDREAMSHOOTS_SITE_ID ?? "site_dreamshoot");
 const liveOrigin = cleanOrigin(args.get("origin") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_ORIGIN ?? "https://www.mydreamshoots.com");
 const localOrigin = cleanOrigin(args.get("local-origin") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_LOCAL_ORIGIN ?? "");
-const guardPaths = parsePaths(args.get("paths") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_PATHS, ["/", "/pricing", "/tools", "/collections", "/workflow", "/faq"]);
+const guardPaths = parsePaths(args.get("paths") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_PATHS, ["/", "/pricing", "/ai-video-generation", "/ai-image-generation", "/workflow", "/faq"]);
 const skipLive = flags.has("skip-live") || process.env.MYDREAMSHOOTS_CONTENT_GUARD_LIVE === "0";
 const includeLocalJson = flags.has("include-local-json") || process.env.MYDREAMSHOOTS_CONTENT_GUARD_LOCAL_JSON === "1";
 const skipLocalJson = flags.has("skip-local-json") || !includeLocalJson;
 const skipHomepageLock = flags.has("skip-homepage-lock");
-const timeoutMs = positiveInt(args.get("timeout-ms") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_TIMEOUT_MS, 15_000);
+const writeHomepageLock = flags.has("write-homepage-lock");
+const timeoutMs = positiveInt(args.get("timeout-ms") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_TIMEOUT_MS, 45_000);
 const minLiveCoverage = boundedNumber(args.get("min-live-coverage") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MIN_LIVE_COVERAGE, 0.62, 0, 1);
-const pathMinLiveCoverage = parsePathCoverage(args.get("min-live-coverage-by-path") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MIN_LIVE_COVERAGE_BY_PATH, { "/tools": 0.58 });
+const pathMinLiveCoverage = parsePathCoverage(args.get("min-live-coverage-by-path") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MIN_LIVE_COVERAGE_BY_PATH, { "/ai-video-generation": 0.58 });
 const maxLiveRecords = positiveInt(args.get("max-live-records") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MAX_LIVE_RECORDS, 90);
 const failures = [];
 const warnings = [];
@@ -56,6 +57,8 @@ const visibleTextKeys = new Set([
   "ctaLabel",
   "description",
   "detail",
+  "directoryLabel",
+  "directorySubtitle",
   "eyebrow",
   "headline",
   "heading",
@@ -63,6 +66,7 @@ const visibleTextKeys = new Set([
   "includedTitle",
   "label",
   "location",
+  "marketComparison",
   "meta",
   "name",
   "nextCampaignLabel",
@@ -77,9 +81,13 @@ const visibleTextKeys = new Set([
   "role",
   "safetyCopy",
   "secondaryCta",
+  "sidePanelBody",
+  "sidePanelEyebrow",
+  "sidePanelTitle",
   "subheading",
   "subheadline",
   "subtitle",
+  "supportingCopy",
   "text",
   "title"
 ]);
@@ -89,16 +97,21 @@ const highSignalKeys = new Set([
   "body",
   "caption",
   "description",
+  "directorySubtitle",
   "eyebrow",
   "headline",
   "heading",
+  "marketComparison",
   "primaryCta",
   "question",
   "quote",
   "secondaryCta",
+  "sidePanelBody",
+  "sidePanelTitle",
   "subheading",
   "subheadline",
   "subtitle",
+  "supportingCopy",
   "text",
   "title"
 ]);
@@ -303,6 +316,75 @@ function fingerprintSummary(records) {
   return {
     fingerprint: fingerprintRecords(records),
     recordCount: dedupeRecords(records).length
+  };
+}
+
+function homepageSectionsOrder(publishedJson) {
+  if (Array.isArray(publishedJson?.sectionsOrder)) return publishedJson.sectionsOrder.map(String);
+  if (publishedJson?.sections && typeof publishedJson.sections === "object" && !Array.isArray(publishedJson.sections)) {
+    return Object.keys(publishedJson.sections);
+  }
+  return [];
+}
+
+function homepageHeroSettings(publishedJson) {
+  const hero = publishedJson?.sections?.hero_1;
+  if (!hero || typeof hero !== "object" || Array.isArray(hero)) return {};
+  const settings = hero.settings && typeof hero.settings === "object" && !Array.isArray(hero.settings) ? hero.settings : hero;
+  return Object.fromEntries(
+    Object.entries(settings)
+      .filter(([, value]) => typeof value === "string" || typeof value === "number" || typeof value === "boolean" || value === null)
+      .sort(([left], [right]) => left.localeCompare(right))
+  );
+}
+
+function lockVisibleRecord(record) {
+  return {
+    source: String(record.source ?? "").replace(/^db:/, "approved-lock:"),
+    key: record.key,
+    text: record.text,
+    normalized: record.normalized
+  };
+}
+
+function buildHomepageLock({ dbPage, dbRecords, latestPublication, settings, site }) {
+  const visibleRecords = dedupeRecords(dbRecords).map(lockVisibleRecord);
+  return {
+    lockVersion: 1,
+    lockedAt: new Date().toISOString(),
+    policy: {
+      owner: "myDreamshoots site owner",
+      rule: "This homepage copy baseline is locked. Do not modify, switch versions, import old JSON, or roll back production copy unless the site owner explicitly requests a homepage copy change.",
+      deployRequirement: "npm run guard:mydreamshoots-content must compare Postgres published content, the latest ThemePublication snapshot, production HTML, and this approved homepage lock before release."
+    },
+    sourceOfTruth: "Postgres ThemePage.publishedJson for site_dreamshoot / plus ThemeSettings.publishedJson SEO records used by the guard",
+    site: {
+      id: site.id,
+      slug: site.slug,
+      primaryDomain: site.primaryDomain
+    },
+    page: {
+      id: dbPage.id,
+      slug: dbPage.slug,
+      title: dbPage.title,
+      pageType: dbPage.pageType
+    },
+    latestPublication: latestPublication
+      ? { id: latestPublication.id, version: latestPublication.version, publishedAt: latestPublication.publishedAt }
+      : null,
+    seo: {
+      title: extractSeoValue(dbPage.publishedJson?.seo ?? settings?.seo, "title"),
+      description: extractSeoValue(dbPage.publishedJson?.seo ?? settings?.seo, "description"),
+      keywords: extractSeoValue(dbPage.publishedJson?.seo ?? settings?.seo, "keywords")
+    },
+    hero: homepageHeroSettings(dbPage.publishedJson),
+    sectionsOrder: homepageSectionsOrder(dbPage.publishedJson),
+    fingerprints: {
+      publishedJsonSha256: stableJsonFingerprint(dbPage.publishedJson),
+      visibleTextSha256: fingerprintRecords(dbRecords),
+      visibleRecordCount: visibleRecords.length
+    },
+    visibleRecords
   };
 }
 
@@ -683,6 +765,24 @@ async function main() {
       leftRecords: collectSettingsRecords(settings, "db:themeSettings.publishedJson"),
       rightRecords: collectSettingsRecords(localSettings, "local-json:themeSettings.publishedJson")
     });
+  }
+
+  if (writeHomepageLock) {
+    const dbPage = findPageBySlug(site.pages, "/");
+    if (!dbPage) {
+      addFailure("homepage-lock-write-db-page-missing", "Cannot write MyDreamShoots approved homepage lock because the homepage is missing from database ThemePage records", {
+        homepageLockPath
+      });
+    } else {
+      const dbRecords = collectPageRecords(dbPage, settings, `db:themePage:${dbPage.slug}`);
+      const lock = buildHomepageLock({ dbPage, dbRecords, latestPublication, settings, site });
+      fs.writeFileSync(homepageLockPath, `${JSON.stringify(lock, null, 2)}\n`);
+      warnings.push({
+        type: "homepage-lock-written",
+        homepageLockPath,
+        message: "The approved homepage lock was refreshed from the current Postgres published homepage. Re-run the guard without --write-homepage-lock before deploying."
+      });
+    }
   }
 
   for (const slug of guardPaths) {

@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import { randomUUID } from "node:crypto";
 import { PrismaClient } from "@prisma/client";
 import { config as loadEnv } from "dotenv";
@@ -9,6 +10,20 @@ const base = process.env.SITE_ADMIN_BASE_URL ?? process.env.SMOKE_BASE_URL ?? "h
 const siteId = process.env.SITE_ADMIN_SITE_ID ?? "site_dreamshoot";
 const username = process.env.SITE_ADMIN_USER;
 const prisma = new PrismaClient();
+const csrfSecret = process.env.CSRF_SECRET || process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET || "dev-csrf-secret-change-me";
+
+function createCsrfToken(scope, sessionId) {
+  const nonce = crypto.randomBytes(24).toString("base64url");
+  const mac = crypto.createHmac("sha256", csrfSecret).update(`${scope}:${sessionId}:${nonce}`).digest("base64url");
+  return `${nonce}.${mac}`;
+}
+
+function draftMetaFromSettingsDraft(draftJson) {
+  const draftMeta = draftJson?.draftMeta;
+  if (draftMeta?.revision && draftMeta?.etag) return draftMeta;
+  const revision = Math.max(1, Number(draftJson?.version ?? 1));
+  return { revision, etag: `W/"${revision}-legacy"` };
+}
 
 async function createSmokeAdminSession() {
   const admin = username
@@ -37,11 +52,16 @@ async function createSmokeAdminSession() {
 }
 
 async function jsonFetch(path, init, cookie) {
+  const scope = `site-admin:${siteId}`;
+  const sessionId = cookie.split(";").map((part) => part.trim()).find((part) => part.startsWith(`site_admin_session_${siteId}=`))?.split("=")[1];
+  const csrfToken = sessionId ? createCsrfToken(scope, sessionId) : undefined;
+  const csrfCookie = csrfToken ? `site_admin_csrf_${siteId}=${csrfToken}` : undefined;
   const response = await fetch(`${base}${path}`, {
     ...init,
     headers: {
       "Content-Type": "application/json",
-      cookie,
+      cookie: csrfCookie ? `${cookie}; ${csrfCookie}` : cookie,
+      ...(csrfToken ? { "x-csrf-token": csrfToken } : {}),
       ...(init?.headers ?? {})
     },
     cache: "no-store"
@@ -96,7 +116,11 @@ try {
 
   await jsonFetch(`/api/sites/${siteId}/theme/settings/draft`, {
     method: "PUT",
-    body: JSON.stringify({ draftJson: nextDraft })
+    body: JSON.stringify({
+      draftJson: nextDraft,
+      expectedRevision: draftMetaFromSettingsDraft(originalDraft).revision,
+      expectedEtag: draftMetaFromSettingsDraft(originalDraft).etag
+    })
   }, smokeSession.cookie);
 
   const updated = await prisma.themeSettings.findUnique({ where: { siteId } });

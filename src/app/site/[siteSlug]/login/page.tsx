@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { renderStorefrontLoginPage } from "@/lib/storefront-render";
-import { readPathModePublicMetadataState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
+import { readPathModePublicMetadataState } from "@/lib/storefront-local-state";
 import { customerSessionCookie } from "@/lib/session";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { publicSiteSlug } from "@/lib/domain-routing";
@@ -40,7 +40,7 @@ export default async function SiteLoginPage({
     pathname: "/login",
     siteSlug
   });
-  const state = await readPathModePublicRuntimeState(publicSlug, "/login");
+  const state = await readPathModePublicMetadataState(publicSlug, "/login");
   const site = state?.sites[0];
   if (!state || !site) notFound();
   const sessionId = (await cookies()).get(customerSessionCookie(site.id))?.value;
@@ -56,5 +56,5 @@ export default async function SiteLoginPage({
   if (relationalCustomer) {
     redirect(nextPath || storefrontPathForRouteMode(publicSiteSlug(site.slug), "/app/create", routeMode));
   }
-  return renderStorefrontLoginPage({ site, query, routeMode, state });
+  return renderStorefrontLoginPage({ site, query, routeMode });
 }

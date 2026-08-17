@@ -17,6 +17,8 @@ import {
 import { PublicationActions, RestorePublicationButton } from "@/components/admin/design-actions";
 import { downloadCsv } from "@/components/admin/export-utils";
 import { StatusPill } from "@/components/ui";
+import type { PublishGlobalVisualChange } from "@/lib/theme/publish-preflight";
+import type { ThemeDraftMeta } from "@/lib/types";
 
 type PublicationItem = {
   id: string;
@@ -26,6 +28,7 @@ type PublicationItem = {
   sectionCount: number;
   publishedAt: string;
   publishedBy: string;
+  visualSummary: Record<string, string>;
 };
 
 export function DesignPublicationsWorkbench({
@@ -41,7 +44,11 @@ export function DesignPublicationsWorkbench({
   preflightScore,
   preflightStale = false,
   firstPageId,
-  siteId
+  siteId,
+  pageVersions,
+  settingsVersion,
+  publishedVersion,
+  globalVisualChanges
 }: {
   publications: PublicationItem[];
   latestVersion?: number;
@@ -56,6 +63,10 @@ export function DesignPublicationsWorkbench({
   preflightStale?: boolean;
   firstPageId?: string;
   siteId: string;
+  pageVersions: Record<string, ThemeDraftMeta | undefined>;
+  settingsVersion?: ThemeDraftMeta;
+  publishedVersion: number;
+  globalVisualChanges: PublishGlobalVisualChange[];
 }) {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -65,6 +76,7 @@ export function DesignPublicationsWorkbench({
     score: preflightScore,
     stale: preflightStale,
     loading: false,
+    globalVisualChanges,
     message: preflightStale ? "发布检查将在点击时执行，避免切换页面时等待完整校验。" : "发布检查已就绪。"
   });
 
@@ -85,7 +97,9 @@ export function DesignPublicationsWorkbench({
         publication.publishedBy,
         publication.publishedAt,
         `${publication.pageCount} pages`,
-        `${publication.sectionCount} sections`
+        `${publication.sectionCount} sections`,
+        publication.visualSummary.contentWidth,
+        publication.visualSummary.footerBackground
       ]
         .join(" ")
         .toLowerCase()
@@ -103,9 +117,11 @@ export function DesignPublicationsWorkbench({
         pageCount: publication.pageCount,
         sectionCount: publication.sectionCount,
         publishedAt: publication.publishedAt,
-        publishedBy: publication.publishedBy
+        publishedBy: publication.publishedBy,
+        contentWidth: publication.visualSummary.contentWidth,
+        footerBackground: publication.visualSummary.footerBackground
       })),
-      ["publicationId", "version", "isActive", "pageCount", "sectionCount", "publishedAt", "publishedBy"]
+      ["publicationId", "version", "isActive", "pageCount", "sectionCount", "publishedAt", "publishedBy", "contentWidth", "footerBackground"]
     );
   }
 
@@ -117,6 +133,7 @@ export function DesignPublicationsWorkbench({
       score?: number;
       blockerCount?: number;
       warningCount?: number;
+      globalVisualChanges?: PublishGlobalVisualChange[];
       error?: string;
     };
     if (!response.ok) {
@@ -133,6 +150,7 @@ export function DesignPublicationsWorkbench({
       score: Number(json.score ?? 0),
       stale: false,
       loading: false,
+      globalVisualChanges: json.globalVisualChanges ?? [],
       message: `检查完成：${json.blockerCount ?? 0} 个阻断项，${json.warningCount ?? 0} 个提醒。`
     });
   }
@@ -234,8 +252,14 @@ export function DesignPublicationsWorkbench({
               <div className="shrink-0">
                 <PublicationActions
                   canPublish={Boolean(firstPageId) && preflight.canPublish && !preflight.stale}
+                  dirtyPages={dirtyPages}
                   onBeforePublish={refreshPreflight}
+                  pageVersions={pageVersions}
                   pageId={firstPageId}
+                  publishedVersion={publishedVersion}
+                  globalVisualChanges={preflight.globalVisualChanges}
+                  settingsDirty={settingsDirty}
+                  settingsVersion={settingsVersion}
                   siteId={siteId}
                 />
               </div>
@@ -334,7 +358,10 @@ export function DesignPublicationsWorkbench({
                 </div>
 
                 <div className="text-[13px] text-[#18212f]">
-                  {publication.pageCount} pages / {publication.sectionCount} sections
+                  <div>{publication.pageCount} pages / {publication.sectionCount} sections</div>
+                  <div className="mt-1 text-[12px] text-[#667085]">
+                    Width {publication.visualSummary.contentWidth} / Footer {publication.visualSummary.footerBackground}
+                  </div>
                 </div>
 
                 <div className="text-[13px] text-[#667085]">

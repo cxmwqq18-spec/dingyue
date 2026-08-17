@@ -17,10 +17,10 @@ const storefronts = [
     cartPath: "/cart?product=prod_aidreamcapes_starter&price=price_aidreamcapes_trailhead_monthly"
   },
   {
-    label: "MyDreamShoots",
+    label: "myDreamshoots",
     siteId: "site_dreamshoot",
     siteSlug: process.env.SMOKE_DREAMSHOOT_SITE_SLUG || "mydreamshoots",
-    cartPath: "/cart?product=prod_dreamshoot_pro&price=price_dreamshoot_pro_yearly"
+    cartPath: "/cart?product=prod_dreamshoot_pro&price=price_dreamshoot_pro_half_year"
   }
 ];
 

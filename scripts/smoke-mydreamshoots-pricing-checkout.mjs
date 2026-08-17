@@ -7,6 +7,11 @@ loadRuntimeEnv();
 const prisma = new PrismaClient();
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(/\/$/, "");
 const siteSlug = process.env.SMOKE_SITE_SLUG || "mydreamshoots";
+const billingCases = [
+  { query: "monthly", interval: "month" },
+  { query: "quarterly", interval: "quarter" },
+  { query: "semiannually", interval: "half_year" }
+];
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -36,46 +41,52 @@ async function fetchText(path, options) {
 }
 
 async function assertPricing() {
-  for (const billing of ["monthly", "yearly"]) {
-    const { response, text } = await fetchText(`/site/${siteSlug}/pricing?billing=${billing}`);
-    assert(response.ok, `pricing ${billing} failed with ${response.status}`);
+  for (const billing of billingCases) {
+    const { response, text } = await fetchText(`/site/${siteSlug}/pricing?billing=${billing.query}`);
+    assert(response.ok, `pricing ${billing.query} failed with ${response.status}`);
     const visible = textFromHtml(text);
-    assert(!text.includes("audience="), `pricing ${billing} still exposes audience query`);
-    assert(!/Single\s+(Starter|Pro|Premium)/i.test(visible), `pricing ${billing} still shows Single plans`);
-    assert(!/Couple\s+(Starter|Pro|Premium)/i.test(visible), `pricing ${billing} still shows Couple plans`);
+    assert(!text.includes("audience="), `pricing ${billing.query} still exposes audience query`);
+    assert(!/Single\s+(Starter|Pro|Premium)/i.test(visible), `pricing ${billing.query} still shows Single plans`);
+    assert(!/Couple\s+(Starter|Pro|Premium)/i.test(visible), `pricing ${billing.query} still shows Couple plans`);
+    assert(!/\bYearly\b|\bAnnual\b/i.test(visible), `pricing ${billing.query} still renders yearly or annual billing copy`);
     assert(
       !/Add-on credits|One-shot trial|Small credit pack|Medium credit pack|Large credit pack/i.test(visible),
-      `pricing ${billing} still shows one-time add-on purchase cards`
+      `pricing ${billing.query} still shows one-time add-on purchase cards`
     );
 
-    const sectionPath = `/api/site-slugs/${encodeURIComponent(siteSlug)}/storefront-section?pagePath=/pricing&sectionId=pricing_1&routeMode=path&billing=${billing}`;
+    const sectionPath = `/api/site-slugs/${encodeURIComponent(siteSlug)}/storefront-section?pagePath=/pricing&sectionId=pricing_1&routeMode=path&billing=${billing.query}`;
     const section = await fetchText(sectionPath, { headers: { accept: "application/json" } });
-    assert(section.response.ok, `pricing ${billing} section failed with ${section.response.status}`);
+    assert(section.response.ok, `pricing ${billing.query} section failed with ${section.response.status}`);
     const payload = JSON.parse(section.text);
     const subscriptionProducts = (payload.renderData?.products ?? []).filter((product) => product.type === "subscription" && product.status === "active");
+    const subscriptionPrices = subscriptionProducts.flatMap((product) => product.prices ?? []);
+    assert(
+      !subscriptionPrices.some((price) => price.interval === "year" || /yearly/i.test(`${price.id} ${price.label}`)),
+      `pricing ${billing.query} section still exposes yearly prices`
+    );
     for (const tier of ["Starter", "Pro", "Premium"]) {
       const product = subscriptionProducts.find((item) => item.name === tier);
-      assert(product, `pricing ${billing} section missing ${tier}`);
-      assert(product.prices?.some((price) => billing === "monthly" ? price.interval === "month" : price.interval === "year"), `pricing ${billing} section missing ${tier} ${billing} price`);
+      assert(product, `pricing ${billing.query} section missing ${tier}`);
+      assert(product.prices?.some((price) => price.interval === billing.interval), `pricing ${billing.query} section missing ${tier} ${billing.interval} price`);
     }
   }
 }
 
 async function assertCartPriceSelection() {
-  const { response, text } = await fetchText(`/site/${siteSlug}/cart?product=prod_dreamshoot_pro&price=price_dreamshoot_pro_yearly`);
+  const { response, text } = await fetchText(`/site/${siteSlug}/cart?product=prod_dreamshoot_pro&price=price_dreamshoot_pro_half_year`);
   assert(response.ok, `cart failed with ${response.status}`);
   const visible = textFromHtml(text);
   assert(visible.includes("Cart") || visible.includes("Checkout"), "cart page shell did not render");
   assert(!text.includes("audience="), "cart still exposes audience query");
 
-  const sectionPath = `/api/site-slugs/${encodeURIComponent(siteSlug)}/storefront-section?pagePath=/cart&sectionId=cart_1&routeMode=path&product=prod_dreamshoot_pro&price=price_dreamshoot_pro_yearly`;
+  const sectionPath = `/api/site-slugs/${encodeURIComponent(siteSlug)}/storefront-section?pagePath=/cart&sectionId=cart_1&routeMode=path&product=prod_dreamshoot_pro&price=price_dreamshoot_pro_half_year`;
   const section = await fetchText(sectionPath, { headers: { accept: "application/json" } });
   assert(section.response.ok, `cart section failed with ${section.response.status}`);
   const payload = JSON.parse(section.text);
   const selectedProduct = (payload.renderData?.products ?? []).find((product) => product.id === "prod_dreamshoot_pro");
-  const selectedPrice = selectedProduct?.prices?.find((price) => price.id === "price_dreamshoot_pro_yearly");
+  const selectedPrice = selectedProduct?.prices?.find((price) => price.id === "price_dreamshoot_pro_half_year");
   assert(selectedProduct?.name === "Pro", "cart section does not include selected Pro plan");
-  assert(selectedPrice?.amountCents === 24000 && selectedPrice?.interval === "year", "cart section does not include yearly Pro price");
+  assert(selectedPrice?.amountCents === 12000 && selectedPrice?.interval === "half_year", "cart section does not include semiannual Pro price");
 }
 
 async function assertCheckoutUnauthBlocked() {
@@ -286,7 +297,7 @@ async function assertSameIntentIdempotent() {
 async function main() {
   console.log(`Smoke target: ${baseUrl}`);
   await assertPricing();
-  console.log("✓ pricing has three tiers and no audience query");
+  console.log("✓ pricing has three tiers, three billing cadences, and no yearly purchase options");
   await assertCartPriceSelection();
   console.log("✓ cart selects the requested billing price");
   await assertCheckoutUnauthBlocked();

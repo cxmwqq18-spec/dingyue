@@ -3,8 +3,8 @@ import { publicSiteSlug } from "@/lib/domain-routing";
 const databasePreferences = new Set(["database", "db", "relational"]);
 const legacyLocalPreferences = new Set(["local", "json", "legacy", "file"]);
 const explicitLocalPreviewPreferences = new Set(["local-preview", "json-preview", "legacy-preview", "file-preview"]);
-const mydreamshootsSiteIds = new Set(["site_dreamshoot"]);
-const mydreamshootsPublicSlugs = new Set(["mydreamshoots", "dreamshoot"]);
+const mydreamshootsSiteIds = new Set(["site_dreamshoot", "site_aidreamcapes", "site_grownstride_test"]);
+const mydreamshootsPublicSlugs = new Set(["mydreamshoots", "dreamshoot", "aidreamcapes", "grownstride"]);
 
 export function normalizeStorefrontReadPreference(value: string | undefined): string {
   return String(value ?? "").trim().toLowerCase();
@@ -48,7 +48,7 @@ export function isMydreamshootsContentSourceSite(site: {
   if (isMydreamshootsContentSourceSiteId(site.id)) return true;
   if (isMydreamshootsContentSourceSlug(site.slug)) return true;
   const identity = `${site.slug ?? ""} ${site.name ?? ""} ${site.primaryDomain ?? ""} ${site.branding?.logoText ?? ""}`.toLowerCase();
-  return identity.includes("mydreamshoots") || identity.includes("mydreamshoots.com");
+  return identity.includes("mydreamshoots") || identity.includes("mydreamshoots.com") || identity.includes("aidreamcapes") || identity.includes("aidreamcapes.com");
 }
 
 export function requiresMydreamshootsPublishedSource(siteSlug: string | undefined, preference: string | undefined): boolean {

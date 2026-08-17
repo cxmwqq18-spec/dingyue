@@ -21,7 +21,7 @@ const {
   dreamshootAiStudioTemplatesForSite
 } = jiti("../src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 
-const publicPaths = ["/about-us", "/contact-us", "/creators-circle", "/partner-registration"];
+const publicPaths = ["/about-us", "/contact-us", "/creators-circle", "/partner-registration", "/best-packages", "/best-ai-image", "/best-ai-video"];
 const aidreamcapesSite = {
   id: "site_aidreamcapes",
   slug: "aidreamcapes",
@@ -41,6 +41,12 @@ for (const pathName of publicPaths) {
   assert.equal(getDreamshootPublicSeoPageMetadataForSite(aidreamcapesSite, pathName)?.title, aidreamcapesSeed.title);
   assert.equal(dreamshootAiStudioTemplates[templateKey].seo?.title, mydreamshootsSeed.title);
   assert.equal(dreamshootAiStudioTemplatesForSite(aidreamcapesSite)[templateKey].seo?.title, aidreamcapesSeed.title);
+  if (pathName === "/best-ai-image" || pathName === "/best-ai-video") {
+    assert.doesNotMatch(mydreamshootsSeed.description ?? "", /customer/i, `${pathName} MyDreamShoots SEO description should not mention customer`);
+    assert.doesNotMatch(aidreamcapesSeed.description ?? "", /customer/i, `${pathName} Aidreamcapes SEO description should not mention customer`);
+    assert.doesNotMatch(dreamshootAiStudioTemplates[templateKey].seo?.description ?? "", /customer/i, `${pathName} MyDreamShoots template SEO description should not mention customer`);
+    assert.doesNotMatch(dreamshootAiStudioTemplatesForSite(aidreamcapesSite)[templateKey].seo?.description ?? "", /customer/i, `${pathName} Aidreamcapes template SEO description should not mention customer`);
+  }
   assert.doesNotMatch(
     dreamshootAiStudioTemplatesForSite(aidreamcapesSite)[templateKey].seo?.title ?? "",
     /MyDreamShoots/i,

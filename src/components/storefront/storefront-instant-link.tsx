@@ -131,6 +131,10 @@ function isSamePageHashHref(href: LinkProps["href"], target?: string) {
   return targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search;
 }
 
+function isDesignerPreviewRoute() {
+  return typeof window !== "undefined" && window.location.pathname.includes("/admin/design/preview/");
+}
+
 function isCurrentPlainHref(targetUrl: URL) {
   return !targetUrl.hash && !window.location.hash && targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search;
 }
@@ -148,10 +152,10 @@ export function StorefrontInstantLink({
 }: StorefrontInstantLinkProps) {
   const router = useRouter();
   const hoverPrefetchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const disablePrefetch = useContext(StorefrontLinkPrefetchContext);
+  const disablePrefetch = useContext(StorefrontLinkPrefetchContext) || isDesignerPreviewRoute();
   const samePageHashHref = isSamePageHashHref(href, target);
   const shouldUseLinkPrefetch = disablePrefetch || samePageHashHref ? false : prefetch ?? process.env.NEXT_PUBLIC_STOREFRONT_LINK_PREFETCH === "1";
-  const forceDocumentNavigation = (props as Record<string, unknown>)["data-storefront-document-navigation"] === "true";
+  const forceDocumentNavigation = isDesignerPreviewRoute() || (props as Record<string, unknown>)["data-storefront-document-navigation"] === "true";
 
   function prefetchTarget() {
     if (disablePrefetch) return;

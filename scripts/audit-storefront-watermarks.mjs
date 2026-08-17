@@ -38,7 +38,7 @@ const verifyLiveContent = !flags.has("skip-content-verify");
 const hashVideos = flags.has("hash-videos");
 const maxPages = Math.max(1, Number(args.get("max-pages") ?? 80));
 const outputPath = String(args.get("output") ?? "").trim();
-const expectedWatermarkCacheVersion = "20260803watermark30sync1";
+const expectedWatermarkCacheVersion = "20260811watermark30sync2";
 const expectedWatermark = {
   version: STOREFRONT_WATERMARK_VERSION,
   opacity: DEFAULT_STOREFRONT_WATERMARK_OPACITY

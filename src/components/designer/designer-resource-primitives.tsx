@@ -18,9 +18,40 @@ function resourcePreviewAlt(title: ReactNode, fallback = "Resource preview") {
   return fallback;
 }
 
+export function DesignerResourcePreviewMedia({
+  preview,
+  previewType,
+  title,
+  className,
+  controls = false
+}: {
+  preview?: string;
+  previewType?: "image" | "video";
+  title: ReactNode;
+  className: string;
+  controls?: boolean;
+}) {
+  if (!preview) return null;
+  if (previewType === "video") {
+    return (
+      <video
+        aria-label={resourcePreviewAlt(title, "Selected video preview")}
+        className={className}
+        controls={controls}
+        muted
+        playsInline
+        preload="metadata"
+        src={preview}
+      />
+    );
+  }
+  return <img alt={resourcePreviewAlt(title, "Selected resource preview")} className={className} src={preview} />;
+}
+
 export function DesignerResourceTrigger({
   icon,
   preview,
+  previewType,
   title,
   detail,
   actionLabel = "选择",
@@ -29,6 +60,7 @@ export function DesignerResourceTrigger({
 }: ButtonHTMLAttributes<HTMLButtonElement> & {
   icon: ReactNode;
   preview?: string;
+  previewType?: "image" | "video";
   title: ReactNode;
   detail?: ReactNode;
   actionLabel?: ReactNode;
@@ -44,7 +76,7 @@ export function DesignerResourceTrigger({
     >
       <span className="flex min-w-0 flex-1 items-center">
         <span className="widget-selected-line__img mr-[5px] grid h-8 w-7 shrink-0 place-items-center overflow-hidden bg-transparent text-[#6b7282]">
-            {preview ? <img alt={resourcePreviewAlt(title, "Selected resource preview")} className="h-full w-full object-cover" src={preview} /> : icon}
+            {preview ? <DesignerResourcePreviewMedia className="h-full w-full object-cover" preview={preview} previewType={previewType} title={title} /> : icon}
         </span>
         <span className="widget-selected-line__title min-w-0 flex-1 truncate text-sm text-[#212121]">
           <span className="widget-selected-line__font-family mr-2.5">{title}</span>
@@ -212,6 +244,7 @@ export function DesignerResourceMetaList({
 
 export function DesignerResourceCard({
   preview,
+  previewType,
   icon,
   title,
   subtitle,
@@ -223,6 +256,7 @@ export function DesignerResourceCard({
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & {
   preview?: string;
+  previewType?: "image" | "video";
   icon: ReactNode;
   title: ReactNode;
   subtitle?: ReactNode;
@@ -243,7 +277,7 @@ export function DesignerResourceCard({
     >
       <span className="grid min-w-0 gap-2 grid-cols-[54px_1fr_auto]">
         <span className="grid h-[46px] w-[54px] place-items-center overflow-hidden rounded-[2px] border border-[#d7dce4] bg-[#f2f3f5]">
-          {preview ? <img alt={resourcePreviewAlt(title)} className="h-full w-full object-cover" src={preview} /> : icon}
+          {preview ? <DesignerResourcePreviewMedia className="h-full w-full object-cover" preview={preview} previewType={previewType} title={title} /> : icon}
         </span>
         <span className="min-w-0">
           <span className="flex items-start justify-between gap-3">

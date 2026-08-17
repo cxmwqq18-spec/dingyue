@@ -35,7 +35,9 @@ import {
   toThemeCopy,
   toThemePublication,
   toToolCategory,
-  toToolMenuItem
+  toToolMenuItem,
+  toVideoTheme,
+  toVideoThemeCategory
 } from "@/lib/stores/prisma-mappers";
 import type { PlatformState, Site } from "@/lib/types";
 
@@ -76,6 +78,8 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
       creativePacks,
       toolCategories,
       toolMenuItems,
+      videoThemeCategories,
+      videoThemes,
       mediaAssets,
       themePublications,
       siteThemes,
@@ -119,6 +123,8 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
       () => prisma.creativePack.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }], include: { categoryRecord: { include: { parent: true } } } }),
       () => prisma.toolCategory.findMany({ orderBy: [{ siteId: "asc" }, { parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }], include: { parent: true } }),
       () => prisma.toolMenuItem.findMany({ orderBy: [{ siteId: "asc" }, { sortOrder: "asc" }, { title: "asc" }], include: { category: { include: { parent: true } } } }),
+      () => prisma.videoThemeCategory.findMany({ orderBy: [{ siteId: "asc" }, { sortOrder: "asc" }, { label: "asc" }] }),
+      () => prisma.videoTheme.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }], include: { category: true } }),
       () => prisma.mediaAsset.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
       () => prisma.themePublication.findMany({ orderBy: [{ siteId: "asc" }, { version: "desc" }] }),
       () => prisma.siteTheme.findMany({ orderBy: [{ siteId: "asc" }, { updatedAt: "desc" }] }),
@@ -186,6 +192,8 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
       siteAiApps: siteAiApps.map(toSiteAiApp),
       toolCategories: toolCategories.map(toToolCategory),
       toolMenuItems: toolMenuItems.map(toToolMenuItem),
+      videoThemeCategories: videoThemeCategories.map(toVideoThemeCategory),
+      videoThemes: videoThemes.map(toVideoTheme),
       aiGatewayGroups: aiGatewayGroups.map(toGatewayGroup),
       creativePackCategories: creativePackCategories.map(toCreativePackCategory),
       creativePacks: creativePacks.map(toCreativePack),

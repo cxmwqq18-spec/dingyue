@@ -7,7 +7,7 @@ import { findPage, getPage } from "@/lib/data";
 import { authMessageForCode } from "@/lib/auth-messages";
 import { getCustomerAdminAccessForSite } from "@/lib/customer-admin-access";
 import { prisma } from "@/lib/prisma";
-import { preferLocalPathModeState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
+import { preferLocalPathModeState, readPathModePublicMetadataState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
 import { isMydreamshootsContentSourceSite, isMydreamshootsContentSourceSlug } from "@/lib/storefront-content-source-policy";
 import {
   getCustomerBySessionFromState,
@@ -26,6 +26,7 @@ import { customerSessionCookie } from "@/lib/session";
 import {
   readStorefrontCustomerRuntimeStateForSiteFromDatabase,
   readStorefrontPlatformState,
+  readStorefrontPublicPageMetadataStateBySlugFromDatabase,
   readStorefrontPublicRuntimeStateBySlugFromDatabase,
   readStorefrontRuntimeStateForSiteFromDatabase
 } from "@/lib/storefront-state";
@@ -37,15 +38,27 @@ import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellR
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
+import { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } from "@/lib/dreamshoot-tool-faq";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
+import { isMydreamshootsPublicVideoGenerationSlug, isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, type PolicySeoCopy } from "@/lib/theme/policy-seo";
-import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
-const dreamshootPartnerTemplateSlugs = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
+const dreamshootPartnerTemplateSlugs = new Set([
+  "/workflow",
+  "/faq",
+  "/creators-circle",
+  "/partner-registration",
+  "/about-us",
+  "/contact-us",
+  "/best-packages",
+  "/best-ai-image",
+  "/best-ai-video"
+]);
 
 type SiteRenderData = {
   creativePackCategories: CreativePackCategory[];
@@ -54,6 +67,7 @@ type SiteRenderData = {
   products: ReturnType<typeof getSiteProductsFromState>;
   siteAiApps: ReturnType<typeof getSiteAppsFromState>;
   toolMenuItems: PlatformState["toolMenuItems"];
+  videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
 };
 
@@ -86,6 +100,7 @@ function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData
     products: (state.products ?? []).filter((product) => product.siteId === siteId),
     siteAiApps: (state.siteAiApps ?? []).filter((app) => app.siteId === siteId),
     toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === siteId),
+    videoThemeCategories: (state.videoThemeCategories ?? []).filter((category) => category.siteId === siteId),
     videoThemes: (state.videoThemes ?? []).filter((theme) => theme.siteId === siteId)
   };
 }
@@ -98,6 +113,7 @@ function emptySiteRenderData(): SiteRenderData {
     products: [],
     siteAiApps: [],
     toolMenuItems: [],
+    videoThemeCategories: [],
     videoThemes: []
   };
 }
@@ -122,17 +138,18 @@ function trimToolDetailRenderData(renderData: SiteRenderData): SiteRenderData {
       }
     })),
     toolMenuItems: renderData.toolMenuItems.slice(0, 24),
+    videoThemeCategories: renderData.videoThemeCategories,
     videoThemes: []
   };
 }
 
 const productSectionTypes = new Set(["cart_summary", "dreamshoot_generation_showcase", "pricing_table", "product_detail", "products", "products_plus", "search_results"]);
 const siteAiAppSectionTypes = new Set(["ai_tool_entry", "ai_tool_grid", "aidreamcapes_tool_collection", "generation_form", "search_results"]);
-const creativePackSectionTypes = new Set(["aidreamcapes_package_catalog", "aidreamcapes_package_taxonomy", "collection_list_plus", "dreamshoot_generation_showcase", "dreamshoot_package_catalog", "dreamshoot_package_taxonomy", "dreamshoot_related_packages", "dreamshoot_theme_cta", "dreamshoot_theme_faq", "photo_package_wall", "products", "products_plus", "search_results"]);
+const creativePackSectionTypes = new Set(["aidreamcapes_package_catalog", "aidreamcapes_package_taxonomy", "collection_list_plus", "dreamshoot_featured_pack", "dreamshoot_generation_showcase", "dreamshoot_media_gallery", "dreamshoot_package_catalog", "dreamshoot_package_taxonomy", "dreamshoot_related_packages", "dreamshoot_theme_cta", "dreamshoot_theme_faq", "photo_package_wall", "products", "products_plus", "search_results"]);
 const toolMenuItemSectionTypes = new Set(["aidreamcapes_tool_collection", "dreamshoot_tool_collection", "search_results"]);
-const videoThemeSectionTypes = new Set(["dreamshoot_generation_showcase"]);
+const videoThemeSectionTypes = new Set(["dreamshoot_generation_showcase", "dreamshoot_media_gallery"]);
 const customerRuntimeSectionTypes = new Set(["album_gallery", "cart_summary", "generation_form", "job_detail", "job_progress", "login_method_panel", "upload_panel"]);
-const publicHomePackLimit = 12;
+const publicHomePackLimit = 16;
 const publicDirectoryPackLimit = 128;
 const publicToolLimit = 96;
 
@@ -161,14 +178,31 @@ function publicCreativePackToken(pack: CreativePack): string {
   return publicStorefrontToken(pack.id || pack.name, ["pack_mydreamshoots_xby", "pack_aidreamcapes_xby", "pack_dreamshoot", "pack_aidreamcapes"]);
 }
 
-function resolveInitialCreativePackId(rawPack: string | undefined, packs: CreativePack[]): string | undefined {
-  if (!rawPack) return undefined;
-  const normalized = publicStorefrontToken(rawPack, []);
-  const match = packs.find((pack) => {
+function creativePackMatchesInitialCategory(pack: CreativePack, rawCategory: string | undefined): boolean {
+  if (!rawCategory || pack.status !== "active") return false;
+  const normalizedCategory = normalizePublicSlug(rawCategory);
+  if (!normalizedCategory) return false;
+  return [
+    pack.categoryRecord?.slug,
+    pack.categoryRecord?.label,
+    pack.categoryRecord?.parent?.slug,
+    pack.categoryRecord?.parent?.label,
+    pack.category,
+    pack.name
+  ].some((value) => value ? normalizePublicSlug(String(value)) === normalizedCategory : false);
+}
+
+function resolveInitialCreativePackId(rawPack: string | undefined, packs: CreativePack[], rawCategory?: string): string | undefined {
+  const normalizedPack = rawPack ? publicStorefrontToken(rawPack, []) : "";
+  const packMatch = rawPack ? packs.find((pack) => {
     if (pack.status !== "active") return false;
-    return pack.id === rawPack || publicStorefrontToken(pack.id, []) === normalized || publicCreativePackToken(pack) === normalized;
-  });
-  return match?.id ?? rawPack;
+    return pack.id === rawPack || publicStorefrontToken(pack.id, []) === normalizedPack || publicCreativePackToken(pack) === normalizedPack;
+  }) : undefined;
+  if (packMatch) return packMatch.id;
+
+  const categoryMatch = packs.find((pack) => creativePackMatchesInitialCategory(pack, rawCategory));
+  if (categoryMatch) return categoryMatch.id;
+  return rawPack;
 }
 
 function limitedCreativePacks(packs: SiteRenderData["creativePacks"], limit?: number): SiteRenderData["creativePacks"] {
@@ -186,10 +220,26 @@ function trimCreativePackCategoriesForStorefront(renderData: SiteRenderData): Cr
     .filter((category): category is CreativePackCategory => Boolean(category));
 }
 
+function publicPackLimitForPage({
+  slug,
+  usesFullMediaGallery,
+  isDirectoryPage = false,
+  hasDirectorySections = false
+}: {
+  slug: string;
+  usesFullMediaGallery: boolean;
+  isDirectoryPage?: boolean;
+  hasDirectorySections?: boolean;
+}): number | undefined {
+  if (usesFullMediaGallery) return undefined;
+  if (slug === "/") return publicHomePackLimit;
+  if (isDirectoryPage || slug === "/collections" || hasDirectorySections) return publicDirectoryPackLimit;
+  return publicHomePackLimit;
+}
+
 async function completePublicCreativePacksForSite(site: Site, existing: SiteRenderData["creativePacks"], limit?: number): Promise<SiteRenderData["creativePacks"]> {
   const sanitizedExisting = existing.map(lightweightCreativePack);
   if (typeof limit === "number" && sanitizedExisting.length >= limit) return sanitizedExisting.slice(0, limit);
-  if (typeof limit !== "number" && sanitizedExisting.length > 0) return sanitizedExisting;
   const fullPacks = (await getStorefrontPublicCreativePacksForSite(site.id, limit)).map(lightweightCreativePack);
   if (!fullPacks.length) return limitedCreativePacks(sanitizedExisting, limit);
 
@@ -201,15 +251,15 @@ async function completePublicCreativePacksForSite(site: Site, existing: SiteRend
   return limitedCreativePacks(merged, limit);
 }
 
-function publicVideoThemesFromRenderData(siteId: string, existing: VideoTheme[], limit = 32): VideoTheme[] {
-  return existing
+function publicVideoThemesFromRenderData(siteId: string, existing: VideoTheme[], limit?: number): VideoTheme[] {
+  const activeThemes = existing
     .filter((theme) => theme.siteId === siteId && theme.status === "active")
-    .sort((left, right) => left.createdAt.localeCompare(right.createdAt))
-    .slice(0, limit)
+    .sort((left, right) => left.createdAt.localeCompare(right.createdAt));
+  return (typeof limit === "number" ? activeThemes.slice(0, limit) : activeThemes)
     .map(lightweightVideoTheme);
 }
 
-async function loadStorefrontPublicVideoThemesForSection(site: Pick<Site, "id" | "slug">, existing: VideoTheme[], limit = 32): Promise<VideoTheme[]> {
+async function loadStorefrontPublicVideoThemesForSection(site: Pick<Site, "id" | "slug">, existing: VideoTheme[], limit?: number): Promise<VideoTheme[]> {
   const localThemes = publicVideoThemesFromRenderData(site.id, existing, limit);
   if (preferLocalPathModeState(site.slug)) return localThemes;
 
@@ -342,7 +392,7 @@ function lightweightCreativePack(pack: CreativePack): CreativePack {
     createdAt: "",
     imageUrl: pack.imageUrl,
     galleryImages: (pack.galleryImages ?? []).filter(Boolean).slice(0, 12),
-    galleryImageAlts: (pack.galleryImageAlts ?? []).filter(Boolean).slice(0, 12),
+    galleryImageAlts: (pack.galleryImageAlts ?? []).map((alt) => alt.trim()).slice(0, 12),
     categoryRecord: lightweightCategoryRecord(pack.categoryRecord)
   };
 }
@@ -431,6 +481,7 @@ function lightweightVideoTheme(theme: VideoTheme): VideoTheme {
     modelPricing: theme.modelPricing,
     durationSeconds: theme.durationSeconds,
     maxFrames: theme.maxFrames,
+    sortOrder: theme.sortOrder,
     effectiveMaxFrames: theme.effectiveMaxFrames,
     providerMaxFrames: theme.providerMaxFrames,
     generationCount: theme.generationCount,
@@ -446,15 +497,37 @@ function storefrontSettingList(value: unknown): string[] {
   return value.split(/[\n|,]/).map((item) => item.trim()).filter(Boolean);
 }
 
-function trimVideoThemesForStorefront(renderData: SiteRenderData, limit = 24, section?: SectionInstance): VideoTheme[] {
-  const activeThemes = renderData.videoThemes.filter((theme) => theme.status === "active");
+function storefrontBooleanSetting(value: unknown): boolean {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "number") return value !== 0;
+  if (typeof value !== "string") return false;
+  return ["1", "true", "yes", "on"].includes(value.trim().toLowerCase());
+}
+
+function sectionUsesFullMediaGallery(section?: SectionInstance): boolean {
+  return section?.type === "dreamshoot_media_gallery" && storefrontBooleanSetting(section.settings?.fullGallery);
+}
+
+function pageUsesFullMediaGallery(pageJson: ThemePageJson): boolean {
+  return Object.values(pageJson.sections).some((section) => sectionUsesFullMediaGallery(section));
+}
+
+const blockedPublicVideoThemeSlugs = new Set(["creator-scene-motion"]);
+
+function isBlockedPublicVideoTheme(theme: VideoTheme): boolean {
+  return blockedPublicVideoThemeSlugs.has(theme.slug) && (theme.siteId === "site_dreamshoot" || theme.siteId === "site_aidreamcapes");
+}
+
+function trimVideoThemesForStorefront(renderData: SiteRenderData, limit?: number, section?: SectionInstance): VideoTheme[] {
+  const activeThemes = renderData.videoThemes.filter((theme) => theme.status === "active" && !isBlockedPublicVideoTheme(theme));
   const selectedSlugs = storefrontSettingList(section?.settings?.videoSlugs).map(normalizePublicSlug);
   const selectedThemes = selectedSlugs.length
     ? selectedSlugs
         .map((slug) => activeThemes.find((theme) => normalizePublicSlug(theme.slug) === slug))
         .filter((theme): theme is VideoTheme => Boolean(theme))
     : activeThemes;
-  return selectedThemes.slice(0, limit).map(lightweightVideoTheme);
+  const limitedThemes = typeof limit === "number" ? selectedThemes.slice(0, limit) : selectedThemes;
+  return limitedThemes.map(lightweightVideoTheme);
 }
 
 function collectStorefrontMediaReferences(value: unknown, refs: Set<string>, parentKey = ""): void {
@@ -492,16 +565,30 @@ function trimMediaAssetsForPage(site: Site, pageJson: ThemePageJson, settings: S
   ).map(lightweightMediaAsset);
 }
 
-function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJson, slug: string): SiteRenderData {
+function trimRenderDataForPage(
+  renderData: SiteRenderData,
+  pageJson: ThemePageJson,
+  slug: string,
+  isDirectoryPage = false
+): SiteRenderData {
   const sectionTypes = pageSectionTypes(pageJson);
+  const usesFullMediaGallery = pageUsesFullMediaGallery(pageJson);
   const needsProducts = slug === "/pricing" || slug === "/cart" || Array.from(sectionTypes).some((type) => productSectionTypes.has(type));
   const hasPricingTable = slug === "/pricing" || sectionTypes.has("pricing_table") || sectionTypes.has("dreamshoot_generation_showcase");
   const needsSiteAiApps = slug === "/tools" || slug.startsWith("/tools/") || Array.from(sectionTypes).some((type) => siteAiAppSectionTypes.has(type));
   const needsCreativePacks = slug === "/" || slug === "/collections" || slug === "/tools" || Array.from(sectionTypes).some((type) => creativePackSectionTypes.has(type));
   const needsVideoThemes = Array.from(sectionTypes).some((type) => videoThemeSectionTypes.has(type));
-  const packLimit = slug === "/collections" || sectionTypes.has("dreamshoot_generation_showcase")
-    ? publicDirectoryPackLimit
-    : publicHomePackLimit;
+  const packLimit = publicPackLimitForPage({
+    slug,
+    usesFullMediaGallery,
+    isDirectoryPage,
+    hasDirectorySections: sectionTypes.has("dreamshoot_generation_showcase") || sectionTypes.has("dreamshoot_media_gallery") || sectionTypes.has("dreamshoot_featured_pack")
+  });
+  const videoThemeLimit = sectionTypes.has("dreamshoot_media_gallery")
+    ? usesFullMediaGallery ? undefined : publicDirectoryPackLimit
+    : sectionTypes.has("dreamshoot_generation_showcase")
+    ? 8
+    : 32;
   const siteAiAppLimit = slug === "/tools" ? publicToolLimit : 48;
   return {
     creativePackCategories: needsCreativePacks ? trimCreativePackCategoriesForStorefront(renderData) : [],
@@ -510,7 +597,8 @@ function trimRenderDataForPage(renderData: SiteRenderData, pageJson: ThemePageJs
     products: needsProducts ? (hasPricingTable ? trimPricingProductsForStorefront(renderData, 12) : trimProductsForStorefront(renderData, slug === "/cart" ? 12 : 6)) : [],
     siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData, siteAiAppLimit) : [],
     toolMenuItems: renderData.toolMenuItems.slice(0, 160).map(lightweightToolMenuItem),
-    videoThemes: needsVideoThemes ? trimVideoThemesForStorefront(renderData, 32) : []
+    videoThemeCategories: renderData.videoThemeCategories,
+    videoThemes: needsVideoThemes ? trimVideoThemesForStorefront(renderData, videoThemeLimit) : []
   };
 }
 
@@ -518,15 +606,21 @@ function trimRenderDataForSection(renderData: SiteRenderData, pageJson: ThemePag
   const section = pageJson.sections[sectionId];
   if (!section) return emptySiteRenderData();
   const sectionType = section.type;
+  const usesFullMediaGallery = sectionUsesFullMediaGallery(section);
   const needsProducts = productSectionTypes.has(sectionType);
   const needsSiteAiApps = siteAiAppSectionTypes.has(sectionType);
   const needsCreativePacks = creativePackSectionTypes.has(sectionType);
   const needsToolMenuItems = toolMenuItemSectionTypes.has(sectionType);
   const needsVideoThemes = videoThemeSectionTypes.has(sectionType);
   const hasPricingTable = sectionType === "pricing_table" || sectionType === "dreamshoot_generation_showcase";
-  const packLimit = slug === "/collections" || sectionType === "dreamshoot_generation_showcase"
+  const packLimit = usesFullMediaGallery
+    ? undefined
+    : slug === "/"
+    ? publicHomePackLimit
+    : slug === "/collections" || sectionType === "dreamshoot_generation_showcase" || sectionType === "dreamshoot_media_gallery" || sectionType === "dreamshoot_featured_pack"
     ? publicDirectoryPackLimit
     : publicHomePackLimit;
+  const videoThemeLimit = sectionType === "dreamshoot_generation_showcase" ? 8 : usesFullMediaGallery ? undefined : publicDirectoryPackLimit;
   const siteAiAppLimit = sectionType.includes("tool_collection") ? publicToolLimit : 48;
   return {
     creativePackCategories: needsCreativePacks ? trimCreativePackCategoriesForStorefront(renderData) : [],
@@ -535,7 +629,8 @@ function trimRenderDataForSection(renderData: SiteRenderData, pageJson: ThemePag
     products: needsProducts ? (hasPricingTable ? trimPricingProductsForStorefront(renderData, 12) : trimProductsForStorefront(renderData, slug === "/cart" ? 12 : 6)) : [],
     siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData, siteAiAppLimit) : [],
     toolMenuItems: needsToolMenuItems ? renderData.toolMenuItems.slice(0, 160).map(lightweightToolMenuItem) : [],
-    videoThemes: needsVideoThemes ? trimVideoThemesForStorefront(renderData, sectionType === "dreamshoot_generation_showcase" ? 8 : 32, section) : []
+    videoThemeCategories: renderData.videoThemeCategories,
+    videoThemes: needsVideoThemes ? trimVideoThemesForStorefront(renderData, videoThemeLimit, section) : []
   };
 }
 
@@ -767,18 +862,18 @@ function proposedFederalPrivacyLegislationNotice(brand: string): string {
 }
 
 const MYDREAMSHOOTS_TERMS_POLICY_BODY =
-  `<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a MyDreamShoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums.</p><h3>2. Accounts, credits, and checkout</h3><p>You are responsible for accurate account information and secure sign-in. Credits are added after payment confirmation, displayed before generation, reserved when a request begins, used after successful delivery, and released or reviewed when a request fails.</p><h3>3. Upload rights and consent</h3><p>You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.</p><h3>4. No AI training on your photos</h3><p>Your inputs are never used to train models. 30-day auto-delete applies to input photos after generation. Private uploads and account records are protected with AES-256 at rest and TLS 256-bit in transit. Some billing, security, tax, dispute, refund, and account-integrity records may be retained where required or reasonably necessary.</p><h3>5. AI output variability</h3><p>AI photo results can vary based on source photo quality, pose, lighting, package settings, moderation review, provider availability, and model behavior. MyDreamShoots may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and use of outputs</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Refunds and guarantee review</h3><p>Refunds and credit adjustments follow the Refund Policy, including the 100% money-back guarantee when the shoot does not look like you, subject to support review, account history, and the details of the affected request.</p><h3>8. Contact</h3><p>Email <a href="mailto:support@mydreamshoots.com">support@mydreamshoots.com</a> for account, billing, refund, policy, or legal questions.</p>`;
+  `<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a myDreamshoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums.</p><h3>2. Accounts, credits, and checkout</h3><p>You are responsible for accurate account information and secure sign-in. Credits are added after payment confirmation, displayed before generation, reserved when a request begins, used after successful delivery, and released or reviewed when a request fails.</p><h3>3. Upload rights and consent</h3><p>You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.</p><h3>4. No AI training on your photos</h3><p>Your inputs are never used to train models. 30-day auto-delete applies to input photos after generation. Private uploads and account records are protected by secure account, storage, and access workflows. Some billing, security, tax, dispute, refund, and account-integrity records may be retained where required or reasonably necessary.</p><h3>5. AI output variability</h3><p>AI photo results can vary based on source photo quality, pose, lighting, package settings, moderation review, provider availability, and model behavior. myDreamshoots may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and use of outputs</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Refunds and guarantee review</h3><p>Refunds and credit adjustments follow the Refund Policy, including refund review when the shoot does not look like you, subject to support review, account history, and the details of the affected request.</p><h3>8. Contact</h3><p>Email <a href="mailto:support@mydreamshoots.com">support@mydreamshoots.com</a> for account, billing, refund, policy, or legal questions.</p>`;
 
 function mydreamshootsPolicyBody(path: string): string {
   const normalized = normalizePublicSlug(path).replace(/-/g, " ");
   if (normalized.includes("children")) {
-    return "<h3>1. Service audience</h3><p>MyDreamShoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. MyDreamShoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. DPDPA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">DPDPA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>";
+    return "<h3>1. Service audience</h3><p>myDreamshoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. myDreamshoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. DPDPA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">DPDPA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>";
   }
   if (normalized.includes("state privacy") || normalized.includes("california") || normalized.includes("ccpa")) {
-    return "<h3>1. DPDPA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. MyDreamShoots does not sell personal source photos or generated private albums as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: myDreamshoots.com; Address: 8 THE GREEN STE B,DOVER,DE 19901; Contact Us: support@mydreamshoots.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>" + proposedFederalPrivacyLegislationNotice("MyDreamShoots");
+    return "<h3>1. DPDPA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. myDreamshoots does not sell personal source photos or generated private albums as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: myDreamshoots.com; Address: 8 THE GREEN STE B,DOVER,DE 19901; Contact Us: support@mydreamshoots.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>" + proposedFederalPrivacyLegislationNotice("myDreamshoots");
   }
   if (normalized.includes("cookie")) {
-    return "<h3>1. Essential cookies and local storage</h3><p>MyDreamShoots uses essential cookies and local storage for sign-in, account sessions, cart continuity, credit visibility, private gallery access, and site reliability.</p><h3>2. Security and checkout continuity</h3><p>Operational storage helps keep customer sessions secure, remember checkout state, protect private albums, and diagnose failed requests or delivery issues.</p><h3>3. Payment and service providers</h3><p>Checkout, infrastructure, email, analytics, and AI processing providers may use limited cookies or identifiers when needed for payment status, fraud prevention, service delivery, security, or operational measurement.</p><h3>4. Your choices</h3><p>You can clear cookies or adjust browser settings. Clearing storage may sign you out, interrupt checkout, remove local preferences, or require another sign-in before opening private albums, jobs, credit history, or downloads.</p><h3>5. Contact us</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with cookie, account session, checkout continuity, or private gallery questions.</p>";
+    return "<h3>1. Essential cookies and local storage</h3><p>myDreamshoots uses essential cookies and local storage for sign-in, account sessions, cart continuity, credit visibility, private gallery access, and site reliability.</p><h3>2. Security and checkout continuity</h3><p>Operational storage helps keep customer sessions secure, remember checkout state, protect private albums, and diagnose failed requests or delivery issues.</p><h3>3. Payment and service providers</h3><p>Checkout, infrastructure, email, analytics, and AI processing providers may use limited cookies or identifiers when needed for payment status, fraud prevention, service delivery, security, or operational measurement.</p><h3>4. Your choices</h3><p>You can clear cookies or adjust browser settings. Clearing storage may sign you out, interrupt checkout, remove local preferences, or require another sign-in before opening private albums, jobs, credit history, or downloads.</p><h3>5. Contact us</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with cookie, account session, checkout continuity, or private gallery questions.</p>";
   }
   if (normalized.includes("term")) {
     return MYDREAMSHOOTS_TERMS_POLICY_BODY;
@@ -926,7 +1021,81 @@ async function getStateForStorefrontRender(site: Site, routeMode: "host" | "path
   return readStorefrontPlatformState();
 }
 
-async function getPublicSectionStateForRoute(publicSlug: string, slug: string, routeMode: "host" | "path"): Promise<PlatformState | undefined> {
+async function getPublicSectionShellStateForRoute(publicSlug: string, slug: string, routeMode: "host" | "path"): Promise<PlatformState | undefined> {
+  if (routeMode === "path") return readPathModePublicMetadataState(publicSlug, slug);
+  try {
+    const state = await readStorefrontPublicPageMetadataStateBySlugFromDatabase(publicSlug, slug);
+    if (state) return state;
+  } catch (error) {
+    if (isMydreamshootsContentSourceSlug(publicSlug)) {
+      throw new Error(
+        `MyDreamShoots section metadata for ${publicSlug}${slug} must read Postgres published content. ` +
+        "Refusing to fall back to legacy state because that can reintroduce stale copy. " +
+        `Original error: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
+  }
+  if (isMydreamshootsContentSourceSlug(publicSlug)) {
+    throw new Error(`MyDreamShoots section metadata for ${publicSlug}${slug} was not found in Postgres. Refusing to fall back to legacy state.`);
+  }
+  return readStorefrontPlatformState();
+}
+
+function sectionIdsNeedPublicRuntime(pageJson: ThemePageJson, slug: string, sectionIds: string[], query: Record<string, string | string[] | undefined>): boolean {
+  if (slug === "/account" || slug === "/login" || slug.startsWith("/app/") || slug.startsWith("/tools/")) return true;
+  if (slug === "/cart" || slug === "/pricing") return true;
+  if (slug === "/collections" && typeof query.category === "string" && query.category) return true;
+  return sectionIds.some((sectionId) => {
+    const sectionType = pageJson.sections[sectionId]?.type;
+    return Boolean(sectionType && (
+      productSectionTypes.has(sectionType) ||
+      siteAiAppSectionTypes.has(sectionType) ||
+      creativePackSectionTypes.has(sectionType) ||
+      toolMenuItemSectionTypes.has(sectionType) ||
+      videoThemeSectionTypes.has(sectionType) ||
+      customerRuntimeSectionTypes.has(sectionType)
+    ));
+  });
+}
+
+function isCollectionPublicPath(slug: string): boolean {
+  return slug === "/collections" || slug.startsWith("/collections/") || slug === "/ai-image-generation" || slug.startsWith("/ai-image-generation/");
+}
+
+function internalPageSlugForPublicPath(slug: string): string {
+  return isCollectionPublicPath(slug) ? "/collections" : slug;
+}
+
+function collectionCategoryFromPublicPath(slug: string): string {
+  const parts = slug.split(/[?#]/)[0]?.split("/").filter(Boolean) ?? [];
+  if (parts[0] === "ai-image-generation") return parts[1] || "";
+  if (parts[0] === "collections") return parts[1] || "";
+  return "";
+}
+
+function queryWithPublicCollectionCategory(slug: string, query: Record<string, string | string[] | undefined>): Record<string, string | string[] | undefined> {
+  if (typeof query.category === "string" && query.category) return query;
+  const category = collectionCategoryFromPublicPath(slug);
+  return category ? { ...query, category } : query;
+}
+
+async function getPublicSectionStateForRoute(
+  publicSlug: string,
+  slug: string,
+  routeMode: "host" | "path",
+  sectionIds: string[],
+  query: Record<string, string | string[] | undefined>
+): Promise<PlatformState | undefined> {
+  const shellState = await getPublicSectionShellStateForRoute(publicSlug, slug, routeMode);
+  const shellSite = shellState?.sites.find((item) =>
+    publicSiteSlug(item.slug) === publicSlug ||
+    canonicalSiteSlug(item.slug) === canonicalSiteSlug(publicSlug)
+  );
+  const shellPage = shellSite
+    ? findPage(shellSite, slug) ?? syntheticStorefrontPolicyPage(shellSite, slug) ?? syntheticDreamShootPartnerPage(shellSite, slug)
+    : undefined;
+  if (!shellState || !shellSite || !shellPage) return shellState;
+  if (!sectionIdsNeedPublicRuntime(shellPage.publishedJson, slug, sectionIds, query)) return shellState;
   if (routeMode === "path") return readPathModePublicRuntimeState(publicSlug, slug);
   try {
     const state = await readStorefrontPublicRuntimeStateBySlugFromDatabase(publicSlug, slug);
@@ -1428,6 +1597,7 @@ function normalizeToolLookup(value: string): string {
     .trim()
     .toLowerCase()
     .replace(/^\/tools\//, "")
+    .replace(/^\/ai-video-generation\//, "")
     .replace(/[_\s]+/g, "-")
     .replace(/[^a-z0-9-]+/g, "-")
     .replace(/-+/g, "-")
@@ -1492,7 +1662,7 @@ function clonePageJson(page: ThemePageJson): ThemePageJson {
 
 function toolBlocksFromTheme(site: Site): SectionBlockInstance[] {
   const headerBlocks = site.themeSettings.publishedJson.globalSections?.header?.blocks?.filter((block) => block.type === "tool_card") ?? [];
-  const toolPage = site.pages.find((page) => page.slug === "/tools" || page.pageType === "tools");
+  const toolPage = site.pages.find((page) => page.slug === "/ai-video-generation" || page.slug === "/tools" || page.pageType === "tools");
   const toolPageBlocks = toolPage
     ? Object.values(toolPage.publishedJson.sections).flatMap((section) => section.blocks ?? []).filter((block) => block.type === "tool_card")
     : [];
@@ -1503,7 +1673,7 @@ function toolBlocksFromTheme(site: Site): SectionBlockInstance[] {
 function toolSlugFromBlock(block: SectionBlockInstance): string {
   const href = blockString(block, "href", "");
   const path = href.split("?")[0]?.split("#")[0] ?? "";
-  return normalizeToolLookup(path.replace(/^\/tools\//, "") || block.id || blockString(block, "title"));
+  return normalizeToolLookup(path.replace(/^\/tools\//, "").replace(/^\/ai-video-generation\//, "") || block.id || blockString(block, "title"));
 }
 
 function appSlugForToolCategory(category: string, siteAiApps: ReturnType<typeof getSiteAppsFromState>): string {
@@ -1846,6 +2016,61 @@ const fallbackToolDirectoryBlocks = cache((): SectionBlockInstance[] =>
   dreamshootToolDirectorySlugs.map((slug) => fallbackToolBlockForSlug(slug)).filter((block): block is SectionBlockInstance => Boolean(block))
 );
 
+function toolsDirectoryFaqSectionForSite(site: Site): SectionInstance {
+  const isAidreamcapes = isAidreamcapesStorefront(site);
+  const isSpanishXby = isSpanishXbyStorefront(site);
+  const items = isSpanishXby
+    ? isAidreamcapes
+      ? [
+          ["Que herramienta de ocasion debo usar?", "Elige la herramienta que coincida con el momento: fans, dia de partido, festivos, retratos de viaje o planificacion segura."],
+          ["Las herramientas copian identidades oficiales?", "No. Usa fotos aprobadas y direcciones originales, sin recrear celebridades, deportistas, logos o marcas protegidas sin permiso."],
+          ["Los resultados son privados?", "Si. Fotos fuente, pedidos, creditos y albumes terminados permanecen vinculados a la cuenta del cliente."],
+          ["Puedo publicar resultados en redes?", "Si, cuando las personas mostradas aprobaron el uso y cumples las reglas de plataforma, derechos y divulgacion."]
+        ]
+      : [
+          ["Que herramienta de fotos debo usar?", "Elige por resultado: retratos profesionales, retratos de creador, edicion de fondo, mejora de imagen o video corto."],
+          ["Las herramientas usan subida privada?", "Si. Fotos fuente, pedidos, creditos y resultados terminados permanecen vinculados a la cuenta del cliente."],
+          ["Puedo usar resultados en redes o paginas de negocio?", "Si, cuando tienes permiso para las fotos fuente y cumples las reglas de la plataforma."],
+          ["Que debo revisar antes de descargar?", "Revisa caras, manos, recortes, marcas, texto accidental y calidad general antes de publicar."]
+        ]
+    : isAidreamcapes
+      ? [
+          ["Which Aidreamcapes occasion tool should I use?", "Choose the tool that matches the private album moment: fan-scene atmosphere, game-day group energy, holiday cards, creator occasion portraits, premiere-inspired photos, or permission-safe content planning."],
+          ["Do tools recreate real public figures or official marks?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized celebrity likenesses, athlete identities, official logos, league marks, venue marks, or misleading affiliation."],
+          ["What source photos work best for occasion tools?", "Use clear, well-lit photos with permission from every person shown. Group tools work better when faces are visible and not heavily overlapping; holiday and fan-scene tools work better when the source photos have enough detail for a private album concept."],
+          ["Are source photos and finished albums private?", "Uploads, request details, credit records, generation status, and finished albums remain connected to the signed-in Aidreamcapes account. Results are delivered to a private gallery for review and download rather than a public listing."],
+          ["How are credits handled for Aidreamcapes tools?", "Supported tools show the credit requirement before generation starts, reserve credits while processing, and settle or release credits according to the recorded request status. Review the cost before starting an album or motion request."],
+          ["Can I use results on social pages?", "Yes, when every person shown approved the use, the content avoids misleading endorsement or official affiliation, and the post follows platform and AI disclosure rules."]
+        ]
+      : [
+          ["Which AI photo tool should I start with?", "Start with the tool that matches the final asset you need. Use headshot tools for LinkedIn, resumes, founder bios, and team pages; creator portrait tools for media kits and campaign images; edit tools for cleanup or enhancement; and AI video tools when you want a short motion concept from an approved still image."],
+          ["What source photos work best for AI tools?", "Use sharp, recent, well-lit photos where the subject is visible and the intended edit is clear. Avoid screenshots, heavy beauty filters, tiny crops, sunglasses, blurred faces, extreme compression, and any photo you do not own or have permission to process."],
+          ["Do myDreamshoots tools use a private upload flow?", "Yes. Customer-facing AI tools keep source photos, request settings, credit reservations, generation status, and finished images connected to the signed-in myDreamshoots workspace instead of publishing them publicly by default."],
+          ["How are credits shown for AI photo and video tools?", "Paid tools show the credit requirement before generation begins, so you can compare an AI headshot, background edit, image enhancement, portrait style, or AI video request before credits are reserved. Failed requests can release reserved credits according to the recorded job status."],
+          ["Can tool results be used for social media or business pages?", "You can use suitable results for social media, creator pages, LinkedIn, websites, ad drafts, or business profiles when you control the source photos, every person shown has approved the use, and the destination platform rules and AI disclosure requirements are followed."],
+          ["What should I inspect before downloading or publishing results?", "Review identity details, facial consistency, hands, text-like marks, logos, background artifacts, crop quality, and overall realism. AI results should be checked before use in professional profiles, campaigns, printed material, or customer-facing business pages."]
+        ];
+  return {
+    type: "faq",
+    settings: {
+      anchor: "faq",
+      layout: "visual_faq",
+      eyebrow: isSpanishXby ? "Preguntas de herramientas" : isAidreamcapes ? "Occasion tools FAQ" : "Tools FAQ",
+      title: isSpanishXby ? "Preguntas antes de usar herramientas" : isAidreamcapes ? "Aidreamcapes tool questions" : "AI tool questions before upload",
+      subtitle: isSpanishXby
+        ? "Respuestas sobre fotos fuente, creditos, privacidad y entrega."
+        : isAidreamcapes
+          ? "Answers about Aidreamcapes occasion tools, approved source photos, protected-identity boundaries, credits, privacy, social use, and private album delivery."
+          : "Answers about myDreamshoots AI photo tools, source photos, credits, privacy, quality review, and publishing use."
+    },
+    blocks: items.map(([question, answer], index) => ({
+      id: `tools_directory_faq_${index + 1}`,
+      type: "faq_item",
+      settings: { question, answer }
+    }))
+  };
+}
+
 function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): ThemePageJson {
   const blocks = toolBlocksFromTheme(site);
   const toolsBySlug = new Map<string, SectionBlockInstance>();
@@ -1867,7 +2092,7 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
   const tools = Array.from(toolsBySlug.values()).map((tool) => isSpanishXby ? spanishXbyToolBlockForSite(site, tool) : tool);
   return {
     ...pageJson,
-    sectionsOrder: ["tools_directory_1"],
+    sectionsOrder: ["tools_directory_1", "faq_1"],
     sections: {
       tools_directory_1: {
         type: "dreamshoot_tool_collection",
@@ -1895,6 +2120,27 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
           layout: "directory"
         },
         blocks: tools
+      },
+      faq_1: toolsDirectoryFaqSectionForSite(site)
+    }
+  };
+}
+
+function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson): ThemePageJson {
+  return {
+    ...pageJson,
+    sectionsOrder: ["video_theme_directory_1"],
+    sections: {
+      video_theme_directory_1: {
+        type: "dreamshoot_tool_collection",
+        settings: {
+          anchor: "video-themes",
+          title: "AI Video Generation",
+          subtitle: "Browse every public AI video theme and open the dedicated guide for the direction you want.",
+          layout: "video_theme_grid",
+          headingLevel: "h1"
+        },
+        blocks: []
       }
     }
   };
@@ -1903,8 +2149,9 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
 function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Site["pages"][number] {
   const existingToolPage =
     page ??
+    site.pages.find((item) => item.slug === "/ai-video-generation") ??
     site.pages.find((item) => item.slug === "/tools/image-studio") ??
-    site.pages.find((item) => item.pageType === "ai_tool" && /^\/tools\/[^/]+$/.test(item.slug));
+    site.pages.find((item) => item.pageType === "ai_tool" && /^\/(?:tools|ai-video-generation)\/[^/]+$/.test(item.slug));
   if (existingToolPage) return existingToolPage;
   const template = clonePageJson(dreamshootAiStudioTemplates["tool-detail"]);
   return {
@@ -1923,37 +2170,29 @@ function isAidreamcapesStorefront(site: Pick<Site, "id" | "slug" | "name" | "pri
   return `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase().includes("aidreamcapes");
 }
 
+function isPrimaryMydreamshootsStorefront(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
+  const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase();
+  const isSpanishXby = identity.includes("site_mydreamshoots_xby") || identity.includes("site_aidreamcapes_xby") || identity.includes("aidreamshoots.eu") || identity.includes("aidreamcapes.eu");
+  if (!identity || isAidreamcapesStorefront(site) || isSpanishXby) return false;
+  return identity.includes("site_dreamshoot") || identity.includes("mydreamshoots") || identity.includes("dreamshoot");
+}
+
 function usesSharedDreamShootNavigation(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
   return /mydreamshoots|dreamshoot/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`) || isAidreamcapesStorefront(site);
 }
 
-function aidreamcapesToolFaqBlocks(label: string, workflow: string[]): SectionBlockInstance[] {
-  return [
-    {
-      id: "faq_inputs",
-      type: "faq_item",
-      settings: {
-        question: `What should I upload for ${label}?`,
-        answer: workflow[1] ?? "Upload clear source portraits or references that match the dreamscape direction you want."
-      }
-    },
-    {
-      id: "faq_private",
-      type: "faq_item",
-      settings: {
-        question: "Are Aidreamcapes results private?",
-        answer: "Yes. Source photos, photo sets, credit records, and finished galleries stay connected to the signed-in customer account."
-      }
-    },
-    {
-      id: "faq_credits",
-      type: "faq_item",
-      settings: {
-        question: "When are credits used?",
-        answer: "Credits are shown before a request starts, reserved for generation, consumed after successful delivery, and released when a request fails."
-      }
-    }
-  ];
+function toolDetailFaqBlocksForSite(
+  site: Site,
+  input: {
+    toolSlug: string;
+    label: string;
+    description: string;
+    category: string;
+    workflow: string[];
+    useCases: string[];
+  }
+): SectionBlockInstance[] {
+  return dreamshootToolDetailFaqBlocks({ site, ...input }, `faq_tool_${input.toolSlug}`);
 }
 
 function detailText(detail: ToolMenuItem["detailJson"] | undefined, key: keyof NonNullable<ToolMenuItem["detailJson"]>, fallback: string): string {
@@ -1977,11 +2216,19 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
   const aidreamcapes = isAidreamcapesStorefront(site);
   const spanishXby = isSpanishXbyStorefront(site);
   const directoryContent = getSeoDirectoryContentForSite(site, "tool", toolSlug);
+  const useDirectoryToolContent = spanishXby || aidreamcapes || directoryContent.explicit;
+  const toolBrandName = site.branding.logoText || site.name || (aidreamcapes ? "Aidreamcapes" : "myDreamshoots");
   const effectiveCategory = spanishXby ? aidreamcapes ? "Herramienta de viaje IA" : "Herramienta de fotos IA" : category;
-  const effectiveTitle = spanishXby ? directoryContent.label : detailText(detail, "title", aidreamcapes ? directoryContent.label : title);
-  const effectiveDescription = spanishXby ? directoryContent.intro : detailText(detail, "subtitle", aidreamcapes ? directoryContent.intro : blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", copy.intro)));
-  const effectiveCta = detailText(detail, "ctaLabel", spanishXby ? aidreamcapes ? "Crear ruta privada" : "Crear set privado" : aidreamcapes ? directoryContent.ctaLabel : copy.primaryCta);
-  const guideTitle = detailText(detail, "guideTitle", spanishXby ? `Guia de ${effectiveTitle}` : aidreamcapes ? directoryContent.h3[0] ?? copy.guideTitle : copy.guideTitle);
+  const effectiveTitle = useDirectoryToolContent ? directoryContent.label : detailText(detail, "title", title);
+  const effectiveDescription = useDirectoryToolContent
+    ? directoryContent.intro
+    : detailText(detail, "subtitle", blockString(tool, "description", sectionSetting(page, "entry_1", "subtitle", copy.intro)));
+  const effectiveCta = useDirectoryToolContent
+    ? directoryContent.ctaLabel
+    : detailText(detail, "ctaLabel", copy.primaryCta);
+  const guideTitle = useDirectoryToolContent
+    ? directoryContent.h3[0] ?? (spanishXby ? `Guia de ${effectiveTitle}` : copy.guideTitle)
+    : detailText(detail, "guideTitle", copy.guideTitle);
   const guideBody = detailText(
     detail,
     "guideBody",
@@ -1991,18 +2238,17 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
         : `Sube fotos fuente claras, elige el estilo, revisa creditos visibles y guarda resultados en la galeria privada de ${site.branding.logoText || site.name}.`
       : aidreamcapes ? directoryContent.workflow.join(" ") : copy.guideBody
   );
-  const detailTitle = detailText(detail, "detailTitle", spanishXby ? `Detalles de ${effectiveTitle}` : aidreamcapes ? `How ${directoryContent.label} fits Aidreamcapes` : `What ${title} is used for`);
-  const detailBody = detailText(
-    detail,
-    "detailBody",
-    spanishXby
-      ? "Esta pagina resume el uso recomendado, las fotos fuente necesarias y el flujo privado antes de iniciar la generacion."
-      : aidreamcapes ? directoryContent.details.join(" ") : copy.detailBody
-  );
-  const workflowItems = spanishXby ? directoryContent.workflow : detailList(detail, "workflow", aidreamcapes ? directoryContent.workflow : []);
-  const useCaseItems = spanishXby ? directoryContent.useCases : detailList(detail, "useCases", aidreamcapes ? directoryContent.useCases : [copy.useCaseOneDescription, copy.useCaseTwoDescription]);
+  const effectiveGuideBody = useDirectoryToolContent ? directoryContent.workflow.join(" ") : guideBody;
+  const detailTitle = useDirectoryToolContent
+    ? spanishXby ? `Detalles de ${effectiveTitle}` : `How ${directoryContent.label} fits ${toolBrandName}`
+    : detailText(detail, "detailTitle", `What ${title} is used for`);
+  const detailBody = useDirectoryToolContent
+    ? directoryContent.details.join(" ")
+    : detailText(detail, "detailBody", copy.detailBody);
+  const workflowItems = useDirectoryToolContent ? directoryContent.workflow : detailList(detail, "workflow", []);
+  const useCaseItems = useDirectoryToolContent ? directoryContent.useCases : detailList(detail, "useCases", [copy.useCaseOneDescription, copy.useCaseTwoDescription]);
   const imageUrl = blockString(tool, "imageUrl", sectionSetting(page, "entry_1", "imageUrl"));
-  const appCreateHref = isStandaloneVideoToolSlug(toolSlug) ? "/app/create#step-video" : `/app/create?tool_id=${encodeURIComponent(toolSlug)}`;
+  const appCreateHref = isStandaloneVideoToolSlug(toolSlug) ? `/app/create?videoMode=${encodeURIComponent(toolSlug)}#step-video` : `/app/create?tool_id=${encodeURIComponent(toolSlug)}`;
   const keptSectionIds = page.sectionsOrder.filter((sectionId) => {
     const type = page.sections[sectionId]?.type;
     return type && !workspaceOnlyToolSectionTypes.has(type);
@@ -2051,7 +2297,7 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
     settings: {
       eyebrow: effectiveCategory,
       title: guideTitle,
-      body: guideBody,
+      body: effectiveGuideBody,
       primaryCta: effectiveCta,
       primaryHref: appCreateHref,
       secondaryCta: spanishXby ? "Elegir un plan" : "Choose a plan",
@@ -2079,45 +2325,29 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
       ? useCaseItems.slice(0, 4).map((description, index) => ({
           id: `tool_detail_use_case_${index + 1}`,
           type: "rich_text_card",
-          settings: { meta: index === 0 ? spanishXby ? "Ideal para" : "Best for" : spanishXby ? "Caso de uso" : "Use case", title: description, description }
+          settings: {
+            meta: index === 0 ? spanishXby ? "Ideal para" : "Best for" : spanishXby ? "Caso de uso" : "Use case",
+            title: useDirectoryToolContent ? directoryContent.h3[index + 1] ?? `${spanishXby ? "Caso" : "Use case"} ${index + 1}` : description,
+            description
+          }
         }))
       : toolDetailUseCaseBlocks(copy)
   };
-  if (aidreamcapes && page.sections.faq_1) {
+  if (page.sections.faq_1) {
+    const toolFaqInput = {
+      site,
+      toolSlug,
+      label: effectiveTitle,
+      description: effectiveDescription,
+      category: effectiveCategory,
+      workflow: workflowItems.length ? workflowItems : directoryContent.workflow,
+      useCases: useCaseItems
+    };
     page.sections.faq_1.settings = {
       ...page.sections.faq_1.settings,
-      eyebrow: spanishXby ? "Preguntas de herramienta" : "Aidreamcapes tool questions",
-      title: spanishXby ? `FAQ de ${directoryContent.label}` : `${directoryContent.label} FAQ`,
-      subtitle: spanishXby ? "Respuestas sobre fotos fuente, creditos, galerias privadas y entrega antes de generar." : "Answers about source photos, credits, private galleries, and delivery before you generate."
+      ...dreamshootToolDetailFaqSectionSettings(toolFaqInput)
     };
-    page.sections.faq_1.blocks = spanishXby
-      ? [
-          {
-            id: "faq_inputs",
-            type: "faq_item",
-            settings: {
-              question: `Que debo subir para ${directoryContent.label}?`,
-              answer: directoryContent.workflow[1] ?? "Sube retratos o referencias claras que coincidan con la direccion de viaje que quieres."
-            }
-          },
-          {
-            id: "faq_private",
-            type: "faq_item",
-            settings: {
-              question: "Los resultados son privados?",
-              answer: "Si. Fotos fuente, pedidos, creditos y galerias terminadas permanecen vinculados a la cuenta del cliente."
-            }
-          },
-          {
-            id: "faq_credits",
-            type: "faq_item",
-            settings: {
-              question: "Cuando se usan los creditos?",
-              answer: "Los creditos se muestran antes de empezar, se reservan durante la generacion y se liberan si el pedido falla."
-            }
-          }
-        ]
-      : aidreamcapesToolFaqBlocks(directoryContent.label, directoryContent.workflow);
+    page.sections.faq_1.blocks = toolDetailFaqBlocksForSite(site, toolFaqInput);
   }
   const insertAfterEntry = page.sectionsOrder.includes("entry_1") ? page.sectionsOrder.indexOf("entry_1") + 1 : page.sectionsOrder.length;
   page.sectionsOrder.splice(insertAfterEntry, 0, guideSectionId, useCaseSectionId);
@@ -2214,15 +2444,25 @@ const aidreamcapesToolAliases = new Map<string, string>([
 export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlug: string, siteAiApps = getSiteAppsFromState(state, site.id), creativePacks = getSiteCreativePacksFromState(state, site.id)) {
   const normalizedToolSlug = normalizeToolLookup(toolSlug);
   const isAidreamcapes = isAidreamcapesStorefront(site);
+  const isPrimaryMydreamshoots = !isAidreamcapes && /mydreamshoots|dreamshoot/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  const databaseVideoTheme = (state.videoThemes ?? []).find((theme) =>
+    theme.siteId === site.id &&
+    theme.status === "active" &&
+    normalizeToolLookup(theme.slug) === normalizedToolSlug
+  );
+  const isVideoTool = isPrimaryMydreamshoots && (isMydreamshootsVideoGenerationSlug(normalizedToolSlug) || Boolean(databaseVideoTheme));
+  const isPublicVideoTopic = isPrimaryMydreamshoots && isMydreamshootsPublicVideoGenerationSlug(normalizedToolSlug);
   const aidreamcapesAliasTarget = isAidreamcapes ? aidreamcapesToolAliases.get(normalizedToolSlug) : undefined;
   const canonicalToolSlug = aidreamcapesAliasTarget ?? normalizedToolSlug;
-  const directPageSlug = `/tools/${toolSlug}`;
-  const normalizedPageSlug = normalizedToolSlug ? `/tools/${normalizedToolSlug}` : directPageSlug;
+  const directPageSlug = isVideoTool ? `/ai-video-generation/${normalizedToolSlug}` : `/tools/${toolSlug}`;
+  const normalizedPageSlug = normalizedToolSlug
+    ? isVideoTool ? `/ai-video-generation/${normalizedToolSlug}` : `/tools/${normalizedToolSlug}`
+    : directPageSlug;
   const aliasMap = new Map<string, string>();
 
-  for (const page of site.pages.filter((item) => item.pageType === "ai_tool")) {
+  for (const page of site.pages.filter((item) => item.pageType === "ai_tool" || item.slug.startsWith("/ai-video-generation/"))) {
     aliasMap.set(page.slug, page.slug);
-    aliasMap.set(page.slug.replace(/^\/tools\//, ""), page.slug);
+    aliasMap.set(page.slug.replace(/^\/(?:tools|ai-video-generation)\//, ""), page.slug);
     aliasMap.set(normalizeToolLookup(page.slug), page.slug);
   }
 
@@ -2265,11 +2505,23 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     ? siteAiApps.find((siteApp) => siteApp.aiApp.slug === "image_generator")
     : undefined;
   const resolvedSlug = explicitPageSlug ?? aliasMap.get(toolSlug) ?? aliasMap.get(directPageSlug) ?? aliasMap.get(normalizedToolSlug) ?? normalizedPageSlug;
-  const page = site.pages.find((item) => item.slug === resolvedSlug);
+  const page = site.pages.find((item) => item.slug === resolvedSlug) ?? site.pages.find((item) => item.slug === directPageSlug);
+  const pageTypes = page ? pageSectionTypes(page.publishedJson) : undefined;
+  const hasDedicatedVideoLanding = Boolean(
+    isVideoTool &&
+    pageTypes &&
+    (pageTypes.has("ai_video_topic_landing") || pageTypes.has("talking_photo_landing"))
+  );
+  if (hasDedicatedVideoLanding && page) {
+    return { siteAiApps, page, app: undefined, matched: true, resolvedSlug };
+  }
+  if (isPublicVideoTopic) {
+    return { siteAiApps, page: baseToolDetailPageForSite(site, page), app: undefined, matched: false, resolvedSlug };
+  }
   const app = directApp ?? legacyImageApp ?? (page?.slug === "/tools/image-studio" ? siteAiApps.find((siteApp) => siteApp.aiApp.slug === "image_generator") : undefined);
   const menuTool = (state.toolMenuItems ?? []).find((item) => {
     if (item.siteId !== site.id || item.status !== "active") return false;
-    const hrefSlug = normalizeToolLookup(item.href.replace(/^\/tools\//, ""));
+    const hrefSlug = normalizeToolLookup(item.href.replace(/^\/tools\//, "").replace(/^\/ai-video-generation\//, ""));
     const itemSlug = normalizeToolLookup(item.slug);
     return hrefSlug === normalizedToolSlug || hrefSlug === canonicalToolSlug || itemSlug === normalizedToolSlug || itemSlug === canonicalToolSlug;
   });
@@ -2277,9 +2529,22 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     const blockSlug = toolSlugFromBlock(block);
     return blockSlug === normalizedToolSlug || blockSlug === canonicalToolSlug;
   });
+  const databaseThemeToolBlock = databaseVideoTheme
+    ? {
+        id: `video_theme_${databaseVideoTheme.id}`,
+        type: "tool_card",
+        settings: {
+          title: databaseVideoTheme.name,
+          description: databaseVideoTheme.description,
+          category: databaseVideoTheme.category?.label ?? "AI Video",
+          href: `/ai-video-generation/${databaseVideoTheme.slug}`,
+          imageUrl: databaseVideoTheme.imageUrl ?? ""
+        }
+      } as SectionBlockInstance
+    : undefined;
   const toolBlock = menuTool
     ? toolBlockFromMenuItem(menuTool)
-    : themeToolBlock ?? (explicitAidreamcapesToolSlug ? aidreamcapesToolBlockForSlug(site, canonicalToolSlug) : isAidreamcapes ? undefined : fallbackToolBlockForSlug(canonicalToolSlug));
+    : themeToolBlock ?? databaseThemeToolBlock ?? (explicitAidreamcapesToolSlug ? aidreamcapesToolBlockForSlug(site, canonicalToolSlug) : isAidreamcapes ? undefined : fallbackToolBlockForSlug(canonicalToolSlug));
   const localizedToolBlock = toolBlock ? spanishXbyToolBlockForSite(site, toolBlock) : undefined;
   const basePage = baseToolDetailPageForSite(site, page);
   const synthesizedPage = localizedToolBlock
@@ -2293,7 +2558,7 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     : undefined;
   const matched = isAidreamcapes
     ? !aidreamcapesAliasTarget && Boolean(page || directApp || menuTool || themeToolBlock || explicitAidreamcapesToolSlug)
-    : Boolean(page || directApp || legacyImageApp || toolBlock || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
+    : Boolean(page || directApp || legacyImageApp || databaseVideoTheme || toolBlock || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
   return { siteAiApps, page: synthesizedPage ? { ...basePage, slug: normalizedPageSlug, title: blockString(localizedToolBlock!, "title", basePage.title), publishedJson: synthesizedPage } : basePage, app, matched, resolvedSlug };
 }
 
@@ -2306,6 +2571,8 @@ function renderThemePage({
   navigationCreativePackCategories,
   navigationCreativePacks,
   navigationToolMenuItems,
+  navigationVideoThemeCategories,
+  navigationVideoThemes,
   routeMode,
   runtime,
   settings,
@@ -2320,12 +2587,16 @@ function renderThemePage({
   navigationCreativePackCategories?: SiteRenderData["creativePackCategories"];
   navigationCreativePacks?: SiteRenderData["creativePacks"];
   navigationToolMenuItems?: SiteRenderData["toolMenuItems"];
+  navigationVideoThemeCategories?: SiteRenderData["videoThemeCategories"];
+  navigationVideoThemes?: SiteRenderData["videoThemes"];
   routeMode: "host" | "path";
   runtime: ThemeRuntimeData;
   settings: Site["themeSettings"]["publishedJson"];
   jsonLd?: JsonLdNode[];
   lightweightChrome?: boolean;
 }) {
+  const jsonLdNodes = jsonLd;
+
   return (
     <div style={themeStyleVars(settings)}>
       <ThemeRenderer
@@ -2343,11 +2614,14 @@ function renderThemePage({
         navigationCreativePackCategories={navigationCreativePackCategories}
         navigationCreativePacks={navigationCreativePacks}
         navigationToolMenuItems={navigationToolMenuItems}
+        navigationVideoThemeCategories={navigationVideoThemeCategories}
+        navigationVideoThemes={navigationVideoThemes}
         toolMenuItems={renderData.toolMenuItems}
+        videoThemeCategories={renderData.videoThemeCategories}
         videoThemes={renderData.videoThemes}
         lightweightChrome={lightweightChrome}
       />
-      {jsonLd?.length ? <StorefrontJsonLd nodes={jsonLd} /> : null}
+      {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} /> : null}
     </div>
   );
 }
@@ -2355,6 +2629,7 @@ function renderThemePage({
 export async function renderStorefrontPage({
   site,
   slug,
+  publicPath,
   query = {},
   routeMode = "path",
   state: providedState,
@@ -2362,18 +2637,26 @@ export async function renderStorefrontPage({
 }: {
   site: Site;
   slug: string;
+  publicPath?: string;
   query?: Record<string, string | string[] | undefined>;
   routeMode?: "host" | "path";
   state?: PlatformState;
   deferCustomerRuntime?: boolean;
 }) {
   const shouldDeferCustomerRuntime = deferCustomerRuntime && publicCustomerBootstrapEnabled();
-  const shouldCompletePublicPacks = !(routeMode === "path" && preferLocalPathModeState(site.slug));
+  const shouldCompletePublicPacks = !preferLocalPathModeState(site.slug);
   const state = await getStateForStorefrontRender(site, routeMode, providedState);
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   const collectionCategory = typeof query.category === "string" ? query.category : "";
-  const isFocusedCollectionPage = slug === "/collections" && Boolean(collectionCategory);
+  const collectionRootPath = publicCollectionRootPathForSite(currentSite);
+  const isCollectionDirectoryPage = slug === "/collections" || slug === collectionRootPath;
+  const isFocusedCollectionPage = isCollectionDirectoryPage && Boolean(collectionCategory);
+  const renderPagePath = publicPath ?? (
+    isCollectionDirectoryPage
+      ? publicCollectionPathForSite(currentSite, collectionCategory)
+      : slug
+  );
   const renderData = getSiteRenderData(state, currentSite.id);
   const focusedCollectionRenderData = isFocusedCollectionPage ? trimFocusedCollectionRenderData(renderData, collectionCategory) : renderData;
   const useSharedNavigation = usesSharedDreamShootNavigation(currentSite);
@@ -2385,6 +2668,12 @@ export async function renderStorefrontPage({
     : undefined;
   const navigationToolMenuItems = useSharedNavigation
     ? renderData.toolMenuItems.map(lightweightToolMenuItem)
+    : undefined;
+  const navigationVideoThemeCategories = useSharedNavigation
+    ? renderData.videoThemeCategories
+    : undefined;
+  const navigationVideoThemes = useSharedNavigation
+    ? renderData.videoThemes
     : undefined;
   currentSite.mediaAssets = renderData.mediaAssets;
   const directPage = findPage(currentSite, slug) ?? syntheticStorefrontPolicyPage(currentSite, slug) ?? syntheticDreamShootPartnerPage(currentSite, slug);
@@ -2398,13 +2687,16 @@ export async function renderStorefrontPage({
   const usesDreamShootToolsDirectory =
     slug === "/tools" &&
     (/dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`) || isAidreamcapesStorefront(currentSite));
+  const usesDreamShootVideoGenerationDirectory = slug === "/ai-video-generation" && isPrimaryMydreamshootsStorefront(currentSite);
   const pageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)
+    : usesDreamShootVideoGenerationDirectory
+    ? withDreamShootVideoGenerationDirectoryPage(page.publishedJson)
     : usesDreamShootToolsDirectory
     ? withDreamShootToolsDirectoryPage(page.publishedJson, currentSite)
     : isFocusedCollectionPage
     ? withSeoDirectorySection(page.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
-    : slug === "/collections"
+    : isCollectionDirectoryPage
     ? withDreamShootCollectionsDirectoryPage(page.publishedJson, currentSite)
     : page.publishedJson;
   const renderDataForPage = isFocusedCollectionPage ? focusedCollectionRenderData : renderData;
@@ -2412,36 +2704,47 @@ export async function renderStorefrontPage({
     currentSite,
     pageJson,
     settings,
-    trimRenderDataForPage(renderDataForPage, pageJson, slug)
+    trimRenderDataForPage(renderDataForPage, pageJson, slug, isCollectionDirectoryPage && !isFocusedCollectionPage)
   );
-  if (shouldCompletePublicPacks && slug === "/") {
-    const directoryPackLimit = pageSectionTypes(pageJson).has("dreamshoot_generation_showcase")
-      ? publicDirectoryPackLimit
-      : publicHomePackLimit;
+  const currentPageSectionTypes = pageSectionTypes(pageJson);
+  const currentPageUsesFullMediaGallery = pageUsesFullMediaGallery(pageJson);
+  const pageUsesDirectoryPackLimit = currentPageSectionTypes.has("dreamshoot_generation_showcase") || currentPageSectionTypes.has("dreamshoot_media_gallery") || currentPageSectionTypes.has("dreamshoot_featured_pack");
+  const pageNeedsPublicCreativePacks = !isFocusedCollectionPage && (slug === "/" || isCollectionDirectoryPage || Array.from(currentPageSectionTypes).some((type) => creativePackSectionTypes.has(type)));
+  const pageNeedsPublicVideoThemes = currentPageSectionTypes.has("dreamshoot_generation_showcase") || currentPageSectionTypes.has("dreamshoot_media_gallery");
+  const directoryPackLimit = publicPackLimitForPage({
+    slug,
+    usesFullMediaGallery: currentPageUsesFullMediaGallery,
+    isDirectoryPage: isCollectionDirectoryPage && !isFocusedCollectionPage,
+    hasDirectorySections: pageUsesDirectoryPackLimit
+  });
+  if (shouldCompletePublicPacks && pageNeedsPublicCreativePacks && pageRenderData.creativePacks.length > 0) {
     pageRenderData = {
       ...pageRenderData,
       creativePacks: await completePublicCreativePacksForSite(currentSite, pageRenderData.creativePacks, directoryPackLimit)
     };
   }
-  if (shouldCompletePublicPacks && slug === "/" && !pageRenderData.creativePacks.length) {
-    const directoryPackLimit = pageSectionTypes(pageJson).has("dreamshoot_generation_showcase")
-      ? publicDirectoryPackLimit
-      : publicHomePackLimit;
+  if (shouldCompletePublicPacks && pageNeedsPublicCreativePacks && !pageRenderData.creativePacks.length) {
     pageRenderData = {
       ...pageRenderData,
       creativePacks: (await getStorefrontPublicCreativePacksForSite(currentSite.id, directoryPackLimit)).map((pack) => ({
         ...pack,
         prompt: undefined,
-        galleryImages: (pack.galleryImages ?? []).filter(Boolean).slice(0, 12)
+        galleryImages: (pack.galleryImages ?? []).filter(Boolean).slice(0, 12),
+        galleryImageAlts: (pack.galleryImageAlts ?? []).map((alt) => alt.trim()).slice(0, 12)
       }))
     };
   }
-  if (pageSectionTypes(pageJson).has("dreamshoot_generation_showcase") && !pageRenderData.videoThemes.length) {
+  if (pageNeedsPublicVideoThemes && !pageRenderData.videoThemes.length) {
+    const videoThemeLimit = currentPageSectionTypes.has("dreamshoot_media_gallery")
+      ? currentPageUsesFullMediaGallery ? undefined : publicDirectoryPackLimit
+      : currentPageSectionTypes.has("dreamshoot_generation_showcase")
+      ? 8
+      : 32;
     pageRenderData = {
       ...pageRenderData,
       videoThemes: trimVideoThemesForStorefront(
-        { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite, renderData.videoThemes, 32) },
-        32
+        { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite, renderData.videoThemes, videoThemeLimit) },
+        videoThemeLimit
       )
     };
   }
@@ -2459,11 +2762,13 @@ export async function renderStorefrontPage({
   return renderThemePage({
     currentSite,
     page: pageJson,
-    pagePath: slug,
+    pagePath: renderPagePath,
     query,
     navigationCreativePackCategories,
     navigationCreativePacks,
     navigationToolMenuItems,
+    navigationVideoThemeCategories,
+    navigationVideoThemes,
     renderData: pageRenderData,
     routeMode,
     runtime: runtimeWithAuth,
@@ -2480,7 +2785,7 @@ export async function renderStorefrontPage({
           site: currentSite,
           page,
           pageJson,
-          pagePath: slug,
+          pagePath: renderPagePath,
           routeMode,
           creativePacks: pageRenderData.creativePacks,
           products: state.products,
@@ -2519,6 +2824,7 @@ export async function renderStorefrontSectionNode({
       site={payload.clientSite}
       siteAiApps={payload.renderData.siteAiApps}
       toolMenuItems={payload.renderData.toolMenuItems}
+      videoThemeCategories={payload.renderData.videoThemeCategories ?? []}
       videoThemes={payload.renderData.videoThemes ?? []}
     />
   );
@@ -2540,8 +2846,11 @@ export async function renderStorefrontSectionPayloads({
   const requestedSectionIds = Array.from(new Set(sectionIds.map((sectionId) => sectionId.trim()).filter(Boolean)));
   if (!requestedSectionIds.length) return [];
   const publicSlug = publicSiteSlug(siteSlug);
+  const requestSlug = slug;
+  const internalSlug = internalPageSlugForPublicPath(requestSlug);
+  const requestQuery = queryWithPublicCollectionCategory(requestSlug, query);
   const shouldCompletePublicPacks = !(routeMode === "path" && preferLocalPathModeState(publicSlug));
-  const state = await getPublicSectionStateForRoute(publicSlug, slug, routeMode);
+  const state = await getPublicSectionStateForRoute(publicSlug, internalSlug, routeMode, requestedSectionIds, requestQuery);
   if (!state) return [];
   const currentSite = state.sites.find((item) =>
     item.slug === siteSlug ||
@@ -2552,34 +2861,40 @@ export async function renderStorefrontSectionPayloads({
   const sectionState = state;
   const sectionSite = currentSite;
 
-  const collectionCategory = typeof query.category === "string" ? query.category : "";
-  const isFocusedCollectionPage = slug === "/collections" && Boolean(collectionCategory);
+  const collectionRoute = isCollectionPublicPath(requestSlug) ? parsePublicCollectionRouteForSite(currentSite, requestSlug) : undefined;
+  if (isCollectionPublicPath(requestSlug) && !collectionRoute) return [];
+  const collectionCategory = collectionRoute?.collectionSlug ?? (typeof requestQuery.category === "string" ? requestQuery.category : "");
+  const renderPagePath = collectionRoute?.canonicalPath ?? requestSlug;
+  const isFocusedCollectionPage = internalSlug === "/collections" && Boolean(collectionCategory);
   const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
-  const toolDetailSlug = slug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
+  const toolDetailSlug = internalSlug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
   const resolvedToolDetail = toolDetailSlug
     ? resolveToolPageForSite(state, currentSite, toolDetailSlug, renderData.siteAiApps, renderData.creativePacks)
     : undefined;
   const directPage = resolvedToolDetail?.matched
     ? resolvedToolDetail.page
-    : findPage(currentSite, slug) ?? syntheticStorefrontPolicyPage(currentSite, slug) ?? syntheticDreamShootPartnerPage(currentSite, slug);
+    : findPage(currentSite, internalSlug) ?? syntheticStorefrontPolicyPage(currentSite, internalSlug) ?? syntheticDreamShootPartnerPage(currentSite, internalSlug);
   if (!directPage) return [];
   if (isFocusedCollectionPage) {
-    currentSite.pages = currentSite.pages.filter((item) => item.slug === slug || item.slug === "/404");
+    currentSite.pages = currentSite.pages.filter((item) => item.slug === internalSlug || item.slug === "/404");
   }
 
   const usesDreamShootToolsDirectory =
-    slug === "/tools" &&
+    internalSlug === "/tools" &&
     (/dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`) || isAidreamcapesStorefront(currentSite));
-  const pageJson: ThemePageJson = slug === "/account"
+  const usesDreamShootVideoGenerationDirectory = internalSlug === "/ai-video-generation" && isPrimaryMydreamshootsStorefront(currentSite);
+  const pageJson: ThemePageJson = internalSlug === "/account"
     ? withAccountDashboardPage(directPage.publishedJson)
     : toolDetailSlug && resolvedToolDetail?.matched
     ? withSeoDirectorySection(directPage.publishedJson, "tool", toolDetailSlug, { site: currentSite })
+    : usesDreamShootVideoGenerationDirectory
+    ? withDreamShootVideoGenerationDirectoryPage(directPage.publishedJson)
     : usesDreamShootToolsDirectory
     ? withDreamShootToolsDirectoryPage(directPage.publishedJson, currentSite)
     : isFocusedCollectionPage
     ? withSeoDirectorySection(directPage.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
-    : slug === "/collections"
+    : internalSlug === "/collections"
     ? withDreamShootCollectionsDirectoryPage(directPage.publishedJson, currentSite)
     : directPage.publishedJson;
 
@@ -2591,10 +2906,10 @@ export async function renderStorefrontSectionPayloads({
       runtimeByMode.set("empty", runtimeByMode.get("empty") ?? Promise.resolve(runtimeWithEmptyCollections()));
       return runtimeByMode.get("empty");
     }
-    const needsCustomerRuntime = customerRuntimeSectionTypes.has(section.type) || slug === "/account" || slug.startsWith("/app/");
+    const needsCustomerRuntime = customerRuntimeSectionTypes.has(section.type) || internalSlug === "/account" || internalSlug.startsWith("/app/");
     if (!needsCustomerRuntime) return undefined;
     sectionSessionId ??= await readCustomerSessionId(sectionSite.id);
-    if (pageNeedsFullCustomerRuntime(singleSectionPageJson, slug)) {
+    if (pageNeedsFullCustomerRuntime(singleSectionPageJson, internalSlug)) {
       runtimeByMode.set("full", runtimeByMode.get("full") ?? getFullCustomerRuntime(sectionState, sectionSite.id, sectionSessionId));
       return runtimeByMode.get("full");
     }
@@ -2620,12 +2935,15 @@ export async function renderStorefrontSectionPayloads({
           ? trimToolDetailRenderData(renderData)
           : renderData,
         pageJson,
-        slug,
+        internalSlug,
         sectionId
       )
     );
-    if (shouldCompletePublicPacks && (slug === "/" || (slug === "/collections" && !isFocusedCollectionPage)) && pageRenderData.creativePacks.length > 0) {
-      const directoryPackLimit = slug === "/" && section.type !== "dreamshoot_generation_showcase"
+    if (shouldCompletePublicPacks && (internalSlug === "/" || (internalSlug === "/collections" && !isFocusedCollectionPage) || creativePackSectionTypes.has(section.type)) && pageRenderData.creativePacks.length > 0) {
+      const sectionFullMediaGallery = sectionUsesFullMediaGallery(section);
+      const directoryPackLimit = sectionFullMediaGallery
+        ? undefined
+        : internalSlug === "/"
         ? publicHomePackLimit
         : publicDirectoryPackLimit;
       pageRenderData = {
@@ -2639,12 +2957,22 @@ export async function renderStorefrontSectionPayloads({
         videoThemes: trimVideoThemesForStorefront({ ...emptySiteRenderData(), videoThemes: pageRenderData.videoThemes }, 8, section)
       };
     }
-    if (section.type === "dreamshoot_generation_showcase" && !pageRenderData.videoThemes.length) {
+    if (section.type === "dreamshoot_media_gallery" && pageRenderData.videoThemes.length) {
+      const videoThemeLimit = sectionUsesFullMediaGallery(section) ? undefined : publicDirectoryPackLimit;
+      pageRenderData = {
+        ...pageRenderData,
+        videoThemes: trimVideoThemesForStorefront({ ...emptySiteRenderData(), videoThemes: pageRenderData.videoThemes }, videoThemeLimit, section)
+      };
+    }
+    if ((section.type === "dreamshoot_generation_showcase" || section.type === "dreamshoot_media_gallery") && !pageRenderData.videoThemes.length) {
+      const videoThemeLimit = section.type === "dreamshoot_media_gallery"
+        ? sectionUsesFullMediaGallery(section) ? undefined : publicDirectoryPackLimit
+        : 8;
       pageRenderData = {
         ...pageRenderData,
         videoThemes: trimVideoThemesForStorefront(
-          { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite, renderData.videoThemes, 32) },
-          8,
+          { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite, renderData.videoThemes, videoThemeLimit) },
+          videoThemeLimit,
           section
         )
       };
@@ -2653,11 +2981,11 @@ export async function renderStorefrontSectionPayloads({
     currentSite.mediaAssets = pageRenderData.mediaAssets;
 
     const runtime = await runtimeForSection(singleSectionPageJson, section);
-    const routedSite = clientSiteForSectionRender(currentSite, singleSectionPageJson, slug) as Site & { __storefrontBasePath?: string };
+    const routedSite = clientSiteForSectionRender(currentSite, singleSectionPageJson, internalSlug) as Site & { __storefrontBasePath?: string };
     routedSite.__storefrontBasePath = routeMode === "host" ? "" : `/site/${publicSiteSlug(currentSite.slug)}`;
     const renderContext = {
-      pagePath: slug,
-      query,
+      pagePath: renderPagePath,
+      query: requestQuery,
       page: pageJson,
       pages: pageNeedsSearchEntries(pageJson) ? searchPageEntriesForSite(routedSite) : []
     };
@@ -2667,13 +2995,14 @@ export async function renderStorefrontSectionPayloads({
       component: "ThemeSectionFrame",
       id: sectionId,
       mode: "published",
-      pagePath: slug,
+      pagePath: renderPagePath,
       renderData: {
         creativePackCategories: pageRenderData.creativePackCategories,
         creativePacks: pageRenderData.creativePacks,
         products: pageRenderData.products,
         siteAiApps: pageRenderData.siteAiApps,
         toolMenuItems: pageRenderData.toolMenuItems,
+        videoThemeCategories: pageRenderData.videoThemeCategories,
         videoThemes: pageRenderData.videoThemes
       },
       renderContext,
@@ -2700,8 +3029,11 @@ export async function renderStorefrontSectionPayload({
   routeMode?: "host" | "path";
 }): Promise<StorefrontSectionPayload | undefined> {
   const publicSlug = publicSiteSlug(siteSlug);
+  const requestSlug = slug;
+  const internalSlug = internalPageSlugForPublicPath(requestSlug);
+  const requestQuery = queryWithPublicCollectionCategory(requestSlug, query);
   const shouldCompletePublicPacks = !(routeMode === "path" && preferLocalPathModeState(publicSlug));
-  const state = await getPublicSectionStateForRoute(publicSlug, slug, routeMode);
+  const state = await getPublicSectionStateForRoute(publicSlug, internalSlug, routeMode, [sectionId], requestQuery);
   if (!state) return undefined;
   const currentSite = state.sites.find((item) =>
     item.slug === siteSlug ||
@@ -2710,26 +3042,29 @@ export async function renderStorefrontSectionPayload({
   );
   if (!currentSite) return undefined;
 
-  const collectionCategory = typeof query.category === "string" ? query.category : "";
-  const isFocusedCollectionPage = slug === "/collections" && Boolean(collectionCategory);
+  const collectionRoute = isCollectionPublicPath(requestSlug) ? parsePublicCollectionRouteForSite(currentSite, requestSlug) : undefined;
+  if (isCollectionPublicPath(requestSlug) && !collectionRoute) return undefined;
+  const collectionCategory = collectionRoute?.collectionSlug ?? (typeof requestQuery.category === "string" ? requestQuery.category : "");
+  const renderPagePath = collectionRoute?.canonicalPath ?? requestSlug;
+  const isFocusedCollectionPage = internalSlug === "/collections" && Boolean(collectionCategory);
   const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
-  const toolDetailSlug = slug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
+  const toolDetailSlug = internalSlug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
   const resolvedToolDetail = toolDetailSlug
     ? resolveToolPageForSite(state, currentSite, toolDetailSlug, renderData.siteAiApps, renderData.creativePacks)
     : undefined;
   const directPage = resolvedToolDetail?.matched
     ? resolvedToolDetail.page
-    : findPage(currentSite, slug) ?? syntheticStorefrontPolicyPage(currentSite, slug) ?? syntheticDreamShootPartnerPage(currentSite, slug);
+    : findPage(currentSite, internalSlug) ?? syntheticStorefrontPolicyPage(currentSite, internalSlug) ?? syntheticDreamShootPartnerPage(currentSite, internalSlug);
   if (!directPage) return undefined;
   if (isFocusedCollectionPage) {
-    currentSite.pages = currentSite.pages.filter((item) => item.slug === slug || item.slug === "/404");
+    currentSite.pages = currentSite.pages.filter((item) => item.slug === internalSlug || item.slug === "/404");
   }
 
   const usesDreamShootToolsDirectory =
-    slug === "/tools" &&
+    internalSlug === "/tools" &&
     (/dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`) || isAidreamcapesStorefront(currentSite));
-  const pageJson: ThemePageJson = slug === "/account"
+  const pageJson: ThemePageJson = internalSlug === "/account"
     ? withAccountDashboardPage(directPage.publishedJson)
     : toolDetailSlug && resolvedToolDetail?.matched
     ? withSeoDirectorySection(directPage.publishedJson, "tool", toolDetailSlug, { site: currentSite })
@@ -2737,7 +3072,7 @@ export async function renderStorefrontSectionPayload({
     ? withDreamShootToolsDirectoryPage(directPage.publishedJson, currentSite)
     : isFocusedCollectionPage
     ? withSeoDirectorySection(directPage.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
-    : slug === "/collections"
+    : internalSlug === "/collections"
     ? withDreamShootCollectionsDirectoryPage(directPage.publishedJson, currentSite)
     : directPage.publishedJson;
   const section = (pageJson.sections as Record<string, SectionInstance>)[sectionId];
@@ -2758,12 +3093,15 @@ export async function renderStorefrontSectionPayload({
         ? trimToolDetailRenderData(renderData)
         : renderData,
       pageJson,
-      slug,
+      internalSlug,
       sectionId
     )
   );
-  if (shouldCompletePublicPacks && (slug === "/" || (slug === "/collections" && !isFocusedCollectionPage)) && pageRenderData.creativePacks.length > 0) {
-    const directoryPackLimit = slug === "/" && section.type !== "dreamshoot_generation_showcase"
+  if (shouldCompletePublicPacks && (internalSlug === "/" || (internalSlug === "/collections" && !isFocusedCollectionPage) || creativePackSectionTypes.has(section.type)) && pageRenderData.creativePacks.length > 0) {
+    const sectionFullMediaGallery = sectionUsesFullMediaGallery(section);
+    const directoryPackLimit = sectionFullMediaGallery
+      ? undefined
+      : internalSlug === "/"
       ? publicHomePackLimit
       : publicDirectoryPackLimit;
     pageRenderData = {
@@ -2777,12 +3115,22 @@ export async function renderStorefrontSectionPayload({
       videoThemes: trimVideoThemesForStorefront({ ...emptySiteRenderData(), videoThemes: pageRenderData.videoThemes }, 8, section)
     };
   }
-  if (section.type === "dreamshoot_generation_showcase" && !pageRenderData.videoThemes.length) {
+  if (section.type === "dreamshoot_media_gallery" && pageRenderData.videoThemes.length) {
+    const videoThemeLimit = sectionUsesFullMediaGallery(section) ? undefined : publicDirectoryPackLimit;
+    pageRenderData = {
+      ...pageRenderData,
+      videoThemes: trimVideoThemesForStorefront({ ...emptySiteRenderData(), videoThemes: pageRenderData.videoThemes }, videoThemeLimit, section)
+    };
+  }
+  if ((section.type === "dreamshoot_generation_showcase" || section.type === "dreamshoot_media_gallery") && !pageRenderData.videoThemes.length) {
+    const videoThemeLimit = section.type === "dreamshoot_media_gallery"
+      ? sectionUsesFullMediaGallery(section) ? undefined : publicDirectoryPackLimit
+      : 8;
     pageRenderData = {
       ...pageRenderData,
       videoThemes: trimVideoThemesForStorefront(
-        { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite, renderData.videoThemes, 32) },
-        8,
+        { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite, renderData.videoThemes, videoThemeLimit) },
+        videoThemeLimit,
         section
       )
     };
@@ -2790,20 +3138,20 @@ export async function renderStorefrontSectionPayload({
   pageRenderData = withPageMediaAssets(currentSite, singleSectionPageJson, settings, pageRenderData);
   currentSite.mediaAssets = pageRenderData.mediaAssets;
 
-  const needsCustomerRuntime = customerRuntimeSectionTypes.has(section.type) || slug === "/account" || slug.startsWith("/app/");
+  const needsCustomerRuntime = customerRuntimeSectionTypes.has(section.type) || internalSlug === "/account" || internalSlug.startsWith("/app/");
   const sessionId = needsCustomerRuntime ? await readCustomerSessionId(currentSite.id) : undefined;
   const runtime = toolDetailSlug
     ? runtimeWithEmptyCollections()
     : needsCustomerRuntime
-    ? sessionId && pageNeedsFullCustomerRuntime(singleSectionPageJson, slug)
+    ? sessionId && pageNeedsFullCustomerRuntime(singleSectionPageJson, internalSlug)
       ? await getFullCustomerRuntime(state, currentSite.id, sessionId)
       : await getLightCustomerRuntime(state, currentSite.id, sessionId)
     : undefined;
-  const routedSite = clientSiteForSectionRender(currentSite, singleSectionPageJson, slug) as Site & { __storefrontBasePath?: string };
+  const routedSite = clientSiteForSectionRender(currentSite, singleSectionPageJson, internalSlug) as Site & { __storefrontBasePath?: string };
   routedSite.__storefrontBasePath = routeMode === "host" ? "" : `/site/${publicSiteSlug(currentSite.slug)}`;
   const renderContext = {
-    pagePath: slug,
-    query,
+    pagePath: renderPagePath,
+    query: requestQuery,
     page: pageJson,
     pages: pageNeedsSearchEntries(pageJson) ? searchPageEntriesForSite(routedSite) : []
   };
@@ -2813,13 +3161,14 @@ export async function renderStorefrontSectionPayload({
     component: "ThemeSectionFrame",
     id: sectionId,
     mode: "published",
-    pagePath: slug,
+    pagePath: renderPagePath,
     renderData: {
       creativePackCategories: pageRenderData.creativePackCategories,
       creativePacks: pageRenderData.creativePacks,
       products: pageRenderData.products,
       siteAiApps: pageRenderData.siteAiApps,
       toolMenuItems: pageRenderData.toolMenuItems,
+      videoThemeCategories: pageRenderData.videoThemeCategories,
       videoThemes: pageRenderData.videoThemes
     },
     renderContext,
@@ -2832,13 +3181,16 @@ export async function renderStorefrontSectionPayload({
 
 function syntheticDreamShootPartnerPage(site: Site, slug: string): ThemePage | undefined {
   if (!dreamshootPartnerTemplateSlugs.has(slug)) return undefined;
-  if (!(/dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`) || isAidreamcapesStorefront(site))) return undefined;
+  if (!usesSharedDreamShootNavigation(site)) return undefined;
   const templateKey =
     slug === "/workflow" ? "workflow" :
     slug === "/faq" ? "help" :
     slug === "/partner-registration" ? "partner-registration" :
     slug === "/about-us" ? "about-us" :
     slug === "/contact-us" ? "contact-us" :
+    slug === "/best-packages" ? "best-packages" :
+    slug === "/best-ai-image" ? "best-ai-image" :
+    slug === "/best-ai-video" ? "best-ai-video" :
     "creators-circle";
   const pageJson = dreamshootAiStudioTemplatesForSite(site)[templateKey];
   return {
@@ -2853,6 +3205,9 @@ function syntheticDreamShootPartnerPage(site: Site, slug: string): ThemePage | u
       templateKey === "partner-registration" ? "Partner Registration" :
       templateKey === "about-us" ? "About Us" :
       templateKey === "contact-us" ? "Contact Us" :
+      templateKey === "best-packages" ? "Best Packages" :
+      templateKey === "best-ai-image" ? "Best AI image" :
+      templateKey === "best-ai-video" ? "Best AI video" :
       "Creators Circle",
     draftJson: pageJson,
     publishedJson: pageJson
@@ -2870,7 +3225,9 @@ export async function renderStorefrontLoginPage({
   routeMode?: "host" | "path";
   state?: PlatformState;
 }) {
-  const state = await getStateForStorefrontRender(site, routeMode, providedState);
+  const state = providedState
+    ?? (routeMode === "path" ? await readPathModePublicRuntimeState(publicSiteSlug(site.slug), "/login") : undefined)
+    ?? await getStateForStorefrontRender(site, routeMode);
   const currentSite = state.sites.find((item) => item.id === site.id);
   if (!currentSite) notFound();
   const page = getPage(currentSite, "/login");
@@ -2888,7 +3245,8 @@ export async function renderStorefrontLoginPage({
       ...emptySiteRenderData(),
       creativePackCategories: renderData.creativePackCategories,
       creativePacks: renderData.creativePacks,
-      toolMenuItems: renderData.toolMenuItems
+      toolMenuItems: renderData.toolMenuItems,
+      videoThemeCategories: renderData.videoThemeCategories
     },
     routeMode,
     runtime: runtimeWithEmptyCollections({
@@ -2923,6 +3281,24 @@ export async function renderCustomerWorkspacePage({
 
   const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
+  if (slug === "/account") {
+    const [bootstrap, accountRuntime] = await Promise.all([
+      getCustomerWorkspaceBootstrapRelational(currentSite.slug),
+      getCustomerAccountSummaryRuntimeRelational({ customer: current.customer, siteId: currentSite.id })
+    ]);
+    return (
+      <CustomerAccountClientPage
+        initialCreativePackCategories={bootstrap?.creativePackCategories ?? []}
+        initialCreativePacks={bootstrap?.creativePacks ?? []}
+        initialCustomer={accountRuntime.customer ?? current.customer}
+        initialRuntime={accountRuntime}
+        initialSite={currentSite}
+        initialToolMenuItems={bootstrap?.toolMenuItems ?? []}
+        initialVideoThemeCategories={bootstrap?.videoThemeCategories ?? []}
+        siteSlug={publicSiteSlug(currentSite.slug)}
+      />
+    );
+  }
   const page = getPage(currentSite, slug);
   const settings = currentSite.themeSettings.publishedJson;
   const adminAccess = await getCustomerAdminAccessForSite({ siteId: currentSite.id, customer: current.customer });
@@ -2980,7 +3356,7 @@ export async function renderCustomerWorkspacePageBySlug({
   }
   if (slug === "/account") {
     const siteId = await getSiteIdBySlugRelational(canonicalSlug);
-    if (!siteId) notFound();
+    if (!siteId) redirect(loginPathWithNext);
     const sessionId = await readCustomerSessionId(siteId);
     if (!sessionId) redirect(loginPathWithNext);
     const [current, site, bootstrap] = await Promise.all([
@@ -2998,6 +3374,7 @@ export async function renderCustomerWorkspacePageBySlug({
         initialRuntime={accountRuntime}
         initialSite={site}
         initialToolMenuItems={bootstrap?.toolMenuItems ?? []}
+        initialVideoThemeCategories={bootstrap?.videoThemeCategories ?? []}
         siteSlug={routeSlug}
       />
     );
@@ -3005,7 +3382,7 @@ export async function renderCustomerWorkspacePageBySlug({
 
   if (isWorkspaceRoute) {
     const siteId = await getSiteIdBySlugRelational(canonicalSlug);
-    if (!siteId) notFound();
+    if (!siteId) redirect(loginPathWithNext);
     const sessionId = await readCustomerSessionId(siteId);
     if (!sessionId) redirect(loginPathWithNext);
     const current = await getCustomerBySessionRelational({ siteId, sessionId });
@@ -3042,7 +3419,11 @@ export async function renderCustomerWorkspacePageBySlug({
           customer: current.customer,
           ...(initialWorkspaceRuntime ? { workspaceRuntime: initialWorkspaceRuntime } : {})
         }}
-        initialCreativePackId={resolveInitialCreativePackId(typeof query.pack === "string" ? query.pack : undefined, bootstrap.creativePacks)}
+        initialCreativePackId={resolveInitialCreativePackId(
+          typeof query.pack === "string" ? query.pack : undefined,
+          bootstrap.creativePacks,
+          typeof query.category === "string" ? query.category : undefined
+        )}
         initialPanel={initialWorkspacePanel}
         initialToolId={typeof query.tool_id === "string" ? query.tool_id : undefined}
         siteSlug={routeSlug}
@@ -3146,6 +3527,7 @@ export async function renderCustomerJobDetailPage({
 export async function renderToolPage({
   site,
   toolSlug,
+  publicPath,
   query = {},
   routeMode = "path",
   state: providedState,
@@ -3153,6 +3535,7 @@ export async function renderToolPage({
 }: {
   site: Site;
   toolSlug: string;
+  publicPath?: string;
   query?: Record<string, string | string[] | undefined>;
   routeMode?: "host" | "path";
   state?: PlatformState;
@@ -3172,7 +3555,12 @@ export async function renderToolPage({
   const settings = currentSite.themeSettings.publishedJson;
   const normalizedToolSlug = normalizeToolLookup(toolSlug);
   const pageHasToolEntry = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "ai_tool_entry");
-  const basePageJson = pageHasToolEntry
+  const pageHasTalkingPhotoLanding = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "talking_photo_landing");
+  const pageHasAiVideoTopicLanding = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "ai_video_topic_landing");
+  const pageHasDedicatedVideoLanding = pageHasTalkingPhotoLanding || pageHasAiVideoTopicLanding;
+  const basePageJson = pageHasDedicatedVideoLanding
+    ? page.publishedJson
+    : pageHasToolEntry
     ? withToolEntryFirst(page.publishedJson)
     : (() => {
         const fallbackBlock = isAidreamcapesStorefront(currentSite)
@@ -3188,7 +3576,9 @@ export async function renderToolPage({
           currentSite
         ));
       })();
-  const pageJson = withSeoDirectorySection(basePageJson, "tool", toolSlug, { site: currentSite });
+  const pageJson = pageHasDedicatedVideoLanding
+    ? basePageJson
+    : withSeoDirectorySection(basePageJson, "tool", toolSlug, { site: currentSite });
   const pageRenderData = withPageMediaAssets(
     currentSite,
     pageJson,
@@ -3199,11 +3589,13 @@ export async function renderToolPage({
   return renderThemePage({
     currentSite,
     page: pageJson,
-    pagePath: page.slug,
+    pagePath: publicPath ?? page.slug,
     query,
     navigationCreativePackCategories: trimCreativePackCategoriesForStorefront(renderData),
     navigationCreativePacks: trimCreativePacksForNavigation(renderData),
     navigationToolMenuItems: renderData.toolMenuItems.map(lightweightToolMenuItem),
+    navigationVideoThemeCategories: renderData.videoThemeCategories,
+    navigationVideoThemes: renderData.videoThemes,
     renderData: pageRenderData,
     routeMode,
     runtime: runtimeWithEmptyCollections(),
@@ -3211,7 +3603,9 @@ export async function renderToolPage({
     jsonLd: buildToolDirectoryJsonLd({
       site: currentSite,
       toolSlug,
-      routeMode
+      publicPath,
+      routeMode,
+      pageJson
     })
   });
 }

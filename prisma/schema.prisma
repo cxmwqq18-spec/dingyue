@@ -157,6 +157,7 @@ model Site {
   admins                 SiteAdmin[]
   adminSessions          SiteAdminSession[]
   customers              Customer[]
+  customerProfiles       CustomerProfile[]
   customerSessions       CustomerSession[]
   emailVerifications     CustomerEmailVerification[]
   products               Product[]
@@ -181,11 +182,13 @@ model Site {
   creativePacks          CreativePack[]
   videoThemeCategories   VideoThemeCategory[]
   videoThemes            VideoTheme[]
+  videoThemeSlugRedirects VideoThemeSlugRedirect[]
   mediaAssets            MediaAsset[]
   customerModels         CustomerModel[]
   albums                 Album[]
   jobs                   GenerationJob[]
   uploads                AssetUpload[]
+  customerDownloads      CustomerAssetDownload[]
   auditLogs              AuditLog[]
   partnerApplications    PartnerApplication[]
   emailConfigAssignment  SiteEmailConfigAssignment?
@@ -254,12 +257,14 @@ model Customer {
   updatedAt     DateTime          @updatedAt
   site          Site              @relation(fields: [siteId], references: [id], onDelete: Cascade)
   sessions      CustomerSession[]
+  profile       CustomerProfile?
   subscriptions Subscription[]
   orders        Order[]
   ledger        CreditLedger[]
   balance       CreditBalance?
   jobs          GenerationJob[]
   uploads       AssetUpload[]
+  downloads     CustomerAssetDownload[]
   models        CustomerModel[]
   albums        Album[]
 
@@ -267,6 +272,21 @@ model Customer {
   @@index([siteId, status])
   @@index([siteId, createdAt])
   @@index([siteId, status, createdAt])
+}
+
+model CustomerProfile {
+  id            String       @id
+  siteId        String
+  customerId    String       @unique
+  avatarAssetId String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  site          Site         @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer      Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  avatarAsset   AssetUpload? @relation("CustomerProfileAvatarAsset", fields: [avatarAssetId], references: [id], onDelete: SetNull)
+
+  @@index([siteId])
+  @@index([siteId, avatarAssetId])
 }
 
 model CustomerSession {
@@ -707,6 +727,7 @@ model CreativePack {
   conversionRate   Float                 @default(0)
   imageUrl         String?
   galleryImages    Json?
+  galleryImageAlts Json?
   createdAt        DateTime              @default(now())
   updatedAt        DateTime              @updatedAt
   site             Site                  @relation(fields: [siteId], references: [id], onDelete: Cascade)
@@ -760,15 +781,17 @@ model VideoTheme {
   durationSeconds Int                 @default(6)
   maxFrames       Int                 @default(30)
   generationCount Int                 @default(0)
+  sortOrder       Int                 @default(0)
   imageUrl        String?
   galleryImages   Json?
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
   site            Site                @relation(fields: [siteId], references: [id], onDelete: Cascade)
   category        VideoThemeCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  slugRedirects   VideoThemeSlugRedirect[]
 
   @@unique([siteId, slug])
-  @@index([siteId, status])
+  @@index([siteId, status, sortOrder])
   @@index([siteId, categoryId])
   @@index([siteId, status, createdAt])
 }
@@ -779,6 +802,8 @@ model VideoThemeCategory {
   slug        String
   label       String
   description String?
+  icon        String?
+  accentColor String?
   imageUrl    String?
   sortOrder   Int          @default(0)
   status      String       @default("active")
@@ -790,6 +815,19 @@ model VideoThemeCategory {
   @@unique([siteId, slug])
   @@index([siteId, sortOrder])
   @@index([siteId, status])
+}
+
+model VideoThemeSlugRedirect {
+  id        String      @id
+  siteId    String
+  themeId   String?
+  oldSlug   String
+  createdAt DateTime    @default(now())
+  site      Site        @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  theme     VideoTheme? @relation(fields: [themeId], references: [id], onDelete: SetNull)
+
+  @@unique([siteId, oldSlug])
+  @@index([siteId, themeId])
 }
 
 model CustomerModel {
@@ -834,6 +872,7 @@ model Album {
   sourceJob      GenerationJob? @relation(fields: [sourceJobId], references: [id])
   creativePack   CreativePack?  @relation(fields: [creativePackId], references: [id])
   coverAsset     AssetUpload?   @relation("AlbumCoverAsset", fields: [coverAssetId], references: [id])
+  downloads      CustomerAssetDownload[]
 
   @@index([siteId, customerId, status])
   @@index([siteId, customerId, updatedAt])
@@ -867,6 +906,8 @@ model AssetUpload {
   customerModel    CustomerModel? @relation(fields: [customerModelId], references: [id])
   job              GenerationJob? @relation(fields: [jobId], references: [id])
   albumCovers      Album[]        @relation("AlbumCoverAsset")
+  profileAvatars   CustomerProfile[] @relation("CustomerProfileAvatarAsset")
+  downloads         CustomerAssetDownload[]
 
   @@index([siteId, storageKey])
   @@index([siteId, customerId, role])
@@ -877,6 +918,28 @@ model AssetUpload {
   @@index([siteId, role, deletedAt, createdAt])
   @@index([siteId, customerId, createdAt])
   @@index([siteId, createdAt])
+}
+
+model CustomerAssetDownload {
+  id         String         @id
+  siteId     String
+  customerId String
+  assetId    String
+  jobId      String?
+  albumId    String?
+  source     String         @default("asset")
+  createdAt  DateTime       @default(now())
+  site       Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer   Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  asset      AssetUpload    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  job        GenerationJob? @relation(fields: [jobId], references: [id])
+  album      Album?         @relation(fields: [albumId], references: [id])
+
+  @@index([siteId, customerId, createdAt])
+  @@index([siteId, customerId, assetId, createdAt])
+  @@index([siteId, assetId])
+  @@index([siteId, jobId])
+  @@index([siteId, albumId])
 }
 
 model PartnerApplication {
@@ -926,6 +989,7 @@ model GenerationJob {
   aiApp           AiApp         @relation(fields: [aiAppId], references: [id])
   uploads         AssetUpload[]
   albums          Album[]
+  downloads       CustomerAssetDownload[]
 
   @@index([siteId, customerId, createdAt])
   @@index([siteId, customerId, updatedAt])
@@ -956,4 +1020,25 @@ model AuditLog {
   @@index([actorType, actorId])
   @@index([targetType, targetId])
   @@index([createdAt])
+}
+
+model DeploymentRelease {
+  id                String    @id
+  releaseId         String
+  environment       String
+  siteId            String
+  codeCommit        String
+  manifestHash      String
+  schemaMigrations  Json
+  contentMigrations Json
+  scope             Json
+  status            String
+  details           Json?
+  appliedAt         DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@unique([environment, siteId, releaseId])
+  @@index([environment, siteId, appliedAt])
+  @@index([manifestHash])
 }

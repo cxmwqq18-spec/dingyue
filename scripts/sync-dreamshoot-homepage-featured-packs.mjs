@@ -7,6 +7,8 @@ import { PrismaClient } from "@prisma/client";
 const repoRoot = process.cwd();
 const statePath = path.join(repoRoot, "data", "platform-state.json");
 const orderedFeaturedIds = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
+const homepageFeaturedId = "featured_thanksgiving_1";
+const homepageRemovedFeaturedIds = ["featured_pack_1", "featured_christmas_1"];
 const additionalFeaturedIds = ["featured_christmas_1", "featured_thanksgiving_1"];
 const assetVersion = "20260801visualfix1";
 const dreamshootFeaturedCoverImages = {
@@ -34,7 +36,8 @@ for (let index = 0; index < rawArgs.length; index += 1) {
   }
 }
 
-const dryRun = flags.has("dry-run");
+const forceContentOverwrite = flags.has("force-content-overwrite") || ["1", "true", "yes"].includes(String(args.get("force-content-overwrite") ?? "").toLowerCase());
+const dryRun = flags.has("dry-run") || !forceContentOverwrite;
 const updateDb = flags.has("db");
 const selectedStores = new Set(
   String(args.get("stores") ?? args.get("store") ?? "")
@@ -76,7 +79,7 @@ function dreamshootFeaturedSections() {
         primaryCta: "Create Christmas Photos",
         primaryHref: "/login",
         secondaryCta: "View Christmas Photos",
-        secondaryHref: "/collections/christmas-photos",
+        secondaryHref: "/ai-image-generation/christmas-photo",
         photos: "Holiday cards",
         credits: "20 credits",
         privacy: "Private album",
@@ -91,12 +94,12 @@ function dreamshootFeaturedSections() {
         nextCampaignLabel: "Next: Thanksgiving / Halloween / Seasonal"
       },
       [
-      block("seasonal_christmas_1", "seasonal_image", { label: "Christmas Portraits", meta: "Card-ready mood", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp"), collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_2", "seasonal_image", { label: "Greeting Card Scene", meta: "Festive group crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp"), collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_3", "seasonal_image", { label: "Cozy Couple", meta: "Warm keepsake", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-04.webp"), collectionSlug: "christmas-couple", shape: "square" }),
-      block("seasonal_christmas_4", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/christmas-photos/christmas-photos-cover.webp"), collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_5", "seasonal_image", { label: "Seasonal Album", meta: "Family-style glow", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-08.webp"), collectionSlug: "christmas-photos", shape: "square" }),
-      block("seasonal_christmas_6", "seasonal_image", { label: "Giftable Keepsake", meta: "Social-ready crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-05.webp"), collectionSlug: "christmas-couple", shape: "square" })
+      block("seasonal_christmas_1", "seasonal_image", { label: "Christmas Portraits", meta: "Card-ready mood", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-06.webp"), collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_2", "seasonal_image", { label: "Greeting Card Scene", meta: "Festive group crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-07.webp"), collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_3", "seasonal_image", { label: "Cozy Couple", meta: "Warm keepsake", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-04.webp"), collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_4", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/christmas-photos/christmas-photos-cover.webp"), collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_5", "seasonal_image", { label: "Seasonal Album", meta: "Family-style glow", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-08.webp"), collectionSlug: "christmas-photo", shape: "square" }),
+      block("seasonal_christmas_6", "seasonal_image", { label: "Giftable Keepsake", meta: "Social-ready crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-05.webp"), collectionSlug: "christmas-photo", shape: "square" })
       ]
     ),
     featured_thanksgiving_1: section(
@@ -110,7 +113,7 @@ function dreamshootFeaturedSections() {
         primaryCta: "Create Thanksgiving Photos",
         primaryHref: "/login",
         secondaryCta: "View Thanksgiving Photos",
-        secondaryHref: "/collections/thanksgiving-group-photos",
+        secondaryHref: "/ai-image-generation/thanksgiving-photo",
         photos: "Group portraits",
         credits: "20 credits",
         privacy: "Private gallery",
@@ -125,12 +128,12 @@ function dreamshootFeaturedSections() {
         nextCampaignLabel: "Next: Christmas / Halloween / Seasonal"
       },
       [
-      block("seasonal_thanksgiving_1", "seasonal_image", { label: "Dinner Portraits", meta: "Warm table scene", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_2", "seasonal_image", { label: "Friendsgiving Set", meta: "Group-friendly crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_3", "seasonal_image", { label: "Gratitude Card", meta: "Seasonal note", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_4", "seasonal_image", { label: "Keepsake Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_5", "seasonal_image", { label: "Family-style Album", meta: "Harvest warmth", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" }),
-      block("seasonal_thanksgiving_6", "seasonal_image", { label: "Host Story", meta: "Download-ready image", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp"), collectionSlug: "thanksgiving-group-photos", shape: "square" })
+      block("seasonal_thanksgiving_1", "seasonal_image", { label: "Dinner Portraits", meta: "Warm table scene", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-05.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_2", "seasonal_image", { label: "Friendsgiving Set", meta: "Group-friendly crop", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-06.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_3", "seasonal_image", { label: "Gratitude Card", meta: "Seasonal note", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-07.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_4", "seasonal_image", { label: "Keepsake Cover", meta: "Private album art", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_5", "seasonal_image", { label: "Family-style Album", meta: "Harvest warmth", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-08.webp"), collectionSlug: "thanksgiving-photo", shape: "square" }),
+      block("seasonal_thanksgiving_6", "seasonal_image", { label: "Host Story", meta: "Download-ready image", imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-09.webp"), collectionSlug: "thanksgiving-photo", shape: "square" })
       ]
     )
   };
@@ -232,12 +235,12 @@ const stores = [
 );
 
 function normalizeOrder(order, sections) {
-  const baseOrder = Array.from(new Set((order ?? []).filter((id) => !additionalFeaturedIds.includes(id))));
-  const packageIndex = baseOrder.indexOf("package_catalog_1");
-  const existingFeaturedIndex = baseOrder.indexOf("featured_pack_1");
-  const insertAt = existingFeaturedIndex >= 0 ? existingFeaturedIndex + 1 : packageIndex >= 0 ? packageIndex : Math.min(4, baseOrder.length);
-  baseOrder.splice(insertAt, 0, ...additionalFeaturedIds);
-  return baseOrder.filter((id) => id === "featured_pack_1" || Boolean(sections[id]));
+  const normalized = Array.from(new Set((order ?? []).filter((id) => !homepageRemovedFeaturedIds.includes(id)))).filter((id) => Boolean(sections[id]));
+  if (sections[homepageFeaturedId] && !normalized.includes(homepageFeaturedId)) {
+    const heroIndex = normalized.indexOf("hero_1");
+    normalized.splice(heroIndex >= 0 ? heroIndex + 1 : 0, 0, homepageFeaturedId);
+  }
+  return normalized;
 }
 
 function applyDreamshootVisualProofIsolation(sections) {
@@ -262,7 +265,7 @@ function applyDreamshootVisualProofIsolation(sections) {
     title: "Christmas group photos",
     description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.",
     imageUrl: dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp"),
-    href: "/collections/christmas-photos",
+    href: "/ai-image-generation/christmas-photo",
     previewImages: `${dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-04.webp")}|${dreamshootAsset("/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-03.webp")}`
   });
   updateBlock(blocks, "proof_seasonal", {
@@ -302,9 +305,10 @@ function applyFeaturedSectionsToPageJson(pageJson, store) {
     catalogThanksgiving: store.siteId === "site_dreamshoot" ? pageJson.sections.package_catalog_1?.blocks?.find((item) => item?.id === "catalog_thanksgiving") : undefined,
     catalogHalloween: store.siteId === "site_dreamshoot" ? pageJson.sections.package_catalog_1?.blocks?.find((item) => item?.id === "catalog_halloween") : undefined
   });
-  for (const id of additionalFeaturedIds) {
-    pageJson.sections[id] = clone(store.sections[id]);
+  for (const id of homepageRemovedFeaturedIds) {
+    if (pageJson.sections[id]) delete pageJson.sections[id];
   }
+  if (store.sections?.[homepageFeaturedId]) pageJson.sections[homepageFeaturedId] = clone(store.sections[homepageFeaturedId]);
   if (store.siteId === "site_dreamshoot") {
     applyDreamshootVisualProofIsolation(pageJson.sections);
   }
@@ -335,9 +339,10 @@ function applyFeaturedSectionsToThemeTemplate(template, store) {
     catalogThanksgiving: store.siteId === "site_dreamshoot" ? template.sections.package_catalog_1?.blocks?.find((item) => item?.id === "catalog_thanksgiving") : undefined,
     catalogHalloween: store.siteId === "site_dreamshoot" ? template.sections.package_catalog_1?.blocks?.find((item) => item?.id === "catalog_halloween") : undefined
   });
-  for (const id of additionalFeaturedIds) {
-    template.sections[id] = clone(store.sections[id]);
+  for (const id of homepageRemovedFeaturedIds) {
+    if (template.sections[id]) delete template.sections[id];
   }
+  if (store.sections?.[homepageFeaturedId]) template.sections[homepageFeaturedId] = clone(store.sections[homepageFeaturedId]);
   if (store.siteId === "site_dreamshoot") {
     applyDreamshootVisualProofIsolation(template.sections);
   }
@@ -484,6 +489,15 @@ async function main() {
   console.log(JSON.stringify({
     ok: true,
     dryRun,
+    contentOverwriteGuard: {
+      writeEnabled: !dryRun,
+      requiredFlag: "--force-content-overwrite",
+      dbRequested: updateDb,
+      dbWriteEnabled: updateDb && !dryRun,
+      note: dryRun
+        ? "No files or database rows were overwritten. Re-run with --force-content-overwrite to write data/platform-state.json, and add --db to write Postgres."
+        : "Content overwrite was explicitly enabled for this run."
+    },
     stores: stores.map((store) => store.key),
     featuredOrder: orderedFeaturedIds,
     state: stateReport,

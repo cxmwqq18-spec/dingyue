@@ -510,6 +510,45 @@ function coverSourceForSlug(slug, galleryImages) {
   return galleryImages[0];
 }
 
+const galleryAltScenes = [
+  "close portrait with clear facial detail",
+  "half-body editorial portrait in themed lighting",
+  "group-friendly pose with polished composition",
+  "wide scene showing the package setting",
+  "candid smile prepared for social sharing",
+  "detail portrait crop with polished styling",
+  "vertical profile crop with clean framing",
+  "cinematic frame with richer color contrast",
+  "album cover style crop with strong subject focus",
+  "lifestyle portrait framing with natural setting cues",
+  "event-style portrait with polished lighting",
+  "distinct themed pose with refined styling"
+];
+
+const gallerySubjectBySlug = {
+  "anime-avatar": "stylized anime-inspired avatar portrait with expressive character styling",
+  "ai-video-add-ons": "motion-ready AI video starter frame with cinematic movement cues",
+  "product-style": "product-style lifestyle scene with clean studio lighting and creator-commerce framing",
+  "profile-cards": "social profile card portrait with clean avatar framing and personal-brand styling",
+  "creator-portraits": "creator portrait with studio lighting and personal-brand composition"
+};
+
+function galleryImageAltsForProfile(profile, pack, slug, count) {
+  const subject = String(
+    gallerySubjectBySlug[slug]
+      || profile?.headline
+      || profile?.cardDescription
+      || pack.description
+      || pack.headline
+      || pack.name
+  )
+    .replace(/\s+/g, " ")
+    .trim() || `${pack.name} AI photo package`;
+  return Array.from({ length: count }, (_, index) =>
+    `${subject}, ${galleryAltScenes[index % galleryAltScenes.length]}.`
+  );
+}
+
 function descriptionFor(pack, profile) {
   const bestFor = profile.bestForItems?.length
     ? `Best for ${profile.bestForItems.join(", ")}.`
@@ -668,10 +707,11 @@ async function applyLocalState() {
     const slug = category?.slug || slugify(pack.category || pack.name);
     const profile = profileBySlug[slug] ?? profileBySlug[pack.category] ?? profileBySlug[slugify(pack.name)];
     if (!profile) continue;
-    pack.headline = profile.headline;
-    pack.description = descriptionFor(pack, profile);
-    pack.galleryImages = await galleryForProfile(profile, pack, pools, allAssets, slug);
-    pack.imageUrl = await ensureProviderCover(slug, coverSourceForSlug(slug, pack.galleryImages));
+	    pack.headline = profile.headline;
+	    pack.description = descriptionFor(pack, profile);
+	    pack.galleryImages = await galleryForProfile(profile, pack, pools, allAssets, slug);
+	    pack.galleryImageAlts = galleryImageAltsForProfile(profile, pack, slug, pack.galleryImages.length);
+	    pack.imageUrl = await ensureProviderCover(slug, coverSourceForSlug(slug, pack.galleryImages));
     pack.category = slug;
     packs += 1;
   }
@@ -733,10 +773,11 @@ async function applyPostgres(localResult) {
         data: {
           category: pack.category,
           headline: pack.headline,
-          description: pack.description,
-          imageUrl: pack.imageUrl,
-          galleryImages: pack.galleryImages
-        }
+	          description: pack.description,
+	          imageUrl: pack.imageUrl,
+	          galleryImages: pack.galleryImages,
+	          galleryImageAlts: pack.galleryImageAlts
+	        }
       });
     }
     for (const category of categoryUpdates) {

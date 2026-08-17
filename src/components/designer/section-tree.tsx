@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComponentProps, DragEvent } from "react";
+import type { ComponentProps, DragEvent, ReactNode } from "react";
 import {
   DesignerStructureEmptyState,
   DesignerStructureSequence,
@@ -51,6 +51,7 @@ export function SectionTree({
   onBlockDragTarget,
   onChooseBlock,
   onAddBlock,
+  emptyStateActions,
   chrome = "full"
 }: {
   activePage: ThemePage;
@@ -87,6 +88,7 @@ export function SectionTree({
   onBlockDragTarget: (blockId: string) => void;
   onChooseBlock: (sectionId: string, blockId: string) => void;
   onAddBlock: (sectionId: string, blockSchema: ThemeBlockSchema) => void;
+  emptyStateActions?: ReactNode;
   chrome?: "full" | "bare";
 }) {
   const moduleLibraryProps = {
@@ -133,16 +135,25 @@ export function SectionTree({
           <DesignerStructureSequence
             emptyState={
               <DesignerStructureEmptyState>
-                <p>当前页面还没有模块。</p>
-                <div className="mt-4">
-                  <DesignerStructureInsertSlot
-                    moduleLibraryProps={moduleLibraryProps}
-                    onInsertSection={(type) => onInsertSection(type)}
-                    pageTitle={activePage.title}
-                    sectionCount={sectionList.length}
-                    variant="inline"
-                  />
-                </div>
+                <p>此页主体没有页面模块。</p>
+                <p className="mt-1 text-[11px] leading-5 text-[#7c8087]">
+                  预览里看到的页头、页脚、导航和 SEO 来自全局配置。
+                </p>
+                {emptyStateActions ? <div className="mt-3">{emptyStateActions}</div> : null}
+                <details className="mt-4 text-left">
+                  <summary className="cursor-pointer rounded-[6px] border border-[#d9dde4] bg-white px-2.5 py-2 text-[11px] font-medium text-[#667085]">
+                    需要页面主体内容时再添加模块
+                  </summary>
+                  <div className="mt-2">
+                    <DesignerStructureInsertSlot
+                      moduleLibraryProps={moduleLibraryProps}
+                      onInsertSection={(type) => onInsertSection(type)}
+                      pageTitle={activePage.title}
+                      sectionCount={sectionList.length}
+                      variant="inline"
+                    />
+                  </div>
+                </details>
               </DesignerStructureEmptyState>
             }
             itemKey={({ id }) => id}

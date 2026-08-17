@@ -77,6 +77,32 @@ const modulations = [
   { brightness: 0.99, saturation: 1.01 }
 ];
 
+const galleryAltScenes = [
+  "close travel portrait with clear facial detail",
+  "half-body editorial frame in destination light",
+  "wide scene showing the route setting and mood",
+  "candid lifestyle moment for a private album",
+  "detail crop with travel objects and polished composition",
+  "vertical profile crop for mobile sharing",
+  "scenic overlook portrait with atmospheric background",
+  "soft evening frame with cinematic destination color",
+  "album cover style image with strong subject focus",
+  "download-ready keepsake frame from the route",
+  "event-style portrait with polished vacation styling",
+  "finished gallery example with a distinct pose"
+];
+
+function galleryImageAltForPack(pack, slug, index) {
+  const subject = String(pack.description || pack.headline || pack.name)
+    .replace(/\s+/g, " ")
+    .trim() || `${pack.name} travel portrait album`;
+  return `${subject}, ${galleryAltScenes[index % galleryAltScenes.length]}, ${pack.name} gallery example for AIdreamcapes.`;
+}
+
+function galleryImageAltsForPack(pack, slug, count) {
+  return Array.from({ length: count }, (_, index) => galleryImageAltForPack(pack, slug, index));
+}
+
 function slugify(value) {
   return String(value || "")
     .trim()
@@ -149,14 +175,15 @@ async function generateGalleryForPack(pack) {
       .toFile(path.join(outputDir, `${slug}-${slot}.webp`));
   }
 
-  return {
-    id: pack.id,
-    name: pack.name,
-    slug,
-    sourceCount: sources.length,
-    galleryImages: galleryPublicPaths(slug)
-  };
-}
+	  return {
+	    id: pack.id,
+	    name: pack.name,
+	    slug,
+	    sourceCount: sources.length,
+	    galleryImages: galleryPublicPaths(slug),
+	    galleryImageAlts: galleryImageAltsForPack(pack, slug, galleryCount)
+	  };
+	}
 
 async function updateStateFile(resultsById) {
   const state = JSON.parse(await fs.readFile(statePath, "utf8"));
@@ -165,10 +192,11 @@ async function updateStateFile(resultsById) {
     const result = resultsById.get(pack.id);
     if (!result) return pack;
     updated += 1;
-    return {
-      ...pack,
-      galleryImages: result.galleryImages
-    };
+	    return {
+	      ...pack,
+	      galleryImages: result.galleryImages,
+	      galleryImageAlts: result.galleryImageAlts
+	    };
   });
   await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
   return updated;
@@ -181,7 +209,7 @@ async function updatePrisma(resultsById) {
     for (const result of resultsById.values()) {
       const response = await prisma.creativePack.updateMany({
         where: { id: result.id, siteId },
-        data: { galleryImages: result.galleryImages }
+	        data: { galleryImages: result.galleryImages, galleryImageAlts: result.galleryImageAlts }
       });
       updated += response.count;
     }

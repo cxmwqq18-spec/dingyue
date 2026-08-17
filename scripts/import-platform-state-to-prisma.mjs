@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { assertNonProductionWriteTarget } from "./lib/database-target.mjs";
 
 const prisma = new PrismaClient();
 const documentId = "platform";
@@ -61,6 +62,7 @@ async function main() {
   }
   const summary = summarize(state);
   if (!dryRun) {
+    assertNonProductionWriteTarget();
     await prisma.platformStateDocument.upsert({
       where: { id: documentId },
       create: { id: documentId, state },

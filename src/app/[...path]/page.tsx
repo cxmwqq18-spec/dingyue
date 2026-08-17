@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
-import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost, siteAdminPathForHost } from "@/lib/domain-routing";
+import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost, publicSiteUrl, siteAdminPathForHost } from "@/lib/domain-routing";
 import { findPage } from "@/lib/data";
 import {
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
@@ -20,23 +20,20 @@ import {
   resolveToolPageForSite
 } from "@/lib/storefront-render";
 import { canonicalSeoDirectoryPathForSite, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
+import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { customerSessionCookie } from "@/lib/session";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
-import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
+import { getSiteByHostForPublicAuth, getVideoThemeSlugRedirectRelational } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
-  "ai-image-studio": "/tools",
-  "image-studio": "/tools",
-  "travel-portraits": "/tools/nature-adventure"
-};
+const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {};
 const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "/tools",
   "background-changer": "/tools/fan-scene-album-builder",
@@ -211,8 +208,13 @@ const AIDREAMCAPES_LEGACY_BLOG_VIDEO_REDIRECTS: Record<string, string> = {
   "profile-travel": "/blog/private-fan-scene-album-photo-package-guide",
   "route-motion": "/blog/private-fan-scene-album-photo-package-guide"
 };
-const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools"]);
-const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us"]);
+const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools", "/ai-image-generation", "/ai-video-generation", "/best-packages", "/best-ai-image", "/best-ai-video"]);
+const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us", "/best-packages", "/best-ai-image", "/best-ai-video"]);
+const STATIC_ASSET_REQUEST_SEGMENTS = new Set(["_next", "assets"]);
+
+function isStaticAssetCatchAllRequest(firstSegment: string): boolean {
+  return STATIC_ASSET_REQUEST_SEGMENTS.has(firstSegment);
+}
 
 async function hasAnyCustomerSessionCookie(): Promise<boolean> {
   return (await cookies()).getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
@@ -253,6 +255,29 @@ function isMydreamshootsSite(site: { slug: string; name: string; branding: { log
 
 function isAidreamcapesSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
   return /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
+}
+
+function isCollectionRouteRequest(path: string[]): boolean {
+  return path[0] === "ai-image-generation" || path[0] === "collections";
+}
+
+function isVideoGenerationRouteRequest(path: string[]): boolean {
+  return path[0] === "ai-video-generation";
+}
+
+function collectionRouteLookupSlug(path: string[]): string {
+  if (path[0] === "ai-image-generation") return path[1] || "";
+  if (path[0] === "collections") return path[1] || "";
+  return "";
+}
+
+function isMydreamshootsPublicSlug(slug: string | undefined): boolean {
+  const value = slug ?? "";
+  return (value === "grownstride" || /dreamshoot/i.test(value)) && !/aidreamcapes|aidreamshoots/i.test(value);
+}
+
+function fallbackCollectionRootPathForHost(host: string | null | undefined): string {
+  return isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null])) ? "/ai-image-generation" : "/collections";
 }
 
 function isSpanishXbyStorefrontSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }): boolean {
@@ -345,7 +370,7 @@ async function getHostPublicCollectionRuntimeStateWithFallback(hosts: Array<stri
     const resolved = resolveHostCollectionPage(state, hosts, collectionSlug);
     if (resolved) return state;
   }
-  return getHostRuntimeStateForModeWithFallback(hosts, "public", "/collections", collectionSlug);
+  return getHostRuntimeStateForModeWithFallback(hosts, "public", fallbackCollectionRootPathForHost(hosts.find(Boolean)), collectionSlug);
 }
 
 function knownWorkspaceSiteSlugForHost(hosts: Array<string | null>): string | undefined {
@@ -353,6 +378,7 @@ function knownWorkspaceSiteSlugForHost(hosts: Array<string | null>): string | un
     const host = cleanHost(hostValue);
     if (!host) continue;
     if (host === "mydreamshoots.com" || host === "www.mydreamshoots.com" || host.endsWith(".mydreamshoots.localhost")) return "mydreamshoots";
+    if (host === "grownstride.com" || host === "www.grownstride.com" || host === "test.grownstride.com" || host.endsWith(".grownstride.localhost")) return "grownstride";
     if (host === "aidreamcapes.com" || host === "www.aidreamcapes.com" || host.endsWith(".aidreamcapes.localhost")) return "aidreamcapes";
     if (host === "aidreamshoots.eu" || host === "www.aidreamshoots.eu" || host.endsWith(".aidreamshoots.localhost")) return "aidreamshoots";
     if (host === "aidreamcapes.eu" || host === "www.aidreamcapes.eu") return "aidreamcapes-eu";
@@ -405,13 +431,21 @@ function resolveHostCollectionPage(state: PlatformState | undefined, hosts: Arra
 }
 
 async function resolveHostToolPageWithFallback(hosts: Array<string | null>, toolSlug: string) {
-  const detailState = await getHostPublicToolRuntimeStateWithFallback(hosts, `/tools/${toolSlug}`, toolSlug);
+  const detailState = await getHostPublicToolRuntimeStateWithFallback(hosts, `/ai-video-generation/${toolSlug}`, toolSlug);
   const detailResolved = resolveHostToolPage(detailState, hosts, toolSlug);
   if (detailResolved) return detailResolved;
 
-  const toolsState = await getHostPublicRuntimeStateWithFallback(hosts, "/tools");
+  const toolsState = await getHostPublicRuntimeStateWithFallback(hosts, "/ai-video-generation");
   const toolsResolved = resolveHostToolPage(toolsState, hosts, toolSlug);
   if (toolsResolved) return toolsResolved;
+
+  const legacyDetailState = await getHostPublicToolRuntimeStateWithFallback(hosts, `/tools/${toolSlug}`, toolSlug);
+  const legacyDetailResolved = resolveHostToolPage(legacyDetailState, hosts, toolSlug);
+  if (legacyDetailResolved) return legacyDetailResolved;
+
+  const legacyToolsState = await getHostPublicRuntimeStateWithFallback(hosts, "/tools");
+  const legacyToolsResolved = resolveHostToolPage(legacyToolsState, hosts, toolSlug);
+  if (legacyToolsResolved) return legacyToolsResolved;
 
   const homeState = await getHostPublicRuntimeStateWithFallback(hosts, "/");
   return resolveHostToolPage(homeState, hosts, toolSlug);
@@ -422,28 +456,63 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const { path } = resolvedParams;
   const firstSegment = path[0] ?? "";
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
-  if (firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard") {
+  if (isStaticAssetCatchAllRequest(firstSegment)) return {};
+  if (firstSegment === "account") {
+    const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
+    return { title: spanishTitle ? "Cuenta" : "Account", robots: { index: false, follow: false } };
+  }
+  if (firstSegment === "app" || firstSegment === "dashboard") {
     const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
     return { title: spanishTitle ? "Espacio privado" : "Workspace", robots: { index: false, follow: false } };
   }
-  if ((host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) && ["tools", "account", "app", "collections"].includes(firstSegment)) {
+  if ((host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) && ["tools", "account", "app", "collections", "ai-image-generation", "ai-video-generation", "best-packages", "best-ai-image", "best-ai-video"].includes(firstSegment)) {
     return {};
   }
-  const metadataPageSlug = path[0] === "collections" && path[1] ? "/collections" : path[0] === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
+  const isCollectionRequest = isCollectionRouteRequest(path);
+  const isVideoGenerationRequest = isVideoGenerationRouteRequest(path);
+  const collectionRootPageSlug = fallbackCollectionRootPathForHost(host);
+  const metadataPageSlug = isCollectionRequest
+    ? collectionRootPageSlug
+    : isVideoGenerationRequest
+    ? path[1] ? `/ai-video-generation/${path[1]}` : "/ai-video-generation"
+    : path[0] === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const state = await getHostPublicRuntimeStateWithFallback(hostCandidates, metadataPageSlug);
   if (!state) return {};
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) return {};
+  if (path[0] === "tools" && isMydreamshootsSite(site) && !isAidreamcapesSite(site)) return {};
   const slug = publicContentPageSlug(`/${path.join("/")}`);
+  if (isVideoGenerationRequest) {
+    const videoGenerationRoute = parsePublicVideoGenerationRouteForSite(site, path);
+    if (!videoGenerationRoute) return {};
+    if (videoGenerationRoute.itemSlug) {
+      const redirectRecord = await getVideoThemeSlugRedirectRelational(site.id, videoGenerationRoute.itemSlug);
+      if (redirectRecord?.theme?.status === "active") {
+        return metadataForSeoDirectory(site, "tool", redirectRecord.theme.slug);
+      }
+      const resolved = await resolveHostToolPageWithFallback(hostCandidates, videoGenerationRoute.itemSlug);
+      if (!resolved) return {};
+      return metadataForSeoDirectory(resolved.site, "tool", videoGenerationRoute.itemSlug);
+    }
+    return metadataForDreamshootFallbackRoute(site.slug, "/ai-video-generation", {
+      primaryDomain: site.primaryDomain,
+      ogImage: site.themeSettings.publishedJson.seo?.defaultOgImage,
+      siteName: site.branding.logoText || site.name
+    });
+  }
   if (path[0] === "tools" && path[1]) {
     const resolved = await resolveHostToolPageWithFallback(hostCandidates, path[1]);
     if (!resolved) return {};
     return metadataForSeoDirectory(resolved.site, "tool", path[1]);
   }
-  if (path[0] === "collections" && path[1]) {
-    if (!canResolveCollectionSlugForSite(state, site, path[1])) return {};
-    return metadataForSeoDirectory(site, "collection", path[1]);
+  if (isCollectionRequest) {
+    const collectionRoute = parsePublicCollectionRouteForSite(site, path);
+    if (!collectionRoute) return {};
+    if (collectionRoute.collectionSlug && !canResolveCollectionSlugForSite(state, site, collectionRoute.collectionSlug)) return {};
+    if (collectionRoute.collectionSlug) return metadataForSeoDirectory(site, "collection", collectionRoute.collectionSlug);
+    const page = findPage(site, publicCollectionRootPathForSite(site)) ?? findPage(site, "/collections");
+    return page ? metadataForSingleThemePage(site, page) : {};
   }
   if (DREAMSHOOT_PARTNER_TEMPLATE_SLUGS.has(slug) && (isSpanishXbyStorefrontSite(site) || canUseStorefrontPartnerTemplate(site, slug))) {
     return metadataForDreamshootFallbackRoute(site.slug, slug, {
@@ -480,7 +549,7 @@ export default async function HostStorefrontCatchAllPage({
 }) {
   const [{ path }, headerStore] = await Promise.all([params, headers()]);
   const firstSegment = path[0] ?? "";
-  if (firstSegment === "platform" || firstSegment === "site" || firstSegment === "api" || firstSegment === "_next") {
+  if (firstSegment === "platform" || firstSegment === "site" || firstSegment === "api" || isStaticAssetCatchAllRequest(firstSegment)) {
     notFound();
   }
 
@@ -491,24 +560,27 @@ export default async function HostStorefrontCatchAllPage({
   const slug = `/${path.join("/")}`;
   if (host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) {
     const defaultSiteSlug = process.env.DEFAULT_STOREFRONT_SITE_SLUG || "mydreamshoots";
-    if (firstSegment === "tools" || firstSegment === "account" || firstSegment === "app" || firstSegment === "collections" || firstSegment === "pricing" || firstSegment === "help" || firstSegment === "faq" || firstSegment === "workflow") {
+    if (firstSegment === "tools" || firstSegment === "account" || firstSegment === "app" || firstSegment === "ai-image-generation" || firstSegment === "ai-video-generation" || firstSegment === "pricing" || firstSegment === "help" || firstSegment === "faq" || firstSegment === "workflow" || firstSegment === "best-packages" || firstSegment === "best-ai-image" || firstSegment === "best-ai-video") {
       const query = searchParams ? await searchParams : {};
       redirect(`/site/${defaultSiteSlug}${firstSegment === "help" ? "/faq" : slug}${searchParamsSuffix(query)}`);
     }
   }
   if (slug === "/about") redirect("/about-us");
   if (slug === "/contact") redirect("/contact-us");
-  if (slug === "/examples") redirect("/collections");
-  if (slug === "/packages") redirect("/collections");
-  if (slug === "/privacy-policy" || slug === "/policies/privacy") redirect("/privacy");
-  if (slug === "/terms-of-service" || slug === "/policies/terms") redirect("/terms");
-  if (slug === "/cookie-policy" || slug === "/policies/cookies") redirect("/cookies");
+  if (slug === "/examples") redirect(fallbackCollectionRootPathForHost(host));
+  if (slug === "/packages") redirect(fallbackCollectionRootPathForHost(host));
+  if (slug === "/privacy-policy" || slug === "/policies/privacy" || slug === "/policies/privacy-policy") redirect("/privacy");
+  if (slug === "/terms-of-service" || slug === "/policies/terms" || slug === "/policies/terms-of-service") redirect("/terms");
+  if (slug === "/cookie-policy" || slug === "/policies/cookies" || slug === "/policies/cookie-policy") redirect("/cookies");
   if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect("/refunds");
   if (slug === "/content-policy" || slug === "/policies/content") redirect("/content");
-  if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping") redirect("/shipping");
-  if (slug === "/children-privacy-policy" || slug === "/childrens-privacy" || slug === "/policies/children-privacy") redirect("/children-privacy");
-  if (slug === "/state-privacy-rights" || slug === "/california-privacy" || slug === "/ccpa" || slug === "/policies/state-privacy") redirect("/state-privacy");
-  if (slug === "/tool") redirect("/tools");
+  if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping" || slug === "/policies/delivery" || slug === "/policies/delivery-policy") redirect("/shipping");
+  if (slug === "/children-privacy-policy" || slug === "/childrens-privacy" || slug === "/policies/children-privacy" || slug === "/policies/children" || slug === "/policies/children-privacy-policy" || slug === "/policies/childrens-privacy") redirect("/children-privacy");
+  if (slug === "/state-privacy-rights" || slug === "/california-privacy" || slug === "/ccpa" || slug === "/policies/state-privacy" || slug === "/policies/state-privacy-rights" || slug === "/policies/california-privacy" || slug === "/policies/ccpa") redirect("/state-privacy");
+  if (slug === "/tool") {
+    if (isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]))) notFound();
+    redirect("/tools");
+  }
   if (slug === "/app" || slug === "/dashboard") {
     const query = searchParams ? await searchParams : {};
     redirect(`/app/create${searchParamsSuffix(query)}`);
@@ -527,12 +599,24 @@ export default async function HostStorefrontCatchAllPage({
     if (!siteSlug) notFound();
     return renderCustomerWorkspacePageBySlug({ siteSlug, slug, query, routeMode: "host" });
   }
-  const publicPageSlug = firstSegment === "collections" && path[1] ? "/collections" : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
-  const collectionCategory = firstSegment === "collections" && path[1] ? path[1] : "";
+  const isCollectionRequest = isCollectionRouteRequest(path);
+  const isVideoGenerationRequest = isVideoGenerationRouteRequest(path);
+  const collectionRootPageSlug = fallbackCollectionRootPathForHost(host);
+  const publicPageSlug = isCollectionRequest
+    ? collectionRootPageSlug
+    : isVideoGenerationRequest
+    ? path[1] ? `/ai-video-generation/${path[1]}` : "/ai-video-generation"
+    : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
+  const collectionLookupSlug = collectionRouteLookupSlug(path);
+  const videoLookupSlug = isVideoGenerationRequest ? path[1] || "" : "";
   const state = needsPrivateRuntime
     ? await getHostRuntimeStateWithFallback(hostCandidates)
-    : collectionCategory
-    ? await getHostPublicCollectionRuntimeStateWithFallback(hostCandidates, collectionCategory)
+    : isVideoGenerationRequest && videoLookupSlug
+    ? await getHostPublicToolRuntimeStateWithFallback(hostCandidates, `/ai-video-generation/${videoLookupSlug}`, videoLookupSlug)
+    : isVideoGenerationRequest
+    ? await getHostPublicRuntimeStateWithFallback(hostCandidates, "/ai-video-generation")
+    : isCollectionRequest && collectionLookupSlug
+    ? await getHostPublicCollectionRuntimeStateWithFallback(hostCandidates, collectionLookupSlug)
     : await getHostPublicRuntimeStateWithFallback(hostCandidates, publicPageSlug);
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
@@ -543,21 +627,29 @@ export default async function HostStorefrontCatchAllPage({
   }
   if (slug === "/help" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/faq");
   if (slug === "/how-it-works" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/workflow");
+  if (firstSegment === "tools" && isMydreamshootsSite(site) && !isAidreamcapesSite(site)) notFound();
   redirectLegacyBlogArticle(site, slug);
   const resolvedToolPage = firstSegment === "tools" && path[1]
     ? await resolveHostToolPageWithFallback(hostCandidates, path[1])
     : undefined;
+  const resolvedVideoToolPage = isVideoGenerationRequest && path[1]
+    ? await resolveHostToolPageWithFallback(hostCandidates, path[1])
+    : undefined;
+  const collectionRoute = isCollectionRequest ? parsePublicCollectionRouteForSite(site, path) : undefined;
+  const videoGenerationRoute = isVideoGenerationRequest ? parsePublicVideoGenerationRouteForSite(site, path) : undefined;
   if (firstSegment === "tools" && path[1]) {
     const toolSite = resolvedToolPage?.site ?? site;
     redirectMydreamshootsLegacyTool(toolSite, path[1]);
     redirectAidreamcapesLegacyTool(toolSite, path[1]);
     const canonicalToolPath = canonicalSeoDirectoryPathForSite(toolSite, "tool", path[1]);
-    if (canonicalToolPath !== `/tools/${path[1]}`) permanentRedirect(canonicalToolPath);
+    if (canonicalToolPath !== `/tools/${path[1]}`) permanentRedirect(publicSiteUrl(toolSite, canonicalToolPath));
   }
   const hasKnownPublicRoute =
     PUBLIC_DIRECTORY_PAGE_SLUGS.has(publicPageSlug) ||
     Boolean(resolvedToolPage) ||
-    firstSegment === "collections" && Boolean(path[1]) ||
+    Boolean(videoGenerationRoute) ||
+    Boolean(resolvedVideoToolPage) ||
+    Boolean(collectionRoute) ||
     Boolean(findPage(site, publicPageSlug)) ||
     canUseStorefrontPartnerTemplate(site, publicPageSlug) ||
     Boolean(storefrontPolicySeoForSite(site, publicPageSlug));
@@ -578,21 +670,56 @@ export default async function HostStorefrontCatchAllPage({
   if (firstSegment === "dashboard") {
     redirect(`/app/create${searchParamsSuffix(query)}`);
   }
+  if (isVideoGenerationRequest) {
+    if (!videoGenerationRoute) notFound();
+    if (videoGenerationRoute.itemSlug) {
+      const redirectRecord = await getVideoThemeSlugRedirectRelational(site.id, videoGenerationRoute.itemSlug);
+      if (redirectRecord?.theme?.status === "active" && redirectRecord.theme.slug !== videoGenerationRoute.itemSlug) {
+        permanentRedirect(publicSiteUrl(site, `/ai-video-generation/${redirectRecord.theme.slug}`));
+      }
+      if (!resolvedVideoToolPage) notFound();
+      const canonicalToolPath = resolvedVideoToolPage.site.id === site.id && state.videoThemes?.some((theme) => theme.siteId === site.id && theme.slug === videoGenerationRoute.itemSlug)
+        ? videoGenerationRoute.canonicalPath
+        : canonicalSeoDirectoryPathForSite(resolvedVideoToolPage.site, "tool", videoGenerationRoute.itemSlug);
+      if (canonicalToolPath !== videoGenerationRoute.canonicalPath) permanentRedirect(publicSiteUrl(resolvedVideoToolPage.site, canonicalToolPath));
+      return renderToolPage({
+        site: resolvedVideoToolPage.site,
+        toolSlug: videoGenerationRoute.itemSlug,
+        publicPath: videoGenerationRoute.canonicalPath,
+        query,
+        routeMode: "host",
+        state: resolvedVideoToolPage.state,
+        resolvedPage: resolvedVideoToolPage.page
+      });
+    }
+    return renderStorefrontPage({
+      site,
+      slug: "/ai-video-generation",
+      publicPath: videoGenerationRoute.canonicalPath,
+      query,
+      routeMode: "host",
+      state,
+      deferCustomerRuntime: true
+    });
+  }
   if (firstSegment === "tools" && path[1]) {
     if (!resolvedToolPage) notFound();
     return renderToolPage({ site: resolvedToolPage.site, toolSlug: path[1], query, routeMode: "host", state: resolvedToolPage.state, resolvedPage: resolvedToolPage.page });
   }
-  if (collectionCategory) {
-    const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(site, "collection", collectionCategory);
-    if (canonicalCollectionPath !== `/collections/${collectionCategory}`) permanentRedirect(canonicalCollectionPath);
+  if (isCollectionRequest && !collectionRoute) notFound();
+  const collectionCategory = collectionRoute?.collectionSlug ?? "";
+  if (collectionRoute) {
+    const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(site, "collection", collectionRoute.collectionSlug);
+    if (canonicalCollectionPath !== collectionRoute.canonicalPath) permanentRedirect(publicSiteUrl(site, canonicalCollectionPath));
   }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, site, collectionCategory)) notFound();
-  const pageSlug = collectionCategory ? "/collections" : publicContentPageSlug(`/${path.join("/")}`);
-  if (!collectionCategory && !findPage(site, pageSlug) && !canUseStorefrontPartnerTemplate(site, pageSlug) && !storefrontPolicySeoForSite(site, pageSlug)) notFound();
+  const pageSlug = collectionRoute ? publicCollectionRootPathForSite(site) : publicContentPageSlug(`/${path.join("/")}`);
+  if (!collectionRoute && !findPage(site, pageSlug) && !canUseStorefrontPartnerTemplate(site, pageSlug) && !storefrontPolicySeoForSite(site, pageSlug)) notFound();
   const storefrontQuery = collectionCategory ? { ...query, category: collectionCategory } : query;
   return renderStorefrontPage({
     site,
     slug: pageSlug,
+    publicPath: collectionRoute?.canonicalPath ?? pageSlug,
     query: storefrontQuery,
     routeMode: "host",
     state

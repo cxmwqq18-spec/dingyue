@@ -300,6 +300,7 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
     return <ContentPageSkeleton />;
   }
   const publicationCount = publicationSection.data?.publicationCount ?? payload.publicationCount ?? payload.publications.length;
+  const latestPublicationVersion = publicationSection.data?.publications?.[0]?.version ?? payload.publications[0]?.version;
   const publicationCountValue = publicationSection.loading && !publicationSection.data ? "加载中" : String(publicationCount);
   const blogSummary: BlogSummary = payload.blogSummary ?? { homeSlug: "", articleCount: 0, footerLinkPresent: false, articles: [] };
   const blogSeoReadyCount = blogSummary.articles.filter((article) => article.seoStatus === "ready").length;
@@ -511,6 +512,8 @@ export function ContentPageClient({ siteId, siteSlug }: ContentPageClientProps) 
                 allPages={payload.site.pages}
                 editablePages={derived.contentEditablePages}
                 mediaAssets={editorResources.media}
+                publicationCount={publicationCount}
+                latestPublicationVersion={latestPublicationVersion}
                 products={editorResources.products}
                 site={payload.site}
                 siteAiApps={editorResources.apps}

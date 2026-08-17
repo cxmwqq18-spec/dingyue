@@ -742,17 +742,17 @@ export function DesignerModeTabs<T extends string>({
       {...props}
     >
       <div className={cx("flex items-center", tone === "pill" ? "justify-center" : "gap-4")}>
-        <div className={cx(tone === "pill" ? "wrap flex h-9 items-center justify-center rounded-[30px] bg-[#ebeef3] p-0" : "flex items-center gap-4")}>
+        <div className={cx(tone === "pill" ? "flex min-h-10 w-full min-w-0 items-center justify-center gap-1 rounded-[10px] bg-[#eef1f5] p-1" : "flex items-center gap-4")}>
         {items.map((item) => {
           const selected = item.key === active;
           return (
             <button
               aria-pressed={selected}
               className={cx(
-                "tools_tab_item inline-flex items-center justify-center gap-1.5 text-sm transition",
+                "inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2f6fed]/35",
                 tone === "pill"
                   ? cx(
-                      "h-9 w-[120px] rounded-[30px] px-0 py-0 text-[14px]",
+                      "h-8 flex-1 rounded-[8px] px-2 py-0 text-[12px] font-medium",
                       selected ? "bg-[#f4a719] text-white" : "text-[#6b7282] hover:text-[#383838]"
                     )
                   : cx(
@@ -761,6 +761,7 @@ export function DesignerModeTabs<T extends string>({
                     )
               )}
               key={item.key}
+              data-designer-tab-key={item.key}
               onClick={() => onValueChange(item.key)}
               type="button"
             >

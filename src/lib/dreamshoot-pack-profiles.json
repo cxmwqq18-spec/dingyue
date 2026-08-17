@@ -3,13 +3,39 @@
     "headline": "AI Professional Headshot Generator",
     "cardDescription": "Refresh work profiles with clean studio lighting, polished wardrobe direction, and crops that feel ready for LinkedIn, resumes, and team pages.",
     "metaLabel": "Work profiles",
-    "tags": ["AI Headshots", "LinkedIn Photos", "Work Profiles"],
-    "detailTags": ["AI Headshots", "LinkedIn Photos", "Resume Photos", "Founder Bios", "Team Pages", "Speaker Profiles", "Clean Lighting", "Private Gallery"],
+    "tags": [
+      "AI Headshots",
+      "LinkedIn Photos",
+      "Work Profiles"
+    ],
+    "detailTags": [
+      "AI Headshots",
+      "LinkedIn Photos",
+      "Resume Photos",
+      "Founder Bios",
+      "Team Pages",
+      "Speaker Profiles",
+      "Clean Lighting",
+      "Private Gallery"
+    ],
     "detailIntro": "Build work-ready portraits with believable lighting, simple backgrounds, and face-forward crops. This package keeps the mood professional without making every image feel like the same studio template.",
     "whatCreates": "A private gallery of polished headshots, profile crops, and business-ready portraits for public bios, resumes, speaker pages, and team directories.",
-    "bestFor": ["LinkedIn refreshes", "Resume and CV portraits", "Founder and speaker bios", "Team directory pages"],
-    "workflow": ["Upload clear portraits with visible faces and simple lighting.", "Choose the professional direction and review the credit cost before generation.", "Save a private gallery and download the strongest business crops."],
-    "styleNotes": ["Neutral office or studio backdrops", "Clean face-forward compositions", "Natural retouching with professional contrast"],
+    "bestFor": [
+      "LinkedIn refreshes",
+      "Resume and CV portraits",
+      "Founder and speaker bios",
+      "Team directory pages"
+    ],
+    "workflow": [
+      "Upload clear portraits with visible faces and simple lighting.",
+      "Choose the professional direction and review the credit cost before generation.",
+      "Save a private gallery and download the strongest business crops."
+    ],
+    "styleNotes": [
+      "Neutral office or studio backdrops",
+      "Clean face-forward compositions",
+      "Natural retouching with professional contrast"
+    ],
     "coverNote": "Use the cover mood to judge lighting, wardrobe polish, and how direct the portrait crop should feel.",
     "safetyNote": "Do not use this package for official IDs, passports, impersonation, or representing another person without permission."
   },
@@ -17,13 +43,39 @@
     "headline": "AI Football Fan Photo Generator",
     "cardDescription": "Create sports fan photos, sports-idol style meetups, stadium group shots, match-day posters, and social-ready supporter portraits from your own selfies.",
     "metaLabel": "Fan meetups",
-    "tags": ["Fan Photos", "Sports-idol Style", "Group Shots"],
-    "detailTags": ["Fan Photos", "Sports-idol Style", "Fan Meetups", "Match Day Portraits", "Stadium Mood", "Group Photos", "Social Banners", "Private Gallery"],
+    "tags": [
+      "Fan Photos",
+      "Sports-idol Style",
+      "Group Shots"
+    ],
+    "detailTags": [
+      "Fan Photos",
+      "Sports-idol Style",
+      "Fan Meetups",
+      "Match Day Portraits",
+      "Stadium Mood",
+      "Group Photos",
+      "Social Banners",
+      "Private Gallery"
+    ],
     "detailIntro": "Create permission-safe sports fan photos that feel loud, cinematic, and made for match-day sharing. The look is inspired by stadium energy, fan meetup moments, floodlights, and supporter emotion rather than official event branding or real player likenesses.",
     "whatCreates": "A private set of fan meetup photos, stadium-style group shots, supporter posters, avatars, and social crops based on photos you own or have permission to use.",
-    "bestFor": ["Fan meetup portraits", "Match-day group photos", "Tournament watch-party graphics", "Sports-idol style personal albums"],
-    "workflow": ["Upload personal source photos with clear faces and no protected third-party imagery.", "Pick the fan-photo direction and review the credit cost before generation.", "Download private favorites for personal posts, group albums, avatars, or keepsakes."],
-    "styleNotes": ["Floodlight glow and stadium atmosphere", "Supporter-color styling without protected logos", "Group-friendly framing for fan meetups"],
+    "bestFor": [
+      "Fan meetup portraits",
+      "Match-day group photos",
+      "Tournament watch-party graphics",
+      "Sports-idol style personal albums"
+    ],
+    "workflow": [
+      "Upload personal source photos with clear faces and no protected third-party imagery.",
+      "Pick the fan-photo direction and review the credit cost before generation.",
+      "Download private favorites for personal posts, group albums, avatars, or keepsakes."
+    ],
+    "styleNotes": [
+      "Floodlight glow and stadium atmosphere",
+      "Supporter-color styling without protected logos",
+      "Group-friendly framing for fan meetups"
+    ],
     "coverNote": "Use the preview to check supporter mood, crowd energy, and whether the final image should feel like a fan meetup, avatar, group shot, or poster.",
     "safetyNote": "Fan-safe styling only; do not request real player or celebrity likenesses, official team logos, event marks, protected brand assets, or unauthorized third-party portraits."
   },
@@ -31,120 +83,352 @@
     "headline": "AI Hairstyle Photo Generator",
     "cardDescription": "Explore hair color, cut, texture, and beauty portrait ideas before a salon visit or content refresh.",
     "metaLabel": "Hair previews",
-    "tags": ["Hairstyle Ideas", "Hair Color", "Beauty Portraits"],
-    "detailTags": ["Hairstyle Ideas", "Hair Color Preview", "Beauty Portraits", "Salon Inspiration", "Profile Refresh", "Texture Tests", "Private Gallery", "Visual Planning"],
+    "tags": [
+      "Hairstyle Ideas",
+      "Hair Color",
+      "Beauty Portraits"
+    ],
+    "detailTags": [
+      "Hairstyle Ideas",
+      "Hair Color Preview",
+      "Beauty Portraits",
+      "Salon Inspiration",
+      "Profile Refresh",
+      "Texture Tests",
+      "Private Gallery",
+      "Visual Planning"
+    ],
     "detailIntro": "Preview hairstyle directions in polished portraits before committing to a real-world change. The package is built for visual planning, salon inspiration, and creator beauty content.",
     "whatCreates": "A private gallery of hairstyle concepts, beauty portraits, color directions, and profile-ready crops that help compare looks side by side.",
-    "bestFor": ["Hair color planning", "Salon consultation ideas", "Beauty profile refreshes", "Creator styling tests"],
-    "workflow": ["Upload clear selfies with hair and face visible.", "Select the hairstyle direction and compare the preview against your real-world plans.", "Download favorites for consultation, moodboards, or personal content."],
-    "styleNotes": ["Face-framing hair detail", "Soft beauty lighting", "Readable color and texture changes"],
+    "bestFor": [
+      "Hair color planning",
+      "Salon consultation ideas",
+      "Beauty profile refreshes",
+      "Creator styling tests"
+    ],
+    "workflow": [
+      "Upload clear selfies with hair and face visible.",
+      "Select the hairstyle direction and compare the preview against your real-world plans.",
+      "Download favorites for consultation, moodboards, or personal content."
+    ],
+    "styleNotes": [
+      "Face-framing hair detail",
+      "Soft beauty lighting",
+      "Readable color and texture changes"
+    ],
     "coverNote": "Use the examples to compare silhouette, face framing, and whether the style still feels like you.",
     "safetyNote": "Results are visual inspiration and not a guaranteed salon outcome."
   },
   "cyberpunk": {
-    "headline": "AI Cyberpunk Photo Generator",
-    "cardDescription": "Step into neon city portraits with high-tech fashion, rain-lit streets, electric color, and poster-ready contrast.",
-    "metaLabel": "Neon portraits",
-    "tags": ["Cyberpunk", "Neon Portraits", "Sci-Fi Style"],
-    "detailTags": ["Cyberpunk Portraits", "Neon City", "Sci-Fi Fashion", "Rain Streets", "Gaming Avatars", "Music Visuals", "Poster Crops", "Private Gallery"],
-    "detailIntro": "Enter a cyberpunk world of neon streets, high-tech wardrobe cues, and cinematic night-city light. This package turns simple portraits into futuristic images with bold contrast and urban atmosphere.",
-    "whatCreates": "A private gallery of neon portraits, sci-fi avatar crops, dramatic poster images, and creator visuals with a consistent futuristic mood.",
-    "bestFor": ["Gaming profiles", "Music and creator visuals", "Dramatic avatars", "Sci-fi social posts"],
-    "workflow": ["Upload portraits with clear facial detail and strong source quality.", "Review the cyberpunk direction, credit cost, and private-gallery flow.", "Generate neon city variations and download the strongest cinematic crops."],
-    "styleNotes": ["Magenta and cyan light accents", "Rainy city backgrounds", "High-tech fashion and sharp contrast"],
-    "coverNote": "Use the cover direction to judge whether the final gallery should lean poster-like, avatar-ready, or fashion-forward."
+    "headline": "AI Cyberpunk Photos for Neon City Portraits and Futuristic Profile Art",
+    "cardDescription": "Turn portraits into neon cyberpunk city scenes with rain reflections, futuristic styling, cinematic light, and poster crops.",
+    "metaLabel": "Cyberpunk photos",
+    "tags": [
+      "Neon City",
+      "Futuristic",
+      "Poster Crop",
+      "Gaming"
+    ],
+    "detailTags": [
+      "Cyberpunk portrait",
+      "Neon profile",
+      "Rain street",
+      "Sci-fi style",
+      "Music visual"
+    ],
+    "detailIntro": "Use Cyberpunk when you want a high-impact profile or poster image built around neon streets, futuristic wardrobe, rain reflections, and cinematic contrast.",
+    "whatCreates": "AI cyberpunk portraits, neon city profile images, sci-fi social crops, gaming-style avatars, and poster-ready private gallery options.",
+    "bestFor": [
+      "Gaming profiles, music visuals, creator launches, and bold social refreshes",
+      "Neon city portraits with futuristic clothing and high-contrast lighting",
+      "Poster-style crops for campaigns, thumbnails, and personal projects",
+      "Private character images that still preserve the source person's identity"
+    ],
+    "workflow": [
+      "Upload expressive portraits with clear face detail.",
+      "Choose neon city, rain street, futuristic studio, or poster direction.",
+      "Generate profile, banner, and vertical poster variations.",
+      "Review resemblance, hands, wardrobe, and background readability before use."
+    ],
+    "styleNotes": [
+      "Keep neon effects strong but do not let them hide the face.",
+      "Use simple crops for avatars and wider frames for posters.",
+      "Avoid protected franchise imagery, logos, or character imitation."
+    ],
+    "coverNote": "Cyberpunk results are strongest with expressive face references and a clear choice between profile icon, poster, or social campaign.",
+    "safetyNote": "Use original futuristic styling and avoid copying protected characters, trademarks, or another person's likeness."
   },
   "gala-photos": {
     "headline": "AI Gala Photo Generator",
     "cardDescription": "Create formal evening portraits with black-tie styling, red-carpet polish, warm flash, and elegant event energy.",
     "metaLabel": "Evening portraits",
-    "tags": ["Gala Photos", "Formal Portraits", "Red Carpet"],
-    "detailTags": ["Gala Photos", "Formal Portraits", "Red Carpet Mood", "Evening Wear", "Event Concepts", "Creator Campaigns", "Private Album", "Polished Lighting"],
+    "tags": [
+      "Gala Photos",
+      "Formal Portraits",
+      "Red Carpet"
+    ],
+    "detailTags": [
+      "Gala Photos",
+      "Formal Portraits",
+      "Red Carpet Mood",
+      "Evening Wear",
+      "Event Concepts",
+      "Creator Campaigns",
+      "Private Album",
+      "Polished Lighting"
+    ],
     "detailIntro": "Turn portraits into formal evening images with refined wardrobe styling, warm event light, and red-carpet atmosphere. The mood is elevated, polished, and made for announcement-worthy visuals.",
     "whatCreates": "A private album of gala-style portraits, formal profile crops, event-inspired images, and creator visuals with a black-tie finish.",
-    "bestFor": ["Formal portraits", "Event concepts", "Announcement visuals", "Polished creator campaigns"],
-    "workflow": ["Upload portraits that show face shape, posture, and wardrobe references clearly.", "Review the gala direction and decide whether you want soft elegance or stronger red-carpet drama.", "Generate a private gallery and download the most polished formal crops."],
-    "styleNotes": ["Black-tie wardrobe cues", "Warm flash and elegant venue light", "Confident red-carpet composition"],
+    "bestFor": [
+      "Formal portraits",
+      "Event concepts",
+      "Announcement visuals",
+      "Polished creator campaigns"
+    ],
+    "workflow": [
+      "Upload portraits that show face shape, posture, and wardrobe references clearly.",
+      "Review the gala direction and decide whether you want soft elegance or stronger red-carpet drama.",
+      "Generate a private gallery and download the most polished formal crops."
+    ],
+    "styleNotes": [
+      "Black-tie wardrobe cues",
+      "Warm flash and elegant venue light",
+      "Confident red-carpet composition"
+    ],
     "coverNote": "Use the preview to judge how formal, glamorous, and event-ready the package should feel."
   },
   "mafia": {
-    "headline": "AI Noir Portrait Generator",
-    "cardDescription": "Build cinematic noir character portraits with tailored styling, moody interiors, low-key light, and film-still drama.",
-    "metaLabel": "Noir portraits",
-    "tags": ["Noir Portraits", "Cinematic Style", "Character Photos"],
-    "detailTags": ["Noir Portraits", "Cinematic Style", "Character Photos", "Moody Interiors", "Tailored Wardrobe", "Story Concepts", "Poster Crops", "Private Gallery"],
-    "detailIntro": "Create a private character-led album with moody interiors, tailored wardrobe cues, and dramatic film light. The result feels like a premium noir still rather than a generic costume filter.",
-    "whatCreates": "A focused gallery of noir portraits, story-led profile images, dramatic poster crops, and cinematic character concepts.",
-    "bestFor": ["Noir portraits", "Story-led profile images", "Character concepts", "Dramatic social campaigns"],
-    "workflow": ["Upload portraits with expressive angles and clear facial detail.", "Review the noir direction, wardrobe mood, and credit cost before generating.", "Download the character crops that feel strongest for your intended channel."],
-    "styleNotes": ["Low-key lighting and smoke-free atmosphere", "Tailored wardrobe and vintage interiors", "Film-still framing with restrained color"],
-    "coverNote": "Use the cover mood to decide whether the final set should feel classic, dramatic, or more editorial.",
-    "safetyNote": "Use only consented source images and avoid presenting real people as involved in crime or harmful activity."
+    "headline": "AI Mafia Photos for Noir Character Portraits and Cinematic Profile Art",
+    "cardDescription": "Create mafia-inspired noir portraits with tailored wardrobe, moody interiors, dramatic light, and private character albums.",
+    "metaLabel": "Mafia photos",
+    "tags": [
+      "Noir Character",
+      "Cinematic Portrait",
+      "Tailored Wardrobe",
+      "Moody Light"
+    ],
+    "detailTags": [
+      "Mafia-inspired",
+      "Noir portrait",
+      "Vintage interior",
+      "Character concept",
+      "Dramatic profile"
+    ],
+    "detailIntro": "Use Mafia for fictional noir styling: tailored suits, dramatic interiors, smoky contrast, and cinematic character energy without suggesting real criminal affiliation.",
+    "whatCreates": "AI mafia-inspired portraits, noir character images, vintage interior scenes, dramatic profile crops, and private cinematic album options.",
+    "bestFor": [
+      "Noir profile art, character concepts, creator campaigns, and poster-style images",
+      "Cinematic portraits with tailored wardrobe, moody lighting, and vintage rooms",
+      "Private themed albums for storytelling, social posts, or concept boards",
+      "Users who want dramatic images while keeping the subject recognizable"
+    ],
+    "workflow": [
+      "Upload expressive portraits with clear face detail.",
+      "Choose noir interior, tailored portrait, vintage street, or poster direction.",
+      "Generate profile, poster, and story crops.",
+      "Review likeness, hands, wardrobe, props, and the fictional tone before use."
+    ],
+    "styleNotes": [
+      "Keep the style cinematic and fictional, not a claim about real activity.",
+      "Avoid weapons, graphic violence, or threatening prompts.",
+      "Use cleaner crops for profiles and wider frames for poster concepts."
+    ],
+    "coverNote": "Mafia-style portraits work best with expressive source photos and a clear noir or character concept.",
+    "safetyNote": "Do not create images that threaten, harass, impersonate, or imply real criminal conduct."
   },
   "nature": {
     "headline": "AI Nature Adventure Photo Generator",
     "cardDescription": "Turn portraits into outdoor adventure scenes with alpine trails, lake light, forest paths, and grounded creator mood.",
     "metaLabel": "Outdoor portraits",
-    "tags": ["Nature Photography", "Outdoor Portraits", "Adventure Photos"],
-    "detailTags": ["Nature Photography", "Outdoor Portraits", "Adventure Photos", "Alpine Trails", "Forest Mood", "Creator Profiles", "Lifestyle Gallery", "Private Album"],
+    "tags": [
+      "Nature Photography",
+      "Outdoor Portraits",
+      "Adventure Photos"
+    ],
+    "detailTags": [
+      "Nature Photography",
+      "Outdoor Portraits",
+      "Adventure Photos",
+      "Alpine Trails",
+      "Forest Mood",
+      "Creator Profiles",
+      "Lifestyle Gallery",
+      "Private Album"
+    ],
     "detailIntro": "Create outdoor portraits with alpine trails, forest paths, mountain lakes, and natural lifestyle energy. This package is built for grounded adventure photos that still keep the subject recognizable.",
     "whatCreates": "A private nature gallery with scenic portraits, adventure crops, creator profile images, and lifestyle visuals for personal profiles, creator posts, or keepsake albums.",
-    "bestFor": ["Outdoor profile photos", "Adventure portraits", "Creator moodboards", "Lifestyle galleries"],
-    "workflow": ["Upload clear portraits with natural expressions and usable lighting.", "Review the outdoor direction, image count, and credit cost before generating.", "Download the scenic crops that best match your profile, post, or album plan."],
-    "styleNotes": ["Alpine trails and lake reflections", "Natural jackets, backpacks, and outdoor posture", "Soft daylight with scenic depth"],
+    "bestFor": [
+      "Outdoor profile photos",
+      "Adventure portraits",
+      "Creator moodboards",
+      "Lifestyle galleries"
+    ],
+    "workflow": [
+      "Upload clear portraits with natural expressions and usable lighting.",
+      "Review the outdoor direction, image count, and credit cost before generating.",
+      "Download the scenic crops that best match your profile, post, or album plan."
+    ],
+    "styleNotes": [
+      "Alpine trails and lake reflections",
+      "Natural jackets, backpacks, and outdoor posture",
+      "Soft daylight with scenic depth"
+    ],
     "coverNote": "Use the representative image to judge terrain, weather mood, and how close the subject should sit in the frame."
   },
   "outdoor-creator-scenes": {
     "headline": "AI Outdoor Creator Scene Photo Generator",
     "cardDescription": "Place portraits into creator-ready scenes with beaches, cities, cliffs, date-night walks, and golden-hour outdoor light.",
     "metaLabel": "Creator scenes",
-    "tags": ["Creator Scenes", "Outdoor Portraits", "Lifestyle Albums"],
-    "detailTags": ["Creator Scenes", "Outdoor Portraits", "Lifestyle Albums", "City Walks", "Beach Light", "Dating Profiles", "Golden Hour Mood", "Private Gallery"],
+    "tags": [
+      "Creator Scenes",
+      "Outdoor Portraits",
+      "Lifestyle Albums"
+    ],
+    "detailTags": [
+      "Creator Scenes",
+      "Outdoor Portraits",
+      "Lifestyle Albums",
+      "City Walks",
+      "Beach Light",
+      "Dating Profiles",
+      "Golden Hour Mood",
+      "Private Gallery"
+    ],
     "detailIntro": "Compare outdoor creator moods before spending credits: coastal walks, city streets, scenic cliffs, soft evening light, and relaxed profile portraits. The package helps make personal photos feel like a curated creator album.",
     "whatCreates": "A private gallery of creator-scene portraits, profile crops, dating-profile images, and outdoor personal-brand visuals.",
-    "bestFor": ["Dating profile refreshes", "Personal-brand creator visuals", "Outdoor album concepts", "Golden-hour social posts"],
-    "workflow": ["Upload portraits with clear faces and a few expression options.", "Choose the creator-scene direction and review the credit cost before generation.", "Keep the strongest outdoor crops for profiles, posts, or private albums."],
-    "styleNotes": ["Golden-hour creator light", "Beach, city, and scenic outdoor backgrounds", "Relaxed posture and creator wardrobe cues"],
+    "bestFor": [
+      "Dating profile refreshes",
+      "Personal-brand creator visuals",
+      "Outdoor album concepts",
+      "Golden-hour social posts"
+    ],
+    "workflow": [
+      "Upload portraits with clear faces and a few expression options.",
+      "Choose the creator-scene direction and review the credit cost before generation.",
+      "Keep the strongest outdoor crops for profiles, posts, or private albums."
+    ],
+    "styleNotes": [
+      "Golden-hour creator light",
+      "Beach, city, and scenic outdoor backgrounds",
+      "Relaxed posture and creator wardrobe cues"
+    ],
     "coverNote": "Use the examples to decide whether you want the final gallery to feel romantic, scenic, urban, or resort-like."
   },
   "virtual-try-on": {
-    "headline": "AI Virtual Try-On Photo Generator",
-    "cardDescription": "Preview outfit and styling directions for creator looks, fashion tests, wardrobe moodboards, and personal photo planning.",
-    "metaLabel": "Style previews",
-    "tags": ["Virtual Try-On", "Outfit Preview", "Fashion Planning"],
-    "detailTags": ["Virtual Try-On", "Outfit Preview", "Fashion Planning", "Creator Styling", "Wardrobe Moodboard", "Profile Refresh", "Visual Preview", "Private Gallery"],
-    "detailIntro": "Use AI try-on as a visual planning tool for outfits, creator looks, and fashion content directions. The package helps compare styling ideas before ordering a larger shoot or making a real-world purchase.",
-    "whatCreates": "A private set of outfit previews, wardrobe moodboard images, creator styling tests, and profile-ready fashion crops.",
-    "bestFor": ["Outfit moodboards", "Fashion content planning", "Creator styling tests", "Profile-refresh ideas"],
-    "workflow": ["Upload clear source photos and any clothing references you have permission to use.", "Review the try-on direction as a visual preview rather than a fit guarantee.", "Download favorite styling images for planning, posts, or moodboards."],
-    "styleNotes": ["Readable outfit shape and color", "Fashion-forward portrait lighting", "Clean comparison-friendly crops"],
-    "coverNote": "Use the gallery examples to compare silhouette, color mood, and whether the styling direction matches your real use case.",
-    "safetyNote": "Visual preview only; results are not exact garment fit, sizing, fabric behavior, or purchase guarantees."
+    "headline": "AI Virtual Try-On Photos for Outfit Ideas, Wardrobe Moodboards, and Fashion Planning",
+    "cardDescription": "Preview outfit directions, wardrobe moodboards, fashion looks, creator styling ideas, and private try-on portraits.",
+    "metaLabel": "Virtual try-on photos",
+    "tags": [
+      "Outfit Ideas",
+      "Wardrobe Moodboard",
+      "Fashion Planning",
+      "Creator Styling"
+    ],
+    "detailTags": [
+      "Outfit preview",
+      "Try-on portrait",
+      "Wardrobe planning",
+      "Fashion crop",
+      "Style comparison"
+    ],
+    "detailIntro": "Use Virtual Try-On when you want to compare outfit direction, wardrobe mood, styling color, or creator campaign looks before buying, packing, or shooting.",
+    "whatCreates": "AI outfit preview portraits, wardrobe moodboards, fashion profile crops, styling comparisons, and private try-on gallery images.",
+    "bestFor": [
+      "Outfit ideas, wardrobe planning, fashion campaigns, and creator styling",
+      "Comparing colors, silhouettes, formal looks, casual looks, or event outfits",
+      "Private try-on concepts before shopping, packing, or arranging a shoot",
+      "Profile images where clothing style is part of the message"
+    ],
+    "workflow": [
+      "Upload clear portraits and any clothing reference you own or can use.",
+      "Choose casual, formal, streetwear, creator, travel, or event styling.",
+      "Generate outfit variations with consistent face and pose framing.",
+      "Review clothing realism, hands, body shape, and brand-safe details."
+    ],
+    "styleNotes": [
+      "Use specific outfit cues rather than broad fashion words when accuracy matters.",
+      "Avoid protected logos or branded garments unless you have permission.",
+      "Treat try-on outputs as planning visuals, not exact garment fit guarantees."
+    ],
+    "coverNote": "Virtual try-on works best with clear body framing, simple lighting, and a specific outfit direction.",
+    "safetyNote": "Do not use try-on images to misrepresent a product, brand, or person without permission."
   },
   "profile-cards": {
     "headline": "AI Profile Card Generator",
     "cardDescription": "Build clean social profile cards, avatar crops, intro visuals, and personal identity updates for bios and small landing pages.",
     "metaLabel": "Profile cards",
-    "tags": ["Profile Cards", "Avatar Crops", "Personal Bio"],
-    "detailTags": ["Profile Cards", "Avatar Crops", "Personal Bio", "Intro Visuals", "Social Profiles", "Newsletter Images", "Contact Pages", "Private Gallery"],
+    "tags": [
+      "Profile Cards",
+      "Avatar Crops",
+      "Personal Bio"
+    ],
+    "detailTags": [
+      "Profile Cards",
+      "Avatar Crops",
+      "Personal Bio",
+      "Intro Visuals",
+      "Social Profiles",
+      "Newsletter Images",
+      "Contact Pages",
+      "Private Gallery"
+    ],
     "detailIntro": "Create profile-ready visuals that work across bios, social accounts, newsletters, and personal pages. The package favors clean identity design over heavy fantasy styling.",
     "whatCreates": "A private set of profile cards, avatar crops, intro visuals, and personal-brand images that can be reused across lightweight public channels.",
-    "bestFor": ["Social profile updates", "Personal landing pages", "Newsletter identity blocks", "Contact-page visuals"],
-    "workflow": ["Upload a clear portrait and choose the card mood you want.", "Review the image count, private-gallery flow, and credit cost before generating.", "Download profile crops and card-style images sized for your channels."],
-    "styleNotes": ["Clean framing and readable face crops", "Modern personal-brand color accents", "Simple layouts that work at small sizes"],
+    "bestFor": [
+      "Social profile updates",
+      "Personal landing pages",
+      "Newsletter identity blocks",
+      "Contact-page visuals"
+    ],
+    "workflow": [
+      "Upload a clear portrait and choose the card mood you want.",
+      "Review the image count, private-gallery flow, and credit cost before generating.",
+      "Download profile crops and card-style images sized for your channels."
+    ],
+    "styleNotes": [
+      "Clean framing and readable face crops",
+      "Modern personal-brand color accents",
+      "Simple layouts that work at small sizes"
+    ],
     "coverNote": "Use the preview to decide whether your profile set should feel minimal, creator-led, or more polished."
   },
   "creator-portraits": {
     "headline": "AI Creator Portrait Generator",
     "cardDescription": "Create VIP-style creator portraits, red-carpet fan snapshots, media-kit images, thumbnails, and polished personal-brand photos without a full studio day.",
     "metaLabel": "Red-carpet looks",
-    "tags": ["Creator Portraits", "VIP-style Looks", "Red-carpet Style"],
-    "detailTags": ["Creator Portraits", "VIP-style Looks", "Red-carpet Style", "Media Kit", "Personal Brand", "Thumbnail Crops", "Founder Images", "Private Gallery"],
+    "tags": [
+      "Creator Portraits",
+      "VIP-style Looks",
+      "Red-carpet Style"
+    ],
+    "detailTags": [
+      "Creator Portraits",
+      "VIP-style Looks",
+      "Red-carpet Style",
+      "Media Kit",
+      "Personal Brand",
+      "Thumbnail Crops",
+      "Founder Images",
+      "Private Gallery"
+    ],
     "detailIntro": "Build a consistent set of creator portraits with polished VIP-style lighting, red-carpet mood, and personal-brand flexibility. The look feels elevated without implying access to a real event or public figure.",
     "whatCreates": "A private gallery of creator portraits, red-carpet style fan snapshots, thumbnail-ready crops, website portraits, and personal-brand images with consistent lighting and mood.",
-    "bestFor": ["VIP-style creator portraits", "Red-carpet fan moments", "Media kits", "Thumbnail and landing-page visuals"],
-    "workflow": ["Upload source portraits that show your face and expression clearly.", "Pick the creator portrait direction and review credits before generation.", "Download the strongest crops for public pages, posts, and media assets."],
-    "styleNotes": ["VIP-style editorial lighting", "Red-carpet mood without protected brand claims", "Flexible crops for square, vertical, and banner use"],
+    "bestFor": [
+      "VIP-style creator portraits",
+      "Red-carpet fan moments",
+      "Media kits",
+      "Thumbnail and landing-page visuals"
+    ],
+    "workflow": [
+      "Upload source portraits that show your face and expression clearly.",
+      "Pick the creator portrait direction and review credits before generation.",
+      "Download the strongest crops for public pages, posts, and media assets."
+    ],
+    "styleNotes": [
+      "VIP-style editorial lighting",
+      "Red-carpet mood without protected brand claims",
+      "Flexible crops for square, vertical, and banner use"
+    ],
     "coverNote": "Use the examples to check whether the set should feel approachable, premium, red-carpet styled, or highly editorial.",
     "safetyNote": "Use only approved source photos and avoid implying endorsement, attendance, or association with a real celebrity, brand, venue, or event without permission."
   },
@@ -152,13 +436,39 @@
     "headline": "AI Fashion Editorial Photo Generator",
     "cardDescription": "Explore wardrobe-led portraits with magazine lighting, refined posing, outfit direction, and polished editorial crops.",
     "metaLabel": "Editorial looks",
-    "tags": ["Fashion Editorial", "Outfit Direction", "Magazine Portraits"],
-    "detailTags": ["Fashion Editorial", "Outfit Direction", "Magazine Portraits", "Wardrobe Tests", "Campaign Moodboard", "Creator Styling", "Studio Light", "Private Gallery"],
+    "tags": [
+      "Fashion Editorial",
+      "Outfit Direction",
+      "Magazine Portraits"
+    ],
+    "detailTags": [
+      "Fashion Editorial",
+      "Outfit Direction",
+      "Magazine Portraits",
+      "Wardrobe Tests",
+      "Campaign Moodboard",
+      "Creator Styling",
+      "Studio Light",
+      "Private Gallery"
+    ],
     "detailIntro": "Create fashion-forward portraits with wardrobe direction, magazine-style lighting, and editorial composition. This package helps test a visual world before a campaign, profile refresh, or style-led post.",
     "whatCreates": "A private gallery of fashion editorial portraits, outfit concepts, magazine crops, and campaign moodboard images.",
-    "bestFor": ["Fashion creators", "Outfit tests", "Editorial profile photos", "Campaign moodboards"],
-    "workflow": ["Upload portraits or style references you have permission to use.", "Review wardrobe mood, credit cost, and intended publishing use before generation.", "Download the strongest editorial crops for planning or content."],
-    "styleNotes": ["Magazine lighting and confident posing", "Wardrobe as the visual anchor", "Polished color grading with clean crops"],
+    "bestFor": [
+      "Fashion creators",
+      "Outfit tests",
+      "Editorial profile photos",
+      "Campaign moodboards"
+    ],
+    "workflow": [
+      "Upload portraits or style references you have permission to use.",
+      "Review wardrobe mood, credit cost, and intended publishing use before generation.",
+      "Download the strongest editorial crops for planning or content."
+    ],
+    "styleNotes": [
+      "Magazine lighting and confident posing",
+      "Wardrobe as the visual anchor",
+      "Polished color grading with clean crops"
+    ],
     "coverNote": "Use the cover direction to decide whether the final gallery should feel studio, street-style, or campaign-led.",
     "safetyNote": "Use consented source photos and avoid implying brand endorsement without permission."
   },
@@ -166,13 +476,39 @@
     "headline": "AI Anime Avatar Generator",
     "cardDescription": "Turn portraits into stylized anime-inspired avatars, character profile art, playful identity images, and fan-community visuals.",
     "metaLabel": "Anime avatars",
-    "tags": ["Anime Avatars", "Character Art", "Profile Icons"],
-    "detailTags": ["Anime Avatars", "Character Art", "Profile Icons", "Fan Communities", "Stylized Portraits", "Gaming Profiles", "Playful Identity", "Private Gallery"],
+    "tags": [
+      "Anime Avatars",
+      "Character Art",
+      "Profile Icons"
+    ],
+    "detailTags": [
+      "Anime Avatars",
+      "Character Art",
+      "Profile Icons",
+      "Fan Communities",
+      "Stylized Portraits",
+      "Gaming Profiles",
+      "Playful Identity",
+      "Private Gallery"
+    ],
     "detailIntro": "Transform a private portrait into anime-inspired avatar directions with expressive styling and profile-friendly crops. The goal is playful identity design, not a one-click copy of a specific copyrighted character.",
     "whatCreates": "A private gallery of stylized avatars, character profile crops, fan-community images, and playful social identity visuals.",
-    "bestFor": ["Anime avatars", "Gaming profiles", "Fan community visuals", "Playful social identities"],
-    "workflow": ["Upload a clear portrait with permission to use it.", "Choose the anime-inspired direction and review the credit cost before generation.", "Download avatar crops and character images that fit your profile use."],
-    "styleNotes": ["Expressive eyes and clean character silhouette", "Profile-icon readability", "Stylized color without copying protected characters"],
+    "bestFor": [
+      "Anime avatars",
+      "Gaming profiles",
+      "Fan community visuals",
+      "Playful social identities"
+    ],
+    "workflow": [
+      "Upload a clear portrait with permission to use it.",
+      "Choose the anime-inspired direction and review the credit cost before generation.",
+      "Download avatar crops and character images that fit your profile use."
+    ],
+    "styleNotes": [
+      "Expressive eyes and clean character silhouette",
+      "Profile-icon readability",
+      "Stylized color without copying protected characters"
+    ],
     "coverNote": "Use the preview to judge how stylized, cute, dramatic, or profile-icon friendly the final set should be.",
     "safetyNote": "Avoid requesting direct copies of copyrighted characters or using another person's likeness without permission."
   },
@@ -180,13 +516,39 @@
     "headline": "AI Product Style Photo Generator",
     "cardDescription": "Draft creator-led product scenes, lifestyle images, simple social-commerce visuals, and campaign moodboards from approved references.",
     "metaLabel": "Product scenes",
-    "tags": ["Product Style", "Lifestyle Photos", "Commerce Visuals"],
-    "detailTags": ["Product Style", "Lifestyle Photos", "Commerce Visuals", "Creator Product Posts", "Campaign Moodboard", "Social Commerce", "Reference Images", "Private Gallery"],
+    "tags": [
+      "Product Style",
+      "Lifestyle Photos",
+      "Commerce Visuals"
+    ],
+    "detailTags": [
+      "Product Style",
+      "Lifestyle Photos",
+      "Commerce Visuals",
+      "Creator Product Posts",
+      "Campaign Moodboard",
+      "Social Commerce",
+      "Reference Images",
+      "Private Gallery"
+    ],
     "detailIntro": "Plan product-style visuals with lifestyle context, creator framing, and simple campaign direction. The package is useful for drafts, moodboards, and social content planning before production work.",
     "whatCreates": "A private set of product-style scene drafts, creator-product portraits, lifestyle crops, and social commerce moodboard images.",
-    "bestFor": ["Social commerce concepts", "Product lifestyle drafts", "Creator product posts", "Campaign moodboards"],
-    "workflow": ["Upload product references and source photos you own or have permission to use.", "Review the visual direction, credit cost, and publishing needs before generation.", "Download drafts for planning, testing, or content direction."],
-    "styleNotes": ["Readable product placement", "Creator-led lifestyle context", "Clean crops for social and storefront planning"],
+    "bestFor": [
+      "Social commerce concepts",
+      "Product lifestyle drafts",
+      "Creator product posts",
+      "Campaign moodboards"
+    ],
+    "workflow": [
+      "Upload product references and source photos you own or have permission to use.",
+      "Review the visual direction, credit cost, and publishing needs before generation.",
+      "Download drafts for planning, testing, or content direction."
+    ],
+    "styleNotes": [
+      "Readable product placement",
+      "Creator-led lifestyle context",
+      "Clean crops for social and storefront planning"
+    ],
     "coverNote": "Use the examples to judge product visibility, lifestyle mood, and how polished the scene needs to be.",
     "safetyNote": "Generated images are planning visuals; verify product claims, packaging, and commercial permissions before publishing."
   },
@@ -194,144 +556,429 @@
     "headline": "AI Social Card Generator",
     "cardDescription": "Generate share-ready cards, announcement visuals, profile banners, keepsake images, and polished story post crops.",
     "metaLabel": "Social cards",
-    "tags": ["Social Cards", "Story Posts", "Announcement Visuals"],
-    "detailTags": ["Social Cards", "Story Posts", "Announcement Visuals", "Profile Banners", "Keepsake Images", "Creator Updates", "Personal News", "Private Gallery"],
+    "tags": [
+      "Social Cards",
+      "Story Posts",
+      "Announcement Visuals"
+    ],
+    "detailTags": [
+      "Social Cards",
+      "Story Posts",
+      "Announcement Visuals",
+      "Profile Banners",
+      "Keepsake Images",
+      "Creator Updates",
+      "Personal News",
+      "Private Gallery"
+    ],
     "detailIntro": "Create lightweight publishing visuals for moments that need to look polished without becoming a full photo shoot. The package works for announcements, stories, banners, and personal keepsakes.",
     "whatCreates": "A private gallery of share-ready cards, story images, profile banners, announcement crops, and personal update visuals.",
-    "bestFor": ["Announcement cards", "Story posts", "Profile banners", "Creator updates"],
-    "workflow": ["Upload the portraits or references you want to anchor the card set.", "Choose the social-card direction and review credits before generation.", "Download the strongest crops for the channels you plan to post on."],
-    "styleNotes": ["Clear subject hierarchy", "Readable small-format crops", "Polished but lightweight publishing style"],
+    "bestFor": [
+      "Announcement cards",
+      "Story posts",
+      "Profile banners",
+      "Creator updates"
+    ],
+    "workflow": [
+      "Upload the portraits or references you want to anchor the card set.",
+      "Choose the social-card direction and review credits before generation.",
+      "Download the strongest crops for the channels you plan to post on."
+    ],
+    "styleNotes": [
+      "Clear subject hierarchy",
+      "Readable small-format crops",
+      "Polished but lightweight publishing style"
+    ],
     "coverNote": "Use the preview to check whether the set should feel celebratory, clean, personal, or creator-led."
   },
   "wedding-portraits": {
     "headline": "AI Wedding Portrait Generator",
     "cardDescription": "Create romantic wedding-inspired portraits, couple album ideas, save-the-date visuals, and warm ceremony scenes.",
     "metaLabel": "Wedding portraits",
-    "tags": ["Wedding Portraits", "Couple Photos", "Save the Date"],
-    "detailTags": ["Wedding Portraits", "Couple Photos", "Save the Date", "Wedding Website", "Romantic Scenes", "Keepsake Album", "Engagement Mood", "Private Gallery"],
+    "tags": [
+      "Wedding Portraits",
+      "Couple Photos",
+      "Save the Date"
+    ],
+    "detailTags": [
+      "Wedding Portraits",
+      "Couple Photos",
+      "Save the Date",
+      "Wedding Website",
+      "Romantic Scenes",
+      "Keepsake Album",
+      "Engagement Mood",
+      "Private Gallery"
+    ],
     "detailIntro": "Build wedding-inspired portraits for planning, keepsakes, announcements, and couple albums. The package emphasizes romantic light, flattering poses, and album-ready composition.",
     "whatCreates": "A private gallery of wedding-style couple portraits, save-the-date concepts, romantic scenes, and announcement-ready crops.",
-    "bestFor": ["Wedding websites", "Save-the-date concepts", "Couple portraits", "Private romantic albums"],
-    "workflow": ["Upload approved couple photos with clear faces and natural expressions.", "Review the wedding direction, image count, and credit cost before generation.", "Download favorite portraits for planning, private albums, or announcement concepts."],
-    "styleNotes": ["Warm ceremony light and soft backgrounds", "Couple-centered composition", "Album-ready romance without heavy clutter"],
+    "bestFor": [
+      "Wedding websites",
+      "Save-the-date concepts",
+      "Couple portraits",
+      "Private romantic albums"
+    ],
+    "workflow": [
+      "Upload approved couple photos with clear faces and natural expressions.",
+      "Review the wedding direction, image count, and credit cost before generation.",
+      "Download favorite portraits for planning, private albums, or announcement concepts."
+    ],
+    "styleNotes": [
+      "Warm ceremony light and soft backgrounds",
+      "Couple-centered composition",
+      "Album-ready romance without heavy clutter"
+    ],
     "coverNote": "Use the preview to decide whether the set should feel classic, cinematic, intimate, or announcement-ready."
   },
   "indian-wedding": {
     "headline": "AI Indian Wedding Photo Generator",
     "cardDescription": "Create Indian wedding-inspired portraits with rich textiles, jewelry detail, ceremony light, and album-ready celebration mood.",
     "metaLabel": "Ceremony portraits",
-    "tags": ["Indian Wedding", "Ceremony Portraits", "Bridal Style"],
-    "detailTags": ["Indian Wedding", "Ceremony Portraits", "Bridal Style", "Saree Looks", "Lehenga Looks", "Sherwani Style", "Jewelry Detail", "Private Gallery"],
+    "tags": [
+      "Indian Wedding",
+      "Ceremony Portraits",
+      "Bridal Style"
+    ],
+    "detailTags": [
+      "Indian Wedding",
+      "Ceremony Portraits",
+      "Bridal Style",
+      "Saree Looks",
+      "Lehenga Looks",
+      "Sherwani Style",
+      "Jewelry Detail",
+      "Private Gallery"
+    ],
     "detailIntro": "Build respectful Indian wedding-inspired portraits around textiles, ceremony light, jewelry detail, and celebration styling. The package is designed for private concepts, keepsakes, and wedding-album imagination.",
     "whatCreates": "A private gallery of Indian wedding-style portraits, couple images, bridal and groom styling concepts, and celebration-ready crops.",
-    "bestFor": ["Indian wedding concepts", "Celebration portraits", "Traditional outfit inspiration", "Private family albums"],
-    "workflow": ["Upload approved portraits or couple photos with clear facial detail.", "Review the cultural styling direction, credit cost, and private-gallery flow.", "Download favorite ceremony-inspired images for planning, keepsakes, or albums."],
-    "styleNotes": ["Rich textiles and jewelry detail", "Warm mandap or ceremony lighting", "Respectful couple and family portrait composition"],
+    "bestFor": [
+      "Indian wedding concepts",
+      "Celebration portraits",
+      "Traditional outfit inspiration",
+      "Private family albums"
+    ],
+    "workflow": [
+      "Upload approved portraits or couple photos with clear facial detail.",
+      "Review the cultural styling direction, credit cost, and private-gallery flow.",
+      "Download favorite ceremony-inspired images for planning, keepsakes, or albums."
+    ],
+    "styleNotes": [
+      "Rich textiles and jewelry detail",
+      "Warm mandap or ceremony lighting",
+      "Respectful couple and family portrait composition"
+    ],
     "coverNote": "Use the cover direction to check textile color, jewelry emphasis, and ceremony mood before starting."
   },
   "desi-wedding": {
     "headline": "AI Desi Wedding Photo Generator",
     "cardDescription": "Design festive Desi wedding portraits with rich color, ceremony atmosphere, couple posing, and joyful album energy.",
     "metaLabel": "Festive portraits",
-    "tags": ["Desi Wedding", "Wedding Photography", "Bridal Photos"],
-    "detailTags": ["Desi Wedding", "Wedding Photography", "Bridal Photos", "Festive Color", "Couple Portraits", "Family Keepsakes", "Ceremony Mood", "Private Gallery"],
+    "tags": [
+      "Desi Wedding",
+      "Wedding Photography",
+      "Bridal Photos"
+    ],
+    "detailTags": [
+      "Desi Wedding",
+      "Wedding Photography",
+      "Bridal Photos",
+      "Festive Color",
+      "Couple Portraits",
+      "Family Keepsakes",
+      "Ceremony Mood",
+      "Private Gallery"
+    ],
     "detailIntro": "Create Desi wedding-inspired images with festive color, ceremony atmosphere, and couple-ready album composition. The mood is celebratory, warm, and rooted in private keepsake planning.",
     "whatCreates": "A private gallery of Desi wedding portraits, bridal and couple concepts, festive scenes, and wedding website visuals.",
-    "bestFor": ["Desi wedding concepts", "Family keepsakes", "Wedding website visuals", "Festive couple portraits"],
-    "workflow": ["Upload approved source photos with clear faces and natural expressions.", "Review the festive styling direction and credit cost before generating.", "Download the strongest images for private planning, albums, or announcement drafts."],
-    "styleNotes": ["Warm ceremony glow", "Festive color and textile detail", "Couple-centered album composition"],
+    "bestFor": [
+      "Desi wedding concepts",
+      "Family keepsakes",
+      "Wedding website visuals",
+      "Festive couple portraits"
+    ],
+    "workflow": [
+      "Upload approved source photos with clear faces and natural expressions.",
+      "Review the festive styling direction and credit cost before generating.",
+      "Download the strongest images for private planning, albums, or announcement drafts."
+    ],
+    "styleNotes": [
+      "Warm ceremony glow",
+      "Festive color and textile detail",
+      "Couple-centered album composition"
+    ],
     "coverNote": "Use the preview to decide whether the final set should feel intimate, festive, traditional, or editorial."
   },
   "valentine-photos": {
     "headline": "AI Valentine Photo Generator",
     "cardDescription": "Make romantic Valentine portraits, couple cards, giftable keepsakes, and warm social images with soft date-night mood.",
     "metaLabel": "Romantic cards",
-    "tags": ["Valentine Photos", "Romantic Cards", "Couple Portraits"],
-    "detailTags": ["Valentine Photos", "Romantic Cards", "Couple Portraits", "Gift Keepsakes", "Date Night", "Love Notes", "Social Posts", "Private Gallery"],
+    "tags": [
+      "Valentine Photos",
+      "Romantic Cards",
+      "Couple Portraits"
+    ],
+    "detailTags": [
+      "Valentine Photos",
+      "Romantic Cards",
+      "Couple Portraits",
+      "Gift Keepsakes",
+      "Date Night",
+      "Love Notes",
+      "Social Posts",
+      "Private Gallery"
+    ],
     "detailIntro": "Create Valentine-ready portraits and romantic card visuals with soft light, date-night energy, and giftable composition. The package keeps the mood intimate and polished.",
     "whatCreates": "A private set of romantic portraits, Valentine cards, couple keepsakes, and share-ready images for personal gifts or social posts.",
-    "bestFor": ["Valentine gifts", "Couple keepsakes", "Romantic social posts", "Private love-note cards"],
-    "workflow": ["Upload approved solo or couple photos with clear faces.", "Review the Valentine direction, credits, and private album flow.", "Download favorite romantic crops for cards, posts, or keepsakes."],
-    "styleNotes": ["Soft warm light and romantic color", "Giftable card composition", "Gentle couple or solo portrait mood"],
+    "bestFor": [
+      "Valentine gifts",
+      "Couple keepsakes",
+      "Romantic social posts",
+      "Private love-note cards"
+    ],
+    "workflow": [
+      "Upload approved solo or couple photos with clear faces.",
+      "Review the Valentine direction, credits, and private album flow.",
+      "Download favorite romantic crops for cards, posts, or keepsakes."
+    ],
+    "styleNotes": [
+      "Soft warm light and romantic color",
+      "Giftable card composition",
+      "Gentle couple or solo portrait mood"
+    ],
     "coverNote": "Use the preview to judge whether the final set should feel cute, romantic, cinematic, or keepsake-focused."
   },
   "engagement": {
     "headline": "AI Engagement Photo Generator",
     "cardDescription": "Create proposal scenes, engagement portraits, announcement images, and romantic album concepts with cinematic light.",
     "metaLabel": "Engagement photos",
-    "tags": ["Engagement Photos", "Proposal Scene", "Announcement Cards"],
-    "detailTags": ["Engagement Photos", "Proposal Scene", "Announcement Cards", "Couple Portraits", "Ring Moment", "Romantic Album", "Wedding Planning", "Private Gallery"],
+    "tags": [
+      "Engagement Photos",
+      "Proposal Scene",
+      "Announcement Cards"
+    ],
+    "detailTags": [
+      "Engagement Photos",
+      "Proposal Scene",
+      "Announcement Cards",
+      "Couple Portraits",
+      "Ring Moment",
+      "Romantic Album",
+      "Wedding Planning",
+      "Private Gallery"
+    ],
     "detailIntro": "Build engagement-inspired images for proposal concepts, announcement drafts, and private couple albums. The package focuses on emotional light, ring-moment composition, and romantic storytelling.",
     "whatCreates": "A private gallery of engagement portraits, proposal scenes, announcement-card crops, and romantic planning visuals.",
-    "bestFor": ["Proposal concepts", "Engagement announcements", "Couple albums", "Wedding planning visuals"],
-    "workflow": ["Upload approved couple photos with clear expressions and posture.", "Review the engagement direction and credit cost before generating.", "Download favorite crops for private planning, social drafts, or keepsake albums."],
-    "styleNotes": ["Golden-hour romance", "Ring and hand-detail moments", "Couple-centered cinematic framing"],
+    "bestFor": [
+      "Proposal concepts",
+      "Engagement announcements",
+      "Couple albums",
+      "Wedding planning visuals"
+    ],
+    "workflow": [
+      "Upload approved couple photos with clear expressions and posture.",
+      "Review the engagement direction and credit cost before generating.",
+      "Download favorite crops for private planning, social drafts, or keepsake albums."
+    ],
+    "styleNotes": [
+      "Golden-hour romance",
+      "Ring and hand-detail moments",
+      "Couple-centered cinematic framing"
+    ],
     "coverNote": "Use the examples to decide whether the set should feel proposal-focused, candid, cinematic, or announcement-ready."
   },
   "boudoir": {
-    "headline": "AI Boudoir Portrait Generator",
-    "cardDescription": "Create tasteful non-explicit boudoir-inspired portraits for consenting adults with soft light, privacy, and elegant mood.",
-    "metaLabel": "Intimate portraits",
-    "tags": ["Boudoir Portraits", "Tasteful Photos", "Private Album"],
-    "detailTags": ["Boudoir Portraits", "Tasteful Photos", "Private Album", "Consenting Adults", "Soft Light", "Elegant Mood", "Gift Keepsakes", "Non-Explicit"],
-    "detailIntro": "Create tasteful boudoir-inspired portraits for consenting adults with privacy, soft light, and elegant composition. The package is intimate without being explicit.",
-    "whatCreates": "A private gallery of non-explicit intimate portraits, elegant keepsake crops, and soft-light images for adult personal use.",
-    "bestFor": ["Private adult keepsakes", "Tasteful gift albums", "Soft intimate portraits", "Confidence-focused images"],
-    "workflow": ["Upload only consented adult source photos that you own or have permission to use.", "Review the tasteful boudoir direction, safety boundary, and credit cost.", "Keep results in a private gallery and download only the images you want to use."],
-    "styleNotes": ["Soft window light and elegant shadows", "Non-explicit posing", "Private album mood with restrained styling"],
-    "coverNote": "Use the preview to judge privacy, softness, and whether the mood stays tasteful.",
-    "safetyNote": "Consenting adults only. This package is for non-explicit imagery and should not be used with minors, non-consensual images, or explicit requests."
+    "headline": "Private AI Boudoir Photos for Tasteful Adult Portraits and Confidence Sets",
+    "cardDescription": "Create tasteful boudoir-inspired portraits with soft editorial light, elegant styling, consent-first review, and private delivery.",
+    "metaLabel": "Boudoir photos",
+    "tags": [
+      "Tasteful Adult",
+      "Private Portrait",
+      "Soft Editorial",
+      "Confidence"
+    ],
+    "detailTags": [
+      "Boudoir-inspired",
+      "Consent-first",
+      "Non-explicit",
+      "Anniversary keepsake",
+      "Private album"
+    ],
+    "detailIntro": "Use Boudoir only for consenting adults who want tasteful, non-explicit portraits focused on confidence, lighting, wardrobe mood, and private review.",
+    "whatCreates": "AI boudoir-inspired portraits, soft studio concepts, elegant confidence images, anniversary keepsake crops, and private adult-only album options.",
+    "bestFor": [
+      "Private confidence portraits and tasteful adult keepsakes",
+      "Soft editorial moodboards with controlled lighting and wardrobe tone",
+      "Anniversary gift concepts that stay non-explicit and permission-safe",
+      "Adult users who want private review before downloading favorites"
+    ],
+    "workflow": [
+      "Upload adult source photos that you own and have consent to use.",
+      "Choose soft studio, editorial, robe, silhouette, or elegant bedroom mood.",
+      "Generate private non-explicit options with several crops and lighting styles.",
+      "Review every output carefully before saving or sharing."
+    ],
+    "styleNotes": [
+      "Keep prompts focused on mood, confidence, light, and wardrobe rather than explicit content.",
+      "Check face, hands, clothing edges, and body realism before keeping an image.",
+      "Use private downloads unless every person shown agrees to the final use."
+    ],
+    "coverNote": "Boudoir-inspired photos work best with adult source images, clear consent, and a tasteful non-explicit styling direction.",
+    "safetyNote": "Adults and consent only. Do not upload minors, non-consenting people, stolen images, or explicit requests."
   },
   "holiday": {
-    "headline": "AI Holiday Photo Generator",
-    "cardDescription": "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, friend groups, and private holiday albums.",
-    "metaLabel": "Seasonal albums",
-    "tags": ["Holiday Photos", "Group Portraits", "Seasonal Cards"],
-    "detailTags": ["Holiday Photos", "Group Portraits", "Christmas Cards", "Thanksgiving Portraits", "Halloween Albums", "Family Keepsakes", "Greeting Images", "Private Gallery"],
-    "detailIntro": "Turn portraits into flexible holiday scenes with warm seasonal styling, greeting-card composition, and group-photo energy for Christmas, Thanksgiving, Halloween, and winter albums.",
-    "whatCreates": "A private gallery of holiday portraits, seasonal group cards, winter scenes, family-style keepsake crops, and festive images for personal albums.",
-    "bestFor": ["Seasonal greeting cards", "Christmas group portraits", "Thanksgiving albums", "Halloween party keepsakes"],
-    "workflow": ["Upload clear portraits or family photos you have permission to use.", "Choose the holiday direction and review credit cost before generation.", "Download favorite festive crops for cards, posts, or private albums."],
-    "styleNotes": ["Seasonal glow and holiday decoration", "Warm family or friend-group mood", "Greeting-card friendly composition"],
-    "coverNote": "Use the preview to decide whether the final set should feel Christmas-ready, Thanksgiving-warm, Halloween-dramatic, or card-first."
+    "headline": "AI Holiday Photos for Seasonal Cards, Festive Profiles, and Warm Albums",
+    "cardDescription": "Plan holiday portraits, seasonal cards, festive creator images, cozy profile crops, and private keepsake albums.",
+    "metaLabel": "Holiday photos",
+    "tags": [
+      "Seasonal Cards",
+      "Festive Profile",
+      "Warm Album",
+      "Creator"
+    ],
+    "detailTags": [
+      "Holiday portrait",
+      "Greeting card",
+      "Festive album",
+      "Seasonal campaign",
+      "Cozy keepsake"
+    ],
+    "detailIntro": "Use Holiday when you need flexible seasonal imagery that can fit cards, warm albums, festive posts, or creator campaigns beyond one specific holiday.",
+    "whatCreates": "AI holiday portraits, festive greeting-card images, warm lifestyle scenes, seasonal profile crops, and private keepsake album options.",
+    "bestFor": [
+      "Holiday cards, seasonal greetings, and private family or couple albums",
+      "Creator posts and small campaigns with festive but flexible styling",
+      "Profile refreshes that need warm seasonal mood without a specific holiday label",
+      "Card-ready images with simple backgrounds and friendly expressions"
+    ],
+    "workflow": [
+      "Upload clear portraits or group references with visible faces.",
+      "Choose cozy, festive, winter, party, or card-ready direction.",
+      "Generate crops for cards, posts, banners, and private albums.",
+      "Review faces, hands, decor, and spacing before download."
+    ],
+    "styleNotes": [
+      "Choose a specific seasonal mood so the page does not become generic.",
+      "Use text-safe backgrounds for cards and invitations.",
+      "Avoid protected holiday characters or brand marks unless you have permission."
+    ],
+    "coverNote": "Holiday photos work best with a clear card, profile, campaign, or keepsake goal.",
+    "safetyNote": "Only upload and share photos of other people with permission."
   },
   "christmas-couple": {
     "headline": "AI Christmas Couple Photo Generator",
     "cardDescription": "Make cozy Christmas couple portraits, friend-card moments, festive greeting images, and giftable holiday keepsakes.",
     "metaLabel": "Couple cards",
-    "tags": ["Christmas Couple", "Holiday Cards", "Friend Cards"],
-    "detailTags": ["Christmas Couple", "Holiday Cards", "Cozy Portraits", "Friend Cards", "Gift Keepsakes", "Greeting Images", "Festive Couple", "Private Gallery"],
+    "tags": [
+      "Christmas Couple",
+      "Holiday Cards",
+      "Friend Cards"
+    ],
+    "detailTags": [
+      "Christmas Couple",
+      "Holiday Cards",
+      "Cozy Portraits",
+      "Friend Cards",
+      "Gift Keepsakes",
+      "Greeting Images",
+      "Festive Couple",
+      "Private Gallery"
+    ],
     "detailIntro": "Create cozy Christmas couple portraits with warm interiors, winter light, festive decor, and card-ready composition. The package works for romantic keepsakes, friend-card moments, and seasonal greetings.",
     "whatCreates": "A private gallery of Christmas couple portraits, friend-card images, holiday cards, cozy seasonal scenes, and giftable festive images.",
-    "bestFor": ["Couple holiday cards", "Friend-card moments", "Gift keepsakes", "Festive social posts"],
-    "workflow": ["Upload approved couple photos with clear faces and natural expressions.", "Review the Christmas couple direction and credit cost before generation.", "Download card-ready favorites or private keepsake images."],
-    "styleNotes": ["Warm fireplaces, lights, and cozy decor", "Romantic but natural couple posing", "Greeting-card framing"],
+    "bestFor": [
+      "Couple holiday cards",
+      "Friend-card moments",
+      "Gift keepsakes",
+      "Festive social posts"
+    ],
+    "workflow": [
+      "Upload approved couple photos with clear faces and natural expressions.",
+      "Review the Christmas couple direction and credit cost before generation.",
+      "Download card-ready favorites or private keepsake images."
+    ],
+    "styleNotes": [
+      "Warm fireplaces, lights, and cozy decor",
+      "Romantic but natural couple posing",
+      "Greeting-card framing"
+    ],
     "coverNote": "Use the cover mood to decide whether the set should feel cozy, romantic, playful, or card-first."
   },
   "christmas-photos": {
     "headline": "AI Christmas Photo Generator",
     "cardDescription": "Create Christmas group portraits with festive decor, winter glow, greeting-card layouts, cozy couple scenes, and cheerful seasonal atmosphere.",
     "metaLabel": "Holiday cards",
-    "tags": ["Christmas Photos", "Group Portraits", "Greeting Cards"],
-    "detailTags": ["Christmas Photos", "Group Portraits", "Greeting Cards", "Family Holiday", "Winter Glow", "Gift Images", "Cozy Scenes", "Private Gallery"],
+    "tags": [
+      "Christmas Photos",
+      "Group Portraits",
+      "Greeting Cards"
+    ],
+    "detailTags": [
+      "Christmas Photos",
+      "Group Portraits",
+      "Greeting Cards",
+      "Family Holiday",
+      "Winter Glow",
+      "Gift Images",
+      "Cozy Scenes",
+      "Private Gallery"
+    ],
     "detailIntro": "Turn portraits into Christmas-ready images with decorated interiors, winter glow, cheerful color, and greeting-card polish. It works for solo, couple, family-style, creator, and friend-group moments.",
     "whatCreates": "A private set of Christmas group portraits, greeting-card images, festive profile crops, and cozy winter keepsakes.",
-    "bestFor": ["Christmas cards", "Family-style holiday images", "Friend-group portraits", "Giftable keepsakes"],
-    "workflow": ["Upload source photos with clear faces and permission to use them.", "Pick the Christmas direction and review credits before generation.", "Download favorite festive crops for cards, posts, or private albums."],
-    "styleNotes": ["Christmas lights and warm interior glow", "Cheerful seasonal styling", "Card-friendly composition with clear faces"],
+    "bestFor": [
+      "Christmas cards",
+      "Family-style holiday images",
+      "Friend-group portraits",
+      "Giftable keepsakes"
+    ],
+    "workflow": [
+      "Upload source photos with clear faces and permission to use them.",
+      "Pick the Christmas direction and review credits before generation.",
+      "Download favorite festive crops for cards, posts, or private albums."
+    ],
+    "styleNotes": [
+      "Christmas lights and warm interior glow",
+      "Cheerful seasonal styling",
+      "Card-friendly composition with clear faces"
+    ],
     "coverNote": "Use the preview to decide whether the set should feel classic, cozy, cheerful, or more cinematic."
   },
   "thanksgiving-group-photos": {
     "headline": "AI Thanksgiving Group Photo Generator",
     "cardDescription": "Create warm Thanksgiving group portraits, dinner-table keepsakes, gratitude cards, family-style albums, and cozy seasonal social images.",
     "metaLabel": "Group portraits",
-    "tags": ["Thanksgiving", "Group Portraits", "Gratitude Cards"],
-    "detailTags": ["Thanksgiving Photos", "Group Portraits", "Family-style Albums", "Dinner-table Keepsakes", "Gratitude Cards", "Warm Interiors", "Seasonal Sharing", "Private Gallery"],
+    "tags": [
+      "Thanksgiving",
+      "Group Portraits",
+      "Gratitude Cards"
+    ],
+    "detailTags": [
+      "Thanksgiving Photos",
+      "Group Portraits",
+      "Family-style Albums",
+      "Dinner-table Keepsakes",
+      "Gratitude Cards",
+      "Warm Interiors",
+      "Seasonal Sharing",
+      "Private Gallery"
+    ],
     "detailIntro": "Create Thanksgiving group photos with warm interiors, harvest color, dinner-table atmosphere, and card-ready composition. The package is designed for private family-style albums, friend gatherings, and gratitude posts.",
     "whatCreates": "A private gallery of Thanksgiving group portraits, gratitude cards, cozy dinner-table scenes, and seasonal keepsake images based on photos you own or have permission to use.",
-    "bestFor": ["Thanksgiving cards", "Family-style group portraits", "Friend gathering albums", "Warm seasonal posts"],
-    "workflow": ["Upload clear solo or group photos you own or have permission to use.", "Choose the Thanksgiving direction and review the credit cost before generation.", "Download card-ready favorites or keep the set in your private holiday album."],
-    "styleNotes": ["Warm dining-room light", "Harvest colors and cozy seasonal decor", "Group-friendly framing with clear faces"],
+    "bestFor": [
+      "Thanksgiving cards",
+      "Family-style group portraits",
+      "Friend gathering albums",
+      "Warm seasonal posts"
+    ],
+    "workflow": [
+      "Upload clear solo or group photos you own or have permission to use.",
+      "Choose the Thanksgiving direction and review the credit cost before generation.",
+      "Download card-ready favorites or keep the set in your private holiday album."
+    ],
+    "styleNotes": [
+      "Warm dining-room light",
+      "Harvest colors and cozy seasonal decor",
+      "Group-friendly framing with clear faces"
+    ],
     "coverNote": "Use the preview to decide whether the set should feel family-style, friend-group, card-ready, or dinner-table warm.",
     "safetyNote": "Use only photos you own or have permission to use; do not imply attendance by a real public figure without authorization."
   },
@@ -339,13 +986,39 @@
     "headline": "AI Halloween Party Photo Generator",
     "cardDescription": "Create Halloween party photos with costume energy, spooky group cards, cinematic VIP looks, and dramatic seasonal social images.",
     "metaLabel": "Party albums",
-    "tags": ["Halloween Photos", "Party Portraits", "Spooky Cards"],
-    "detailTags": ["Halloween Photos", "Party Portraits", "Costume Looks", "Spooky Cards", "VIP-style Scenes", "Group Albums", "Cinematic Lighting", "Private Gallery"],
+    "tags": [
+      "Halloween Photos",
+      "Party Portraits",
+      "Spooky Cards"
+    ],
+    "detailTags": [
+      "Halloween Photos",
+      "Party Portraits",
+      "Costume Looks",
+      "Spooky Cards",
+      "VIP-style Scenes",
+      "Group Albums",
+      "Cinematic Lighting",
+      "Private Gallery"
+    ],
     "detailIntro": "Create Halloween party photos with costume energy, dramatic lighting, playful spooky styling, and group-card composition. The package is built for private albums, party keepsakes, and seasonal social posts.",
     "whatCreates": "A private set of Halloween party portraits, spooky group cards, VIP-style costume looks, dramatic poster crops, and seasonal social images.",
-    "bestFor": ["Halloween party albums", "Costume portraits", "Spooky group cards", "Seasonal social posts"],
-    "workflow": ["Upload clear portraits or group photos you own or have permission to use.", "Choose the Halloween party direction and review credits before generation.", "Download favorites for cards, posts, party albums, or private keepsakes."],
-    "styleNotes": ["Dramatic color and cinematic shadows", "Costume-party energy without explicit content", "Group-friendly framing for cards and posts"],
+    "bestFor": [
+      "Halloween party albums",
+      "Costume portraits",
+      "Spooky group cards",
+      "Seasonal social posts"
+    ],
+    "workflow": [
+      "Upload clear portraits or group photos you own or have permission to use.",
+      "Choose the Halloween party direction and review credits before generation.",
+      "Download favorites for cards, posts, party albums, or private keepsakes."
+    ],
+    "styleNotes": [
+      "Dramatic color and cinematic shadows",
+      "Costume-party energy without explicit content",
+      "Group-friendly framing for cards and posts"
+    ],
     "coverNote": "Use the preview to decide whether the set should feel playful, spooky, VIP-style, or cinematic.",
     "safetyNote": "Use only photos you own or have permission to use; do not imply attendance by a real public figure without authorization."
   },
@@ -353,13 +1026,39 @@
     "headline": "AI Video Add-On Generator",
     "cardDescription": "Extend photo sets into motion-ready concepts with cinematic frame ideas, couple clips, creator teasers, and album video direction.",
     "metaLabel": "Motion add-ons",
-    "tags": ["AI Video", "Motion Clips", "Cinematic Frames"],
-    "detailTags": ["AI Video", "Motion Clips", "Cinematic Frames", "Couple Videos", "Creator Teasers", "Album Motion", "Story Concepts", "Private Gallery"],
+    "tags": [
+      "AI Video",
+      "Motion Clips",
+      "Cinematic Frames"
+    ],
+    "detailTags": [
+      "AI Video",
+      "Motion Clips",
+      "Cinematic Frames",
+      "Couple Videos",
+      "Creator Teasers",
+      "Album Motion",
+      "Story Concepts",
+      "Private Gallery"
+    ],
     "detailIntro": "Use video add-ons to plan motion around an existing or upcoming photo package. The package helps bridge still portraits into short cinematic ideas, teaser frames, and motion-ready story direction.",
     "whatCreates": "A private set of video concept frames, motion-ready portrait directions, short clip ideas, and cinematic add-on visuals tied to your photo style.",
-    "bestFor": ["Couple clip concepts", "Creator teasers", "Album motion ideas", "Cinematic social previews"],
-    "workflow": ["Start with clear source portraits or a finished package direction.", "Review the video add-on scope, credit cost, and intended clip use.", "Save the motion-ready frames and use them to guide the next creative step."],
-    "styleNotes": ["Cinematic pose continuity", "Frame sequences that suggest motion", "Story-friendly crops for short clips"],
+    "bestFor": [
+      "Couple clip concepts",
+      "Creator teasers",
+      "Album motion ideas",
+      "Cinematic social previews"
+    ],
+    "workflow": [
+      "Start with clear source portraits or a finished package direction.",
+      "Review the video add-on scope, credit cost, and intended clip use.",
+      "Save the motion-ready frames and use them to guide the next creative step."
+    ],
+    "styleNotes": [
+      "Cinematic pose continuity",
+      "Frame sequences that suggest motion",
+      "Story-friendly crops for short clips"
+    ],
     "coverNote": "Use the examples to judge pacing mood, cinematic framing, and whether your add-on should feel romantic, creator-led, or dramatic.",
     "safetyNote": "This package creates planning visuals and motion concepts; it does not submit real provider video jobs from the public CTA."
   },
@@ -367,14 +1066,1327 @@
     "headline": "AI Magic Upscaler",
     "cardDescription": "Improve preview clarity for favorite generated photos, profile images, and larger downloads while keeping the original mood intact.",
     "metaLabel": "Image enhancer",
-    "tags": ["Image Upscaler", "Sharper Downloads", "Photo Enhancer"],
-    "detailTags": ["Image Upscaler", "Sharper Downloads", "Photo Enhancer", "Profile Images", "Large Files", "Gallery Favorites", "Preview Clarity", "Private Gallery"],
+    "tags": [
+      "Image Upscaler",
+      "Sharper Downloads",
+      "Photo Enhancer"
+    ],
+    "detailTags": [
+      "Image Upscaler",
+      "Sharper Downloads",
+      "Photo Enhancer",
+      "Profile Images",
+      "Large Files",
+      "Gallery Favorites",
+      "Preview Clarity",
+      "Private Gallery"
+    ],
     "detailIntro": "Use Magic Upscaler when a favorite image needs clearer detail for a profile, album, post, or larger download. The tool focuses on practical enhancement rather than changing the theme world.",
     "whatCreates": "A private set of sharper versions, clearer profile crops, and enhanced favorites based on images you already have permission to use.",
-    "bestFor": ["Sharper profile images", "Larger downloads", "Gallery favorites", "Before publishing previews"],
-    "workflow": ["Choose a favorite generated or uploaded image that you can use.", "Review the enhancement direction and credit cost before processing.", "Download the clearer version for your profile, post, album, or website."],
-    "styleNotes": ["Preserve original mood and composition", "Sharper detail without over-stylizing", "Cleaner previews for larger displays"],
+    "bestFor": [
+      "Sharper profile images",
+      "Larger downloads",
+      "Gallery favorites",
+      "Before publishing previews"
+    ],
+    "workflow": [
+      "Choose a favorite generated or uploaded image that you can use.",
+      "Review the enhancement direction and credit cost before processing.",
+      "Download the clearer version for your profile, post, album, or website."
+    ],
+    "styleNotes": [
+      "Preserve original mood and composition",
+      "Sharper detail without over-stylizing",
+      "Cleaner previews for larger displays"
+    ],
     "coverNote": "Use the examples to decide whether you need subtle clarity, stronger detail, or a cleaner download version.",
     "safetyNote": "Enhancement cannot guarantee perfect restoration, identity accuracy, or permission to publish images you do not own."
+  },
+  "engagement-photo": {
+    "headline": "AI Engagement Photos for Proposals, Announcements, and Couple Stories",
+    "cardDescription": "Create proposal-inspired engagement portraits, announcement images, ring reveal scenes, and romantic couple story photos.",
+    "metaLabel": "Engagement photos",
+    "tags": [
+      "Proposal",
+      "Announcement",
+      "Couple Story",
+      "Ring Reveal"
+    ],
+    "detailTags": [
+      "Engagement portrait",
+      "Proposal photo",
+      "Save-the-date draft",
+      "Couple announcement",
+      "Romantic keepsake"
+    ],
+    "detailIntro": "Use this theme when the photo set needs to feel like a proposal moment, engagement announcement, or polished couple story rather than a generic romantic portrait.",
+    "whatCreates": "AI engagement portraits, proposal-style scenes, ring-focused crops, announcement-ready images, and private couple album options.",
+    "bestFor": [
+      "Engagement announcement posts, save-the-date drafts, and proposal keepsakes",
+      "Couple portraits with ring, flowers, city lights, or soft outdoor mood",
+      "Private romantic albums before a real shoot or after a milestone",
+      "Card-ready crops for family messages, social posts, and wedding site drafts"
+    ],
+    "workflow": [
+      "Upload recent solo or couple photos with clear faces and natural expressions.",
+      "Choose proposal, announcement, outdoor, studio, or cinematic couple styling.",
+      "Generate variations for portrait crops, card layouts, and private album covers.",
+      "Review faces, hands, jewelry, and mood before downloading favorites."
+    ],
+    "styleNotes": [
+      "Choose softer backgrounds when the image will carry announcement text.",
+      "Check hands, rings, eye direction, and both faces before sharing publicly.",
+      "Keep the brief focused on the real relationship moment instead of mixing wedding, holiday, and fantasy cues."
+    ],
+    "coverNote": "Engagement sets work best with clear couple references and a simple note about proposal, announcement, or keepsake use.",
+    "safetyNote": "Only upload and publish photos of another person when you have permission."
+  },
+  "wedding-photo": {
+    "headline": "AI Wedding Photos for Save-the-Dates, Ceremony Moodboards, and Keepsakes",
+    "cardDescription": "Generate wedding-inspired portraits for save-the-date concepts, ceremony moodboards, invitation visuals, and couple keepsakes.",
+    "metaLabel": "Wedding photos",
+    "tags": [
+      "Save the Date",
+      "Ceremony Moodboard",
+      "Couple Album",
+      "Invitation"
+    ],
+    "detailTags": [
+      "Wedding portrait",
+      "Bridal mood",
+      "Groom portrait",
+      "Wedding website",
+      "Private keepsake"
+    ],
+    "detailIntro": "Use Wedding Photo when you want romantic wedding styling, ceremony atmosphere, and card-ready couple imagery without presenting the result as real event documentation.",
+    "whatCreates": "AI wedding portraits, ceremony-inspired scenes, invitation-friendly crops, wedding website visuals, and private keepsake album images.",
+    "bestFor": [
+      "Save-the-date ideas, wedding website headers, and invitation moodboards",
+      "Couple keepsakes with ceremony light, floral accents, or formal wardrobe mood",
+      "Pre-shoot planning before booking a photographer or choosing styling",
+      "Private anniversary albums and romantic card images"
+    ],
+    "workflow": [
+      "Upload clear portraits for each person, ideally with similar lighting and recent appearance.",
+      "Choose ceremony, formal studio, outdoor romance, or card-ready direction.",
+      "Generate multiple crops for website banners, cards, and private albums.",
+      "Review faces, hands, fabric, jewelry, and text-safe spacing before use."
+    ],
+    "styleNotes": [
+      "Leave names, dates, and venue text for a separate design tool after image generation.",
+      "Use soft compositions for cards and cleaner portrait crops for profiles.",
+      "Check cultural or ceremonial details carefully before sharing."
+    ],
+    "coverNote": "Wedding photos are strongest when both partners have clear face references and the intended wedding mood is specific.",
+    "safetyNote": "Use generated wedding images as creative concepts or keepsakes, not as proof of a real ceremony."
+  },
+  "valentines-photo": {
+    "headline": "AI Valentines Photos for Date Night Cards, Gifts, and Romantic Posts",
+    "cardDescription": "Build romantic Valentines portraits, date-night cards, gift images, couple story crops, and private seasonal albums.",
+    "metaLabel": "Valentines photos",
+    "tags": [
+      "Date Night",
+      "Romantic Gift",
+      "Couple Card",
+      "Seasonal"
+    ],
+    "detailTags": [
+      "Valentine portrait",
+      "Love card",
+      "Anniversary gift",
+      "Couple profile",
+      "Romantic album"
+    ],
+    "detailIntro": "Use this theme for warm, seasonal couple imagery built around Valentines Day, date-night mood, romantic cards, and gift-ready private albums.",
+    "whatCreates": "AI Valentines portraits, date-night scenes, romantic card images, soft couple crops, and private gift album variations.",
+    "bestFor": [
+      "Valentines cards, anniversary notes, and private romantic gifts",
+      "Date-night portraits for couples, partners, and long-distance keepsakes",
+      "Social posts with warm romantic styling and text-friendly spacing",
+      "Seasonal profile images that feel sweet without looking generic"
+    ],
+    "workflow": [
+      "Upload clear photos of the person or couple with natural expressions.",
+      "Select candlelit, floral, studio, outdoor, or playful Valentines mood.",
+      "Generate card, portrait, and album-cover variations.",
+      "Download the versions that match your gift, post, or private album plan."
+    ],
+    "styleNotes": [
+      "Use simple backgrounds if you plan to add a message later.",
+      "Check both faces and hands in close couple poses.",
+      "Keep the tone romantic and personal instead of mixing unrelated holiday themes."
+    ],
+    "coverNote": "Valentines photos work best with expressive source photos and a clear note about card, gift, or social use.",
+    "safetyNote": "Share couple images only when every person shown is comfortable with the final use."
+  },
+  "christmas-photo": {
+    "headline": "AI Christmas Photos for Greeting Cards, Winter Portraits, and Holiday Albums",
+    "cardDescription": "Create festive Christmas portraits, cozy winter scenes, greeting-card images, family-style crops, and private holiday albums.",
+    "metaLabel": "Christmas photos",
+    "tags": [
+      "Greeting Card",
+      "Winter Portrait",
+      "Holiday Album",
+      "Cozy"
+    ],
+    "detailTags": [
+      "Christmas card",
+      "Festive portrait",
+      "Holiday profile",
+      "Winter scene",
+      "Family keepsake"
+    ],
+    "detailIntro": "Use Christmas Photo when you need a festive set that feels ready for cards, warm greetings, cozy profile updates, or private winter keepsakes.",
+    "whatCreates": "AI Christmas portraits, greeting-card scenes, warm indoor holiday images, winter profile crops, and private seasonal album options.",
+    "bestFor": [
+      "Christmas cards, family greetings, and seasonal social posts",
+      "Cozy winter portraits with lights, decor, sweaters, or snow mood",
+      "Private holiday albums for couples, families, creators, and teams",
+      "Profile refreshes with a festive but polished visual tone"
+    ],
+    "workflow": [
+      "Upload clear portraits or group references with visible faces.",
+      "Choose cozy home, snowy outdoor, classic card, or festive studio mood.",
+      "Generate versions for cards, albums, and profile crops.",
+      "Review faces, hands, decor, and text-safe spacing before download."
+    ],
+    "styleNotes": [
+      "Choose quieter backgrounds when the image will carry greeting text.",
+      "Check group images carefully so every person remains recognizable.",
+      "Avoid protected brand characters or commercial holiday marks unless you have permission."
+    ],
+    "coverNote": "Christmas sets perform best with clear faces and a specific card, album, or profile use case.",
+    "safetyNote": "Only upload photos of children or family members when you have appropriate permission."
+  },
+  "halloween-photo": {
+    "headline": "AI Halloween Photos for Costume Portraits, Party Cards, and Spooky Albums",
+    "cardDescription": "Make Halloween portraits with costume-friendly styling, moody party light, spooky cards, character crops, and private albums.",
+    "metaLabel": "Halloween photos",
+    "tags": [
+      "Costume Portrait",
+      "Party Card",
+      "Spooky Scene",
+      "Character"
+    ],
+    "detailTags": [
+      "Halloween party",
+      "Costume idea",
+      "Moody portrait",
+      "Spooky card",
+      "Seasonal album"
+    ],
+    "detailIntro": "Use Halloween Photo for playful costume energy, moody seasonal lighting, party cards, and spooky portraits that still preserve the person in the source photo.",
+    "whatCreates": "AI Halloween portraits, costume-inspired scenes, spooky social cards, party invitation images, and private seasonal album crops.",
+    "bestFor": [
+      "Halloween party posts, invitations, and profile refreshes",
+      "Costume-inspired portraits without needing a full costume shoot",
+      "Original spooky character images for private albums and cards",
+      "Moody seasonal visuals for creators and small campaigns"
+    ],
+    "workflow": [
+      "Upload clear portraits with good facial detail and expression.",
+      "Choose playful costume, gothic, cinematic party, or spooky card mood.",
+      "Generate portrait, poster, and card-friendly versions.",
+      "Review face consistency, hands, costume details, and background clutter."
+    ],
+    "styleNotes": [
+      "Use original costume directions instead of copying protected characters.",
+      "Keep horror intensity appropriate for the channel where the image will appear.",
+      "Choose readable crops for profile images and wider frames for invitations."
+    ],
+    "coverNote": "Halloween outputs are strongest when the source portrait has expression and the spooky style is clearly chosen.",
+    "safetyNote": "Avoid protected characters, celebrity likenesses, or images meant to scare, shame, or impersonate someone."
+  },
+  "thanksgiving-photo": {
+    "headline": "AI Thanksgiving Photos for Gratitude Cards, Dinner Portraits, and Family Keepsakes",
+    "cardDescription": "Create warm Thanksgiving portraits, gratitude-card images, dinner-table scenes, group crops, and private family-style albums.",
+    "metaLabel": "Thanksgiving photos",
+    "tags": [
+      "Gratitude Card",
+      "Dinner Portrait",
+      "Family Album",
+      "Warm"
+    ],
+    "detailTags": [
+      "Thanksgiving table",
+      "Friendsgiving",
+      "Harvest color",
+      "Group keepsake",
+      "Seasonal card"
+    ],
+    "detailIntro": "Use Thanksgiving Photo when the image needs to feel warm, grateful, family-oriented, and ready for cards, dinner memories, or private Friendsgiving albums.",
+    "whatCreates": "AI Thanksgiving portraits, harvest-color scenes, gratitude cards, dinner-table group images, and private seasonal keepsake crops.",
+    "bestFor": [
+      "Thanksgiving cards, gratitude posts, and private family albums",
+      "Friendsgiving portraits and warm dinner-table moodboards",
+      "Seasonal creator posts with cozy harvest color and soft light",
+      "Group keepsake concepts before or after the holiday"
+    ],
+    "workflow": [
+      "Upload clear solo, couple, or group photos with visible faces.",
+      "Choose dinner-table, harvest, cozy home, or card-ready styling.",
+      "Generate portrait and horizontal crops for posts, cards, and albums.",
+      "Review group faces, hands, table details, and overall warmth."
+    ],
+    "styleNotes": [
+      "Choose simple compositions for gratitude-card text.",
+      "Check that generated food, hands, and group faces look natural.",
+      "Keep the scene personal rather than overloaded with unrelated holiday props."
+    ],
+    "coverNote": "Thanksgiving photos work best with clear source faces and a specific card, dinner, group, or keepsake goal.",
+    "safetyNote": "Ask permission before uploading or sharing family and group photos."
+  },
+  "avatar": {
+    "headline": "AI Avatars for Profiles, Gaming Handles, and Community Identity",
+    "cardDescription": "Turn selfies into recognizable avatars for profile icons, gaming handles, Discord servers, creator pages, and social refreshes.",
+    "metaLabel": "AI avatars",
+    "tags": [
+      "Profile Icons",
+      "Gaming Handles",
+      "Discord",
+      "Social Identity"
+    ],
+    "detailTags": [
+      "Square crop",
+      "PFP",
+      "Streamer avatar",
+      "Community profile",
+      "Consistent identity"
+    ],
+    "detailIntro": "Use Avatar when you need a profile image that still looks like you while fitting gaming communities, social accounts, creator handles, or polished personal branding.",
+    "whatCreates": "Stylized AI avatars, square profile icons, realistic and illustrated identity portraits, channel-ready crops, and community profile images.",
+    "bestFor": [
+      "Gaming profiles, Discord servers, streamer pages, and community member cards",
+      "Social profile refreshes where a normal selfie feels too plain",
+      "Creator handles, fan accounts, newsletters, and personal brand pages",
+      "Multiple avatar styles that keep the same face and recognizable identity"
+    ],
+    "workflow": [
+      "Upload sharp front-facing photos with consistent lighting and visible facial detail.",
+      "Select an avatar style that matches the platform, community, or brand tone.",
+      "Generate realistic, illustrated, or stylized options with profile-safe framing.",
+      "Download square crops and larger versions for icons, banners, and posts."
+    ],
+    "styleNotes": [
+      "Check that the avatar remains recognizable at small mobile icon sizes.",
+      "Choose a style that fits the platform instead of mixing too many art directions.",
+      "Avoid official characters, protected logos, or another person's likeness without permission."
+    ],
+    "coverNote": "Avatar packs perform best with clean face references, simple backgrounds, and a clear final platform in mind.",
+    "safetyNote": "Use original avatar styles and do not imitate protected characters, official marks, or people who did not consent."
+  },
+  "headshot": {
+    "headline": "AI Headshots for LinkedIn, Resumes, Founder Bios, and Team Pages",
+    "cardDescription": "Generate realistic professional headshots for LinkedIn, resumes, speaker pages, founder bios, and team profile updates.",
+    "metaLabel": "AI headshots",
+    "tags": [
+      "LinkedIn",
+      "Resume",
+      "Founder Bio",
+      "Team Profile"
+    ],
+    "detailTags": [
+      "Professional portrait",
+      "Business headshot",
+      "Speaker photo",
+      "Consultant profile",
+      "Team page"
+    ],
+    "detailIntro": "Use Headshot when the result needs to look credible, current, and business-ready across hiring, founder, consultant, speaker, or team profile channels.",
+    "whatCreates": "AI professional headshots, clean studio portraits, business profile crops, team-page images, and private resume-ready options.",
+    "bestFor": [
+      "LinkedIn, resumes, job search profiles, and consultant bios",
+      "Founder pages, speaker profiles, podcast guest kits, and team directories",
+      "Business portraits when you need a polished look without a studio booking",
+      "Private comparison sets with several wardrobe, background, and crop options"
+    ],
+    "workflow": [
+      "Upload recent face-forward photos with varied angles and natural expressions.",
+      "Choose business, founder, team, or clean studio styling.",
+      "Generate several headshot options after reviewing expected credits.",
+      "Download profile-ready crops and inspect face, clothing, and background realism."
+    ],
+    "styleNotes": [
+      "Prefer simple backgrounds and realistic wardrobe for professional trust.",
+      "Check eyes, teeth, hairline, hands, and jacket edges before publishing.",
+      "Do not use generated headshots for passports, official IDs, or legal documents."
+    ],
+    "coverNote": "Headshots are strongest when source photos are recent, sharp, and show the person from multiple natural angles.",
+    "safetyNote": "Only create professional portraits for yourself or people who gave permission; do not impersonate others."
+  },
+  "gala-photo": {
+    "headline": "AI Gala Photos for Formal Events, Red-Carpet Mood, and Elegant Portraits",
+    "cardDescription": "Create formal gala portraits with eveningwear mood, polished event lighting, red-carpet energy, and elegant editorial crops.",
+    "metaLabel": "Gala photos",
+    "tags": [
+      "Formal Event",
+      "Red Carpet",
+      "Eveningwear",
+      "Editorial"
+    ],
+    "detailTags": [
+      "Gala portrait",
+      "Award night",
+      "Event profile",
+      "Flash photography",
+      "Elegant album"
+    ],
+    "detailIntro": "Use Gala Photo when you want a formal event look with polished lighting, evening wardrobe, red-carpet atmosphere, and profile-ready elegance.",
+    "whatCreates": "AI gala portraits, award-night style images, formal event crops, red-carpet moodboards, and private elegant album options.",
+    "bestFor": [
+      "Formal profile updates, event announcements, and creator campaign visuals",
+      "Gala, award-night, premiere, or charity-event inspired portraits",
+      "Elegant social posts with flash photography mood and refined styling",
+      "Private albums that test formal wardrobe and event lighting ideas"
+    ],
+    "workflow": [
+      "Upload clear portraits and any wardrobe direction you want reflected.",
+      "Select red carpet, ballroom, flash photo, or editorial event styling.",
+      "Generate close-up, half-body, and social-ready crops.",
+      "Review fabric, jewelry, hands, and facial resemblance before download."
+    ],
+    "styleNotes": [
+      "Use refined backgrounds so the portrait feels formal rather than busy.",
+      "Check accessories and clothing edges carefully in eveningwear outputs.",
+      "Avoid implying attendance at a real event unless the context is clearly creative."
+    ],
+    "coverNote": "Gala images work best with clear face references and a specific formal mood such as red carpet, ballroom, or flash portrait.",
+    "safetyNote": "Do not use gala images to falsely suggest real event access, awards, or endorsements."
+  },
+  "portrait-photo": {
+    "headline": "AI Portrait Photos for Personal Brands, Media Kits, and Creator Profiles",
+    "cardDescription": "Build polished creator portraits, media-kit images, founder visuals, newsletter photos, and personal-brand profile crops.",
+    "metaLabel": "Portrait photos",
+    "tags": [
+      "Personal Brand",
+      "Media Kit",
+      "Creator Profile",
+      "Founder Visuals"
+    ],
+    "detailTags": [
+      "Editorial portrait",
+      "Profile refresh",
+      "Newsletter image",
+      "Campaign portrait",
+      "Portfolio crop"
+    ],
+    "detailIntro": "Use Portrait Photo when you need a flexible personal-brand image set that can support bios, launches, websites, newsletters, and social campaigns.",
+    "whatCreates": "AI portrait photos, editorial profile images, personal-brand crops, media-kit visuals, and campaign-ready private gallery options.",
+    "bestFor": [
+      "Creator profiles, founder bios, author pages, and consultant websites",
+      "Media kits, sponsor decks, newsletters, and landing page visuals",
+      "Campaign portraits with consistent tone across several channels",
+      "Users who want polished portraits without a full studio session"
+    ],
+    "workflow": [
+      "Upload varied portrait photos with clear face detail and natural expressions.",
+      "Choose creator, editorial, founder, or approachable profile styling.",
+      "Generate several crops for web, social, and presentation use.",
+      "Download the images that keep your identity consistent and channel-ready."
+    ],
+    "styleNotes": [
+      "Use cleaner crops for bios and wider frames when text overlays are needed.",
+      "Check that styling supports the intended brand tone.",
+      "Review skin, hands, background, and wardrobe details before use."
+    ],
+    "coverNote": "Portrait photos work best with a mix of close-up and half-body source images.",
+    "safetyNote": "Do not create or publish portraits of someone who did not consent."
+  },
+  "black-friday": {
+    "headline": "AI Black Friday Photos for Sale Banners, Social Ads, and Promo Campaigns",
+    "cardDescription": "Create bold Black Friday visuals for sale banners, social ads, shopping feeds, creator promos, and seasonal campaign posts.",
+    "metaLabel": "Black Friday campaign photos",
+    "tags": [
+      "Sale Banners",
+      "Social Ads",
+      "Promo Posters",
+      "Shopping Feeds"
+    ],
+    "detailTags": [
+      "Black Friday sale",
+      "Cyber week",
+      "Discount campaign",
+      "Ad creative",
+      "Conversion visual"
+    ],
+    "detailIntro": "Use Black Friday when the image needs to sell a seasonal offer: bold contrast, shopping energy, promotional framing, and space for campaign copy.",
+    "whatCreates": "AI Black Friday campaign portraits, sale poster concepts, social ad visuals, shopping-feed images, creator promo crops, and dark high-impact banner frames.",
+    "bestFor": [
+      "Black Friday sale banners, Cyber Week countdowns, and social ad drafts",
+      "Creator storefront promos, product teasers, and shopping-feed refreshes",
+      "High-contrast portraits with room for price, discount, or callout text",
+      "Campaign moodboards before final graphic design and ad production"
+    ],
+    "workflow": [
+      "Upload product, portrait, or creator reference photos you can use in the campaign.",
+      "Choose dark studio, neon sale, shopping feed, poster, or banner direction.",
+      "Generate image options with text-safe space for discount and CTA overlays.",
+      "Pick the strongest crop, then add exact prices and offer details in your design tool."
+    ],
+    "styleNotes": [
+      "Leave final sale text, prices, coupon codes, and dates for post-generation design.",
+      "Use strong contrast and simple composition so the offer remains readable.",
+      "Check that products, faces, and hands look natural before using an image in ads."
+    ],
+    "coverNote": "Black Friday images work best when the source photo and intended channel are clear: banner, feed post, ad, or storefront hero.",
+    "safetyNote": "Only use products, logos, brand assets, and promotional claims that you own or have permission to advertise."
+  },
+  "only-fans": {
+    "headline": "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers",
+    "cardDescription": "Create tasteful creator subscription visuals for profile teasers, feed refreshes, private promo posts, and non-explicit brand imagery.",
+    "metaLabel": "Only Fans creator photos",
+    "tags": [
+      "Subscription Profile",
+      "Feed Teasers",
+      "Creator Promo",
+      "Non-explicit"
+    ],
+    "detailTags": [
+      "Creator branding",
+      "Subscriber preview",
+      "Profile refresh",
+      "Studio lighting",
+      "Private content planning"
+    ],
+    "detailIntro": "Use Only Fans for safe creator-brand visuals that support subscription profiles, teaser posts, bio images, and promotional refreshes without explicit content.",
+    "whatCreates": "AI creator profile portraits, tasteful promo teasers, subscriber-preview crops, soft studio images, and private non-explicit visual sets for consenting adults.",
+    "bestFor": [
+      "Creator subscription profile photos, banner refreshes, and bio images",
+      "Tasteful feed teasers, promo cards, and private brand moodboards",
+      "Consistent visual sets for creators who need polished but non-explicit imagery",
+      "Testing lighting, wardrobe mood, and content-safe framing before publishing"
+    ],
+    "workflow": [
+      "Upload adult source photos that you own and have consent to use.",
+      "Choose profile, teaser, soft studio, lifestyle, or personal-brand styling.",
+      "Generate non-explicit crops for profile pages, feed previews, and promo posts.",
+      "Review privacy, resemblance, wardrobe, and platform fit before downloading."
+    ],
+    "styleNotes": [
+      "Keep prompts focused on creator branding, confidence, lighting, and profile use.",
+      "Avoid explicit requests, nudity, minors, non-consenting people, or stolen images.",
+      "Choose images that feel polished and subscriber-ready without violating platform rules."
+    ],
+    "coverNote": "Only Fans creator photos work best with clear adult source images and a specific profile, teaser, or promo channel in mind.",
+    "safetyNote": "For consenting adults only. Keep all requests non-explicit, permission-safe, and compliant with the platform where the image will be used."
+  },
+  "singles-awareness-day": {
+    "headline": "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes",
+    "cardDescription": "Make confident solo portraits, self-love cards, dating profile updates, independence-themed posts, and upbeat private albums.",
+    "metaLabel": "Singles Awareness Day photos",
+    "tags": [
+      "Self Love",
+      "Solo Portraits",
+      "Dating Profile",
+      "Confidence"
+    ],
+    "detailTags": [
+      "Singles Awareness Day",
+      "Self-care portrait",
+      "Solo celebration",
+      "Profile refresh",
+      "Empowering social post"
+    ],
+    "detailIntro": "Use Singles Awareness Day when the photo should celebrate independence, confidence, self-love, and a polished solo presence instead of couple imagery.",
+    "whatCreates": "AI solo portraits, self-love cards, dating-profile crops, confident lifestyle images, and upbeat social visuals for Singles Awareness Day.",
+    "bestFor": [
+      "Singles Awareness Day posts, self-love cards, and solo celebration images",
+      "Dating profile refreshes with confident lifestyle and portrait options",
+      "Personal branding updates centered on independence and upbeat energy",
+      "Private albums for users who want a polished solo photo set"
+    ],
+    "workflow": [
+      "Upload clear solo photos with natural expressions and varied angles.",
+      "Choose confident studio, lifestyle, dating profile, or self-love card styling.",
+      "Generate portrait, square, and story-friendly crops.",
+      "Download the versions that feel authentic, confident, and channel-ready."
+    ],
+    "styleNotes": [
+      "Use positive language around confidence, independence, and personal expression.",
+      "Choose natural poses for dating profiles and stronger compositions for cards or posts.",
+      "Avoid making the page feel like a breakup joke or generic romance category."
+    ],
+    "coverNote": "Singles Awareness Day photos perform best with clear solo references and a chosen use case such as profile, card, or social post.",
+    "safetyNote": "Only upload your own photos or images you have permission to use."
+  },
+  "cannes": {
+    "headline": "AI Cannes Photos for Festival Glamour, Premiere Looks, and Flash Portraits",
+    "cardDescription": "Create Cannes-inspired festival portraits with glamorous arrival energy, flash photography, elegant styling, and editorial crops.",
+    "metaLabel": "Cannes photos",
+    "tags": [
+      "Festival Glamour",
+      "Premiere Look",
+      "Flash Portrait",
+      "Editorial"
+    ],
+    "detailTags": [
+      "Cannes-inspired",
+      "Red carpet arrival",
+      "Film festival mood",
+      "Luxury portrait",
+      "Glamour crop"
+    ],
+    "detailIntro": "Use Cannes when you want film-festival glamour: elegant arrivals, flash-lit portraits, luxury styling, and premiere-style editorial crops.",
+    "whatCreates": "AI Cannes-inspired portraits, festival arrival images, red-carpet moodboards, glamour profile crops, and private editorial album options.",
+    "bestFor": [
+      "Premiere-style profile updates and creator campaign visuals",
+      "Festival glamour concepts with eveningwear, flash, and luxury mood",
+      "Editorial social posts that need a polished arrival-photo feeling",
+      "Private albums testing formal styling before a real event or shoot"
+    ],
+    "workflow": [
+      "Upload clear portraits and optional wardrobe references.",
+      "Choose festival arrival, flash portrait, yacht terrace, or red-carpet mood.",
+      "Generate elegant crops for profiles, posts, and campaign images.",
+      "Review clothing, jewelry, face detail, and background plausibility."
+    ],
+    "styleNotes": [
+      "Use Cannes-inspired styling without implying real festival attendance.",
+      "Keep backgrounds elegant and not overloaded with fake logos or event marks.",
+      "Check flash highlights and skin texture for a natural editorial look."
+    ],
+    "coverNote": "Cannes photos work best with confident portraits and a clear glamour direction such as premiere, flash, or luxury terrace.",
+    "safetyNote": "Do not use official festival logos, red-carpet marks, celebrity likenesses, or false endorsement cues."
+  },
+  "nightlife": {
+    "headline": "AI Nightlife Photos for City Lights, Lounge Portraits, and After-Dark Profiles",
+    "cardDescription": "Create nightlife portraits with city lights, lounge mood, evening wardrobe, neon accents, and private after-dark albums.",
+    "metaLabel": "Nightlife photos",
+    "tags": [
+      "City Lights",
+      "Lounge Portrait",
+      "Evening Wardrobe",
+      "After Dark"
+    ],
+    "detailTags": [
+      "Night portrait",
+      "Club mood",
+      "Cocktail lounge",
+      "Neon street",
+      "Evening profile"
+    ],
+    "detailIntro": "Use Nightlife when the portrait needs after-dark energy: city lights, lounges, evening outfits, neon reflections, and confident social crops.",
+    "whatCreates": "AI nightlife portraits, lounge-style profile images, neon city crops, evening creator visuals, and private after-dark album options.",
+    "bestFor": [
+      "Night-out profile refreshes, event posts, and creator campaign images",
+      "City light portraits with lounge, rooftop, bar, or neon street mood",
+      "Social images that feel polished, confident, and after-dark without looking messy",
+      "Private albums for testing evening wardrobe and nightlife scenes"
+    ],
+    "workflow": [
+      "Upload clear portraits with expressive face detail.",
+      "Choose lounge, rooftop, neon street, party, or cinematic evening styling.",
+      "Generate square, story, and portrait crops.",
+      "Review lighting, facial resemblance, hands, and background realism."
+    ],
+    "styleNotes": [
+      "Use evening atmosphere without hiding the face in heavy shadows.",
+      "Avoid messy party cues if the image is for a professional creator brand.",
+      "Choose text-safe crops when the image supports event announcements."
+    ],
+    "coverNote": "Nightlife photos work best with a clear channel in mind: profile, event post, story, or campaign image.",
+    "safetyNote": "Avoid implying real venue access, endorsements, or unsafe behavior."
+  },
+  "rich-lifestyle": {
+    "headline": "AI Rich Lifestyle Photos for Luxury Portraits, Premium Profiles, and Travel Mood",
+    "cardDescription": "Build luxury lifestyle portraits with elevated interiors, premium wardrobe mood, travel energy, and polished creator crops.",
+    "metaLabel": "Rich lifestyle photos",
+    "tags": [
+      "Luxury Portrait",
+      "Premium Profile",
+      "Travel Mood",
+      "Elevated"
+    ],
+    "detailTags": [
+      "Luxury interior",
+      "Premium wardrobe",
+      "High-end lifestyle",
+      "Creator campaign",
+      "Aspirational portrait"
+    ],
+    "detailIntro": "Use Rich Lifestyle when the image needs aspirational polish: refined interiors, travel cues, premium styling, and confident personal-brand energy.",
+    "whatCreates": "AI luxury lifestyle portraits, premium profile images, aspirational travel scenes, polished campaign crops, and private gallery variations.",
+    "bestFor": [
+      "Premium profile refreshes, lifestyle campaigns, and creator brand visuals",
+      "Luxury interior, rooftop, resort, car, or travel-inspired portrait concepts",
+      "Social posts that need elevated mood without claiming false status or affiliation",
+      "Private albums for testing wardrobe, light, and high-end composition"
+    ],
+    "workflow": [
+      "Upload clear portraits and optional outfit or setting references.",
+      "Choose luxury interior, travel, resort, rooftop, or premium studio mood.",
+      "Generate several profile, story, and campaign crops.",
+      "Review realism, face consistency, wardrobe, and any implied brand details."
+    ],
+    "styleNotes": [
+      "Keep luxury cues tasteful and believable instead of overloaded.",
+      "Avoid visible brand logos unless you have permission to use them.",
+      "Choose polished crops that support personal brand rather than fake status claims."
+    ],
+    "coverNote": "Rich lifestyle images work best with clean portrait sources and a specific luxury setting or channel.",
+    "safetyNote": "Do not use protected brand assets, vehicle badges, property logos, or false endorsement signals without permission."
+  },
+  "bikini": {
+    "headline": "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets",
+    "cardDescription": "Create bikini-inspired resort portraits with beach light, confident styling, private review, and consent-first image handling.",
+    "metaLabel": "Bikini photos",
+    "tags": [
+      "Beachwear",
+      "Resort Portrait",
+      "Private Review",
+      "Confidence"
+    ],
+    "detailTags": [
+      "Bikini style",
+      "Beach portrait",
+      "Poolside mood",
+      "Vacation crop",
+      "Adult-safe styling"
+    ],
+    "detailIntro": "Use Bikini for consenting adult beachwear portraits, resort lighting, poolside moodboards, and private confidence sets that stay tasteful and review-focused.",
+    "whatCreates": "AI bikini-inspired portraits, resort beach scenes, poolside profile crops, vacation moodboards, and private adult-safe gallery options.",
+    "bestFor": [
+      "Beachwear profile concepts, vacation moodboards, and resort-style portraits",
+      "Private confidence sets with controlled styling and download review",
+      "Creator visuals that need swimwear mood without explicit content",
+      "Testing lighting, background, and pose ideas before a real shoot"
+    ],
+    "workflow": [
+      "Upload adult source photos that you own and have consent to use.",
+      "Choose beach, resort, poolside, sunlit studio, or vacation styling.",
+      "Generate tasteful portrait and social crops.",
+      "Review body realism, face consistency, wardrobe edges, and platform fit."
+    ],
+    "styleNotes": [
+      "Keep prompts tasteful, adult-only, and focused on beachwear or resort mood.",
+      "Avoid explicit content, minors, non-consenting people, and stolen images.",
+      "Use private review before sharing any image publicly."
+    ],
+    "coverNote": "Bikini photos work best with adult source images, clear consent, and a specific resort or beachwear direction.",
+    "safetyNote": "Adults and consent only. Keep output non-explicit and permission-safe."
+  },
+  "swimsuit": {
+    "headline": "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews",
+    "cardDescription": "Preview swimsuit and resort portrait ideas with beach light, wardrobe planning, vacation mood, and private gallery review.",
+    "metaLabel": "Swimsuit photos",
+    "tags": [
+      "Swimsuit Style",
+      "Resort Styling",
+      "Beach Profile",
+      "Wardrobe Preview"
+    ],
+    "detailTags": [
+      "Swimwear mood",
+      "Vacation portrait",
+      "Poolside image",
+      "Beach crop",
+      "Private preview"
+    ],
+    "detailIntro": "Use Swimsuit when the goal is a resort or beachwear portrait set with wardrobe planning, vacation styling, and controlled private review.",
+    "whatCreates": "AI swimsuit portraits, beach profile images, resort styling previews, vacation crops, and private swimwear moodboard variations.",
+    "bestFor": [
+      "Swimsuit styling previews, resort moodboards, and vacation profile photos",
+      "Creators planning beach, poolside, or summer campaign visuals",
+      "Private comparison sets for wardrobe, lighting, and pose direction",
+      "Non-explicit social crops with polished resort energy"
+    ],
+    "workflow": [
+      "Upload adult source photos with clear face and body framing where appropriate.",
+      "Choose beach, resort, poolside, studio swim, or vacation story direction.",
+      "Generate portrait and story-friendly crops.",
+      "Review privacy, wardrobe edges, body realism, and platform suitability."
+    ],
+    "styleNotes": [
+      "Keep the direction about styling, confidence, and resort mood rather than explicit content.",
+      "Use simple backgrounds when comparing outfit color or cut.",
+      "Review every output before public sharing."
+    ],
+    "coverNote": "Swimsuit images work best with adult source photos, clear consent, and a specific preview or profile use case.",
+    "safetyNote": "Adults and consent only. Do not upload minors, non-consenting people, or explicit requests."
+  },
+  "travel": {
+    "headline": "AI Travel Photos for Destination Portraits, Route Stories, and Creator Albums",
+    "cardDescription": "Create travel portraits with scenic streets, coastal escapes, outdoor light, destination mood, and private creator albums.",
+    "metaLabel": "Travel photos",
+    "tags": [
+      "Destination Portraits",
+      "Route Stories",
+      "Coastal Escape",
+      "Creator Album"
+    ],
+    "detailTags": [
+      "Travel profile",
+      "Vacation story",
+      "City walk",
+      "Scenic portrait",
+      "Postcard crop"
+    ],
+    "detailIntro": "Use Travel when your everyday photo needs a destination story: old city lanes, coastal light, scenic routes, resort mornings, or postcard-ready creator scenes.",
+    "whatCreates": "AI travel portraits, destination lifestyle images, route-story crops, coastal and city scenes, and private travel album variations.",
+    "bestFor": [
+      "Travel profile refreshes, vacation-style social posts, and route albums",
+      "Creator trip concepts without coordinating a destination shoot",
+      "Postcard crops, story images, and soft destination moodboards",
+      "Private albums that test coastal, city, resort, or outdoor travel styles"
+    ],
+    "workflow": [
+      "Upload clear portraits and any outfit or destination mood references.",
+      "Choose coastal, old city, mountain route, resort, or urban travel direction.",
+      "Generate portrait, story, and postcard-style crops.",
+      "Download favorites after checking face consistency and location realism."
+    ],
+    "styleNotes": [
+      "Choose one destination mood at a time so the gallery feels coherent.",
+      "Avoid using generated travel images as proof that you visited a real place.",
+      "Use wider frames for story scenes and tighter crops for profile refreshes."
+    ],
+    "coverNote": "Travel photos work best with clear portraits and a specific destination mood such as coast, city, resort, or scenic route.",
+    "safetyNote": "Do not present generated destination imagery as real travel documentation when accuracy matters."
+  },
+  "soccer": {
+    "headline": "AI Soccer Fan Photos for Match-Day Posters, Stadium Portraits, and Profile Avatars",
+    "cardDescription": "Create personal soccer fan portraits, stadium-style posters, match-day social images, and supporter albums without official marks.",
+    "metaLabel": "Soccer fan photos",
+    "tags": [
+      "Match Day",
+      "Stadium Portraits",
+      "Fan Posters",
+      "Profile Avatars"
+    ],
+    "detailTags": [
+      "Football fan photo",
+      "Supporter portrait",
+      "Tournament poster",
+      "Fan profile",
+      "Game day album"
+    ],
+    "detailIntro": "Use Soccer for personal fan creativity: stadium mood, match-day energy, supporter portraits, posters, and profile avatars without relying on official marks.",
+    "whatCreates": "AI soccer fan portraits, stadium scenes, match-day posters, square supporter avatars, social banners, and private fan album images.",
+    "bestFor": [
+      "Match-day profile images, tournament posts, and supporter group concepts",
+      "Fan posters, stadium portraits, and social-ready banners",
+      "Personal fan albums that avoid team logos, player likenesses, and official marks",
+      "Creator content around football culture, watch parties, and game-day energy"
+    ],
+    "workflow": [
+      "Upload personal fan portraits or group references you have permission to use.",
+      "Choose stadium, poster, profile avatar, or watch-party direction.",
+      "Generate private match-day images with safe fan styling.",
+      "Review faces, jerseys, marks, and implied affiliation before download."
+    ],
+    "styleNotes": [
+      "Use generic colors and fan energy instead of official team crests or tournament marks.",
+      "Avoid player likenesses, celebrities, and protected logos unless you have rights.",
+      "Choose square crops for avatars and wide layouts for banners."
+    ],
+    "coverNote": "Soccer fan photos work best with clear portraits and a safe match-day direction that does not depend on official branding.",
+    "safetyNote": "For personal fan use only unless you have permission for official marks, logos, player likenesses, celebrity likenesses, or brand assets."
+  },
+  "urban": {
+    "headline": "AI Urban Photos for Street Portraits, City Profiles, and Creator Scenes",
+    "cardDescription": "Build urban portraits with city textures, street scenes, modern wardrobe, creator energy, and private gallery delivery.",
+    "metaLabel": "Urban photos",
+    "tags": [
+      "Street Portraits",
+      "City Profiles",
+      "Creator Scenes",
+      "Modern"
+    ],
+    "detailTags": [
+      "Urban portrait",
+      "City backdrop",
+      "Street texture",
+      "Lifestyle crop",
+      "Creator profile"
+    ],
+    "detailIntro": "Use Urban when you want everyday portraits to feel current, city-based, and creator-ready through streets, concrete textures, night lights, or modern wardrobe.",
+    "whatCreates": "AI urban portraits, city profile images, street-scene crops, creator visuals, and private lifestyle gallery variations.",
+    "bestFor": [
+      "City profile refreshes, social posts, and creator campaign visuals",
+      "Street-scene portraits with modern wardrobe and urban texture",
+      "Lifestyle images for personal brands, newsletters, and landing pages",
+      "Private albums that test city, rooftop, subway, or neighborhood mood"
+    ],
+    "workflow": [
+      "Upload clear portraits with varied expressions and simple clothing references.",
+      "Choose city street, rooftop, subway, alley, or modern studio direction.",
+      "Generate portrait, story, and banner crops.",
+      "Review face detail, background realism, and channel fit before use."
+    ],
+    "styleNotes": [
+      "Keep the background recognizable as urban without overpowering the subject.",
+      "Use clean outfits and simpler compositions for profile pages.",
+      "Avoid graffiti, logos, or signage that could create unwanted claims."
+    ],
+    "coverNote": "Urban photos work best with expressive portraits and a clear city setting or channel goal.",
+    "safetyNote": "Do not imply endorsement by real venues, brands, or city authorities unless you have permission."
+  },
+  "street-style": {
+    "headline": "AI Street Style Photos for Fashion Profiles, Outfit Concepts, and Editorial City Looks",
+    "cardDescription": "Generate fashion-forward street style portraits with outfit direction, editorial poses, city backdrops, and creator crops.",
+    "metaLabel": "Street style photos",
+    "tags": [
+      "Fashion Profile",
+      "Outfit Concepts",
+      "Editorial City",
+      "Creator Crops"
+    ],
+    "detailTags": [
+      "Streetwear portrait",
+      "Fashion editorial",
+      "OOTD concept",
+      "City runway",
+      "Style moodboard"
+    ],
+    "detailIntro": "Use Street Style when the focus is fashion: outfit mood, city movement, editorial pose, streetwear energy, and social-ready creator crops.",
+    "whatCreates": "AI street style portraits, fashion profile images, outfit moodboards, city editorial crops, and private style gallery options.",
+    "bestFor": [
+      "Fashion profile refreshes, outfit concepts, and OOTD-style posts",
+      "Creator campaigns with streetwear, city textures, and editorial posing",
+      "Wardrobe moodboards before a real shoot or shopping plan",
+      "Social crops that make clothing and personal style easy to read"
+    ],
+    "workflow": [
+      "Upload clear portraits and any outfit reference or fashion direction.",
+      "Choose streetwear, editorial city, casual luxe, or bold fashion styling.",
+      "Generate full-body, half-body, and profile crops.",
+      "Review clothing edges, hands, face consistency, and street background details."
+    ],
+    "styleNotes": [
+      "Use full-body references when outfit accuracy matters.",
+      "Keep logos generic unless you have permission to show a brand.",
+      "Choose stronger poses for editorial images and simpler crops for profiles."
+    ],
+    "coverNote": "Street style images work best with clear face references plus outfit direction or wardrobe examples.",
+    "safetyNote": "Avoid protected brand marks, counterfeit product claims, or implying affiliation with a fashion label."
+  },
+  "hairstyle-generator": {
+    "headline": "AI Hairstyle Generator for Hair Color, Cut Ideas, and Salon Preview Portraits",
+    "cardDescription": "Preview hairstyle, hair color, texture, bangs, length, and salon inspiration portraits before choosing a real-world look.",
+    "metaLabel": "Hairstyle generator photos",
+    "tags": [
+      "Hair Color",
+      "Cut Preview",
+      "Salon Ideas",
+      "Style Change"
+    ],
+    "detailTags": [
+      "Hairstyle preview",
+      "Hair color test",
+      "Bangs preview",
+      "Length change",
+      "Salon moodboard"
+    ],
+    "detailIntro": "Use Hairstyle Generator when the goal is to compare hair color, length, texture, bangs, or styling ideas before changing a real look or creator profile.",
+    "whatCreates": "AI hairstyle preview portraits, hair color comparisons, cut and length concepts, salon moodboard images, and private profile refresh options.",
+    "bestFor": [
+      "Hair color ideas, haircut previews, bangs, curls, and length changes",
+      "Salon consultation moodboards and beauty profile refreshes",
+      "Creators comparing several style directions before a campaign shoot",
+      "Private image sets for choosing a look before committing in real life"
+    ],
+    "workflow": [
+      "Upload clear portraits with visible hairline, face shape, and current hair texture.",
+      "Choose color, cut, length, bangs, curls, straight style, or salon mood.",
+      "Generate comparison images with similar framing for easier review.",
+      "Save favorites and use them as inspiration rather than guaranteed salon outcomes."
+    ],
+    "styleNotes": [
+      "Use front and side angles when hair shape matters.",
+      "Compare styles under similar lighting so the color difference is readable.",
+      "Check that the face, hairline, and ear area still look natural."
+    ],
+    "coverNote": "Hairstyle previews work best with sharp photos where the current hair shape is visible.",
+    "safetyNote": "Use hairstyle previews for inspiration; real salon results depend on hair condition, stylist, and products."
+  },
+  "motion-generator": {
+    "headline": "AI Motion Generator Photos for Image-to-Video, Camera Moves, and Storyboard Starters",
+    "cardDescription": "Create motion-ready stills for image-to-video clips, pan, tilt, orbit, zoom, social reels, ad drafts, and storyboard starters.",
+    "metaLabel": "Motion generator storyboard photos",
+    "tags": [
+      "Image-to-video",
+      "Camera Motion",
+      "Social Reels",
+      "Storyboard"
+    ],
+    "detailTags": [
+      "Pan tilt orbit",
+      "Zoom move",
+      "GIF starter",
+      "Short video crop",
+      "Ad motion draft"
+    ],
+    "detailIntro": "Use Motion Generator when a still image needs to be planned for movement: camera direction, subject action, short-video framing, and social-ready motion ideas.",
+    "whatCreates": "Motion-ready portrait frames, image-to-video starter stills, GIF-style sequences, reel-friendly crops, ad motion concepts, and storyboard planning images.",
+    "bestFor": [
+      "Image-to-video preparation with clear pan, tilt, orbit, zoom, or push-in direction",
+      "Social reels, story clips, profile motion, product teasers, and ad drafts",
+      "Storyboard starter frames before generating a finished AI video",
+      "Creators who need still images designed for vertical, square, or widescreen motion"
+    ],
+    "workflow": [
+      "Upload or choose a strong still image with clear subject, background space, and intended channel.",
+      "Pick a motion direction such as slow push-in, side pan, orbit, tilt, reveal, or loop.",
+      "Generate motion-ready frames and crops for reels, GIFs, ads, or storyboard review.",
+      "Use the best still as the source for video generation or save it as a campaign draft."
+    ],
+    "styleNotes": [
+      "Leave room around the subject so camera movement does not crop the face or product.",
+      "Choose one motion idea per generation instead of stacking too many camera moves.",
+      "Match the crop to the final channel: vertical reels, square posts, or widescreen video."
+    ],
+    "coverNote": "Motion generator images work best when the subject is clear, the frame has movement space, and the final video format is known.",
+    "safetyNote": "Only animate images you own or have permission to use, and avoid implying real actions, endorsements, or events that did not happen."
+  },
+  "background-changer": {
+    "headline": "AI Background Changer Photos for Portrait Scenes, Product Context, and Profile Refreshes",
+    "cardDescription": "Replace or redesign backgrounds for portraits, products, creator images, profile photos, and private gallery updates.",
+    "metaLabel": "Background changer photos",
+    "tags": [
+      "Scene Change",
+      "Portrait Background",
+      "Product Context",
+      "Profile Refresh"
+    ],
+    "detailTags": [
+      "Background replacement",
+      "Studio backdrop",
+      "Lifestyle scene",
+      "Ecommerce context",
+      "Clean profile"
+    ],
+    "detailIntro": "Use Background Changer when the subject is strong but the setting needs a new context, cleaner backdrop, or more useful scene for a profile or product image.",
+    "whatCreates": "AI background replacement concepts, portrait scene changes, product-context images, studio backdrop versions, and private before-after gallery options.",
+    "bestFor": [
+      "Profile photos that need cleaner studio, office, outdoor, or lifestyle backgrounds",
+      "Product or creator images that need a stronger scene without reshooting",
+      "Testing social, ecommerce, and portfolio contexts from one source photo",
+      "Private review of background options before choosing a final image"
+    ],
+    "workflow": [
+      "Upload the image with the subject, person, or product you want to keep.",
+      "Choose studio, lifestyle, office, outdoor, product, or abstract background direction.",
+      "Generate variations with consistent subject edges and realistic lighting.",
+      "Review cutout edges, shadows, reflections, and background fit before download."
+    ],
+    "styleNotes": [
+      "Match lighting direction between the subject and replacement background.",
+      "Use simple backdrops for professional portraits and richer scenes for campaigns.",
+      "Avoid backgrounds that imply locations or endorsements you cannot claim."
+    ],
+    "coverNote": "Background changes work best with a clear subject edge and a specific final context.",
+    "safetyNote": "Do not use background changes to mislead viewers about real location, attendance, product use, or endorsement."
+  },
+  "background-remover": {
+    "headline": "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets",
+    "cardDescription": "Prepare clean cutout-style images for profiles, product listings, creator graphics, thumbnails, and private downloads.",
+    "metaLabel": "Background remover photos",
+    "tags": [
+      "Clean Cutout",
+      "Transparent Look",
+      "Listing Asset",
+      "Thumbnail"
+    ],
+    "detailTags": [
+      "Remove background",
+      "Profile cutout",
+      "Product cutout",
+      "Clean edge",
+      "Design asset"
+    ],
+    "detailIntro": "Use Background Remover when the subject needs to stand alone for profile graphics, thumbnails, listing assets, design layouts, or cleaner private downloads.",
+    "whatCreates": "AI background-removal concepts, clean subject cutouts, profile-ready isolated images, product listing assets, and private design-friendly crops.",
+    "bestFor": [
+      "Profile images, thumbnails, listing assets, and creator graphics",
+      "Product photos that need a cleaner cutout before design or upload",
+      "Portraits that need distraction-free framing for banners or decks",
+      "Private review of edge quality before using an isolated subject publicly"
+    ],
+    "workflow": [
+      "Upload a photo with the subject clearly separated from the background.",
+      "Choose clean cutout, white backdrop, transparent-style, or design asset direction.",
+      "Generate isolated versions with several crop options.",
+      "Review hair, hands, product edges, shadows, and small details."
+    ],
+    "styleNotes": [
+      "Use high-contrast source images when hair or product edges are detailed.",
+      "Check cutout edges before placing the image on colored backgrounds.",
+      "Use removal for cleanup, not to hide important context in sensitive images."
+    ],
+    "coverNote": "Background removal works best when the subject is sharp and not blended into the original scene.",
+    "safetyNote": "Do not remove backgrounds to misrepresent evidence, products, identity, or real-world context."
+  },
+  "magic-eraser": {
+    "headline": "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images",
+    "cardDescription": "Remove small distractions, clutter, unwanted objects, background marks, and visual noise while keeping the main image natural.",
+    "metaLabel": "Magic eraser photos",
+    "tags": [
+      "Object Removal",
+      "Cleanup",
+      "Distraction-Free",
+      "Natural Edit"
+    ],
+    "detailTags": [
+      "Remove clutter",
+      "Erase object",
+      "Clean portrait",
+      "Fix background",
+      "Private edit"
+    ],
+    "detailIntro": "Use Magic Eraser when a good photo is distracted by clutter, small objects, marks, background noise, or unwanted details that can be cleaned up naturally.",
+    "whatCreates": "AI cleanup edits, object-removal concepts, distraction-free portraits, cleaner product images, and private before-after review options.",
+    "bestFor": [
+      "Removing small objects, clutter, photobomb details, marks, or background distractions",
+      "Cleaning profile photos, product images, travel shots, and creator visuals",
+      "Preparing stronger source images before starting a full photo package",
+      "Private edit review before downloading a cleaner final image"
+    ],
+    "workflow": [
+      "Upload the image and identify the distraction you want removed.",
+      "Choose cleanup, object removal, background fix, or portrait polish direction.",
+      "Generate natural-looking edits with the main subject preserved.",
+      "Review texture, shadows, edges, and any filled-in areas before use."
+    ],
+    "styleNotes": [
+      "Erase one clear distraction at a time for the most natural result.",
+      "Check repeated textures, shadows, and edges after object removal.",
+      "Avoid removing context that changes the truth of a sensitive image."
+    ],
+    "coverNote": "Magic Eraser works best for small or medium distractions with enough surrounding texture to repair the area.",
+    "safetyNote": "Do not use cleanup edits to falsify documents, evidence, product condition, or another person's actions."
+  },
+  "photo-enhancer": {
+    "headline": "AI Photo Enhancer for Sharper Portraits, Clearer Details, and Better Downloads",
+    "cardDescription": "Enhance soft, dark, compressed, or low-detail photos for clearer profiles, gallery downloads, creator assets, and keepsakes.",
+    "metaLabel": "Photo enhancer",
+    "tags": [
+      "Sharpness",
+      "Clarity",
+      "Low Light",
+      "Better Detail"
+    ],
+    "detailTags": [
+      "Enhance photo",
+      "Improve clarity",
+      "Upscale detail",
+      "Fix compression",
+      "Clean download"
+    ],
+    "detailIntro": "Use Photo Enhancer when the image is valuable but needs better clarity, stronger detail, improved brightness, or cleaner download quality before publishing or saving.",
+    "whatCreates": "AI enhanced portraits, clearer source images, sharper profile crops, improved gallery downloads, and private quality-check versions.",
+    "bestFor": [
+      "Soft selfies, compressed uploads, low-light portraits, and old social images",
+      "Preparing cleaner source photos before generating a full AI photo package",
+      "Improving profile images, keepsakes, creator assets, and private albums",
+      "Reviewing clarity upgrades while preserving a natural look"
+    ],
+    "workflow": [
+      "Upload the soft, dark, compressed, or low-detail image.",
+      "Choose clarity, brightness, sharpness, portrait detail, or download improvement.",
+      "Generate enhanced versions with natural texture and better readability.",
+      "Review face detail, skin texture, edges, and noise before saving."
+    ],
+    "styleNotes": [
+      "Avoid over-sharpening faces or adding unnatural skin texture.",
+      "Use enhancement before generation when source quality is holding back a theme.",
+      "Compare the enhanced image against the original before replacing it."
+    ],
+    "coverNote": "Photo enhancement works best when the original contains enough real detail to recover.",
+    "safetyNote": "Do not enhance images to mislead viewers about product condition, identity, or documentary accuracy."
+  },
+  "portrait-retouch": {
+    "headline": "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos",
+    "cardDescription": "Retouch portraits with natural skin texture, balanced light, cleaner crops, subtle polish, and private review-friendly realism.",
+    "metaLabel": "Portrait retouch photos",
+    "tags": [
+      "Natural Skin",
+      "Balanced Light",
+      "Profile Polish",
+      "Subtle Retouch"
+    ],
+    "detailTags": [
+      "Portrait cleanup",
+      "Skin texture",
+      "Light balance",
+      "Face realism",
+      "Private retouch"
+    ],
+    "detailIntro": "Use Portrait Retouch when a portrait needs subtle polish while still looking like the real person: better light, cleaner skin, tidy background, and natural detail.",
+    "whatCreates": "AI retouched portraits, naturally polished profile images, cleaner light-balanced crops, and private before-after retouch options.",
+    "bestFor": [
+      "Profile photos, creator portraits, dating images, and business-ready headshots",
+      "Subtle skin cleanup, light balancing, crop refinement, and background tidying",
+      "Preparing a stronger source photo before using another AI photo theme",
+      "Private review where realism matters more than heavy beauty filtering"
+    ],
+    "workflow": [
+      "Upload a portrait with clear face detail and the expression you want to keep.",
+      "Choose natural retouch, light balance, skin cleanup, or profile polish.",
+      "Generate subtle versions that preserve identity and texture.",
+      "Review face shape, skin detail, eyes, teeth, hairline, and background."
+    ],
+    "styleNotes": [
+      "Keep skin texture visible so the portrait does not look artificial.",
+      "Use retouching to polish, not to change identity or age dramatically.",
+      "Compare before and after images before using the retouched version publicly."
+    ],
+    "coverNote": "Portrait retouch works best with clear, high-resolution source portraits and realistic expectations.",
+    "safetyNote": "Do not retouch someone else's portrait in a way that misrepresents them without consent."
+  },
+  "unblur-image": {
+    "headline": "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail",
+    "cardDescription": "Improve blurred or soft images with clearer facial detail, sharper edges, better readability, and natural-looking downloads.",
+    "metaLabel": "Unblur image photos",
+    "tags": [
+      "Deblur",
+      "Sharper Faces",
+      "Clear Detail",
+      "Restore"
+    ],
+    "detailTags": [
+      "Fix blur",
+      "Sharpen image",
+      "Recover detail",
+      "Clear face",
+      "Soft photo repair"
+    ],
+    "detailIntro": "Use Unblur Image when a meaningful photo is too soft, slightly shaky, or low-detail and needs better facial readability or sharper edges.",
+    "whatCreates": "AI deblurred portraits, sharper source images, clearer gallery downloads, improved keepsake photos, and private detail-recovery options.",
+    "bestFor": [
+      "Soft portraits, shaky phone photos, low-detail profile images, and keepsakes",
+      "Preparing usable source images before starting a full AI photo package",
+      "Improving face clarity, clothing edges, and background readability",
+      "Private comparison of sharpened results before download"
+    ],
+    "workflow": [
+      "Upload the blurred or soft image you want to improve.",
+      "Choose face clarity, edge sharpening, general deblur, or keepsake repair.",
+      "Generate clearer versions while preserving a natural look.",
+      "Review artifacts, face accuracy, text, edges, and fine details."
+    ],
+    "styleNotes": [
+      "Use deblur for mild to moderate blur; severely missing details may not be recoverable.",
+      "Check that the enhanced face still matches the original person.",
+      "Avoid treating restored details as guaranteed facts when the source was unclear."
+    ],
+    "coverNote": "Unblur works best when the original photo still contains visible structure and recognizable facial detail.",
+    "safetyNote": "Do not use deblurred images as forensic proof when the original photo was ambiguous."
+  },
+  "color-correction": {
+    "headline": "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood",
+    "cardDescription": "Correct color casts, exposure imbalance, flat lighting, dull tones, and mismatched photo mood while keeping images realistic.",
+    "metaLabel": "Color correction photos",
+    "tags": [
+      "Skin Tone",
+      "Exposure",
+      "Color Cast",
+      "Realistic Mood"
+    ],
+    "detailTags": [
+      "Fix color",
+      "White balance",
+      "Tone correction",
+      "Photo mood",
+      "Exposure balance"
+    ],
+    "detailIntro": "Use Color Correction when a photo has the right subject but the color feels off: yellow indoor light, flat exposure, dull tones, or mismatched mood.",
+    "whatCreates": "AI color-corrected portraits, balanced exposure versions, cleaner skin tone images, mood-adjusted scenes, and private before-after review options.",
+    "bestFor": [
+      "Portraits with yellow, green, blue, or flat color casts",
+      "Product and creator photos that need cleaner tone before publishing",
+      "Matching several images into a consistent gallery or campaign mood",
+      "Preparing stronger source photos before using another AI theme"
+    ],
+    "workflow": [
+      "Upload the image with color, tone, or exposure issues.",
+      "Choose skin tone, white balance, warmth, contrast, or mood correction.",
+      "Generate corrected versions with realistic color and cleaner lighting.",
+      "Review skin, whites, shadows, highlights, and brand colors before download."
+    ],
+    "styleNotes": [
+      "Keep skin tones natural rather than pushing dramatic filters.",
+      "Use consistent tone if the images belong to the same album or campaign.",
+      "Check product colors carefully when color accuracy affects sales."
+    ],
+    "coverNote": "Color correction works best when the original exposure still retains detail in faces, shadows, and highlights.",
+    "safetyNote": "Do not color-correct product images in a way that misrepresents actual product color or condition."
+  },
+  "old-photo-restoration": {
+    "headline": "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits",
+    "cardDescription": "Restore old or damaged photos with clearer detail, reduced scratches, improved tone, respectful keepsake handling, and private review.",
+    "metaLabel": "Old photo restoration",
+    "tags": [
+      "Family Keepsake",
+      "Scratch Repair",
+      "Faded Photo",
+      "Vintage Portrait"
+    ],
+    "detailTags": [
+      "Restore old photo",
+      "Repair damage",
+      "Vintage family image",
+      "Color recovery",
+      "Private archive"
+    ],
+    "detailIntro": "Use Old Photo Restoration when a family image, vintage portrait, or meaningful keepsake needs clearer detail, fewer scratches, better tone, and careful private review.",
+    "whatCreates": "AI restored old photos, repaired portrait details, reduced scratches and fading, improved tone versions, and private family archive downloads.",
+    "bestFor": [
+      "Family keepsakes, vintage portraits, old albums, and memorial archives",
+      "Reducing scratches, fading, dust, cracks, stains, and soft detail",
+      "Preparing restored copies for private sharing or printing",
+      "Comparing restoration strength before choosing a final image"
+    ],
+    "workflow": [
+      "Upload the highest-quality scan or photo of the original image.",
+      "Choose scratch repair, fade recovery, color balance, detail clarity, or gentle restoration.",
+      "Generate restored versions with natural texture and respectful handling.",
+      "Review faces, clothing, background, and any reconstructed details before saving."
+    ],
+    "styleNotes": [
+      "Use gentle restoration for family archives where authenticity matters.",
+      "Do not over-smooth faces or invent details that change the memory.",
+      "Keep an untouched original copy for reference."
+    ],
+    "coverNote": "Old photo restoration works best from a high-resolution scan or evenly lit photograph of the original print.",
+    "safetyNote": "Treat restored family and memorial images respectfully, and avoid presenting reconstructed details as guaranteed historical fact."
+  },
+  "edit-by-prompt": {
+    "headline": "AI Edit By Prompt for Safe Scene Changes, Style Adjustments, and Custom Photo Edits",
+    "cardDescription": "Use a written prompt to request safe photo edits, scene changes, style adjustments, object tweaks, and private image variations.",
+    "metaLabel": "Edit by prompt photos",
+    "tags": [
+      "Prompt Editing",
+      "Scene Changes",
+      "Style Adjustments",
+      "Custom Edits"
+    ],
+    "detailTags": [
+      "Text prompt edit",
+      "Change scene",
+      "Adjust style",
+      "Custom variation",
+      "Private photo edit"
+    ],
+    "detailIntro": "Use Edit By Prompt when the edit does not fit a single tool: describe the safe change you want and keep the result inside a private review flow.",
+    "whatCreates": "AI prompt-edited images, safe scene variations, style adjustments, background tweaks, object edits, and private custom photo options.",
+    "bestFor": [
+      "Custom photo edits that need a short written instruction",
+      "Scene changes, styling adjustments, background tweaks, and small visual fixes",
+      "Creator images where one specific detail needs to change",
+      "Private testing before deciding whether to use a full theme or tool"
+    ],
+    "workflow": [
+      "Upload the image you want to edit and write a clear prompt for the change.",
+      "Keep the instruction specific, safe, and limited to one main edit.",
+      "Generate edited variations for review inside the private gallery.",
+      "Compare results against the original and download only the version that fits your use case."
+    ],
+    "styleNotes": [
+      "Write concrete edits such as change background, adjust lighting, remove clutter, or add a safer mood.",
+      "Avoid vague prompts that mix several unrelated changes.",
+      "Check that the edit does not alter identity, product truth, or important context."
+    ],
+    "coverNote": "Prompt editing works best when the instruction is specific and the source image already has a clear subject.",
+    "safetyNote": "Do not use prompt edits to impersonate, deceive, falsify evidence, create explicit content, or change someone's image without permission."
   }
 }

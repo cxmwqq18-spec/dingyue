@@ -573,7 +573,7 @@ export function DesignerSectionBranchCard({
       onToggle={() => onToggleSectionExpanded(sectionId)}
       selected={sectionActive}
       subtitle={sectionPreviewLine(section)}
-      aside={`${blocks.length} 子块`}
+      aside={blocks.length > 0 ? `${blocks.length} 子块` : "仅字段"}
       testId={`section:${sectionId}`}
       title={<span className="truncate">{labelForSchema(section.type, selectedSaasSectionSchemas)}</span>}
       afterContent={showSectionDrop && dragState?.position === "after" ? (

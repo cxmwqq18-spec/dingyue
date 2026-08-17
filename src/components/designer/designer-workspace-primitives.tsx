@@ -20,7 +20,7 @@ export function DesignerWorkspaceShell({
 }: HTMLAttributes<HTMLElement>) {
   return (
     <aside
-      className={cx("wrapper_right flex h-full w-[454px] shrink-0 flex-col border-l border-[#c4c7cc] bg-[#d7dce4] pl-[6px] shadow-none", className)}
+      className={cx("designer-workbench-inspector isolate flex h-full min-h-0 w-[clamp(440px,30vw,560px)] shrink-0 flex-col overflow-hidden border-l border-[#c4c7cc] bg-[#eef1f5] shadow-none", className)}
       data-designer-layout="saas-right-editor-pane"
       {...props}
     >
@@ -42,10 +42,9 @@ export function DesignerWorkspaceTabsBar({
   actions?: ReactNode;
 }) {
   return (
-    <div className={cx("tools_tab grid h-[52px] shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b border-[#c4c7cc] bg-white px-0 py-0 shadow-none", className)} data-designer-layout="saas-editor-tabs-bar" {...props}>
-      <div />
-      <div className="flex items-center justify-center">{children}</div>
-      <div className="flex items-center justify-end gap-1 pr-2">{actions}</div>
+    <div className={cx("designer-workbench-tabs flex min-h-[64px] shrink-0 items-center gap-2 border-b border-[#d0d5dd] bg-white px-3 py-2 shadow-none", className)} data-designer-layout="saas-editor-tabs-bar" {...props}>
+      <div className="min-w-0 flex-1">{children}</div>
+      {actions ? <div className="flex shrink-0 items-center justify-end gap-1">{actions}</div> : null}
     </div>
   );
 }
@@ -56,7 +55,7 @@ export function DesignerWorkspaceSplit({
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cx("wrap-tabs-content grid h-full min-h-0 grid-cols-[156px_298px]", className)} data-designer-layout="saas-editor-split" {...props}>
+    <div className={cx("designer-workbench-split grid h-full min-h-0 grid-rows-[minmax(420px,42%)_minmax(0,1fr)]", className)} data-designer-layout="saas-editor-split" {...props}>
       {children}
     </div>
   );
@@ -68,7 +67,7 @@ export function DesignerWorkspaceRail({
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cx("side_bar_c051 min-h-0 overflow-hidden bg-[#d7dce4] pr-[6px]", className)} data-designer-layout="saas-editor-rail" {...props}>
+    <div className={cx("designer-workbench-rail flex min-h-0 min-w-0 flex-col overflow-hidden border-b border-[#d0d5dd] bg-[#eef1f5]", className)} data-designer-layout="saas-editor-rail" {...props}>
       {children}
     </div>
   );
@@ -80,7 +79,7 @@ export function DesignerWorkspaceInspector({
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cx("setting_tabpane my-[6px] min-h-0 overflow-hidden rounded-l-[8px] border border-[#c4c7cc] bg-white shadow-none", className)} data-designer-layout="saas-editor-inspector" {...props}>
+    <div className={cx("designer-workbench-property min-h-0 flex-1 overflow-hidden bg-white shadow-none", className)} data-designer-layout="saas-editor-inspector" {...props}>
       {children}
     </div>
   );

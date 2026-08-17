@@ -20,8 +20,15 @@ const homeOrderByStore = {
   mydreamshoots: [
     "hero_1",
     "generation_showcase_1",
-    "featured_pack_1",
-    "featured_christmas_1",
+    "tutorial_video_1",
+    "package_catalog_1",
+    "proof_1",
+    "faq_1",
+    "conversion_1"
+  ],
+  aidreamcapes: [
+    "hero_1",
+    "generation_showcase_1",
     "featured_thanksgiving_1",
     "tutorial_video_1",
     "tutorial_video_2",
@@ -31,38 +38,42 @@ const homeOrderByStore = {
     "faq_1",
     "conversion_1",
     "brand_strip_1"
-  ],
-  aidreamcapes: [
-    "hero_1",
-    "brand_strip_1",
-    "visual_proof_1",
-    "featured_pack_1",
-    "featured_christmas_1",
-    "featured_thanksgiving_1",
-    "package_catalog_1",
-    "generation_showcase_1",
-    "tutorial_video_1",
-    "tutorial_video_2",
-    "mobile_video_1",
-    "flow_bridge_1",
-    "pricing_1",
-    "proof_1",
-    "faq_1",
-    "trust_1",
-    "conversion_1"
   ]
 };
 const removedHomeSectionsByStore = {
-  mydreamshoots: ["visual_proof_1", "flow_bridge_1", "trust_1"],
-  aidreamcapes: []
+  mydreamshoots: ["mobile_video_1", "tutorial_video_2", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "brand_strip_1"],
+  aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
 };
+const bestPageTemplateKeys = ["best-packages", "best-ai-image", "best-ai-video"];
 const assetVersion = "20260801visualfix1";
 const aidreamAssetVersion = "20260801visualfix2";
+const mydreamshootsPackageDirectoryCopy = {
+  title: "AI Photo Packages by Style and Use Case",
+  subtitle: "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
+};
 
 const rawArgs = process.argv.slice(2);
-const flags = new Set(rawArgs.filter((arg) => arg.startsWith("--")).map((arg) => arg.slice(2)));
+const flags = new Set();
+const args = new Map();
+for (let index = 0; index < rawArgs.length; index += 1) {
+  const rawArg = rawArgs[index];
+  if (!rawArg.startsWith("--")) continue;
+  const [key, ...rest] = rawArg.slice(2).split("=");
+  if (rest.length) {
+    args.set(key, rest.join("="));
+    continue;
+  }
+  const next = rawArgs[index + 1];
+  if (next && !next.startsWith("--")) {
+    args.set(key, next);
+    index += 1;
+  } else {
+    flags.add(key);
+  }
+}
 const dryRun = flags.has("dry-run");
 const updateDb = flags.has("db");
+const requestedStoreKey = String(args.get("site") ?? args.get("store") ?? "all").trim().toLowerCase();
 
 function versioned(pathname, version = assetVersion) {
   return `${pathname}?v=${version}`;
@@ -97,38 +108,90 @@ const myAssets = {
   galleryHoliday: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1"
 };
 
-const trustedLogoAssetBase = "/assets/dreamshoot/generated/trusted-logos";
-const mydreamshootsAboutBody = "MyDreamShoots is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.";
-const mydreamshootsTrustedLogoBlocks = [
-  block("trusted_logo_dior", "logo", { name: "Dior", imageUrl: `${trustedLogoAssetBase}/dior.png`, badge: "Creator proof" }),
-  block("trusted_logo_green_wedding_shoes", "logo", { name: "Green Wedding Shoes", imageUrl: `${trustedLogoAssetBase}/green-wedding-shoes.png`, badge: "Creator proof" }),
-  block("trusted_logo_weddingwire", "logo", { name: "WeddingWire", imageUrl: `${trustedLogoAssetBase}/weddingwire.png`, badge: "Creator proof" }),
-  block("trusted_logo_azazie", "logo", { name: "Azazie", imageUrl: `${trustedLogoAssetBase}/azazie.png`, badge: "Creator proof" }),
-  block("trusted_logo_bodas", "logo", { name: "Bodas", imageUrl: `${trustedLogoAssetBase}/bodas.png`, badge: "Creator proof" }),
-  block("trusted_logo_bodasnet", "logo", { name: "Bodas.net", imageUrl: `${trustedLogoAssetBase}/bodasnet.png`, badge: "Creator proof" }),
-  block("trusted_logo_bonprix", "logo", { name: "Bonprix", imageUrl: `${trustedLogoAssetBase}/bonprix.png`, badge: "Creator proof" }),
-  block("trusted_logo_brides", "logo", { name: "Brides", imageUrl: `${trustedLogoAssetBase}/brides.png`, badge: "Creator proof" }),
-  block("trusted_logo_chanel", "logo", { name: "Chanel", imageUrl: `${trustedLogoAssetBase}/chanel.png`, badge: "Creator proof" }),
-  block("trusted_logo_davids", "logo", { name: "David's", imageUrl: `${trustedLogoAssetBase}/davids.png`, badge: "Creator proof" }),
-  block("trusted_logo_linkedin", "logo", { name: "LinkedIn", imageUrl: `${trustedLogoAssetBase}/linkedin.png`, badge: "Creator proof" }),
-  block("trusted_logo_macys", "logo", { name: "Macy's", imageUrl: `${trustedLogoAssetBase}/macys.png`, badge: "Creator proof" }),
-  block("trusted_logo_marks_and_spencer", "logo", { name: "Marks & Spencer", imageUrl: `${trustedLogoAssetBase}/marksandspencer.png`, badge: "Creator proof" }),
-  block("trusted_logo_next", "logo", { name: "Next", imageUrl: `${trustedLogoAssetBase}/nextcouk.jpg`, badge: "Creator proof" }),
-  block("trusted_logo_oscar_de_la_renta", "logo", { name: "Oscar de la Renta", imageUrl: `${trustedLogoAssetBase}/oscardelarenta.jpg`, badge: "Creator proof" }),
-  block("trusted_logo_pinterest", "logo", { name: "Pinterest", imageUrl: `${trustedLogoAssetBase}/pinterest.png`, badge: "Creator proof" }),
-  block("trusted_logo_pronovias", "logo", { name: "Pronovias", imageUrl: `${trustedLogoAssetBase}/pronovias.jpg`, badge: "Creator proof" }),
-  block("trusted_logo_shein", "logo", { name: "SHEIN", imageUrl: `${trustedLogoAssetBase}/shein.png`, badge: "Creator proof" }),
-  block("trusted_logo_style_me_pretty", "logo", { name: "Style Me Pretty", imageUrl: `${trustedLogoAssetBase}/style-me-pretty.png`, badge: "Creator proof" }),
-  block("trusted_logo_starbucks", "logo", { name: "Starbucks", imageUrl: `${trustedLogoAssetBase}/starbucks.jpeg`, badge: "Creator proof" }),
-  block("trusted_logo_the_knot", "logo", { name: "The Knot", imageUrl: `${trustedLogoAssetBase}/the-knot.png`, badge: "Creator proof" }),
-  block("trusted_logo_the_knot_weddings", "logo", { name: "The Knot Weddings", imageUrl: `${trustedLogoAssetBase}/theknot2.png`, badge: "Creator proof" }),
-  block("trusted_logo_vera_wang", "logo", { name: "Vera Wang", imageUrl: `${trustedLogoAssetBase}/verawang.png`, badge: "Creator proof" }),
-  block("trusted_logo_vinted", "logo", { name: "Vinted", imageUrl: `${trustedLogoAssetBase}/vinted.png`, badge: "Creator proof" }),
-  block("trusted_logo_vogue", "logo", { name: "Vogue", imageUrl: `${trustedLogoAssetBase}/vogue.svg`, badge: "Creator proof" }),
-  block("trusted_logo_zalando", "logo", { name: "Zalando", imageUrl: `${trustedLogoAssetBase}/zalando.png`, badge: "Creator proof" }),
-  block("trusted_logo_zara", "logo", { name: "Zara", imageUrl: `${trustedLogoAssetBase}/zara.png`, badge: "Creator proof" }),
-  block("trusted_logo_zexy", "logo", { name: "Zexy", imageUrl: `${trustedLogoAssetBase}/zexy.svg`, badge: "Creator proof" }),
-  block("trusted_logo_zola", "logo", { name: "Zola", imageUrl: `${trustedLogoAssetBase}/zola.png`, badge: "Creator proof" })
+const mydreamshootsTrustedLogoAssetBase = "/assets/dreamshoot/brand/trusted-creators-dark-v2";
+const aidreamTrustedLogoAssetBase = "/assets/sites/site_aidreamcapes/trusted-logos";
+const mydreamshootsAboutBody = "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. Upload photos you are authorized to use, choose a supported image or video workflow, review the current credit cost, and generate results inside your signed-in workspace. Current workflows include professional headshots, portraits, fan and seasonal images, creative styles, photo-editing tools, and short video options.";
+const mydreamshootsTrustedLogoDefinitions = [
+  { key: "ikraddy", name: "iKraddy", file: "01__ikraddy.webp" },
+  { key: "beer", name: "Beer", file: "02__beer.webp" },
+  { key: "fumei", name: "FUMEI", file: "03__fumei.webp" },
+  { key: "mrlin", name: "MRLIN", file: "04__mrlin.webp" },
+  { key: "popo", name: "POPO", file: "05__popo.webp" },
+  { key: "mr-sdm", name: "MR.SDM", file: "06__mr-sdm.webp" },
+  { key: "ezzy", name: "EZZY", file: "07__ezzy.webp" },
+  { key: "xraz", name: "XRAZ", file: "08__xraz.webp" },
+  { key: "giantdc", name: "Giantdc", file: "09__giantdc.webp" },
+  { key: "smart-check", name: "SMART Check", file: "10__smart-check.webp" },
+  { key: "jo", name: "JO", file: "11__jo.webp" },
+  { key: "mashtacore", name: "Mashtacore", file: "12__mashtacore.webp" },
+  { key: "fb", name: "FB", file: "13__fb.webp" },
+  { key: "shurong-lim", name: "SHURONG LIM", file: "14__shurong-lim.webp" },
+  { key: "coffee-swap", name: "COFFEE SWAP", file: "15__coffee-swap.webp" },
+  { key: "heart-beat", name: "HEART BEAT", file: "16__heart-beat.webp" },
+  { key: "chinawuzhougem", name: "CHINAWUZHOUGEM", file: "17__chinawuzhougem.webp" },
+  { key: "tosaco", name: "TOSACO", file: "18__tosaco.webp" },
+  { key: "monkey", name: "Monkey", file: "19__monkey.webp" },
+  { key: "yu-kidsrooms", name: "YU kidsrooms", file: "20__yu-kidsrooms.webp" },
+  { key: "yx", name: "YX", file: "21__yx.webp" },
+  { key: "laboom", name: "LABOOM", file: "22__laboom.webp" },
+  { key: "moonpizza", name: "MOONPIZZA", file: "23__moonpizza.webp" },
+  { key: "observer", name: "OBSERVER", file: "24__observer.webp" },
+  { key: "anteater", name: "Anteater", file: "25__anteater.webp" },
+  { key: "prevence", name: "Prevence", file: "26__prevence.webp" },
+  { key: "bison", name: "BISON", file: "27__bison.webp" },
+  { key: "hana-pet", name: "HANA PET", file: "28__hana-pet.webp" },
+  { key: "oficina", name: "Oficina", file: "29__oficina.webp" },
+  { key: "panda-ber", name: "Panda BER", file: "30__panda-ber.webp" }
+];
+const trustedLogoDefinitions = [
+  { key: "wliano", name: "Wliano", file: "39__wliano__wliano.com.png" },
+  { key: "hmaxio", name: "Hmaxio", file: "13__hmaxio__hmaxio.co.za.png" },
+  { key: "invorae", name: "Invorae", file: "14__invorae__invorae.com.png" },
+  { key: "bolvian", name: "Bolvian", file: "03__bolvian__bolvian.co.za.png" },
+  { key: "ravinr", name: "Ravinr", file: "24__ravinr__ravinr.co.za.png" },
+  { key: "luntra", name: "Luntra", file: "19__luntra__luntra.co.za.png" },
+  { key: "yaveno", name: "Yaveno", file: "44__yaveno__yaveno.co.za.png" },
+  { key: "vkovel", name: "Vkovel", file: "37__vkovel__vkovel.com.webp" },
+  { key: "orvinoe", name: "Orvinoe", file: "21__orvinoe__orvinoe.com.png" },
+  { key: "elvorae", name: "Elvorae", file: "06__elvorae__elvorae.co.za.png" },
+  { key: "trovic", name: "Trovic", file: "31__trovic__trovic.co.za.png" },
+  { key: "aroveno", name: "Aroveno", file: "02__aroveno__aroveno.co.za.png" },
+  { key: "ulvanx", name: "Ulvanx", file: "33__ulvanx__ulvanx.com.png" },
+  { key: "kernivo", name: "Kernivo", file: "17__kernivo__kernivo.com.png" },
+  { key: "bpickr", name: "Bpickr", file: "04__bpickr__bpickr.co.za.png" },
+  { key: "jurvina", name: "Jurvina", file: "15__jurvina__jurvina.com.png" },
+  { key: "zervino", name: "Zervino", file: "45__zervino__zervino.co.za.png" },
+  { key: "harlivo", name: "Harlivo", file: "12__harlivo__harlivo.com.png" },
+  { key: "qervon", name: "Qervon", file: "22__qervon__qervon.com.png" },
+  { key: "zuvric", name: "Zuvric", file: "46__zuvric__zuvric.com.png" },
+  { key: "urmino", name: "Urmino", file: "34__urmino__urmino.com.png" },
+  { key: "wlivon", name: "Wlivon", file: "41__wlivon__wlivon.com.png" },
+  { key: "rpfira", name: "Rpfira", file: "25__rpfira__rpfira.com.png" },
+  { key: "klnova", name: "Klnova", file: "42__klnova__klnova.com.png" },
+  { key: "qmarto", name: "Qmarto", file: "47__qmarto__xn--qmarto-220j.co.za.png" },
+  { key: "folvian", name: "Folvian", file: "09__folvian__folvian.com.webp" },
+  { key: "gmarto", name: "Gmarto", file: "10__gmarto__gmarto.co.za.png" },
+  { key: "tuzemo", name: "Tuzemo", file: "32__tuzemo__tuzemo.com.png" },
+  { key: "ervanoe", name: "Ervanoe", file: "07__ervanoe__ervanoe.com.webp" }
+];
+
+function trustedLogoBlocks(definitions, basePath, prefix) {
+  return definitions.map(({ key, name, file }) =>
+    block(`${prefix}${key}`, "logo", { name, imageUrl: `${basePath}/${file}`, badge: "Creator proof" })
+  );
+}
+
+const mydreamshootsTrustedLogoBlocks = trustedLogoBlocks(mydreamshootsTrustedLogoDefinitions, mydreamshootsTrustedLogoAssetBase, "trusted_logo_");
+const aidreamcapesTrustedLogoBlocks = trustedLogoBlocks(trustedLogoDefinitions, aidreamTrustedLogoAssetBase, "aidream_trusted_logo_");
+const mydreamshootsWorkflowExampleBlocks = [
+  block("workflow_example_headshots", "logo", { name: "Professional headshots", imageUrl: "", badge: "Profiles" }),
+  block("workflow_example_portraits", "logo", { name: "Creator portraits", imageUrl: "", badge: "Portraits" }),
+  block("workflow_example_couples", "logo", { name: "Couple photo sets", imageUrl: "", badge: "Relationships" }),
+  block("workflow_example_seasonal", "logo", { name: "Seasonal cards", imageUrl: "", badge: "Holiday" }),
+  block("workflow_example_fan", "logo", { name: "Sports fan photos", imageUrl: "", badge: "Fan use" }),
+  block("workflow_example_creative", "logo", { name: "Creative styles", imageUrl: "", badge: "Concepts" }),
+  block("workflow_example_editing", "logo", { name: "Photo-edit tools", imageUrl: "", badge: "Editing" }),
+  block("workflow_example_video", "logo", { name: "Short video workflows", imageUrl: "", badge: "Motion" })
 ];
 
 const aidreamAssets = {
@@ -149,27 +212,43 @@ const stores = [
     siteId: "site_dreamshoot",
     siteSlug: "mydreamshoots",
     heroSettings: null,
-    packageSettings: null,
+    packageSettings: {
+      anchor: "packages",
+      label: "AI PHOTO STUDIOS",
+      title: "AI Photo Packages by Style and Use Case",
+      subtitle: "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
+      directoryLabel: "AI PHOTO THEMED",
+      directorySubtitle: "Compare every active theme by category, title, cover, and route before starting a private photo package."
+    },
+    pricingSettings: {
+      title: "Subscription Plans",
+	      subtitle: "Compare the current price, included credits, renewal interval, and supported workflows before selecting a plan.",
+	      marketComparison: "Choose a monthly, quarterly, or semiannual plan based on the credits you expect to use. Compare the current price, included credits, renewal interval, and supported workflows before selecting a plan.",
+	      description: "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs.",
+	      sidePanelEyebrow: "Why people subscribe",
+	      sidePanelTitle: "Plans start at {LIVE_LOWEST_ACTIVE_PLAN_PRICE}, with the current credit allowance and billing interval shown for each option.",
+	      sidePanelBody: "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs."
+    },
     generationSettings: {
       anchor: "generated-showcase",
-      showTrustedLogoIntro: true,
-      trustedLogoTitle: "Trusted by creators worldwide",
-      aboutTitle: "What is MyDreamShoots?",
-      aboutBody: mydreamshootsAboutBody,
+      showTrustedLogoIntro: false,
       embeddedPricingSectionId: "pricing_1",
-      trustedLogoSplitIndex: 15,
-      eyebrow: "Customer-created examples",
-      title: "Browse image and video themes customers have already created.",
-      subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
-      imageTitle: "Customer image themes",
-      videoTitle: "Customer video themes",
+	      eyebrow: "Customer-created examples",
+	      title: "Browse image and video themes customers have already created.",
+	      subtitle: "Scan photo themes and supported video workflows before you upload approved photos, review credits, and generate inside your signed-in workspace.",
+      imageTitle: "Best Photo Generator",
+      imageAllLabel: "VIEW ALL PHOTO",
+      imageAllHref: "/best-ai-image",
+      videoTitle: "Best Video Generator",
+      videoAllLabel: "VIEW ALL VIDEO",
+      videoAllHref: "/best-ai-video",
       primaryCta: "Start with your photos",
-      primaryHref: "/login",
+      primaryHref: "/app/create",
       imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
-      videoSlugs: "cinematic-portrait-motion|social-profile-clip|creator-scene-motion|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
+      videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
       videoItemLimit: 8
     },
-    generationBlocks: mydreamshootsTrustedLogoBlocks,
+	    generationBlocks: [],
     featuredPack: section("dreamshoot_featured_pack", {
       anchor: "featured-pack",
       label: "Recommended seasonal pack",
@@ -179,7 +258,7 @@ const stores = [
       primaryCta: "Create Fan Photos",
       primaryHref: "/login",
       secondaryCta: "View all themes",
-      secondaryHref: "/collections",
+      secondaryHref: "/ai-image-generation",
       photos: "Private gallery",
       credits: "26 credits",
       privacy: "Approved uploads",
@@ -193,40 +272,43 @@ const stores = [
       campaignLabel: "Current recommendation: World Cup Fan Photos",
       nextCampaignLabel: "Next: Christmas / Thanksgiving / Halloween"
     }, [
-      block("featured_worldcup_stadium", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: myAssets.galleryWorldCupFanThree, collectionSlug: "world-cup-fan-photos", shape: "square" }),
-      block("featured_worldcup_gala", "seasonal_image", { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: myAssets.galleryGalaTwo, collectionSlug: "gala-photos", shape: "square" }),
-      block("featured_worldcup_christmas", "seasonal_image", { label: "Seasonal Card Direction", meta: "Holiday campaign option", imageUrl: myAssets.galleryChristmasCoupleTwo, collectionSlug: "christmas-couple", shape: "square" }),
-      block("featured_worldcup_creator", "seasonal_image", { label: "Creator Profile Crop", meta: "Social-ready portrait", imageUrl: myAssets.galleryCreatorOne, collectionSlug: "creator-portraits", shape: "square" }),
-      block("featured_worldcup_thanksgiving", "seasonal_image", { label: "Thanksgiving Keepsake", meta: "Warm group album", imageUrl: myAssets.galleryThanksgiving, collectionSlug: "thanksgiving-group-photos", shape: "square" }),
+      block("featured_worldcup_stadium", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: myAssets.galleryWorldCupFanThree, collectionSlug: "soccer", shape: "square" }),
+      block("featured_worldcup_gala", "seasonal_image", { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: myAssets.galleryGalaTwo, collectionSlug: "gala-photo", shape: "square" }),
+      block("featured_worldcup_christmas", "seasonal_image", { label: "Seasonal Card Direction", meta: "Holiday campaign option", imageUrl: myAssets.galleryChristmasCoupleTwo, collectionSlug: "christmas-photo", shape: "square" }),
+      block("featured_worldcup_creator", "seasonal_image", { label: "Creator Profile Crop", meta: "Social-ready portrait", imageUrl: myAssets.galleryCreatorOne, collectionSlug: "portrait-photo", shape: "square" }),
+      block("featured_worldcup_thanksgiving", "seasonal_image", { label: "Thanksgiving Keepsake", meta: "Warm group album", imageUrl: myAssets.galleryThanksgiving, collectionSlug: "thanksgiving-photo", shape: "square" }),
       block("featured_worldcup_holiday", "seasonal_image", { label: "Holiday Cover", meta: "Private album art", imageUrl: myAssets.galleryHoliday, collectionSlug: "holiday", shape: "square" })
     ]),
     tutorial: section("video_feature", {
       anchor: "how-it-works",
       eyebrow: "How it works",
-      title: "Watch the private photo package workflow.",
-      subtitle: "Upload photos you own, choose an AI photo package, review credits, generate the album, and download finished images from your private MyDreamShoots gallery.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-tutorial-55s.jpg?v=20260805i2vselect3",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-tutorial-55s.mp4?v=20260805i2vselect3",
-      videoBadge: "Private gallery workflow",
-      playLabel: "Watch the MyDreamShoots workflow"
+      title: "How it works",
+	      subtitle: "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.",
+	      supportingCopy: "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.",
+	      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
+	      imageAlt: "Homepage tutorial screenshot showing the AI headshot hero, navigation, and account signup panel.",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-20260814.mp4",
+      videoBadge: "",
+      playLabel: "Watch the myDreamshoots AI image tutorial"
     }),
     imageTutorial: section("video_feature", {
-      anchor: "ai-image-tutorial",
-      eyebrow: "AI image tutorial",
-      title: "Create an AI photo set from source photos.",
-      subtitle: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
-      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-55s.jpg?v=20260806chooserfix1",
-      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-55s.mp4?v=20260806chooserfix1",
-      videoBadge: "AI photo generation",
-      playLabel: "Watch the MyDreamShoots AI image tutorial"
+      anchor: "ai-video-tutorial",
+      eyebrow: "AI video tutorial",
+      title: "Turn selected images into a private AI video.",
+      subtitle: "Watch the image-to-video flow: upload frame images, choose the video mode, set the aspect ratio and duration, generate the clip, and preview the finished motion result.",
+      imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814.jpg",
+      videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-video-tutorial-20260814.mp4",
+      videoBadge: "AI image-to-video",
+      playLabel: "Watch the myDreamshoots AI video tutorial"
     }),
     mobile: section("mobile_video_showcase", {
       anchor: "mobile-video-tutorial",
       eyebrow: "Mobile tutorial",
-      title: "MyDreamShoots mobile photo workflow preview.",
-      subtitle: "Compare image setup and motion-preview steps in a vertical phone view.",
+      title: "How it works",
+	      subtitle: "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.",
+	      supportingCopy: "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.",
       imageUrl: myAssets.flowPrivateAlbumWorkspace,
-      imageAlt: "MyDreamShoots private album workspace preview",
+      imageAlt: "Mobile myDreamshoots workspace screen showing private source-photo setup, credit review, and finished AI photo gallery steps.",
       videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-i2v-mobile-tutorial-45s.mp4?v=20260806mobile45a",
       videoPoster: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-i2v-mobile-tutorial-45s.jpg?v=20260806mobile45a",
       videoBadge: "Mobile workflow",
@@ -242,24 +324,38 @@ const stores = [
       placeholderTitle: "Mobile tutorial coming soon",
       placeholderBody: "The vertical mobile walkthrough will appear here when the final file is ready."
     }),
-    reviews: section("testimonial_wall", {
-      anchor: "reviews",
-      mode: "reviews",
-      title: "What customers like about MyDreamShoots.",
-      subtitle: "Clear credit costs, realistic-looking themes, private galleries, and quick planning keep showing up in customer feedback.",
-      summaryTitle: "Customers love the private gallery flow.",
-      summaryBody: "Creators, small teams, sports fans, and holiday-card buyers use MyDreamShoots to test polished AI photo ideas before booking a studio or building a campaign.",
-      summaryRating: "4.9/5",
-      summaryMeta: "Customer feedback"
-    }, [
-      block("review_ava", "testimonial", { quote: "The package cards made it easy to pick a direction before I spent credits. My sports fan set looked polished and stayed organized in one private gallery.", name: "Ava M.", role: "Sports fan album", location: "Fan photos", rating: "5", avatarUrl: myAssets.reviewAvaAvatar, resultImageUrl: myAssets.galleryWorldCupFanThree }),
-      block("review_lucas", "testimonial", { quote: "I needed profile images for a launch week. The VIP-style portraits gave me several usable looks without arranging a shoot or chasing edits.", name: "Lucas R.", role: "Creator portraits", location: "VIP-style set", rating: "5", avatarUrl: myAssets.reviewLucasAvatar, resultImageUrl: myAssets.galleryGalaTwo }),
-      block("review_mia", "testimonial", { quote: "The Christmas couple pack saved a lot of time. We compared the theme first, checked credits, then downloaded card-ready images from the gallery.", name: "Mia C.", role: "Holiday cards", location: "Christmas album", rating: "5", avatarUrl: myAssets.reviewMiaAvatar, resultImageUrl: myAssets.galleryChristmasCoupleTwo }),
-      block("review_noah", "testimonial", { quote: "My favorite part is the workflow. Upload, choose a package, approve the cost, and the finished set is easy to review with the rest of my account history.", name: "Noah P.", role: "Private gallery user", location: "Credit planning", rating: "5", avatarUrl: myAssets.reviewNoahAvatar, resultImageUrl: myAssets.flowPrivateAlbumWorkspace }),
-      block("review_chloe", "testimonial", { quote: "The theme labels helped me explain options to a client. We tested creator portraits, holiday images, and short motion ideas from the same source photos.", name: "Chloe S.", role: "Social seller", location: "Creator workflow", rating: "5", avatarUrl: myAssets.womanPortrait, resultImageUrl: myAssets.galleryCreatorOne }),
-      block("review_eli", "testimonial", { quote: "Good quality, clear wording, and no confusing checkout surprise. I knew what each generation would use before starting the album.", name: "Eli T.", role: "Small team admin", location: "Headshots and cards", rating: "5", avatarUrl: myAssets.selfie, resultImageUrl: myAssets.galleryCreatorTwo })
-    ]),
+	    reviews: section("testimonial_wall", {
+	      anchor: "reviews",
+	      mode: "use_cases",
+	      title: "Workflow examples from myDreamshoots use cases",
+	      subtitle: "Use-case examples for private photo packages, clear credit review, gallery delivery, and supported motion workflows.",
+	      summaryTitle: "Ways people use myDreamshoots",
+	      summaryBody: "Plan sports fan photos, VIP-style portraits, Christmas cards, professional headshots, creator scenes, and short motion previews before spending credits.",
+	      summaryRating: "",
+	      summaryMeta: "Private examples"
+	    }, [
+	      block("review_ava", "testimonial", { quote: "Compare sports fan photo directions, credit cost, and private gallery delivery before creating a match-day album from approved personal photos.", name: "Sports fan workflow", role: "Sports fan photos", location: "Fan Photos", rating: "", avatarUrl: myAssets.reviewAvaAvatar, resultImageUrl: myAssets.galleryWorldCupFanThree }),
+	      block("review_lucas", "testimonial", { quote: "Plan VIP-style portraits and formal profile images from approved source photos, then review the finished options inside the signed-in workspace.", name: "VIP portrait workflow", role: "Formal portrait set", location: "VIP-style set", rating: "", avatarUrl: myAssets.reviewLucasAvatar, resultImageUrl: myAssets.galleryGalaTwo }),
+	      block("review_mia", "testimonial", { quote: "Compare Christmas couple, friend-card, and seasonal portrait directions before creating private card-ready images.", name: "Seasonal card workflow", role: "Holiday cards", location: "Christmas album", rating: "", avatarUrl: myAssets.reviewMiaAvatar, resultImageUrl: myAssets.galleryChristmasCoupleTwo }),
+	      block("review_noah", "testimonial", { quote: "Upload approved source photos, choose a package, review the visible credit cost, and keep finished results organized in one private gallery.", name: "Gallery workflow", role: "Private gallery delivery", location: "Credit planning", rating: "", avatarUrl: myAssets.reviewNoahAvatar, resultImageUrl: myAssets.flowPrivateAlbumWorkspace }),
+	      block("review_chloe", "testimonial", { quote: "Test creator portraits, holiday images, and supported motion ideas from the same approved source photos before choosing the next workflow.", name: "Creator workflow", role: "Creator scene planning", location: "Creator workflow", rating: "", avatarUrl: myAssets.womanPortrait, resultImageUrl: myAssets.galleryCreatorOne }),
+	      block("review_eli", "testimonial", { quote: "Use credit-aware headshot and card workflows when a small team needs private images without a studio appointment.", name: "Team workflow", role: "Headshots and cards", location: "Clear credits", rating: "", avatarUrl: myAssets.selfie, resultImageUrl: myAssets.galleryCreatorTwo })
+	    ]),
     faq: mydreamshootsFaqSection(),
+    conversion: section("conversion_panel", {
+      anchor: "start",
+      eyebrow: "BEST AI MAKER",
+      title: "Ready to try the myDreamshoots's Best AI Maker?",
+      subtitle: "We've designed myDreamshoots to be as easy as possible to use, allowing you to focus on unleashing your creativity with complete peace of mind. Subscribe, upload, choose packages, generate results, and keep delivery in one workspace.",
+      primaryCta: "Create my first photo set",
+      primaryHref: "/login",
+      secondaryCta: "Choose a plan",
+      secondaryHref: "/pricing"
+    }, [
+      block("cta_metric_credits", "stat", { value: "200", label: "starter credits" }),
+      block("cta_metric_styles", "stat", { value: "15+", label: "live scene packs" }),
+      block("cta_metric_private", "stat", { value: "Private", label: "uploads and albums" })
+    ]),
     partnerStrip: section("brand_logo_strip", {
       anchor: "trusted",
       title: "For creators, photographers, social sellers, studios, fan communities, and small teams.",
@@ -279,6 +375,7 @@ const stores = [
     key: "aidreamcapes",
     siteId: "site_aidreamcapes",
     siteSlug: "aidreamcapes",
+    preserveExistingCopy: true,
     heroSettings: {
       anchor: "home",
       eyebrow: "",
@@ -314,17 +411,28 @@ const stores = [
     },
     generationSettings: {
       anchor: "generated-showcase",
-      eyebrow: "Customer occasion examples",
-      title: "Browse private fan-scene, game-day, and holiday themes customers can create.",
-      subtitle: "These examples use Aidreamcapes-owned theme assets and approved source-photo assumptions. Scan fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, and seasonal directions.",
-      imageTitle: "Fan and holiday image themes",
-      videoTitle: "Fan and holiday video themes",
-      primaryCta: "Start with approved photos",
-      primaryHref: "/login",
+      showTrustedLogoIntro: true,
+      trustedLogoTitle: "Trusted by Aidreamcapes creators worldwide",
+      aboutTitle: "What is Aidreamcapes?",
+      aboutBody: "Aidreamcapes is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.",
+      embeddedPricingSectionId: "pricing_1",
+      trustedLogoSplitIndex: 15,
+      eyebrow: "Customer-created examples",
+      title: "Browse Aidreamcapes image and video themes customers have already created.",
+      subtitle: "These Aidreamcapes examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
+      imageTitle: "Best Photo Generator",
+      imageAllLabel: "View all photos",
+      imageAllHref: "/best-ai-image",
+      videoTitle: "Best Video Generator",
+      videoAllLabel: "View all videos",
+      videoAllHref: "/best-ai-video",
+      primaryCta: "Start with your photos",
+      primaryHref: "/app/create",
       imageSlugs: "fan-scene-albums|game-day-group-photos|stadium-night-fan-sets|premiere-style-portraits|christmas-holiday-albums|thanksgiving-memory-sets|halloween-party-portraits|seasonal-celebration-photos",
       videoSlugs: "route-atlas-motion|coastal-memory-clip|old-quarter-walkthrough|resort-balcony-motion|scenic-overlook-pan|alpine-trail-motion|solo-traveler-profile-clip|heritage-celebration-film",
       videoItemLimit: 8
     },
+    generationBlocks: aidreamcapesTrustedLogoBlocks,
     featuredPack: section("dreamshoot_featured_pack", {
       anchor: "featured-pack",
       label: "Recommended occasion album",
@@ -379,9 +487,9 @@ const stores = [
       anchor: "mobile-video-tutorial",
       eyebrow: "Mobile tutorial",
       title: "Aidreamcapes mobile private album preview.",
-      subtitle: "Compare portrait intake and album review steps in a vertical phone view.",
+      subtitle: "Compare portrait intake and album review steps in a vertical phone layout.",
       imageUrl: aidreamAssets.gallery,
-      imageAlt: "Aidreamcapes private fan-scene album preview",
+      imageAlt: "Mobile Aidreamcapes private album screen showing approved source-photo intake, fan-scene review, and finished gallery delivery.",
       videoUrl: "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-mobile-tutorial-55s.mp4?v=20260804mobile1",
       videoPoster: "/assets/sites/site_aidreamcapes/homepage-showcase/posters/aidreamcapes-i2v-mobile-tutorial-55s.jpg?v=20260804mobile1",
       videoBadge: "Mobile workflow",
@@ -417,7 +525,7 @@ const stores = [
     faq: aidreamcapesFaqSection(),
     partnerStrip: section("brand_logo_strip", {
       anchor: "trusted",
-      title: "For fan communities, event planners, holiday sellers, creator teams, and local studios.",
+      title: "Aidreamcapes for fan communities, event planners, holiday sellers, creator teams, and local studios.",
       style: "dark"
     }, [
       block("aidream_partner_fan_communities", "logo", { name: "Fan communities", imageUrl: "", badge: "Groups" }),
@@ -457,9 +565,151 @@ function homePageForSite(site) {
   return site?.pages?.find((page) => page.slug === "/" || page.pageType === "home");
 }
 
-function applyStoreSpecificExistingSections(pageJson, store) {
+function settingText(section, key) {
+  const value = section?.settings?.[key];
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function firstSeasonalBlockImage(section) {
+  return (section?.blocks ?? [])
+    .map((block) => block?.settings?.imageUrl)
+    .find((value) => typeof value === "string" && value.trim());
+}
+
+function uniqueStringList(values) {
+  const seen = new Set();
+  return values
+    .map((value) => String(value ?? "").trim())
+    .filter(Boolean)
+    .filter((value) => {
+      if (seen.has(value)) return false;
+      seen.add(value);
+      return true;
+    });
+}
+
+function trustedLogoBlocksFromSection(section) {
+  const blocks = section?.blocks ?? [];
+  return blocks
+    .filter((block) => block?.type === "logo")
+    .map((block, index) => ({
+      ...clone(block),
+      id: `trusted_${block.id || `logo_${index + 1}`}`,
+      type: "logo"
+    }));
+}
+
+function aidreamcapesFaqImages(sections) {
+  const primaryImage = firstSeasonalBlockImage(sections.featured_christmas_1) ||
+    firstSeasonalBlockImage(sections.featured_pack_1) ||
+    settingText(sections.hero_1, "imageUrl");
+  const imageList = uniqueStringList([
+    firstSeasonalBlockImage(sections.featured_christmas_1),
+    firstSeasonalBlockImage(sections.featured_thanksgiving_1),
+    firstSeasonalBlockImage(sections.featured_pack_1),
+    settingText(sections.hero_1, "imageUrl"),
+    settingText(sections.hero_1, "secondaryImageUrl"),
+    settingText(sections.hero_1, "tertiaryImageUrl")
+  ]).filter((value) => value.startsWith("/assets/sites/site_aidreamcapes/"));
+  return { primaryImage, imageList };
+}
+
+function applyFeaturedThanksgivingToHomeSections(sections, featuredSections) {
+  if (featuredSections?.featured_thanksgiving_1) {
+    sections.featured_thanksgiving_1 = clone(featuredSections.featured_thanksgiving_1);
+  }
+}
+
+function applyAidreamcapesArchitectureOnly(pageJson, store, featuredSections = {}) {
   if (!pageJson?.sections) return false;
   const sections = pageJson.sections;
+  const generation = sections.generation_showcase_1 ?? { type: "dreamshoot_generation_showcase", settings: {}, blocks: [] };
+  const generationSourceSettings = clone(store.generationSettings ?? {});
+  const generationSettings = {
+    ...generation.settings,
+    ...generationSourceSettings,
+    anchor: generationSourceSettings.anchor ?? generation.settings?.anchor ?? "generated-showcase",
+    embeddedPricingSectionId: "pricing_1",
+    videoItemLimit: Number(generationSourceSettings.videoItemLimit ?? generation.settings?.videoItemLimit ?? generation.settings?.itemLimit ?? 8) || 8
+  };
+  delete generationSettings.itemLimit;
+
+  const trustedBlocks = clone(store.generationBlocks ?? trustedLogoBlocksFromSection(store.partnerStrip));
+  const aboutTitle = settingText({ settings: generationSettings }, "aboutTitle");
+  const aboutBody = settingText({ settings: generationSettings }, "aboutBody");
+  if (generationSourceSettings.showTrustedLogoIntro !== false && trustedBlocks.length && aboutTitle && aboutBody) {
+    generationSettings.showTrustedLogoIntro = true;
+    generationSettings.trustedLogoTitle = settingText({ settings: generationSettings }, "trustedLogoTitle") || settingText(store.partnerStrip, "title");
+    generationSettings.trustedLogoSplitIndex = Math.max(
+      1,
+      Math.min(trustedBlocks.length - 1, Number(generationSettings.trustedLogoSplitIndex ?? Math.ceil(trustedBlocks.length / 2)) || Math.ceil(trustedBlocks.length / 2))
+    );
+    generationSettings.aboutTitle = aboutTitle;
+    generationSettings.aboutBody = aboutBody;
+  } else {
+    generationSettings.showTrustedLogoIntro = false;
+    delete generationSettings.trustedLogoTitle;
+    delete generationSettings.trustedLogoSplitIndex;
+    delete generationSettings.aboutTitle;
+    delete generationSettings.aboutBody;
+  }
+
+  sections.generation_showcase_1 = {
+    ...generation,
+    type: "dreamshoot_generation_showcase",
+    settings: generationSettings,
+    blocks: trustedBlocks
+  };
+
+  if (sections.package_catalog_1) {
+    sections.package_catalog_1 = {
+      ...sections.package_catalog_1,
+      settings: {
+        ...sections.package_catalog_1.settings,
+        featuredCount: 12
+      }
+    };
+  }
+  if (store.mobile) {
+    sections.mobile_video_1 = clone(store.mobile);
+  }
+  applyFeaturedThanksgivingToHomeSections(sections, featuredSections);
+  for (const sectionId of removedHomeSectionsByStore[store.key] ?? []) delete sections[sectionId];
+  if (sections.proof_1 && store.key !== "mydreamshoots") {
+    sections.proof_1 = {
+      ...sections.proof_1,
+      settings: {
+        ...sections.proof_1.settings,
+        mode: "reviews"
+      }
+    };
+  }
+  if (sections.faq_1) {
+    const faqImages = aidreamcapesFaqImages(sections);
+    sections.faq_1 = {
+      ...sections.faq_1,
+      settings: {
+        ...sections.faq_1.settings,
+        layout: "visual_faq",
+        ...(faqImages.primaryImage ? { imageUrl: faqImages.primaryImage } : {}),
+        ...(faqImages.imageList.length ? { imageList: faqImages.imageList.join("|") } : {}),
+        imageAlt: settingText(sections.faq_1, "imageAlt") || settingText(sections.faq_1, "subtitle"),
+        imageListAlt: settingText(sections.faq_1, "imageListAlt") || settingText(sections.faq_1, "subtitle"),
+        featureCaption: settingText(sections.faq_1, "featureCaption") || settingText(sections.faq_1, "subtitle")
+      }
+    };
+  }
+
+  const homeOrder = homeOrderByStore[store.key] ?? homeOrderByStore.mydreamshoots;
+  pageJson.sectionsOrder = homeOrder.filter((sectionId) => Boolean(sections[sectionId]));
+  return true;
+}
+
+function applyStoreSpecificExistingSections(pageJson, store, featuredSections = {}) {
+  if (!pageJson?.sections) return false;
+  if (store.preserveExistingCopy) return applyAidreamcapesArchitectureOnly(pageJson, store, featuredSections);
+  const sections = pageJson.sections;
+  const removedHomeSections = removedHomeSectionsByStore[store.key] ?? [];
   if (store.heroSettings && sections.hero_1) {
     sections.hero_1 = {
       ...sections.hero_1,
@@ -472,6 +722,12 @@ function applyStoreSpecificExistingSections(pageJson, store) {
       settings: { ...sections.package_catalog_1.settings, ...clone(store.packageSettings) }
     };
   }
+  if (store.pricingSettings && sections.pricing_1) {
+    sections.pricing_1 = {
+      ...sections.pricing_1,
+      settings: { ...sections.pricing_1.settings, ...clone(store.pricingSettings) }
+    };
+  }
   if (sections.package_catalog_1) {
     sections.package_catalog_1 = {
       ...sections.package_catalog_1,
@@ -480,9 +736,6 @@ function applyStoreSpecificExistingSections(pageJson, store) {
         featuredCount: 12
       }
     };
-  }
-  if (store.featuredPack) {
-    sections.featured_pack_1 = clone(store.featuredPack);
   }
   const generationSettings = { ...(sections.generation_showcase_1?.settings ?? {}), ...clone(store.generationSettings) };
   delete generationSettings.itemLimit;
@@ -494,15 +747,161 @@ function applyStoreSpecificExistingSections(pageJson, store) {
   };
   sections.tutorial_video_1 = clone(store.tutorial);
   sections.tutorial_video_2 = clone(store.imageTutorial);
-  sections.mobile_video_1 = clone(store.mobile);
+  if (store.mobile && !removedHomeSections.includes("mobile_video_1")) {
+    sections.mobile_video_1 = clone(store.mobile);
+  } else {
+    delete sections.mobile_video_1;
+  }
   sections.proof_1 = clone(store.reviews);
   sections.faq_1 = clone(store.faq);
-  sections.brand_strip_1 = clone(store.partnerStrip);
-  const removedHomeSections = removedHomeSectionsByStore[store.key] ?? [];
+  if (store.conversion) {
+    sections.conversion_1 = clone(store.conversion);
+  }
+  if (store.key !== "mydreamshoots") {
+    sections.brand_strip_1 = clone(store.partnerStrip);
+  }
+  applyFeaturedThanksgivingToHomeSections(sections, featuredSections);
   for (const sectionId of removedHomeSections) delete sections[sectionId];
   const homeOrder = homeOrderByStore[store.key] ?? homeOrderByStore.mydreamshoots;
   pageJson.sectionsOrder = homeOrder.filter((sectionId) => Boolean(sections[sectionId]));
   return true;
+}
+
+function bestPageSlug(templateKey) {
+  return `/${templateKey}`;
+}
+
+function bestPageTitle(templateKey) {
+  if (templateKey === "best-ai-image") return "Best AI image";
+  if (templateKey === "best-ai-video") return "Best AI video";
+  return "Best Packages";
+}
+
+function bestPageIdSuffix(templateKey) {
+  return templateKey.replaceAll("-", "_");
+}
+
+function bestPageTemplatesForSite(site) {
+  return dreamshootAiStudioTemplatesForSite({
+    id: site.id,
+    slug: site.slug,
+    name: site.name,
+    primaryDomain: site.primaryDomain,
+    branding: site.branding
+  });
+}
+
+function bestPageOgImage(site, json) {
+  const sections = json?.sections ?? {};
+  const homeSections = site.pages?.find((page) => page.slug === "/" || page.pageType === "home")?.publishedJson?.sections ?? {};
+  return firstSeasonalBlockImage(sections.featured_pack_1) ||
+    firstSeasonalBlockImage(sections.featured_christmas_1) ||
+    firstSeasonalBlockImage(sections.featured_thanksgiving_1) ||
+    site.themeSettings?.publishedJson?.seo?.defaultOgImage ||
+    site.themeSettings?.draftJson?.seo?.defaultOgImage ||
+    settingText(homeSections.hero_1, "heroVisualOverride") ||
+    settingText(homeSections.hero_1, "imageUrl") ||
+    settingText(homeSections.hero_1, "secondaryImageUrl") ||
+    "";
+}
+
+function bestThemePageRecord(site, templateKey, json) {
+  const slug = bestPageSlug(templateKey);
+  const pageJson = clone(json);
+  if (pageJson.seo && !pageJson.seo.ogImage) {
+    const ogImage = bestPageOgImage(site, pageJson);
+    if (ogImage) pageJson.seo = { ...pageJson.seo, ogImage };
+  }
+  return {
+    id: `${site.id}_${bestPageIdSuffix(templateKey)}`,
+    siteId: site.id,
+    pageType: pageJson.pageType ?? "content",
+    templateKey,
+    slug,
+    title: bestPageTitle(templateKey),
+    draftJson: clone(pageJson),
+    publishedJson: clone(pageJson)
+  };
+}
+
+function upsertBestPagesForSite(site) {
+  const templates = bestPageTemplatesForSite(site);
+  let updates = 0;
+  for (const templateKey of bestPageTemplateKeys) {
+    const json = templates[templateKey];
+    if (!json) continue;
+    const nextPage = bestThemePageRecord(site, templateKey, json);
+    const existingIndex = site.pages.findIndex((page) => page.slug === nextPage.slug);
+    if (existingIndex >= 0) {
+      site.pages[existingIndex] = { ...site.pages[existingIndex], ...nextPage, id: site.pages[existingIndex].id || nextPage.id };
+    } else {
+      const homeIndex = site.pages.findIndex((page) => page.slug === "/");
+      site.pages.splice(homeIndex >= 0 ? homeIndex + 1 : site.pages.length, 0, nextPage);
+    }
+    updates += 1;
+  }
+  return updates;
+}
+
+function upsertBestTemplates(theme, site) {
+  const templates = bestPageTemplatesForSite(site);
+  theme.templates ??= {};
+  let updates = 0;
+  for (const templateKey of bestPageTemplateKeys) {
+    if (!templates[templateKey]) continue;
+    theme.templates[templateKey] = clone(templates[templateKey]);
+    updates += 1;
+  }
+  return updates;
+}
+
+function upsertBestPagesInPublication(publication, site) {
+  const pages = publication.snapshot?.pages;
+  if (!Array.isArray(pages)) return 0;
+  const templates = bestPageTemplatesForSite(site);
+  let updates = 0;
+  for (const templateKey of bestPageTemplateKeys) {
+    const json = templates[templateKey];
+    if (!json) continue;
+    const page = bestThemePageRecord(site, templateKey, json);
+    const snapshotPage = {
+      id: page.id,
+      siteId: page.siteId,
+      pageType: page.pageType,
+      templateKey: page.templateKey,
+      slug: page.slug,
+      title: page.title,
+      draftJson: clone(page.draftJson),
+      publishedJson: clone(page.publishedJson)
+    };
+    const existingIndex = pages.findIndex((item) => item.slug === snapshotPage.slug);
+    if (existingIndex >= 0) pages[existingIndex] = { ...pages[existingIndex], ...snapshotPage, id: pages[existingIndex].id || snapshotPage.id };
+    else {
+      const homeIndex = pages.findIndex((item) => item.slug === "/");
+      pages.splice(homeIndex >= 0 ? homeIndex + 1 : pages.length, 0, snapshotPage);
+    }
+    updates += 1;
+  }
+  return updates;
+}
+
+function refreshPublicationStats(publication) {
+  if ("snapshotBytes" in publication) publication.snapshotBytes = Buffer.byteLength(JSON.stringify(publication.snapshot), "utf8");
+  if ("pageCount" in publication) publication.pageCount = publication.snapshot?.pages?.length ?? publication.pageCount;
+  if ("sectionCount" in publication) {
+    publication.sectionCount = (publication.snapshot?.pages ?? []).reduce((count, page) => count + Object.keys(page.publishedJson?.sections ?? {}).length, 0);
+  }
+}
+
+function applyMydreamshootsPackageDirectoryCopy(pageJson, store) {
+  if (store.key !== "mydreamshoots" || !pageJson?.sections?.taxonomy_1) return false;
+  const section = pageJson.sections.taxonomy_1;
+  const settings = section.settings && typeof section.settings === "object" ? section.settings : (section.settings = {});
+  const changed = settings.title !== mydreamshootsPackageDirectoryCopy.title ||
+    settings.subtitle !== mydreamshootsPackageDirectoryCopy.subtitle;
+  settings.title = mydreamshootsPackageDirectoryCopy.title;
+  settings.subtitle = mydreamshootsPackageDirectoryCopy.subtitle;
+  return changed;
 }
 
 function applyStoreToState(state, store) {
@@ -512,43 +911,55 @@ function applyStoreToState(state, store) {
   const site = findSite(state, store);
   const homePage = homePageForSite(site);
   if (!site || !homePage) throw new Error(`missing_home_page:${store.key}`);
-  if (applyStoreSpecificExistingSections(homePage.draftJson, store)) pageUpdates += 1;
-  if (applyStoreSpecificExistingSections(homePage.publishedJson, store)) pageUpdates += 1;
+  const featuredSections = bestPageTemplatesForSite(site)["best-packages"]?.sections ?? {};
+  if (applyStoreSpecificExistingSections(homePage.draftJson, store, featuredSections)) pageUpdates += 1;
+  if (applyStoreSpecificExistingSections(homePage.publishedJson, store, featuredSections)) pageUpdates += 1;
+  for (const page of site.pages ?? []) {
+    if (page.slug !== "/ai-image-generation") continue;
+    if (applyMydreamshootsPackageDirectoryCopy(page.draftJson, store)) pageUpdates += 1;
+    if (applyMydreamshootsPackageDirectoryCopy(page.publishedJson, store)) pageUpdates += 1;
+  }
+  pageUpdates += upsertBestPagesForSite(site);
 
   for (const theme of state.siteThemes ?? []) {
     if (theme.siteId !== store.siteId) continue;
+    themeUpdates += upsertBestTemplates(theme, site);
     const template = theme.templates?.index;
-    if (!template?.sections || !Array.isArray(template.content_for_page)) continue;
+    const templateOrder = Array.isArray(template?.sectionsOrder) ? template.sectionsOrder : template?.content_for_page;
+    if (!template?.sections || !Array.isArray(templateOrder)) continue;
     const syntheticPage = {
       sections: template.sections,
-      sectionsOrder: template.content_for_page
+      sectionsOrder: templateOrder
     };
-    applyStoreSpecificExistingSections(syntheticPage, store);
+    applyStoreSpecificExistingSections(syntheticPage, store, featuredSections);
+    template.sectionsOrder = syntheticPage.sectionsOrder;
     template.content_for_page = syntheticPage.sectionsOrder;
     themeUpdates += 1;
+    if (applyMydreamshootsPackageDirectoryCopy(theme.templates?.packages, store)) themeUpdates += 1;
   }
 
   for (const publication of state.themePublications ?? []) {
     if (publication.siteId !== store.siteId) continue;
     const snapshotHome = publication.snapshot?.pages?.find((page) => page.slug === "/");
-    if (snapshotHome?.publishedJson && applyStoreSpecificExistingSections(snapshotHome.publishedJson, store)) {
+    if (snapshotHome?.publishedJson && applyStoreSpecificExistingSections(snapshotHome.publishedJson, store, featuredSections)) {
       publicationUpdates += 1;
-      if ("snapshotBytes" in publication) publication.snapshotBytes = Buffer.byteLength(JSON.stringify(publication.snapshot), "utf8");
-      if ("pageCount" in publication) publication.pageCount = publication.snapshot?.pages?.length ?? publication.pageCount;
-      if ("sectionCount" in publication) {
-        publication.sectionCount = (publication.snapshot?.pages ?? []).reduce((count, page) => count + Object.keys(page.publishedJson?.sections ?? {}).length, 0);
-      }
     }
+    const snapshotDirectory = publication.snapshot?.pages?.find((page) => page.slug === "/ai-image-generation");
+    if (snapshotDirectory?.publishedJson && applyMydreamshootsPackageDirectoryCopy(snapshotDirectory.publishedJson, store)) {
+      publicationUpdates += 1;
+    }
+    publicationUpdates += upsertBestPagesInPublication(publication, site);
+    refreshPublicationStats(publication);
   }
 
   return { pageUpdates, themeUpdates, publicationUpdates };
 }
 
-async function updateDatabase(state) {
+async function updateDatabase(state, selectedStores) {
   const prisma = new PrismaClient();
   const report = { pages: 0, siteThemes: 0, publications: 0 };
   try {
-    for (const store of stores) {
+    for (const store of selectedStores) {
       const site = findSite(state, store);
       const homePage = homePageForSite(site);
       if (homePage) {
@@ -557,6 +968,31 @@ async function updateDatabase(state) {
           data: {
             draftJson: homePage.draftJson,
             publishedJson: homePage.publishedJson
+          }
+        });
+        report.pages += 1;
+      }
+      for (const templateKey of bestPageTemplateKeys) {
+        const page = site?.pages?.find((item) => item.slug === bestPageSlug(templateKey));
+        if (!page) continue;
+        await prisma.themePage.upsert({
+          where: { siteId_slug: { siteId: store.siteId, slug: page.slug } },
+          create: {
+            id: page.id,
+            siteId: store.siteId,
+            pageType: page.pageType,
+            templateKey: page.templateKey,
+            slug: page.slug,
+            title: page.title,
+            draftJson: page.draftJson,
+            publishedJson: page.publishedJson
+          },
+          update: {
+            pageType: page.pageType,
+            templateKey: page.templateKey,
+            title: page.title,
+            draftJson: page.draftJson,
+            publishedJson: page.publishedJson
           }
         });
         report.pages += 1;
@@ -587,10 +1023,14 @@ async function updateDatabase(state) {
 async function main() {
   const state = await readState();
   const report = {};
-  for (const store of stores) report[store.key] = applyStoreToState(state, store);
+  const selectedStores = requestedStoreKey === "all"
+    ? stores
+    : stores.filter((store) => store.key === requestedStoreKey || store.siteSlug === requestedStoreKey || store.siteId === requestedStoreKey);
+  if (!selectedStores.length) throw new Error(`unknown_store:${requestedStoreKey}`);
+  for (const store of selectedStores) report[store.key] = applyStoreToState(state, store);
   if (!dryRun) await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
-  const dbReport = updateDb && !dryRun ? await updateDatabase(state) : undefined;
-  console.log(JSON.stringify({ dryRun, report, dbReport }, null, 2));
+  const dbReport = updateDb && !dryRun ? await updateDatabase(state, selectedStores) : undefined;
+  console.log(JSON.stringify({ dryRun, selectedStores: selectedStores.map((store) => store.key), report, dbReport }, null, 2));
 }
 
 main().catch((error) => {

@@ -180,8 +180,8 @@ const pageMappings = [
 const dreamshootSeoPages = {
   index: {
     title: "Professional AI Photo Generator Online - MyDreamShoots",
-    description: "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.",
-    keywords: "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator",
+    description: "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
+    keywords: "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
     canonicalPath: "/",
     index: true,
     follow: true
@@ -696,27 +696,27 @@ const creativePacks = [
 }));
 
 const mediaAssets = [
-  ["media_dreamshoot_hero", "MyDreamShoots hero", "sites/site_dreamshoot/theme/cyberpunk-solo-city-v1.png", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"],
-  ["media_dreamshoot_alt_hero", "MyDreamShoots hero alt", "sites/site_dreamshoot/theme/headshot-lifestyle-v1.png", "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
-  ["media_dreamshoot_lifestyle", "MyDreamShoots creator portrait", "sites/site_dreamshoot/theme/avatar-nora-gpt2.png", "/assets/dreamshoot/avatar-nora-gpt2.png"],
-  ["media_dreamshoot_social_cards", "MyDreamShoots social cards", "sites/site_dreamshoot/theme/holiday-card-gpt2.png", "/assets/dreamshoot/holiday-card-gpt2.png"],
-  ["media_dreamshoot_travel", "MyDreamShoots travel scene", "sites/site_dreamshoot/theme/cliffside-holiday-v1.png", "/assets/dreamshoot/generated/20260618/cliffside-holiday-v1.png"],
-  ["media_dreamshoot_avatar", "MyDreamShoots avatar", "sites/site_dreamshoot/theme/avatar-nora-gpt2.png", "/assets/dreamshoot/avatar-nora-gpt2.png"],
-  ["media_dreamshoot_headshot", "MyDreamShoots headshot", "sites/site_dreamshoot/theme/editorial-headshot-gpt2.png", "/assets/dreamshoot/editorial-headshot-gpt2.png"],
-  ["media_dreamshoot_beauty", "MyDreamShoots beauty portrait", "sites/site_dreamshoot/theme/beauty-portrait-gpt2.png", "/assets/dreamshoot/beauty-portrait-gpt2.png"],
-  ["media_dreamshoot_lifestyle_headshot", "MyDreamShoots lifestyle headshot", "sites/site_dreamshoot/theme/headshot-lifestyle-v1.png", "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
-  ["media_dreamshoot_hairstyle_preview", "MyDreamShoots hairstyle preview", "sites/site_dreamshoot/theme/hairstyle-preview-v1.png", "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"],
-  ["media_dreamshoot_upscaler_utility", "MyDreamShoots upscaler utility", "sites/site_dreamshoot/theme/upscaler-utility-v1.png", "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png"],
-  ["media_dreamshoot_holiday_portrait", "MyDreamShoots holiday portrait", "sites/site_dreamshoot/theme/holiday-portrait-v1.png", "/assets/dreamshoot/generated/20260618/holiday-portrait-v1.png"],
-  ["media_dreamshoot_mafia_noir", "MyDreamShoots mafia noir", "sites/site_dreamshoot/theme/mafia-noir-single-v1.png", "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"],
-  ["media_dreamshoot_nature_adventure", "MyDreamShoots nature adventure", "sites/site_dreamshoot/theme/nature-adventure-solo-v1.png", "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"],
-  ["media_dreamshoot_worldcup_stadium", "MyDreamShoots World Cup stadium portrait", "sites/site_dreamshoot/theme/worldcup-stadium-portrait.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"],
-  ["media_dreamshoot_worldcup_friends", "MyDreamShoots World Cup friend fan photos", "sites/site_dreamshoot/theme/worldcup-friend-fan-photos.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png"],
-  ["media_dreamshoot_worldcup_avatar", "MyDreamShoots World Cup match-day avatar", "sites/site_dreamshoot/theme/worldcup-match-day-avatar.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png"],
-  ["media_dreamshoot_worldcup_poster", "MyDreamShoots World Cup fan poster", "sites/site_dreamshoot/theme/worldcup-fan-poster.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png"],
-  ["media_dreamshoot_worldcup_story", "MyDreamShoots World Cup social story", "sites/site_dreamshoot/theme/worldcup-social-story.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png"],
-  ["media_dreamshoot_worldcup_banner", "MyDreamShoots World Cup banner cover", "sites/site_dreamshoot/theme/worldcup-banner-cover.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png"],
-  ["media_dreamshoot_cyberpunk_solo", "MyDreamShoots cyberpunk solo", "sites/site_dreamshoot/theme/cyberpunk-solo-city-v1.png", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"]
+  ["media_dreamshoot_hero", "MyDreamShoots homepage hero portrait with neon city lighting and a polished private photo-studio introduction", "sites/site_dreamshoot/theme/cyberpunk-solo-city-v1.png", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"],
+  ["media_dreamshoot_alt_hero", "MyDreamShoots alternate homepage portrait showing clean lifestyle lighting for professional and creator profile packages", "sites/site_dreamshoot/theme/headshot-lifestyle-v1.png", "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
+  ["media_dreamshoot_lifestyle", "MyDreamShoots creator portrait with a relaxed expression for social profile and personal-brand content", "sites/site_dreamshoot/theme/avatar-nora-gpt2.png", "/assets/dreamshoot/avatar-nora-gpt2.png"],
+  ["media_dreamshoot_social_cards", "MyDreamShoots seasonal portrait arranged as a polished social card for creator posts and digital greetings", "sites/site_dreamshoot/theme/holiday-card-gpt2.png", "/assets/dreamshoot/holiday-card-gpt2.png"],
+  ["media_dreamshoot_travel", "MyDreamShoots traveler portrait in a bright cliffside destination scene for holiday and lifestyle collections", "sites/site_dreamshoot/theme/cliffside-holiday-v1.png", "/assets/dreamshoot/generated/20260618/cliffside-holiday-v1.png"],
+  ["media_dreamshoot_avatar", "MyDreamShoots square creator avatar portrait with clear facial framing for social profiles and account branding", "sites/site_dreamshoot/theme/avatar-nora-gpt2.png", "/assets/dreamshoot/avatar-nora-gpt2.png"],
+  ["media_dreamshoot_headshot", "MyDreamShoots professional headshot with clean studio lighting for LinkedIn, resumes, and business profiles", "sites/site_dreamshoot/theme/editorial-headshot-gpt2.png", "/assets/dreamshoot/editorial-headshot-gpt2.png"],
+  ["media_dreamshoot_beauty", "MyDreamShoots beauty portrait with soft studio lighting for editorial styling and polished profile content", "sites/site_dreamshoot/theme/beauty-portrait-gpt2.png", "/assets/dreamshoot/beauty-portrait-gpt2.png"],
+  ["media_dreamshoot_lifestyle_headshot", "MyDreamShoots lifestyle headshot with natural framing for creator introductions and social media profile updates", "sites/site_dreamshoot/theme/headshot-lifestyle-v1.png", "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png"],
+  ["media_dreamshoot_hairstyle_preview", "MyDreamShoots hairstyle portrait showing a polished hair direction before a creator or beauty photo session", "sites/site_dreamshoot/theme/hairstyle-preview-v1.png", "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png"],
+  ["media_dreamshoot_upscaler_utility", "MyDreamShoots AI upscaler result showing sharper portrait detail for downloads and polished creator assets", "sites/site_dreamshoot/theme/upscaler-utility-v1.png", "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png"],
+  ["media_dreamshoot_holiday_portrait", "MyDreamShoots holiday portrait with warm seasonal styling for greeting cards and private celebration albums", "sites/site_dreamshoot/theme/holiday-portrait-v1.png", "/assets/dreamshoot/generated/20260618/holiday-portrait-v1.png"],
+  ["media_dreamshoot_mafia_noir", "MyDreamShoots cinematic noir character portrait with dramatic contrast for an original themed photo package", "sites/site_dreamshoot/theme/mafia-noir-single-v1.png", "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"],
+  ["media_dreamshoot_nature_adventure", "MyDreamShoots outdoor adventure portrait set against a natural landscape for travel and nature storytelling", "sites/site_dreamshoot/theme/nature-adventure-solo-v1.png", "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png"],
+  ["media_dreamshoot_worldcup_stadium", "MyDreamShoots football fan portrait beneath stadium floodlights for a World Cup match-day photo package", "sites/site_dreamshoot/theme/worldcup-stadium-portrait.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"],
+  ["media_dreamshoot_worldcup_friends", "MyDreamShoots group of friends in football supporter outfits celebrating together for a World Cup fan album", "sites/site_dreamshoot/theme/worldcup-friend-fan-photos.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png"],
+  ["media_dreamshoot_worldcup_avatar", "MyDreamShoots square match-day football fan avatar with bold supporter styling for social profiles", "sites/site_dreamshoot/theme/worldcup-match-day-avatar.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png"],
+  ["media_dreamshoot_worldcup_poster", "MyDreamShoots football fan poster with stadium lights and supporter colors for match-day sharing", "sites/site_dreamshoot/theme/worldcup-fan-poster.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png"],
+  ["media_dreamshoot_worldcup_story", "MyDreamShoots vertical World Cup fan story layout designed for mobile social sharing and match-day updates", "sites/site_dreamshoot/theme/worldcup-social-story.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png"],
+  ["media_dreamshoot_worldcup_banner", "MyDreamShoots wide football supporter banner for World Cup profile covers and campaign posts", "sites/site_dreamshoot/theme/worldcup-banner-cover.png", "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png"],
+  ["media_dreamshoot_cyberpunk_solo", "MyDreamShoots solo cyberpunk portrait with neon city color and futuristic styling for creative profile content", "sites/site_dreamshoot/theme/cyberpunk-solo-city-v1.png", "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"]
 ].map(([id, label, storageKey, previewUrl]) => ({
   id,
   siteId,
@@ -814,6 +814,13 @@ const baseImageApp = (state.aiApps ?? []).find((app) => app.slug === "image_gene
   description: "Private image generation with signed album delivery.",
   appType: "image",
 };
+const baseVideoApp = (state.aiApps ?? []).find((app) => app.slug === "video_generator") ?? {
+  id: "ai_video_generator",
+  slug: "video_generator",
+  name: "Image to Video",
+  description: "Generate a private video clip from ordered customer frame images and a maintained video theme.",
+  appType: "video",
+};
 const imageApp = {
   ...baseImageApp,
   name: "MyDreamShoots Image Studio",
@@ -823,6 +830,23 @@ const imageApp = {
     { id: "outputCount", label: "Output count", type: "select", options: ["8", "20", "40"] }
   ]
 };
+const videoApp = {
+  ...baseVideoApp,
+  name: "Image to Video",
+  description: "Generate a private video clip from ordered customer frame images and a maintained video theme.",
+  appType: "video",
+  parameterSchema: []
+};
+state.aiApps = (() => {
+  const next = (state.aiApps ?? []).map((app) => {
+    if (app.id === imageApp.id || app.slug === imageApp.slug) return imageApp;
+    if (app.id === videoApp.id || app.slug === videoApp.slug) return videoApp;
+    return app;
+  });
+  if (!next.some((app) => app.id === imageApp.id)) next.push(imageApp);
+  if (!next.some((app) => app.id === videoApp.id)) next.push(videoApp);
+  return next;
+})();
 state.siteAiApps = replaceWhere(state.siteAiApps ?? [], (item) => item.siteId === siteId, [
   { id: "sai_dreamshoot_image", siteId, aiApp: imageApp, enabled: true, creditCost: 24, routeKey: "n8n.image.dreamshoot.v1" }
 ]);
@@ -849,6 +873,15 @@ state.customers = replaceWhere(state.customers ?? [], (item) => item.siteId === 
     name: "Nora Whitman",
     status: "active",
     balance: { available: 276, reserved: 24 }
+  },
+  {
+    id: "cust_dreamshoot_mqq9gas9_i1vjal",
+    siteId,
+    email: "1621417163@qq.com",
+    passwordHash: hashPassword("mydreamshoots123"),
+    name: "Nora Whitman",
+    status: "active",
+    balance: { available: 312, reserved: 0 }
   }
 ]);
 state.subscriptions = replaceWhere(state.subscriptions ?? [], (item) => item.siteId === siteId, [

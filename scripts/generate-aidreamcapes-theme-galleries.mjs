@@ -134,6 +134,32 @@ function galleryPaths(slug) {
   });
 }
 
+const galleryAltScenes = [
+  "close travel portrait with clear facial detail",
+  "half-body editorial frame in destination light",
+  "wide scene showing the route setting and mood",
+  "candid lifestyle moment for a private album",
+  "detail crop with travel objects and polished composition",
+  "vertical profile crop for mobile sharing",
+  "scenic overlook portrait with atmospheric background",
+  "soft evening frame with cinematic destination color",
+  "album cover style image with strong subject focus",
+  "download-ready keepsake frame from the route",
+  "event-style portrait with polished vacation styling",
+  "finished gallery example with a distinct pose"
+];
+
+function galleryImageAltForPack(pack, slug, index) {
+  const direction = themeDirections[slug] ?? pack.description ?? pack.headline ?? pack.name;
+  const subject = String(direction).split(";")[0].replace(/\s+/g, " ").trim() || `${pack.name} travel portrait album`;
+  const scene = galleryAltScenes[index % galleryAltScenes.length];
+  return `${subject}, ${scene}, ${pack.name} gallery example for AIdreamcapes.`;
+}
+
+function galleryImageAltsForPack(pack, slug, count) {
+  return Array.from({ length: count }, (_, index) => galleryImageAltForPack(pack, slug, index));
+}
+
 async function fileExists(filePath) {
   try {
     const stat = await fs.stat(filePath);
@@ -263,7 +289,7 @@ async function generatePack(pack, provider) {
   const outputs = galleryPaths(slug);
   const complete = await Promise.all(outputs.map((output) => fileExists(output.filePath)));
   if (!force && complete.every(Boolean)) {
-    return { id: pack.id, slug, name: pack.name, skipped: true, galleryImages: outputs.map((output) => output.publicPath) };
+    return { id: pack.id, slug, name: pack.name, skipped: true, galleryImages: outputs.map((output) => output.publicPath), galleryImageAlts: galleryImageAltsForPack(pack, slug, outputs.length) };
   }
   for (let sheetIndex = 0; sheetIndex < 3; sheetIndex += 1) {
     console.log(`generating ${slug}: ${pack.name} sheet ${sheetIndex + 1}/3`);
@@ -275,7 +301,7 @@ async function generatePack(pack, provider) {
     }
     await cropContactSheet(buffer, slug, sheetIndex);
   }
-  return { id: pack.id, slug, name: pack.name, skipped: false, galleryImages: outputs.map((output) => output.publicPath) };
+  return { id: pack.id, slug, name: pack.name, skipped: false, galleryImages: outputs.map((output) => output.publicPath), galleryImageAlts: galleryImageAltsForPack(pack, slug, outputs.length) };
 }
 
 async function mapLimit(items, workerCount, mapper) {
@@ -301,7 +327,7 @@ async function updateState(results) {
     const result = resultById.get(pack.id) ?? resultBySlug.get(pack.category);
     if (!result) return pack;
     updated += 1;
-    return { ...pack, galleryImages: result.galleryImages };
+    return { ...pack, galleryImages: result.galleryImages, galleryImageAlts: result.galleryImageAlts };
   });
   await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
   return updated;
@@ -312,7 +338,7 @@ async function updatePrisma(results) {
   for (const result of results) {
     const response = await prisma.creativePack.updateMany({
       where: { siteId, OR: [{ id: result.id }, { category: result.slug }] },
-      data: { galleryImages: result.galleryImages }
+      data: { galleryImages: result.galleryImages, galleryImageAlts: result.galleryImageAlts }
     });
     updated += response.count;
   }

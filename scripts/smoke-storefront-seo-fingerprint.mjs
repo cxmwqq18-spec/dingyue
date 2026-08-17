@@ -23,12 +23,41 @@ const sites = [
   }
 ];
 
+const approvedHomeOrders = {
+  site_dreamshoot: [
+    "hero_1",
+    "generation_showcase_1",
+    "tutorial_video_1",
+    "package_catalog_1",
+    "proof_1",
+    "faq_1",
+    "conversion_1",
+    "brand_strip_1"
+  ],
+  site_aidreamcapes: [
+    "hero_1",
+    "generation_showcase_1",
+    "featured_thanksgiving_1",
+    "tutorial_video_1",
+    "tutorial_video_2",
+    "mobile_video_1",
+    "package_catalog_1",
+    "proof_1",
+    "faq_1",
+    "conversion_1",
+    "brand_strip_1"
+  ]
+};
+const homepageFeaturedPackageSectionIds = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
+const approvedBestPackagesOrder = ["intro_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "faq_1"];
+
 const visibleTextKeys = new Set([
   "answer",
   "body",
   "caption",
   "description",
   "eyebrow",
+  "featureCaption",
   "headline",
   "heading",
   "label",
@@ -269,6 +298,12 @@ function homeSectionsOrder(siteId) {
   return home?.publishedJson?.sectionsOrder ?? [];
 }
 
+function bestPackagesSectionsOrder(siteId) {
+  const site = getSite(siteId);
+  const page = (site.pages ?? []).find((item) => item.slug === "/best-packages");
+  return page?.publishedJson?.sectionsOrder ?? [];
+}
+
 function formatPercent(value) {
   return `${Math.round(value * 100)}%`;
 }
@@ -296,12 +331,36 @@ for (const site of sites) {
 }
 
 const [dreamshootHomeOrder, aidreamcapesHomeOrder] = sites.map((site) => homeSectionsOrder(site.id));
-if (
-  dreamshootHomeOrder.length > 0 &&
-  aidreamcapesHomeOrder.length > 0 &&
-  JSON.stringify(dreamshootHomeOrder) === JSON.stringify(aidreamcapesHomeOrder)
-) {
-  failures.push(`home_sections_order_identical:${dreamshootHomeOrder.join(" > ")}`);
+const [dreamshootBestPackagesOrder, aidreamcapesBestPackagesOrder] = sites.map((site) => bestPackagesSectionsOrder(site.id));
+for (const [siteId, order] of [
+  ["site_dreamshoot", dreamshootHomeOrder],
+  ["site_aidreamcapes", aidreamcapesHomeOrder]
+]) {
+  const approvedHomeOrder = approvedHomeOrders[siteId];
+  if (order.length > 0 && approvedHomeOrder && JSON.stringify(order) !== JSON.stringify(approvedHomeOrder)) {
+    failures.push(`home_sections_order_mismatch:${siteId}:expected=${approvedHomeOrder.join(" > ")}:actual=${order.join(" > ")}`);
+  }
+  const home = getSite(siteId).pages?.find((page) => page.slug === "/" || page.pageType === "home");
+  for (const featuredSectionId of homepageFeaturedPackageSectionIds) {
+    if (siteId === "site_aidreamcapes" && featuredSectionId === "featured_thanksgiving_1") {
+      if (!home?.publishedJson?.sections?.[featuredSectionId]) {
+        failures.push(`home_featured_section_missing:${siteId}:${featuredSectionId}`);
+      }
+      continue;
+    }
+    if (home?.publishedJson?.sections?.[featuredSectionId]) {
+      failures.push(`home_featured_section_not_removed:${siteId}:${featuredSectionId}`);
+    }
+  }
+}
+
+for (const [siteId, order] of [
+  ["site_dreamshoot", dreamshootBestPackagesOrder],
+  ["site_aidreamcapes", aidreamcapesBestPackagesOrder]
+]) {
+  if (JSON.stringify(order) !== JSON.stringify(approvedBestPackagesOrder)) {
+    failures.push(`best_packages_sections_order_mismatch:${siteId}:expected=${approvedBestPackagesOrder.join(" > ")}:actual=${order.join(" > ")}`);
+  }
 }
 
 for (const left of seoBySite.site_dreamshoot ?? []) {
@@ -392,6 +451,7 @@ const checkedCounts = {
   visibleTextRecords: Object.values(visibleBySite).reduce((sum, records) => sum + records.length, 0),
   titleDescriptionPairs: Object.values(pairsBySite).reduce((sum, records) => sum + records.length, 0),
   homeSectionsOrders: Number(dreamshootHomeOrder.length > 0) + Number(aidreamcapesHomeOrder.length > 0),
+  bestPackagesSectionsOrders: Number(dreamshootBestPackagesOrder.length > 0) + Number(aidreamcapesBestPackagesOrder.length > 0),
   sourceFiles: fs.existsSync(jsonLdPath) ? 1 : 0
 };
 

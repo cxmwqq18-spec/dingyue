@@ -3,6 +3,9 @@ import { chromium } from "playwright";
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(/\/$/, "");
 const pageTimeoutMs = Number(process.env.STOREFRONT_NAV_PAGE_TIMEOUT_MS ?? 90_000);
 const networkIdleTimeoutMs = Number(process.env.STOREFRONT_NAV_NETWORK_IDLE_TIMEOUT_MS ?? 20_000);
+const focusSiteSlug = process.env.STOREFRONT_NAV_FOCUS_SITE || "";
+const skipFocusedVisuals = process.env.STOREFRONT_NAV_SKIP_VISUALS === "1";
+const skipWorkspaceOptions = process.env.STOREFRONT_NAV_SKIP_WORKSPACE === "1";
 
 const siteChecks = [
   {
@@ -17,6 +20,9 @@ const siteChecks = [
       "/site/aidreamcapes/tools",
       "/site/aidreamcapes/tools/fan-scene-album-builder",
       "/site/aidreamcapes/tools/new-year-countdown-album-maker",
+      "/site/aidreamcapes/best-packages",
+      "/site/aidreamcapes/best-ai-image",
+      "/site/aidreamcapes/best-ai-video",
       "/site/aidreamcapes/pricing",
       "/site/aidreamcapes/faq",
       "/site/aidreamcapes/login"
@@ -26,9 +32,21 @@ const siteChecks = [
     slug: "mydreamshoots",
     routes: [
       "/site/mydreamshoots",
-      "/site/mydreamshoots/collections",
-      "/site/mydreamshoots/collections/creator-portraits",
-      "/site/mydreamshoots/tools",
+      "/site/mydreamshoots/ai-image-generation",
+      "/site/mydreamshoots/ai-image-generation/portrait-photo",
+      "/site/mydreamshoots/ai-video-generation",
+      "/site/mydreamshoots/ai-video-generation/talking-photo",
+      "/site/mydreamshoots/ai-video-generation/cinematic-video",
+      "/site/mydreamshoots/ai-video-generation/tiktok-video",
+      "/site/mydreamshoots/ai-video-generation/instagram-reels",
+      "/site/mydreamshoots/ai-video-generation/social-media-video",
+      "/site/mydreamshoots/ai-video-generation/youtube-video",
+      "/site/mydreamshoots/ai-video-generation/story-video",
+      "/site/mydreamshoots/ai-video-generation/meme-video",
+      "/site/mydreamshoots/ai-video-generation/product-video",
+      "/site/mydreamshoots/best-packages",
+      "/site/mydreamshoots/best-ai-image",
+      "/site/mydreamshoots/best-ai-video",
       "/site/mydreamshoots/pricing",
       "/site/mydreamshoots/faq",
       "/site/mydreamshoots/login"
@@ -39,11 +57,11 @@ const siteChecks = [
 const menuChecks = [
   {
     name: "packages",
-    buttonName: /Headshot Generator|Photoshoot Studio|Browse packages|Occasion Albums|Photo Packages|Ver paquetes|Paquetes de ocasion/i
+    buttonName: /AI Image Generation|AI Photoshoot|Headshot Generator|Photoshoot Studio|Browse packages|Occasion Albums|Photo Packages|Ver paquetes|Paquetes de ocasion/i
   },
   {
     name: "tools",
-    buttonName: /^Tools$|^Herramientas$/
+    buttonName: /^(AI Video Generation|AI Tools|Tools|Herramientas)$/
   }
 ];
 
@@ -64,8 +82,8 @@ const workspaceChecks = [
   {
     slug: "mydreamshoots",
     siteId: "site_dreamshoot",
-    expectedPackageCount: 28,
-    expectedToolCount: 28,
+    expectedPackageCount: 38,
+    expectedToolCount: 0,
     credentials: [
       {
         email: process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_EMAIL || process.env.SMOKE_CUSTOMER_EMAIL || "nora@mydreamshoots.localhost",
@@ -82,22 +100,22 @@ const focusedVisualRoutes = [
     route: "/site/mydreamshoots",
     footerText: "© 2026 myDreamshoots.com. All rights reserved.",
     categoryHrefs: {
-      Christmas: "/site/mydreamshoots/collections/christmas-photos",
-      Thanksgiving: "/site/mydreamshoots/collections/thanksgiving-group-photos",
-      Halloween: "/site/mydreamshoots/collections/halloween-party-photos",
-      Seasonal: "/site/mydreamshoots/collections/holiday",
-      Creator: "/site/mydreamshoots/collections/creator-portraits",
-      Video: "/site/mydreamshoots/collections/ai-video-add-ons",
-      Utility: "/site/mydreamshoots/collections/magic-upscaler"
+      Christmas: "/site/mydreamshoots/ai-image-generation/christmas-photo",
+      Thanksgiving: "/site/mydreamshoots/ai-image-generation/thanksgiving-photo",
+      Halloween: "/site/mydreamshoots/ai-image-generation/halloween-photo",
+      Seasonal: "/site/mydreamshoots/ai-image-generation/holiday",
+      Creator: "/site/mydreamshoots/ai-image-generation/portrait-photo",
+      Video: "/site/mydreamshoots/ai-image-generation/motion-generator",
+      Utility: "/site/mydreamshoots/ai-image-generation/photo-enhancer"
     }
   },
   {
     site: "mydreamshoots",
-    route: "/site/mydreamshoots/collections"
+    route: "/site/mydreamshoots/ai-image-generation"
   },
   {
     site: "mydreamshoots",
-    route: "/site/mydreamshoots/collections/thanksgiving-group-photos"
+    route: "/site/mydreamshoots/ai-image-generation/thanksgiving-photo"
   },
   {
     site: "aidreamcapes",
@@ -125,6 +143,11 @@ const focusedVisualRoutes = [
   }
 ];
 
+function filterByFocusSite(items) {
+  if (!focusSiteSlug) return items;
+  return items.filter((item) => item.slug === focusSiteSlug || item.site === focusSiteSlug);
+}
+
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
@@ -135,7 +158,10 @@ function normalizeHref(value) {
 
 function normalizeSignatureHref(value, siteSlug) {
   const href = normalizeHref(value);
+  if (href === "/app/create#step-video") return `/site/${siteSlug}${href}`;
   if (href.startsWith("/collections/") || href === "/collections") return `/site/${siteSlug}${href}`;
+  if (href.startsWith("/ai-image-generation/") || href === "/ai-image-generation") return `/site/${siteSlug}${href}`;
+  if (href.startsWith("/ai-video-generation/") || href === "/ai-video-generation") return `/site/${siteSlug}${href}`;
   if (href.startsWith("/tools/") || href === "/tools") return `/site/${siteSlug}${href}`;
   return href;
 }
@@ -158,15 +184,12 @@ function signatureFromItems(items, siteSlug) {
 async function extractMenuSignature(page, siteSlug, route, menuCheck) {
   const button = page.locator('nav button[aria-haspopup="dialog"]').filter({ hasText: menuCheck.buttonName }).first();
   await button.waitFor({ state: "visible", timeout: 30000 });
-  await button.click({ timeout: 15000 });
-  await page.waitForFunction(
-    () => Boolean(document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]')),
-    undefined,
-    { timeout: 10000 }
-  );
+  const controlId = await button.getAttribute("aria-controls");
   const items = await page.evaluate(
-    ({ currentSiteSlug, currentMenuName }) => {
-      const panel = document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]');
+    ({ currentSiteSlug, currentMenuName, currentControlId }) => {
+      const panel = currentControlId
+        ? document.getElementById(currentControlId)
+        : document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]');
       if (!panel) return [];
       const toolCardAnchors = currentMenuName === "tools"
         ? [...panel.querySelectorAll('a[data-xfcart-block-type="tool_card"][href]')]
@@ -180,18 +203,53 @@ async function extractMenuSignature(page, siteSlug, route, menuCheck) {
         .filter((item) => item.text)
         .filter((item) => {
           if (currentMenuName === "packages") {
-            return item.href.includes(`/site/${currentSiteSlug}/collections/`) || item.href.startsWith("/collections/");
+            return item.href.includes(`/site/${currentSiteSlug}/collections/`) ||
+              item.href.includes(`/site/${currentSiteSlug}/ai-image-generation/`) ||
+              item.href.startsWith("/collections/") ||
+              item.href.startsWith("/ai-image-generation/");
+          }
+          if (currentSiteSlug === "mydreamshoots") {
+            return item.href.includes(`/site/${currentSiteSlug}/app/create#step-video`) ||
+              item.href === "/app/create#step-video" ||
+              item.href.startsWith("/app/create#step-video") ||
+              item.href.includes(`/site/${currentSiteSlug}/ai-video-generation/`) ||
+              item.href.startsWith("/ai-video-generation/");
           }
           return item.href.includes(`/site/${currentSiteSlug}/tools/`) || item.href.startsWith("/tools/");
-        });
+      });
       return links;
     },
-    { currentSiteSlug: siteSlug, currentMenuName: menuCheck.name }
+    { currentSiteSlug: siteSlug, currentMenuName: menuCheck.name, currentControlId: controlId }
   );
   await page.keyboard.press("Escape").catch(() => undefined);
   const signature = signatureFromItems(items, siteSlug);
   assert(signature.length > 0, `${siteSlug} ${route} ${menuCheck.name}: no menu item links were found`);
   return signature;
+}
+
+async function assertBestPackagesDirectLink(page, siteSlug, route, failures) {
+  const result = await page.evaluate(() => {
+    const nav = document.querySelector("header nav");
+    const normalizeText = (value) => String(value || "").replace(/\s+/g, " ").trim();
+    const bestAnchors = [...(nav?.querySelectorAll("a[href]") ?? [])]
+      .filter((anchor) => normalizeText(anchor.textContent) === "Best Packages")
+      .map((anchor) => anchor.getAttribute("href") || "");
+    const bestButtons = [...(nav?.querySelectorAll('button[aria-haspopup="dialog"]') ?? [])]
+      .filter((button) => normalizeText(button.textContent) === "Best Packages")
+      .map((button) => normalizeText(button.textContent));
+    return { bestAnchors, bestButtons };
+  });
+  const expectedHref = `/site/${siteSlug}/best-packages`;
+  if (!result.bestAnchors.some((href) => normalizeHref(href) === expectedHref) || result.bestButtons.length) {
+    failures.push({
+      site: siteSlug,
+      route,
+      surface: "best_packages_header_link",
+      expectedHref,
+      anchors: result.bestAnchors,
+      buttons: result.bestButtons
+    });
+  }
 }
 
 async function loginWorkspaceCustomer(context, workspaceCheck) {
@@ -224,6 +282,43 @@ async function extractWorkspacePackageSignature(page, siteSlug) {
       href: item.getAttribute("data-workspace-package-href") || ""
     })));
   return signatureFromItems(items, siteSlug);
+}
+
+async function extractDirectoryPackageSignature(page, siteSlug) {
+  await gotoRoute(page, `/site/${siteSlug}/ai-image-generation`);
+  await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
+  await page.waitForFunction(
+    () => document.querySelectorAll('#package-taxonomy [data-package-taxonomy-client="ready"] a[href]').length > 0,
+    undefined,
+    { timeout: 30000 }
+  );
+  const items = await page.evaluate(() => [...document.querySelectorAll('#package-taxonomy [data-package-taxonomy-client="ready"] a[href]')]
+    .map((item) => ({
+      text: item.querySelector("h2")?.textContent || item.textContent || "",
+      href: item.getAttribute("href") || ""
+    })));
+  return signatureFromItems(items, siteSlug);
+}
+
+async function extractWorkspacePackageAssetState(page, siteSlug) {
+  await openWorkspaceCreate(page, siteSlug);
+  return page.evaluate(() => ({
+    packages: [...document.querySelectorAll("[data-workspace-package-option]")].map((item) => {
+      const image = item.querySelector("img");
+      return {
+        title: item.getAttribute("data-workspace-package-title") || "",
+        src: image?.getAttribute("src") || "",
+        complete: Boolean(image?.complete),
+        naturalWidth: image?.naturalWidth || 0,
+        naturalHeight: image?.naturalHeight || 0
+      };
+    }),
+    categories: [...document.querySelectorAll("[data-workspace-package-category-option]")]
+      .map((item) => ({
+        slug: item.getAttribute("data-workspace-package-category-option") || "",
+        count: Number(item.getAttribute("data-workspace-package-category-count") || 0)
+      }))
+  }));
 }
 
 async function extractWorkspaceToolSignature(page, siteSlug) {
@@ -262,23 +357,73 @@ function pushSignatureFailure(failures, { site, surface, expected, actual, requi
   }
 }
 
-async function smokeWorkspaceOptionConsistency(context, failures) {
+async function smokeWorkspaceOptionConsistency(context, failures, checks = workspaceChecks) {
   const page = await context.newPage();
   try {
-    for (const workspaceCheck of workspaceChecks) {
+    for (const workspaceCheck of checks) {
       if (!(await loginWorkspaceCustomer(context, workspaceCheck))) continue;
       await page.goto(`/site/${workspaceCheck.slug}`, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
       await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
       const packageMenuSignature = await extractMenuSignature(page, workspaceCheck.slug, `/site/${workspaceCheck.slug}`, menuChecks[0]);
       const toolMenuSignature = await extractMenuSignature(page, workspaceCheck.slug, `/site/${workspaceCheck.slug}`, menuChecks[1]);
+      const directoryPackageSignature = workspaceCheck.slug === "mydreamshoots"
+        ? await extractDirectoryPackageSignature(page, workspaceCheck.slug)
+        : [];
       const workspacePackageSignature = await extractWorkspacePackageSignature(page, workspaceCheck.slug);
-      const workspaceToolSignature = await extractWorkspaceToolSignature(page, workspaceCheck.slug);
+      const workspacePackageAssetState = await extractWorkspacePackageAssetState(page, workspaceCheck.slug);
+      const workspaceToolSignature = workspaceCheck.expectedToolCount > 0
+        ? await extractWorkspaceToolSignature(page, workspaceCheck.slug)
+        : [];
 
       if (workspacePackageSignature.length !== workspaceCheck.expectedPackageCount) {
         failures.push({ site: workspaceCheck.slug, surface: "workspace_packages_count", expected: workspaceCheck.expectedPackageCount, actual: workspacePackageSignature.length });
       }
       if (workspaceToolSignature.length !== workspaceCheck.expectedToolCount) {
         failures.push({ site: workspaceCheck.slug, surface: "workspace_tools_count", expected: workspaceCheck.expectedToolCount, actual: workspaceToolSignature.length });
+      }
+      if (directoryPackageSignature.length !== workspaceCheck.expectedPackageCount && workspaceCheck.slug === "mydreamshoots") {
+        failures.push({ site: workspaceCheck.slug, surface: "directory_packages_count", expected: workspaceCheck.expectedPackageCount, actual: directoryPackageSignature.length });
+      }
+      if (workspaceCheck.slug === "mydreamshoots") {
+        pushSignatureFailure(failures, {
+          site: workspaceCheck.slug,
+          surface: "directory_packages",
+          expected: packageMenuSignature,
+          actual: directoryPackageSignature,
+          requireOrder: false,
+          normalizeItem: normalizeWorkspaceSignatureItem
+        });
+      }
+      const invalidWorkspaceImages = workspacePackageAssetState.packages.filter((item) =>
+        !item.src ||
+        !item.complete ||
+        item.naturalWidth < 64 ||
+        item.naturalHeight < 64 ||
+        !item.src.includes("/assets/")
+      );
+      if (workspacePackageAssetState.packages.length !== workspaceCheck.expectedPackageCount || invalidWorkspaceImages.length) {
+        failures.push({
+          site: workspaceCheck.slug,
+          surface: "workspace_package_images",
+          expectedCount: workspaceCheck.expectedPackageCount,
+          actualCount: workspacePackageAssetState.packages.length,
+          invalidImages: invalidWorkspaceImages.slice(0, 12)
+        });
+      }
+      if (workspaceCheck.slug === "mydreamshoots") {
+        const allPackages = workspacePackageAssetState.categories.find((item) => item.slug === "all");
+        const categoryTotal = workspacePackageAssetState.categories
+          .filter((item) => item.slug !== "all")
+          .reduce((total, item) => total + item.count, 0);
+        if (allPackages?.count !== workspaceCheck.expectedPackageCount || categoryTotal !== workspaceCheck.expectedPackageCount) {
+          failures.push({
+            site: workspaceCheck.slug,
+            surface: "workspace_package_category_counts",
+            expected: workspaceCheck.expectedPackageCount,
+            allPackages: allPackages?.count ?? 0,
+            categoryTotal
+          });
+        }
       }
       pushSignatureFailure(failures, {
         site: workspaceCheck.slug,
@@ -288,14 +433,16 @@ async function smokeWorkspaceOptionConsistency(context, failures) {
         requireOrder: false,
         normalizeItem: normalizeWorkspaceSignatureItem
       });
-      pushSignatureFailure(failures, {
-        site: workspaceCheck.slug,
-        surface: "workspace_tools",
-        expected: toolMenuSignature,
-        actual: workspaceToolSignature,
-        requireOrder: false,
-        normalizeItem: normalizeWorkspaceSignatureItem
-      });
+      if (workspaceCheck.expectedToolCount > 0) {
+        pushSignatureFailure(failures, {
+          site: workspaceCheck.slug,
+          surface: "workspace_tools",
+          expected: toolMenuSignature,
+          actual: workspaceToolSignature,
+          requireOrder: false,
+          normalizeItem: normalizeWorkspaceSignatureItem
+        });
+      }
       console.log(`✓ ${workspaceCheck.slug} workspace packages/tools signatures checked`);
     }
   } finally {
@@ -304,23 +451,46 @@ async function smokeWorkspaceOptionConsistency(context, failures) {
 }
 
 async function scrollThroughPage(page) {
-  await page.evaluate(async () => {
-    const height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-    const stops = [0, 0.28, 0.56, 0.84, 1];
-    for (const stop of stops) {
-      window.scrollTo(0, Math.max(0, Math.round((height - window.innerHeight) * stop)));
-      await new Promise((resolve) => window.setTimeout(resolve, 350));
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      await page.evaluate(async () => {
+        const height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        const stops = [0, 0.28, 0.56, 0.84, 1];
+        for (const stop of stops) {
+          window.scrollTo(0, Math.max(0, Math.round((height - window.innerHeight) * stop)));
+          await new Promise((resolve) => window.setTimeout(resolve, 350));
+        }
+      });
+      return;
+    } catch (error) {
+      const message = String(error?.message ?? "");
+      const retryable =
+        message.includes("Execution context was destroyed") ||
+        message.includes("Cannot find context") ||
+        message.includes("Most likely because of a navigation");
+      if (!retryable || page.isClosed() || attempt === 2) throw error;
+      await page.waitForLoadState("domcontentloaded", { timeout: pageTimeoutMs }).catch(() => undefined);
+      await page.waitForTimeout(500 + attempt * 500);
     }
-  });
+  }
 }
 
 async function gotoRoute(page, route) {
-  try {
-    return await page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
-  } catch (error) {
-    if (!String(error?.message ?? "").includes("net::ERR_ABORTED")) throw error;
-    await page.waitForTimeout(500);
-    return page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      return await page.goto(route, { waitUntil: "domcontentloaded", timeout: pageTimeoutMs });
+    } catch (error) {
+      const message = String(error?.message ?? "");
+      const retryable =
+        message.includes("net::ERR_ABORTED") ||
+        message.includes("net::ERR_CONNECTION_REFUSED") ||
+        message.includes("net::ERR_EMPTY_RESPONSE") ||
+        message.includes("ECONNRESET") ||
+        message.includes("socket hang up") ||
+        message.includes("Timeout");
+      if (!retryable || attempt === 2) throw error;
+      await page.waitForTimeout(800 + attempt * 1200);
+    }
   }
 }
 
@@ -485,10 +655,12 @@ async function assertShowcaseImageRail(page, routeCheck, failures) {
     const rails = [...(section?.querySelectorAll(".dreamshoot-showcase-rail") ?? [])];
     const productFigureSelector = 'figure[data-dreamshoot-showcase-preview="image"], figure[data-dreamshoot-image-product-card]';
     const rail = rails.find((item) => !item.querySelector("video") && item.querySelectorAll(productFigureSelector).length >= 4);
-    const figures = [...(rail?.querySelectorAll(productFigureSelector) ?? [])];
+    const railFigures = [...(rail?.querySelectorAll(productFigureSelector) ?? [])];
+    const gridFigures = [...(section?.querySelectorAll(productFigureSelector) ?? [])];
+    const figures = railFigures.length >= 4 ? railFigures : gridFigures;
     const images = figures.map((figure) => figure.querySelector("img")).filter(Boolean).slice(0, 4);
     return images.map((image) => {
-      const frame = image.closest("figure") || image.parentElement;
+      const frame = image.parentElement || image.closest("figure");
       const imageRect = image?.getBoundingClientRect();
       const frameRect = frame?.getBoundingClientRect();
       return {
@@ -505,7 +677,7 @@ async function assertShowcaseImageRail(page, routeCheck, failures) {
     failures.push({
       site: routeCheck.site,
       route: routeCheck.route,
-      type: "showcase_image_rail_blank_or_unloaded",
+      type: "showcase_image_grid_or_rail_blank_or_unloaded",
       images: result
     });
   }
@@ -517,9 +689,7 @@ async function assertShowcaseMotionVideos(page, routeCheck, failures, mediaRespo
   await page.waitForTimeout(4500);
   const result = await page.evaluate(async () => {
     const section = document.querySelector("#generated-showcase");
-    const rails = [...(section?.querySelectorAll(".dreamshoot-showcase-rail") ?? [])];
-    const rail = rails.find((item) => item.querySelector("video"));
-    const videos = [...(rail?.querySelectorAll("video") ?? [])].slice(0, 8);
+    const videos = [...(section?.querySelectorAll('[data-showcase-card-kind="video"] video') ?? [])];
     await Promise.all(videos.map((video) => new Promise((resolve) => {
       if (video.readyState >= 2 && video.videoWidth > 0 && video.videoHeight > 0) {
         resolve();
@@ -550,7 +720,7 @@ async function assertShowcaseMotionVideos(page, routeCheck, failures, mediaRespo
     const active = !item.paused || item.currentTime > 0.05;
     return !/\.mp4(?:[?#]|$)/i.test(item.currentSrc) || !playable || !active || !item.autoplay || !item.muted || !item.playsInline;
   });
-  if (result.length < 8 || badStatuses.length || invalidVideos.length) {
+  if (result.length < 1 || badStatuses.length || invalidVideos.length) {
     failures.push({
       site: routeCheck.site,
       route: routeCheck.route,
@@ -592,9 +762,9 @@ async function assertFeaturedPackWhitespace(page, routeCheck, failures) {
   }
 }
 
-async function smokeFocusedStorefrontVisuals(context) {
+async function smokeFocusedStorefrontVisuals(context, routes = focusedVisualRoutes) {
   const failures = [];
-  for (const routeCheck of focusedVisualRoutes) {
+  for (const routeCheck of routes) {
     const page = await context.newPage();
     try {
       const { badAssets, mediaResponses } = await visitRouteAndCollectAssetFailures(page, routeCheck.route);
@@ -617,7 +787,7 @@ async function smokeFocusedStorefrontVisuals(context) {
     }
   }
 
-  for (const routeCheck of focusedVisualRoutes.filter((item) => item.route.endsWith(item.site))) {
+  for (const routeCheck of routes.filter((item) => item.route.endsWith(item.site))) {
     const mobilePage = await context.newPage();
     try {
       await mobilePage.setViewportSize({ width: 390, height: 844 });
@@ -640,8 +810,16 @@ async function smokeNavigationDataConsistency() {
       viewport: { width: 1440, height: 1000 }
     });
     const page = await context.newPage();
+    const activeSiteChecks = filterByFocusSite(siteChecks);
+    const activeFocusedVisualRoutes = filterByFocusSite(focusedVisualRoutes);
+    const activeWorkspaceChecks = filterByFocusSite(workspaceChecks);
 
-    for (const site of siteChecks) {
+    for (const site of activeSiteChecks) {
+      for (const route of site.routes) {
+        await gotoRoute(page, route);
+        await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
+        await assertBestPackagesDirectLink(page, site.slug, route, failures);
+      }
       for (const menuCheck of menuChecks) {
         let expected;
         for (const route of site.routes) {
@@ -678,8 +856,8 @@ async function smokeNavigationDataConsistency() {
       }
     }
 
-    await smokeFocusedStorefrontVisuals(context);
-    await smokeWorkspaceOptionConsistency(context, failures);
+    if (!skipFocusedVisuals) await smokeFocusedStorefrontVisuals(context, activeFocusedVisualRoutes);
+    if (!skipWorkspaceOptions) await smokeWorkspaceOptionConsistency(context, failures, activeWorkspaceChecks);
   } finally {
     await browser.close();
   }

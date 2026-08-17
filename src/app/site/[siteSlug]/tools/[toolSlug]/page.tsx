@@ -9,12 +9,6 @@ import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonica
 import { publicSiteSlug as normalizePublicSiteSlug } from "@/lib/domain-routing";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
-const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
-  "ai-image-studio": "/tools",
-  "image-studio": "/tools",
-  "travel-portraits": "/tools/nature-adventure"
-};
-
 const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "/tools",
   "background-changer": "/tools/fan-scene-album-builder",
@@ -49,7 +43,6 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
 function legacyToolRedirectPath(siteSlug: string, toolSlug: string): string | undefined {
   const publicSlug = normalizePublicSiteSlug(siteSlug);
   const normalizedToolSlug = toolSlug.trim().toLowerCase();
-  if (publicSlug === "mydreamshoots") return DREAMSHOOT_LEGACY_TOOL_REDIRECTS[normalizedToolSlug];
   if (publicSlug === "aidreamcapes") return AIDREAMCAPES_LEGACY_TOOL_REDIRECTS[normalizedToolSlug];
   return undefined;
 }
@@ -86,6 +79,7 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; toolSlug: string }> }): Promise<Metadata> {
   const { siteSlug, toolSlug } = await params;
+  if (normalizePublicSiteSlug(siteSlug) === "mydreamshoots") return {};
   if (legacyToolRedirectPath(siteSlug, toolSlug)) return {};
   const { site, matched } = await resolveToolPage(siteSlug, toolSlug);
   if (!site || !matched) return {};
@@ -100,6 +94,7 @@ export default async function ToolPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug, toolSlug } = await params;
+  if (normalizePublicSiteSlug(siteSlug) === "mydreamshoots") notFound();
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
   const publicSiteSlug = redirectPublicSitePathToCanonicalHost({

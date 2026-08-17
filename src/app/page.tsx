@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight, Boxes, Brush, CreditCard, Database, Globe2, L
 import {
   readStorefrontAccessSummaryFromDatabase,
   readStorefrontPlatformStateFromLegacyJson,
+  readStorefrontPublicPageMetadataStateByHostFromDatabase,
   readStorefrontPublicRuntimeStateByHostFromDatabase
 } from "@/lib/storefront-state";
 import { Metric, Panel, Shell, StatusPill, TopBar } from "@/components/ui";
@@ -30,8 +31,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const headerStore = await headers();
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   if (!shouldResolveHostSite(hostCandidates)) return {};
-  const hostRuntimeState = await getHostRuntimeStateWithFallback(hostCandidates);
-  const hostSite = hostRuntimeState ? getSiteByHostCandidatesFromState(hostRuntimeState, hostCandidates) ?? hostRuntimeState.sites[0] : undefined;
+  const hostMetadataState = await getHostMetadataStateWithFallback(hostCandidates);
+  const hostSite = hostMetadataState ? getSiteByHostCandidatesFromState(hostMetadataState, hostCandidates) ?? hostMetadataState.sites[0] : undefined;
   if (!hostSite) return noindexMetadata;
   return metadataForSingleThemePage(hostSite, getPage(hostSite, "/"));
 }
@@ -52,6 +53,21 @@ async function getHostRuntimeStateWithFallback(hosts: Array<string | null>): Pro
   try {
     for (const host of hosts) {
       const state = await readStorefrontPublicRuntimeStateByHostFromDatabase(host, "/");
+      if (state) return state;
+    }
+  } catch {
+    // Fall through to the legacy state reader for local or migrating databases.
+  }
+  const platformState = await readStorefrontPlatformStateFromLegacyJson();
+  const site = getSiteByHostCandidatesFromState(platformState, hosts);
+  return site ? platformState : undefined;
+}
+
+async function getHostMetadataStateWithFallback(hosts: Array<string | null>): Promise<PlatformState | undefined> {
+  if (!shouldResolveHostSite(hosts)) return undefined;
+  try {
+    for (const host of hosts) {
+      const state = await readStorefrontPublicPageMetadataStateByHostFromDatabase(host, "/");
       if (state) return state;
     }
   } catch {

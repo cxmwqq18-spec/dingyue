@@ -23,6 +23,18 @@ function publicAssetPath(url) {
   return pathname.startsWith("/assets/") ? path.join(repoRoot, "public", pathname) : "";
 }
 
+function packSlug(pack) {
+  return String(pack?.category || pack?.categoryRecord?.slug || pack?.name || pack?.id || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function imageIdentity(url) {
+  return comparableUrl(url);
+}
+
 function rgbRmse(left, right) {
   let sum = 0;
   for (let index = 0; index < left.length; index += 1) {
@@ -71,6 +83,65 @@ async function assertEngagementCoverUsesFullGalleryFrame() {
   assert(rmse < 35, `Engagement cover should preserve the full first gallery image in its safe center; RMSE=${rmse.toFixed(2)}`);
 }
 
+async function assertMydreamshootsThemeAssetContract() {
+  const state = JSON.parse(read("data/platform-state.json"));
+  const activePacks = (state.creativePacks ?? []).filter((pack) => pack.siteId === "site_dreamshoot" && pack.status === "active");
+  const activeCategories = (state.creativePackCategories ?? []).filter((category) => category.siteId === "site_dreamshoot" && category.status === "active");
+  const categoryById = new Map(activeCategories.map((category) => [category.id, category]));
+  const targetSlugs = new Set([
+    "only-fans",
+    "singles-awareness-day",
+    "bikini",
+    "swimsuit",
+    "background-remover",
+    "magic-eraser",
+    "portrait-retouch",
+    "unblur-image",
+    "color-correction",
+    "old-photo-restoration"
+  ]);
+
+  assert(activePacks.length === 38, `MyDreamShoots should expose 38 active package themes, found ${activePacks.length}`);
+  assert(activeCategories.length === 43, `MyDreamShoots should expose 43 active package categories, found ${activeCategories.length}`);
+
+  const coverIdentities = new Map();
+  for (const pack of activePacks) {
+    const slug = packSlug(pack);
+    const cover = String(pack.imageUrl ?? "").trim();
+    const galleryImages = Array.isArray(pack.galleryImages) ? pack.galleryImages : [];
+    const galleryAlts = Array.isArray(pack.galleryImageAlts) ? pack.galleryImageAlts : [];
+    const category = categoryById.get(pack.categoryId);
+
+    assert(cover, `${slug} is missing a pack cover URL`);
+    assert(fs.existsSync(publicAssetPath(cover)), `${slug} pack cover file is missing: ${cover}`);
+    assert(galleryImages.length === 12, `${slug} should expose 12 gallery images, found ${galleryImages.length}`);
+    assert(galleryAlts.length === galleryImages.length, `${slug} gallery image and alt counts should match`);
+    assert(category?.imageUrl, `${slug} leaf category is missing its category cover URL`);
+    assert(imageIdentity(category?.imageUrl) === imageIdentity(cover), `${slug} category and pack cover URLs should match`);
+
+    const previous = coverIdentities.get(imageIdentity(cover));
+    assert(!previous, `${slug} reuses the pack cover from ${previous || "another theme"}`);
+    coverIdentities.set(imageIdentity(cover), slug);
+
+    const seenGallery = new Set();
+    galleryImages.forEach((image, index) => {
+      const identity = imageIdentity(image);
+      assert(identity && !seenGallery.has(identity), `${slug} gallery image ${index + 1} is duplicated`);
+      assert(fs.existsSync(publicAssetPath(image)), `${slug} gallery image file is missing: ${image}`);
+      seenGallery.add(identity);
+    });
+
+    if (targetSlugs.has(slug)) {
+      assert(comparableUrl(cover).includes(`/pack-covers/${slug}/${slug}-cover`), `${slug} should use its own canonical cover directory`);
+      assert(galleryImages.every((image) => comparableUrl(image).includes(`/pack-galleries/${slug}/${slug}-`)), `${slug} should use its own canonical gallery directory`);
+    }
+  }
+
+  for (const category of activeCategories.filter((item) => item.parentId)) {
+    assert(category.imageUrl, `${category.slug} category imageUrl should not be empty`);
+  }
+}
+
 function assertWorkspacePreviewLayout() {
   const source = read("src/components/app/job-create-form.tsx");
   assert(source.includes('data-workspace-selected-package-image="true"'), "Selected package preview image should expose a smoke-test marker");
@@ -96,6 +167,7 @@ function assertCoverGeneratorKeepsFullFrame() {
 }
 
 await assertEngagementCoverUsesFullGalleryFrame();
+await assertMydreamshootsThemeAssetContract();
 assertWorkspacePreviewLayout();
 assertCoverGeneratorKeepsFullFrame();
 

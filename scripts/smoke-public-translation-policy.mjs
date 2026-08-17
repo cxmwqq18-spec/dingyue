@@ -51,7 +51,7 @@ const runtimeRoutesBySite = {
   mydreamshoots: [
     "/",
     "/pricing",
-    "/cart?product=prod_dreamshoot_pro&price=price_dreamshoot_pro_yearly",
+    "/cart?product=prod_dreamshoot_pro&price=price_dreamshoot_pro_half_year",
     "/collections",
     "/collections/product-style",
     "/collections/travel",
@@ -230,7 +230,7 @@ if (baseUrl) {
 
 if (violations.length) {
   console.error("Public storefront translation policy failed.");
-  console.error("MyDreamShoots and Aidreamcapes public pages must not disable browser translation.");
+  console.error("myDreamshoots and Aidreamcapes public pages must not disable browser translation.");
   for (const violation of violations) {
     console.error(`${violation.file}${violation.line ? `:${violation.line}` : ""} ${violation.rule}: ${violation.text}`);
   }

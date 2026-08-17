@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type InputHTMLAttributes, type ReactNode, type TextareaHTMLAttributes } from "react";
 import { ChevronRight } from "lucide-react";
 import { fieldDisplayLabel, optionDisplayLabel } from "@/components/designer/designer-metadata";
 import { saasFontFamily, saasFontOptions, saasFontValue, saasFontVariantKey } from "@/lib/theme/saas-fonts";
 import { themeValueToString } from "@/lib/theme-values";
 import type { Site, ThemeFieldSchema, ThemeSettingValue } from "@/lib/types";
-import type { DesignerResourceKind, FieldOptions } from "@/components/designer/field-editor-types";
+import type { FieldOptions } from "@/components/designer/field-editor-types";
 import {
   collectionSelector,
   pageSelector,
@@ -99,23 +99,6 @@ function navMenuLines(options: FieldOptions, menuId: string): string[] {
   if (menuId === "footer") return ["Privacy|/policies/privacy", "Refunds|/policies/refunds", "Content policy|/policies/content"];
   if (menuId === "ai-tools") return options.siteAiApps.filter((app) => app.enabled).map((app) => `${app.aiApp.name}|/tools/${app.aiApp.slug}`);
   return options.pages.map((page) => `${page.title}|${page.slug}`);
-}
-
-function resourceKindsForField(field: ThemeFieldSchema): DesignerResourceKind[] {
-  const kinds: DesignerResourceKind[] = [];
-  const add = (kind: DesignerResourceKind) => {
-    if (!kinds.includes(kind)) kinds.push(kind);
-  };
-  if (field.type === "product" || field.type === "price" || field.source === "products" || field.source === "prices") add("products");
-  if (field.type === "ai_app" || field.source === "site_ai_apps") add("siteAiApps");
-  if (field.type === "media_asset" || field.type === "image_picker" || field.source === "media_assets") add("mediaAssets");
-  if (field.type === "collection" || field.source === "creative_packs") add("creativePacks");
-  if (field.type === "url") {
-    add("products");
-    add("creativePacks");
-  }
-  if (field.type === "link_list" || field.type === "menu") add("siteAiApps");
-  return kinds;
 }
 
 function SaasFieldShell({
@@ -223,6 +206,81 @@ const saasTextareaClass = "ant-input w-full rounded-[2px] border border-[#c4c7cc
 const saasSelectClass = "ant-input w-full rounded-[2px] border border-[#c4c7cc] bg-white px-[9px] py-2 text-sm text-[#212121] outline-none transition focus:border-[#479dff]";
 const saasCodeTextareaClass = "ant-input min-h-40 w-full rounded-[2px] border border-[#c4c7cc] bg-[#23262e] px-[9px] py-2 font-mono text-xs leading-6 text-[#f5f5f5] outline-none transition focus:border-[#479dff]";
 
+function useStagedFieldValue(value: string, onCommit: (value: string) => void, delayMs = 180) {
+  const [draftValue, setDraftValue] = useState(value);
+  const focusedRef = useRef(false);
+  const onCommitRef = useRef(onCommit);
+
+  useEffect(() => {
+    onCommitRef.current = onCommit;
+  }, [onCommit]);
+
+  useEffect(() => {
+    if (!focusedRef.current) setDraftValue(value);
+  }, [value]);
+
+  useEffect(() => {
+    if (draftValue === value) return;
+    const timer = window.setTimeout(() => onCommitRef.current(draftValue), delayMs);
+    return () => window.clearTimeout(timer);
+  }, [delayMs, draftValue, value]);
+
+  function focus() {
+    focusedRef.current = true;
+  }
+
+  function blur() {
+    focusedRef.current = false;
+    if (draftValue !== value) onCommitRef.current(draftValue);
+  }
+
+  return { draftValue, setDraftValue, focus, blur };
+}
+
+function StagedInput({
+  value,
+  onCommit,
+  delayMs = 180,
+  ...props
+}: Omit<InputHTMLAttributes<HTMLInputElement>, "value" | "onChange"> & {
+  value: string;
+  onCommit: (value: string) => void;
+  delayMs?: number;
+}) {
+  const staged = useStagedFieldValue(value, onCommit, delayMs);
+  return (
+    <input
+      {...props}
+      onBlur={staged.blur}
+      onChange={(event) => staged.setDraftValue(event.target.value)}
+      onFocus={staged.focus}
+      value={staged.draftValue}
+    />
+  );
+}
+
+function StagedTextarea({
+  value,
+  onCommit,
+  delayMs = 180,
+  ...props
+}: Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "value" | "onChange"> & {
+  value: string;
+  onCommit: (value: string) => void;
+  delayMs?: number;
+}) {
+  const staged = useStagedFieldValue(value, onCommit, delayMs);
+  return (
+    <textarea
+      {...props}
+      onBlur={staged.blur}
+      onChange={(event) => staged.setDraftValue(event.target.value)}
+      onFocus={staged.focus}
+      value={staged.draftValue}
+    />
+  );
+}
+
 function StaticSelectedLine({
   title,
   detail,
@@ -272,24 +330,6 @@ export function FieldEditor({
   const mode = fieldInputMode(field);
   const valueString = stringifyValue(value ?? field.default ?? "");
   const choices = runtimeOptions(field, options);
-  const requestResourceRef = useRef(options.requestResource);
-  const resourceStatusRef = useRef(options.resourceStatus);
-
-  useEffect(() => {
-    requestResourceRef.current = options.requestResource;
-    resourceStatusRef.current = options.resourceStatus;
-  }, [options.requestResource, options.resourceStatus]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    for (const kind of resourceKindsForField(field)) {
-      const status = resourceStatusRef.current?.[kind] ?? "idle";
-      if (status === "idle" || status === "error") {
-        void requestResourceRef.current?.(kind, { signal: controller.signal });
-      }
-    }
-    return () => controller.abort();
-  }, [field]);
 
   if (mode === "notice") return <SaasNoticeField field={field} />;
 
@@ -310,9 +350,9 @@ export function FieldEditor({
             手动输入地址
           </summary>
           <div className="border-t border-[#dde2e7] p-2">
-            <input
+            <StagedInput
               className={cx(saasInputClass, "font-mono text-xs")}
-              onChange={(event) => onChange(event.target.value)}
+              onCommit={onChange}
               placeholder="粘贴 CDN URL、/assets 路径或 storage key"
               value={valueString}
             />
@@ -467,6 +507,7 @@ export function FieldEditor({
     return (
       <SaasInlineFieldShell field={field}>
         <button
+          aria-label={fieldDisplayLabel({ id: field.id, label: field.label || field.id })}
           aria-checked={valueString === "true"}
           className={cx("ant-switch flex h-5 w-11 items-center rounded-full border p-0.5 transition", valueString === "true" ? "ant-switch-checked border-[#f4a719] bg-[#f4a719]" : "border-[#e6e6e6] bg-white")}
           onClick={(event) => {
@@ -485,13 +526,13 @@ export function FieldEditor({
   return (
     <SaasFieldShell field={field}>
       {field.type === "video_url" ? (
-        <input className={saasInputClass} onChange={(event) => onChange(event.target.value)} placeholder="YouTube, Vimeo, or embed URL" value={valueString} />
+        <StagedInput className={saasInputClass} onCommit={onChange} placeholder="YouTube, Vimeo, or embed URL" value={valueString} />
       ) : field.type === "richtext" ? (
-        <textarea className={cx(saasTextareaClass, "min-h-32")} onChange={(event) => onChange(event.target.value)} placeholder="<p>Rich text content</p>" value={valueString} />
+        <StagedTextarea className={cx(saasTextareaClass, "min-h-32")} onCommit={onChange} placeholder="<p>Rich text content</p>" value={valueString} />
       ) : field.type === "html" ? (
-        <textarea className={saasCodeTextareaClass} onChange={(event) => onChange(event.target.value)} placeholder="<div>Custom HTML</div>" value={valueString} />
+        <StagedTextarea className={saasCodeTextareaClass} onCommit={onChange} placeholder="<div>Custom HTML</div>" value={valueString} />
       ) : mode === "textarea" ? (
-        <textarea className={cx(saasTextareaClass, "min-h-24")} onChange={(event) => onChange(event.target.value)} value={valueString} />
+        <StagedTextarea className={cx(saasTextareaClass, "min-h-24")} onCommit={onChange} value={valueString} />
       ) : mode === "select" ? (
         <select className={saasSelectClass} onChange={(event) => onChange(event.target.value)} value={valueString}>
           {choices.length ? choices.map((choice, index) => <option key={`${choice.value}_${index}`} value={choice.value}>{optionDisplayLabel(choice.label)}</option>) : <option value="">{optionDisplayLabel("No options available")}</option>}
@@ -499,7 +540,7 @@ export function FieldEditor({
       ) : mode === "color" ? (
         <div className="flex gap-2">
           <input className="h-9 w-11 rounded-[2px] border border-[#c4c7cc] bg-white p-1" type="color" onChange={(event) => onChange(event.target.value)} value={valueString || "#171717"} />
-          <input className={cx(saasInputClass, "min-w-0 flex-1")} onChange={(event) => onChange(event.target.value)} value={valueString} />
+          <StagedInput className={cx(saasInputClass, "min-w-0 flex-1")} onCommit={onChange} value={valueString} />
         </div>
       ) : mode === "range" ? (
         <div className="grid gap-2" data-designer-field-type="saas-range-slider">
@@ -515,7 +556,7 @@ export function FieldEditor({
           </div>
         </div>
       ) : (
-        <input className={saasInputClass} onChange={(event) => onChange(event.target.value)} value={valueString} />
+        <StagedInput className={saasInputClass} onCommit={onChange} value={valueString} />
       )}
     </SaasFieldShell>
   );

@@ -101,7 +101,7 @@ export function ErpToolbarAction({
 
   if (href) {
     return (
-      <Link className={className} href={href}>
+      <Link className={className} href={href} prefetch={false}>
         {label}
       </Link>
     );

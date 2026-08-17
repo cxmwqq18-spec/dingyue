@@ -11,6 +11,8 @@ dist
 .DS_Store
 *.log
 coverage
+artifacts/
+backups/
 tsconfig.tsbuildinfo
 .codex-artifacts/
 .codex/
@@ -18,7 +20,10 @@ tsconfig.tsbuildinfo
 output/
 work_pdf_translation/
 tmp/
+.tmp/
 .tmp-*.cjs
 public/current-*.png
 public/qa-*.png
 data/customer-assets/
+releases/backups/
+releases/.tmp/

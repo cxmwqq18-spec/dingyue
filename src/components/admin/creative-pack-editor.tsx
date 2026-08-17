@@ -203,35 +203,56 @@ function CreativePackImageManager({
   siteId,
   coverUrl,
   galleryImages,
+  galleryImageAlts,
   suggestedUrl,
   onCoverChange,
   onGalleryChange,
+  onGalleryAltsChange,
   onMessage
 }: {
   siteId: string;
   coverUrl?: string;
   galleryImages?: string[];
+  galleryImageAlts?: string[];
   suggestedUrl?: string;
   onCoverChange: (value: string) => void;
   onGalleryChange: (value: string[]) => void;
+  onGalleryAltsChange: (value: string[]) => void;
   onMessage: (value: string) => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
-  const images = useMemo(() => uniqueImages([coverUrl, ...(galleryImages ?? [])]), [coverUrl, galleryImages]);
+  const sourceImages = useMemo(() => [coverUrl, ...(galleryImages ?? [])].map((item) => item?.trim()).filter((item): item is string => Boolean(item)), [coverUrl, galleryImages]);
+  const images = useMemo(() => uniqueImages(sourceImages), [sourceImages]);
+  const imageAlts = useMemo(
+    () => images.map((imageUrl, index) => {
+      const sourceIndex = sourceImages.findIndex((item) => item === imageUrl);
+      return galleryImageAlts?.[sourceIndex >= 0 ? sourceIndex : index] ?? galleryImageAlts?.[index] ?? "";
+    }),
+    [galleryImageAlts, images, sourceImages]
+  );
 
-  function commitImages(nextImages: string[]) {
+  function commitImages(nextImages: string[], nextAlts?: string[]) {
     const cleaned = uniqueImages(nextImages);
+    const alignedAlts = cleaned.map((_, index) => nextAlts?.[index]?.trim() ?? "");
     onCoverChange(cleaned[0] ?? "");
     onGalleryChange(cleaned);
+    onGalleryAltsChange(alignedAlts);
   }
 
   function moveImage(index: number, direction: -1 | 1) {
     const target = index + direction;
     if (target < 0 || target >= images.length) return;
     const next = [...images];
+    const nextAlts = [...imageAlts];
     [next[index], next[target]] = [next[target], next[index]];
-    commitImages(next);
+    [nextAlts[index], nextAlts[target]] = [nextAlts[target], nextAlts[index]];
+    commitImages(next, nextAlts);
+  }
+
+  function updateImageAlt(index: number, value: string) {
+    const nextAlts = images.map((_, imageIndex) => (imageIndex === index ? value : imageAlts[imageIndex] ?? ""));
+    onGalleryAltsChange(nextAlts);
   }
 
   async function uploadFiles(fileList: FileList | null) {
@@ -256,7 +277,7 @@ function CreativePackImageManager({
         const url = result.url ?? result.asset?.previewUrl ?? (result.asset?.storageKey ? `/assets/${result.asset.storageKey}` : "");
         if (url) uploaded.push(url);
       }
-      commitImages([...images, ...uploaded]);
+      commitImages([...images, ...uploaded], [...imageAlts, ...uploaded.map(() => "")]);
       onMessage(`已上传 ${uploaded.length} 张主题图片。首张图片会作为封面。`);
     } catch (error) {
       onMessage(error instanceof Error ? error.message : "图片上传失败。");
@@ -294,7 +315,7 @@ function CreativePackImageManager({
           {suggestedUrl ? (
             <button
               className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-black/10 bg-white px-3 py-2 text-xs active:scale-[0.98]"
-              onClick={() => commitImages([suggestedUrl, ...images])}
+	            onClick={() => commitImages([suggestedUrl, ...images], ["", ...imageAlts])}
               type="button"
             >
               使用建议图
@@ -303,7 +324,7 @@ function CreativePackImageManager({
           <button
             className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-red-100 bg-white px-3 py-2 text-xs text-red-600 active:scale-[0.98]"
             disabled={!images.length}
-            onClick={() => commitImages([])}
+	            onClick={() => commitImages([], [])}
             type="button"
           >
             清空图片
@@ -323,11 +344,14 @@ function CreativePackImageManager({
                   </span>
                 ) : null}
               </div>
-              <div className="flex flex-wrap items-center gap-2 p-2">
+	              <div className="flex flex-wrap items-center gap-2 p-2">
                 <button
                   className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-200 text-zinc-600 disabled:opacity-35"
                   disabled={index === 0}
-                  onClick={() => commitImages([imageUrl, ...images.filter((item) => item !== imageUrl)])}
+	                  onClick={() => commitImages(
+	                    [imageUrl, ...images.filter((_, imageIndex) => imageIndex !== index)],
+	                    [imageAlts[index] ?? "", ...imageAlts.filter((_, imageIndex) => imageIndex !== index)]
+	                  )}
                   title="设为封面"
                   type="button"
                 >
@@ -353,14 +377,26 @@ function CreativePackImageManager({
                 </button>
                 <button
                   className="ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg border border-red-100 text-red-600"
-                  onClick={() => commitImages(images.filter((item) => item !== imageUrl))}
+	                  onClick={() => commitImages(
+	                    images.filter((_, imageIndex) => imageIndex !== index),
+	                    imageAlts.filter((_, imageIndex) => imageIndex !== index)
+	                  )}
                   title="删除图片"
                   type="button"
                 >
-                  <Trash2 className="h-4 w-4" strokeWidth={1.8} />
-                </button>
-              </div>
-            </div>
+	                  <Trash2 className="h-4 w-4" strokeWidth={1.8} />
+	                </button>
+	              </div>
+	              <label className="grid gap-1 border-t border-zinc-100 p-2 text-xs text-zinc-600">
+	                Alt SEO 描述
+	                <textarea
+	                  className="min-h-20 resize-y rounded-lg border border-zinc-200 bg-white px-2.5 py-2 text-xs leading-5 outline-none focus:border-zinc-400"
+	                  onChange={(event) => updateImageAlt(index, event.target.value)}
+	                  placeholder="Brazilian football fan in a green jersey cheering in a packed stadium, World Cup fan photo package preview for MyDreamShoots."
+	                  value={imageAlts[index] ?? ""}
+	                />
+	              </label>
+	            </div>
           ))}
         </div>
       ) : (
@@ -499,8 +535,9 @@ function createDraftPack(siteAiApps: SiteAiApp[]): Omit<CreativePack, "id" | "si
     status: "draft" as const,
     creditCost: 12,
     outputCount: 8,
-    trainingRequired: false,
-    imageUrl: defaultCreativePackCoverByCategory.headshots
+	    trainingRequired: false,
+	    imageUrl: defaultCreativePackCoverByCategory.headshots,
+	    galleryImageAlts: []
   };
   return {
     ...draft,
@@ -1202,12 +1239,14 @@ export function CreativePackEditor({
             />
             <span className="text-xs leading-5 text-zinc-500">建议写成英文专业提示词，包含身份保留、摄影风格、光线、构图和安全约束。</span>
           </label>
-          <CreativePackImageManager
-            coverUrl={draftPack.imageUrl}
-            galleryImages={draftPack.galleryImages}
-            onCoverChange={(value) => updateDraft("imageUrl", value)}
-            onGalleryChange={(value) => updateDraft("galleryImages", value)}
-            onMessage={setMessage}
+	          <CreativePackImageManager
+	            coverUrl={draftPack.imageUrl}
+	            galleryImages={draftPack.galleryImages}
+	            galleryImageAlts={draftPack.galleryImageAlts}
+	            onCoverChange={(value) => updateDraft("imageUrl", value)}
+	            onGalleryChange={(value) => updateDraft("galleryImages", value)}
+	            onGalleryAltsChange={(value) => updateDraft("galleryImageAlts", value)}
+	            onMessage={setMessage}
             siteId={siteId}
             suggestedUrl={suggestedCreativePackCover(draftPack)}
           />
@@ -1385,12 +1424,14 @@ export function CreativePackEditor({
                   />
                   <span className="text-xs leading-5 text-zinc-500">这里维护主题的专业摄影/生成术语；客户只选择主题，不能篡改最终 prompt。</span>
                 </label>
-                <CreativePackImageManager
-                  coverUrl={editingPack.imageUrl}
-                  galleryImages={editingPack.galleryImages}
-                  onCoverChange={(value) => update(editingPack.id, "imageUrl", value)}
-                  onGalleryChange={(value) => update(editingPack.id, "galleryImages", value)}
-                  onMessage={setMessage}
+	                <CreativePackImageManager
+	                  coverUrl={editingPack.imageUrl}
+	                  galleryImages={editingPack.galleryImages}
+	                  galleryImageAlts={editingPack.galleryImageAlts}
+	                  onCoverChange={(value) => update(editingPack.id, "imageUrl", value)}
+	                  onGalleryChange={(value) => update(editingPack.id, "galleryImages", value)}
+	                  onGalleryAltsChange={(value) => update(editingPack.id, "galleryImageAlts", value)}
+	                  onMessage={setMessage}
                   siteId={siteId}
                   suggestedUrl={suggestedCreativePackCover(editingPack)}
                 />

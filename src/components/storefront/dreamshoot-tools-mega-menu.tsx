@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { cleanHost, hostAwareSitePath } from "@/lib/domain-routing";
+import { isMydreamshootsVideoFrameworkSite } from "@/lib/mydreamshoots-video-framework";
+import { isMydreamshootsVideoGenerationSlug, publicVideoGenerationPathForSite } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { themeValueToString } from "@/lib/theme-values";
 import type { SectionBlockInstance, Site, ToolMenuItem } from "@/lib/types";
@@ -156,6 +158,10 @@ function hrefFor(site: DreamShootToolsMenuSite, href: string): string {
   const legacyPrefix = `/site/${site.slug}`;
   if (href === legacyPrefix) return routedSitePath(site, "/");
   if (href.startsWith(`${legacyPrefix}/`)) return routedSitePath(site, href.slice(legacyPrefix.length));
+  if (isPrimaryMyDreamShootsSite(site) && (href === "/tools" || href === "/tools/video-ai" || href.startsWith("/tools/"))) {
+    const toolSlug = href.slice("/tools/".length).split(/[?#]/)[0] ?? "";
+    return routedSitePath(site, isMydreamshootsVideoGenerationSlug(toolSlug) ? publicVideoGenerationPathForSite(site, toolSlug) : "/ai-video-generation");
+  }
   if ((href === "/tools/image-studio" || href === "/tools/ai-image-studio") && /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) {
     return routedSitePath(site, "/tools");
   }
@@ -172,6 +178,11 @@ function slugify(value: string): string {
 
 function isAidreamcapesSite(site: DreamShootToolsMenuSite): boolean {
   return /aidreamcapes/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+}
+
+function isPrimaryMyDreamShootsSite(site: DreamShootToolsMenuSite): boolean {
+  const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`;
+  return /mydreamshoots|dreamshoot/i.test(identity) && !/aidreamcapes|aidreamshoots/i.test(identity);
 }
 
 function isSpanishXbySite(site: DreamShootToolsMenuSite): boolean {
@@ -374,12 +385,14 @@ function aidreamcapesDefaultToolBlocks(): SectionBlockInstance[] {
 }
 
 export function getDreamshootToolBlocks(blocks: SectionBlockInstance[] | undefined, site?: DreamShootToolsMenuSite): SectionBlockInstance[] {
+  if (site && isMydreamshootsVideoFrameworkSite(site)) return [];
   const configured = (blocks ?? []).filter((block) => block.type === "tool_card").map((block) => withNormalizedToolCategory(block));
   if (configured.length) return configured;
   return site && isAidreamcapesSite(site) ? aidreamcapesDefaultToolBlocks() : dreamshootDefaultToolBlocks();
 }
 
 export function mergeDreamshootToolBlocks(blocks: SectionBlockInstance[], site?: DreamShootToolsMenuSite): SectionBlockInstance[] {
+  if (site && isMydreamshootsVideoFrameworkSite(site)) return [];
   const merged = new Map<string, SectionBlockInstance>();
   for (const block of getDreamshootToolBlocks(undefined, site)) {
     merged.set(toolBlockSlug(block), block);
@@ -433,6 +446,7 @@ export function getToolBlocksFromMenuItems(items: ToolMenuItem[]): SectionBlockI
 }
 
 export function getToolBlocksForMenu(site: DreamShootToolsMenuSite, toolMenuItems: ToolMenuItem[] = [], configuredBlocks?: SectionBlockInstance[]): SectionBlockInstance[] {
+  if (isMydreamshootsVideoFrameworkSite(site)) return [];
   const dynamicBlocks = getToolBlocksFromMenuItems(toolMenuItems);
   if (dynamicBlocks.length) return dynamicBlocks;
   const fallbackBlocks = getDreamshootToolBlocks(configuredBlocks, site);

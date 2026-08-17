@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import type { Site, ThemePage, ThemeSettings } from "@/lib/types";
+import { isMydreamshootsVideoGenerationSlug, publicCollectionPathForSite, publicVideoGenerationPathForSite } from "@/lib/photo-package-taxonomy";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo } from "@/lib/theme/policy-seo";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
 type PageSeo = NonNullable<ThemeSettings["seo"]>["pages"][string];
 type PageJsonSeo = NonNullable<ThemePage["publishedJson"]["seo"]>;
-const myDreamShootsSeoName = "MyDreamShoots";
+const myDreamShootsSeoName = "myDreamshoots";
 const myDreamShootsBrandPattern = /(?:myᕲreamshoots|ʍʏƉʀɛǟʍֆhoots|MyÐreãm\$hoots)/g;
 
 function cleanText(value: string | undefined, fallback = ""): string {
@@ -52,7 +53,7 @@ function normalizeStorefrontBrandText(site: Site, value: string | undefined, fal
     .replace(/\bMydreamShoots\b/g, brandName)
     .replace(/\bMydreamshoots\b/g, brandName)
     .replace(/\bDreamShootAI\b/g, brandName)
-    .replace(/\bMyDreamShoots-xby-xby\b/g, "MyDreamShoots-xby")
+    .replace(/\bMyDreamShoots-xby-xby\b/g, "myDreamshoots-xby")
     .replace(/\bAidreamcapes-xby-xby\b/g, "Aidreamcapes-xby");
 }
 
@@ -81,6 +82,32 @@ function normalizeCanonicalPath(value: string | undefined, fallbackSlug: string)
   if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) return trimmed;
   if (trimmed.startsWith("/")) return trimmed;
   return `/${trimmed}`;
+}
+
+function canonicalizeCollectionPathForSite(site: Site, path: string): string {
+  if (path === "/collections") return publicCollectionPathForSite(site, "");
+  if (path.startsWith("/collections/")) return publicCollectionPathForSite(site, path.slice("/collections/".length));
+  if (path === "/ai-image-generation") return publicCollectionPathForSite(site, "");
+  if (path.startsWith("/ai-image-generation/")) return publicCollectionPathForSite(site, path.slice("/ai-image-generation/".length));
+  if (isMyDreamShootsSeoSite(site) && path === "/tools") return publicVideoGenerationPathForSite(site, "");
+  if (isMyDreamShootsSeoSite(site) && path.startsWith("/tools/")) {
+    const slug = path.slice("/tools/".length);
+    if (isMydreamshootsVideoGenerationSlug(slug)) return publicVideoGenerationPathForSite(site, slug);
+  }
+  return path;
+}
+
+function normalizeLaunchSeoPath(value: string | undefined): string {
+  const trimmed = cleanText(value);
+  if (!trimmed) return "/";
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    try {
+      return new URL(trimmed).pathname.replace(/\/+$/, "") || "/";
+    } catch {
+      return trimmed;
+    }
+  }
+  return `/${trimmed.replace(/^\/+|\/+$/g, "")}` || "/";
 }
 
 function defaultRobotsForPage(page: Pick<ThemePage, "slug" | "pageType">): { index: boolean; follow: boolean } {
@@ -113,7 +140,7 @@ function isAidreamcapesSeoSite(site: Site): boolean {
 
 function isMyDreamShootsSeoSite(site: Site): boolean {
   const token = `${site.id} ${site.slug} ${site.primaryDomain} ${site.name} ${site.branding.logoText}`.toLowerCase();
-  return token.includes("mydreamshoots") || site.id === "site_dreamshoot";
+  return token.includes("mydreamshoots") || token.includes("dreamshoot") || site.id === "site_dreamshoot";
 }
 
 function isSpanishXbySeoSite(site: Site): boolean {
@@ -238,7 +265,8 @@ function storefrontLaunchChecklistSeo(
   slug: string,
   seo: Pick<PageSeo, "title" | "description" | "keywords">
 ): Pick<PageSeo, "title" | "description" | "keywords"> {
-  if (slug !== "/") return seo;
+  const normalizedSlug = normalizeLaunchSeoPath(slug);
+  if (normalizedSlug !== "/") return seo;
   if (isSpanishAidreamcapesXbySeoSite(site)) {
     const brand = spanishXbyBrandName(site);
     return {
@@ -267,10 +295,10 @@ function storefrontLaunchChecklistSeo(
   }
   if (!isMyDreamShootsSeoSite(site)) return seo;
   return {
-    title: "Professional AI Photo Generator Online - MyDreamShoots",
+    title: "Professional AI Photo Generator Online - myDreamshoots",
     description:
-      "Create sports fan photos, VIP-style portraits, Christmas group photos, Thanksgiving portraits, and Halloween party albums from your selfies with MyDreamShoots.",
-    keywords: "Dream Shoots,Sports Fan Photos,VIP Style Portraits,Christmas Group Photos,Thanksgiving Photos,Halloween Party Photos,AI Photo Generator"
+      "Create AI headshots, portraits, themed photo sets, editing workflows, and supported short video results from your own approved photos. Compare examples and credit costs before you generate.",
+    keywords: "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
   };
 }
 
@@ -306,31 +334,39 @@ function knownStorefrontSeoOverride(site: Site, slug: string): Partial<PageSeo> 
   }
   const overrides: Record<string, Partial<PageSeo>> = {
     "/collections": {
-      title: "Browse private AI photo packages | MyDreamShoots",
-      description: "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs."
+      title: "Browse private AI photo packages | myDreamshoots",
+      description: "Browse myDreamshoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs."
     },
-    "/collections/headshots": {
-      title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | MyDreamShoots",
+    "/ai-image-generation": {
+      title: "AI Image Generation Packages | myDreamshoots",
+      description: "Browse private AI image generation packages for headshots, couple photos, creator portraits, seasonal themes, creative looks, and photo editing."
+    },
+    "/collections/headshot": {
+      title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | myDreamshoots",
       description: "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs."
     },
-    "/collections/world-cup-fan-photos": {
-      title: "AI World Cup Fan Photos & Match-Day Posters | MyDreamShoots",
+    "/ai-image-generation/headshot": {
+      title: "AI Headshot Generator for LinkedIn, Resumes & Team Photos | myDreamshoots",
+      description: "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs."
+    },
+    "/collections/soccer": {
+      title: "AI World Cup Fan Photos & Match-Day Posters | myDreamshoots",
       description: "Create personal AI World Cup fan photos, match-day posters, and profile avatars from your own selfies for private fan use."
     },
     "/collections/boudoir": {
-      title: "Private AI Boudoir Photo Package | MyDreamShoots",
+      title: "Private AI Boudoir Photo Package | myDreamshoots",
       description: "Create private boudoir-inspired AI portraits for adult, consensual use from photos you own or have permission to use."
     },
     "/pricing": {
-      title: "MyDreamShoots Pricing | Credits for Private AI Headshot Generator",
-      description: "Compare MyDreamShoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery."
+      title: "myDreamshoots Pricing | Credits for Private AI Headshot Generator",
+      description: "Compare myDreamshoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery."
     },
     "/tools": {
-      title: "AI Photo Tools with Free Previews | Background, Headshots & Try-ons | MyDreamShoots",
-      description: "Explore MyDreamShoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums."
+      title: "AI Photo Tools with Free Previews | Background, Headshots & Try-ons | myDreamshoots",
+      description: "Explore myDreamshoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums."
     },
     "/help": {
-      title: "MyDreamShoots FAQ",
+      title: "myDreamshoots FAQ",
       description: "Get FAQ answers for source photos, package selection, credits, billing, refunds, privacy, cookies, and private album delivery.",
       canonicalPath: "/faq"
     }
@@ -515,11 +551,11 @@ export function metadataForThemePage(site: Site, page: ThemePage): Metadata {
   const defaultRobots = defaultRobotsForPage(page);
   const title = applyTitleTemplate(normalizeStorefrontBrandText(site, pageSeo.title || seo.siteTitle), seo.titleTemplate, site);
   const description = normalizeStorefrontBrandText(site, pageSeo.description, seo.siteDescription);
-  const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
+  const canonicalPath = canonicalizeCollectionPathForSite(site, normalizeCanonicalPath(pageSeo.canonicalPath, page.slug));
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || seo.defaultOgImage);
   const icons = siteIcons(site);
-  const launchChecklistSeo = storefrontLaunchChecklistSeo(site, page.slug, { title, description, keywords: pageSeo.keywords });
+  const launchChecklistSeo = storefrontLaunchChecklistSeo(site, canonicalPath, { title, description, keywords: pageSeo.keywords });
   const finalTitle = launchChecklistSeo.title;
   const finalDescription = launchChecklistSeo.description;
   const finalKeywords = launchChecklistSeo.keywords;
@@ -582,11 +618,11 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage): Metadat
   };
   const title = applyTitleTemplate(normalizeStorefrontBrandText(site, pageSeo.title || siteTitle), titleTemplate, site);
   const description = normalizeStorefrontBrandText(site, pageSeo.description, siteDescription);
-  const canonicalPath = normalizeCanonicalPath(pageSeo.canonicalPath, page.slug);
+  const canonicalPath = canonicalizeCollectionPathForSite(site, normalizeCanonicalPath(pageSeo.canonicalPath, page.slug));
   const canonical = absoluteUrl(site, canonicalPath);
   const ogImage = absoluteUrl(site, pageSeo.ogImage || defaultOgImage);
   const icons = siteIcons(site);
-  const launchChecklistSeo = storefrontLaunchChecklistSeo(site, page.slug, { title, description, keywords: pageSeo.keywords });
+  const launchChecklistSeo = storefrontLaunchChecklistSeo(site, canonicalPath, { title, description, keywords: pageSeo.keywords });
   const finalTitle = launchChecklistSeo.title;
   const finalDescription = launchChecklistSeo.description;
   const finalKeywords = launchChecklistSeo.keywords;
