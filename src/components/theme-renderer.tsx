@@ -27,6 +27,7 @@ import { StorefrontInstantLink, StorefrontLinkPrefetchProvider, type StorefrontI
 import { AiVideoTopicLanding } from "@/components/storefront/ai-video-topic-landing";
 import { TalkingPhotoLanding } from "@/components/storefront/talking-photo-landing";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
+import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
 import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { dreamshootPackProfileForPack, dreamshootPackProfileForSlug, type DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
@@ -129,7 +130,8 @@ import {
   photoPackageLabel,
   photoPackageSlug
 } from "@/lib/photo-package-taxonomy";
-import { isMydreamshootsPublicVideoGenerationTopicSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
+import { isMydreamshootsPublicVideoGenerationTopicSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationThemeSeeds, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
+import { talkingPhotoContent } from "@/lib/talking-photo-content";
 import { themeValueToList, themeValueToString } from "@/lib/theme-values";
 import type {
   CreativePack,
@@ -991,6 +993,25 @@ function headerVideoGenerationTopicsForClient(site: Site, categories: VideoTheme
         href: hrefFor(site, videoGenerationCreatePath(definition.slug))
       }];
     });
+}
+
+const defaultMydreamshootsVideoThemeCover = "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.png";
+
+const mydreamshootsVideoThemeSeedImageBySlug = new Map<string, string>(
+  mydreamshootsVideoGenerationThemeSeeds
+    .filter((theme) => theme.imageUrl)
+    .map((theme) => [theme.slug, theme.imageUrl])
+);
+
+function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic, fallbackImageUrl = defaultMydreamshootsVideoThemeCover) {
+  const detailHeroImage = topic.slug === "talking-photo"
+    ? talkingPhotoContent.hero.image
+    : aiVideoTopicLandingContentByKey[topic.slug]?.hero.image;
+  const seedImageUrl = mydreamshootsVideoThemeSeedImageBySlug.get(topic.slug);
+  return {
+    alt: detailHeroImage?.alt || `${topic.label} AI video theme cover`,
+    src: detailHeroImage?.src || seedImageUrl || fallbackImageUrl
+  };
 }
 
 export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [] }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[] }) {
@@ -13255,7 +13276,7 @@ function SectionView({
     const layout = setting(section, "layout", "directory");
     const mydreamshootsVideoFramework = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXbySite(site) && !aidreamcapes && !primaryMyDreamShoots;
     if (primaryMyDreamShoots && renderContext.pagePath === "/ai-video-generation" && layout === "video_theme_grid") {
-      const coverImageUrl = setting(section, "imageUrl", "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.png");
+      const fallbackCoverImageUrl = setting(section, "imageUrl", defaultMydreamshootsVideoThemeCover);
       const topicDescriptions = new Map<string, string>(mydreamshootsVideoGenerationCategories.map((topic) => [topic.slug, topic.description]));
       const topics = headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes)
         .filter((topic) => isMydreamshootsPublicVideoGenerationTopicSlug(topic.slug));
@@ -13279,40 +13300,43 @@ function SectionView({
               </div>
             </div>
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {topics.map((topic, index) => (
-                <Link
-                  className="group/theme relative overflow-hidden rounded-[8px] border border-white/12 bg-[#121018] text-white shadow-[0_24px_70px_-56px_rgba(0,0,0,0.92)] transition duration-300 hover:-translate-y-1 hover:border-[#c4b5fd]/55 hover:bg-[#17131f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd]/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09080d]"
-                  data-video-theme-card={topic.slug}
-                  href={topic.href}
-                  key={topic.id}
-                  prefetch={false}
-                >
-                  <div className="relative aspect-video overflow-hidden bg-[#211c2c]">
-                    <img
-                      alt={manualImageAlt({ src: coverImageUrl, fallback: `${topic.label} AI video theme cover portrait` })}
-                      className="h-full w-full object-cover transition duration-500 group-hover/theme:scale-[1.035]"
-                      decoding="async"
-                      loading={index === 0 ? "eager" : "lazy"}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      src={coverImageUrl}
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,8,13,0)_34%,rgba(9,8,13,0.82)_100%)]" />
-                    <span className="absolute left-3 top-3 rounded-full border border-white/16 bg-black/44 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/82 backdrop-blur">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <div className="min-h-[178px] p-5">
-                    <h2 className="text-xl font-semibold leading-tight tracking-normal text-white">{topic.label}</h2>
-                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/66">
-                      {topicDescriptions.get(topic.slug) ?? "Open this AI video theme guide."}
-                    </p>
-                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ddd7ff] transition group-hover/theme:text-white">
-                      Open theme
-                      <ChevronRight className="h-4 w-4 shrink-0 transition group-hover/theme:translate-x-0.5" strokeWidth={1.9} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
+              {topics.map((topic, index) => {
+                const coverImage = mydreamshootsVideoThemeDirectoryCover(topic, fallbackCoverImageUrl);
+                return (
+                  <Link
+                    className="group/theme relative overflow-hidden rounded-[8px] border border-white/12 bg-[#121018] text-white shadow-[0_24px_70px_-56px_rgba(0,0,0,0.92)] transition duration-300 hover:-translate-y-1 hover:border-[#c4b5fd]/55 hover:bg-[#17131f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd]/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09080d]"
+                    data-video-theme-card={topic.slug}
+                    href={topic.href}
+                    key={topic.id}
+                    prefetch={false}
+                  >
+                    <div className="relative aspect-video overflow-hidden bg-[#211c2c]">
+                      <img
+                        alt={manualImageAlt({ src: coverImage.src, fallback: coverImage.alt })}
+                        className="h-full w-full object-cover transition duration-500 group-hover/theme:scale-[1.035]"
+                        decoding="async"
+                        loading={index === 0 ? "eager" : "lazy"}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        src={coverImage.src}
+                      />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,8,13,0)_34%,rgba(9,8,13,0.82)_100%)]" />
+                      <span className="absolute left-3 top-3 rounded-full border border-white/16 bg-black/44 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/82 backdrop-blur">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <div className="min-h-[178px] p-5">
+                      <h2 className="text-xl font-semibold leading-tight tracking-normal text-white">{topic.label}</h2>
+                      <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/66">
+                        {topicDescriptions.get(topic.slug) ?? "Open this AI video theme guide."}
+                      </p>
+                      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ddd7ff] transition group-hover/theme:text-white">
+                        Open theme
+                        <ChevronRight className="h-4 w-4 shrink-0 transition group-hover/theme:translate-x-0.5" strokeWidth={1.9} />
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>

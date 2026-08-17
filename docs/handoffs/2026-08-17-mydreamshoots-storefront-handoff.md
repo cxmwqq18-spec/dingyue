@@ -55,7 +55,7 @@ MyDreamShoots 本地代码已经包含新的 AI Video Generation 主题目录和
 | `[data-video-theme-card]` 数量 | 9 |
 | 桌面首行卡片数 | 4 |
 | 移动宽度 `390px` | 无横向溢出，`scrollWidth=390` |
-| 卡片封面 | 全部使用 `/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.png` |
+| 卡片封面 | 使用各视频主题详情页的 hero/cover 图片 |
 | 旧内容 | 未出现 `Paid AI photo tools`、`Studio tools are the on-ramp`、`Photo packages`、`Image To Video Concept`、`Profile Clip Maker` |
 
 9 个公开主题：
@@ -79,7 +79,7 @@ MyDreamShoots 本地代码已经包含新的 AI Video Generation 主题目录和
 | 路由 | 本地 | 线上 | 结论 |
 | --- | --- | --- | --- |
 | `/` | 200，title/canonical/keywords 与线上一致，但 description 与 H1 不一致 | 200，H1 为 `Upload selfies and create your own AI model - Headshot without a studio.` | 存在客户可见文案漂移，上线前必须处理 |
-| `/ai-video-generation` | 200，H1 为 `AI Video Generation`，9 个主题卡，使用 Talking Photo 封面 | 200，H1 为 `Paid AI photo tools for better source images.`，仍有旧 photo-tool 内容 | 本地新目录未上线 |
+| `/ai-video-generation` | 200，H1 为 `AI Video Generation`，9 个主题卡，使用各主题详情封面 | 200，H1 为 `Paid AI photo tools for better source images.`，仍有旧 photo-tool 内容 | 本地新目录未上线 |
 | `/ai-video-generation/talking-photo` | 200，H1 为 `Make a Photo Talk Without Recording Another Take` | 404 | 本地新增详情页未上线 |
 | `/best-packages` | 200，title/description/canonical/H1 与线上一致 | 200 | SEO 主信号一致；本地 header/menu 链接数更多 |
 | `/best-ai-image` | 200，title/description/canonical/H1 与线上一致 | 200 | SEO 主信号一致；本地 header/menu 链接数更多 |
