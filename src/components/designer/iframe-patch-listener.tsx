@@ -52,6 +52,22 @@ export function IframePatchListener() {
       }
     }
 
+    function clickedTextFromTarget(target: Element | null, section: HTMLElement) {
+      let current: Element | null = target;
+      while (current && current !== section.parentElement) {
+        const text = [
+          current.getAttribute("aria-label"),
+          current.getAttribute("title"),
+          current.textContent
+        ].find((value) => value?.replace(/\s+/g, " ").trim());
+        const normalized = text?.replace(/\s+/g, " ").trim() ?? "";
+        if (normalized && normalized.length <= 220) return normalized;
+        if (current === section) break;
+        current = current.parentElement;
+      }
+      return "";
+    }
+
     function onMessage(event: MessageEvent) {
       if (!isIframePatchPayload(event.data)) return;
       if (event.data.act === "reload") {
@@ -108,6 +124,7 @@ export function IframePatchListener() {
           act: "previewSelect",
           id,
           blockId,
+          clickedText: clickedTextFromTarget(target, section),
           sectionType: section.dataset.sectionType ?? ""
         },
         "*"
@@ -120,6 +137,7 @@ export function IframePatchListener() {
       if (!section) return;
       const id = section.dataset.sectionId;
       if (!id) return;
+      const submitter = "submitter" in event && event.submitter instanceof Element ? event.submitter : target;
       event.preventDefault();
       event.stopPropagation();
       selectSection(id, "", { scroll: false });
@@ -128,6 +146,7 @@ export function IframePatchListener() {
           act: "previewSelect",
           id,
           blockId: "",
+          clickedText: clickedTextFromTarget(submitter, section),
           sectionType: section.dataset.sectionType ?? ""
         },
         "*"

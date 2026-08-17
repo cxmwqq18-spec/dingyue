@@ -182,6 +182,7 @@ model Site {
   creativePacks          CreativePack[]
   videoThemeCategories   VideoThemeCategory[]
   videoThemes            VideoTheme[]
+  videoThemeSlugRedirects VideoThemeSlugRedirect[]
   mediaAssets            MediaAsset[]
   customerModels         CustomerModel[]
   albums                 Album[]
@@ -780,15 +781,17 @@ model VideoTheme {
   durationSeconds Int                 @default(6)
   maxFrames       Int                 @default(30)
   generationCount Int                 @default(0)
+  sortOrder       Int                 @default(0)
   imageUrl        String?
   galleryImages   Json?
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
   site            Site                @relation(fields: [siteId], references: [id], onDelete: Cascade)
   category        VideoThemeCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  slugRedirects   VideoThemeSlugRedirect[]
 
   @@unique([siteId, slug])
-  @@index([siteId, status])
+  @@index([siteId, status, sortOrder])
   @@index([siteId, categoryId])
   @@index([siteId, status, createdAt])
 }
@@ -799,6 +802,8 @@ model VideoThemeCategory {
   slug        String
   label       String
   description String?
+  icon        String?
+  accentColor String?
   imageUrl    String?
   sortOrder   Int          @default(0)
   status      String       @default("active")
@@ -810,6 +815,19 @@ model VideoThemeCategory {
   @@unique([siteId, slug])
   @@index([siteId, sortOrder])
   @@index([siteId, status])
+}
+
+model VideoThemeSlugRedirect {
+  id        String      @id
+  siteId    String
+  themeId   String?
+  oldSlug   String
+  createdAt DateTime    @default(now())
+  site      Site        @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  theme     VideoTheme? @relation(fields: [themeId], references: [id], onDelete: SetNull)
+
+  @@unique([siteId, oldSlug])
+  @@index([siteId, themeId])
 }
 
 model CustomerModel {

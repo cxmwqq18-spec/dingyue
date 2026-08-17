@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { findPage } from "@/lib/data";
 import {
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
@@ -15,6 +15,7 @@ import { publicSiteSlug } from "@/lib/domain-routing";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
+import { getVideoThemeSlugRedirectRelational } from "@/lib/stores/site-store";
 
 const dreamshootPartnerTemplateSlugs = new Set([
   "/workflow",
@@ -200,7 +201,14 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const videoGenerationRoute = isVideoGenerationRequest ? parsePublicVideoGenerationRouteForSite(site, path) : undefined;
   if (isVideoGenerationRequest) {
     if (!videoGenerationRoute) return {};
-    if (videoGenerationRoute.itemSlug) return metadataForSeoDirectory(site, "tool", videoGenerationRoute.itemSlug);
+    if (videoGenerationRoute.itemSlug) {
+      const theme = state.videoThemes?.find((item) => item.siteId === site.id && item.status === "active" && item.slug === videoGenerationRoute.itemSlug);
+      const redirectRecord = await getVideoThemeSlugRedirectRelational(site.id, videoGenerationRoute.itemSlug);
+      const detailPage = findPage(site, `/ai-video-generation/${videoGenerationRoute.itemSlug}`);
+      if (!theme && !redirectRecord?.theme && !detailPage) return {};
+      const canonicalSlug = redirectRecord?.theme?.status === "active" ? redirectRecord.theme.slug : videoGenerationRoute.itemSlug;
+      return metadataForSeoDirectory(site, "tool", canonicalSlug);
+    }
     return metadataForDreamshootFallbackRoute(publicSiteSlug(siteSlug), "/ai-video-generation", {
       primaryDomain: site.primaryDomain,
       ogImage: site.themeSettings.publishedJson.seo?.defaultOgImage,
@@ -317,6 +325,13 @@ export default async function SiteCatchAllPage({
   if (isVideoGenerationRequest) {
     if (!videoGenerationRoute) notFound();
     if (videoGenerationRoute.itemSlug) {
+      const redirectRecord = await getVideoThemeSlugRedirectRelational(publicSite.id, videoGenerationRoute.itemSlug);
+      if (redirectRecord?.theme?.status === "active" && redirectRecord.theme.slug !== videoGenerationRoute.itemSlug) {
+        permanentRedirect(routePath(`/ai-video-generation/${redirectRecord.theme.slug}`));
+      }
+      const theme = state.videoThemes?.find((item) => item.siteId === publicSite.id && item.status === "active" && item.slug === videoGenerationRoute.itemSlug);
+      const detailPage = findPage(publicSite, `/ai-video-generation/${videoGenerationRoute.itemSlug}`);
+      if (!theme && !detailPage) notFound();
       return renderToolPage({
         site: publicSite,
         toolSlug: videoGenerationRoute.itemSlug,

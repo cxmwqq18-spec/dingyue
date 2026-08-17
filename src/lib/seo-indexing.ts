@@ -2,7 +2,7 @@ import { readStorefrontPlatformStateFromDatabase, readStorefrontPlatformStateFro
 import { getSiteByHostCandidatesFromState } from "@/lib/domain-routing";
 import { canonicalSeoDirectoryPathForSite, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import {
-  MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS,
+  MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS,
   creativePackCollectionHref,
   isMydreamshootsVideoGenerationSlug,
   parsePublicCollectionRouteForSite,
@@ -37,7 +37,7 @@ const FALLBACK_INDEXABLE_PATHS = [
   "/workflow",
   "/ai-image-generation",
   "/ai-video-generation",
-  ...MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS.map((slug) => `/ai-video-generation/${slug}`),
+  ...MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS.map((slug) => `/ai-video-generation/${slug}`),
   "/privacy",
   "/terms",
   "/cookies",
@@ -152,8 +152,9 @@ const REQUIRED_INDEXABLE_TOOL_PATHS = [
   "/tools/virtual-try-on"
 ];
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
-  ...MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS.map((slug) => `/ai-video-generation/${slug}`)
+  ...MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS.map((slug) => `/ai-video-generation/${slug}`)
 ];
+const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_SLUGS = new Set<string>(MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS);
 const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/best-packages", "/best-ai-image", "/best-ai-video"];
 const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"];
 const SITEMAP_STATIC_FALLBACK_LASTMOD = "2026-08-01T00:00:00.000Z";
@@ -791,9 +792,15 @@ function isBlockedPublicPathForSite(site: Site, path: string): boolean {
   if (isDreamshootSite(site)) {
     if (path === "/collections" || path.startsWith("/collections/") || path === "/tools" || path.startsWith("/tools/") || path === "/ai-photoshoot" || path.startsWith("/ai-photoshoot/")) return true;
     if (path.startsWith("/ai-image-generation/") && !parsePublicCollectionRouteForSite(site, path)) return true;
-    if (path.startsWith("/ai-video-generation/") && !parsePublicVideoGenerationRouteForSite(site, path)) return true;
+    if (path.startsWith("/ai-video-generation/") && !isPublicVideoGenerationSitemapPath(site, path)) return true;
   }
   return isBlockedPublicPath(path);
+}
+
+function isPublicVideoGenerationSitemapPath(site: Site, path: string): boolean {
+  if (!isDreamshootSite(site)) return Boolean(parsePublicVideoGenerationRouteForSite(site, path));
+  if (path === "/ai-video-generation") return true;
+  return DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS.includes(path);
 }
 
 function isIndexableSeoDirectoryPath(site: Site, path: string): boolean {
@@ -803,7 +810,7 @@ function isIndexableSeoDirectoryPath(site: Site, path: string): boolean {
     if (route?.kind === "directory") return true;
     return isExplicitSeoDirectoryContentForSite(site, "collection", normalized);
   }
-  if (isVideoGenerationDirectoryPath(site, normalized)) return true;
+  if (isVideoGenerationDirectoryPath(site, normalized)) return isPublicVideoGenerationSitemapPath(site, normalized);
   if (normalized.startsWith("/tools/")) {
     if (isDreamshootSite(site)) return false;
     if (isExplicitSeoDirectoryContentForSite(site, "tool", normalized)) return true;
@@ -960,7 +967,7 @@ function isIndexableToolPath(site: Site, path: string): boolean {
 function addToolPath(site: Site, paths: Set<string>, path: string): void {
   const normalized = canonicalToolPathForSite(site, path);
   if (isVideoGenerationDirectoryPath(site, normalized)) {
-    paths.add(normalized);
+    if (isPublicVideoGenerationSitemapPath(site, normalized)) paths.add(normalized);
     return;
   }
   if (isIndexableToolPath(site, normalized)) paths.add(normalized);
@@ -1008,6 +1015,10 @@ function addPublicPath(state: PlatformState, site: Site, paths: Set<string>, hre
     addCollectionPath(state, site, paths, normalized);
     return;
   }
+  if (isVideoGenerationDirectoryPath(site, normalized)) {
+    if (isPublicVideoGenerationSitemapPath(site, normalized)) paths.add(normalized);
+    return;
+  }
   if (normalized.startsWith("/tools/")) {
     addToolPath(site, paths, normalized);
     return;
@@ -1034,7 +1045,7 @@ function collectExplicitSeoDirectoryPaths(site: Site): string[] {
   const collections = getExplicitSeoDirectorySlugsForSite(site, "collection").map((slug) => canonicalSeoDirectoryPathForSite(site, "collection", slug));
   const tools = getExplicitSeoDirectorySlugsForSite(site, "tool")
     .map((slug) => canonicalToolPathForSite(site, `/tools/${slug}`))
-    .filter((path) => !isDreamshootSite(site) || isVideoGenerationDirectoryPath(site, path));
+    .filter((path) => !isDreamshootSite(site) || DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS.includes(path));
   return Array.from(new Set([...collections, ...tools]));
 }
 
@@ -1057,7 +1068,7 @@ function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[
 
   for (const siteApp of state.siteAiApps.filter((app) => app.siteId === site.id && app.enabled)) {
     if (isDreamshootSite(site)) {
-      if (isMydreamshootsVideoGenerationSlug(siteApp.aiApp.slug)) addToolPath(site, paths, publicVideoGenerationPathForSite(site, siteApp.aiApp.slug));
+      if (DREAMSHOOT_DEFAULT_PUBLIC_TOOL_SLUGS.has(siteApp.aiApp.slug)) addToolPath(site, paths, publicVideoGenerationPathForSite(site, siteApp.aiApp.slug));
     } else if (isExplicitSeoDirectoryContentForSite(site, "tool", siteApp.aiApp.slug)) {
       addToolPath(site, paths, pathFromSlug("/tools", siteApp.aiApp.slug));
     }

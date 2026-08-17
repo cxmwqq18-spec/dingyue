@@ -9,7 +9,7 @@ import {
 import { PropertyInspector } from "@/components/designer/property-inspector";
 import { PropertyPanelBody, PropertyPanelHeader } from "@/components/designer/property-panel";
 import { DesignerSelectionEditor } from "@/components/designer/designer-selection-editor";
-import type { GlobalLocalField, GlobalSettingsNodeDefinition, Selection } from "@/components/designer/designer-types";
+import type { GlobalLocalField, GlobalSettingsNodeDefinition, PropertyFieldFocusRequest, Selection } from "@/components/designer/designer-types";
 import type { DesignerWorkspaceTab } from "@/components/designer/designer-workspace-pane";
 import type { FieldOptions } from "@/components/designer/field-editor-types";
 import type {
@@ -92,7 +92,8 @@ export function DesignerPropertyPane({
   deleteSection,
   moveSection,
   duplicateSection,
-  addBlock
+  addBlock,
+  fieldFocusRequest
 }: {
   workspaceTab: DesignerWorkspaceTab;
   selection: Selection;
@@ -144,6 +145,7 @@ export function DesignerPropertyPane({
   moveSection: (sectionId: string, direction: -1 | 1) => void;
   duplicateSection: (sectionId: string) => void;
   addBlock: (sectionId: string, blockSchema: ThemeBlockSchema) => void;
+  fieldFocusRequest?: PropertyFieldFocusRequest;
 }) {
   const isGlobalSelection =
     selection.kind === "global" ||
@@ -249,6 +251,7 @@ export function DesignerPropertyPane({
                 editGlobalBlockSetting={editGlobalBlockSetting}
                 editGlobalSetting={editGlobalSetting}
                 editSectionSetting={editSectionSetting}
+                fieldFocusRequest={fieldFocusRequest}
                 fieldOptions={fieldOptions}
                 labelForSchema={labelForSchema}
                 mediaAssets={mediaAssets}

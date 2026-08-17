@@ -93,6 +93,7 @@ import {
 import {
   type DesignerDragState,
   type GlobalLocalField,
+  type PropertyFieldFocusRequest,
   type Selection
 } from "@/components/designer/designer-types";
 import { fetchAdminJson } from "@/components/admin/admin-api-client";
@@ -100,6 +101,11 @@ import {
   groupFieldsByIds
 } from "@/components/designer/designer-types";
 import { parseFieldValue } from "@/components/designer/field-editor-registry";
+import {
+  isEditableTextPropertyField,
+  isLocatablePropertyField,
+  propertyFieldGroupFor
+} from "@/components/designer/designer-property-groups";
 import type { DesignerResourceKind, DesignerResourceStatus, FieldOptions } from "@/components/designer/field-editor-types";
 import type { DesignerToolbarMenuOption } from "@/components/designer/designer-toolbar-primitives";
 import {
@@ -314,6 +320,32 @@ function fallbackLocatorLabel(fieldId: string) {
   return fieldDisplayLabel({ id: fieldId, label: fieldId });
 }
 
+function selectionScopeKey(selection: Selection): string {
+  if (selection.kind === "section") return `section:${selection.sectionId}`;
+  if (selection.kind === "block") return `block:${selection.sectionId}:${selection.blockId}`;
+  if (selection.kind === "global") return `global:${selection.globalType}`;
+  if (selection.kind === "globalBlock") return `globalBlock:${selection.globalType}:${selection.blockId}`;
+  return `globalSettings:${selection.node}`;
+}
+
+function normalizedPreviewMatchText(value: string) {
+  return stripLocatorText(value)
+    .toLowerCase()
+    .replace(/[“”‘’"'`]+/g, "")
+    .replace(/[，。！？；：、,.!?;:()[\]{}<>|/\\_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function previewTextLooksMatched(candidateText: string, clickedText: string) {
+  const candidate = normalizedPreviewMatchText(candidateText);
+  const clicked = normalizedPreviewMatchText(clickedText);
+  if (!candidate || !clicked) return false;
+  if (candidate === clicked) return true;
+  if (candidate.length >= 2 && clicked.includes(candidate)) return true;
+  return clicked.length >= 2 && candidate.includes(clicked);
+}
+
 function applyThemePackageSettingsToDraftSettings(base: ThemeSettings, siteSettings?: ThemePackageSiteSettings): ThemeSettings {
   const next = normalizeGlobalSections(cloneSettings(base));
   const packageSettings = siteSettings?.themeSettings;
@@ -460,6 +492,7 @@ export function DesignerClient({
   const [publishBusy, setPublishBusy] = useState(false);
   const [tutorialOpen, setTutorialOpen] = useState(false);
   const [locatorBreadcrumb, setLocatorBreadcrumb] = useState<string | undefined>(undefined);
+  const [fieldFocusRequest, setFieldFocusRequest] = useState<PropertyFieldFocusRequest | undefined>(undefined);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>(() =>
     expansionStateForPage(initialPage?.draftJson, initialPage?.draftJson.sectionsOrder[0])
   );
@@ -474,6 +507,8 @@ export function DesignerClient({
   const dirtyPageIdsRef = useRef<Set<string>>(new Set());
   const themeSettingsDirtyRef = useRef(false);
   const previewSelectionLockUntilRef = useRef(0);
+  const fieldFocusRequestIdRef = useRef(0);
+  const choosePreviewSelectionRef = useRef<(sectionId: string, blockId?: string, clickedText?: string, preferredFieldId?: string) => void>(() => undefined);
   const [publishedPages, setPublishedPages] = useState<Record<string, ThemePageJson>>(
     Object.fromEntries(pages.map((page) => [page.id, clonePage(page.publishedJson)]))
   );
@@ -815,6 +850,67 @@ export function DesignerClient({
   const selectedBlockSchema = activeBlockSchema ?? activeGlobalBlockSchema;
   const selectedBlockSettings = selectedBlockSchema?.settings ?? [];
 
+  function fieldsForSelectionTarget(targetSelection: Selection): { fields: ThemeFieldSchema[]; values: Record<string, ThemeSettingValue> } | undefined {
+    if (targetSelection.kind === "section") {
+      const section = draft.sections[targetSelection.sectionId];
+      if (!section) return undefined;
+      return { fields: schemaForType(section.type).settings, values: section.settings };
+    }
+    if (targetSelection.kind === "block") {
+      const section = draft.sections[targetSelection.sectionId];
+      const block = safeBlocks(section).find((item) => item.id === targetSelection.blockId);
+      const blockSchema = section && block ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, section, block.type) : undefined;
+      if (!block || !blockSchema) return undefined;
+      return { fields: blockSchema.settings, values: block.settings };
+    }
+    if (targetSelection.kind === "global") {
+      const section = themeSettings.globalSections?.[targetSelection.globalType];
+      if (!section) return undefined;
+      return { fields: schemaForType(section.type).settings, values: section.settings };
+    }
+    if (targetSelection.kind === "globalBlock") {
+      const section = themeSettings.globalSections?.[targetSelection.globalType];
+      const block = safeBlocks(section).find((item) => item.id === targetSelection.blockId);
+      const blockSchema = section && block ? resolveBlockSchemaFromSchemas(selectedSaasSectionSchemas, section, block.type) : undefined;
+      if (!block || !blockSchema) return undefined;
+      return { fields: blockSchema.settings, values: block.settings };
+    }
+    return undefined;
+  }
+
+  function fieldFocusForSelection(
+    targetSelection: Selection,
+    clickedText = "",
+    preferredFieldId = ""
+  ): { fieldId: string; label: string } | undefined {
+    const fieldContext = fieldsForSelectionTarget(targetSelection);
+    if (!fieldContext) return undefined;
+    const entries = fieldContext.fields
+      .filter(isLocatablePropertyField)
+      .map((field) => ({
+        field,
+        text: locatorTextFromValue(readThemeFieldValue(fieldContext.values, field) ?? field.default)
+      }));
+    if (!entries.length) return undefined;
+    if (preferredFieldId) {
+      const preferred = entries.find((entry) => entry.field.id === preferredFieldId);
+      if (preferred) return { fieldId: preferred.field.id, label: fieldDisplayLabel(preferred.field) };
+    }
+    const normalizedClickedText = normalizedPreviewMatchText(clickedText);
+    if (normalizedClickedText) {
+      const exact = entries.find((entry) => normalizedPreviewMatchText(entry.text) === normalizedClickedText);
+      if (exact) return { fieldId: exact.field.id, label: fieldDisplayLabel(exact.field) };
+      const partial = entries.find((entry) => previewTextLooksMatched(entry.text, clickedText));
+      if (partial) return { fieldId: partial.field.id, label: fieldDisplayLabel(partial.field) };
+    }
+    const actionFallback = entries.find((entry) => propertyFieldGroupFor(entry.field) === "actions" && entry.text);
+    if (actionFallback) return { fieldId: actionFallback.field.id, label: fieldDisplayLabel(actionFallback.field) };
+    const contentFallback = entries.find((entry) => isEditableTextPropertyField(entry.field));
+    if (contentFallback) return { fieldId: contentFallback.field.id, label: fieldDisplayLabel(contentFallback.field) };
+    const firstEditable = entries[0];
+    return firstEditable ? { fieldId: firstEditable.field.id, label: fieldDisplayLabel(firstEditable.field) } : undefined;
+  }
+
   function defaultSectionForType(type: SectionType): SectionInstance {
     const schema = schemaForType(type);
     const preset = schema.presets?.[0];
@@ -862,6 +958,7 @@ export function DesignerClient({
       if (!text) return;
       pushItem({
         id: `${idBase}:${field.id}`,
+        fieldId: field.id,
         label: fieldDisplayLabel(field),
         path,
         selection,
@@ -1017,6 +1114,7 @@ export function DesignerClient({
         source: "navigation",
         sourceLabel: "导航菜单",
         text: [link.label, link.href, link.group].filter(Boolean).join(" / "),
+        fieldId: "header_links",
         workspaceTab: "global"
       });
     });
@@ -1029,6 +1127,7 @@ export function DesignerClient({
         source: "navigation",
         sourceLabel: "导航菜单",
         text: [link.label, link.href, link.group].filter(Boolean).join(" / "),
+        fieldId: "footer_links",
         workspaceTab: "global"
       });
     });
@@ -1050,6 +1149,7 @@ export function DesignerClient({
         source: "seo",
         sourceLabel: "SEO",
         text,
+        fieldId: `seo_${id.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`)}`,
         workspaceTab: "global"
       });
     });
@@ -1151,7 +1251,16 @@ export function DesignerClient({
     previewSelectionLockUntilRef.current = Date.now() + durationMs;
   }
 
-  function chooseSelection(nextSelection: Selection, options?: { syncPreview?: boolean; scrollPreview?: boolean; lockPreviewSelection?: boolean }) {
+  function chooseSelection(
+    nextSelection: Selection,
+    options?: {
+      syncPreview?: boolean;
+      scrollPreview?: boolean;
+      lockPreviewSelection?: boolean;
+      focusFieldId?: string;
+      clearFieldFocus?: boolean;
+    }
+  ) {
     if (options?.lockPreviewSelection !== false) lockPreviewSelectionUpdates();
     if (nextSelection.kind === "section" || nextSelection.kind === "block") {
       setExpandedSections((current) => ({ ...current, [nextSelection.sectionId]: true }));
@@ -1161,6 +1270,15 @@ export function DesignerClient({
     }
     setLocatorBreadcrumb(undefined);
     setSelection(nextSelection);
+    if (options?.focusFieldId) {
+      setFieldFocusRequest({
+        fieldId: options.focusFieldId,
+        requestId: ++fieldFocusRequestIdRef.current,
+        scopeKey: selectionScopeKey(nextSelection)
+      });
+    } else if (options?.clearFieldFocus !== false) {
+      setFieldFocusRequest(undefined);
+    }
     if (options?.syncPreview !== false && previewMode === "interactive") {
       syncSelectionToIframe(nextSelection, { scroll: options?.scrollPreview ?? true });
     }
@@ -1168,6 +1286,7 @@ export function DesignerClient({
 
   function switchEditorTab(nextTab: DesignerWorkspaceTab) {
     setActiveTab(nextTab);
+    setFieldFocusRequest(undefined);
     const nextSelection = selectionForEditorTab({
       nextTab,
       currentSelection: selection,
@@ -1216,7 +1335,7 @@ export function DesignerClient({
 
   function chooseCopyLocatorItem(item: DesignerCopyLocatorItem) {
     if (item.workspaceTab) setActiveTab(item.workspaceTab);
-    if (item.selection) chooseSelection(item.selection);
+    if (item.selection) chooseSelection(item.selection, { focusFieldId: item.fieldId });
     setLocatorBreadcrumb(item.path);
     setLastAction(
       item.readOnly
@@ -1253,6 +1372,16 @@ export function DesignerClient({
   useEffect(() => {
     function onPreviewMessage(event: MessageEvent<IframeDesignerMessage>) {
       if (event.source !== iframeRef.current?.contentWindow) return;
+      if (event.data?.act === "previewSelect" && typeof event.data.id === "string") {
+        if (Date.now() < previewSelectionLockUntilRef.current) return;
+        choosePreviewSelectionRef.current(
+          event.data.id,
+          typeof event.data.blockId === "string" ? event.data.blockId : "",
+          typeof event.data.clickedText === "string" ? event.data.clickedText : "",
+          typeof event.data.fieldId === "string" ? event.data.fieldId : ""
+        );
+        return;
+      }
       if (previewMode === "interactive" && event.data?.act === "previewNavigate" && typeof event.data.href === "string") {
         try {
           const targetUrl = new URL(event.data.href, window.location.origin);
@@ -1951,7 +2080,13 @@ export function DesignerClient({
       publishedVersion
     });
     if (!result.ok) {
-      setLastAction(result.status === 409 ? "发布已拦截：你确认时看到的页面、全局设置或线上版本已经变化，请刷新后重新检查。" : "发布失败，当前草稿仍已保留。");
+      setLastAction(
+        result.status === 409 && result.error === "theme_publish_global_visual_changes_unacknowledged"
+          ? "发布已拦截：当前草稿包含全局视觉变化，请到发布历史页查看具体变化并勾选确认后再发布。"
+          : result.status === 409
+            ? "发布已拦截：你确认时看到的页面、全局设置或线上版本已经变化，请刷新后重新检查。"
+            : "发布失败，当前草稿仍已保留。"
+      );
       return;
     }
     if (result.pageDraftVersions) setDraftVersions(result.pageDraftVersions);
@@ -2121,17 +2256,20 @@ export function DesignerClient({
     setLastAction(`已套用「${themePackage.name}」到 ${nextDraftEntries.length} 个页面草稿，并同步品牌、导航、页眉、页脚、SEO 全局装修；线上页面仍需发布后生效。`);
   }
 
-  function choosePreviewSelection(sectionId: string, blockId = "") {
+  function choosePreviewSelection(sectionId: string, blockId = "", clickedText = "", preferredFieldId = "") {
     const nextState = selectionFromPreviewMessage({
-      message: { act: "previewSelect", id: sectionId, blockId },
+      message: { act: "previewSelect", id: sectionId, blockId, clickedText, fieldId: preferredFieldId },
       draft,
       themeSettings
     });
     if (!nextState) return;
+    const focusTarget = fieldFocusForSelection(nextState.selection, clickedText, preferredFieldId);
     setActiveTab(nextState.tab);
-    chooseSelection(nextState.selection, { lockPreviewSelection: false });
-    setLastAction(nextState.actionLabel.replace("iframe preview", "编辑定位预览"));
+    chooseSelection(nextState.selection, { lockPreviewSelection: false, focusFieldId: focusTarget?.fieldId });
+    const focusMessage = focusTarget ? `已聚焦「${focusTarget.label}」。` : "未匹配到具体字段，已定位到模块。";
+    setLastAction(`${nextState.actionLabel.replace("iframe preview", "编辑定位预览")} ${focusMessage}`);
   }
+  choosePreviewSelectionRef.current = choosePreviewSelection;
 
   const activePackageCard =
     themePackageApplyCards.find((item) => item.key === (activeIndustryThemeKey === "ai_subscription_theme1" ? "dreamshoot-ai-studio" : activeIndustryThemeKey)) ??
@@ -2139,7 +2277,7 @@ export function DesignerClient({
     themePackageApplyCards[0];
   const templateApplyControl = industryThemePackages.length ? (
     <div
-      className="flex h-[40px] min-w-[420px] max-w-[720px] flex-1 items-center overflow-hidden rounded-[10px] border border-white/10 bg-[#101722] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+      className="flex h-[40px] min-w-[360px] max-w-[560px] shrink-0 items-center overflow-hidden rounded-[10px] border border-white/10 bg-[#101722] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
       data-designer-layout="saas-theme-package-strip"
     >
       <div className="flex h-full min-w-0 flex-1 items-center gap-2 border-r border-white/10 px-3">
@@ -2477,6 +2615,7 @@ export function DesignerClient({
           editGlobalBlockSetting,
           editGlobalSetting,
           editSectionSetting,
+          fieldFocusRequest,
           fieldOptions,
           labelForSchema,
           mediaAssets,

@@ -33,7 +33,7 @@ for (let index = 0; index < rawArgs.length; index += 1) {
 const siteId = String(args.get("site-id") ?? process.env.MYDREAMSHOOTS_SITE_ID ?? "site_dreamshoot");
 const liveOrigin = cleanOrigin(args.get("origin") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_ORIGIN ?? "https://www.mydreamshoots.com");
 const localOrigin = cleanOrigin(args.get("local-origin") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_LOCAL_ORIGIN ?? "");
-const guardPaths = parsePaths(args.get("paths") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_PATHS, ["/", "/pricing", "/tools", "/collections", "/workflow", "/faq"]);
+const guardPaths = parsePaths(args.get("paths") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_PATHS, ["/", "/pricing", "/ai-video-generation", "/ai-image-generation", "/workflow", "/faq"]);
 const skipLive = flags.has("skip-live") || process.env.MYDREAMSHOOTS_CONTENT_GUARD_LIVE === "0";
 const includeLocalJson = flags.has("include-local-json") || process.env.MYDREAMSHOOTS_CONTENT_GUARD_LOCAL_JSON === "1";
 const skipLocalJson = flags.has("skip-local-json") || !includeLocalJson;
@@ -41,7 +41,7 @@ const skipHomepageLock = flags.has("skip-homepage-lock");
 const writeHomepageLock = flags.has("write-homepage-lock");
 const timeoutMs = positiveInt(args.get("timeout-ms") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_TIMEOUT_MS, 45_000);
 const minLiveCoverage = boundedNumber(args.get("min-live-coverage") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MIN_LIVE_COVERAGE, 0.62, 0, 1);
-const pathMinLiveCoverage = parsePathCoverage(args.get("min-live-coverage-by-path") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MIN_LIVE_COVERAGE_BY_PATH, { "/tools": 0.58 });
+const pathMinLiveCoverage = parsePathCoverage(args.get("min-live-coverage-by-path") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MIN_LIVE_COVERAGE_BY_PATH, { "/ai-video-generation": 0.58 });
 const maxLiveRecords = positiveInt(args.get("max-live-records") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_MAX_LIVE_RECORDS, 90);
 const failures = [];
 const warnings = [];

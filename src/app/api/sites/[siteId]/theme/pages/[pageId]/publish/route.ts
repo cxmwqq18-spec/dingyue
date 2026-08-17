@@ -30,6 +30,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     expectedPageVersions?: Record<string, DraftVersionPayload | undefined>;
     expectedSettingsVersion?: DraftVersionPayload;
     expectedPublishedVersion?: number;
+    acknowledgedGlobalVisualChanges?: boolean;
   };
   try {
     const expectedPageVersions = body.expectedPageVersions
@@ -43,7 +44,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       pageVersions: expectedPageVersions,
       settingsVersion: expectedDraftVersion(body.expectedSettingsVersion),
       expectedPublishedVersion: body.expectedPublishedVersion,
-      requireSnapshotVersions: true
+      requireSnapshotVersions: true,
+      acknowledgedGlobalVisualChanges: body.acknowledgedGlobalVisualChanges === true
     });
     return NextResponse.json({
       ok: true,

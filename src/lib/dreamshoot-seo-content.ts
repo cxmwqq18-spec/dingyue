@@ -837,7 +837,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     useCases: ["Image-to-video social drafts", "Creator intro clips", "Product teaser motion", "Album story previews from approved stills"],
     workflow: ["Choose a Video AI format.", "Upload or select one finished visual.", "Describe motion, pacing, and final channel.", "Review the private clip and download or plan the next video."],
     internalLinks: [
-      { label: "Open image to video", href: "/ai-video-generation/image-to-video" },
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
       { label: "Browse video examples", href: "/best-ai-video" },
       { label: "Review pricing and credits", href: "/pricing" }
     ],
@@ -977,6 +977,30 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     ctaLabel: "Upscale My Image",
     ctaHref: "/app/create?tool_id=magic-upscaler"
   },
+  "text-to-video": {
+    label: "Text to Video",
+    title: "AI Text to Video - create short clips from written prompts with myDreamshoots",
+    description: "Use myDreamshoots Text to Video to turn a written scene direction into a short private video workflow with credit review, prompt guidance, and result review before publishing.",
+    keywords: "AI Text to Video, text to video AI, prompt to video generator, private AI video workflow, myDreamshoots video",
+    h2: "text to video",
+    h3: ["Text to video prompt guide", "Short clip output planning", "Private video review"],
+    intro: "Start from a written idea when you do not have a finished source image yet. Text to Video helps customers frame the subject, setting, motion, duration, and final use before opening the private video workspace.",
+    details: [
+      "Write a specific scene direction with the main subject, setting, motion, mood, camera movement, aspect ratio, and intended channel.",
+      "Keep product claims, people, brands, and events truthful; do not create misleading endorsements, official-looking footage, or unverifiable claims.",
+      "Review the full clip for identity drift, unwanted text, visual artifacts, pacing issues, and unsupported claims before using it publicly.",
+      "Use the result as a private draft, a creative direction test, or a starting point before generating a more controlled image-to-video clip."
+    ],
+    useCases: ["Prompt-led creator clips", "Concept videos before source images exist", "Story scene drafts", "Campaign motion tests from written ideas"],
+    workflow: ["Write a focused video prompt.", "Choose the video workflow and review the credit cost.", "Generate a private short clip.", "Review the result before publishing or iterating."],
+    internalLinks: [
+      { label: "Compare Image to Video", href: "/ai-video-generation/image-to-video" },
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Review pricing and credits", href: "/pricing" }
+    ],
+    ctaLabel: "Create a Text to Video Clip",
+    ctaHref: "/app/create?videoMode=text-to-video#step-video"
+  },
   "image-to-video": {
     label: "Image to Video",
     title: "AI Image to Video - create short clips from still images with myDreamshoots",
@@ -999,6 +1023,253 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
       { label: "Review pricing and credits", href: "/pricing" }
     ],
     ctaLabel: "Create a Short Video",
+    ctaHref: "/app/create?videoMode=image-to-video#step-video"
+  },
+  "talking-photo": {
+    label: "Talking Photo",
+    title: "AI Talking Photo Generator – Make a Photo Talk | myDreamshoots",
+    description:
+      "Make a photo talk from one clear portrait and a short script. Create talking-photo videos for birthday wishes, personal messages, explainers, social intros, product pitches, and holiday greetings.",
+    keywords:
+      "AI talking photo generator, make a photo talk, talking photo AI, photo talking video, talking picture generator, speaking photo generator, animate a photo to talk, talking portrait",
+    h2: "make a photo talk without recording another take",
+    h3: ["Choose a clearer source portrait", "Write a script that sounds like speech", "Review the result before sharing"],
+    intro:
+      "Talking Photo is a customer-first workflow for people who have a clear portrait and a focused message but do not want to set up another recording session. Learn how to choose a usable source photo, write a shorter script, and review the full result in context.",
+    details: [
+      "Use one clearly visible face with unobstructed eyes and mouth, even lighting, enough resolution, and a background that does not compete with the subject.",
+      "Start with one useful idea per sentence. Put the important noun early, use punctuation for rhythm, and read the script aloud before moving into a generation workflow.",
+      "Only animate portraits and voices you own or have permission to use. Do not create synthetic endorsements, confessions, promises, or statements that a real person did not make.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools; Talking Photo-specific generation availability may vary."
+    ],
+    useCases: ["Birthday greetings", "Personal thank-you messages", "Education and explainer intros", "Creator and social hooks", "Product introductions", "Holiday greetings"],
+    workflow: ["Choose a clear portrait.", "Write one focused message.", "Open the current video workspace.", "Review the complete result before publishing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Open the Video Workspace",
+    ctaHref: "/app/create#step-video"
+  },
+  "cinematic-video": {
+    label: "Cinematic Video",
+    title: "AI Cinematic Video Generator – Create Story-Driven Cinematic Clips | myDreamshoots",
+    description:
+      "Create cinematic videos with stronger mood, shot design, lighting, pacing, and camera movement. Turn ideas into short-film-style scenes for noir stories, luxury launches, music clips, sci-fi concepts, period moods, and brand storytelling.",
+    keywords:
+      "AI cinematic video generator, cinematic video maker, cinematic AI video, create cinematic video, story-driven video generator, cinematic scene generator, short film style AI video, AI video with camera movement and mood",
+    h2: "create a more cinematic video without a full film crew",
+    h3: ["Cinematic use cases", "Mood, shot, pacing, movement, and lighting guidance", "Responsible cinematic video review"],
+    intro:
+      "Cinematic Video helps customers describe the mood, shot design, pacing, movement, lighting, and visual world they want before opening the current video workspace.",
+    details: [
+      "Use it for noir character scenes, luxury reveals, music performance clips, sci-fi concepts, period moods, and brand story openers.",
+      "Describe the feeling, framing, pacing, camera movement, lighting, and key details instead of using cinematic as a vague one-word prompt.",
+      "Avoid misleading scenes, unverified endorsements, false events, and product claims the source material does not support.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Noir character scenes", "Luxury auto reveals", "Music performance clips", "Sci-fi concepts", "Period drama moods", "Brand story openers"],
+    workflow: ["Upload an approved source or idea.", "Describe mood, shot type, movement, lighting, and details.", "Create a cinematic draft with available settings.", "Review the result before sharing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create My Cinematic Video",
+    ctaHref: "/app/create#step-video"
+  },
+  "tiktok-video": {
+    label: "TikTok Video",
+    title: "AI TikTok Video Generator – Create TikTok-First Vertical Videos | myDreamshoots",
+    description:
+      "Turn photos and ideas into TikTok-first vertical videos with a clearer hook, mobile-safe framing, sound-aware structure, captions, and a focused close. Build short demos, micro-lessons, creator stories, event snippets, and campaign videos.",
+    keywords:
+      "AI TikTok video generator, TikTok video maker, AI TikTok video creator, make TikTok videos from photos, vertical video generator, TikTok content creator, TikTok video from images, short-form video maker",
+    h2: "turn your photos and ideas into TikTok-first videos",
+    h3: ["TikTok use cases", "Hook, body, sound, and close guidance", "TikTok publishing review"],
+    intro:
+      "TikTok Video helps customers shape approved photos and ideas around a stronger hook, vertical framing, safe text placement, captions, sound, and a focused close.",
+    details: [
+      "Use it for visual hooks, micro-lessons, storytime clips, event insights, founder demos, and seasonal campaign drafts.",
+      "Plan the hook, message, supporting visual, sound direction, and close before opening the workspace.",
+      "Avoid virality, reach, engagement, or sales promises because no creative tool can guarantee algorithmic outcomes.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Visual hooks", "Micro-lessons", "Storytime or advice clips", "Event insights", "Product proof demos", "Seasonal campaign videos"],
+    workflow: ["Upload approved source material.", "Describe the TikTok task, hook, audience, tone, and close.", "Create a vertical draft with available settings.", "Review crop, safe zones, audio rights, claims, and disclosure before publishing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create My TikTok Video",
+    ctaHref: "/app/create#step-video"
+  },
+  "instagram-reels": {
+    label: "Instagram Reels",
+    title: "AI Instagram Reels Generator – Create Reels From Photos & Ideas | myDreamshoots",
+    description:
+      "Turn photos and ideas into Instagram Reels with 9:16 framing, safer text placement, stronger cover choices, captions, audio-aware pacing, and a clear visual story for tutorials, BTS, portfolios, launches, and product demos.",
+    keywords:
+      "AI Instagram Reels generator, Instagram Reels maker, create Instagram Reels from photos, AI Reels generator, Instagram video maker, vertical Reels creator, make Reels from images, Instagram short video generator",
+    h2: "turn photos and ideas into reels that fit your feed",
+    h3: ["Instagram Reels use cases", "Cover, opening, visual story, caption, and audio guidance", "Reels publishing review"],
+    intro:
+      "Instagram Reels helps customers turn approved source material into cover-aware, vertical, readable, audio-aware Reel drafts that still fit their account's visual identity.",
+    details: [
+      "Use it for before-after transformations, mini tutorials, behind-the-scenes clips, portfolio showcases, announcements, and product demos.",
+      "Plan the cover, first frame, visual sequence, caption and audio direction, and close before opening the workspace.",
+      "Avoid reach, saves, followers, sales, or commercial-rights promises that are not confirmed by the live product and terms.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Before-after transformations", "Mini tutorials", "Behind-the-scenes reels", "Portfolio showcases", "Launch announcements", "Product demos"],
+    workflow: ["Upload approved photos, clips, or visual starting material.", "Describe the Reel audience, cover idea, opening, sequence, tone, and close.", "Create a vertical draft with available settings.", "Review cover, crop, safe zones, captions, audio rights, claims, and disclosure before publishing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create My Instagram Reel",
+    ctaHref: "/app/create#step-video"
+  },
+  "social-media-video": {
+    label: "Social Media Video",
+    title: "AI Social Media Video Maker – Adapt One Idea Across Platforms | myDreamshoots",
+    description:
+      "Turn one core idea into platform-aware social media videos. Adapt hooks, crops, captions, audio, pacing, safe zones, and CTAs for TikTok, Instagram Reels, YouTube Shorts, campaigns, testimonials, events, and weekly content.",
+    keywords:
+      "AI social media video maker, social media video generator, AI social video maker, create videos for social media, multi-platform video creator, social media content video maker, repurpose content into social videos, make vertical social media videos",
+    h2: "create one strong story and adapt it to the social feed",
+    h3: ["Cross-platform social video use cases", "Master story and platform cut guidance", "Rights, claims, and disclosure review"],
+    intro:
+      "Social Media Video helps customers start from one truthful master story, then adapt the crop, hook, captions, audio, pacing, safe zones, and CTA for each destination.",
+    details: [
+      "Use it for multi-platform launches, evergreen repurposing, customer stories, event content cycles, weekly batches, and audience-specific cuts.",
+      "Keep the core claim, evidence, rights, and brand identity consistent while adapting the opening, frame, captions, sound, pacing, and next action.",
+      "Avoid one-click-publish-everywhere claims unless the live product actually supports them.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Multi-platform launches", "Evergreen content repurposing", "Customer stories", "Event content cycles", "Weekly content batches", "Audience adaptation"],
+    workflow: ["Upload an approved source library.", "Define the master story, audience, evidence, and outcome.", "Create platform-aware cuts with available settings.", "Review crop, safe zones, captions, rights, claims, links, and disclosure before publishing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create My Social Video",
+    ctaHref: "/app/create#step-video"
+  },
+  "youtube-video": {
+    label: "YouTube Video",
+    title: "AI YouTube Video Generator – Create Long-Form Videos From Photos & Ideas | myDreamshoots",
+    description:
+      "Create YouTube videos from photos and ideas with a stronger opening, clearer structure, chapter-ready sequencing, captions, and a better path to the next video, playlist, or deeper explanation.",
+    keywords:
+      "AI YouTube video generator, YouTube video maker, AI long-form video generator, create YouTube videos, make YouTube videos from photos, YouTube content creator, long-form YouTube video maker, video generator for YouTube channel",
+    h2: "turn a bigger idea into a video worth watching through",
+    h3: ["Long-form YouTube use cases", "Promise, opening, chapters, depth, and next-video guidance", "YouTube rights, claims, and disclosure review"],
+    intro:
+      "YouTube Video helps customers shape bigger topics into clearer long-form drafts with a stronger opening, better structure, caption planning, and a relevant next step.",
+    details: [
+      "Use it for tutorials, reviews, expert conversations, case studies, webinar recaps, and playlist episodes.",
+      "Plan the promise, opening minute, chapter structure, depth, captions, and next-video path before opening the workspace.",
+      "Avoid views, subscribers, ranking, monetization, duration, or chapter-support promises that are not confirmed by the live product.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Full tutorials", "Reviews and comparisons", "Expert interviews", "Case studies", "Webinar recaps", "Series or playlist episodes"],
+    workflow: ["Upload an approved photo, clip, slide, topic, or concept.", "Describe the viewer problem, structure, pacing, depth, captions, and next step.", "Create a draft with available settings.", "Review structure, captions, claims, rights, context, and disclosure before publishing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create My YouTube Video",
+    ctaHref: "/app/create#step-video"
+  },
+  "story-video": {
+    label: "Story Video",
+    title: "AI Story Video Generator – Turn Photos & Moments Into a Clear Story | myDreamshoots",
+    description:
+      "Turn photos, clips, memories, and ideas into story-led videos with a clearer setup, tension, turning point, payoff, and meaning. Create origin stories, personal journeys, comeback stories, mini documentaries, community stories, and fictional shorts.",
+    keywords:
+      "AI story video generator, story video maker, AI storytelling video generator, turn photos into a story video, narrative video generator, create story videos from photos, short story video maker, AI video story creator",
+    h2: "turn photos, clips, and real moments into a story worth watching",
+    h3: ["Six story video jobs", "Setup, tension, turning point, payoff, and meaning", "Responsible story review"],
+    intro:
+      "Story Video helps customers shape approved material around the change at the heart of a story instead of simply arranging events in chronological order.",
+    details: [
+      "Use it for origin stories, personal journeys, comeback stories, mini documentaries, community stories, and fictional shorts.",
+      "Define who is experiencing the story, what changes, what gets in the way, and what the ending should mean.",
+      "Keep factual stories faithful to what happened and do not invent hardship, conflict, quotes, endorsements, or outcomes.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Origin stories", "Personal journeys", "Comeback stories", "Mini documentaries", "Community stories", "Fictional shorts"],
+    workflow: ["Share approved photos, clips, quotes, notes, or a fictional concept.", "Choose the story type.", "Define setup, tension, turning point, payoff, and meaning.", "Generate and review the draft before sharing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create My Story Video",
+    ctaHref: "/app/create#step-video"
+  },
+  "meme-video": {
+    label: "Meme Video",
+    title: "AI Meme Video Generator – Make Reaction, POV & Relatable Meme Videos | myDreamshoots",
+    description:
+      "Turn photos, reactions, comments, awkward moments, and everyday situations into meme videos with bold captions, reaction timing, POV setups, expectation-vs-reality edits, and punchlines people instantly understand.",
+    keywords:
+      "AI meme video generator, meme video maker, reaction meme video, AI meme generator video, POV meme video maker, create meme videos from photos, funny reaction video maker, meme caption video, relatable meme video creator",
+    h2: "turn everyday moments into meme videos everyone instantly gets",
+    h3: ["Meme video scenarios", "The meme formula that works", "Responsible meme creation"],
+    intro:
+      "Meme Video helps customers turn a recognizable reaction, awkward moment, comment, pet expression, work frustration, or everyday situation into a short, clear setup-and-punchline video.",
+    details: [
+      "Use it for reaction memes, expectation-vs-reality edits, POV moments, deadpan captions, comment replies, and brand-safe situational humor.",
+      "Build around one idea: recognize the situation, set the expectation, flip it, land the punchline, and stop before the joke needs explaining.",
+      "Keep captions readable, timing intentional, and the source material truthful to the people, brands, comments, and situations represented.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Reaction memes", "Expectation vs. reality", "POV and relatable moments", "Deadpan caption memes", "Comment and reply memes", "Brand-safe situational memes"],
+    workflow: ["Share an approved image, clip, comment, reaction, or idea.", "Plan the setup, expectation, flip, and punchline.", "Generate scenes with available settings.", "Add captions and sound, then review rights, context, and sharing fit."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore TikTok Video", href: "/ai-video-generation/tiktok-video" },
+      { label: "Explore Instagram Reels", href: "/ai-video-generation/instagram-reels" },
+      { label: "Explore Story Video", href: "/ai-video-generation/story-video" },
+      { label: "Explore Social Media Video", href: "/ai-video-generation/social-media-video" }
+    ],
+    ctaLabel: "Create My Meme Video",
+    ctaHref: "/app/create#step-video"
+  },
+  "product-video": {
+    label: "Product Video",
+    title: "AI Product Video Generator – Turn Product Photos Into Clear Videos | myDreamshoots",
+    description:
+      "Turn product photos and source images into videos that show scale, materials, features, real-world use, packaging, and the details buyers need before they decide.",
+    keywords:
+      "AI product video generator, product video maker, product showcase video, ecommerce product video, product video from images, product video generator from photos, product page video, product marketing video",
+    h2: "turn product photos into videos that answer buyer questions",
+    h3: ["Buyer questions product video can answer", "Product clarity method", "Responsible product accuracy review"],
+    intro:
+      "Product Video helps customers turn approved product photos and source shots into a clearer product evaluation video instead of a generic advertisement.",
+    details: [
+      "Use it when static product photos do not answer scale, material, real-use, feature, packaging, included-item, or product-page fit questions.",
+      "Build around one method: buyer question, visual proof, real context, important detail, and next step.",
+      "Keep product color, scale, materials, included items, visible features, compatibility, and performance claims faithful to the actual item.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Size and scale", "Material and detail", "Real-world use", "Feature proof", "What's included", "Product-page fit"],
+    workflow: ["Use accurate product images or approved source shots.", "Name the buyer question.", "Describe the proof shots that must be visible.", "Generate with available settings and review against product reality."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore Social Media Video", href: "/ai-video-generation/social-media-video" },
+      { label: "Explore YouTube Video", href: "/ai-video-generation/youtube-video" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create My Product Video",
     ctaHref: "/app/create#step-video"
   },
   "world-cup-fan-photos": {
@@ -1114,14 +1385,15 @@ const dreamshootDefaultPublicToolSlugs = new Set([
   "nature-adventure",
   "fashion-editorial",
   "product-lifestyle",
-  "image-to-video",
-  "profile-clip",
-  "fan-poster-motion",
-  "creator-intro-video",
-  "product-teaser-clip",
-  "animated-avatar",
-  "fashion-reel",
-  "album-story-video",
+  "talking-photo",
+  "cinematic-video",
+  "tiktok-video",
+  "instagram-reels",
+  "social-media-video",
+  "youtube-video",
+  "story-video",
+  "meme-video",
+  "product-video",
   "background-changer",
   "background-remover",
   "magic-eraser",

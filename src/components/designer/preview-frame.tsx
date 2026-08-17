@@ -109,7 +109,7 @@ export function PreviewFrame({
   onPreviewViewportChange: (preset: PreviewViewportPreset) => void;
   onIframeLoad: () => void;
   onIframeRetry: () => void;
-  onLivePreviewSelect: (sectionId: string, blockId?: string) => void;
+  onLivePreviewSelect: (sectionId: string, blockId?: string, clickedText?: string) => void;
   onRollback: () => void;
   onSaveDraft: () => void;
   onPublishDraft: () => void;
@@ -224,6 +224,22 @@ export function PreviewFrame({
     `
     : "";
 
+  function clickedTextFromTarget(target: Element | null, section: HTMLElement) {
+    let current: Element | null = target;
+    while (current && current !== section.parentElement) {
+      const text = [
+        current.getAttribute("aria-label"),
+        current.getAttribute("title"),
+        current.textContent
+      ].find((value) => value?.replace(/\s+/g, " ").trim());
+      const normalized = text?.replace(/\s+/g, " ").trim() ?? "";
+      if (normalized && normalized.length <= 220) return normalized;
+      if (current === section) break;
+      current = current.parentElement;
+    }
+    return "";
+  }
+
   function onLivePreviewClick(event: React.MouseEvent<HTMLDivElement>) {
     const target = event.target instanceof Element ? event.target : null;
     const section = target?.closest<HTMLElement>(".xfcart-section[data-section-id]");
@@ -233,7 +249,11 @@ export function PreviewFrame({
     const block = target?.closest<HTMLElement>("[data-xfcart-block-id], [data-xfcart-block-legacy-id]");
     event.preventDefault();
     event.stopPropagation();
-    onLivePreviewSelect(sectionId, block?.getAttribute("data-xfcart-block-id") ?? block?.getAttribute("data-xfcart-block-legacy-id") ?? undefined);
+    onLivePreviewSelect(
+      sectionId,
+      block?.getAttribute("data-xfcart-block-id") ?? block?.getAttribute("data-xfcart-block-legacy-id") ?? undefined,
+      clickedTextFromTarget(target, section)
+    );
   }
 
   const onPreviewWheel = useMemo(() => {
@@ -336,8 +356,8 @@ export function PreviewFrame({
       </DesignerTopbarShell>
 
       <div className="border-b border-[#c4c7cc] bg-[#eef1f5] px-4 py-2">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+        <div className="flex items-center gap-3 overflow-x-auto overflow-y-hidden">
+          <div className="flex shrink-0 items-center gap-2 whitespace-nowrap">
             <DesignerToolbarMenu
               className="!h-[40px] !w-[190px] flex-none"
               onValueChange={onPageSelect}
@@ -388,7 +408,7 @@ export function PreviewFrame({
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 text-[11px] text-[#667085]">
+          <div className="flex shrink-0 items-center gap-2 text-[11px] text-[#667085]">
             <span className="inline-flex h-[40px] items-center rounded-[10px] border border-[#d9dde4] bg-white px-3">
               改动模块 {changedSectionCount}
             </span>

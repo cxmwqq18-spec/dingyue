@@ -21,8 +21,7 @@ const expectedHomeOrders = {
     "package_catalog_1",
     "proof_1",
     "faq_1",
-    "conversion_1",
-    "brand_strip_1"
+    "conversion_1"
   ],
   aidreamcapes: [
     "hero_1",
@@ -39,7 +38,7 @@ const expectedHomeOrders = {
   ]
 };
 const removedHomeSectionsByStore = {
-  mydreamshoots: ["mobile_video_1", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
+  mydreamshoots: ["mobile_video_1", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "brand_strip_1"],
   aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
 };
 const expectedMydreamshootsTutorialVideos = {
@@ -50,8 +49,6 @@ const expectedBestPackagesOrder = ["intro_1", "featured_pack_1", "featured_chris
 const expectedImageShowcasePriorityCount = 8;
 const expectedHomepageImageGridCardCount = 16;
 const expectedHomepageVideoGridCardCount = 8;
-const expectedTrustedLogoCount = 30;
-const expectedMydreamshootsTrustedLogoRoot = "/assets/dreamshoot/brand/trusted-creators-dark-v2/";
 const expectedImageShowcaseCardCountByStore = {
   mydreamshoots: 38,
   aidreamcapes: 28
@@ -263,7 +260,11 @@ function assertPage(pageJson, label, storeKey) {
   assert(pageJson?.sections?.package_catalog_1?.type === "dreamshoot_package_catalog", `${label}: wrong package catalog section type`);
   assert(pageJson?.sections?.proof_1?.type === "testimonial_wall", `${label}: wrong review section type`);
   assert(pageJson?.sections?.conversion_1?.type === "conversion_panel", `${label}: missing conversion CTA before customer types`);
-  assert(pageJson?.sections?.brand_strip_1?.type === "brand_logo_strip", `${label}: missing customer type strip before footer`);
+  if (storeKey === "aidreamcapes") {
+    assert(pageJson?.sections?.brand_strip_1?.type === "brand_logo_strip", `${label}: missing customer type strip before footer`);
+  } else {
+    assert(!pageJson?.sections?.brand_strip_1, `${label}: MyDreamShoots footer logo strip should be removed`);
+  }
   for (const sectionId of removedHomeSectionsByStore[storeKey] ?? []) {
     assert(!pageJson?.sections?.[sectionId], `${label}: obsolete homepage section still present: ${sectionId}`);
   }
@@ -305,26 +306,20 @@ function assertPage(pageJson, label, storeKey) {
   assert(!pageJson?.sectionsOrder?.includes("pricing_1"), `${label}: pricing_1 should be embedded in showcase instead of ordered at the bottom`);
   assertMydreamshootsTutorialPair(pageJson, `${label}: mydreamshoots tutorials`);
   assert(Number(pageJson?.sections?.package_catalog_1?.settings?.featuredCount ?? 0) === 12, `${label}: homepage package catalog should feature 12 packs`);
-  assert(pageJson?.sections?.proof_1?.settings?.mode === "reviews", `${label}: testimonial wall should render customer reviews`);
-  assert((pageJson?.sections?.proof_1?.blocks ?? []).length >= 6, `${label}: expected at least 6 review cards`);
+  assert(pageJson?.sections?.proof_1?.settings?.mode === "use_cases", `${label}: testimonial wall should render workflow examples`);
+  assert((pageJson?.sections?.proof_1?.blocks ?? []).length >= 6, `${label}: expected at least 6 workflow example cards`);
   assert((pageJson?.sections?.faq_1?.blocks ?? []).length >= 12, `${label}: expected expanded FAQ content`);
   assert(Number(settings.videoItemLimit ?? 0) === 8, `${label}: expected 8 video showcase items`);
-  assert(settings.trustedLogoTitle === "Most Trusted Creators. | myDreamshoots", `${label}: trusted logo title drifted`);
-  assert(settings.aboutTitle === "What is myDreamshoots?", `${label}: about title drifted`);
-  assert(String(settings.aboutBody ?? "").startsWith("myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC"), `${label}: about body should describe myDreamshoots`);
+  assert(settings.showTrustedLogoIntro === false, `${label}: workflow logo intro should stay disabled`);
   assert(settings.embeddedPricingSectionId === "pricing_1", `${label}: showcase should embed pricing_1`);
-  assert(Number(settings.trustedLogoSplitIndex ?? 0) === 15, `${label}: trusted logo row split should stay at 15`);
   const trustedLogoBlocks = (pageJson?.sections?.generation_showcase_1?.blocks ?? []).filter((block) => block?.type === "logo");
-  assert(trustedLogoBlocks.length === expectedTrustedLogoCount, `${label}: expected ${expectedTrustedLogoCount} trusted logo blocks`);
-  assert(trustedLogoBlocks.every((block) => String(block?.settings?.imageUrl ?? "").startsWith(expectedMydreamshootsTrustedLogoRoot)), `${label}: trusted logos should use the dark MyDreamShoots asset set`);
-  assert(trustedLogoBlocks[0]?.settings?.name === "iKraddy", `${label}: first trusted logo should be iKraddy`);
-  assert(trustedLogoBlocks.at(-1)?.settings?.name === "Panda BER", `${label}: last trusted logo should be Panda BER`);
+  assert(trustedLogoBlocks.length === 0, `${label}: workflow logo intro blocks should be removed`);
   assert(!("itemLimit" in settings), `${label}: old image-limiting itemLimit should be removed`);
   const pricingSettings = pageJson?.sections?.pricing_1?.settings ?? {};
-  assert(pricingSettings.subtitle === "Choose the plan that works for you", `${label}: pricing subtitle drifted`);
-  assert(String(pricingSettings.marketComparison ?? "").includes("$725"), `${label}: pricing market comparison should mention the $725 photoshoot comparison`);
-  assert(String(pricingSettings.description ?? "").startsWith("Choose Starter, Pro, or Premium."), `${label}: pricing description drifted`);
-  assert(pricingSettings.sidePanelTitle === "Our plans starts from $24.50 and are designed to be more affordable and flexible.", `${label}: pricing side panel title drifted`);
+  assert(pricingSettings.subtitle === "Compare the current price, included credits, renewal interval, and supported workflows before selecting a plan.", `${label}: pricing subtitle drifted`);
+  assert(String(pricingSettings.marketComparison ?? "").startsWith("Choose a monthly, quarterly, or semiannual plan"), `${label}: pricing market comparison should describe plan comparison`);
+  assert(pricingSettings.description === "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs.", `${label}: pricing description drifted`);
+  assert(pricingSettings.sidePanelTitle === "Plans start at {LIVE_LOWEST_ACTIVE_PLAN_PRICE}, with the current credit allowance and billing interval shown for each option.", `${label}: pricing side panel title drifted`);
   const catalogSettings = pageJson?.sections?.package_catalog_1?.settings ?? {};
   assert(catalogSettings.label === "AI PHOTO STUDIOS", `${label}: package catalog label drifted`);
   assert(catalogSettings.title === "AI Photo Packages by Style and Use Case", `${label}: package catalog title drifted`);
@@ -332,9 +327,9 @@ function assertPage(pageJson, label, storeKey) {
   assert(catalogSettings.directoryLabel === "AI PHOTO THEMED", `${label}: theme directory label drifted`);
   assert(catalogSettings.directorySubtitle === "Compare every active theme by category, title, cover, and route before starting a private photo package.", `${label}: theme directory subtitle drifted`);
   const proofSettings = pageJson?.sections?.proof_1?.settings ?? {};
-  assert(proofSettings.title === "What Our Customers Say", `${label}: review title drifted`);
-  assert(proofSettings.subtitle === "Our users love us and we love them!", `${label}: review subtitle drifted`);
-  assert(String(proofSettings.summaryBody ?? "").includes("brokers of trust"), `${label}: review body drifted`);
+  assert(proofSettings.title === "Workflow examples from myDreamshoots use cases", `${label}: workflow example title drifted`);
+  assert(proofSettings.subtitle === "Use-case examples for private photo packages, clear credit review, gallery delivery, and supported motion workflows.", `${label}: workflow example subtitle drifted`);
+  assert(String(proofSettings.summaryBody ?? "").includes("short motion previews"), `${label}: workflow example body drifted`);
   const conversionSettings = pageJson?.sections?.conversion_1?.settings ?? {};
   assert(conversionSettings.eyebrow === "BEST AI MAKER", `${label}: conversion eyebrow drifted`);
   assert(conversionSettings.title === "Ready to try the myDreamshoots's Best AI Maker?", `${label}: conversion title drifted`);
@@ -417,9 +412,9 @@ function assertTutorialVideoSection(section, label, expectedEyebrow = "ai image"
 function assertMydreamshootsTutorialPair(pageJson, label) {
   assertTutorialVideoSection(pageJson?.sections?.tutorial_video_1, `${label}: How it works tutorial`, "how it works", expectedMydreamshootsTutorialVideos.image);
   const settings = pageJson?.sections?.tutorial_video_1?.settings ?? {};
-  assert(settings.title === "How it works", `${label}: homepage tutorial title should be How it works`);
-  assert(settings.subtitle === "Upload selfies and start creating your AI photshoot now", `${label}: homepage tutorial subtitle drifted`);
-  assert(settings.supportingCopy === "Use myDreamshoots's AI Video design your videos with your own creativity. Your next video content can instantly go viral.", `${label}: homepage tutorial supporting copy drifted`);
+  assert(settings.title === "Watch the private photo package workflow.", `${label}: homepage tutorial title drifted`);
+  assert(settings.subtitle === "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.", `${label}: homepage tutorial subtitle drifted`);
+  assert(settings.supportingCopy === "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.", `${label}: homepage tutorial supporting copy drifted`);
   assert(!String(settings.videoBadge ?? "").trim(), `${label}: homepage tutorial video badge should be removed`);
   assert(!pageJson?.sections?.tutorial_video_2, `${label}: AI video tutorial should be removed from the homepage`);
   assert(!pageJson?.sections?.mobile_video_1, `${label}: mobile tutorial section should be removed`);
@@ -436,8 +431,8 @@ function assertMobileVideoSection(section, label) {
   const posterUrl = comparableImageUrl(settings.videoPoster);
   const usesMydreamDocCopy = String(settings.title ?? "").trim() === "How it works";
   if (usesMydreamDocCopy) {
-    assert(String(settings.subtitle ?? "").includes("Upload selfies and start creating your AI photshoot now"), `${label}: mobile subtitle should match the approved myDreamshoots copy`);
-    assert(String(settings.supportingCopy ?? "").includes("AI Video"), `${label}: mobile supporting copy should mention AI Video`);
+    assert(String(settings.subtitle ?? "").includes("Upload approved source photos"), `${label}: mobile subtitle should match the approved myDreamshoots copy`);
+    assert(String(settings.supportingCopy ?? "").includes("supported AI Video workflow"), `${label}: mobile supporting copy should mention AI Video workflow`);
   } else {
     assert(String(settings.eyebrow ?? "").toLowerCase().includes("mobile"), `${label}: mobile eyebrow should identify mobile workflow`);
     assert(String(settings.title ?? "").trim().length > 12, `${label}: mobile section should have a real title`);
@@ -645,7 +640,7 @@ assert(!showcaseRenderer.includes("imageCards.length} examples"), "homepage show
 assert(!showcaseRenderer.includes("videoCards.length} clips"), "homepage showcase should not display the video count label");
 assert(mediaGalleryRenderer.includes("fullGallery"), "Best AI media gallery should support full active data mode");
 assert(!mediaGalleryRenderer.includes("cardsCount"), "Best AI media gallery should not display examples/clips count labels");
-assert(showcaseRenderer.includes("data-dreamshoot-trusted-logos"), "showcase should render the trusted logo intro wall");
+assert(showcaseRenderer.includes('settingBool(section, "showTrustedLogoIntro", false)'), "showcase logo intro should remain gated by the published section setting");
 assert(showcaseRenderer.includes('setting(section, "embeddedPricingSectionId")'), "showcase should read the embedded pricing section setting");
 assert(showcaseRenderer.includes("PricingTableSectionView"), "showcase should reuse the pricing table renderer for embedded plans");
 assert(showcaseRenderer.indexOf("</DreamshootShowcasePreview>") < showcaseRenderer.indexOf("{useMydreamShowcaseGrid ? null : showcaseIntro}") && showcaseRenderer.indexOf("{useMydreamShowcaseGrid ? null : showcaseIntro}") < showcaseRenderer.indexOf("{embeddedPricing}"), "showcase intro should render below image/video rails and above embedded pricing when the homepage grid is not active");

@@ -4,13 +4,13 @@ import { Camera, Coffee, Heart, ImageIcon, Map as MapIcon, Mountain, PlayCircle,
 import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
-import { HeaderPhotoPackageMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup } from "@/components/storefront/header-mega-menu-panels";
+import { HeaderPhotoPackageMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
-import { activeVideoGenerationCategories, isMydreamshootsVideoFrameworkSite, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
+import { isMydreamshootsPublicVideoGenerationTopicSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { getPhotoPackageMegaGroups } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
-import type { CreativePack, CreativePackCategory, PublicCustomer, Site, ToolMenuItem, VideoThemeCategory } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, PublicCustomer, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 
@@ -103,13 +103,22 @@ function headerPackageGroupsForClient(basePath: string, groups: MenuGroup): Head
   }));
 }
 
-function videoGenerationCategoriesForMenu(basePath: string, categories: VideoThemeCategory[]) {
-  return activeVideoGenerationCategories(categories).map((category) => ({
-    id: category.id,
-    slug: category.slug,
-    label: category.label,
-    href: `${basePath}${category.href}`
-  }));
+function videoGenerationTopicsForMenu(basePath: string, categories: VideoThemeCategory[], themes: VideoTheme[]): HeaderVideoGenerationTopic[] {
+  const categoriesBySlug = new Map(categories.map((category) => [category.slug, category]));
+  const themesBySlug = new Map(themes.filter((theme) => theme.status === "active").map((theme) => [theme.slug, theme]));
+  return mydreamshootsVideoGenerationCategories
+    .filter((definition) => isMydreamshootsPublicVideoGenerationTopicSlug(definition.slug))
+    .flatMap((definition) => {
+      const category = categoriesBySlug.get(definition.slug);
+      if (category && category.status !== "active") return [];
+      const theme = themesBySlug.get(definition.slug);
+      return [{
+        id: category?.id ?? theme?.id ?? `video_topic_${definition.slug}`,
+        slug: definition.slug,
+        label: category?.label ?? definition.label,
+        href: `${basePath}${videoGenerationCreatePath(definition.slug)}`
+      }];
+    });
 }
 
 export function CustomerShellHeader({
@@ -119,7 +128,8 @@ export function CustomerShellHeader({
   creativePackCategories = [],
   creativePacks = [],
   toolMenuItems = [],
-  videoThemeCategories = []
+  videoThemeCategories = [],
+  videoThemes = []
 }: {
   site: CustomerShellHeaderSite;
   customer: PublicCustomer;
@@ -128,6 +138,7 @@ export function CustomerShellHeader({
   creativePacks?: CreativePack[];
   toolMenuItems?: ToolMenuItem[];
   videoThemeCategories?: VideoThemeCategory[];
+  videoThemes?: VideoTheme[];
 }) {
   const pathname = usePathname();
   const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
@@ -156,7 +167,7 @@ export function CustomerShellHeader({
   const menuSite = { ...site, __storefrontBasePath: basePath };
   const primaryMyDreamShoots = isMyDreamShoots && !isSpanishXby;
   const useVideoGenerationToolsMenu = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXby;
-  const videoGenerationMenuCategories = useVideoGenerationToolsMenu ? videoGenerationCategoriesForMenu(basePath, videoThemeCategories) : [];
+  const videoGenerationMenuTopics = useVideoGenerationToolsMenu ? videoGenerationTopicsForMenu(basePath, videoThemeCategories, videoThemes) : [];
   const videoGenerationMenuHref = `${basePath}${videoGenerationCreatePath()}`;
   const activeToolBlocks = useVideoGenerationToolsMenu ? [] : getToolBlocksForMenu(menuSite, toolMenuItems);
   const packageRootHref = isMyDreamShoots && !isSpanishXby ? "/ai-image-generation" : "/collections";
@@ -167,7 +178,7 @@ export function CustomerShellHeader({
   ])).slice(0, 10);
   const toolPrefetchPaths = Array.from(new Set([
     useVideoGenerationToolsMenu ? videoGenerationMenuHref : `${basePath}${toolRootHref}`,
-    ...(useVideoGenerationToolsMenu ? videoGenerationMenuCategories.map((category) => category.href) : activeToolBlocks.map((tool) => `${basePath}${String(tool.settings.href ?? toolRootHref)}`))
+    ...(useVideoGenerationToolsMenu ? videoGenerationMenuTopics.slice(0, 8).map((topic) => topic.href) : activeToolBlocks.map((tool) => `${basePath}${String(tool.settings.href ?? toolRootHref)}`))
   ])).slice(0, 8);
   const headerPackageGroups = headerPackageGroupsForClient(basePath, activePackageGroups);
   const dark = tone === "dark";
@@ -239,7 +250,9 @@ export function CustomerShellHeader({
             >
               {useVideoGenerationToolsMenu ? (
                 <HeaderVideoGenerationMegaPanel
-                  categories={videoGenerationMenuCategories}
+                  topics={videoGenerationMenuTopics}
+                  ctaHref={`${basePath}/ai-video-generation`}
+                  ctaLabel="View all themes"
                   variantTone="dark"
                 />
               ) : (

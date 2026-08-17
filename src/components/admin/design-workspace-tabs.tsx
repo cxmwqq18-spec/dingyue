@@ -15,8 +15,8 @@ type DesignWorkspaceTabsProps = {
 function tabClass(active: boolean, tone: "light" | "dark") {
   if (tone === "dark") {
     return active
-      ? "border-[var(--admin-accent)] bg-[var(--admin-accent)] text-white"
-      : "border-white/10 bg-transparent text-white/72 hover:bg-white/[0.08] hover:text-white";
+      ? "border-[#3f8cff] bg-[#2f6fed] text-white shadow-[0_10px_22px_-16px_rgba(47,111,237,0.72)]"
+      : "border-white/18 bg-white/[0.06] text-white/90 hover:border-white/30 hover:bg-white/[0.1] hover:text-white";
   }
   return active
     ? "border-[var(--admin-accent)] bg-[var(--admin-accent)] text-white shadow-[0_14px_24px_-18px_rgba(27,119,243,0.52)]"
@@ -49,26 +49,27 @@ export function DesignWorkspaceTabs({
     : allItems;
 
   return (
-    <div className={`flex overflow-x-auto ${tone === "dark" ? "gap-1 pb-1" : "flex-wrap gap-2"}`} data-admin-tabs="saas-design-workspace-tabs">
+    <div className={`flex overflow-x-auto ${tone === "dark" ? "items-center gap-1.5 pb-1" : "flex-wrap gap-2"}`} data-admin-tabs="saas-design-workspace-tabs">
       {items.map((item) => {
         const active = activePath === item.href.replace(`/site/${siteSlug}`, "");
         return (
           <Link
-            className={`inline-flex min-h-[34px] shrink-0 items-center gap-1 rounded-[10px] border text-xs font-medium transition active:scale-[0.98] ${compact ? "px-2" : "px-3"} ${tabClass(active, tone)}`}
+            className={`inline-flex min-h-[38px] shrink-0 items-center gap-1.5 rounded-[12px] border transition active:scale-[0.98] ${compact ? "min-w-[92px] px-3" : "px-3"} ${tone === "dark" ? "text-[13px] font-semibold" : "text-xs font-medium"} ${tabClass(active, tone)}`}
             href={item.href}
             key={item.href}
             prefetch={false}
+            title={item.label}
             target={item.external ? "_blank" : undefined}
             rel={item.external ? "noreferrer" : undefined}
           >
-            <item.icon className="h-3.5 w-3.5" strokeWidth={1.8} />
-            <span>{item.label}</span>
+            <item.icon className={tone === "dark" ? "h-4 w-4 shrink-0 opacity-95" : "h-3.5 w-3.5"} strokeWidth={1.8} />
+            <span className="whitespace-nowrap">{item.label}</span>
             <span
-              className={`${compact ? "hidden xl:inline-flex" : "inline-flex"} border px-1.5 py-0.5 font-mono text-[10px] ${
+              className={`${compact ? "hidden xl:inline-flex" : "inline-flex"} ml-auto rounded-[4px] border px-1.5 py-0.5 font-mono text-[10px] leading-none ${
                 tone === "dark"
                   ? active
-                    ? "border-white/20 bg-white/15 text-white"
-                    : "border-white/10 bg-white/10 text-white/55"
+                    ? "border-white/30 bg-white/18 text-white"
+                    : "border-white/18 bg-white/14 text-white/78"
                   : active
                     ? "border-white/20 bg-white/15 text-white"
                     : "border-[var(--admin-border-soft)] bg-[var(--admin-panel)] text-[#8a94a6]"

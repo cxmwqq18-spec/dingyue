@@ -126,7 +126,10 @@ const focusCollections = {};
 for (const pathname of focusCollectionPaths) {
   focusCollections[pathname] = await fetchHtml(pathname);
 }
-const videoGeneration = await fetchHtml("/ai-video-generation/image-to-video");
+const talkingPhotoGeneration = await fetchHtml("/ai-video-generation/talking-photo");
+const storyVideoGeneration = await fetchHtml("/ai-video-generation/story-video");
+const memeVideoGeneration = await fetchHtml("/ai-video-generation/meme-video");
+const productVideoGeneration = await fetchHtml("/ai-video-generation/product-video");
 const workflow = await fetchHtml("/workflow");
 const faq = await fetchHtml("/faq");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
@@ -140,18 +143,30 @@ for (const pathname of [
   "/ai-photoshoot/professional/headshot",
   "/ai-image-generation/professional",
   "/ai-image-generation/professional/headshot",
-  "/tools",
-  "/tools/image-to-video",
   "/tool"
 ]) {
   legacyCollectionStatuses.push({ pathname, ...(await fetchStatusNoRedirect(pathname)) });
 }
+const legacyToolRedirectStatuses = [];
+for (const pathname of ["/tools"]) {
+  legacyToolRedirectStatuses.push({ pathname, ...(await fetchStatusNoRedirect(pathname)) });
+}
+const hiddenVideoStatuses = [];
+for (const pathname of ["/ai-video-generation/text-to-video", "/ai-video-generation/image-to-video", "/tools/image-to-video"]) {
+  hiddenVideoStatuses.push({ pathname, ...(await fetchStatusNoRedirect(pathname)) });
+}
 const homepageGraph = graphNodes(homepage);
 const collectionGraph = graphNodes(collection);
-const videoGenerationGraph = graphNodes(videoGeneration);
+const talkingPhotoGenerationGraph = graphNodes(talkingPhotoGeneration);
+const storyVideoGenerationGraph = graphNodes(storyVideoGeneration);
+const memeVideoGenerationGraph = graphNodes(memeVideoGeneration);
+const productVideoGenerationGraph = graphNodes(productVideoGeneration);
 const homepageVideos = homepageGraph.filter((node) => node?.["@type"] === "VideoObject");
 const collectionProducts = collectionGraph.filter((node) => node?.["@type"] === "Product");
-const videoGenerationProducts = videoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
+const talkingPhotoGenerationProducts = talkingPhotoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
+const storyVideoGenerationProducts = storyVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
+const memeVideoGenerationProducts = memeVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
+const productVideoGenerationProducts = productVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const collectionProduct = collectionProducts[0];
 const collectionOffer = collectionProduct?.offers;
 const forbiddenLoadingCopy = [
@@ -175,7 +190,10 @@ const publicHtmlPages = {
   pricing,
   collection,
   ...focusCollections,
-  videoGeneration,
+  talkingPhotoGeneration,
+  storyVideoGeneration,
+  memeVideoGeneration,
+  productVideoGeneration,
   workflow,
   faq
 };
@@ -209,6 +227,23 @@ for (const [pathname, html] of Object.entries(focusCollections)) {
   }
 }
 assert.ok(pricing.includes("Starter") && (pricing.includes("$24.50") || pricing.includes("24.50")), "pricing HTML must contain real plan content");
+const homepageForbiddenCopy = [
+  "Upload selfies and create your own AI model",
+  "100% money-back guarantee",
+  "instantly go viral",
+  "15+ package categories",
+  "photshoot",
+  "Our plans starts",
+  "Most Trusted Creators"
+];
+for (const copy of homepageForbiddenCopy) {
+  assert.equal(homepage.includes(copy), false, `homepage must not contain deprecated SEO copy: ${copy}`);
+}
+assert.equal((homepage.match(/<h1\b/gi) ?? []).length, 1, "homepage must render exactly one H1");
+assert.equal(metaDescription(homepage), "Create AI headshots, portraits, themed photo sets, editing workflows, and supported short video results from your own approved photos. Compare examples and credit costs before you generate.", "homepage meta description must match the V4 SEO copy");
+assert.equal(canonicalHref(homepage), "https://www.mydreamshoots.com/", "homepage canonical must point to the root URL");
+assert.equal(homepage.includes('href="/pricing"'), true, "homepage header must link Pricing to /pricing");
+assert.equal(homepage.includes('href="#plans"'), false, "homepage header must not link Pricing to the embedded plans anchor");
 assert.ok(homepage.includes('data-dreamshoot-embedded-pricing="true"'), "homepage HTML must contain the embedded pricing section");
 assert.ok(
   homepage.includes("price_dreamshoot_starter_monthly") &&
@@ -217,8 +252,23 @@ assert.ok(
   "homepage embedded pricing must contain real plan cards and checkout links"
 );
 assert.equal(homepageVideos.length, 0, "homepage SSR must not expose legacy video theme VideoObject nodes after the AI Video Generation route migration");
-assert.match(videoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/image-to-video/, "video generation detail SSR must expose the canonical video generation URL");
-assert.ok(videoGenerationProducts.length >= 1, "video generation detail SSR must expose product or service JSON-LD");
+assert.match(talkingPhotoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/talking-photo/, "Talking Photo detail SSR must expose the canonical AI Video Generation URL");
+assert.match(storyVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/story-video/, "Story Video detail SSR must expose the canonical AI Video Generation URL");
+assert.match(memeVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/meme-video/, "Meme Video detail SSR must expose the canonical AI Video Generation URL");
+assert.match(productVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/product-video/, "Product Video detail SSR must expose the canonical AI Video Generation URL");
+assert.ok(talkingPhotoGeneration.includes("/app/create#step-video") || talkingPhotoGeneration.includes("/app/create"), "Talking Photo CTA must point into the video workspace");
+assert.ok(storyVideoGeneration.includes("/app/create#step-video") || storyVideoGeneration.includes("/app/create"), "Story Video CTA must point into the video workspace");
+assert.ok(memeVideoGeneration.includes("/app/create") && memeVideoGeneration.includes("videoMode=meme-video"), "Meme Video CTA must point into the video workspace with its topic mode");
+assert.ok(productVideoGeneration.includes("/app/create") && productVideoGeneration.includes("videoMode=product-video"), "Product Video CTA must point into the video workspace with its topic mode");
+for (const [pageName, html] of Object.entries({ storyVideoGeneration, memeVideoGeneration, productVideoGeneration })) {
+  for (const copy of ["what to prepare", "Credits held before creation", "Upload source images"]) {
+    assert.equal(html.includes(copy), false, `${pageName} must not render the generic ai_tool_entry hero copy: ${copy}`);
+  }
+}
+assert.ok(talkingPhotoGenerationProducts.length >= 1, "Talking Photo detail SSR must expose product or service JSON-LD");
+assert.ok(storyVideoGenerationProducts.length >= 1, "Story Video detail SSR must expose product or service JSON-LD");
+assert.ok(memeVideoGenerationProducts.length >= 1, "Meme Video detail SSR must expose product or service JSON-LD");
+assert.ok(productVideoGenerationProducts.length >= 1, "Product Video detail SSR must expose product or service JSON-LD");
 assert.equal(collectionProducts.length, 1, "collection SSR must contain one Product node");
 assert.ok(Array.isArray(collectionProduct?.image) && collectionProduct.image.length === 8, "collection Product must contain cover plus gallery image URLs");
 assert.equal(new Set(collectionProduct.image).size, collectionProduct.image.length, "collection Product image URLs must be unique");
@@ -242,21 +292,37 @@ assert.ok(
 );
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/pricing"), "sitemap must contain the canonical pricing URL");
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-image-generation/headshot"), "sitemap must contain the canonical headshot collection URL");
-assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/image-to-video"), "sitemap must contain the canonical image-to-video URL");
-for (const forbidden of ["/collections/headshots", "/ai-photoshoot", "/tools/image-to-video"]) {
+assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/talking-photo"), "sitemap must contain the canonical Talking Photo URL");
+assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/story-video"), "sitemap must contain the canonical Story Video URL");
+assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/meme-video"), "sitemap must contain the canonical Meme Video URL");
+assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/product-video"), "sitemap must contain the canonical Product Video URL");
+for (const forbidden of ["/collections/headshots", "/ai-photoshoot", "/tools/image-to-video", "/ai-video-generation/text-to-video", "/ai-video-generation/image-to-video"]) {
   assert.equal(sitemap.includes(`https://www.mydreamshoots.com${forbidden}`), false, `sitemap must not contain ${forbidden}`);
 }
 for (const legacyStatus of legacyCollectionStatuses) {
   assert.equal(legacyStatus.status, 404, `${legacyStatus.pathname} should return HTTP 404 after the collection slug migration`);
 }
+for (const legacyStatus of legacyToolRedirectStatuses) {
+  const expectedTarget = "https://www.mydreamshoots.com/ai-video-generation";
+  assert.ok([301, 308].includes(legacyStatus.status), `${legacyStatus.pathname} should redirect to its canonical AI video URL`);
+  assert.equal(legacyStatus.headers?.location, expectedTarget, `${legacyStatus.pathname} should redirect to ${expectedTarget}`);
+}
+for (const hiddenStatus of hiddenVideoStatuses) {
+  assert.equal(hiddenStatus.status, 404, `${hiddenStatus.pathname} should return HTTP 404 while hidden from public video topics`);
+}
 
 console.log(JSON.stringify({
   ok: true,
-  pages: ["/", "/pricing", "/ai-image-generation/headshot", "/ai-video-generation/image-to-video", "/workflow", "/faq"],
+  pages: ["/", "/pricing", "/ai-image-generation/headshot", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/meme-video", "/ai-video-generation/product-video", "/workflow", "/faq"],
   legacy404s: legacyCollectionStatuses.map(({ pathname, status }) => ({ pathname, status })),
+  legacyToolRedirects: legacyToolRedirectStatuses.map(({ pathname, status, headers }) => ({ pathname, status, location: headers?.location })),
+  hiddenVideo404s: hiddenVideoStatuses.map(({ pathname, status }) => ({ pathname, status })),
   placeholders: 0,
   homepageVideoObjects: homepageVideos.length,
-  videoGenerationSchemaObjects: videoGenerationProducts.length,
+  talkingPhotoGenerationSchemaObjects: talkingPhotoGenerationProducts.length,
+  storyVideoGenerationSchemaObjects: storyVideoGenerationProducts.length,
+  memeVideoGenerationSchemaObjects: memeVideoGenerationProducts.length,
+  productVideoGenerationSchemaObjects: productVideoGenerationProducts.length,
   collectionProductObjects: collectionProducts.length,
   collectionOfferPrice: collectionOffer.price
 }, null, 2));

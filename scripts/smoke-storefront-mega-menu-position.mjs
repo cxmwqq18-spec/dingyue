@@ -16,6 +16,28 @@ const pageLoadTimeoutMs = Number(process.env.STOREFRONT_MEGA_MENU_PAGE_TIMEOUT_M
 const interactionTimeoutMs = Number(process.env.STOREFRONT_MEGA_MENU_INTERACTION_TIMEOUT_MS ?? 20_000);
 const packageMenuLabel = /AI Image Generation|AI Photoshoot|Headshot Generator|Occasion Albums|Browse occasion albums|Browse packages|Travel Packages|Ver paquetes|Paquetes de viaje|Paquetes de ocasion/i;
 const toolsMenuLabel = /^(AI Video Generation|AI Tools|Tools|Herramientas)$/i;
+const expectedVideoTopicSlugs = [
+  "talking-photo",
+  "cinematic-video",
+  "tiktok-video",
+  "instagram-reels",
+  "social-media-video",
+  "youtube-video",
+  "story-video",
+  "meme-video",
+  "product-video"
+];
+const expectedVideoTopicLabels = [
+  "Talking Photo",
+  "Cinematic Video",
+  "TikTok Video",
+  "Instagram Reels",
+  "Social Media Video",
+  "YouTube Video",
+  "Story Video",
+  "Meme Video",
+  "Product Video"
+];
 const anonymousEntries = [
   { label: "MyDreamShoots home", path: `/site/${siteSlug}` },
   { label: "MyDreamShoots collections", path: `/site/${siteSlug}/ai-image-generation` },
@@ -103,7 +125,18 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
       const text = panelElement?.textContent ?? "";
       const packageCounts = text.match(/(\d+)\s+CATEGOR(?:Y|IES)\s+·\s+(\d+)\s+THEME(?:S)?/i);
       const toolLinkCount = panelElement ? Array.from(panelElement.querySelectorAll('a[href*="/tools"], a[href*="/ai-video-generation"]')).length : 0;
-      const videoFrameworkLinks = panelElement ? Array.from(panelElement.querySelectorAll('a[href*="/app/create#step-video"]')).map((anchor) => ({
+      const hiddenVideoLinks = panelElement ? Array.from(panelElement.querySelectorAll('a[href*="/ai-video-generation/text-to-video"], a[href*="/ai-video-generation/image-to-video"]')).map((anchor) => ({
+        text: (anchor.textContent || "").replace(/\s+/g, " ").trim(),
+        href: anchor.getAttribute("href") || ""
+      })) : [];
+      const videoTopicLinks = panelElement ? Array.from(panelElement.querySelectorAll('a[href*="/ai-video-generation/"]')).map((anchor) => ({
+        text: (anchor.textContent || "").replace(/\s+/g, " ").trim(),
+        href: anchor.getAttribute("href") || ""
+      })) : [];
+      const viewAllThemesLinks = panelElement ? Array.from(panelElement.querySelectorAll('a[href*="/ai-video-generation"]')).filter((anchor) =>
+        /View all themes/i.test(anchor.textContent || "") &&
+        /\/ai-video-generation(?:[?#]|$)/.test(anchor.getAttribute("href") || "")
+      ).map((anchor) => ({
         text: (anchor.textContent || "").replace(/\s+/g, " ").trim(),
         href: anchor.getAttribute("href") || ""
       })) : [];
@@ -123,9 +156,14 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
         packageCounts: packageCounts ? { categories: Number(packageCounts[1]), themes: Number(packageCounts[2]) } : null,
         route: location.pathname,
         toolLinkCount,
-        videoFrameworkLinks,
+        hiddenVideoLinks,
+        videoTopicLinks,
+        viewAllThemesLinks,
         hasLegacyVideoToolLabels: /Profile Clip|Fan Poster Motion|Creator Intro Video|Product Teaser Clip|Animated Avatar|Fashion Reel|Album Story Video/.test(panelText),
-        hasTwoVideoCategoriesLabel: /2\s+CATEGOR(?:Y|IES)/i.test(panelText)
+        hasHiddenVideoWorkflowLabels: /Text to video|Image to Video/.test(panelText),
+        hasVideoTopicDescriptions: /Explore a talking-photo workflow|Plan story-driven cinematic clips|Create TikTok-first vertical video briefs|Shape Reels around cover-aware framing|Adapt one master story|Plan long-form YouTube drafts|Shape story-led videos around setup|Turn reactions, POV setups|Turn product photos into clear video directions/.test(panelText),
+        hasVideoCategoriesLabel: /\bCATEGOR(?:Y|IES)\b/i.test(panelText),
+        hasNineVideoThemesLabel: /9\s+THEMES/i.test(panelText)
       };
     });
 
@@ -148,10 +186,21 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
       assert(Number.parseFloat(metrics.panelMaxHeight) <= responsiveCap + 1, `${entry.label} ${entry.path}: package panel max-height ${metrics.panelMaxHeight} ignored responsive cap ${responsiveCap}px`);
       assert(metrics.packageGridMaxHeight === "none", `${entry.label} ${entry.path}: package list still uses fixed max-height ${metrics.packageGridMaxHeight}`);
     } else if (entry.path.includes(`/site/${siteSlug}/`)) {
-      const videoLabels = metrics.videoFrameworkLinks.map((link) => link.text);
-      assert(metrics.videoFrameworkLinks.length === 2, `${entry.label} ${entry.path}: AI Video Generation menu should expose 2 video framework links, found ${metrics.videoFrameworkLinks.length}`);
-      assert(JSON.stringify(videoLabels) === JSON.stringify(["Text to video", "Image to Video"]), `${entry.label} ${entry.path}: AI Video Generation menu labels changed to ${JSON.stringify(videoLabels)}`);
-      assert(metrics.hasTwoVideoCategoriesLabel, `${entry.label} ${entry.path}: AI Video Generation menu should report 2 categories`);
+      const topicHrefs = metrics.videoTopicLinks.map((link) => link.href);
+      const topicTexts = metrics.videoTopicLinks.map((link) => link.text).join(" ");
+      assert(metrics.hiddenVideoLinks.length === 0, `${entry.label} ${entry.path}: AI Video Generation menu still links hidden Text/Image workflows`, { hiddenVideoLinks: metrics.hiddenVideoLinks });
+      assert(metrics.videoTopicLinks.length === expectedVideoTopicSlugs.length, `${entry.label} ${entry.path}: AI Video Generation menu should expose ${expectedVideoTopicSlugs.length} topic links, found ${metrics.videoTopicLinks.length}`, { videoTopicLinks: metrics.videoTopicLinks });
+      for (const slug of expectedVideoTopicSlugs) {
+        assert(topicHrefs.some((href) => href.endsWith(`/ai-video-generation/${slug}`)), `${entry.label} ${entry.path}: AI Video Generation menu is missing topic href ${slug}`, { topicHrefs });
+      }
+      for (const label of expectedVideoTopicLabels) {
+        assert(topicTexts.includes(label), `${entry.label} ${entry.path}: AI Video Generation menu is missing topic label ${label}`, { topicTexts });
+      }
+      assert(!metrics.hasHiddenVideoWorkflowLabels, `${entry.label} ${entry.path}: AI Video Generation menu still shows hidden Text/Image workflow labels`);
+      assert(!metrics.hasVideoTopicDescriptions, `${entry.label} ${entry.path}: AI Video Generation menu should show topic names only, without description copy`);
+      assert(metrics.viewAllThemesLinks.length >= 1, `${entry.label} ${entry.path}: AI Video Generation menu must include a View all themes link`, { viewAllThemesLinks: metrics.viewAllThemesLinks });
+      assert(!metrics.hasVideoCategoriesLabel, `${entry.label} ${entry.path}: AI Video Generation menu should not report category counts`);
+      assert(metrics.hasNineVideoThemesLabel, `${entry.label} ${entry.path}: AI Video Generation menu should report 9 themes`);
       assert(!metrics.hasLegacyVideoToolLabels, `${entry.label} ${entry.path}: AI Video Generation menu still exposes legacy video tool labels`);
     } else {
       assert(metrics.toolLinkCount >= 6, `${entry.label} ${entry.path}: tools menu shrank to ${metrics.toolLinkCount} tool links`);
@@ -159,7 +208,7 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
     const summary = menu === "packages" && metrics.packageCounts
       ? `${metrics.packageCounts.categories} categories / ${metrics.packageCounts.themes} themes`
       : entry.path.includes(`/site/${siteSlug}/`)
-      ? `${metrics.videoFrameworkLinks.length} video framework links`
+      ? `${metrics.videoTopicLinks.length} topic links`
       : `${metrics.toolLinkCount} tool links`;
     console.log(`✓ ${entry.label} (${metrics.route}) ${buttonLabel}: gap ${gap}px, width ${Math.round(metrics.panelWidth)}px, ${summary}`);
   } finally {
@@ -201,6 +250,12 @@ async function smokeStorefrontMegaMenuPosition() {
     }]);
     for (const entry of customerEntries.filter(entryMatchesFocusSite)) {
       await assertMegaMenuPosition(customerContext, entry);
+    }
+    const customerToolEntries = [
+      { label: "MyDreamShoots workspace video tools", path: `/site/${siteSlug}/app/create` }
+    ].filter(entryMatchesFocusSite);
+    for (const entry of customerToolEntries) {
+      await assertMegaMenuPosition(customerContext, entry, "tools");
     }
     const compactCustomerContext = await browser.newContext({
       baseURL: baseUrl,

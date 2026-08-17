@@ -16,7 +16,7 @@ import { DreamshootShowcaseRail } from "@/components/storefront/dreamshoot-showc
 import { DreamshootShowcaseVideo } from "@/components/storefront/dreamshoot-showcase-video";
 import { DreamshootToolDirectoryClient, type DreamshootToolDirectoryCard } from "@/components/storefront/dreamshoot-tool-directory-client";
 import { DreamShootMegaToolsPanel as SharedDreamShootMegaToolsPanel, getToolBlocksFromMenuItems as getSharedToolBlocksFromMenuItems } from "@/components/storefront/dreamshoot-tools-mega-menu";
-import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderMobileVideoGenerationMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem, type HeaderVideoGenerationCategory } from "@/components/storefront/header-mega-menu-panels";
+import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderMobileVideoGenerationMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { LazyStorefrontSection } from "@/components/storefront/lazy-storefront-section";
 import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
@@ -24,6 +24,8 @@ import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/st
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
 import { PricingBillingTable } from "@/components/storefront/pricing-billing-table";
 import { StorefrontInstantLink, StorefrontLinkPrefetchProvider, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
+import { AiVideoTopicLanding } from "@/components/storefront/ai-video-topic-landing";
+import { TalkingPhotoLanding } from "@/components/storefront/talking-photo-landing";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
 import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
@@ -127,7 +129,7 @@ import {
   photoPackageLabel,
   photoPackageSlug
 } from "@/lib/photo-package-taxonomy";
-import { activeVideoGenerationCategories, isMydreamshootsVideoFrameworkSite } from "@/lib/mydreamshoots-video-framework";
+import { isMydreamshootsPublicVideoGenerationTopicSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { themeValueToList, themeValueToString } from "@/lib/theme-values";
 import type {
   CreativePack,
@@ -190,6 +192,7 @@ export function ThemeRenderer({
   navigationCreativePacks,
   navigationToolMenuItems,
   navigationVideoThemeCategories,
+  navigationVideoThemes,
   toolMenuItems = [],
   runtime,
   mode = "published",
@@ -213,6 +216,7 @@ export function ThemeRenderer({
   navigationCreativePacks?: CreativePack[];
   navigationToolMenuItems?: ToolMenuItem[];
   navigationVideoThemeCategories?: VideoThemeCategory[];
+  navigationVideoThemes?: VideoTheme[];
   toolMenuItems?: ToolMenuItem[];
   runtime?: ThemeRuntimeData;
   mode?: "published" | "preview";
@@ -284,6 +288,7 @@ export function ThemeRenderer({
             pagePath={normalizedPath}
             toolMenuItems={navigationToolMenuItems ?? toolMenuItems}
             videoThemeCategories={navigationVideoThemeCategories ?? videoThemeCategories}
+            videoThemes={navigationVideoThemes ?? videoThemes}
           />
         </div>
         <main className={previewHasEmptyBody ? "flex min-h-0 flex-1 flex-col" : undefined} data-theme-sections-root="">
@@ -415,6 +420,72 @@ export type StorefrontSectionPayload = {
 };
 
 type SiteProduct = ReturnType<typeof import("@/lib/data").getSiteProducts>[number];
+type HomepageMetrics = {
+  categoryCount: number;
+  workflowCount: number;
+  activeHomepagePackageCount: number;
+  lowestActivePlanPriceLabel: string;
+};
+
+const MYDREAMSHOOTS_HOMEPAGE_HERO_GRID_ALTS = [
+  "Collage of four professional portraits showing adults in dark business suits against modern blue and purple office-style backgrounds.",
+  "Hairstyle collage showing the same woman with an updo, long hair, a short bob, and a ponytail against a blue studio background.",
+  "Cyberpunk collage centered on a man in a black coat in a rainy neon city with portrait and doorway inset scenes.",
+  "Travel collage showing a man with a backpack overlooking a mountain fjord from rocky viewpoints at sunrise and sunset.",
+  "Soccer supporter collage showing a cheering man with blue-and-yellow face paint and scarf inside a packed stadium.",
+  "Profile collage centered on a man in a dark hoodie with mountain, camera, close-portrait, and futuristic-scene insets.",
+  "Product collage showing a woman holding a black dropper bottle alongside several unbranded bottle close-ups and hand-held product views.",
+  "Concept graphic showing the same woman across multiple film-like motion frames with blue and purple light trails.",
+  "Creator profile collage showing several adult portraits in black clothing with orange, pink, and mountain graphic backgrounds.",
+  "Cinematic noir collage showing a man in a black suit in a dark close portrait and walking along a wet city waterfront at night."
+];
+
+const MYDREAMSHOOTS_HOMEPAGE_SHOWCASE_ALTS = [
+  "Cheering soccer supporter in a blue jersey and scarf with blue-and-white face paint in a stadium crowd.",
+  "Smiling couple in festive sweaters seated together beside a lit Christmas tree and snowy window.",
+  "Woman in a red sweater posing beside a decorated Christmas tree.",
+  "Woman seated at a desk with a microphone and laptop in a creator recording studio.",
+  "Woman in a blue evening gown posing at a formal gala venue.",
+  "Woman writing a holiday card at a table beside a Christmas tree and wrapped gift.",
+  "Professional portrait of a man in a suit and glasses in a modern office setting.",
+  "Man in dark clothing standing in a wet neon-lit city street at night.",
+  "Smiling man in a dark business suit photographed as a clean professional headshot.",
+  "Cheering soccer supporter in a green shirt and green-and-yellow scarf in a crowded stadium.",
+  "Close portrait of a woman with long, voluminous dark hair styled in loose waves.",
+  "Woman in a blue evening dress posing on a red carpet at a formal event.",
+  "Man in a dark vintage suit and cap posing in a moody old-city street scene with a classic car.",
+  "Woman hiking beside a mountain lake at sunset with a backpack and scenic peaks behind her.",
+  "Woman in a beret seated at an outdoor Paris cafe with a city street behind her.",
+  "Woman wearing a black dress in a wardrobe setting, used as a virtual outfit concept preview."
+];
+
+const MYDREAMSHOOTS_HOMEPAGE_USE_CASE_ALTS = [
+  {
+    avatar: "Smiling woman with long brown hair seated at an outdoor cafe.",
+    result: "Cheering soccer supporter in a green shirt and green-and-yellow scarf in a stadium crowd."
+  },
+  {
+    avatar: "Man with dark hair wearing a black sweater while seated at a cafe.",
+    result: "Man in a black tuxedo posing beside a red carpet at a formal event."
+  },
+  {
+    avatar: "Woman taking a street portrait in central London with a red double-decker bus and St Paul's Cathedral behind her.",
+    result: "Smiling couple in festive sweaters seated together beside a lit Christmas tree and snowy window."
+  },
+  {
+    avatar: "Smiling man in a light shirt photographed outdoors near a cafe terrace.",
+    result: "Private album workspace showing delivered AI portraits organized for customer review and download."
+  },
+  {
+    avatar: "Woman in a white blouse seated indoors against a neutral background.",
+    result: "Woman seated at a desk with a microphone and laptop in a creator recording studio."
+  },
+  {
+    avatar: "Woman with long brown hair wearing a dark blouse against a neutral studio background.",
+    result: "Man in a black jacket and beanie seated in a photography studio holding a camera."
+  }
+];
+
 type SearchResultCard = {
   id: string;
   kind: "product" | "pack" | "tool" | "page";
@@ -575,6 +646,7 @@ function pageHasMainHeadingBefore(sectionId: string, renderContext: RenderContex
 const sectionTypesUsingProducts = new Set([
   "cart_summary",
   "dreamshoot_generation_showcase",
+  "hero",
   "pricing_table",
   "product_detail",
   "products",
@@ -599,6 +671,7 @@ const sectionTypesUsingCreativePacks = new Set([
   "dreamshoot_media_gallery",
   "dreamshoot_package_catalog",
   "dreamshoot_package_taxonomy",
+  "hero",
   "dreamshoot_related_packages",
   "dreamshoot_theme_cta",
   "dreamshoot_theme_faq",
@@ -902,16 +975,25 @@ function headerToolMegaItemsForClient(site: Site, tools: SectionBlockInstance[],
   });
 }
 
-function headerVideoGenerationCategoriesForClient(site: Site, categories: VideoThemeCategory[]): HeaderVideoGenerationCategory[] {
-  return activeVideoGenerationCategories(categories).map((category) => ({
-    id: category.id,
-    slug: category.slug,
-    label: category.label,
-    href: hrefFor(site, category.href)
-  }));
+function headerVideoGenerationTopicsForClient(site: Site, categories: VideoThemeCategory[], themes: VideoTheme[]): HeaderVideoGenerationTopic[] {
+  const categoriesBySlug = new Map(categories.map((category) => [category.slug, category]));
+  const themesBySlug = new Map(themes.filter((theme) => theme.status === "active").map((theme) => [theme.slug, theme]));
+  return mydreamshootsVideoGenerationCategories
+    .filter((definition) => isMydreamshootsPublicVideoGenerationTopicSlug(definition.slug))
+    .flatMap((definition) => {
+      const category = categoriesBySlug.get(definition.slug);
+      if (category && category.status !== "active") return [];
+      const theme = themesBySlug.get(definition.slug);
+      return [{
+        id: category?.id ?? theme?.id ?? `video_topic_${definition.slug}`,
+        slug: definition.slug,
+        label: category?.label ?? definition.label,
+        href: hrefFor(site, videoGenerationCreatePath(definition.slug))
+      }];
+    });
 }
 
-export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [] }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[] }) {
+export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [] }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[] }) {
   const HeaderLink = StorefrontInstantLink;
   const header = settings.globalSections?.header;
   const saasHeader = saasGlobalSection(settings, "header_plus");
@@ -925,7 +1007,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const isMyDreamShootsCom = isDreamShoot && !isAidreamcapes && !spanishXby;
   const disablePublicSeoPrefetch = disablePrefetch || isPublicSeoRoute(pagePath);
   const pricingLabel = spanishXby ? "Precios" : "Pricing";
-  const pricingHeaderHref = pagePath === "/" && !spanishXby && isMyDreamShootsProfileSite(site) ? "#plans" : "/pricing";
+  const pricingHeaderHref = "/pricing";
   const isPricingHref = (href: string) => {
     const normalizedHref = href.trim().replace(/\/+$/, "") || "/";
     return normalizedHref === "/pricing" || normalizedHref === "#plans" || normalizedHref === "/#plans";
@@ -1067,7 +1149,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const darkHeaderControls = dark || isDreamShoot || isAidreamcapes;
   const airyCommerceHeader = lightCommerce && !isAidreamcapes;
   const useVideoGenerationToolsMenu = isMydreamshootsVideoFrameworkSite(site) && !spanishXby && !isAidreamcapes;
-  const videoGenerationMenuCategories = useVideoGenerationToolsMenu ? headerVideoGenerationCategoriesForClient(site, videoThemeCategories) : [];
+  const videoGenerationMenuTopics = useVideoGenerationToolsMenu ? headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes) : [];
   const dynamicToolBlocks = getSharedToolBlocksFromMenuItems(toolMenuItems);
   const configuredToolBlocks = useVideoGenerationToolsMenu
     ? []
@@ -1096,7 +1178,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     : dreamshootMergedToolBlocks;
   const fullToolMegaBlocks = spanishXby ? spanishToolBlocks(rawToolMegaBlocks, isAidreamcapes) : rawToolMegaBlocks;
   const toolMegaBlocks = fullToolMegaBlocks;
-  const showVideoGenerationMega = !lightweight && useVideoGenerationToolsMenu && videoGenerationMenuCategories.length > 0;
+  const showVideoGenerationMega = !lightweight && useVideoGenerationToolsMenu && videoGenerationMenuTopics.length > 0;
   const showDreamShootToolsMega = !lightweight && !showVideoGenerationMega && (isDreamShoot || isAidreamcapes) && toolMegaBlocks.length > 0;
   const dynamicPhotoPackageMegaGroups = lightweight ? [] : getPhotoPackageMegaGroups(creativePacks, creativePackCategories);
   const configuredPhotoPackageMegaGroups = isAidreamcapes ? getPhotoPackageMegaGroupsFromBlocks(header?.blocks) : [];
@@ -1118,7 +1200,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const toolsMegaPrefetchPaths = showDreamShootToolsMega
     ? [hrefFor(site, isMyDreamShootsCom ? "/ai-video-generation" : "/tools"), ...toolMegaBlocks.slice(0, 6).map((tool) => hrefFor(site, blockValue(tool, "href", isMyDreamShootsCom ? "/ai-video-generation" : "/tools")))]
     : showVideoGenerationMega
-    ? [hrefFor(site, "/ai-video-generation"), ...videoGenerationMenuCategories.map((category) => category.href)]
+    ? [hrefFor(site, "/ai-video-generation"), ...videoGenerationMenuTopics.slice(0, 8).map((topic) => topic.href)]
     : [];
   const market = site.branding.market || "AI photo subscriptions, private uploads, and customer galleries";
   const ctaLabel = spanishXby ? "Comenzar" : header ? setting(header, "ctaLabel", "Get Started") : "Get Started";
@@ -1204,7 +1286,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
         [
           "storefront-global-header",
           dark
-            ? `${sticky ? "sticky top-0" : "relative"} z-[120] border-b border-white/10 ${isDreamShoot ? "bg-[#05070E]/94" : "bg-[#0b0b0d]/90"} text-white backdrop-blur-xl`
+            ? `${sticky ? "sticky top-0" : "relative"} z-[120] border-b border-white/10 ${isDreamShoot ? "bg-[#05070E]/[0.94]" : "bg-[#0b0b0d]/90"} text-white backdrop-blur-xl`
             : lightCommerce
               ? `${sticky ? "sticky top-0" : "relative"} z-[120] border-b border-[#eadfce] bg-[linear-gradient(180deg,rgba(255,252,248,0.98)_0%,rgba(252,246,238,0.94)_100%)] text-[#14161a] backdrop-blur`
               : `${sticky ? "sticky top-0" : "relative"} z-[120] border-b border-black/10 bg-[var(--site-bg)] backdrop-blur-md`
@@ -1356,7 +1438,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                    )
 	                  ) : showVideoGenerationMega ? (
 	                    <HeaderVideoGenerationMegaPanel
-	                      categories={videoGenerationMenuCategories}
+	                      topics={videoGenerationMenuTopics}
+	                      ctaHref={hrefFor(site, "/ai-video-generation")}
+	                      ctaLabel="View all themes"
 	                      variantTone="dark"
 	                    />
 	                  ) : deferMegaMenuPanels ? (
@@ -1462,7 +1546,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                 aria-hidden="true"
                 className={
                   isDreamShoot && dark
-                    ? `pointer-events-none fixed inset-0 z-[72] hidden bg-[#02030A]/82 backdrop-blur-[3px] group-open:block ${mobileHeaderVisibilityClass}`
+                    ? `pointer-events-none fixed inset-0 z-[72] hidden bg-[#02030A]/[0.82] backdrop-blur-[3px] group-open:block ${mobileHeaderVisibilityClass}`
                     : `pointer-events-none fixed inset-0 z-[72] hidden bg-black/58 backdrop-blur-[2px] group-open:block ${mobileHeaderVisibilityClass}`
                 }
               />
@@ -1512,7 +1596,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                      return (
 	                        showVideoGenerationMega ? (
                           <HeaderMobileVideoGenerationMenu
-                            categories={videoGenerationMenuCategories}
+                            topics={videoGenerationMenuTopics}
+                            ctaHref={hrefFor(site, "/ai-video-generation")}
+                            ctaLabel="View all themes"
                             dark={dark}
                             key={`mobile_${link.label}_${link.href}`}
                             menuLabel="AI Video Generation"
@@ -6820,6 +6906,61 @@ function activeProducts(products: SiteProduct[]): SiteProduct[] {
   return active.length ? active : products;
 }
 
+function activeSubscriptionProducts(products: SiteProduct[]): SiteProduct[] {
+  const activeSubscriptions = products.filter((product) => product.type === "subscription" && product.status === "active");
+  return activeSubscriptions.length ? activeSubscriptions : activeProducts(products).filter((product) => product.type === "subscription");
+}
+
+function lowestActiveSubscriptionPriceLabel(products: SiteProduct[]): string {
+  const subscriptionProducts = activeSubscriptionProducts(products);
+  const prices = subscriptionProducts.flatMap((product) =>
+    product.prices
+      .filter((price) => price.amountCents > 0)
+      .map((price) => ({ product, price }))
+  );
+  const monthlyPrices = prices.filter(({ price }) => price.interval === "month");
+  const source = monthlyPrices.length ? monthlyPrices : prices;
+  const lowest = [...source].sort((left, right) => left.price.amountCents - right.price.amountCents)[0]?.price;
+  if (!lowest) return "the current lowest active price";
+  if (lowest.interval === "month") return `${formatCurrency(lowest.amountCents, lowest.currency)}/month`;
+  if (lowest.interval === "quarter") return `${formatCurrency(lowest.amountCents, lowest.currency)}/3 months`;
+  if (lowest.interval === "half_year") return `${formatCurrency(lowest.amountCents, lowest.currency)}/6 months`;
+  if (lowest.interval === "year") return `${formatCurrency(lowest.amountCents, lowest.currency)}/year`;
+  return formatCurrency(lowest.amountCents, lowest.currency);
+}
+
+function homepageMetricsForSite({
+  creativePackCategories,
+  creativePacks,
+  products
+}: {
+  creativePackCategories?: CreativePackCategory[];
+  creativePacks?: CreativePack[];
+  products?: SiteProduct[];
+}): HomepageMetrics {
+  const categoryCount = (creativePackCategories ?? []).filter((category) => category.status === "active").length;
+  const workflowCount = (creativePacks ?? []).filter((pack) => pack.status === "active").length;
+  return {
+    categoryCount,
+    workflowCount,
+    activeHomepagePackageCount: Math.min(16, workflowCount || (creativePacks ?? []).length),
+    lowestActivePlanPriceLabel: lowestActiveSubscriptionPriceLabel(products ?? [])
+  };
+}
+
+function homepageMetricText(value: string, metrics: HomepageMetrics): string {
+  return value
+    .replace(/\{LIVE_AI_IMAGE_CATEGORY_COUNT\}/g, String(metrics.categoryCount || 0))
+    .replace(/\{LIVE_AI_IMAGE_WORKFLOW_COUNT\}/g, String(metrics.workflowCount || 0))
+    .replace(/\{LIVE_AI_IMAGE_THEME_COUNT\}/g, String(metrics.workflowCount || 0))
+    .replace(/\{LIVE_ACTIVE_HOMEPAGE_PACKAGE_COUNT\}/g, String(metrics.activeHomepagePackageCount || 0))
+    .replace(/\{LIVE_LOWEST_ACTIVE_PLAN_PRICE\}/g, metrics.lowestActivePlanPriceLabel);
+}
+
+function homepageMetricBlockValue(block: SectionBlockInstance, key: string, metrics: HomepageMetrics): string {
+  return homepageMetricText(blockValue(block, key), metrics);
+}
+
 function selectedProduct(section: SectionInstance, products: SiteProduct[]): SiteProduct | undefined {
   const productId = selectorId(section.settings.product);
   return activeProducts(products).find((product) => product.id === productId) ?? activeProducts(products)[0];
@@ -8247,22 +8388,29 @@ function PricingTableSectionView({
   );
   const pricingTitle = setting(section, "title", "Subscription Plans");
   const mydreamPricingCopyLayout = !aidreamcapes && !spanishXbyPricing && isMyDreamShootsProfileSite(site);
+  const homepageMetrics = homepageMetricsForSite({ products });
   const pricingSubtitle = spanishXbyPricing
     ? aidreamcapes
       ? "Elige el plan de creditos adecuado para crear albumes privados de fans y recuerdos festivos."
       : "Elige el plan de creditos adecuado para crear fotos privadas, retratos profesionales y albumes con IA."
-    : setting(section, "subtitle", aidreamcapes ? "Choose the right credit plan for private fan-scene and holiday albums." : "Choose the plan that works for you");
-  const pricingMarketComparison = setting(
-    section,
-    "marketComparison",
-    mydreamPricingCopyLayout
-      ? "The average professional photoshoot can cost around $725. myDreamshoots keeps plan selection simple with monthly or quarterly and semiannually subscriptions."
-      : "The average professional photoshoot can cost around $725. myDreamshoots keeps plan selection simple with monthly, quarterly, and semiannual subscriptions."
+    : homepageMetricText(setting(section, "subtitle", aidreamcapes ? "Choose the right credit plan for private fan-scene and holiday albums." : "Choose the plan that works for you"), homepageMetrics);
+  const pricingMarketComparison = homepageMetricText(
+    setting(
+      section,
+      "marketComparison",
+      mydreamPricingCopyLayout
+        ? "Choose a monthly, quarterly, or semiannual plan based on the credits you expect to use. Compare the current price, included credits, renewal interval, and supported workflows before selecting a plan."
+        : "The average professional photoshoot can cost around $725. myDreamshoots keeps plan selection simple with monthly, quarterly, and semiannual subscriptions."
+    ),
+    homepageMetrics
   );
-  const pricingDescription = setting(
-    section,
-    "description",
-    "Choose Starter, Pro, or Premium. Each package shows its credit cost before generation; failed requests can return reserved credits according to request status."
+  const pricingDescription = homepageMetricText(
+    setting(
+      section,
+      "description",
+      "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs."
+    ),
+    homepageMetrics
   );
   const pricingImageAlt = spanishXbyImageAlt(site, manualImageAlt({
     explicitAlt: setting(section, "imageAlt", ""),
@@ -8293,15 +8441,15 @@ function PricingTableSectionView({
       title: spanishXbyPricing
         ? aidreamcapes ? "Creditos claros para albumes de ocasion flexibles." : "Creditos claros para paquetes privados flexibles."
         : mydreamPricingCopyLayout
-          ? setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")
-          : priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")),
+	          ? homepageMetricText(setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible."), homepageMetrics)
+	          : priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")),
       body: spanishXbyPricing
         ? aidreamcapes
           ? "Genera albumes privados de fans y recuerdos festivos tras revisar creditos y mantener saldo visible."
           : "Genera albumes privados tras revisar creditos, mantener saldo visible y recargar solo cuando necesitas mas sesiones."
         : mydreamPricingCopyLayout
-          ? setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
-          : priceMetaString(
+	          ? homepageMetricText(setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs."), homepageMetrics)
+	          : priceMetaString(
               featuredPrice,
               "sidePanelBody",
               setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
@@ -8432,8 +8580,18 @@ function SectionView({
   const legacySaasSection = usesNativeDreamShootRenderer ? null : renderLegacySaasSection({ id, section, site, products, creativePacks, mode, renderContext, siteAiApps });
   if (legacySaasSection) return legacySaasSection;
 
+  if (section.type === "ai_video_topic_landing") {
+    return <AiVideoTopicLanding section={section} site={site} />;
+  }
+
+  if (section.type === "talking_photo_landing") {
+    return <TalkingPhotoLanding section={section} site={site} />;
+  }
+
   if (section.type === "hero") {
     const aidreamcapes = isAidreamcapesSite(site);
+    const mydreamHomepage = isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) && renderContext.pagePath === "/";
+    const homepageMetrics = homepageMetricsForSite({ creativePackCategories, creativePacks, products });
     const images = [
       setting(section, "imageUrl", fallbackHeroImages[0]),
       setting(section, "secondaryImageUrl", fallbackHeroImages[1]),
@@ -8566,6 +8724,7 @@ function SectionView({
     if (setting(section, "layout", "editorial") === "immersive_dark") {
       const bullets = listLines(setting(section, "bulletList", "Upload selfies and create your private AI model|Themed packs for headshots, travel, beauty, and style looks|AI video and virtual try-on add-ons|Private credits, albums, and downloads"))
         .map((item) => heroBulletDisplayText(site, item))
+        .map((item) => homepageMetricText(item, homepageMetrics))
         .filter(Boolean);
       const primaryCta = ctas[0];
       const secondaryCta = ctas[1];
@@ -8592,8 +8751,8 @@ function SectionView({
       const aidreamcapesHeroCategoryImages = aidreamcapesRootCategoryImageUrlsForSite(site, creativePackCategories);
       const gridImages = (aidreamcapesHeroCategoryImages.length ? aidreamcapesHeroCategoryImages : configuredGridImages)
         .map((image) => mediaAssetUrl(site, image));
-      const imageBadge = setting(section, "imageBadge", "Private photo album");
-      const imageCaption = setting(section, "imageCaption", "Private AI photo packs, ready for download.");
+      const imageBadge = homepageMetricText(setting(section, "imageBadge", "Private photo album"), homepageMetrics);
+      const imageCaption = homepageMetricText(setting(section, "imageCaption", "Private AI photo packs, ready for download."), homepageMetrics);
       const authEmailHref = setting(section, "authEmailHref", "/login?mode=register");
       const authEmailParams = hiddenSearchParamsFromHref(authEmailHref);
       const authPrimaryLabel = setting(section, "authPrimaryLabel", "Continue with email");
@@ -8621,6 +8780,8 @@ function SectionView({
                     role: "featured",
                     title: "AIdreamcapes category visual"
                   })
+                  : mydreamHomepage && MYDREAMSHOOTS_HOMEPAGE_HERO_GRID_ALTS[index]
+                    ? MYDREAMSHOOTS_HOMEPAGE_HERO_GRID_ALTS[index]
                   : spanishXbyImageAlt(site, manualImageAlt({ src: heroGridImage, fallback: `${motionHeroAltPrefix} ${index + 1}` }));
                 return (
                   <div
@@ -8740,7 +8901,7 @@ function SectionView({
                   className="inline-flex rounded-full px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-white shadow-[0_20px_45px_-28px_rgba(236,75,221,0.75)] sm:px-4 sm:py-2 sm:text-[12px]"
                   style={{ background: dreamshootBrandGradient }}
                 >
-                  {setting(section, "authRibbon", "New seasonal packs live")}
+                  {homepageMetricText(setting(section, "authRibbon", "New seasonal packs live"), homepageMetrics)}
                 </div>
                 <div className="mt-4 rounded-[18px] border border-white/12 bg-white/[0.07] p-3 shadow-[inset_0_0_0_1px_rgba(122,76,255,0.14)] sm:mt-6 sm:p-4">
                   <p className="text-xs font-semibold text-white sm:text-sm">{imageBadge}</p>
@@ -8780,7 +8941,7 @@ function SectionView({
                   </form>
                 </div>
                 <div className="mt-4 rounded-[16px] border border-white/12 bg-white/[0.055] px-3 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:mt-5 sm:rounded-[18px] sm:px-4 sm:py-3">
-                  <p className="text-xs font-semibold text-white sm:text-sm">{setting(section, "socialProofLabel", aidreamcapes ? "Private fan and holiday album customers" : "Private photo-package customers")}</p>
+	                  <p className="text-xs font-semibold text-white sm:text-sm">{homepageMetricText(setting(section, "socialProofLabel", aidreamcapes ? "Private fan and holiday album customers" : "Private photo-package customers"), homepageMetrics)}</p>
                   <p className="mt-1 hidden text-xs leading-5 text-white/58 sm:block">
                     {isSpanishXbySite(site)
                       ? aidreamcapes
@@ -8799,14 +8960,14 @@ function SectionView({
           <div className="relative z-10 mx-auto grid max-w-[var(--site-content-width)] grid-cols-3 gap-3 border-t border-white/14 py-5 text-white sm:gap-4">
             {heroStats.map((item, index) => (
               <div className="min-w-0" key={instanceKey(item, index, "hero_stat")} {...xfcartBlockAttrs(item, index, "hero_stat")}>
-                <div className="text-[1.05rem] font-semibold tracking-tight text-white sm:font-mono sm:text-[1.15rem]">{blockValue(item, "value")}</div>
-                <div className="mt-1 text-[11px] leading-4 text-white/58 sm:text-[12px] sm:leading-5">{blockValue(item, "label")}</div>
+	                <div className="text-[1.05rem] font-semibold tracking-tight text-white sm:font-mono sm:text-[1.15rem]">{homepageMetricBlockValue(item, "value", homepageMetrics)}</div>
+	                <div className="mt-1 text-[11px] leading-4 text-white/58 sm:text-[12px] sm:leading-5">{homepageMetricBlockValue(item, "label", homepageMetrics)}</div>
               </div>
             ))}
           </div>
           <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] pb-7 md:hidden">
             <Link className="flex items-center justify-between rounded-[18px] border border-white/14 px-4 py-3 text-sm font-semibold text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.9)] backdrop-blur" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))} style={{ background: "linear-gradient(100deg, rgba(236,75,221,0.22), rgba(122,76,255,0.46), rgba(22,220,240,0.3))" }}>
-              <span>{setting(section, "imageBadge", "15+ package categories")}: {authPrimaryLabel}</span>
+	              <span>{imageBadge}: {authPrimaryLabel}</span>
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
           </div>
@@ -12322,6 +12483,17 @@ function SectionView({
     const imageProductCards = imageCards.map((card, productIndex) => ({ ...card, productIndex }));
     const homepageImageProductCards = imageProductCards.slice(0, 16);
     const homepageVideoCards = videoCards.slice(0, 8);
+    const homepageImageProductAlt = (card: (typeof imageProductCards)[number]) => {
+      const fallback = cardImageAltForSite(site, {
+        category: card.meta,
+        imageUrl: mediaAssetUrl(site, card.imageUrl),
+        index: card.productIndex,
+        meta: "gallery image product",
+        role: "gallery",
+        title: card.title
+      });
+      return useMydreamShowcaseGrid ? MYDREAMSHOOTS_HOMEPAGE_SHOWCASE_ALTS[card.productIndex] ?? fallback : fallback;
+    };
     const imageProductRowCount = Math.max(1, Math.ceil(imageProductCards.length / 7));
     type ImageProductWallCard = (typeof imageProductCards)[number] & { railKey: string };
     const imageProductRows: ImageProductWallCard[][] = [];
@@ -12350,7 +12522,9 @@ function SectionView({
       const logoSrc = logoImage && shouldRenderStorefrontTrustedLogoImage(site, resolvedLogoImage)
         ? withStorefrontPublicWatermarkCacheVersion(resolvedLogoImage)
         : "";
-      const logoAlt = isSpanishStorefrontSite(site)
+      const logoAlt = mydreamProfileSite && !isSpanishStorefrontSite(site)
+        ? `${logoName} workflow example`
+        : isSpanishStorefrontSite(site)
         ? `${logoName} logo de marca`
         : `${logoName} brand logo`;
       return (
@@ -12377,10 +12551,14 @@ function SectionView({
       );
     };
     const trustedProof = showTrustedLogoIntro ? (
-      <div className="relative left-1/2 mb-12 w-[min(82vw,106rem)] -translate-x-1/2 border-b border-white/10 pb-10 md:mb-14 md:pb-14" data-dreamshoot-trusted-logos="true">
+      <div
+        className="relative left-1/2 mb-12 w-[min(82vw,106rem)] -translate-x-1/2 border-b border-white/10 pb-10 md:mb-14 md:pb-14"
+        data-dreamshoot-trusted-logos={mydreamProfileSite ? undefined : "true"}
+        data-dreamshoot-workflow-examples={mydreamProfileSite ? "true" : undefined}
+      >
         <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
           <DreamshootUnderlinedTitle gradient={accent}>
-            {setting(section, "trustedLogoTitle", "Most Trusted Creators. | myDreamshoots")}
+	            {setting(section, "trustedLogoTitle", mydreamProfileSite ? "Creative workflow examples built with myDreamshoots" : "Most Trusted Creators. | myDreamshoots")}
           </DreamshootUnderlinedTitle>
         </h2>
         <div className="mx-auto mt-7 max-w-[78rem] space-y-3 md:mt-8 md:space-y-3.5">
@@ -12401,7 +12579,7 @@ function SectionView({
             {setting(section, "aboutTitle", "What is myDreamshoots?")}
           </h2>
           <p className="mt-4 text-[clamp(0.84rem,0.88vw,0.94rem)] font-medium leading-[1.58] text-white/74">
-            {setting(section, "aboutBody", "myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photo and video in seconds with myDreamshoots's: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. Plans start at $24.50/month, and every package shows the credit cost before generation.")}
+	            {setting(section, "aboutBody", "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. Upload photos you are authorized to use, choose a supported image or video workflow, review the current credit cost, and generate results inside your signed-in workspace. Current workflows include professional headshots, portraits, fan and seasonal images, creative styles, photo-editing tools, and short video options.")}
           </p>
         </div>
       </div>
@@ -12465,29 +12643,24 @@ function SectionView({
               {renderShowcaseSubsectionHeader(imageTitle, imageAllHref, imageAllLabel, "photo")}
               {useMydreamShowcaseGrid ? (
                 <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4" data-dreamshoot-homepage-gallery-grid="photo" data-dreamshoot-image-product-grid="true">
-                  {homepageImageProductCards.map((card) => (
-                    <figure
-                      aria-label={`View ${cardImageAltForSite(site, { category: card.meta, imageUrl: mediaAssetUrl(site, card.imageUrl), index: card.productIndex, meta: "gallery image product", role: "gallery", title: card.title })}`}
-                      className="group min-w-0 cursor-zoom-in overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] shadow-[0_28px_84px_-66px_rgba(0,0,0,0.92)] transition hover:-translate-y-0.5 hover:border-white/24 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-                      data-dreamshoot-image-product-card="true"
-                      data-dreamshoot-preview-meta={card.meta}
-                      data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
-                      data-dreamshoot-preview-title={cardImageAltForSite(site, { category: card.meta, imageUrl: mediaAssetUrl(site, card.imageUrl), index: card.productIndex, meta: "gallery image product", role: "gallery", title: card.title })}
-                      data-dreamshoot-showcase-preview="image"
-                      key={`${card.id}-image-grid`}
+	                  {homepageImageProductCards.map((card) => {
+	                    const imageAlt = homepageImageProductAlt(card);
+	                    return (
+	                    <figure
+	                      aria-label={`View ${imageAlt}`}
+	                      className="group min-w-0 cursor-zoom-in overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] shadow-[0_28px_84px_-66px_rgba(0,0,0,0.92)] transition hover:-translate-y-0.5 hover:border-white/24 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+	                      data-dreamshoot-image-product-card="true"
+	                      data-dreamshoot-preview-meta={card.meta}
+	                      data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
+	                      data-dreamshoot-preview-title={imageAlt}
+	                      data-dreamshoot-showcase-preview="image"
+	                      key={`${card.id}-image-grid`}
                       role="button"
                       tabIndex={0}
                     >
                       <div className="aspect-square min-w-0 max-w-full overflow-hidden">
-                        <StorefrontImage
-                          alt={cardImageAltForSite(site, {
-                            category: card.meta,
-                            imageUrl: mediaAssetUrl(site, card.imageUrl),
-                            index: card.productIndex,
-                            meta: "gallery image product",
-                            role: "gallery",
-                            title: card.title
-                          })}
+	                        <StorefrontImage
+	                          alt={imageAlt}
                           className="h-full w-full max-w-full bg-[#05070e] object-contain object-center transition duration-300 group-hover:brightness-105"
                           fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, card.productIndex) ? "high" : "low"}
                           loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, card.productIndex) ? "eager" : "lazy"}
@@ -12502,9 +12675,10 @@ function SectionView({
                           <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: accent }} />
                           {card.meta}
                         </span>
-                      </figcaption>
-                    </figure>
-                  ))}
+	                      </figcaption>
+	                    </figure>
+	                    );
+	                  })}
                 </div>
               ) : (
                 <div className="mt-5 space-y-3" data-dreamshoot-image-product-grid="true" data-dreamshoot-image-product-wall="true">
@@ -12516,38 +12690,34 @@ function SectionView({
                       speed={rowIndex % 2 === 1 ? 12 : 14}
                       trackClassName="dreamshoot-showcase-track flex w-max gap-3 px-5 md:gap-4"
                     >
-                      {row.map((card) => (
-                        <figure
-                          aria-label={`View ${cardImageAltForSite(site, { category: card.meta, imageUrl: mediaAssetUrl(site, card.imageUrl), index: card.productIndex, meta: "gallery image product", role: "gallery", title: card.title })}`}
-                          className={`group relative aspect-square w-[min(78vw,18rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[18px] border bg-[#0a0c12] shadow-[0_28px_78px_-58px_rgba(0,0,0,0.78)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:w-[calc((100vw-3.5rem)/2)] md:w-[calc((100vw-4.5rem)/3)] lg:w-[calc((100vw-5.5rem)/4)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
+	                      {row.map((card) => {
+	                        const imageAlt = homepageImageProductAlt(card);
+	                        return (
+	                        <figure
+	                          aria-label={`View ${imageAlt}`}
+	                          className={`group relative aspect-square w-[min(78vw,18rem)] shrink-0 cursor-zoom-in overflow-hidden rounded-[18px] border bg-[#0a0c12] shadow-[0_28px_78px_-58px_rgba(0,0,0,0.78)] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:w-[calc((100vw-3.5rem)/2)] md:w-[calc((100vw-4.5rem)/3)] lg:w-[calc((100vw-5.5rem)/4)] ${aidreamcapes ? "border-white/12" : "border-white/10"}`}
                           data-dreamshoot-image-product-card="true"
                           data-dreamshoot-image-product-row={String(rowIndex + 1)}
-                          data-dreamshoot-preview-meta={card.meta}
-                          data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
-                          data-dreamshoot-preview-title={cardImageAltForSite(site, { category: card.meta, imageUrl: mediaAssetUrl(site, card.imageUrl), index: card.productIndex, meta: "gallery image product", role: "gallery", title: card.title })}
+	                          data-dreamshoot-preview-meta={card.meta}
+	                          data-dreamshoot-preview-src={mediaAssetUrl(site, card.imageUrl)}
+	                          data-dreamshoot-preview-title={imageAlt}
                           data-dreamshoot-showcase-preview="image"
                           key={card.railKey}
                           role="button"
                           tabIndex={0}
                         >
-                          <StorefrontImage
-                            alt={cardImageAltForSite(site, {
-                              category: card.meta,
-                              imageUrl: mediaAssetUrl(site, card.imageUrl),
-                              index: card.productIndex,
-                              meta: "gallery image product",
-                              role: "gallery",
-                              title: card.title
-                            })}
+	                          <StorefrontImage
+	                            alt={imageAlt}
                             className="h-full w-full bg-[#05070e] object-contain object-center transition duration-300 group-hover:brightness-105"
                             fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, card.productIndex) ? "high" : "low"}
                             loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, card.productIndex) ? "eager" : "lazy"}
                             preview={false}
                             sizes="(max-width: 640px) 78vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                             src={mediaAssetUrl(site, card.imageUrl)}
-                          />
-                        </figure>
-                      ))}
+	                          />
+	                        </figure>
+	                        );
+	                      })}
                     </DreamshootShowcaseRail>
                   ))}
                 </div>
@@ -13082,9 +13252,74 @@ function SectionView({
   if (section.type === "dreamshoot_tool_collection" || section.type === "aidreamcapes_tool_collection") {
     const aidreamcapes = isAidreamcapesSite(site);
     const primaryMyDreamShoots = isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) && !aidreamcapes;
+    const layout = setting(section, "layout", "directory");
     const mydreamshootsVideoFramework = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXbySite(site) && !aidreamcapes && !primaryMyDreamShoots;
+    if (primaryMyDreamShoots && renderContext.pagePath === "/ai-video-generation" && layout === "video_theme_grid") {
+      const coverImageUrl = setting(section, "imageUrl", "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.png");
+      const topicDescriptions = new Map<string, string>(mydreamshootsVideoGenerationCategories.map((topic) => [topic.slug, topic.description]));
+      const topics = headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes)
+        .filter((topic) => isMydreamshootsPublicVideoGenerationTopicSlug(topic.slug));
+      const HeadingTag = setting(section, "headingLevel", "h1") === "h1" ? "h1" : "h2";
+      return (
+        <section className="relative isolate overflow-hidden bg-[#09080d] px-5 py-12 text-white sm:py-16 lg:py-20" id={sectionAnchor(section, "video-themes")}>
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,rgba(196,181,253,0.16),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.035),transparent_24%)]" />
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <div className="flex flex-col gap-4 border-b border-white/10 pb-8 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">AI Video Generation</p>
+                <HeadingTag className="mt-4 max-w-3xl text-4xl font-semibold leading-none tracking-normal text-white sm:text-5xl lg:text-6xl [font-family:var(--site-title-font)]">
+                  {setting(section, "title", "AI Video Generation")}
+                </HeadingTag>
+              </div>
+              <div className="max-w-xl lg:text-right">
+                <p className="text-sm font-semibold uppercase tracking-normal text-white/42">{topics.length} themes</p>
+                <p className="mt-3 text-base leading-7 text-white/68">
+                  {setting(section, "subtitle", "Browse every public AI video theme and open the dedicated guide for the direction you want.")}
+                </p>
+              </div>
+            </div>
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {topics.map((topic, index) => (
+                <Link
+                  className="group/theme relative overflow-hidden rounded-[8px] border border-white/12 bg-[#121018] text-white shadow-[0_24px_70px_-56px_rgba(0,0,0,0.92)] transition duration-300 hover:-translate-y-1 hover:border-[#c4b5fd]/55 hover:bg-[#17131f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd]/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09080d]"
+                  data-video-theme-card={topic.slug}
+                  href={topic.href}
+                  key={topic.id}
+                  prefetch={false}
+                >
+                  <div className="relative aspect-video overflow-hidden bg-[#211c2c]">
+                    <img
+                      alt={manualImageAlt({ src: coverImageUrl, fallback: `${topic.label} AI video theme cover portrait` })}
+                      className="h-full w-full object-cover transition duration-500 group-hover/theme:scale-[1.035]"
+                      decoding="async"
+                      loading={index === 0 ? "eager" : "lazy"}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      src={coverImageUrl}
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,8,13,0)_34%,rgba(9,8,13,0.82)_100%)]" />
+                    <span className="absolute left-3 top-3 rounded-full border border-white/16 bg-black/44 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/82 backdrop-blur">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className="min-h-[178px] p-5">
+                    <h2 className="text-xl font-semibold leading-tight tracking-normal text-white">{topic.label}</h2>
+                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/66">
+                      {topicDescriptions.get(topic.slug) ?? "Open this AI video theme guide."}
+                    </p>
+                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ddd7ff] transition group-hover/theme:text-white">
+                      Open theme
+                      <ChevronRight className="h-4 w-4 shrink-0 transition group-hover/theme:translate-x-0.5" strokeWidth={1.9} />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
     if (mydreamshootsVideoFramework) {
-      const categories = headerVideoGenerationCategoriesForClient(site, videoThemeCategories);
+      const topics = headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes);
       return (
         <section className="relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14" id={sectionAnchor(section, "video-generation")}>
           <div className="mx-auto max-w-[1180px]">
@@ -13097,7 +13332,7 @@ function SectionView({
               </p>
             </div>
             <HeaderVideoGenerationMegaPanel
-              categories={categories}
+              topics={topics}
               ctaHref={hrefFor(site, "/app/create#step-video")}
               ctaLabel="Open video workspace"
               variantTone="dark"
@@ -13164,7 +13399,6 @@ function SectionView({
     const configuredCategories = listLines(setting(section, "categories", aidreamcapes ? "Route Portrait Edit|Route Portrait|Video AI" : "Photo AI|AI Photo Edit|Video AI"));
     const toolCategories = Array.from(new Set(tools.map((tool) => blockValue(tool, "category", aidreamcapes ? "Route Portrait" : "Photo AI"))));
     const rawCategories = Array.from(new Set([...configuredCategories, ...toolCategories]));
-    const layout = setting(section, "layout", "directory");
     const dark = layout === "dark";
     const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/tools" || renderContext.pagePath === "/ai-video-generation" ? "h1" : "h2") === "h1" ? "h1" : "h2";
     const categories = spanishXbyTools ? Array.from(new Set(rawCategories.map((category) => spanishToolCategoryLabel(category, aidreamcapes)))) : rawCategories;
@@ -15745,19 +15979,35 @@ function SectionView({
                 const cardMeta = isDreamShootUseCaseWall ? blockValue(item, "location", blockValue(item, "name", "")) : blockValue(item, "location", "");
                 const customerName = blockValue(item, "name", "Customer");
                 const customerRole = blockValue(item, "role", "customer review");
+                const useCaseAlt = MYDREAMSHOOTS_HOMEPAGE_USE_CASE_ALTS[index];
+                const avatarAlt = isDreamShootUseCaseWall && useCaseAlt?.avatar
+                  ? useCaseAlt.avatar
+                  : customerAvatarAltForSite(site, {
+                      cardMeta,
+                      customerName,
+                      customerRole,
+                      imageUrl: avatar,
+                      index
+                    });
+                const resultAlt = isDreamShootUseCaseWall && useCaseAlt?.result
+                  ? useCaseAlt.result
+                  : customerReviewResultAltForSite(site, {
+                      cardMeta,
+                      customerName,
+                      customerRole,
+                      imageUrl: resultImage,
+                      index
+                    });
+                const previewAriaLabel = isDreamShootUseCaseWall
+                  ? `Open ${resultVideo ? "video" : "image"} example for ${cardTitle}`
+                  : `Open ${resultVideo ? "video" : "image"} result from ${customerName}'s ${customerRole} review`;
                 return (
                   <article className={`group flex ${stackedReviewLayout ? "min-h-[410px]" : "min-h-[380px]"} min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#e7dccf] bg-white shadow-[0_22px_58px_-46px_rgba(20,22,26,0.16)]`} key={instanceKey(item, index, "testimonial")} {...xfcartBlockAttrs(item, index, "testimonial")}>
                     <div className={`flex flex-1 flex-col ${stackedReviewLayout ? "p-5" : "p-[18px]"}`}>
                       <div className="flex items-center gap-3">
                         {avatar ? (
-                          <img
-                            alt={customerAvatarAltForSite(site, {
-                              cardMeta,
-                              customerName,
-                              customerRole,
-                              imageUrl: avatar,
-                              index
-                            })}
+	                          <img
+	                            alt={avatarAlt}
                             className="h-14 w-14 rounded-full border-[3px] border-white object-cover shadow-[0_16px_34px_-25px_rgba(20,22,26,0.35)]"
                             decoding="async"
                             fetchPriority="low"
@@ -15782,29 +16032,23 @@ function SectionView({
                         </div>
                       ) : null}
                       <p className="mt-4 text-[0.9rem] leading-6 text-[#1c2026]">{blockValue(item, "quote")}</p>
-                    </div>
-                    <button
-                      aria-label={`Open ${resultVideo ? "video" : "image"} result from ${customerName}'s ${customerRole} review`}
+	                    </div>
+	                    <button
+	                      aria-label={previewAriaLabel}
                       className={`group/result relative block w-full overflow-hidden bg-[#f2e8da] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a57] focus-visible:ring-inset ${stackedReviewLayout ? "aspect-[3/2]" : "h-[180px]"}`}
                       data-dreamshoot-preview-meta={cardMeta}
                       data-dreamshoot-preview-poster={resultImage}
                       data-dreamshoot-preview-src={resultVideo || resultImage}
-                      data-dreamshoot-preview-title={resultVideo
-                        ? videoPosterAltForSite(site, { meta: cardMeta || customerRole, title: cardTitle })
-                        : customerReviewResultAltForSite(site, {
-                            cardMeta,
-                            customerName,
-                            customerRole,
-                            imageUrl: resultImage,
-                            index
-                          })}
-                      data-dreamshoot-review-preview="true"
+	                      data-dreamshoot-preview-title={resultVideo
+	                        ? videoPosterAltForSite(site, { meta: cardMeta || customerRole, title: cardTitle })
+	                        : resultAlt}
+	                      data-dreamshoot-review-preview={reviewMode ? "true" : undefined}
                       data-dreamshoot-showcase-preview={resultVideo ? "video" : "image"}
                       type="button"
                     >
 	                      {resultVideo ? (
-	                        <LazyStorefrontVideo
-	                          aria-label={videoPosterAltForSite(site, { meta: cardMeta || customerRole, title: cardTitle })}
+		                        <LazyStorefrontVideo
+		                          aria-label={videoPosterAltForSite(site, { meta: cardMeta || customerRole, title: cardTitle })}
 	                          className="absolute inset-0 h-full w-full object-cover"
 	                          controls={false}
 	                          muted
@@ -15814,13 +16058,7 @@ function SectionView({
                         />
 	                      ) : (
 	                        <StorefrontSafeImage
-	                          alt={customerReviewResultAltForSite(site, {
-	                            cardMeta,
-	                            customerName,
-	                            customerRole,
-	                            imageUrl: resultImage,
-	                            index
-	                          })}
+	                          alt={resultAlt}
 	                          className="absolute inset-0 bg-[#f2e8da]"
 	                          fetchPriority="low"
                           loading="lazy"
@@ -15831,7 +16069,7 @@ function SectionView({
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/48 via-transparent to-transparent" />
                       <div className="pointer-events-none absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-3 py-1.5 text-[11px] font-semibold text-[#171514] shadow-[0_10px_24px_-18px_rgba(20,22,26,0.35)] backdrop-blur">
                         {resultVideo ? <PlayCircle className="h-3.5 w-3.5 text-[#b98a57]" strokeWidth={1.8} /> : <span className="h-1.5 w-1.5 rounded-full bg-[#d59a4b]" />}
-                        {resultVideo ? "Video review example" : "Private gallery example"}
+	                        {resultVideo ? isDreamShootUseCaseWall ? "Video workflow example" : "Video review example" : "Private gallery example"}
                       </div>
                     </button>
                   </article>

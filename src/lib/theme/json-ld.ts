@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { normalizeThemeSeo } from "@/lib/theme/seo";
+import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
@@ -499,6 +500,13 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: Json
     if (section?.type === "dreamshoot_theme_faq") {
       return themeFaqQuestions(site, input, section)
         .map(([question, answer]) => faqQuestionNode(site, question, answer))
+        .filter(Boolean) as JsonLdNode[];
+    }
+    if (section?.type === "ai_video_topic_landing") {
+      const contentKey = cleanText(section.settings.contentKey, cleanText(section.settings.anchor));
+      const content = aiVideoTopicLandingContentByKey[contentKey];
+      return (content?.faq.items ?? [])
+        .map((item) => faqQuestionNode(site, item.question, item.answer))
         .filter(Boolean) as JsonLdNode[];
     }
     if (section?.type !== "faq") return [];
@@ -1010,18 +1018,31 @@ export function buildToolDirectoryJsonLd({
   site,
   toolSlug,
   publicPath,
-  routeMode
+  routeMode,
+  pageJson
 }: {
   site: Site;
   toolSlug: string;
   publicPath?: string;
   routeMode: "host" | "path";
+  pageJson?: ThemePageJson;
 }): JsonLdNode[] {
   const item = getSeoDirectoryContentForSite(site, "tool", toolSlug);
   const pagePath = publicPath ?? item.canonicalPath;
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
   const siteName = siteBrandName(site);
+  const topicSection = sectionOfType(pageJson, "ai_video_topic_landing");
+  const topicContentKey = cleanText(topicSection?.settings.contentKey, cleanText(topicSection?.settings.anchor));
+  const topicContent = aiVideoTopicLandingContentByKey[topicContentKey];
+  const faq = topicContent
+    ? {
+        "@type": "FAQPage",
+        mainEntity: topicContent.faq.items
+          .map((faqItem) => faqQuestionNode(site, faqItem.question, faqItem.answer))
+          .filter(Boolean)
+      }
+    : toolDirectoryFaqSchema(site, item);
   const graph: JsonLdNode[] = [
     organizationSchema(site, routeMode),
     websiteSchema(site, routeMode),
@@ -1059,7 +1080,7 @@ export function buildToolDirectoryJsonLd({
       },
       url
     },
-    toolDirectoryFaqSchema(site, item)
+    faq
   ];
 
   return [{ "@context": "https://schema.org", "@graph": graph }];

@@ -7,7 +7,7 @@ import { argumentValue, assertAllowedSite, assertDatabaseTarget } from "./lib/da
 const repoRoot = process.cwd();
 const stateFile = path.join(repoRoot, "data", "platform-state.json");
 const targetSiteIds = ["site_dreamshoot", "site_grownstride_test"];
-const categories = [
+const baseCategories = [
   {
     slug: "text-to-video",
     label: "Text to video",
@@ -21,6 +21,66 @@ const categories = [
     sortOrder: 20
   }
 ];
+const categoriesBySiteId = {
+  site_dreamshoot: [
+    ...baseCategories,
+    {
+      slug: "talking-photo",
+      label: "Talking Photo",
+      description: "Explore a talking-photo workflow from one clear portrait and a focused message.",
+      sortOrder: 30
+    },
+    {
+      slug: "cinematic-video",
+      label: "Cinematic Video",
+      description: "Plan cinematic video scenes with stronger mood, shot design, lighting, pacing, and camera movement.",
+      sortOrder: 40
+    },
+    {
+      slug: "tiktok-video",
+      label: "TikTok Video",
+      description: "Shape TikTok-first vertical video ideas with clearer hooks, framing, captions, and closes.",
+      sortOrder: 50
+    },
+    {
+      slug: "instagram-reels",
+      label: "Instagram Reels",
+      description: "Plan Instagram Reels from photos and ideas with mobile-safe pacing, cover choices, and captions.",
+      sortOrder: 60
+    },
+    {
+      slug: "social-media-video",
+      label: "Social Media Video",
+      description: "Adapt one core video idea across social platforms with platform-aware hooks, crops, and CTAs.",
+      sortOrder: 70
+    },
+    {
+      slug: "youtube-video",
+      label: "YouTube Video",
+      description: "Structure YouTube video ideas with stronger openings, chapter-ready sequences, and clearer next steps.",
+      sortOrder: 80
+    },
+    {
+      slug: "story-video",
+      label: "Story Video",
+      description: "Shape story-led videos around setup, tension, turning point, payoff, and meaning.",
+      sortOrder: 90
+    },
+    {
+      slug: "meme-video",
+      label: "Meme Video",
+      description: "Turn reactions, POV setups, everyday situations, and punchlines into clear meme video directions.",
+      sortOrder: 100
+    },
+    {
+      slug: "product-video",
+      label: "Product Video",
+      description: "Turn product photos into clear video directions that answer buyer questions about scale, detail, use, features, and packaging.",
+      sortOrder: 110
+    }
+  ],
+  site_grownstride_test: baseCategories
+};
 
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
@@ -33,9 +93,13 @@ function categoryId(siteId, slug) {
   return `video_cat_${siteId.replace(/^site_/, "")}_${slug.replaceAll("-", "_")}`;
 }
 
+function categoriesForSite(siteId) {
+  return categoriesBySiteId[siteId] ?? baseCategories;
+}
+
 function categoryRows(siteId) {
   const now = new Date().toISOString();
-  return categories.map((category) => ({
+  return categoriesForSite(siteId).map((category) => ({
     id: categoryId(siteId, category.slug),
     siteId,
     slug: category.slug,
@@ -153,7 +217,7 @@ async function dbReset() {
     if (dryRun) {
       const afterRows = Object.fromEntries(targetSiteIds.map((siteId) => [
         siteId,
-        { tools: 0, toolItems: 0, videoThemes: 0, videoCategories: categories.length }
+        { tools: 0, toolItems: 0, videoThemes: 0, videoCategories: categoriesForSite(siteId).length }
       ]));
       printReport("After (dry-run)", afterRows);
       printReport("Deleted (dry-run)", Object.fromEntries(beforeRows.map(([siteId, before]) => [
@@ -175,7 +239,7 @@ async function dbReset() {
         await tx.videoTheme.deleteMany({ where: { siteId } });
         await tx.videoThemeCategory.deleteMany({ where: { siteId } });
         await tx.videoThemeCategory.createMany({
-          data: categories.map((category) => ({
+          data: categoriesForSite(siteId).map((category) => ({
             id: categoryId(siteId, category.slug),
             siteId,
             slug: category.slug,

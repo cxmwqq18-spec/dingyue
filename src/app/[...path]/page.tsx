@@ -27,7 +27,7 @@ import { customerSessionCookie } from "@/lib/session";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
-import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
+import { getSiteByHostForPublicAuth, getVideoThemeSlugRedirectRelational } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -487,6 +487,10 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     const videoGenerationRoute = parsePublicVideoGenerationRouteForSite(site, path);
     if (!videoGenerationRoute) return {};
     if (videoGenerationRoute.itemSlug) {
+      const redirectRecord = await getVideoThemeSlugRedirectRelational(site.id, videoGenerationRoute.itemSlug);
+      if (redirectRecord?.theme?.status === "active") {
+        return metadataForSeoDirectory(site, "tool", redirectRecord.theme.slug);
+      }
       const resolved = await resolveHostToolPageWithFallback(hostCandidates, videoGenerationRoute.itemSlug);
       if (!resolved) return {};
       return metadataForSeoDirectory(resolved.site, "tool", videoGenerationRoute.itemSlug);
@@ -669,8 +673,14 @@ export default async function HostStorefrontCatchAllPage({
   if (isVideoGenerationRequest) {
     if (!videoGenerationRoute) notFound();
     if (videoGenerationRoute.itemSlug) {
+      const redirectRecord = await getVideoThemeSlugRedirectRelational(site.id, videoGenerationRoute.itemSlug);
+      if (redirectRecord?.theme?.status === "active" && redirectRecord.theme.slug !== videoGenerationRoute.itemSlug) {
+        permanentRedirect(publicSiteUrl(site, `/ai-video-generation/${redirectRecord.theme.slug}`));
+      }
       if (!resolvedVideoToolPage) notFound();
-      const canonicalToolPath = canonicalSeoDirectoryPathForSite(resolvedVideoToolPage.site, "tool", videoGenerationRoute.itemSlug);
+      const canonicalToolPath = resolvedVideoToolPage.site.id === site.id && state.videoThemes?.some((theme) => theme.siteId === site.id && theme.slug === videoGenerationRoute.itemSlug)
+        ? videoGenerationRoute.canonicalPath
+        : canonicalSeoDirectoryPathForSite(resolvedVideoToolPage.site, "tool", videoGenerationRoute.itemSlug);
       if (canonicalToolPath !== videoGenerationRoute.canonicalPath) permanentRedirect(publicSiteUrl(resolvedVideoToolPage.site, canonicalToolPath));
       return renderToolPage({
         site: resolvedVideoToolPage.site,

@@ -1,6 +1,6 @@
 import { normalizeThemeSeo } from "@/lib/theme/seo";
 import { themeValueToString } from "@/lib/theme-values";
-import type { SectionInstance, Site, ThemePage, ThemeSettingValue } from "@/lib/types";
+import type { SectionBlockInstance, SectionInstance, Site, ThemePage, ThemeSettings, ThemeSettingValue } from "@/lib/types";
 
 export type PublishPreflightSeverity = "pass" | "warn" | "block";
 
@@ -14,6 +14,7 @@ export type PublishPreflightCheck = {
 
 export type PublishPreflightResult = {
   checks: PublishPreflightCheck[];
+  globalVisualChanges: PublishGlobalVisualChange[];
   canPublish: boolean;
   score: number;
   summary: {
@@ -21,6 +22,13 @@ export type PublishPreflightResult = {
     warnings: number;
     passes: number;
   };
+};
+
+export type PublishGlobalVisualChange = {
+  id: string;
+  label: string;
+  live: string;
+  draft: string;
 };
 
 export type PublishPreflightProduct = {
@@ -52,6 +60,84 @@ const mediaKeys = new Set([
   "beforeImage",
   "afterImage"
 ]);
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function readPath(root: unknown, path: string[]): unknown {
+  return path.reduce<unknown>((current, key) => (isRecord(current) ? current[key] : undefined), root);
+}
+
+function displaySettingValue(value: unknown): string {
+  if (value === undefined || value === null || value === "") return "default";
+  if (typeof value === "string") return value.trim() || "default";
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (Array.isArray(value)) return `${value.length} items`;
+  return JSON.stringify(value);
+}
+
+function globalSectionBlocks(settings: ThemeSettings, type: "header" | "footer"): SectionBlockInstance[] {
+  return settings.globalSections?.[type]?.blocks ?? [];
+}
+
+function linkSignature(links: ThemeSettings["navigation"]["headerLinks"]): string {
+  return links.map((link) => `${link.label.trim()} -> ${link.href.trim()}`).join(" | ");
+}
+
+function compareGlobalVisualValue(changes: PublishGlobalVisualChange[], id: string, label: string, live: unknown, draft: unknown) {
+  const liveValue = displaySettingValue(live);
+  const draftValue = displaySettingValue(draft);
+  if (liveValue !== draftValue) changes.push({ id, label, live: liveValue, draft: draftValue });
+}
+
+export function summarizeThemeGlobalVisuals(settings: ThemeSettings): Record<string, string> {
+  const headerLinks = settings.navigation?.headerLinks ?? [];
+  const footerLinks = settings.navigation?.footerLinks ?? [];
+  return {
+    contentWidth: displaySettingValue(readPath(settings.saasSettingsCurrent, ["general_layout_width"])),
+    layoutSpacing: displaySettingValue(readPath(settings.saasSettingsCurrent, ["general_layout_spacing"])),
+    siteBackground: displaySettingValue(readPath(settings.saasSettingsCurrent, ["skin_bg"]) ?? settings.colors?.background),
+    footerBackground: displaySettingValue(
+      settings.globalSections?.footer?.settings?.backgroundColor ??
+        readPath(settings.saasSettingsCurrent, ["sections", "footer_plus", "settings", "footer_bg_color"])
+    ),
+    footerText: displaySettingValue(
+      settings.globalSections?.footer?.settings?.textColor ??
+        readPath(settings.saasSettingsCurrent, ["sections", "footer_plus", "settings", "footer_text_color"])
+    ),
+    headerLinks: String(headerLinks.length),
+    footerLinks: String(footerLinks.length),
+    headerBlocks: String(globalSectionBlocks(settings, "header").length),
+    footerBlocks: String(globalSectionBlocks(settings, "footer").length)
+  };
+}
+
+export function collectThemeGlobalVisualChanges(site: Pick<Site, "themeSettings">): PublishGlobalVisualChange[] {
+  const live = site.themeSettings.publishedJson;
+  const draft = site.themeSettings.draftJson;
+  const liveHeaderLinks = live.navigation?.headerLinks ?? [];
+  const draftHeaderLinks = draft.navigation?.headerLinks ?? [];
+  const liveFooterLinks = live.navigation?.footerLinks ?? [];
+  const draftFooterLinks = draft.navigation?.footerLinks ?? [];
+  const changes: PublishGlobalVisualChange[] = [];
+  compareGlobalVisualValue(changes, "content_width", "Content width", readPath(live.saasSettingsCurrent, ["general_layout_width"]), readPath(draft.saasSettingsCurrent, ["general_layout_width"]));
+  compareGlobalVisualValue(changes, "layout_spacing", "Layout spacing", readPath(live.saasSettingsCurrent, ["general_layout_spacing"]), readPath(draft.saasSettingsCurrent, ["general_layout_spacing"]));
+  compareGlobalVisualValue(changes, "site_background", "Site background", readPath(live.saasSettingsCurrent, ["skin_bg"]) ?? live.colors?.background, readPath(draft.saasSettingsCurrent, ["skin_bg"]) ?? draft.colors?.background);
+  compareGlobalVisualValue(changes, "footer_background", "Footer background", live.globalSections?.footer?.settings?.backgroundColor ?? readPath(live.saasSettingsCurrent, ["sections", "footer_plus", "settings", "footer_bg_color"]), draft.globalSections?.footer?.settings?.backgroundColor ?? readPath(draft.saasSettingsCurrent, ["sections", "footer_plus", "settings", "footer_bg_color"]));
+  compareGlobalVisualValue(changes, "footer_text", "Footer text", live.globalSections?.footer?.settings?.textColor ?? readPath(live.saasSettingsCurrent, ["sections", "footer_plus", "settings", "footer_text_color"]), draft.globalSections?.footer?.settings?.textColor ?? readPath(draft.saasSettingsCurrent, ["sections", "footer_plus", "settings", "footer_text_color"]));
+  compareGlobalVisualValue(changes, "header_blocks", "Header blocks", globalSectionBlocks(live, "header").length, globalSectionBlocks(draft, "header").length);
+  compareGlobalVisualValue(changes, "footer_blocks", "Footer blocks", globalSectionBlocks(live, "footer").length, globalSectionBlocks(draft, "footer").length);
+  compareGlobalVisualValue(changes, "header_link_count", "Header links", liveHeaderLinks.length, draftHeaderLinks.length);
+  compareGlobalVisualValue(changes, "footer_link_count", "Footer links", liveFooterLinks.length, draftFooterLinks.length);
+  if (liveHeaderLinks.length === draftHeaderLinks.length) {
+    compareGlobalVisualValue(changes, "header_link_items", "Header link items", linkSignature(liveHeaderLinks), linkSignature(draftHeaderLinks));
+  }
+  if (liveFooterLinks.length === draftFooterLinks.length) {
+    compareGlobalVisualValue(changes, "footer_link_items", "Footer link items", linkSignature(liveFooterLinks), linkSignature(draftFooterLinks));
+  }
+  return changes;
+}
 
 function pass(id: string, scope: PublishPreflightCheck["scope"], title: string, detail: string): PublishPreflightCheck {
   return { id, scope, title, detail, severity: "pass" };
@@ -180,6 +266,7 @@ export function runThemePublishPreflight({
   const enabledAiApps = siteAiApps.filter((app) => app.enabled);
   const headerLinks = site.themeSettings.draftJson.navigation.headerLinks;
   const footerLinks = site.themeSettings.draftJson.navigation.footerLinks;
+  const globalVisualChanges = collectThemeGlobalVisualChanges(site);
   const seo = normalizeThemeSeo(site, site.themeSettings.draftJson);
   const brokenLinks = [...headerLinks, ...footerLinks].filter((link) => !link.label.trim() || hasBrokenLink(link.href));
   const mediaIds = new Set(mediaAssets.map((asset) => asset.id));
@@ -214,6 +301,20 @@ export function runThemePublishPreflight({
     dirtyPages.length
       ? warn("dirty_pages", "pages", "存在未发布草稿", `${dirtyPages.length} 个页面草稿和线上版本不同，发布会一次性推到前台。`)
       : pass("dirty_pages", "pages", "草稿与线上一致", "当前页面 draft_json 与 published_json 没有差异。")
+  );
+
+  checks.push(
+    globalVisualChanges.length
+      ? warn(
+          "global_visual_changes",
+          "settings",
+          "存在全局视觉变化",
+          globalVisualChanges
+            .slice(0, 5)
+            .map((change) => `${change.label}: ${change.live} -> ${change.draft}`)
+            .join("；")
+        )
+      : pass("global_visual_changes", "settings", "全局视觉设置一致", "宽度、间距、header/footer 和导航数量与线上一致。")
   );
 
   checks.push(
@@ -318,6 +419,7 @@ export function runThemePublishPreflight({
 
   return {
     checks,
+    globalVisualChanges,
     canPublish: summary.blockers === 0,
     score,
     summary

@@ -195,9 +195,10 @@ async function measureWorkbenchLayout(page) {
   });
 }
 
-async function inspectVisibleButtons(page) {
-  return page.locator("button").evaluateAll((buttons) =>
+async function inspectVisibleButtons(page, { ignoreLivePreviewButtons = false } = {}) {
+  return page.locator("button").evaluateAll((buttons, ignoreLivePreviewButtons) =>
     buttons
+      .filter((button) => !(ignoreLivePreviewButtons && button.closest(".designer-live-preview")))
       .map((button) => {
         const rect = button.getBoundingClientRect();
         const style = window.getComputedStyle(button);
@@ -212,7 +213,7 @@ async function inspectVisibleButtons(page) {
         };
       })
       .filter((button) => button.display !== "none" && button.visibility !== "hidden" && button.width > 0 && button.height > 0)
-  );
+  , ignoreLivePreviewButtons);
 }
 
 function isIgnorablePageError(message) {
@@ -355,13 +356,15 @@ async function auditPage(page, pathname, viewport, screenshotName) {
 }
 
 async function assertNoLayoutDefects(page, label, viewportWidth = 1600) {
-  const buttons = await inspectVisibleButtons(page);
+  const ignoreLivePreviewButtons = label.includes("workbench");
+  const buttons = await inspectVisibleButtons(page, { ignoreLivePreviewButtons });
   const emptyButtons = buttons.filter((button) => !button.text);
   assert(emptyButtons.length === 0, `${label} has visible buttons without accessible text: ${JSON.stringify(emptyButtons)}`);
 
-  const clipped = await page.locator("button").evaluateAll((nodes) =>
+  const clipped = await page.locator("button").evaluateAll((nodes, ignoreLivePreviewButtons) =>
     nodes
       .filter((node) => {
+        if (ignoreLivePreviewButtons && node.closest(".designer-live-preview")) return false;
         const rect = node.getBoundingClientRect();
         const style = window.getComputedStyle(node);
         if (style.display === "none" || style.visibility === "hidden" || rect.width === 0 || rect.height === 0) return false;
@@ -372,7 +375,7 @@ async function assertNoLayoutDefects(page, label, viewportWidth = 1600) {
         scrollWidth: node.scrollWidth,
         clientWidth: node.clientWidth
       }))
-  );
+  , ignoreLivePreviewButtons);
   assert(clipped.length === 0, `${label} has clipped button labels: ${JSON.stringify(clipped.slice(0, 8))}`);
 
   const inspector = page.locator('[data-designer-layout="saas-right-editor-pane"]');
@@ -583,7 +586,7 @@ async function markVisibleDraftPreviewTarget(page) {
     const root = document.querySelector(".designer-live-preview");
     root?.querySelectorAll("[data-smoke-preview-target]").forEach((node) => node.removeAttribute("data-smoke-preview-target"));
     const candidates = Array.from(root?.querySelectorAll('a[href]:not([href^="#"]), button:not([disabled])') ?? []);
-    const target = candidates.find((node) => {
+    const visibleCandidates = candidates.filter((node) => {
       const rect = node.getBoundingClientRect();
       const style = window.getComputedStyle(node);
       const viewportWidth = document.documentElement.clientWidth;
@@ -601,6 +604,17 @@ async function markVisibleDraftPreviewTarget(page) {
         style.display !== "none" &&
         style.visibility !== "hidden";
     });
+    const target = visibleCandidates
+      .map((node) => {
+        const sectionId = node.closest(".xfcart-section[data-section-id]")?.getAttribute("data-section-id") ?? "";
+        const text = (node.textContent || node.getAttribute("aria-label") || node.getAttribute("title") || "").trim().replace(/\s+/g, " ");
+        const globalPenalty = sectionId === "header_plus" || sectionId === "footer_plus" ? -120 : 0;
+        const actionBonus = /create|start|buy|package|learn|shop|pricing|生成|开始|立即|套餐|购买/i.test(text) ? 40 : 0;
+        const tagBonus = node.tagName.toLowerCase() === "button" ? 20 : 10;
+        const textBonus = text.length >= 2 && text.length <= 120 ? 15 : 0;
+        return { node, score: globalPenalty + actionBonus + tagBonus + textBonus };
+      })
+      .sort((left, right) => right.score - left.score)[0]?.node;
     if (!target) return null;
     target.setAttribute("data-smoke-preview-target", "true");
     return {
@@ -609,6 +623,92 @@ async function markVisibleDraftPreviewTarget(page) {
       href: target.tagName.toLowerCase() === "a" ? target.getAttribute("href") ?? "" : ""
     };
   });
+}
+
+async function getPropertyFieldGroupState(page) {
+  return page.evaluate(() => {
+    const pane = document.querySelector('[data-designer-layout="saas-right-editor-pane"]');
+    const groupRoot = pane?.querySelector('[data-designer-layout="saas-property-field-groups"]');
+    if (!(groupRoot instanceof HTMLElement)) return null;
+    const activeGroup = groupRoot.getAttribute("data-designer-field-group-active") ?? "";
+    const panel = groupRoot.querySelector(`[data-designer-field-group-panel="${activeGroup}"]`);
+    return {
+      activeGroup,
+      tabs: Array.from(groupRoot.querySelectorAll("[data-designer-tab-key]")).map((tab) => ({
+        key: tab.getAttribute("data-designer-tab-key") ?? "",
+        label: (tab.textContent ?? "").trim().replace(/\s+/g, " ")
+      })),
+      visibleFieldIds: Array.from(panel?.querySelectorAll("[data-designer-field-id]") ?? []).map((field) => field.getAttribute("data-designer-field-id") ?? "").filter(Boolean)
+    };
+  });
+}
+
+async function assertPropertyFieldTabs(page) {
+  await page.waitForFunction(() => {
+    const pane = document.querySelector('[data-designer-layout="saas-right-editor-pane"]');
+    const groupRoot = pane?.querySelector('[data-designer-layout="saas-property-field-groups"]');
+    return Boolean(groupRoot && groupRoot.querySelectorAll("[data-designer-tab-key]").length >= 2);
+  }, undefined, { timeout: 10_000 });
+  const initial = await getPropertyFieldGroupState(page);
+  assert(initial, "right property field groups did not render");
+  assert(initial.tabs.length >= 2, `expected at least two property field tabs, got ${JSON.stringify(initial.tabs)}`);
+  assert(initial.tabs.some((tab) => tab.key === "content" || tab.label.includes("内容")), `property field tabs missing content tab: ${JSON.stringify(initial.tabs)}`);
+  assert(initial.visibleFieldIds.length > 0, `active property field tab ${initial.activeGroup} rendered no editable fields`);
+  const inactive = initial.tabs.find((tab) => tab.key && tab.key !== initial.activeGroup);
+  assert(inactive, "property field tabs did not expose an inactive tab to test");
+  await page.locator(`[data-designer-tab-key="${cssAttrValue(inactive.key)}"]`).first().click();
+  await page.waitForFunction((key) => {
+    const root = document.querySelector('[data-designer-layout="saas-property-field-groups"]');
+    return root?.getAttribute("data-designer-field-group-active") === key;
+  }, inactive.key, { timeout: 5000 });
+  const afterSwitch = await getPropertyFieldGroupState(page);
+  assert(afterSwitch?.activeGroup === inactive.key, `property field tab did not switch to ${inactive.key}`);
+  assert(
+    JSON.stringify(afterSwitch.visibleFieldIds) !== JSON.stringify(initial.visibleFieldIds) || afterSwitch.activeGroup !== initial.activeGroup,
+    "inactive property field tab still showed the same field set"
+  );
+  const contentTab = page.locator('[data-designer-tab-key="content"]').first();
+  if (await contentTab.count()) await contentTab.click();
+  return { initial, afterSwitch };
+}
+
+async function waitForFocusedPropertyField(page) {
+  await page.waitForFunction(() => {
+    const pane = document.querySelector('[data-designer-layout="saas-right-editor-pane"]');
+    if (!pane) return false;
+    const highlighted = pane.querySelector('[data-designer-field-focus="true"]');
+    const active = document.activeElement instanceof Element ? document.activeElement.closest("[data-designer-field-id]") : null;
+    return Boolean(highlighted || active);
+  }, undefined, { timeout: 5000, polling: 100 });
+  return page.evaluate(() => {
+    const pane = document.querySelector('[data-designer-layout="saas-right-editor-pane"]');
+    const highlighted = pane?.querySelector('[data-designer-field-focus="true"]');
+    const active = document.activeElement instanceof Element ? document.activeElement.closest("[data-designer-field-id]") : null;
+    const field = highlighted ?? active;
+    const groupRoot = field?.closest('[data-designer-layout="saas-property-field-groups"]');
+    return {
+      fieldId: field?.getAttribute("data-designer-field-id") ?? "",
+      fieldType: field?.getAttribute("data-designer-field-type") ?? "",
+      activeGroup: groupRoot?.getAttribute("data-designer-field-group-active") ?? "",
+      requestId: field?.getAttribute("data-designer-field-focus-request-id") ?? ""
+    };
+  });
+}
+
+async function exerciseCopyLocatorFieldFocus(page, text, suiteReport) {
+  const needle = text.replace(/\s+/g, " ").trim().slice(0, 80);
+  if (needle.length < 2) {
+    suiteReport.findings.push("预览点击目标没有稳定文案，已跳过文案定位器字段聚焦断言。");
+    return null;
+  }
+  const locator = page.locator('[data-designer-layout="saas-copy-locator"]').first();
+  await locator.locator('input[placeholder*="文案"]').fill(needle);
+  const result = locator.locator("button[title]").first();
+  await result.waitFor({ state: "visible", timeout: 5000 });
+  await result.click();
+  const focused = await waitForFocusedPropertyField(page);
+  assert(focused.fieldId, `copy locator result did not focus a right-pane field: ${JSON.stringify(focused)}`);
+  return focused;
 }
 
 async function markVisiblePropertyInputTarget(page) {
@@ -789,6 +889,9 @@ async function exerciseWorkbench(page, report, suiteReport) {
 
   await selectPageOptionByPattern(pageSelect, page, /(?:^|[\s/])(?:首页|home)(?:[\s/]|$)|(?:^|\s)\/(?:\s|$)/i);
   await waitForDraftPreviewReady(page);
+  const fieldTabsStartedAt = performance.now();
+  await assertPropertyFieldTabs(page);
+  suiteReport.performance.interactions.propertyFieldTabsReadyMs = roundMs(performance.now() - fieldTabsStartedAt);
   const draftPreview = page.locator(".designer-live-preview").first();
   const initialDraftMetrics = await getDraftPreviewMetrics(page);
   assert(
@@ -853,6 +956,15 @@ async function exerciseWorkbench(page, report, suiteReport) {
   );
   const editClickBody = await page.locator("body").innerText();
   assert(editClickBody.includes("已从编辑定位预览选中"), "edit定位 click did not select a preview source");
+  const focusedField = await waitForFocusedPropertyField(page);
+  assert(focusedField.fieldId, `edit定位 click did not focus a right-pane field: ${JSON.stringify(focusedField)}`);
+  assert(
+    !focusedField.activeGroup || ["content", "actions", "media", "style", "advanced"].includes(focusedField.activeGroup),
+    `edit定位 click focused a field under an unexpected group: ${JSON.stringify(focusedField)}`
+  );
+  const copyLocatorStartedAt = performance.now();
+  await exerciseCopyLocatorFieldFocus(page, editTarget.text, suiteReport);
+  suiteReport.performance.interactions.copyLocatorFieldFocusMs = roundMs(performance.now() - copyLocatorStartedAt);
   suiteReport.performance.interactions.editModePreviewClickMs = roundMs(performance.now() - editClickStartedAt);
   await exerciseMediaResourceWorkflow(page, report, suiteReport);
 
@@ -1412,6 +1524,9 @@ async function run() {
     "## 关键检查",
     "- 后台首页无 pageerror、console error、network error 和 4xx/5xx 资源。",
     "- 外层工作台保持锁定，滚轮会滚动左侧草稿预览，右侧属性区独立滚动。",
+    "- 右侧模块字段按类别 Tab 拆分，切换 Tab 时只展示当前分组字段。",
+    "- 编辑定位模式点击预览文案后，会自动切到对应字段分组并聚焦右侧字段。",
+    "- 文案定位器搜索结果可直接定位并聚焦到对应字段。",
     "- 编辑定位模式使用本地草稿实时预览，点击链接/按钮只选中内容来源，不发生业务跳转。",
     "- 真实交互预览允许站内链接在 iframe 中正常跳转。",
     "- 连续输入会被防抖合并，不会逐字符调用 xfcart mutation。",

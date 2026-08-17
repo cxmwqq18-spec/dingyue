@@ -20,6 +20,7 @@ tsconfig.tsbuildinfo
 output/
 work_pdf_translation/
 tmp/
+.tmp/
 .tmp-*.cjs
 public/current-*.png
 public/qa-*.png

@@ -523,6 +523,31 @@ function normalizeThemeDraftMeta(value: unknown, fallbackRevision = 1): import("
   };
 }
 
+function normalizeThemePageJson(value: unknown): import("@/lib/types").ThemePageJson {
+  const page = cloneJson(value ?? {}) as Partial<import("@/lib/types").ThemePageJson> & {
+    order?: unknown;
+    draftMeta?: unknown;
+  };
+  const sections = page.sections && typeof page.sections === "object" && !Array.isArray(page.sections)
+    ? page.sections as import("@/lib/types").ThemePageJson["sections"]
+    : {};
+  const rawOrder = Array.isArray(page.sectionsOrder)
+    ? page.sectionsOrder
+    : Array.isArray(page.order)
+      ? page.order
+      : Object.keys(sections);
+  const sectionsOrder = rawOrder.filter((sectionId): sectionId is string =>
+    typeof sectionId === "string" && Boolean(sections[sectionId])
+  );
+  return {
+    ...page,
+    pageType: typeof page.pageType === "string" && page.pageType.trim() ? page.pageType : "page",
+    version: typeof page.version === "number" && Number.isFinite(page.version) ? page.version : 1,
+    sections,
+    sectionsOrder
+  };
+}
+
 export function makeThemeDraftMeta(record: {
   draftJson?: object & { version?: number };
   draftMeta?: import("@/lib/types").ThemeDraftMeta;
@@ -561,7 +586,7 @@ export function toThemePage(record: {
   createdAt?: Date | string;
   updatedAt?: Date | string;
 }): import("@/lib/types").ThemePage {
-  const draftJson = cloneJson(record.draftJson) as import("@/lib/types").ThemePageJson & {
+  const draftJson = normalizeThemePageJson(record.draftJson) as import("@/lib/types").ThemePageJson & {
     draftMeta?: import("@/lib/types").ThemeDraftMeta;
   };
   const draftMeta = normalizeThemeDraftMeta(draftJson.draftMeta ?? record.draftMeta, draftJson.version ?? 1);
@@ -573,7 +598,7 @@ export function toThemePage(record: {
     slug: record.slug,
     title: record.title,
     draftJson,
-    publishedJson: cloneJson(record.publishedJson) as import("@/lib/types").ThemePageJson,
+    publishedJson: normalizeThemePageJson(record.publishedJson),
     draftMeta,
     createdAt: toIsoString(record.createdAt),
     updatedAt: toIsoString(record.updatedAt)
@@ -810,6 +835,8 @@ export function toVideoThemeCategory(record: {
   slug: string;
   label: string;
   description?: string | null;
+  icon?: string | null;
+  accentColor?: string | null;
   imageUrl?: string | null;
   sortOrder: number;
   status: string;
@@ -821,6 +848,8 @@ export function toVideoThemeCategory(record: {
     slug: record.slug,
     label: record.label,
     description: record.description ?? undefined,
+    icon: record.icon ?? undefined,
+    accentColor: record.accentColor ?? undefined,
     imageUrl: record.imageUrl ?? undefined,
     sortOrder: record.sortOrder,
     status: record.status as VideoThemeCategory["status"],
@@ -843,6 +872,7 @@ export function toVideoTheme(record: {
   modelPricing?: unknown;
   durationSeconds: number;
   maxFrames: number;
+  sortOrder: number;
   providerModelFamilies?: unknown;
   textToVideoProviderModelFamilies?: unknown;
   imageToVideoProviderModelFamilies?: unknown;
@@ -866,6 +896,7 @@ export function toVideoTheme(record: {
     modelPricing: normalizeVideoModelPricing(record.modelPricing, record.creditCost),
     durationSeconds: record.durationSeconds,
     maxFrames: normalizeVideoFrameLimit(record.maxFrames),
+    sortOrder: record.sortOrder,
     providerModelFamilies: Array.isArray(record.providerModelFamilies)
       ? record.providerModelFamilies.filter((item): item is "grok" | "gemini" => item === "grok" || item === "gemini")
       : undefined,

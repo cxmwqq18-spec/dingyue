@@ -50,6 +50,7 @@ export const MYDREAMSHOOTS_AI_PHOTOSHOOT_ROOT_PATH = MYDREAMSHOOTS_AI_IMAGE_GENE
 export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT = "ai-video-generation";
 export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH = `/${MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT}`;
 export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS = [
+  "text-to-video",
   "image-to-video",
   "profile-clip",
   "fan-poster-motion",
@@ -57,14 +58,35 @@ export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS = [
   "product-teaser-clip",
   "animated-avatar",
   "fashion-reel",
-  "album-story-video"
+  "album-story-video",
+  "talking-photo",
+  "cinematic-video",
+  "tiktok-video",
+  "instagram-reels",
+  "social-media-video",
+  "youtube-video",
+  "story-video",
+  "meme-video",
+  "product-video"
+] as const;
+
+export const MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
+  "talking-photo",
+  "cinematic-video",
+  "tiktok-video",
+  "instagram-reels",
+  "social-media-video",
+  "youtube-video",
+  "story-video",
+  "meme-video",
+  "product-video"
 ] as const;
 
 export type MyDreamShootsVideoGenerationSlug = typeof MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS[number];
 
 export type PublicVideoGenerationRoute = {
   root: "ai-video-generation";
-  itemSlug?: MyDreamShootsVideoGenerationSlug;
+  itemSlug?: string;
   canonicalPath: string;
   kind: "directory" | "item";
 };
@@ -73,6 +95,7 @@ const COLLECTIONS_ROOT_PATH = "/collections";
 const mydreamshootsThemeRootSlugs = new Set(mydreamshootsThemeTaxonomyData.roots.map((root) => root.slug));
 const mydreamshootsThemeItemsBySlug = new Map(mydreamshootsThemeTaxonomyData.items.map((item) => [item.slug, item]));
 const mydreamshootsVideoGenerationSlugs = new Set<string>(MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS);
+const mydreamshootsPublicVideoGenerationSlugs = new Set<string>(MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS);
 
 function siteIdentityToken(site: CollectionRouteSiteIdentity | undefined): string {
   if (!site) return "";
@@ -106,6 +129,10 @@ export function isMydreamshootsVideoGenerationSlug(slug: string | undefined): sl
   return mydreamshootsVideoGenerationSlugs.has(photoPackageSlug(slug));
 }
 
+export function isMydreamshootsPublicVideoGenerationSlug(slug: string | undefined): slug is typeof MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS[number] {
+  return mydreamshootsPublicVideoGenerationSlugs.has(photoPackageSlug(slug));
+}
+
 export function publicCollectionRootPathForSite(site: CollectionRouteSiteIdentity | undefined): string {
   return isMydreamshootsCollectionRouteSite(site) ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH : COLLECTIONS_ROOT_PATH;
 }
@@ -122,7 +149,8 @@ export function publicCollectionPathForSite(site: CollectionRouteSiteIdentity | 
 export function publicVideoGenerationPathForSite(site: CollectionRouteSiteIdentity | undefined, rawSlug?: string): string {
   const slug = photoPackageSlug(rawSlug);
   if (!slug || slug === "all" || slug === "todo" || slug === "todos") return MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH;
-  return isMydreamshootsVideoGenerationSlug(slug) ? `${MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH}/${slug}` : MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH;
+  if (!isMydreamshootsPublicVideoGenerationSlug(slug)) return MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH;
+  return `${MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH}/${slug}`;
 }
 
 export function publicCollectionSlugFromPath(site: CollectionRouteSiteIdentity | undefined, rawPath: string): string {
@@ -208,8 +236,9 @@ export function parsePublicVideoGenerationRouteForSite(site: CollectionRouteSite
       kind: "directory"
     };
   }
-  if (segments.length === 2 && isMydreamshootsVideoGenerationSlug(segments[1])) {
-    const itemSlug = photoPackageSlug(segments[1]) as MyDreamShootsVideoGenerationSlug;
+  if (segments.length === 2) {
+    const itemSlug = photoPackageSlug(segments[1]);
+    if (!isMydreamshootsPublicVideoGenerationSlug(itemSlug)) return undefined;
     return {
       root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT,
       itemSlug,

@@ -43,6 +43,8 @@ export type SectionType =
   | "blog_article"
   | "rich_text"
   | "media_banner"
+  | "talking_photo_landing"
+  | "ai_video_topic_landing"
   | "before_after_gallery"
   | "header"
   | "footer"
@@ -695,6 +697,8 @@ export interface VideoThemeCategory {
   slug: string;
   label: string;
   description?: string;
+  icon?: string;
+  accentColor?: string;
   imageUrl?: string;
   sortOrder: number;
   status: "active" | "draft" | "paused";
@@ -716,6 +720,7 @@ export interface VideoTheme {
   modelPricing?: VideoModelPricing;
   durationSeconds: number;
   maxFrames: number;
+  sortOrder: number;
   effectiveMaxFrames?: number;
   providerMaxFrames?: number;
   providerModelFamilies?: VideoModelFamily[];

@@ -69,14 +69,20 @@ export function PropertyPanelBody({
 export function PropertyField({
   label,
   hint,
-  children
-}: {
+  children,
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement> & {
   label: string;
   hint?: string;
   children: ReactNode;
 }) {
   return (
-    <div className="ant-form-item widget-formitem text-left" data-designer-layout="saas-property-field">
+    <div
+      className={cx("ant-form-item widget-formitem text-left", className)}
+      data-designer-layout="saas-property-field"
+      {...props}
+    >
       <div className="ant-form-item-label mb-2 leading-5">
         <label className="widget_label text-sm text-[#212121]">{label}</label>
       </div>
@@ -93,14 +99,20 @@ export function PropertyField({
 export function PropertyInlineField({
   label,
   hint,
-  children
-}: {
+  children,
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement> & {
   label: string;
   hint?: string;
   children: ReactNode;
 }) {
   return (
-    <div className="ant-form-item widget-formitem widget-formitem-fix text-left" data-designer-layout="saas-inline-property-field">
+    <div
+      className={cx("ant-form-item widget-formitem widget-formitem-fix text-left", className)}
+      data-designer-layout="saas-inline-property-field"
+      {...props}
+    >
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <label className="widget_label text-sm text-[#212121]">{label}</label>
@@ -228,10 +240,10 @@ export function PropertyActionRow({
   const actionClass = "inline-flex h-8 items-center rounded-[8px] border border-[#cfd4da] bg-white px-2.5 text-xs font-medium text-[#17181a] transition hover:border-[#479dff] hover:text-[#479dff] active:scale-[0.98]";
   return (
     <div
-      className="block__remove sticky bottom-0 z-10 flex min-h-[56px] w-full items-center gap-1 border-t border-[#c4c7cc] bg-white px-5 py-2 text-sm font-medium text-[#212121] [isolation:isolate]"
+      className="block__remove mt-4 flex min-h-[56px] w-full items-center gap-1 overflow-x-auto border-t border-[#c4c7cc] bg-white px-5 py-2 text-sm font-medium text-[#212121] [isolation:isolate]"
       data-designer-layout="saas-property-actions"
     >
-      <div className="flex items-center gap-0.5">
+      <div className="flex shrink-0 items-center gap-0.5">
         <button className={actionClass} data-designer-action="move-up" onClick={onMoveUp} type="button">
           上移
         </button>

@@ -2,7 +2,7 @@
 
 import { BlockFields, GlobalSectionFields, GlobalSettingsFields, SectionFields } from "@/components/designer/designer-property-renderers";
 import { PropertyActionRow } from "@/components/designer/property-panel";
-import type { GlobalLocalField, GlobalSettingsNodeDefinition, Selection } from "@/components/designer/designer-types";
+import type { GlobalLocalField, GlobalSettingsNodeDefinition, PropertyFieldFocusRequest, Selection } from "@/components/designer/designer-types";
 import type { FieldOptions } from "@/components/designer/field-editor-types";
 import type {
   MediaAsset,
@@ -57,7 +57,8 @@ export function DesignerSelectionEditor({
   deleteSection,
   moveSection,
   duplicateSection,
-  addBlock
+  addBlock,
+  fieldFocusRequest
 }: {
   selection: Selection;
   activeSectionId?: string;
@@ -99,6 +100,7 @@ export function DesignerSelectionEditor({
   moveSection: (sectionId: string, direction: -1 | 1) => void;
   duplicateSection: (sectionId: string) => void;
   addBlock: (sectionId: string, blockSchema: ThemeBlockSchema) => void;
+  fieldFocusRequest?: PropertyFieldFocusRequest;
 }) {
   if (selection.kind === "globalSettings" && activeGlobalNode) {
     return (
@@ -109,6 +111,8 @@ export function DesignerSelectionEditor({
         onUpdateSaasGlobalSetting={updateSaasGlobalSetting}
         settingLinkString={settingLinkString}
         site={site}
+        focusRequest={fieldFocusRequest}
+        scopeKey={`globalSettings:${selection.node}`}
         themeSettings={themeSettings}
         updateThemeColor={updateThemeColor}
         updateThemeLinks={updateThemeLinks}
@@ -131,7 +135,9 @@ export function DesignerSelectionEditor({
         }
         fieldOptions={fieldOptions}
         fields={selectedBlockSettings}
+        focusRequest={fieldFocusRequest}
         onChange={(field, value) => editBlockSetting(activeSectionId ?? "", activeBlock.id, field, value)}
+        scopeKey={`block:${selection.sectionId}:${activeBlock.id}`}
         site={site}
         values={activeBlock.settings}
       />
@@ -146,6 +152,8 @@ export function DesignerSelectionEditor({
         onChange={(field, value) => editGlobalSetting(selection.globalType, field, value)}
         section={activeSection}
         sectionSchema={activeSectionSchema}
+        focusRequest={fieldFocusRequest}
+        scopeKey={`global:${selection.globalType}`}
         site={site}
       />
     );
@@ -163,7 +171,9 @@ export function DesignerSelectionEditor({
         }
         fieldOptions={fieldOptions}
         fields={selectedBlockSettings}
+        focusRequest={fieldFocusRequest}
         onChange={(field, value) => editGlobalBlockSetting(selection.globalType, activeGlobalBlock.id, field, value)}
+        scopeKey={`globalBlock:${selection.globalType}:${activeGlobalBlock.id}`}
         site={site}
         values={activeGlobalBlock.settings}
       />
@@ -182,6 +192,8 @@ export function DesignerSelectionEditor({
         onMoveUp={() => moveSection(activeSectionId ?? "", -1)}
         section={activeSection}
         sectionSchema={activeSectionSchema}
+        focusRequest={fieldFocusRequest}
+        scopeKey={`section:${activeSectionId ?? ""}`}
         site={site}
       />
     );

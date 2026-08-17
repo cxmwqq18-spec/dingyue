@@ -50,6 +50,8 @@ export type IframeDesignerMessage = {
   blockId?: unknown;
   sectionType?: unknown;
   href?: unknown;
+  clickedText?: unknown;
+  fieldId?: unknown;
 };
 
 export function isIframePatchPayload(value: unknown): value is IframePatchPayload {

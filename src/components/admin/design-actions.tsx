@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ExternalLink, RefreshCcw, RotateCcw, Send, Undo2 } from "lucide-react";
 import { siteAdminJsonHeaders } from "@/lib/client-csrf";
+import type { PublishGlobalVisualChange } from "@/lib/theme/publish-preflight";
 import type { ThemeDraftMeta } from "@/lib/types";
 
 function actionButtonClass(tone: "dark" | "light" | "warn" = "light") {
@@ -78,7 +79,11 @@ export function DesignPageActions({
     const json = await response.json().catch(() => ({}));
     setBusy(null);
     if (!response.ok) {
-      setMessage(`${action === "publish" ? "发布" : "回滚"}失败：${json.error ?? "unknown error"}`);
+      setMessage(
+        action === "publish" && json.error === "theme_publish_global_visual_changes_unacknowledged"
+          ? "发布已拦截：当前草稿包含全局视觉变化，请到发布历史页查看具体变化并勾选确认后再发布。"
+          : `${action === "publish" ? "发布" : "回滚"}失败：${json.error ?? "unknown error"}`
+      );
       return;
     }
     setMessage(action === "publish" ? `已发布全站快照 v${json.publishedVersion ?? ""}。` : "已把该页草稿还原为线上版本。");
@@ -133,7 +138,8 @@ export function PublicationActions({
   settingsVersion,
   publishedVersion,
   dirtyPages,
-  settingsDirty
+  settingsDirty,
+  globalVisualChanges = []
 }: {
   siteId: string;
   pageId?: string;
@@ -144,13 +150,16 @@ export function PublicationActions({
   publishedVersion: number;
   dirtyPages: number;
   settingsDirty: boolean;
+  globalVisualChanges?: PublishGlobalVisualChange[];
 }) {
   const router = useRouter();
   const [busy, setBusy] = useState<"publish" | "reset" | null>(null);
   const [message, setMessage] = useState("发布会写入整站 published snapshot；重置只恢复 draft，不会改线上。");
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [ackGlobalVisualChanges, setAckGlobalVisualChanges] = useState(false);
   const reviewedPageCount = Object.keys(pageVersions).length;
   const hasReviewedVersions = reviewedPageCount > 0 && Object.values(pageVersions).every(Boolean) && Boolean(settingsVersion);
+  const hasGlobalVisualChanges = globalVisualChanges.length > 0;
 
   async function requestPublish() {
     if (!pageId) return;
@@ -172,11 +181,16 @@ export function PublicationActions({
       setMessage("发布版本集合不完整，请刷新页面后重新检查。");
       return;
     }
+    setAckGlobalVisualChanges(false);
     setConfirmOpen(true);
   }
 
   async function publish() {
     if (!pageId) return;
+    if (hasGlobalVisualChanges && !ackGlobalVisualChanges) {
+      setMessage("发布已暂停：请先确认本次会一起上线的全局样式变化。");
+      return;
+    }
     setBusy("publish");
     const response = await fetch(`/api/sites/${siteId}/theme/pages/${pageId}/publish`, {
       method: "POST",
@@ -189,13 +203,21 @@ export function PublicationActions({
             .map(([id, version]) => [id, { revision: version.revision, etag: version.etag }])
         ),
         expectedSettingsVersion: settingsVersion ? { revision: settingsVersion.revision, etag: settingsVersion.etag } : undefined,
-        expectedPublishedVersion: publishedVersion
+        expectedPublishedVersion: publishedVersion,
+        acknowledgedGlobalVisualChanges: hasGlobalVisualChanges ? ackGlobalVisualChanges : true
       })
     });
     const json = await response.json().catch(() => ({}));
     setBusy(null);
     if (!response.ok) {
-      setMessage(response.status === 409 ? `发布已拦截：${json.error ?? "版本已变化，请刷新后重新检查。"}` : `发布失败：${json.error ?? "unknown error"}`);
+      const error = json.error ?? "版本已变化，请刷新后重新检查。";
+      setMessage(
+        response.status === 409 && error === "theme_publish_global_visual_changes_unacknowledged"
+          ? "发布已拦截：存在全局视觉变化，请刷新发布检查并勾选确认后再发布。"
+          : response.status === 409
+            ? `发布已拦截：${error}`
+            : `发布失败：${json.error ?? "unknown error"}`
+      );
       return;
     }
     setConfirmOpen(false);
@@ -284,6 +306,43 @@ export function PublicationActions({
                   </div>
                 </div>
               </div>
+              {hasGlobalVisualChanges ? (
+                <div className="rounded-[8px] border border-[#ffd089] bg-[#fff9ed] p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-[12px] font-semibold text-[#8a5a00]">检测到全局视觉变化</p>
+                      <p className="mt-1 text-[12px] leading-5 text-[#8a5a00]">
+                        这些设置会随本次整站发布一起上线，即使当前页面没有改动。
+                      </p>
+                    </div>
+                    <span className="shrink-0 rounded-full bg-white px-2 py-1 text-[11px] font-medium text-[#8a5a00]">
+                      {globalVisualChanges.length} changes
+                    </span>
+                  </div>
+                  <div className="mt-3 grid gap-2">
+                    {globalVisualChanges.slice(0, 8).map((change) => (
+                      <div className="grid grid-cols-[130px_minmax(0,1fr)] gap-3 text-[12px]" key={change.id}>
+                        <span className="font-medium text-[#4a3b1a]">{change.label}</span>
+                        <span className="min-w-0 text-[#8a5a00]">
+                          <span className="font-mono">{change.live}</span>
+                          <span className="px-2">-&gt;</span>
+                          <span className="font-mono">{change.draft}</span>
+                        </span>
+                      </div>
+                    ))}
+                    {globalVisualChanges.length > 8 ? <div className="text-[12px] text-[#8a5a00]">还有 {globalVisualChanges.length - 8} 项变化未展开。</div> : null}
+                  </div>
+                  <label className="mt-4 flex items-start gap-2 text-[12px] font-medium text-[#4a3b1a]">
+                    <input
+                      checked={ackGlobalVisualChanges}
+                      className="mt-1 h-4 w-4 accent-[#f4a719]"
+                      onChange={(event) => setAckGlobalVisualChanges(event.currentTarget.checked)}
+                      type="checkbox"
+                    />
+                    <span>确认发布全局样式变化</span>
+                  </label>
+                </div>
+              ) : null}
               <div className="rounded-[8px] border border-[#f7d794] bg-[#fff8e8] px-4 py-3 text-[#8a5a00]">
                 若页面、全局设置或线上版本在确认前发生变化，这次发布会被版本校验拦截。
               </div>
@@ -292,7 +351,7 @@ export function PublicationActions({
               <button className="admin_btn h-[34px] px-4" disabled={busy !== null} onClick={() => setConfirmOpen(false)} type="button">
                 返回检查
               </button>
-              <button className="input_btn h-[34px] px-4 disabled:cursor-not-allowed disabled:opacity-55" disabled={busy !== null} onClick={() => void publish()} type="button">
+              <button className="input_btn h-[34px] px-4 disabled:cursor-not-allowed disabled:opacity-55" disabled={busy !== null || (hasGlobalVisualChanges && !ackGlobalVisualChanges)} onClick={() => void publish()} type="button">
                 {busy === "publish" ? "发布中" : "确认发布"}
               </button>
             </div>
@@ -331,7 +390,7 @@ export function RestorePublicationButton({
       setMessage(`恢复失败：${json.error ?? "unknown error"}`);
       return;
     }
-    setMessage(`已把 v${json.sourceVersion ?? version} 恢复到草稿，线上版本未改变。`);
+    setMessage(`已恢复 v${json.sourceVersion ?? version} 到草稿，线上未改变；发布会把该历史全局设置一起上线。`);
     router.refresh();
   }
 

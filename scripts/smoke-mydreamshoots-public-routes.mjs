@@ -3,14 +3,33 @@ import fs from "node:fs";
 import path from "node:path";
 
 const DEFAULT_VIDEO_SLUGS = [
-  "image-to-video",
-  "profile-clip",
-  "fan-poster-motion",
-  "creator-intro-video",
-  "product-teaser-clip",
-  "animated-avatar",
-  "fashion-reel",
-  "album-story-video"
+  "talking-photo",
+  "cinematic-video",
+  "tiktok-video",
+  "instagram-reels",
+  "social-media-video",
+  "youtube-video",
+  "story-video",
+  "meme-video",
+  "product-video"
+];
+const HIDDEN_VIDEO_SLUGS = [
+  "text-to-video",
+  "image-to-video"
+];
+const LEGACY_VIDEO_REDIRECT_SLUGS = [
+  "talking-photo"
+];
+const LEGACY_VIDEO_GONE_SLUGS = [
+  ...HIDDEN_VIDEO_SLUGS,
+  "cinematic-video",
+  "tiktok-video",
+  "instagram-reels",
+  "social-media-video",
+  "youtube-video",
+  "story-video",
+  "meme-video",
+  "product-video"
 ];
 
 function parseArgs(argv) {
@@ -40,24 +59,34 @@ function normalizeBaseUrl(value) {
   return String(value).replace(/\/+$/, "");
 }
 
+function isLocalBaseUrl(baseUrl) {
+  try {
+    return ["localhost", "127.0.0.1", "::1"].includes(new URL(baseUrl).hostname);
+  } catch {
+    return false;
+  }
+}
+
+function routeUrl(baseUrl, route, options = {}) {
+  const localSitePrefix = isLocalBaseUrl(baseUrl) && !options.publicHost ? "/site/mydreamshoots" : "";
+  return `${baseUrl}${localSitePrefix}${route.startsWith("/") ? route : `/${route}`}`;
+}
+
 function readTaxonomySlugs() {
   const taxonomyPath = path.join(process.cwd(), "src", "lib", "mydreamshoots-theme-taxonomy.json");
   const taxonomy = JSON.parse(fs.readFileSync(taxonomyPath, "utf8"));
   return Array.from(new Set((taxonomy.items ?? []).map((item) => item.slug).filter(Boolean))).sort();
 }
 
-function urlFor(baseUrl, route) {
-  return `${baseUrl}${route.startsWith("/") ? route : `/${route}`}`;
-}
-
 async function fetchRoute(baseUrl, route, options = {}) {
-  const url = urlFor(baseUrl, route);
+  const url = routeUrl(baseUrl, route, options);
   const response = await fetch(url, {
     method: "GET",
     redirect: options.redirect ?? "follow",
     headers: {
       "user-agent": "codex-route-smoke/1.0",
-      accept: options.accept ?? "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+      accept: options.accept ?? "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+      ...(options.publicHost ? { host: options.publicHost, "x-forwarded-host": options.publicHost } : {})
     }
   });
   const text = options.readBody === false ? "" : await response.text();
@@ -72,15 +101,15 @@ async function fetchRoute(baseUrl, route, options = {}) {
 }
 
 function hasOldCollectionLink(text) {
-  return /(?:href|content|url|@id|loc)=["'][^"']*\/collections(?:\/|[?#"']|$)/i.test(text)
-    || /https?:\/\/(?:www\.)?mydreamshoots\.com\/collections(?:\/|[?#<\s]|$)/i.test(text)
-    || /<loc>[^<]*\/collections(?:\/|[?#<]|$)/i.test(text);
+  return /(?:href|content|url|@id|loc)=["'](?:https?:\/\/(?:www\.)?mydreamshoots\.com)?\/collections(?:\/|[?#"']|$)/i.test(text)
+    || /<loc>(?:https?:\/\/(?:www\.)?mydreamshoots\.com)?\/collections(?:\/|[?#<]|$)/i.test(text);
 }
 
 function hasOldVideoToolLink(text) {
-  return /(?:href|content|url|@id|loc)=["'][^"']*\/tools\/(?:image-to-video|profile-clip|fan-poster-motion|creator-intro-video|product-teaser-clip|animated-avatar|fashion-reel|album-story-video)(?:[?#"']|$)/i.test(text)
-    || /https?:\/\/(?:www\.)?mydreamshoots\.com\/tools\/(?:image-to-video|profile-clip|fan-poster-motion|creator-intro-video|product-teaser-clip|animated-avatar|fashion-reel|album-story-video)(?:[?#<\s]|$)/i.test(text)
-    || /<loc>[^<]*\/tools\/(?:image-to-video|profile-clip|fan-poster-motion|creator-intro-video|product-teaser-clip|animated-avatar|fashion-reel|album-story-video)(?:[?#<]|$)/i.test(text);
+  const slugs = [...DEFAULT_VIDEO_SLUGS, ...HIDDEN_VIDEO_SLUGS].join("|");
+  const routePattern = new RegExp(`(?:href|content|url|@id|loc)=["'](?:https?:\\/\\/(?:www\\.)?mydreamshoots\\.com)?\\/tools\\/(?:${slugs})(?:[?#"']|$)`, "i");
+  const locPattern = new RegExp(`<loc>(?:https?:\\/\\/(?:www\\.)?mydreamshoots\\.com)?\\/tools\\/(?:${slugs})(?:[?#<]|$)`, "i");
+  return routePattern.test(text) || locPattern.test(text);
 }
 
 async function main() {
@@ -90,7 +119,9 @@ async function main() {
   const canonicalImageRoutes = ["/ai-image-generation", ...imageSlugs.map((slug) => `/ai-image-generation/${slug}`)];
   const legacyImageRoutes = ["/collections", ...imageSlugs.map((slug) => `/collections/${slug}`)];
   const videoRoutes = ["/ai-video-generation", ...DEFAULT_VIDEO_SLUGS.map((slug) => `/ai-video-generation/${slug}`)];
-  const legacyVideoRoutes = ["/tools", ...DEFAULT_VIDEO_SLUGS.map((slug) => `/tools/${slug}`)];
+  const hiddenVideoRoutes = HIDDEN_VIDEO_SLUGS.map((slug) => `/ai-video-generation/${slug}`);
+  const legacyVideoRedirectRoutes = ["/tools", ...LEGACY_VIDEO_REDIRECT_SLUGS.map((slug) => `/tools/${slug}`)];
+  const legacyVideoGoneRoutes = LEGACY_VIDEO_GONE_SLUGS.map((slug) => `/tools/${slug}`);
   const keyRoutes = ["/", "/login", "/pricing", "/workflow", "/faq", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog"];
   const htmlScanRoutes = ["/", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog", "/sitemap.xml"];
   const failures = [];
@@ -118,7 +149,7 @@ async function main() {
     }
   }
 
-  for (const route of legacyVideoRoutes) {
+  for (const route of legacyVideoRedirectRoutes) {
     const first = await fetchRoute(baseUrl, route, { redirect: "manual", readBody: false });
     if (![301, 302, 307, 308].includes(first.status)) {
       failures.push({ kind: "legacy_video_redirect_status", route, expected: "301/302/307/308", actual: first.status });
@@ -134,8 +165,22 @@ async function main() {
     }
   }
 
+  for (const route of legacyVideoGoneRoutes) {
+    const result = await fetchRoute(baseUrl, route, { redirect: "manual", readBody: false });
+    if (result.status !== 404) {
+      failures.push({ kind: "legacy_video_gone_status", route, expected: 404, actual: result.status, location: result.location });
+    }
+  }
+
+  for (const route of hiddenVideoRoutes) {
+    const result = await fetchRoute(baseUrl, route, { redirect: "manual", readBody: false });
+    if (result.status !== 404) {
+      failures.push({ kind: "hidden_video_public_status", route, expected: 404, actual: result.status, location: result.location });
+    }
+  }
+
   for (const route of htmlScanRoutes) {
-    const result = await fetchRoute(baseUrl, route);
+    const result = await fetchRoute(baseUrl, route, route === "/sitemap.xml" ? { publicHost: "www.mydreamshoots.com" } : {});
     if (result.status !== 200) {
       failures.push({ kind: "html_scan_status", route, expected: 200, actual: result.status });
       continue;
@@ -159,7 +204,9 @@ async function main() {
       canonicalImageRoutes: canonicalImageRoutes.length,
       legacyImageRoutes: legacyImageRoutes.length,
       videoRoutes: videoRoutes.length,
-      legacyVideoRoutes: legacyVideoRoutes.length,
+      hiddenVideoRoutes: hiddenVideoRoutes.length,
+      legacyVideoRedirectRoutes: legacyVideoRedirectRoutes.length,
+      legacyVideoGoneRoutes: legacyVideoGoneRoutes.length,
       htmlScanRoutes: htmlScanRoutes.length
     },
     failures

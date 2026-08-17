@@ -273,7 +273,13 @@ export function ContentDraftEditor({
     };
     setBusy(null);
     if (!response.ok) {
-      setMessage(response.status === 409 ? `发布已拦截：${result.error ?? "版本已变化，请刷新后重新检查。"}` : `发布失败：${result.error ?? "unknown error"}`);
+      setMessage(
+        response.status === 409 && result.error === "theme_publish_global_visual_changes_unacknowledged"
+          ? "发布已拦截：当前草稿包含全局视觉变化，请到发布历史页查看具体变化并勾选确认后再发布。"
+          : response.status === 409
+            ? `发布已拦截：${result.error ?? "版本已变化，请刷新后重新检查。"}`
+            : `发布失败：${result.error ?? "unknown error"}`
+      );
       return;
     }
     if (result.pageDraftVersions) setDraftVersions(result.pageDraftVersions);

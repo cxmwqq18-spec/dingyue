@@ -41,6 +41,12 @@ const videoGenerationCategories = [
     label: "Image to Video",
     description: "Video themes created from uploaded or selected images.",
     sortOrder: 20
+  },
+  {
+    slug: "talking-photo",
+    label: "Talking Photo",
+    description: "Explore a talking-photo workflow from one clear portrait and a focused message.",
+    sortOrder: 30
   }
 ];
 const videoGenerationSlugs = new Set(videoGenerationCategories.map((category) => category.slug));

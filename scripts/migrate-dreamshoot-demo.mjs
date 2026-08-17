@@ -814,6 +814,13 @@ const baseImageApp = (state.aiApps ?? []).find((app) => app.slug === "image_gene
   description: "Private image generation with signed album delivery.",
   appType: "image",
 };
+const baseVideoApp = (state.aiApps ?? []).find((app) => app.slug === "video_generator") ?? {
+  id: "ai_video_generator",
+  slug: "video_generator",
+  name: "Image to Video",
+  description: "Generate a private video clip from ordered customer frame images and a maintained video theme.",
+  appType: "video",
+};
 const imageApp = {
   ...baseImageApp,
   name: "MyDreamShoots Image Studio",
@@ -823,6 +830,23 @@ const imageApp = {
     { id: "outputCount", label: "Output count", type: "select", options: ["8", "20", "40"] }
   ]
 };
+const videoApp = {
+  ...baseVideoApp,
+  name: "Image to Video",
+  description: "Generate a private video clip from ordered customer frame images and a maintained video theme.",
+  appType: "video",
+  parameterSchema: []
+};
+state.aiApps = (() => {
+  const next = (state.aiApps ?? []).map((app) => {
+    if (app.id === imageApp.id || app.slug === imageApp.slug) return imageApp;
+    if (app.id === videoApp.id || app.slug === videoApp.slug) return videoApp;
+    return app;
+  });
+  if (!next.some((app) => app.id === imageApp.id)) next.push(imageApp);
+  if (!next.some((app) => app.id === videoApp.id)) next.push(videoApp);
+  return next;
+})();
 state.siteAiApps = replaceWhere(state.siteAiApps ?? [], (item) => item.siteId === siteId, [
   { id: "sai_dreamshoot_image", siteId, aiApp: imageApp, enabled: true, creditCost: 24, routeKey: "n8n.image.dreamshoot.v1" }
 ]);
@@ -849,6 +873,15 @@ state.customers = replaceWhere(state.customers ?? [], (item) => item.siteId === 
     name: "Nora Whitman",
     status: "active",
     balance: { available: 276, reserved: 24 }
+  },
+  {
+    id: "cust_dreamshoot_mqq9gas9_i1vjal",
+    siteId,
+    email: "1621417163@qq.com",
+    passwordHash: hashPassword("mydreamshoots123"),
+    name: "Nora Whitman",
+    status: "active",
+    balance: { available: 312, reserved: 0 }
   }
 ]);
 state.subscriptions = replaceWhere(state.subscriptions ?? [], (item) => item.siteId === siteId, [

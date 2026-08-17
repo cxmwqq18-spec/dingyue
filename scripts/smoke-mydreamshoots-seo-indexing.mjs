@@ -390,8 +390,44 @@ for (const pathName of ["/tools", "/tools/image-studio", "/tools/ai-image-studio
 for (const pathName of ["/ai-video-generation"]) {
   assert(seoIndexing.includes(`"${pathName}"`), "sitemap required video paths must use /ai-video-generation", { pathName });
 }
-for (const slug of ["image-to-video", "profile-clip", "fashion-reel"]) {
-  assert(photoPackageTaxonomy.includes(`"${slug}"`), "MyDreamShoots video slug list must include the required public video slug", { slug });
+for (const slug of [
+  "text-to-video",
+  "image-to-video",
+  "talking-photo",
+  "profile-clip",
+  "fan-poster-motion",
+  "creator-intro-video",
+  "product-teaser-clip",
+  "animated-avatar",
+  "fashion-reel",
+  "album-story-video",
+  "cinematic-video",
+  "tiktok-video",
+  "instagram-reels",
+  "social-media-video",
+  "youtube-video",
+  "story-video",
+  "meme-video",
+  "product-video"
+]) {
+  assert(photoPackageTaxonomy.includes(`"${slug}"`), "MyDreamShoots internal video slug list must include the required video slug", { slug });
+}
+const publicVideoSlugSource = photoPackageTaxonomy.match(/MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS\s*=\s*\[([\s\S]*?)\]\s*as const/)?.[1] ?? "";
+for (const slug of ["text-to-video", "image-to-video"]) {
+  assert(!publicVideoSlugSource.includes(`"${slug}"`), "hidden video workflow slug must not be in the public video generation slug list", { slug });
+}
+for (const slug of [
+  "talking-photo",
+  "cinematic-video",
+  "tiktok-video",
+  "instagram-reels",
+  "social-media-video",
+  "youtube-video",
+  "story-video",
+  "meme-video",
+  "product-video"
+]) {
+  assert(publicVideoSlugSource.includes(`"${slug}"`), "public video generation slug list must include the published topic slug", { slug });
 }
 
 assert(
@@ -441,9 +477,9 @@ assert(
   "sitemap URL expansion must include explicit SEO directory pages using canonical collection and video paths"
 );
 assert(
-  seoIndexing.includes("DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS") &&
+    seoIndexing.includes("DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS") &&
     seoIndexing.includes('`/ai-video-generation/${slug}`') &&
-    seoIndexing.includes("MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS") &&
+    seoIndexing.includes("MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS") &&
     seoIndexing.includes("state.toolMenuItems ?? []") &&
     seoIndexing.includes("state.creativePackCategories ?? []") &&
     seoIndexing.includes("collectInternalHrefPaths(state, site, paths, site.themeSettings.publishedJson)") &&
@@ -454,13 +490,24 @@ assert(
   "sitemap URL expansion must cover video generators, package categories, theme hrefs, and canonical public support pages"
 );
 assert(
-  dreamshootSeoContent.includes("dreamshootDefaultPublicToolSlugs") &&
-    dreamshootSeoContent.includes('"image-to-video"') &&
-    dreamshootSeoContent.includes('"album-story-video"') &&
+    dreamshootSeoContent.includes("dreamshootDefaultPublicToolSlugs") &&
+    dreamshootSeoContent.includes('"talking-photo"') &&
+    dreamshootSeoContent.includes('"cinematic-video"') &&
+    dreamshootSeoContent.includes('"tiktok-video"') &&
+    dreamshootSeoContent.includes('"instagram-reels"') &&
+    dreamshootSeoContent.includes('"social-media-video"') &&
+    dreamshootSeoContent.includes('"youtube-video"') &&
+    dreamshootSeoContent.includes('"story-video"') &&
+    dreamshootSeoContent.includes('"meme-video"') &&
+    dreamshootSeoContent.includes('"product-video"') &&
     dreamshootSeoContent.includes("indexableDreamshootDefaultTool") &&
     dreamshootSeoContent.includes("item.explicit || indexableDreamshootDefaultTool"),
   "default public MyDreamShoots video detail pages must be indexable when they are included in sitemap coverage"
 );
+const defaultPublicToolSlugSource = dreamshootSeoContent.match(/dreamshootDefaultPublicToolSlugs\s*=\s*new Set\(\[([\s\S]*?)\]\)/)?.[1] ?? "";
+for (const slug of ["text-to-video", "image-to-video"]) {
+  assert(!defaultPublicToolSlugSource.includes(`"${slug}"`), "hidden video workflow slug must not be a default public SEO tool slug", { slug });
+}
 assert(
   storefrontStateRelational.includes("creativePackCategories.map(toCreativePackCategory)") &&
     storefrontStateRelational.includes("toolCategories.map(toToolCategory)") &&

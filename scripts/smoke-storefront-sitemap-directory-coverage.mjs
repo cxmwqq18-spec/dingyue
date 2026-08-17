@@ -28,14 +28,15 @@ const siteChecks = [
       "/ai-image-generation/motion-generator",
       "/ai-image-generation/soccer",
       "/ai-video-generation",
-      "/ai-video-generation/image-to-video",
-      "/ai-video-generation/profile-clip",
-      "/ai-video-generation/fan-poster-motion",
-      "/ai-video-generation/creator-intro-video",
-      "/ai-video-generation/product-teaser-clip",
-      "/ai-video-generation/animated-avatar",
-      "/ai-video-generation/fashion-reel",
-      "/ai-video-generation/album-story-video",
+      "/ai-video-generation/talking-photo",
+      "/ai-video-generation/cinematic-video",
+      "/ai-video-generation/tiktok-video",
+      "/ai-video-generation/instagram-reels",
+      "/ai-video-generation/social-media-video",
+      "/ai-video-generation/youtube-video",
+      "/ai-video-generation/story-video",
+      "/ai-video-generation/meme-video",
+      "/ai-video-generation/product-video",
       "/blog",
       "/privacy",
       "/terms",
@@ -57,6 +58,8 @@ const siteChecks = [
       "/ai-photoshoot/professional/headshot",
       "/ai-image-generation/professional",
       "/ai-image-generation/professional/headshot",
+      "/ai-video-generation/text-to-video",
+      "/ai-video-generation/image-to-video",
       "/tools",
       "/tools/image-to-video",
       "/tools/headshot-generator",
@@ -134,14 +137,15 @@ const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/ref
 const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us"];
 const DIRECTORY_KEY_RE = /(?:^|\n)\s*(?:"([^"]+)"|'([^']+)'|([a-z][a-z0-9-]*))\s*:\s*\{/gi;
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
-  "/ai-video-generation/image-to-video",
-  "/ai-video-generation/profile-clip",
-  "/ai-video-generation/fan-poster-motion",
-  "/ai-video-generation/creator-intro-video",
-  "/ai-video-generation/product-teaser-clip",
-  "/ai-video-generation/animated-avatar",
-  "/ai-video-generation/fashion-reel",
-  "/ai-video-generation/album-story-video"
+  "/ai-video-generation/talking-photo",
+  "/ai-video-generation/cinematic-video",
+  "/ai-video-generation/tiktok-video",
+  "/ai-video-generation/instagram-reels",
+  "/ai-video-generation/social-media-video",
+  "/ai-video-generation/youtube-video",
+  "/ai-video-generation/story-video",
+  "/ai-video-generation/meme-video",
+  "/ai-video-generation/product-video"
 ];
 const DREAMSHOOT_VIDEO_GENERATION_SLUGS = new Set(DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS.map((pathName) => pathName.split("/").pop()));
 

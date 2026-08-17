@@ -28,6 +28,7 @@ import {
   type ThemePackageSiteSettings,
   type ThemePackageTemplateKey
 } from "@/lib/theme/packages";
+import { collectThemeGlobalVisualChanges, summarizeThemeGlobalVisuals } from "@/lib/theme/publish-preflight";
 import { normalizeGlobalSection } from "@/lib/theme/section-normalize";
 import type {
   MediaAsset,
@@ -889,6 +890,7 @@ export type SiteThemePublicationMeta = {
   pageCount: number;
   sectionCount: number;
   snapshotBytes: number;
+  visualSummary: Record<string, string>;
 };
 
 export async function getSiteThemePublicationMetaRelational(siteId: string): Promise<SiteThemePublicationMeta[]> {
@@ -898,6 +900,7 @@ export async function getSiteThemePublicationMetaRelational(siteId: string): Pro
       version: number;
       publishedAt: Date | string;
       publishedBy: string;
+      snapshot: ThemePublication["snapshot"];
       pageCount: bigint | number | string | null;
       sectionCount: bigint | number | string | null;
       snapshotBytes: bigint | number | string | null;
@@ -908,6 +911,7 @@ export async function getSiteThemePublicationMetaRelational(siteId: string): Pro
         "version",
         "publishedAt",
         "publishedBy",
+        "snapshot",
         COALESCE("pageCount", jsonb_array_length("snapshot"::jsonb -> 'pages'), 0) AS "pageCount",
         COALESCE("sectionCount", (
           SELECT SUM(jsonb_array_length(COALESCE(page -> 'publishedJson' -> 'sectionsOrder', '[]'::jsonb)))
@@ -925,7 +929,8 @@ export async function getSiteThemePublicationMetaRelational(siteId: string): Pro
       publishedBy: row.publishedBy,
       pageCount: typeof row.pageCount === "bigint" ? Number(row.pageCount) : Number(row.pageCount ?? 0),
       sectionCount: typeof row.sectionCount === "bigint" ? Number(row.sectionCount) : Number(row.sectionCount ?? 0),
-      snapshotBytes: typeof row.snapshotBytes === "bigint" ? Number(row.snapshotBytes) : Number(row.snapshotBytes ?? 0)
+      snapshotBytes: typeof row.snapshotBytes === "bigint" ? Number(row.snapshotBytes) : Number(row.snapshotBytes ?? 0),
+      visualSummary: summarizeThemeGlobalVisuals(row.snapshot.themeSettings)
     }));
   });
 }
@@ -1148,6 +1153,7 @@ export async function publishDraftPageRelational(
     settingsVersion?: ThemeDraftVersionExpectation;
     expectedPublishedVersion?: number;
     requireSnapshotVersions?: boolean;
+    acknowledgedGlobalVisualChanges?: boolean;
   }
 ): Promise<{
   site: Site;
@@ -1191,6 +1197,10 @@ export async function publishDraftPageRelational(
     }
     if (expected?.settingsVersion) {
       assertThemeDraftVersion({ draftMeta: site.themeSettings.draftMeta }, expected.settingsVersion);
+    }
+    const globalVisualChanges = collectThemeGlobalVisualChanges(site);
+    if (globalVisualChanges.length && !expected?.acknowledgedGlobalVisualChanges) {
+      throw new RelationalStoreError("theme_publish_global_visual_changes_unacknowledged", 409);
     }
 
     const publishedVersion = currentPublishedVersion + 1;

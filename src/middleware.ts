@@ -66,7 +66,7 @@ const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
 };
 const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {};
 const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {
-  "image-to-video": "image-to-video",
+  "talking-photo": "talking-photo",
   "profile-clip": "profile-clip",
   "fan-poster-motion": "fan-poster-motion",
   "creator-intro-video": "creator-intro-video",

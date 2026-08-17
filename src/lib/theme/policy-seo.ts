@@ -17,13 +17,13 @@ const POLICY_KEYWORDS = [
 ].join(", ");
 
 const MYDREAMSHOOTS_PRIVACY_POLICY_DESCRIPTION =
-  "Read how myDreamshoots keeps account data, uploaded source photos, generated portraits, credit activity, checkout records, and private album access private. Your photos are never used to train models, input photos auto-delete 30 days after generation, and data is protected with AES-256 at rest and TLS 256-bit in transit.";
+  "Read how myDreamshoots keeps account data, uploaded source photos, generated portraits, credit activity, checkout records, and private album access private. Your photos are never used to train models, input photos auto-delete 30 days after generation, and account workflows use secure storage and access controls.";
 
 const MYDREAMSHOOTS_TERMS_POLICY_DESCRIPTION =
-  "Review the myDreamshoots terms for customer accounts, AI photo credits, uploads, generation limits, refunds, and private gallery access. The service does not use your photos for model training, applies 30-day auto-delete to input photos, and protects data with AES-256 at rest and TLS 256-bit in transit.";
+  "Review the myDreamshoots terms for customer accounts, AI photo credits, uploads, generation limits, refunds, and private gallery access. The service does not use your photos for model training, applies 30-day auto-delete to input photos, and keeps uploads inside secure account workflows.";
 
 const MYDREAMSHOOTS_REFUNDS_POLICY_DESCRIPTION =
-  "Review how myDreamshoots handles the 100% money-back guarantee, unused credits, subscription cancellations, technical failures, reruns, billing reversals, and account credit history.";
+  "Review how myDreamshoots handles refund reviews, unused credits, subscription cancellations, technical failures, reruns, billing reversals, and account credit history.";
 
 const MYDREAMSHOOTS_CONTENT_POLICY_DESCRIPTION =
   "Read the myDreamshoots content policy for permitted source photos, upload rights, identity consent, moderation review, private album use, and the trust commitments that keep your photos out of model training and auto-delete inputs after 30 days.";

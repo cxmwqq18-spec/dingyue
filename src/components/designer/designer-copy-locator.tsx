@@ -22,6 +22,7 @@ export type DesignerCopyLocatorItem = {
   readOnly?: boolean;
   selection?: Selection;
   workspaceTab?: DesignerWorkspaceTab;
+  fieldId?: string;
 };
 
 export type DesignerCopyLocatorQuickTarget = "header" | "footer" | "navigation" | "seo";

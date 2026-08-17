@@ -41,7 +41,7 @@ import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } from "@/lib/dreamshoot-tool-faq";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
-import { isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
+import { isMydreamshootsPublicVideoGenerationSlug, isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, type PolicySeoCopy } from "@/lib/theme/policy-seo";
@@ -481,6 +481,7 @@ function lightweightVideoTheme(theme: VideoTheme): VideoTheme {
     modelPricing: theme.modelPricing,
     durationSeconds: theme.durationSeconds,
     maxFrames: theme.maxFrames,
+    sortOrder: theme.sortOrder,
     effectiveMaxFrames: theme.effectiveMaxFrames,
     providerMaxFrames: theme.providerMaxFrames,
     generationCount: theme.generationCount,
@@ -861,7 +862,7 @@ function proposedFederalPrivacyLegislationNotice(brand: string): string {
 }
 
 const MYDREAMSHOOTS_TERMS_POLICY_BODY =
-  `<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a myDreamshoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums.</p><h3>2. Accounts, credits, and checkout</h3><p>You are responsible for accurate account information and secure sign-in. Credits are added after payment confirmation, displayed before generation, reserved when a request begins, used after successful delivery, and released or reviewed when a request fails.</p><h3>3. Upload rights and consent</h3><p>You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.</p><h3>4. No AI training on your photos</h3><p>Your inputs are never used to train models. 30-day auto-delete applies to input photos after generation. Private uploads and account records are protected with AES-256 at rest and TLS 256-bit in transit. Some billing, security, tax, dispute, refund, and account-integrity records may be retained where required or reasonably necessary.</p><h3>5. AI output variability</h3><p>AI photo results can vary based on source photo quality, pose, lighting, package settings, moderation review, provider availability, and model behavior. myDreamshoots may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and use of outputs</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Refunds and guarantee review</h3><p>Refunds and credit adjustments follow the Refund Policy, including the 100% money-back guarantee when the shoot does not look like you, subject to support review, account history, and the details of the affected request.</p><h3>8. Contact</h3><p>Email <a href="mailto:support@mydreamshoots.com">support@mydreamshoots.com</a> for account, billing, refund, policy, or legal questions.</p>`;
+  `<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a myDreamshoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums.</p><h3>2. Accounts, credits, and checkout</h3><p>You are responsible for accurate account information and secure sign-in. Credits are added after payment confirmation, displayed before generation, reserved when a request begins, used after successful delivery, and released or reviewed when a request fails.</p><h3>3. Upload rights and consent</h3><p>You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.</p><h3>4. No AI training on your photos</h3><p>Your inputs are never used to train models. 30-day auto-delete applies to input photos after generation. Private uploads and account records are protected by secure account, storage, and access workflows. Some billing, security, tax, dispute, refund, and account-integrity records may be retained where required or reasonably necessary.</p><h3>5. AI output variability</h3><p>AI photo results can vary based on source photo quality, pose, lighting, package settings, moderation review, provider availability, and model behavior. myDreamshoots may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and use of outputs</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Refunds and guarantee review</h3><p>Refunds and credit adjustments follow the Refund Policy, including refund review when the shoot does not look like you, subject to support review, account history, and the details of the affected request.</p><h3>8. Contact</h3><p>Email <a href="mailto:support@mydreamshoots.com">support@mydreamshoots.com</a> for account, billing, refund, policy, or legal questions.</p>`;
 
 function mydreamshootsPolicyBody(path: string): string {
   const normalized = normalizePublicSlug(path).replace(/-/g, " ");
@@ -2125,6 +2126,26 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
   };
 }
 
+function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson): ThemePageJson {
+  return {
+    ...pageJson,
+    sectionsOrder: ["video_theme_directory_1"],
+    sections: {
+      video_theme_directory_1: {
+        type: "dreamshoot_tool_collection",
+        settings: {
+          anchor: "video-themes",
+          title: "AI Video Generation",
+          subtitle: "Browse every public AI video theme and open the dedicated guide for the direction you want.",
+          layout: "video_theme_grid",
+          headingLevel: "h1"
+        },
+        blocks: []
+      }
+    }
+  };
+}
+
 function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Site["pages"][number] {
   const existingToolPage =
     page ??
@@ -2147,6 +2168,13 @@ function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Si
 
 function isAidreamcapesStorefront(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
   return `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase().includes("aidreamcapes");
+}
+
+function isPrimaryMydreamshootsStorefront(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
+  const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase();
+  const isSpanishXby = identity.includes("site_mydreamshoots_xby") || identity.includes("site_aidreamcapes_xby") || identity.includes("aidreamshoots.eu") || identity.includes("aidreamcapes.eu");
+  if (!identity || isAidreamcapesStorefront(site) || isSpanishXby) return false;
+  return identity.includes("site_dreamshoot") || identity.includes("mydreamshoots") || identity.includes("dreamshoot");
 }
 
 function usesSharedDreamShootNavigation(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
@@ -2220,7 +2248,7 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
   const workflowItems = useDirectoryToolContent ? directoryContent.workflow : detailList(detail, "workflow", []);
   const useCaseItems = useDirectoryToolContent ? directoryContent.useCases : detailList(detail, "useCases", [copy.useCaseOneDescription, copy.useCaseTwoDescription]);
   const imageUrl = blockString(tool, "imageUrl", sectionSetting(page, "entry_1", "imageUrl"));
-  const appCreateHref = isStandaloneVideoToolSlug(toolSlug) ? "/app/create#step-video" : `/app/create?tool_id=${encodeURIComponent(toolSlug)}`;
+  const appCreateHref = isStandaloneVideoToolSlug(toolSlug) ? `/app/create?videoMode=${encodeURIComponent(toolSlug)}#step-video` : `/app/create?tool_id=${encodeURIComponent(toolSlug)}`;
   const keptSectionIds = page.sectionsOrder.filter((sectionId) => {
     const type = page.sections[sectionId]?.type;
     return type && !workspaceOnlyToolSectionTypes.has(type);
@@ -2417,16 +2445,22 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
   const normalizedToolSlug = normalizeToolLookup(toolSlug);
   const isAidreamcapes = isAidreamcapesStorefront(site);
   const isPrimaryMydreamshoots = !isAidreamcapes && /mydreamshoots|dreamshoot/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
-  const isVideoTool = isPrimaryMydreamshoots && isMydreamshootsVideoGenerationSlug(normalizedToolSlug);
+  const databaseVideoTheme = (state.videoThemes ?? []).find((theme) =>
+    theme.siteId === site.id &&
+    theme.status === "active" &&
+    normalizeToolLookup(theme.slug) === normalizedToolSlug
+  );
+  const isVideoTool = isPrimaryMydreamshoots && (isMydreamshootsVideoGenerationSlug(normalizedToolSlug) || Boolean(databaseVideoTheme));
+  const isPublicVideoTopic = isPrimaryMydreamshoots && isMydreamshootsPublicVideoGenerationSlug(normalizedToolSlug);
   const aidreamcapesAliasTarget = isAidreamcapes ? aidreamcapesToolAliases.get(normalizedToolSlug) : undefined;
   const canonicalToolSlug = aidreamcapesAliasTarget ?? normalizedToolSlug;
-  const directPageSlug = isVideoTool ? `/ai-video-generation/${toolSlug}` : `/tools/${toolSlug}`;
+  const directPageSlug = isVideoTool ? `/ai-video-generation/${normalizedToolSlug}` : `/tools/${toolSlug}`;
   const normalizedPageSlug = normalizedToolSlug
     ? isVideoTool ? `/ai-video-generation/${normalizedToolSlug}` : `/tools/${normalizedToolSlug}`
     : directPageSlug;
   const aliasMap = new Map<string, string>();
 
-  for (const page of site.pages.filter((item) => item.pageType === "ai_tool")) {
+  for (const page of site.pages.filter((item) => item.pageType === "ai_tool" || item.slug.startsWith("/ai-video-generation/"))) {
     aliasMap.set(page.slug, page.slug);
     aliasMap.set(page.slug.replace(/^\/(?:tools|ai-video-generation)\//, ""), page.slug);
     aliasMap.set(normalizeToolLookup(page.slug), page.slug);
@@ -2471,7 +2505,19 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     ? siteAiApps.find((siteApp) => siteApp.aiApp.slug === "image_generator")
     : undefined;
   const resolvedSlug = explicitPageSlug ?? aliasMap.get(toolSlug) ?? aliasMap.get(directPageSlug) ?? aliasMap.get(normalizedToolSlug) ?? normalizedPageSlug;
-  const page = site.pages.find((item) => item.slug === resolvedSlug);
+  const page = site.pages.find((item) => item.slug === resolvedSlug) ?? site.pages.find((item) => item.slug === directPageSlug);
+  const pageTypes = page ? pageSectionTypes(page.publishedJson) : undefined;
+  const hasDedicatedVideoLanding = Boolean(
+    isVideoTool &&
+    pageTypes &&
+    (pageTypes.has("ai_video_topic_landing") || pageTypes.has("talking_photo_landing"))
+  );
+  if (hasDedicatedVideoLanding && page) {
+    return { siteAiApps, page, app: undefined, matched: true, resolvedSlug };
+  }
+  if (isPublicVideoTopic) {
+    return { siteAiApps, page: baseToolDetailPageForSite(site, page), app: undefined, matched: false, resolvedSlug };
+  }
   const app = directApp ?? legacyImageApp ?? (page?.slug === "/tools/image-studio" ? siteAiApps.find((siteApp) => siteApp.aiApp.slug === "image_generator") : undefined);
   const menuTool = (state.toolMenuItems ?? []).find((item) => {
     if (item.siteId !== site.id || item.status !== "active") return false;
@@ -2483,9 +2529,22 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     const blockSlug = toolSlugFromBlock(block);
     return blockSlug === normalizedToolSlug || blockSlug === canonicalToolSlug;
   });
+  const databaseThemeToolBlock = databaseVideoTheme
+    ? {
+        id: `video_theme_${databaseVideoTheme.id}`,
+        type: "tool_card",
+        settings: {
+          title: databaseVideoTheme.name,
+          description: databaseVideoTheme.description,
+          category: databaseVideoTheme.category?.label ?? "AI Video",
+          href: `/ai-video-generation/${databaseVideoTheme.slug}`,
+          imageUrl: databaseVideoTheme.imageUrl ?? ""
+        }
+      } as SectionBlockInstance
+    : undefined;
   const toolBlock = menuTool
     ? toolBlockFromMenuItem(menuTool)
-    : themeToolBlock ?? (explicitAidreamcapesToolSlug ? aidreamcapesToolBlockForSlug(site, canonicalToolSlug) : isAidreamcapes ? undefined : fallbackToolBlockForSlug(canonicalToolSlug));
+    : themeToolBlock ?? databaseThemeToolBlock ?? (explicitAidreamcapesToolSlug ? aidreamcapesToolBlockForSlug(site, canonicalToolSlug) : isAidreamcapes ? undefined : fallbackToolBlockForSlug(canonicalToolSlug));
   const localizedToolBlock = toolBlock ? spanishXbyToolBlockForSite(site, toolBlock) : undefined;
   const basePage = baseToolDetailPageForSite(site, page);
   const synthesizedPage = localizedToolBlock
@@ -2499,7 +2558,7 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     : undefined;
   const matched = isAidreamcapes
     ? !aidreamcapesAliasTarget && Boolean(page || directApp || menuTool || themeToolBlock || explicitAidreamcapesToolSlug)
-    : Boolean(page || directApp || legacyImageApp || toolBlock || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
+    : Boolean(page || directApp || legacyImageApp || databaseVideoTheme || toolBlock || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
   return { siteAiApps, page: synthesizedPage ? { ...basePage, slug: normalizedPageSlug, title: blockString(localizedToolBlock!, "title", basePage.title), publishedJson: synthesizedPage } : basePage, app, matched, resolvedSlug };
 }
 
@@ -2513,6 +2572,7 @@ function renderThemePage({
   navigationCreativePacks,
   navigationToolMenuItems,
   navigationVideoThemeCategories,
+  navigationVideoThemes,
   routeMode,
   runtime,
   settings,
@@ -2528,6 +2588,7 @@ function renderThemePage({
   navigationCreativePacks?: SiteRenderData["creativePacks"];
   navigationToolMenuItems?: SiteRenderData["toolMenuItems"];
   navigationVideoThemeCategories?: SiteRenderData["videoThemeCategories"];
+  navigationVideoThemes?: SiteRenderData["videoThemes"];
   routeMode: "host" | "path";
   runtime: ThemeRuntimeData;
   settings: Site["themeSettings"]["publishedJson"];
@@ -2554,6 +2615,7 @@ function renderThemePage({
         navigationCreativePacks={navigationCreativePacks}
         navigationToolMenuItems={navigationToolMenuItems}
         navigationVideoThemeCategories={navigationVideoThemeCategories}
+        navigationVideoThemes={navigationVideoThemes}
         toolMenuItems={renderData.toolMenuItems}
         videoThemeCategories={renderData.videoThemeCategories}
         videoThemes={renderData.videoThemes}
@@ -2610,6 +2672,9 @@ export async function renderStorefrontPage({
   const navigationVideoThemeCategories = useSharedNavigation
     ? renderData.videoThemeCategories
     : undefined;
+  const navigationVideoThemes = useSharedNavigation
+    ? renderData.videoThemes
+    : undefined;
   currentSite.mediaAssets = renderData.mediaAssets;
   const directPage = findPage(currentSite, slug) ?? syntheticStorefrontPolicyPage(currentSite, slug) ?? syntheticDreamShootPartnerPage(currentSite, slug);
   if (!directPage) notFound();
@@ -2622,8 +2687,11 @@ export async function renderStorefrontPage({
   const usesDreamShootToolsDirectory =
     slug === "/tools" &&
     (/dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`) || isAidreamcapesStorefront(currentSite));
+  const usesDreamShootVideoGenerationDirectory = slug === "/ai-video-generation" && isPrimaryMydreamshootsStorefront(currentSite);
   const pageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)
+    : usesDreamShootVideoGenerationDirectory
+    ? withDreamShootVideoGenerationDirectoryPage(page.publishedJson)
     : usesDreamShootToolsDirectory
     ? withDreamShootToolsDirectoryPage(page.publishedJson, currentSite)
     : isFocusedCollectionPage
@@ -2700,6 +2768,7 @@ export async function renderStorefrontPage({
     navigationCreativePacks,
     navigationToolMenuItems,
     navigationVideoThemeCategories,
+    navigationVideoThemes,
     renderData: pageRenderData,
     routeMode,
     runtime: runtimeWithAuth,
@@ -2814,10 +2883,13 @@ export async function renderStorefrontSectionPayloads({
   const usesDreamShootToolsDirectory =
     internalSlug === "/tools" &&
     (/dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`) || isAidreamcapesStorefront(currentSite));
+  const usesDreamShootVideoGenerationDirectory = internalSlug === "/ai-video-generation" && isPrimaryMydreamshootsStorefront(currentSite);
   const pageJson: ThemePageJson = internalSlug === "/account"
     ? withAccountDashboardPage(directPage.publishedJson)
     : toolDetailSlug && resolvedToolDetail?.matched
     ? withSeoDirectorySection(directPage.publishedJson, "tool", toolDetailSlug, { site: currentSite })
+    : usesDreamShootVideoGenerationDirectory
+    ? withDreamShootVideoGenerationDirectoryPage(directPage.publishedJson)
     : usesDreamShootToolsDirectory
     ? withDreamShootToolsDirectoryPage(directPage.publishedJson, currentSite)
     : isFocusedCollectionPage
@@ -3284,7 +3356,7 @@ export async function renderCustomerWorkspacePageBySlug({
   }
   if (slug === "/account") {
     const siteId = await getSiteIdBySlugRelational(canonicalSlug);
-    if (!siteId) notFound();
+    if (!siteId) redirect(loginPathWithNext);
     const sessionId = await readCustomerSessionId(siteId);
     if (!sessionId) redirect(loginPathWithNext);
     const [current, site, bootstrap] = await Promise.all([
@@ -3310,7 +3382,7 @@ export async function renderCustomerWorkspacePageBySlug({
 
   if (isWorkspaceRoute) {
     const siteId = await getSiteIdBySlugRelational(canonicalSlug);
-    if (!siteId) notFound();
+    if (!siteId) redirect(loginPathWithNext);
     const sessionId = await readCustomerSessionId(siteId);
     if (!sessionId) redirect(loginPathWithNext);
     const current = await getCustomerBySessionRelational({ siteId, sessionId });
@@ -3483,7 +3555,12 @@ export async function renderToolPage({
   const settings = currentSite.themeSettings.publishedJson;
   const normalizedToolSlug = normalizeToolLookup(toolSlug);
   const pageHasToolEntry = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "ai_tool_entry");
-  const basePageJson = pageHasToolEntry
+  const pageHasTalkingPhotoLanding = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "talking_photo_landing");
+  const pageHasAiVideoTopicLanding = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "ai_video_topic_landing");
+  const pageHasDedicatedVideoLanding = pageHasTalkingPhotoLanding || pageHasAiVideoTopicLanding;
+  const basePageJson = pageHasDedicatedVideoLanding
+    ? page.publishedJson
+    : pageHasToolEntry
     ? withToolEntryFirst(page.publishedJson)
     : (() => {
         const fallbackBlock = isAidreamcapesStorefront(currentSite)
@@ -3499,7 +3576,9 @@ export async function renderToolPage({
           currentSite
         ));
       })();
-  const pageJson = withSeoDirectorySection(basePageJson, "tool", toolSlug, { site: currentSite });
+  const pageJson = pageHasDedicatedVideoLanding
+    ? basePageJson
+    : withSeoDirectorySection(basePageJson, "tool", toolSlug, { site: currentSite });
   const pageRenderData = withPageMediaAssets(
     currentSite,
     pageJson,
@@ -3516,6 +3595,7 @@ export async function renderToolPage({
     navigationCreativePacks: trimCreativePacksForNavigation(renderData),
     navigationToolMenuItems: renderData.toolMenuItems.map(lightweightToolMenuItem),
     navigationVideoThemeCategories: renderData.videoThemeCategories,
+    navigationVideoThemes: renderData.videoThemes,
     renderData: pageRenderData,
     routeMode,
     runtime: runtimeWithEmptyCollections(),
@@ -3524,7 +3604,8 @@ export async function renderToolPage({
       site: currentSite,
       toolSlug,
       publicPath,
-      routeMode
+      routeMode,
+      pageJson
     })
   });
 }

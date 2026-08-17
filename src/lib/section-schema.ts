@@ -468,7 +468,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       image("imageUrl", "Primary image URL"),
       image("secondaryImageUrl", "Secondary image URL"),
       image("tertiaryImageUrl", "Tertiary image URL"),
-      textarea("bulletList", "Feature bullets", "Upload selfies and create your own AI model|Themed photo packs from headshots to AI photos|Announcement creator|Magic upscaler|Music lip sync"),
+      textarea("bulletList", "Feature bullets", "Upload approved source photos|Choose a supported image or video workflow|Review the credit cost before generation|Keep results inside your signed-in workspace"),
       text("highlightWord", "Highlighted word", "real"),
       text("heroBadge", "Hero badge", "AI photo package studio"),
       text("authRibbon", "Auth ribbon", "World Cup fan pack live"),
@@ -508,7 +508,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           secondaryImageUrl: "/assets/dreamshoot/editorial-headshot.svg",
           tertiaryImageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
           bulletList:
-            "Upload selfies and create your own AI model|Themed photo packs from headshots to AI photos|Announcement creator|Magic upscaler|Music lip sync",
+            "Upload approved source photos|Choose a supported image or video workflow|Review the credit cost before generation|Keep results inside your signed-in workspace",
           highlightWord: "real",
           heroBadge: "AI photo package studio",
           authRibbon: "World Cup fan pack live",
@@ -1499,9 +1499,9 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     settings: [
       text("anchor", "Anchor", "generated-showcase"),
       checkbox("showTrustedLogoIntro", "Show trusted logo intro", false),
-      text("trustedLogoTitle", "Trusted logo title", "Most Trusted Creators. | myDreamshoots"),
+      text("trustedLogoTitle", "Trusted logo title", "Creative workflow examples built with myDreamshoots"),
       text("aboutTitle", "About heading", "What is myDreamshoots?"),
-      textarea("aboutBody", "About body", "myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photo and video in seconds with myDreamshoots's: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. Plans start at $24.50/month, and every package shows the credit cost before generation."),
+      textarea("aboutBody", "About body", "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. Upload photos you are authorized to use, choose a supported image or video workflow, review the current credit cost, and generate results inside your signed-in workspace. Current workflows include professional headshots, portraits, fan and seasonal images, creative styles, photo-editing tools, and short video options."),
       text("embeddedPricingSectionId", "Embedded pricing section ID", ""),
       range("trustedLogoSplitIndex", "Trusted logo row split", 15, 1, 30),
       text("eyebrow", "Eyebrow", "Customer-created examples"),
@@ -1525,9 +1525,9 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         settings: {
           anchor: "generated-showcase",
           showTrustedLogoIntro: false,
-          trustedLogoTitle: "Most Trusted Creators. | myDreamshoots",
+	          trustedLogoTitle: "Creative workflow examples built with myDreamshoots",
           aboutTitle: "What is myDreamshoots?",
-          aboutBody: "myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photo and video in seconds with myDreamshoots's: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. Plans start at $24.50/month, and every package shows the credit cost before generation.",
+	          aboutBody: "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. Upload photos you are authorized to use, choose a supported image or video workflow, review the current credit cost, and generate results inside your signed-in workspace. Current workflows include professional headshots, portraits, fan and seasonal images, creative styles, photo-editing tools, and short video options.",
           embeddedPricingSectionId: "",
           trustedLogoSplitIndex: 15,
           eyebrow: "Customer-created examples",
@@ -2388,6 +2388,26 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       url("secondaryHref", "Secondary CTA link", "/pricing")
     ],
     blocks: [cardBlock]
+  },
+  talking_photo_landing: {
+    type: "talking_photo_landing",
+    label: "Talking Photo Landing Page",
+    category: "Storefront",
+    description: "Customer-first Talking Photo SEO landing page with guided source-photo, script, trust, and FAQ content.",
+    settings: [
+      text("anchor", "Anchor", "talking-photo"),
+      text("contentKey", "Content key", "talking-photo", "Uses the versioned Talking Photo content model.")
+    ]
+  },
+  ai_video_topic_landing: {
+    type: "ai_video_topic_landing",
+    label: "AI Video Topic Landing Page",
+    category: "Storefront",
+    description: "Customer-first AI video topic SEO landing page with theme-specific use cases, guidance, trust, and FAQ content.",
+    settings: [
+      text("anchor", "Anchor", "cinematic-video"),
+      text("contentKey", "Content key", "cinematic-video", "Uses the versioned AI video topic content model.")
+    ]
   },
   before_after_gallery: {
     type: "before_after_gallery",

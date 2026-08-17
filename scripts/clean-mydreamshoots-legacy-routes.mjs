@@ -8,14 +8,15 @@ const CONFIRM_TOKEN = "clean-mydreamshoots-legacy-routes";
 const ALLOWED_SITE_IDS = new Set(["site_dreamshoot", "site_grownstride_test"]);
 const TARGET_DOMAINS = ["mydreamshoots.com", "www.mydreamshoots.com", "test.grownstride.com"];
 const MYDREAMSHOOTS_VIDEO_TOOL_SLUGS = [
-  "image-to-video",
-  "profile-clip",
-  "fan-poster-motion",
-  "creator-intro-video",
-  "product-teaser-clip",
-  "animated-avatar",
-  "fashion-reel",
-  "album-story-video"
+  "talking-photo",
+  "cinematic-video",
+  "tiktok-video",
+  "instagram-reels",
+  "social-media-video",
+  "youtube-video",
+  "story-video",
+  "meme-video",
+  "product-video"
 ];
 const transactionTimeoutMs = Number(process.env.ROUTE_CLEANUP_TRANSACTION_TIMEOUT_MS ?? 600000);
 const RELATIVE_COLLECTIONS_RE = /(^|[\s"'=([{>:])\/collections(?=\/|[?#"'`<>)\]|&\s.,;:!]|$)/g;

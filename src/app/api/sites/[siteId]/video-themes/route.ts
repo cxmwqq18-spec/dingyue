@@ -183,6 +183,7 @@ function themeBody(body: Record<string, unknown>): Partial<VideoTheme> {
     modelPricing: normalizeVideoModelPricing(body.modelPricing, Number(body.creditCost)),
     durationSeconds: Number(body.durationSeconds),
     maxFrames: Number(body.maxFrames),
+    sortOrder: Number(body.sortOrder),
     imageUrl: typeof body.imageUrl === "string" ? body.imageUrl : undefined,
     galleryImages: Array.isArray(body.galleryImages)
       ? body.galleryImages.filter((item): item is string => typeof item === "string")
@@ -246,7 +247,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     let themes = await prisma.videoTheme.findMany({
       where,
       include: { category: true },
-      orderBy: [{ createdAt: "desc" }],
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
       take: pageSize
     });
     if (!themes.length) {
@@ -258,7 +259,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       themes = await prisma.videoTheme.findMany({
         where,
         include: { category: true },
-        orderBy: [{ createdAt: "desc" }],
+        orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
         take: pageSize
       });
     }
@@ -304,7 +305,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     prisma.videoTheme.findMany({
       where,
       include: { category: true },
-      orderBy: [{ status: "asc" }, { createdAt: "desc" }],
+      orderBy: [{ status: "asc" }, { sortOrder: "asc" }, { createdAt: "desc" }],
       skip: admin ? (page - 1) * pageSize : undefined,
       take: pageSize
     }),
@@ -364,6 +365,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
       modelPricing: body.modelPricing,
       durationSeconds: Number(body.durationSeconds),
       maxFrames: Number(body.maxFrames),
+      sortOrder: Number(body.sortOrder),
       imageUrl: body.imageUrl,
       galleryImages: body.galleryImages
     });
