@@ -31,7 +31,7 @@ import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
 import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { dreamshootPackProfileForPack, dreamshootPackProfileForSlug, type DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
-import { mydreamshootsPageCopyForSlug, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
+import { mydreamshootsPageCopyForRoute, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 import {
   aidreamcapesCategoryUseCaseProfileForSlug,
   mydreamshootsCategoryUseCaseProfileForSlug,
@@ -5359,7 +5359,12 @@ function myDreamShootsProfileForSlug(site: Site, slug: string | null | undefined
     return undefined;
   }
 
-  return dreamshootPackProfileForSlug(slug) ?? mydreamshootsCategoryUseCaseProfileForSlug(slug);
+  return mydreamshootsPageCopyForRoute({
+    siteId: site.id,
+    routeKind: "ai-image-theme-leaf",
+    canonicalSlug: slug,
+    canonicalPath: slug ? `/ai-image-generation/${slug}` : undefined
+  }) ?? dreamshootPackProfileForSlug(slug) ?? mydreamshootsCategoryUseCaseProfileForSlug(slug);
 }
 
 function aidreamcapesProfileForSlug(site: Site, slug: string | null | undefined): PhotoPackageUseCaseProfile | undefined {
@@ -11131,7 +11136,12 @@ function SectionView({
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
     const selectedPacks = activeCreativePacksForCollectionSlug(creativePacks, selectedCollectionSlug);
     const selectedPack = selectedPacks.length === 1 ? selectedPacks[0] : undefined;
-    const selectedPageCopy = !aidreamcapes && !spanishXbyTaxonomy ? mydreamshootsPageCopyForSlug(selectedCollectionSlug) : undefined;
+    const selectedPageCopy = !aidreamcapes && !spanishXbyTaxonomy ? mydreamshootsPageCopyForRoute({
+      siteId: site.id,
+      routeKind: "ai-image-theme-leaf",
+      canonicalSlug: selectedCollectionSlug,
+      canonicalPath: selectedCollectionSlug ? `/ai-image-generation/${selectedCollectionSlug}` : undefined
+    }) : undefined;
     const selectedProfile = selectedPageCopy ?? (aidreamcapes && !spanishXbyTaxonomy
       ? selectedPack ? aidreamcapesProfileForPack(site, selectedPack) : aidreamcapesProfileForSlug(site, selectedCollectionSlug)
       : selectedPack ? myDreamShootsProfileForPack(site, selectedPack) : myDreamShootsProfileForSlug(site, selectedCollectionSlug));
@@ -11461,7 +11471,12 @@ function SectionView({
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
     const selectedPack = activeCreativePackForCollectionSlug(creativePacks, selectedCollectionSlug);
     if (!selectedPack) return null;
-    const selectedPageCopy = !aidreamcapesThemeCta && !spanishXbyThemeCta ? mydreamshootsPageCopyForSlug(selectedCollectionSlug) : undefined;
+    const selectedPageCopy = !aidreamcapesThemeCta && !spanishXbyThemeCta ? mydreamshootsPageCopyForRoute({
+      siteId: site.id,
+      routeKind: "ai-image-theme-leaf",
+      canonicalSlug: selectedCollectionSlug,
+      canonicalPath: selectedCollectionSlug ? `/ai-image-generation/${selectedCollectionSlug}` : undefined
+    }) : undefined;
     const packTitle = spanishXbyThemeCta ? spanishPhotoPackageLabel(selectedPack.name, aidreamcapesThemeCta) : selectedPack.name;
     const spanishThemeBrand = site.branding.logoText || site.name || (aidreamcapesThemeCta ? "AIdreamcapes" : "AIdreamshoots");
     const ctaHref = hrefFor(site, creativePackCreateHref(selectedPack, site));
@@ -11583,7 +11598,12 @@ function SectionView({
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
     const selectedPack = activeCreativePackForCollectionSlug(creativePacks, selectedCollectionSlug);
     if (!selectedPack) return null;
-    const selectedPageCopy = !aidreamcapesThemeFaq && !spanishXbyThemeFaq ? mydreamshootsPageCopyForSlug(selectedCollectionSlug) : undefined;
+    const selectedPageCopy = !aidreamcapesThemeFaq && !spanishXbyThemeFaq ? mydreamshootsPageCopyForRoute({
+      siteId: site.id,
+      routeKind: "ai-image-theme-leaf",
+      canonicalSlug: selectedCollectionSlug,
+      canonicalPath: selectedCollectionSlug ? `/ai-image-generation/${selectedCollectionSlug}` : undefined
+    }) : undefined;
     const packTitle = spanishXbyThemeFaq ? spanishPhotoPackageLabel(selectedPack.name, aidreamcapesThemeFaq) : selectedPack.name;
     const outputCount = selectedPack.outputCount;
     const creditCost = selectedPack.creditCost;
@@ -11646,7 +11666,12 @@ function SectionView({
     const aidreamcapes = isAidreamcapesSite(site);
     const spanishXbyRelated = isSpanishXbySite(site);
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
-    const selectedPageCopy = !aidreamcapes && !spanishXbyRelated ? mydreamshootsPageCopyForSlug(selectedCollectionSlug) : undefined;
+    const selectedPageCopy = !aidreamcapes && !spanishXbyRelated ? mydreamshootsPageCopyForRoute({
+      siteId: site.id,
+      routeKind: "ai-image-theme-leaf",
+      canonicalSlug: selectedCollectionSlug,
+      canonicalPath: selectedCollectionSlug ? `/ai-image-generation/${selectedCollectionSlug}` : undefined
+    }) : undefined;
     const selectedPacks = activeCreativePacksForCollectionSlug(creativePacks, selectedCollectionSlug);
     const selectedPackIds = new Set(selectedPacks.map((pack) => pack.id));
     const relatedPacks = creativePacks
@@ -11689,7 +11714,18 @@ function SectionView({
                 <div className="p-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-white/42">{packCategoryLabelForStorefront(pack)}</p>
                   <h3 className="mt-2 line-clamp-1 text-lg font-semibold text-white">{pack.name}</h3>
-                  <p className="mt-2 line-clamp-3 min-h-[3.9rem] text-sm leading-5 text-white/56">{dreamshootPackageThemeIntro(pack)}</p>
+                  <p className="mt-2 line-clamp-3 min-h-[3.9rem] text-sm leading-5 text-white/56">
+                    {(() => {
+                      const targetSlug = dreamshootCategorySlug(pack.categoryRecord?.slug || pack.category || pack.name);
+                      const targetCopy = !aidreamcapes && !spanishXbyRelated ? mydreamshootsPageCopyForRoute({
+                        siteId: site.id,
+                        routeKind: "ai-image-theme-leaf",
+                        canonicalSlug: targetSlug,
+                        canonicalPath: `/ai-image-generation/${targetSlug}`
+                      }) : undefined;
+                      return targetCopy?.cardDescription ?? dreamshootPackageThemeIntro(pack);
+                    })()}
+                  </p>
                   <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-white/78">
                     {spanishXbyRelated ? "Abrir paquete" : "Open package"}
                     <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" strokeWidth={1.8} />
@@ -11723,7 +11759,12 @@ function SectionView({
     const DirectoryHeadingTag = focusedCollectionRoute ? "h1" : "h2";
     const spanishXbyDirectory = isSpanishXbySite(site);
     const selectedPageCopy = kind === "collection" && !spanishXbyDirectory && !isAidreamcapesSite(site)
-      ? mydreamshootsPageCopyForSlug(selectedCollectionSlugFromRenderContext(renderContext))
+      ? mydreamshootsPageCopyForRoute({
+          siteId: site.id,
+          routeKind: "ai-image-theme-leaf",
+          canonicalSlug: selectedCollectionSlugFromRenderContext(renderContext),
+          canonicalPath: selectedCollectionSlugFromRenderContext(renderContext) ? `/ai-image-generation/${selectedCollectionSlugFromRenderContext(renderContext)}` : undefined
+        })
       : undefined;
     const guideStats = spanishXbyDirectory
       ? [

@@ -7,7 +7,11 @@
       "description": "Popular AI photo presets for romance, holidays, seasonal cards, and private keepsake albums.",
       "icon": "sparkles",
       "sortOrder": 10,
-      "tags": ["Popular", "Seasonal", "Keepsakes"]
+      "tags": [
+        "Popular",
+        "Seasonal",
+        "Keepsakes"
+      ]
     },
     {
       "slug": "professional",
@@ -16,7 +20,11 @@
       "description": "Polished AI photo themes for avatars, headshots, portraits, creator profiles, and occasion-ready professional images.",
       "icon": "badge-check",
       "sortOrder": 20,
-      "tags": ["Work", "Profile", "Creator"]
+      "tags": [
+        "Work",
+        "Profile",
+        "Creator"
+      ]
     },
     {
       "slug": "lifestyle-creative",
@@ -25,7 +33,11 @@
       "description": "Lifestyle and cinematic AI photo themes for travel, fashion, nightlife, sports, and expressive personal albums.",
       "icon": "camera",
       "sortOrder": 30,
-      "tags": ["Lifestyle", "Creative", "Scenes"]
+      "tags": [
+        "Lifestyle",
+        "Creative",
+        "Scenes"
+      ]
     },
     {
       "slug": "magic",
@@ -34,7 +46,11 @@
       "description": "Fast visual transformation themes for hairstyle previews, virtual try-on looks, and motion-ready photo concepts.",
       "icon": "wand-sparkles",
       "sortOrder": 40,
-      "tags": ["Try-on", "Motion", "Preview"]
+      "tags": [
+        "Try-on",
+        "Motion",
+        "Preview"
+      ]
     },
     {
       "slug": "photo-tools",
@@ -43,7 +59,11 @@
       "description": "Collection-style photo tool themes for background edits, restoration, enhancement, retouching, and prompt-led image changes.",
       "icon": "sliders-horizontal",
       "sortOrder": 50,
-      "tags": ["Edit", "Restore", "Enhance"]
+      "tags": [
+        "Edit",
+        "Restore",
+        "Enhance"
+      ]
     }
   ],
   "items": [
@@ -58,7 +78,11 @@
       "creditCost": 22,
       "outputCount": 20,
       "icon": "heart",
-      "tags": ["Engagement", "Couple", "Announcement"]
+      "tags": [
+        "Engagement",
+        "Couple",
+        "Announcement"
+      ]
     },
     {
       "slug": "wedding-photo",
@@ -71,7 +95,11 @@
       "creditCost": 24,
       "outputCount": 24,
       "icon": "heart",
-      "tags": ["Wedding", "Couple", "Keepsake"]
+      "tags": [
+        "Wedding",
+        "Couple",
+        "Keepsake"
+      ]
     },
     {
       "slug": "valentines-photo",
@@ -84,7 +112,11 @@
       "creditCost": 20,
       "outputCount": 20,
       "icon": "heart",
-      "tags": ["Valentines", "Date Night", "Romance"]
+      "tags": [
+        "Valentines",
+        "Date Night",
+        "Romance"
+      ]
     },
     {
       "slug": "christmas-photo",
@@ -97,7 +129,11 @@
       "creditCost": 20,
       "outputCount": 20,
       "icon": "snowflake",
-      "tags": ["Christmas", "Holiday Card", "Winter"]
+      "tags": [
+        "Christmas",
+        "Holiday Card",
+        "Winter"
+      ]
     },
     {
       "slug": "halloween-photo",
@@ -110,7 +146,11 @@
       "creditCost": 20,
       "outputCount": 20,
       "icon": "sparkles",
-      "tags": ["Halloween", "Party", "Seasonal"]
+      "tags": [
+        "Halloween",
+        "Party",
+        "Seasonal"
+      ]
     },
     {
       "slug": "thanksgiving-photo",
@@ -123,7 +163,11 @@
       "creditCost": 20,
       "outputCount": 20,
       "icon": "users",
-      "tags": ["Thanksgiving", "Gratitude", "Group Portraits"]
+      "tags": [
+        "Thanksgiving",
+        "Gratitude",
+        "Group Portraits"
+      ]
     },
     {
       "slug": "avatar",
@@ -136,7 +180,11 @@
       "creditCost": 20,
       "outputCount": 20,
       "icon": "user-circle",
-      "tags": ["Avatar", "Profile", "Social"]
+      "tags": [
+        "Avatar",
+        "Profile",
+        "Social"
+      ]
     },
     {
       "slug": "headshot",
@@ -149,7 +197,11 @@
       "creditCost": 20,
       "outputCount": 20,
       "icon": "badge-check",
-      "tags": ["Headshot", "LinkedIn", "Professional"]
+      "tags": [
+        "Headshot",
+        "LinkedIn",
+        "Professional"
+      ]
     },
     {
       "slug": "gala-photo",
@@ -162,7 +214,11 @@
       "creditCost": 24,
       "outputCount": 24,
       "icon": "star",
-      "tags": ["Gala", "Formal", "Event"]
+      "tags": [
+        "Gala",
+        "Formal",
+        "Event"
+      ]
     },
     {
       "slug": "portrait-photo",
@@ -175,11 +231,15 @@
       "creditCost": 24,
       "outputCount": 24,
       "icon": "user-round",
-      "tags": ["Portrait", "Creator", "Personal Brand"]
+      "tags": [
+        "Portrait",
+        "Creator",
+        "Personal Brand"
+      ]
     },
     {
       "slug": "black-friday",
-      "sourceCategorySlug": "anime-avatar",
+      "sourceCategorySlug": "creator-portraits",
       "reusePackId": "pack_dreamshoot_anime_avatar",
       "groupSlug": "professional",
       "label": "Black Friday",
@@ -188,7 +248,12 @@
       "creditCost": 22,
       "outputCount": 20,
       "icon": "badge-percent",
-      "tags": ["Black Friday", "Campaign", "Promo"]
+      "tags": [
+        "Black Friday",
+        "Campaign",
+        "Promo"
+      ],
+      "sourcePackId": "pack_dreamshoot_creator_portraits"
     },
     {
       "slug": "only-fans",
@@ -200,7 +265,11 @@
       "creditCost": 24,
       "outputCount": 24,
       "icon": "user-round-check",
-      "tags": ["Creator", "Subscription", "Profile"],
+      "tags": [
+        "Creator",
+        "Subscription",
+        "Profile"
+      ],
       "safetyNote": "For consenting adults only. Keep requests non-explicit, permission-safe, and focused on profile, promo, or personal-brand imagery."
     },
     {
@@ -213,7 +282,11 @@
       "creditCost": 20,
       "outputCount": 20,
       "icon": "sparkles",
-      "tags": ["Solo", "Self Love", "Profile"]
+      "tags": [
+        "Solo",
+        "Self Love",
+        "Profile"
+      ]
     },
     {
       "slug": "cyberpunk",
@@ -226,7 +299,11 @@
       "creditCost": 26,
       "outputCount": 24,
       "icon": "zap",
-      "tags": ["Cyberpunk", "Neon", "Cinematic"]
+      "tags": [
+        "Cyberpunk",
+        "Neon",
+        "Cinematic"
+      ]
     },
     {
       "slug": "boudoir",
@@ -239,7 +316,11 @@
       "creditCost": 24,
       "outputCount": 24,
       "icon": "lock",
-      "tags": ["Boudoir", "Private", "Editorial"],
+      "tags": [
+        "Boudoir",
+        "Private",
+        "Editorial"
+      ],
       "safetyNote": "For consenting adults only. Do not upload minors, non-consenting people, stolen images, or explicit requests."
     },
     {
@@ -253,7 +334,11 @@
       "creditCost": 20,
       "outputCount": 20,
       "icon": "sparkles",
-      "tags": ["Holiday", "Seasonal", "Cards"]
+      "tags": [
+        "Holiday",
+        "Seasonal",
+        "Cards"
+      ]
     },
     {
       "slug": "cannes",
@@ -266,7 +351,11 @@
       "creditCost": 24,
       "outputCount": 24,
       "icon": "star",
-      "tags": ["Cannes", "Festival", "Glamour"]
+      "tags": [
+        "Cannes",
+        "Festival",
+        "Glamour"
+      ]
     },
     {
       "slug": "nightlife",
@@ -279,7 +368,11 @@
       "creditCost": 22,
       "outputCount": 24,
       "icon": "moon",
-      "tags": ["Nightlife", "City", "Evening"]
+      "tags": [
+        "Nightlife",
+        "City",
+        "Evening"
+      ]
     },
     {
       "slug": "rich-lifestyle",
@@ -292,7 +385,11 @@
       "creditCost": 24,
       "outputCount": 24,
       "icon": "gem",
-      "tags": ["Luxury", "Lifestyle", "Premium"]
+      "tags": [
+        "Luxury",
+        "Lifestyle",
+        "Premium"
+      ]
     },
     {
       "slug": "bikini",
@@ -304,7 +401,11 @@
       "creditCost": 24,
       "outputCount": 24,
       "icon": "sun",
-      "tags": ["Beachwear", "Resort", "Portrait"],
+      "tags": [
+        "Beachwear",
+        "Resort",
+        "Portrait"
+      ],
       "safetyNote": "For consenting adults only. Keep requests tasteful, non-explicit, and based on photos you own or have permission to use."
     },
     {
@@ -317,7 +418,11 @@
       "creditCost": 22,
       "outputCount": 24,
       "icon": "waves",
-      "tags": ["Swimsuit", "Resort", "Style"],
+      "tags": [
+        "Swimsuit",
+        "Resort",
+        "Style"
+      ],
       "safetyNote": "For consenting adults only. Use approved source photos and keep styling requests non-explicit."
     },
     {
@@ -331,7 +436,11 @@
       "creditCost": 22,
       "outputCount": 24,
       "icon": "map",
-      "tags": ["Travel", "Destination", "Lifestyle"]
+      "tags": [
+        "Travel",
+        "Destination",
+        "Lifestyle"
+      ]
     },
     {
       "slug": "soccer",
@@ -344,7 +453,11 @@
       "creditCost": 26,
       "outputCount": 24,
       "icon": "circle-dot",
-      "tags": ["Soccer", "Fan Photos", "Match Day"],
+      "tags": [
+        "Soccer",
+        "Fan Photos",
+        "Match Day"
+      ],
       "safetyNote": "For personal fan creativity only. Avoid official team logos, league marks, player likenesses, celebrity faces, or protected brand assets unless you have permission."
     },
     {
@@ -358,7 +471,11 @@
       "creditCost": 22,
       "outputCount": 24,
       "icon": "building-2",
-      "tags": ["Urban", "City", "Creator"]
+      "tags": [
+        "Urban",
+        "City",
+        "Creator"
+      ]
     },
     {
       "slug": "street-style",
@@ -371,7 +488,11 @@
       "creditCost": 24,
       "outputCount": 24,
       "icon": "shirt",
-      "tags": ["Street Style", "Fashion", "Editorial"]
+      "tags": [
+        "Street Style",
+        "Fashion",
+        "Editorial"
+      ]
     },
     {
       "slug": "mafia",
@@ -384,7 +505,11 @@
       "creditCost": 22,
       "outputCount": 24,
       "icon": "film",
-      "tags": ["Noir", "Character", "Cinematic"]
+      "tags": [
+        "Noir",
+        "Character",
+        "Cinematic"
+      ]
     },
     {
       "slug": "hairstyle-generator",
@@ -397,7 +522,11 @@
       "creditCost": 18,
       "outputCount": 20,
       "icon": "scissors",
-      "tags": ["Hairstyle", "Hair Color", "Preview"]
+      "tags": [
+        "Hairstyle",
+        "Hair Color",
+        "Preview"
+      ]
     },
     {
       "slug": "virtual-try-on",
@@ -410,7 +539,11 @@
       "creditCost": 20,
       "outputCount": 20,
       "icon": "shirt",
-      "tags": ["Virtual Try-On", "Outfit", "Fashion"]
+      "tags": [
+        "Virtual Try-On",
+        "Outfit",
+        "Fashion"
+      ]
     },
     {
       "slug": "motion-generator",
@@ -423,7 +556,11 @@
       "creditCost": 18,
       "outputCount": 16,
       "icon": "play-circle",
-      "tags": ["Motion", "GIF", "Video Starter"]
+      "tags": [
+        "Motion",
+        "GIF",
+        "Video Starter"
+      ]
     },
     {
       "slug": "background-changer",
@@ -436,7 +573,11 @@
       "creditCost": 12,
       "outputCount": 12,
       "icon": "image",
-      "tags": ["Background", "Edit", "Scene"]
+      "tags": [
+        "Background",
+        "Edit",
+        "Scene"
+      ]
     },
     {
       "slug": "background-remover",
@@ -448,7 +589,11 @@
       "creditCost": 10,
       "outputCount": 10,
       "icon": "eraser",
-      "tags": ["Background", "Cutout", "Clean"]
+      "tags": [
+        "Background",
+        "Cutout",
+        "Clean"
+      ]
     },
     {
       "slug": "magic-eraser",
@@ -460,7 +605,11 @@
       "creditCost": 10,
       "outputCount": 10,
       "icon": "eraser",
-      "tags": ["Erase", "Cleanup", "Edit"]
+      "tags": [
+        "Erase",
+        "Cleanup",
+        "Edit"
+      ]
     },
     {
       "slug": "photo-enhancer",
@@ -473,7 +622,11 @@
       "creditCost": 10,
       "outputCount": 10,
       "icon": "sparkles",
-      "tags": ["Enhance", "Clarity", "Sharpness"]
+      "tags": [
+        "Enhance",
+        "Clarity",
+        "Sharpness"
+      ]
     },
     {
       "slug": "portrait-retouch",
@@ -485,7 +638,11 @@
       "creditCost": 10,
       "outputCount": 10,
       "icon": "user-round-check",
-      "tags": ["Retouch", "Portrait", "Natural"]
+      "tags": [
+        "Retouch",
+        "Portrait",
+        "Natural"
+      ]
     },
     {
       "slug": "unblur-image",
@@ -497,7 +654,11 @@
       "creditCost": 10,
       "outputCount": 8,
       "icon": "focus",
-      "tags": ["Unblur", "Sharpness", "Restore"]
+      "tags": [
+        "Unblur",
+        "Sharpness",
+        "Restore"
+      ]
     },
     {
       "slug": "color-correction",
@@ -509,7 +670,11 @@
       "creditCost": 10,
       "outputCount": 8,
       "icon": "palette",
-      "tags": ["Color", "Exposure", "Tone"]
+      "tags": [
+        "Color",
+        "Exposure",
+        "Tone"
+      ]
     },
     {
       "slug": "old-photo-restoration",
@@ -521,7 +686,11 @@
       "creditCost": 12,
       "outputCount": 8,
       "icon": "history",
-      "tags": ["Restoration", "Old Photos", "Keepsake"]
+      "tags": [
+        "Restoration",
+        "Old Photos",
+        "Keepsake"
+      ]
     },
     {
       "slug": "edit-by-prompt",
@@ -534,7 +703,11 @@
       "creditCost": 12,
       "outputCount": 12,
       "icon": "message-square-text",
-      "tags": ["Prompt", "Edit", "Creative"]
+      "tags": [
+        "Prompt",
+        "Edit",
+        "Creative"
+      ]
     }
   ]
 }

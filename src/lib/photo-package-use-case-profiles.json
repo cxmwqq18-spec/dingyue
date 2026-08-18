@@ -75,7 +75,44 @@
         "Avoid official characters, protected logos, or another person's likeness without permission."
       ],
       "coverNote": "Avatar packs perform best with clean face references, simple backgrounds, and a clear final platform in mind.",
-      "safetyNote": "Use original avatar styles and do not imitate protected characters, official marks, or people who did not consent."
+      "safetyNote": "Use original avatar styles and do not imitate protected characters, official marks, or people who did not consent.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:avatar",
+      "copyRevision": "2026-08-18.avatar",
+      "seoTitle": "AI Avatars for Profiles, Gaming Handles, and Community Identity | myDreamshoots",
+      "galleryTitle": "12 AI Avatar Photo Examples for Avatar, Profile, Social",
+      "galleryIntro": "Review avatar, profile, social examples before opening the avatar workflow.",
+      "ctaEyebrow": "Start the avatar set",
+      "ctaTitle": "Create avatar images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into avatar, profile, social with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Avatar Photos",
+      "faqEyebrow": "Avatar FAQ",
+      "faqTitle": "Avatar photos before you create",
+      "faqItems": [
+        {
+          "id": "avatar_what_is_it",
+          "question": "What is Avatar?",
+          "answer": "Design polished AI avatars, profile crops, personal bio visuals, and clean social identity images from private uploads. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "avatar_source_photos",
+          "question": "What source photos work best for Avatar?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "avatar_use_results",
+          "question": "Can I use Avatar results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "avatar_before_generate",
+          "question": "What should I check before generating Avatar images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related avatar ideas",
+      "relatedTitle": "More avatar and nearby themes",
+      "relatedSubtitle": "Compare avatar, profile, social and adjacent themes before opening a avatar set.",
+      "relatedCtaLabel": "View all packages"
     },
     "wedding": {
       "headline": "Wedding Photos for Save-the-Dates, Couple Albums, and Keepsakes",
@@ -1151,7 +1188,44 @@
         "Do not use generated headshots for passports, official IDs, or legal documents."
       ],
       "coverNote": "Headshots are strongest when source photos are recent, sharp, and show the person from multiple natural angles.",
-      "safetyNote": "Only create professional portraits for yourself or people who gave permission; do not impersonate others."
+      "safetyNote": "Only create professional portraits for yourself or people who gave permission; do not impersonate others.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:headshot",
+      "copyRevision": "2026-08-18.headshot",
+      "seoTitle": "AI Headshots for LinkedIn, Resumes, Founder Bios, and Team Pages | myDreamshoots",
+      "galleryTitle": "12 AI Headshot Photo Examples for Headshot, LinkedIn, Professional",
+      "galleryIntro": "Review headshot, linkedin, professional examples before opening the headshot workflow.",
+      "ctaEyebrow": "Start the headshot set",
+      "ctaTitle": "Create headshot images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into headshot, linkedin, professional with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Headshot Photos",
+      "faqEyebrow": "Headshot FAQ",
+      "faqTitle": "Headshot photos before you create",
+      "faqItems": [
+        {
+          "id": "headshot_what_is_it",
+          "question": "What is Headshot?",
+          "answer": "Generate realistic AI headshots for LinkedIn, resumes, founder bios, speaker pages, and professional team profiles. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "headshot_source_photos",
+          "question": "What source photos work best for Headshot?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "headshot_use_results",
+          "question": "Can I use Headshot results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "headshot_before_generate",
+          "question": "What should I check before generating Headshot images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related headshot ideas",
+      "relatedTitle": "More headshot and nearby themes",
+      "relatedSubtitle": "Compare headshot, linkedin, professional and adjacent themes before opening a headshot set.",
+      "relatedCtaLabel": "View all packages"
     },
     "gala-photo": {
       "headline": "AI Gala Photos for Formal Events, Red-Carpet Mood, and Elegant Portraits",
@@ -1190,7 +1264,44 @@
         "Avoid implying attendance at a real event unless the context is clearly creative."
       ],
       "coverNote": "Gala images work best with clear face references and a specific formal mood such as red carpet, ballroom, or flash portrait.",
-      "safetyNote": "Do not use gala images to falsely suggest real event access, awards, or endorsements."
+      "safetyNote": "Do not use gala images to falsely suggest real event access, awards, or endorsements.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:gala-photo",
+      "copyRevision": "2026-08-18.gala-photo",
+      "seoTitle": "AI Gala Photos for Formal Events, Red-Carpet Mood, and Elegant Portraits | myDreamshoots",
+      "galleryTitle": "12 AI Gala Photo Photo Examples for Gala, Formal, Event",
+      "galleryIntro": "Review gala, formal, event examples before opening the gala-photo workflow.",
+      "ctaEyebrow": "Start the gala photo set",
+      "ctaTitle": "Create gala photo images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into gala, formal, event with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Gala Photo Photos",
+      "faqEyebrow": "Gala Photo FAQ",
+      "faqTitle": "Gala Photo photos before you create",
+      "faqItems": [
+        {
+          "id": "gala_photo_what_is_it",
+          "question": "What is Gala Photo?",
+          "answer": "Create gala-night portraits with formal styling, polished event lighting, red-carpet mood, and private album delivery. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "gala_photo_source_photos",
+          "question": "What source photos work best for Gala Photo?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "gala_photo_use_results",
+          "question": "Can I use Gala Photo results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "gala_photo_before_generate",
+          "question": "What should I check before generating Gala Photo images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related gala photo ideas",
+      "relatedTitle": "More gala photo and nearby themes",
+      "relatedSubtitle": "Compare gala, formal, event and adjacent themes before opening a gala photo set.",
+      "relatedCtaLabel": "View all packages"
     },
     "portrait-photo": {
       "headline": "AI Portrait Photos for Personal Brands, Media Kits, and Creator Profiles",
@@ -1229,7 +1340,44 @@
         "Review skin, hands, background, and wardrobe details before use."
       ],
       "coverNote": "Portrait photos work best with a mix of close-up and half-body source images.",
-      "safetyNote": "Do not create or publish portraits of someone who did not consent."
+      "safetyNote": "Do not create or publish portraits of someone who did not consent.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:portrait-photo",
+      "copyRevision": "2026-08-18.portrait-photo",
+      "seoTitle": "AI Portrait Photos for Personal Brands, Media Kits, and Creator Profiles | myDreamshoots",
+      "galleryTitle": "12 AI Portrait Photo Photo Examples for Portrait, Creator, Personal Brand",
+      "galleryIntro": "Review portrait, creator, personal brand examples before opening the portrait-photo workflow.",
+      "ctaEyebrow": "Start the portrait photo set",
+      "ctaTitle": "Create portrait photo images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into portrait, creator, personal brand with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Portrait Photo Photos",
+      "faqEyebrow": "Portrait Photo FAQ",
+      "faqTitle": "Portrait Photo photos before you create",
+      "faqItems": [
+        {
+          "id": "portrait_photo_what_is_it",
+          "question": "What is Portrait Photo?",
+          "answer": "Build creator portraits, personal-brand images, media-kit photos, founder visuals, and polished profile albums. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "portrait_photo_source_photos",
+          "question": "What source photos work best for Portrait Photo?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "portrait_photo_use_results",
+          "question": "Can I use Portrait Photo results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "portrait_photo_before_generate",
+          "question": "What should I check before generating Portrait Photo images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related portrait photo ideas",
+      "relatedTitle": "More portrait photo and nearby themes",
+      "relatedSubtitle": "Compare portrait, creator, personal brand and adjacent themes before opening a portrait photo set.",
+      "relatedCtaLabel": "View all packages"
     },
     "black-friday": {
       "headline": "AI Black Friday Photos for Sale Banners, Social Ads, and Promo Campaigns",
@@ -1344,7 +1492,44 @@
         "Choose images that feel polished and subscriber-ready without violating platform rules."
       ],
       "coverNote": "Only Fans creator photos work best with clear adult source images and a specific profile, teaser, or promo channel in mind.",
-      "safetyNote": "For consenting adults only. Keep all requests non-explicit, permission-safe, and compliant with the platform where the image will be used."
+      "safetyNote": "For consenting adults only. Keep all requests non-explicit, permission-safe, and compliant with the platform where the image will be used.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:only-fans",
+      "copyRevision": "2026-08-18.only-fans",
+      "seoTitle": "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers | myDreamshoots",
+      "galleryTitle": "12 AI Only Fans Photo Examples for Creator, Subscription, Profile",
+      "galleryIntro": "Review creator, subscription, profile examples before opening the only-fans workflow.",
+      "ctaEyebrow": "Start the only fans set",
+      "ctaTitle": "Create only fans images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into creator, subscription, profile with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Only Fans Photos",
+      "faqEyebrow": "Only Fans FAQ",
+      "faqTitle": "Only Fans photos before you create",
+      "faqItems": [
+        {
+          "id": "only_fans_what_is_it",
+          "question": "What is Only Fans?",
+          "answer": "Create creator subscription profile photos, tasteful promo portraits, bio images, and private content-safe visual sets for consenting adults. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything. For consenting adults only."
+        },
+        {
+          "id": "only_fans_source_photos",
+          "question": "What source photos work best for Only Fans?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job. For consenting adults only."
+        },
+        {
+          "id": "only_fans_use_results",
+          "question": "Can I use Only Fans results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Keep the use private unless your destination rules and consent terms clearly allow sharing. For consenting adults only."
+        },
+        {
+          "id": "only_fans_before_generate",
+          "question": "What should I check before generating Only Fans images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related only fans ideas",
+      "relatedTitle": "More only fans and nearby themes",
+      "relatedSubtitle": "Compare creator, subscription, profile and adjacent themes before opening a only fans set.",
+      "relatedCtaLabel": "View all packages"
     },
     "singles-awareness-day": {
       "headline": "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes",
@@ -1459,7 +1644,44 @@
         "Avoid protected franchise imagery, logos, or character imitation."
       ],
       "coverNote": "Cyberpunk results are strongest with expressive face references and a clear choice between profile icon, poster, or social campaign.",
-      "safetyNote": "Use original futuristic styling and avoid copying protected characters, trademarks, or another person's likeness."
+      "safetyNote": "Use original futuristic styling and avoid copying protected characters, trademarks, or another person's likeness.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:cyberpunk",
+      "copyRevision": "2026-08-18.cyberpunk",
+      "seoTitle": "AI Cyberpunk Photos for Neon City Portraits and Futuristic Profile Art | myDreamshoots",
+      "galleryTitle": "12 AI Cyberpunk Photo Examples for Cyberpunk, Neon, Cinematic",
+      "galleryIntro": "Review cyberpunk, neon, cinematic examples before opening the cyberpunk workflow.",
+      "ctaEyebrow": "Start the cyberpunk set",
+      "ctaTitle": "Create cyberpunk images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into cyberpunk, neon, cinematic with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Cyberpunk Photos",
+      "faqEyebrow": "Cyberpunk FAQ",
+      "faqTitle": "Cyberpunk photos before you create",
+      "faqItems": [
+        {
+          "id": "cyberpunk_what_is_it",
+          "question": "What is Cyberpunk?",
+          "answer": "Turn portraits into neon cyberpunk city images with futuristic wardrobe, cinematic lighting, and poster-ready crops. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "cyberpunk_source_photos",
+          "question": "What source photos work best for Cyberpunk?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "cyberpunk_use_results",
+          "question": "Can I use Cyberpunk results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "cyberpunk_before_generate",
+          "question": "What should I check before generating Cyberpunk images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related cyberpunk ideas",
+      "relatedTitle": "More cyberpunk and nearby themes",
+      "relatedSubtitle": "Compare cyberpunk, neon, cinematic and adjacent themes before opening a cyberpunk set.",
+      "relatedCtaLabel": "View all packages"
     },
     "boudoir": {
       "headline": "Private AI Boudoir Photos for Tasteful Adult Portraits and Confidence Sets",
@@ -1498,7 +1720,44 @@
         "Use private downloads unless every person shown agrees to the final use."
       ],
       "coverNote": "Boudoir-inspired photos work best with adult source images, clear consent, and a tasteful non-explicit styling direction.",
-      "safetyNote": "Adults and consent only. Do not upload minors, non-consenting people, stolen images, or explicit requests."
+      "safetyNote": "Adults and consent only. Do not upload minors, non-consenting people, stolen images, or explicit requests.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:boudoir",
+      "copyRevision": "2026-08-18.boudoir",
+      "seoTitle": "Private AI Boudoir Photos for Tasteful Adult Portraits and Confidence Sets | myDreamshoots",
+      "galleryTitle": "12 AI Boudoir Photo Examples for Boudoir, Private, Editorial",
+      "galleryIntro": "Review boudoir, private, editorial examples before opening the boudoir workflow.",
+      "ctaEyebrow": "Start the boudoir set",
+      "ctaTitle": "Create boudoir images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into boudoir, private, editorial with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Boudoir Photos",
+      "faqEyebrow": "Boudoir FAQ",
+      "faqTitle": "Boudoir photos before you create",
+      "faqItems": [
+        {
+          "id": "boudoir_what_is_it",
+          "question": "What is Boudoir?",
+          "answer": "Create tasteful private boudoir-inspired portraits with soft editorial light, elegant styling, and consent-first review. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything. For consenting adults only."
+        },
+        {
+          "id": "boudoir_source_photos",
+          "question": "What source photos work best for Boudoir?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job. For consenting adults only."
+        },
+        {
+          "id": "boudoir_use_results",
+          "question": "Can I use Boudoir results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Keep the use private unless your destination rules and consent terms clearly allow sharing. For consenting adults only."
+        },
+        {
+          "id": "boudoir_before_generate",
+          "question": "What should I check before generating Boudoir images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related boudoir ideas",
+      "relatedTitle": "More boudoir and nearby themes",
+      "relatedSubtitle": "Compare boudoir, private, editorial and adjacent themes before opening a boudoir set.",
+      "relatedCtaLabel": "View all packages"
     },
     "holiday": {
       "headline": "AI Holiday Photos for Seasonal Cards, Festive Profiles, and Warm Albums",
@@ -1613,7 +1872,44 @@
         "Check flash highlights and skin texture for a natural editorial look."
       ],
       "coverNote": "Cannes photos work best with confident portraits and a clear glamour direction such as premiere, flash, or luxury terrace.",
-      "safetyNote": "Do not use official festival logos, red-carpet marks, celebrity likenesses, or false endorsement cues."
+      "safetyNote": "Do not use official festival logos, red-carpet marks, celebrity likenesses, or false endorsement cues.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:cannes",
+      "copyRevision": "2026-08-18.cannes",
+      "seoTitle": "AI Cannes Photos for Festival Glamour, Premiere Looks, and Flash Portraits | myDreamshoots",
+      "galleryTitle": "12 AI Cannes Photo Examples for Cannes, Festival, Glamour",
+      "galleryIntro": "Review cannes, festival, glamour examples before opening the cannes workflow.",
+      "ctaEyebrow": "Start the cannes set",
+      "ctaTitle": "Create cannes images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into cannes, festival, glamour with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Cannes Photos",
+      "faqEyebrow": "Cannes FAQ",
+      "faqTitle": "Cannes photos before you create",
+      "faqItems": [
+        {
+          "id": "cannes_what_is_it",
+          "question": "What is Cannes?",
+          "answer": "Create Cannes-inspired festival portraits with glamorous arrival energy, flash photography mood, and elegant editorial crops. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "cannes_source_photos",
+          "question": "What source photos work best for Cannes?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "cannes_use_results",
+          "question": "Can I use Cannes results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "cannes_before_generate",
+          "question": "What should I check before generating Cannes images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related cannes ideas",
+      "relatedTitle": "More cannes and nearby themes",
+      "relatedSubtitle": "Compare cannes, festival, glamour and adjacent themes before opening a cannes set.",
+      "relatedCtaLabel": "View all packages"
     },
     "nightlife": {
       "headline": "AI Nightlife Photos for City Lights, Lounge Portraits, and After-Dark Profiles",
@@ -1652,7 +1948,44 @@
         "Choose text-safe crops when the image supports event announcements."
       ],
       "coverNote": "Nightlife photos work best with a clear channel in mind: profile, event post, story, or campaign image.",
-      "safetyNote": "Avoid implying real venue access, endorsements, or unsafe behavior."
+      "safetyNote": "Avoid implying real venue access, endorsements, or unsafe behavior.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:nightlife",
+      "copyRevision": "2026-08-18.nightlife",
+      "seoTitle": "AI Nightlife Photos for City Lights, Lounge Portraits, and After-Dark Profiles | myDreamshoots",
+      "galleryTitle": "12 AI Nightlife Photo Examples for Nightlife, City, Evening",
+      "galleryIntro": "Review nightlife, city, evening examples before opening the nightlife workflow.",
+      "ctaEyebrow": "Start the nightlife set",
+      "ctaTitle": "Create nightlife images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into nightlife, city, evening with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Nightlife Photos",
+      "faqEyebrow": "Nightlife FAQ",
+      "faqTitle": "Nightlife photos before you create",
+      "faqItems": [
+        {
+          "id": "nightlife_what_is_it",
+          "question": "What is Nightlife?",
+          "answer": "Create nightlife portraits with city lights, evening wardrobe, lounge mood, and private after-dark creator albums. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "nightlife_source_photos",
+          "question": "What source photos work best for Nightlife?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "nightlife_use_results",
+          "question": "Can I use Nightlife results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "nightlife_before_generate",
+          "question": "What should I check before generating Nightlife images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related nightlife ideas",
+      "relatedTitle": "More nightlife and nearby themes",
+      "relatedSubtitle": "Compare nightlife, city, evening and adjacent themes before opening a nightlife set.",
+      "relatedCtaLabel": "View all packages"
     },
     "rich-lifestyle": {
       "headline": "AI Rich Lifestyle Photos for Luxury Portraits, Premium Profiles, and Travel Mood",
@@ -1691,7 +2024,44 @@
         "Choose polished crops that support personal brand rather than fake status claims."
       ],
       "coverNote": "Rich lifestyle images work best with clean portrait sources and a specific luxury setting or channel.",
-      "safetyNote": "Do not use protected brand assets, vehicle badges, property logos, or false endorsement signals without permission."
+      "safetyNote": "Do not use protected brand assets, vehicle badges, property logos, or false endorsement signals without permission.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:rich-lifestyle",
+      "copyRevision": "2026-08-18.rich-lifestyle",
+      "seoTitle": "AI Rich Lifestyle Photos for Luxury Portraits, Premium Profiles, and Travel Mood | myDreamshoots",
+      "galleryTitle": "12 AI Rich Lifestyle Photo Examples for Luxury, Lifestyle, Premium",
+      "galleryIntro": "Review luxury, lifestyle, premium examples before opening the rich-lifestyle workflow.",
+      "ctaEyebrow": "Start the rich lifestyle set",
+      "ctaTitle": "Create rich lifestyle images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into luxury, lifestyle, premium with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Rich Lifestyle Photos",
+      "faqEyebrow": "Rich Lifestyle FAQ",
+      "faqTitle": "Rich Lifestyle photos before you create",
+      "faqItems": [
+        {
+          "id": "rich_lifestyle_what_is_it",
+          "question": "What is Rich Lifestyle?",
+          "answer": "Build polished rich lifestyle portraits with luxury interiors, elevated wardrobe, travel mood, and premium creator crops. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "rich_lifestyle_source_photos",
+          "question": "What source photos work best for Rich Lifestyle?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "rich_lifestyle_use_results",
+          "question": "Can I use Rich Lifestyle results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "rich_lifestyle_before_generate",
+          "question": "What should I check before generating Rich Lifestyle images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related rich lifestyle ideas",
+      "relatedTitle": "More rich lifestyle and nearby themes",
+      "relatedSubtitle": "Compare luxury, lifestyle, premium and adjacent themes before opening a rich lifestyle set.",
+      "relatedCtaLabel": "View all packages"
     },
     "bikini": {
       "headline": "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets",
@@ -1730,7 +2100,44 @@
         "Use private review before sharing any image publicly."
       ],
       "coverNote": "Bikini photos work best with adult source images, clear consent, and a specific resort or beachwear direction.",
-      "safetyNote": "Adults and consent only. Keep output non-explicit and permission-safe."
+      "safetyNote": "Adults and consent only. Keep output non-explicit and permission-safe.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:bikini",
+      "copyRevision": "2026-08-18.bikini",
+      "seoTitle": "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets | myDreamshoots",
+      "galleryTitle": "12 AI Bikini Photo Examples for Beachwear, Resort, Portrait",
+      "galleryIntro": "Review beachwear, resort, portrait examples before opening the bikini workflow.",
+      "ctaEyebrow": "Start the bikini set",
+      "ctaTitle": "Create bikini images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into beachwear, resort, portrait with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Bikini Photos",
+      "faqEyebrow": "Bikini FAQ",
+      "faqTitle": "Bikini photos before you create",
+      "faqItems": [
+        {
+          "id": "bikini_what_is_it",
+          "question": "What is Bikini?",
+          "answer": "Create beachwear-inspired bikini portraits with resort light, confident styling, private review, and consent-first image handling. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything. For consenting adults only."
+        },
+        {
+          "id": "bikini_source_photos",
+          "question": "What source photos work best for Bikini?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job. For consenting adults only."
+        },
+        {
+          "id": "bikini_use_results",
+          "question": "Can I use Bikini results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Keep the use private unless your destination rules and consent terms clearly allow sharing. For consenting adults only."
+        },
+        {
+          "id": "bikini_before_generate",
+          "question": "What should I check before generating Bikini images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related bikini ideas",
+      "relatedTitle": "More bikini and nearby themes",
+      "relatedSubtitle": "Compare beachwear, resort, portrait and adjacent themes before opening a bikini set.",
+      "relatedCtaLabel": "View all packages"
     },
     "swimsuit": {
       "headline": "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews",
@@ -1769,7 +2176,44 @@
         "Review every output before public sharing."
       ],
       "coverNote": "Swimsuit images work best with adult source photos, clear consent, and a specific preview or profile use case.",
-      "safetyNote": "Adults and consent only. Do not upload minors, non-consenting people, or explicit requests."
+      "safetyNote": "Adults and consent only. Do not upload minors, non-consenting people, or explicit requests.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:swimsuit",
+      "copyRevision": "2026-08-18.swimsuit",
+      "seoTitle": "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews | myDreamshoots",
+      "galleryTitle": "12 AI Swimsuit Photo Examples for Swimsuit, Resort, Style",
+      "galleryIntro": "Review swimsuit, resort, style examples before opening the swimsuit workflow.",
+      "ctaEyebrow": "Start the swimsuit set",
+      "ctaTitle": "Create swimsuit images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into swimsuit, resort, style with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Swimsuit Photos",
+      "faqEyebrow": "Swimsuit FAQ",
+      "faqTitle": "Swimsuit photos before you create",
+      "faqItems": [
+        {
+          "id": "swimsuit_what_is_it",
+          "question": "What is Swimsuit?",
+          "answer": "Preview swimsuit and resort portrait ideas with beach lighting, wardrobe planning, creator crops, and private gallery review. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything. For consenting adults only."
+        },
+        {
+          "id": "swimsuit_source_photos",
+          "question": "What source photos work best for Swimsuit?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job. For consenting adults only."
+        },
+        {
+          "id": "swimsuit_use_results",
+          "question": "Can I use Swimsuit results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Keep the use private unless your destination rules and consent terms clearly allow sharing. For consenting adults only."
+        },
+        {
+          "id": "swimsuit_before_generate",
+          "question": "What should I check before generating Swimsuit images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related swimsuit ideas",
+      "relatedTitle": "More swimsuit and nearby themes",
+      "relatedSubtitle": "Compare swimsuit, resort, style and adjacent themes before opening a swimsuit set.",
+      "relatedCtaLabel": "View all packages"
     },
     "travel": {
       "headline": "AI Travel Photos for Destination Portraits, Route Stories, and Creator Albums",
@@ -1808,7 +2252,44 @@
         "Use wider frames for story scenes and tighter crops for profile refreshes."
       ],
       "coverNote": "Travel photos work best with clear portraits and a specific destination mood such as coast, city, resort, or scenic route.",
-      "safetyNote": "Do not present generated destination imagery as real travel documentation when accuracy matters."
+      "safetyNote": "Do not present generated destination imagery as real travel documentation when accuracy matters.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:travel",
+      "copyRevision": "2026-08-18.travel",
+      "seoTitle": "AI Travel Photos for Destination Portraits, Route Stories, and Creator Albums | myDreamshoots",
+      "galleryTitle": "12 AI Travel Photo Examples for Travel, Destination, Lifestyle",
+      "galleryIntro": "Review travel, destination, lifestyle examples before opening the travel workflow.",
+      "ctaEyebrow": "Start the travel set",
+      "ctaTitle": "Create travel images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into travel, destination, lifestyle with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Travel Photos",
+      "faqEyebrow": "Travel FAQ",
+      "faqTitle": "Travel photos before you create",
+      "faqItems": [
+        {
+          "id": "travel_what_is_it",
+          "question": "What is Travel?",
+          "answer": "Create travel portraits with scenic streets, coastal escapes, outdoor light, destination mood, and private creator albums. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "travel_source_photos",
+          "question": "What source photos work best for Travel?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "travel_use_results",
+          "question": "Can I use Travel results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "travel_before_generate",
+          "question": "What should I check before generating Travel images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related travel ideas",
+      "relatedTitle": "More travel and nearby themes",
+      "relatedSubtitle": "Compare travel, destination, lifestyle and adjacent themes before opening a travel set.",
+      "relatedCtaLabel": "View all packages"
     },
     "soccer": {
       "headline": "AI Soccer Fan Photos for Match-Day Posters, Stadium Portraits, and Profile Avatars",
@@ -1847,7 +2328,44 @@
         "Choose square crops for avatars and wide layouts for banners."
       ],
       "coverNote": "Soccer fan photos work best with clear portraits and a safe match-day direction that does not depend on official branding.",
-      "safetyNote": "For personal fan use only unless you have permission for official marks, logos, player likenesses, celebrity likenesses, or brand assets."
+      "safetyNote": "For personal fan use only unless you have permission for official marks, logos, player likenesses, celebrity likenesses, or brand assets.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:soccer",
+      "copyRevision": "2026-08-18.soccer",
+      "seoTitle": "AI Soccer Fan Photos for Match-Day Posters, Stadium Portraits, and Profile Avatars | myDreamshoots",
+      "galleryTitle": "12 AI Soccer Photo Examples for Soccer, Fan Photos, Match Day",
+      "galleryIntro": "Review soccer, fan photos, match day examples before opening the soccer workflow.",
+      "ctaEyebrow": "Start the soccer set",
+      "ctaTitle": "Create soccer images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into soccer, fan photos, match day with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Soccer Photos",
+      "faqEyebrow": "Soccer FAQ",
+      "faqTitle": "Soccer photos before you create",
+      "faqItems": [
+        {
+          "id": "soccer_what_is_it",
+          "question": "What is Soccer?",
+          "answer": "Create soccer fan portraits, stadium-style posters, match-day profile images, and private supporter albums without official marks. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "soccer_source_photos",
+          "question": "What source photos work best for Soccer?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "soccer_use_results",
+          "question": "Can I use Soccer results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "soccer_before_generate",
+          "question": "What should I check before generating Soccer images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related soccer ideas",
+      "relatedTitle": "More soccer and nearby themes",
+      "relatedSubtitle": "Compare soccer, fan photos, match day and adjacent themes before opening a soccer set.",
+      "relatedCtaLabel": "View all packages"
     },
     "urban": {
       "headline": "AI Urban Photos for Street Portraits, City Profiles, and Creator Scenes",
@@ -1886,7 +2404,44 @@
         "Avoid graffiti, logos, or signage that could create unwanted claims."
       ],
       "coverNote": "Urban photos work best with expressive portraits and a clear city setting or channel goal.",
-      "safetyNote": "Do not imply endorsement by real venues, brands, or city authorities unless you have permission."
+      "safetyNote": "Do not imply endorsement by real venues, brands, or city authorities unless you have permission.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:urban",
+      "copyRevision": "2026-08-18.urban",
+      "seoTitle": "AI Urban Photos for Street Portraits, City Profiles, and Creator Scenes | myDreamshoots",
+      "galleryTitle": "12 AI Urban Photo Examples for Urban, City, Creator",
+      "galleryIntro": "Review urban, city, creator examples before opening the urban workflow.",
+      "ctaEyebrow": "Start the urban set",
+      "ctaTitle": "Create urban images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into urban, city, creator with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Urban Photos",
+      "faqEyebrow": "Urban FAQ",
+      "faqTitle": "Urban photos before you create",
+      "faqItems": [
+        {
+          "id": "urban_what_is_it",
+          "question": "What is Urban?",
+          "answer": "Build urban portraits with street scenes, city textures, modern wardrobe, creator energy, and private gallery delivery. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "urban_source_photos",
+          "question": "What source photos work best for Urban?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "urban_use_results",
+          "question": "Can I use Urban results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "urban_before_generate",
+          "question": "What should I check before generating Urban images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related urban ideas",
+      "relatedTitle": "More urban and nearby themes",
+      "relatedSubtitle": "Compare urban, city, creator and adjacent themes before opening a urban set.",
+      "relatedCtaLabel": "View all packages"
     },
     "street-style": {
       "headline": "AI Street Style Photos for Fashion Profiles, Outfit Concepts, and Editorial City Looks",
@@ -1925,7 +2480,44 @@
         "Choose stronger poses for editorial images and simpler crops for profiles."
       ],
       "coverNote": "Street style images work best with clear face references plus outfit direction or wardrobe examples.",
-      "safetyNote": "Avoid protected brand marks, counterfeit product claims, or implying affiliation with a fashion label."
+      "safetyNote": "Avoid protected brand marks, counterfeit product claims, or implying affiliation with a fashion label.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:street-style",
+      "copyRevision": "2026-08-18.street-style",
+      "seoTitle": "AI Street Style Photos for Fashion Profiles, Outfit Concepts, and Editorial City Looks | myDreamshoots",
+      "galleryTitle": "12 AI Street Style Photo Examples for Street Style, Fashion, Editorial",
+      "galleryIntro": "Review street style, fashion, editorial examples before opening the street-style workflow.",
+      "ctaEyebrow": "Start the street style set",
+      "ctaTitle": "Create street style images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into street style, fashion, editorial with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Street Style Photos",
+      "faqEyebrow": "Street Style FAQ",
+      "faqTitle": "Street Style photos before you create",
+      "faqItems": [
+        {
+          "id": "street_style_what_is_it",
+          "question": "What is Street Style?",
+          "answer": "Generate street style portraits with fashion-forward wardrobe, editorial poses, city backdrops, and creator-ready crops. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "street_style_source_photos",
+          "question": "What source photos work best for Street Style?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "street_style_use_results",
+          "question": "Can I use Street Style results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "street_style_before_generate",
+          "question": "What should I check before generating Street Style images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related street style ideas",
+      "relatedTitle": "More street style and nearby themes",
+      "relatedSubtitle": "Compare street style, fashion, editorial and adjacent themes before opening a street style set.",
+      "relatedCtaLabel": "View all packages"
     },
     "mafia": {
       "headline": "AI Mafia Photos for Noir Character Portraits and Cinematic Profile Art",
@@ -1964,7 +2556,44 @@
         "Use cleaner crops for profiles and wider frames for poster concepts."
       ],
       "coverNote": "Mafia-style portraits work best with expressive source photos and a clear noir or character concept.",
-      "safetyNote": "Do not create images that threaten, harass, impersonate, or imply real criminal conduct."
+      "safetyNote": "Do not create images that threaten, harass, impersonate, or imply real criminal conduct.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:mafia",
+      "copyRevision": "2026-08-18.mafia",
+      "seoTitle": "AI Mafia Photos for Noir Character Portraits and Cinematic Profile Art | myDreamshoots",
+      "galleryTitle": "12 AI Mafia Photo Examples for Noir, Character, Cinematic",
+      "galleryIntro": "Review noir, character, cinematic examples before opening the mafia workflow.",
+      "ctaEyebrow": "Start the mafia set",
+      "ctaTitle": "Create mafia images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into noir, character, cinematic with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Mafia Photos",
+      "faqEyebrow": "Mafia FAQ",
+      "faqTitle": "Mafia photos before you create",
+      "faqItems": [
+        {
+          "id": "mafia_what_is_it",
+          "question": "What is Mafia?",
+          "answer": "Create cinematic mafia-inspired noir portraits with tailored wardrobe, moody light, character energy, and private albums. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "mafia_source_photos",
+          "question": "What source photos work best for Mafia?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "mafia_use_results",
+          "question": "Can I use Mafia results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "mafia_before_generate",
+          "question": "What should I check before generating Mafia images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related mafia ideas",
+      "relatedTitle": "More mafia and nearby themes",
+      "relatedSubtitle": "Compare noir, character, cinematic and adjacent themes before opening a mafia set.",
+      "relatedCtaLabel": "View all packages"
     },
     "hairstyle-generator": {
       "headline": "AI Hairstyle Generator for Hair Color, Cut Ideas, and Salon Preview Portraits",
@@ -2003,7 +2632,44 @@
         "Check that the face, hairline, and ear area still look natural."
       ],
       "coverNote": "Hairstyle previews work best with sharp photos where the current hair shape is visible.",
-      "safetyNote": "Use hairstyle previews for inspiration; real salon results depend on hair condition, stylist, and products."
+      "safetyNote": "Use hairstyle previews for inspiration; real salon results depend on hair condition, stylist, and products.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:hairstyle-generator",
+      "copyRevision": "2026-08-18.hairstyle-generator",
+      "seoTitle": "AI Hairstyle Generator for Hair Color, Cut Ideas, and Salon Preview Portraits | myDreamshoots",
+      "galleryTitle": "12 AI Hairstyle Generator Photo Examples for Hairstyle, Hair Color, Preview",
+      "galleryIntro": "Review hairstyle, hair color, preview examples before opening the hairstyle-generator workflow.",
+      "ctaEyebrow": "Start the hairstyle generator set",
+      "ctaTitle": "Create hairstyle generator images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into hairstyle, hair color, preview with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Hairstyle Generator Photos",
+      "faqEyebrow": "Hairstyle Generator FAQ",
+      "faqTitle": "Hairstyle Generator photos before you create",
+      "faqItems": [
+        {
+          "id": "hairstyle_generator_what_is_it",
+          "question": "What is Hairstyle Generator?",
+          "answer": "Preview hairstyle, hair color, texture, and salon inspiration portraits before choosing a real-world look or creator refresh. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "hairstyle_generator_source_photos",
+          "question": "What source photos work best for Hairstyle Generator?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "hairstyle_generator_use_results",
+          "question": "Can I use Hairstyle Generator results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "hairstyle_generator_before_generate",
+          "question": "What should I check before generating Hairstyle Generator images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related hairstyle generator ideas",
+      "relatedTitle": "More hairstyle generator and nearby themes",
+      "relatedSubtitle": "Compare hairstyle, hair color, preview and adjacent themes before opening a hairstyle generator set.",
+      "relatedCtaLabel": "View all packages"
     },
     "virtual-try-on": {
       "headline": "AI Virtual Try-On Photos for Outfit Ideas, Wardrobe Moodboards, and Fashion Planning",
@@ -2042,7 +2708,44 @@
         "Treat try-on outputs as planning visuals, not exact garment fit guarantees."
       ],
       "coverNote": "Virtual try-on works best with clear body framing, simple lighting, and a specific outfit direction.",
-      "safetyNote": "Do not use try-on images to misrepresent a product, brand, or person without permission."
+      "safetyNote": "Do not use try-on images to misrepresent a product, brand, or person without permission.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:virtual-try-on",
+      "copyRevision": "2026-08-18.virtual-try-on",
+      "seoTitle": "AI Virtual Try-On Photos for Outfit Ideas, Wardrobe Moodboards, and Fashion Planning | myDreamshoots",
+      "galleryTitle": "12 AI Virtual Try-On Photo Examples for Virtual Try-On, Outfit, Fashion",
+      "galleryIntro": "Review virtual try-on, outfit, fashion examples before opening the virtual-try-on workflow.",
+      "ctaEyebrow": "Start the virtual try-on set",
+      "ctaTitle": "Create virtual try-on images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into virtual try-on, outfit, fashion with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Virtual Try-On Photos",
+      "faqEyebrow": "Virtual Try-On FAQ",
+      "faqTitle": "Virtual Try-On photos before you create",
+      "faqItems": [
+        {
+          "id": "virtual_try_on_what_is_it",
+          "question": "What is Virtual Try-On?",
+          "answer": "Preview outfit directions, wardrobe moodboards, fashion looks, and creator styling ideas from private source photos. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "virtual_try_on_source_photos",
+          "question": "What source photos work best for Virtual Try-On?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "virtual_try_on_use_results",
+          "question": "Can I use Virtual Try-On results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "virtual_try_on_before_generate",
+          "question": "What should I check before generating Virtual Try-On images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related virtual try-on ideas",
+      "relatedTitle": "More virtual try-on and nearby themes",
+      "relatedSubtitle": "Compare virtual try-on, outfit, fashion and adjacent themes before opening a virtual try-on set.",
+      "relatedCtaLabel": "View all packages"
     },
     "motion-generator": {
       "headline": "AI Motion Generator Photos for Image-to-Video, Camera Moves, and Storyboard Starters",
@@ -2081,7 +2784,44 @@
         "Match the crop to the final channel: vertical reels, square posts, or widescreen video."
       ],
       "coverNote": "Motion generator images work best when the subject is clear, the frame has movement space, and the final video format is known.",
-      "safetyNote": "Only animate images you own or have permission to use, and avoid implying real actions, endorsements, or events that did not happen."
+      "safetyNote": "Only animate images you own or have permission to use, and avoid implying real actions, endorsements, or events that did not happen.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:motion-generator",
+      "copyRevision": "2026-08-18.motion-generator",
+      "seoTitle": "AI Motion Generator Photos for Image-to-Video, Camera Moves, and Storyboard Starters | myDreamshoots",
+      "galleryTitle": "12 AI Motion Generator Photo Examples for Motion, GIF, Video Starter",
+      "galleryIntro": "Review motion, gif, video starter examples before opening the motion-generator workflow.",
+      "ctaEyebrow": "Start the motion generator set",
+      "ctaTitle": "Create motion generator images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into motion, gif, video starter with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Motion Generator Photos",
+      "faqEyebrow": "Motion Generator FAQ",
+      "faqTitle": "Motion Generator photos before you create",
+      "faqItems": [
+        {
+          "id": "motion_generator_what_is_it",
+          "question": "What is Motion Generator?",
+          "answer": "Create motion-ready photo concepts, animated portrait frames, GIF-style direction, and short video starter images. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "motion_generator_source_photos",
+          "question": "What source photos work best for Motion Generator?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "motion_generator_use_results",
+          "question": "Can I use Motion Generator results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "motion_generator_before_generate",
+          "question": "What should I check before generating Motion Generator images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related motion generator ideas",
+      "relatedTitle": "More motion generator and nearby themes",
+      "relatedSubtitle": "Compare motion, gif, video starter and adjacent themes before opening a motion generator set.",
+      "relatedCtaLabel": "View all packages"
     },
     "background-changer": {
       "headline": "AI Background Changer Photos for Portrait Scenes, Product Context, and Profile Refreshes",
@@ -2120,7 +2860,44 @@
         "Avoid backgrounds that imply locations or endorsements you cannot claim."
       ],
       "coverNote": "Background changes work best with a clear subject edge and a specific final context.",
-      "safetyNote": "Do not use background changes to mislead viewers about real location, attendance, product use, or endorsement."
+      "safetyNote": "Do not use background changes to mislead viewers about real location, attendance, product use, or endorsement.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:background-changer",
+      "copyRevision": "2026-08-18.background-changer",
+      "seoTitle": "AI Background Changer Photos for Portrait Scenes, Product Context, and Profile Refreshes | myDreamshoots",
+      "galleryTitle": "12 AI Background Changer Photo Examples for Background, Edit, Scene",
+      "galleryIntro": "Review background, edit, scene examples before opening the background-changer workflow.",
+      "ctaEyebrow": "Start the background changer set",
+      "ctaTitle": "Create background changer images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into background, edit, scene with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Background Changer Photos",
+      "faqEyebrow": "Background Changer FAQ",
+      "faqTitle": "Background Changer photos before you create",
+      "faqItems": [
+        {
+          "id": "background_changer_what_is_it",
+          "question": "What is Background Changer?",
+          "answer": "Create collection-style background replacement concepts for portraits, products, profile photos, and private gallery images. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "background_changer_source_photos",
+          "question": "What source photos work best for Background Changer?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "background_changer_use_results",
+          "question": "Can I use Background Changer results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "background_changer_before_generate",
+          "question": "What should I check before generating Background Changer images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related background changer ideas",
+      "relatedTitle": "More background changer and nearby themes",
+      "relatedSubtitle": "Compare background, edit, scene and adjacent themes before opening a background changer set.",
+      "relatedCtaLabel": "View all packages"
     },
     "background-remover": {
       "headline": "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets",
@@ -2159,7 +2936,44 @@
         "Use removal for cleanup, not to hide important context in sensitive images."
       ],
       "coverNote": "Background removal works best when the subject is sharp and not blended into the original scene.",
-      "safetyNote": "Do not remove backgrounds to misrepresent evidence, products, identity, or real-world context."
+      "safetyNote": "Do not remove backgrounds to misrepresent evidence, products, identity, or real-world context.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:background-remover",
+      "copyRevision": "2026-08-18.background-remover",
+      "seoTitle": "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets | myDreamshoots",
+      "galleryTitle": "12 AI Background Remover Photo Examples for Background, Cutout, Clean",
+      "galleryIntro": "Review background, cutout, clean examples before opening the background-remover workflow.",
+      "ctaEyebrow": "Start the background remover set",
+      "ctaTitle": "Create background remover images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into background, cutout, clean with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Background Remover Photos",
+      "faqEyebrow": "Background Remover FAQ",
+      "faqTitle": "Background Remover photos before you create",
+      "faqItems": [
+        {
+          "id": "background_remover_what_is_it",
+          "question": "What is Background Remover?",
+          "answer": "Prepare clean background removal and cutout-style images for profiles, listings, creator graphics, and private downloads. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "background_remover_source_photos",
+          "question": "What source photos work best for Background Remover?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "background_remover_use_results",
+          "question": "Can I use Background Remover results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "background_remover_before_generate",
+          "question": "What should I check before generating Background Remover images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related background remover ideas",
+      "relatedTitle": "More background remover and nearby themes",
+      "relatedSubtitle": "Compare background, cutout, clean and adjacent themes before opening a background remover set.",
+      "relatedCtaLabel": "View all packages"
     },
     "magic-eraser": {
       "headline": "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images",
@@ -2198,7 +3012,44 @@
         "Avoid removing context that changes the truth of a sensitive image."
       ],
       "coverNote": "Magic Eraser works best for small or medium distractions with enough surrounding texture to repair the area.",
-      "safetyNote": "Do not use cleanup edits to falsify documents, evidence, product condition, or another person's actions."
+      "safetyNote": "Do not use cleanup edits to falsify documents, evidence, product condition, or another person's actions.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:magic-eraser",
+      "copyRevision": "2026-08-18.magic-eraser",
+      "seoTitle": "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images | myDreamshoots",
+      "galleryTitle": "12 AI Magic Eraser Photo Examples for Erase, Cleanup, Edit",
+      "galleryIntro": "Review erase, cleanup, edit examples before opening the magic-eraser workflow.",
+      "ctaEyebrow": "Start the magic eraser set",
+      "ctaTitle": "Create magic eraser images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into erase, cleanup, edit with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Magic Eraser Photos",
+      "faqEyebrow": "Magic Eraser FAQ",
+      "faqTitle": "Magic Eraser photos before you create",
+      "faqItems": [
+        {
+          "id": "magic_eraser_what_is_it",
+          "question": "What is Magic Eraser?",
+          "answer": "Remove distractions, small objects, clutter, and unwanted visual details while keeping the main photo natural. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "magic_eraser_source_photos",
+          "question": "What source photos work best for Magic Eraser?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "magic_eraser_use_results",
+          "question": "Can I use Magic Eraser results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "magic_eraser_before_generate",
+          "question": "What should I check before generating Magic Eraser images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related magic eraser ideas",
+      "relatedTitle": "More magic eraser and nearby themes",
+      "relatedSubtitle": "Compare erase, cleanup, edit and adjacent themes before opening a magic eraser set.",
+      "relatedCtaLabel": "View all packages"
     },
     "photo-enhancer": {
       "headline": "AI Photo Enhancer for Sharper Portraits, Clearer Details, and Better Downloads",
@@ -2237,7 +3088,44 @@
         "Compare the enhanced image against the original before replacing it."
       ],
       "coverNote": "Photo enhancement works best when the original contains enough real detail to recover.",
-      "safetyNote": "Do not enhance images to mislead viewers about product condition, identity, or documentary accuracy."
+      "safetyNote": "Do not enhance images to mislead viewers about product condition, identity, or documentary accuracy.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:photo-enhancer",
+      "copyRevision": "2026-08-18.photo-enhancer",
+      "seoTitle": "AI Photo Enhancer for Sharper Portraits, Clearer Details, and Better Downloads | myDreamshoots",
+      "galleryTitle": "12 AI Photo Enhancer Photo Examples for Enhance, Clarity, Sharpness",
+      "galleryIntro": "Review enhance, clarity, sharpness examples before opening the photo-enhancer workflow.",
+      "ctaEyebrow": "Start the photo enhancer set",
+      "ctaTitle": "Create photo enhancer images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into enhance, clarity, sharpness with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Photo Enhancer Photos",
+      "faqEyebrow": "Photo Enhancer FAQ",
+      "faqTitle": "Photo Enhancer photos before you create",
+      "faqItems": [
+        {
+          "id": "photo_enhancer_what_is_it",
+          "question": "What is Photo Enhancer?",
+          "answer": "Enhance soft, dark, compressed, or low-detail photos for clearer downloads, profile images, and private gallery review. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "photo_enhancer_source_photos",
+          "question": "What source photos work best for Photo Enhancer?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "photo_enhancer_use_results",
+          "question": "Can I use Photo Enhancer results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "photo_enhancer_before_generate",
+          "question": "What should I check before generating Photo Enhancer images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related photo enhancer ideas",
+      "relatedTitle": "More photo enhancer and nearby themes",
+      "relatedSubtitle": "Compare enhance, clarity, sharpness and adjacent themes before opening a photo enhancer set.",
+      "relatedCtaLabel": "View all packages"
     },
     "portrait-retouch": {
       "headline": "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos",
@@ -2276,7 +3164,44 @@
         "Compare before and after images before using the retouched version publicly."
       ],
       "coverNote": "Portrait retouch works best with clear, high-resolution source portraits and realistic expectations.",
-      "safetyNote": "Do not retouch someone else's portrait in a way that misrepresents them without consent."
+      "safetyNote": "Do not retouch someone else's portrait in a way that misrepresents them without consent.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:portrait-retouch",
+      "copyRevision": "2026-08-18.portrait-retouch",
+      "seoTitle": "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos | myDreamshoots",
+      "galleryTitle": "12 AI Portrait Retouch Photo Examples for Retouch, Portrait, Natural",
+      "galleryIntro": "Review retouch, portrait, natural examples before opening the portrait-retouch workflow.",
+      "ctaEyebrow": "Start the portrait retouch set",
+      "ctaTitle": "Create portrait retouch images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into retouch, portrait, natural with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Portrait Retouch Photos",
+      "faqEyebrow": "Portrait Retouch FAQ",
+      "faqTitle": "Portrait Retouch photos before you create",
+      "faqItems": [
+        {
+          "id": "portrait_retouch_what_is_it",
+          "question": "What is Portrait Retouch?",
+          "answer": "Retouch portraits with natural skin texture, balanced light, cleaner crops, and private review-friendly realism. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "portrait_retouch_source_photos",
+          "question": "What source photos work best for Portrait Retouch?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "portrait_retouch_use_results",
+          "question": "Can I use Portrait Retouch results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "portrait_retouch_before_generate",
+          "question": "What should I check before generating Portrait Retouch images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related portrait retouch ideas",
+      "relatedTitle": "More portrait retouch and nearby themes",
+      "relatedSubtitle": "Compare retouch, portrait, natural and adjacent themes before opening a portrait retouch set.",
+      "relatedCtaLabel": "View all packages"
     },
     "unblur-image": {
       "headline": "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail",
@@ -2315,7 +3240,44 @@
         "Avoid treating restored details as guaranteed facts when the source was unclear."
       ],
       "coverNote": "Unblur works best when the original photo still contains visible structure and recognizable facial detail.",
-      "safetyNote": "Do not use deblurred images as forensic proof when the original photo was ambiguous."
+      "safetyNote": "Do not use deblurred images as forensic proof when the original photo was ambiguous.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:unblur-image",
+      "copyRevision": "2026-08-18.unblur-image",
+      "seoTitle": "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail | myDreamshoots",
+      "galleryTitle": "12 AI Unblur Image Photo Examples for Unblur, Sharpness, Restore",
+      "galleryIntro": "Review unblur, sharpness, restore examples before opening the unblur-image workflow.",
+      "ctaEyebrow": "Start the unblur image set",
+      "ctaTitle": "Create unblur image images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into unblur, sharpness, restore with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Unblur Image Photos",
+      "faqEyebrow": "Unblur Image FAQ",
+      "faqTitle": "Unblur Image photos before you create",
+      "faqItems": [
+        {
+          "id": "unblur_image_what_is_it",
+          "question": "What is Unblur Image?",
+          "answer": "Improve blurred or soft images with clearer facial detail, sharper edges, and natural-looking private downloads. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "unblur_image_source_photos",
+          "question": "What source photos work best for Unblur Image?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "unblur_image_use_results",
+          "question": "Can I use Unblur Image results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "unblur_image_before_generate",
+          "question": "What should I check before generating Unblur Image images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related unblur image ideas",
+      "relatedTitle": "More unblur image and nearby themes",
+      "relatedSubtitle": "Compare unblur, sharpness, restore and adjacent themes before opening a unblur image set.",
+      "relatedCtaLabel": "View all packages"
     },
     "color-correction": {
       "headline": "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood",
@@ -2354,7 +3316,44 @@
         "Check product colors carefully when color accuracy affects sales."
       ],
       "coverNote": "Color correction works best when the original exposure still retains detail in faces, shadows, and highlights.",
-      "safetyNote": "Do not color-correct product images in a way that misrepresents actual product color or condition."
+      "safetyNote": "Do not color-correct product images in a way that misrepresents actual product color or condition.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:color-correction",
+      "copyRevision": "2026-08-18.color-correction",
+      "seoTitle": "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood | myDreamshoots",
+      "galleryTitle": "12 AI Color Correction Photo Examples for Color, Exposure, Tone",
+      "galleryIntro": "Review color, exposure, tone examples before opening the color-correction workflow.",
+      "ctaEyebrow": "Start the color correction set",
+      "ctaTitle": "Create color correction images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into color, exposure, tone with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Color Correction Photos",
+      "faqEyebrow": "Color Correction FAQ",
+      "faqTitle": "Color Correction photos before you create",
+      "faqItems": [
+        {
+          "id": "color_correction_what_is_it",
+          "question": "What is Color Correction?",
+          "answer": "Correct color casts, exposure imbalance, flat lighting, and dull tones while keeping portraits and scenes realistic. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "color_correction_source_photos",
+          "question": "What source photos work best for Color Correction?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "color_correction_use_results",
+          "question": "Can I use Color Correction results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "color_correction_before_generate",
+          "question": "What should I check before generating Color Correction images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related color correction ideas",
+      "relatedTitle": "More color correction and nearby themes",
+      "relatedSubtitle": "Compare color, exposure, tone and adjacent themes before opening a color correction set.",
+      "relatedCtaLabel": "View all packages"
     },
     "old-photo-restoration": {
       "headline": "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits",
@@ -2393,7 +3392,44 @@
         "Keep an untouched original copy for reference."
       ],
       "coverNote": "Old photo restoration works best from a high-resolution scan or evenly lit photograph of the original print.",
-      "safetyNote": "Treat restored family and memorial images respectfully, and avoid presenting reconstructed details as guaranteed historical fact."
+      "safetyNote": "Treat restored family and memorial images respectfully, and avoid presenting reconstructed details as guaranteed historical fact.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:old-photo-restoration",
+      "copyRevision": "2026-08-18.old-photo-restoration",
+      "seoTitle": "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits | myDreamshoots",
+      "galleryTitle": "12 AI OLD Photo Restoration Photo Examples for Restoration, Old Photos, Keepsake",
+      "galleryIntro": "Review restoration, old photos, keepsake examples before opening the old-photo-restoration workflow.",
+      "ctaEyebrow": "Start the old photo restoration set",
+      "ctaTitle": "Create old photo restoration images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into restoration, old photos, keepsake with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Old Photo Restoration Photos",
+      "faqEyebrow": "Old Photo Restoration FAQ",
+      "faqTitle": "Old Photo Restoration photos before you create",
+      "faqItems": [
+        {
+          "id": "old_photo_restoration_what_is_it",
+          "question": "What is Old Photo Restoration?",
+          "answer": "Restore old or damaged photos with clearer detail, reduced scratches, improved tone, and respectful family keepsake handling. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "old_photo_restoration_source_photos",
+          "question": "What source photos work best for Old Photo Restoration?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "old_photo_restoration_use_results",
+          "question": "Can I use Old Photo Restoration results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "old_photo_restoration_before_generate",
+          "question": "What should I check before generating Old Photo Restoration images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related old photo restoration ideas",
+      "relatedTitle": "More old photo restoration and nearby themes",
+      "relatedSubtitle": "Compare restoration, old photos, keepsake and adjacent themes before opening a old photo restoration set.",
+      "relatedCtaLabel": "View all packages"
     },
     "edit-by-prompt": {
       "headline": "AI Edit By Prompt for Safe Scene Changes, Style Adjustments, and Custom Photo Edits",
@@ -2432,7 +3468,44 @@
         "Check that the edit does not alter identity, product truth, or important context."
       ],
       "coverNote": "Prompt editing works best when the instruction is specific and the source image already has a clear subject.",
-      "safetyNote": "Do not use prompt edits to impersonate, deceive, falsify evidence, create explicit content, or change someone's image without permission."
+      "safetyNote": "Do not use prompt edits to impersonate, deceive, falsify evidence, create explicit content, or change someone's image without permission.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:edit-by-prompt",
+      "copyRevision": "2026-08-18.edit-by-prompt",
+      "seoTitle": "AI Edit By Prompt for Safe Scene Changes, Style Adjustments, and Custom Photo Edits | myDreamshoots",
+      "galleryTitle": "12 AI Edit By Prompt Photo Examples for Prompt, Edit, Creative",
+      "galleryIntro": "Review prompt, edit, creative examples before opening the edit-by-prompt workflow.",
+      "ctaEyebrow": "Start the edit by prompt set",
+      "ctaTitle": "Create edit by prompt images in your private studio.",
+      "ctaSubtitle": "Turn approved source photos into prompt, edit, creative with visible credit cost and private gallery review.",
+      "ctaLabel": "Create Edit By Prompt Photos",
+      "faqEyebrow": "Edit By Prompt FAQ",
+      "faqTitle": "Edit By Prompt photos before you create",
+      "faqItems": [
+        {
+          "id": "edit_by_prompt_what_is_it",
+          "question": "What is Edit By Prompt?",
+          "answer": "Use a written prompt to request safe photo edits, scene changes, style adjustments, and private image variations. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+        },
+        {
+          "id": "edit_by_prompt_source_photos",
+          "question": "What source photos work best for Edit By Prompt?",
+          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+        },
+        {
+          "id": "edit_by_prompt_use_results",
+          "question": "Can I use Edit By Prompt results for social media or client work?",
+          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+        },
+        {
+          "id": "edit_by_prompt_before_generate",
+          "question": "What should I check before generating Edit By Prompt images?",
+          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+        }
+      ],
+      "relatedEyebrow": "Related edit by prompt ideas",
+      "relatedTitle": "More edit by prompt and nearby themes",
+      "relatedSubtitle": "Compare prompt, edit, creative and adjacent themes before opening a edit by prompt set.",
+      "relatedCtaLabel": "View all packages"
     }
   },
   "aidreamcapesCategories": {

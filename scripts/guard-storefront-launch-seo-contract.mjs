@@ -16,6 +16,7 @@ const storefrontSiteIds = ["site_dreamshoot", "site_aidreamcapes"];
 const requiredDeployPrecheckCommands = [
   "npm run typecheck",
   "npm run guard:storefront-launch-seo-contract",
+  "npm run guard:mydreamshoots-page-copy-contract",
   "npm run smoke:mydreamshoots-seo-indexing",
   "npm run guard:mydreamshoots-content"
 ];

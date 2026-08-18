@@ -26,26 +26,20 @@ const generatedThemeSlugs = new Set([
   "color-correction",
   "old-photo-restoration"
 ]);
-const requiredPageCopySlugs = new Set([
-  "engagement-photo",
-  "wedding-photo",
-  "valentines-photo",
-  "christmas-photo",
-  "halloween-photo",
-  "thanksgiving-photo",
-  "holiday",
-  "singles-awareness-day",
-  "black-friday"
-]);
+let requiredPageCopySlugs = new Set();
 const requiredPageCopyFields = [
   "pageEntityId",
   "copyRevision",
   "seoTitle",
   "galleryTitle",
+  "galleryIntro",
+  "ctaEyebrow",
   "ctaTitle",
   "ctaSubtitle",
   "ctaLabel",
+  "faqEyebrow",
   "faqTitle",
+  "relatedEyebrow",
   "relatedTitle",
   "relatedSubtitle",
   "relatedCtaLabel"
@@ -196,10 +190,13 @@ function profileForItem(item) {
   if (requiredPageCopySlugs.has(item.slug)) {
     const missingFields = requiredPageCopyFields.filter((field) => typeof profile[field] !== "string" || !profile[field].trim());
     const invalidFaqItems = !Array.isArray(profile.faqItems) ||
-      profile.faqItems.length < 4 ||
+      profile.faqItems.length !== 4 ||
       profile.faqItems.some((faqItem) => !faqItem?.id?.trim() || !faqItem?.question?.trim() || !faqItem?.answer?.trim());
     if (profile.pageEntityId !== `mydreamshoots:ai-image-theme:${item.slug}`) {
       missingFields.push("pageEntityId:canonicalSlug");
+    }
+    if (profile.copyRevision !== `2026-08-18.${item.slug}`) {
+      missingFields.push("copyRevision:revision");
     }
     if (invalidFaqItems) {
       missingFields.push("faqItems");
@@ -974,6 +971,7 @@ async function updateDatabase({ state, categories, packs }) {
 
 const state = readJson(statePath);
 const taxonomy = readJson(taxonomyPath);
+requiredPageCopySlugs = new Set((taxonomy.items ?? []).map((item) => normalizeSlug(item.slug)).filter(Boolean));
 collectionPathBySlug = buildCollectionPathMap(taxonomy);
 const packProfiles = readJson(packProfilesPath);
 const useCaseProfiles = readJson(useCaseProfilesPath);

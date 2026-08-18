@@ -1,6 +1,6 @@
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
 import { dreamshootPackProfileForSlug, type DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
-import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
+import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import {
   aidreamcapesCategoryUseCaseProfileForSlug,
@@ -2820,6 +2820,7 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
   const slug = normalizeDirectorySlug(rawSlug);
   const aidreamcapes = isAidreamcapesSite(site);
   const spanishXby = isSpanishXbySite(site);
+  const siteId = site?.id;
   const collectionSource = aidreamcapes ? aidreamcapesCollectionDirectory : spanishXby ? collectionDirectory : mydreamshootsCollectionDirectory;
   const toolSource = aidreamcapes ? aidreamcapesToolDirectory : toolDirectory;
   const brandName = spanishXby ? spanishXbyBrandName(site) : aidreamcapes ? "Aidreamcapes" : "myDreamshoots";
@@ -2833,7 +2834,12 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
   const collectionProfile = kind === "collection" && !spanishXby
     ? aidreamcapes
       ? aidreamcapesCategoryUseCaseProfileForSlug(canonicalSlug)
-      : mydreamshootsPageCopyForSlug(canonicalSlug) ?? mydreamshootsCategoryUseCaseProfileForSlug(canonicalSlug) ?? dreamshootPackProfileForSlug(canonicalSlug)
+      : mydreamshootsPageCopyForRoute({
+          siteId,
+          routeKind: "ai-image-theme-leaf",
+          canonicalSlug,
+          canonicalPath: canonicalSeoDirectoryPathForSite(site, kind, canonicalSlug)
+        }) ?? mydreamshootsCategoryUseCaseProfileForSlug(canonicalSlug) ?? dreamshootPackProfileForSlug(canonicalSlug)
     : undefined;
   const sourceWithProfile = collectionProfile
     ? collectionSeedWithUseCaseProfile(source, collectionProfile, brandName)

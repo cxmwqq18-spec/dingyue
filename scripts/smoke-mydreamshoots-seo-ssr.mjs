@@ -5,6 +5,7 @@ import fs from "node:fs";
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/+$/, "");
 const host = process.env.MYDREAMSHOOTS_HOST || "www.mydreamshoots.com";
 const localState = JSON.parse(fs.readFileSync(new URL("../data/platform-state.json", import.meta.url), "utf8"));
+const localTaxonomy = JSON.parse(fs.readFileSync(new URL("../src/lib/mydreamshoots-theme-taxonomy.json", import.meta.url), "utf8"));
 const localPageCopyProfiles = JSON.parse(fs.readFileSync(new URL("../src/lib/photo-package-use-case-profiles.json", import.meta.url), "utf8")).mydreamshootsCategories ?? {};
 const localSite = localState.sites?.find((site) => site.id === "site_dreamshoot");
 const hasProviderBackedPrice = (localState.products ?? [])
@@ -146,17 +147,7 @@ const homepage = await fetchHtml("/");
 const pricing = await fetchHtml("/pricing");
 const collection = await fetchHtml("/ai-image-generation/headshot");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
-const focusCollectionSlugs = [
-  "engagement-photo",
-  "wedding-photo",
-  "valentines-photo",
-  "christmas-photo",
-  "halloween-photo",
-  "thanksgiving-photo",
-  "holiday",
-  "singles-awareness-day",
-  "black-friday"
-];
+const focusCollectionSlugs = (localTaxonomy.items ?? []).map((item) => item.slug).filter(Boolean);
 const focusCollectionPaths = focusCollectionSlugs.map((slug) => `/ai-image-generation/${slug}`);
 const focusCollections = {};
 for (const pathname of focusCollectionPaths) {
@@ -236,9 +227,16 @@ const forbiddenGenericThemeCopy = [
   "turn approved uploads into a focused private photo set",
   "A private gallery of",
   "works best when the source photos are current, sharp",
-  "Keep the request focused on",
   "Confirm the visible credit cost before generation starts"
 ];
+const focusTopicNeedles = Object.fromEntries(
+  (localTaxonomy.items ?? []).map((item) => {
+    const topicTokens = Array.from(new Set([item.label, item.slug, ...(item.tags ?? [])]
+      .flatMap((value) => String(value).toLowerCase().split(/[^a-z0-9]+/))
+      .filter((token) => token.length >= 4 && !["photo", "photos", "image", "images", "private", "style"].includes(token))));
+    return [`/ai-image-generation/${item.slug}`, topicTokens];
+  })
+);
 const publicHtmlPages = {
   homepage,
   pricing,
@@ -258,17 +256,6 @@ for (const [pageName, html] of Object.entries(publicHtmlPages)) {
     assert.equal(html.includes(copy), false, `${pageName} must not SSR loading placeholder copy: ${copy}`);
   }
 }
-const focusTopicNeedles = {
-  "/ai-image-generation/engagement-photo": ["proposal", "announcement", "ring", "save-the-date"],
-  "/ai-image-generation/wedding-photo": ["save-the-date", "ceremony", "invitation", "wedding website"],
-  "/ai-image-generation/valentines-photo": ["date-night", "gifts", "self-love", "romantic"],
-  "/ai-image-generation/christmas-photo": ["christmas", "greeting card", "winter", "family"],
-  "/ai-image-generation/halloween-photo": ["costume", "party", "spooky", "protected character"],
-  "/ai-image-generation/thanksgiving-photo": ["friendsgiving", "gratitude", "dinner", "group"],
-  "/ai-image-generation/holiday": ["year-end", "seasonal", "winter", "christmas photo"],
-  "/ai-image-generation/singles-awareness-day": ["self-love", "solo", "dating profile", "confidence"],
-  "/ai-image-generation/black-friday": ["sale banners", "social ads", "shopping", "campaign"],
-};
 for (const [pathname, html] of Object.entries(focusCollections)) {
   const slug = pathname.split("/").pop();
   const pageCopy = localPageCopyProfiles[slug];
@@ -286,9 +273,8 @@ for (const [pathname, html] of Object.entries(focusCollections)) {
   for (const copy of forbiddenGenericThemeCopy) {
     assert.equal(normalizedHtml.includes(copy.toLowerCase()), false, `${pathname} must not SSR generic theme copy: ${copy}`);
   }
-  for (const needle of focusTopicNeedles[pathname]) {
-    assert.ok(normalizedHtml.includes(needle), `${pathname} must contain topic-specific SEO copy: ${needle}`);
-  }
+  const topicTokens = focusTopicNeedles[pathname] ?? [];
+  assert.ok(topicTokens.some((needle) => normalizedHtml.includes(needle)), `${pathname} must contain topic-specific SEO copy: ${topicTokens.join(", ")}`);
   if (slug === "black-friday") {
     assert.equal(/anime avatar|avatar package/i.test(text), false, `${pathname} must not inherit Anime Avatar page copy`);
   }

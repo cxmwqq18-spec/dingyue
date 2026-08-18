@@ -22,7 +22,7 @@ export type ResolvedOffer = {
 };
 
 export type EntityReference = {
-  entityType: "page" | "theme_settings" | "product" | "price" | "creative_pack" | "video_theme" | "media";
+  entityType: "page" | "page_copy" | "theme_settings" | "product" | "price" | "creative_pack" | "video_theme" | "media";
   entityId: string;
   ownerId: string;
   revision: string;
@@ -111,6 +111,9 @@ export type StorefrontContext = {
     publicationId?: string;
     factsRevision: string;
     buildId: string;
+    pageEntityId?: string;
+    copyRevision?: string;
+    canonicalSlug?: string;
   };
   capability: SiteCapability;
   indexability: EffectiveIndexability;

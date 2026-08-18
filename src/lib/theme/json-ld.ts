@@ -7,7 +7,7 @@ import { storefrontBaseUrl, storefrontOrigin } from "@/lib/storefront-context/se
 import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
-import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
+import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
@@ -1085,7 +1085,14 @@ export function buildCollectionDirectoryJsonLd({
   const faqLabel = cleanText(faqPack?.name, item.label);
   const faqOutputCount = faqPack?.outputCount;
   const faqCreditCost = faqPack?.creditCost;
-  const collectionPageCopy = !isSpanishXbySite(site) && isPrimaryMyDreamShootsSite(site) ? mydreamshootsPageCopyForSlug(item.slug) : undefined;
+  const collectionPageCopy = !isSpanishXbySite(site) && isPrimaryMyDreamShootsSite(site)
+    ? mydreamshootsPageCopyForRoute({
+        siteId: site.id,
+        routeKind: "ai-image-theme-leaf",
+        canonicalSlug: item.slug,
+        canonicalPath: canonicalSeoDirectoryPathForSite(site, "collection", item.slug)
+      })
+    : undefined;
   const collectionFaqItems = collectionPageCopy
     ? collectionPageCopy.faqItems.map((faqItem) => [faqItem.question, faqItem.answer] as [string, string])
     : !faqPack ? [] : isSpanishXbySite(site)

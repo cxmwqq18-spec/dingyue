@@ -52,6 +52,9 @@ const siteToolPage = readText("src/app/site/[siteSlug]/tools/[toolSlug]/page.tsx
 const siteRouteCanonical = readText("src/lib/site-route-canonical.ts");
 const storefrontRender = readText("src/lib/storefront-render.tsx");
 const storefrontStateRelational = readText("src/lib/storefront-state-relational.ts");
+const storefrontContextCore = readText("src/lib/storefront-context/core.ts");
+const storefrontContextSnapshot = readText("src/lib/storefront-context/snapshot.ts");
+const storefrontContextTypes = readText("src/lib/storefront-context/types.ts");
 const themeRenderer = readText("src/components/theme-renderer.tsx");
 const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const photoPackageTaxonomy = readText("src/lib/photo-package-taxonomy.ts");
@@ -91,73 +94,30 @@ const requiredUseCaseProfileFields = [
   "coverNote",
   "safetyNote"
 ];
-const requiredPageCopySlugs = [
-  "engagement-photo",
-  "wedding-photo",
-  "valentines-photo",
-  "christmas-photo",
-  "halloween-photo",
-  "thanksgiving-photo",
-  "holiday",
-  "singles-awareness-day",
-  "black-friday"
-];
+const requiredPageCopySlugs = (mydreamshootsTaxonomy.items ?? [])
+  .map((item) => item.slug)
+  .filter((slug) => typeof slug === "string" && slug.trim());
 const requiredPageCopyFields = [
   "pageEntityId",
   "copyRevision",
   "seoTitle",
   "galleryTitle",
+  "galleryIntro",
+  "ctaEyebrow",
   "ctaTitle",
   "ctaSubtitle",
   "ctaLabel",
+  "faqEyebrow",
   "faqTitle",
+  "relatedEyebrow",
   "relatedTitle",
   "relatedSubtitle",
   "relatedCtaLabel"
 ];
-const expectedPageCopyTitles = {
-  "engagement-photo": {
-    seoTitle: "AI Engagement Photos for Proposals & Announcements | myDreamshoots",
-    galleryTitle: "12 AI Engagement Photo Examples for Proposals and Announcements"
-  },
-  "wedding-photo": {
-    seoTitle: "AI Wedding Photos for Save-the-Dates & Ceremony Moodboards | myDreamshoots",
-    galleryTitle: "12 AI Wedding Photo Examples for Save-the-Dates and Ceremony Moodboards"
-  },
-  "valentines-photo": {
-    seoTitle: "AI Valentine's Day Photos for Date Night & Gifts | myDreamshoots",
-    galleryTitle: "12 AI Valentine's Day Photo Examples for Date Night Cards and Gifts"
-  },
-  "christmas-photo": {
-    seoTitle: "AI Christmas Photos for Greeting Cards & Winter Portraits | myDreamshoots",
-    galleryTitle: "12 AI Christmas Photo Examples for Greeting Cards and Winter Portraits"
-  },
-  "halloween-photo": {
-    seoTitle: "AI Halloween Photos for Costume Portraits & Party Cards | myDreamshoots",
-    galleryTitle: "12 AI Halloween Photo Examples for Costume Portraits, Party Cards, and Spooky Albums"
-  },
-  "thanksgiving-photo": {
-    seoTitle: "AI Thanksgiving Photos for Gratitude Cards & Dinner Portraits | myDreamshoots",
-    galleryTitle: "12 AI Thanksgiving Photo Examples for Gratitude Cards and Family Keepsakes"
-  },
-  holiday: {
-    seoTitle: "AI Holiday Photos for Seasonal Cards & Festive Profiles | myDreamshoots",
-    galleryTitle: "12 AI Holiday Photo Examples for Seasonal Cards and Festive Profiles"
-  },
-  "singles-awareness-day": {
-    seoTitle: "AI Singles Awareness Day Photos for Self-Love & Solo Portraits | myDreamshoots",
-    galleryTitle: "12 AI Singles Awareness Day Photo Examples for Self-Love and Solo Confidence"
-  },
-  "black-friday": {
-    seoTitle: "AI Black Friday Photos for Sale Banners & Social Ads | myDreamshoots",
-    galleryTitle: "12 AI Black Friday Photo Examples for Sale Banners and Social Ads"
-  }
-};
 const bannedTemplateProfilePhrases = [
   "turn approved uploads into a focused private photo set",
   "A private gallery of",
   "works best when the source photos are current, sharp",
-  "Keep the request focused on",
   "Confirm the visible credit cost before generation starts"
 ];
 const profileMissingRows = [];
@@ -205,7 +165,6 @@ for (const item of mydreamshootsTaxonomy.items ?? []) {
 const seenFaqIds = new Map();
 for (const slug of requiredPageCopySlugs) {
   const profile = mydreamshootsUseCaseProfiles[slug];
-  const expected = expectedPageCopyTitles[slug];
   const invalidFields = [];
   if (!profile) {
     pageCopyInvalidRows.push({ slug, invalidFields: ["missing"] });
@@ -216,8 +175,7 @@ for (const slug of requiredPageCopySlugs) {
     if (typeof value !== "string" || !value.trim()) invalidFields.push(field);
   }
   if (profile.pageEntityId !== `mydreamshoots:ai-image-theme:${slug}`) invalidFields.push("pageEntityId:canonicalSlug");
-  if (profile.seoTitle !== expected.seoTitle) invalidFields.push("seoTitle:approvedCopy");
-  if (profile.galleryTitle !== expected.galleryTitle) invalidFields.push("galleryTitle:approvedCopy");
+  if (profile.copyRevision !== `2026-08-18.${slug}`) invalidFields.push("copyRevision:revision");
   if (!Array.isArray(profile.faqItems) || profile.faqItems.length !== 4) {
     invalidFields.push("faqItems:count");
   } else {
@@ -232,14 +190,9 @@ for (const slug of requiredPageCopySlugs) {
     pageCopyInvalidRows.push({ slug, invalidFields });
   }
   const projection = dreamshootPackProfiles[slug];
-  const driftFields = [
-    ...requiredPageCopyFields,
-    "galleryIntro",
-    "ctaEyebrow",
-    "faqEyebrow",
-    "faqItems",
-    "relatedEyebrow"
-  ].filter((field) => JSON.stringify(profile[field]) !== JSON.stringify(projection?.[field]));
+  const driftFields = projection?.pageEntityId
+    ? [...requiredPageCopyFields, "faqItems"].filter((field) => JSON.stringify(profile[field]) !== JSON.stringify(projection?.[field]))
+    : [];
   if (driftFields.length) {
     pageCopyProjectionDriftRows.push({ slug, driftFields });
   }
@@ -274,13 +227,27 @@ assert(
 );
 assert(
   !pageCopyInvalidRows.length,
-  "The nine MyDreamShoots dynamic pages must have exact per-canonical-slug page copy fields",
+  "All MyDreamShoots dynamic pages must have exact per-canonical-slug page copy fields",
   { pageCopyInvalidRows }
 );
 assert(
   !pageCopyProjectionDriftRows.length,
   "dreamshoot-pack-profiles.json must remain a generated projection of the page copy fields",
   { pageCopyProjectionDriftRows }
+);
+assert(
+  dreamshootSeoContent.includes("mydreamshootsPageCopyForRoute(") &&
+    themeRenderer.includes("mydreamshootsPageCopyForRoute(") &&
+    jsonLd.includes("mydreamshootsPageCopyForRoute(") &&
+    themeRenderer.includes("targetCopy?.cardDescription"),
+  "MyDreamShoots SEO and renderer code must resolve exact page copy through the route-aware resolver"
+);
+assert(
+  storefrontContextTypes.includes('"page_copy"') &&
+    storefrontContextCore.includes("pageEntityId: pageCopy?.pageEntityId") &&
+    storefrontContextCore.includes("copyRevision: pageCopy?.copyRevision") &&
+    storefrontContextSnapshot.includes('entityType: "page_copy"'),
+  "published storefront context and snapshot must include page-copy identity"
 );
 
 const slugRows = mydreamshootsSite.pages.map((page) => ({

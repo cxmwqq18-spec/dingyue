@@ -3,6 +3,7 @@ import "server-only";
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
 import type { MediaAsset, PlatformState, Site, ThemePage } from "@/lib/types";
 import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
+import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
 import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
@@ -94,6 +95,18 @@ export function createPublishedSiteSnapshot(
   const mediaAssets = state.mediaAssets.filter((asset) => asset.siteId === site.id);
   const entityReferences: EntityReference[] = [
     ...pages.map((page) => ({ entityType: "page" as const, entityId: page.id, ownerId: site.id, revision: page.draftMeta?.etag ?? revision([page.id, page.publishedJson.version, page.updatedAt]), updatedAt: page.updatedAt })),
+    ...pages.flatMap((page) => {
+      const canonicalPath = canonicalPathForPage(page);
+      const canonicalSlug = canonicalPath.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1];
+      if (!canonicalSlug) return [];
+      const copy = mydreamshootsPageCopyForRoute({
+        siteId: site.id,
+        routeKind: "ai-image-theme-leaf",
+        canonicalSlug,
+        canonicalPath
+      });
+      return copy ? [{ entityType: "page_copy" as const, entityId: copy.pageEntityId, ownerId: site.id, revision: copy.copyRevision }] : [];
+    }),
     { entityType: "theme_settings" as const, entityId: site.id, ownerId: site.id, revision: revision(publishedSettings.publishedJson) },
     ...products.flatMap((product) => [
       { entityType: "product" as const, entityId: product.id, ownerId: site.id, revision: revision([product.id, product.metadata, product.status]) },

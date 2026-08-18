@@ -84,6 +84,7 @@ assert.equal(site.primaryDomain, "www.mydreamshoots.com", "MyDreamShoots primary
 const activePacks = (state.creativePacks ?? []).filter((pack) => pack.siteId === site.id && pack.status === "active");
 const activeProducts = (state.products ?? []).filter((product) => product.siteId === site.id && product.status === "active");
 const activeVideoThemes = (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id && theme.status === "active");
+const blackFridayPack = activePacks.find((pack) => schemaSlug(pack.category || pack.name) === "black-friday" || schemaSlug(pack.name) === "black-friday");
 const homePage = site.pages.find((page) => page.slug === "/");
 assert.ok(homePage, "MyDreamShoots homepage should exist");
 const schemaContext = resolveStorefrontContext({
@@ -109,6 +110,9 @@ const lowestVerifiedMonthlyUsdCents = Math.min(
 assert.equal(activePacks.length, 38, "MyDreamShoots should expose 38 active photo package themes");
 assert.equal(activeProducts.length, 7, "MyDreamShoots should expose 7 active pricing products");
 assert.equal(activeVideoThemes.length, 0, "MyDreamShoots should not expose legacy video theme framework records after the AI Video Generation route migration");
+assert.ok(blackFridayPack, "Black Friday pack should exist");
+assert.equal(/anime-avatar/i.test(blackFridayPack.imageUrl ?? ""), false, "Black Friday pack cover must not reuse Anime Avatar art");
+assert.equal((blackFridayPack.galleryImages ?? []).some((image) => /anime-avatar/i.test(image)), false, "Black Friday pack gallery must not reuse Anime Avatar art");
 
 const homeGraph = graphNodes(buildStorefrontJsonLd({
   site,

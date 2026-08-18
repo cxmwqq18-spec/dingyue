@@ -1,4 +1,5 @@
 import type { Price, StorefrontProfileJson, ThemePageJson, ThemeSettings } from "@/lib/types";
+import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import type { ResolvedOffer, ResolvedPageSeo, StorefrontContext, StorefrontContextBundle, StorefrontContextMode, StorefrontPublishScope } from "./types";
 import { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
 import { resolveSiteCapability } from "./capabilities";
@@ -189,6 +190,15 @@ export function resolveStorefrontContext(
   const invalidPacks = bundle.creativePacks.filter((pack) => pack.status === "active" && (pack.creditCost <= 0 || pack.outputCount <= 0));
   const seo = resolveSeo(bundle, pageJson, settings);
   const missingFacts = missingStorefrontProfileFacts(profile);
+  const pageCopySlug = seo.canonicalPath.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1];
+  const pageCopy = pageCopySlug
+    ? mydreamshootsPageCopyForRoute({
+        siteId: bundle.site.id,
+        routeKind: "ai-image-theme-leaf",
+        canonicalSlug: pageCopySlug,
+        canonicalPath: seo.canonicalPath
+      })
+    : undefined;
   if (!seo.description && seo.index) missingFacts.push(`page.${bundle.page.id}.seo.description`);
   return {
     mode,
@@ -209,7 +219,10 @@ export function resolveStorefrontContext(
       factsRevision: mode === "published" && bundle.factsRevision
         ? bundle.factsRevision
         : revision(bundle, mode, pageJson, settings, profile),
-      buildId: bundle.buildId || process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local"
+      buildId: bundle.buildId || process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local",
+      pageEntityId: pageCopy?.pageEntityId,
+      copyRevision: pageCopy?.copyRevision,
+      canonicalSlug: pageCopy ? pageCopySlug : undefined
     },
     capability: resolveSiteCapability(bundle.site),
     indexability: {

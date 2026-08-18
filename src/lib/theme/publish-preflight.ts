@@ -1,5 +1,6 @@
 import { normalizeThemeSeo } from "@/lib/theme/seo";
 import { themeValueToString } from "@/lib/theme-values";
+import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import { isPublicPriceFact, missingStorefrontProfileFacts } from "@/lib/storefront-context";
 import type { SectionBlockInstance, SectionInstance, Site, StorefrontProfileJson, ThemePage, ThemeSettings, ThemeSettingValue } from "@/lib/types";
 
@@ -300,6 +301,28 @@ export function runThemePublishPreflight({
   const mediaIds = new Set(mediaAssets.map((asset) => asset.id));
   const missingMediaRefs = collectMediaReferencesFromSections(sections).filter((ref) => !mediaIds.has(ref));
   const mediaOwnerReviewRequired = mediaAssets.filter((asset) => mediaIds.has(asset.id) && (!asset.ownerId || !asset.entityRevision || asset.ownerId !== site.id));
+  const pageCopyFailures: string[] = [];
+  if (site.id === "site_dreamshoot") {
+    for (const page of site.pages) {
+      const canonicalSlug = page.slug.match(/^\/ai-image-generation\/([^/?#]+)/)?.[1];
+      if (!canonicalSlug) continue;
+      const isIndexableLeaf = page.publishedJson?.seo?.index ?? page.publishedJson?.seo?.robots?.index ?? page.draftJson?.seo?.index ?? page.draftJson?.seo?.robots?.index;
+      if (isIndexableLeaf === false) continue;
+      try {
+        const copy = mydreamshootsPageCopyForRoute({
+          siteId: site.id,
+          routeKind: "ai-image-theme-leaf",
+          canonicalSlug,
+          canonicalPath: page.slug
+        });
+        if (!copy) throw new Error("PAGE_COPY_REVIEW_REQUIRED");
+        if (copy.pageEntityId !== `mydreamshoots:ai-image-theme:${canonicalSlug}`) throw new Error("PAGE_COPY_ENTITY_MISMATCH");
+        if (!Array.isArray(copy.faqItems) || copy.faqItems.length < 4) throw new Error("PAGE_COPY_FAQ_REQUIRED");
+      } catch (error) {
+        pageCopyFailures.push(`${page.slug}:${error instanceof Error ? error.message : "PAGE_COPY_REVIEW_REQUIRED"}`);
+      }
+    }
+  }
   const pagesMissingSeoTitle = site.pages.filter((page) => !page.draftJson.seo?.title?.trim());
   const pagesMissingSeoDescription = site.pages.filter((page) => !page.draftJson.seo?.description?.trim());
   const pagesWithShortSeoDescription = site.pages.filter((page) => {
@@ -448,6 +471,12 @@ export function runThemePublishPreflight({
           mediaOwnerReviewRequired.length ? `owner/revision: ${mediaOwnerReviewRequired.slice(0, 6).map((asset) => asset.id).join(", ")}` : ""
         ].filter(Boolean).join("; "))
       : pass("media_refs", "media", "媒体引用有效", "draft 中的站点媒体引用都有本站 owner 和 entity revision。")
+  );
+
+  checks.push(
+    pageCopyFailures.length
+      ? block("page_copy_contract", "pages", "MyDreamShoots 页级 copy 契约失败", pageCopyFailures.slice(0, 6).join("; "))
+      : pass("page_copy_contract", "pages", "MyDreamShoots 页级 copy 契约通过", "已发布的 AI Image Generation leaf 页面都能解析到 exact page copy。")
   );
 
   checks.push(
