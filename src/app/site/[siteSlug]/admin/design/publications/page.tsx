@@ -24,7 +24,8 @@ export default async function DesignPublicationsPage({ params }: { params: Promi
   const publications = await getSiteThemePublicationMetaRelational(data.site.id);
   const latest = publications[0];
   const settingsDirty = JSON.stringify(data.site.themeSettings.draftJson) !== JSON.stringify(data.site.themeSettings.publishedJson);
-  const hasDirtyDraft = data.dirtyPages > 0 || settingsDirty;
+  const profileDirty = JSON.stringify(data.site.storefrontProfile?.draftJson) !== JSON.stringify(data.site.storefrontProfile?.publishedJson);
+  const hasDirtyDraft = data.dirtyPages > 0 || settingsDirty || profileDirty;
   const firstPageId = data.site.pages[0]?.id;
   const pageVersions: Record<string, ThemeDraftMeta | undefined> = Object.fromEntries(
     data.site.pages.map((page) => [page.id, page.draftMeta])
@@ -93,7 +94,9 @@ export default async function DesignPublicationsPage({ params }: { params: Promi
           }))}
           publishedVersion={currentPublishedVersion}
           settingsVersion={data.site.themeSettings.draftMeta}
+          profileVersion={data.site.storefrontProfile?.draftMeta}
           settingsDirty={settingsDirty}
+          profileDirty={profileDirty}
           siteId={data.site.id}
         />
       </div>

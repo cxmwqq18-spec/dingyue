@@ -7,7 +7,7 @@ export function canPublishPaidProducts(chargesEnabled: boolean, products: Produc
   if (!chargesEnabled) {
     return { ok: false, reason: "Stripe Connect onboarding is not complete for this site." };
   }
-  const hasProduct = products.some((product) => product.status === "active");
+  const hasProduct = products.some((product) => product.status === "active" && product.prices.some((price) => price.status === "active" && price.providerVerifiedAt && price.providerFingerprint && /^price_/.test(price.stripePriceId)));
   if (!hasProduct) {
     return { ok: false, reason: "Create at least one active subscription or credit pack." };
   }

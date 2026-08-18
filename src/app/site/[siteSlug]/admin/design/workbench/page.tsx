@@ -5,6 +5,7 @@ import { LogoutActionButton } from "@/components/auth/logout-action-button";
 import Link from "next/link";
 import { ArrowLeft, Layers3 } from "lucide-react";
 import { createDesignerPreviewToken } from "@/lib/designer-preview-auth";
+import { loadDraftStorefrontContext } from "@/lib/storefront-context";
 import { getSiteAdminData } from "../../_lib/site-admin-context";
 import {
   getSiteSaasThemeLabelsRelational,
@@ -31,9 +32,21 @@ export default async function DesignPage({
     siteId: designerSite.id,
     siteSlug: designerSite.slug
   });
-  const [themeLabels, publicationCount] = await Promise.all([
+  const initialPage = designerSite.pages.find((page) => page.id === query.pageId) ?? designerSite.pages[0];
+  if (!initialPage) notFound();
+  const [themeLabels, publicationCount, storefrontContext] = await Promise.all([
     getSiteSaasThemeLabelsRelational(designerSite.id),
-    getSiteThemePublicationCountRelational(designerSite.id)
+    getSiteThemePublicationCountRelational(designerSite.id),
+    loadDraftStorefrontContext({
+      siteId: designerSite.id,
+      pageId: initialPage.id,
+      publishScope: {
+        type: "site",
+        pageIds: [initialPage.id],
+        includeThemeSettings: true,
+        includeStorefrontProfile: true
+      }
+    })
   ]);
   const activeThemeName = themeLabels.active?.name || `${designerSite.name} live theme`;
   const activeThemeKey = themeLabels.active?.themeKey || `${designerSite.id}_active`;
@@ -74,6 +87,7 @@ export default async function DesignPage({
           publicationCount={publicationCount}
           site={designerSite}
           siteAiApps={data.apps}
+          storefrontContext={storefrontContext}
           toolbarLeading={
             <div className="flex min-w-0 items-center gap-3">
               <Link

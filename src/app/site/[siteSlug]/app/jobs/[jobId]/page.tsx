@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { readPathModePublicMetadataState } from "@/lib/storefront-local-state";
-import { metadataForSingleThemePage } from "@/lib/theme/seo";
+import { metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
     site?.pages.find((item) => item.slug === jobDetailSlug || item.pageType === "job_detail") ??
     site?.pages.find((item) => item.slug === "/app/jobs/progress");
   return {
-    ...(site && page ? metadataForSingleThemePage(site, page) : {}),
+    ...(site && page ? await metadataForPublishedStorefrontPage({ site, page, products: state?.products, creativePacks: state?.creativePacks }) : {}),
     robots: { index: false, follow: false }
   };
 }

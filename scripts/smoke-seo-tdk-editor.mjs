@@ -18,10 +18,10 @@ function createCsrfToken(scope, sessionId) {
   return `${nonce}.${mac}`;
 }
 
-function draftMetaFromSettingsDraft(draftJson) {
-  const draftMeta = draftJson?.draftMeta;
+function draftMetaFromPage(page) {
+  const draftMeta = page?.draftMeta ?? page?.draftJson?.draftMeta;
   if (draftMeta?.revision && draftMeta?.etag) return draftMeta;
-  const revision = Math.max(1, Number(draftJson?.version ?? 1));
+  const revision = Math.max(1, Number(page?.draftJson?.version ?? 1));
   return { revision, etag: `W/"${revision}-legacy"` };
 }
 
@@ -72,75 +72,57 @@ async function jsonFetch(path, init, cookie) {
 }
 
 const smokeSession = await createSmokeAdminSession();
-let originalDraft;
+let originalPage;
 
 try {
-  const settings = await prisma.themeSettings.findUnique({ where: { siteId } });
-  if (!settings?.draftJson || typeof settings.draftJson !== "object" || Array.isArray(settings.draftJson)) {
-    throw new Error(`missing_theme_settings:${siteId}`);
-  }
-  originalDraft = settings.draftJson;
   const pages = await prisma.themePage.findMany({
     where: { siteId },
     orderBy: { createdAt: "asc" },
-    select: { id: true, slug: true, title: true }
+    select: { id: true, slug: true, title: true, draftJson: true, draftMeta: true }
   });
   const page = pages.find((item) => item.slug === "/pricing") ?? pages[0];
   if (!page) throw new Error(`missing_theme_page:${siteId}`);
+  originalPage = page;
 
   const nextDraft = {
-    ...originalDraft,
+    ...page.draftJson,
     seo: {
-      ...(originalDraft.seo ?? {}),
-      siteTitle: originalDraft.seo?.siteTitle ?? "Smoke TDK Site",
-      siteDescription: originalDraft.seo?.siteDescription ?? "Smoke TDK description.",
-      siteKeywords: "smoke tdk, ai photo packages, metadata editor",
-      titleTemplate: originalDraft.seo?.titleTemplate ?? "%s | Smoke TDK",
-      defaultOgImage: originalDraft.seo?.defaultOgImage ?? "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-      robots: originalDraft.seo?.robots ?? { index: true, follow: true },
-      pages: {
-        ...(originalDraft.seo?.pages ?? {}),
-        [page.id]: {
-          ...(originalDraft.seo?.pages?.[page.id] ?? {}),
-          title: "Smoke TDK Pricing Title",
-          description: "Smoke TDK pricing description used to verify editable title, description, keywords, canonical and social image fields.",
-          keywords: "pricing metadata, smoke keywords, ai subscription",
-          canonicalPath: page.slug || "/pricing",
-          ogImage: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
-          index: true,
-          follow: true
-        }
-      }
+      ...(page.draftJson?.seo ?? {}),
+      title: "Smoke TDK Pricing Title",
+      description: "Smoke TDK pricing description used to verify editable title, description, keywords, canonical and social image fields.",
+      keywords: "pricing metadata, smoke keywords, ai subscription",
+      canonicalPath: page.slug || "/pricing",
+      ogImage: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
+      robots: { index: true, follow: true }
     }
   };
 
-  await jsonFetch(`/api/sites/${siteId}/theme/settings/draft`, {
+  await jsonFetch(`/api/sites/${siteId}/theme/pages/${page.id}/draft`, {
     method: "PUT",
     body: JSON.stringify({
       draftJson: nextDraft,
-      expectedRevision: draftMetaFromSettingsDraft(originalDraft).revision,
-      expectedEtag: draftMetaFromSettingsDraft(originalDraft).etag
+      expectedRevision: draftMetaFromPage(page).revision,
+      expectedEtag: draftMetaFromPage(page).etag
     })
   }, smokeSession.cookie);
 
-  const updated = await prisma.themeSettings.findUnique({ where: { siteId } });
+  const updated = await prisma.themePage.findUnique({ where: { id: page.id } });
   const seo = updated?.draftJson?.seo;
-  if (seo?.siteKeywords !== nextDraft.seo.siteKeywords) throw new Error("site_keywords_not_saved");
-  if (seo?.pages?.[page.id]?.keywords !== nextDraft.seo.pages[page.id].keywords) throw new Error("page_keywords_not_saved");
-  if (seo?.pages?.[page.id]?.ogImage !== nextDraft.seo.pages[page.id].ogImage) throw new Error("page_og_image_not_saved");
+  if (seo?.keywords !== nextDraft.seo.keywords) throw new Error("page_keywords_not_saved");
+  if (seo?.ogImage !== nextDraft.seo.ogImage) throw new Error("page_og_image_not_saved");
 
   console.log(JSON.stringify({
     ok: true,
     pageId: page.id,
-    siteKeywords: seo.siteKeywords,
-    pageKeywords: seo.pages[page.id].keywords,
-    pageOgImage: seo.pages[page.id].ogImage
+    pageTitle: seo.title,
+    pageKeywords: seo.keywords,
+    pageOgImage: seo.ogImage
   }, null, 2));
 } finally {
-  if (originalDraft) {
-    await prisma.themeSettings.update({
-      where: { siteId },
-      data: { draftJson: originalDraft }
+  if (originalPage) {
+    await prisma.themePage.update({
+      where: { id: originalPage.id },
+      data: { draftJson: originalPage.draftJson, draftMeta: originalPage.draftMeta }
     }).catch(() => undefined);
   }
   await prisma.siteAdminSession.deleteMany({ where: { id: smokeSession.id } }).catch(() => undefined);

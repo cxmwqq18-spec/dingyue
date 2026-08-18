@@ -64,7 +64,16 @@ function jsonArray<T>(value: Prisma.JsonValue | null | undefined): T[] {
 }
 
 export function mapPrice(row: Prisma.PriceGetPayload<object>, fallback?: Partial<Price>): Price {
-  const record = row as Prisma.PriceGetPayload<object> & { label?: string; metadata?: Prisma.JsonValue | null };
+  const record = row as Prisma.PriceGetPayload<object> & {
+    label?: string;
+    metadata?: Prisma.JsonValue | null;
+    status?: string;
+    effectiveFrom?: Date | null;
+    effectiveTo?: Date | null;
+    replacesPriceId?: string | null;
+    providerVerifiedAt?: Date | null;
+    providerFingerprint?: string | null;
+  };
   const interval: Price["interval"] =
     row.interval === "year" || row.interval === "quarter" || row.interval === "half_year" || row.interval === "one_time"
       ? row.interval
@@ -79,17 +88,25 @@ export function mapPrice(row: Prisma.PriceGetPayload<object>, fallback?: Partial
     interval,
     creditsGranted: row.creditsGranted,
     stripePriceId: row.stripePriceId ?? fallback?.stripePriceId ?? `manual_${row.id}`,
-    metadata: fallback?.metadata ?? (jsonRecord(record.metadata) as Price["metadata"] | undefined)
+    metadata: fallback?.metadata ?? (jsonRecord(record.metadata) as Price["metadata"] | undefined),
+    status: record.status === "archived" ? "archived" : record.status === "draft" ? "draft" : "active",
+    effectiveFrom: toIsoString(record.effectiveFrom),
+    effectiveTo: toIsoString(record.effectiveTo),
+    replacesPriceId: record.replacesPriceId ?? undefined,
+    providerVerifiedAt: toIsoString(record.providerVerifiedAt),
+    providerFingerprint: record.providerFingerprint ?? undefined
   };
 }
 
 export function mapProduct(row: ProductWithPrices): Product {
+  const record = row as ProductWithPrices & { metadata?: Prisma.JsonValue | null };
   return {
     id: row.id,
     siteId: row.siteId,
     name: row.name,
     type: row.type === "credit_pack" ? "credit_pack" : "subscription",
     status: row.status === "draft" ? "draft" : "active",
+    metadata: jsonObject<Product["metadata"]>(record.metadata),
     prices: row.prices.map((price) => mapPrice(price))
   };
 }
@@ -623,6 +640,32 @@ export function toThemeSettings(record?: { draftJson: unknown; publishedJson: un
   };
 }
 
+export function toStorefrontProfile(record?: {
+  id: string;
+  siteId: string;
+  draftJson: unknown;
+  publishedJson: unknown;
+  draftMeta?: unknown;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+} | null): import("@/lib/types").StorefrontProfile | undefined {
+  if (!record) return undefined;
+  const draftJson = cloneJson(record.draftJson ?? {}) as import("@/lib/types").StorefrontProfileJson & {
+    draftMeta?: import("@/lib/types").ThemeDraftMeta;
+  };
+  const draftMeta = normalizeThemeDraftMeta(draftJson.draftMeta ?? record.draftMeta, 1);
+  if ("draftMeta" in draftJson) delete draftJson.draftMeta;
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    draftJson,
+    publishedJson: cloneJson(record.publishedJson ?? {}) as import("@/lib/types").StorefrontProfileJson,
+    draftMeta,
+    createdAt: toIsoString(record.createdAt),
+    updatedAt: toIsoString(record.updatedAt)
+  };
+}
+
 export function themeSettingsDraftJsonWithMeta(settings: import("@/lib/types").Site["themeSettings"]): Prisma.InputJsonValue {
   return cloneJson({
     ...settings.draftJson,
@@ -642,6 +685,8 @@ export function toSite(record: {
   domains?: Array<{ domain: string; isPrimary: boolean }>;
   pages?: Array<Parameters<typeof toThemePage>[0]>;
   settings?: { draftJson: unknown; publishedJson: unknown } | null;
+  storefrontProfile?: Parameters<typeof toStorefrontProfile>[0];
+  publications?: Array<Parameters<typeof toThemePublication>[0]>;
   connect?: { stripeAccountId: string; onboardingStatus: string; chargesEnabled: boolean; payoutsEnabled: boolean } | null;
 }): import("@/lib/types").Site {
   const primaryDomain = record.domains?.find((domain) => domain.isPrimary)?.domain ?? record.domains?.[0]?.domain ?? "";
@@ -662,6 +707,8 @@ export function toSite(record: {
       payoutsEnabled: Boolean(record.connect?.payoutsEnabled)
     },
     themeSettings: toThemeSettings(record.settings),
+    storefrontProfile: toStorefrontProfile(record.storefrontProfile),
+    latestPublication: record.publications?.[0] ? toThemePublication(record.publications[0]) : undefined,
     pages: (record.pages ?? []).map(toThemePage)
   };
 }
@@ -1072,6 +1119,9 @@ export function toThemePublication(record: {
   pageCount?: number | null;
   sectionCount?: number | null;
   snapshotBytes?: number | null;
+  scope?: unknown;
+  manifestHash?: string | null;
+  factsRevision?: string | null;
   publishedBy: string;
   publishedAt: Date | string;
 }): import("@/lib/types").ThemePublication {
@@ -1089,6 +1139,11 @@ export function toThemePublication(record: {
     pageCount,
     sectionCount,
     snapshotBytes,
+    scope: record.scope && typeof record.scope === "object"
+      ? cloneJson(record.scope) as import("@/lib/types").ThemePublication["scope"]
+      : undefined,
+    manifestHash: record.manifestHash ?? undefined,
+    factsRevision: record.factsRevision ?? undefined,
     publishedBy: record.publishedBy,
     publishedAt: toIsoString(record.publishedAt) ?? new Date().toISOString()
   };

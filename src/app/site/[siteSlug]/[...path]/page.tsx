@@ -7,12 +7,11 @@ import {
 } from "@/lib/storefront-state";
 import { canResolveCollectionSlugForSite, renderCustomerWorkspacePageBySlug, renderStorefrontPage, renderToolPage } from "@/lib/storefront-render";
 import { preferLocalPathModeState, readPathModePublicMetadataState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
-import { metadataForSingleThemePage } from "@/lib/theme/seo";
-import { canonicalSeoDirectoryPathForSite, metadataForDreamshootFallbackRoute, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
+import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
+import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSite } from "@/lib/photo-package-taxonomy";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
-import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, policyCanonicalUrlForSite, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 import { getVideoThemeSlugRedirectRelational } from "@/lib/stores/site-store";
@@ -148,14 +147,6 @@ function fallbackCollectionRootPathForPublicSlug(publicSlug: string): string {
     : "/collections";
 }
 
-function storefrontPolicySeoForSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }, slug: string): PolicySeoCopy | undefined {
-  const identity = `${site.slug} ${site.name} ${site.primaryDomain ?? ""} ${site.branding.logoText}`;
-  if (isSpanishXbyStorefrontSite(site)) return getSpanishXbyPolicySeo(site, slug);
-  if (/aidreamcapes/i.test(identity)) return getAidreamcapesPolicySeo(slug);
-  if (/dreamshoot/i.test(identity)) return getMydreamshootsPolicySeo(slug);
-  return undefined;
-}
-
 async function readCollectionRouteState(siteSlug: string, collectionCategory: string) {
   const collectionRootPageSlug = fallbackCollectionRootPathForPublicSlug(siteSlug);
   if (preferLocalPathModeState(siteSlug)) return readPathModePublicRuntimeState(siteSlug, collectionRootPageSlug);
@@ -207,46 +198,40 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
       const detailPage = findPage(site, `/ai-video-generation/${videoGenerationRoute.itemSlug}`);
       if (!theme && !redirectRecord?.theme && !detailPage) return {};
       const canonicalSlug = redirectRecord?.theme?.status === "active" ? redirectRecord.theme.slug : videoGenerationRoute.itemSlug;
-      return metadataForSeoDirectory(site, "tool", canonicalSlug);
+      const page = detailPage ?? findPage(site, "/ai-video-generation");
+      return page ? metadataForPublishedStorefrontDirectoryPage({
+        site,
+        page,
+        kind: "tool",
+        directorySlug: canonicalSlug,
+        path: videoGenerationRoute.canonicalPath,
+        products: state.products,
+        creativePacks: state.creativePacks
+      }) : {};
     }
-    return metadataForDreamshootFallbackRoute(publicSiteSlug(siteSlug), "/ai-video-generation", {
-      primaryDomain: site.primaryDomain,
-      ogImage: site.themeSettings.publishedJson.seo?.defaultOgImage,
-      siteName: site.branding.logoText || site.name
-    });
+    const page = findPage(site, "/ai-video-generation");
+    return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks }) : {};
   }
   const collectionRoute = isCollectionRequest ? parsePublicCollectionRouteForSite(site, path) : undefined;
   if (isCollectionRequest) {
     if (!collectionRoute) return {};
     if (collectionRoute.collectionSlug && !canResolveCollectionSlugForSite(state, site, collectionRoute.collectionSlug)) return {};
-    if (collectionRoute.collectionSlug) return metadataForSeoDirectory(site, "collection", collectionRoute.collectionSlug);
     const page = findPage(site, collectionRootPageSlug) ?? findPage(site, "/collections");
-    return page ? metadataForSingleThemePage(site, page) : {};
-  }
-  if (dreamshootPartnerTemplateSlugs.has(slug) && (isSpanishXbyStorefrontSite(site) || isDreamshootPartnerTemplateSite(site))) {
-    return metadataForDreamshootFallbackRoute(publicSiteSlug(siteSlug), slug, {
-      primaryDomain: site.primaryDomain,
-      ogImage: site.themeSettings.publishedJson.seo?.defaultOgImage,
-      siteName: site.branding.logoText || site.name
-    });
-  }
-  const policySeo = storefrontPolicySeoForSite(site, slug);
-  if (policySeo) {
-    return {
-      title: policySeo.title,
-      description: policySeo.description,
-      keywords: policySeo.keywords,
-      robots: {
-        follow: policySeo.follow,
-        index: policySeo.index
-      },
-      alternates: {
-        canonical: policyCanonicalUrlForSite(site, policySeo.canonicalPath)
-      }
-    };
+    if (collectionRoute.collectionSlug && page) {
+      return metadataForPublishedStorefrontDirectoryPage({
+        site,
+        page,
+        kind: "collection",
+        directorySlug: collectionRoute.collectionSlug,
+        path: collectionRoute.canonicalPath,
+        products: state.products,
+        creativePacks: state.creativePacks
+      });
+    }
+    return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks }) : {};
   }
   const page = findPage(site, slug);
-  return page ? metadataForSingleThemePage(site, page) : {};
+  return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks }) : {};
 }
 
 export default async function SiteCatchAllPage({
@@ -358,8 +343,7 @@ export default async function SiteCatchAllPage({
   const canUseDreamShootPartnerTemplate =
     dreamshootPartnerTemplateSlugs.has(pageSlug) &&
     (isSpanishXbyStorefrontSite(publicSite) || isDreamshootPartnerTemplateSite(publicSite));
-  const canUseStorefrontPolicy = Boolean(storefrontPolicySeoForSite(publicSite, pageSlug));
-  if (!isCollectionRequest && !findPage(publicSite, pageSlug) && !canUseDreamShootPartnerTemplate && !canUseStorefrontPolicy) notFound();
+  if (!isCollectionRequest && !findPage(publicSite, pageSlug) && !canUseDreamShootPartnerTemplate) notFound();
   const publicPath = collectionRoute?.canonicalPath ?? publicContentPageSlug(slug);
   return renderStorefrontPage({ site: publicSite, slug: pageSlug, publicPath, query: storefrontQuery, routeMode, state, deferCustomerRuntime: pageSlug !== "/cart" });
 }

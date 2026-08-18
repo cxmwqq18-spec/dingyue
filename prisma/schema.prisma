@@ -169,6 +169,7 @@ model Site {
   balances               CreditBalance[]
   pages                  ThemePage[]
   settings               ThemeSettings?
+  storefrontProfile      StorefrontProfile?
   publications           ThemePublication[]
   siteThemes             SiteTheme[]
   themeCopies            ThemeCopy[]
@@ -341,6 +342,7 @@ model Product {
   name          String
   type          String
   status        String
+  metadata      Json?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   site          Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
@@ -364,15 +366,23 @@ model Price {
   creditsGranted Int
   stripePriceId  String?
   metadata       Json?
+  status         String         @default("draft")
+  effectiveFrom  DateTime?
+  effectiveTo    DateTime?
+  replacesPriceId String?
+  providerVerifiedAt DateTime?
+  providerFingerprint String?
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   site           Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
   product        Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
   subscriptions  Subscription[]
+  orders         Order[]
 
   @@unique([siteId, stripePriceId])
   @@index([siteId, productId])
   @@index([siteId, interval])
+  @@index([siteId, status, effectiveFrom, effectiveTo])
   @@index([productId, createdAt])
 }
 
@@ -406,6 +416,7 @@ model Order {
   id          String   @id
   siteId      String
   customerId  String
+  priceId     String?
   status      String
   amountCents Int
   currency    String
@@ -415,9 +426,11 @@ model Order {
   updatedAt   DateTime @updatedAt
   site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
   customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  price       Price?   @relation(fields: [priceId], references: [id], onDelete: SetNull)
 
   @@unique([siteId, customerId, sourceId])
   @@index([siteId, customerId, createdAt])
+  @@index([siteId, priceId])
   @@index([siteId, createdAt])
   @@index([siteId, status])
   @@index([siteId, status, createdAt])
@@ -622,6 +635,17 @@ model ThemeSettings {
   site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
 }
 
+model StorefrontProfile {
+  id            String   @id
+  siteId        String   @unique
+  draftJson     Json
+  publishedJson Json
+  draftMeta     Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+}
+
 model ThemePublication {
   id            String   @id
   siteId        String
@@ -630,6 +654,9 @@ model ThemePublication {
   pageCount     Int?
   sectionCount  Int?
   snapshotBytes Int?
+  scope         Json?
+  manifestHash  String?
+  factsRevision String?
   publishedBy   String
   publishedAt   DateTime @default(now())
   site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
@@ -637,6 +664,7 @@ model ThemePublication {
   @@unique([siteId, version])
   @@index([siteId, publishedAt])
   @@index([siteId, version])
+  @@index([siteId, factsRevision])
 }
 
 model SiteTheme {

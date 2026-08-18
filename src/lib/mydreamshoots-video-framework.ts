@@ -68,6 +68,12 @@ export const mydreamshootsVideoGenerationCategories = [
     label: "Product Video",
     description: "Turn product photos into clear video directions that answer buyer questions about scale, detail, use, features, and packaging.",
     sortOrder: 110
+  },
+  {
+    slug: "product-ad-video",
+    label: "Product Ad Video",
+    description: "Build product ads around one audience, product promise, visual proof, offer, and clear next action.",
+    sortOrder: 120
   }
 ] as const;
 
@@ -214,6 +220,19 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     durationSeconds: 6,
     maxFrames: 10,
     sortOrder: 110
+  },
+  {
+    slug: "product-ad-video",
+    categorySlug: "product-ad-video",
+    name: "Product Ad Video",
+    headline: "Build product ads around one buyer decision, proof, offer, and CTA.",
+    description: "Create product ad video directions around a specific audience, supported promise, visual proof, real offer terms, and one clear next action.",
+    prompt: "Create a product advertising video draft around one defined audience and buyer decision. Connect the problem or desire to a supported product promise, show clear visual proof, state only verified offer terms, and end with one relevant call to action without inventing claims or outcomes.",
+    imageUrl: "/assets/dreamshoot/product-ad-video/ai-product-ad-video-new-product-unboxing-creative.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 120
   }
 ] as const;
 
@@ -226,7 +245,8 @@ export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "youtube-video",
   "story-video",
   "meme-video",
-  "product-video"
+  "product-video",
+  "product-ad-video"
 ] as const;
 
 const publicVideoGenerationPageSlugs = new Set<string>(mydreamshootsPublicVideoGenerationTopicSlugs);

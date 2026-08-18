@@ -13,7 +13,7 @@ import { Metric, Panel, Shell, StatusPill, TopBar } from "@/components/ui";
 import { AccessRoutePrefetcher } from "@/components/platform/access-route-prefetcher";
 import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost, siteAdminPathForHost } from "@/lib/domain-routing";
 import { renderStorefrontPage } from "@/lib/storefront-render";
-import { metadataForSingleThemePage } from "@/lib/theme/seo";
+import { metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import { getPage } from "@/lib/data";
 import type { PlatformState } from "@/lib/types";
 
@@ -34,7 +34,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const hostMetadataState = await getHostMetadataStateWithFallback(hostCandidates);
   const hostSite = hostMetadataState ? getSiteByHostCandidatesFromState(hostMetadataState, hostCandidates) ?? hostMetadataState.sites[0] : undefined;
   if (!hostSite) return noindexMetadata;
-  return metadataForSingleThemePage(hostSite, getPage(hostSite, "/"));
+  return metadataForPublishedStorefrontPage({
+    site: hostSite,
+    page: getPage(hostSite, "/"),
+    products: hostMetadataState?.products,
+    creativePacks: hostMetadataState?.creativePacks
+  });
 }
 
 function shouldResolveHostSite(hosts: Array<string | null>): boolean {

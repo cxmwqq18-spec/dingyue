@@ -42,7 +42,7 @@ export function DesignPageActions({
   const router = useRouter();
   const [message, setMessage] = useState(dirty ? "该页面有未发布草稿。" : "页面草稿与线上版本一致。");
   const [busy, setBusy] = useState<"publish" | "rollback" | null>(null);
-  const hasReviewedVersions = Object.keys(pageVersions).length > 0 && Object.values(pageVersions).every(Boolean) && Boolean(settingsVersion) && publishedVersion !== undefined;
+  const hasReviewedVersions = Boolean(pageVersions[pageId]) && publishedVersion !== undefined;
 
   async function run(action: "publish" | "rollback") {
     if (action === "publish" && !canPublish) {
@@ -67,7 +67,7 @@ export function DesignPageActions({
               actor: "site_admin_demo",
               expectedPageVersions: Object.fromEntries(
                 Object.entries(pageVersions)
-                  .filter((entry): entry is [string, ThemeDraftMeta] => Boolean(entry[1]))
+                  .filter((entry): entry is [string, ThemeDraftMeta] => entry[0] === pageId && Boolean(entry[1]))
                   .map(([id, version]) => [id, { revision: version.revision, etag: version.etag }])
               ),
               expectedSettingsVersion: settingsVersion ? { revision: settingsVersion.revision, etag: settingsVersion.etag } : undefined,
@@ -86,7 +86,7 @@ export function DesignPageActions({
       );
       return;
     }
-    setMessage(action === "publish" ? `已发布全站快照 v${json.publishedVersion ?? ""}。` : "已把该页草稿还原为线上版本。");
+    setMessage(action === "publish" ? `已发布此页，并记录整站审计快照 v${json.publishedVersion ?? ""}。` : "已把该页草稿还原为线上版本。");
     router.refresh();
   }
 
@@ -112,7 +112,7 @@ export function DesignPageActions({
           type="button"
         >
           <Send className="h-3.5 w-3.5" strokeWidth={1.8} />
-          {busy === "publish" ? "发布中" : "发布全站"}
+          {busy === "publish" ? "发布中" : "仅发布此页"}
         </button>
         <button
           className={`inline-flex min-h-[30px] items-center gap-1 border px-2 text-xs font-normal transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-55 ${actionButtonClass("warn")}`}
@@ -136,9 +136,11 @@ export function PublicationActions({
   onBeforePublish,
   pageVersions,
   settingsVersion,
+  profileVersion,
   publishedVersion,
   dirtyPages,
   settingsDirty,
+  profileDirty,
   globalVisualChanges = []
 }: {
   siteId: string;
@@ -147,9 +149,11 @@ export function PublicationActions({
   onBeforePublish?: () => Promise<void>;
   pageVersions: Record<string, ThemeDraftMeta | undefined>;
   settingsVersion?: ThemeDraftMeta;
+  profileVersion?: ThemeDraftMeta;
   publishedVersion: number;
   dirtyPages: number;
   settingsDirty: boolean;
+  profileDirty: boolean;
   globalVisualChanges?: PublishGlobalVisualChange[];
 }) {
   const router = useRouter();
@@ -158,7 +162,7 @@ export function PublicationActions({
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [ackGlobalVisualChanges, setAckGlobalVisualChanges] = useState(false);
   const reviewedPageCount = Object.keys(pageVersions).length;
-  const hasReviewedVersions = reviewedPageCount > 0 && Object.values(pageVersions).every(Boolean) && Boolean(settingsVersion);
+  const hasReviewedVersions = reviewedPageCount > 0 && Object.values(pageVersions).every(Boolean) && Boolean(settingsVersion) && Boolean(profileVersion);
   const hasGlobalVisualChanges = globalVisualChanges.length > 0;
 
   async function requestPublish() {
@@ -186,25 +190,33 @@ export function PublicationActions({
   }
 
   async function publish() {
-    if (!pageId) return;
+    if (!pageId || !settingsVersion || !profileVersion) return;
     if (hasGlobalVisualChanges && !ackGlobalVisualChanges) {
       setMessage("发布已暂停：请先确认本次会一起上线的全局样式变化。");
       return;
     }
     setBusy("publish");
-    const response = await fetch(`/api/sites/${siteId}/theme/pages/${pageId}/publish`, {
+    const expectedPageVersions = Object.fromEntries(
+      Object.entries(pageVersions)
+        .filter((entry): entry is [string, ThemeDraftMeta] => Boolean(entry[1]))
+        .map(([id, version]) => [id, { expectedRevision: version.revision, expectedEtag: version.etag }])
+    );
+    const manifestBase = {
+      pageIds: Object.keys(expectedPageVersions).sort(),
+      includeThemeSettings: true,
+      includeStorefrontProfile: true,
+      pageVersions: Object.fromEntries(Object.entries(expectedPageVersions).sort()),
+      settingsVersion: { expectedRevision: settingsVersion.revision, expectedEtag: settingsVersion.etag },
+      profileVersion: { expectedRevision: profileVersion.revision, expectedEtag: profileVersion.etag }
+    };
+    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(JSON.stringify(manifestBase)));
+    const manifestHash = Array.from(new Uint8Array(digest)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+    const response = await fetch(`/api/sites/${siteId}/theme/publish`, {
       method: "POST",
       headers: siteAdminJsonHeaders(siteId),
       body: JSON.stringify({
         actor: "site_admin_demo",
-        expectedPageVersions: Object.fromEntries(
-          Object.entries(pageVersions)
-            .filter((entry): entry is [string, ThemeDraftMeta] => Boolean(entry[1]))
-            .map(([id, version]) => [id, { revision: version.revision, etag: version.etag }])
-        ),
-        expectedSettingsVersion: settingsVersion ? { revision: settingsVersion.revision, etag: settingsVersion.etag } : undefined,
-        expectedPublishedVersion: publishedVersion,
-        acknowledgedGlobalVisualChanges: hasGlobalVisualChanges ? ackGlobalVisualChanges : true
+        manifest: { ...manifestBase, manifestHash }
       })
     });
     const json = await response.json().catch(() => ({}));
@@ -288,14 +300,15 @@ export function PublicationActions({
               </div>
             </div>
             <div className="grid gap-4 px-5 py-4 text-[13px] leading-6 text-[#667085]">
-              <p>发布会把所有页面草稿和主题设置写入同一个线上 snapshot。确认前请检查本次范围和版本。</p>
+              <p>发布会把 manifest 中的页面、主题设置和站点资料写入线上状态，并生成不可编辑的整站审计 snapshot。</p>
               <div className="grid gap-3 md:grid-cols-2">
                 <div className="rounded-[8px] border border-[#eef0f4] bg-[#fafafa] p-4">
                   <p className="text-[12px] font-medium text-[#667085]">发布范围</p>
                   <div className="mt-3 grid gap-2 text-[#333]">
                     <div className="flex justify-between gap-3"><span>页面版本集合</span><strong>{reviewedPageCount}</strong></div>
                     <div className="flex justify-between gap-3"><span>待发布页面</span><strong>{dirtyPages}</strong></div>
-                    <div className="flex justify-between gap-3"><span>全局设置</span><strong>{settingsDirty ? "有变更" : "无变更"}</strong></div>
+                    <div className="flex justify-between gap-3"><span>全局设置</span><strong>{settingsDirty ? "包含变更" : "包含当前版本"}</strong></div>
+                    <div className="flex justify-between gap-3"><span>站点资料</span><strong>{profileDirty ? "包含变更" : "包含当前 Profile"}</strong></div>
                   </div>
                 </div>
                 <div className="rounded-[8px] border border-[#eef0f4] bg-[#fafafa] p-4">

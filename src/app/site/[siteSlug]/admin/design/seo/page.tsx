@@ -20,7 +20,10 @@ export default async function DesignSeoPage({ params }: { params: Promise<{ site
     id: page.id,
     title: page.title,
     slug: page.slug,
-    pageType: page.pageType
+    pageType: page.pageType,
+    draftJson: page.draftJson,
+    publishedJson: page.publishedJson,
+    draftMeta: page.draftMeta
   }));
   const seoReady = Boolean(data.site.themeSettings.draftJson.seo?.siteTitle && data.site.themeSettings.draftJson.seo?.siteDescription);
 
@@ -40,7 +43,7 @@ export default async function DesignSeoPage({ params }: { params: Promise<{ site
       nav={siteAdminNav(data.site, data)}
       siteSlug={data.site.slug}
       stats={siteAdminStats(data)}
-      subtitle="SEO 属于主题全局设置。保存只进入草稿；发布整站快照后，前台页面 metadata、canonical、robots 和分享图才读取最新 published SEO。"
+      subtitle="页面 SEO 保存到对应页面草稿；站点默认值保存在主题设置。单页发布后，metadata、canonical、robots、分享图与 JSON-LD 同步更新。"
       title="SEO 设置"
       titleBadge={String(pages.length)}
       workspace={siteAdminWorkspace(data, "design workspace")}

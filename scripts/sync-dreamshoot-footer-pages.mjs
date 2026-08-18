@@ -2,7 +2,7 @@ import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-const defaultCompanyAddress = "8 THE GREEN STE B,DOVER,DE 19901";
+const defaultCompanyAddress = "";
 
 const brandProfiles = [
   {
@@ -10,7 +10,7 @@ const brandProfiles = [
     brand: "MyDreamShoots",
     footerCopyright: "© 2026 myDreamshoots.com. All rights reserved.",
     footerTitle: "MyDreamShoots",
-    companyName: "myDreamshoots.com",
+    companyName: "",
     companyAddress: defaultCompanyAddress,
     contactPhone: "",
     taxIdLabel: "",
@@ -76,8 +76,8 @@ const brandProfiles = [
     brand: "Aidreamcapes",
     footerCopyright: "© 2026 Aidreamcapes.com. All rights reserved.",
     footerTitle: "ልiጋreamርapes",
-    companyName: "Aidreamcapes.com",
-    companyAddress: "30 N GOULD ST STE R,SHERIDAN,WY 82801",
+    companyName: "",
+    companyAddress: "",
     contactPhone: "",
     taxIdLabel: "",
     taxId: "",

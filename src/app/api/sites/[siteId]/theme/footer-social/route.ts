@@ -6,23 +6,8 @@ import {
   type ThemeFooterSocialLinks
 } from "@/lib/stores/theme-store";
 
-const socialUrlKeys = ["instagramUrl", "facebookUrl", "pinterestUrl", "youtubeUrl", "threadsUrl", "twitterUrl"] as const;
-
 function cleanText(value: unknown, maxLength: number) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
-}
-
-function cleanSocialUrl(value: unknown) {
-  if (typeof value !== "string") return "";
-  const trimmed = value.trim();
-  if (!trimmed) return "";
-  try {
-    const url = new URL(trimmed);
-    if (url.protocol !== "https:" && url.protocol !== "http:") return null;
-    return url.toString();
-  } catch {
-    return null;
-  }
 }
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
@@ -37,22 +22,8 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
   const socialLinks: ThemeFooterSocialLinks = {
     socialHeading: cleanText(body.socialHeading, 80) || "Follow Us",
-    socialBody: cleanText(body.socialBody, 240),
-    instagramUrl: "",
-    facebookUrl: "",
-    pinterestUrl: "",
-    youtubeUrl: "",
-    threadsUrl: "",
-    twitterUrl: ""
+    socialBody: cleanText(body.socialBody, 240)
   };
-
-  for (const key of socialUrlKeys) {
-    const url = cleanSocialUrl(body[key]);
-    if (url === null) {
-      return NextResponse.json({ error: `invalid_${key}` }, { status: 400 });
-    }
-    socialLinks[key] = url;
-  }
 
   try {
     const result = await updateThemeFooterSocialLinksRelational({

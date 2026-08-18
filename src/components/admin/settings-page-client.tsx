@@ -7,6 +7,7 @@ import { AuditFeedPanel } from "@/components/admin/audit-feed-panel";
 import { ErpSection, ErpStatGrid, ErpToolbar, ErpToolbarAction, ErpToolbarField } from "@/components/admin/erp-primitives";
 import { SiteAdminsPanel } from "@/components/admin/site-admins-panel";
 import { SiteSettingsEditor } from "@/components/admin/site-settings-editor";
+import { StorefrontProfileEditor } from "@/components/admin/storefront-profile-editor";
 import type { AiGatewayGroup, PublicSiteAdmin, Site, SiteDomain } from "@/lib/types";
 
 type AuditFeedItem = {
@@ -203,6 +204,14 @@ export function SettingsPageClient({ site }: { site: Site }) {
         <div className="mt-3 text-[12px] text-[#667085]">
           AI 网关：{gatewaySection.loading ? "加载中" : gateway ? gateway.name : "未配置"}
         </div>
+      </ErpSection>
+
+      <ErpSection
+        description="One editable source for legal identity, support contact, social profiles, and policy facts used by Footer, Contact, About, and Organization Schema."
+        eyebrow="storefront facts"
+        title="Site profile"
+      >
+        <StorefrontProfileEditor site={site} />
       </ErpSection>
 
       <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">

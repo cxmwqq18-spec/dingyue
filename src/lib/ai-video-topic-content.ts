@@ -138,6 +138,7 @@ const socialImageRoot = "/assets/dreamshoot/social-media-video";
 const youtubeImageRoot = "/assets/dreamshoot/youtube-video";
 const memeImageRoot = "/assets/dreamshoot/meme-video";
 const productImageRoot = "/assets/dreamshoot/product-video";
+const productAdImageRoot = "/assets/dreamshoot/product-ad-video";
 
 export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLandingContent> = {
   "cinematic-video": {
@@ -1957,6 +1958,308 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       body: "Start with an approved product image, name the buying uncertainty, and turn the video brief toward visual proof.",
       cta: "Create My Product Video",
       microcopy: "Use product images and claims you are allowed to publish, and review the finished draft for accuracy before sharing."
+    }
+  },
+  "product-ad-video": {
+    seo: {
+      title: "AI Product Ad Video Generator – Create Product Ads With Clear Proof & CTA | myDreamshoots",
+      description:
+        "Create product ad videos around a specific audience, problem or desire, product promise, visual proof, offer, and call to action. Plan launch ads, problem-solution ads, benefit ads, offers, comparison ads, and retargeting reminders.",
+      keywords:
+        "AI product ad video generator, product ad video maker, AI product advertising video, product video ad generator, ecommerce video ad maker, social media product ad video, product launch ad video, product marketing video generator",
+      canonicalPath: "/ai-video-generation/product-ad-video"
+    },
+    hero: {
+      eyebrow: "AI PRODUCT AD VIDEO GENERATOR",
+      title: "Build the Ad Around One Buyer Decision—Not Every Product Feature",
+      body:
+        "Start with one audience and one reason they should care now. Then connect the problem or desire to a specific product promise, show proof the viewer can understand, state the offer accurately when there is one, and end with one clear next action.",
+      primaryCta: "Create My Product Ad",
+      secondaryCta: "See Ad Scenarios",
+      availabilityNote:
+        "This page explains the Product Ad direction. Open the current video workspace to review the creation tools available today.",
+      rightsCopy:
+        "Keep product claims, prices, discounts, availability, testimonials, and before/after evidence accurate. Do not promise outcomes the product or offer cannot support.",
+      imageNote: "Audience -> Promise -> Proof -> Offer -> CTA",
+      image: image(
+        `${productAdImageRoot}/ai-product-ad-video-new-product-unboxing-creative.jpg`,
+        "Adult opening a delivered product package in warm light for a new-product ad creative concept",
+        5184,
+        3456
+      )
+    },
+    useCases: {
+      eyebrow: "PAID CREATIVE SCENARIOS",
+      title: "Six Paid-Creative Problems That Need Different Ads",
+      intro:
+        "Launch, problem-solution, benefit, offer, comparison, and retargeting should not use the same message. Choose the ad job before you choose the edit.",
+      items: [
+        makeUseCaseCard({
+          title: "Lead With What Is New for the Buyer—Not Just the Release Date",
+          problem: "The product is new, but “NEW” alone does not tell the right customer why this launch matters.",
+          body:
+            "Show the new product or collection quickly, then anchor the launch around the change the audience will notice: a new use case, design, bundle, size, category, workflow, or choice. Give the viewer enough context to understand why this release is relevant to them.",
+          noteLabel: "Ad structure",
+          noteBody: "Audience cue -> what is new -> why it matters -> proof or first look -> CTA.",
+          cta: "Create a New Product Launch Ad",
+          image: image(
+            `${productAdImageRoot}/product-ad-video-new-product-launch-shoes.jpg`,
+            "Blue and green running shoes on a bright background for a new-product launch ad concept",
+            5184,
+            3456
+          )
+        }),
+        makeUseCaseCard({
+          title: "Show the Friction Clearly—Then Show the Product Changing That Specific Moment",
+          problem: "The pain point is familiar, but many ads exaggerate it so much that the solution feels disconnected or manipulative.",
+          body:
+            "Use one real problem the audience already recognizes. Do not pile on several unrelated frustrations. Show how the product enters the situation, what changes, and what the viewer can actually observe.",
+          noteLabel: "Ad structure",
+          noteBody: "Recognizable friction -> product action -> visible change -> CTA.",
+          cta: "Create a Problem-Solution Ad",
+          image: image(
+            `${productAdImageRoot}/product-ad-video-problem-solution-cleaning-scene.jpg`,
+            "Adult woman using a spray cleaner on a mirror for a problem-solution product ad scenario",
+            3183,
+            4774
+          )
+        }),
+        makeUseCaseCard({
+          title: "Translate the Feature Into the Buyer's Real Benefit",
+          problem: "The product has a useful feature, but the ad only names it instead of showing why it matters.",
+          body:
+            "Show the feature in context. A control, material, capacity, fit, battery indicator, accessory, design choice, or workflow only becomes persuasive when the viewer understands what it helps them do.",
+          noteLabel: "Ad structure",
+          noteBody: "Audience need -> feature in use -> practical benefit -> proof -> CTA.",
+          cta: "Create a Benefit or Feature Ad",
+          image: image(
+            `${productAdImageRoot}/product-ad-video-benefit-feature-headphones.jpg`,
+            "Adult man presenting wireless headphones for a product feature and benefit ad",
+            5192,
+            3466
+          )
+        }),
+        makeUseCaseCard({
+          title: "Make the Offer Easy to Understand Without Hiding the Conditions",
+          problem: "The offer is strong, but urgency overwhelms the product value or the terms are too vague.",
+          body:
+            "State the real offer, who or what it applies to, and the relevant timing or condition. The discount should accelerate an already understandable product decision—not replace the reason to buy.",
+          noteLabel: "Keep accurate",
+          noteBody: "Product relevance -> real offer -> condition or timing -> next action.",
+          cta: "Create a Limited-Time Offer Ad",
+          image: image(
+            `${productAdImageRoot}/product-ad-video-limited-offer-shopping-response.jpg`,
+            "Adult shopper reacting to a smartphone while holding shopping bags for an offer ad scenario",
+            5184,
+            2920
+          )
+        }),
+        makeUseCaseCard({
+          title: "Compare on the Decision the Buyer Is Actually Making",
+          problem: "The customer is already comparing options, but the ad uses vague “better” language instead of a useful criterion.",
+          body:
+            "Choose one or two legitimate criteria: size, included accessories, workflow, material, compatibility, price structure, portability, maintenance, or another verifiable difference. Do not create a fake competitor weakness simply to make the product win.",
+          noteLabel: "Ad structure",
+          noteBody: "Decision context -> comparison criterion -> evidence -> who it fits -> CTA.",
+          cta: "Create a Comparison Ad",
+          image: image(
+            `${productAdImageRoot}/product-ad-video-comparison-shopping-decision.jpg`,
+            "Adults comparing products on a laptop and smartphone during an online shopping decision",
+            6016,
+            4016
+          )
+        }),
+        makeUseCaseCard({
+          title: "Answer the Reason Someone Might Still Be Hesitating",
+          problem: "The viewer already knows the product, so replaying the awareness ad wastes the second chance.",
+          body:
+            "Use the reminder to reduce remaining uncertainty: size, shipping, return terms, included items, compatibility, proof, price, availability, or a real offer. Retargeting creative should continue the decision instead of restarting the introduction.",
+          noteLabel: "Ad structure",
+          noteBody: "Recognition -> unresolved question -> proof or offer -> return to product.",
+          cta: "Create a Retargeting Reminder Ad",
+          image: image(
+            `${productAdImageRoot}/product-ad-video-retargeting-purchase-reminder.jpg`,
+            "Adult shopper using a smartphone and payment card beside personal-care products for a retargeting ad scenario",
+            6720,
+            4480
+          )
+        })
+      ]
+    },
+    foundation: {
+      eyebrow: "START WITH THE MEDIA DECISION, NOT THE EDIT",
+      title: "A Strong Ad Brief Makes Six Choices Before the First Cut",
+      intro:
+        "Before generating, decide who the ad is for, what decision it should support, and what evidence can carry the message without adding unsupported claims.",
+      leftTitle: "Decide first",
+      leftItems: [
+        "Audience: who is this specific version for?",
+        "Problem or desire: what tension does this audience already understand?",
+        "Product promise: what can the product accurately claim here?",
+        "Proof: what visual or observable evidence supports the promise?",
+        "Offer: is there a real reason to act now, and what are its conditions?",
+        "CTA: what one next action fits this ad?"
+      ],
+      rightTitle: "Keep the brief focused",
+      rightItems: [
+        "Do not write one ad for every possible audience.",
+        "Do not stack several unrelated problems into one opening.",
+        "Do not make a promise that the product evidence cannot support.",
+        "Do not separate the proof from the claim it is meant to support.",
+        "Do not use urgency, discounts, or original prices that are not verified.",
+        "Do not end with several competing destinations or CTAs."
+      ],
+      rightTone: "avoid",
+      expertLabel: "EXPERT TIP",
+      expertTip:
+        "If the ad contains three audiences, five promises, four proofs, two offers, and several CTAs, it probably needs to become several ads—not one “complete” ad."
+    },
+    guidance: {
+      eyebrow: "THE PRODUCT AD MESSAGE",
+      title: "Audience -> Promise -> Proof -> Offer -> CTA",
+      intro: "Make the message easy to follow before making the edit fast.",
+      cards: [
+        guidanceCard({
+          title: "Audience cue",
+          body: "Use the first visual or line to tell the right viewer that this ad is relevant to them."
+        }),
+        guidanceCard({
+          title: "Promise",
+          body: "State the product value in language that can be supported by the product and the approved evidence."
+        }),
+        guidanceCard({
+          title: "Proof",
+          body: "Show the evidence as close as possible to the claim it supports."
+        }),
+        guidanceCard({
+          title: "Offer",
+          body: "Use pricing or urgency only when the terms are real, clear, and relevant to the decision."
+        }),
+        guidanceCard({
+          title: "CTA",
+          body: "End on the next action—not another new selling point."
+        })
+      ]
+    },
+    platformExamples: {
+      eyebrow: "PLACEMENT ADAPTATION",
+      title: "One Campaign Idea Can Need More Than One Finished Cut",
+      intro:
+        "Keep the campaign claim and evidence consistent, but reframe the composition, opening, captions, text-safe areas, and CTA presentation for the intended placement. Validate the current destination requirements at publishing time.",
+      items: [
+        guidanceCard({
+          title: "Vertical-first cut",
+          body: "Use when the target placement is phone-first and vertical-friendly. Keep the main product, person, proof, and essential text readable in a tall frame."
+        }),
+        guidanceCard({
+          title: "Square / flexible-feed cut",
+          body: "Recompose rather than simply crop the vertical version. Make sure the proof and CTA still survive the tighter frame."
+        }),
+        guidanceCard({
+          title: "Horizontal cut",
+          body: "Use the added width intentionally for product context, comparison, demonstration, or scene information instead of leaving the subject isolated in the center."
+        })
+      ]
+    },
+    steps: {
+      eyebrow: "FROM PRODUCT GOAL TO AD DRAFT",
+      title: "Five Steps From Product Goal to Ad Draft",
+      items: [
+        { title: "Choose the ad job", body: "Launch, problem-solution, feature or benefit, offer, comparison, or retargeting." },
+        { title: "Define audience and decision", body: "State who the ad is for and what decision or hesitation it should move." },
+        { title: "Add approved product evidence", body: "Use product images, source clips, real specs, screenshots, offer terms, packaging, or other approved proof." },
+        { title: "Generate the creative draft", body: "Build the ad using only actual myDreamshoots generation capabilities and the intended placement context." },
+        { title: "Review before publishing", body: "Verify claims, price or discount, proof, CTA destination, rights, disclosure, and placement crop." }
+      ],
+      cta: "Create My Product Ad"
+    },
+    value: {
+      eyebrow: "MESSAGE TESTING WITHOUT CHANGING THE FACTS",
+      title: "Test the Angle—Not the Truth",
+      image: image(
+        `${productAdImageRoot}/product-ad-video-skincare-customer-context.jpg`,
+        "Adult woman holding a skincare product in a studio customer-context scene",
+        3648,
+        5472
+      ),
+      items: [
+        {
+          title: "Good variables to test",
+          body: "Opening audience cue, pain point versus aspiration, proof order, first product shot, comparison criterion, CTA wording, and placement crop."
+        },
+        {
+          title: "Facts that must stay consistent",
+          body: "Product functionality, price and offer terms, availability facts, customer quote meaning, before-and-after conditions, and specification data."
+        },
+        {
+          title: "One source library, several angles",
+          body: "Use the same approved product material to test different openings, proof sequences, and destinations without changing what the product actually does."
+        },
+        {
+          title: "Separate variants when the decision changes",
+          body: "If the audience, buying tension, promise, proof, or CTA changes substantially, make a focused variant instead of crowding every angle into one ad."
+        }
+      ]
+    },
+    trust: {
+      eyebrow: "CREATE RESPONSIBLY",
+      title: "An Ad Can Be Persuasive Without Making the Evidence Less Accurate",
+      intro: "Before publishing:",
+      items: [
+        { title: "Verify product facts", body: "Verify product names, models, prices, discounts, availability, and offer dates." },
+        { title: "Use supportable claims", body: "Use only claims the product and approved evidence can support." },
+        { title: "Keep comparisons fair", body: "Show before-and-after evidence under fair, representative conditions and use verifiable comparison criteria." },
+        { title: "Do not fabricate proof", body: "Do not fabricate reviews, ratings, testimonials, customer counts, awards, endorsements, or competitor weaknesses." },
+        { title: "Label stock context honestly", body: "Do not imply that stock imagery shows actual customers, staff, or product results unless that is true." },
+        { title: "Keep material conditions visible", body: "Keep subscription, compatibility, shipping, refill, accessories, returns, and exclusions visible when they affect the decision." },
+        { title: "Review destination rules", body: "Review the destination platform's current rules for realistic AI-generated or altered advertising content." },
+        { title: "Keep the CTA relevant", body: "Make the ad destination and CTA match the promise and decision in the creative." }
+      ]
+    },
+    faq: {
+      eyebrow: "QUESTIONS? WE'VE GOT ANSWERS",
+      title: "Frequently Asked Questions",
+      items: [
+        {
+          question: "What is an AI product ad video generator?",
+          answer: "It helps turn approved product material, a defined audience, a supported product promise, proof, offer, and CTA into product advertising video drafts."
+        },
+        {
+          question: "How is Product Ad Video different from Product Video?",
+          answer: "Product Video helps someone understand the product. Product Ad Video is built around a specific campaign audience and decision, with a focused promise, evidence, and CTA."
+        },
+        {
+          question: "Should every ad include a discount?",
+          answer: "No. A discount is useful only when a real offer is part of the campaign. Product relevance and proof should still make sense without invented urgency."
+        },
+        {
+          question: "How many benefits should one ad include?",
+          answer: "Usually only the benefits needed to support the main buying decision. If several benefits compete for attention, create separate variants around different angles."
+        },
+        {
+          question: "Can I make comparison ads?",
+          answer: "Yes when the comparison uses accurate, verifiable criteria and does not misrepresent another product or brand."
+        },
+        {
+          question: "Can the same ad run everywhere?",
+          answer: "A campaign idea can be reused, but the finished creative may need different framing, text placement, crop, captions, and CTA presentation for different placements."
+        },
+        {
+          question: "Should I add VideoObject structured data?",
+          answer: "Only when the live landing page contains a real, accessible video that meets Google's structured-data requirements. Do not mark a static ad mockup as a video."
+        },
+        {
+          question: "Can I use the result commercially?",
+          answer: "Only state commercial rights supported by the actual myDreamshoots plan and current terms."
+        }
+      ]
+    },
+    finalCta: {
+      eyebrow: "MAKE THE NEXT DECISION CLEARER",
+      title: "Make One Buyer Decision Easier",
+      body: "Choose the audience, the real reason to care, the promise you can support, the proof that makes it believable, and the one next action this ad should earn.",
+      cta: "Create My Product Ad",
+      microcopy: "Use product material and claims you are allowed to publish, and review the finished ad for accuracy before sharing."
     }
   }
 };

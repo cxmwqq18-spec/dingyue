@@ -40,7 +40,7 @@ const copyTargets = {
   homeSeoDescription: "Create AI headshots, portraits, themed photo sets, editing workflows, and supported short video results from your own approved photos. Compare examples and credit costs before you generate.",
   heroHeadline: "Create Professional AI Headshots and Photo Sets Without a Studio",
   heroSubheadline: "Upload a few approved photos and choose the result you want - from professional headshots and portraits to wedding, engagement, seasonal, creative, and supported video workflows. Review the examples and credit cost before generation, then check the finished results in your signed-in workspace before downloading.",
-  heroBulletList: "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|Money-back guarantee - If the generated shoot does not look like you, request a refund review under our Refund Policy. Read the refund policy|Secure account workflow - Uploads, requests, credit review, and galleries stay inside your signed-in account.",
+  heroBulletList: "Training policy - {LIVE_TRAINING_POLICY_STATEMENT}|Source-photo retention - Source photos follow the published {LIVE_SOURCE_MEDIA_RETENTION_DAYS}-day retention period.|Refund review - {LIVE_REFUND_REVIEW_POLICY_STATEMENT} Requests should be submitted within {LIVE_REFUND_WINDOW_DAYS} days.|Secure account workflow - Uploads, requests, credit review, and galleries stay inside your signed-in account.",
   heroHighlightWord: "AI Headshots",
   heroBadge: "AI Headshot Generators",
   heroAuthRibbon: "Review credits before generation",
@@ -49,7 +49,7 @@ const copyTargets = {
   heroSocialProofLabel: "Private uploads, requests, galleries",
   trustedLogoTitle: `Creative workflow examples built with ${brand}`,
   aboutTitle: `What is ${brand}?`,
-  aboutBody: `${brand} is an AI photo and video studio operated by MRNARUEBET LLC. Upload photos you are authorized to use, choose a supported image or video workflow, review the current credit cost, and generate results inside your signed-in workspace. Current workflows include professional headshots, portraits, fan and seasonal images, creative styles, photo-editing tools, and short video options.`,
+  aboutBody: `${brand} is an AI photo and video studio for approved uploads, visible credit review, supported image and video workflows, and private account delivery. The current legal identity and policy facts are maintained in the published site profile.`,
   imageTitle: "Best Photo Generator",
   imageAllLabel: "VIEW ALL PHOTO",
   imageAllHref: "/best-ai-image",
@@ -65,7 +65,7 @@ const copyTargets = {
   pricingSidePanelBody: "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs.",
   packageLabel: "AI PHOTO STUDIOS",
   packageTitle: "AI Photo Packages by Style and Use Case",
-  packageSubtitle: `Browse all 38 ${brand} themes across professional, lifestyle, creative, magic, and photo tools before spending credits.`,
+  packageSubtitle: `Browse the currently published ${brand} themes across professional, lifestyle, creative, magic, and photo tools before spending credits.`,
   directoryLabel: "AI PHOTO THEMED",
   directorySubtitle: "Compare every active theme by category, title, cover, and route before starting a private photo package.",
   reviewTitle: "Workflow examples from myDreamshoots use cases",
@@ -437,16 +437,13 @@ function dedupeRecords(records) {
   );
 }
 
-function collectPageRecords(page, settings, sourcePrefix) {
+function collectPageRecords(page, _settings, sourcePrefix) {
   const records = [];
   const pageJson = page?.publishedJson ?? page?.draftJson ?? page;
   const seo = pageJson?.seo;
   addRecord(records, `${sourcePrefix}:seo`, "seo.title", extractSeoValue(seo, "title"), 0);
   addRecord(records, `${sourcePrefix}:seo`, "seo.description", extractSeoValue(seo, "description"), 1);
 
-  const settingsSeo = settings?.seo?.pages?.[page?.id] ?? settings?.seo?.pages?.[page?.slug];
-  addRecord(records, `${sourcePrefix}:themeSettings.seo`, "seo.title", extractSeoValue(settingsSeo, "title"), 0);
-  addRecord(records, `${sourcePrefix}:themeSettings.seo`, "seo.description", extractSeoValue(settingsSeo, "description"), 1);
   collectVisibleRecordsFromNode(records, `${sourcePrefix}:publishedJson`, pageJson);
   return dedupeRecords(records);
 }

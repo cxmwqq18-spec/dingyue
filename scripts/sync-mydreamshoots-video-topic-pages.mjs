@@ -77,6 +77,12 @@ const videoCategories = [
     label: "Product Video",
     description: "Turn product photos into clear video directions that answer buyer questions about scale, detail, use, features, and packaging.",
     sortOrder: 110
+  },
+  {
+    slug: "product-ad-video",
+    label: "Product Ad Video",
+    description: "Build product ads around one audience, product promise, visual proof, offer, and clear next action.",
+    sortOrder: 120
   }
 ];
 
@@ -160,6 +166,16 @@ const pages = [
     keywords:
       "AI product video generator, product video maker, product showcase video, ecommerce product video, product video from images, product video generator from photos, product page video, product marketing video",
     imageUrl: "/assets/dreamshoot/product-video/product-video-size-scale-backpack.jpg"
+  },
+  {
+    slug: "product-ad-video",
+    title: "Product Ad Video",
+    seoTitle: "AI Product Ad Video Generator – Create Product Ads With Clear Proof & CTA | myDreamshoots",
+    description:
+      "Create product ad videos around a specific audience, problem or desire, product promise, visual proof, offer, and call to action. Plan launch ads, problem-solution ads, benefit ads, offers, comparison ads, and retargeting reminders.",
+    keywords:
+      "AI product ad video generator, product ad video maker, AI product advertising video, product video ad generator, ecommerce video ad maker, social media product ad video, product launch ad video, product marketing video generator",
+    imageUrl: "/assets/dreamshoot/product-ad-video/ai-product-ad-video-new-product-unboxing-creative.jpg"
   }
 ];
 
@@ -331,26 +347,6 @@ function syncPages(state, changes) {
       "ThemePage"
     );
 
-    for (const settingsKey of ["draftJson", "publishedJson"]) {
-      const settings = site.themeSettings?.[settingsKey];
-      const seoPages = settings?.seo?.pages;
-      if (!seoPages) continue;
-      updateRecord(
-        seoPages,
-        {
-          [slug]: {
-            title: pageDefinition.seoTitle,
-            description: pageDefinition.description,
-            keywords: pageDefinition.keywords,
-            canonicalPath: slug,
-            index: true,
-            follow: true
-          }
-        },
-        changes,
-        `ThemeSettings.${settingsKey}.seo.pages`
-      );
-    }
     return page;
   });
 }
@@ -370,20 +366,6 @@ function pruneNonPublicVideoTopicPages(state, changes) {
           before: page.slug
         });
       }
-    }
-  }
-  for (const settingsKey of ["draftJson", "publishedJson"]) {
-    const seoPages = site.themeSettings?.[settingsKey]?.seo?.pages;
-    if (!seoPages) continue;
-    for (const nonPublicPath of nonPublicVideoTopicPaths) {
-      if (!(nonPublicPath in seoPages)) continue;
-      changes.push({
-        targetType: `ThemeSettings.${settingsKey}.seo.pages`,
-        id: SITE_ID,
-        field: nonPublicPath,
-        before: seoPages[nonPublicPath]
-      });
-      delete seoPages[nonPublicPath];
     }
   }
 }

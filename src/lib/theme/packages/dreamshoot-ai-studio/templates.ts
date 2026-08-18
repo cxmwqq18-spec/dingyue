@@ -1,5 +1,4 @@
 import type { SectionBlockInstance, SectionInstance, SectionType, ThemePageJson, ThemeSettingValue } from "@/lib/types";
-import { getDreamshootPublicSeoPageMetadataForSite } from "@/lib/dreamshoot-seo-content";
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
 
 export type MydreamShootsAiStudioTemplateKey =
@@ -38,21 +37,11 @@ function page(pageType: string, sectionsOrder: string[], sections: ThemePageJson
   };
 }
 
-type DreamshootPublicSeoSiteSeed = Parameters<typeof getDreamshootPublicSeoPageMetadataForSite>[0];
-type DreamshootPublicSeoPath = "/creators-circle" | "/partner-registration" | "/about-us" | "/contact-us" | "/best-packages" | "/best-ai-image" | "/best-ai-video";
+type DreamshootPublicSeoSiteSeed = { id: string; slug: string; name: string; primaryDomain: string; branding?: { logoText?: string } };
 
-function seoForPublicPage(path: DreamshootPublicSeoPath, site?: DreamshootPublicSeoSiteSeed): ThemePageJson["seo"] {
-  const metadata = getDreamshootPublicSeoPageMetadataForSite(site, path);
-  if (!metadata) return undefined;
-  return {
-    title: metadata.title,
-    description: metadata.description,
-    canonicalPath: metadata.canonicalPath,
-    robots: {
-      index: metadata.index,
-      follow: metadata.follow
-    }
-  };
+function seoForPublicPage(_path: string, _site?: DreamshootPublicSeoSiteSeed): ThemePageJson["seo"] {
+  // SEO is authored on ThemePage and is intentionally absent from template defaults.
+  return undefined;
 }
 
 function isAidreamcapesTemplateSite(site?: DreamshootPublicSeoSiteSeed): boolean {
@@ -175,8 +164,8 @@ const assets = {
 
 const mydreamshootsTrustedLogoAssetBase = "/assets/dreamshoot/brand/trusted-creators-dark-v2";
 const aidreamcapesTrustedLogoAssetBase = "/assets/sites/site_aidreamcapes/trusted-logos";
-const mydreamshootsAboutBody = "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. Upload photos you are authorized to use, choose a supported image or video workflow, review the current credit cost, and generate results inside your signed-in workspace. Current workflows include professional headshots, portraits, fan and seasonal images, creative styles, photo-editing tools, and short video options.";
-const aidreamcapesAboutBody = "Aidreamcapes is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.";
+const mydreamshootsAboutBody = "myDreamshoots is an AI photo and video studio. Upload photos you are authorized to use, choose a supported workflow, review the current credit cost, and generate results inside your signed-in workspace.";
+const aidreamcapesAboutBody = "Aidreamcapes is an AI photo and video studio: upload your photos, choose a theme, review the published price and credit cost, and download finished results from your private gallery.";
 const mydreamshootsTrustedLogoDefinitions = [
   { key: "ikraddy", name: "iKraddy", file: "01__ikraddy.webp" },
   { key: "beer", name: "Beer", file: "02__beer.webp" },
@@ -297,7 +286,7 @@ const homeSections: ThemePageJson["sections"] = {
       tertiaryImageUrl: assets.gala,
       heroGridImages: [assets.heroGridBusiness, assets.heroGridBeauty, assets.heroGridCyber, assets.heroGridTravel, assets.heroGridSports, assets.heroGridAvatar, assets.heroGridProduct, assets.heroGridVideo, assets.heroGridSocial, assets.heroGridNoir, assets.heroGridUpscale].join("|"),
       bulletList:
-        "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|Money-back guarantee - If the generated shoot does not look like you, request a refund review under our Refund Policy. Read the refund policy|Secure account workflow - Uploads, requests, credit review, and galleries stay inside your signed-in account.",
+        "Training policy - {LIVE_TRAINING_POLICY_STATEMENT}|Source-photo retention - Input photos follow the published {LIVE_SOURCE_MEDIA_RETENTION_DAYS}-day retention period.|Refund policy - {LIVE_REFUND_REVIEW_POLICY_STATEMENT}|Secure account workflow - Uploads, requests, credit review, and galleries stay inside your signed-in account.",
       highlightWord: "AI Headshots",
       heroBadge: "AI Headshot Generators",
       authRibbon: "Review credits before generation",
@@ -363,7 +352,7 @@ const homeSections: ThemePageJson["sections"] = {
       secondaryCta: "View Sports Packs",
       secondaryHref: "/ai-image-generation",
       photos: "Private gallery",
-      credits: "26 credits",
+      credits: "",
       privacy: "Private album",
       includedTitle: "Included outputs",
       includedOutputs: "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
@@ -397,7 +386,7 @@ const homeSections: ThemePageJson["sections"] = {
       secondaryCta: "View Christmas Photos",
       secondaryHref: "/ai-image-generation/christmas-photo",
       photos: "Holiday cards",
-      credits: "20 credits",
+      credits: "",
       privacy: "Private album",
       includedTitle: "Included outputs",
       includedOutputs: "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
@@ -431,7 +420,7 @@ const homeSections: ThemePageJson["sections"] = {
       secondaryCta: "View Thanksgiving Photos",
       secondaryHref: "/ai-image-generation/thanksgiving-photo",
       photos: "Group portraits",
-      credits: "20 credits",
+      credits: "",
       privacy: "Private gallery",
       includedTitle: "Included outputs",
       includedOutputs: "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
@@ -458,7 +447,7 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "packages",
       label: "AI PHOTO STUDIOS",
       title: "AI Photo Packages by Style and Use Case",
-      subtitle: "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
+      subtitle: "Browse all {LIVE_AI_IMAGE_WORKFLOW_COUNT} active myDreamshoots themes before spending credits.",
       directoryLabel: "AI PHOTO THEMED",
       directorySubtitle: "Compare every active theme by category, title, cover, and route before starting a private photo package.",
       tabs: "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal|Creator|Video|Utility",
@@ -467,13 +456,13 @@ const homeSections: ThemePageJson["sections"] = {
       featuredCount: 12
     },
     [
-      block("catalog_worldcup", "catalog_pack", { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "26 credits", imageUrl: assets.galleryWorldCupFanFour, href: "/ai-image-generation/soccer" }),
-      block("catalog_christmas", "catalog_pack", { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "20 credits", imageUrl: assets.galleryChristmasPhotosOne, href: "/ai-image-generation/christmas-photo" }),
-      block("catalog_nightlife", "catalog_pack", { title: "Nightlife", description: "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", category: "Lifestyle & Creative", meta: "Night-out looks", credits: "22 credits", imageUrl: assets.galleryChristmasCoupleOne, href: "/ai-image-generation/nightlife" }),
-      block("catalog_holiday", "catalog_pack", { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: assets.galleryHolidayFallback, href: "/ai-image-generation/holiday" }),
-      block("catalog_creator_vip", "catalog_pack", { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "24 credits", imageUrl: assets.galleryGalaOne, href: "/ai-image-generation/portrait-photo" }),
-      block("catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving Photo", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", category: "Best Themes & Presets", meta: "Group portraits", credits: "20 credits", imageUrl: assets.galleryThanksgivingFallback, href: "/ai-image-generation/thanksgiving-photo" }),
-      block("catalog_halloween", "catalog_pack", { title: "Halloween Photo", description: "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", category: "Best Themes & Presets", meta: "Party albums", credits: "20 credits", imageUrl: assets.galleryHalloweenFallback, href: "/ai-image-generation/halloween-photo" })
+      block("catalog_worldcup", "catalog_pack", { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "", imageUrl: assets.galleryWorldCupFanFour, href: "/ai-image-generation/soccer" }),
+      block("catalog_christmas", "catalog_pack", { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "", imageUrl: assets.galleryChristmasPhotosOne, href: "/ai-image-generation/christmas-photo" }),
+      block("catalog_nightlife", "catalog_pack", { title: "Nightlife", description: "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", category: "Lifestyle & Creative", meta: "Night-out looks", credits: "", imageUrl: assets.galleryChristmasCoupleOne, href: "/ai-image-generation/nightlife" }),
+      block("catalog_holiday", "catalog_pack", { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "", imageUrl: assets.galleryHolidayFallback, href: "/ai-image-generation/holiday" }),
+      block("catalog_creator_vip", "catalog_pack", { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "", imageUrl: assets.galleryGalaOne, href: "/ai-image-generation/portrait-photo" }),
+      block("catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving Photo", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", category: "Best Themes & Presets", meta: "Group portraits", credits: "", imageUrl: assets.galleryThanksgivingFallback, href: "/ai-image-generation/thanksgiving-photo" }),
+      block("catalog_halloween", "catalog_pack", { title: "Halloween Photo", description: "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", category: "Best Themes & Presets", meta: "Party albums", credits: "", imageUrl: assets.galleryHalloweenFallback, href: "/ai-image-generation/halloween-photo" })
     ]
   ),
   generation_showcase_1: section(
@@ -527,7 +516,7 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "package-taxonomy",
       eyebrow: "Photo package library",
       title: "AI Photo Packages by Style and Use Case",
-      subtitle: "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits. Your uploads stay private by default.",
+      subtitle: "Browse all {LIVE_AI_IMAGE_WORKFLOW_COUNT} active myDreamshoots themes before spending credits. Your uploads stay private by default.",
       layout: "editorial"
     },
     [
@@ -678,9 +667,9 @@ const homeSections: ThemePageJson["sections"] = {
     "trust_signal_bar",
     { anchor: "trust", title: "Private safeguards for every AI photo shoot." },
     [
-      block("trust_no_training", "stat", { value: "No AI training on your photos", label: "Your inputs are never used to train models." }),
-      block("trust_auto_delete", "stat", { value: "30-day auto-delete", label: "Input photos automatically delete 30 days after generation." }),
-      block("trust_refund", "stat", { value: "Money-back guarantee", label: "If the generated shoot does not look like you, request a refund review under our Refund Policy.", linkLabel: "Read the refund policy", href: "/refunds" }),
+      block("trust_no_training", "stat", { value: "Training policy", label: "{LIVE_TRAINING_POLICY_STATEMENT}" }),
+      block("trust_auto_delete", "stat", { value: "Source-photo retention", label: "Input photos follow the published {LIVE_SOURCE_MEDIA_RETENTION_DAYS}-day retention period." }),
+      block("trust_refund", "stat", { value: "Refund policy", label: "{LIVE_REFUND_REVIEW_POLICY_STATEMENT}", linkLabel: "Read the refund policy", href: "/refunds" }),
       block("trust_encryption", "stat", { value: "Secure account workflow", label: "Uploads, requests, credit review, and galleries stay inside your signed-in account." })
     ]
   ),
@@ -1043,7 +1032,7 @@ function aidreamcapesHomeHeroSection(): SectionInstance {
         "Upload approved source photos.|Choose fan-scene, game-day, premiere, or holiday albums.|Review credits before generation starts.|Download finished images from your private gallery.",
       highlightWord: "private",
       heroBadge: "AI occasion album studio",
-      authRibbon: "Plans start at $24.50/month",
+      authRibbon: "Plans start at {LIVE_LOWEST_ACTIVE_PLAN_PRICE}",
       authPrimaryLabel: "Continue with Google",
       authEmailPlaceholder: "Email address",
       authButtonLabel: "Create account with email",
@@ -1078,13 +1067,13 @@ function aidreamcapesPackageCatalogSection(): SectionInstance {
       featuredCount: 12
     },
     [
-      block("aidream_catalog_fan", "catalog_pack", { title: "Private fan-scene album", description: "Create original fan-scene portraits and keepsake images from approved source photos without copying public figures, official marks, or protected logos.", category: "Fan Scenes", meta: "Fan albums", credits: "24 credits", imageUrl: aidreamcapesPublicAssets.fan, href: "/collections/private-fan-scene-album" }),
-      block("aidream_catalog_game_day", "catalog_pack", { title: "Game-day group portraits", description: "Turn group photos into private game-day images, watch-party portraits, and personal supporter keepsakes.", category: "Game Day", meta: "Group portraits", credits: "22 credits", imageUrl: aidreamcapesPublicAssets.gameDay, href: "/collections/game-day-group-portraits" }),
-      block("aidream_catalog_premiere", "catalog_pack", { title: "Premiere flash portraits", description: "Create polished premiere-inspired portraits, event-look images, and creator-ready gallery crops.", category: "Premiere", meta: "Flash portraits", credits: "24 credits", imageUrl: aidreamcapesPublicAssets.premiere, href: "/collections/premiere-flash-portraits" }),
-      block("aidream_catalog_christmas", "catalog_pack", { title: "Christmas group album", description: "Build festive portraits, greeting-card images, warm group crops, and private holiday keepsakes.", category: "Christmas", meta: "Holiday album", credits: "20 credits", imageUrl: aidreamcapesPublicAssets.christmas, href: "/collections/christmas-group-album" }),
-      block("aidream_catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving keepsake table set", description: "Create warm table scenes, gratitude cards, Friendsgiving images, and family-style seasonal albums.", category: "Thanksgiving", meta: "Memory set", credits: "20 credits", imageUrl: aidreamcapesPublicAssets.thanksgiving, href: "/collections/thanksgiving-keepsake-table-set" }),
-      block("aidream_catalog_halloween", "catalog_pack", { title: "Halloween party portrait set", description: "Create costume-party portraits, atmospheric group shots, and playful seasonal images from approved photos.", category: "Halloween", meta: "Party portraits", credits: "20 credits", imageUrl: aidreamcapesPublicAssets.halloween, href: "/collections/halloween-party-portrait-set" }),
-      block("aidream_catalog_seasonal", "catalog_pack", { title: "Seasonal celebration photo set", description: "Plan occasion albums for parties, celebrations, gift notes, and private memory pages throughout the year.", category: "Seasonal", meta: "Celebrations", credits: "20 credits", imageUrl: aidreamcapesPublicAssets.seasonal, href: "/collections/seasonal-celebration-photo-set" })
+      block("aidream_catalog_fan", "catalog_pack", { title: "Private fan-scene album", description: "Create original fan-scene portraits and keepsake images from approved source photos without copying public figures, official marks, or protected logos.", category: "Fan Scenes", meta: "Fan albums", credits: "", imageUrl: aidreamcapesPublicAssets.fan, href: "/collections/private-fan-scene-album" }),
+      block("aidream_catalog_game_day", "catalog_pack", { title: "Game-day group portraits", description: "Turn group photos into private game-day images, watch-party portraits, and personal supporter keepsakes.", category: "Game Day", meta: "Group portraits", credits: "", imageUrl: aidreamcapesPublicAssets.gameDay, href: "/collections/game-day-group-portraits" }),
+      block("aidream_catalog_premiere", "catalog_pack", { title: "Premiere flash portraits", description: "Create polished premiere-inspired portraits, event-look images, and creator-ready gallery crops.", category: "Premiere", meta: "Flash portraits", credits: "", imageUrl: aidreamcapesPublicAssets.premiere, href: "/collections/premiere-flash-portraits" }),
+      block("aidream_catalog_christmas", "catalog_pack", { title: "Christmas group album", description: "Build festive portraits, greeting-card images, warm group crops, and private holiday keepsakes.", category: "Christmas", meta: "Holiday album", credits: "", imageUrl: aidreamcapesPublicAssets.christmas, href: "/collections/christmas-group-album" }),
+      block("aidream_catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving keepsake table set", description: "Create warm table scenes, gratitude cards, Friendsgiving images, and family-style seasonal albums.", category: "Thanksgiving", meta: "Memory set", credits: "", imageUrl: aidreamcapesPublicAssets.thanksgiving, href: "/collections/thanksgiving-keepsake-table-set" }),
+      block("aidream_catalog_halloween", "catalog_pack", { title: "Halloween party portrait set", description: "Create costume-party portraits, atmospheric group shots, and playful seasonal images from approved photos.", category: "Halloween", meta: "Party portraits", credits: "", imageUrl: aidreamcapesPublicAssets.halloween, href: "/collections/halloween-party-portrait-set" }),
+      block("aidream_catalog_seasonal", "catalog_pack", { title: "Seasonal celebration photo set", description: "Plan occasion albums for parties, celebrations, gift notes, and private memory pages throughout the year.", category: "Seasonal", meta: "Celebrations", credits: "", imageUrl: aidreamcapesPublicAssets.seasonal, href: "/collections/seasonal-celebration-photo-set" })
     ]
   );
 }
@@ -1945,7 +1934,7 @@ function aidreamcapesFeaturedPackSection(): SectionInstance {
       secondaryCta: "View all themes",
       secondaryHref: "/collections",
       photos: "Private gallery",
-      credits: "20-24 credits",
+      credits: "",
       privacy: "Approved uploads",
       includedTitle: "Recommended directions",
       includedOutputs: "Game-day group portraits|Watch-party and supporter scenes|Christmas holiday albums|Card-ready festive crops|Premiere-inspired portraits|Private occasion keepsakes",
@@ -1982,7 +1971,7 @@ function aidreamcapesFeaturedChristmasSection(): SectionInstance {
       secondaryCta: "Browse Christmas albums",
       secondaryHref: "/collections/christmas-holiday-albums",
       photos: "Group album",
-      credits: "22 credits",
+      credits: "",
       privacy: "Permission-safe",
       includedTitle: "Included outputs",
       includedOutputs: "Festive group portraits|Christmas album scenes|Card cover images|Cozy winter crops|Greeting album visuals|Private downloads|Family-style keepsakes|Account-only gallery",
@@ -2019,7 +2008,7 @@ function aidreamcapesFeaturedThanksgivingSection(): SectionInstance {
       secondaryCta: "Browse Thanksgiving sets",
       secondaryHref: "/collections/thanksgiving-memory-sets",
       photos: "Keepsake set",
-      credits: "20 credits",
+      credits: "",
       privacy: "Private delivery",
       includedTitle: "Included outputs",
       includedOutputs: "Gratitude portraits|Dinner-table warmth|Friendsgiving memories|Group-friendly keepsakes|Host story crops|Seasonal card images|Private album covers|Download-ready visuals",
@@ -2219,7 +2208,7 @@ function aidreamcapesPartnerRegistrationPage(site?: DreamshootPublicSeoSiteSeed)
         tone: "dark",
         imageUrl: aidreamcapesPublicAssets.seasonal,
         primaryCta: "Email partnership details",
-        primaryHref: "mailto:support@aidreamcapes.com?subject=Aidreamcapes%20partner%20application",
+        primaryHref: "/contact-us",
         secondaryCta: "Back to Creators Circle",
         secondaryHref: "/creators-circle"
       }, [
@@ -2295,8 +2284,8 @@ function aidreamcapesAboutPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJso
 }
 
 function aidreamcapesContactPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJson {
-  const supportEmail = "support@aidreamcapes.com";
-  const companyAddress = "30 N GOULD ST STE R,SHERIDAN,WY 82801";
+  const supportEmail = "";
+  const companyAddress = "";
   return page(
     "content",
     ["contact_intro_1", "contact_details_1", "conversion_1"],
@@ -2309,7 +2298,7 @@ function aidreamcapesContactPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJ
         tone: "dark",
         imageUrl: aidreamcapesPublicAssets.thanksgiving,
         primaryCta: "Email support",
-        primaryHref: `mailto:${supportEmail}`,
+        primaryHref: "/contact-us",
         secondaryCta: "View FAQ",
         secondaryHref: "/faq"
       }, [
@@ -2320,7 +2309,7 @@ function aidreamcapesContactPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJ
       contact_details_1: section("policy_content", {
         title: "Contact information",
         headingLevel: "h2",
-        lastUpdated: "June 28, 2026",
+        lastUpdated: "{LIVE_POLICY_EFFECTIVE_DATE}",
         contactEmail: supportEmail,
         body: `<h3>Company</h3><p>Aidreamcapes.com</p><h3>Address</h3><p>${companyAddress}</p><h3>Contact Us</h3><p><a href="mailto:${supportEmail}">${supportEmail}</a></p>`
       }),
@@ -2713,20 +2702,20 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         tone: "dark",
         imageUrl: assets.catalogHeadshotCard,
         primaryCta: "Email support",
-        primaryHref: "mailto:support@mydreamshoots.com",
+        primaryHref: "/contact-us",
         secondaryCta: "Email support",
-        secondaryHref: "mailto:support@mydreamshoots.com"
+        secondaryHref: "/faq"
       }, [
-        block("contact_support", "rich_text_card", { meta: "Support", title: "support@mydreamshoots.com", description: "For account access, billing review, credit questions, upload help, privacy requests, and delivered album support." }),
-        block("contact_account", "rich_text_card", { meta: "Account help", title: "support@mydreamshoots.com", description: "For plan questions, creator use cases, billing review, credits, and private album delivery help." }),
-        block("contact_address", "rich_text_card", { meta: "Address", title: "8 THE GREEN STE B,DOVER,DE 19901", description: "Address for myDreamshoots.com business correspondence." })
+        block("contact_support", "rich_text_card", { meta: "Support", title: "", description: "For account access, billing review, credit questions, upload help, privacy requests, and delivered album support." }),
+        block("contact_account", "rich_text_card", { meta: "Company", title: "", description: "Published company identity for legal and account correspondence." }),
+        block("contact_address", "rich_text_card", { meta: "Address", title: "", description: "Published address for business correspondence." })
       ]),
       contact_details_1: section("policy_content", {
         title: "Contact information",
         headingLevel: "h2",
-        lastUpdated: "June 28, 2026",
-        contactEmail: "support@mydreamshoots.com",
-        body: "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B,DOVER,DE 19901</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>"
+        lastUpdated: "{LIVE_POLICY_EFFECTIVE_DATE}",
+        contactEmail: "",
+        body: "<h3>Company</h3><p>{LIVE_LEGAL_NAME}</p><h3>Address</h3><p>{LIVE_STORE_ADDRESS}</p><h3>Contact Us</h3><p>{LIVE_SUPPORT_EMAIL}</p>"
       }),
       conversion_1: homeSections.conversion_1
     },
@@ -2939,10 +2928,10 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           youtubeUrl: "https://www.youtube.com/@blydey-inc",
           twitterUrl: "",
           showPaymentIcons: true,
-          companyName: "myDreamshoots.com",
-          contactAddress: "8 THE GREEN STE B,DOVER,DE 19901",
+          companyName: "",
+          contactAddress: "",
           contactPhone: "",
-          contactEmail: "support@mydreamshoots.com",
+          contactEmail: "",
           taxIdLabel: "",
           taxId: "",
           salesEmail: "",

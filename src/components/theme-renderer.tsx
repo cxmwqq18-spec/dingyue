@@ -89,19 +89,6 @@ function Link(props: StorefrontInstantLinkProps) {
   return <StorefrontInstantLink {...props} />;
 }
 
-function spanishStorefrontSupportEmail(site: Pick<Site, "primaryDomain">, configuredEmail = ""): string {
-  const host = cleanHost(site.primaryDomain).replace(/^www\./, "");
-  const fallback = host ? `support@${host}` : "";
-  const configured = configuredEmail.trim();
-  if (
-    configured.includes("@") &&
-    !/(?:mydreamshoots|aidreamcapes)\.com|localhost/i.test(configured)
-  ) {
-    return configured;
-  }
-  return fallback;
-}
-
 const dreamShootsVisibleTitle = "myᕲreamshoots";
 const aidreamcapesVisibleTitle = "ልiጋreamርapes";
 
@@ -132,6 +119,8 @@ import {
 } from "@/lib/photo-package-taxonomy";
 import { isMydreamshootsPublicVideoGenerationTopicSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationThemeSeeds, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { talkingPhotoContent } from "@/lib/talking-photo-content";
+import { isPublicPrice, projectPublicPricingOffers, resolveStorefrontBindings, selectOfferPrice } from "@/lib/storefront-context/core";
+import type { ResolvedOffer, StorefrontContext } from "@/lib/storefront-context/types";
 import { themeValueToList, themeValueToString } from "@/lib/theme-values";
 import type {
   CreativePack,
@@ -203,7 +192,8 @@ export function ThemeRenderer({
   routeMode = "path",
   lightweightChrome = false,
   previewSelection,
-  previewEmptyState
+  previewEmptyState,
+  storefrontContext
 }: {
   site: Site;
   page: ThemePageJson;
@@ -231,6 +221,7 @@ export function ThemeRenderer({
     blockId?: string;
   };
   previewEmptyState?: ReactNode;
+  storefrontContext?: StorefrontContext;
 }) {
   const displaySite = mode === "published" ? storefrontPaidSiteCopy(site) : site;
   const displayPage = mode === "published" ? storefrontBrandPageCopy(displaySite, page) : page;
@@ -326,6 +317,7 @@ export function ThemeRenderer({
                 previewSelection={previewSelection}
                 products={products}
                 renderContext={renderContext}
+                storefrontContext={storefrontContext}
                 runtime={runtime}
                 section={section}
                 site={routedSite}
@@ -364,7 +356,7 @@ export function ThemeRenderer({
           }}
           {...previewSelectedAttrs(previewSelection, "footer_plus")}
         >
-          <ThemeGlobalFooter lightweight={lightweightChrome} site={routedSite} settings={settings} />
+          <ThemeGlobalFooter lightweight={lightweightChrome} site={routedSite} settings={settings} storefrontContext={storefrontContext} />
         </div>
       </div>
     </StorefrontLinkPrefetchProvider>
@@ -386,6 +378,7 @@ type ThemeSectionFrameProps = {
   lazyRender?: boolean;
   mode: "published" | "preview";
   renderContext: RenderContext;
+  storefrontContext?: StorefrontContext;
   previewSelection?: {
     sectionId?: string;
     blockId?: string;
@@ -415,6 +408,7 @@ export type StorefrontSectionPayload = {
     videoThemes?: VideoTheme[];
   };
   renderContext: RenderContext;
+  storefrontContext?: StorefrontContext;
   routeMode: StorefrontRouteMode;
   runtime?: ThemeRuntimeData;
   section: SectionInstance;
@@ -423,10 +417,10 @@ export type StorefrontSectionPayload = {
 
 type SiteProduct = ReturnType<typeof import("@/lib/data").getSiteProducts>[number];
 type HomepageMetrics = {
-  categoryCount: number;
-  workflowCount: number;
-  activeHomepagePackageCount: number;
-  lowestActivePlanPriceLabel: string;
+  categoryCount?: number;
+  workflowCount?: number;
+  activeHomepagePackageCount?: number;
+  lowestActivePlanPriceLabel?: string;
 };
 
 const MYDREAMSHOOTS_HOMEPAGE_HERO_GRID_ALTS = [
@@ -727,7 +721,7 @@ function runtimeWithOnlyShellState(runtime: ThemeRuntimeData): ThemeRuntimeData 
   };
 }
 
-export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, runtime, lazyRender = false, mode, renderContext, previewSelection }: ThemeSectionFrameProps) {
+export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
   const sectionType = canonicalSectionType(section.type);
   const lazyStyle: CSSProperties | undefined = lazyRender
     ? {
@@ -753,6 +747,7 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
           mode={mode}
           products={sectionTypesUsingProducts.has(sectionType) ? products : []}
           renderContext={renderContext}
+          storefrontContext={storefrontContext}
           runtime={runtimeForSection(section, runtime)}
           section={sectionType === section.type ? section : { ...section, type: sectionType }}
           site={site}
@@ -777,10 +772,13 @@ export function LazyStorefrontSectionMount(payload: StorefrontSectionPayload) {
     videoThemes: []
   };
   const site = payload.clientSite ?? payload.site;
+  const activePackIds = payload.storefrontContext
+    ? new Set(payload.storefrontContext.catalog.activePacks.map((pack) => pack.id))
+    : undefined;
   return (
     <ThemeSectionFrame
       creativePackCategories={renderData.creativePackCategories}
-      creativePacks={renderData.creativePacks}
+      creativePacks={activePackIds ? renderData.creativePacks.filter((pack) => activePackIds.has(pack.id)) : renderData.creativePacks}
       id={payload.id}
       lazyRender={false}
       mode={payload.mode}
@@ -790,6 +788,7 @@ export function LazyStorefrontSectionMount(payload: StorefrontSectionPayload) {
       section={payload.section}
       site={site}
       siteAiApps={renderData.siteAiApps}
+      storefrontContext={payload.storefrontContext}
       toolMenuItems={renderData.toolMenuItems}
       videoThemeCategories={renderData.videoThemeCategories ?? []}
       videoThemes={renderData.videoThemes ?? []}
@@ -1716,7 +1715,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   );
 }
 
-export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lightweight?: boolean; site: Site; settings: ThemeSettings }) {
+export function ThemeGlobalFooter({ lightweight = false, site, settings, storefrontContext }: { lightweight?: boolean; site: Site; settings: ThemeSettings; storefrontContext?: StorefrontContext }) {
   const footer = settings.globalSections?.footer;
   const saasFooter = saasGlobalSection(settings, "footer_plus");
   const title = footer ? setting(footer, "title", site.branding.logoText) : site.branding.logoText;
@@ -1738,37 +1737,21 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
       : title || readableFooterTitle;
   const tagline = storefrontPaidToolText(footer ? setting(footer, "tagline", site.branding.market) : site.branding.market);
   const body = storefrontPaidToolText(footer ? setting(footer, "body", site.branding.description) : site.branding.description);
-  const companyNameFallback = spanishXbyFooter ? "" : isAidreamcapesFooter ? "Aidreamcapes.com" : isDreamShootFooter ? "myDreamshoots.com" : "";
-  const contactAddressFallback = spanishXbyFooter ? "" : isAidreamcapesFooter ? "30 N GOULD ST STE R,SHERIDAN,WY 82801" : isDreamShootFooter ? "8 THE GREEN STE B,DOVER,DE 19901" : "";
-  const contactPhoneFallback = "";
-  const configuredContactEmail = footer ? setting(footer, "contactEmail", "") : "";
-  const contactEmailFallback = spanishXbyFooter ? spanishStorefrontSupportEmail(site, configuredContactEmail) : isAidreamcapesFooter ? "support@aidreamcapes.com" : isDreamShootFooter ? "support@mydreamshoots.com" : "";
-  const taxIdFallback = "";
-  const taxIdLabel = isDreamShootFooter ? "EIN / Tax ID" : "Tax ID";
-  const salesEmailFallback = "";
-  const companyName = spanishXbyFooter
-    ? footer ? setting(footer, "companyName", companyNameFallback) : companyNameFallback
-    : isDreamShootFooter || isAidreamcapesFooter ? companyNameFallback : footer ? setting(footer, "companyName", companyNameFallback) : companyNameFallback;
-  const contactAddress = spanishXbyFooter
-    ? footer ? setting(footer, "contactAddress", contactAddressFallback) : contactAddressFallback
-    : isDreamShootFooter || isAidreamcapesFooter ? contactAddressFallback : footer ? setting(footer, "contactAddress", contactAddressFallback) : contactAddressFallback;
-  const contactPhone = spanishXbyFooter
-    ? footer ? setting(footer, "contactPhone", contactPhoneFallback) : contactPhoneFallback
-    : isDreamShootFooter || isAidreamcapesFooter ? contactPhoneFallback : footer ? setting(footer, "contactPhone", contactPhoneFallback) : contactPhoneFallback;
-  const contactEmail = spanishXbyFooter
-    ? spanishStorefrontSupportEmail(site, configuredContactEmail)
-    : isDreamShootFooter || isAidreamcapesFooter ? contactEmailFallback : footer ? setting(footer, "contactEmail", contactEmailFallback) : contactEmailFallback;
-  const taxId = spanishXbyFooter
-    ? footer ? setting(footer, "taxId", taxIdFallback) : taxIdFallback
-    : isDreamShootFooter || isAidreamcapesFooter ? taxIdFallback : footer ? setting(footer, "taxId", taxIdFallback) : taxIdFallback;
-  const salesEmail = spanishXbyFooter || isDreamShootFooter || isAidreamcapesFooter ? "" : footer ? setting(footer, "salesEmail", salesEmailFallback) : salesEmailFallback;
+  const identity = storefrontContext?.profile?.identity;
+  const companyName = identity?.legalName?.trim() ?? "";
+  const contactAddress = identity?.address
+    ? [identity.address.line1, identity.address.line2, identity.address.city, identity.address.region, identity.address.postalCode, identity.address.country]
+        .map((part) => part?.trim())
+        .filter(Boolean)
+        .join(", ")
+    : "";
+  const contactPhone = identity?.phone?.trim() ?? "";
+  const contactEmail = identity?.supportEmail?.trim() ?? "";
   const contactItems = [
     companyName ? { label: spanishXbyFooter ? "Empresa" : "Company", value: companyName, href: "" } : null,
     contactAddress ? { label: spanishXbyFooter ? "Direccion de empresa" : isDreamShootFooter || isAidreamcapesFooter ? "Address" : "Company address", value: contactAddress, href: "" } : null,
     contactPhone ? { label: spanishXbyFooter ? "Telefono" : "Phone", value: contactPhone, href: `tel:${contactPhone.replace(/[^+\d]/g, "")}` } : null,
     contactEmail ? { label: spanishXbyFooter ? "Soporte" : isDreamShootFooter || isAidreamcapesFooter ? "Contact Us" : "Support", value: contactEmail, href: `mailto:${contactEmail}` } : null,
-    taxId ? { label: taxIdLabel, value: taxId, href: "" } : null,
-    salesEmail ? { label: spanishXbyFooter ? "Ventas" : "Sales", value: salesEmail, href: `mailto:${salesEmail}` } : null
   ].filter(Boolean) as Array<{ label: string; value: string; href: string }>;
   const configuredFooterLogoImageUrl = footer ? setting(footer, "logoImageUrl", "") : "";
   const brandingFooterLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
@@ -1989,44 +1972,15 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
     : semanticSupportLinks.length
       ? semanticSupportLinks
       : links.slice(Math.min(4, links.length));
-  const defaultSocialUrls = isAidreamcapesFooter
-    ? {
-        instagramUrl: "https://www.instagram.com/aidreamcapes",
-        facebookUrl: "https://www.facebook.com/aidreamcapes",
-        pinterestUrl: "https://www.pinterest.com/aidreamcapes",
-        youtubeUrl: "https://www.youtube.com/@aidreamcapes",
-        threadsUrl: "",
-        twitterUrl: "https://x.com/aidreamcapes"
-      }
-    : isDreamShootFooter
-      ? {
-          instagramUrl: "https://www.instagram.com/blydey_inc",
-          facebookUrl: "https://www.facebook.com/blydeyinc",
-          pinterestUrl: "https://www.pinterest.com/Blydeyinc",
-          youtubeUrl: "https://www.youtube.com/@blydey-inc",
-          threadsUrl: "https://www.threads.com/@blydey_inc",
-          twitterUrl: ""
-        }
-      : {
-          instagramUrl: "",
-          facebookUrl: "",
-          pinterestUrl: "",
-          youtubeUrl: "",
-          threadsUrl: "",
-          twitterUrl: ""
-        };
-	  const socialHref = (key: keyof typeof defaultSocialUrls) => {
-	    const value = footer ? setting(footer, key, "") : "";
-	    if (spanishXbyFooter && /\b(?:aidreamcapes|mydreamshoots)\b/i.test(value) && !/-xby/i.test(value)) return "";
-	    return value || defaultSocialUrls[key];
-	  };
+  const profileSocials = identity?.sameAs ?? [];
+  const socialHref = (pattern: RegExp) => profileSocials.find((url) => pattern.test(url)) ?? "";
   const socialLinks = [
-    { label: "Instagram", href: socialHref("instagramUrl"), icon: Instagram },
-    { label: "Facebook", href: socialHref("facebookUrl"), icon: Facebook },
-    { label: "Threads", href: socialHref("threadsUrl"), icon: AtSign },
-    { label: "Pinterest", href: socialHref("pinterestUrl"), icon: Pin },
-    { label: "YouTube", href: socialHref("youtubeUrl"), icon: Youtube },
-    { label: "X", href: socialHref("twitterUrl"), icon: Twitter }
+    { label: "Instagram", href: socialHref(/instagram\.com/i), icon: Instagram },
+    { label: "Facebook", href: socialHref(/facebook\.com/i), icon: Facebook },
+    { label: "Threads", href: socialHref(/threads\.(?:com|net)/i), icon: AtSign },
+    { label: "Pinterest", href: socialHref(/pinterest\./i), icon: Pin },
+    { label: "YouTube", href: socialHref(/youtube\.com/i), icon: Youtube },
+    { label: "X", href: socialHref(/(?:^|\.)x\.com/i), icon: Twitter }
   ].filter((item) => item.href);
   const showPaymentIconsValue = footer?.settings.showPaymentIcons;
   const showPaymentIcons = showPaymentIconsValue === undefined ? true : showPaymentIconsValue !== false && showPaymentIconsValue !== "false";
@@ -2065,12 +2019,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings }: { lig
         { label: isAidreamcapesFooter ? "CISA" : "DPDPA", href: "/state-privacy" }
       ]
     : [];
-  const rawCopyright = footer ? setting(footer, "copyright", "All rights reserved.") : "All rights reserved.";
-  const normalizedCopyright = !spanishXbyFooter && isDreamShootFooter
-    ? "© 2026 myDreamshoots.com. All rights reserved."
-    : !spanishXbyFooter && isAidreamcapesFooter
-      ? "© 2026 Aidreamcapes.com. All rights reserved."
-      : rawCopyright;
+  const normalizedCopyright = `© ${new Date().getUTCFullYear()} ${readableFooterTitle}. All rights reserved.`;
   const brandMark =
     readableFooterTitle
       .split(/\s+/)
@@ -3676,15 +3625,6 @@ function priceMetaString(price: SiteProduct["prices"][number] | undefined, key: 
   return fallback;
 }
 
-function priceMetaLines(price: SiteProduct["prices"][number] | undefined, key: string): string[] {
-  const raw = price?.metadata?.[key];
-  if (typeof raw !== "string") return [];
-  return raw
-    .split(/\r?\n/g)
-    .map((line) => line.trim())
-    .filter(Boolean);
-}
-
 function priceMetaBool(price: SiteProduct["prices"][number] | undefined, key: string, fallback: boolean): boolean {
   const raw = price?.metadata?.[key];
   if (typeof raw === "boolean") return raw;
@@ -3821,6 +3761,13 @@ function hrefFor(site: Site, href: string): string {
     return routedSitePath(site, "/ai-image-generation");
   }
   return routedSitePath(site, href);
+}
+
+function blogArticleBodyHtmlForSite(site: Site, html: string): string {
+  return html.replace(/\bhref=(["'])(\/(?!\/)[^"']*)\1/gi, (match, quote: string, href: string) => {
+    const routedHref = hrefFor(site, href);
+    return match.replace(`${quote}${href}${quote}`, `${quote}${routedHref}${quote}`);
+  });
 }
 
 function hrefForPage(site: Site, href: string, pagePath: string): string {
@@ -3985,7 +3932,7 @@ function activeCreativePacksForCollectionSlug(creativePacks: CreativePack[], slu
   const selectedSlug = dreamshootCategorySlug(slug);
   if (!selectedSlug) return [];
   return creativePacks.filter((pack) => {
-    if (pack.status !== "active") return false;
+    if (pack.status !== "active" || pack.creditCost <= 0 || pack.outputCount <= 0) return false;
     return creativePackCollectionTokens(pack).includes(selectedSlug);
   });
 }
@@ -4912,6 +4859,18 @@ function articleHeadingsFromHtml(html: string): Array<{ id?: string; label: stri
   return headings.slice(0, 8);
 }
 
+function blogArticleRelatedLinks(section: SectionInstance): Array<{ label: string; href: string }> {
+  const value = section.settings.relatedLinks;
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((item) => {
+    if (!item || typeof item !== "object" || Array.isArray(item)) return [];
+    const label = typeof item.label === "string" ? item.label.trim() : "";
+    const href = typeof item.href === "string" ? item.href.trim() : "";
+    if (!label || !href.startsWith("/") || href.startsWith("//")) return [];
+    return [{ label, href }];
+  }).slice(0, 3);
+}
+
 function blogArticleCardsForSite(site: Site, currentPath = ""): BlogArticleCard[] {
   return site.pages
     .filter((page) => page.slug.startsWith("/blog/") && page.slug !== currentPath)
@@ -5080,22 +5039,24 @@ function billingCycleFromQuery(query: Record<string, string | string[] | undefin
   return "month";
 }
 
-function selectedCartProduct(site: Site, products: SiteProduct[], query: Record<string, string | string[] | undefined>) {
-  const active = activeProducts(products);
+function selectedCartOffers(site: Site, storefrontContext: StorefrontContext | undefined, query: Record<string, string | string[] | undefined>): ResolvedOffer[] {
+  const active = storefrontContext?.offers.active ?? [];
   const selectedProductId = dreamshootCategorySlug(queryValue(query.product));
   const selectedPriceId = dreamshootCategorySlug(queryValue(query.price));
   const billingCycle = billingCycleFromQuery(query);
-  const product =
-    active.find((item) => {
-      const productMatches = dreamshootCategorySlug(item.id) === selectedProductId || (isSpanishXbySite(site) && publicProductToken(item) === selectedProductId);
-      const priceMatches = item.prices.some((price) => dreamshootCategorySlug(price.id) === selectedPriceId || (isSpanishXbySite(site) && publicPriceToken(price, item) === selectedPriceId));
-      return productMatches || priceMatches;
-    }) ??
-    active[0];
-  const price =
-    product?.prices.find((item) => dreamshootCategorySlug(item.id) === selectedPriceId || (isSpanishXbySite(site) && publicPriceToken(item, product) === selectedPriceId)) ??
-    (product ? productPriceForBilling(product, billingCycle) : undefined);
-  return { product, price };
+  const productMatches = (offer: ResolvedOffer) => dreamshootCategorySlug(offer.product.id) === selectedProductId || (isSpanishXbySite(site) && publicProductToken(offer.product) === selectedProductId);
+  const priceMatches = (offer: ResolvedOffer) => dreamshootCategorySlug(offer.price.id) === selectedPriceId || (isSpanishXbySite(site) && publicPriceToken(offer.price, offer.product) === selectedPriceId);
+  if (selectedPriceId) {
+    const selected = active.find((offer) => priceMatches(offer) && (!selectedProductId || productMatches(offer)));
+    return selected ? [selected] : [];
+  }
+  if (selectedProductId) {
+    const selected = active.find((offer) => productMatches(offer) && offer.price.interval === billingCycle);
+    return selected ? [selected] : [];
+  }
+  return active
+    .filter((offer) => offer.product.type === "subscription" && offer.price.interval === billingCycle)
+    .slice(0, 2);
 }
 
 function _collectionPageCards(
@@ -5150,16 +5111,6 @@ const aidreamcapesFallbackHeroImages = [
   `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/fan-scene-albums.webp?v=${aidreamcapesFanHolidayAssetVersion}`,
   `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/game-day-group-photos.webp?v=${aidreamcapesFanHolidayAssetVersion}`,
   `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/christmas-holiday-albums.webp?v=${aidreamcapesFanHolidayAssetVersion}`
-];
-
-const aidreamcapesFallbackCatalogCardsSeed: Array<{ id: string; title: string; category: string; description: string; meta: string; credits: string; imageUrl: string; href: string }> = [
-  { id: "aidream_fallback_fan_scene", title: "Fan-Scene Albums", category: "Fan Scenes", description: "Private meetup-style moments, supporter photo walls, and original star-adjacent album images.", meta: "Private album", credits: "24 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/fan-scene-albums.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/fan-scene-albums" },
-  { id: "aidream_fallback_game_day", title: "Game-Day Group Portraits", category: "Game Day", description: "Arena-inspired group portraits, watch-party images, and supporter albums without official marks.", meta: "Group portraits", credits: "24 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/game-day-group-photos.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/game-day-group-photos" },
-  { id: "aidream_fallback_premiere", title: "Premiere-Inspired Portrait Sets", category: "Premiere", description: "Flash-lit VIP mood, formal arrival portraits, and polished private creator images.", meta: "VIP mood", credits: "24 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/premiere-style-portraits.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/premiere-style-portraits" },
-  { id: "aidream_fallback_christmas", title: "Christmas Holiday Albums", category: "Christmas", description: "Festive group photos, card-ready crops, and cozy private holiday album images.", meta: "Holiday album", credits: "22 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/christmas-holiday-albums.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/christmas-holiday-albums" },
-  { id: "aidream_fallback_thanksgiving", title: "Thanksgiving Keepsake Sets", category: "Thanksgiving", description: "Warm gratitude portraits, Friendsgiving scenes, and family-style private keepsakes.", meta: "Keepsake set", credits: "20 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/thanksgiving-memory-sets.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/thanksgiving-memory-sets" },
-  { id: "aidream_fallback_halloween", title: "Halloween Party Portraits", category: "Halloween", description: "Original costume-friendly group portraits, dramatic color, and spooky seasonal albums.", meta: "Party portraits", credits: "22 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/halloween-party-portraits.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/halloween-party-portraits" },
-  { id: "aidream_fallback_seasonal", title: "Seasonal Celebration Photos", category: "Seasonal", description: "Birthday, New Year, family occasion, and rotating holiday albums in one private workflow.", meta: "Occasion photos", credits: "20 credits", imageUrl: `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/seasonal-celebration-photos.webp?v=${aidreamcapesFanHolidayAssetVersion}`, href: "/collections/seasonal-celebration-photos" }
 ];
 
 const myDreamShootsCatalogCategoryHrefOverrides: DreamshootCategoryHrefOverrides = {
@@ -5467,7 +5418,7 @@ function dreamshootCategoryPreviewImageSet(site: Site, categoryImageUrl: string,
 }
 
 function dreamshootPackPhotoCountLabel(pack: CreativePack): string {
-  return `${pack.outputCount || 20} Photos`;
+  return pack.outputCount > 0 ? `${pack.outputCount} Photos` : "";
 }
 
 function dreamshootPackUsesLabel(pack: CreativePack): string | undefined {
@@ -5574,9 +5525,9 @@ function profileTaxonomyDetailFields(
   profile: StorefrontPackageProfile,
   relatedPacks: CreativePack[]
 ): Pick<PackageTaxonomyCard, "detailBestFor" | "detailCreates" | "detailReviewPoints" | "detailStats" | "detailWorkflow"> {
-  const packageLabel = relatedPacks.length === 1 ? "1 package theme" : `${relatedPacks.length || 1} package themes`;
-  const outputTotal = relatedPacks.reduce((sum, pack) => sum + (pack.outputCount || 0), 0);
-  const creditRange = rangeLabel(relatedPacks.map((pack) => pack.creditCost || 0), "credits");
+  const packageLabel = relatedPacks.length === 1 ? "1 package theme" : relatedPacks.length ? `${relatedPacks.length} package themes` : "Package themes";
+  const outputTotal = relatedPacks.reduce((sum, pack) => sum + pack.outputCount, 0);
+  const creditRange = rangeLabel(relatedPacks.map((pack) => pack.creditCost), "credits");
   const reviewPoints = profileReviewPoints(profile);
   return {
     detailStats: [
@@ -5598,9 +5549,9 @@ function aidreamcapesTaxonomyDetailFields(
 ): Pick<PackageTaxonomyCard, "detailBestFor" | "detailCreates" | "detailReviewPoints" | "detailStats" | "detailWorkflow"> {
   const packNames = relatedPacks.map((pack) => pack.name).filter(Boolean);
   const exampleNames = packNames.slice(0, 5);
-  const packageLabel = relatedPacks.length === 1 ? "1 package theme" : `${relatedPacks.length || 1} package themes`;
-  const outputTotal = relatedPacks.reduce((sum, pack) => sum + (pack.outputCount || 0), 0);
-  const creditRange = rangeLabel(relatedPacks.map((pack) => pack.creditCost || 0), "credits");
+  const packageLabel = relatedPacks.length === 1 ? "1 package theme" : relatedPacks.length ? `${relatedPacks.length} package themes` : "Package themes";
+  const outputTotal = relatedPacks.reduce((sum, pack) => sum + pack.outputCount, 0);
+  const creditRange = rangeLabel(relatedPacks.map((pack) => pack.creditCost), "credits");
   const outputLabel = outputTotal ? `${outputTotal} gallery images` : "Private gallery review";
   const packageExamples = exampleNames.length ? exampleNames.join(", ") : card.title;
   return {
@@ -6813,19 +6764,15 @@ function richTextHtml(section: SectionInstance, key: string, fallback: string): 
 }
 
 function productPrice(product: SiteProduct): SiteProduct["prices"][number] | undefined {
-  return product.prices.find((price) => price.interval === "month")
-    ?? product.prices.find((price) => price.interval === "quarter")
-    ?? product.prices.find((price) => price.interval === "half_year")
-    ?? product.prices.find((price) => price.interval === "year")
-    ?? product.prices[0];
+  return product.prices.find((price) => price.interval === "month" && isPublicPrice(price))
+    ?? product.prices.find((price) => price.interval === "quarter" && isPublicPrice(price))
+    ?? product.prices.find((price) => price.interval === "half_year" && isPublicPrice(price))
+    ?? product.prices.find((price) => price.interval === "year" && isPublicPrice(price))
+    ?? product.prices.find((price) => price.interval === "one_time" && isPublicPrice(price));
 }
 
 function productPriceForBilling(product: SiteProduct, cycle: BillingCycle): SiteProduct["prices"][number] | undefined {
-  return product.prices.find((price) => price.interval === cycle) ?? productPrice(product);
-}
-
-function productHasBillingCycle(product: SiteProduct, cycle: BillingCycle): boolean {
-  return product.prices.some((price) => price.interval === cycle);
+  return product.prices.find((price) => price.interval === cycle && isPublicPrice(price));
 }
 
 function pricePeriodLabel(price: SiteProduct["prices"][number] | undefined): string {
@@ -6846,8 +6793,8 @@ function priceCreditsLabel(price: SiteProduct["prices"][number] | undefined): st
   return `${price.creditsGranted} one-time credits`;
 }
 
-function creditsImageEstimateLabel(price: SiteProduct["prices"][number] | undefined, perImageCredits = 24): string {
-  if (!price || price.creditsGranted <= 0) return "";
+function creditsImageEstimateLabel(price: SiteProduct["prices"][number] | undefined, perImageCredits?: number): string {
+  if (!price || price.creditsGranted <= 0 || !perImageCredits || perImageCredits <= 0) return "";
   const estimatedImages = Math.floor(price.creditsGranted / perImageCredits);
   if (estimatedImages <= 0) return `Less than one ${perImageCredits}-credit image`;
   return `About ${estimatedImages} image${estimatedImages === 1 ? "" : "s"} at ${perImageCredits} credits each`;
@@ -6863,9 +6810,9 @@ function localizedPriceCreditsLabel(site: Site, price: SiteProduct["prices"][num
   return `${price.creditsGranted} creditos de recarga`;
 }
 
-function localizedCreditsImageEstimateLabel(site: Site, price: SiteProduct["prices"][number] | undefined, perImageCredits = 24): string {
+function localizedCreditsImageEstimateLabel(site: Site, price: SiteProduct["prices"][number] | undefined, perImageCredits?: number): string {
   if (!isSpanishXbySite(site)) return creditsImageEstimateLabel(price, perImageCredits);
-  if (!price || price.creditsGranted <= 0) return "";
+  if (!price || price.creditsGranted <= 0 || !perImageCredits || perImageCredits <= 0) return "";
   const estimatedImages = Math.floor(price.creditsGranted / perImageCredits);
   if (estimatedImages <= 0) return `Menos de una imagen de ${perImageCredits} creditos`;
   return `Unas ${estimatedImages} imagenes a ${perImageCredits} creditos cada una`;
@@ -6891,9 +6838,13 @@ function productImageAltForSite(site: Site, product: SiteProduct, index: number)
   const category = spanish
     ? product.type === "subscription" ? "suscripcion de creditos" : "paquete de creditos"
     : product.type === "subscription" ? "credit subscription" : "credit package";
-  const description = spanish
-    ? `${product.name} ofrece ${price?.creditsGranted ?? 0} creditos para crear fotos IA y entregarlas en una galeria privada.`
-    : `${product.name} provides ${price?.creditsGranted ?? 0} credits for creating AI photos and delivering them in a private gallery.`;
+  const description = price
+    ? spanish
+      ? `${product.name} ofrece ${price.creditsGranted} creditos para crear fotos IA y entregarlas en una galeria privada.`
+      : `${product.name} provides ${price.creditsGranted} credits for creating AI photos and delivering them in a private gallery.`
+    : spanish
+      ? `${product.name} es un plan para crear fotos IA y entregarlas en una galeria privada.`
+      : `${product.name} is a plan for creating AI photos and delivering them in a private gallery.`;
   return cardImageAltForSite(site, {
     category,
     description,
@@ -6923,59 +6874,42 @@ function productHref(site: Site, product: SiteProduct): string {
 }
 
 function activeProducts(products: SiteProduct[]): SiteProduct[] {
-  const active = products.filter((product) => product.status === "active");
-  return active.length ? active : products;
+  return products.filter((product) => product.status === "active" && product.prices.some((price) => isPublicPrice(price)));
 }
 
 function activeSubscriptionProducts(products: SiteProduct[]): SiteProduct[] {
-  const activeSubscriptions = products.filter((product) => product.type === "subscription" && product.status === "active");
-  return activeSubscriptions.length ? activeSubscriptions : activeProducts(products).filter((product) => product.type === "subscription");
-}
-
-function lowestActiveSubscriptionPriceLabel(products: SiteProduct[]): string {
-  const subscriptionProducts = activeSubscriptionProducts(products);
-  const prices = subscriptionProducts.flatMap((product) =>
-    product.prices
-      .filter((price) => price.amountCents > 0)
-      .map((price) => ({ product, price }))
-  );
-  const monthlyPrices = prices.filter(({ price }) => price.interval === "month");
-  const source = monthlyPrices.length ? monthlyPrices : prices;
-  const lowest = [...source].sort((left, right) => left.price.amountCents - right.price.amountCents)[0]?.price;
-  if (!lowest) return "the current lowest active price";
-  if (lowest.interval === "month") return `${formatCurrency(lowest.amountCents, lowest.currency)}/month`;
-  if (lowest.interval === "quarter") return `${formatCurrency(lowest.amountCents, lowest.currency)}/3 months`;
-  if (lowest.interval === "half_year") return `${formatCurrency(lowest.amountCents, lowest.currency)}/6 months`;
-  if (lowest.interval === "year") return `${formatCurrency(lowest.amountCents, lowest.currency)}/year`;
-  return formatCurrency(lowest.amountCents, lowest.currency);
+  return activeProducts(products).filter((product) => product.type === "subscription");
 }
 
 function homepageMetricsForSite({
   creativePackCategories,
-  creativePacks,
-  products
+  storefrontContext
 }: {
   creativePackCategories?: CreativePackCategory[];
-  creativePacks?: CreativePack[];
-  products?: SiteProduct[];
+  storefrontContext?: StorefrontContext;
 }): HomepageMetrics {
   const categoryCount = (creativePackCategories ?? []).filter((category) => category.status === "active").length;
-  const workflowCount = (creativePacks ?? []).filter((pack) => pack.status === "active").length;
+  const workflowCount = storefrontContext?.catalog.activeImageWorkflowCount ?? 0;
+  const resolvedPrice = storefrontContext?.offers.lowestPublicMonthlySubscriptionPrice;
   return {
-    categoryCount,
-    workflowCount,
-    activeHomepagePackageCount: Math.min(16, workflowCount || (creativePacks ?? []).length),
-    lowestActivePlanPriceLabel: lowestActiveSubscriptionPriceLabel(products ?? [])
+    categoryCount: categoryCount > 0 ? categoryCount : undefined,
+    workflowCount: workflowCount > 0 ? workflowCount : undefined,
+    activeHomepagePackageCount: workflowCount > 0 ? Math.min(16, workflowCount) : undefined,
+    lowestActivePlanPriceLabel: resolvedPrice ? `${resolvedPrice.formattedPrice}/month` : undefined
   };
 }
 
 function homepageMetricText(value: string, metrics: HomepageMetrics): string {
-  return value
-    .replace(/\{LIVE_AI_IMAGE_CATEGORY_COUNT\}/g, String(metrics.categoryCount || 0))
-    .replace(/\{LIVE_AI_IMAGE_WORKFLOW_COUNT\}/g, String(metrics.workflowCount || 0))
-    .replace(/\{LIVE_AI_IMAGE_THEME_COUNT\}/g, String(metrics.workflowCount || 0))
-    .replace(/\{LIVE_ACTIVE_HOMEPAGE_PACKAGE_COUNT\}/g, String(metrics.activeHomepagePackageCount || 0))
-    .replace(/\{LIVE_LOWEST_ACTIVE_PLAN_PRICE\}/g, metrics.lowestActivePlanPriceLabel);
+  const values: Record<string, string | undefined> = {
+    LIVE_AI_IMAGE_CATEGORY_COUNT: metrics.categoryCount ? String(metrics.categoryCount) : undefined,
+    LIVE_AI_IMAGE_WORKFLOW_COUNT: metrics.workflowCount ? String(metrics.workflowCount) : undefined,
+    LIVE_AI_IMAGE_THEME_COUNT: metrics.workflowCount ? String(metrics.workflowCount) : undefined,
+    LIVE_ACTIVE_HOMEPAGE_PACKAGE_COUNT: metrics.activeHomepagePackageCount ? String(metrics.activeHomepagePackageCount) : undefined,
+    LIVE_LOWEST_ACTIVE_PLAN_PRICE: metrics.lowestActivePlanPriceLabel
+  };
+  const tokens = Array.from(value.matchAll(/\{(LIVE_[A-Z0-9_]+)\}/g), (match) => match[1]);
+  if (tokens.some((token) => !values[token])) return "";
+  return value.replace(/\{(LIVE_[A-Z0-9_]+)\}/g, (_match, token: string) => values[token] ?? "");
 }
 
 function homepageMetricBlockValue(block: SectionBlockInstance, key: string, metrics: HomepageMetrics): string {
@@ -7135,71 +7069,13 @@ function dreamshootCatalogCardFromBlock(site: Site, block: SectionBlockInstance)
     description: blockValue(block, "description", "A private AI shoot package with album-ready outputs."),
     category: blockValue(block, "category", "Package"),
     meta: blockValue(block, "meta", "Private gallery"),
-	    credits: blockValue(block, "credits", "20 credits"),
+	    credits: blockValue(block, "credits", ""),
 	    imageAlt: blockValue(block, "imageAlt", ""),
 	    imageUrl: mediaAssetUrl(site, blockValue(block, "imageUrl", packImages.creator)),
     href: blockValue(block, "href", collectionHref(title)),
     kind: "package",
     filterTokens: [blockValue(block, "category", "Package"), title, blockValue(block, "href", collectionHref(title))]
   };
-}
-
-function defaultDreamshootCatalogCards(site: Site): DreamShootCatalogCard[] {
-  const card = (id: string, title: string, category: string, description: string, meta: string, credits: string, imageUrl: string, href: string) =>
-    dreamshootCatalogCardFromBlock(site, { id, type: "catalog_pack", settings: { title, category, description, meta, credits, imageUrl, href } });
-  return [
-    card("catalog_worldcup", "Soccer", "Lifestyle & Creative", "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", "Fan meetups", "26 credits", packImages.sports, "/ai-image-generation/soccer"),
-    card("catalog_christmas", "Christmas Photos", "Christmas", "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", "Holiday cards", "20 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", "/ai-image-generation/christmas-photo"),
-    card("catalog_nightlife", "Nightlife", "Lifestyle & Creative", "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", "Night-out looks", "22 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp", "/ai-image-generation/nightlife"),
-    card("catalog_holiday", "Holiday", "Seasonal", "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", "Seasonal albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", "/ai-image-generation/holiday"),
-    card("catalog_creator_vip", "Portrait Photo", "Professional", "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", "Red-carpet looks", "24 credits", "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", "/ai-image-generation/portrait-photo"),
-    card("catalog_thanksgiving", "Thanksgiving Photo", "Best Themes & Presets", "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", "Group portraits", "20 credits", "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1", "/ai-image-generation/thanksgiving-photo"),
-    card("catalog_halloween", "Halloween Photo", "Best Themes & Presets", "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", "Party albums", "20 credits", "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1", "/ai-image-generation/halloween-photo"),
-    card("catalog_headshot", "Headshot", "Professional", "Create work-ready headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles. Not for passports, official IDs, impersonation, or representing someone without permission.", "Work profiles", "20 credits", packImages.headshots, "/ai-image-generation/headshot"),
-    card("catalog_hairstyle", "Hairstyle Generator", "Magic", "Preview haircut, color, and styling ideas before you commit to a salon change or full image package. Visual preview only; not an exact real-world result guarantee.", "Style preview", "18 credits", packImages.beauty, "/ai-image-generation/hairstyle-generator"),
-    card("catalog_cyberpunk", "Cyberpunk", "Creative", "Turn your selfie into a neon city portrait with night lights, futuristic styling, and high-contrast poster crops.", "Neon portraits", "26 credits", packImages.creative, "/ai-image-generation/cyberpunk"),
-    card("catalog_gala", "Gala Photo", "Professional", "Create formal evening portraits with black-tie styling and red-carpet-style lighting from your own photos.", "Evening portraits", "24 credits", packImages.gala, "/ai-image-generation/gala-photo"),
-    card("catalog_travel", "Travel", "Lifestyle & Creative", "Create outdoor profile photos, creator scenes, and personal-brand images from your own photos.", "Lifestyle scenes", "24 credits", packImages.travel, "/ai-image-generation/travel"),
-    card("catalog_wedding", "Wedding Photo", "Best Themes & Presets", "Create wedding-inspired portraits, couple-style scenes, and save-the-date visuals for personal ideas and albums.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/sample-wedding-trip.png", "/ai-image-generation/wedding-photo"),
-    card("catalog_rich_lifestyle", "Rich Lifestyle", "Lifestyle & Creative", "Create upscale lifestyle portraits from photos you own or have permission to use.", "Personal concepts", "24 credits", "/assets/dreamshoot/frames/story-wedding-look.png", "/ai-image-generation/rich-lifestyle"),
-    card("catalog_christmas", "Christmas Photos", "Seasonal", "Create festive portraits for holiday cards, profile photos, family-style posts, and seasonal albums.", "Seasonal album", "20 credits", "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", "/ai-image-generation/christmas-photo"),
-    card("catalog_creator", "Portrait Photo", "Professional", "Generate fresh profile portraits for newsletters, landing pages, thumbnails, media kits, and social profiles.", "Creator profiles", "24 credits", packImages.creator, "/ai-image-generation/portrait-photo"),
-    card("catalog_avatar", "Avatar", "Professional", "Create stylized avatar concepts for profiles, fan communities, and playful identity updates.", "Avatar concepts", "24 credits", packImages.avatar, "/ai-image-generation/avatar"),
-    card("catalog_fashion", "Fashion Editorial", "Beauty", "Preview outfit and styling directions on your own image before choosing a full photo set. Visual preview only; not an exact fit guarantee.", "Style preview", "24 credits", packImages.fashion, "/ai-image-generation/street-style"),
-    card("catalog_nature", "Nature adventure", "Outdoor", "Place your portrait into outdoor scenes such as beaches, mountains, city streets, and scenic backdrops.", "Outdoor-inspired", "18 credits", packImages.travel, "/ai-image-generation/travel"),
-    card("catalog_mafia", "Noir portraits", "Creative", "Create dramatic noir-style character portraits from photos you own or have permission to use.", "Character scenes", "22 credits", packImages.gala, "/ai-image-generation/mafia"),
-    card("catalog_profile", "Avatar", "Professional", "Social profile cards, avatar crops, and clean personal introduction visuals.", "Profile cards", "20 credits", packImages.headshots, "/ai-image-generation/avatar"),
-    card("catalog_product", "Background Changer", "Photo Tools", "Product-style scenes and creator-led lifestyle images for simple campaigns.", "Product scenes", "22 credits", packImages.copy, "/ai-image-generation/background-changer")
-  ];
-}
-
-function defaultAidreamcapesCatalogCards(
-  site: Site,
-  creativePacks: CreativePack[] = [],
-  creativePackCategories: CreativePackCategory[] = []
-): DreamShootCatalogCard[] {
-  return aidreamcapesFallbackCatalogCardsSeed.map((card) => {
-    const catalogCard = dreamshootCatalogCardFromBlock(site, {
-      id: card.id,
-      type: "catalog_pack",
-      settings: {
-        title: card.title,
-        category: card.category,
-        description: card.description,
-        meta: card.meta,
-        credits: card.credits,
-        imageUrl: card.imageUrl,
-        href: card.href
-      }
-    });
-    const relatedPacks = relatedPacksForTaxonomyCard(site, creativePacks, creativePackCategories, catalogCard.id, catalogCard.href);
-    const imageUrls = dreamshootCategoryPreviewImageSet(site, catalogCard.imageUrl, relatedPacks, 2);
-    return {
-      ...catalogCard,
-      imageUrl: imageUrls[0] ?? catalogCard.imageUrl,
-      imageUrls: imageUrls.length ? imageUrls : [catalogCard.imageUrl]
-    };
-  });
 }
 
 function dreamshootFeaturedCatalogScore(card: DreamShootCatalogCard): number {
@@ -7280,6 +7156,7 @@ function renderLegacySaasSection({
   creativePacks,
   mode,
   renderContext,
+  storefrontContext,
   siteAiApps
 }: {
   id: string;
@@ -7289,6 +7166,7 @@ function renderLegacySaasSection({
   creativePacks: CreativePack[];
   mode: "published" | "preview";
   renderContext: RenderContext;
+  storefrontContext?: StorefrontContext;
   siteAiApps: ReturnType<typeof import("@/lib/data").getSiteAiApps>;
 }) {
   const type = String(section.type);
@@ -7695,48 +7573,40 @@ function renderLegacySaasSection({
 
   if (type === "cart") {
     const spanishCart = isSpanishXbySite(site);
-    const active = activeProducts(products);
     const selectedProductId = queryValue(renderContext.query.product);
     const selectedPriceId = queryValue(renderContext.query.price);
     const hasExplicitSelection = Boolean(selectedProductId || selectedPriceId);
-    const { product: selectedProduct, price: selectedPrice } = selectedCartProduct(site, products, renderContext.query);
-    const productsForCart = hasExplicitSelection && selectedProduct ? [selectedProduct] : active.slice(0, 2);
-    const estimatedCredits = productsForCart.reduce((sum, product) => {
-      const linePrice = product.id === selectedProduct?.id ? selectedPrice : productPrice(product);
-      return sum + (linePrice?.creditsGranted ?? 0);
-    }, 0);
-    const estimatedAmount = productsForCart.reduce((sum, product) => {
-      const linePrice = product.id === selectedProduct?.id ? selectedPrice : productPrice(product);
-      return sum + (linePrice?.amountCents ?? 0);
-    }, 0);
-    const currency = selectedPrice?.currency ?? productsForCart[0]?.prices[0]?.currency ?? site.currency;
+    const offersForCart = selectedCartOffers(site, storefrontContext, renderContext.query);
+    const selectedOffer = hasExplicitSelection ? offersForCart[0] : undefined;
+    const estimatedCredits = offersForCart.reduce((sum, offer) => sum + offer.price.creditsGranted, 0);
+    const estimatedAmount = offersForCart.reduce((sum, offer) => sum + offer.price.amountCents, 0);
+    const currency = offersForCart[0]?.price.currency ?? site.currency;
     return (
       <section className="px-5 py-14" data-saas-section-renderer={type} id={sectionAnchor(section, id)}>
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 lg:grid-cols-[1fr_360px]">
           <div className="rounded-[1.4rem] border border-black/10 bg-white shadow-[0_24px_70px_-58px_rgba(24,24,27,0.22)]">
             <div className="border-b border-black/10 p-5">
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{spanishCart ? "Resumen de pago" : "Checkout summary"}</p>
-              <h1 className="mt-3 text-3xl font-semibold tracking-tight">{productsForCart.length ? spanishCart ? "Tu plan seleccionado" : "Your selected plan" : spanishCart ? "Elige un plan primero" : "Choose a plan first"}</h1>
+              <h1 className="mt-3 text-3xl font-semibold tracking-tight">{offersForCart.length ? spanishCart ? "Tu plan seleccionado" : "Your selected plan" : spanishCart ? "Elige un plan primero" : "Choose a plan first"}</h1>
               <p className="mt-2 text-sm leading-6 text-zinc-500">
                 {spanishCart ? "Revisa plan, creditos e importe antes de continuar con el flujo privado." : "Review your selected collection, credit grant, and checkout amount before the private album workflow begins."}
               </p>
             </div>
             <div className="divide-y divide-black/10">
-              {productsForCart.map((product, index) => {
-                const price = product.id === selectedProduct?.id ? selectedPrice ?? productPrice(product) : productPrice(product);
+              {offersForCart.map(({ product, price }, index) => {
                 return (
                   <div className="grid gap-4 p-5 sm:grid-cols-[96px_1fr_auto] sm:items-center" key={product.id}>
                     <img className="aspect-square rounded-[0.9rem] object-cover" src={productImage(site, product, index)} alt={productImageAltForSite(site, product, index)} />
                     <div>
                       <p className="font-semibold">{product.name}</p>
-                      <p className="mt-1 text-sm text-zinc-500">{price?.creditsGranted ?? 0} {spanishCart ? "creditos" : "credits"}</p>
-                      {product.id === selectedProduct?.id && hasExplicitSelection ? <p className="mt-1 text-xs font-mono text-[var(--site-accent)]">{spanishCart ? "Seleccionado desde precios/busqueda" : "Selected from pricing/search"}</p> : null}
+                      <p className="mt-1 text-sm text-zinc-500">{price.creditsGranted} {spanishCart ? "creditos" : "credits"}</p>
+                      {product.id === selectedOffer?.product.id && hasExplicitSelection ? <p className="mt-1 text-xs font-mono text-[var(--site-accent)]">{spanishCart ? "Seleccionado desde precios/busqueda" : "Selected from pricing/search"}</p> : null}
                     </div>
                     <p className="font-mono">{price ? formatCurrency(price.amountCents, price.currency) : ""}</p>
                   </div>
                 );
               })}
-              {!productsForCart.length ? (
+              {!offersForCart.length ? (
                 <div className="p-8 text-sm text-zinc-500">{spanishCart ? "Abre precios para elegir una suscripcion o paquete de creditos." : "Open pricing to select a subscription or credit pack."}</div>
               ) : null}
             </div>
@@ -7750,11 +7620,11 @@ function renderLegacySaasSection({
             <div className="mt-6 rounded-[1rem] border border-white/10 bg-white/[0.05] p-4">
               <div className="flex items-center justify-between gap-3 text-sm">
                 <span className="text-white/64">{spanishCart ? "Articulos" : "Items"}</span>
-                <span>{productsForCart.length}</span>
+                <span>{offersForCart.length}</span>
               </div>
               <div className="mt-3 flex items-center justify-between gap-3 text-sm">
                 <span className="text-white/64">{spanishCart ? "Creditos" : "Credits"}</span>
-                <span>{estimatedCredits}</span>
+                <span>{offersForCart.length ? estimatedCredits : "--"}</span>
               </div>
               <div className="mt-3 flex items-center justify-between gap-3 text-sm">
                 <span className="text-white/64">{spanishCart ? "Importe" : "Amount"}</span>
@@ -7811,15 +7681,24 @@ function renderLegacySaasSection({
     const updatedAt = articleDateLabel(setting(section, "updatedAt", ""));
     const readMinutes = articleReadTimeLabel(setting(section, "readMinutes", "6"));
     const body = setting(section, "body", "<p>Photo planning guidance appears here.</p>");
+    const routedBody = blogArticleBodyHtmlForSite(site, body);
     const tags = articleTags(setting(section, "tags", setting(section, "guideType", "")));
     const headings = articleHeadingsFromHtml(body);
     const coverImage = mediaAssetUrl(site, setting(section, "imageUrl", fallbackImageForSeed(`${site.slug}-${slugify(renderContext.pagePath)}-article`)));
-    const relatedArticles = blogArticleCardsForSite(site, renderContext.pagePath).slice(0, 3);
+    const explicitRelatedLinks = blogArticleRelatedLinks(section);
+    const relatedLinks = explicitRelatedLinks.length
+      ? explicitRelatedLinks
+      : blogArticleCardsForSite(site, renderContext.pagePath).slice(0, 3).map((article) => ({
+          label: article.targetLabel || article.title,
+          href: article.href
+        }));
     const HeadingTag = setting(section, "headingLevel", "h1") === "h2" ? "h2" : "h1";
     const primaryCta = setting(section, "primaryCta", isAidreamcapesSite(site) ? "Start an occasion album" : "Create my first photo set");
     const _primaryHref = setting(section, "primaryHref", "/login");
     const targetHref = setting(section, "targetHref", setting(section, "secondaryHref", setting(section, "primaryHref", "")));
     const targetLabel = setting(section, "targetLabel", setting(section, "secondaryCta", primaryCta || "Open related page"));
+    const secondaryTargetHref = setting(section, "secondaryTargetHref", "");
+    const secondaryTargetLabel = setting(section, "secondaryTargetLabel", "");
 
     return (
       <section className="bg-[#F5F8FB] px-5 py-14 text-slate-900 md:py-18" data-saas-section-renderer={type} id={sectionAnchor(section, id)}>
@@ -7839,11 +7718,21 @@ function renderLegacySaasSection({
             <HeadingTag className="mt-5 text-4xl font-bold text-[var(--site-accent)] md:text-6xl">{title}</HeadingTag>
             {summary ? <p className="mt-5 text-lg font-medium leading-8 text-slate-700 md:text-xl md:leading-9">{summary}</p> : null}
             {updatedAt && updatedAt !== publishedAt ? <p className="mt-3 text-sm text-slate-500">Updated {updatedAt}</p> : null}
-            {targetHref ? (
-              <Link className="mt-6 inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[var(--site-accent)]" href={hrefFor(site, targetHref)}>
-                {targetLabel || "Open related page"}
-                <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-              </Link>
+            {targetHref || secondaryTargetHref ? (
+              <div className="mt-6 flex flex-wrap gap-3" data-blog-article-actions="true">
+                {targetHref ? (
+                  <Link className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[var(--site-accent)]" href={hrefFor(site, targetHref)}>
+                    {targetLabel || "Open related page"}
+                    <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+                  </Link>
+                ) : null}
+                {secondaryTargetHref && secondaryTargetLabel ? (
+                  <Link className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5 hover:border-[var(--site-accent)] hover:text-[var(--site-accent)]" href={hrefFor(site, secondaryTargetHref)}>
+                    {secondaryTargetLabel}
+                    <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
+                  </Link>
+                ) : null}
+              </div>
             ) : null}
           </header>
 
@@ -7880,18 +7769,18 @@ function renderLegacySaasSection({
           ) : null}
 
           <div
-            className="mx-auto mt-8 max-w-3xl text-lg leading-9 text-slate-700 [&_a]:font-semibold [&_a]:text-[var(--site-accent)] [&_a]:underline [&_blockquote]:my-7 [&_blockquote]:border-l-4 [&_blockquote]:border-[var(--site-accent)] [&_blockquote]:bg-white [&_blockquote]:px-5 [&_blockquote]:py-4 [&_h2]:mb-4 [&_h2]:mt-12 [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-[var(--site-accent)] [&_h3]:mb-3 [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-[var(--site-accent)] [&_li]:mb-2 [&_ol]:my-5 [&_ol]:pl-6 [&_p]:mb-6 [&_strong]:font-bold [&_strong]:text-slate-900 [&_table]:my-8 [&_table]:w-full [&_table]:overflow-hidden [&_table]:rounded-lg [&_table]:border [&_table]:border-slate-200 [&_td]:border-t [&_td]:border-slate-200 [&_td]:bg-white [&_td]:p-3 [&_th]:bg-white [&_th]:p-3 [&_th]:text-left [&_th]:font-bold [&_th]:text-slate-900 [&_ul]:my-5 [&_ul]:pl-6"
-            dangerouslySetInnerHTML={{ __html: body }}
+            className="mx-auto mt-8 max-w-3xl text-lg leading-9 text-slate-700 [&_a]:font-semibold [&_a]:text-[var(--site-accent)] [&_a]:underline [&_blockquote]:my-7 [&_blockquote]:border-l-4 [&_blockquote]:border-[var(--site-accent)] [&_blockquote]:bg-white [&_blockquote]:px-5 [&_blockquote]:py-4 [&_h2]:mb-4 [&_h2]:mt-12 [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-[var(--site-accent)] [&_h3]:mb-3 [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-[var(--site-accent)] [&_li]:mb-2 [&_ol]:my-5 [&_ol]:pl-6 [&_p]:mb-6 [&_strong]:font-bold [&_strong]:text-slate-900 [&_table]:my-8 [&_table]:table-fixed [&_table]:max-w-full [&_table]:w-full [&_table]:rounded-lg [&_table]:border [&_table]:border-slate-200 [&_table]:text-sm md:[&_table]:text-base [&_td]:break-words [&_td]:border-t [&_td]:border-slate-200 [&_td]:bg-white [&_td]:p-2 md:[&_td]:p-3 [&_td]:align-top [&_th]:break-words [&_th]:bg-white [&_th]:p-2 md:[&_th]:p-3 [&_th]:text-left [&_th]:font-bold [&_th]:text-slate-900 [&_th]:align-top [&_ul]:my-5 [&_ul]:pl-6"
+            dangerouslySetInnerHTML={{ __html: routedBody }}
           />
 
-          {relatedArticles.length ? (
+          {relatedLinks.length ? (
             <nav className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center gap-x-3 gap-y-2 border-t border-slate-200 pt-5 text-sm text-slate-600" aria-label="More guides">
               <span className="font-semibold uppercase tracking-[0.12em] text-slate-500">More guides</span>
-              {relatedArticles.map((article, index) => (
-                <span className="inline-flex items-center gap-x-3" key={article.id}>
+              {relatedLinks.map((link, index) => (
+                <span className="inline-flex items-center gap-x-3" key={`${link.href}-${link.label}`}>
                   {index > 0 ? <span className="text-slate-300">/</span> : null}
-                  <Link className="font-semibold text-slate-900 underline-offset-4 transition hover:text-[var(--site-accent)] hover:underline" href={hrefFor(site, article.href)}>
-                    {article.targetLabel || article.title}
+                  <Link className="font-semibold text-slate-900 underline-offset-4 transition hover:text-[var(--site-accent)] hover:underline" href={hrefFor(site, link.href)}>
+                    {link.label}
                   </Link>
                 </span>
               ))}
@@ -8253,35 +8142,34 @@ function renderLegacySaasSection({
 function PricingTableSectionView({
   section,
   site,
-  products,
   renderContext,
+  storefrontContext,
   embedded = false
 }: {
   section: SectionInstance;
   site: Site;
-  products: SiteProduct[];
   renderContext: RenderContext;
+  storefrontContext?: StorefrontContext;
   embedded?: boolean;
 }) {
   const aidreamcapes = isAidreamcapesSite(site);
   const spanishXbyPricing = isSpanishXbySite(site);
   const configuredFeaturedProductId = selectorIdSetting(section, "featuredProductId", "");
-  const activeSubscriptionProducts = products.filter((product) => product.type === "subscription" && product.status === "active");
-  const displayProducts = (activeSubscriptionProducts.length ? activeSubscriptionProducts : activeProducts(products)).slice(0, 3);
+  const displayProducts = Array.from(new Map(
+    projectPublicPricingOffers(storefrontContext).map((offer) => [offer.product.id, offer.product] as const)
+  ).values());
+  const offerFor = (productId: string, cycle: BillingCycle) => storefrontContext
+    ? selectOfferPrice(storefrontContext, productId, cycle)
+    : undefined;
   const billingCycle = billingCycleFromQuery(renderContext.query);
   const canShowBillingSwitch = displayProducts.some((product) =>
-    productHasBillingCycle(product, "quarter") || productHasBillingCycle(product, "half_year")
+    offerFor(product.id, "quarter") || offerFor(product.id, "half_year")
   );
   const featuredProductIdsByCycle = billingCycles.reduce<Record<BillingCycle, string | undefined>>((acc, cycle) => {
     acc[cycle] =
-      displayProducts.find((product) => product.id === configuredFeaturedProductId)?.id ??
-      displayProducts.find((product) => priceMetaBool(productPriceForBilling(product, cycle), "featured", false))?.id ??
-      displayProducts[0]?.id;
-    return acc;
-  }, { month: undefined, quarter: undefined, half_year: undefined });
-  const featuredPricesByCycle = billingCycles.reduce<Record<BillingCycle, SiteProduct["prices"][number] | undefined>>((acc, cycle) => {
-    const featuredProduct = displayProducts.find((product) => product.id === featuredProductIdsByCycle[cycle]);
-    acc[cycle] = featuredProduct ? productPriceForBilling(featuredProduct, cycle) : undefined;
+      displayProducts.find((product) => product.id === configuredFeaturedProductId && offerFor(product.id, cycle))?.id ??
+      displayProducts.find((product) => priceMetaBool(offerFor(product.id, cycle)?.price, "featured", false))?.id ??
+      displayProducts.find((product) => offerFor(product.id, cycle))?.id;
     return acc;
   }, { month: undefined, quarter: undefined, half_year: undefined });
   const pricingPlans = displayProducts.map((product) => {
@@ -8300,9 +8188,8 @@ function PricingTableSectionView({
       buttonLabel: string;
       cartHref: string;
     }>>>((acc, cycle) => {
-      const price = productPriceForBilling(product, cycle);
+      const price = offerFor(product.id, cycle)?.price;
       if (!price) return acc;
-      const occasionCount = priceMetaNumber(price, aidreamcapes ? "occasionCount" : "destinationCount", product.name === "Deluxe" ? 999 : product.name === "Premium" ? 4 : 2);
       const featured = product.id === featuredProductIdsByCycle[cycle];
       const originalAmountCents = priceMetaNumber(price, "originalAmountCents", 0);
       const discountLabel = priceMetaString(price, "discountLabel", "");
@@ -8317,63 +8204,9 @@ function PricingTableSectionView({
               ? Math.round(price.amountCents / 12)
               : 0;
       const bestValue = priceMetaBool(price, "bestValue", false);
-      const planSubtitle = priceMetaString(
-        price,
-        "planSubtitle",
-        spanishXbyPricing
-          ? aidreamcapes
-            ? "Creditos para probar albumes privados de fans y recuerdos festivos."
-            : "Creditos para probar perfiles, retratos y albumes privados."
-          : product.name === "Starter"
-            ? "Start with one focused headshot, beauty, or profile set"
-            : product.name === "Pro" || product.name === "Popular"
-              ? "Compare several package styles with room for reruns"
-              : "More credits for premium packs, video add-ons, and repeat campaigns"
-      );
-      const defaultFeatures = spanishXbyPricing ? [
-        localizedPriceCreditsLabel(site, price),
-        localizedCreditsImageEstimateLabel(site, price),
-        aidreamcapes ? "Crea albumes privados de fans y recuerdos festivos" : "Crea albumes privados despues de generar",
-        aidreamcapes ? "Editor de albumes con prompts" : "Editor de fotos con prompts",
-        "Filtros especiales con IA",
-        "Crea fotos escribiendo prompts en segundos",
-        "Crea videos con IA",
-        "Mejora magica para imagenes de alta resolucion",
-        "Sin marca de agua",
-        ...(product.name === "Premium" || product.name === "Deluxe" ? ["Salidas 4K de alta calidad"] : []),
-        ...(occasionCount >= 999 ? ["Direcciones de estilo ilimitadas"] : [])
-      ] : [
-        localizedPriceCreditsLabel(site, price),
-        localizedCreditsImageEstimateLabel(site, price),
-        "Create private photo albums after generation completes",
-        aidreamcapes ? "Fan and holiday album editor with prompts" : "AI photo editor with prompts",
-        "Special AI photo filters",
-        "Create photos by writing prompts in seconds",
-        "Create AI videos",
-        "Magic Upscaler for high-res images",
-        "No watermark",
-        ...(product.name === "Premium" || product.name === "Deluxe" ? ["4K Ultra-High quality outputs"] : []),
-        ...(occasionCount >= 999 ? ["Unlimited style directions"] : [])
-      ].filter(Boolean);
-      const featureLines = spanishXbyPricing ? [] : priceMetaLines(price, "featuresText");
-      const features = featureLines.length ? featureLines : defaultFeatures;
-      const badgeLabel = spanishXbyPricing
-        ? featured
-          ? "Mas elegido"
-          : bestValue
-            ? "Mejor valor"
-            : aidreamcapes
-              ? "Plan de album"
-              : "Plan de fotos"
-        : priceMetaString(
-            price,
-            "badgeLabel",
-            featured
-              ? setting(section, "featuredBadgeLabel", "Most Popular")
-              : bestValue
-                ? "Best Value"
-                : setting(section, "standardBadgeLabel", "Photo plan")
-          );
+      const planSubtitle = product.metadata?.summary ?? "";
+      const features = [localizedPriceCreditsLabel(site, price), ...(product.metadata?.features ?? [])].filter(Boolean);
+      const badgeLabel = product.metadata?.badgeLabel ?? (featured ? setting(section, "featuredBadgeLabel", "Most Popular") : "");
       acc[cycle] = {
         id: price.id,
         formattedAmount: formatCurrency(price.amountCents, price.currency),
@@ -8386,7 +8219,7 @@ function PricingTableSectionView({
         featured,
         bestValue,
         badgeLabel,
-        buttonLabel: priceMetaString(price, "buttonLabel", isSpanishXbySite(site) ? "Seleccionar plan" : "Select plan"),
+        buttonLabel: product.metadata?.buttonLabel ?? (isSpanishXbySite(site) ? "Seleccionar plan" : "Select plan"),
         cartHref: publicCartHref(site, product, price)
       };
       return acc;
@@ -8409,7 +8242,7 @@ function PricingTableSectionView({
   );
   const pricingTitle = setting(section, "title", "Subscription Plans");
   const mydreamPricingCopyLayout = !aidreamcapes && !spanishXbyPricing && isMyDreamShootsProfileSite(site);
-  const homepageMetrics = homepageMetricsForSite({ products });
+  const homepageMetrics = homepageMetricsForSite({ storefrontContext });
   const pricingSubtitle = spanishXbyPricing
     ? aidreamcapes
       ? "Elige el plan de creditos adecuado para crear albumes privados de fans y recuerdos festivos."
@@ -8446,48 +8279,26 @@ function PricingTableSectionView({
     body: string;
     items: Array<readonly [string, string]>;
   }>>((acc, cycle) => {
-    const featuredPrice = featuredPricesByCycle[cycle];
-    const configuredSideItems = (spanishXbyPricing ? [] : priceMetaLines(featuredPrice, "sidePanelItemsText"))
-      .map((line) => {
-        const [label, ...detailParts] = line.split("|").map((part) => part.trim());
+    const featuredProduct = displayProducts.find((product) => product.id === featuredProductIdsByCycle[cycle]);
+    const configuredSideItems = (featuredProduct?.metadata?.features ?? [])
+      .map((feature) => {
+        const [label, ...detailParts] = feature.split("|").map((part) => part.trim());
         return label && detailParts.join(" ").trim() ? [label, detailParts.join(" | ")] as const : undefined;
       })
       .filter((item): item is readonly [string, string] => Boolean(item));
     acc[cycle] = {
       eyebrow: spanishXbyPricing
         ? aidreamcapes ? "Por que elegir creditos de ruta" : "Por que elegir creditos"
-        : mydreamPricingCopyLayout
-          ? setting(section, "sidePanelEyebrow", "Why people subscribe")
-          : priceMetaString(featuredPrice, "sidePanelEyebrow", setting(section, "sidePanelEyebrow", "Why people subscribe")),
+        : setting(section, "sidePanelEyebrow", "Why people subscribe"),
       title: spanishXbyPricing
         ? aidreamcapes ? "Creditos claros para albumes de ocasion flexibles." : "Creditos claros para paquetes privados flexibles."
-        : mydreamPricingCopyLayout
-	          ? homepageMetricText(setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible."), homepageMetrics)
-	          : priceMetaString(featuredPrice, "sidePanelTitle", setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible.")),
+        : homepageMetricText(setting(section, "sidePanelTitle", "Credits stay predictable while packs stay flexible."), homepageMetrics),
       body: spanishXbyPricing
         ? aidreamcapes
           ? "Genera albumes privados de fans y recuerdos festivos tras revisar creditos y mantener saldo visible."
           : "Genera albumes privados tras revisar creditos, mantener saldo visible y recargar solo cuando necesitas mas sesiones."
-        : mydreamPricingCopyLayout
-	          ? homepageMetricText(setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs."), homepageMetrics)
-	          : priceMetaString(
-              featuredPrice,
-              "sidePanelBody",
-              setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.")
-            ),
-      items: configuredSideItems.length
-        ? configuredSideItems
-        : spanishXbyPricing
-          ? [
-              [aidreamcapes ? "Inicial" : "Inicio", aidreamcapes ? "Ideal para un album de fan, partido o recuerdo festivo." : "Ideal para retratos profesionales, perfiles y primeros albumes."],
-              ["Equilibrado", "Creditos equilibrados para varios albumes, ediciones por prompt y pruebas de estilo."],
-              ["Premium", "Mas creditos para video, mejora de resolucion, albumes repetidos y salidas de alta calidad."]
-            ]
-          : [
-              ["Starter", aidreamcapes ? "Best for one quick fan-scene, game-day, or holiday album." : "Best for quick headshots, profile sets, and first photo albums."],
-              ["Popular", "Balanced credits for creating several albums, prompt edits, and style tests."],
-              ["Premium", "More credits for videos, upscale runs, repeat albums, and high-quality outputs."]
-            ]
+        : homepageMetricText(setting(section, "sidePanelBody", "Customers can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs."), homepageMetrics),
+      items: configuredSideItems
     };
     return acc;
   }, {
@@ -8561,7 +8372,8 @@ function SectionView({
   videoThemes,
   runtime,
   mode,
-  renderContext
+  renderContext,
+  storefrontContext
 }: {
   id: string;
   section: SectionInstance;
@@ -8576,6 +8388,7 @@ function SectionView({
   runtime?: ThemeRuntimeData;
   mode: "published" | "preview";
   renderContext: RenderContext;
+  storefrontContext?: StorefrontContext;
 }) {
   const canonicalType = canonicalSectionType(section.type);
   if (canonicalType !== section.type) {
@@ -8587,6 +8400,7 @@ function SectionView({
         mode={mode}
         products={products}
         renderContext={renderContext}
+        storefrontContext={storefrontContext}
         runtime={runtime}
         section={{ ...section, type: canonicalType as SectionInstance["type"] }}
         site={site}
@@ -8598,7 +8412,7 @@ function SectionView({
     );
   }
   const usesNativeDreamShootRenderer = section.type.startsWith("dreamshoot_");
-  const legacySaasSection = usesNativeDreamShootRenderer ? null : renderLegacySaasSection({ id, section, site, products, creativePacks, mode, renderContext, siteAiApps });
+  const legacySaasSection = usesNativeDreamShootRenderer ? null : renderLegacySaasSection({ id, section, site, products, creativePacks, mode, renderContext, storefrontContext, siteAiApps });
   if (legacySaasSection) return legacySaasSection;
 
   if (section.type === "ai_video_topic_landing") {
@@ -8612,7 +8426,7 @@ function SectionView({
   if (section.type === "hero") {
     const aidreamcapes = isAidreamcapesSite(site);
     const mydreamHomepage = isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) && renderContext.pagePath === "/";
-    const homepageMetrics = homepageMetricsForSite({ creativePackCategories, creativePacks, products });
+    const homepageMetrics = homepageMetricsForSite({ creativePackCategories, storefrontContext });
     const images = [
       setting(section, "imageUrl", fallbackHeroImages[0]),
       setting(section, "secondaryImageUrl", fallbackHeroImages[1]),
@@ -8631,6 +8445,7 @@ function SectionView({
           "Private source-photo intake with clear upload rules|Photo packs tied to real credits and subscriptions|Before and after proof blocks customers understand instantly|Published storefront pages stay separate from design drafts"
         )
       )
+        .map((item) => storefrontContext ? resolveStorefrontBindings(item, storefrontContext).value ?? "" : item)
         .map((item) => heroBulletDisplayText(site, item))
         .filter(Boolean);
       const heroStats = stats.length
@@ -8744,6 +8559,7 @@ function SectionView({
     }
     if (setting(section, "layout", "editorial") === "immersive_dark") {
       const bullets = listLines(setting(section, "bulletList", "Upload selfies and create your private AI model|Themed packs for headshots, travel, beauty, and style looks|AI video and virtual try-on add-ons|Private credits, albums, and downloads"))
+        .map((item) => storefrontContext ? resolveStorefrontBindings(item, storefrontContext).value ?? "" : item)
         .map((item) => heroBulletDisplayText(site, item))
         .map((item) => homepageMetricText(item, homepageMetrics))
         .filter(Boolean);
@@ -10023,7 +9839,13 @@ function SectionView({
       { id: "trust_checkout", type: "stat", settings: { value: "Secure checkout", label: "Plans and top-ups use the checkout flow." } },
       { id: "trust_policy", type: "stat", settings: { value: "Policy guided", label: "Refunds and account access follow the posted site terms." } }
     ] as SectionBlockInstance[];
-    const items = (stats.length ? stats : fallbackStats).slice(0, 4);
+    const items = (stats.length ? stats : fallbackStats).slice(0, 4).map((stat) => {
+      if (!storefrontContext) return stat;
+      const title = resolveStorefrontBindings(blockValue(stat, "value", blockValue(stat, "title", "Trust")), storefrontContext).value;
+      const label = resolveStorefrontBindings(blockValue(stat, "label", blockValue(stat, "description", "")), storefrontContext).value;
+      return title && label ? { ...stat, settings: { ...stat.settings, value: title, label } } : undefined;
+    }).filter((item): item is SectionBlockInstance => Boolean(item));
+    if (!items.length) return null;
     return (
       <section className="border-y border-[#ece1d3] bg-[#fffaf3] px-5 py-8 text-[#171514]" id={sectionAnchor(section, "trust")}>
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-0 md:grid-cols-4">
@@ -10833,7 +10655,7 @@ function SectionView({
           title: blockValue(item, "title"),
           description: blockValue(item, "description"),
           meta: blockValue(item, "meta"),
-          credits: blockValue(item, "credits"),
+          credits: "",
           category: blockValue(item, "category", spanishXbyPackageWall ? "Paquete de fotos" : "Photo package"),
           trainingLabel: blockValue(item, "trainingLabel", spanishXbyPackageWall ? "Flujo listo" : "Ready workflow"),
 	          imageUrl: mediaAssetUrl(site, blockValue(item, "imageUrl", isAidreamcapesSite(site) ? aidreamcapesFallbackHeroImages[0] : packImages.creator)),
@@ -10850,44 +10672,7 @@ function SectionView({
     const selectedPackGallery = selectedPack
       ? galleryImagesForPack(site, selectedPack, 12)
       : [];
-    const fallbackCards = [
-      aidreamcapesPackageWall ? {
-        id: "fallback_route_story",
-        title: spanishXbyPackageWall ? "Kit de historia de ruta" : "Route Story Kit",
-        description: spanishXbyPackageWall
-          ? "Retratos de ruta, recortes de diario de viaje, postales y albumes privados."
-          : "Route portraits, travel journal crops, postcard sets, and private gallery albums.",
-        meta: spanishXbyPackageWall ? "Galeria privada" : "Private gallery",
-        credits: spanishXbyPackageWall ? "22 creditos" : "22 credits",
-        category: spanishXbyPackageWall ? "Ruta" : "Route",
-        trainingLabel: spanishXbyPackageWall ? "Flujo listo" : "Ready workflow",
-        imageUrl: aidreamcapesFallbackHeroImages[0],
-        imageUrls: undefined,
-        photoCountLabel: undefined,
-        tags: [],
-        usesLabel: undefined,
-        href: "/collections"
-      } : {
-        id: "fallback_creator",
-        title: spanishXbyPackageWall ? "Pack de estudio para creadores" : "Creator Studio Pack",
-        description: spanishXbyPackageWall
-          ? "Retratos IA para perfiles, regalos, publicaciones de creador y albumes privados."
-          : "AI portraits for profile updates, gifts, creator posts, and private albums.",
-        meta: spanishXbyPackageWall ? "Perfiles de creador" : "Creator profiles",
-        credits: spanishXbyPackageWall ? "24 creditos" : "24 credits",
-        category: spanishXbyPackageWall ? "Creador" : "Creator",
-        trainingLabel: spanishXbyPackageWall ? "Flujo listo" : "Ready workflow",
-        imageUrl: packImages.creator,
-        imageUrls: undefined,
-        photoCountLabel: undefined,
-        tags: [],
-        usesLabel: undefined,
-        href: "/tools"
-      }
-    ];
-    const allCards = cards.length
-      ? cards
-      : fallbackCards;
+    const allCards = cards;
     const defaultMaxCount = "12";
     const maxCountSetting = setting(section, "maxCount", setting(section, "max_count", defaultMaxCount)).trim().toLowerCase();
     const maxCount = maxCountSetting === "all"
@@ -11016,7 +10801,7 @@ function SectionView({
                       </div>
                     ) : null}
                     <div className={dreamshootSplitFooterClass}>
-                      <span className={dreamshootSplitPhotoCountClass}>{card.photoCountLabel || card.credits}</span>
+                      {card.photoCountLabel || card.credits ? <span className={dreamshootSplitPhotoCountClass}>{card.photoCountLabel || card.credits}</span> : null}
                       <span className={dreamshootSplitUsesClass}>{card.usesLabel || card.trainingLabel}</span>
                     </div>
                   </div>
@@ -11058,7 +10843,7 @@ function SectionView({
                     <div className="mt-auto">
                       <div className="mb-4 flex flex-wrap gap-2">
                         <span className="rounded-full border border-white/14 bg-white/[0.12] px-2.5 py-1 text-[11px] font-semibold text-white/82 backdrop-blur">{card.meta}</span>
-                        <span className="rounded-full border border-white/14 bg-white/[0.12] px-2.5 py-1 text-[11px] font-semibold text-white/82 backdrop-blur">{card.credits}</span>
+                        {card.credits ? <span className="rounded-full border border-white/14 bg-white/[0.12] px-2.5 py-1 text-[11px] font-semibold text-white/82 backdrop-blur">{card.credits}</span> : null}
                         <span className="rounded-full border border-white/14 bg-white/[0.12] px-2.5 py-1 text-[11px] font-semibold text-white/82 backdrop-blur">{card.trainingLabel}</span>
                       </div>
                       <h2 className="text-[clamp(1.35rem,2.1vw,1.85rem)] font-semibold leading-tight tracking-[-0.03em] text-balance text-white">{card.title}</h2>
@@ -11219,7 +11004,10 @@ function SectionView({
           block: card
         }));
     const taxonomyClientCards: PackageTaxonomyCard[] = taxonomyCards.map((card) => {
-      const matchingPack = creativePacks.find((pack) => creativePackCollectionHref(pack) === card.href || pack.id === card.id);
+      const matchingPack = creativePacks.find((pack) =>
+        pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0 &&
+        (creativePackCollectionHref(pack) === card.href || pack.id === card.id)
+      );
       const cardSlug = publicCollectionSlugFromPath(site, card.href) || card.href.replace(/^\/collections\//, "").split("/").filter(Boolean).at(-1) || "";
       const profile = aidreamcapes && !spanishXbyTaxonomy
         ? aidreamcapesProfileForSlug(site, cardSlug) ?? (matchingPack ? aidreamcapesProfileForPack(site, matchingPack) : undefined)
@@ -11235,7 +11023,7 @@ function SectionView({
       const aidreamcapesTags = aidreamcapes && !spanishXbyTaxonomy && !profile
         ? aidreamcapesTravelTagsFor(card.title, card.meta, card.description)
         : [];
-      const aidreamcapesPhotoCount = relatedAidreamcapesPacks.reduce((sum, pack) => sum + (pack.outputCount || 0), 0);
+      const aidreamcapesPhotoCount = relatedAidreamcapesPacks.reduce((sum, pack) => sum + pack.outputCount, 0);
       const aidreamcapesUsesCount = relatedAidreamcapesPacks.reduce((sum, pack) => sum + (pack.generationCount || 0), 0);
       const aidreamcapesPhotoCountLabel = aidreamcapesPhotoCount
         ? `${aidreamcapesPhotoCount} Photos`
@@ -11282,7 +11070,7 @@ function SectionView({
           ? spanishXbyTaxonomy
             ? [
                 "Galeria privada",
-                `${matchingPack.creditCost || 20} creditos`,
+                `${matchingPack.creditCost} creditos`,
                 aidreamcapes ? "Retrato de viaje" : "Fotos IA",
                 matchingPack.trainingRequired ? "Modelo privado" : "Flujo listo"
               ]
@@ -11290,11 +11078,11 @@ function SectionView({
             ? [
                 ...profile.tags,
                 dreamshootPackPhotoCountLabel(matchingPack),
-                `${matchingPack.creditCost || 20} credits`
+                `${matchingPack.creditCost} credits`
               ]
             : [
                 "Private gallery",
-                `${matchingPack.creditCost || 20} credits`,
+                `${matchingPack.creditCost} credits`,
                 dreamshootDefaultToolTitle(matchingPack.aiAppSlug || "image-studio"),
                 matchingPack.trainingRequired ? "Training required" : "Ready workflow"
               ]
@@ -11335,11 +11123,11 @@ function SectionView({
     ]);
     const selectedDetailImages = selectedDetailPreviewImages.slice(0, 1);
     const selectedGalleryDisplayImages = selectedGalleryImages.slice(0, 12);
-    const selectedOutputCount = selectedPack?.outputCount || selectedPacks.reduce((sum, pack) => sum + (pack.outputCount || 0), 0);
+    const selectedOutputCount = selectedPack?.outputCount ?? selectedPacks.reduce((sum, pack) => sum + pack.outputCount, 0);
     const detailStats = (selectedProfile && selectedPack
       ? [
           dreamshootPackPhotoCountLabel(selectedPack),
-          `${selectedPack.creditCost || 20} credits`,
+          `${selectedPack.creditCost} credits`,
           selectedProfile.metaLabel,
           dreamshootPackUsesLabel(selectedPack) || (selectedPack.trainingRequired ? "Private model" : "Ready workflow")
         ]
@@ -11348,13 +11136,13 @@ function SectionView({
           selectedOutputCount ? `${selectedOutputCount} images` : "Private gallery",
           "Visible credits",
           selectedProfile.metaLabel,
-          `${selectedPacks.length || 1} package themes`
+          selectedPacks.length ? `${selectedPacks.length} package themes` : "Package themes"
         ]
       : [
           selectedOutputCount ? `${selectedOutputCount} images` : "Private gallery",
-          selectedPack ? `${selectedPack.creditCost || 20} credits` : "Visible credits",
+          selectedPack ? `${selectedPack.creditCost} credits` : "Visible credits",
           selectedPack?.trainingRequired ? "Private model" : selectedPacks.some((pack) => pack.trainingRequired) ? "Model options" : "Ready workflow",
-          selectedPack ? dreamshootDefaultToolTitle(selectedPack.aiAppSlug || "image-studio") : `${selectedPacks.length || 1} package themes`
+          selectedPack ? dreamshootDefaultToolTitle(selectedPack.aiAppSlug || "image-studio") : selectedPacks.length ? `${selectedPacks.length} package themes` : "Package themes"
         ]).filter((stat): stat is string => Boolean(stat));
     const detailUseCases = spanishXbyTaxonomy
       ? aidreamcapes
@@ -11399,7 +11187,7 @@ function SectionView({
       ? spanishXbyTaxonomy
         ? [
             "Galeria privada",
-            `${selectedPack.creditCost || 20} creditos`,
+            `${selectedPack.creditCost} creditos`,
             aidreamcapes ? "Retrato de viaje" : "Fotos IA",
             selectedPack.trainingRequired ? "Modelo privado" : "Flujo listo"
           ]
@@ -11407,7 +11195,7 @@ function SectionView({
         ? selectedProfile.detailTags.slice(0, 8)
         : [
             "Private gallery",
-            `${selectedPack.creditCost || 20} credits`,
+            `${selectedPack.creditCost} credits`,
             dreamshootDefaultToolTitle(selectedPack.aiAppSlug || "image-studio"),
             selectedPack.trainingRequired ? "Training required" : "Ready workflow"
           ]
@@ -11643,27 +11431,27 @@ function SectionView({
     const workflow = spanishXbyThemeCta
       ? [
           [aidreamcapesThemeCta ? "Sube fotos aprobadas" : "Sube fotos fuente", "Usa imagenes claras que te pertenecen o que tienes permiso para usar."],
-          [aidreamcapesThemeCta ? "Elige el album de ocasion" : "Elige este tema", `Revisa ${selectedPack.outputCount || 20} resultados y ${selectedPack.creditCost || 20} creditos antes de iniciar.`],
+          [aidreamcapesThemeCta ? "Elige el album de ocasion" : "Elige este tema", `Revisa ${selectedPack.outputCount} resultados y ${selectedPack.creditCost} creditos antes de iniciar.`],
           ["Generacion privada", `La solicitud se ejecuta dentro del espacio privado de ${spanishThemeBrand}.`],
           ["Descarga favoritos", "Conserva los resultados en tu galeria privada y exporta solo las imagenes que quieras."]
         ]
       : [
           [aidreamcapesThemeCta ? "Upload approved photos" : "Upload source photos", "Use clear images you own or have permission to use."],
-          [aidreamcapesThemeCta ? "Choose this occasion album" : "Choose this theme", `Review ${selectedPack.outputCount || 20} outputs and ${selectedPack.creditCost || 20} credits before starting.`],
+          [aidreamcapesThemeCta ? "Choose this occasion album" : "Choose this theme", `Review ${selectedPack.outputCount} outputs and ${selectedPack.creditCost} credits before starting.`],
           ["Generate privately", aidreamcapesThemeCta ? "The request runs inside your signed-in Aidreamcapes workspace." : "The request runs inside your signed-in myDreamshoots workspace."],
           ["Download favorites", "Keep results in your private gallery and export only the images you want."]
         ];
     const studioPreview = spanishXbyThemeCta
       ? [
           { label: "Fuente", value: "Subidas revisadas", Icon: UploadCloud },
-          { label: "Creditos", value: `${selectedPack.creditCost || 20} reservados`, Icon: BadgeCheck },
-          { label: "Galeria", value: `${selectedPack.outputCount || 20} resultados`, Icon: ImageIcon },
+          { label: "Creditos", value: `${selectedPack.creditCost} reservados`, Icon: BadgeCheck },
+          { label: "Galeria", value: `${selectedPack.outputCount} resultados`, Icon: ImageIcon },
           { label: "Entrega", value: "Descarga privada", Icon: Download }
         ]
       : [
           { label: "Source", value: "Checked uploads", Icon: UploadCloud },
-          { label: "Credits", value: `${selectedPack.creditCost || 20} reserved`, Icon: BadgeCheck },
-          { label: "Gallery", value: `${selectedPack.outputCount || 20} outputs`, Icon: ImageIcon },
+          { label: "Credits", value: `${selectedPack.creditCost} reserved`, Icon: BadgeCheck },
+          { label: "Gallery", value: `${selectedPack.outputCount} outputs`, Icon: ImageIcon },
           { label: "Delivery", value: "Private download", Icon: Download }
         ];
     const defaultThemeEyebrow = spanishXbyThemeCta ? (aidreamcapesThemeCta ? "Iniciar este album" : "Iniciar este tema") : aidreamcapesThemeCta ? "Start this album" : "Start this theme";
@@ -11759,8 +11547,8 @@ function SectionView({
     const selectedPack = activeCreativePackForCollectionSlug(creativePacks, selectedCollectionSlug);
     if (!selectedPack) return null;
     const packTitle = spanishXbyThemeFaq ? spanishPhotoPackageLabel(selectedPack.name, aidreamcapesThemeFaq) : selectedPack.name;
-    const outputCount = selectedPack.outputCount || 20;
-    const creditCost = selectedPack.creditCost || 20;
+    const outputCount = selectedPack.outputCount;
+    const creditCost = selectedPack.creditCost;
     const faqBrand = site.branding.logoText || site.name || (aidreamcapesThemeFaq ? "AIdreamcapes" : "AIdreamshoots");
     const faqItems = spanishXbyThemeFaq
       ? [
@@ -12042,14 +11830,14 @@ function SectionView({
         "cinematic-travel": "game-day-group-photos",
         "travel-journal-covers": "seasonal-celebration-photos"
       };
-      const proofStatsFallback: Record<string, { photoCountLabel: string; usesLabel: string }> = {
-        "fan-scene-albums": { photoCountLabel: "24 Photos", usesLabel: "Fan-scene albums" },
-        "game-day-group-photos": { photoCountLabel: "24 Photos", usesLabel: "Game-day portraits" },
-        "premiere-style-portraits": { photoCountLabel: "24 Photos", usesLabel: "Premiere sets" },
-        "christmas-group-albums": { photoCountLabel: "22 Photos", usesLabel: "Christmas groups" },
-        "thanksgiving-memory-sets": { photoCountLabel: "22 Photos", usesLabel: "Thanksgiving keepsakes" },
-        "halloween-party-portraits": { photoCountLabel: "24 Photos", usesLabel: "Halloween portraits" },
-        "seasonal-celebration-photos": { photoCountLabel: "24 Photos", usesLabel: "Seasonal albums" }
+      const proofStatsFallback: Record<string, { usesLabel: string }> = {
+        "fan-scene-albums": { usesLabel: "Fan-scene albums" },
+        "game-day-group-photos": { usesLabel: "Game-day portraits" },
+        "premiere-style-portraits": { usesLabel: "Premiere sets" },
+        "christmas-group-albums": { usesLabel: "Christmas groups" },
+        "thanksgiving-memory-sets": { usesLabel: "Thanksgiving keepsakes" },
+        "halloween-party-portraits": { usesLabel: "Halloween portraits" },
+        "seasonal-celebration-photos": { usesLabel: "Seasonal albums" }
       };
       const proofGalleryFallbackBaseSlugs: Record<string, string[]> = {
         "fan-scene-albums": ["private-fan-scene-album", "backstage-meetup-portraits"],
@@ -12080,7 +11868,6 @@ function SectionView({
         const title = blockValue(card, "title", "Occasion album");
         const description = blockValue(card, "description", "Fan-scene albums, game-day group portraits, holiday memory sets, and private gallery-ready photos.");
         const category = blockValue(card, "category", blockValue(card, "badge", "Occasion"));
-        const explicitPhotoCountLabel = blockValue(card, "photoCountLabel", "");
         const explicitUsesLabel = blockValue(card, "usesLabel", "");
         const explicitTags = listLines(blockValue(card, "tags", ""));
         const configuredHref = blockValue(card, "href", "/collections");
@@ -12117,7 +11904,7 @@ function SectionView({
           ]
           : [];
         const images = uniqueImageUrlList([...explicitImages, ...imageUrls, ...fallbackGalleryImages, fallbackImage]).slice(0, 2);
-        const photoCount = relatedPacks.reduce((sum, pack) => sum + (pack.outputCount || 0), 0);
+        const photoCount = relatedPacks.reduce((sum, pack) => sum + pack.outputCount, 0);
         const usesCount = relatedPacks.reduce((sum, pack) => sum + (pack.generationCount || 0), 0);
         const fallbackStats = gallerySlug ? proofStatsFallback[gallerySlug] : undefined;
         return {
@@ -12128,7 +11915,7 @@ function SectionView({
           href,
           images,
           tags: explicitTags.length ? explicitTags.slice(0, 3) : aidreamcapesTravelTagsFor(title, category, description),
-          photoCountLabel: explicitPhotoCountLabel || (photoCount ? `${photoCount} Photos` : fallbackStats?.photoCountLabel || "20 Photos"),
+          photoCountLabel: photoCount ? `${photoCount} Photos` : "",
           usesLabel: explicitUsesLabel || (usesCount ? `${usesCount.toLocaleString("en-US")} uses` : fallbackStats?.usesLabel || aidreamcapesMetaLabel(title, category, description))
         };
       });
@@ -12528,6 +12315,13 @@ function SectionView({
       imageProductRows.push(row.map((card) => ({ ...card, railKey: `${card.id}-image-product-${rowIndex}` })));
     }
     const videoRailCards = videoCards.map((card) => ({ ...card, railKey: `${card.id}-video` }));
+    const configuredAboutBody = setting(section, "aboutBody", "myDreamshoots is an AI photo and video studio. Upload photos you are authorized to use, choose a supported image or video workflow, review the current credit cost, and generate results inside your signed-in workspace.");
+    const resolvedAboutBody = storefrontContext
+      ? resolveStorefrontBindings(configuredAboutBody, storefrontContext).value ?? ""
+      : configuredAboutBody;
+    const aboutBody = storefrontContext?.profile?.identity.legalName
+      ? `${resolvedAboutBody} Operated by ${storefrontContext.profile.identity.legalName}.`
+      : resolvedAboutBody;
     const trustedLogoBlocks = sectionBlocks(section, "logo");
     const showTrustedLogoIntro = settingBool(section, "showTrustedLogoIntro", false) && trustedLogoBlocks.length > 0;
     const trustedLogoSplitIndex = trustedLogoBlocks.length > 1
@@ -12599,9 +12393,7 @@ function SectionView({
           <h2 className="text-[clamp(1.45rem,1.75vw,1.9rem)] font-semibold leading-tight tracking-[-0.03em] text-white [font-family:var(--site-title-font)]">
             {setting(section, "aboutTitle", "What is myDreamshoots?")}
           </h2>
-          <p className="mt-4 text-[clamp(0.84rem,0.88vw,0.94rem)] font-medium leading-[1.58] text-white/74">
-	            {setting(section, "aboutBody", "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. Upload photos you are authorized to use, choose a supported image or video workflow, review the current credit cost, and generate results inside your signed-in workspace. Current workflows include professional headshots, portraits, fan and seasonal images, creative styles, photo-editing tools, and short video options.")}
-          </p>
+          {aboutBody ? <p className="mt-4 text-[clamp(0.84rem,0.88vw,0.94rem)] font-medium leading-[1.58] text-white/74">{aboutBody}</p> : null}
         </div>
       </div>
     ) : null;
@@ -12610,10 +12402,10 @@ function SectionView({
     const embeddedPricing = embeddedPricingSection?.type === "pricing_table" ? (
       <PricingTableSectionView
         embedded
-        products={products}
         renderContext={renderContext}
         section={embeddedPricingSection}
         site={site}
+        storefrontContext={storefrontContext}
       />
     ) : null;
     const showcaseIntro = (
@@ -12821,6 +12613,10 @@ function SectionView({
     ];
     const collage = (images.length ? images : fallbackImages).slice(0, 6);
     while (collage.length < 6) collage.push(fallbackImages[collage.length]);
+    const configuredPackId = selectorIdSetting(section, "creativePackId", "");
+    const featuredPack = configuredPackId
+      ? storefrontContext?.catalog.activePacks.find((pack) => pack.id === configuredPackId)
+      : undefined;
     const alignFeaturedPackGrid = shouldAlignFeaturedPackGrid(collage);
     const useUniformFeaturedPackTiles = aidreamcapes || alignFeaturedPackGrid;
     const includedTokens = listLines(
@@ -12837,7 +12633,7 @@ function SectionView({
     const overlayChips = listLines(setting(section, "overlayChips", "fan meetup|group shot|stadium|social-ready"));
     const metrics = [
       { value: setting(section, "photos", spanishXbyFeaturedPack ? "Galeria privada" : "Private gallery"), label: spanishXbyFeaturedPack ? "Album del cliente" : "Customer album" },
-      { value: setting(section, "credits", spanishXbyFeaturedPack ? "26 creditos" : "26 credits"), label: spanishXbyFeaturedPack ? "Visible antes de generar" : "Shown upfront" },
+      ...(featuredPack ? [{ value: `${featuredPack.creditCost} ${spanishXbyFeaturedPack ? "creditos" : "credits"}`, label: spanishXbyFeaturedPack ? "Visible antes de generar" : "Shown upfront" }] : []),
       { value: setting(section, "privacy", spanishXbyFeaturedPack ? "Album privado" : "Private album"), label: spanishXbyFeaturedPack ? "Identidad protegida" : "Identity-safe" }
     ];
     return (
@@ -13033,23 +12829,10 @@ function SectionView({
     const packCards = usePacks
       ? isMyDreamShootsProfileSite(site) || (aidreamcapes && !spanishXbyCatalog) ? packItems : [...packItems, ...categoryItems]
       : [];
-    const fallbackCards: DreamShootCatalogCard[] = [
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_worldcup", type: "catalog_pack", settings: { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "26 credits", imageUrl: packImages.sports, href: publicCollectionPathForSite(site, "soccer") } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_christmas", type: "catalog_pack", settings: { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: publicCollectionPathForSite(site, "christmas-photo") } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_holiday", type: "catalog_pack", settings: { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: publicCollectionPathForSite(site, "holiday") } }),
-      dreamshootCatalogCardFromBlock(site, { id: "catalog_creator_vip", type: "catalog_pack", settings: { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/catalog-gala-card.png", href: publicCollectionPathForSite(site, "portrait-photo") } })
-    ];
-    const defaultCatalogCards = aidreamcapes ? defaultAidreamcapesCatalogCards(site, creativePacks, creativePackCategories) : defaultDreamshootCatalogCards(site);
-    const seededCards = manualCards.length ? manualCards : defaultCatalogCards;
-    const baseCards = aidreamcapes && defaultCatalogCards.length > seededCards.length
-      ? defaultCatalogCards
-      : seededCards.length ? seededCards : fallbackCards;
-    const completePackCards = aidreamcapes ? mergeDreamshootCatalogCards(packCards, defaultCatalogCards) : packCards;
-    const cards = usePacks && completePackCards.length
-      ? completePackCards
-      : baseCards;
+    const cards = usePacks ? packCards : manualCards;
+    if (!cards.length) return null;
     const categoryHrefOverrides = storefrontCatalogCategoryHrefOverrides(site);
-    const displayCards = normalizeStorefrontCatalogCards(site, cards.length ? cards : fallbackCards, categoryHrefOverrides);
+    const displayCards = normalizeStorefrontCatalogCards(site, cards, categoryHrefOverrides);
     const featuredCountDefault = Math.min(12, displayCards.length || 12);
     const featuredCountMax = 12;
     const featuredCount = Math.max(3, Math.min(featuredCountMax, numberSetting(section, "featuredCount", featuredCountDefault)));
@@ -13077,7 +12860,9 @@ function SectionView({
         sectionId={sectionAnchor(section, "packages")}
         siteBasePath={routedSitePath(site, "")}
         steps={spanishXbyCatalog && steps.join("|") === "Pick pack|See credit cost|Generate album" ? ["Elige paquete", "Revisa creditos", "Genera album"] : steps}
-        subtitle={setting(section, "subtitle", "Each package shows what it creates, who it is for, and the credit cost before you start.")}
+        subtitle={storefrontContext
+          ? resolveStorefrontBindings(setting(section, "subtitle", "Each package shows what it creates, who it is for, and the credit cost before you start."), storefrontContext).value ?? ""
+          : setting(section, "subtitle", "Each package shows what it creates, who it is for, and the credit cost before you start.")}
         tabs={tabs}
         title={setting(section, "title", spanishXbyCatalog ? aidreamcapes ? "Elige primero un album privado de ocasion." : "Elige primero un paquete de fotos IA." : aidreamcapes ? "Choose a private fan or holiday album first." : "Choose an AI shoot package first.")}
       />
@@ -13586,7 +13371,7 @@ function SectionView({
   if (section.type === "shoot_pack_marquee") {
     const spanishXbyMarquee = isSpanishXbySite(site);
     const usePacks = setting(section, "source", "creative_packs") === "creative_packs";
-    const packItems = creativePacks.filter((pack) => pack.status === "active").slice(0, Number(setting(section, "max_count", "8")) || 8);
+    const packItems = creativePacks.filter((pack) => pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0).slice(0, Number(setting(section, "max_count", "8")) || 8);
     const manualItems = sectionBlocks(section, "package");
     const cards = usePacks
       ? packItems.map((pack) => ({
@@ -13607,18 +13392,8 @@ function SectionView({
           imageUrl: mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.seasonal)),
           href: blockValue(item, "href", "/tools")
         }));
-    const fallbackCards = [
-      spanishXbyMarquee
-        ? { id: "worldcup", title: "Fotos de aficion mundial", description: "Retratos de fan, carteles de partido y avatares desde tus selfies.", meta: "Galeria privada", credits: "26 creditos", imageUrl: packImages.sports, href: "/collections/soccer" }
-        : { id: "worldcup", title: "Soccer", description: "Personal fan portraits, match-day posters, and profile avatars from your own selfies.", meta: "Private gallery", credits: "26 credits", imageUrl: packImages.sports, href: publicCollectionPathForSite(site, "soccer") },
-      spanishXbyMarquee
-        ? { id: "creator_portraits", title: "Retratos de creador", description: "Fotos para perfil, pagina personal, boletin y kit de medios.", meta: "Perfiles de creador", credits: "16 creditos", imageUrl: packImages.creator, href: "/collections/portrait-photo" }
-        : { id: "creator_portraits", title: "Portrait Photo", description: "Profile, landing-page, newsletter, and media-kit portraits from your own photos.", meta: "Creator profiles", credits: "16 credits", imageUrl: packImages.creator, href: publicCollectionPathForSite(site, "portrait-photo") },
-      spanishXbyMarquee
-        ? { id: "gala", title: "Fotos de gala", description: "Retratos formales con estilo de noche, traje elegante e iluminacion de alfombra roja.", meta: "Retratos de noche", credits: "22 creditos", imageUrl: packImages.gala, href: "/collections/gala-photo" }
-        : { id: "gala", title: "Gala Photo", description: "Formal evening portraits with black-tie styling and red-carpet-style lighting.", meta: "Evening portraits", credits: "22 credits", imageUrl: packImages.gala, href: publicCollectionPathForSite(site, "gala-photo") }
-    ];
-    const displayCards = [...(cards.length ? cards : fallbackCards), ...(cards.length ? cards : fallbackCards)];
+    if (!cards.length) return null;
+    const displayCards = [...cards, ...cards];
     return (
       <section className="overflow-hidden bg-white px-5 py-16" id={sectionAnchor(section, "packs")}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -13903,10 +13678,10 @@ function SectionView({
   if (section.type === "pricing_table") {
     return (
       <PricingTableSectionView
-        products={products}
         renderContext={renderContext}
         section={section}
         site={site}
+        storefrontContext={storefrontContext}
       />
     );
   }
@@ -13985,12 +13760,12 @@ function SectionView({
     const toolEntrySteps = spanishXbyToolEntry
       ? [
           ["Subir", "fotos fuente"],
-          ["Crear", `${boundApp?.creditCost ?? 0} creditos`],
+          ["Crear", boundApp && boundApp.creditCost > 0 ? `${boundApp.creditCost} creditos` : "Visible tras seleccionar"],
           ["Revisar", "galeria privada"]
         ]
       : [
           ["Upload", "source photos"],
-          ["Create", `${boundApp?.creditCost ?? 0} credits`],
+          ["Create", boundApp && boundApp.creditCost > 0 ? `${boundApp.creditCost} credits` : "Shown after selection"],
           ["Review", "private gallery"]
         ];
     return (
@@ -14510,7 +14285,7 @@ function SectionView({
                       <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/56">album request form</p>
                       <div className="mt-4 grid gap-3">
                         {[
-                          ["Album style", "Image Studio - 108 credits"],
+                          ["Album style", "Select after sign-in"],
                           ["Style", "editorial"],
                           ["Output count", "4"]
                         ].map(([label, value]) => (
@@ -14524,7 +14299,7 @@ function SectionView({
                         <div className="grid gap-3 sm:grid-cols-3">
                           <div>
                             <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/50">Credits</p>
-                            <p className="mt-2 text-sm font-semibold text-white">108</p>
+                            <p className="mt-2 text-sm font-semibold text-white">Shown after selection</p>
                           </div>
                           <div>
                             <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/50">Delivery</p>
@@ -14593,7 +14368,7 @@ function SectionView({
                       <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/56">album request form</p>
                       <div className="mt-4 grid gap-3">
                         {[
-                          ["Album style", "Image Studio - 108 credits"],
+                          ["Album style", "Select after sign-in"],
                           ["Style", "editorial"],
                           ["Output count", "4"]
                         ].map(([label, value]) => (
@@ -14607,7 +14382,7 @@ function SectionView({
                         <div className="grid gap-3 sm:grid-cols-3">
                           <div>
                             <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/50">Credits</p>
-                            <p className="mt-2 text-sm font-semibold text-white">108</p>
+                            <p className="mt-2 text-sm font-semibold text-white">Shown after selection</p>
                           </div>
                           <div>
                             <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/50">Delivery</p>
@@ -15569,23 +15344,18 @@ function SectionView({
   }
 
   if (section.type === "cart_summary") {
-    const active = activeProducts(products);
     const selectedProductId = queryValue(renderContext.query.product);
     const selectedPriceId = queryValue(renderContext.query.price);
     const hasExplicitSelection = Boolean(selectedProductId || selectedPriceId);
-    const { product: selectedProduct, price: selectedPrice } = selectedCartProduct(site, products, renderContext.query);
-    const productsForCart = hasExplicitSelection && selectedProduct ? [selectedProduct] : active.slice(0, 2);
-    const estimatedCredits = productsForCart.reduce((sum, product) => {
-      const linePrice = product.id === selectedProduct?.id ? selectedPrice : productPrice(product);
-      return sum + (linePrice?.creditsGranted ?? 0);
-    }, 0);
-    const estimatedAmount = productsForCart.reduce((sum, product) => {
-      const linePrice = product.id === selectedProduct?.id ? selectedPrice : productPrice(product);
-      return sum + (linePrice?.amountCents ?? 0);
-    }, 0);
-    const currency = selectedPrice?.currency ?? productsForCart[0]?.prices[0]?.currency ?? site.currency;
+    const offersForCart = selectedCartOffers(site, storefrontContext, renderContext.query);
+    const selectedOffer = hasExplicitSelection ? offersForCart[0] : undefined;
+    const selectedProduct = selectedOffer?.product;
+    const selectedPrice = selectedOffer?.price;
+    const estimatedCredits = offersForCart.reduce((sum, offer) => sum + offer.price.creditsGranted, 0);
+    const estimatedAmount = offersForCart.reduce((sum, offer) => sum + offer.price.amountCents, 0);
+    const currency = offersForCart[0]?.price.currency ?? site.currency;
     const returnHref = setting(section, "returnHref", "/pricing");
-    const selectedLinePrice = selectedPrice ?? (selectedProduct ? productPrice(selectedProduct) : productsForCart[0] ? productPrice(productsForCart[0]) : undefined);
+    const selectedLinePrice = selectedPrice ?? offersForCart[0]?.price;
 	    const selectedAmountLabel = selectedLinePrice ? priceAmountLabel(selectedLinePrice) : estimatedAmount ? formatCurrency(estimatedAmount, currency) : "--";
 	    const customer = runtime?.customer;
 	    const spanishCart = isSpanishXbySite(site);
@@ -15598,14 +15368,13 @@ function SectionView({
           <div className="rounded-[1.4rem] border border-black/10 bg-white shadow-[0_24px_70px_-58px_rgba(24,24,27,0.22)]">
             <div className="border-b border-black/10 p-5">
 	              <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{setting(section, "eyebrow", spanishCart ? "Revision de creditos" : "Checkout summary")}</p>
-	              <HeadingTag className="mt-3 text-3xl font-semibold tracking-tight">{productsForCart.length ? setting(section, "title", spanishCart ? "Tu plan seleccionado" : "Your selected plan") : setting(section, "emptyTitle", spanishCart ? "Elige un plan primero" : "Choose a plan first")}</HeadingTag>
+	              <HeadingTag className="mt-3 text-3xl font-semibold tracking-tight">{offersForCart.length ? setting(section, "title", spanishCart ? "Tu plan seleccionado" : "Your selected plan") : setting(section, "emptyTitle", spanishCart ? "Elige un plan primero" : "Choose a plan first")}</HeadingTag>
 	              <p className="mt-2 text-sm leading-6 text-zinc-500">
-	                {productsForCart.length ? setting(section, "subtitle", spanishCart ? "Productos, precios, creditos y pago permanecen conectados a tu cuenta." : "Products, prices, credits, and checkout details stay connected to your account.") : setting(section, "emptyBody", spanishCart ? "Abre precios para elegir una suscripcion o paquete de creditos." : "Open pricing to select a subscription or credit pack.")}
+	                {offersForCart.length ? setting(section, "subtitle", spanishCart ? "Productos, precios, creditos y pago permanecen conectados a tu cuenta." : "Products, prices, credits, and checkout details stay connected to your account.") : setting(section, "emptyBody", spanishCart ? "Abre precios para elegir una suscripcion o paquete de creditos." : "Open pricing to select a subscription or credit pack.")}
 	              </p>
             </div>
             <div className="divide-y divide-black/10">
-              {productsForCart.map((product, index) => {
-                const price = product.id === selectedProduct?.id ? selectedPrice ?? productPrice(product) : productPrice(product);
+              {offersForCart.map(({ product, price }, index) => {
                 return (
                   <div className="grid gap-4 p-5 sm:grid-cols-[96px_1fr_auto] sm:items-center" key={product.id}>
                     <img className="aspect-square rounded-[0.9rem] object-cover" src={productImage(site, product, index)} alt={productImageAltForSite(site, product, index)} />
@@ -15618,7 +15387,7 @@ function SectionView({
                   </div>
                 );
               })}
-              {!productsForCart.length ? (
+              {!offersForCart.length ? (
 	                <div className="p-8 text-sm text-zinc-500">{setting(section, "emptyBody", spanishCart ? "Abre precios para elegir una suscripcion o paquete de creditos." : "Open pricing to select a subscription or credit pack.")}</div>
               ) : null}
             </div>
@@ -15634,11 +15403,11 @@ function SectionView({
             <div className="mt-6 rounded-[1rem] border border-white/10 bg-white/[0.05] p-4">
               <div className="flex items-center justify-between gap-3 text-sm">
 	                <span className="text-white/64">{spanishCart ? "Articulos" : "Items"}</span>
-                <span>{productsForCart.length}</span>
+                <span>{offersForCart.length}</span>
               </div>
               <div className="mt-3 flex items-center justify-between gap-3 text-sm">
 	                <span className="text-white/64">{spanishCart ? "Creditos" : "Credits"}</span>
-                <span>{estimatedCredits}</span>
+                <span>{offersForCart.length ? estimatedCredits : "--"}</span>
               </div>
               <div className="mt-3 flex items-center justify-between gap-3 text-sm">
 	                <span className="text-white/64">{spanishCart ? "Importe" : "Amount"}</span>
@@ -16370,7 +16139,12 @@ function SectionView({
           .replace(/^POLICY$/i, "Politica")
           .replace(/^Delivery policy$/i, "Politica de entrega")
       : rawEyebrow;
-    const body = storefrontPaidToolText(stripHtml(setting(section, "body", "Use this page to explain the photo experience, packages, delivery timing, and private customer journey.")));
+    const configuredBody = setting(section, "body", "Use this page to explain the photo experience, packages, delivery timing, and private customer journey.");
+    const resolvedBody = storefrontContext ? resolveStorefrontBindings(configuredBody, storefrontContext).value ?? "" : configuredBody;
+    const operatorSuffix = renderContext.pagePath === "/about-us" && storefrontContext?.profile?.identity.legalName
+      ? ` Operated by ${storefrontContext.profile.identity.legalName}.`
+      : "";
+    const body = `${storefrontPaidToolText(stripHtml(resolvedBody))}${operatorSuffix}`.trim();
     const configuredImage = setting(section, "imageUrl", firstImage(section));
     const workflowIntroFallbackImage = workflowIntroRichText
       ? aidreamcapesRichText
@@ -16380,9 +16154,22 @@ function SectionView({
     const image = mediaAssetUrl(site, configuredImage || workflowIntroFallbackImage);
     const cards = sectionBlocks(section);
     const formFields = sectionBlocks(section, "form_field");
-    const richCards = cards.filter((card) => card.type !== "form_field");
+    const configuredRichCards = cards.filter((card) => card.type !== "form_field");
+    const profileIdentity = storefrontContext?.profile?.identity;
+    const profileAddress = profileIdentity?.address
+      ? [profileIdentity.address.line1, profileIdentity.address.line2, profileIdentity.address.city, profileIdentity.address.region, profileIdentity.address.postalCode, profileIdentity.address.country].filter(Boolean).join(", ")
+      : "";
+    const richCards = renderContext.pagePath === "/contact-us" && profileIdentity
+      ? [
+          { id: "profile_contact_email", type: "rich_text_card", settings: { meta: "Support", title: profileIdentity.supportEmail ?? "", description: "Account, billing, upload, privacy, and delivery support." } },
+          { id: "profile_contact_company", type: "rich_text_card", settings: { meta: "Company", title: profileIdentity.legalName ?? "", description: profileIdentity.entityType ?? "" } },
+          { id: "profile_contact_address", type: "rich_text_card", settings: { meta: "Address", title: profileAddress, description: "Published business correspondence address." } }
+        ].filter((card) => Boolean(card.settings.title)) as SectionBlockInstance[]
+      : configuredRichCards;
     const primaryCta = setting(section, "primaryCta", "");
-    const primaryHref = setting(section, "primaryHref", "");
+    const primaryHref = renderContext.pagePath === "/contact-us" && profileIdentity?.supportEmail
+      ? `mailto:${profileIdentity.supportEmail}`
+      : setting(section, "primaryHref", "");
     const secondaryCta = setting(section, "secondaryCta", "");
     const secondaryHref = setting(section, "secondaryHref", "");
     const tone = setting(section, "tone", "warm");
@@ -16658,12 +16445,12 @@ function SectionView({
           .replace(/^POLICY$/i, "Politica")
           .replace(/^Policy$/i, "Politica")
       : rawEyebrow;
-    const lastUpdated = setting(section, "lastUpdated", "June 25, 2024");
-    const configuredContactEmail = setting(section, "contactEmail", "");
-    const contactEmail = spanishXbyPolicy
-      ? spanishStorefrontSupportEmail(site, configuredContactEmail)
-      : setting(section, "contactEmail", isAidreamcapesSite(site) ? "support@aidreamcapes.com" : "support@mydreamshoots.com");
-    const body = setting(section, "body", "Private uploads, account activity, and delivered albums are handled according to this policy.");
+    const lastUpdated = storefrontContext?.profile?.policyFacts.effectiveDate ?? "";
+    const contactEmail = storefrontContext?.profile?.identity.supportEmail ?? "";
+    const bodyTemplate = setting(section, "body", "Private uploads, account activity, and delivered albums are handled according to this policy.");
+    const bodyResolution = storefrontContext ? resolveStorefrontBindings(bodyTemplate, storefrontContext) : { value: bodyTemplate, missing: [] };
+    if (!bodyResolution.value) return null;
+    const body = bodyResolution.value;
     const fallbackHeadingLevel = pageHasMainHeadingBefore(id, renderContext) ? "h2" : "h1";
     const HeadingTag = normalizedHeadingLevel(setting(section, "headingLevel"), fallbackHeadingLevel) === "h1" ? "h1" : "h2";
     return (
@@ -16675,19 +16462,19 @@ function SectionView({
               {title}
             </HeadingTag>
             <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[#6f685f]">
-              <span>{spanishXbyPolicy ? "Actualizado" : "Last updated"}: {lastUpdated}</span>
-              <span>
+              {lastUpdated ? <span>{spanishXbyPolicy ? "Actualizado" : "Last updated"}: {lastUpdated}</span> : null}
+              {contactEmail ? <span>
                 {spanishXbyPolicy ? "Contacto" : "Contact"}:{" "}
                 <a className="text-[#14161a] underline decoration-[#14161a]/25 underline-offset-4" href={`mailto:${contactEmail}`}>
                   {contactEmail}
                 </a>
-              </span>
+              </span> : null}
             </div>
           </div>
           <article className="mt-8 max-w-4xl rounded-[28px] border border-[#e5ddd1] bg-white p-6 shadow-[0_24px_80px_-64px_rgba(18,20,24,0.25)] md:p-8">
             <div
               className="space-y-6 text-[0.97rem] leading-8 text-[#3d3a36] [&_h3]:mt-8 [&_h3]:text-[1.05rem] [&_h3]:font-semibold [&_h3]:tracking-[-0.02em] [&_p]:mt-3 [&_p]:leading-8 [&_a]:text-[#2f6fed] [&_a]:underline [&_a]:decoration-[#2f6fed]/30 [&_a]:underline-offset-4 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_ol]:mt-3 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6"
-              dangerouslySetInnerHTML={richTextHtml(section, "body", body)}
+              dangerouslySetInnerHTML={{ __html: body }}
             />
           </article>
           <div className="mt-6 flex flex-wrap gap-3 text-sm">

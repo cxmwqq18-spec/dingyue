@@ -58,6 +58,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
           name: true,
           type: true,
           status: true,
+          metadata: true,
           prices: {
             select: {
               id: true,
@@ -69,7 +70,13 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
               interval: true,
               creditsGranted: true,
               stripePriceId: true,
-              metadata: true
+              metadata: true,
+              status: true,
+              effectiveFrom: true,
+              effectiveTo: true,
+              replacesPriceId: true,
+              providerVerifiedAt: true,
+              providerFingerprint: true
             },
             orderBy: [{ createdAt: "asc" }, { id: "asc" }],
             take: adminPriceListTake
@@ -114,6 +121,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
       name: product.name,
       type: product.type === "credit_pack" ? "credit_pack" : "subscription",
       status: product.status === "draft" ? "draft" : "active",
+      metadata: jsonRecord(product.metadata) as Product["metadata"],
       prices: product.prices.map(
         (price): Price => ({
           id: price.id,
@@ -125,7 +133,13 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
           interval: priceInterval(price.interval),
           creditsGranted: price.creditsGranted,
           stripePriceId: price.stripePriceId ?? `manual_${price.id}`,
-          metadata: jsonRecord(price.metadata)
+          metadata: jsonRecord(price.metadata),
+          status: price.status === "active" || price.status === "archived" ? price.status : "draft",
+          effectiveFrom: price.effectiveFrom?.toISOString(),
+          effectiveTo: price.effectiveTo?.toISOString(),
+          replacesPriceId: price.replacesPriceId ?? undefined,
+          providerVerifiedAt: price.providerVerifiedAt?.toISOString(),
+          providerFingerprint: price.providerFingerprint ?? undefined
         })
       )
     }));
@@ -136,6 +150,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
         name: product.name,
         type: product.type === "credit_pack" ? "credit_pack" : "subscription",
         status: product.status === "draft" ? "draft" : "active",
+        metadata: jsonRecord(product.metadata) as Product["metadata"],
         prices: []
       })
     );

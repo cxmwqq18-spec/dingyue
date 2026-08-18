@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { Prisma } from "@prisma/client";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { clearPublicCreativePacksCache, publicCreativePacksCache } from "@/lib/creative-pack-api-cache";
+import { clearStorefrontContextCache } from "@/lib/storefront-context";
 import { photoPackageSlug } from "@/lib/photo-package-taxonomy";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
@@ -221,6 +222,7 @@ export async function POST(
       galleryImageAlts: body.galleryImageAlts
     });
     clearPublicCreativePacksCache();
+    clearStorefrontContextCache(siteId);
     return NextResponse.json({ ok: true, pack: result.pack, created: result.created });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

@@ -48,10 +48,14 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (!guard.ok) return guard.response;
   const price = await prisma.price.findFirst({
     where: { siteId, id: body.priceId },
-    select: { id: true, interval: true, stripePriceId: true }
+    select: { id: true, interval: true, stripePriceId: true, status: true, amountCents: true, currency: true, effectiveFrom: true, effectiveTo: true, providerVerifiedAt: true, providerFingerprint: true }
   }).catch(() => null);
   if (!price) {
     return NextResponse.json({ error: "price_not_found_for_site" }, { status: 404 });
+  }
+  const now = Date.now();
+  if (price.status !== "active" || !/^price_[a-zA-Z0-9_]+$/.test(price.stripePriceId ?? "") || price.amountCents <= 0 || price.currency.trim().toLowerCase() !== site.currency.trim().toLowerCase() || !price.providerVerifiedAt || !price.providerFingerprint || (price.effectiveFrom && price.effectiveFrom.getTime() > now) || (price.effectiveTo && price.effectiveTo.getTime() <= now)) {
+    return NextResponse.json({ error: "price_not_public" }, { status: 409 });
   }
   const checkoutMode = checkoutModeForInterval(price.interval);
 

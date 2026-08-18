@@ -298,6 +298,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
           name: true,
           type: true,
           status: true,
+          metadata: true,
           createdAt: true,
           updatedAt: true,
           prices: {
@@ -312,6 +313,12 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
               stripePriceId: true,
               label: true,
               metadata: true,
+              status: true,
+              effectiveFrom: true,
+              effectiveTo: true,
+              replacesPriceId: true,
+              providerVerifiedAt: true,
+              providerFingerprint: true,
               createdAt: true,
               updatedAt: true
             },

@@ -323,7 +323,7 @@ function assertPage(pageJson, label, storeKey) {
   const catalogSettings = pageJson?.sections?.package_catalog_1?.settings ?? {};
   assert(catalogSettings.label === "AI PHOTO STUDIOS", `${label}: package catalog label drifted`);
   assert(catalogSettings.title === "AI Photo Packages by Style and Use Case", `${label}: package catalog title drifted`);
-  assert(catalogSettings.subtitle === "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.", `${label}: package catalog subtitle drifted`);
+  assert(!/\b(?:38|20)\b/.test(catalogSettings.subtitle), `${label}: package catalog subtitle must not contain a fixed catalog count`);
   assert(catalogSettings.directoryLabel === "AI PHOTO THEMED", `${label}: theme directory label drifted`);
   assert(catalogSettings.directorySubtitle === "Compare every active theme by category, title, cover, and route before starting a private photo package.", `${label}: theme directory subtitle drifted`);
   const proofSettings = pageJson?.sections?.proof_1?.settings ?? {};

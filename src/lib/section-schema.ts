@@ -400,7 +400,7 @@ const dreamshootCatalogPackBlock: ThemeBlockSchema = {
     textarea("description", "Description", "Match-day portraits, fan posters, and stadium-inspired profile images."),
     text("category", "Category", "Sports"),
     text("meta", "Photos", "Private gallery"),
-    text("credits", "Credits", "26 credits"),
+    text("credits", "Credits", ""),
     image("imageUrl", "Image URL"),
     url("href", "Link", "/tools/world-cup-fan-photos")
   ],
@@ -411,7 +411,7 @@ const dreamshootCatalogPackBlock: ThemeBlockSchema = {
       description: "Match-day portraits, fan posters, and stadium-inspired profile images.",
       category: "Sports",
       meta: "Private gallery",
-      credits: "26 credits",
+      credits: "",
       imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png",
       href: "/tools/world-cup-fan-photos"
     }
@@ -1089,7 +1089,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           text("title", "Title", "Photo Story Album"),
           textarea("description", "Description", "AI portraits for profiles, creator pages, product launches, and private albums."),
           text("meta", "Meta", "Private gallery"),
-          text("credits", "Credits", "24 credits"),
+          text("credits", "Credits", ""),
           image("imageUrl", "Image URL"),
           url("href", "Link", "/tools")
         ],
@@ -1099,7 +1099,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
             title: "Photo Story Album",
             description: "AI portraits for profiles, creator pages, product launches, and private albums.",
             meta: "Private gallery",
-            credits: "24 credits",
+            credits: "",
             imageUrl: "",
             href: "/tools"
           }
@@ -1122,7 +1122,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
             title: "Photo Story Album",
             description: "Scene, editorial, and announcement looks generated from private customer uploads.",
             meta: "Private gallery",
-            credits: "24 credits",
+            credits: "",
             imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
             href: "/tools/creator-portrait"
           }),
@@ -1130,7 +1130,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
             title: "Headshot",
             description: "LinkedIn-ready portraits for founders, operators, and consultants.",
             meta: "Private gallery",
-            credits: "16 credits",
+            credits: "",
             imageUrl: "/assets/dreamshoot/editorial-headshot.svg",
             href: "/tools/headshot"
           }),
@@ -1138,7 +1138,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
             title: "Editorial Studio Set",
             description: "Fashion lighting, magazine crops, and premium social profile imagery.",
             meta: "Private gallery",
-            credits: "20 credits",
+            credits: "",
             imageUrl: "/assets/dreamshoot/editorial-headshot.svg",
             href: "/tools/fashion-editorial"
           })
@@ -1501,7 +1501,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       checkbox("showTrustedLogoIntro", "Show trusted logo intro", false),
       text("trustedLogoTitle", "Trusted logo title", "Creative workflow examples built with myDreamshoots"),
       text("aboutTitle", "About heading", "What is myDreamshoots?"),
-      textarea("aboutBody", "About body", "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. Upload photos you are authorized to use, choose a supported image or video workflow, review the current credit cost, and generate results inside your signed-in workspace. Current workflows include professional headshots, portraits, fan and seasonal images, creative styles, photo-editing tools, and short video options."),
+      textarea("aboutBody", "About body", "myDreamshoots is an AI photo and video studio. Upload photos you are authorized to use, choose a supported workflow, review the current credit cost, and generate results inside your signed-in workspace."),
       text("embeddedPricingSectionId", "Embedded pricing section ID", ""),
       range("trustedLogoSplitIndex", "Trusted logo row split", 15, 1, 30),
       text("eyebrow", "Eyebrow", "Customer-created examples"),
@@ -1527,7 +1527,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           showTrustedLogoIntro: false,
 	          trustedLogoTitle: "Creative workflow examples built with myDreamshoots",
           aboutTitle: "What is myDreamshoots?",
-	          aboutBody: "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. Upload photos you are authorized to use, choose a supported image or video workflow, review the current credit cost, and generate results inside your signed-in workspace. Current workflows include professional headshots, portraits, fan and seasonal images, creative styles, photo-editing tools, and short video options.",
+	          aboutBody: "myDreamshoots is an AI photo and video studio. Upload photos you are authorized to use, choose a supported workflow, review the current credit cost, and generate results inside your signed-in workspace.",
           embeddedPricingSectionId: "",
           trustedLogoSplitIndex: 15,
           eyebrow: "Customer-created examples",
@@ -1631,7 +1631,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("secondaryCta", "Secondary CTA", "View Sports Packs"),
       url("secondaryHref", "Secondary link", "/collections"),
       text("photos", "Photos stat", "Private gallery"),
-      text("credits", "Credits stat", "26 credits"),
+      { id: "creativePackId", label: "Creative pack", type: "custom_select", source: "creative_packs", default: "" },
       text("privacy", "Privacy stat", "Private album"),
       text("includedTitle", "Included title", "Included outputs"),
       textarea("includedOutputs", "Included outputs", "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing"),
@@ -1658,7 +1658,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           secondaryCta: "View Sports Packs",
           secondaryHref: "/collections",
           photos: "Private gallery",
-          credits: "26 credits",
+          credits: "",
           privacy: "Private album",
           includedTitle: "Included outputs",
           includedOutputs: "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
@@ -1715,7 +1715,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           anchor: "packages",
           label: "AI PHOTO STUDIOS",
           title: "AI Photo Packages by Style and Use Case",
-          subtitle: "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
+          subtitle: "Browse all {LIVE_AI_IMAGE_WORKFLOW_COUNT} active myDreamshoots themes before spending credits.",
           directoryLabel: "AI PHOTO THEMED",
           directorySubtitle: "Compare every active theme by category, title, cover, and route before starting a private photo package.",
           tabs: "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal|Creator|Video|Utility",
@@ -1724,13 +1724,13 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           featuredCount: 12
         },
         blocks: [
-          block("catalog_worldcup", "catalog_pack", { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-04.webp", href: "/ai-image-generation/soccer" }),
-          block("catalog_christmas", "catalog_pack", { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/ai-image-generation/christmas-photo" }),
-          block("catalog_nightlife", "catalog_pack", { title: "Nightlife", description: "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", category: "Lifestyle & Creative", meta: "Night-out looks", credits: "22 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp", href: "/ai-image-generation/nightlife" }),
-          block("catalog_holiday", "catalog_pack", { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: "/ai-image-generation/holiday" }),
-          block("catalog_creator_vip", "catalog_pack", { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp", href: "/ai-image-generation/portrait-photo" }),
-          block("catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving Photo", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", category: "Best Themes & Presets", meta: "Group portraits", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1", href: "/ai-image-generation/thanksgiving-photo" }),
-          block("catalog_halloween", "catalog_pack", { title: "Halloween Photo", description: "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", category: "Best Themes & Presets", meta: "Party albums", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1", href: "/ai-image-generation/halloween-photo" })
+          block("catalog_worldcup", "catalog_pack", { title: "Soccer", description: "Create soccer fan portraits, match-day posters, stadium group shots, and social-ready avatars from your own selfies. For personal fan use only; no official logos, player likenesses, celebrity likenesses, or official marks without permission.", category: "Lifestyle & Creative", meta: "Fan meetups", credits: "", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-04.webp", href: "/ai-image-generation/soccer" }),
+          block("catalog_christmas", "catalog_pack", { title: "Christmas Photo", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.", category: "Best Themes & Presets", meta: "Holiday cards", credits: "", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: "/ai-image-generation/christmas-photo" }),
+          block("catalog_nightlife", "catalog_pack", { title: "Nightlife", description: "Create polished night-out portraits, social profile crops, and neon-lit personal scenes from photos you own or can use.", category: "Lifestyle & Creative", meta: "Night-out looks", credits: "", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp", href: "/ai-image-generation/nightlife" }),
+          block("catalog_holiday", "catalog_pack", { title: "Holiday", description: "Create seasonal portraits for Christmas, Thanksgiving, Halloween, family-style cards, and private group albums.", category: "Seasonal", meta: "Seasonal albums", credits: "", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: "/ai-image-generation/holiday" }),
+          block("catalog_creator_vip", "catalog_pack", { title: "Portrait Photo", description: "Create VIP-style creator portraits, red-carpet fan snapshots, and polished personal-brand images from approved photos.", category: "Professional", meta: "Red-carpet looks", credits: "", imageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp", href: "/ai-image-generation/portrait-photo" }),
+          block("catalog_thanksgiving", "catalog_pack", { title: "Thanksgiving Photo", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.", category: "Best Themes & Presets", meta: "Group portraits", credits: "", imageUrl: "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1", href: "/ai-image-generation/thanksgiving-photo" }),
+          block("catalog_halloween", "catalog_pack", { title: "Halloween Photo", description: "Create costume-party portraits, spooky group cards, cinematic VIP looks, and seasonal social images.", category: "Best Themes & Presets", meta: "Party albums", credits: "", imageUrl: "/assets/dreamshoot/generated/pack-covers/halloween-party-photos/halloween-party-photos-cover.webp?v=20260803safecover1", href: "/ai-image-generation/halloween-photo" })
         ]
       }
     ]
@@ -1854,7 +1854,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           text("title", "Title", "Portrait Photo"),
           textarea("description", "Description", "Polished portrait photo and soccer fan portraits."),
           text("meta", "Meta", "Private gallery"),
-          text("credits", "Credits", "24 credits"),
+          text("credits", "Credits", ""),
           image("imageUrl", "Image URL", "/assets/dreamshoot/travel-card.svg"),
           url("href", "Link", "/tools")
         ],
@@ -1864,7 +1864,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
             title: "Portrait Photo",
             description: "Polished portrait photo and soccer fan portraits.",
             meta: "Private gallery",
-            credits: "24 credits",
+            credits: "",
             imageUrl: "/assets/dreamshoot/travel-card.svg",
             href: "/tools"
           }
@@ -1882,9 +1882,9 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           source: "creative_packs"
         },
         blocks: [
-          block("marquee_photo", "package", { title: "AI Photo Sets", description: "Announcement, profile, and scene visuals.", meta: "Private gallery", credits: "24 credits", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/creator-portrait" }),
-          block("marquee_sports", "package", { title: "Soccer", description: "Stadium fan scenes, fan posters, and portrait photo sets.", meta: "Private gallery", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png", href: "/tools/world-cup-fan-photos" }),
-          block("marquee_gala", "package", { title: "Gala Photo", description: "Formal editorial night-out imagery.", meta: "Private gallery", credits: "22 credits", imageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", href: "/tools/gala-photo" })
+          block("marquee_photo", "package", { title: "AI Photo Sets", description: "Announcement, profile, and scene visuals.", meta: "Private gallery", credits: "", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/creator-portrait" }),
+          block("marquee_sports", "package", { title: "Soccer", description: "Stadium fan scenes, fan posters, and portrait photo sets.", meta: "Private gallery", credits: "", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png", href: "/tools/world-cup-fan-photos" }),
+          block("marquee_gala", "package", { title: "Gala Photo", description: "Formal editorial night-out imagery.", meta: "Private gallery", credits: "", imageUrl: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png", href: "/tools/gala-photo" })
         ]
       }
     ]
@@ -2309,8 +2309,8 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     settings: [
       text("title", "Title", "Policy page"),
       select("headingLevel", "Heading level", [["h1", "H1"], ["h2", "H2"]], "h1"),
-      text("lastUpdated", "Last updated", "June 25, 2024"),
-      text("contactEmail", "Contact email", "support@mydreamshoots.com"),
+      text("lastUpdated", "Last updated", ""),
+      text("contactEmail", "Contact email", ""),
       richtext("body", "Body")
     ]
   },

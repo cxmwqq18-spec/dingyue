@@ -92,6 +92,8 @@ const siteRuntimeInclude = {
   domains: true,
   pages: { orderBy: { slug: "asc" } },
   settings: true,
+  storefrontProfile: true,
+  publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 },
   connect: true
 } satisfies Prisma.SiteInclude;
 
@@ -2794,6 +2796,8 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
   site?: Site;
   dirtyPageIds: string[];
   products: PublishPreflightProduct[];
+  creativePacks: Array<{ id: string; status: string; creditCost: number; outputCount: number }>;
+  storefrontProfile?: import("@/lib/types").StorefrontProfileJson;
   siteAiApps: PublishPreflightSiteAiApp[];
   mediaAssets: PublishPreflightMediaAsset[];
 }> {
@@ -2829,6 +2833,8 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
         }>;
         dirtyPageIds: string[];
         products: PublishPreflightProduct[];
+        creativePacks: Array<{ id: string; status: string; creditCost: number; outputCount: number }>;
+        storefrontProfile?: import("@/lib/types").StorefrontProfileJson;
         siteAiApps: PublishPreflightSiteAiApp[];
         mediaAssets: PublishPreflightMediaAsset[];
       };
@@ -2881,7 +2887,7 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
               'status', pr."status",
               'type', pr."type",
               'prices', COALESCE((
-                SELECT jsonb_agg(jsonb_build_object('stripePriceId', px."stripePriceId", 'amountCents', px."amountCents"))
+                SELECT jsonb_agg(jsonb_build_object('stripePriceId', px."stripePriceId", 'amountCents', px."amountCents", 'status', px."status", 'currency', px."currency", 'interval', px."interval", 'providerVerifiedAt', px."providerVerifiedAt", 'providerFingerprint', px."providerFingerprint", 'effectiveFrom', px."effectiveFrom", 'effectiveTo', px."effectiveTo"))
                 FROM "Price" px
                 WHERE px."productId" = pr."id"
               ), '[]'::jsonb)
@@ -2889,6 +2895,12 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
             FROM "Product" pr
             WHERE pr."siteId" = s."id"
           ), '[]'::jsonb) AS "products",
+          COALESCE((
+            SELECT jsonb_agg(jsonb_build_object('id', cp."id", 'status', cp."status", 'creditCost', cp."creditCost", 'outputCount', cp."outputCount"))
+            FROM "CreativePack" cp
+            WHERE cp."siteId" = s."id"
+          ), '[]'::jsonb) AS "creativePacks",
+          CASE WHEN sp."id" IS NULL THEN NULL ELSE sp."draftJson" END AS "storefrontProfile",
           COALESCE((
             SELECT jsonb_agg(jsonb_build_object(
               'id', sa."id",
@@ -2907,11 +2919,12 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
         FROM "Site" s
         LEFT JOIN "ThemeSettings" ts ON ts."siteId" = s."id"
         LEFT JOIN "StripeConnectAccount" sc ON sc."siteId" = s."id"
+        LEFT JOIN "StorefrontProfile" sp ON sp."siteId" = s."id"
         WHERE s."id" = ${siteId}
         LIMIT 1
       `;
       const row = rows[0];
-      if (!row) return { site: undefined, dirtyPageIds: [], products: [], siteAiApps: [], mediaAssets: [] };
+      if (!row) return { site: undefined, dirtyPageIds: [], products: [], creativePacks: [], storefrontProfile: undefined, siteAiApps: [], mediaAssets: [] };
       const primaryDomain = row.domains.find((domain) => domain.isPrimary)?.domain ?? row.domains[0]?.domain ?? row.primaryDomain ?? "";
       return {
         dirtyPageIds: row.dirtyPageIds,
@@ -2920,10 +2933,19 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
           status: product.status as PublishPreflightProduct["status"],
           type: product.type as PublishPreflightProduct["type"],
           prices: product.prices.map((price) => ({
-            amountCents: price.amountCents,
-            stripePriceId: price.stripePriceId ?? ""
+              amountCents: price.amountCents,
+              stripePriceId: price.stripePriceId ?? "",
+              status: price.status,
+              currency: price.currency,
+              interval: price.interval,
+              providerVerifiedAt: price.providerVerifiedAt,
+              providerFingerprint: price.providerFingerprint,
+              effectiveFrom: price.effectiveFrom,
+              effectiveTo: price.effectiveTo
           }))
         })),
+        creativePacks: row.creativePacks,
+        storefrontProfile: row.storefrontProfile,
         siteAiApps: row.siteAiApps,
         mediaAssets: row.mediaAssets,
         site: {
@@ -3035,6 +3057,7 @@ export async function getSiteShellBySlugForAdmin(slug: string): Promise<Site | u
         FROM "Site" s
         LEFT JOIN "ThemeSettings" ts ON ts."siteId" = s."id"
         LEFT JOIN "StripeConnectAccount" sc ON sc."siteId" = s."id"
+        LEFT JOIN "StorefrontProfile" sp ON sp."siteId" = s."id"
         WHERE s."slug" = ANY(${slugCandidates})
         ORDER BY s."updatedAt" DESC
         LIMIT 1
@@ -5278,7 +5301,7 @@ export async function upsertCreativePackRelational(params: {
   if (prompt && prompt.length > 6000) throw new RelationalStoreError("creative_pack_prompt_too_long", 400);
   const aiApp = await prisma.aiApp.findUnique({ where: { slug: params.aiAppSlug }, select: { id: true } });
   if (!aiApp) throw new RelationalStoreError("ai_app_not_found", 404);
-  if (!Number.isInteger(params.creditCost) || params.creditCost < 0) throw new RelationalStoreError("invalid_credit_cost", 400);
+  if (!Number.isInteger(params.creditCost) || params.creditCost < 1) throw new RelationalStoreError("invalid_credit_cost", 400);
   if (!Number.isInteger(params.outputCount) || params.outputCount < 1) throw new RelationalStoreError("invalid_output_count", 400);
   const categoryRecord = params.categoryId
     ? await prisma.creativePackCategory.findFirst({ where: { id: params.categoryId, siteId: params.siteId }, select: { id: true, slug: true } })
@@ -5334,6 +5357,7 @@ export async function upsertCreativePackRelational(params: {
         }
       });
 
+  clearSiteReadCache();
   return { pack: toCreativePack(pack), created: !existing };
 }
 
@@ -5347,6 +5371,7 @@ export async function deleteCreativePackRelational(params: {
     await tx.album.updateMany({ where: { siteId: params.siteId, creativePackId: pack.id }, data: { creativePackId: null } });
     await tx.creativePack.delete({ where: { id: pack.id } });
   });
+  clearSiteReadCache();
   return { deletedPack: toCreativePack(pack) };
 }
 

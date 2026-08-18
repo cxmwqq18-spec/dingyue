@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Copy, Download, Eye, Layers3, Play, Plus, RefreshCcw, Sparkles, Trash2, WandSparkles } from "lucide-react";
+import { CheckCircle2, Copy, Download, Eye, Layers3, Plus, RefreshCcw, Sparkles, Trash2, WandSparkles } from "lucide-react";
 import type { SiteTheme, ThemeCopy, ThemePublication } from "@/lib/types";
 import { downloadJson } from "@/components/admin/export-utils";
 import { siteAdminJsonHeaders } from "@/lib/client-csrf";
@@ -390,22 +390,6 @@ export function ThemeManagerPanel({
     setMessage(`${theme.name} 已应用到当前草稿，可继续进入设计器编辑。`);
   }
 
-  async function activateTheme(theme: SiteThemeSummary) {
-    const response = await fetch(`/api/sites/${siteId}/theme/${theme.id}/activate`, {
-      method: "POST",
-      headers: siteAdminJsonHeaders(siteId),
-      body: JSON.stringify({ actor: "site_admin_demo" })
-    });
-    const json = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      setMessage(`发布失败：${json.error ?? "未知错误"}`);
-      return;
-    }
-    await refreshThemeSnapshot();
-    router.refresh();
-    setMessage(`${theme.name} 已发布为当前线上主题。`);
-  }
-
   async function deleteTheme(theme: SiteThemeSummary) {
     const response = await fetch(`/api/sites/${siteId}/theme/${theme.id}`, {
       method: "DELETE",
@@ -732,7 +716,6 @@ export function ThemeManagerPanel({
               {liveThemes.map((theme) => (
                 <InstalledThemeCard
                   key={theme.id}
-                  onActivate={() => activateTheme(theme)}
                   onApply={() => applyToDraft(theme)}
                   onDelete={() => deleteTheme(theme)}
                   onDuplicate={() => duplicateTheme(theme)}
@@ -752,7 +735,6 @@ export function ThemeManagerPanel({
               {draftThemes.map((theme) => (
                 <InstalledThemeCard
                   key={theme.id}
-                  onActivate={() => activateTheme(theme)}
                   onApply={() => applyToDraft(theme)}
                   onDelete={() => deleteTheme(theme)}
                   onDuplicate={() => duplicateTheme(theme)}
@@ -819,7 +801,6 @@ function InstalledThemeCard({
   theme,
   siteSlug,
   onApply,
-  onActivate,
   onDuplicate,
   onDelete,
   onExport
@@ -827,7 +808,6 @@ function InstalledThemeCard({
   theme: SiteThemeSummary;
   siteSlug: string;
   onApply: () => void;
-  onActivate: () => void;
   onDuplicate: () => void;
   onDelete: () => void;
   onExport: () => void;
@@ -881,10 +861,6 @@ function InstalledThemeCard({
         <button className="admin_btn inline-flex items-center gap-1" onClick={onExport} type="button">
           <Download className="h-3 w-3" strokeWidth={1.8} />
           导出
-        </button>
-        <button className="admin_edit inline-flex items-center gap-1 disabled:opacity-40" disabled={theme.status === "active"} onClick={onActivate} type="button">
-          <Play className="h-3 w-3" strokeWidth={1.8} />
-          发布上线
         </button>
         <button className="admin_del inline-flex items-center gap-1 disabled:opacity-40" disabled={theme.status === "active"} onClick={onDelete} type="button">
           <Trash2 className="h-3 w-3" strokeWidth={1.8} />

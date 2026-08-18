@@ -1,6 +1,6 @@
 import { normalizeThemeSeo } from "@/lib/theme/seo";
 import { themeValueToString } from "@/lib/theme-values";
-import type { SectionBlockInstance, SectionInstance, Site, ThemePage, ThemeSettings, ThemeSettingValue } from "@/lib/types";
+import type { SectionBlockInstance, SectionInstance, Site, StorefrontProfileJson, ThemePage, ThemeSettings, ThemeSettingValue } from "@/lib/types";
 
 export type PublishPreflightSeverity = "pass" | "warn" | "block";
 
@@ -35,8 +35,10 @@ export type PublishPreflightProduct = {
   id: string;
   status: "active" | "draft";
   type: "subscription" | "credit_pack";
-  prices: Array<{ stripePriceId: string | null; amountCents: number }>;
+  prices: Array<{ stripePriceId: string | null; amountCents: number; status?: string; currency?: string; interval?: string; providerVerifiedAt?: string | null; providerFingerprint?: string | null; effectiveFrom?: string | null; effectiveTo?: string | null }>;
 };
+
+export type PublishPreflightCreativePack = { id: string; status: string; creditCost: number; outputCount: number };
 
 export type PublishPreflightSiteAiApp = {
   id: string;
@@ -167,8 +169,33 @@ function setting(section: SectionInstance, key: string): string {
   return themeValueToString(section.settings[key], "").trim();
 }
 
-function productPriceCount(products: PublishPreflightProduct[]): number {
-  return products.reduce((sum, product) => sum + product.prices.filter((price) => price.stripePriceId && price.amountCents > 0).length, 0);
+function productPriceCount(products: PublishPreflightProduct[], siteCurrency: string): number {
+  return products.reduce((sum, product) => sum + product.prices.filter((price) => validPublishedPrice(price, Date.now(), siteCurrency)).length, 0);
+}
+
+function validPublishedPrice(price: PublishPreflightProduct["prices"][number], now = Date.now(), siteCurrency?: string): boolean {
+  const effectiveFrom = price.effectiveFrom ? Date.parse(price.effectiveFrom) : undefined;
+  const effectiveTo = price.effectiveTo ? Date.parse(price.effectiveTo) : undefined;
+  return price.status === "active"
+    && Boolean(price.stripePriceId && /^price_/.test(price.stripePriceId))
+    && price.amountCents > 0
+    && Boolean(price.currency && price.interval && price.providerVerifiedAt && price.providerFingerprint)
+    && (!siteCurrency || price.currency?.trim().toLowerCase() === siteCurrency.trim().toLowerCase())
+    && (effectiveFrom === undefined || (Number.isFinite(effectiveFrom) && effectiveFrom <= now))
+    && (effectiveTo === undefined || (Number.isFinite(effectiveTo) && effectiveTo > now));
+}
+
+function collectLiveBindings(value: unknown, found = new Set<string>()): Set<string> {
+  if (typeof value === "string") {
+    for (const match of value.matchAll(/\{(LIVE_[A-Z0-9_]+)\}/g)) found.add(match[1]);
+    return found;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectLiveBindings(item, found));
+    return found;
+  }
+  if (isRecord(value)) Object.values(value).forEach((item) => collectLiveBindings(item, found));
+  return found;
 }
 
 function activeProductsForFilter(products: PublishPreflightProduct[], filter: string): PublishPreflightProduct[] {
@@ -235,12 +262,16 @@ export function runThemePublishPreflight({
   products,
   siteAiApps,
   mediaAssets,
+  storefrontProfile,
+  creativePacks = [],
   dirtyPageIds
 }: {
   site: Site;
   products: PublishPreflightProduct[];
   siteAiApps: PublishPreflightSiteAiApp[];
   mediaAssets: PublishPreflightMediaAsset[];
+  storefrontProfile?: StorefrontProfileJson;
+  creativePacks?: PublishPreflightCreativePack[];
   dirtyPageIds?: string[] | Set<string>;
 }): PublishPreflightResult {
   const checks: PublishPreflightCheck[] = [];
@@ -262,7 +293,9 @@ export function runThemePublishPreflight({
   const generationForms = sections.filter((entry) => entry.section.type === "generation_form" || entry.section.type === "ai_tool_entry");
   const policyPages = site.pages.filter((page) => page.slug.includes("policy") || page.pageType.includes("policy"));
   const activeProducts = products.filter((product) => product.status === "active");
-  const activePrices = productPriceCount(activeProducts);
+  const activePrices = productPriceCount(activeProducts, site.currency);
+  const invalidActivePrices = activeProducts.flatMap((product) => product.prices.filter((price) => price.status === "active" && !validPublishedPrice(price, Date.now(), site.currency)));
+  const invalidCreativePacks = creativePacks.filter((pack) => pack.status === "active" && (pack.creditCost <= 0 || pack.outputCount <= 0));
   const enabledAiApps = siteAiApps.filter((app) => app.enabled);
   const headerLinks = site.themeSettings.draftJson.navigation.headerLinks;
   const footerLinks = site.themeSettings.draftJson.navigation.footerLinks;
@@ -271,19 +304,72 @@ export function runThemePublishPreflight({
   const brokenLinks = [...headerLinks, ...footerLinks].filter((link) => !link.label.trim() || hasBrokenLink(link.href));
   const mediaIds = new Set(mediaAssets.map((asset) => asset.id));
   const missingMediaRefs = collectMediaReferencesFromSections(sections).filter((ref) => !mediaIds.has(ref));
-  const pagesMissingSeoTitle = site.pages.filter((page) => !seo.pages[page.id]?.title.trim());
-  const pagesMissingSeoDescription = site.pages.filter((page) => !seo.pages[page.id]?.description.trim());
+  const pagesMissingSeoTitle = site.pages.filter((page) => !page.draftJson.seo?.title?.trim());
+  const pagesMissingSeoDescription = site.pages.filter((page) => !page.draftJson.seo?.description?.trim());
   const pagesWithShortSeoDescription = site.pages.filter((page) => {
-    const length = seo.pages[page.id]?.description.trim().length ?? 0;
+    const length = page.draftJson.seo?.description?.trim().length ?? 0;
     return length > 0 && length < 50;
   });
-  const pagesWithBrokenCanonical = site.pages.filter((page) => hasBrokenCanonical(seo.pages[page.id]?.canonicalPath));
+  const pagesWithBrokenCanonical = site.pages.filter((page) => hasBrokenCanonical(page.draftJson.seo?.canonical ?? page.draftJson.seo?.canonicalPath));
+  const address = storefrontProfile?.identity.address;
+  const liveBindings = collectLiveBindings({ pages: site.pages.map((page) => page.draftJson), settings: site.themeSettings.draftJson });
+  const bindingAvailability: Record<string, boolean> = {
+    LIVE_LOWEST_ACTIVE_PLAN_PRICE: activeProducts.some((product) => product.type === "subscription" && product.prices.some((price) => price.interval === "month" && validPublishedPrice(price, Date.now(), site.currency))),
+    LIVE_LOWEST_ONE_TIME_CREDIT_PRICE: activeProducts.some((product) => product.type === "credit_pack" && product.prices.some((price) => price.interval === "one_time" && validPublishedPrice(price, Date.now(), site.currency))),
+    LIVE_AI_IMAGE_WORKFLOW_COUNT: creativePacks.some((pack) => pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0),
+    LIVE_SOURCE_MEDIA_RETENTION_DAYS: Boolean(storefrontProfile?.policyFacts.sourceMediaRetentionDays),
+    LIVE_REFUND_WINDOW_DAYS: Boolean(storefrontProfile?.policyFacts.refundWindowDays),
+    LIVE_SUPPORT_EMAIL: Boolean(storefrontProfile?.identity.supportEmail),
+    LIVE_LEGAL_NAME: Boolean(storefrontProfile?.identity.legalName),
+    LIVE_STORE_ADDRESS: Boolean(address?.line1 && address.city && address.region && address.postalCode && address.country),
+    LIVE_POLICY_EFFECTIVE_DATE: Boolean(storefrontProfile?.policyFacts.effectiveDate),
+    LIVE_TRAINING_POLICY_STATEMENT: storefrontProfile?.policyFacts.usesCustomerMediaForTraining !== undefined,
+    LIVE_REFUND_REVIEW_POLICY_STATEMENT: storefrontProfile?.policyFacts.refundReviewRequired !== undefined
+  };
+  const unresolvedBindings = [...liveBindings].filter((binding) => !bindingAvailability[binding]);
+  const draftText = JSON.stringify({ pages: site.pages.map((page) => page.draftJson), settings: site.themeSettings.draftJson });
+  const policyContradictions: string[] = [];
+  const retentionClaims = [
+    ...draftText.matchAll(/(\d+)[- ]day[^.]{0,80}(?:delete|retention)/gi),
+    ...draftText.matchAll(/(?:delete|retention)[^.]{0,80}?(\d+)[- ]day/gi)
+  ].map((match) => Number(match[1])).filter(Number.isFinite);
+  if (storefrontProfile?.policyFacts.sourceMediaRetentionDays && retentionClaims.some((days) => days !== storefrontProfile.policyFacts.sourceMediaRetentionDays)) {
+    policyContradictions.push("sourceMediaRetentionDays");
+  }
+  const refundWindowClaims = [...draftText.matchAll(/refund[^.]{0,100}?(\d+)[- ]day/gi)].map((match) => Number(match[1])).filter(Number.isFinite);
+  if (storefrontProfile?.policyFacts.refundWindowDays && refundWindowClaims.some((days) => days !== storefrontProfile.policyFacts.refundWindowDays)) {
+    policyContradictions.push("refundWindowDays");
+  }
+  if (storefrontProfile?.policyFacts.usesCustomerMediaForTraining === true && /(?:never|not) used to train models/i.test(draftText)) {
+    policyContradictions.push("usesCustomerMediaForTraining");
+  }
+  if (storefrontProfile?.policyFacts.refundReviewRequired === true && /(?:automatic|guaranteed) refund/i.test(draftText)) {
+    policyContradictions.push("refundReviewRequired");
+  }
 
   checks.push(
     site.pages.length >= 10
       ? pass("page_count", "pages", "全站页面覆盖", `${site.pages.length} 个页面已进入主题页面树。`)
       : warn("page_count", "pages", "页面覆盖偏少", `当前只有 ${site.pages.length} 个页面，DreamShootAI 主题目标应覆盖首页、定价、工具、登录、工作台、相册、政策、帮助和博客。`)
   );
+
+  const profileMissing = [
+    !storefrontProfile?.identity.legalName ? "legalName" : "",
+    !storefrontProfile?.identity.entityType ? "entityType" : "",
+    !address?.line1 || !address.city || !address.region || !address.postalCode || !address.country ? "address" : "",
+    !storefrontProfile?.identity.supportEmail ? "supportEmail" : "",
+    storefrontProfile?.policyFacts.usesCustomerMediaForTraining === undefined ? "usesCustomerMediaForTraining" : "",
+    storefrontProfile?.policyFacts.sourceMediaRetentionDays ? "" : "sourceMediaRetentionDays",
+    storefrontProfile?.policyFacts.refundReviewRequired === undefined ? "refundReviewRequired" : "",
+    storefrontProfile?.policyFacts.refundWindowDays ? "" : "refundWindowDays",
+    storefrontProfile?.policyFacts.effectiveDate ? "" : "effectiveDate"
+  ].filter(Boolean);
+  checks.push(profileMissing.length ? block("storefront_profile", "settings", "站点资料未确认", `Profile 缺少: ${profileMissing.join(", ")}。法人资料未确认时禁止整站发布。`) : pass("storefront_profile", "settings", "站点资料完整", "Footer、Contact、About 和 Organization Schema 共享同一份已发布 Profile。"));
+  checks.push(invalidActivePrices.length ? block("price_provider_verification", "commerce", "报价未完成 provider 校验", `${invalidActivePrices.length} 个 active Price 缺少有效 Stripe read-only fingerprint。`) : pass("price_provider_verification", "commerce", "报价 provider 校验有效", "公开报价均有 active 状态、有效 Price ID 和 provider fingerprint。"));
+  checks.push(invalidCreativePacks.length ? block("creative_pack_facts", "ai", "CreativePack 数值非法", `${invalidCreativePacks.map((pack) => pack.id).slice(0, 5).join(", ")} 的 credits/outputCount 必须大于 0。`) : pass("creative_pack_facts", "ai", "CreativePack 数值有效", "前台不会为缺失 credits 或 outputCount 伪造默认值。"));
+  checks.push(unresolvedBindings.length ? block("storefront_bindings", "pages", "存在未解析事实 binding", unresolvedBindings.join(", ")) : pass("storefront_bindings", "pages", "事实 binding 可解析", "页面只使用白名单事实 binding，且当前值均可解析。"));
+  checks.push(policyContradictions.length ? block("policy_fact_consistency", "settings", "Trust 文案与政策事实冲突", Array.from(new Set(policyContradictions)).join(", ")) : pass("policy_fact_consistency", "settings", "Trust 文案与政策事实一致", "政策数字和训练/退款声明由 Profile facts 或白名单 binding 提供。"));
+  checks.push(pass("seo_schema_context", "pages", "SEO 与 Schema 使用同一解析结果", `页面 SEO 来自 ThemePage 草稿；站点默认值由 ${seo.siteTitle || "site defaults"} 提供。发布渲染不会读取 ThemeSettings.seo.pages。`));
 
   checks.push(
     emptyPages.length
@@ -299,7 +385,7 @@ export function runThemePublishPreflight({
 
   checks.push(
     dirtyPages.length
-      ? warn("dirty_pages", "pages", "存在未发布草稿", `${dirtyPages.length} 个页面草稿和线上版本不同，发布会一次性推到前台。`)
+      ? warn("dirty_pages", "pages", "存在未发布草稿", `${dirtyPages.length} 个页面草稿和线上版本不同；单页发布只影响目标页，整站发布必须显式列入 manifest。`)
       : pass("dirty_pages", "pages", "草稿与线上一致", "当前页面 draft_json 与 published_json 没有差异。")
   );
 

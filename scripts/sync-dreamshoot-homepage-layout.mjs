@@ -49,7 +49,7 @@ const assetVersion = "20260801visualfix1";
 const aidreamAssetVersion = "20260801visualfix2";
 const mydreamshootsPackageDirectoryCopy = {
   title: "AI Photo Packages by Style and Use Case",
-  subtitle: "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
+  subtitle: "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
 };
 
 const rawArgs = process.argv.slice(2);
@@ -110,7 +110,7 @@ const myAssets = {
 
 const mydreamshootsTrustedLogoAssetBase = "/assets/dreamshoot/brand/trusted-creators-dark-v2";
 const aidreamTrustedLogoAssetBase = "/assets/sites/site_aidreamcapes/trusted-logos";
-const mydreamshootsAboutBody = "myDreamshoots is an AI photo and video studio operated by MRNARUEBET LLC. Upload photos you are authorized to use, choose a supported image or video workflow, review the current credit cost, and generate results inside your signed-in workspace. Current workflows include professional headshots, portraits, fan and seasonal images, creative styles, photo-editing tools, and short video options.";
+const mydreamshootsAboutBody = "myDreamshoots is an AI photo and video studio for approved uploads, visible credit review, supported image and video workflows, and private account delivery. The current legal identity and policy facts are maintained in the published site profile.";
 const mydreamshootsTrustedLogoDefinitions = [
   { key: "ikraddy", name: "iKraddy", file: "01__ikraddy.webp" },
   { key: "beer", name: "Beer", file: "02__beer.webp" },
@@ -216,7 +216,7 @@ const stores = [
       anchor: "packages",
       label: "AI PHOTO STUDIOS",
       title: "AI Photo Packages by Style and Use Case",
-      subtitle: "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
+      subtitle: "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
       directoryLabel: "AI PHOTO THEMED",
       directorySubtitle: "Compare every active theme by category, title, cover, and route before starting a private photo package."
     },
@@ -260,7 +260,7 @@ const stores = [
       secondaryCta: "View all themes",
       secondaryHref: "/ai-image-generation",
       photos: "Private gallery",
-      credits: "26 credits",
+      credits: "",
       privacy: "Approved uploads",
       includedTitle: "Recommended outputs",
       includedOutputs: "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Profile-ready avatars|Social banners|Private album downloads",
@@ -388,7 +388,7 @@ const stores = [
       bulletList: "Upload approved source photos.|Choose fan-scene, game-day, premiere, or holiday albums.|Review credits before generation starts.|Download finished images from your private gallery.",
       highlightWord: "private",
       heroBadge: "AI occasion album studio",
-      authRibbon: "Plans start at $24.50/month",
+      authRibbon: "Plans start at {LIVE_LOWEST_ACTIVE_PLAN_PRICE}",
       authPrimaryLabel: "Continue with email",
       authEmailPlaceholder: "Email address",
       authButtonLabel: "Create account with email",
@@ -414,7 +414,7 @@ const stores = [
       showTrustedLogoIntro: true,
       trustedLogoTitle: "Trusted by Aidreamcapes creators worldwide",
       aboutTitle: "What is Aidreamcapes?",
-      aboutBody: "Aidreamcapes is an AI photo and video studio: upload your photos, choose a theme, and create realistic headshots, creator portraits, fan photos, seasonal cards, private albums, and short video-ready images. There is no photographer to book; you review credits before generation, keep uploads private, and download finished results from your private gallery. Plans start at $24.50/month, and every package shows the credit cost before generation.",
+      aboutBody: "Aidreamcapes is an AI photo and video studio: upload approved photos, choose a theme, review the current credit cost, and create private galleries inside your account.",
       embeddedPricingSectionId: "pricing_1",
       trustedLogoSplitIndex: 15,
       eyebrow: "Customer-created examples",
@@ -444,7 +444,7 @@ const stores = [
       secondaryCta: "View all themes",
       secondaryHref: "/collections",
       photos: "Private gallery",
-      credits: "20-24 credits",
+      credits: "",
       privacy: "Approved uploads",
       includedTitle: "Recommended directions",
       includedOutputs: "Game-day group portraits|Watch-party and supporter scenes|Christmas holiday albums|Card-ready festive crops|Premiere-inspired portraits|Private occasion keepsakes",

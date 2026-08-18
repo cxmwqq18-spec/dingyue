@@ -36,15 +36,16 @@ import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/custome
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
+import { loadPublishedStorefrontContext } from "@/lib/storefront-context";
+import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } from "@/lib/dreamshoot-tool-faq";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
-import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection } from "@/lib/dreamshoot-seo-content";
+import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
 import { isMydreamshootsPublicVideoGenerationSlug, isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
-import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo, getSpanishXbyPolicySeo, type PolicySeoCopy } from "@/lib/theme/policy-seo";
 import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
@@ -301,7 +302,13 @@ function lightweightPrice(price: Price): Price {
     interval: price.interval,
     creditsGranted: price.creditsGranted,
     stripePriceId: price.stripePriceId,
-    metadata: price.metadata
+    metadata: price.metadata,
+    status: price.status,
+    effectiveFrom: price.effectiveFrom,
+    effectiveTo: price.effectiveTo,
+    replacesPriceId: price.replacesPriceId,
+    providerVerifiedAt: price.providerVerifiedAt,
+    providerFingerprint: price.providerFingerprint
   };
 }
 
@@ -312,6 +319,7 @@ function lightweightProduct(product: Product): Product {
     name: product.name,
     type: product.type,
     status: product.status,
+    metadata: product.metadata,
     prices: product.prices.map(lightweightPrice)
   };
 }
@@ -857,144 +865,8 @@ function clientSiteForSectionRender(site: Site, activePage: ThemePageJson, pageP
   return lightweightSiteForClient(site, Array.from(pageMap.values()));
 }
 
-function proposedFederalPrivacyLegislationNotice(brand: string): string {
-  return `<h3>5. Proposed federal privacy legislation watch</h3><p>${brand} monitors proposed U.S. federal privacy legislation, including the SECURE Data Act and the GUARD Financial Data Act. These proposals are not treated as enacted storefront policy unless they become law, but our privacy operations are prepared around data minimization, customer access, portable copy, deletion, sensitive-data opt-in, and AI-use transparency where applicable.</p>`;
-}
-
-const MYDREAMSHOOTS_TERMS_POLICY_BODY =
-  `<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a myDreamshoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums.</p><h3>2. Accounts, credits, and checkout</h3><p>You are responsible for accurate account information and secure sign-in. Credits are added after payment confirmation, displayed before generation, reserved when a request begins, used after successful delivery, and released or reviewed when a request fails.</p><h3>3. Upload rights and consent</h3><p>You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.</p><h3>4. No AI training on your photos</h3><p>Your inputs are never used to train models. 30-day auto-delete applies to input photos after generation. Private uploads and account records are protected by secure account, storage, and access workflows. Some billing, security, tax, dispute, refund, and account-integrity records may be retained where required or reasonably necessary.</p><h3>5. AI output variability</h3><p>AI photo results can vary based on source photo quality, pose, lighting, package settings, moderation review, provider availability, and model behavior. myDreamshoots may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and use of outputs</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Refunds and guarantee review</h3><p>Refunds and credit adjustments follow the Refund Policy, including refund review when the shoot does not look like you, subject to support review, account history, and the details of the affected request.</p><h3>8. Contact</h3><p>Email <a href="mailto:support@mydreamshoots.com">support@mydreamshoots.com</a> for account, billing, refund, policy, or legal questions.</p>`;
-
-function mydreamshootsPolicyBody(path: string): string {
-  const normalized = normalizePublicSlug(path).replace(/-/g, " ");
-  if (normalized.includes("children")) {
-    return "<h3>1. Service audience</h3><p>myDreamshoots is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. myDreamshoots does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. DPDPA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">DPDPA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for children's privacy or COPPA-related questions.</p>";
-  }
-  if (normalized.includes("state privacy") || normalized.includes("california") || normalized.includes("ccpa")) {
-    return "<h3>1. DPDPA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. myDreamshoots does not sell personal source photos or generated private albums as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: myDreamshoots.com; Address: 8 THE GREEN STE B,DOVER,DE 19901; Contact Us: support@mydreamshoots.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>" + proposedFederalPrivacyLegislationNotice("myDreamshoots");
-  }
-  if (normalized.includes("cookie")) {
-    return "<h3>1. Essential cookies and local storage</h3><p>myDreamshoots uses essential cookies and local storage for sign-in, account sessions, cart continuity, credit visibility, private gallery access, and site reliability.</p><h3>2. Security and checkout continuity</h3><p>Operational storage helps keep customer sessions secure, remember checkout state, protect private albums, and diagnose failed requests or delivery issues.</p><h3>3. Payment and service providers</h3><p>Checkout, infrastructure, email, analytics, and AI processing providers may use limited cookies or identifiers when needed for payment status, fraud prevention, service delivery, security, or operational measurement.</p><h3>4. Your choices</h3><p>You can clear cookies or adjust browser settings. Clearing storage may sign you out, interrupt checkout, remove local preferences, or require another sign-in before opening private albums, jobs, credit history, or downloads.</p><h3>5. Contact us</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with cookie, account session, checkout continuity, or private gallery questions.</p>";
-  }
-  if (normalized.includes("term")) {
-    return MYDREAMSHOOTS_TERMS_POLICY_BODY;
-  }
-  return "<p>Private uploads, account activity, credits, checkout status, generated images, and delivered albums are handled according to this policy.</p>";
-}
-
-function aidreamcapesPolicyBody(path: string): string {
-  const normalized = normalizePublicSlug(path).replace(/-/g, " ");
-  if (normalized.includes("children")) {
-    return "<h3>1. Service audience</h3><p>Aidreamcapes is not directed to children under 13 and is not designed for child account creation. Customers should use the service only if they can lawfully manage an account or have permission from a parent or legal guardian.</p><h3>2. COPPA-aware handling</h3><p>The Children's Online Privacy Protection Act (COPPA) applies to certain online services directed to children under 13 or knowingly collecting personal information from children under 13. Aidreamcapes does not knowingly collect account information directly from children under 13. If we learn that child personal information was provided without required consent, we will review and delete or restrict it as appropriate.</p><h3>3. Photos of minors</h3><p>Customers must not upload photos of minors unless they are the parent, legal guardian, or otherwise have the legal right and consent to use those images for the requested AI photo album workflow. Minor images should never be used for deceptive, exploitative, unlawful, or unsafe purposes.</p><h3>4. Parent or guardian requests</h3><p>A parent or legal guardian may contact us to ask about access, deletion, or restriction of child-related information. We may request verification before acting on a sensitive privacy request.</p><h3>5. CISA requests</h3><p>California and other U.S. state privacy requests are handled in our <a href=\"/state-privacy\">CISA</a> notice, including access, deletion, correction, opt-out, and appeal requests where applicable.</p><h3>6. Contact</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for children's privacy or COPPA-related questions.</p>";
-  }
-  if (normalized.includes("state privacy") || normalized.includes("california") || normalized.includes("ccpa")) {
-    return "<h3>1. CISA</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. Aidreamcapes does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: Aidreamcapes.com; Address: 30 N GOULD ST STE R,SHERIDAN,WY 82801; Contact Us: support@aidreamcapes.com.</p><h3>3. How to submit a request</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>" + proposedFederalPrivacyLegislationNotice("Aidreamcapes");
-  }
-  if (normalized.includes("cookie")) {
-    return "<h3>1. Essential cookies and local storage</h3><p>Aidreamcapes uses essential cookies and local storage for secure sign-in, cart continuity, credit visibility, private gallery access, and site reliability.</p><h3>2. Service providers</h3><p>Checkout, infrastructure, email, analytics, and AI processing providers may use limited identifiers when needed for payment status, fraud prevention, service delivery, security, or operational measurement.</p><h3>3. Your choices</h3><p>You can clear cookies or adjust browser settings. Clearing storage may sign you out, interrupt checkout, remove local preferences, or require another sign-in before opening private galleries, credits, jobs, or downloads.</p><h3>4. Contact us</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> with cookie, account session, checkout continuity, or private gallery questions.</p>";
-  }
-  if (normalized.includes("term")) {
-    return "<h3>1. Acceptance</h3><p>By using Aidreamcapes, creating an account, purchasing credits, uploading source photos, starting a generation job, or opening a private gallery, you agree to these terms and the privacy policy that governs account data, uploads, payment status, and delivery records.</p><h3>2. Accounts and source photos</h3><p>Customers must provide accurate account information, keep sign-in credentials secure, and only upload images and references they own or have permission to use.</p><h3>3. Credits, packages, and delivery</h3><p>Credits are granted after confirmed payment, displayed before package creation, reserved when a job starts, consumed after successful delivery, and released when a request fails or times out.</p><h3>4. Safety and rights</h3><p>Aidreamcapes may reject, remove, restrict, or review requests that violate law, policy, platform safety rules, or third-party rights.</p><h3>5. Contact us</h3><p>Email <a href=\"mailto:support@aidreamcapes.com\">support@aidreamcapes.com</a> for account, billing, refund, policy, generation, or private gallery questions.</p>";
-  }
-  return "<p>Private uploads, account activity, credits, checkout status, generated portraits, and delivered galleries are handled according to this policy.</p>";
-}
-
 function isSpanishXbyStorefront(site: Site): boolean {
   return isSpanishStorefrontSite(site);
-}
-
-function storefrontSupportEmail(site: Site, fallback: string): string {
-  const configuredEmail = site.themeSettings?.publishedJson?.globalSections?.footer?.settings?.contactEmail;
-  const spanishXby = isSpanishXbyStorefront(site);
-  if (typeof configuredEmail === "string" && configuredEmail.includes("@")) {
-    if (!spanishXby || !/(?:mydreamshoots|aidreamcapes)\.com|localhost/i.test(configuredEmail)) return configuredEmail;
-  }
-  const host = String(site.primaryDomain ?? "").trim().replace(/^https?:\/\//i, "").split("/")[0].replace(/\/+$/, "");
-  if (spanishXby && host) return `support@${host}`;
-  return fallback;
-}
-
-function spanishXbyPolicyTitle(path: string, seo: PolicySeoCopy): string {
-  const normalized = normalizePublicSlug(path).replace(/-/g, " ");
-  if (normalized.includes("cookie")) return "Politica de cookies";
-  if (normalized.includes("term")) return "Terminos de servicio";
-  if (normalized.includes("refund")) return "Revision de creditos y reembolsos";
-  if (normalized.includes("shipping") || normalized.includes("delivery")) return "Entrega digital";
-  if (normalized.includes("content")) return "Politica de contenido";
-  if (normalized.includes("privacy")) return "Politica de privacidad";
-  return seo.title.replace(/\s+\|\s+.*$/i, "");
-}
-
-function spanishXbyPolicyBody(site: Site, path: string, contactEmail: string): string {
-  const brand = site.branding.logoText || site.name;
-  const normalized = normalizePublicSlug(path).replace(/-/g, " ");
-  if (normalized.includes("cookie")) {
-    return `<h3>1. Cookies esenciales y almacenamiento local</h3><p>${brand} usa cookies esenciales para mantener sesiones, carrito, creditos, pago, seguridad y acceso a galerias privadas.</p><h3>2. Proveedores de servicio</h3><p>Los proveedores de pago, infraestructura, correo, analitica operativa e IA pueden usar identificadores limitados cuando son necesarios para confirmar pagos, prevenir fraude, entregar el servicio o diagnosticar incidencias.</p><h3>3. Tus opciones</h3><p>Puedes borrar cookies o ajustar el navegador. Al hacerlo, puede que tengas que iniciar sesion de nuevo antes de abrir pedidos, creditos, descargas o galerias privadas.</p><h3>4. Contacto</h3><p>Escribe a <a href="mailto:${contactEmail}">${contactEmail}</a> para preguntas sobre cookies, sesiones, pago o acceso privado.</p>`;
-  }
-  if (normalized.includes("term")) {
-    return `<h3>1. Aceptacion</h3><p>Al usar ${brand}, crear una cuenta, comprar creditos, subir fotos fuente, iniciar una generacion o abrir una galeria privada, aceptas estos terminos y la politica de privacidad.</p><h3>2. Cuentas y seguridad</h3><p>Debes proporcionar datos correctos, proteger tus credenciales y usar el servicio solo para flujos personales, creativos o comerciales permitidos.</p><h3>3. Creditos, paquetes y entrega</h3><p>Los creditos se muestran antes de generar, se reservan cuando inicia un pedido, se consumen al entregar resultados correctos y se liberan si una solicitud falla o expira.</p><h3>4. Fotos subidas y derechos</h3><p>Solo debes subir imagenes y referencias que sean tuyas o que tengas permiso para usar. Sigues siendo responsable del material fuente y del uso de los resultados.</p><h3>5. Seguridad creativa</h3><p>${brand} puede rechazar, revisar o limitar solicitudes que infrinjan la ley, derechos de terceros, normas de seguridad o politicas de contenido.</p><h3>6. Contacto</h3><p>Escribe a <a href="mailto:${contactEmail}">${contactEmail}</a> para cuenta, facturacion, reembolsos, politicas, generacion o entrega de galerias.</p>`;
-  }
-  if (normalized.includes("refund")) {
-    return `<h3>1. Revision de creditos</h3><p>${brand} revisa incidencias de creditos, pedidos fallidos, duplicados, errores de pago y solicitudes de rerun desde el historial de la cuenta.</p><h3>2. Pedidos fallidos</h3><p>Cuando una generacion no puede completarse, los creditos se liberan o se devuelven segun el estado real del pedido y la confirmacion del sistema.</p><h3>3. Contacto</h3><p>Escribe a <a href="mailto:${contactEmail}">${contactEmail}</a> con el correo de tu cuenta, pedido, plan o captura relevante.</p>`;
-  }
-  if (normalized.includes("content")) {
-    return `<h3>1. Fotos permitidas</h3><p>Debes subir fotos fuente que puedas usar legalmente y que representen a personas con consentimiento cuando corresponda.</p><h3>2. Solicitudes no permitidas</h3><p>${brand} puede bloquear contenido que infrinja derechos, seguridad, privacidad, identidad, abuso, acoso o cualquier uso no autorizado.</p><h3>3. Uso responsable</h3><p>Los resultados generados deben usarse de forma responsable y respetando a las personas representadas.</p>`;
-  }
-  if (normalized.includes("shipping") || normalized.includes("delivery")) {
-    return `<h3>1. Entrega digital</h3><p>${brand} entrega creditos, imagenes generadas, descargas y galerias privadas de forma digital dentro de la cuenta del cliente.</p><h3>2. Sin envio fisico</h3><p>No hay productos fisicos, tracking postal, aduanas ni transportistas para estos pedidos.</p><h3>3. Soporte</h3><p>Escribe a <a href="mailto:${contactEmail}">${contactEmail}</a> si no puedes abrir una galeria o descargar resultados.</p>`;
-  }
-  return `<p>${brand} gestiona subidas privadas, actividad de cuenta, creditos, pago, imagenes generadas y galerias de acuerdo con esta politica. Para preguntas, escribe a <a href="mailto:${contactEmail}">${contactEmail}</a>.</p>`;
-}
-
-function storefrontPolicySeoForSite(site: Site, slug: string): PolicySeoCopy | undefined {
-  const identity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`;
-  if (isSpanishXbyStorefront(site)) return getSpanishXbyPolicySeo(site, slug);
-  if (/aidreamcapes/i.test(identity)) return getAidreamcapesPolicySeo(slug);
-  if (/dreamshoot/i.test(identity)) return getMydreamshootsPolicySeo(slug);
-  return undefined;
-}
-
-function syntheticStorefrontPolicyPage(site: Site, slug: string): ThemePage | undefined {
-  const seo = storefrontPolicySeoForSite(site, slug);
-  if (!seo) return undefined;
-  const isAidreamcapes = isAidreamcapesStorefront(site);
-  const isSpanishXby = isSpanishXbyStorefront(site);
-  const contactEmail = storefrontSupportEmail(site, isAidreamcapes ? "support@aidreamcapes.com" : "support@mydreamshoots.com");
-  const title =
-    isSpanishXby ? spanishXbyPolicyTitle(slug, seo) :
-    slug.includes("children") ? "KIDS Act" :
-    slug.includes("state-privacy") || slug.includes("california") || slug.includes("ccpa") ? isAidreamcapes ? "CISA" : "DPDPA" :
-    slug.includes("cookie") ? "Cookie Policy" :
-    slug.includes("term") ? "Terms of Service" :
-    seo.title.replace(/\s+\|\s+(MyDreamShoots|Aidreamcapes).*$/i, "");
-  const pageJson: ThemePageJson = {
-    pageType: "policy",
-    version: 1,
-    sectionsOrder: ["policy_1"],
-    sections: {
-      policy_1: {
-        type: "policy_content",
-        settings: {
-          eyebrow: isSpanishXby ? "Politica" : "Policy",
-          title,
-          body: isSpanishXby ? spanishXbyPolicyBody(site, slug, contactEmail) : isAidreamcapes ? aidreamcapesPolicyBody(slug) : mydreamshootsPolicyBody(slug),
-          contactEmail,
-          lastUpdated: isSpanishXby || isAidreamcapes ? "July 14, 2026" : "August 5, 2026",
-          headingLevel: "h1"
-        },
-        blocks: []
-      }
-    }
-  };
-  return {
-    id: `${site.id}_${normalizePublicSlug(slug || "policy")}_synthetic`,
-    siteId: site.id,
-    pageType: "policy",
-    templateKey: "policy",
-    slug,
-    title,
-    draftJson: pageJson,
-    publishedJson: pageJson
-  };
 }
 
 async function getStateForStorefrontRender(site: Site, routeMode: "host" | "path", providedState?: PlatformState): Promise<PlatformState> {
@@ -1092,7 +964,7 @@ async function getPublicSectionStateForRoute(
     canonicalSiteSlug(item.slug) === canonicalSiteSlug(publicSlug)
   );
   const shellPage = shellSite
-    ? findPage(shellSite, slug) ?? syntheticStorefrontPolicyPage(shellSite, slug) ?? syntheticDreamShootPartnerPage(shellSite, slug)
+    ? findPage(shellSite, slug) ?? syntheticDreamShootPartnerPage(shellSite, slug)
     : undefined;
   if (!shellState || !shellSite || !shellPage) return shellState;
   if (!sectionIdsNeedPublicRuntime(shellPage.publishedJson, slug, sectionIds, query)) return shellState;
@@ -2577,6 +2449,7 @@ function renderThemePage({
   runtime,
   settings,
   jsonLd,
+  storefrontContext,
   lightweightChrome = false
 }: {
   currentSite: Site;
@@ -2593,18 +2466,31 @@ function renderThemePage({
   runtime: ThemeRuntimeData;
   settings: Site["themeSettings"]["publishedJson"];
   jsonLd?: JsonLdNode[];
+  storefrontContext?: StorefrontContext;
   lightweightChrome?: boolean;
 }) {
   const jsonLdNodes = jsonLd;
+  const activePackIds = storefrontContext
+    ? new Set(storefrontContext.catalog.activePacks.map((pack) => pack.id))
+    : undefined;
+  const activeProductIds = storefrontContext
+    ? new Set(storefrontContext.offers.active.map((offer) => offer.product.id))
+    : undefined;
+  const resolvedCreativePacks = activePackIds
+    ? renderData.creativePacks.filter((pack) => activePackIds.has(pack.id))
+    : renderData.creativePacks;
+  const resolvedNavigationCreativePacks = activePackIds && navigationCreativePacks
+    ? navigationCreativePacks.filter((pack) => activePackIds.has(pack.id))
+    : navigationCreativePacks;
 
   return (
     <div style={themeStyleVars(settings)}>
       <ThemeRenderer
         creativePackCategories={renderData.creativePackCategories}
-        creativePacks={renderData.creativePacks}
+        creativePacks={resolvedCreativePacks}
         page={page}
         pagePath={pagePath}
-        products={renderData.products}
+        products={activeProductIds ? renderData.products.filter((product) => activeProductIds.has(product.id)) : renderData.products}
         query={query}
         routeMode={routeMode}
         runtime={runtime}
@@ -2612,7 +2498,7 @@ function renderThemePage({
         site={clientSiteForThemeRender(currentSite, page, pagePath)}
         siteAiApps={renderData.siteAiApps}
         navigationCreativePackCategories={navigationCreativePackCategories}
-        navigationCreativePacks={navigationCreativePacks}
+        navigationCreativePacks={resolvedNavigationCreativePacks}
         navigationToolMenuItems={navigationToolMenuItems}
         navigationVideoThemeCategories={navigationVideoThemeCategories}
         navigationVideoThemes={navigationVideoThemes}
@@ -2620,6 +2506,7 @@ function renderThemePage({
         videoThemeCategories={renderData.videoThemeCategories}
         videoThemes={renderData.videoThemes}
         lightweightChrome={lightweightChrome}
+        storefrontContext={storefrontContext}
       />
       {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} /> : null}
     </div>
@@ -2676,7 +2563,7 @@ export async function renderStorefrontPage({
     ? renderData.videoThemes
     : undefined;
   currentSite.mediaAssets = renderData.mediaAssets;
-  const directPage = findPage(currentSite, slug) ?? syntheticStorefrontPolicyPage(currentSite, slug) ?? syntheticDreamShootPartnerPage(currentSite, slug);
+  const directPage = findPage(currentSite, slug) ?? syntheticDreamShootPartnerPage(currentSite, slug);
   if (!directPage) notFound();
   const page = directPage;
   if (isFocusedCollectionPage) {
@@ -2758,6 +2645,25 @@ export async function renderStorefrontPage({
     ...(shouldDeferCustomerRuntime ? { clientBootstrapCustomer: true } : {}),
     ...(slug === "/login" ? { auth: getDefaultCustomerAuth(state, currentSite.id, typeof query.error === "string" ? query.error : undefined) } : {})
   };
+  const renderedPage = { ...page, publishedJson: pageJson };
+  const storefrontContext = await loadPublishedStorefrontContext({
+    siteId: currentSite.id,
+    path: renderPagePath,
+    adapter: {
+      async loadPublishedBundle() {
+        return {
+          site: currentSite,
+          page: renderedPage,
+          products: renderData.products,
+          creativePacks: renderData.creativePacks,
+          publication: currentSite.latestPublication
+        };
+      },
+      async loadDraftBundle() {
+        throw new Error("published_render_adapter_does_not_load_drafts");
+      }
+    }
+  });
 
   return renderThemePage({
     currentSite,
@@ -2773,13 +2679,14 @@ export async function renderStorefrontPage({
     routeMode,
     runtime: runtimeWithAuth,
     settings,
+    storefrontContext,
     jsonLd: isFocusedCollectionPage
       ? buildCollectionDirectoryJsonLd({
           site: currentSite,
           collectionSlug: collectionCategory,
           routeMode,
           creativePacks: trimCreativePacksForStorefront(focusedCollectionRenderData, publicDirectoryPackLimit),
-          products: state.products
+          context: storefrontContext
         })
       : buildStorefrontJsonLd({
           site: currentSite,
@@ -2789,6 +2696,7 @@ export async function renderStorefrontPage({
           routeMode,
           creativePacks: pageRenderData.creativePacks,
           products: state.products,
+          context: storefrontContext,
           videoThemes: pageRenderData.videoThemes
         }),
     lightweightChrome: false
@@ -2810,10 +2718,13 @@ export async function renderStorefrontSectionNode({
 }): Promise<ReactElement | undefined> {
   const payload = await renderStorefrontSectionPayload({ siteSlug, slug, sectionId, query, routeMode });
   if (!payload) return undefined;
+  const activePackIds = payload.storefrontContext
+    ? new Set(payload.storefrontContext.catalog.activePacks.map((pack) => pack.id))
+    : undefined;
   return (
     <ThemeSectionFrame
       creativePackCategories={payload.renderData.creativePackCategories}
-      creativePacks={payload.renderData.creativePacks}
+      creativePacks={activePackIds ? payload.renderData.creativePacks.filter((pack) => activePackIds.has(pack.id)) : payload.renderData.creativePacks}
       id={payload.id}
       lazyRender={false}
       mode={payload.mode}
@@ -2823,6 +2734,7 @@ export async function renderStorefrontSectionNode({
       section={payload.section}
       site={payload.clientSite}
       siteAiApps={payload.renderData.siteAiApps}
+      storefrontContext={payload.storefrontContext}
       toolMenuItems={payload.renderData.toolMenuItems}
       videoThemeCategories={payload.renderData.videoThemeCategories ?? []}
       videoThemes={payload.renderData.videoThemes ?? []}
@@ -2874,7 +2786,7 @@ export async function renderStorefrontSectionPayloads({
     : undefined;
   const directPage = resolvedToolDetail?.matched
     ? resolvedToolDetail.page
-    : findPage(currentSite, internalSlug) ?? syntheticStorefrontPolicyPage(currentSite, internalSlug) ?? syntheticDreamShootPartnerPage(currentSite, internalSlug);
+    : findPage(currentSite, internalSlug) ?? syntheticDreamShootPartnerPage(currentSite, internalSlug);
   if (!directPage) return [];
   if (isFocusedCollectionPage) {
     currentSite.pages = currentSite.pages.filter((item) => item.slug === internalSlug || item.slug === "/404");
@@ -2899,6 +2811,25 @@ export async function renderStorefrontSectionPayloads({
     : directPage.publishedJson;
 
   const settings = currentSite.themeSettings.publishedJson;
+  const renderedPage = { ...directPage, publishedJson: pageJson };
+  const storefrontContext = await loadPublishedStorefrontContext({
+    siteId: currentSite.id,
+    path: renderPagePath,
+    adapter: {
+      async loadPublishedBundle() {
+        return {
+          site: currentSite,
+          page: renderedPage,
+          products: renderData.products,
+          creativePacks: renderData.creativePacks,
+          publication: currentSite.latestPublication
+        };
+      },
+      async loadDraftBundle() {
+        throw new Error("published_section_adapter_does_not_load_drafts");
+      }
+    }
+  });
   const runtimeByMode = new Map<"empty" | "full" | "light", Promise<ThemeRuntimeData>>();
   let sectionSessionId: string | undefined;
   async function runtimeForSection(singleSectionPageJson: ThemePageJson, section: SectionInstance): Promise<ThemeRuntimeData | undefined> {
@@ -3006,6 +2937,7 @@ export async function renderStorefrontSectionPayloads({
         videoThemes: pageRenderData.videoThemes
       },
       renderContext,
+      storefrontContext,
       routeMode,
       runtime,
       section,
@@ -3055,7 +2987,7 @@ export async function renderStorefrontSectionPayload({
     : undefined;
   const directPage = resolvedToolDetail?.matched
     ? resolvedToolDetail.page
-    : findPage(currentSite, internalSlug) ?? syntheticStorefrontPolicyPage(currentSite, internalSlug) ?? syntheticDreamShootPartnerPage(currentSite, internalSlug);
+    : findPage(currentSite, internalSlug) ?? syntheticDreamShootPartnerPage(currentSite, internalSlug);
   if (!directPage) return undefined;
   if (isFocusedCollectionPage) {
     currentSite.pages = currentSite.pages.filter((item) => item.slug === internalSlug || item.slug === "/404");
@@ -3084,6 +3016,25 @@ export async function renderStorefrontSectionPayload({
     sections: { [sectionId]: section }
   };
   const settings = currentSite.themeSettings.publishedJson;
+  const renderedPage = { ...directPage, publishedJson: pageJson };
+  const storefrontContext = await loadPublishedStorefrontContext({
+    siteId: currentSite.id,
+    path: renderPagePath,
+    adapter: {
+      async loadPublishedBundle() {
+        return {
+          site: currentSite,
+          page: renderedPage,
+          products: renderData.products,
+          creativePacks: renderData.creativePacks,
+          publication: currentSite.latestPublication
+        };
+      },
+      async loadDraftBundle() {
+        throw new Error("published_section_adapter_does_not_load_drafts");
+      }
+    }
+  });
   let pageRenderData = withPageMediaAssets(
     currentSite,
     singleSectionPageJson,
@@ -3172,6 +3123,7 @@ export async function renderStorefrontSectionPayload({
       videoThemes: pageRenderData.videoThemes
     },
     renderContext,
+    storefrontContext,
     routeMode,
     runtime,
     section,
@@ -3577,7 +3529,7 @@ export async function renderToolPage({
         ));
       })();
   const pageJson = pageHasDedicatedVideoLanding
-    ? basePageJson
+    ? withSeoDirectorySeo(basePageJson, "tool", toolSlug, currentSite)
     : withSeoDirectorySection(basePageJson, "tool", toolSlug, { site: currentSite });
   const pageRenderData = withPageMediaAssets(
     currentSite,
@@ -3586,6 +3538,25 @@ export async function renderToolPage({
     trimRenderDataForPage(toolRenderData, pageJson, page.slug)
   );
   currentSite.mediaAssets = pageRenderData.mediaAssets;
+  const renderedPage = { ...page, publishedJson: pageJson };
+  const storefrontContext = await loadPublishedStorefrontContext({
+    siteId: currentSite.id,
+    path: publicPath ?? page.slug,
+    adapter: {
+      async loadPublishedBundle() {
+        return {
+          site: currentSite,
+          page: renderedPage,
+          products: renderData.products,
+          creativePacks: renderData.creativePacks,
+          publication: currentSite.latestPublication
+        };
+      },
+      async loadDraftBundle() {
+        throw new Error("published_render_adapter_does_not_load_drafts");
+      }
+    }
+  });
   return renderThemePage({
     currentSite,
     page: pageJson,
@@ -3600,12 +3571,14 @@ export async function renderToolPage({
     routeMode,
     runtime: runtimeWithEmptyCollections(),
     settings,
+    storefrontContext,
     jsonLd: buildToolDirectoryJsonLd({
       site: currentSite,
       toolSlug,
       publicPath,
       routeMode,
-      pageJson
+      pageJson,
+      context: storefrontContext
     })
   });
 }

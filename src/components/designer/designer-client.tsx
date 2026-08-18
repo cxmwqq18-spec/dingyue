@@ -108,6 +108,7 @@ import {
 } from "@/components/designer/designer-property-groups";
 import type { DesignerResourceKind, DesignerResourceStatus, FieldOptions } from "@/components/designer/field-editor-types";
 import type { DesignerToolbarMenuOption } from "@/components/designer/designer-toolbar-primitives";
+import type { StorefrontContext } from "@/lib/storefront-context/types";
 import {
   aiSubscriptionSectionSchemas,
   defaultBlock,
@@ -392,10 +393,10 @@ function applyThemePackageSettingsToDraftSettings(base: ThemeSettings, siteSetti
     next.seo = {
       siteTitle: packageSettings.seo.siteTitle ?? next.seo?.siteTitle ?? "",
       siteDescription: packageSettings.seo.siteDescription ?? next.seo?.siteDescription ?? "",
+      siteKeywords: packageSettings.seo.siteKeywords ?? next.seo?.siteKeywords,
       titleTemplate: packageSettings.seo.titleTemplate ?? next.seo?.titleTemplate ?? "",
       defaultOgImage: packageSettings.seo.defaultOgImage ?? next.seo?.defaultOgImage,
-      robots: next.seo?.robots ?? { index: true, follow: true },
-      pages: next.seo?.pages ?? {}
+      robots: next.seo?.robots ?? { index: true, follow: true }
     };
   }
 
@@ -415,6 +416,7 @@ export type DesignerClientProps = {
   products?: Product[];
   siteAiApps?: SiteAiApp[];
   creativePacks?: CreativePack[];
+  storefrontContext: StorefrontContext;
   mediaAssets?: MediaAsset[];
   previewToken: string;
   publicationCount?: number;
@@ -443,6 +445,7 @@ export function DesignerClient({
   products: initialProducts = [],
   siteAiApps: initialSiteAiApps = [],
   creativePacks: initialCreativePacks = [],
+  storefrontContext,
   mediaAssets: initialMediaAssets = [],
   previewToken,
   publicationCount = 0,
@@ -2568,6 +2571,7 @@ export function DesignerClient({
           selectedPreviewSectionId={previewSelection ? previewSectionIdForSelection(previewSelection) : undefined}
           site={siteWithDesignerMedia}
           siteAiApps={siteAiApps}
+          storefrontContext={storefrontContext}
           templateApplyControl={templateApplyControl}
           templateDisplayName={templateDisplayName}
           themeSettings={themeSettings}

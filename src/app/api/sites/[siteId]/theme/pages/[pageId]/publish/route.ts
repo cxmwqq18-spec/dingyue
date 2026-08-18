@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSiteMutation } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { publishDraftPageRelational } from "@/lib/stores/theme-store";
+import { RelationalStoreError } from "@/lib/stores/prisma-mappers";
 import type { NextRequest } from "next/server";
 
 type DraftVersionPayload = {
@@ -38,13 +39,20 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
           Object.entries(body.expectedPageVersions).map(([id, version]) => [id, expectedDraftVersion(version)])
         )
       : undefined;
+    const targetVersion = expectedPageVersions?.[pageId] ?? expectedDraftVersion({
+      expectedRevision: body.expectedRevision,
+      expectedEtag: body.expectedEtag
+    });
+    if (targetVersion?.expectedRevision === undefined && !targetVersion?.expectedEtag) {
+      return NextResponse.json({ error: "theme_publish_page_revision_required" }, { status: 409 });
+    }
     const result = await publishDraftPageRelational(siteId, pageId, body.actor ?? "site_admin_demo", {
       expectedRevision: body.expectedRevision,
       expectedEtag: body.expectedEtag,
       pageVersions: expectedPageVersions,
       settingsVersion: expectedDraftVersion(body.expectedSettingsVersion),
       expectedPublishedVersion: body.expectedPublishedVersion,
-      requireSnapshotVersions: true,
+      requireSnapshotVersions: false,
       acknowledgedGlobalVisualChanges: body.acknowledgedGlobalVisualChanges === true
     });
     return NextResponse.json({
@@ -58,7 +66,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       settingsDraftVersion: result.settingsDraftVersion
     });
   } catch (error) {
-    const status = error instanceof StoreError ? error.status : 404;
+    const status = error instanceof StoreError || error instanceof RelationalStoreError ? error.status : 500;
     return NextResponse.json({ error: error instanceof Error ? error.message : "publish_failed" }, { status });
   }
 }

@@ -44,6 +44,7 @@ const siteChecks = [
       "/site/mydreamshoots/ai-video-generation/story-video",
       "/site/mydreamshoots/ai-video-generation/meme-video",
       "/site/mydreamshoots/ai-video-generation/product-video",
+      "/site/mydreamshoots/ai-video-generation/product-ad-video",
       "/site/mydreamshoots/best-packages",
       "/site/mydreamshoots/best-ai-image",
       "/site/mydreamshoots/best-ai-video",

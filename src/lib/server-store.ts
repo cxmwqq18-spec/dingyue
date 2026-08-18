@@ -1129,10 +1129,10 @@ function applyInternalThemePackageSiteSettings(
     next.seo = {
       siteTitle: themeSettings.seo.siteTitle ?? next.seo?.siteTitle ?? "",
       siteDescription: themeSettings.seo.siteDescription ?? next.seo?.siteDescription ?? "",
+      siteKeywords: themeSettings.seo.siteKeywords ?? next.seo?.siteKeywords,
       titleTemplate: themeSettings.seo.titleTemplate ?? next.seo?.titleTemplate ?? "",
       defaultOgImage: themeSettings.seo.defaultOgImage ?? next.seo?.defaultOgImage,
-      robots: next.seo?.robots ?? { index: true, follow: true },
-      pages: next.seo?.pages ?? {}
+      robots: next.seo?.robots ?? { index: true, follow: true }
     };
   }
 
@@ -3169,7 +3169,13 @@ export function upsertProductPrice(siteId: string, productId: string, price: Pri
     const product = state.products.find((item) => item.siteId === siteId && item.id === productId);
     if (!product) throw new Error("product_not_found");
     const existingIndex = product.prices.findIndex((item) => item.id === price.id);
-    if (existingIndex >= 0) product.prices[existingIndex] = price;
+    if (existingIndex >= 0) {
+      const existing = product.prices[existingIndex];
+      if (existing.status === "active" && (existing.amountCents !== price.amountCents || existing.currency !== price.currency || existing.interval !== price.interval || existing.creditsGranted !== price.creditsGranted || existing.stripePriceId !== price.stripePriceId)) {
+        throw new Error("active_price_immutable");
+      }
+      product.prices[existingIndex] = { ...price, status: existing.status };
+    }
     else product.prices.push(price);
   });
 }
@@ -3194,7 +3200,7 @@ export function createProductPrice(params: {
     if (!label) throw new StoreError("price_label_required", 400);
     if (!Number.isInteger(params.amountCents) || params.amountCents < 0) throw new StoreError("invalid_price_amount", 400);
     if (!currency) throw new StoreError("invalid_price_currency", 400);
-    if (!["month", "year", "one_time"].includes(params.interval)) throw new StoreError("invalid_price_interval", 400);
+    if (!["month", "quarter", "half_year", "year", "one_time"].includes(params.interval)) throw new StoreError("invalid_price_interval", 400);
     if (!Number.isInteger(params.creditsGranted) || params.creditsGranted < 0) throw new StoreError("invalid_credits_granted", 400);
     const priceId = uid("price");
     const price: Price = {
@@ -3207,7 +3213,8 @@ export function createProductPrice(params: {
       interval: params.interval,
       creditsGranted: params.creditsGranted,
       stripePriceId: params.stripePriceId?.trim() || `manual_${priceId}`,
-      metadata: params.metadata
+      metadata: params.metadata,
+      status: "draft"
     };
     product.prices.push(price);
     result = { price };
@@ -3624,13 +3631,13 @@ export function updateSiteSettings(params: {
       settings.seo = {
         siteTitle: settings.seo?.siteTitle?.trim() ? settings.seo.siteTitle : logoText,
         siteDescription: settings.seo?.siteDescription?.trim() ? settings.seo.siteDescription : description,
+        siteKeywords: settings.seo?.siteKeywords,
         titleTemplate: settings.seo?.titleTemplate?.trim() ? settings.seo.titleTemplate : `%s | ${logoText}`,
         defaultOgImage: settings.seo?.defaultOgImage,
         robots: settings.seo?.robots ?? {
           index: true,
           follow: true
-        },
-        pages: settings.seo?.pages ?? {}
+        }
       };
     };
 

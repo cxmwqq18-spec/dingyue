@@ -43,22 +43,7 @@ type SiteSettingsForm = {
 type SocialLinksForm = {
   socialHeading: string;
   socialBody: string;
-  instagramUrl: string;
-  facebookUrl: string;
-  pinterestUrl: string;
-  youtubeUrl: string;
-  threadsUrl: string;
-  twitterUrl: string;
 };
-
-const socialLinkFields: Array<{ key: keyof SocialLinksForm; label: string; placeholder: string }> = [
-  { key: "instagramUrl", label: "Instagram", placeholder: "https://www.instagram.com/yourbrand" },
-  { key: "facebookUrl", label: "Facebook", placeholder: "https://www.facebook.com/yourbrand" },
-  { key: "threadsUrl", label: "Threads", placeholder: "https://www.threads.com/@yourbrand" },
-  { key: "pinterestUrl", label: "Pinterest", placeholder: "https://www.pinterest.com/yourbrand" },
-  { key: "youtubeUrl", label: "YouTube", placeholder: "https://www.youtube.com/@yourbrand" },
-  { key: "twitterUrl", label: "X / Twitter", placeholder: "https://x.com/yourbrand" }
-];
 
 function themeText(value: unknown): string {
   if (value === undefined || value === null) return "";
@@ -102,13 +87,7 @@ function createSocialLinksForm(site: Site): SocialLinksForm {
     {};
   return {
     socialHeading: themeText(footerSettings.socialHeading) || "Follow Us",
-    socialBody: themeText(footerSettings.socialBody),
-    instagramUrl: themeText(footerSettings.instagramUrl),
-    facebookUrl: themeText(footerSettings.facebookUrl),
-    threadsUrl: themeText(footerSettings.threadsUrl),
-    pinterestUrl: themeText(footerSettings.pinterestUrl),
-    youtubeUrl: themeText(footerSettings.youtubeUrl),
-    twitterUrl: themeText(footerSettings.twitterUrl)
+    socialBody: themeText(footerSettings.socialBody)
   };
 }
 
@@ -172,7 +151,7 @@ export function SiteSettingsEditor({
   const [newDomain, setNewDomain] = useState("");
   const [newPrimary, setNewPrimary] = useState(false);
   const [message, setMessage] = useState("站点名称、品牌、收款状态和域名现在都可以在站点后台直接维护。");
-  const [socialMessage, setSocialMessage] = useState("前台页脚的社媒图标会读取这里的链接；留空则不展示对应平台。");
+  const [socialMessage, setSocialMessage] = useState("这里只维护页脚社媒栏的展示文案；社交账号统一在站点资料 Profile 中维护。");
   const [saving, setSaving] = useState(false);
   const [savingSocial, setSavingSocial] = useState(false);
   const [domainPage, setDomainPage] = useState(1);
@@ -270,7 +249,7 @@ export function SiteSettingsEditor({
       return;
     }
     setSocialForm(result.socialLinks);
-    setSocialMessage("社媒链接已保存，并已同步到前台页脚。");
+    setSocialMessage("页脚社媒栏文案已保存为主题草稿；整站发布后生效。社交账号仍由 Profile 提供。");
     router.refresh();
   }
 
@@ -504,19 +483,19 @@ export function SiteSettingsEditor({
       </ErpSection>
 
       <ErpSection
-        description="运营可以在这里维护前台页脚的社媒入口。保存后会写入主题 footer 的草稿和线上配置。"
-        eyebrow="social links"
-        title="社媒链接"
+        description="这里只维护页脚社媒栏的标题和说明。账号 URL 在站点资料 Profile 中统一维护。"
+        eyebrow="social presentation"
+        title="社媒展示文案"
       >
         <div className="tixing mb-4">{socialMessage}</div>
         <ErpToolbar className="mb-5">
           <div className="flex flex-wrap gap-2">
             <ErpToolbarField label="栏目标题" value={socialForm.socialHeading || "Follow Us"} />
-            <ErpToolbarField label="已配置平台" value={String(socialLinkFields.filter((field) => String(socialForm[field.key] ?? "").trim()).length)} />
+            <ErpToolbarField label="账号来源" value="Storefront Profile" />
           </div>
           <div className="flex flex-wrap gap-2">
             <span className={socialDirty ? "tag_org" : "tag_green"}>{socialDirty ? "有未保存修改" : "与当前配置一致"}</span>
-            <ErpToolbarAction label={savingSocial ? "保存中" : "保存社媒链接"} onClick={saveSocialLinks} primary />
+            <ErpToolbarAction label={savingSocial ? "保存中" : "保存展示文案"} onClick={saveSocialLinks} primary />
           </div>
         </ErpToolbar>
         <ErpFormGrid>
@@ -526,21 +505,11 @@ export function SiteSettingsEditor({
           <ErpField hint="显示在社媒图标上方的说明文案。前台用户可见，请填写英文。" label="前台说明文案" span="full">
             <ErpTextarea className="min-h-[96px] resize-y" onChange={(event) => updateSocial("socialBody", event.target.value)} value={socialForm.socialBody} />
           </ErpField>
-          {socialLinkFields.map((field) => (
-            <ErpField hint="支持 http 或 https；清空后前台隐藏这个平台图标。" key={field.key} label={`${field.label} 链接`}>
-              <ErpInput
-                className="font-mono"
-                onChange={(event) => updateSocial(field.key, event.target.value)}
-                placeholder={field.placeholder}
-                value={socialForm[field.key]}
-              />
-            </ErpField>
-          ))}
         </ErpFormGrid>
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-[12px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] px-4 py-3">
           <div className="flex flex-wrap items-center gap-2">
             <span className={socialDirty ? "tag_org" : "tag_green"}>{socialDirty ? "有未保存修改" : "与当前配置一致"}</span>
-            <span className="text-[12px] text-[#667085]">保存后前台 footer 的社媒图标会立即读取最新链接。</span>
+            <span className="text-[12px] text-[#667085]">保存后进入主题草稿；账号链接始终读取已发布 Profile。</span>
           </div>
           <button
             className="input_btn inline-flex h-[34px] shrink-0 items-center gap-1 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-55"
@@ -549,7 +518,7 @@ export function SiteSettingsEditor({
             type="button"
           >
             <Save className="h-3.5 w-3.5" strokeWidth={1.8} />
-            {savingSocial ? "保存中" : "保存社媒链接"}
+            {savingSocial ? "保存中" : "保存展示文案"}
           </button>
         </div>
       </ErpSection>

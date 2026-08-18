@@ -17,18 +17,47 @@ import {
 import { downloadCsv } from "@/components/admin/export-utils";
 import { StatusPill } from "@/components/ui";
 import { siteAdminJsonHeaders } from "@/lib/client-csrf";
-import type { Site, ThemeDraftMeta, ThemeSettings } from "@/lib/types";
+import type { Site, ThemeDraftMeta, ThemePageJson, ThemeSettings } from "@/lib/types";
 import { normalizeThemeSeo } from "@/lib/theme/seo";
+import type { NormalizedThemeSeo } from "@/lib/theme/seo";
 
 type PageSummary = {
   id: string;
   title: string;
   slug: string;
   pageType: string;
+  draftJson: ThemePageJson;
+  publishedJson: ThemePageJson;
+  draftMeta?: ThemeDraftMeta;
 };
 
-type SeoSettings = NonNullable<ThemeSettings["seo"]>;
-type PageSeo = SeoSettings["pages"][string];
+type SeoSettings = NormalizedThemeSeo;
+type PageSeo = {
+  title: string;
+  description: string;
+  keywords?: string;
+  ogImage?: string;
+  canonicalPath?: string;
+  index?: boolean;
+  follow?: boolean;
+};
+
+function pageSeoFrom(page: PageSummary, mode: "draft" | "published", defaults: SeoSettings): PageSeo {
+  const source = (mode === "draft" ? page.draftJson : page.publishedJson).seo;
+  return {
+    title: source?.title?.trim() || page.title,
+    description: source?.description?.trim() || "",
+    keywords: source?.keywords ?? "",
+    ogImage: source?.ogImage ?? "",
+    canonicalPath: source?.canonical ?? source?.canonicalPath ?? page.slug,
+    index: source?.robots?.index ?? source?.index ?? defaults.robots.index,
+    follow: source?.robots?.follow ?? source?.follow ?? defaults.robots.follow
+  };
+}
+
+function pageSeoMap(pages: PageSummary[], mode: "draft" | "published", defaults: SeoSettings) {
+  return Object.fromEntries(pages.map((page) => [page.id, pageSeoFrom(page, mode, defaults)]));
+}
 
 function cleanPath(value: string, fallback: string) {
   const trimmed = value.trim();
@@ -53,7 +82,7 @@ function pageScore(page: PageSeo) {
   return score;
 }
 
-function seoDiffers(left: ThemeSettings["seo"], right: ThemeSettings["seo"]) {
+function seoDiffers(left: SeoSettings, right: SeoSettings) {
   return JSON.stringify(left ?? null) !== JSON.stringify(right ?? null);
 }
 
@@ -80,6 +109,14 @@ export function SeoSettingsEditor({
     [publishedSettings, site]
   );
   const [seo, setSeo] = useState<SeoSettings>(normalizedInitial);
+  const initialPageSeo = useMemo(() => pageSeoMap(pages, "draft", normalizedInitial), [normalizedInitial, pages]);
+  const publishedPageSeo = useMemo(() => pageSeoMap(pages, "published", normalizedPublished), [normalizedPublished, pages]);
+  const [pageSeo, setPageSeo] = useState<Record<string, PageSeo>>(initialPageSeo);
+  const [savedSeo, setSavedSeo] = useState<SeoSettings>(normalizedInitial);
+  const [savedPageSeo, setSavedPageSeo] = useState<Record<string, PageSeo>>(initialPageSeo);
+  const [pageVersions, setPageVersions] = useState<Record<string, ThemeDraftMeta | undefined>>(
+    Object.fromEntries(pages.map((page) => [page.id, page.draftMeta]))
+  );
   const [selectedPageId, setSelectedPageId] = useState(pages[0]?.id ?? "");
   const [searchEngine, setSearchEngine] = useState<"google" | "bing">("google");
   const [message, setMessage] = useState(
@@ -90,7 +127,14 @@ export function SeoSettingsEditor({
 
   useEffect(() => {
     setSeo(normalizedInitial);
+    setSavedSeo(normalizedInitial);
   }, [normalizedInitial]);
+
+  useEffect(() => {
+    setPageSeo(initialPageSeo);
+    setSavedPageSeo(initialPageSeo);
+    setPageVersions(Object.fromEntries(pages.map((page) => [page.id, page.draftMeta])));
+  }, [initialPageSeo, pages]);
 
   useEffect(() => {
     setDraftVersion(draftMeta);
@@ -103,15 +147,15 @@ export function SeoSettingsEditor({
   }, [pages, selectedPageId]);
 
   const selectedPage = pages.find((page) => page.id === selectedPageId) ?? pages[0];
-  const selectedSeo = selectedPage ? seo.pages[selectedPage.id] : undefined;
-  const dirty = seoDiffers(seo, normalizedPublished);
-  const missingTitleCount = pages.filter((page) => !seo.pages[page.id]?.title.trim()).length;
-  const missingDescriptionCount = pages.filter((page) => !seo.pages[page.id]?.description.trim()).length;
-  const missingKeywordCount = pages.filter((page) => !seo.pages[page.id]?.keywords?.trim() && !seo.siteKeywords?.trim()).length;
-  const noIndexCount = pages.filter((page) => seo.pages[page.id]?.index === false).length;
+  const selectedSeo = selectedPage ? pageSeo[selectedPage.id] : undefined;
+  const dirty = seoDiffers(seo, normalizedPublished) || pages.some((page) => JSON.stringify(pageSeo[page.id]) !== JSON.stringify(publishedPageSeo[page.id]));
+  const missingTitleCount = pages.filter((page) => !pageSeo[page.id]?.title.trim()).length;
+  const missingDescriptionCount = pages.filter((page) => !pageSeo[page.id]?.description.trim()).length;
+  const missingKeywordCount = pages.filter((page) => !pageSeo[page.id]?.keywords?.trim() && !seo.siteKeywords?.trim()).length;
+  const noIndexCount = pages.filter((page) => pageSeo[page.id]?.index === false).length;
   const averageScore = pages.length
     ? Math.round(
-        pages.reduce((sum, page) => sum + pageScore(seo.pages[page.id]), 0) / pages.length
+        pages.reduce((sum, page) => sum + pageScore(pageSeo[page.id]), 0) / pages.length
       )
     : 0;
   const warningsCount =
@@ -124,6 +168,7 @@ export function SeoSettingsEditor({
 
   function resetToPublished() {
     setSeo(normalizedPublished);
+    setPageSeo(publishedPageSeo);
     setMessage("SEO 草稿已恢复到线上发布版本。");
   }
 
@@ -131,18 +176,18 @@ export function SeoSettingsEditor({
     downloadCsv(
       `${site.slug}-seo-pages.csv`,
       pages.map((page) => {
-        const pageSeo = seo.pages[page.id];
+        const currentPageSeo = pageSeo[page.id];
         return {
           pageId: page.id,
           title: page.title,
           slug: page.slug,
           pageType: page.pageType,
-          seoTitle: pageSeo.title,
-          seoDescription: pageSeo.description,
-          seoKeywords: pageSeo.keywords ?? seo.siteKeywords ?? "",
-          canonicalPath: pageSeo.canonicalPath ?? "",
-          index: pageSeo.index,
-          ogImage: pageSeo.ogImage ?? ""
+          seoTitle: currentPageSeo.title,
+          seoDescription: currentPageSeo.description,
+          seoKeywords: currentPageSeo.keywords ?? seo.siteKeywords ?? "",
+          canonicalPath: currentPageSeo.canonicalPath ?? "",
+          index: currentPageSeo.index,
+          ogImage: currentPageSeo.ogImage ?? ""
         };
       }),
       ["pageId", "title", "slug", "pageType", "seoTitle", "seoDescription", "seoKeywords", "canonicalPath", "index", "ogImage"]
@@ -158,37 +203,71 @@ export function SeoSettingsEditor({
   }
 
   function updatePage(pageId: string, patch: Partial<PageSeo>) {
-    setSeo((current) => ({
+    setPageSeo((current) => ({
       ...current,
-      pages: {
-        ...current.pages,
-        [pageId]: {
-          ...current.pages[pageId],
-          ...patch
-        }
-      }
+      [pageId]: { ...current[pageId], ...patch }
     }));
   }
 
   async function save() {
     setSaving(true);
-    const response = await fetch(`/api/sites/${site.id}/theme/settings/draft`, {
-      method: "PUT",
-      headers: siteAdminJsonHeaders(site.id),
-      body: JSON.stringify({
-        draftJson: draftSettings,
-        expectedRevision: draftVersion?.revision,
-        expectedEtag: draftVersion?.etag
-      })
-    });
-    const json = (await response.json().catch(() => ({}))) as { draftVersion?: ThemeDraftMeta; error?: string };
-    setSaving(false);
-    if (!response.ok) {
-      setMessage(response.status === 409 ? "保存被拦截：SEO 草稿版本已变化，请刷新后重新检查。" : `保存失败：${json.error ?? "unknown error"}`);
+    const settingsChanged = seoDiffers(seo, savedSeo);
+    const changedPages = pages.filter((page) => JSON.stringify(pageSeo[page.id]) !== JSON.stringify(savedPageSeo[page.id]));
+    const requests: Promise<{ kind: "settings" | "page"; pageId?: string; response: Response }>[] = [];
+    if (settingsChanged) {
+      requests.push(fetch(`/api/sites/${site.id}/theme/settings/draft`, {
+        method: "PUT",
+        headers: siteAdminJsonHeaders(site.id),
+        body: JSON.stringify({ draftJson: draftSettings, expectedRevision: draftVersion?.revision, expectedEtag: draftVersion?.etag })
+      }).then((response) => ({ kind: "settings" as const, response })));
+    }
+    for (const page of changedPages) {
+      const current = pageSeo[page.id];
+      const existing = page.draftJson.seo ?? {};
+      const nextPage: ThemePageJson = {
+        ...page.draftJson,
+        seo: {
+          ...existing,
+          title: current.title,
+          description: current.description,
+          keywords: current.keywords,
+          ogImage: current.ogImage,
+          canonicalPath: cleanPath(current.canonicalPath ?? "", page.slug),
+          robots: { index: current.index !== false, follow: current.follow !== false }
+        }
+      };
+      const version = pageVersions[page.id];
+      requests.push(fetch(`/api/sites/${site.id}/theme/pages/${page.id}/draft`, {
+        method: "PUT",
+        headers: siteAdminJsonHeaders(site.id),
+        body: JSON.stringify({ draftJson: nextPage, expectedRevision: version?.revision, expectedEtag: version?.etag })
+      }).then((response) => ({ kind: "page" as const, pageId: page.id, response })));
+    }
+    if (!requests.length) {
+      setSaving(false);
+      setMessage("No unsaved SEO changes.");
       return;
     }
-    if (json.draftVersion) setDraftVersion(json.draftVersion);
-    setMessage("SEO 草稿已保存。进入发布历史发布整站快照后，前台 metadata 才会更新。");
+    const results = await Promise.all(requests);
+    const decoded = await Promise.all(results.map(async (result) => ({
+      ...result,
+      json: await result.response.json().catch(() => ({})) as { draftVersion?: ThemeDraftMeta; error?: string }
+    })));
+    setSaving(false);
+    const failed = decoded.find((result) => !result.response.ok);
+    if (failed) {
+      setMessage(failed.response.status === 409 ? "Save blocked: the SEO draft changed. Refresh and review it again." : `Save failed: ${failed.json.error ?? "unknown error"}`);
+      return;
+    }
+    const settingsResult = decoded.find((result) => result.kind === "settings");
+    if (settingsResult?.json.draftVersion) setDraftVersion(settingsResult.json.draftVersion);
+    setPageVersions((current) => ({
+      ...current,
+      ...Object.fromEntries(decoded.filter((result) => result.kind === "page" && result.pageId && result.json.draftVersion).map((result) => [result.pageId as string, result.json.draftVersion]))
+    }));
+    setSavedSeo(seo);
+    setSavedPageSeo(pageSeo);
+    setMessage(`Saved ${changedPages.length} page SEO draft${changedPages.length === 1 ? "" : "s"}${settingsChanged ? " and site defaults" : ""}. Publish each page or use a reviewed site manifest.`);
     router.refresh();
   }
 

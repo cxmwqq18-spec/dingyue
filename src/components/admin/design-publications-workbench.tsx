@@ -40,6 +40,7 @@ export function DesignPublicationsWorkbench({
   hasDirtyDraft,
   dirtyPages,
   settingsDirty,
+  profileDirty,
   canPublish,
   preflightScore,
   preflightStale = false,
@@ -47,6 +48,7 @@ export function DesignPublicationsWorkbench({
   siteId,
   pageVersions,
   settingsVersion,
+  profileVersion,
   publishedVersion,
   globalVisualChanges
 }: {
@@ -58,6 +60,7 @@ export function DesignPublicationsWorkbench({
   hasDirtyDraft: boolean;
   dirtyPages: number;
   settingsDirty: boolean;
+  profileDirty: boolean;
   canPublish: boolean;
   preflightScore: number;
   preflightStale?: boolean;
@@ -65,6 +68,7 @@ export function DesignPublicationsWorkbench({
   siteId: string;
   pageVersions: Record<string, ThemeDraftMeta | undefined>;
   settingsVersion?: ThemeDraftMeta;
+  profileVersion?: ThemeDraftMeta;
   publishedVersion: number;
   globalVisualChanges: PublishGlobalVisualChange[];
 }) {
@@ -259,7 +263,9 @@ export function DesignPublicationsWorkbench({
                   publishedVersion={publishedVersion}
                   globalVisualChanges={preflight.globalVisualChanges}
                   settingsDirty={settingsDirty}
+                  profileDirty={profileDirty}
                   settingsVersion={settingsVersion}
+                  profileVersion={profileVersion}
                   siteId={siteId}
                 />
               </div>

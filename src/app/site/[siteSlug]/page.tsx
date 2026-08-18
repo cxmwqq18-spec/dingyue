@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getPage } from "@/lib/data";
 import { renderStorefrontPage } from "@/lib/storefront-render";
 import { readPathModePublicMetadataState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
-import { metadataForSingleThemePage } from "@/lib/theme/seo";
+import { metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { headers } from "next/headers";
 import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const state = await readPathModePublicMetadataState(siteSlug, "/");
   const site = state?.sites[0];
   if (!site) return {};
-  return metadataForSingleThemePage(site, getPage(site, "/"));
+  return metadataForPublishedStorefrontPage({ site, page: getPage(site, "/"), products: state.products, creativePacks: state.creativePacks });
 }
 
 export default async function SiteFrontPage({

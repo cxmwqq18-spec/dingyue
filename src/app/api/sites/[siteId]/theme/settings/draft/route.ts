@@ -18,24 +18,17 @@ function isValidSeoPayload(seo: ThemeSettings["seo"]) {
     typeof seo.titleTemplate !== "string" ||
     !validOptionalString(seo.defaultOgImage) ||
     typeof seo.robots?.index !== "boolean" ||
-    typeof seo.robots?.follow !== "boolean" ||
-    !seo.pages ||
-    typeof seo.pages !== "object" ||
-    Array.isArray(seo.pages)
+    typeof seo.robots?.follow !== "boolean"
   ) {
     return false;
   }
-  return Object.values(seo.pages).every((page) =>
-    page &&
-    typeof page === "object" &&
-    typeof page.title === "string" &&
-    typeof page.description === "string" &&
-    validOptionalString(page.keywords) &&
-    validOptionalString(page.ogImage) &&
-    validOptionalString(page.canonicalPath) &&
-    (page.index === undefined || typeof page.index === "boolean") &&
-    (page.follow === undefined || typeof page.follow === "boolean")
-  );
+  return true;
+}
+
+function withoutLegacyPageSeo(settings: ThemeSettings): ThemeSettings {
+  if (!settings.seo) return settings;
+  const { pages: _legacyPages, ...seo } = settings.seo;
+  return { ...settings, seo };
 }
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
@@ -52,7 +45,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   try {
     const result = await saveThemeSettingsDraftRelational({
       siteId,
-      draftJson: body.draftJson,
+      draftJson: withoutLegacyPageSeo(body.draftJson),
       expected: { expectedRevision: body.expectedRevision, expectedEtag: body.expectedEtag },
       requireExpected: true,
       actor: guard.current.siteAdmin.id

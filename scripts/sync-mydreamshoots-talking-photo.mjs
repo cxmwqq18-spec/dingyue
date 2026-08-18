@@ -152,26 +152,6 @@ function syncPage(state, changes) {
     "ThemePage"
   );
 
-  for (const settingsKey of ["draftJson", "publishedJson"]) {
-    const settings = site.themeSettings?.[settingsKey];
-    const seoPages = settings?.seo?.pages;
-    if (!seoPages) continue;
-    updateRecord(
-      seoPages,
-      {
-        [PAGE_SLUG]: {
-          title: pageJson.seo.title,
-          description: pageJson.seo.description,
-          keywords: pageJson.seo.keywords,
-          canonicalPath: PAGE_SLUG,
-          index: true,
-          follow: true
-        }
-      },
-      changes,
-      `ThemeSettings.${settingsKey}.seo.pages`
-    );
-  }
   return { site, page };
 }
 

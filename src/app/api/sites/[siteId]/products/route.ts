@@ -8,6 +8,7 @@ type CreateProductPayload = {
   name?: string;
   type?: Product["type"];
   status?: Product["status"];
+  metadata?: Product["metadata"];
   price?: Partial<Price>;
 };
 
@@ -34,6 +35,7 @@ export async function POST(
       name: body.name,
       type: body.type,
       status: body.status,
+      metadata: body.metadata,
       price: {
         label: body.price.label,
         amountCents: Number(body.price.amountCents),

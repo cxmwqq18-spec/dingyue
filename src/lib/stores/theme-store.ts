@@ -1,11 +1,16 @@
 import "server-only";
 
+import crypto from "node:crypto";
+
 import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getSectionSchema } from "@/lib/section-schema";
-import { clearSiteMediaSummaryCache } from "@/lib/stores/site-store";
+import { clearSiteMediaSummaryCache, clearSiteReadCache, getThemePublishPreflightBundleRelational } from "@/lib/stores/site-store";
+import { normalizeStorefrontProfile } from "@/lib/stores/storefront-profile-store";
+import { clearStorefrontContextCache, loadDraftStorefrontContext } from "@/lib/storefront-context";
+import { resolveStorefrontBindings } from "@/lib/storefront-context/core";
 import {
   buildSaasThemeDraft,
   buildSaasThemePublication,
@@ -28,7 +33,7 @@ import {
   type ThemePackageSiteSettings,
   type ThemePackageTemplateKey
 } from "@/lib/theme/packages";
-import { collectThemeGlobalVisualChanges, summarizeThemeGlobalVisuals } from "@/lib/theme/publish-preflight";
+import { runThemePublishPreflight, summarizeThemeGlobalVisuals } from "@/lib/theme/publish-preflight";
 import { normalizeGlobalSection } from "@/lib/theme/section-normalize";
 import type {
   MediaAsset,
@@ -43,7 +48,8 @@ import type {
   ThemePublication,
   ThemeSectionSchema,
   ThemeSettings,
-  ThemeSettingValue
+  ThemeSettingValue,
+  StorefrontProfileJson
 } from "@/lib/types";
 
 import {
@@ -82,6 +88,7 @@ function clearSiteThemeReadCache(siteId: string) {
   themeReadCache.clear(`publication-meta:${siteId}`);
   themeReadCache.clear(`publication-count:${siteId}`);
   themeReadCache.clear(`theme-labels:${siteId}`);
+  clearSiteReadCache();
 }
 
 export type SaasThemeAction =
@@ -123,6 +130,8 @@ async function getSiteWithThemeRecords(db: PrismaLike, siteId: string) {
       domains: true,
       pages: { orderBy: { slug: "asc" } },
       settings: true,
+      storefrontProfile: true,
+      publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 },
       connect: true
     }
   });
@@ -138,6 +147,7 @@ function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme): ThemePubli
       publishedJson: cloneJson(page.publishedJson)
     })),
     themeSettings: cloneJson(site.themeSettings.publishedJson),
+    storefrontProfile: site.storefrontProfile?.publishedJson ? cloneJson(site.storefrontProfile.publishedJson) : undefined,
     saasTheme: siteTheme
       ? {
           name: siteTheme.name,
@@ -233,10 +243,10 @@ function applyInternalThemePackageSiteSettings(base: ThemeSettings, siteSettings
     next.seo = {
       siteTitle: themeSettings.seo.siteTitle ?? next.seo?.siteTitle ?? "",
       siteDescription: themeSettings.seo.siteDescription ?? next.seo?.siteDescription ?? "",
+      siteKeywords: themeSettings.seo.siteKeywords ?? next.seo?.siteKeywords,
       titleTemplate: themeSettings.seo.titleTemplate ?? next.seo?.titleTemplate ?? "%s",
       defaultOgImage: themeSettings.seo.defaultOgImage ?? next.seo?.defaultOgImage,
-      robots: next.seo?.robots ?? { index: true, follow: true },
-      pages: next.seo?.pages ?? {}
+      robots: next.seo?.robots ?? { index: true, follow: true }
     };
   }
   return next;
@@ -1006,12 +1016,6 @@ export async function saveThemeSettingsDraftRelational(params: {
 export type ThemeFooterSocialLinks = {
   socialHeading: string;
   socialBody: string;
-  instagramUrl: string;
-  facebookUrl: string;
-  pinterestUrl: string;
-  youtubeUrl: string;
-  threadsUrl: string;
-  twitterUrl: string;
 };
 
 function applyFooterSocialLinks(settings: ThemeSettings, socialLinks: ThemeFooterSocialLinks): ThemeSettings {
@@ -1020,7 +1024,8 @@ function applyFooterSocialLinks(settings: ThemeSettings, socialLinks: ThemeFoote
   next.globalSections.footer = normalizeGlobalSection("footer", next.globalSections.footer);
   next.globalSections.footer.settings = {
     ...next.globalSections.footer.settings,
-    ...socialLinks
+    socialHeading: socialLinks.socialHeading,
+    socialBody: socialLinks.socialBody
   };
   return next;
 }
@@ -1037,17 +1042,15 @@ export async function updateThemeFooterSocialLinksRelational(params: {
   }
   const currentSettings = toThemeSettings(current);
   const draftJson = applyFooterSocialLinks(currentSettings.draftJson, params.socialLinks);
-  const publishedJson = applyFooterSocialLinks(currentSettings.publishedJson, params.socialLinks);
   const nextSettings = {
     draftJson,
-    publishedJson,
+    publishedJson: currentSettings.publishedJson,
     draftMeta: makeThemeDraftMeta(currentSettings)
   };
   await prisma.themeSettings.update({
     where: { siteId: params.siteId },
     data: {
-      draftJson: themeSettingsDraftJsonWithMeta(nextSettings),
-      publishedJson: cloneJson(publishedJson) as unknown as Prisma.InputJsonValue
+      draftJson: themeSettingsDraftJsonWithMeta(nextSettings)
     }
   });
   return { site: toSite(await getSiteWithThemeRecords(prisma, params.siteId)) };
@@ -1068,19 +1071,6 @@ export async function rollbackThemePageDraftRelational(params: {
       where: { id: page.id },
       data: { draftJson: draftJsonWithMeta(page) }
     });
-    const settings = await tx.themeSettings.findUnique({ where: { siteId: params.siteId } });
-    if (settings) {
-      const currentSettings = toThemeSettings(settings);
-      const nextSettings = {
-        ...currentSettings,
-        draftJson: cloneJson(currentSettings.publishedJson),
-        draftMeta: makeThemeDraftMeta(currentSettings)
-      };
-      await tx.themeSettings.update({
-        where: { siteId: params.siteId },
-        data: { draftJson: themeSettingsDraftJsonWithMeta(nextSettings) }
-      });
-    }
     return { page: toThemePage(updated), draftVersion: page.draftMeta };
   });
 }
@@ -1164,7 +1154,28 @@ export async function publishDraftPageRelational(
   publishedVersion: number;
 }> {
   clearSiteThemeReadCache(siteId);
-  return prisma.$transaction(async (tx) => {
+  const targetExpectation = expected?.pageVersions?.[pageId] ?? {
+    expectedRevision: expected?.expectedRevision,
+    expectedEtag: expected?.expectedEtag
+  };
+  if (!hasDraftVersionExpectation(targetExpectation)) {
+    throw new RelationalStoreError("theme_publish_page_revision_required", 409);
+  }
+  const targetContext = await loadDraftStorefrontContext({
+    siteId,
+    pageId,
+    publishScope: { type: "page", pageIds: [pageId], includeThemeSettings: false, includeStorefrontProfile: false }
+  });
+  assertThemeDraftVersion(targetContext.page, targetExpectation);
+  const unresolvedBindings = resolveStorefrontBindings(JSON.stringify(targetContext.pageJson), targetContext).missing;
+  const missingRequiredFacts = targetContext.missingFacts.filter((fact) => fact.startsWith("profile.") || fact.endsWith("seo.description"));
+  if (missingRequiredFacts.length) throw new RelationalStoreError("theme_publish_page_facts_incomplete", 409);
+  if (unresolvedBindings.length) throw new RelationalStoreError("theme_publish_page_bindings_unresolved", 409);
+  if (targetContext.catalog.invalidPacks.length) throw new RelationalStoreError("theme_publish_page_invalid_creative_pack", 409);
+  if (targetContext.page.pageType === "pricing" && !targetContext.offers.active.some((offer) => offer.product.type === "subscription")) {
+    throw new RelationalStoreError("theme_publish_page_active_subscription_required", 409);
+  }
+  const result = await prisma.$transaction(async (tx) => {
     const siteRecord = await getSiteWithThemeRecords(tx, siteId);
     const site = toSite(siteRecord);
     const targetPage = site.pages.find((page) => page.id === pageId);
@@ -1177,113 +1188,38 @@ export async function publishDraftPageRelational(
       if (expected.expectedPublishedVersion === undefined) {
         throw new RelationalStoreError("theme_publish_review_scope_incomplete", 409);
       }
-      if (!hasDraftVersionExpectation(expected.settingsVersion)) {
+      if (!hasDraftVersionExpectation(expected.pageVersions?.[pageId]) && !hasDraftVersionExpectation({ expectedRevision: expected.expectedRevision, expectedEtag: expected.expectedEtag })) {
         throw new RelationalStoreError("theme_publish_review_scope_incomplete", 409);
       }
-      for (const page of site.pages) {
-        if (!hasDraftVersionExpectation(expected.pageVersions?.[page.id])) {
-          throw new RelationalStoreError("theme_publish_review_scope_incomplete", 409);
-        }
-      }
     }
-    const targetExpectation = expected?.pageVersions?.[pageId] ?? {
-      expectedRevision: expected?.expectedRevision,
-      expectedEtag: expected?.expectedEtag
-    };
     assertThemeDraftVersion(targetPage, targetExpectation);
-    for (const page of site.pages) {
-      const pageExpectation = expected?.pageVersions?.[page.id];
-      if (pageExpectation && page.id !== pageId) assertThemeDraftVersion(page, pageExpectation);
+    const targetSeo = targetPage.draftJson.seo;
+    if (!targetSeo?.title?.trim() || !targetSeo.description?.trim()) {
+      throw new RelationalStoreError("theme_publish_page_seo_incomplete", 409);
     }
-    if (expected?.settingsVersion) {
-      assertThemeDraftVersion({ draftMeta: site.themeSettings.draftMeta }, expected.settingsVersion);
-    }
-    const globalVisualChanges = collectThemeGlobalVisualChanges(site);
-    if (globalVisualChanges.length && !expected?.acknowledgedGlobalVisualChanges) {
-      throw new RelationalStoreError("theme_publish_global_visual_changes_unacknowledged", 409);
+    const canonical = (targetSeo.canonical ?? targetSeo.canonicalPath)?.trim();
+    if (canonical && !(canonical.startsWith("/") || canonical.startsWith("http://") || canonical.startsWith("https://"))) {
+      throw new RelationalStoreError("theme_publish_page_canonical_invalid", 409);
     }
 
     const publishedVersion = currentPublishedVersion + 1;
-    let draftVersion: ThemeDraftMeta | undefined;
     const pageDraftVersions: Record<string, ThemeDraftMeta> = {};
 
-    await tx.themeSettings.upsert({
-      where: { siteId },
-      create: {
-        id: `settings_${siteId}`,
-        siteId,
-        draftJson: themeSettingsDraftJsonWithMeta(site.themeSettings),
-        publishedJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue
-      },
-      update: {
-        publishedJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue
+    targetPage.publishedJson = cloneJson(targetPage.draftJson);
+    targetPage.publishedJson.version = publishedVersion;
+    targetPage.draftJson.version = publishedVersion;
+    targetPage.draftMeta = makeThemeDraftMeta(targetPage);
+    const draftVersion = targetPage.draftMeta;
+    pageDraftVersions[targetPage.id] = targetPage.draftMeta;
+    await tx.themePage.update({
+      where: { id: targetPage.id },
+      data: {
+        draftJson: draftJsonWithMeta(targetPage),
+        publishedJson: cloneJson(targetPage.publishedJson) as unknown as Prisma.InputJsonValue
       }
     });
-    site.themeSettings.publishedJson = cloneJson(site.themeSettings.draftJson);
 
-    for (const page of site.pages) {
-      page.publishedJson = cloneJson(page.draftJson);
-      page.publishedJson.version = publishedVersion;
-      page.draftJson.version = publishedVersion;
-      page.draftMeta = makeThemeDraftMeta(page);
-      if (page.id === pageId) draftVersion = page.draftMeta;
-      pageDraftVersions[page.id] = page.draftMeta;
-      await tx.themePage.update({
-        where: { id: page.id },
-        data: {
-          draftJson: draftJsonWithMeta(page),
-          publishedJson: cloneJson(page.publishedJson) as unknown as Prisma.InputJsonValue
-        }
-      });
-    }
-
-    const draftThemeRecord = await tx.siteTheme.findFirst({
-      where: { siteId, status: "draft" },
-      orderBy: { updatedAt: "desc" }
-    });
-    const draftTheme = draftThemeRecord ? toSiteTheme(draftThemeRecord) : undefined;
-    const nextActive = activeThemeFromDraft(siteId, draftTheme, actor);
-    await tx.siteTheme.updateMany({ where: { siteId, status: "active" }, data: { status: "draft" } });
-    const activeThemeRecord = draftThemeRecord
-      ? await tx.siteTheme.update({
-          where: { id: draftThemeRecord.id },
-          data: {
-            name: nextActive.name,
-            themeKey: nextActive.themeKey,
-            status: "active",
-            templates: cloneJson(nextActive.templates) as unknown as Prisma.InputJsonValue,
-            settings: cloneJson(nextActive.settings) as unknown as Prisma.InputJsonValue,
-            source: nextActive.source,
-            createdBy: nextActive.createdBy
-          }
-        })
-      : await tx.siteTheme.upsert({
-          where: { siteId_themeId: { siteId, themeId: nextActive.themeId } },
-          create: {
-            id: nextActive.id,
-            siteId,
-            name: nextActive.name,
-            themeId: nextActive.themeId,
-            themeKey: nextActive.themeKey,
-            status: "active",
-            templates: cloneJson(nextActive.templates) as unknown as Prisma.InputJsonValue,
-            settings: cloneJson(nextActive.settings) as unknown as Prisma.InputJsonValue,
-            source: nextActive.source,
-            createdBy: nextActive.createdBy
-          },
-          update: {
-            name: nextActive.name,
-            themeKey: nextActive.themeKey,
-            status: "active",
-            templates: cloneJson(nextActive.templates) as unknown as Prisma.InputJsonValue,
-            settings: cloneJson(nextActive.settings) as unknown as Prisma.InputJsonValue,
-            source: nextActive.source,
-            createdBy: nextActive.createdBy
-          }
-        });
-    const activeTheme = toSiteTheme(activeThemeRecord);
-
-    const snapshot = buildPublicationSnapshot(site, activeTheme);
+    const snapshot = buildPublicationSnapshot(site);
     const snapshotStats = buildPublicationSnapshotStats(snapshot);
     const publicationRecord = await tx.themePublication.create({
       data: {
@@ -1294,7 +1230,10 @@ export async function publishDraftPageRelational(
         pageCount: snapshotStats.pageCount,
         sectionCount: snapshotStats.sectionCount,
         snapshotBytes: snapshotStats.snapshotBytes,
-        publishedBy: actor
+        publishedBy: actor,
+        scope: { type: "page", pageIds: [pageId], includeThemeSettings: false, includeStorefrontProfile: false } as unknown as Prisma.InputJsonValue,
+        manifestHash: crypto.createHash("sha256").update(JSON.stringify({ type: "page", pageIds: [pageId], version: publishedVersion })).digest("hex"),
+        factsRevision: crypto.createHash("sha256").update(JSON.stringify({ pageId, version: publishedVersion })).digest("hex").slice(0, 20)
       } as unknown as Prisma.ThemePublicationUncheckedCreateInput
     });
     const publication = toThemePublication(publicationRecord);
@@ -1309,6 +1248,170 @@ export async function publishDraftPageRelational(
     });
     return { site, draftVersion, pageDraftVersions, settingsDraftVersion: site.themeSettings.draftMeta, publication, publishedVersion };
   }, { timeout: 120000 });
+  clearStorefrontContextCache(siteId);
+  return result;
+}
+
+export type StorefrontPublishManifest = {
+  pageIds: string[];
+  includeThemeSettings: boolean;
+  includeStorefrontProfile: boolean;
+  pageVersions: Record<string, ThemeDraftVersionExpectation>;
+  settingsVersion?: ThemeDraftVersionExpectation;
+  profileVersion?: ThemeDraftVersionExpectation;
+  manifestHash: string;
+};
+
+export function storefrontPublishManifestHash(manifest: Omit<StorefrontPublishManifest, "manifestHash">): string {
+  return crypto.createHash("sha256").update(JSON.stringify({
+    pageIds: [...manifest.pageIds].sort(),
+    includeThemeSettings: manifest.includeThemeSettings,
+    includeStorefrontProfile: manifest.includeStorefrontProfile,
+    pageVersions: Object.fromEntries(Object.entries(manifest.pageVersions).sort()),
+    settingsVersion: manifest.settingsVersion,
+    profileVersion: manifest.profileVersion
+  })).digest("hex");
+}
+
+export async function publishDraftSiteRelational(
+  siteId: string,
+  manifest: StorefrontPublishManifest,
+  actor = "site_admin_demo"
+): Promise<{ site: Site; publication: ThemePublication; publishedVersion: number }> {
+  clearSiteThemeReadCache(siteId);
+  const expectedHash = storefrontPublishManifestHash(manifest);
+  if (manifest.manifestHash !== expectedHash) throw new RelationalStoreError("theme_publish_manifest_hash_invalid", 409);
+  if (!manifest.pageIds.length) throw new RelationalStoreError("theme_publish_manifest_empty", 409);
+  const preflightBundle = await getThemePublishPreflightBundleRelational(siteId);
+  if (!preflightBundle.site) throw new RelationalStoreError("theme_site_not_found", 404);
+  const preflight = runThemePublishPreflight({
+    site: preflightBundle.site,
+    products: preflightBundle.products,
+    siteAiApps: preflightBundle.siteAiApps,
+    mediaAssets: preflightBundle.mediaAssets,
+    storefrontProfile: preflightBundle.storefrontProfile,
+    creativePacks: preflightBundle.creativePacks,
+    dirtyPageIds: preflightBundle.dirtyPageIds
+  });
+  if (!preflight.canPublish) throw new RelationalStoreError("theme_publish_preflight_blocked", 409);
+  const result = await prisma.$transaction(async (tx) => {
+    const siteRecord = await getSiteWithThemeRecords(tx, siteId);
+    const site = toSite(siteRecord);
+    const omittedDirtyPages = site.pages.filter((page) => !manifest.pageIds.includes(page.id) && JSON.stringify(page.draftJson) !== JSON.stringify(page.publishedJson));
+    const settingsDirty = JSON.stringify(site.themeSettings.draftJson) !== JSON.stringify(site.themeSettings.publishedJson);
+    const profileDirty = JSON.stringify(site.storefrontProfile?.draftJson) !== JSON.stringify(site.storefrontProfile?.publishedJson);
+    if (omittedDirtyPages.length || (settingsDirty && !manifest.includeThemeSettings) || (profileDirty && !manifest.includeStorefrontProfile)) {
+      throw new RelationalStoreError("theme_publish_manifest_unreviewed_objects", 409);
+    }
+    const pages = site.pages.filter((page) => manifest.pageIds.includes(page.id));
+    if (pages.length !== manifest.pageIds.length) throw new RelationalStoreError("theme_publish_manifest_page_not_found", 409);
+    for (const page of pages) {
+      const expectedPageVersion = manifest.pageVersions[page.id];
+      if (!hasDraftVersionExpectation(expectedPageVersion)) {
+        throw new RelationalStoreError("theme_publish_manifest_page_revision_required", 409);
+      }
+      assertThemeDraftVersion(page, expectedPageVersion);
+    }
+    if (manifest.includeThemeSettings) {
+      if (!manifest.settingsVersion) throw new RelationalStoreError("theme_publish_manifest_settings_revision_required", 409);
+      assertThemeDraftVersion({ draftMeta: site.themeSettings.draftMeta }, manifest.settingsVersion);
+    }
+    const profile = site.storefrontProfile;
+    if (manifest.includeStorefrontProfile) {
+      if (!profile) throw new RelationalStoreError("storefront_profile_not_found", 409);
+      if (!manifest.profileVersion || profile.draftMeta?.revision !== manifest.profileVersion.expectedRevision || (manifest.profileVersion.expectedEtag && profile.draftMeta?.etag !== manifest.profileVersion.expectedEtag)) throw new RelationalStoreError("storefront_profile_draft_conflict", 409);
+    }
+    const publishedProfile = manifest.includeStorefrontProfile ? profile?.draftJson : profile?.publishedJson;
+    const normalizedPublishedProfile = publishedProfile ? normalizeStorefrontProfile(publishedProfile) : undefined;
+    const publishedAddress = normalizedPublishedProfile?.identity.address;
+    const publishedPolicy = normalizedPublishedProfile?.policyFacts;
+    if (
+      !normalizedPublishedProfile?.identity.legalName ||
+      !normalizedPublishedProfile.identity.entityType ||
+      !publishedAddress?.line1 ||
+      !publishedAddress.city ||
+      !publishedAddress.region ||
+      !publishedAddress.postalCode ||
+      !publishedAddress.country ||
+      !normalizedPublishedProfile.identity.supportEmail ||
+      publishedPolicy?.usesCustomerMediaForTraining === undefined ||
+      !publishedPolicy.sourceMediaRetentionDays ||
+      publishedPolicy.refundReviewRequired === undefined ||
+      !publishedPolicy.refundWindowDays ||
+      !publishedPolicy.effectiveDate
+    ) {
+      throw new RelationalStoreError("storefront_profile_incomplete", 409);
+    }
+    const [activePrices, invalidPackCount, otherSites] = await Promise.all([
+      tx.price.findMany({
+        where: { siteId, status: "active", product: { status: "active" } },
+        select: { id: true, stripePriceId: true, currency: true, interval: true, amountCents: true, providerVerifiedAt: true, providerFingerprint: true, effectiveFrom: true, effectiveTo: true }
+      }),
+      tx.creativePack.count({ where: { siteId, status: "active", OR: [{ creditCost: { lte: 0 } }, { outputCount: { lte: 0 } }] } }),
+      tx.site.findMany({ where: { id: { not: siteId } }, select: { id: true, primaryDomain: true } })
+    ]);
+    const now = Date.now();
+    const invalidPrice = activePrices.find((price) =>
+      !price.stripePriceId ||
+      !/^price_[a-zA-Z0-9_]+$/.test(price.stripePriceId) ||
+      !price.currency ||
+      price.currency.trim().toLowerCase() !== site.currency.trim().toLowerCase() ||
+      !price.interval ||
+      price.amountCents <= 0 ||
+      !price.providerVerifiedAt ||
+      !price.providerFingerprint ||
+      (price.effectiveFrom !== null && price.effectiveFrom.getTime() > now) ||
+      (price.effectiveTo !== null && price.effectiveTo.getTime() <= now)
+    );
+    if (invalidPrice) throw new RelationalStoreError("theme_publish_price_facts_invalid", 409);
+    if (invalidPackCount) throw new RelationalStoreError("theme_publish_creative_pack_facts_invalid", 409);
+    const otherDomains = new Set(otherSites.map((other) => other.primaryDomain.trim().replace(/^https?:\/\//i, "").replace(/^www\./i, "").split("/")[0]).filter(Boolean));
+    const crossSiteSocial = normalizedPublishedProfile.identity.sameAs.some((value) => {
+      try {
+        return otherDomains.has(new URL(value).hostname.replace(/^www\./i, ""));
+      } catch {
+        return true;
+      }
+    });
+    if (crossSiteSocial) throw new RelationalStoreError("storefront_profile_social_cross_site", 409);
+    const publishedVersion = Math.max(0, ...site.pages.map((page) => page.publishedJson.version ?? 0)) + 1;
+    for (const page of pages) {
+      page.publishedJson = cloneJson(page.draftJson);
+      page.publishedJson.version = publishedVersion;
+      page.draftJson.version = publishedVersion;
+      page.draftMeta = makeThemeDraftMeta(page);
+      await tx.themePage.update({ where: { id: page.id }, data: { draftJson: draftJsonWithMeta(page), publishedJson: cloneJson(page.publishedJson) as unknown as Prisma.InputJsonValue } });
+    }
+    if (manifest.includeThemeSettings) {
+      site.themeSettings.publishedJson = cloneJson(site.themeSettings.draftJson);
+      await tx.themeSettings.update({ where: { siteId }, data: { publishedJson: cloneJson(site.themeSettings.publishedJson) as unknown as Prisma.InputJsonValue } });
+    }
+    if (manifest.includeStorefrontProfile && profile) {
+      profile.publishedJson = cloneJson(normalizedPublishedProfile!);
+      await tx.storefrontProfile.update({ where: { siteId }, data: { publishedJson: cloneJson(profile.publishedJson) as unknown as Prisma.InputJsonValue } });
+    }
+    const snapshot = buildPublicationSnapshot(site);
+    const snapshotStats = buildPublicationSnapshotStats(snapshot);
+    const publicationRecord = await tx.themePublication.create({
+      data: {
+        id: `pub_${siteId}_${Date.now().toString(36)}`,
+        siteId,
+        version: publishedVersion,
+        snapshot: snapshot as unknown as Prisma.InputJsonValue,
+        pageCount: snapshotStats.pageCount,
+        sectionCount: snapshotStats.sectionCount,
+        snapshotBytes: snapshotStats.snapshotBytes,
+        publishedBy: actor,
+        scope: manifest as unknown as Prisma.InputJsonValue,
+        manifestHash: manifest.manifestHash,
+        factsRevision: crypto.createHash("sha256").update(JSON.stringify({ pages: manifest.pageIds, profile: normalizedPublishedProfile, version: publishedVersion })).digest("hex").slice(0, 20)
+      } as unknown as Prisma.ThemePublicationUncheckedCreateInput
+    });
+    await addAuditLogRelational(tx, { siteId, actorType: "site_admin", actorId: actor, action: "theme_site_published", targetType: "theme", targetId: siteId, metadata: { version: publishedVersion, manifestHash: manifest.manifestHash, pageIds: manifest.pageIds.join(",") } });
+    return { site, publication: toThemePublication(publicationRecord), publishedVersion };
+  }, { timeout: 120000 });
+  clearStorefrontContextCache(siteId);
+  return result;
 }
 
 export async function restoreDraftThemeFromPublicationRelational(
@@ -1356,6 +1459,20 @@ export async function restoreDraftThemeFromPublicationRelational(
       }
     });
     site.themeSettings.draftJson = cloneJson(publication.snapshot.themeSettings);
+    if (publication.snapshot.storefrontProfile) {
+      await tx.storefrontProfile.upsert({
+        where: { siteId },
+        create: {
+          id: `profile_${siteId}`,
+          siteId,
+          draftJson: cloneJson(publication.snapshot.storefrontProfile) as unknown as Prisma.InputJsonValue,
+          publishedJson: cloneJson(site.storefrontProfile?.publishedJson ?? publication.snapshot.storefrontProfile) as unknown as Prisma.InputJsonValue,
+          draftMeta: makeThemeDraftMeta(site.themeSettings) as unknown as Prisma.InputJsonValue
+        },
+        update: { draftJson: cloneJson(publication.snapshot.storefrontProfile) as unknown as Prisma.InputJsonValue }
+      });
+      if (site.storefrontProfile) site.storefrontProfile.draftJson = cloneJson(publication.snapshot.storefrontProfile);
+    }
 
     const draftTheme = await tx.siteTheme.findFirst({ where: { siteId, status: "draft" }, orderBy: { updatedAt: "desc" } });
     if (draftTheme && publication.snapshot.saasTheme && typeof publication.snapshot.saasTheme === "object") {
@@ -1480,65 +1597,7 @@ export async function activateSiteThemeRelational(params: {
   themeId: string;
   actor?: string;
 }): Promise<{ theme: SiteTheme; publication: ThemePublication }> {
-  clearSiteThemeReadCache(params.siteId);
-  return prisma.$transaction(async (tx) => {
-    const siteRecord = await getSiteWithThemeRecords(tx, params.siteId);
-    const site = toSite(siteRecord);
-    const theme = await tx.siteTheme.findFirst({ where: { siteId: params.siteId, id: params.themeId } });
-    if (!theme) throw new RelationalStoreError("theme_not_found", 404);
-    const currentMax = await tx.themePublication.aggregate({
-      where: { siteId: params.siteId },
-      _max: { version: true }
-    });
-    const version = (currentMax._max.version ?? 0) + 1;
-    await tx.siteTheme.updateMany({ where: { siteId: params.siteId, status: "active" }, data: { status: "draft" } });
-    const activeThemeRecord = await tx.siteTheme.update({ where: { id: theme.id }, data: { status: "active" } });
-    for (const page of site.pages) {
-      const publishedJson = cloneJson(page.draftJson);
-      publishedJson.version = version;
-      await tx.themePage.update({
-        where: { id: page.id },
-        data: { publishedJson: publishedJson as unknown as Prisma.InputJsonValue }
-      });
-      page.publishedJson = publishedJson;
-    }
-    await tx.themeSettings.upsert({
-      where: { siteId: params.siteId },
-      create: {
-        id: `settings_${params.siteId}`,
-        siteId: params.siteId,
-        draftJson: themeSettingsDraftJsonWithMeta(site.themeSettings),
-        publishedJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue
-      },
-      update: { publishedJson: cloneJson(site.themeSettings.draftJson) as unknown as Prisma.InputJsonValue }
-    });
-    site.themeSettings.publishedJson = cloneJson(site.themeSettings.draftJson);
-    const activeTheme = toSiteTheme(activeThemeRecord);
-    const snapshot = buildPublicationSnapshot(site, activeTheme);
-    const snapshotStats = buildPublicationSnapshotStats(snapshot);
-    const publicationRecord = await tx.themePublication.create({
-      data: {
-        id: `pub_${params.siteId}_${Date.now().toString(36)}`,
-        siteId: params.siteId,
-        version,
-        snapshot: snapshot as unknown as Prisma.InputJsonValue,
-        pageCount: snapshotStats.pageCount,
-        sectionCount: snapshotStats.sectionCount,
-        snapshotBytes: snapshotStats.snapshotBytes,
-        publishedBy: params.actor ?? "site_admin_demo"
-      } as unknown as Prisma.ThemePublicationUncheckedCreateInput
-    });
-    await addAuditLogRelational(tx, {
-      siteId: params.siteId,
-      actorType: "site_admin",
-      actorId: params.actor ?? "site_admin_demo",
-      action: "theme_activated",
-      targetType: "site_theme",
-      targetId: activeTheme.id,
-      metadata: { version, themeKey: activeTheme.themeKey }
-    });
-    return { theme: activeTheme, publication: toThemePublication(publicationRecord) };
-  }, { timeout: 20000 });
+  throw new RelationalStoreError("theme_activation_requires_full_publish_manifest", 409);
 }
 
 export async function deleteSiteThemeRelational(params: {

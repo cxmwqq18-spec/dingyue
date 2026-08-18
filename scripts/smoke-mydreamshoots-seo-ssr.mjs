@@ -130,6 +130,7 @@ const talkingPhotoGeneration = await fetchHtml("/ai-video-generation/talking-pho
 const storyVideoGeneration = await fetchHtml("/ai-video-generation/story-video");
 const memeVideoGeneration = await fetchHtml("/ai-video-generation/meme-video");
 const productVideoGeneration = await fetchHtml("/ai-video-generation/product-video");
+const productAdVideoGeneration = await fetchHtml("/ai-video-generation/product-ad-video");
 const workflow = await fetchHtml("/workflow");
 const faq = await fetchHtml("/faq");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
@@ -161,12 +162,14 @@ const talkingPhotoGenerationGraph = graphNodes(talkingPhotoGeneration);
 const storyVideoGenerationGraph = graphNodes(storyVideoGeneration);
 const memeVideoGenerationGraph = graphNodes(memeVideoGeneration);
 const productVideoGenerationGraph = graphNodes(productVideoGeneration);
+const productAdVideoGenerationGraph = graphNodes(productAdVideoGeneration);
 const homepageVideos = homepageGraph.filter((node) => node?.["@type"] === "VideoObject");
 const collectionProducts = collectionGraph.filter((node) => node?.["@type"] === "Product");
 const talkingPhotoGenerationProducts = talkingPhotoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const storyVideoGenerationProducts = storyVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const memeVideoGenerationProducts = memeVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const productVideoGenerationProducts = productVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
+const productAdVideoGenerationProducts = productAdVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const collectionProduct = collectionProducts[0];
 const collectionOffer = collectionProduct?.offers;
 const forbiddenLoadingCopy = [
@@ -194,6 +197,7 @@ const publicHtmlPages = {
   storyVideoGeneration,
   memeVideoGeneration,
   productVideoGeneration,
+  productAdVideoGeneration,
   workflow,
   faq
 };
@@ -226,7 +230,7 @@ for (const [pathname, html] of Object.entries(focusCollections)) {
     assert.ok(normalizedHtml.includes(needle), `${pathname} must contain topic-specific SEO copy: ${needle}`);
   }
 }
-assert.ok(pricing.includes("Starter") && (pricing.includes("$24.50") || pricing.includes("24.50")), "pricing HTML must contain real plan content");
+assert.ok(pricing.includes("Starter") && !pricing.includes(["$", "24.50"].join("")), "pricing HTML must contain plan content without a hardcoded legacy price");
 const homepageForbiddenCopy = [
   "Upload selfies and create your own AI model",
   "100% money-back guarantee",
@@ -256,10 +260,12 @@ assert.match(talkingPhotoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-vide
 assert.match(storyVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/story-video/, "Story Video detail SSR must expose the canonical AI Video Generation URL");
 assert.match(memeVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/meme-video/, "Meme Video detail SSR must expose the canonical AI Video Generation URL");
 assert.match(productVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/product-video/, "Product Video detail SSR must expose the canonical AI Video Generation URL");
+assert.match(productAdVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/product-ad-video/, "Product Ad Video detail SSR must expose the canonical AI Video Generation URL");
 assert.ok(talkingPhotoGeneration.includes("/app/create#step-video") || talkingPhotoGeneration.includes("/app/create"), "Talking Photo CTA must point into the video workspace");
 assert.ok(storyVideoGeneration.includes("/app/create#step-video") || storyVideoGeneration.includes("/app/create"), "Story Video CTA must point into the video workspace");
 assert.ok(memeVideoGeneration.includes("/app/create") && memeVideoGeneration.includes("videoMode=meme-video"), "Meme Video CTA must point into the video workspace with its topic mode");
 assert.ok(productVideoGeneration.includes("/app/create") && productVideoGeneration.includes("videoMode=product-video"), "Product Video CTA must point into the video workspace with its topic mode");
+assert.ok(productAdVideoGeneration.includes("/app/create") && productAdVideoGeneration.includes("videoMode=product-ad-video"), "Product Ad Video CTA must point into the video workspace with its topic mode");
 for (const [pageName, html] of Object.entries({ storyVideoGeneration, memeVideoGeneration, productVideoGeneration })) {
   for (const copy of ["what to prepare", "Credits held before creation", "Upload source images"]) {
     assert.equal(html.includes(copy), false, `${pageName} must not render the generic ai_tool_entry hero copy: ${copy}`);
@@ -269,6 +275,7 @@ assert.ok(talkingPhotoGenerationProducts.length >= 1, "Talking Photo detail SSR 
 assert.ok(storyVideoGenerationProducts.length >= 1, "Story Video detail SSR must expose product or service JSON-LD");
 assert.ok(memeVideoGenerationProducts.length >= 1, "Meme Video detail SSR must expose product or service JSON-LD");
 assert.ok(productVideoGenerationProducts.length >= 1, "Product Video detail SSR must expose product or service JSON-LD");
+assert.ok(productAdVideoGenerationProducts.length >= 1, "Product Ad Video detail SSR must expose product or service JSON-LD");
 assert.equal(collectionProducts.length, 1, "collection SSR must contain one Product node");
 assert.ok(Array.isArray(collectionProduct?.image) && collectionProduct.image.length === 8, "collection Product must contain cover plus gallery image URLs");
 assert.equal(new Set(collectionProduct.image).size, collectionProduct.image.length, "collection Product image URLs must be unique");
@@ -296,6 +303,7 @@ assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/ta
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/story-video"), "sitemap must contain the canonical Story Video URL");
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/meme-video"), "sitemap must contain the canonical Meme Video URL");
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/product-video"), "sitemap must contain the canonical Product Video URL");
+assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/product-ad-video"), "sitemap must contain the canonical Product Ad Video URL");
 for (const forbidden of ["/collections/headshots", "/ai-photoshoot", "/tools/image-to-video", "/ai-video-generation/text-to-video", "/ai-video-generation/image-to-video"]) {
   assert.equal(sitemap.includes(`https://www.mydreamshoots.com${forbidden}`), false, `sitemap must not contain ${forbidden}`);
 }
@@ -313,7 +321,7 @@ for (const hiddenStatus of hiddenVideoStatuses) {
 
 console.log(JSON.stringify({
   ok: true,
-  pages: ["/", "/pricing", "/ai-image-generation/headshot", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/meme-video", "/ai-video-generation/product-video", "/workflow", "/faq"],
+  pages: ["/", "/pricing", "/ai-image-generation/headshot", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/meme-video", "/ai-video-generation/product-video", "/ai-video-generation/product-ad-video", "/workflow", "/faq"],
   legacy404s: legacyCollectionStatuses.map(({ pathname, status }) => ({ pathname, status })),
   legacyToolRedirects: legacyToolRedirectStatuses.map(({ pathname, status, headers }) => ({ pathname, status, location: headers?.location })),
   hiddenVideo404s: hiddenVideoStatuses.map(({ pathname, status }) => ({ pathname, status })),
@@ -323,6 +331,7 @@ console.log(JSON.stringify({
   storyVideoGenerationSchemaObjects: storyVideoGenerationProducts.length,
   memeVideoGenerationSchemaObjects: memeVideoGenerationProducts.length,
   productVideoGenerationSchemaObjects: productVideoGenerationProducts.length,
+  productAdVideoGenerationSchemaObjects: productAdVideoGenerationProducts.length,
   collectionProductObjects: collectionProducts.length,
   collectionOfferPrice: collectionOffer.price
 }, null, 2));

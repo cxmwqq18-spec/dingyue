@@ -77,6 +77,12 @@ const categoriesBySiteId = {
       label: "Product Video",
       description: "Turn product photos into clear video directions that answer buyer questions about scale, detail, use, features, and packaging.",
       sortOrder: 110
+    },
+    {
+      slug: "product-ad-video",
+      label: "Product Ad Video",
+      description: "Build product ads around one audience, product promise, visual proof, offer, and clear next action.",
+      sortOrder: 120
     }
   ],
   site_grownstride_test: baseCategories

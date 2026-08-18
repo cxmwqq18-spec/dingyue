@@ -2648,7 +2648,7 @@ function patchPageJson(pageJson, slug, spec) {
         ? "Sube fotos claras una vez y crea retratos profesionales, retratos de pareja, carteles, belleza, perfiles y albumes privados. Veras el coste en creditos antes de generar."
         : "Elige un destino, una luz y un ambiente; sube tus fotos y recibe albumes privados de retratos cinematicos con creditos visibles.",
       heroBadge: my ? "Estudio de paquetes de fotos IA" : "Estudio de retratos de viaje IA",
-      authRibbon: "Planes desde $24.50/mes",
+      authRibbon: "Planes desde {LIVE_LOWEST_ACTIVE_PLAN_PRICE}",
       authPrimaryLabel: "Continuar con email",
       authEmailPlaceholder: "Correo electronico",
       authButtonLabel: my ? "Crear mi primer set con email" : "Crear mi primer album con email",

@@ -1,18 +1,30 @@
+"use client";
+
+import { useServerInsertedHTML } from "next/navigation";
+import { useRef } from "react";
+
 import type { JsonLdNode } from "@/lib/theme/json-ld";
 
 export function StorefrontJsonLd({ nodes }: { nodes: JsonLdNode[] }) {
-  const html = nodes
-    .map((node, index) => {
-      const json = JSON.stringify(node).replace(/</g, "\\u003c");
-      return `<script id="storefront-json-ld-${index}" type="application/ld+json">${json}</script>`;
-    })
-    .join("");
-
-  return (
-    <div
-      data-storefront-json-ld=""
-      dangerouslySetInnerHTML={{ __html: html }}
-      suppressHydrationWarning
-    />
-  );
+  const inserted = useRef(false);
+  useServerInsertedHTML(() => (
+    inserted.current
+      ? null
+      : (() => {
+          inserted.current = true;
+          return (
+            <>
+              {nodes.map((node, index) => (
+                <script
+                  dangerouslySetInnerHTML={{ __html: JSON.stringify(node).replace(/</g, "\\u003c") }}
+                  id={`storefront-json-ld-${index}`}
+                  key={index}
+                  type="application/ld+json"
+                />
+              ))}
+            </>
+          );
+        })()
+  ));
+  return null;
 }

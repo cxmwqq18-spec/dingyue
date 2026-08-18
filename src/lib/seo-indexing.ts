@@ -12,13 +12,17 @@ import {
 } from "@/lib/photo-package-taxonomy";
 import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
-import { getAidreamcapesPolicySeo, getMydreamshootsPolicySeo } from "@/lib/theme/policy-seo";
+import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import type { CreativePack, PlatformState, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
 export const MYDREAMSHOOTS_SITEMAP_URL = `${MYDREAMSHOOTS_ORIGIN}/sitemap.xml`;
 export const AIDREAMCAPES_ORIGIN = "https://www.aidreamcapes.com";
 export const AIDREAMCAPES_SITEMAP_URL = `${AIDREAMCAPES_ORIGIN}/sitemap.xml`;
+export const AIDREAMSHOOTS_EU_ORIGIN = "https://aidreamshoots.eu";
+export const AIDREAMSHOOTS_EU_SITEMAP_URL = `${AIDREAMSHOOTS_EU_ORIGIN}/sitemap.xml`;
+export const AIDREAMCAPES_EU_ORIGIN = "https://aidreamcapes.eu";
+export const AIDREAMCAPES_EU_SITEMAP_URL = `${AIDREAMCAPES_EU_ORIGIN}/sitemap.xml`;
 
 const DREAMSHOOT_SITE_ID = "site_dreamshoot";
 const DREAMSHOOT_SITE_SLUGS = new Set(["mydreamshoots", "dreamshoot"]);
@@ -160,6 +164,8 @@ const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/ref
 const SITEMAP_STATIC_FALLBACK_LASTMOD = "2026-08-01T00:00:00.000Z";
 const DREAMSHOOT_FALLBACK_SITE = { id: DREAMSHOOT_SITE_ID, slug: "mydreamshoots", name: "MyDreamShoots", primaryDomain: "www.mydreamshoots.com" } as Site;
 const AIDREAMCAPES_FALLBACK_SITE = { id: AIDREAMCAPES_SITE_ID, slug: "aidreamcapes", name: "Aidreamcapes", primaryDomain: "www.aidreamcapes.com" } as Site;
+const AIDREAMSHOOTS_EU_FALLBACK_SITE = { id: "site_mydreamshoots_xby", slug: "aidreamshoots", name: "AIdreamshoots", primaryDomain: "aidreamshoots.eu" } as Site;
+const AIDREAMCAPES_EU_FALLBACK_SITE = { id: "site_aidreamcapes_xby", slug: "aidreamcapes-eu", name: "Aidreamcapes.eu", primaryDomain: "aidreamcapes.eu" } as Site;
 const CANONICAL_PUBLIC_PATHS = new Map([
   ["/about", "/about-us"],
   ["/contact", "/contact-us"],
@@ -633,11 +639,10 @@ function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): Sitem
 
 function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   if (page.siteId !== site.id) return "";
-  const pageSeo = site.themeSettings.publishedJson.seo?.pages?.[page.id];
-  const policySeo = policySeoForSite(site, page.slug);
-  const canonicalPath = canonicalPublicPath(normalizePath(policySeo?.canonicalPath ?? pageSeo?.canonicalPath ?? page.slug));
+  const pageSeo = page.publishedJson.seo;
+  const canonicalPath = canonicalPublicPath(normalizePath(pageSeo?.canonical ?? pageSeo?.canonicalPath ?? page.slug));
   const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug));
-  return isIndexablePage(page) && !isLegacyDuplicate && !isBlockedPublicPathForSite(site, canonicalPath) && pageSeo?.index !== false && policySeo?.index !== false
+  return isIndexablePage(page) && !isLegacyDuplicate && !isBlockedPublicPathForSite(site, canonicalPath) && pageSeo?.robots?.index !== false && pageSeo?.index !== false
     ? canonicalDirectoryPathForSite(site, canonicalPath)
     : "";
 }
@@ -823,11 +828,10 @@ function pageSeoForPath(site: Site, path: string) {
   const normalized = canonicalPublicPath(normalizePath(path));
   return pagesForSite(site)
     .map((page) => {
-      const pageSeo = site.themeSettings.publishedJson.seo?.pages?.[page.id] ?? site.themeSettings.publishedJson.seo?.pages?.[page.slug];
       const jsonSeo = page.publishedJson.seo;
-      const canonicalPath = canonicalPublicPath(normalizePath(pageSeo?.canonicalPath ?? jsonSeo?.canonical ?? jsonSeo?.canonicalPath ?? page.slug));
+      const canonicalPath = canonicalPublicPath(normalizePath(jsonSeo?.canonical ?? jsonSeo?.canonicalPath ?? page.slug));
       return canonicalDirectoryPathForSite(site, canonicalPath) === canonicalDirectoryPathForSite(site, normalized)
-        ? { page, pageSeo, jsonSeo }
+        ? { page, jsonSeo }
         : undefined;
     })
     .find((item): item is NonNullable<typeof item> => Boolean(item));
@@ -837,13 +841,10 @@ function isSitemapIndexablePath(site: Site, path: string): boolean {
   const normalized = canonicalDirectoryPathForSite(site, canonicalPublicPath(normalizePath(path)));
   if (isBlockedPublicPathForSite(site, normalized)) return false;
 
-  const policySeo = policySeoForSite(site, normalized);
-  if (policySeo?.index === false) return false;
-
   const pageMatch = pageSeoForPath(site, normalized);
   if (pageMatch) {
     if (!isIndexablePage(pageMatch.page)) return false;
-    if (pageMatch.jsonSeo?.robots?.index === false || pageMatch.jsonSeo?.index === false || pageMatch.pageSeo?.index === false) return false;
+    if (pageMatch.jsonSeo?.robots?.index === false || pageMatch.jsonSeo?.index === false) return false;
   }
 
   return isIndexableSeoDirectoryPath(site, normalized);
@@ -916,7 +917,11 @@ function isHostForSite(site: Site, host: string): boolean {
     (normalizedHost === "www.mydreamshoots.com" && isDreamshootSite(site)) ||
     (normalizedHost === "mydreamshoots.com" && isDreamshootSite(site)) ||
     (normalizedHost === "www.aidreamcapes.com" && isAidreamcapesSite(site)) ||
-    (normalizedHost === "aidreamcapes.com" && isAidreamcapesSite(site));
+    (normalizedHost === "aidreamcapes.com" && isAidreamcapesSite(site)) ||
+    (normalizedHost === "aidreamshoots.eu" && site.id === "site_mydreamshoots_xby") ||
+    (normalizedHost === "www.aidreamshoots.eu" && site.id === "site_mydreamshoots_xby") ||
+    (normalizedHost === "aidreamcapes.eu" && site.id === "site_aidreamcapes_xby") ||
+    (normalizedHost === "www.aidreamcapes.eu" && site.id === "site_aidreamcapes_xby");
 }
 
 function isMydreamshootsHost(host: string): boolean {
@@ -935,17 +940,16 @@ function isAidreamcapesHost(host: string): boolean {
   return host === "www.aidreamcapes.com" || host === "aidreamcapes.com";
 }
 
-function mydreamshootsPolicySeoForSite(site: Site, slug: string) {
-  return isDreamshootSite(site) ? getMydreamshootsPolicySeo(slug) : undefined;
+function isAidreamshootsEuHost(host: string): boolean {
+  return host === "www.aidreamshoots.eu" || host === "aidreamshoots.eu";
 }
 
-function policySeoForSite(site: Site, slug: string) {
-  if (isAidreamcapesSite(site)) return getAidreamcapesPolicySeo(slug);
-  return mydreamshootsPolicySeoForSite(site, slug);
+function isAidreamcapesEuHost(host: string): boolean {
+  return host === "www.aidreamcapes.eu" || host === "aidreamcapes.eu";
 }
 
 function findIndexableSites(state: PlatformState): Site[] {
-  const candidates = state.sites.filter((site) => isDreamshootSite(site) || isAidreamcapesSite(site));
+  const candidates = state.sites.filter((site) => isDreamshootSite(site) || isAidreamcapesSite(site) || isSpanishStorefrontSite(site));
   const activeFirst = [...candidates].sort((a, b) => Number(b.status === "active") - Number(a.status === "active"));
   return Array.from(new Map(activeFirst.map((site) => [site.id, site])).values());
 }
@@ -1164,9 +1168,9 @@ function getSitemapUrlsForSite(state: PlatformState, site: Site): string[] {
   }
 
   for (const path of REQUIRED_INDEXABLE_POLICY_PATHS) {
-    const policySeo = policySeoForSite(site, path);
-    if (!policySeo || policySeo.index === false) continue;
-    if (isDreamshootSite(site) || isAidreamcapesSite(site)) paths.push(policySeo.canonicalPath);
+    const page = pagesForSite(site).find((candidate) => canonicalPublicPath(normalizePath(candidate.slug)) === canonicalPublicPath(normalizePath(path)));
+    if (!page || page.publishedJson.seo?.robots?.index === false || page.publishedJson.seo?.index === false) continue;
+    if (isDreamshootSite(site) || isAidreamcapesSite(site)) paths.push(page.publishedJson.seo?.canonical ?? page.publishedJson.seo?.canonicalPath ?? page.slug);
   }
 
   return Array.from(
@@ -1235,6 +1239,8 @@ function fallbackUrlsForSite(site: Site, basePaths: string[]): string[] {
 }
 
 function publicFallbackSitemapUrlsForHost(hosts: string[]): string[] {
+  if (hosts.some(isAidreamshootsEuHost)) return fallbackUrlsForSite(AIDREAMSHOOTS_EU_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
+  if (hosts.some(isAidreamcapesEuHost)) return fallbackUrlsForSite(AIDREAMCAPES_EU_FALLBACK_SITE, AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS);
   if (hosts.some(isAidreamcapesHost)) return fallbackUrlsForSite(AIDREAMCAPES_FALLBACK_SITE, AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS);
   if (hosts.some(isMydreamshootsHost)) return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
   if (hosts.some(isLocalDevelopmentHost)) {
@@ -1243,7 +1249,7 @@ function publicFallbackSitemapUrlsForHost(hosts: string[]): string[] {
       ...fallbackUrlsForSite(AIDREAMCAPES_FALLBACK_SITE, AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS)
     ];
   }
-  return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
+  return [];
 }
 
 export async function getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>): Promise<string[]> {
@@ -1255,7 +1261,7 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
   const normalizedHosts = normalizeHostCandidates(hosts);
   const normalizedHost = normalizedHosts[0] ?? "";
   if (!normalizedHost) {
-    return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS).map(sitemapFallbackEntry);
+    return [];
   }
   const publicHostCandidates = normalizedHosts.filter((host) => !isLocalDevelopmentHost(host));
   const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
@@ -1271,14 +1277,18 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
     getSiteByHostCandidatesFromState(runtime.state, siteHostCandidates) ??
     runtime.sites.find((item) => siteHostCandidates.some((host) => isHostForSite(item, host)));
   if (site) return sitemapEntriesForSite(runtime.state, site);
+  if (siteHostCandidates.some(isAidreamshootsEuHost)) return fallbackUrlsForSite(AIDREAMSHOOTS_EU_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS).map(sitemapFallbackEntry);
+  if (siteHostCandidates.some(isAidreamcapesEuHost)) return fallbackUrlsForSite(AIDREAMCAPES_EU_FALLBACK_SITE, AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS).map(sitemapFallbackEntry);
   if (siteHostCandidates.some(isAidreamcapesHost)) return (await getAidreamcapesSitemapUrls()).map(sitemapFallbackEntry);
   if (siteHostCandidates.some(isMydreamshootsHost)) return (await getMydreamshootsSitemapUrls()).map(sitemapFallbackEntry);
-  return runtime.sites.flatMap((item) => sitemapEntriesForSite(runtime.state, item));
+  return [];
 }
 
 export function storefrontSitemapUrlForHost(hosts: string | null | undefined | Array<string | null | undefined>): string | undefined {
   const normalizedHost = normalizeFirstHost(hosts);
   if (isGrownstrideHost(normalizedHost)) return undefined;
+  if (isAidreamshootsEuHost(normalizedHost)) return AIDREAMSHOOTS_EU_SITEMAP_URL;
+  if (isAidreamcapesEuHost(normalizedHost)) return AIDREAMCAPES_EU_SITEMAP_URL;
   if (isAidreamcapesHost(normalizedHost)) return AIDREAMCAPES_SITEMAP_URL;
   if (isMydreamshootsHost(normalizedHost)) return MYDREAMSHOOTS_SITEMAP_URL;
   return undefined;

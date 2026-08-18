@@ -34,7 +34,6 @@ import {
 } from "./theme/packages/wedding-story-house";
 import { dreamshootAiStudioSiteSettings, dreamshootAiStudioTemplates } from "./theme/packages/dreamshoot-ai-studio";
 import { canonicalSiteSlug, legacySiteSlugCandidates } from "./domain-routing";
-import { getMydreamshootsPolicySeo } from "./theme/policy-seo";
 import type { ThemePackageTemplateKey } from "./theme/packages/types";
 
 function cloneSeed<T>(value: T): T {
@@ -250,10 +249,10 @@ function buildWeddingThemeSettings(): ThemeSettings {
     next.seo = {
       siteTitle: themeSettings.seo.siteTitle ?? weddingSiteName,
       siteDescription: themeSettings.seo.siteDescription ?? weddingSiteDescription,
+      siteKeywords: themeSettings.seo.siteKeywords,
       titleTemplate: themeSettings.seo.titleTemplate ?? `%s | ${weddingSiteName}`,
       defaultOgImage: themeSettings.seo.defaultOgImage,
-      robots: { index: true, follow: true },
-      pages: {}
+      robots: { index: true, follow: true }
     };
   }
 
@@ -347,9 +346,9 @@ const _dreamShootHomeSections = {
     subtitle: "World Cup, gala, travel, headshot, beauty, try-on, creator, and editorial packs give customers clear outcomes to choose from.",
     source: "creative_packs"
   }, [
-    { id: "marquee_headshots", type: "package", settings: { title: "Professional Headshots", description: "Founder, LinkedIn, resume, and profile-ready portraits.", meta: "Private gallery", credits: "20 credits", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/headshot" } },
-    { id: "marquee_worldcup", type: "package", settings: { title: "World Cup Fan Photos", description: "Stadium meet-ups, fan posters, and sports profile visuals.", meta: "Private gallery", credits: "26 credits", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/world-cup-fan-photos" } },
-    { id: "marquee_gala", type: "package", settings: { title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "Private gallery", credits: "24 credits", imageUrl: "/assets/dreamshoot/frames/sample-gala.png", href: "/tools/gala-photo" } }
+    { id: "marquee_headshots", type: "package", settings: { title: "Professional Headshots", description: "Founder, LinkedIn, resume, and profile-ready portraits.", meta: "Private gallery", credits: "", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/headshot" } },
+    { id: "marquee_worldcup", type: "package", settings: { title: "World Cup Fan Photos", description: "Stadium meet-ups, fan posters, and sports profile visuals.", meta: "Private gallery", credits: "", imageUrl: "/assets/dreamshoot/generated/20260619/world-cup-fan-star-clean-v1.png", href: "/tools/world-cup-fan-photos" } },
+    { id: "marquee_gala", type: "package", settings: { title: "Gala Photos", description: "Formal night-out scenes and editorial lighting.", meta: "Private gallery", credits: "", imageUrl: "/assets/dreamshoot/frames/sample-gala.png", href: "/tools/gala-photo" } }
   ]),
   launcher_1: section("ai_feature_launcher", {
     anchor: "features",
@@ -883,10 +882,14 @@ const notFoundJson: ThemePageJson = {
   }
 };
 
+function policyPageSeo(title: string, description: string, canonicalPath: string): ThemePageJson["seo"] {
+  return { title, description, canonicalPath, robots: { index: true, follow: true } };
+}
+
 const privacyJson: ThemePageJson = {
   pageType: "policy",
   version: 1,
-  seo: getMydreamshootsPolicySeo("/privacy"),
+  seo: policyPageSeo("Privacy Policy | myDreamshoots", "How myDreamshoots handles account information, source photos, generated results, billing records, and privacy requests.", "/privacy"),
   sectionsOrder: ["header_1", "policy_1", "footer_1"],
   sections: {
     header_1: section("rich_text", {
@@ -896,9 +899,9 @@ const privacyJson: ThemePageJson = {
     }),
     policy_1: section("policy_content", {
       title: "Privacy policy",
-      lastUpdated: "June 25, 2026",
-      contactEmail: "support@mydreamshoots.com",
-      body: "<h3>1. Scope of this policy</h3><p>This Privacy Policy explains how MyDreamShoots handles information when customers visit www.mydreamshoots.com, create an account, upload source photos, buy credits or subscriptions, use AI photo packages, open private albums, contact support, or use connected checkout and generation tools.</p><h3>2. Information we collect</h3><p>We collect account information such as your email address, authentication method, session records, customer profile details, support messages, and communication preferences. We also process uploaded source photos, reference images, package selections, prompts or style choices you submit, generated previews, delivered images, albums, order records, subscription status, credit ledger events, checkout references, device signals, browser type, approximate request metadata, and security logs.</p><h3>3. How we use information</h3><p>MyDreamShoots uses this information to operate customer accounts, generate requested AI photo results, reserve and settle credits, deliver private albums, process checkout, detect failed jobs, provide customer support, secure the service, prevent misuse, improve reliability, test new package workflows, and show the correct pages after you sign in.</p><h3>4. Uploaded photos and generated images</h3><p>Your uploads and generated results are treated as private customer assets. They are connected to your signed-in account and are not sold as stock images, published in public galleries, or transferred to unrelated storefronts by default. You decide whether to download, share, or reuse your delivered images. We may temporarily process uploads and outputs with infrastructure or AI providers only to complete the service you requested.</p><h3>5. Payments, credits, and checkout records</h3><p>Payments may be processed by Stripe or another connected payment provider. MyDreamShoots stores order IDs, checkout status, plan names, credit purchases, credit reservations, refunds, reversals, and subscription events so your account balance remains accurate. We do not store full card numbers on our own servers.</p><h3>6. Cookies and similar technology</h3><p>We use cookies, local storage, and similar tools for sign-in, session security, CSRF protection, checkout continuity, preference memory, rate limiting, diagnostics, and limited analytics. See the <a href=\"/cookies\">Cookie Policy</a> for more detail.</p><h3>7. Service providers</h3><p>We may use hosting, database, storage, email, analytics, payment, moderation, and AI infrastructure providers. These providers may process limited customer data only for the purpose of running, securing, generating, storing, or delivering the MyDreamShoots service.</p><h3>8. Retention and deletion</h3><p>Uploads, generated results, albums, order records, and credit history may remain available while your account is active so you can revisit past work. You may request deletion of uploaded or generated photos. Some billing, fraud-prevention, tax, security, dispute, and account integrity records may be retained where required or reasonably necessary.</p><h3>9. Your choices</h3><p>You may contact us to request access, correction, export, deletion, or help with account privacy. We may need to verify your identity or account ownership before acting on sensitive requests. Browser controls may also let you manage cookies and local storage.</p><h3>10. Security</h3><p>We use account-scoped sessions, private customer routes, access checks, security cookies, and operational monitoring to reduce unauthorized access. No online service can guarantee perfect security, so customers should protect their login method and contact us quickly if they suspect unauthorized account use.</p><h3>11. Children</h3><p>MyDreamShoots is not intended for children under the age required to consent to online services in their location. Customers should not upload photos of minors unless they have the legal right and consent to do so.</p><h3>12. Changes and contact</h3><p>We may update this policy as features, providers, or legal requirements change. Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for privacy, account, deletion, or data-use questions.</p>",
+      lastUpdated: "{LIVE_POLICY_EFFECTIVE_DATE}",
+      contactEmail: "{LIVE_SUPPORT_EMAIL}",
+      body: "<h3>1. Scope of this policy</h3><p>This Privacy Policy explains how MyDreamShoots handles information when customers visit www.mydreamshoots.com, create an account, upload source photos, buy credits or subscriptions, use AI photo packages, open private albums, contact support, or use connected checkout and generation tools.</p><h3>2. Information we collect</h3><p>We collect account information such as your email address, authentication method, session records, customer profile details, support messages, and communication preferences. We also process uploaded source photos, reference images, package selections, prompts or style choices you submit, generated previews, delivered images, albums, order records, subscription status, credit ledger events, checkout references, device signals, browser type, approximate request metadata, and security logs.</p><h3>3. How we use information</h3><p>MyDreamShoots uses this information to operate customer accounts, generate requested AI photo results, reserve and settle credits, deliver private albums, process checkout, detect failed jobs, provide customer support, secure the service, prevent misuse, improve reliability, test new package workflows, and show the correct pages after you sign in.</p><h3>4. Uploaded photos and generated images</h3><p>Your uploads and generated results are treated as private customer assets. They are connected to your signed-in account and are not sold as stock images, published in public galleries, or transferred to unrelated storefronts by default. You decide whether to download, share, or reuse your delivered images. We may temporarily process uploads and outputs with infrastructure or AI providers only to complete the service you requested.</p><h3>5. Payments, credits, and checkout records</h3><p>Payments may be processed by Stripe or another connected payment provider. MyDreamShoots stores order IDs, checkout status, plan names, credit purchases, credit reservations, refunds, reversals, and subscription events so your account balance remains accurate. We do not store full card numbers on our own servers.</p><h3>6. Cookies and similar technology</h3><p>We use cookies, local storage, and similar tools for sign-in, session security, CSRF protection, checkout continuity, preference memory, rate limiting, diagnostics, and limited analytics. See the <a href=\"/cookies\">Cookie Policy</a> for more detail.</p><h3>7. Service providers</h3><p>We may use hosting, database, storage, email, analytics, payment, moderation, and AI infrastructure providers. These providers may process limited customer data only for the purpose of running, securing, generating, storing, or delivering the MyDreamShoots service.</p><h3>8. Retention and deletion</h3><p>Uploads, generated results, albums, order records, and credit history may remain available while your account is active so you can revisit past work. You may request deletion of uploaded or generated photos. Some billing, fraud-prevention, tax, security, dispute, and account integrity records may be retained where required or reasonably necessary.</p><h3>9. Your choices</h3><p>You may contact us to request access, correction, export, deletion, or help with account privacy. We may need to verify your identity or account ownership before acting on sensitive requests. Browser controls may also let you manage cookies and local storage.</p><h3>10. Security</h3><p>We use account-scoped sessions, private customer routes, access checks, security cookies, and operational monitoring to reduce unauthorized access. No online service can guarantee perfect security, so customers should protect their login method and contact us quickly if they suspect unauthorized account use.</p><h3>11. Children</h3><p>MyDreamShoots is not intended for children under the age required to consent to online services in their location. Customers should not upload photos of minors unless they have the legal right and consent to do so.</p><h3>12. Changes and contact</h3><p>We may update this policy as features, providers, or legal requirements change. Email <a href=\"mailto:{LIVE_SUPPORT_EMAIL}\">{LIVE_SUPPORT_EMAIL}</a> for privacy, account, deletion, or data-use questions.</p>",
       sections: "privacy"
     }),
     footer_1: section("footer", {
@@ -911,7 +914,7 @@ const privacyJson: ThemePageJson = {
 const cookiePolicyJson: ThemePageJson = {
   pageType: "policy",
   version: 1,
-  seo: getMydreamshootsPolicySeo("/cookies"),
+  seo: policyPageSeo("Cookie Policy | myDreamshoots", "How myDreamshoots uses essential browser storage for sign-in, checkout continuity, security, preferences, and private galleries.", "/cookies"),
   sectionsOrder: ["header_1", "policy_1", "footer_1"],
   sections: {
     header_1: section("rich_text", {
@@ -921,9 +924,9 @@ const cookiePolicyJson: ThemePageJson = {
     }),
     policy_1: section("policy_content", {
       title: "Cookie policy",
-      lastUpdated: "June 25, 2026",
-      contactEmail: "support@mydreamshoots.com",
-      body: "<h3>1. What cookies are</h3><p>Cookies are small files stored by your browser. MyDreamShoots also uses similar browser storage, such as local storage, to keep the AI photo service secure, usable, and consistent while you move between packages, checkout, your account, and private albums.</p><h3>2. Essential cookies</h3><p>Essential cookies support customer sign-in, scoped sessions, CSRF protection, checkout continuity, credit reservation flows, private album access, rate limiting, fraud prevention, and secure admin or customer authentication. These cookies are required for the core service and cannot be switched off inside the site without breaking key features.</p><h3>3. Preference storage</h3><p>We may remember practical preferences such as menu state, recently opened workspace views, selected package context, language or display choices if available, and browser-side UI settings. This helps MyDreamShoots open the right customer workspace more quickly.</p><h3>4. Performance and diagnostics</h3><p>We may collect limited technical signals to understand slow pages, failed requests, broken checkout steps, job submission errors, and account access issues. These signals help us improve route speed, generation reliability, and customer support.</p><h3>5. Analytics and measurement</h3><p>If analytics tools are enabled, they may help us understand aggregated usage such as popular package categories, tool discovery, pricing page visits, and conversion paths. Analytics should not be used to sell your uploaded photos or generated images.</p><h3>6. Payment, email, hosting, and AI providers</h3><p>Connected providers may set or read cookies or similar identifiers when needed for checkout, anti-fraud checks, email delivery, hosting security, media storage, or AI generation. Their use is limited to providing and protecting the requested service.</p><h3>7. Your browser controls</h3><p>You can block, delete, or limit cookies in your browser settings. If you block essential cookies, MyDreamShoots may not be able to keep you signed in, complete checkout, reserve credits, start generation jobs, or open private albums.</p><h3>8. Relationship to privacy policy</h3><p>Cookie data is handled together with the privacy practices described in our <a href=\"/privacy\">Privacy Policy</a>. The <a href=\"/terms\">Terms of Service</a> explain customer responsibilities when using accounts, credits, uploads, and generated outputs.</p><h3>9. Updates and contact</h3><p>We may update this Cookie Policy as we add or remove providers, analytics, checkout methods, or security features. Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with cookie or tracking questions.</p>",
+      lastUpdated: "{LIVE_POLICY_EFFECTIVE_DATE}",
+      contactEmail: "{LIVE_SUPPORT_EMAIL}",
+      body: "<h3>1. What cookies are</h3><p>Cookies are small files stored by your browser. MyDreamShoots also uses similar browser storage, such as local storage, to keep the AI photo service secure, usable, and consistent while you move between packages, checkout, your account, and private albums.</p><h3>2. Essential cookies</h3><p>Essential cookies support customer sign-in, scoped sessions, CSRF protection, checkout continuity, credit reservation flows, private album access, rate limiting, fraud prevention, and secure admin or customer authentication. These cookies are required for the core service and cannot be switched off inside the site without breaking key features.</p><h3>3. Preference storage</h3><p>We may remember practical preferences such as menu state, recently opened workspace views, selected package context, language or display choices if available, and browser-side UI settings. This helps MyDreamShoots open the right customer workspace more quickly.</p><h3>4. Performance and diagnostics</h3><p>We may collect limited technical signals to understand slow pages, failed requests, broken checkout steps, job submission errors, and account access issues. These signals help us improve route speed, generation reliability, and customer support.</p><h3>5. Analytics and measurement</h3><p>If analytics tools are enabled, they may help us understand aggregated usage such as popular package categories, tool discovery, pricing page visits, and conversion paths. Analytics should not be used to sell your uploaded photos or generated images.</p><h3>6. Payment, email, hosting, and AI providers</h3><p>Connected providers may set or read cookies or similar identifiers when needed for checkout, anti-fraud checks, email delivery, hosting security, media storage, or AI generation. Their use is limited to providing and protecting the requested service.</p><h3>7. Your browser controls</h3><p>You can block, delete, or limit cookies in your browser settings. If you block essential cookies, MyDreamShoots may not be able to keep you signed in, complete checkout, reserve credits, start generation jobs, or open private albums.</p><h3>8. Relationship to privacy policy</h3><p>Cookie data is handled together with the privacy practices described in our <a href=\"/privacy\">Privacy Policy</a>. The <a href=\"/terms\">Terms of Service</a> explain customer responsibilities when using accounts, credits, uploads, and generated outputs.</p><h3>9. Updates and contact</h3><p>We may update this Cookie Policy as we add or remove providers, analytics, checkout methods, or security features. Email <a href=\"mailto:{LIVE_SUPPORT_EMAIL}\">{LIVE_SUPPORT_EMAIL}</a> with cookie or tracking questions.</p>",
       sections: "cookies"
     }),
     footer_1: section("footer", {
@@ -948,9 +951,9 @@ const refundsJson: ThemePageJson = {
     }),
     policy_1: section("policy_content", {
       title: "Refunds and reversals",
-      lastUpdated: "June 25, 2024",
-      contactEmail: "support@mydreamshoots.com",
-      body: "<h3>Refund eligibility</h3><p>You may request a refund for purchased credits if none of the credits from that purchase have been used. Once credits have been spent on a successful generation, that purchase becomes non-refundable.</p><h3>Refund window</h3><p>Refund requests should be submitted within 30 days of the purchase date with your account email and purchase details.</p><h3>Subscriptions</h3><p>If a subscription is canceled, the customer keeps access to purchased credits until they are used or expire according to the plan rules. Cancellation does not automatically refund credits already used.</p><h3>Technical failures</h3><p>If a technical failure on our side prevents credit use or delivery, support may release credits, rerun the job, or approve a refund after review.</p><h3>Credit history</h3><p>Refunds and billing reversals appear in the customer's credit history. Checkout completion never grants credits before payment confirmation, and every adjustment is recorded for account support.</p>",
+      lastUpdated: "{LIVE_POLICY_EFFECTIVE_DATE}",
+      contactEmail: "{LIVE_SUPPORT_EMAIL}",
+      body: "<h3>Refund eligibility</h3><p>{LIVE_REFUND_REVIEW_POLICY_STATEMENT} Credits spent on a successful generation are handled under the published refund policy.</p><h3>Refund window</h3><p>Refund requests should be submitted within {LIVE_REFUND_WINDOW_DAYS} days of the purchase date with your account email and purchase details.</p><h3>Subscriptions</h3><p>If a subscription is canceled, remaining access follows the published plan and refund policy.</p><h3>Technical failures</h3><p>If a technical failure prevents delivery, support may release reserved credits, rerun the job, or review refund eligibility.</p><h3>Credit history</h3><p>Refunds and billing reversals appear in the customer's credit history. Checkout completion never grants credits before payment confirmation, and every adjustment is recorded for account support.</p>",
       sections: "refunds"
     }),
     footer_1: section("footer", {
@@ -972,8 +975,8 @@ const contentPolicyJson: ThemePageJson = {
     }),
     policy_1: section("policy_content", {
       title: "Content policy",
-      lastUpdated: "June 25, 2024",
-      contactEmail: "support@mydreamshoots.com",
+      lastUpdated: "{LIVE_POLICY_EFFECTIVE_DATE}",
+      contactEmail: "{LIVE_SUPPORT_EMAIL}",
       body: "Customers may only upload assets they control or have permission to use. Generated output remains within the site's account scope, and moderation or review states can block publication when needed.",
       sections: "content"
     }),
@@ -1106,12 +1109,12 @@ const workflowJson: ThemePageJson = {
 };
 
 const mydreamshootsTermsPolicyBody =
-  "<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a MyDreamShoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums.</p><h3>2. Accounts, credits, and checkout</h3><p>You are responsible for accurate account information and secure sign-in. Credits are added after payment confirmation, displayed before generation, reserved when a request begins, used after successful delivery, and released or reviewed when a request fails.</p><h3>3. Upload rights and consent</h3><p>You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.</p><h3>4. No AI training on your photos</h3><p>Your inputs are never used to train models. 30-day auto-delete applies to input photos after generation. Private uploads and account records are protected by secure account, storage, and access workflows. Some billing, security, tax, dispute, refund, and account-integrity records may be retained where required or reasonably necessary.</p><h3>5. AI output variability</h3><p>AI photo results can vary based on source photo quality, pose, lighting, package settings, moderation review, provider availability, and model behavior. MyDreamShoots may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and use of outputs</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Refunds and guarantee review</h3><p>Refunds and credit adjustments follow the Refund Policy, including refund review when the shoot does not look like you, subject to support review, account history, and the details of the affected request.</p><h3>8. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account, billing, refund, policy, or legal questions.</p>";
+  "<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a MyDreamShoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums.</p><h3>2. Accounts, credits, and checkout</h3><p>You are responsible for accurate account information and secure sign-in. Credits are added after payment confirmation, displayed before generation, reserved when a request begins, used after successful delivery, and released or reviewed when a request fails.</p><h3>3. Upload rights and consent</h3><p>You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.</p><h3>4. No AI training on your photos</h3><p>{LIVE_TRAINING_POLICY_STATEMENT} {LIVE_SOURCE_MEDIA_RETENTION_DAYS}-day source-photo retention applies to input photos after generation. Private uploads and account records are protected by secure account, storage, and access workflows. Some billing, security, tax, dispute, refund, and account-integrity records may be retained where required or reasonably necessary.</p><h3>5. AI output variability</h3><p>AI photo results can vary based on source photo quality, pose, lighting, package settings, moderation review, provider availability, and model behavior. MyDreamShoots may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and use of outputs</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Refunds and guarantee review</h3><p>Refunds and credit adjustments follow the Refund Policy, including refund review when the shoot does not look like you, subject to support review, account history, and the details of the affected request.</p><h3>8. Contact</h3><p>Email <a href=\"mailto:{LIVE_SUPPORT_EMAIL}\">{LIVE_SUPPORT_EMAIL}</a> for account, billing, refund, policy, or legal questions.</p>";
 
 const termsJson: ThemePageJson = {
   pageType: "policy",
   version: 1,
-  seo: getMydreamshootsPolicySeo("/terms"),
+  seo: policyPageSeo("Terms of Service | myDreamshoots", "Terms for myDreamshoots accounts, source-photo rights, current published offers, generation requests, delivered results, and acceptable use.", "/terms"),
   sectionsOrder: ["header_1", "policy_1", "footer_1"],
   sections: {
     header_1: section("rich_text", {
@@ -1121,9 +1124,9 @@ const termsJson: ThemePageJson = {
     }),
     policy_1: section("policy_content", {
       title: "Terms of service",
-      lastUpdated: "June 25, 2026",
-      contactEmail: "support@mydreamshoots.com",
-      body: "<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a MyDreamShoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums. By using the service, you agree to these terms and to the related Privacy Policy, Cookie Policy, Refund Policy, and Content Policy.</p><h3>2. Accounts and eligibility</h3><p>You are responsible for the accuracy of your account information and for keeping your login method secure. Account access, credits, jobs, generated images, and private albums are intended for the customer account that created or purchased them. You may not share access in a way that bypasses plan limits or harms other users.</p><h3>3. Credits, subscriptions, and billing</h3><p>MyDreamShoots may offer subscriptions, one-time credit packs, promotional credits, or package-specific credit costs. Credits are added after payment confirmation, reserved when a generation job starts, settled when a job succeeds, and released or reviewed when a job fails or expires. Prices, credit amounts, package availability, and plan features may change over time, but checkout pages should show the current offer before purchase.</p><h3>4. Upload rights and customer content</h3><p>You may upload only photos, reference images, logos, prompts, or other materials that you own or have permission to use. You must not upload content that violates privacy, publicity, intellectual property, contractual rights, platform rules, or applicable law. You remain responsible for the materials you submit and the way you use generated outputs.</p><h3>5. AI generation and output variability</h3><p>AI photo results vary based on source image quality, pose, lighting, package settings, provider availability, moderation checks, and model behavior. MyDreamShoots does not guarantee that every output will match a specific expectation, identity detail, style reference, or commercial requirement. We may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and downloads</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Acceptable use</h3><p>You may not use MyDreamShoots to impersonate someone without permission, create unlawful or harmful content, exploit minors, harass others, violate intellectual property, upload stolen images, attack or scrape the service, bypass access controls, resell unauthorized access, interfere with other accounts, or overload generation capacity.</p><h3>8. Refunds, failed jobs, and support review</h3><p>Refunds and credit adjustments are handled under the Refund Policy. Successfully delivered generation jobs are generally not refundable unless MyDreamShoots confirms a service-side technical failure. Failed or timed-out jobs may result in credit release, rerun, or manual support review depending on the issue.</p><h3>9. Service changes and availability</h3><p>We may update packages, tools, providers, pricing, credit costs, policy pages, UI flows, and feature availability. We may also suspend access to protect customers, investigate abuse, perform maintenance, comply with law, or respond to provider outages.</p><h3>10. Intellectual property</h3><p>The MyDreamShoots website, brand, software, templates, interface, package structure, and documentation belong to MyDreamShoots or its licensors. Customer uploads remain subject to the rights of the customer or original owner. Your rights in generated outputs may depend on law, provider rules, your uploaded materials, and the way you use the results.</p><h3>11. Disclaimers</h3><p>MyDreamShoots is provided as an AI photo software service. Outputs may contain errors, artifacts, inaccurate details, or unexpected results. You should not rely on generated images as official identity documents, professional credentials, legal evidence, or factual records.</p><h3>12. Limitation of liability</h3><p>To the fullest extent permitted by law, MyDreamShoots is not liable for indirect, incidental, special, consequential, or punitive damages. Our total liability for a claim is limited to the amount you paid for the affected billing period, subscription, or credit purchase.</p><h3>13. Changes to these terms</h3><p>We may update these terms as the service changes. Continued use of MyDreamShoots after changes means you accept the updated terms.</p><h3>14. Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> for account, billing, refund, policy, or legal questions.</p>"
+      lastUpdated: "{LIVE_POLICY_EFFECTIVE_DATE}",
+      contactEmail: "{LIVE_SUPPORT_EMAIL}",
+      body: "<h3>1. Agreement to these terms</h3><p>These Terms of Service apply when you visit www.mydreamshoots.com, create a MyDreamShoots account, upload photos, buy credits or subscriptions, use AI photo tools, start generation jobs, download outputs, or access private albums. By using the service, you agree to these terms and to the related Privacy Policy, Cookie Policy, Refund Policy, and Content Policy.</p><h3>2. Accounts and eligibility</h3><p>You are responsible for the accuracy of your account information and for keeping your login method secure. Account access, credits, jobs, generated images, and private albums are intended for the customer account that created or purchased them. You may not share access in a way that bypasses plan limits or harms other users.</p><h3>3. Credits, subscriptions, and billing</h3><p>MyDreamShoots may offer subscriptions, one-time credit packs, promotional credits, or package-specific credit costs. Credits are added after payment confirmation, reserved when a generation job starts, settled when a job succeeds, and released or reviewed when a job fails or expires. Prices, credit amounts, package availability, and plan features may change over time, but checkout pages should show the current offer before purchase.</p><h3>4. Upload rights and customer content</h3><p>You may upload only photos, reference images, logos, prompts, or other materials that you own or have permission to use. You must not upload content that violates privacy, publicity, intellectual property, contractual rights, platform rules, or applicable law. You remain responsible for the materials you submit and the way you use generated outputs.</p><h3>5. AI generation and output variability</h3><p>AI photo results vary based on source image quality, pose, lighting, package settings, provider availability, moderation checks, and model behavior. MyDreamShoots does not guarantee that every output will match a specific expectation, identity detail, style reference, or commercial requirement. We may reject, rerun, delay, moderate, or remove jobs that violate rules or cannot be completed reliably.</p><h3>6. Private albums and downloads</h3><p>Generated images and albums are designed for private customer access unless you choose to share, publish, or download them. You are responsible for reviewing outputs before using them in advertising, profiles, documents, merchandise, social media, or other public settings.</p><h3>7. Acceptable use</h3><p>You may not use MyDreamShoots to impersonate someone without permission, create unlawful or harmful content, exploit minors, harass others, violate intellectual property, upload stolen images, attack or scrape the service, bypass access controls, resell unauthorized access, interfere with other accounts, or overload generation capacity.</p><h3>8. Refunds, failed jobs, and support review</h3><p>Refunds and credit adjustments are handled under the Refund Policy. Successfully delivered generation jobs are generally not refundable unless MyDreamShoots confirms a service-side technical failure. Failed or timed-out jobs may result in credit release, rerun, or manual support review depending on the issue.</p><h3>9. Service changes and availability</h3><p>We may update packages, tools, providers, pricing, credit costs, policy pages, UI flows, and feature availability. We may also suspend access to protect customers, investigate abuse, perform maintenance, comply with law, or respond to provider outages.</p><h3>10. Intellectual property</h3><p>The MyDreamShoots website, brand, software, templates, interface, package structure, and documentation belong to MyDreamShoots or its licensors. Customer uploads remain subject to the rights of the customer or original owner. Your rights in generated outputs may depend on law, provider rules, your uploaded materials, and the way you use the results.</p><h3>11. Disclaimers</h3><p>MyDreamShoots is provided as an AI photo software service. Outputs may contain errors, artifacts, inaccurate details, or unexpected results. You should not rely on generated images as official identity documents, professional credentials, legal evidence, or factual records.</p><h3>12. Limitation of liability</h3><p>To the fullest extent permitted by law, MyDreamShoots is not liable for indirect, incidental, special, consequential, or punitive damages. Our total liability for a claim is limited to the amount you paid for the affected billing period, subscription, or credit purchase.</p><h3>13. Changes to these terms</h3><p>We may update these terms as the service changes. Continued use of MyDreamShoots after changes means you accept the updated terms.</p><h3>14. Contact</h3><p>Email <a href=\"mailto:{LIVE_SUPPORT_EMAIL}\">{LIVE_SUPPORT_EMAIL}</a> for account, billing, refund, policy, or legal questions.</p>"
     }),
     footer_1: section("footer", {
       title: "Terms",
@@ -1138,7 +1141,7 @@ const termsJson: ThemePageJson = {
 
 termsJson.sections.policy_1.settings = {
   ...termsJson.sections.policy_1.settings,
-  lastUpdated: "August 5, 2026",
+  lastUpdated: "{LIVE_POLICY_EFFECTIVE_DATE}",
   body: mydreamshootsTermsPolicyBody
 };
 
@@ -1696,6 +1699,7 @@ export const platformState: PlatformState = {
       name: "Essential",
       type: "subscription",
       status: "active",
+      metadata: { capabilities: { generatedPhotos: 15, destinationCount: 2, deliveryDays: 3, revisions: "basic" } },
       prices: [
         {
           id: "price_lumen_essential",
@@ -1707,13 +1711,8 @@ export const platformState: PlatformState = {
           interval: "month",
           creditsGranted: 60,
           stripePriceId: "price_lumen_essential_60",
-          metadata: {
-            generatedPhotos: 15,
-            destinationCount: 2,
-            deliveryDays: 3,
-            revisions: "basic",
-            featured: false
-          }
+          status: "active",
+          metadata: { featured: false }
         }
       ]
     },
@@ -1723,6 +1722,7 @@ export const platformState: PlatformState = {
       name: "Premium",
       type: "subscription",
       status: "active",
+      metadata: { capabilities: { generatedPhotos: 30, destinationCount: 4, deliveryDays: 2, revisions: "priority" } },
       prices: [
         {
           id: "price_lumen_premium",
@@ -1734,13 +1734,8 @@ export const platformState: PlatformState = {
           interval: "month",
           creditsGranted: 120,
           stripePriceId: "price_lumen_premium_120",
-          metadata: {
-            generatedPhotos: 30,
-            destinationCount: 4,
-            deliveryDays: 2,
-            revisions: "priority",
-            featured: true
-          }
+          status: "active",
+          metadata: { featured: true }
         }
       ]
     },
@@ -1750,6 +1745,7 @@ export const platformState: PlatformState = {
       name: "Deluxe",
       type: "subscription",
       status: "active",
+      metadata: { capabilities: { generatedPhotos: 60, destinationCount: 999, deliveryDays: 1, revisions: "unlimited" } },
       prices: [
         {
           id: "price_lumen_deluxe",
@@ -1761,13 +1757,8 @@ export const platformState: PlatformState = {
           interval: "month",
           creditsGranted: 240,
           stripePriceId: "price_lumen_deluxe_240",
-          metadata: {
-            generatedPhotos: 60,
-            destinationCount: 999,
-            deliveryDays: 1,
-            revisions: "unlimited",
-            featured: false
-          }
+          status: "active",
+          metadata: { featured: false }
         }
       ]
     },
@@ -1787,7 +1778,8 @@ export const platformState: PlatformState = {
           currency: "usd",
           interval: "one_time",
           creditsGranted: 120,
-          stripePriceId: "price_lumen_pack_120"
+          stripePriceId: "price_lumen_pack_120",
+          status: "active"
         }
       ]
     },
@@ -1807,7 +1799,8 @@ export const platformState: PlatformState = {
           currency: "usd",
           interval: "month",
           creditsGranted: 140,
-          stripePriceId: "price_atlas_140"
+          stripePriceId: "price_atlas_140",
+          status: "draft"
         }
       ]
     }

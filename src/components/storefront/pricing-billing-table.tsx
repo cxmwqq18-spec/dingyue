@@ -57,7 +57,7 @@ export function PricingBillingTable({
   const [billingCycle, setBillingCycle] = useState<BillingCycle>(initialBillingCycle);
   const activeSidePanel = sidePanels[billingCycle] ?? sidePanels.month;
   const visiblePlans = useMemo(
-    () => plans.map((plan) => ({ ...plan, price: plan.prices[billingCycle] ?? plan.prices.month })).filter((plan) => plan.price),
+    () => plans.map((plan) => ({ ...plan, price: plan.prices[billingCycle] })).filter((plan) => plan.price),
     [billingCycle, plans]
   );
   const cycleLabel = (cycle: BillingCycle) => {

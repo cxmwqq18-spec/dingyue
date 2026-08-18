@@ -5,6 +5,9 @@ import { prisma } from "@/lib/prisma";
 import type { CreditLedgerEntry, Customer, Order, PaymentEvent, Price, Product, Subscription } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapPaymentEvent, mapPrice, mapProduct } from "@/lib/stores/prisma-mappers";
+import { clearSiteReadCache } from "@/lib/stores/site-store";
+import { fakeStripePriceAdapter, verifyPriceReadOnly, type StripePriceReadAdapter } from "@/lib/stripe-price-verification";
+import { clearStorefrontContextCache } from "@/lib/storefront-context";
 
 type Tx = Prisma.TransactionClient;
 const validPriceIntervals = ["month", "quarter", "half_year", "year", "one_time"] as const;
@@ -12,6 +15,21 @@ const billingTransactionOptions = { maxWait: 10000, timeout: 20000 } as const;
 
 function uid(prefix: string): string {
   return `${prefix}_${Date.now().toString(36)}_${crypto.randomBytes(3).toString("hex")}`;
+}
+
+function normalizedProductMetadata(metadata: Product["metadata"] | undefined): Product["metadata"] {
+  if (!metadata) return undefined;
+  const capabilities = metadata.capabilities
+    ? Object.fromEntries(Object.entries(metadata.capabilities).filter(([, value]) => typeof value === "string" || typeof value === "number" || typeof value === "boolean"))
+    : undefined;
+  return {
+    ...(metadata.summary?.trim() ? { summary: metadata.summary.trim() } : {}),
+    ...(metadata.features?.map((value) => value.trim()).filter(Boolean).length ? { features: metadata.features.map((value) => value.trim()).filter(Boolean) } : {}),
+    ...(capabilities && Object.keys(capabilities).length ? { capabilities } : {}),
+    ...(metadata.badgeLabel?.trim() ? { badgeLabel: metadata.badgeLabel.trim() } : {}),
+    ...(metadata.buttonLabel?.trim() ? { buttonLabel: metadata.buttonLabel.trim() } : {}),
+    ...(Number.isFinite(metadata.sortOrder) ? { sortOrder: Math.trunc(metadata.sortOrder as number) } : {})
+  };
 }
 
 function isSubscriptionInterval(interval: Price["interval"] | string): boolean {
@@ -48,6 +66,36 @@ async function readCustomerForUpdate(tx: Tx, siteId: string, customerId: string)
   return customer;
 }
 
+async function readPublicPriceForCheckout(tx: Tx, siteId: string, priceId: string) {
+  const site = await tx.site.findUnique({ where: { id: siteId }, select: { currency: true } });
+  if (!site) throw new StoreError("site_not_found", 404);
+  const candidate = await tx.price.findFirst({
+    where: { siteId, id: priceId },
+    select: { productId: true, interval: true }
+  });
+  if (!candidate) throw new StoreError("price_not_found_for_site", 404);
+  // Price activation and edits use the same product/interval lock. Re-read after
+  // acquiring it so an archive cannot race an order or subscription grant.
+  await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`${siteId}:${candidate.productId}:${candidate.interval}`}))`;
+  const price = await tx.price.findFirst({
+    where: { siteId, id: priceId },
+    include: { product: { include: { prices: true } } }
+  });
+  if (!price || price.product.siteId !== siteId) throw new StoreError("price_not_found_for_site", 404);
+  const now = Date.now();
+  const publicPrice = price.status === "active"
+    && /^price_[a-zA-Z0-9_]+$/.test(price.stripePriceId ?? "")
+    && price.amountCents > 0
+    && price.currency.trim().toLowerCase() === site.currency.trim().toLowerCase()
+    && Boolean(price.providerVerifiedAt && price.providerFingerprint)
+    && (!price.effectiveFrom || price.effectiveFrom.getTime() <= now)
+    && (!price.effectiveTo || price.effectiveTo.getTime() > now);
+  if (!publicPrice) throw new StoreError("price_not_public", 409);
+  if (price.product.status !== "active") throw new StoreError("product_not_active", 409);
+  if (!Number.isInteger(price.creditsGranted) || price.creditsGranted <= 0) throw new StoreError("price_has_no_credits", 409);
+  return price;
+}
+
 export async function getSiteBillingState(siteId: string): Promise<{
   products: Product[];
   customers: Customer[];
@@ -77,7 +125,9 @@ export async function upsertProductPriceRelational(params: {
   stripePriceId?: string;
   metadata?: Price["metadata"];
 }): Promise<{ price: Price }> {
-  return prisma.$transaction(async (tx) => {
+  const priceId = params.priceId ?? uid("price");
+  const result = await prisma.$transaction(async (tx) => {
+    await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`price:${priceId}`}))`;
     const product = await tx.product.findFirst({ where: { id: params.productId, siteId: params.siteId } });
     if (!product) throw new StoreError("product_not_found", 404);
     const label = params.label.trim();
@@ -88,8 +138,30 @@ export async function upsertProductPriceRelational(params: {
     if (!validPriceIntervals.includes(params.interval)) throw new StoreError("invalid_price_interval", 400);
     if (!Number.isInteger(params.creditsGranted) || params.creditsGranted < 0) throw new StoreError("invalid_credits_granted", 400);
 
-    const priceId = params.priceId ?? uid("price");
     const stripePriceId = params.stripePriceId?.trim() || `manual_${priceId}`;
+    const existing = params.priceId
+      ? await tx.price.findUnique({ where: { id: params.priceId } })
+      : undefined;
+    if (existing && (existing.siteId !== params.siteId || existing.productId !== params.productId)) throw new StoreError("price_product_mismatch", 409);
+    const intervalLocks = Array.from(new Set([existing?.interval, params.interval].filter(Boolean) as string[])).sort();
+    for (const interval of intervalLocks) {
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`${params.siteId}:${params.productId}:${interval}`}))`;
+    }
+    const isReferenced = existing
+      ? (await Promise.all([
+          tx.subscription.count({ where: { priceId: existing.id } }),
+          tx.order.count({ where: { priceId: existing.id } })
+        ])).some((count) => count > 0)
+      : false;
+    const immutableEconomics = Boolean(existing && (existing.status !== "draft" || isReferenced));
+    if (immutableEconomics && existing && (existing.amountCents !== params.amountCents || existing.currency !== currency || existing.interval !== params.interval || existing.creditsGranted !== params.creditsGranted || (existing.stripePriceId ?? `manual_${existing.id}`) !== stripePriceId)) {
+      throw new StoreError("active_price_immutable", 409);
+    }
+    const replacedPrice = existing ? undefined : await tx.price.findFirst({
+      where: { siteId: params.siteId, productId: params.productId, interval: params.interval, status: "active" },
+      orderBy: { effectiveFrom: "desc" },
+      select: { id: true }
+    });
     const row = await tx.price.upsert({
       where: { id: priceId },
       create: {
@@ -102,21 +174,90 @@ export async function upsertProductPriceRelational(params: {
         currency,
         amountCents: params.amountCents,
         interval: params.interval,
-        creditsGranted: params.creditsGranted
+        creditsGranted: params.creditsGranted,
+        status: "draft",
+        replacesPriceId: replacedPrice?.id
       },
       update: {
         label,
-        stripePriceId,
+        ...(immutableEconomics ? {} : { stripePriceId }),
         metadata: params.metadata ? (params.metadata as Prisma.InputJsonObject) : undefined,
-        currency,
-        amountCents: params.amountCents,
-        interval: params.interval,
-        creditsGranted: params.creditsGranted
+        ...(immutableEconomics ? {} : { currency, amountCents: params.amountCents, interval: params.interval, creditsGranted: params.creditsGranted, status: "draft" })
       }
     });
     if (row.siteId !== params.siteId || row.productId !== params.productId) throw new StoreError("price_product_mismatch", 409);
     return { price: mapPrice(row, { label, metadata: params.metadata, stripePriceId }) };
   }, billingTransactionOptions);
+  clearStorefrontContextCache(params.siteId);
+  clearSiteReadCache();
+  return result;
+}
+
+export async function activateProductPriceRelational(params: {
+  siteId: string;
+  productId: string;
+  priceId: string;
+  adapter?: StripePriceReadAdapter;
+}): Promise<{ price: Price; archivedPriceIds: string[] }> {
+  const [source, site] = await Promise.all([
+    prisma.price.findFirst({ where: { id: params.priceId, siteId: params.siteId, productId: params.productId } }),
+    prisma.site.findUnique({ where: { id: params.siteId }, select: { currency: true } })
+  ]);
+  if (!site) throw new StoreError("site_not_found", 404);
+  if (!source) throw new StoreError("price_not_found", 404);
+  if (source.currency.trim().toLowerCase() !== site.currency.trim().toLowerCase()) throw new StoreError("price_currency_mismatch", 409);
+  if (source.status === "active") return { price: mapPrice(source), archivedPriceIds: [] };
+  if (source.status !== "draft") throw new StoreError("price_not_activatable", 409);
+  let verification: Awaited<ReturnType<typeof verifyPriceReadOnly>>;
+  try {
+    verification = await verifyPriceReadOnly({ price: { ...mapPrice(source), stripePriceId: source.stripePriceId ?? `manual_${source.id}` }, adapter: params.adapter ?? fakeStripePriceAdapter });
+  } catch (error) {
+    throw new StoreError(error instanceof Error ? error.message : "stripe_price_verification_failed", 409);
+  }
+  const result = await prisma.$transaction(async (tx) => {
+    await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`price:${source.id}`}))`;
+    await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`${params.siteId}:${params.productId}:${source.interval}`}))`;
+    const current = await tx.price.findFirst({ where: { id: source.id, siteId: params.siteId, productId: params.productId } });
+    if (!current) throw new StoreError("price_not_found", 404);
+    const currentSite = await tx.site.findUnique({ where: { id: params.siteId }, select: { currency: true } });
+    if (!currentSite || current.currency.trim().toLowerCase() !== currentSite.currency.trim().toLowerCase()) throw new StoreError("price_currency_mismatch", 409);
+    if (current.status === "active") return { price: mapPrice(current), archivedPriceIds: [] };
+    if (
+      current.status !== "draft" ||
+      current.amountCents !== source.amountCents ||
+      current.currency !== source.currency ||
+      current.interval !== source.interval ||
+      current.creditsGranted !== source.creditsGranted ||
+      current.stripePriceId !== source.stripePriceId
+    ) {
+      throw new StoreError("price_changed_during_provider_verification", 409);
+    }
+    const now = new Date();
+    const previous = await tx.price.findMany({
+      where: { siteId: params.siteId, productId: params.productId, interval: source.interval, status: "active", id: { not: source.id } },
+      select: { id: true }
+    });
+    if (previous.length) {
+      await tx.price.updateMany({
+        where: { id: { in: previous.map((item) => item.id) } },
+        data: { status: "archived", effectiveTo: now }
+      });
+    }
+    const row = await tx.price.update({
+      where: { id: source.id },
+      data: {
+        status: "active",
+        effectiveFrom: now,
+        effectiveTo: null,
+        providerVerifiedAt: now,
+        providerFingerprint: verification.fingerprint
+      }
+    });
+    return { price: mapPrice(row), archivedPriceIds: previous.map((item) => item.id) };
+  }, billingTransactionOptions);
+  clearStorefrontContextCache(params.siteId);
+  clearSiteReadCache();
+  return result;
 }
 
 export async function createProductWithPriceRelational(params: {
@@ -124,6 +265,7 @@ export async function createProductWithPriceRelational(params: {
   name: string;
   type: Product["type"];
   status: Product["status"];
+  metadata?: Product["metadata"];
   price: {
     label: string;
     amountCents: number;
@@ -134,7 +276,7 @@ export async function createProductWithPriceRelational(params: {
     metadata?: Price["metadata"];
   };
 }): Promise<{ product: Product }> {
-  return prisma.$transaction(async (tx) => {
+  const result = await prisma.$transaction(async (tx) => {
     const site = await tx.site.findUnique({ where: { id: params.siteId }, select: { id: true } });
     if (!site) throw new StoreError("site_not_found", 404);
     const name = params.name.trim();
@@ -159,6 +301,7 @@ export async function createProductWithPriceRelational(params: {
         name,
         type: params.type,
         status: params.status,
+        metadata: normalizedProductMetadata(params.metadata) as Prisma.InputJsonObject | undefined,
         prices: {
           create: {
             id: priceId,
@@ -169,7 +312,8 @@ export async function createProductWithPriceRelational(params: {
             currency,
             amountCents: params.price.amountCents,
             interval: params.price.interval,
-            creditsGranted: params.price.creditsGranted
+            creditsGranted: params.price.creditsGranted,
+            status: "draft"
           }
         }
       },
@@ -177,6 +321,35 @@ export async function createProductWithPriceRelational(params: {
     });
     return { product: mapProduct(product) };
   }, billingTransactionOptions);
+  clearStorefrontContextCache(params.siteId);
+  clearSiteReadCache();
+  return result;
+}
+
+export async function updateProductRelational(params: {
+  siteId: string;
+  productId: string;
+  name: string;
+  status: Product["status"];
+  metadata?: Product["metadata"];
+}): Promise<{ product: Product }> {
+  const name = params.name.trim();
+  if (name.length < 2) throw new StoreError("product_name_required", 400);
+  if (!(["active", "draft"] as const).includes(params.status)) throw new StoreError("invalid_product_status", 400);
+  const existing = await prisma.product.findFirst({ where: { id: params.productId, siteId: params.siteId } });
+  if (!existing) throw new StoreError("product_not_found", 404);
+  const row = await prisma.product.update({
+    where: { id: params.productId },
+    data: {
+      name,
+      status: params.status,
+      metadata: normalizedProductMetadata(params.metadata) as Prisma.InputJsonObject | undefined
+    },
+    include: { prices: true }
+  });
+  clearStorefrontContextCache(params.siteId);
+  clearSiteReadCache();
+  return { product: mapProduct(row) };
 }
 
 export async function deleteProductPriceRelational(params: {
@@ -184,15 +357,26 @@ export async function deleteProductPriceRelational(params: {
   productId: string;
   priceId: string;
 }): Promise<{ deletedPrice: Price }> {
-  return prisma.$transaction(async (tx) => {
+  const result = await prisma.$transaction(async (tx) => {
     const product = await tx.product.findFirst({ where: { id: params.productId, siteId: params.siteId }, include: { prices: true } });
     if (!product) throw new StoreError("product_not_found", 404);
     const price = product.prices.find((item) => item.id === params.priceId);
     if (!price) throw new StoreError("price_not_found", 404);
+    const isReferenced = (await Promise.all([
+      tx.subscription.count({ where: { priceId: price.id } }),
+      tx.order.count({ where: { priceId: price.id } })
+    ])).some((count) => count > 0);
+    if (price.status === "active" || price.status === "archived" || isReferenced) {
+      const archived = await tx.price.update({ where: { id: price.id }, data: { status: "archived", effectiveTo: new Date() } });
+      return { deletedPrice: mapPrice(archived) };
+    }
     if (product.prices.length <= 1) throw new StoreError("product_requires_at_least_one_price", 409);
     await tx.price.delete({ where: { id: params.priceId } });
     return { deletedPrice: mapPrice(price) };
   }, billingTransactionOptions);
+  clearStorefrontContextCache(params.siteId);
+  clearSiteReadCache();
+  return result;
 }
 
 export async function adjustCustomerCreditsRelational(params: {
@@ -248,6 +432,7 @@ function mapOrder(row: Prisma.OrderGetPayload<object>): Order {
     id: row.id,
     siteId: row.siteId,
     customerId: row.customerId,
+    priceId: row.priceId ?? undefined,
     status: row.status as Order["status"],
     amountCents: row.amountCents,
     currency: row.currency,
@@ -283,19 +468,14 @@ export async function completeAdminCheckoutRelational(params: {
   const sourceId = intentId ? `admin_comp:${intentId}` : `admin_comp:${uid("intent")}`;
   return prisma.$transaction(async (tx) => {
     await readCustomerForUpdate(tx, params.siteId, params.customerId);
-    const price = await tx.price.findFirst({
-      where: { siteId: params.siteId, id: params.priceId },
-      include: { product: true }
-    });
-    if (!price || price.product.siteId !== params.siteId) throw new StoreError("price_not_found_for_site", 404);
-    if (price.product.status !== "active") throw new StoreError("product_not_active", 409);
-    if (!Number.isInteger(price.creditsGranted) || price.creditsGranted <= 0) throw new StoreError("price_has_no_credits", 409);
+    const price = await readPublicPriceForCheckout(tx, params.siteId, params.priceId);
 
     await tx.order.createMany({
       data: [{
         id: uid("ord"),
         siteId: params.siteId,
         customerId: params.customerId,
+        priceId: price.id,
         status: "fulfilled",
         amountCents: price.amountCents,
         currency: price.currency,
@@ -379,13 +559,7 @@ export async function startCustomerCheckoutRelational(params: {
 }): Promise<{ customer: Customer; order: Order; price: Price; product: Product; metadata: Record<string, string> }> {
   return prisma.$transaction(async (tx) => {
     const customer = await readCustomerForUpdate(tx, params.siteId, params.customerId);
-    const price = await tx.price.findFirst({
-      where: { siteId: params.siteId, id: params.priceId },
-      include: { product: { include: { prices: true } } }
-    });
-    if (!price || price.product.siteId !== params.siteId) throw new StoreError("price_not_found_for_site", 404);
-    if (price.product.status !== "active") throw new StoreError("product_not_active", 409);
-    if (!Number.isInteger(price.creditsGranted) || price.creditsGranted <= 0) throw new StoreError("price_has_no_credits", 409);
+    const price = await readPublicPriceForCheckout(tx, params.siteId, params.priceId);
 
     const sourceId = checkoutSourceId(params.intentId);
     await tx.order.createMany({
@@ -393,6 +567,7 @@ export async function startCustomerCheckoutRelational(params: {
         id: uid("ord"),
         siteId: params.siteId,
         customerId: params.customerId,
+        priceId: price.id,
         status: "checkout_started",
         amountCents: price.amountCents,
         currency: price.currency,
@@ -507,6 +682,7 @@ export async function recordStripeWebhookRelational(payload: {
           id: uid("ord"),
           siteId,
           customerId: customer.id,
+          priceId: price?.id,
           status: "checkout_started",
           amountCents: price?.amountCents ?? 0,
           currency: price?.currency ?? "usd",
@@ -543,6 +719,7 @@ export async function recordStripeWebhookRelational(payload: {
       where: { id: order.id },
       data: {
         status: "fulfilled",
+        priceId: price?.id ?? order.priceId,
         amountCents: price?.amountCents ?? order.amountCents,
         currency: price?.currency ?? order.currency,
         credits

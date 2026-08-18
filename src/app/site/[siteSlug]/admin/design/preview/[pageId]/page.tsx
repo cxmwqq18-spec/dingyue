@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { IframeInteractiveNavigation, IframePatchListener } from "@/components/designer/iframe-patch-listener";
 import { ThemeRenderer } from "@/components/theme-renderer";
 import { verifyDesignerPreviewToken } from "@/lib/designer-preview-auth";
+import { loadDraftStorefrontContext } from "@/lib/storefront-context";
 import { siteAdminSessionCookie } from "@/lib/session";
 import { getSiteAdminBySessionRelational, getSiteAdminContextRelationalState, getSiteShellBySlugForAdmin } from "@/lib/stores/site-store";
 import { prisma } from "@/lib/prisma";
@@ -51,9 +52,21 @@ export default async function ThemePreviewPage({
     gateways: false,
     siteAdmins: false
   });
-  const creativePacks = await prisma.creativePack
-    .findMany({ where: { siteId: site.id }, orderBy: [{ status: "asc" }, { createdAt: "asc" }] })
-    .then((rows) => rows.map(toCreativePack));
+  const [creativePacks, storefrontContext] = await Promise.all([
+    prisma.creativePack
+      .findMany({ where: { siteId: site.id }, orderBy: [{ status: "asc" }, { createdAt: "asc" }] })
+      .then((rows) => rows.map(toCreativePack)),
+    loadDraftStorefrontContext({
+      siteId: site.id,
+      pageId: page.id,
+      publishScope: {
+        type: "site",
+        pageIds: [page.id],
+        includeThemeSettings: true,
+        includeStorefrontProfile: true
+      }
+    })
+  ]);
   const runtime: ThemeRuntimeData = {
     jobs: [],
     assets: [],
@@ -68,7 +81,7 @@ export default async function ThemePreviewPage({
     <div data-designer-preview-mode={interactivePreview ? "interactive" : "edit"} style={themeStyleVars(settings)}>
       {interactivePreview ? <IframeInteractiveNavigation /> : <IframePatchListener />}
       <ThemeRenderer
-        creativePacks={creativePacks}
+        creativePacks={creativePacks.filter((pack) => storefrontContext.catalog.activePacks.some((activePack) => activePack.id === pack.id))}
         mode="preview"
         page={page.draftJson}
         pagePath={page.slug}
@@ -78,6 +91,7 @@ export default async function ThemePreviewPage({
         settings={settings}
         site={site}
         siteAiApps={relationalState.apps ?? []}
+        storefrontContext={storefrontContext}
       />
     </div>
   );

@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Download, Plus, Save, Trash2 } from "lucide-react";
+import { Download, Plus, Save, Star, Trash2 } from "lucide-react";
 import type { Price, Product } from "@/lib/types";
 import { downloadCsv } from "@/components/admin/export-utils";
+import { siteAdminJsonHeaders } from "@/lib/client-csrf";
 
 type PriceDraft = {
   label: string;
@@ -20,57 +21,40 @@ type ProductDraft = {
   name: string;
   type: Product["type"];
   status: Product["status"];
+  metadata: NonNullable<Product["metadata"]>;
   price: PriceDraft;
 };
 
-const textMetadataFields = new Set([
-  "revisions",
-  "planSubtitle",
-  "featuresText",
-  "badgeLabel",
-  "editingLabel",
-  "buttonLabel",
-  "sidePanelEyebrow",
-  "sidePanelTitle",
-  "sidePanelBody",
-  "sidePanelItemsText"
-]);
+const textMetadataFields = new Set(["discountLabel"]);
 
 function normalizeMetadata(metadata?: Price["metadata"]): Record<string, string | number | boolean> {
   return {
-    generatedPhotos: typeof metadata?.generatedPhotos === "number" ? metadata.generatedPhotos : 0,
-    destinationCount: typeof metadata?.destinationCount === "number" ? metadata.destinationCount : 0,
-    deliveryDays: typeof metadata?.deliveryDays === "number" ? metadata.deliveryDays : 0,
-    revisions: typeof metadata?.revisions === "string" ? metadata.revisions : "",
-    planSubtitle: typeof metadata?.planSubtitle === "string" ? metadata.planSubtitle : "",
-    featuresText: typeof metadata?.featuresText === "string" ? metadata.featuresText : "",
-    badgeLabel: typeof metadata?.badgeLabel === "string" ? metadata.badgeLabel : "",
-    editingLabel: typeof metadata?.editingLabel === "string" ? metadata.editingLabel : "",
-    buttonLabel: typeof metadata?.buttonLabel === "string" ? metadata.buttonLabel : "",
-    sidePanelEyebrow: typeof metadata?.sidePanelEyebrow === "string" ? metadata.sidePanelEyebrow : "",
-    sidePanelTitle: typeof metadata?.sidePanelTitle === "string" ? metadata.sidePanelTitle : "",
-    sidePanelBody: typeof metadata?.sidePanelBody === "string" ? metadata.sidePanelBody : "",
-    sidePanelItemsText: typeof metadata?.sidePanelItemsText === "string" ? metadata.sidePanelItemsText : "",
-    featured: typeof metadata?.featured === "boolean" ? metadata.featured : false
+    originalAmountCents: typeof metadata?.originalAmountCents === "number" ? metadata.originalAmountCents : 0,
+    yearlyEquivalentMonthlyCents: typeof metadata?.yearlyEquivalentMonthlyCents === "number" ? metadata.yearlyEquivalentMonthlyCents : 0,
+    discountLabel: typeof metadata?.discountLabel === "string" ? metadata.discountLabel : "",
+    featured: typeof metadata?.featured === "boolean" ? metadata.featured : false,
+    bestValue: typeof metadata?.bestValue === "boolean" ? metadata.bestValue : false
   };
 }
 
 function defaultMetadata(): Record<string, string | number | boolean> {
   return {
-    generatedPhotos: 0,
-    destinationCount: 0,
-    deliveryDays: 0,
-    revisions: "",
-    planSubtitle: "",
-    featuresText: "",
-    badgeLabel: "",
-    editingLabel: "",
-    buttonLabel: "",
-    sidePanelEyebrow: "",
-    sidePanelTitle: "",
-    sidePanelBody: "",
-    sidePanelItemsText: "",
-    featured: false
+    originalAmountCents: 0,
+    yearlyEquivalentMonthlyCents: 0,
+    discountLabel: "",
+    featured: false,
+    bestValue: false
+  };
+}
+
+function normalizeProductMetadata(metadata?: Product["metadata"]): NonNullable<Product["metadata"]> {
+  return {
+    summary: metadata?.summary ?? "",
+    features: metadata?.features ?? [],
+    capabilities: metadata?.capabilities ?? {},
+    badgeLabel: metadata?.badgeLabel ?? "",
+    buttonLabel: metadata?.buttonLabel ?? "",
+    sortOrder: metadata?.sortOrder ?? 0
   };
 }
 
@@ -93,6 +77,7 @@ function createDraftProduct(): ProductDraft {
     name: "新套餐",
     type: "subscription",
     status: "active",
+    metadata: normalizeProductMetadata(),
     price: {
       label: "新套餐",
       amountCents: 0,
@@ -110,6 +95,10 @@ function normalizePrice(price: Price): Price {
     ...price,
     metadata: normalizeMetadata(price.metadata)
   };
+}
+
+function normalizeProduct(product: Product): Product {
+  return { ...product, metadata: normalizeProductMetadata(product.metadata), prices: product.prices.map(normalizePrice) };
 }
 
 function numberValue(value: string): number {
@@ -174,7 +163,7 @@ function updateDraftMetadata(draft: PriceDraft, field: string, value: string | b
 
 export function PricingEditor({ siteId, products }: { siteId: string; products: Product[] }) {
   const router = useRouter();
-  const [items, setItems] = useState(products.map((product) => ({ ...product, prices: product.prices.map(normalizePrice) })));
+  const [items, setItems] = useState(products.map(normalizeProduct));
   const [drafts, setDrafts] = useState<Record<string, PriceDraft>>({});
   const [productDraft, setProductDraft] = useState<ProductDraft>(() => createDraftProduct());
   const [creatingProduct, setCreatingProduct] = useState(false);
@@ -182,7 +171,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
   const [activeProductId, setActiveProductId] = useState(products[0]?.id ?? "");
 
   useEffect(() => {
-    const normalizedProducts = products.map((product) => ({ ...product, prices: product.prices.map(normalizePrice) }));
+    const normalizedProducts = products.map(normalizeProduct);
     setItems(normalizedProducts);
     setDrafts(Object.fromEntries(products.map((product) => [product.id, createDraftPrice(product)])));
     setActiveProductId((current) => (normalizedProducts.some((product) => product.id === current) ? current : normalizedProducts[0]?.id ?? ""));
@@ -222,6 +211,42 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
         };
       })
     );
+  }
+
+  function updateProductMetadata(productId: string, field: "summary" | "features" | "badgeLabel" | "buttonLabel", value: string) {
+    setItems((current) => current.map((product) => product.id === productId ? {
+      ...product,
+      metadata: {
+        ...normalizeProductMetadata(product.metadata),
+        [field]: field === "features" ? value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean) : value
+      }
+    } : product));
+  }
+
+  function updateProductCapability(productId: string, field: string, value: string) {
+    const normalizedValue = value.trim() && Number.isFinite(Number(value)) ? Number(value) : value;
+    setItems((current) => current.map((product) => product.id === productId ? {
+      ...product,
+      metadata: {
+        ...normalizeProductMetadata(product.metadata),
+        capabilities: { ...normalizeProductMetadata(product.metadata).capabilities, [field]: normalizedValue }
+      }
+    } : product));
+  }
+
+  function updateNewProductMetadata(field: "summary" | "features" | "badgeLabel" | "buttonLabel", value: string) {
+    setProductDraft((current) => ({
+      ...current,
+      metadata: { ...current.metadata, [field]: field === "features" ? value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean) : value }
+    }));
+  }
+
+  function updateNewProductCapability(field: string, value: string) {
+    const normalizedValue = value.trim() && Number.isFinite(Number(value)) ? Number(value) : value;
+    setProductDraft((current) => ({
+      ...current,
+      metadata: { ...current.metadata, capabilities: { ...current.metadata.capabilities, [field]: normalizedValue } }
+    }));
   }
 
   function updateDraft(productId: string, field: string, value: string) {
@@ -270,13 +295,6 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
     updateProductDraftPrice("amountCents", String(Math.round(numberValue(value) * 100)));
   }
 
-  function updateProductDraftMeta(field: string, value: string | boolean) {
-    setProductDraft((current) => ({
-      ...current,
-      price: updateDraftMetadata(current.price, field, value)
-    }));
-  }
-
   function updateDraftMeta(productId: string, field: string, value: string | boolean) {
     setDrafts((current) => ({
       ...current,
@@ -319,6 +337,23 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
     setMessage(result.error ? `${product.name} 保存失败：${result.error}` : `${product.name} / ${price.label} 保存失败。`);
   }
 
+  async function saveProduct(product: Product) {
+    const response = await fetch(`/api/sites/${siteId}/products/${product.id}`, {
+      method: "PUT",
+      headers: siteAdminJsonHeaders(siteId),
+      body: JSON.stringify({ name: product.name, status: product.status, metadata: product.metadata })
+    });
+    const result = (await response.json().catch(() => ({}))) as { product?: Product; error?: string };
+    if (response.ok && result.product) {
+      const normalized = normalizeProduct(result.product);
+      setItems((current) => current.map((item) => item.id === normalized.id ? normalized : item));
+      setMessage(`${normalized.name} 的套餐摘要、权益和能力已保存到商品主数据。`);
+      router.refresh();
+      return;
+    }
+    setMessage(result.error ? `${product.name} 商品资料保存失败：${result.error}` : `${product.name} 商品资料保存失败。`);
+  }
+
   async function createPrice(product: Product) {
     const draft = drafts[product.id];
     if (!draft) return;
@@ -351,6 +386,34 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
     setMessage(result.error ? `${product.name} 新增失败：${result.error}` : `${product.name} 新增失败。`);
   }
 
+  async function activatePrice(product: Product, price: Price) {
+    const response = await fetch(`/api/sites/${siteId}/products/${product.id}/prices/${price.id}/activate`, {
+      method: "POST",
+      headers: siteAdminJsonHeaders(siteId),
+      body: JSON.stringify({
+        providerSnapshot: {
+          id: price.stripePriceId,
+          amountCents: price.amountCents,
+          currency: price.currency,
+          interval: price.interval,
+          active: true
+        }
+      })
+    });
+    const result = (await response.json().catch(() => ({}))) as { price?: Price; archivedPriceIds?: string[]; error?: string };
+    if (!response.ok || !result.price) {
+      setMessage(result.error ? `${product.name} 激活失败：${result.error}` : `${product.name} 激活失败。`);
+      return;
+    }
+    const archived = new Set(result.archivedPriceIds ?? []);
+    setItems((current) => current.map((item) => item.id === product.id ? {
+      ...item,
+      prices: item.prices.map((candidate) => candidate.id === result.price?.id ? normalizePrice(result.price) : archived.has(candidate.id) ? { ...candidate, status: "archived" as const } : candidate)
+    } : item));
+    setMessage(`${product.name} / ${result.price.label} 已通过 fake read-only adapter 校验并激活；旧同周期价格已归档。`);
+    router.refresh();
+  }
+
   async function createProduct() {
     setCreatingProduct(true);
     const response = await fetch(`/api/sites/${siteId}/products`, {
@@ -361,7 +424,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
     const result = (await response.json().catch(() => ({}))) as { product?: Product; error?: string };
     setCreatingProduct(false);
     if (response.ok && result.product) {
-      const normalized = { ...result.product, prices: result.product.prices.map(normalizePrice) };
+      const normalized = normalizeProduct(result.product);
       setItems((current) => [normalized, ...current]);
       setDrafts((current) => ({ ...current, [normalized.id]: createDraftPrice(normalized) }));
       setActiveProductId(normalized.id);
@@ -412,19 +475,11 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
           interval: price.interval,
           creditsGranted: price.creditsGranted,
           stripePriceId: price.stripePriceId,
-          generatedPhotos: price.metadata?.generatedPhotos ?? 0,
-          destinationCount: price.metadata?.destinationCount ?? 0,
-          deliveryDays: price.metadata?.deliveryDays ?? 0,
-          revisions: price.metadata?.revisions ?? "",
-          planSubtitle: price.metadata?.planSubtitle ?? "",
-          featuresText: price.metadata?.featuresText ?? "",
-          badgeLabel: price.metadata?.badgeLabel ?? "",
-          editingLabel: price.metadata?.editingLabel ?? "",
-          buttonLabel: price.metadata?.buttonLabel ?? "",
-          sidePanelEyebrow: price.metadata?.sidePanelEyebrow ?? "",
-          sidePanelTitle: price.metadata?.sidePanelTitle ?? "",
-          sidePanelBody: price.metadata?.sidePanelBody ?? "",
-          sidePanelItemsText: price.metadata?.sidePanelItemsText ?? "",
+          productSummary: product.metadata?.summary ?? "",
+          productFeatures: (product.metadata?.features ?? []).join(" | "),
+          productCapabilities: JSON.stringify(product.metadata?.capabilities ?? {}),
+          badgeLabel: product.metadata?.badgeLabel ?? "",
+          buttonLabel: product.metadata?.buttonLabel ?? "",
           featured: price.metadata?.featured ?? false
         }))
       ),
@@ -440,19 +495,11 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
         "interval",
         "creditsGranted",
         "stripePriceId",
-        "generatedPhotos",
-        "destinationCount",
-        "deliveryDays",
-        "revisions",
-        "planSubtitle",
-        "featuresText",
+        "productSummary",
+        "productFeatures",
+        "productCapabilities",
         "badgeLabel",
-        "editingLabel",
         "buttonLabel",
-        "sidePanelEyebrow",
-        "sidePanelTitle",
-        "sidePanelBody",
-        "sidePanelItemsText",
         "featured"
       ]
     );
@@ -539,21 +586,25 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
             {fieldLabel("到账 Credits")}
             <input className="inputtext w-full" onChange={(event) => updateProductDraftPrice("creditsGranted", event.target.value)} value={productDraft.price.creditsGranted} />
           </label>
+          <label className="block md:col-span-2">
+            {fieldLabel("Stripe Price ID（本地/测试使用 fake read-only 校验）")}
+            <input className="inputtext w-full font-mono" onChange={(event) => updateProductDraftPrice("stripePriceId", event.target.value)} value={productDraft.price.stripePriceId} />
+          </label>
           <label className="block">
             {fieldLabel("套餐成片数")}
-            <input className="inputtext w-full" onChange={(event) => updateProductDraftMeta("generatedPhotos", event.target.value)} value={String(productDraft.price.metadata.generatedPhotos ?? 0)} />
+            <input className="inputtext w-full" onChange={(event) => updateNewProductCapability("generatedPhotos", event.target.value)} value={String(productDraft.metadata.capabilities?.generatedPhotos ?? "")} />
           </label>
           <label className="block">
             {fieldLabel("可选目的地数")}
-            <input className="inputtext w-full" onChange={(event) => updateProductDraftMeta("destinationCount", event.target.value)} value={String(productDraft.price.metadata.destinationCount ?? 0)} />
+            <input className="inputtext w-full" onChange={(event) => updateNewProductCapability("destinationCount", event.target.value)} value={String(productDraft.metadata.capabilities?.destinationCount ?? "")} />
           </label>
           <label className="block md:col-span-2">
             {fieldLabel("前台套餐描述")}
-            <textarea className="inputtext min-h-[74px] w-full" onChange={(event) => updateProductDraftMeta("planSubtitle", event.target.value)} value={String(productDraft.price.metadata.planSubtitle ?? "")} />
+            <textarea className="inputtext min-h-[74px] w-full" onChange={(event) => updateNewProductMetadata("summary", event.target.value)} value={productDraft.metadata.summary ?? ""} />
           </label>
           <label className="block md:col-span-2">
-            {fieldLabel("前台卖点列表（每行一条，留空则使用系统默认卖点）")}
-            <textarea className="inputtext min-h-[112px] w-full" onChange={(event) => updateProductDraftMeta("featuresText", event.target.value)} value={String(productDraft.price.metadata.featuresText ?? "")} />
+            {fieldLabel("前台卖点列表（每行一条）")}
+            <textarea className="inputtext min-h-[112px] w-full" onChange={(event) => updateNewProductMetadata("features", event.target.value)} value={(productDraft.metadata.features ?? []).join("\n")} />
           </label>
         </div>
         <div className="mt-4 flex justify-end border-t border-[#eef2f6] pt-4">
@@ -611,6 +662,44 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
             </div>
           </div>
 
+          <div className="mt-4 rounded-[14px] border border-[#e4e9f0] bg-white p-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-[13px] font-semibold text-[#111827]">商品主数据</p>
+                <p className="mt-1 text-[12px] text-[#667085]">套餐摘要、权益和能力只在这里维护，所有账期共享。</p>
+              </div>
+              <button className="input_btn inline-flex h-[34px] items-center gap-1.5 px-3" onClick={() => void saveProduct(activeProduct)} type="button">
+                <Save className="h-3.5 w-3.5" strokeWidth={1.8} />保存商品资料
+              </button>
+            </div>
+            <div className="mt-4 grid gap-3 md:grid-cols-2">
+              <label className="block md:col-span-2">
+                {fieldLabel("前台套餐描述")}
+                <textarea className="inputtext min-h-[74px] w-full" onChange={(event) => updateProductMetadata(activeProduct.id, "summary", event.target.value)} value={activeProduct.metadata?.summary ?? ""} />
+              </label>
+              <label className="block md:col-span-2">
+                {fieldLabel("前台权益列表（每行一条）")}
+                <textarea className="inputtext min-h-[112px] w-full" onChange={(event) => updateProductMetadata(activeProduct.id, "features", event.target.value)} value={(activeProduct.metadata?.features ?? []).join("\n")} />
+              </label>
+              <label className="block">
+                {fieldLabel("套餐成片数")}
+                <input className="inputtext w-full" onChange={(event) => updateProductCapability(activeProduct.id, "generatedPhotos", event.target.value)} value={String(activeProduct.metadata?.capabilities?.generatedPhotos ?? "")} />
+              </label>
+              <label className="block">
+                {fieldLabel("可选目的地数")}
+                <input className="inputtext w-full" onChange={(event) => updateProductCapability(activeProduct.id, "destinationCount", event.target.value)} value={String(activeProduct.metadata?.capabilities?.destinationCount ?? "")} />
+              </label>
+              <label className="block">
+                {fieldLabel("角标文案")}
+                <input className="inputtext w-full" onChange={(event) => updateProductMetadata(activeProduct.id, "badgeLabel", event.target.value)} value={activeProduct.metadata?.badgeLabel ?? ""} />
+              </label>
+              <label className="block">
+                {fieldLabel("按钮文案")}
+                <input className="inputtext w-full" onChange={(event) => updateProductMetadata(activeProduct.id, "buttonLabel", event.target.value)} value={activeProduct.metadata?.buttonLabel ?? ""} />
+              </label>
+            </div>
+          </div>
+
           <div className="mt-4 grid gap-3">
               {activeProduct.prices.map((price) => (
                 <div className="rounded-[14px] border border-[#e4e9f0] bg-white p-4 shadow-[0_10px_24px_-26px_rgba(15,23,42,0.3)]" key={price.id}>
@@ -618,7 +707,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                     <div className="min-w-0">
                       <p className="truncate text-[13px] font-semibold text-[#111827]">{price.label}</p>
                       <p className="mt-1 truncate text-[12px] text-[#98a2b3]">
-                        {formatAmount(price.amountCents, price.currency)} / {intervalLabel(price.interval)} / 到账 {price.creditsGranted} Credits
+                        {formatAmount(price.amountCents, price.currency)} / {intervalLabel(price.interval)} / 到账 {price.creditsGranted} Credits / {price.status}
                       </p>
                     </div>
                     {price.metadata?.featured ? (
@@ -635,7 +724,7 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                     </label>
                     <label className="block">
                       {fieldLabel("周期")}
-                      <select className="selectmini w-full" onChange={(event) => updatePrice(activeProduct.id, price.id, "interval", event.target.value)} value={price.interval}>
+                      <select className="selectmini w-full" disabled={price.status !== "draft"} onChange={(event) => updatePrice(activeProduct.id, price.id, "interval", event.target.value)} value={price.interval}>
                         <option value="month">月度订阅</option>
                         <option value="quarter">季度订阅</option>
                         <option value="half_year">半年订阅</option>
@@ -645,69 +734,16 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                     </label>
                     <label className="block">
                       {fieldLabel("金额（美元）")}
-                      <input className="inputtext w-full" inputMode="decimal" onChange={(event) => updatePriceAmount(activeProduct.id, price.id, event.target.value)} value={majorAmountValue(price.amountCents)} />
+                      <input className="inputtext w-full" disabled={price.status !== "draft"} inputMode="decimal" onChange={(event) => updatePriceAmount(activeProduct.id, price.id, event.target.value)} value={majorAmountValue(price.amountCents)} />
                     </label>
                     <label className="block">
                       {fieldLabel("到账 Credits")}
-                      <input className="inputtext w-full" onChange={(event) => updatePrice(activeProduct.id, price.id, "creditsGranted", event.target.value)} value={price.creditsGranted} />
-                    </label>
-                    <label className="block">
-                      {fieldLabel("套餐成片数")}
-                      <input className="inputtext w-full" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "generatedPhotos", event.target.value)} value={String(price.metadata?.generatedPhotos ?? 0)} />
-                    </label>
-                    <label className="block">
-                      {fieldLabel("可选目的地数")}
-                      <input className="inputtext w-full" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "destinationCount", event.target.value)} value={String(price.metadata?.destinationCount ?? 0)} />
-                    </label>
-                    <label className="block">
-                      {fieldLabel("承诺交付天数")}
-                      <input className="inputtext w-full" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "deliveryDays", event.target.value)} value={String(price.metadata?.deliveryDays ?? 0)} />
-                    </label>
-                    <label className="block">
-                      {fieldLabel("修改/重修规则")}
-                      <input className="inputtext w-full" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "revisions", event.target.value)} value={String(price.metadata?.revisions ?? "")} />
-                    </label>
-                    <label className="block">
-                      {fieldLabel("角标文案")}
-                      <input className="inputtext w-full" placeholder="例如 Most Popular" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "badgeLabel", event.target.value)} value={String(price.metadata?.badgeLabel ?? "")} />
-                    </label>
-                    <label className="block">
-                      {fieldLabel("按钮文案")}
-                      <input className="inputtext w-full" placeholder="例如 Select plan" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "buttonLabel", event.target.value)} value={String(price.metadata?.buttonLabel ?? "")} />
-                    </label>
-                    <label className="block">
-                      {fieldLabel("编辑权益文案")}
-                      <input className="inputtext w-full" placeholder="例如 Basic editing" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "editingLabel", event.target.value)} value={String(price.metadata?.editingLabel ?? "")} />
+                      <input className="inputtext w-full" disabled={price.status !== "draft"} onChange={(event) => updatePrice(activeProduct.id, price.id, "creditsGranted", event.target.value)} value={price.creditsGranted} />
                     </label>
                     <label className="block md:col-span-2">
-                      {fieldLabel("前台套餐描述")}
-                      <textarea className="inputtext min-h-[74px] w-full" placeholder="显示在套餐标题下方的描述。" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "planSubtitle", event.target.value)} value={String(price.metadata?.planSubtitle ?? "")} />
+                      {fieldLabel("Stripe Price ID")}
+                      <input className="inputtext w-full font-mono" disabled={price.status !== "draft"} onChange={(event) => updatePrice(activeProduct.id, price.id, "stripePriceId", event.target.value)} value={price.stripePriceId} />
                     </label>
-                    <label className="block md:col-span-2">
-                      {fieldLabel("前台卖点列表（每行一条，留空则使用系统默认卖点）")}
-                      <textarea className="inputtext min-h-[120px] w-full" placeholder={"200 credits included\n15 AI-generated photos\nHigh-resolution images"} onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "featuresText", event.target.value)} value={String(price.metadata?.featuresText ?? "")} />
-                    </label>
-                    <div className="md:col-span-2 rounded-[12px] border border-[#e8eef7] bg-[#fbfdff] p-3">
-                      <p className="text-[12px] font-semibold text-[#344054]">右侧说明区文案（可选，通常填在主推套餐价格里）</p>
-                      <div className="mt-3 grid gap-3 md:grid-cols-2">
-                        <label className="block">
-                          {fieldLabel("说明区小标题")}
-                          <input className="inputtext w-full" placeholder="Why people subscribe" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "sidePanelEyebrow", event.target.value)} value={String(price.metadata?.sidePanelEyebrow ?? "")} />
-                        </label>
-                        <label className="block">
-                          {fieldLabel("说明区标题")}
-                          <input className="inputtext w-full" placeholder="Credits stay predictable..." onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "sidePanelTitle", event.target.value)} value={String(price.metadata?.sidePanelTitle ?? "")} />
-                        </label>
-                        <label className="block md:col-span-2">
-                          {fieldLabel("说明区正文")}
-                          <textarea className="inputtext min-h-[74px] w-full" onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "sidePanelBody", event.target.value)} value={String(price.metadata?.sidePanelBody ?? "")} />
-                        </label>
-                        <label className="block md:col-span-2">
-                          {fieldLabel("说明区条目（每行：标题 | 描述）")}
-                          <textarea className="inputtext min-h-[96px] w-full" placeholder={"Starter | Best for one focused headshot.\nPopular | Balanced for comparing package looks."} onChange={(event) => updatePriceMeta(activeProduct.id, price.id, "sidePanelItemsText", event.target.value)} value={String(price.metadata?.sidePanelItemsText ?? "")} />
-                        </label>
-                      </div>
-                    </div>
                   </div>
 
                   <div className="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-[#eef2f6] pt-4">
@@ -720,6 +756,11 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                       设为主推套餐
                     </label>
                     <div className="flex shrink-0 items-center gap-2">
+                      {price.status === "draft" ? (
+                        <button className="admin_btn inline-flex h-[34px] min-w-[76px] items-center justify-center gap-1.5 whitespace-nowrap px-3" onClick={() => void activatePrice(activeProduct, price)} type="button">
+                          <Star className="h-3.5 w-3.5" strokeWidth={1.8} />激活
+                        </button>
+                      ) : null}
                       <button className="input_btn inline-flex h-[34px] min-w-[76px] items-center justify-center gap-1.5 whitespace-nowrap px-3" onClick={() => save(activeProduct, price.id)} type="button">
                         <Save className="h-3.5 w-3.5" strokeWidth={1.8} />
                         保存
@@ -767,41 +808,9 @@ export function PricingEditor({ siteId, products }: { siteId: string; products: 
                     {fieldLabel("到账 Credits")}
                     <input className="inputtext w-full" onChange={(event) => updateDraft(activeProduct.id, "creditsGranted", event.target.value)} value={activeDraft?.creditsGranted ?? 0} />
                   </label>
-                  <label className="block">
-                    {fieldLabel("套餐成片数")}
-                    <input className="inputtext w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "generatedPhotos", event.target.value)} value={String(activeDraft?.metadata.generatedPhotos ?? 0)} />
-                  </label>
-                  <label className="block">
-                    {fieldLabel("可选目的地数")}
-                    <input className="inputtext w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "destinationCount", event.target.value)} value={String(activeDraft?.metadata.destinationCount ?? 0)} />
-                  </label>
-                  <label className="block">
-                    {fieldLabel("承诺交付天数")}
-                    <input className="inputtext w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "deliveryDays", event.target.value)} value={String(activeDraft?.metadata.deliveryDays ?? 0)} />
-                  </label>
-                  <label className="block">
-                    {fieldLabel("修改/重修规则")}
-                    <input className="inputtext w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "revisions", event.target.value)} value={String(activeDraft?.metadata.revisions ?? "")} />
-                  </label>
-                  <label className="block">
-                    {fieldLabel("角标文案")}
-                    <input className="inputtext w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "badgeLabel", event.target.value)} value={String(activeDraft?.metadata.badgeLabel ?? "")} />
-                  </label>
-                  <label className="block">
-                    {fieldLabel("按钮文案")}
-                    <input className="inputtext w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "buttonLabel", event.target.value)} value={String(activeDraft?.metadata.buttonLabel ?? "")} />
-                  </label>
-                  <label className="block">
-                    {fieldLabel("编辑权益文案")}
-                    <input className="inputtext w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "editingLabel", event.target.value)} value={String(activeDraft?.metadata.editingLabel ?? "")} />
-                  </label>
                   <label className="block md:col-span-2">
-                    {fieldLabel("前台套餐描述")}
-                    <textarea className="inputtext min-h-[74px] w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "planSubtitle", event.target.value)} value={String(activeDraft?.metadata.planSubtitle ?? "")} />
-                  </label>
-                  <label className="block md:col-span-2">
-                    {fieldLabel("前台卖点列表（每行一条）")}
-                    <textarea className="inputtext min-h-[112px] w-full" onChange={(event) => updateDraftMeta(activeProduct.id, "featuresText", event.target.value)} value={String(activeDraft?.metadata.featuresText ?? "")} />
+                    {fieldLabel("Stripe Price ID")}
+                    <input className="inputtext w-full font-mono" onChange={(event) => updateDraft(activeProduct.id, "stripePriceId", event.target.value)} value={activeDraft?.stripePriceId ?? ""} />
                   </label>
                 </div>
 

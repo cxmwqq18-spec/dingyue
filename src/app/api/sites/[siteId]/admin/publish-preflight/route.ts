@@ -17,6 +17,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
     products: bundle.products,
     siteAiApps: bundle.siteAiApps,
     mediaAssets: bundle.mediaAssets,
+    storefrontProfile: bundle.storefrontProfile,
+    creativePacks: bundle.creativePacks,
     dirtyPageIds
   }));
   return adminPerfJson(perf, {
@@ -25,6 +27,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ sit
     score: preflight.score,
     blockerCount: preflight.summary.blockers,
     warningCount: preflight.summary.warnings,
-    globalVisualChanges: preflight.globalVisualChanges
+    globalVisualChanges: preflight.globalVisualChanges,
+    checks: preflight.checks
   });
 }

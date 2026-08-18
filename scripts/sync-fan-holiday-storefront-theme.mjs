@@ -37,7 +37,6 @@ const publicAssetBase = "/assets/sites/site_aidreamcapes/fan-holiday-theme";
 const localAssetRoot = path.join(repoRoot, "public", "assets", "sites", "site_aidreamcapes", "fan-holiday-theme");
 const legacyVideoShowcase = showcaseStoreBySlug("aidreamcapes");
 const sourceAssetRoot = path.join(repoRoot, "public", "assets", "sites", "site_aidreamcapes", "creative-packs");
-const supportEmail = "support@aidreamcapes.com";
 const complianceCopy =
   "Use only photos you own or have permission to use. Aidreamcapes does not recreate real celebrities, real athletes, public figures, official team logos, event marks, brand logos, trademarks, or protected materials without permission.";
 const aidreamcapesBranding = {
@@ -1121,10 +1120,10 @@ function homeSections() {
       primaryCta: "Start this album",
       primaryHref: "/login"
     }, [
-      block("proof_fan_scene", "proof_card", { title: "Private fan-scene albums", description: "Meetup-style moments, fan wall portraits, and original supporter scenes.", category: "Fan Scenes", badge: "Featured", imageUrl: asset("covers", "private-fan-scene-album"), previewImages: `${asset("gallery", "private-fan-scene-album-11")}|${asset("gallery", "backstage-meetup-portraits-12")}`, tags: "Fan-Scene Albums|Supporter Moments|Private Gallery", photoCountLabel: "20 Photos", usesLabel: "Fan-scene albums", href: "/collections/fan-scene-albums" }),
-      block("proof_game_day", "proof_card", { title: "Game-day group portraits", description: "Arena energy, watch-party album mood, and supporter group photos without official marks.", category: "Game Day", badge: "Group", imageUrl: asset("covers", "game-day-group-portraits"), previewImages: `${asset("gallery", "game-day-group-portraits-11")}|${asset("gallery", "stadium-night-fan-set-12")}`, tags: "Game-Day Portraits|Watch-Party Albums|Supporter Moments", photoCountLabel: "20 Photos", usesLabel: "Game-day portraits", href: "/collections/game-day-group-photos" }),
-      block("proof_premiere", "proof_card", { title: "Premiere flash portraits", description: "Red-carpet flash, VIP arrival mood, and polished creator portraits.", category: "Premiere", badge: "VIP", imageUrl: asset("covers", "premiere-flash-portraits"), previewImages: `${asset("gallery", "premiere-flash-portraits-11")}|${asset("gallery", "vip-arrival-photo-set-12")}`, tags: "Premiere Sets|VIP Mood|Private Gallery", photoCountLabel: "20 Photos", usesLabel: "Premiere sets", href: "/collections/premiere-style-portraits" }),
-      block("proof_christmas", "proof_card", { title: "Cozy Christmas card portraits", description: "Warm card-ready portraits, festive interiors, and private winter album images.", category: "Christmas", badge: "Holiday", imageUrl: asset("covers", "cozy-card-portrait-set"), previewImages: `${asset("gallery", "christmas-group-album-11")}|${asset("gallery", "cozy-card-portrait-set-12")}`, tags: "Christmas Albums|Holiday Memories|Card-Ready Crops", photoCountLabel: "20 Photos", usesLabel: "Christmas albums", href: "/collections/christmas-holiday-albums" }),
+      block("proof_fan_scene", "proof_card", { title: "Private fan-scene albums", description: "Meetup-style moments, fan wall portraits, and original supporter scenes.", category: "Fan Scenes", badge: "Featured", imageUrl: asset("covers", "private-fan-scene-album"), previewImages: `${asset("gallery", "private-fan-scene-album-11")}|${asset("gallery", "backstage-meetup-portraits-12")}`, tags: "Fan-Scene Albums|Supporter Moments|Private Gallery", photoCountLabel: "", usesLabel: "Fan-scene albums", href: "/collections/fan-scene-albums" }),
+      block("proof_game_day", "proof_card", { title: "Game-day group portraits", description: "Arena energy, watch-party album mood, and supporter group photos without official marks.", category: "Game Day", badge: "Group", imageUrl: asset("covers", "game-day-group-portraits"), previewImages: `${asset("gallery", "game-day-group-portraits-11")}|${asset("gallery", "stadium-night-fan-set-12")}`, tags: "Game-Day Portraits|Watch-Party Albums|Supporter Moments", photoCountLabel: "", usesLabel: "Game-day portraits", href: "/collections/game-day-group-photos" }),
+      block("proof_premiere", "proof_card", { title: "Premiere flash portraits", description: "Red-carpet flash, VIP arrival mood, and polished creator portraits.", category: "Premiere", badge: "VIP", imageUrl: asset("covers", "premiere-flash-portraits"), previewImages: `${asset("gallery", "premiere-flash-portraits-11")}|${asset("gallery", "vip-arrival-photo-set-12")}`, tags: "Premiere Sets|VIP Mood|Private Gallery", photoCountLabel: "", usesLabel: "Premiere sets", href: "/collections/premiere-style-portraits" }),
+      block("proof_christmas", "proof_card", { title: "Cozy Christmas card portraits", description: "Warm card-ready portraits, festive interiors, and private winter album images.", category: "Christmas", badge: "Holiday", imageUrl: asset("covers", "cozy-card-portrait-set"), previewImages: `${asset("gallery", "christmas-group-album-11")}|${asset("gallery", "cozy-card-portrait-set-12")}`, tags: "Christmas Albums|Holiday Memories|Card-Ready Crops", photoCountLabel: "", usesLabel: "Christmas albums", href: "/collections/christmas-holiday-albums" }),
       block("proof_halloween", "proof_card", { title: "Halloween party portraits", description: "Original costume-friendly portraits, dramatic color, and seasonal album scenes.", category: "Halloween", badge: "Seasonal", imageUrl: asset("covers", "halloween-party-portrait-set"), href: "/collections/halloween-party-portraits" })
     ]),
     featured_pack_1: section("dreamshoot_featured_pack", {
@@ -1138,7 +1137,7 @@ function homeSections() {
       secondaryCta: "Browse occasion albums",
       secondaryHref: "/collections",
       photos: "Private album",
-      credits: "24 credits",
+      credits: "",
       privacy: "Permission-safe",
       includedTitle: "Included outputs",
       includedOutputs: "Fan-scene portraits|Meetup-style moments|Supporter photo-wall crops|Spotlight images|Private album cover|Square profile crops|Group-friendly scenes|Download-ready visuals",
@@ -1168,7 +1167,7 @@ function homeSections() {
       secondaryCta: "Browse Christmas albums",
       secondaryHref: "/collections/christmas-holiday-albums",
       photos: "Group album",
-      credits: "22 credits",
+      credits: "",
       privacy: "Permission-safe",
       includedTitle: "Included outputs",
       includedOutputs: "Festive group portraits|Christmas album scenes|Card cover images|Cozy winter crops|Greeting album visuals|Private downloads|Family-style keepsakes|Account-only gallery",
@@ -1198,7 +1197,7 @@ function homeSections() {
       secondaryCta: "Browse Thanksgiving sets",
       secondaryHref: "/collections/thanksgiving-memory-sets",
       photos: "Keepsake set",
-      credits: "20 credits",
+      credits: "Review current credit cost before generation",
       privacy: "Private delivery",
       includedTitle: "Included outputs",
       includedOutputs: "Gratitude portraits|Dinner-table warmth|Friendsgiving memories|Group-friendly keepsakes|Host story crops|Seasonal card images|Private album covers|Download-ready visuals",
@@ -1231,7 +1230,9 @@ function homeSections() {
       description: category.description,
       category: category.label.replace(/ Albums| Portraits| Sets| Photos/g, ""),
       meta: index < 3 ? "Fan-scene direction" : "Holiday direction",
-      credits: `${firstPackDefForCategorySlug(category.slug)?.creditCost ?? 20} credits`,
+      credits: firstPackDefForCategorySlug(category.slug)?.creditCost
+        ? `${firstPackDefForCategorySlug(category.slug).creditCost} credits`
+        : "",
       imageUrl: asset("categories", category.slug),
       href: `/collections/${category.slug}`
     }))),
@@ -1672,19 +1673,19 @@ function applyContactPage(pageJson) {
       tone: "dark",
       imageUrl: asset("covers", "seasonal-celebration-photo-set"),
       primaryCta: "Email support",
-      primaryHref: `mailto:${supportEmail}`,
+      primaryHref: "",
       secondaryCta: "View FAQ",
       secondaryHref: "/faq"
     }, [
-      block("contact_support", "rich_text_card", { meta: "Support", title: supportEmail, description: "For account access, billing review, credit questions, upload help, privacy requests, and delivered album support." }),
+      block("contact_support", "rich_text_card", { meta: "Support", title: "{LIVE_SUPPORT_EMAIL}", description: "For account access, billing review, credit questions, upload help, privacy requests, and delivered album support." }),
       block("contact_safety", "rich_text_card", { meta: "Safety", title: "Source-photo and protected mark questions", description: "Ask before uploading images with unclear rights, official marks, or public-figure references." })
     ]),
     contact_details_1: section("policy_content", {
       title: "Contact information",
       headingLevel: "h2",
-      lastUpdated: "July 30, 2026",
-      contactEmail: supportEmail,
-      body: `<h3>Company</h3><p>Aidreamcapes</p><h3>Contact Us</h3><p><a href="mailto:${supportEmail}">${supportEmail}</a></p>`
+      lastUpdated: "{LIVE_POLICY_EFFECTIVE_DATE}",
+      contactEmail: "{LIVE_SUPPORT_EMAIL}",
+      body: "<h3>Company</h3><p>{LIVE_LEGAL_NAME}</p><h3>Contact Us</h3><p>{LIVE_SUPPORT_EMAIL}</p>"
     }),
     conversion_1: homeSections().conversion_1
   };
@@ -2218,7 +2219,7 @@ function applyThemeSettings(settings) {
     bottomLine: "Private albums, live pricing, and fan-to-holiday photo storytelling in one storefront.",
     logoImageUrl: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c",
     logoAlt: "Aidreamcapes logo for private fan-scene and holiday photo albums",
-    contactEmail: supportEmail,
+    contactEmail: "",
     copyright: "© 2026 Aidreamcapes.com. All rights reserved."
   }, next.navigation.footerLinks.map((link, index) => block(`global_footer_${index + 1}`, "menu_link", link)));
   const currentSettings = sanitizeJson(next.settings_data?.current ?? {});
@@ -2234,7 +2235,7 @@ function applyThemeSettings(settings) {
     footer_text_color: "#d8d0c7",
     title: "Aidreamcapes",
     description: "Private fan-scene and holiday photo albums with visible credits and account-only delivery.",
-    contactEmail: supportEmail
+    contactEmail: ""
   }, next.navigation.footerLinks.map((link, index) => block(`footer_plus_${index + 1}`, "menu_link", link)));
   currentSettings.sections = {
     ...(currentSettings.sections ?? {}),
@@ -2279,16 +2280,27 @@ function applyAidreamcapesProductCopy(state) {
     const copy = aidreamcapesProductCopy[product.id];
     if (!copy) continue;
     product.name = copy.name;
+    const productMetadata = sanitizeJson(product.metadata ?? {});
+    product.metadata = {
+      ...productMetadata,
+      summary: copy.planSubtitle,
+      capabilities: {
+        ...sanitizeJson(productMetadata.capabilities ?? {}),
+        occasionCount: copy.occasionCount,
+        editingLabel: copy.editingLabel,
+        planFamily: copy.planFamily
+      }
+    };
     for (const price of product.prices ?? []) {
       const yearly = price.interval === "year";
       price.label = yearly ? `${copy.name} yearly` : copy.name;
       const metadata = sanitizeJson(price.metadata ?? {});
       delete metadata.destinationCount;
-      metadata.occasionCount = copy.occasionCount;
-      metadata.planSubtitle = copy.planSubtitle;
-      metadata.editingLabel = copy.editingLabel;
-      metadata.planFamily = copy.planFamily;
-      metadata.publicReference = `Aidreamcapes ${copy.name} ${yearly ? "yearly" : price.interval === "one_time" ? "one-time" : "monthly"} fan and holiday album credit plan`;
+      delete metadata.occasionCount;
+      delete metadata.planSubtitle;
+      delete metadata.editingLabel;
+      delete metadata.planFamily;
+      delete metadata.publicReference;
       if (!yearly && price.interval !== "one_time") metadata.discountLabel = "Album launch price";
       if (price.interval === "one_time") metadata.discountLabel = "Occasion credit top-up";
       price.metadata = metadata;

@@ -11,7 +11,8 @@ const DEFAULT_VIDEO_SLUGS = [
   "youtube-video",
   "story-video",
   "meme-video",
-  "product-video"
+  "product-video",
+  "product-ad-video"
 ];
 const HIDDEN_VIDEO_SLUGS = [
   "text-to-video",

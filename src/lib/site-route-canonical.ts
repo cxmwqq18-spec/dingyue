@@ -6,6 +6,44 @@ function isCanonicalPublicHost(host: string | null | undefined): boolean {
   return Boolean(value && !isPlatformHost(value) && value !== "localhost" && value !== "127.0.0.1" && !value.endsWith(".localhost"));
 }
 
+function normalizedPathname(pathname: string): string {
+  return !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
+}
+
+const POLICY_PUBLIC_TO_INTERNAL = new Map<string, string>([
+  ["/privacy", "/policies/privacy"], ["/privacy-policy", "/policies/privacy"], ["/policies/privacy", "/policies/privacy"], ["/policies/privacy-policy", "/policies/privacy"],
+  ["/terms", "/policies/terms"], ["/terms-of-service", "/policies/terms"], ["/policies/terms", "/policies/terms"], ["/policies/terms-of-service", "/policies/terms"],
+  ["/cookies", "/policies/cookies"], ["/cookie-policy", "/policies/cookies"], ["/policies/cookies", "/policies/cookies"], ["/policies/cookie-policy", "/policies/cookies"],
+  ["/refunds", "/policies/refunds"], ["/refund-policy", "/policies/refunds"], ["/policies/refunds", "/policies/refunds"], ["/policies/refund", "/policies/refunds"],
+  ["/content", "/policies/content"], ["/content-policy", "/policies/content"], ["/policies/content", "/policies/content"],
+  ["/shipping", "/policies/shipping"], ["/shipping-policy", "/policies/shipping"], ["/delivery-policy", "/policies/shipping"], ["/policies/shipping", "/policies/shipping"], ["/policies/delivery", "/policies/shipping"], ["/policies/delivery-policy", "/policies/shipping"],
+  ["/children-privacy", "/policies/children-privacy"], ["/children-privacy-policy", "/policies/children-privacy"], ["/childrens-privacy", "/policies/children-privacy"], ["/policies/children-privacy", "/policies/children-privacy"], ["/policies/children", "/policies/children-privacy"], ["/policies/children-privacy-policy", "/policies/children-privacy"], ["/policies/childrens-privacy", "/policies/children-privacy"],
+  ["/state-privacy", "/policies/state-privacy"], ["/state-privacy-rights", "/policies/state-privacy"], ["/california-privacy", "/policies/state-privacy"], ["/ccpa", "/policies/state-privacy"], ["/policies/state-privacy", "/policies/state-privacy"], ["/policies/state-privacy-rights", "/policies/state-privacy"], ["/policies/california-privacy", "/policies/state-privacy"], ["/policies/ccpa", "/policies/state-privacy"]
+]);
+
+const POLICY_INTERNAL_TO_PUBLIC = new Map<string, string>([
+  ["/policies/privacy", "/privacy"], ["/policies/privacy-policy", "/privacy"], ["/privacy", "/privacy"], ["/privacy-policy", "/privacy"],
+  ["/policies/terms", "/terms"], ["/policies/terms-of-service", "/terms"], ["/terms", "/terms"], ["/terms-of-service", "/terms"],
+  ["/policies/cookies", "/cookies"], ["/policies/cookie-policy", "/cookies"], ["/cookies", "/cookies"], ["/cookie-policy", "/cookies"],
+  ["/policies/refunds", "/refunds"], ["/policies/refund", "/refunds"], ["/refunds", "/refunds"], ["/refund-policy", "/refunds"],
+  ["/policies/content", "/content"], ["/content", "/content"], ["/content-policy", "/content"],
+  ["/policies/shipping", "/shipping"], ["/policies/delivery", "/shipping"], ["/policies/delivery-policy", "/shipping"], ["/shipping", "/shipping"], ["/shipping-policy", "/shipping"], ["/delivery-policy", "/shipping"],
+  ["/policies/children-privacy", "/children-privacy"], ["/policies/children", "/children-privacy"], ["/policies/children-privacy-policy", "/children-privacy"], ["/policies/childrens-privacy", "/children-privacy"], ["/children-privacy", "/children-privacy"], ["/children-privacy-policy", "/children-privacy"], ["/childrens-privacy", "/children-privacy"],
+  ["/policies/state-privacy", "/state-privacy"], ["/policies/state-privacy-rights", "/state-privacy"], ["/policies/california-privacy", "/state-privacy"], ["/policies/ccpa", "/state-privacy"], ["/state-privacy", "/state-privacy"], ["/state-privacy-rights", "/state-privacy"], ["/california-privacy", "/state-privacy"], ["/ccpa", "/state-privacy"]
+]);
+
+/** Public policy URLs are the only URLs exposed to search engines and users. */
+export function publicPolicyPathToInternalPath(pathname: string): string {
+  const requestedPath = normalizedPathname(pathname);
+  return POLICY_PUBLIC_TO_INTERNAL.get(requestedPath) ?? requestedPath;
+}
+
+/** Internal policy routes are implementation paths and must map back to public URLs. */
+export function internalPolicyPathToPublicPath(pathname: string): string {
+  const requestedPath = normalizedPathname(pathname);
+  return POLICY_INTERNAL_TO_PUBLIC.get(requestedPath) ?? requestedPath;
+}
+
 export function redirectLegacySiteSlug(siteSlug: string, pathname = ""): string {
   const publicSlug = publicSiteSlug(siteSlug);
   if (publicSlug !== siteSlug) {
@@ -16,29 +54,11 @@ export function redirectLegacySiteSlug(siteSlug: string, pathname = ""): string 
 }
 
 export function shortPolicyPath(pathname: string): string {
-  const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
-  return requestedPath === "/policies/privacy" || requestedPath === "/policies/privacy-policy" || requestedPath === "/privacy-policy" ? "/privacy" :
-    requestedPath === "/policies/terms" || requestedPath === "/policies/terms-of-service" || requestedPath === "/terms-of-service" ? "/terms" :
-    requestedPath === "/policies/cookies" || requestedPath === "/policies/cookie-policy" || requestedPath === "/cookie-policy" ? "/cookies" :
-    requestedPath === "/policies/refunds" || requestedPath === "/policies/refund" || requestedPath === "/refund-policy" ? "/refunds" :
-    requestedPath === "/policies/content" || requestedPath === "/content-policy" ? "/content" :
-    requestedPath === "/policies/shipping" || requestedPath === "/policies/delivery" || requestedPath === "/policies/delivery-policy" || requestedPath === "/shipping-policy" || requestedPath === "/delivery-policy" ? "/shipping" :
-    requestedPath === "/policies/children-privacy" || requestedPath === "/policies/children" || requestedPath === "/policies/children-privacy-policy" || requestedPath === "/policies/childrens-privacy" || requestedPath === "/children-privacy-policy" || requestedPath === "/childrens-privacy" ? "/children-privacy" :
-    requestedPath === "/policies/state-privacy" || requestedPath === "/policies/state-privacy-rights" || requestedPath === "/policies/california-privacy" || requestedPath === "/policies/ccpa" || requestedPath === "/state-privacy-rights" || requestedPath === "/california-privacy" || requestedPath === "/ccpa" ? "/state-privacy" :
-    requestedPath;
+  return internalPolicyPathToPublicPath(pathname);
 }
 
 export function policyPageSlug(pathname: string): string {
-  const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
-  return requestedPath === "/privacy" || requestedPath === "/privacy-policy" || requestedPath === "/policies/privacy-policy" ? "/policies/privacy" :
-    requestedPath === "/terms" || requestedPath === "/terms-of-service" || requestedPath === "/policies/terms-of-service" ? "/policies/terms" :
-    requestedPath === "/cookies" || requestedPath === "/cookie-policy" || requestedPath === "/policies/cookie-policy" ? "/policies/cookies" :
-    requestedPath === "/refunds" || requestedPath === "/refund-policy" || requestedPath === "/policies/refund" ? "/policies/refunds" :
-    requestedPath === "/content" || requestedPath === "/content-policy" ? "/policies/content" :
-    requestedPath === "/shipping" || requestedPath === "/shipping-policy" || requestedPath === "/delivery-policy" || requestedPath === "/policies/delivery" || requestedPath === "/policies/delivery-policy" ? "/policies/shipping" :
-    requestedPath === "/children-privacy" || requestedPath === "/children-privacy-policy" || requestedPath === "/childrens-privacy" || requestedPath === "/policies/children" || requestedPath === "/policies/children-privacy-policy" || requestedPath === "/policies/childrens-privacy" ? "/policies/children-privacy" :
-    requestedPath === "/state-privacy" || requestedPath === "/state-privacy-rights" || requestedPath === "/california-privacy" || requestedPath === "/ccpa" || requestedPath === "/policies/state-privacy-rights" || requestedPath === "/policies/california-privacy" || requestedPath === "/policies/ccpa" ? "/policies/state-privacy" :
-    requestedPath;
+  return publicPolicyPathToInternalPath(pathname);
 }
 
 export function publicContentPageSlug(pathname: string): string {

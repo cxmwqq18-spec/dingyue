@@ -102,6 +102,43 @@ export interface ThemeDraftMeta {
   etag: string;
 }
 
+export interface StorefrontAddress {
+  line1: string;
+  line2?: string;
+  city: string;
+  region: string;
+  postalCode: string;
+  country: string;
+}
+
+export interface StorefrontProfileJson {
+  identity: {
+    legalName?: string;
+    entityType?: string;
+    address?: StorefrontAddress;
+    supportEmail?: string;
+    phone?: string;
+    sameAs: string[];
+  };
+  policyFacts: {
+    usesCustomerMediaForTraining?: boolean;
+    sourceMediaRetentionDays?: number;
+    refundReviewRequired?: boolean;
+    refundWindowDays?: number;
+    effectiveDate?: string;
+  };
+}
+
+export interface StorefrontProfile {
+  id: string;
+  siteId: string;
+  draftJson: StorefrontProfileJson;
+  publishedJson: StorefrontProfileJson;
+  draftMeta?: ThemeDraftMeta;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface ThemePage {
   id: string;
   siteId: string;
@@ -149,7 +186,8 @@ export interface ThemeSettings {
       index: boolean;
       follow: boolean;
     };
-    pages: Record<
+    /** @deprecated Page SEO is stored on ThemePage draftJson/publishedJson. */
+    pages?: Record<
       string,
       {
         title: string;
@@ -274,6 +312,8 @@ export interface Site {
     publishedJson: ThemeSettings;
     draftMeta?: ThemeDraftMeta;
   };
+  storefrontProfile?: StorefrontProfile;
+  latestPublication?: ThemePublication;
   pages: ThemePage[];
   mediaAssets?: MediaAsset[];
 }
@@ -449,6 +489,21 @@ export interface Price {
   creditsGranted: number;
   stripePriceId: string;
   metadata?: Record<string, string | number | boolean>;
+  status: "draft" | "active" | "archived";
+  effectiveFrom?: string;
+  effectiveTo?: string;
+  replacesPriceId?: string;
+  providerVerifiedAt?: string;
+  providerFingerprint?: string;
+}
+
+export interface ProductMetadata {
+  summary?: string;
+  features?: string[];
+  capabilities?: Record<string, boolean | string | number>;
+  badgeLabel?: string;
+  buttonLabel?: string;
+  sortOrder?: number;
 }
 
 export interface Product {
@@ -457,6 +512,7 @@ export interface Product {
   name: string;
   type: "subscription" | "credit_pack";
   status: "active" | "draft";
+  metadata?: ProductMetadata;
   prices: Price[];
 }
 
@@ -642,6 +698,7 @@ export interface Order {
   id: string;
   siteId: string;
   customerId: string;
+  priceId?: string;
   status: "created" | "checkout_started" | "paid" | "fulfilled" | "expired" | "refunded";
   amountCents: number;
   currency: string;
@@ -754,11 +811,20 @@ export interface ThemePublication {
   snapshot: {
     pages: Array<{ id: string; slug: string; publishedJson: ThemePageJson }>;
     themeSettings: ThemeSettings;
+    storefrontProfile?: StorefrontProfileJson;
     saasTheme?: unknown;
   };
   pageCount?: number;
   sectionCount?: number;
   snapshotBytes?: number;
+  scope?: {
+    type: "page" | "site";
+    pageIds: string[];
+    includeThemeSettings: boolean;
+    includeStorefrontProfile: boolean;
+  };
+  manifestHash?: string;
+  factsRevision?: string;
   publishedBy: string;
   publishedAt: string;
 }

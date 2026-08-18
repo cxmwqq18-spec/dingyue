@@ -20,6 +20,7 @@ import {
   type PreviewViewportPreset
 } from "@/components/designer/designer-preview-protocol";
 import { ThemeRenderer } from "@/components/theme-renderer";
+import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { themeStyleVars } from "@/lib/theme";
 import type { CreativePack, Product, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeSettings } from "@/lib/types";
 
@@ -34,6 +35,7 @@ export function PreviewFrame({
   siteAiApps,
   creativePacks,
   themeSettings,
+  storefrontContext,
   pageMenuOptions,
   device,
   previewMode,
@@ -80,6 +82,7 @@ export function PreviewFrame({
   siteAiApps: SiteAiApp[];
   creativePacks: CreativePack[];
   themeSettings: ThemeSettings;
+  storefrontContext: StorefrontContext;
   currentTemplateName: string;
   currentPageDirty: boolean;
   changedSectionCount: number;
@@ -575,7 +578,7 @@ export function PreviewFrame({
                     }}
                   />
                   <ThemeRenderer
-                    creativePacks={creativePacks}
+                    creativePacks={creativePacks.filter((pack) => storefrontContext.catalog.activePacks.some((activePack) => activePack.id === pack.id))}
                     mode="preview"
                     page={draft}
                     previewSelection={{ sectionId: selectedPreviewSectionId, blockId: selectedPreviewBlockId }}
@@ -583,6 +586,7 @@ export function PreviewFrame({
                     settings={themeSettings}
                     site={site}
                     siteAiApps={siteAiApps}
+                    storefrontContext={storefrontContext}
                   />
                 </div>
               )}

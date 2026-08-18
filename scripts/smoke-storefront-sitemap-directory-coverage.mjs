@@ -37,6 +37,7 @@ const siteChecks = [
       "/ai-video-generation/story-video",
       "/ai-video-generation/meme-video",
       "/ai-video-generation/product-video",
+      "/ai-video-generation/product-ad-video",
       "/blog",
       "/privacy",
       "/terms",
@@ -145,7 +146,8 @@ const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
   "/ai-video-generation/youtube-video",
   "/ai-video-generation/story-video",
   "/ai-video-generation/meme-video",
-  "/ai-video-generation/product-video"
+  "/ai-video-generation/product-video",
+  "/ai-video-generation/product-ad-video"
 ];
 const DREAMSHOOT_VIDEO_GENERATION_SLUGS = new Set(DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS.map((pathName) => pathName.split("/").pop()));
 

@@ -1,6 +1,4 @@
-import type { Metadata } from "next";
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
-import { publicSiteUrlFromParts } from "@/lib/domain-routing";
 import { dreamshootPackProfileForSlug, type DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import {
@@ -14,7 +12,7 @@ import {
   publicCollectionPathForSite,
   publicVideoGenerationPathForSite
 } from "@/lib/photo-package-taxonomy";
-import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
 export type SeoDirectoryKind = "collection" | "tool";
 
@@ -104,41 +102,6 @@ function withSpanishBrand(
     title: metadata.title.replaceAll(previousBrand, brand),
     description: metadata.description.replaceAll(previousBrand, brand),
     keywords: metadata.keywords.replaceAll(previousBrand, brand)
-  };
-}
-
-function seoDirectoryIcons(site: Site): Metadata["icons"] {
-  if (isSpanishXbySite(site)) {
-    const aidreamcapes = isAidreamcapesSite(site);
-    const basePath = aidreamcapes ? "/assets/sites/site_aidreamcapes_eu/brand" : "/assets/sites/site_aidreamshoots/brand";
-    const iconPrefix = aidreamcapes ? "aidreamcapes" : "aidreamshoots";
-    const logo = aidreamcapes ? "aidreamcapes-logo-refined.svg" : "aidreamshoots-logo-refined.svg";
-    return {
-      icon: [
-        { url: `${basePath}/${iconPrefix}-icon-192.png?v=20260717a`, type: "image/png", sizes: "192x192" },
-        { url: `${basePath}/${logo}?v=20260717a`, type: "image/svg+xml" }
-      ],
-      shortcut: `${basePath}/${iconPrefix}-icon-192.png?v=20260717a`,
-      apple: [{ url: `${basePath}/${iconPrefix}-icon-180.png?v=20260717a`, sizes: "180x180", type: "image/png" }]
-    };
-  }
-  if (isAidreamcapesSite(site)) {
-    return {
-      icon: [
-        { url: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260702", type: "image/png", sizes: "192x192" },
-        { url: "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260702", type: "image/svg+xml" }
-      ],
-      shortcut: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260702",
-      apple: [{ url: "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-180.png?v=20260702", sizes: "180x180", type: "image/png" }]
-    };
-  }
-  return {
-    icon: [
-      { url: "/assets/dreamshoot/brand/dreamshootai-icon-192.png?v=20260702", type: "image/png", sizes: "192x192" },
-      { url: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260702", type: "image/svg+xml" }
-    ],
-    shortcut: "/assets/dreamshoot/brand/dreamshootai-icon-192.png?v=20260702",
-    apple: [{ url: "/assets/dreamshoot/brand/dreamshootai-icon-180.png?v=20260702", sizes: "180x180", type: "image/png" }]
   };
 }
 
@@ -456,89 +419,6 @@ export function getDreamshootPublicSeoPageMetadataForSite(
   }
   return isAidreamcapesSite(site) ? aidreamcapesPublicSeoPageMetadata[normalizedPath] : dreamshootPublicSeoPageMetadata[normalizedPath];
 }
-
-const aidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
-  "/tools": {
-    title: "Aidreamcapes fan-scene and holiday photo tools",
-    description:
-      "Explore Aidreamcapes tools for fan-scene photo albums, game-day group portraits, premiere-inspired photo sets, Christmas group albums, Thanksgiving keepsake sets, Halloween party portraits, and private gallery delivery.",
-    keywords: "Aidreamcapes tools, fan-scene album builder, game-day group portrait maker, Christmas group album studio, Halloween party portrait maker",
-    canonicalPath: "/tools",
-    index: true,
-    follow: true
-  },
-  "/terms": {
-    title: "Aidreamcapes Terms of Service",
-    description:
-      "Review Aidreamcapes account, credit, upload, checkout, generation, private gallery, refund, and acceptable-use terms before creating portraits.",
-    keywords: "Aidreamcapes terms, AI portrait terms, private gallery terms, AI credit policy",
-    canonicalPath: "/terms",
-    index: true,
-    follow: true
-  }
-};
-
-const spanishMydreamshootsFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
-  "/login": {
-    title: "Iniciar sesion en AIdreamshoots",
-    description: "Accede a AIdreamshoots para gestionar subidas privadas, creditos, pedidos de fotos con IA, albumes y descargas.",
-    keywords: "AIdreamshoots login, cuenta fotos IA, galeria privada",
-    canonicalPath: "/login",
-    index: false,
-    follow: true
-  },
-  "/pricing": {
-    title: "Precios AIdreamshoots - creditos y planes de fotos IA",
-    description: "Compara planes, creditos mensuales, recargas puntuales, pago seguro y entrega de galerias privadas antes de crear fotos con IA.",
-    keywords: "precios AIdreamshoots, creditos IA, planes fotos IA",
-    canonicalPath: "/pricing",
-    index: true,
-    follow: true
-  },
-  "/tools": {
-    title: "Herramientas de fotos con IA | AIdreamshoots",
-    description: "Explora herramientas para retratos profesionales, fondos, retoque, video corto, probador virtual, paquetes privados y galerias con creditos visibles.",
-    keywords: "herramientas IA, fotos IA, retratos profesionales IA, cambiador de fondo",
-    canonicalPath: "/tools",
-    index: true,
-    follow: true
-  }
-};
-
-const spanishAidreamcapesFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSeed> = {
-  "/login": {
-    title: "Iniciar sesion en AIdreamcapes",
-    description: "Accede a AIdreamcapes para gestionar subidas privadas, creditos, pedidos de retratos de viaje, galerias y descargas.",
-    keywords: "AIdreamcapes login, cuenta retratos IA, galeria privada",
-    canonicalPath: "/login",
-    index: false,
-    follow: true
-  },
-  "/pricing": {
-    title: "Precios AIdreamcapes - creditos para retratos de viaje",
-    description: "Compara planes, creditos mensuales, recargas puntuales, pago seguro y entrega privada antes de crear retratos de viaje con IA.",
-    keywords: "precios AIdreamcapes, creditos IA, retratos de viaje IA",
-    canonicalPath: "/pricing",
-    index: true,
-    follow: true
-  },
-  "/tools": {
-    title: "Herramientas de retratos de viaje | AIdreamcapes",
-    description: "Explora herramientas para retratos de ruta, luz costera, escenas de viaje, postales y galerias privadas con IA.",
-    keywords: "herramientas viaje IA, retratos de ruta, fotos de destino IA",
-    canonicalPath: "/tools",
-    index: true,
-    follow: true
-  },
-  "/terms": {
-    title: "Terminos de servicio | AIdreamcapes",
-    description: "Revisa los terminos de cuenta, creditos, subidas, pago, generacion, galerias privadas, reembolsos y uso aceptable.",
-    keywords: "terminos AIdreamcapes, politica creditos IA, galeria privada",
-    canonicalPath: "/terms",
-    index: true,
-    follow: true
-  }
-};
 
 const collectionDirectory: Record<string, SeoDirectorySeed> = {
   beauty: {
@@ -1272,6 +1152,35 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     ctaLabel: "Create My Product Video",
     ctaHref: "/app/create#step-video"
   },
+  "product-ad-video": {
+    label: "Product Ad Video",
+    title: "AI Product Ad Video Generator – Create Product Ads With Clear Proof & CTA | myDreamshoots",
+    description:
+      "Create product ad videos around a specific audience, problem or desire, product promise, visual proof, offer, and call to action. Plan launch ads, problem-solution ads, benefit ads, offers, comparison ads, and retargeting reminders.",
+    keywords:
+      "AI product ad video generator, product ad video maker, AI product advertising video, product video ad generator, ecommerce video ad maker, social media product ad video, product launch ad video, product marketing video generator",
+    h2: "build the ad around one buyer decision",
+    h3: ["Six paid-creative problems", "Audience, promise, proof, offer, and CTA", "Responsible ad evidence review"],
+    intro:
+      "Product Ad Video helps customers plan a campaign creative around one defined audience and buying decision instead of cramming every product feature into one ad.",
+    details: [
+      "Use it for new product launches, problem-solution ads, benefit or feature ads, limited-time offers, comparisons, and retargeting reminders.",
+      "Build around Audience, Problem or Desire, Product Promise, Proof, Offer, and CTA.",
+      "Keep claims, prices, discounts, availability, testimonials, comparisons, and before-and-after evidence accurate.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["New product launches", "Problem-solution ads", "Benefit and feature ads", "Limited-time offers", "Comparison ads", "Retargeting reminders"],
+    workflow: ["Choose the ad job.", "Define the audience and decision.", "Add approved product evidence and offer terms.", "Generate and review the draft before publishing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore Product Video", href: "/ai-video-generation/product-video" },
+      { label: "Explore Social Media Video", href: "/ai-video-generation/social-media-video" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create My Product Ad",
+    ctaHref: "/app/create#step-video"
+  },
   "world-cup-fan-photos": {
     label: "World Cup Fan Photos",
     title: "AI World Cup Fan Photo Maker - stadium portraits and match-day posters",
@@ -1394,6 +1303,7 @@ const dreamshootDefaultPublicToolSlugs = new Set([
   "story-video",
   "meme-video",
   "product-video",
+  "product-ad-video",
   "background-changer",
   "background-remover",
   "magic-eraser",
@@ -2500,42 +2410,6 @@ export function getExplicitSeoDirectorySlugsForSite(site: Site | undefined, kind
   return Object.keys(kind === "collection" ? mydreamshootsCollectionDirectory : toolDirectory);
 }
 
-function absoluteSeoImageUrl(site: Site, imagePath = ""): string {
-  let value = imagePath.trim();
-  if (!value) return "";
-  if (value.startsWith("http://") || value.startsWith("https://")) {
-    try {
-      const url = new URL(value);
-      if (!["localhost", "127.0.0.1", "::1"].includes(url.hostname)) return value;
-      value = `${url.pathname}${url.search}`;
-    } catch {
-      return value;
-    }
-  }
-  const domain = site.primaryDomain?.trim();
-  if (!domain || domain.includes("localhost")) return value;
-  const base = domain.startsWith("http://") || domain.startsWith("https://") ? domain.replace(/\/$/, "") : `https://${domain}`;
-  return `${base}${value.startsWith("/") ? value : `/${value}`}`;
-}
-
-function absoluteRouteSeoImageUrl(options: { primaryDomain?: string; ogImage?: string }): string {
-  let value = (options.ogImage ?? "").trim();
-  if (!value) return "";
-  if (value.startsWith("http://") || value.startsWith("https://")) {
-    try {
-      const url = new URL(value);
-      if (!["localhost", "127.0.0.1", "::1"].includes(url.hostname)) return value;
-      value = `${url.pathname}${url.search}`;
-    } catch {
-      return value;
-    }
-  }
-  const domain = options.primaryDomain?.trim();
-  if (!domain || domain.includes("localhost")) return value;
-  const base = domain.startsWith("http://") || domain.startsWith("https://") ? domain.replace(/\/$/, "") : `https://${domain}`;
-  return `${base}${value.startsWith("/") ? value : `/${value}`}`;
-}
-
 function titleCase(slug: string): string {
   return slug.split("-").filter(Boolean).map((part) => {
     const lower = part.toLowerCase();
@@ -2927,114 +2801,6 @@ function spanishDirectorySeed(kind: SeoDirectoryKind, slug: string, brandName: s
   };
 }
 
-function normalizeRouteMetadataPath(value: string): string {
-  const trimmed = value.trim();
-  if (!trimmed || trimmed === "/") return "/";
-  return `/${trimmed.replace(/^\/+/, "").replace(/\/+$/, "")}`;
-}
-
-function dreamshootFallbackMetadataCanonical(siteSlug: string, primaryDomain: string | undefined, canonicalPath: string): string {
-  return publicSiteUrlFromParts({ slug: siteSlug, primaryDomain: primaryDomain ?? "" }, canonicalPath);
-}
-
-function seoDirectoryCanonicalUrl(site: Site, canonicalPath: string): string {
-  const normalizedPath = !canonicalPath || canonicalPath === "/" ? "/" : canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`;
-  const domain = String(site.primaryDomain ?? "").trim().replace(/^https?:\/\//i, "").replace(/\/$/, "");
-  if (domain) {
-    const protocol = domain.includes("localhost") || domain.startsWith("127.0.0.1") ? "http" : "https";
-    return `${protocol}://${domain}${normalizedPath === "/" ? "" : normalizedPath}`;
-  }
-  return publicSiteUrlFromParts({ slug: site.slug, primaryDomain: "" }, normalizedPath);
-}
-
-function fallbackRouteSiteName(siteSlug: string, options: { primaryDomain?: string; siteName?: string }): string {
-  const siteIdentity = `${siteSlug} ${options.primaryDomain ?? ""} ${options.siteName ?? ""}`.toLowerCase();
-  if (isSpanishStorefrontRequestIdentity(siteIdentity)) return options.siteName?.trim() || siteSlug;
-  if (siteIdentity.includes("aidreamcapes")) return "Aidreamcapes";
-  if (siteIdentity.includes("mydreamshoots") || siteIdentity.includes("dreamshoot")) return "myDreamshoots";
-  return options.siteName?.trim() || "myDreamshoots";
-}
-
-export function metadataForDreamshootFallbackRoute(
-  siteSlug: string,
-  path: string,
-  options: { primaryDomain?: string; ogImage?: string; siteName?: string } = {}
-): Metadata {
-  const normalizedPath = normalizeRouteMetadataPath(path);
-  const siteIdentity = `${siteSlug} ${options.primaryDomain ?? ""} ${options.siteName ?? ""}`.toLowerCase();
-  const aidreamcapes = siteIdentity.includes("aidreamcapes");
-  const spanishXby = isSpanishStorefrontRequestIdentity(siteIdentity);
-  const spanishBrand = options.siteName?.trim() || (aidreamcapes ? "AIdreamcapes" : "AIdreamshoots");
-  const publicMetadata = spanishXby
-    ? aidreamcapes
-      ? spanishAidreamcapesPublicSeoPageMetadata
-      : spanishMydreamshootsPublicSeoPageMetadata
-    : aidreamcapes
-      ? aidreamcapesPublicSeoPageMetadata
-      : dreamshootPublicSeoPageMetadata;
-  const fallbackMetadata = spanishXby
-    ? aidreamcapes
-      ? spanishAidreamcapesFallbackRouteMetadata
-      : spanishMydreamshootsFallbackRouteMetadata
-    : aidreamcapes
-      ? aidreamcapesFallbackRouteMetadata
-      : dreamshootFallbackRouteMetadata;
-  const defaultSeed = spanishXby
-    ? {
-        title: spanishBrand,
-        description: aidreamcapes
-          ? `${spanishBrand} es una tienda privada para retratos de viaje con IA, creditos, subidas privadas y galerias de cliente.`
-          : `${spanishBrand} es una tienda privada para fotos con IA, creditos, paquetes creativos y galerias de cliente.`,
-        keywords: aidreamcapes ? `${spanishBrand}, albumes de fans, recuerdos festivos, galeria privada` : `${spanishBrand}, fotos IA, galeria privada`,
-        canonicalPath: normalizedPath,
-        index: false,
-        follow: true
-      }
-    : {
-        title: aidreamcapes ? "Aidreamcapes" : "myDreamshoots",
-        description: aidreamcapes
-          ? "Aidreamcapes is a private AI photo workspace for fan-scene albums, game-day group portraits, holiday memory albums, visible credits, and customer-only galleries."
-          : "myDreamshoots is a private AI photo workspace for uploads, credits, creator photo packages, AI tools, and customer-only galleries.",
-        keywords: aidreamcapes ? "Aidreamcapes, fan-scene photo albums, holiday memory albums, private occasion gallery" : "myDreamshoots, AI photo workspace, AI creator photo packages, private photo gallery",
-        canonicalPath: normalizedPath,
-        index: false,
-        follow: true
-      };
-  const selectedSeed =
-    publicMetadata[normalizedPath] ??
-    fallbackMetadata[normalizedPath] ??
-    (!aidreamcapes ? dreamshootPublicSeoPageMetadata[normalizedPath] : undefined) ??
-    (!aidreamcapes ? dreamshootFallbackRouteMetadata[normalizedPath] : undefined) ??
-    defaultSeed;
-  const seed = spanishXby ? withSpanishBrand(selectedSeed, spanishBrand, aidreamcapes) ?? defaultSeed : selectedSeed;
-  const canonical = dreamshootFallbackMetadataCanonical(siteSlug, options.primaryDomain, seed.canonicalPath);
-  const ogImage = absoluteRouteSeoImageUrl(options);
-  const siteName = fallbackRouteSiteName(siteSlug, options);
-  return {
-    title: seed.title,
-    description: seed.description,
-    keywords: seed.keywords || undefined,
-    alternates: { canonical },
-    robots: {
-      index: seed.index,
-      follow: seed.follow
-    },
-    openGraph: {
-      title: seed.title,
-      description: seed.description,
-      url: canonical,
-      siteName,
-      ...(ogImage ? { images: [{ url: ogImage }] } : {})
-    },
-    twitter: {
-      card: ogImage ? "summary_large_image" : "summary",
-      title: seed.title,
-      description: seed.description,
-      ...(ogImage ? { images: [ogImage] } : {})
-    }
-  };
-}
-
 export function getSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: string): SeoDirectoryContent {
   return getSeoDirectoryContentForSite(undefined, kind, rawSlug);
 }
@@ -3085,40 +2851,28 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
   };
 }
 
-export function metadataForSeoDirectory(site: Site, kind: SeoDirectoryKind, rawSlug: string): Metadata {
+export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, site?: Site): ThemePageJson {
   const item = getSeoDirectoryContentForSite(site, kind, rawSlug);
-  const spanishXby = isSpanishXbySite(site);
   const indexableDreamshootDefaultTool =
     kind === "tool" &&
     !isAidreamcapesSite(site) &&
     dreamshootDefaultPublicToolSlugs.has(item.slug);
-  const canonicalPath = item.canonicalPath;
-  const canonical = seoDirectoryCanonicalUrl(site, canonicalPath);
-  const ogImage = absoluteSeoImageUrl(site, site.themeSettings.publishedJson.seo?.defaultOgImage);
-  const siteName = fallbackRouteSiteName(site.slug, { primaryDomain: site.primaryDomain, siteName: site.branding.logoText || site.name });
   return {
-    title: item.title,
-    description: item.description,
-    keywords: item.keywords,
-    alternates: { canonical },
-    robots: {
-      index: spanishXby || item.explicit || indexableDreamshootDefaultTool,
-      follow: true
-    },
-	    openGraph: {
-	      title: item.title,
-	      description: item.description,
-	      url: canonical,
-	      siteName,
-	      ...(ogImage ? { images: [ogImage] } : {})
-	    },
-    twitter: {
-      card: ogImage ? "summary_large_image" : "summary",
+    ...pageJson,
+    seo: {
+      ...pageJson.seo,
       title: item.title,
       description: item.description,
-      ...(ogImage ? { images: [ogImage] } : {})
-    },
-    icons: seoDirectoryIcons(site)
+      keywords: item.keywords,
+      canonicalPath: item.canonicalPath,
+      canonical: item.canonicalPath,
+      index: isSpanishXbySite(site) || item.explicit || indexableDreamshootDefaultTool,
+      follow: true,
+      robots: {
+        index: isSpanishXbySite(site) || item.explicit || indexableDreamshootDefaultTool,
+        follow: true
+      }
+    }
   };
 }
 
@@ -3207,7 +2961,7 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
     ? { [firstSection]: focusedFirstSection ?? pageJson.sections[firstSection] }
     : pageJson.sections;
   return {
-    ...pageJson,
+    ...withSeoDirectorySeo(pageJson, kind, rawSlug, options.site),
     sectionsOrder,
     sections: {
       ...existingSections,

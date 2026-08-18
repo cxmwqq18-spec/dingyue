@@ -4,7 +4,8 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { cache } from "react";
 import { renderToolPage, resolveToolPageForSite } from "@/lib/storefront-render";
 import { readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
-import { canonicalSeoDirectoryPathForSite, metadataForSeoDirectory } from "@/lib/dreamshoot-seo-content";
+import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
+import { metadataForPublishedStorefrontDirectoryPage } from "@/lib/storefront-metadata";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { publicSiteSlug as normalizePublicSiteSlug } from "@/lib/domain-routing";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
@@ -81,9 +82,16 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const { siteSlug, toolSlug } = await params;
   if (normalizePublicSiteSlug(siteSlug) === "mydreamshoots") return {};
   if (legacyToolRedirectPath(siteSlug, toolSlug)) return {};
-  const { site, matched } = await resolveToolPage(siteSlug, toolSlug);
-  if (!site || !matched) return {};
-  return metadataForSeoDirectory(site, "tool", toolSlug);
+  const { state, site, page, matched } = await resolveToolPage(siteSlug, toolSlug);
+  if (!state || !site || !page || !matched) return {};
+  return metadataForPublishedStorefrontDirectoryPage({
+    site,
+    page,
+    kind: "tool",
+    directorySlug: toolSlug,
+    products: state.products,
+    creativePacks: state.creativePacks
+  });
 }
 
 export default async function ToolPage({
