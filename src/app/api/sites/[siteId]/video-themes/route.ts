@@ -14,6 +14,7 @@ import {
 } from "@/lib/stores/site-store";
 import type { PlatformState, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import { normalizeVideoModelPricing } from "@/lib/video-frame-config";
+import { isBlockedPublicVideoThemeSlugForSite, publicVideoThemeSlugListForSite } from "@/lib/video-theme-public-scope";
 import { videoProviderModelFamiliesForProviders } from "@/lib/video-provider-family";
 import { runnableVideoProviderModelFamiliesForRequest } from "@/lib/video-provider-availability";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit, isVideoProviderModel } from "@/lib/video-provider-limits";
@@ -74,6 +75,32 @@ function categoryWhere(category?: string): Prisma.VideoThemeWhereInput | undefin
       { category: { is: { slug: normalizedCategory } } },
       { category: { is: { label: { equals: rawCategory, mode: "insensitive" } } } }
     ]
+  };
+}
+
+function publicVideoThemeWhere(siteId: string): Prisma.VideoThemeWhereInput {
+  const slugList = publicVideoThemeSlugListForSite(siteId);
+  return {
+    siteId,
+    status: "active",
+    ...(slugList?.length
+      ? { slug: { in: [...slugList] } }
+      : isBlockedPublicVideoThemeSlugForSite(siteId, "creator-scene-motion")
+        ? { slug: { not: "creator-scene-motion" } }
+        : {}),
+    OR: [
+      { categoryId: null },
+      { category: { is: { status: "active" } } }
+    ]
+  };
+}
+
+function publicVideoThemeCategoryWhere(siteId: string): Prisma.VideoThemeCategoryWhereInput {
+  const slugList = publicVideoThemeSlugListForSite(siteId);
+  return {
+    siteId,
+    status: "active",
+    ...(slugList?.length ? { slug: { in: [...slugList] } } : {})
   };
 }
 
@@ -219,15 +246,25 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   const admin = adminRequested && await hasSiteAdminSession(siteId);
   const includeCategories = url.searchParams.get("includeCategories") === "1";
   const withCounts = admin || url.searchParams.get("withCounts") === "1";
+  const publicScope = admin && url.searchParams.get("scope") === "public";
   const page = numberParam(url.searchParams.get("page"), 1, 1, 10000);
   const pageSize = numberParam(url.searchParams.get("pageSize"), admin ? 20 : 100, 1, 100);
   const query = url.searchParams.get("q")?.trim();
   const status = url.searchParams.get("status")?.trim();
   const category = url.searchParams.get("category")?.trim();
+  const baseWhere: Prisma.VideoThemeWhereInput = publicScope
+    ? publicVideoThemeWhere(siteId)
+    : {
+        siteId,
+        status: admin && status ? status : admin ? undefined : "active"
+      };
   const where: Prisma.VideoThemeWhereInput = {
-    siteId,
-    status: admin && status ? status : admin ? undefined : "active",
-    AND: [categoryWhere(category), searchWhere(query)].filter(Boolean) as Prisma.VideoThemeWhereInput[]
+    AND: [
+      baseWhere,
+      publicScope && status ? { status } : undefined,
+      categoryWhere(category),
+      searchWhere(query)
+    ].filter(Boolean) as Prisma.VideoThemeWhereInput[]
   };
 
   if (!admin && shouldUseLocalPublicVideoThemeReads(siteId)) {
@@ -265,7 +302,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     }
     const categories = includeCategories
       ? await prisma.videoThemeCategory.findMany({
-          where: { siteId, status: "active" },
+          where: publicVideoThemeCategoryWhere(siteId),
           orderBy: [{ sortOrder: "asc" }, { label: "asc" }]
         })
       : [];
@@ -301,7 +338,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   const site = await prisma.site.findUnique({ where: { id: siteId }, select: { id: true } });
   if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
   await ensureDefaultVideoThemesRelational(siteId);
-  const [themes, total, activeCount, draftCount, pausedCount] = await prisma.$transaction([
+  const countScopeWhere: Prisma.VideoThemeWhereInput = publicScope ? publicVideoThemeWhere(siteId) : { siteId };
+  const [themes, total, activeCount, draftCount, pausedCount, backendAllCount, publicAllCount] = await prisma.$transaction([
     prisma.videoTheme.findMany({
       where,
       include: { category: true },
@@ -310,9 +348,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       take: pageSize
     }),
     prisma.videoTheme.count({ where }),
-    prisma.videoTheme.count({ where: { siteId, status: "active" } }),
-    prisma.videoTheme.count({ where: { siteId, status: "draft" } }),
-    prisma.videoTheme.count({ where: { siteId, status: "paused" } })
+    prisma.videoTheme.count({ where: { AND: [countScopeWhere, { status: "active" }] } }),
+    prisma.videoTheme.count({ where: { AND: [countScopeWhere, { status: "draft" }] } }),
+    prisma.videoTheme.count({ where: { AND: [countScopeWhere, { status: "paused" }] } }),
+    prisma.videoTheme.count({ where: { siteId } }),
+    prisma.videoTheme.count({ where: publicVideoThemeWhere(siteId) })
   ]);
   const frameLimits = await videoThemeProviderFrameLimits();
   return NextResponse.json({
@@ -332,12 +372,16 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       all: activeCount + draftCount + pausedCount,
       active: activeCount,
       draft: draftCount,
-      paused: pausedCount
+      paused: pausedCount,
+      backendAll: backendAllCount,
+      publicAll: publicAllCount
     },
     ...(includeCategories
       ? {
           categories: (await prisma.videoThemeCategory.findMany({
-            where: { siteId, status: admin ? undefined : "active" },
+            where: publicScope
+              ? publicVideoThemeCategoryWhere(siteId)
+              : { siteId, status: admin ? undefined : "active" },
             orderBy: [{ sortOrder: "asc" }, { label: "asc" }]
           })).map(toVideoThemeCategory)
         }

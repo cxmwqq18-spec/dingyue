@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import type { Prisma } from "@prisma/client";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
@@ -8,6 +9,7 @@ import {
   upsertVideoThemeCategoryRelational
 } from "@/lib/stores/site-store";
 import type { VideoThemeCategory } from "@/lib/types";
+import { publicVideoThemeSlugListForSite } from "@/lib/video-theme-public-scope";
 
 function bodyFromRequest(body: Record<string, unknown>): Partial<VideoThemeCategory> {
   return {
@@ -22,16 +24,28 @@ function bodyFromRequest(body: Record<string, unknown>): Partial<VideoThemeCateg
   };
 }
 
+function publicVideoThemeCategoryWhere(siteId: string): Prisma.VideoThemeCategoryWhereInput {
+  const slugList = publicVideoThemeSlugListForSite(siteId);
+  return {
+    siteId,
+    status: "active",
+    ...(slugList?.length ? { slug: { in: [...slugList] } } : {})
+  };
+}
+
 export async function GET(request: Request, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
   const url = new URL(request.url);
   const adminRequested = url.searchParams.get("admin") === "1";
   const admin = adminRequested && await hasSiteAdminSession(siteId);
+  const publicScope = admin && url.searchParams.get("scope") === "public";
   const site = await prisma.site.findUnique({ where: { id: siteId }, select: { id: true } });
   if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
   await ensureDefaultVideoThemesRelational(siteId);
   const categories = await prisma.videoThemeCategory.findMany({
-    where: { siteId, status: admin ? undefined : "active" },
+    where: publicScope
+      ? publicVideoThemeCategoryWhere(siteId)
+      : { siteId, status: admin ? undefined : "active" },
     orderBy: [{ sortOrder: "asc" }, { label: "asc" }]
   });
   return NextResponse.json({ ok: true, categories: categories.map(toVideoThemeCategory) });

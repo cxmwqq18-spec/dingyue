@@ -1,5 +1,7 @@
 import type { Price, StorefrontProfileJson, ThemePageJson, ThemeSettings } from "@/lib/types";
 import type { ResolvedOffer, ResolvedPageSeo, StorefrontContext, StorefrontContextBundle, StorefrontContextMode, StorefrontPublishScope } from "./types";
+import { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
+import { resolveSiteCapability } from "./capabilities";
 
 function clean(value: unknown): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
@@ -67,24 +69,13 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
     canonicalUrl: `${origin(bundle.site.primaryDomain)}${path === "/" ? "" : path}`,
     ogImage: clean(pageSeo?.ogImage) || clean(settings.seo?.defaultOgImage) || undefined,
     index: defaultIndex && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true),
-    follow: pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true
+    follow: pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true,
+    sitemapEligible: defaultIndex && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true)
   };
 }
 
-function validDate(value: string | undefined): number | undefined {
-  if (!value) return undefined;
-  const parsed = Date.parse(value);
-  return Number.isFinite(parsed) ? parsed : undefined;
-}
-
 export function isPublicPrice(price: Price, now = new Date(), expectedCurrency?: string): boolean {
-  if (price.status !== "active") return false;
-  if (!/^price_[a-zA-Z0-9_]+$/.test(price.stripePriceId) || !price.providerVerifiedAt || !price.providerFingerprint) return false;
-  if (expectedCurrency && price.currency.trim().toLowerCase() !== expectedCurrency.trim().toLowerCase()) return false;
-  const timestamp = now.getTime();
-  const from = validDate(price.effectiveFrom);
-  const to = validDate(price.effectiveTo);
-  return (from === undefined || from <= timestamp) && (to === undefined || to > timestamp);
+  return isPublicPriceFact(price, now, expectedCurrency);
 }
 
 function formatPrice(price: Price): string {
@@ -119,7 +110,8 @@ function resolvedOffers(bundle: StorefrontContextBundle, pageJson: ThemePageJson
     .flatMap((product) => product.prices.filter((price) => isPublicPrice(price, now, bundle.site.currency)).map((price): ResolvedOffer => ({
       product,
       price,
-      formattedPrice: formatPrice(price)
+      formattedPrice: formatPrice(price),
+      checkoutEnabled: Boolean(bundle.site.connect?.chargesEnabled && bundle.site.connect?.payoutsEnabled)
     })));
   const byAmount = (left: ResolvedOffer, right: ResolvedOffer) => left.price.amountCents - right.price.amountCents;
   return {
@@ -147,21 +139,6 @@ function normalizedProfile(value: StorefrontProfileJson | undefined): Storefront
     },
     policyFacts: { ...(value.policyFacts ?? {}) }
   };
-}
-
-function missingProfileFacts(profile: StorefrontProfileJson | undefined): string[] {
-  const missing: string[] = [];
-  if (!profile?.identity.legalName) missing.push("profile.identity.legalName");
-  if (!profile?.identity.entityType) missing.push("profile.identity.entityType");
-  const address = profile?.identity.address;
-  if (!address?.line1 || !address.city || !address.region || !address.postalCode || !address.country) missing.push("profile.identity.address");
-  if (!profile?.identity.supportEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(profile.identity.supportEmail)) missing.push("profile.identity.supportEmail");
-  if (profile?.policyFacts.usesCustomerMediaForTraining === undefined) missing.push("profile.policyFacts.usesCustomerMediaForTraining");
-  if (!profile?.policyFacts.sourceMediaRetentionDays) missing.push("profile.policyFacts.sourceMediaRetentionDays");
-  if (profile?.policyFacts.refundReviewRequired === undefined) missing.push("profile.policyFacts.refundReviewRequired");
-  if (!profile?.policyFacts.refundWindowDays) missing.push("profile.policyFacts.refundWindowDays");
-  if (!profile?.policyFacts.effectiveDate || !/^\d{4}-\d{2}-\d{2}$/.test(profile.policyFacts.effectiveDate)) missing.push("profile.policyFacts.effectiveDate");
-  return missing;
 }
 
 function revision(bundle: StorefrontContextBundle, mode: StorefrontContextMode, pageJson: ThemePageJson, settings: ThemeSettings, profile: StorefrontProfileJson | undefined): string {
@@ -241,7 +218,7 @@ export function resolveStorefrontContext(
   const validPacks = bundle.creativePacks.filter((pack) => pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0);
   const invalidPacks = bundle.creativePacks.filter((pack) => pack.status === "active" && (pack.creditCost <= 0 || pack.outputCount <= 0));
   const seo = resolveSeo(bundle, pageJson, settings);
-  const missingFacts = missingProfileFacts(profile);
+  const missingFacts = missingStorefrontProfileFacts(profile);
   if (!seo.description && seo.index) missingFacts.push(`page.${bundle.page.id}.seo.description`);
   return {
     mode,
@@ -261,6 +238,12 @@ export function resolveStorefrontContext(
       publicationId: bundle.publication?.id,
       factsRevision: revision(bundle, mode, pageJson, settings, profile),
       buildId: bundle.buildId || process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local"
+    },
+    capability: resolveSiteCapability(bundle.site),
+    indexability: {
+      index: seo.index,
+      follow: seo.follow,
+      sitemapEligible: seo.sitemapEligible
     },
     missingFacts
   };

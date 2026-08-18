@@ -1,4 +1,5 @@
 import "./load-runtime-env.mjs";
+import fs from "node:fs";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -275,7 +276,10 @@ function childrenPrivacyBody(profile) {
 }
 
 function statePrivacyBody(profile) {
-  return `<h3>1. ${profile.statePrivacyTitle}</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. ${profile.brand} does not sell personal source photos or generated private galleries as stock content.</p><h3>2. Company record for privacy contact</h3><p>Company: ${profile.companyName}; Address: ${profile.companyAddress}; Contact Us: ${profile.supportEmail}.</p><h3>3. How to submit a request</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>${proposedFederalPrivacyLegislationNotice(profile)}`;
+  const verifiedCompanyRecord = profile.companyName && profile.companyAddress
+    ? `<h3>2. Company record for privacy contact</h3><p>Company: ${profile.companyName}; Address: ${profile.companyAddress}; Contact Us: ${profile.supportEmail}.</p>`
+    : `<h3>2. Privacy contact</h3><p>Privacy requests are routed through the verified support address <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a>. We may ask for account or order details to verify the request before changing private uploads, generated images, or gallery records.</p>`;
+  return `<h3>1. ${profile.statePrivacyTitle}</h3><p>California and other U.S. residents may have privacy rights, including rights to request access to personal information, deletion, correction, a portable copy, and information about certain disclosures. Where applicable, customers may also request to opt out of sale or sharing of personal information. ${profile.brand} does not sell personal source photos or generated private galleries as stock content.</p>${verifiedCompanyRecord}<h3>3. How to submit a request</h3><p>Email <a href="mailto:${profile.supportEmail}">${profile.supportEmail}</a> with the account email, request type, and any relevant order or gallery details. We will review the request under the privacy rights that apply to the customer and account.</p>${proposedFederalPrivacyLegislationNotice(profile)}`;
 }
 
 function profileForSite(site) {
@@ -615,18 +619,58 @@ function upsertFooterLinks(settings, profile) {
   return next;
 }
 
-async function syncSite(site) {
+function policyPagesForProfile(profile) {
+  return [
+    { slug: "/policies/shipping", idSuffix: "shipping", templateKey: "shipping", title: "Shipping and Digital Delivery Policy", json: pageJson(profile, "shipping") },
+    { slug: "/policies/children-privacy", idSuffix: "children_privacy", templateKey: "children-privacy", title: profile.childrenPrivacyTitle, json: pageJson(profile, "childrenPrivacy") },
+    { slug: "/policies/state-privacy", idSuffix: "state_privacy", templateKey: "state-privacy", title: profile.statePrivacyTitle, json: pageJson(profile, "statePrivacy") }
+  ];
+}
+
+function allPagesForProfile(profile) {
+  return [
+    { slug: "/workflow", idSuffix: "workflow", templateKey: "workflow", title: "How it works", json: pageJson(profile, "workflow") },
+    { slug: "/about-us", idSuffix: "about_us", templateKey: "about-us", title: "About Us", json: pageJson(profile, "about") },
+    { slug: "/contact-us", idSuffix: "contact_us", templateKey: "contact-us", title: "Contact Us", json: pageJson(profile, "contact") },
+    ...policyPagesForProfile(profile)
+  ];
+}
+
+async function syncPolicyPagesIntoStateDocument(site, pages) {
+  const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
+  if (!document?.state || !Array.isArray(document.state.sites)) return false;
+  const state = clone(document.state);
+  const stateSite = state.sites.find((item) => item.id === site.id);
+  if (!stateSite) return false;
+  stateSite.pages ??= [];
+  for (const page of pages) {
+    const nextPage = {
+      id: `${site.id}_${page.idSuffix}`,
+      siteId: site.id,
+      pageType: page.json.pageType ?? "policy",
+      templateKey: page.templateKey,
+      slug: page.slug,
+      title: page.title,
+      draftJson: page.json,
+      publishedJson: page.json
+    };
+    const existingIndex = stateSite.pages.findIndex((item) => item.slug === page.slug);
+    if (existingIndex >= 0) stateSite.pages[existingIndex] = { ...stateSite.pages[existingIndex], ...nextPage };
+    else stateSite.pages.push(nextPage);
+  }
+  await prisma.platformStateDocument.update({ where: { id: "platform" }, data: { state } });
+  return true;
+}
+
+async function syncSite(site, { policiesOnly = false, dryRun = false } = {}) {
   const profile = profileForSite(site);
   if (!profile) return false;
 
-  const pages = [
-    { slug: "/workflow", idSuffix: "workflow", title: "How it works", json: pageJson(profile, "workflow") },
-    { slug: "/about-us", idSuffix: "about_us", title: "About Us", json: pageJson(profile, "about") },
-    { slug: "/contact-us", idSuffix: "contact_us", title: "Contact Us", json: pageJson(profile, "contact") },
-    { slug: "/policies/shipping", idSuffix: "shipping", title: "Shipping and Digital Delivery Policy", json: pageJson(profile, "shipping") },
-    { slug: "/policies/children-privacy", idSuffix: "children_privacy", title: profile.childrenPrivacyTitle, json: pageJson(profile, "childrenPrivacy") },
-    { slug: "/policies/state-privacy", idSuffix: "state_privacy", title: profile.statePrivacyTitle, json: pageJson(profile, "statePrivacy") }
-  ];
+  const pages = policiesOnly ? policyPagesForProfile(profile) : allPagesForProfile(profile);
+  if (dryRun) {
+    console.log(`dry-run: ${profile.brand} (${site.slug}) -> ${pages.map((page) => page.slug).join(", ")}`);
+    return true;
+  }
   for (const page of pages) {
     await prisma.themePage.upsert({
       where: { siteId_slug: { siteId: site.id, slug: page.slug } },
@@ -634,7 +678,7 @@ async function syncSite(site) {
         id: `${site.id}_${page.idSuffix}`,
         siteId: site.id,
         pageType: page.json.pageType ?? "content",
-        templateKey: page.slug.slice(1),
+        templateKey: page.templateKey,
         slug: page.slug,
         title: page.title,
         draftJson: page.json,
@@ -642,12 +686,18 @@ async function syncSite(site) {
       },
       update: {
         pageType: page.json.pageType ?? "content",
-        templateKey: page.slug.slice(1),
+        templateKey: page.templateKey,
         title: page.title,
         draftJson: page.json,
         publishedJson: page.json
       }
     });
+  }
+
+  if (policiesOnly) {
+    await syncPolicyPagesIntoStateDocument(site, pages);
+    console.log(`synced ${profile.brand} policy pages (${site.slug})`);
+    return true;
   }
 
   const themeSettings = await prisma.themeSettings.findUnique({ where: { siteId: site.id } });
@@ -673,13 +723,70 @@ async function syncSite(site) {
   return true;
 }
 
-try {
-  const sites = await prisma.site.findMany();
-  let count = 0;
-  for (const site of sites) {
-    if (await syncSite(site)) count += 1;
+function parseOption(name) {
+  const prefix = `${name}=`;
+  const value = process.argv.find((arg) => arg.startsWith(prefix));
+  return value ? value.slice(prefix.length) : undefined;
+}
+
+function localPolicyPagesForSite(site) {
+  const profile = profileForSite(site);
+  if (!profile) return [];
+  return policyPagesForProfile(profile);
+}
+
+function applyPolicyPagesToLocalState(state, site) {
+  const pages = localPolicyPagesForSite(site);
+  for (const page of pages) {
+    const nextPage = {
+      id: `${site.id}_${page.idSuffix}`,
+      siteId: site.id,
+      pageType: page.json.pageType ?? "policy",
+      templateKey: page.templateKey,
+      slug: page.slug,
+      title: page.title,
+      draftJson: page.json,
+      publishedJson: page.json
+    };
+    const existingIndex = site.pages.findIndex((item) => item.slug === page.slug);
+    if (existingIndex >= 0) site.pages[existingIndex] = { ...site.pages[existingIndex], ...nextPage };
+    else site.pages.push(nextPage);
   }
-  console.log(`done: ${count} site(s) synced`);
+  return pages.length;
+}
+
+const args = new Set(process.argv.slice(2));
+const requestedSiteId = parseOption("--site-id");
+const policiesOnly = args.has("--policies-only");
+const dryRun = args.has("--dry-run");
+const localJson = args.has("--local-json");
+const useDb = args.has("--db") || !localJson;
+
+try {
+  if (localJson) {
+    const statePath = new URL("../data/platform-state.json", import.meta.url);
+    const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+    const sites = state.sites.filter((site) => !requestedSiteId || site.id === requestedSiteId);
+    if (!sites.length) throw new Error(`site_not_found:${requestedSiteId ?? "all"}`);
+    let pageCount = 0;
+    for (const site of sites) {
+      if (policiesOnly) pageCount += applyPolicyPagesToLocalState(state, site);
+      else throw new Error("--local-json requires --policies-only to protect unrelated content");
+    }
+    if (dryRun) console.log(`dry-run: local JSON would update ${pageCount} policy page(s)`);
+    else fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+    if (!dryRun) console.log(`updated local JSON: ${pageCount} policy page(s)`);
+  }
+
+  if (useDb) {
+    const sites = await prisma.site.findMany({ where: requestedSiteId ? { id: requestedSiteId } : undefined });
+    if (requestedSiteId && !sites.length) throw new Error(`site_not_found:${requestedSiteId}`);
+    let count = 0;
+    for (const site of sites) {
+      if (await syncSite(site, { policiesOnly, dryRun })) count += 1;
+    }
+    console.log(`done: ${count} site(s) synced`);
+  }
 } finally {
   await prisma.$disconnect();
 }

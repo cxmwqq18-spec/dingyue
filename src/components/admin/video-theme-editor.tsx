@@ -26,6 +26,7 @@ import {
 } from "@/lib/video-frame-config";
 
 type Status = VideoTheme["status"];
+type ThemeScope = "public" | "all";
 
 type ThemeQueryResult = {
   themes?: VideoTheme[];
@@ -35,6 +36,8 @@ type ThemeQueryResult = {
     active?: number;
     draft?: number;
     paused?: number;
+    backendAll?: number;
+    publicAll?: number;
   };
   error?: string;
 };
@@ -138,6 +141,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<Status | "">("");
   const [categoryFilter, setCategoryFilter] = useState("");
+  const [scopeFilter, setScopeFilter] = useState<ThemeScope>("public");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
@@ -158,26 +162,30 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
     const slug = theme.slug?.trim();
     return slug ? `${siteBasePath}/ai-video-generation/${slug}` : "";
   }, [siteBasePath]);
-  const themeFiltersRef = useRef({ query, statusFilter, categoryFilter });
-  themeFiltersRef.current = { query, statusFilter, categoryFilter };
+  const themeFiltersRef = useRef({ query, statusFilter, categoryFilter, scopeFilter });
+  themeFiltersRef.current = { query, statusFilter, categoryFilter, scopeFilter };
 
   useEffect(() => {
     const match = window.location.pathname.match(/^\/site\/[^/]+/);
     setSiteBasePath(match?.[0] ?? "");
   }, []);
 
-  const loadCategories = useCallback(async (signal?: AbortSignal) => {
-    const response = await fetchAdminJson<CategoryQueryResult>(`/api/sites/${siteId}/video-theme-categories?admin=1`, { init: { signal }, ttlMs: 0 });
+  const loadCategories = useCallback(async (nextScope = themeFiltersRef.current.scopeFilter, signal?: AbortSignal) => {
+    const params = new URLSearchParams({ admin: "1" });
+    if (nextScope === "public") params.set("scope", "public");
+    const response = await fetchAdminJson<CategoryQueryResult>(`/api/sites/${siteId}/video-theme-categories?${params.toString()}`, { init: { signal }, ttlMs: 0 });
     if (!response.ok) throw new Error(response.data.error ?? "视频主题分类加载失败。");
     setCategories(response.data.categories ?? []);
   }, [siteId]);
 
-  const loadThemes = useCallback(async (next: Partial<{ query: string; statusFilter: Status | ""; categoryFilter: string }> = {}, signal?: AbortSignal) => {
+  const loadThemes = useCallback(async (next: Partial<{ query: string; statusFilter: Status | ""; categoryFilter: string; scopeFilter: ThemeScope }> = {}, signal?: AbortSignal) => {
     const currentFilters = themeFiltersRef.current;
     const nextQuery = next.query ?? currentFilters.query;
     const nextStatus = next.statusFilter ?? currentFilters.statusFilter;
     const nextCategory = next.categoryFilter ?? currentFilters.categoryFilter;
+    const nextScope = next.scopeFilter ?? currentFilters.scopeFilter;
     const params = new URLSearchParams({ admin: "1", pageSize: "100" });
+    if (nextScope === "public") params.set("scope", "public");
     if (nextQuery.trim()) params.set("q", nextQuery.trim());
     if (nextStatus) params.set("status", nextStatus);
     if (nextCategory) params.set("category", nextCategory);
@@ -195,7 +203,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
       try {
         setLoading(true);
         setMessage("");
-        await Promise.all([loadCategories(controller.signal), loadThemes({}, controller.signal)]);
+        await Promise.all([loadCategories(scopeFilter, controller.signal), loadThemes({ scopeFilter }, controller.signal)]);
       } catch (error) {
         if (active && !controller.signal.aborted) setMessage(error instanceof Error ? error.message : "视频主题数据加载失败。");
       } finally {
@@ -207,7 +215,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
       active = false;
       controller.abort();
     };
-  }, [loadCategories, loadThemes]);
+  }, [loadCategories, loadThemes, scopeFilter]);
 
   function updateDraft<K extends keyof typeof draftTheme>(key: K, value: (typeof draftTheme)[K]) {
     setDraftTheme((current) => ({ ...current, [key]: value }));
@@ -420,12 +428,30 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
     void loadThemes({ statusFilter: nextStatus });
   }
 
+  function applyScope(nextScope: ThemeScope) {
+    setScopeFilter(nextScope);
+    setCategoryFilter("");
+  }
+
   function applyCategory(nextCategory: string) {
     setCategoryFilter(nextCategory);
     void loadThemes({ categoryFilter: nextCategory });
   }
 
   const editingThemePreviewHref = editingTheme ? themePreviewHref(editingTheme) : "";
+  const scopeCopy = scopeFilter === "public"
+    ? {
+        primaryLabel: "前台可见",
+        secondaryLabel: "后台全部",
+        secondaryValue: counts?.backendAll ?? counts?.all ?? themes.length,
+        helper: "当前默认只显示前台 AI Video Generation 目录会展示的公开视频主题。旧工作区主题、内部预设和隐藏入口保留在后台全部视图中，避免误删。"
+      }
+    : {
+        primaryLabel: "后台全部",
+        secondaryLabel: "前台可见",
+        secondaryValue: counts?.publicAll ?? counts?.active ?? 0,
+        helper: "当前显示后台全部视频主题，包含旧工作区主题、内部预设和隐藏入口；这个数量不等于前台目录展示数量。"
+      };
 
   if (loading) {
     return (
@@ -439,12 +465,17 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
     <div className="grid gap-5">
       <ErpToolbar>
         <div className="flex flex-wrap gap-2">
-          <ErpToolbarField label="全部主题" value={String(counts?.all ?? themes.length)} />
+          <ErpToolbarField label={scopeCopy.primaryLabel} value={String(counts?.all ?? themes.length)} />
+          <ErpToolbarField label={scopeCopy.secondaryLabel} value={String(scopeCopy.secondaryValue)} />
           <ErpToolbarField label="已启用" value={String(counts?.active ?? 0)} />
           <ErpToolbarField label="草稿" value={String(counts?.draft ?? 0)} />
           <ErpToolbarField label="暂停" value={String(counts?.paused ?? 0)} />
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <select className="erp-select h-9 min-w-36" onChange={(event) => applyScope(event.target.value as ThemeScope)} value={scopeFilter}>
+            <option value="public">前台可见主题</option>
+            <option value="all">全部后台主题</option>
+          </select>
           <label className="inline-flex h-9 items-center gap-2 rounded-[8px] border border-slate-200 bg-white px-3 text-sm text-slate-500">
             <Search className="h-4 w-4" strokeWidth={1.8} />
             <input
@@ -476,6 +507,10 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
           {message}
         </div>
       ) : null}
+
+      <div className="rounded-[10px] border border-cyan-100 bg-cyan-50 px-4 py-3 text-sm leading-6 text-cyan-800">
+        {scopeCopy.helper}
+      </div>
 
       <details className="rounded-[12px] border border-slate-200 bg-white p-4">
         <summary className="cursor-pointer text-sm font-semibold text-slate-900">导入分类和主题</summary>
@@ -640,7 +675,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
       </div>
 
       <div className="rounded-[10px] border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-500">
-        当前筛选共 {total} 个主题。前台只展示状态为“已启用”的主题；时长会作为供应商入参，最大帧图数上限固定为 {MAX_VIDEO_FRAME_LIMIT}。
+        当前筛选共 {total} 个主题。前台目录口径为 {counts?.publicAll ?? counts?.active ?? 0} 个公开视频主题；后台全部口径为 {counts?.backendAll ?? counts?.all ?? 0} 个主题。时长会作为供应商入参，最大帧图数上限固定为 {MAX_VIDEO_FRAME_LIMIT}。
       </div>
 
       {editingCategory ? (

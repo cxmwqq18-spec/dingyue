@@ -1,9 +1,98 @@
+import "./load-runtime-env.mjs";
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 
 const statePath = path.join(process.cwd(), "data/platform-state.json");
 const mydreamshootsTaxonomyPath = path.join(process.cwd(), "src", "lib", "mydreamshoots-theme-taxonomy.json");
+const MYDREAMSHOOTS_SITE_ID = "site_dreamshoot";
+const MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS = [
+  "/blog/cyberpunk-photo-package-guide",
+  "/blog/mafia-photo-package-guide",
+  "/blog/magic-upscaler-photo-package-guide",
+  "/blog/nature-photo-package-guide",
+  "/blog/outdoor-creator-scenes-photo-package-guide",
+  "/blog/valentine-photos-photo-package-guide",
+  "/blog/virtual-try-on-photo-package-guide",
+  "/blog/wedding-portraits-photo-package-guide",
+  "/blog/world-cup-fan-photos-photo-package-guide"
+];
+const mydreamshootsPriorityBlogSlugSet = new Set(MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS);
+
+function cliOption(name) {
+  const prefix = `--${name}=`;
+  const inline = process.argv.slice(2).find((value) => value.startsWith(prefix));
+  if (inline) return inline.slice(prefix.length);
+  const index = process.argv.indexOf(`--${name}`);
+  return index >= 0 ? process.argv[index + 1] ?? "" : "";
+}
+
+const cliFlags = new Set(process.argv.slice(2));
+const dryRun = cliFlags.has("--dry-run");
+const updateDb = cliFlags.has("--db");
+const requestedSiteId = cliOption("site-id");
+const requestedSlugs = cliOption("slugs")
+  .split(",")
+  .map((value) => value.trim())
+  .filter(Boolean);
+const scopedRun = Boolean(requestedSiteId || requestedSlugs.length || updateDb);
+
+if (scopedRun) {
+  if (requestedSiteId !== MYDREAMSHOOTS_SITE_ID) {
+    throw new Error(`Scoped blog sync requires --site-id=${MYDREAMSHOOTS_SITE_ID}.`);
+  }
+  if (!requestedSlugs.length) {
+    throw new Error(`Scoped blog sync requires --slugs=${MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS.join(",")}.`);
+  }
+  const unsupportedSlugs = requestedSlugs.filter((slug) => !mydreamshootsPriorityBlogSlugSet.has(slug));
+  if (unsupportedSlugs.length) {
+    throw new Error(`Scoped blog sync refuses non-priority slugs: ${unsupportedSlugs.join(", ")}`);
+  }
+}
+
+const sourceState = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const mydreamshootsTaxonomy = JSON.parse(fs.readFileSync(mydreamshootsTaxonomyPath, "utf8"));
+
+function slugifySegment(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 72);
+}
+
+const mydreamshootsCollectionHrefBySlug = new Map([
+  ["", "/ai-image-generation"],
+  ...mydreamshootsTaxonomy.roots.map((root) => [root.slug, `/ai-image-generation/${root.slug}`]),
+  ...mydreamshootsTaxonomy.items.map((item) => [item.slug, `/ai-image-generation/${item.groupSlug}/${item.slug}`]),
+  ["creator", "/ai-image-generation/portrait-photo"],
+  ["creator-portraits", "/ai-image-generation/portrait-photo"],
+  ["profile-cards", "/ai-image-generation/avatar"],
+  ["wedding", "/ai-image-generation/wedding-photo"],
+  ["wedding-portraits", "/ai-image-generation/wedding-photo"],
+  ["cultural", "/ai-image-generation/wedding-photo"],
+  ["couple", "/ai-image-generation/engagement-photo"],
+  ["creative", "/ai-image-generation"],
+  ["beauty", "/ai-image-generation/hairstyle-generator"],
+  ["sports", "/ai-image-generation/soccer"],
+  ["world-cup-fan-photos", "/ai-image-generation/soccer"],
+  ["video", "/ai-image-generation/motion-generator"],
+  ["ai-video-add-ons", "/ai-image-generation/motion-generator"],
+  ["utility", "/ai-image-generation/photo-enhancer"],
+  ["headshots", "/ai-image-generation/headshot"],
+  ["professional-headshots", "/ai-image-generation/headshot"],
+  ["seasonal", "/ai-image-generation/holiday"]
+]);
+
+function packageDirectoryHrefForSite(siteId, slug = "") {
+  const normalizedSlug = slugifySegment(slug);
+  if (siteId === MYDREAMSHOOTS_SITE_ID) {
+    return mydreamshootsCollectionHrefBySlug.get(normalizedSlug) ?? "/ai-image-generation";
+  }
+  return normalizedSlug ? `/collections/${normalizedSlug}` : "/collections";
+}
 
 function clone(value) {
   return value === undefined ? undefined : JSON.parse(JSON.stringify(value));
@@ -554,50 +643,6 @@ const aidreamcapesThemeArticles = [
   ...item
 }));
 
-const sourceState = JSON.parse(fs.readFileSync(statePath, "utf8"));
-const mydreamshootsTaxonomy = JSON.parse(fs.readFileSync(mydreamshootsTaxonomyPath, "utf8"));
-
-function slugifySegment(value) {
-  return String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/&/g, " and ")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 72);
-}
-
-const mydreamshootsCollectionHrefBySlug = new Map([
-  ["", "/ai-image-generation"],
-  ...mydreamshootsTaxonomy.roots.map((root) => [root.slug, `/ai-image-generation/${root.slug}`]),
-  ...mydreamshootsTaxonomy.items.map((item) => [item.slug, `/ai-image-generation/${item.groupSlug}/${item.slug}`]),
-  ["creator", "/ai-image-generation/portrait-photo"],
-  ["creator-portraits", "/ai-image-generation/portrait-photo"],
-  ["profile-cards", "/ai-image-generation/avatar"],
-  ["wedding", "/ai-image-generation/wedding-photo"],
-  ["wedding-portraits", "/ai-image-generation/wedding-photo"],
-  ["cultural", "/ai-image-generation/wedding-photo"],
-  ["couple", "/ai-image-generation/engagement-photo"],
-  ["creative", "/ai-image-generation"],
-  ["beauty", "/ai-image-generation/hairstyle-generator"],
-  ["sports", "/ai-image-generation/soccer"],
-  ["world-cup-fan-photos", "/ai-image-generation/soccer"],
-  ["video", "/ai-image-generation/motion-generator"],
-  ["ai-video-add-ons", "/ai-image-generation/motion-generator"],
-  ["utility", "/ai-image-generation/photo-enhancer"],
-  ["headshots", "/ai-image-generation/headshot"],
-  ["professional-headshots", "/ai-image-generation/headshot"],
-  ["seasonal", "/ai-image-generation/holiday"]
-]);
-
-function packageDirectoryHrefForSite(siteId, slug = "") {
-  const normalizedSlug = slugifySegment(slug);
-  if (siteId === "site_dreamshoot") {
-    return mydreamshootsCollectionHrefBySlug.get(normalizedSlug) ?? "/ai-image-generation";
-  }
-  return normalizedSlug ? `/collections/${normalizedSlug}` : "/collections";
-}
-
 function activeItems(state, key, siteId) {
   return (state[key] ?? []).filter((item) => item.siteId === siteId && item.status === "active");
 }
@@ -635,6 +680,423 @@ function defaultSiteImage(brand) {
 const mydreamshootsBlogSafeImageOverrides = new Map([
   ["holiday", "/assets/dreamshoot/generated/homepage-showcase/images/holiday.webp?v=20260803blogsafe1"],
   ["magic-upscaler", "/assets/dreamshoot/generated/20260622-pack-fill/magic-upscaler-pack.webp?v=20260803blogsafe1"]
+]);
+
+function makePriorityBlogArticle(input) {
+  const idSlug = input.slug.replace(/^\/blog\//, "").replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+  return {
+    id: `${MYDREAMSHOOTS_SITE_ID}_blog_theme_${idSlug}`,
+    pageTitle: input.pageTitle,
+    author: "myDreamshoots editorial team",
+    authorType: "Organization",
+    publishedAt: "2026-07-28",
+    updatedAt: "2026-08-18",
+    readMinutes: input.readMinutes ?? "7",
+    primaryCta: "Browse AI photo packages",
+    primaryHref: "/ai-image-generation",
+    secondaryCta: "View pricing",
+    secondaryHref: "/pricing",
+    ...input
+  };
+}
+
+const mydreamshootsPriorityArticleOverrides = new Map([
+  makePriorityBlogArticle({
+    slug: "/blog/cyberpunk-photo-package-guide",
+    pageTitle: "Cyberpunk AI photo guide",
+    title: "Cyberpunk AI Photos: Neon Styles, Source Photos, and a Review Checklist",
+    summary: "Learn how to plan a cyberpunk portrait with neon city lighting, futuristic wardrobe cues, and a focused set of source photos. Compare nearby city styles, then review the result before downloading.",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/cyberpunk/cyberpunk-01.webp?v=20260715b",
+    imageAlt: "Neon-lit cyberpunk portrait with magenta and cyan city lighting.",
+    tags: "Cyberpunk AI photos|Neon portrait|Source photo planning|Private gallery",
+    targetLabel: "Open Cyberpunk",
+    targetHref: "/ai-image-generation/cyberpunk",
+    relatedLinks: [
+      { label: "Read the Mafia-style photo guide", href: "/blog/mafia-photo-package-guide" },
+      { label: "Read the Gala Photos guide", href: "/blog/gala-photos-photo-package-guide" },
+      { label: "Explore Nightlife portraits", href: "/ai-image-generation/nightlife" }
+    ],
+    seoTitle: "Cyberpunk private AI photo guide | myDreamshoots",
+    seoDescription: "Plan neon cyberpunk portraits with focused source photos, futuristic wardrobe cues, nearby style comparisons, and a practical artifact review checklist.",
+    seoKeywords: "cyberpunk AI photos, neon portrait guide, futuristic portrait, cyberpunk source photos, neon city portrait checklist",
+    body: html`
+      <p>Cyberpunk works when the person remains recognizable while the scene makes a deliberate jump into a futuristic city. The strongest brief does not ask for every science-fiction idea at once. It chooses a visible story world, supports it with suitable source photos, and gives you a clear standard for deciding which results are ready to keep.</p>
+      <h2 id="cyberpunk-choose-direction">Choose one visible cyberpunk direction</h2>
+      <p>Choose Cyberpunk when you want a high-contrast portrait built around neon signs, rain-lit streets, metallic textures, holographic accents, or dramatic magenta-and-cyan lighting. A natural professional portrait or a daylight lifestyle image needs a less stylized package. Naming the visual direction first prevents the scene from becoming a random collection of futuristic details.</p>
+      <p>Useful directions include a neon alley, futuristic skyline, techwear portrait, holographic studio, or cinematic night scene. Pick one as the main idea. A restrained palette, one lighting reference, and one wardrobe cue usually make the request easier to judge than several competing references.</p>
+      <h2 id="cyberpunk-source-photos">Prepare source photos and wardrobe cues</h2>
+      <p>Start with current, unfiltered portraits that clearly show the face, hairline, and useful angles. Avoid sunglasses, strong beauty filters, heavy colored light, or deep shadows that hide identity before the cyberpunk treatment begins. Use only photos you own or have permission to use.</p>
+      <p>Then add a wardrobe direction that belongs to the chosen world: clean techwear layers, metallic accents, a structured jacket, or a simple dark silhouette. The clothing reference should support the portrait instead of competing with it. Do not combine neon streetwear, corporate headshots, fantasy armor, and vintage film in one brief.</p>
+      <h2 id="cyberpunk-compare-city-styles">Compare Cyberpunk with nearby city styles</h2>
+      <table><thead><tr><th>Choice</th><th>Main visual idea</th><th>Choose it when</th></tr></thead><tbody><tr><td>Cyberpunk</td><td>Futuristic city scenes, neon contrast, and techwear details</td><td>The science-fiction layer is central to the portrait.</td></tr><tr><td>Urban</td><td>Contemporary streets, rooftops, alleys, and transit settings</td><td>You want a modern city portrait without futuristic styling.</td></tr><tr><td>Nightlife</td><td>Present-day club, event, or evening light</td><td>The mood should feel social and current rather than fictional.</td></tr><tr><td>Headshot</td><td>Clean professional framing with minimal scene narrative</td><td>Professional presentation matters more than the setting.</td></tr></tbody></table>
+      <p>Compare <a href="/ai-image-generation/cyberpunk">Cyberpunk</a> with <a href="/ai-image-generation/urban">Urban</a> and <a href="/ai-image-generation/nightlife">Nightlife</a> before starting. The live product card shows the current output count and credit cost, so the guide does not preserve numbers that may later change.</p>
+      <h2 id="cyberpunk-review-checklist">Review neon, identity, and scene artifacts</h2>
+      <p>A convincing result should keep the person recognizable while making the selected futuristic direction visible. Review the full image and then zoom in. Neon can create believable atmosphere, but it can also hide errors or introduce colored edges that look unnatural against skin and clothing.</p>
+      <ul><li>Check neon spill across the face, teeth, eyes, and hair.</li><li>Inspect signs and background text for invented or broken lettering.</li><li>Review eyewear, jewelry, cables, and metallic accessories for impossible joins.</li><li>Check fingers, garment closures, reflective surfaces, and repeated architecture.</li><li>Confirm that the final crop still reads clearly at the size where you will use it.</li></ul>
+      <h2 id="cyberpunk-keep-claims-clear">Keep the fictional scene easy to explain</h2>
+      <p>Treat the city and technology as generated creative elements. Do not present a fictional venue, brand, product, or event as real. If you publish the image in a context where material AI edits must be disclosed, follow the destination platform's rules. Keep the original source photos and review the private gallery before downloading favorites.</p>
+      <h2 id="cyberpunk-faq">Cyberpunk photo FAQ</h2>
+      <h3 id="cyberpunk-faq-first-photo">What source photo works best?</h3>
+      <p>Use a sharp, recent portrait with a readable face and hairline. Neutral or simple light gives the generated neon direction room to work without fighting an existing filter.</p>
+      <h3 id="cyberpunk-faq-neon">Should I provide several neon references?</h3>
+      <p>One focused lighting reference is easier to follow and review. Several references with different color palettes, eras, and scene types can pull the image in competing directions.</p>
+      <h3 id="cyberpunk-faq-download">What should I check before downloading?</h3>
+      <p>Check identity first, then neon spill, hands, accessories, garment edges, reflections, background text, and the intended crop. Keep only images whose futuristic scene remains coherent at normal viewing size.</p>
+    `
+  }),
+  makePriorityBlogArticle({
+    slug: "/blog/mafia-photo-package-guide",
+    pageTitle: "Mafia-style AI photo guide",
+    title: "Mafia-Style AI Photos: Wardrobe, Lighting, and Scene Guide",
+    summary: "Plan a fictional cinematic character portrait with tailored wardrobe, low-key interior lighting, and a restrained noir scene. Prepare source photos and review the details that make the result believable.",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/mafia/mafia-01.webp?v=20260715b",
+    imageAlt: "Moody noir portrait of a man in a dark suit seated beside window blinds.",
+    tags: "Mafia-style AI photos|Noir portrait|Wardrobe planning|Permission-safe portraits",
+    targetLabel: "Open Mafia",
+    targetHref: "/ai-image-generation/mafia",
+    relatedLinks: [
+      { label: "Read the Cyberpunk photo guide", href: "/blog/cyberpunk-photo-package-guide" },
+      { label: "Read the Gala Photos guide", href: "/blog/gala-photos-photo-package-guide" },
+      { label: "Explore Nightlife portraits", href: "/ai-image-generation/nightlife" }
+    ],
+    seoTitle: "Mafia AI photo planning guide | myDreamshoots",
+    seoDescription: "Plan a fictional Mafia-style noir portrait with tailored wardrobe, controlled interior light, permission-safe source photos, and a detailed review checklist.",
+    seoKeywords: "Mafia-style AI photos, noir portrait guide, cinematic character portrait, tailored suit AI portrait, fictional noir scene",
+    body: html`
+      <p>This guide treats Mafia as a fictional, cinematic style rather than a statement about a real person. The goal is a restrained noir portrait: tailored clothing, controlled interior light, a believable setting, and enough visual discipline that the person remains more important than the props.</p>
+      <h2 id="mafia-build-fictional-noir">Build a fictional noir character, not a real-world claim</h2>
+      <p>Choose the Mafia style when you want a character portrait built around dark interiors, controlled window light, serious posture, and classic tailoring. The image can borrow the visual language of crime films without claiming that the source person belongs to a criminal organization. Do not use the finished image as evidence of real affiliation, conduct, or history.</p>
+      <p>Keep the concept simple enough to explain in one sentence, such as a private-room portrait beside window blinds or an understated evening character in a wood-paneled interior. A neutral business image belongs in Headshot. Contemporary luxury without crime-film framing belongs closer to Rich Lifestyle.</p>
+      <h2 id="mafia-wardrobe-scene">Coordinate wardrobe, light, and interior</h2>
+      <p>Use current, unfiltered portraits with a clear view of the face and hairline. Then choose one wardrobe direction: three-piece suit, overcoat, or understated evening tailoring. Pair it with one interior cue such as wood paneling, window blinds, a dim private room, or a quiet bar-like setting. Keep props secondary to the person.</p>
+      <p>Low-key lighting should still leave enough detail around the eyes, hands, lapels, and background objects to review the result. Multiple hero props, several historical eras, or conflicting hat and suit references can turn a focused portrait into an inconsistent costume scene.</p>
+      <h2 id="mafia-nearby-styles">Decide between noir, luxury, nightlife, and headshots</h2>
+      <table><thead><tr><th>Direction</th><th>Defining cues</th><th>Best fit</th></tr></thead><tbody><tr><td>Mafia style</td><td>Fictional noir character, tailored wardrobe, moody interiors</td><td>A cinematic portrait with a clear period-film mood.</td></tr><tr><td>Rich Lifestyle</td><td>Contemporary luxury, polished spaces, modern status cues</td><td>Luxury is the goal without crime-film framing.</td></tr><tr><td>Nightlife</td><td>Modern club or event light and social energy</td><td>The scene should feel current and event-led.</td></tr><tr><td>Headshot</td><td>Neutral background and professional restraint</td><td>The image needs to support work-facing identity.</td></tr></tbody></table>
+      <p>Open the live <a href="/ai-image-generation/mafia">Mafia package</a> to review its current output count and credit cost. Those values stay on the product card rather than being copied into this guide.</p>
+      <h2 id="mafia-private-review">Review tailoring, props, and shadow detail</h2>
+      <p>Start with identity and expression. Then check the visual details that make a dark interior believable. Deep contrast can conceal errors, so compare the face and hands at normal size and close up before selecting a favorite.</p>
+      <ul><li>Inspect lapels, ties, buttons, pockets, and hat brims for broken geometry.</li><li>Check fingers around glasses, chairs, cards, or other props.</li><li>Review smoke, glass, mirrors, and window reflections for repeated or impossible shapes.</li><li>Confirm that both eyes remain readable and that shadows do not change identity.</li><li>Look for warped furniture, duplicated objects, and inconsistent light direction.</li></ul>
+      <h2 id="mafia-faq">Mafia-style portrait FAQ</h2>
+      <h3 id="mafia-faq-identity">Can the image imply a real criminal identity?</h3>
+      <p>No. Keep the request fictional and style-led. A generated character portrait should not be used to claim that a real person belongs to an organization or took part in criminal activity.</p>
+      <h3 id="mafia-faq-props">How many props should I request?</h3>
+      <p>Use as few as the scene needs. One restrained prop can support the noir direction; several hero props compete with the person and create more places for visual artifacts.</p>
+      <h3 id="mafia-faq-source">What source photos should I use?</h3>
+      <p>Choose clear, recent photos you are authorized to use. A readable face, hairline, and natural expression provide a stronger identity base than filtered or heavily shadowed images.</p>
+    `
+  }),
+  makePriorityBlogArticle({
+    slug: "/blog/magic-upscaler-photo-package-guide",
+    pageTitle: "Magic Upscaler and Photo Enhancer guide",
+    title: "Magic Upscaler Guide: Improve Clarity Without Overprocessing Your Photo",
+    summary: "Magic Upscaler is available in myDreamshoots as the Photo Enhancer package. Learn which original file to use, what enhancement cannot recover, and how to spot false detail before downloading.",
+    imageUrl: "/assets/dreamshoot/generated/20260622-pack-fill/magic-upscaler-pack.webp?v=20260803blogsafe1",
+    imageAlt: "Before-and-after portrait preview comparing a softer source image with an enhanced result.",
+    tags: "Magic Upscaler|Photo Enhancer|Image clarity|Artifact review",
+    targetLabel: "Open Photo Enhancer",
+    targetHref: "/ai-image-generation/photo-enhancer",
+    relatedLinks: [
+      { label: "Open Photo Enhancer", href: "/ai-image-generation/photo-enhancer" },
+      { label: "Compare Unblur Image", href: "/ai-image-generation/unblur-image" },
+      { label: "Compare Old Photo Restoration", href: "/ai-image-generation/old-photo-restoration" }
+    ],
+    seoTitle: "Magic Upscaler and Photo Enhancer | myDreamshoots",
+    seoDescription: "Use Magic Upscaler through Photo Enhancer, choose the cleanest original, understand enhancement limits, and check halos, false texture, and identity changes.",
+    seoKeywords: "Magic Upscaler, Photo Enhancer guide, improve photo clarity, image enhancement artifacts, upscaling review checklist",
+    body: html`
+      <p>Use Magic Upscaler when a valuable photo is soft, dark, compressed, or too small for its intended display. In myDreamshoots, this workflow is available through the Photo Enhancer package. The job is not to invent a new scene; it is to improve perceived clarity while protecting identity and believable detail.</p>
+      <h2 id="upscaler-choose-original">Start with the cleanest available original</h2>
+      <p>Choose the original camera file or highest-quality export you can find. A screenshot, messaging-app copy, or social-media download may already contain compression, resizing, and sharpening artifacts. Enhancement can make those defects more visible. Keep an untouched copy so every result can be compared against the same source.</p>
+      <p>Check that the face or subject still contains real edges and tonal variation. Crop only when the final use requires it. If the image is severely blurred, physically damaged, or already sharp but needs portrait cleanup, another tool may match the defect more closely.</p>
+      <h2 id="upscaler-capability-boundary">Understand what enhancement cannot recover</h2>
+      <p>Enhancement can improve perceived clarity and readability, but it cannot guarantee recovery of detail that is absent from the source. Newly sharpened facial features, text, jewelry, hair, fabric, and background patterns may be generated interpretation. Compare them with the original instead of assuming that every crisp edge is historically or physically accurate.</p>
+      <blockquote>Use the result as an enhanced version for review, not as proof that missing source detail was recovered exactly.</blockquote>
+      <h2 id="upscaler-compare-tools">Match the tool to the source defect</h2>
+      <table><thead><tr><th>Tool</th><th>Use it when</th><th>Review closely</th></tr></thead><tbody><tr><td>Photo Enhancer</td><td>General clarity, brightness, and download quality need improvement.</td><td>Overall sharpness, tone, noise, and natural texture.</td></tr><tr><td>Unblur Image</td><td>Motion or focus blur is the main visible defect.</td><td>Face edges, double contours, and invented fine detail.</td></tr><tr><td>Old Photo Restoration</td><td>Age-related damage, fading, scratches, or missing areas are central.</td><td>Whether repaired areas remain plausible and clearly interpreted.</td></tr><tr><td>Portrait Retouch</td><td>The original is already sharp and needs controlled portrait cleanup.</td><td>Skin texture, identity, and signs of over-smoothing.</td></tr></tbody></table>
+      <p>Review the live <a href="/ai-image-generation/photo-enhancer">Photo Enhancer package card</a> for the current output count and credit cost before starting. Do not rely on a number copied from an older article.</p>
+      <h2 id="upscaler-compare-at-100">Compare the result at 100 percent and normal size</h2>
+      <p>Inspect at 100 percent to find local artifacts, then return to the normal display size to judge whether the image actually looks better. Excess sharpening can seem impressive while zoomed in but create harsh skin, glowing edges, or noisy backgrounds in normal use.</p>
+      <ul><li>Compare skin texture, eyelashes, teeth, hair strands, and expression.</li><li>Inspect text, jewelry, straight edges, and repeating background patterns.</li><li>Look for ringing halos, false texture, oversharpened noise, and color shifts.</li><li>Confirm that identity and facial proportions did not change.</li><li>Review the exact crop and display size where the file will be used.</li></ul>
+      <h2 id="upscaler-keep-original">Keep the original and record the intended use</h2>
+      <p>Do not overwrite the only source file. Store the original beside the enhanced version and name the intended use, such as profile crop, larger display, personal archive, or cleaner download. If factual detail matters, treat the original as the reference and the enhanced file as an edited derivative.</p>
+      <h2 id="upscaler-faq">Photo enhancement FAQ</h2>
+      <h3 id="upscaler-faq-suitable">When is a photo suitable for enhancement?</h3>
+      <p>A photo is a reasonable candidate when the subject remains identifiable and real edges or tonal detail are still present. A severely damaged or missing subject may require restoration rather than general enhancement.</p>
+      <h3 id="upscaler-faq-original">Should I upload the original or a social-media copy?</h3>
+      <p>Upload the highest-quality original available. Social copies and screenshots often contain compression artifacts that become more visible after sharpening.</p>
+      <h3 id="upscaler-faq-review">What details should I compare afterward?</h3>
+      <p>Compare identity, skin, hair, eyes, teeth, text, straight edges, repeating textures, noise, and halos. Keep the original open during review so new detail is not mistaken for recovered fact.</p>
+    `
+  }),
+  makePriorityBlogArticle({
+    slug: "/blog/nature-photo-package-guide",
+    pageTitle: "Nature AI portrait guide",
+    title: "Nature AI Portraits: Plan Forest, Mountain, and Lakeside Scenes",
+    summary: "Nature scenes are available through the Travel package. Plan one believable outdoor setting, prepare portraits that fit the intended light and clothing, and review the generated landscape before sharing.",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/nature/nature-01.webp?v=20260715b",
+    imageAlt: "Outdoor portrait on a mountain trail with warm backlight at golden hour.",
+    tags: "Nature AI portraits|Travel package|Outdoor portrait planning|Generated landscape",
+    targetLabel: "Open Travel and choose a nature setting",
+    targetHref: "/ai-image-generation/travel",
+    relatedLinks: [
+      { label: "Open Travel portraits", href: "/ai-image-generation/travel" },
+      { label: "Read the Outdoor Creator guide", href: "/blog/outdoor-creator-scenes-photo-package-guide" },
+      { label: "Explore Urban portraits", href: "/ai-image-generation/urban" }
+    ],
+    seoTitle: "Nature AI portrait planning guide | myDreamshoots",
+    seoDescription: "Plan forest, mountain, lakeside, or meadow portraits through Travel, coordinate source photos with outdoor light, and review generated landscape artifacts.",
+    seoKeywords: "nature AI portraits, forest portrait guide, mountain portrait, lakeside AI photo, Travel nature setting, outdoor portrait checklist",
+    body: html`
+      <p>Nature scenes are available in myDreamshoots through the Travel package. Use this guide when a forest path, alpine trail, mountain lake, or open meadow should lead the mood of a portrait. The setting is generated creative imagery, so the page focuses on visual planning rather than claiming a real trip or location.</p>
+      <h2 id="nature-pick-setting">Pick one landscape, season, and time of day</h2>
+      <p>Choose one natural environment as the main idea. A forest path can support soft filtered light and close framing. An alpine trail calls for open scale, practical clothing, and a readable horizon. A mountain lake adds reflections that require careful review. A meadow can support wider poses and warm evening light.</p>
+      <p>Then choose one season and one time of day. Clothing, hair, shadows, and apparent weather should agree. A heavy coat in a bright summer meadow or dry ground beneath a rainy sky can make the person and landscape feel assembled from unrelated sources.</p>
+      <h2 id="nature-source-light">Prepare portraits that fit outdoor light</h2>
+      <p>Use clear, current portraits with natural expression and enough shoulder or body framing for the intended composition. Avoid strong indoor color casts, clipped hair, or heavy portrait filters. Select simple clothing whose color and weight make sense for the terrain and weather. Use only source photos you own or have permission to use.</p>
+      <p>Nature is landscape-led. If the purpose is a destination or route story across cities, coastlines, and resorts, use Travel more broadly. If the setting mainly supports a personal brand or publishing format, the Outdoor Creator guide provides a different decision process.</p>
+      <h2 id="nature-compare-intent">Separate landscape, destination, and creator intent</h2>
+      <table><thead><tr><th>Direction</th><th>Primary idea</th><th>Use it for</th></tr></thead><tbody><tr><td>Nature</td><td>The landscape and outdoor mood lead the portrait.</td><td>Forest, mountain, lake, or meadow imagery.</td></tr><tr><td>Travel</td><td>The image tells a destination or route story.</td><td>City, coast, resort, old-town, or scenic route concepts.</td></tr><tr><td>Outdoor Creator</td><td>The setting supports a publishing channel or personal brand.</td><td>Profiles, stories, feed portraits, headers, and campaign drafts.</td></tr><tr><td>Urban</td><td>A contemporary city environment is the visual anchor.</td><td>Streets, rooftops, alleys, transit, and modern creator scenes.</td></tr></tbody></table>
+      <p>Open <a href="/ai-image-generation/travel">Travel</a> and choose a nature setting. Check the live product card for current outputs and credit cost before generating.</p>
+      <h2 id="nature-location-boundary">Treat the landscape as generated</h2>
+      <p>Do not present a generated mountain, trail, lake, resort, landmark, or wildlife encounter as proof that the person visited a real place. For documentary or commercial location claims, use a real photograph and disclose material AI edits where the context requires it. Avoid naming a specific real location unless the workflow and source material support that claim.</p>
+      <h2 id="nature-review-landscape">Review how the person and landscape meet</h2>
+      <ul><li>Check horizon level, path continuity, and believable subject scale.</li><li>Inspect repeated trees, rocks, flowers, snow, and shoreline patterns.</li><li>Review water reflections, shadows under the person, and light direction.</li><li>Check hair and clothing edges against detailed foliage.</li><li>Inspect hands around backpacks, rails, walking poles, or other outdoor gear.</li><li>Confirm that clothing and apparent weather make sense together.</li></ul>
+      <h2 id="nature-faq">Nature portrait FAQ</h2>
+      <h3 id="nature-faq-travel">Why does the Nature guide open Travel?</h3>
+      <p>Nature is a setting direction available through the Travel package. The live Travel card is the source for current package details and credit cost.</p>
+      <h3 id="nature-faq-location">Can I name the generated landscape as a real place?</h3>
+      <p>Not unless a verified workflow supports that location. Treat the background as generated and avoid using it as evidence of a real visit, booking, or wildlife encounter.</p>
+      <h3 id="nature-faq-source">What source photos work for outdoor portraits?</h3>
+      <p>Use clear, current portraits with natural expression and enough framing for the intended scene. Clothing, light, season, and apparent weather should support the same outdoor direction.</p>
+    `
+  }),
+  makePriorityBlogArticle({
+    slug: "/blog/outdoor-creator-scenes-photo-package-guide",
+    pageTitle: "Outdoor creator photo guide",
+    title: "Outdoor Creator Photos: Urban Streets vs Scenic Locations",
+    summary: "Choose an outdoor direction based on the content you need: Urban for city creator profiles or Travel for scenic locations. Plan the crop, background space, wardrobe, and disclosure before generating.",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/outdoor-creator-scenes/outdoor-creator-scenes-01.webp?v=20260715b",
+    imageAlt: "Outdoor creator portrait of a woman on a beach with sea and cliffs behind her.",
+    tags: "Outdoor creator photos|Urban portraits|Travel portraits|Creator content planning",
+    targetLabel: "Explore Urban creator scenes",
+    targetHref: "/ai-image-generation/urban",
+    secondaryTargetLabel: "Explore scenic Travel portraits",
+    secondaryTargetHref: "/ai-image-generation/travel",
+    relatedLinks: [
+      { label: "Explore Urban creator scenes", href: "/ai-image-generation/urban" },
+      { label: "Explore scenic Travel portraits", href: "/ai-image-generation/travel" },
+      { label: "Read the Nature portrait guide", href: "/blog/nature-photo-package-guide" }
+    ],
+    seoTitle: "Outdoor creator photos: Urban vs Travel | myDreamshoots",
+    seoDescription: "Compare Urban streets with scenic Travel locations for creator photos, then plan channel, crop, negative space, brand safety, and publication review.",
+    seoKeywords: "outdoor creator photos, Urban vs Travel portraits, creator profile photos, scenic creator portraits, social media crop planning",
+    body: html`
+      <p>Outdoor Creator Scenes is a comparison guide, not a separate product package. Choose Urban when city streets and modern creator profiles are central. Choose Travel when coast, mountain, resort, or route-story scenery should shape the image. Start with the publishing destination so the scene and crop serve a real use.</p>
+      <h2 id="outdoor-name-channel">Name the publishing channel before choosing a scene</h2>
+      <p>Decide whether the image is for a profile avatar, vertical story, feed portrait, newsletter header, landing-page hero, or campaign draft. A square avatar needs immediate face recognition and a quiet background. A vertical story needs body framing that survives interface overlays. A header needs width and safe negative space for approved copy.</p>
+      <p>Choose whether the final frame needs face-forward impact, full-body context, or room for text. This decision belongs before generation because a visually strong portrait can still fail when the subject is covered by navigation, captions, or platform controls.</p>
+      <h2 id="outdoor-urban-travel">Choose Urban or Travel based on the main promise</h2>
+      <table><thead><tr><th>Direction</th><th>Scene language</th><th>Creator use</th></tr></thead><tbody><tr><td>Urban</td><td>City street, rooftop, subway, alley, and contemporary architecture</td><td>Modern profiles, editorial posts, streetwear, and city-led campaigns.</td></tr><tr><td>Travel</td><td>Coast, mountain route, resort, old city, and scenic location</td><td>Destination-style stories, lifestyle headers, and scenic personal-brand concepts.</td></tr><tr><td>Nature guide</td><td>Forest, mountain, lake, or meadow where landscape leads</td><td>Outdoor portraits whose environment matters more than a campaign format.</td></tr></tbody></table>
+      <p>Use the live <a href="/ai-image-generation/urban">Urban</a> or <a href="/ai-image-generation/travel">Travel</a> product card to review current outputs and credit cost. The guide does not copy those changing values.</p>
+      <h2 id="outdoor-source-brand">Prepare source photos and remove unapproved brand claims</h2>
+      <p>Use current portraits with the expression and body framing required by the destination channel. Choose one setting and simple wardrobe that separates clearly from the background. Remove unlicensed logos, venue marks, product labels, or campaign claims from references unless you have permission to use them.</p>
+      <p>Do not imply that a generated scene documents a real trip, venue booking, brand partnership, or city endorsement. Signs, landmarks, products, and background text need review before publication. Follow the destination platform's AI disclosure rules when material edits must be identified.</p>
+      <h2 id="outdoor-review-size">Review the image at its real publishing size</h2>
+      <ul><li>Check face and hand detail at the final crop size.</li><li>Review subject-to-background scale, perspective, horizon, and shadows.</li><li>Inspect hair edges, repeated architecture, foliage, signs, and logos.</li><li>Confirm there is safe space for copy without covering the subject.</li><li>Preview the image behind expected interface overlays.</li><li>Check that a generated location or partnership is not implied as real.</li></ul>
+      <h2 id="outdoor-copy-later">Add verified text after generation</h2>
+      <p>Generate a clean scene first. Add headlines, dates, calls to action, and campaign copy later in a design tool where spelling and placement can be controlled. This also separates the visual concept from factual or commercial claims that require approval.</p>
+      <h2 id="outdoor-faq">Outdoor creator FAQ</h2>
+      <h3 id="outdoor-faq-product">Is Outdoor Creator Scenes a separate product?</h3>
+      <p>No. Use this page to decide between Urban and Travel based on whether a city or scenic location better supports the final creator use.</p>
+      <h3 id="outdoor-faq-avatar">Which direction works for a profile avatar?</h3>
+      <p>Either can work if the face remains legible at square size. Choose the scene whose background stays quiet enough to support recognition rather than competing with it.</p>
+      <h3 id="outdoor-faq-claim">Can I describe the scene as a real trip or partnership?</h3>
+      <p>Do not make that claim from a generated image. Use real evidence for travel, venue, or partnership statements and disclose material AI edits where required.</p>
+      <h3 id="outdoor-faq-review">What should I preview before publishing?</h3>
+      <p>Preview the final crop, interface overlays, text-safe space, face and hands, background signs, logos, landmarks, perspective, and any detail that could imply a real endorsement.</p>
+    `
+  }),
+  makePriorityBlogArticle({
+    slug: "/blog/valentine-photos-photo-package-guide",
+    pageTitle: "Valentine's Day AI photo guide",
+    title: "Valentine's Day AI Photos: Couple Portraits, Cards, and Gifts",
+    summary: "Plan a Valentine's Day portrait for a private gift, date-night card, anniversary note, or social post. Choose one person or a couple, use approved photos, and leave message space for later.",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/valentine-photos/valentine-photos-01.webp?v=20260715b",
+    imageAlt: "Close Valentine's Day portrait of a smiling couple with a glowing red heart decoration.",
+    tags: "Valentine's Day photos|Couple portraits|Romantic cards|Consent",
+    targetLabel: "Open Valentine's Day Photos",
+    targetHref: "/ai-image-generation/valentines-photo",
+    relatedLinks: [
+      { label: "Read the Engagement photo guide", href: "/blog/engagement-photo-package-guide" },
+      { label: "Read the Wedding portrait guide", href: "/blog/wedding-portraits-photo-package-guide" },
+      { label: "Open Valentine's Day Photos", href: "/ai-image-generation/valentines-photo" }
+    ],
+    seoTitle: "Valentine's Day AI photo guide | myDreamshoots",
+    seoDescription: "Plan Valentine's Day couple portraits, cards, gifts, or social posts with approved source photos, clear consent, text-safe crops, and a focused review.",
+    seoKeywords: "Valentine's Day AI photos, couple portrait guide, romantic AI card, Valentine's gift photo, consent for couple photos",
+    body: html`
+      <p>Plan a Valentine's Day portrait around one purpose: a private gift, date-night card, anniversary note, or social post. Decide whether the image features one person or a couple, confirm that every source photo is approved, and leave space for any message that will be added after generation.</p>
+      <h2 id="valentine-one-purpose">Choose one relationship context and final format</h2>
+      <p>A warm seasonal portrait can be playful, candlelit, floral, studio-based, or outdoors. Pick one mood and one crop. A card needs text-safe space. A gift image may favor a close composition. A social post must remain readable at a smaller size. Combining an engagement announcement, wedding keepsake, date-night portrait, and generic holiday card in one request creates conflicting claims.</p>
+      <p>Use standard public English such as Valentine's Day and Valentine's Day Photos. The technical URL can remain unchanged without carrying the unpunctuated form into headings, buttons, or body copy.</p>
+      <h2 id="valentine-source-consent">Prepare both people and confirm consent</h2>
+      <p>For a couple image, use clear, current photos of both people with compatible face angles and natural expressions. Confirm that each person approves the source images, generated pairing, intended audience, and final use. Do not use a romantic image to imply a relationship, engagement, or endorsement that the other person has not approved.</p>
+      <p>Choose one mood after the source photos are settled: candlelit, floral, studio, outdoor, or playful. Describe wardrobe and color direction simply. Add long messages, names, or dates later in a design tool so spelling and placement can be verified.</p>
+      <h2 id="valentine-compare-relationship">Compare seasonal, announcement, and ceremony-led images</h2>
+      <table><thead><tr><th>Theme</th><th>Primary purpose</th><th>Claim to review</th></tr></thead><tbody><tr><td>Valentine's Day</td><td>Seasonal cards, date-night portraits, romantic gifts, or warm social posts</td><td>The image is seasonal and approved by everyone shown.</td></tr><tr><td>Engagement</td><td>Proposal or announcement imagery where ring and message details matter</td><td>The relationship announcement is real and approved.</td></tr><tr><td>Wedding</td><td>Formal couple portraits and ceremony-led concepts or keepsakes</td><td>The image is wedding-inspired and not false event documentation.</td></tr></tbody></table>
+      <p>Review the live <a href="/ai-image-generation/valentines-photo">Valentine's Day Photos</a> card for current outputs and credit cost before starting.</p>
+      <h2 id="valentine-review-couple">Review both identities and the card crop</h2>
+      <ul><li>Check both faces, eye direction, expression, and relative scale.</li><li>Inspect overlapping arms, hands, fingers, jewelry, flowers, and gifts.</li><li>Review heart-shaped props, reflections, and background text.</li><li>Confirm that the card crop leaves usable space without covering either face.</li><li>Check the image at the final gift, card, or social-post size.</li><li>Confirm that everyone shown approves the selected result and audience.</li></ul>
+      <h2 id="valentine-faq">Valentine's Day photo FAQ</h2>
+      <h3 id="valentine-faq-one-person">Can the image feature one person?</h3>
+      <p>Yes. Choose a purpose and mood that make sense for a single portrait, gift, or card rather than forcing a couple composition.</p>
+      <h3 id="valentine-faq-consent">What approval is needed for a couple image?</h3>
+      <p>Each person should approve the source photos, generated romantic pairing, final audience, and intended use. Do not use the image to make an unapproved relationship claim.</p>
+      <h3 id="valentine-faq-text">Should the message be generated inside the image?</h3>
+      <p>Generate a clean composition with text-safe space, then add verified copy in a design tool. This gives you control over spelling, dates, and placement.</p>
+    `
+  }),
+  makePriorityBlogArticle({
+    slug: "/blog/virtual-try-on-photo-package-guide",
+    pageTitle: "AI Virtual Try-On guide",
+    title: "AI Virtual Try-On Guide: Plan Outfits Without Treating the Preview as Exact Fit",
+    summary: "Use Virtual Try-On to compare outfit direction, color, silhouette, and creator styling. Prepare a clear portrait and approved clothing reference, then treat the result as a visual concept rather than a fit guarantee.",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/virtual-try-on/virtual-try-on-01.webp?v=20260715b",
+    imageAlt: "Woman standing beside a clothing rack while planning a virtual try-on outfit.",
+    tags: "AI Virtual Try-On|Outfit planning|Clothing references|Fit limitation",
+    targetLabel: "Open Virtual Try-On",
+    targetHref: "/ai-image-generation/virtual-try-on",
+    relatedLinks: [
+      { label: "Open Virtual Try-On", href: "/ai-image-generation/virtual-try-on" },
+      { label: "Read the Hairstyle photo guide", href: "/blog/hairstyle-photo-package-guide" },
+      { label: "Compare Portrait Retouch", href: "/ai-image-generation/portrait-retouch" }
+    ],
+    seoTitle: "AI Virtual Try-On planning guide | myDreamshoots",
+    seoDescription: "Plan outfits with AI Virtual Try-On using approved person and garment references, clear fit limits, and checks for body, fabric, logo, and identity artifacts.",
+    seoKeywords: "AI Virtual Try-On guide, outfit planning AI, garment reference photo, virtual try-on fit limitation, fashion image review",
+    body: html`
+      <p>Use Virtual Try-On to compare outfit direction, color, silhouette, and creator styling before shopping, packing, or planning a shoot. Prepare a clearly framed portrait and a clothing reference you are allowed to use. Treat every result as a visual concept, not a promise of exact size, fabric, color, or fit.</p>
+      <h2 id="tryon-prepare-person">Prepare a clear person photo</h2>
+      <p>Use a front or three-quarter portrait with enough body framing to show the garment area. Prefer simple lighting, an unobstructed pose, and clothing that does not hide the shoulders, waist, or other area being changed. Hair, hands, bags, and jewelry can overlap fabric, so make sure those elements are readable in the source.</p>
+      <p>Use current photos you own or have permission to use. A heavily filtered face, extreme pose, cropped garment area, or deep shadow makes it harder to judge whether the preview preserved the person and placed the clothing coherently.</p>
+      <h2 id="tryon-prepare-garment">Use one approved clothing reference and styling direction</h2>
+      <p>Add one clothing reference that you own or have permission to use. Describe one direction such as casual, formal, streetwear, travel, or event styling. Avoid combining several garments whose cut, layers, or branding compete. Protected logos and branded product images need appropriate rights before they are used or published.</p>
+      <h2 id="tryon-not-fit-guarantee">Treat the output as a moodboard, not a fit guarantee</h2>
+      <p>The preview may not reproduce a garment's exact size, cut, fabric weight, texture, transparency, color, pattern placement, closures, or drape. It cannot confirm comfort, inventory, tailoring, or how the physical item will fit. Check the seller's product page, size chart, materials, product photos, and return policy before making a purchase decision.</p>
+      <table><thead><tr><th>Workflow</th><th>What changes</th><th>Use it when</th></tr></thead><tbody><tr><td>Virtual Try-On</td><td>Wardrobe direction on a person</td><td>You want a visual outfit concept, not a measurement.</td></tr><tr><td>Street Style</td><td>Clothing and a complete fashion scene</td><td>The setting matters as much as the outfit.</td></tr><tr><td>Portrait Retouch</td><td>An existing portrait without replacing the outfit</td><td>The source is already dressed correctly and needs controlled cleanup.</td></tr><tr><td>Hairstyle Generator</td><td>Hair direction rather than wardrobe</td><td>The clothing should stay secondary to a hairstyle decision.</td></tr></tbody></table>
+      <p>Review the live <a href="/ai-image-generation/virtual-try-on">Virtual Try-On package card</a> for current outputs and credit cost before starting.</p>
+      <h2 id="tryon-review-garment">Review garment, body, and identity artifacts</h2>
+      <ul><li>Check neckline, shoulders, sleeves, cuffs, waist, hem, and closures.</li><li>Inspect pattern continuity, fabric edges, transparency, and repeated texture.</li><li>Review logos, labels, jewelry overlap, fingers, and hair over fabric.</li><li>Confirm body shape, pose, proportions, shadows, and skin remain believable.</li><li>Check that the outfit did not change identity, age, or expression.</li><li>Compare the preview with both the person photo and garment reference.</li></ul>
+      <h2 id="tryon-brand-boundary">Avoid product and brand misrepresentation</h2>
+      <p>Do not present a generated try-on as an exact image of a retailer's product, a verified brand collaboration, or proof of how a garment will fit. Disclose material AI changes when the publishing context requires it. The current local cover shows outfit planning beside a clothing rack; a verified source-reference-preview workflow asset remains required before this page is approved for publication.</p>
+      <h2 id="tryon-faq">Virtual Try-On FAQ</h2>
+      <h3 id="tryon-faq-fit">Does Virtual Try-On show exact garment fit?</h3>
+      <p>No. The result is a visual planning image, not a measurement, material, color, or fit guarantee. Confirm purchase details using the physical product and seller information.</p>
+      <h3 id="tryon-faq-reference">What person photo and garment reference work best?</h3>
+      <p>Use a clear, simply lit portrait with enough body framing and one unobstructed clothing reference that you are authorized to use.</p>
+      <h3 id="tryon-faq-retailer">Can I use a retailer's product image?</h3>
+      <p>Only when you have the rights or permission required for that image and use. Do not imply an official product rendering or brand partnership from a generated preview.</p>
+    `
+  }),
+  makePriorityBlogArticle({
+    slug: "/blog/wedding-portraits-photo-package-guide",
+    pageTitle: "AI Wedding portrait guide",
+    title: "AI Wedding Portraits: Plan Save-the-Dates, Moodboards, and Keepsakes",
+    summary: "Use Wedding Photo for save-the-date concepts, ceremony moodboards, invitation-friendly portraits, website visuals, or private keepsakes. Treat the results as creative imagery, not event documentation.",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/wedding-portraits/wedding-portraits-01.webp?v=20260715b",
+    imageAlt: "Close wedding portrait of a couple in formal attire with veil, bouquet, and soft daylight.",
+    tags: "AI Wedding portraits|Save-the-date concepts|Couple consent|Wedding moodboard",
+    targetLabel: "Open Wedding Photo",
+    targetHref: "/ai-image-generation/wedding-photo",
+    relatedLinks: [
+      { label: "Read the Engagement photo guide", href: "/blog/engagement-photo-package-guide" },
+      { label: "Read the Valentine's Day photo guide", href: "/blog/valentine-photos-photo-package-guide" },
+      { label: "Open Wedding Photo", href: "/ai-image-generation/wedding-photo" }
+    ],
+    seoTitle: "AI Wedding portrait planning guide | myDreamshoots",
+    seoDescription: "Plan AI wedding portraits for save-the-dates, moodboards, invitations, websites, or keepsakes with couple consent, verified text, and careful detail review.",
+    seoKeywords: "AI wedding portraits, save-the-date concept, wedding moodboard, wedding couple photo guide, AI wedding keepsake",
+    body: html`
+      <p>Use Wedding Photo for save-the-date concepts, ceremony moodboards, invitation-friendly portraits, wedding website visuals, or private keepsakes. Prepare approved photos of both people, choose one ceremony direction, and treat every result as wedding-inspired creative imagery rather than proof of a real event.</p>
+      <h2 id="wedding-choose-use">Choose the wedding use before the visual style</h2>
+      <p>A save-the-date needs text-safe composition. A ceremony moodboard can explore atmosphere, clothing, floral direction, and light. An invitation portrait should leave room for verified copy. A website header needs a wide crop that survives navigation overlays. A private keepsake can favor emotion and close detail.</p>
+      <p>Choose Wedding Photo when formal couple styling, ceremony atmosphere, floral details, or card-ready framing is central. Choose Engagement for a proposal or ring-led announcement. Choose Valentine's Day for a seasonal romantic card that does not make a ceremony claim.</p>
+      <h2 id="wedding-prepare-couple">Prepare both people and one ceremony direction</h2>
+      <p>Use recent, clear portraits of both people with similar lighting and useful face angles. Confirm that each person approves the source images, generated pairing, intended audience, and final use. Then choose one direction: ceremony, formal studio, outdoor romance, or card-ready portrait.</p>
+      <p>Include only cultural, floral, wardrobe, jewelry, and ceremonial details that knowledgeable participants can review accurately. Do not invent family traditions, religious meaning, or event facts that were not supplied.</p>
+      <h2 id="wedding-compare-nearby">Match the theme to the relationship claim</h2>
+      <table><thead><tr><th>Theme</th><th>Primary format</th><th>Boundary</th></tr></thead><tbody><tr><td>Wedding Photo</td><td>Ceremony-led concepts, formal portraits, save-the-dates, and keepsakes</td><td>Do not present generated imagery as event documentation.</td></tr><tr><td>Engagement Photo</td><td>Proposal, ring, and announcement-led imagery</td><td>The announcement and relationship claim must be real and approved.</td></tr><tr><td>Valentine's Day</td><td>Seasonal romantic cards, date-night portraits, and gifts</td><td>Use seasonal language without implying a ceremony.</td></tr></tbody></table>
+      <p>Review the live <a href="/ai-image-generation/wedding-photo">Wedding Photo package card</a> for current outputs and credit cost.</p>
+      <h2 id="wedding-add-text-later">Add names, dates, and venue copy later</h2>
+      <p>Leave names, dates, venue details, invitation copy, and schedules out of the generated scene. Add verified text later in a design tool where spelling, hierarchy, and date accuracy can be controlled. A clean text-safe crop is more reliable than generated lettering that appears correct at first glance.</p>
+      <h2 id="wedding-trust-review">Review consent, ceremony details, and pair anatomy</h2>
+      <p>Use generated wedding images as concepts or keepsakes, not as proof that a ceremony, venue booking, marriage, or cultural rite occurred. Share couple images only with both people's approval.</p>
+      <ul><li>Check both faces, eye direction, expression, and relative scale.</li><li>Inspect overlapping hands and arms, rings, jewelry, and bouquet stems.</li><li>Review veil and hair edges, suit and dress fabric, and floral repetition.</li><li>Check ceremonial objects, cultural details, background guests, and venue cues.</li><li>Confirm the final card or website crop preserves text-safe spacing.</li><li>Have knowledgeable participants review meaningful attire, symbols, and rituals.</li></ul>
+      <h2 id="wedding-faq">AI wedding portrait FAQ</h2>
+      <h3 id="wedding-faq-documentary">Can a generated wedding portrait document a real ceremony?</h3>
+      <p>No. Use it as a concept, moodboard, invitation-friendly visual, or keepsake. Real event claims require real documentation.</p>
+      <h3 id="wedding-faq-consent">Who should approve a couple image?</h3>
+      <p>Both people should approve the source photos, generated pairing, relationship claim, intended audience, and final use.</p>
+      <h3 id="wedding-faq-text">Where should names and dates be added?</h3>
+      <p>Add verified copy after generation in a design tool so spelling, dates, hierarchy, and placement can be controlled.</p>
+      <h3 id="wedding-faq-culture">How should cultural details be reviewed?</h3>
+      <p>Include only details supplied by the participants and ask knowledgeable people to review attire, symbols, rituals, and ceremonial objects before publication.</p>
+    `
+  }),
+  makePriorityBlogArticle({
+    slug: "/blog/world-cup-fan-photos-photo-package-guide",
+    pageTitle: "AI Soccer fan photo guide",
+    title: "AI Soccer Fan Photos: Match-Day Posters Without Official Marks",
+    summary: "Create a personal soccer supporter portrait, match-day poster, profile avatar, social banner, or watch-party image without official tournament marks, team crests, player likenesses, or affiliation claims.",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp?v=20260715b",
+    imageAlt: "Excited soccer supporter in generic blue, white, and red fan colors with a stadium crowd behind her.",
+    tags: "AI Soccer fan photos|Match-day poster|Generic supporter colors|Brand safety",
+    targetLabel: "Open Soccer",
+    targetHref: "/ai-image-generation/soccer",
+    relatedLinks: [
+      { label: "Open Soccer fan photos", href: "/ai-image-generation/soccer" },
+      { label: "Explore Avatar profile formats", href: "/ai-image-generation/avatar" },
+      { label: "Read the content policy", href: "/policies/content" }
+    ],
+    seoTitle: "AI Soccer fan photo and poster guide | myDreamshoots",
+    seoDescription: "Plan soccer supporter portraits, avatars, banners, and match-day posters with generic colors, approved photos, no official marks, and brand-safety checks.",
+    seoKeywords: "AI soccer fan photos, match-day poster, soccer supporter portrait, generic fan colors, sports logo safety, supporter avatar",
+    body: html`
+      <p>Create a personal soccer supporter portrait, match-day poster, profile avatar, social banner, or watch-party image from approved photos. Plan the crop and fan mood without using official tournament marks, team crests, sponsor logos, player likenesses, or language that implies an official partnership.</p>
+      <h2 id="soccer-choose-format">Choose one personal fan format</h2>
+      <p>Choose Soccer for personal fan creativity: a face-led avatar, dramatic vertical poster, wide social banner, supporter portrait, or approved group scene. Use personal portraits or group references that you have permission to use. Pick one generic color direction and one format so the result has a clear job.</p>
+      <table><thead><tr><th>Format</th><th>Composition</th><th>Review priority</th></tr></thead><tbody><tr><td>Profile avatar</td><td>Square, face-led, minimal background</td><td>Recognition at small size and no accidental marks.</td></tr><tr><td>Match-day poster</td><td>Vertical, energetic light, clean space for later copy</td><td>Hands, jersey details, stadium geometry, and text-safe area.</td></tr><tr><td>Social banner</td><td>Wide, subject placed away from interface overlays</td><td>Crop resilience, crowd repetition, and background signs.</td></tr><tr><td>Supporter group</td><td>Only approved people, with clear spacing</td><td>Every face, hand, garment, and relationship between figures.</td></tr></tbody></table>
+      <h2 id="soccer-use-generic-elements">Use generic supporter colors and invented scene details</h2>
+      <p>Use generic colors, unbranded clothing, invented stadium details, and personal fan expressions. Do not include official competition names or marks, team crests, sponsor logos, player or celebrity likenesses, protected trophy designs, tickets, or branded venue assets unless you hold the required rights.</p>
+      <p>Do not describe the output as official, licensed, sponsored, endorsed, or affiliated. The historical URL is being retained locally, but the visible Title, H1, Meta, CTA, and body use generic Soccer language. Brand and legal review remains required before any future publication.</p>
+      <h2 id="soccer-add-copy-later">Add verified match copy later</h2>
+      <p>Generate a clean poster image first. Add verified match names, dates, scores, and other copy later in a design tool. Do not rely on generated text, and do not use protected event branding without permission. If a score or date is factual, verify it independently before publishing.</p>
+      <p>Review the live <a href="/ai-image-generation/soccer">Soccer package card</a> for current outputs and credit cost. This guide intentionally avoids hardcoded catalog values.</p>
+      <h2 id="soccer-review-marks">Inspect every detail that could imply a real team or event</h2>
+      <ul><li>Check every face, hand, finger, and interaction in group scenes.</li><li>Inspect jersey numbers, names, stripes, seams, flags, and face paint.</li><li>Review balls, goal lines, crowd repetition, and stadium geometry.</li><li>Look for signs, sponsor-like shapes, accidental crests, and invented text.</li><li>Remove details that resemble a real player, tournament, team, trophy, or venue.</li><li>Confirm the crop works without implying official affiliation.</li></ul>
+      <h2 id="soccer-personal-use">Keep personal fan creativity separate from commercial rights</h2>
+      <p>A personal supporter image does not automatically grant rights for advertising, merchandise, ticketing, sponsorship, or commercial campaigns. Obtain the permissions required for people, marks, brands, and commercial use. Review the <a href="/policies/content">content policy</a> before sharing material that may involve protected identities or branding.</p>
+      <h2 id="soccer-faq">Soccer fan photo FAQ</h2>
+      <h3 id="soccer-faq-crests">Can I request an official crest or tournament mark?</h3>
+      <p>Do not include protected marks unless you hold the required rights. Use generic colors and invented supporter details for a personal fan concept.</p>
+      <h3 id="soccer-faq-player">Can the image feature a real player?</h3>
+      <p>Avoid player and celebrity likenesses unless you have the necessary permission. A personal supporter portrait should focus on the approved person in the source photo.</p>
+      <h3 id="soccer-faq-poster">How should poster text be handled?</h3>
+      <p>Generate a clean image with text-safe space, then add verified names, dates, scores, and copy in a design tool. Keep protected event branding out unless authorized.</p>
+    `
+  })
+].map((article) => [article.slug, article]));
+
+const mydreamshootsPriorityBlogSlugByPackSlug = new Map([
+  ["cyberpunk", "/blog/cyberpunk-photo-package-guide"],
+  ["mafia", "/blog/mafia-photo-package-guide"],
+  ["photo-enhancer", "/blog/magic-upscaler-photo-package-guide"],
+  ["travel", "/blog/nature-photo-package-guide"],
+  ["urban", "/blog/outdoor-creator-scenes-photo-package-guide"],
+  ["valentines-photo", "/blog/valentine-photos-photo-package-guide"],
+  ["virtual-try-on", "/blog/virtual-try-on-photo-package-guide"],
+  ["wedding-photo", "/blog/wedding-portraits-photo-package-guide"],
+  ["soccer", "/blog/world-cup-fan-photos-photo-package-guide"]
 ]);
 
 function publicAssetExists(imageUrl) {
@@ -733,12 +1195,17 @@ function buildCreativePackCoverageArticles(state, siteId, brand) {
       const parentLabel = parent?.label || categoryLabel || "fan and holiday albums";
       const examples = compactList([label, categoryLabel, parentLabel], label);
       const targetHref = packageDirectoryHrefForSite(siteId, slug);
+      const blogSlug = brand === "MyDreamShoots"
+        ? mydreamshootsPriorityBlogSlugByPackSlug.get(slug) ?? `/blog/${slug}-photo-package-guide`
+        : `/blog/${slug}-photo-package-guide`;
+      const priorityOverride = brand === "MyDreamShoots" ? mydreamshootsPriorityArticleOverrides.get(blogSlug) : undefined;
+      if (priorityOverride) return clone(priorityOverride);
       return makeCategoryArticle({
         sitePrefix: siteId,
         brand,
         kind: "theme",
         label,
-        blogSlug: `/blog/${slug}-photo-package-guide`,
+        blogSlug,
         description: pack.description || pack.headline || `${label} gives shoppers a focused ${parentLabel} direction to compare before starting a private album.`,
         imageUrl: blogSafeImageUrlForPack({ brand, slug, pack, category, parent }),
         imageAlt: `${brand} ${label} collection cover showing the visual direction, scene, and intended private album use for this AI photo package.`,
@@ -1386,6 +1853,7 @@ function makeArticleJson(config, article, existingPage, sourceArticlePage) {
     headingLevel: "h1",
     summary: article.summary,
     author: article.author,
+    authorType: article.authorType,
     publishedAt: article.publishedAt,
     updatedAt: article.updatedAt,
     readMinutes: article.readMinutes,
@@ -1398,6 +1866,9 @@ function makeArticleJson(config, article, existingPage, sourceArticlePage) {
     secondaryHref: article.secondaryHref,
     targetLabel,
     targetHref,
+    secondaryTargetLabel: article.secondaryTargetLabel,
+    secondaryTargetHref: article.secondaryTargetHref,
+    relatedLinks: clone(article.relatedLinks ?? []),
     body: article.body
   });
   for (const sectionId of ["packages_1", "packages_strip_1", "blog_list_1", "conversion_1"]) {
@@ -1499,7 +1970,7 @@ function fallbackPathsForSite(site, existingPaths) {
   return Array.from(new Set(next));
 }
 
-function syncSeoFallbacks(state) {
+function syncSeoFallbacks(state, { write = true } = {}) {
   const seoIndexingPath = path.join(process.cwd(), "src/lib/seo-indexing.ts");
   const source = fs.readFileSync(seoIndexingPath, "utf8");
   const dreamshootSite = state.sites.find((site) => site.id === "site_dreamshoot" || site.slug === "mydreamshoots");
@@ -1519,7 +1990,7 @@ function syncSeoFallbacks(state) {
     "AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS",
     aidreamcapesFallback
   );
-  if (next !== source) fs.writeFileSync(seoIndexingPath, next);
+  if (write && next !== source) fs.writeFileSync(seoIndexingPath, next);
   return {
     updated: next !== source,
     mydreamshoots: dreamshootFallback.length,
@@ -1576,14 +2047,215 @@ function syncSite(state, config) {
   syncPublicationSnapshots(state, site);
 }
 
-const state = sourceState;
-for (const config of siteConfigs) syncSite(state, config);
-fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
-const seoFallbacks = syncSeoFallbacks(state);
+function seoSettingsForPage(page) {
+  const seo = page.publishedJson?.seo ?? {};
+  return {
+    title: seo.title ?? page.title,
+    description: seo.description ?? "",
+    keywords: seo.keywords ?? "",
+    ogImage: seo.ogImage ?? "",
+    canonicalPath: seo.canonicalPath ?? page.slug,
+    index: seo.robots?.index ?? true,
+    follow: seo.robots?.follow ?? true
+  };
+}
+
+function mergeScopedSeoPages(settings, pages) {
+  const next = clone(settings ?? {});
+  next.seo ??= { pages: {} };
+  next.seo.pages ??= {};
+  for (const page of pages) next.seo.pages[page.id] = seoSettingsForPage(page);
+  return next;
+}
+
+function syncScopedPublicationSnapshots(state, site, pages) {
+  for (const publication of state.themePublications ?? []) {
+    if (publication.siteId !== site.id) continue;
+    publication.snapshot ??= {};
+    const snapshotPages = Array.isArray(publication.snapshot.pages) ? publication.snapshot.pages : [];
+    for (const page of pages) {
+      const entry = { id: page.id, slug: page.slug, publishedJson: clone(page.publishedJson) };
+      const index = snapshotPages.findIndex((item) => item?.slug === page.slug || item?.id === page.id);
+      if (index >= 0) snapshotPages[index] = entry;
+      else snapshotPages.push(entry);
+    }
+    publication.snapshot.pages = snapshotPages;
+    publication.snapshot.themeSettings = mergeScopedSeoPages(publication.snapshot.themeSettings, pages);
+  }
+}
+
+function syncScopedSite(state, config, slugs) {
+  const site = state.sites.find((item) => item.id === config.siteId || item.slug === config.slug);
+  if (!site) throw new Error(`Missing site ${config.slug}`);
+  const selectedArticles = config.articles.filter((article) => slugs.has(article.slug));
+  const missingSlugs = Array.from(slugs).filter((slug) => !selectedArticles.some((article) => article.slug === slug));
+  if (missingSlugs.length) throw new Error(`Missing generated priority articles: ${missingSlugs.join(", ")}`);
+
+  const sourceArticlePage = site.pages.find((page) => page.slug.startsWith("/blog/"));
+  const pages = selectedArticles.map((article) => {
+    const existingPage = site.pages.find((page) => page.slug === article.slug);
+    const articleJson = makeArticleJson(config, article, existingPage, sourceArticlePage);
+    const page = {
+      id: existingPage?.id ?? article.id,
+      siteId: site.id,
+      pageType: "article",
+      templateKey: "blog-detail",
+      slug: article.slug,
+      title: article.pageTitle,
+      draftJson: clone(articleJson),
+      publishedJson: clone(articleJson)
+    };
+    upsertPage(site, page);
+    return page;
+  });
+
+  site.themeSettings.draftJson = mergeScopedSeoPages(site.themeSettings.draftJson, pages);
+  site.themeSettings.publishedJson = mergeScopedSeoPages(site.themeSettings.publishedJson, pages);
+  syncScopedPublicationSnapshots(state, site, pages);
+  return pages;
+}
+
+function assertLocalDatabaseUrl() {
+  const databaseUrl = process.env.DATABASE_URL ?? "";
+  if (!databaseUrl) throw new Error("--db requires DATABASE_URL.");
+  const parsed = new URL(databaseUrl);
+  if (!["localhost", "127.0.0.1", "[::1]", "::1"].includes(parsed.hostname)) {
+    throw new Error(`Refusing scoped blog sync against non-local database host: ${parsed.hostname}`);
+  }
+  if (process.env.ALLOW_LOCAL_BLOG_DB_SYNC !== "1") {
+    throw new Error("--db requires ALLOW_LOCAL_BLOG_DB_SYNC=1 after confirming the database is local and disposable.");
+  }
+  if (["15432", "15433"].includes(parsed.port) && process.env.LOCAL_BLOG_DB_CONTAINER_CONFIRMED !== "1") {
+    throw new Error(`Refusing mapped database port ${parsed.port} until LOCAL_BLOG_DB_CONTAINER_CONFIRMED=1 confirms the local disposable container.`);
+  }
+}
+
+function toPrismaJson(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+async function updateScopedDatabase(state, pages) {
+  assertLocalDatabaseUrl();
+  const { PrismaClient } = await import("@prisma/client");
+  const prisma = new PrismaClient();
+  try {
+    await prisma.$transaction(async (tx) => {
+      const databasePages = [];
+      for (const page of pages) {
+        const existing = await tx.themePage.findUnique({
+          where: { siteId_slug: { siteId: MYDREAMSHOOTS_SITE_ID, slug: page.slug } },
+          select: { id: true }
+        });
+        const id = existing?.id ?? page.id;
+        const data = {
+          siteId: MYDREAMSHOOTS_SITE_ID,
+          pageType: page.pageType,
+          templateKey: page.templateKey,
+          slug: page.slug,
+          title: page.title,
+          draftJson: toPrismaJson(page.draftJson),
+          publishedJson: toPrismaJson(page.publishedJson)
+        };
+        await tx.themePage.upsert({
+          where: { id },
+          create: { id, ...data },
+          update: data
+        });
+        databasePages.push({ ...page, id });
+      }
+
+      const themeSettings = await tx.themeSettings.findUnique({ where: { siteId: MYDREAMSHOOTS_SITE_ID } });
+      if (!themeSettings) throw new Error(`Missing ThemeSettings for ${MYDREAMSHOOTS_SITE_ID}.`);
+      await tx.themeSettings.update({
+        where: { siteId: MYDREAMSHOOTS_SITE_ID },
+        data: {
+          draftJson: toPrismaJson(mergeScopedSeoPages(themeSettings.draftJson, databasePages)),
+          publishedJson: toPrismaJson(mergeScopedSeoPages(themeSettings.publishedJson, databasePages))
+        }
+      });
+
+      const publications = await tx.themePublication.findMany({ where: { siteId: MYDREAMSHOOTS_SITE_ID } });
+      for (const publication of publications) {
+        const snapshot = clone(publication.snapshot ?? {});
+        const snapshotPages = Array.isArray(snapshot.pages) ? snapshot.pages : [];
+        for (const page of databasePages) {
+          const entry = { id: page.id, slug: page.slug, publishedJson: clone(page.publishedJson) };
+          const index = snapshotPages.findIndex((item) => item?.slug === page.slug || item?.id === page.id);
+          if (index >= 0) snapshotPages[index] = entry;
+          else snapshotPages.push(entry);
+        }
+        snapshot.pages = snapshotPages;
+        snapshot.themeSettings = mergeScopedSeoPages(snapshot.themeSettings, databasePages);
+        await tx.themePublication.update({
+          where: { id: publication.id },
+          data: { snapshot: toPrismaJson(snapshot) }
+        });
+      }
+
+      const stateDocument = await tx.platformStateDocument.findUnique({ where: { id: "platform" } });
+      if (stateDocument?.state && Array.isArray(stateDocument.state.sites)) {
+        const nextState = clone(stateDocument.state);
+        const stateSite = nextState.sites.find((item) => item.id === MYDREAMSHOOTS_SITE_ID);
+        if (stateSite) {
+          stateSite.pages ??= [];
+          for (const page of databasePages) {
+            const index = stateSite.pages.findIndex((item) => item?.slug === page.slug || item?.id === page.id);
+            const entry = {
+              id: page.id,
+              siteId: MYDREAMSHOOTS_SITE_ID,
+              pageType: page.pageType,
+              templateKey: page.templateKey,
+              slug: page.slug,
+              title: page.title,
+              draftJson: clone(page.draftJson),
+              publishedJson: clone(page.publishedJson)
+            };
+            if (index >= 0) stateSite.pages[index] = { ...stateSite.pages[index], ...entry };
+            else stateSite.pages.push(entry);
+          }
+          stateSite.themeSettings = {
+            ...stateSite.themeSettings,
+            draftJson: mergeScopedSeoPages(stateSite.themeSettings?.draftJson, databasePages),
+            publishedJson: mergeScopedSeoPages(stateSite.themeSettings?.publishedJson, databasePages)
+          };
+          await tx.platformStateDocument.update({ where: { id: "platform" }, data: { state: toPrismaJson(nextState) } });
+        }
+      }
+    }, { timeout: 120_000 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+const state = clone(sourceState);
+let updatedPages = [];
+let updatedSites = [];
+let seoFallbacks = { updated: false, skipped: scopedRun };
+
+if (scopedRun) {
+  const config = siteConfigs.find((item) => item.siteId === requestedSiteId);
+  if (!config) throw new Error(`Missing config for ${requestedSiteId}`);
+  updatedPages = syncScopedSite(state, config, new Set(requestedSlugs));
+  updatedSites = [config.slug];
+} else {
+  for (const config of siteConfigs) syncSite(state, config);
+  updatedSites = siteConfigs.map((config) => config.slug);
+  seoFallbacks = syncSeoFallbacks(state, { write: !dryRun });
+}
+
+if (updateDb && !dryRun) {
+  await updateScopedDatabase(state, updatedPages);
+} else if (!dryRun) {
+  fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+}
 
 console.log(JSON.stringify({
   ok: true,
-  updatedSites: siteConfigs.map((config) => config.slug),
+  dryRun,
+  updateDb,
+  scopedRun,
+  updatedSites,
+  updatedSlugs: updatedPages.map((page) => page.slug),
   articlesPerSite: Object.fromEntries(siteConfigs.map((config) => [config.slug, config.articles.length])),
   seoFallbacks
 }, null, 2));

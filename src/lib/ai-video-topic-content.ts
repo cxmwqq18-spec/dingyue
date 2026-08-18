@@ -3,6 +3,8 @@ export type AiVideoTopicImage = {
   alt: string;
   width: number;
   height: number;
+  /** Focal point used by the shared 16:9 storefront media frame. */
+  objectPosition?: string;
 };
 
 export type AiVideoTopicCard = {
@@ -19,6 +21,7 @@ export type AiVideoTopicUseCase = AiVideoTopicCard & {
   problem: string;
   cta: string;
   image: AiVideoTopicImage;
+  scenarioLabel?: string;
 };
 
 export type AiVideoTopicFoundation = {
@@ -81,6 +84,7 @@ export type AiVideoTopicLandingContent = {
     intro: string;
     items: AiVideoTopicUseCase[];
   };
+  /** @deprecated Legacy duplicate gallery content is intentionally not rendered. */
   gallery?: {
     eyebrow: string;
     title: string;
@@ -92,6 +96,12 @@ export type AiVideoTopicLandingContent = {
   foundation: AiVideoTopicFoundation;
   guidance: AiVideoTopicGuidance;
   platformExamples?: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    items: AiVideoTopicCard[];
+  };
+  comparison?: {
     eyebrow: string;
     title: string;
     intro: string;
@@ -119,8 +129,8 @@ export type AiVideoTopicLandingContent = {
   };
 };
 
-function image(src: string, alt: string, width: number, height: number): AiVideoTopicImage {
-  return { src, alt, width, height };
+function image(src: string, alt: string, width: number, height: number, objectPosition?: string): AiVideoTopicImage {
+  return { src, alt, width, height, ...(objectPosition ? { objectPosition } : {}) };
 }
 
 function makeUseCaseCard(card: AiVideoTopicUseCase): AiVideoTopicUseCase {
@@ -1995,6 +2005,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         "Launch, problem-solution, benefit, offer, comparison, and retargeting should not use the same message. Choose the ad job before you choose the edit.",
       items: [
         makeUseCaseCard({
+          scenarioLabel: "New Product Launch Ad",
           title: "Lead With What Is New for the Buyer—Not Just the Release Date",
           problem: "The product is new, but “NEW” alone does not tell the right customer why this launch matters.",
           body:
@@ -2010,6 +2021,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           )
         }),
         makeUseCaseCard({
+          scenarioLabel: "Problem -> Solution Ad",
           title: "Show the Friction Clearly—Then Show the Product Changing That Specific Moment",
           problem: "The pain point is familiar, but many ads exaggerate it so much that the solution feels disconnected or manipulative.",
           body:
@@ -2025,6 +2037,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           )
         }),
         makeUseCaseCard({
+          scenarioLabel: "Benefit / Feature Ad",
           title: "Translate the Feature Into the Buyer's Real Benefit",
           problem: "The product has a useful feature, but the ad only names it instead of showing why it matters.",
           body:
@@ -2040,6 +2053,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           )
         }),
         makeUseCaseCard({
+          scenarioLabel: "Limited-Time Offer Ad",
           title: "Make the Offer Easy to Understand Without Hiding the Conditions",
           problem: "The offer is strong, but urgency overwhelms the product value or the terms are too vague.",
           body:
@@ -2055,6 +2069,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           )
         }),
         makeUseCaseCard({
+          scenarioLabel: "Comparison / Why Choose It Ad",
           title: "Compare on the Decision the Buyer Is Actually Making",
           problem: "The customer is already comparing options, but the ad uses vague “better” language instead of a useful criterion.",
           body:
@@ -2070,6 +2085,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           )
         }),
         makeUseCaseCard({
+          scenarioLabel: "Retargeting / Reminder Ad",
           title: "Answer the Reason Someone Might Still Be Hesitating",
           problem: "The viewer already knows the product, so replaying the awareness ad wastes the second chance.",
           body:
@@ -2159,6 +2175,30 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           title: "Horizontal cut",
           body: "Use the added width intentionally for product context, comparison, demonstration, or scene information instead of leaving the subject isolated in the center."
         })
+      ]
+    },
+    comparison: {
+      eyebrow: "CHOOSE THE RIGHT VIDEO JOB",
+      title: "Product Ad Is Not Product Video, Product Demo, or Promo",
+      intro:
+        "Keep these pages distinct by the customer decision they support. The right brief starts with the question the viewer still needs answered.",
+      items: [
+        {
+          title: "Product Video",
+          body: "Use Product Video when the viewer first needs to understand the product itself: scale, materials, features, use context, packaging, and important details."
+        },
+        {
+          title: "Product Demo Video",
+          body: "Use Product Demo Video when the viewer needs to understand how the product works: goal, setup, action, feedback, result, and the steps that connect them."
+        },
+        {
+          title: "Product Ad Video",
+          body: "Use Product Ad Video when a defined audience needs a campaign message built around a supported promise, visual proof, accurate offer, and one next action."
+        },
+        {
+          title: "Promo Video",
+          body: "Use Promo Video when the subject is broader than one product decision, such as a campaign, event, collection, announcement, seasonal push, or brand promotion."
+        }
       ]
     },
     steps: {

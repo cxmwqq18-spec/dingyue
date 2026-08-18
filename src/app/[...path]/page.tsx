@@ -70,7 +70,6 @@ const DREAMSHOOT_LEGACY_BLOG_CATEGORY_REDIRECTS: Record<string, string> = {
   "christmas-couple": "/blog/seasonal-photo-package-guide",
   "christmas-photos": "/blog/seasonal-photo-package-guide",
   "creator-portraits": "/blog/creator-photo-package-guide",
-  cyberpunk: "/blog/creative-photo-package-guide",
   "desi-wedding": "/blog/cultural-wedding-photo-guide",
   engagement: "/blog/couple-photo-package-guide",
   "fashion-editorial": "/blog/creator-photo-package-guide",
@@ -79,19 +78,11 @@ const DREAMSHOOT_LEGACY_BLOG_CATEGORY_REDIRECTS: Record<string, string> = {
   "halloween-party-photos": "/blog/seasonal-photo-package-guide",
   holiday: "/blog/seasonal-photo-package-guide",
   "indian-wedding": "/blog/cultural-wedding-photo-guide",
-  mafia: "/blog/creative-photo-package-guide",
-  "magic-upscaler": "/blog/utility-image-prep-guide",
-  nature: "/blog/creative-photo-package-guide",
-  "outdoor-creator-scenes": "/blog/creative-photo-package-guide",
   "product-style": "/blog/creator-photo-package-guide",
   "professional-headshots": "/blog/headshot-photo-package-guide",
   "profile-cards": "/blog/creator-photo-package-guide",
   "social-cards": "/blog/creator-photo-package-guide",
-  "thanksgiving-group-photos": "/blog/seasonal-photo-package-guide",
-  "valentine-photos": "/blog/couple-photo-package-guide",
-  "virtual-try-on": "/blog/beauty-style-photo-guide",
-  "wedding-portraits": "/blog/wedding-photo-package-guide",
-  "world-cup-fan-photos": "/blog/sports-fan-photo-guide"
+  "thanksgiving-group-photos": "/blog/seasonal-photo-package-guide"
 };
 const DREAMSHOOT_LEGACY_BLOG_TOOL_REDIRECTS: Record<string, string> = {
   "ai-photo-edit": "/blog/utility-image-prep-guide",

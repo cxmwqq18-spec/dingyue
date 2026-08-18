@@ -14,7 +14,11 @@ import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { storefrontGalleryMediaPairs } from "@/lib/storefront-media-alt";
 import { withStorefrontPublicWatermarkUrl } from "@/lib/storefront-public-watermark-url";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
-import { isMydreamshootsVideoFrameworkSiteId, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationThemeSeeds } from "@/lib/mydreamshoots-video-framework";
+import {
+  isMydreamshootsVideoFrameworkSiteId,
+  mydreamshootsVideoGenerationCategoriesForSite,
+  mydreamshootsVideoGenerationThemeSeedsForSite
+} from "@/lib/mydreamshoots-video-framework";
 import { normalizePlatformAiProviderType, platformProviderTypeForAppType } from "@/lib/ai-provider-type";
 import { shouldFallbackRelationalRead, shouldUseRelationalReadFallbackCircuit, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import { isMydreamshootsContentSourceSiteId } from "@/lib/storefront-content-source-policy";
@@ -4765,7 +4769,7 @@ export async function ensureDefaultVideoThemesRelational(siteId: string): Promis
 async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: string): Promise<void> {
   await ensureVideoGeneratorAppForSiteRelational(siteId);
   const categoryIdBySlug = new Map<string, string>();
-  for (const category of mydreamshootsVideoGenerationCategories) {
+  for (const category of mydreamshootsVideoGenerationCategoriesForSite(siteId)) {
     const row = await prisma.videoThemeCategory.upsert({
       where: { siteId_slug: { siteId, slug: category.slug } },
       create: {
@@ -4781,7 +4785,7 @@ async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: str
     });
     categoryIdBySlug.set(category.slug, row.id);
   }
-  for (const theme of mydreamshootsVideoGenerationThemeSeeds) {
+  for (const theme of mydreamshootsVideoGenerationThemeSeedsForSite(siteId)) {
     const savedTheme = await prisma.videoTheme.upsert({
       where: { siteId_slug: { siteId, slug: theme.slug } },
       create: {

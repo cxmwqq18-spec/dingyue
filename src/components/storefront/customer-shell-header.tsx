@@ -103,7 +103,8 @@ function headerPackageGroupsForClient(basePath: string, groups: MenuGroup): Head
   }));
 }
 
-function videoGenerationTopicsForMenu(basePath: string, categories: VideoThemeCategory[], themes: VideoTheme[]): HeaderVideoGenerationTopic[] {
+function videoGenerationTopicsForMenu(siteId: string, basePath: string, categories: VideoThemeCategory[], themes: VideoTheme[]): HeaderVideoGenerationTopic[] {
+  if (siteId !== "site_dreamshoot") return [];
   const categoriesBySlug = new Map(categories.map((category) => [category.slug, category]));
   const themesBySlug = new Map(themes.filter((theme) => theme.status === "active").map((theme) => [theme.slug, theme]));
   return mydreamshootsVideoGenerationCategories
@@ -112,6 +113,7 @@ function videoGenerationTopicsForMenu(basePath: string, categories: VideoThemeCa
       const category = categoriesBySlug.get(definition.slug);
       if (category && category.status !== "active") return [];
       const theme = themesBySlug.get(definition.slug);
+      if (!category && !theme) return [];
       return [{
         id: category?.id ?? theme?.id ?? `video_topic_${definition.slug}`,
         slug: definition.slug,
@@ -167,7 +169,7 @@ export function CustomerShellHeader({
   const menuSite = { ...site, __storefrontBasePath: basePath };
   const primaryMyDreamShoots = isMyDreamShoots && !isSpanishXby;
   const useVideoGenerationToolsMenu = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXby;
-  const videoGenerationMenuTopics = useVideoGenerationToolsMenu ? videoGenerationTopicsForMenu(basePath, videoThemeCategories, videoThemes) : [];
+  const videoGenerationMenuTopics = useVideoGenerationToolsMenu ? videoGenerationTopicsForMenu(site.id, basePath, videoThemeCategories, videoThemes) : [];
   const videoGenerationMenuHref = `${basePath}${videoGenerationCreatePath()}`;
   const activeToolBlocks = useVideoGenerationToolsMenu ? [] : getToolBlocksForMenu(menuSite, toolMenuItems);
   const packageRootHref = isMyDreamShoots && !isSpanishXby ? "/ai-image-generation" : "/collections";

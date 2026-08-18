@@ -977,6 +977,7 @@ function headerToolMegaItemsForClient(site: Site, tools: SectionBlockInstance[],
 }
 
 function headerVideoGenerationTopicsForClient(site: Site, categories: VideoThemeCategory[], themes: VideoTheme[]): HeaderVideoGenerationTopic[] {
+  if (site.id !== "site_dreamshoot") return [];
   const categoriesBySlug = new Map(categories.map((category) => [category.slug, category]));
   const themesBySlug = new Map(themes.filter((theme) => theme.status === "active").map((theme) => [theme.slug, theme]));
   return mydreamshootsVideoGenerationCategories
@@ -985,6 +986,7 @@ function headerVideoGenerationTopicsForClient(site: Site, categories: VideoTheme
       const category = categoriesBySlug.get(definition.slug);
       if (category && category.status !== "active") return [];
       const theme = themesBySlug.get(definition.slug);
+      if (!category && !theme) return [];
       return [{
         id: category?.id ?? theme?.id ?? `video_topic_${definition.slug}`,
         slug: definition.slug,
@@ -13084,7 +13086,7 @@ function SectionView({
                 </p>
               </div>
             </div>
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 grid items-start gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {topics.map((topic, index) => {
                 const coverImage = mydreamshootsVideoThemeDirectoryCover(topic, fallbackCoverImageUrl);
                 return (
@@ -13095,10 +13097,10 @@ function SectionView({
                     key={topic.id}
                     prefetch={false}
                   >
-                    <div className="relative aspect-video overflow-hidden bg-[#211c2c]">
+                    <div className="relative overflow-hidden bg-[#211c2c]">
                       <img
                         alt={manualImageAlt({ src: coverImage.src, fallback: coverImage.alt })}
-                        className="h-full w-full object-cover transition duration-500 group-hover/theme:scale-[1.035]"
+                        className="block h-auto w-full object-cover transition duration-500 group-hover/theme:scale-[1.035]"
                         decoding="async"
                         loading={index === 0 ? "eager" : "lazy"}
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"

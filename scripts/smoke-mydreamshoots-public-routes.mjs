@@ -30,7 +30,8 @@ const LEGACY_VIDEO_GONE_SLUGS = [
   "youtube-video",
   "story-video",
   "meme-video",
-  "product-video"
+  "product-video",
+  "product-ad-video"
 ];
 
 function parseArgs(argv) {

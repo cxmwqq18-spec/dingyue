@@ -2853,6 +2853,7 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
 
 export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, site?: Site): ThemePageJson {
   const item = getSeoDirectoryContentForSite(site, kind, rawSlug);
+  const canonicalPath = item.canonicalPath;
   const indexableDreamshootDefaultTool =
     kind === "tool" &&
     !isAidreamcapesSite(site) &&
@@ -2864,8 +2865,8 @@ export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryK
       title: item.title,
       description: item.description,
       keywords: item.keywords,
-      canonicalPath: item.canonicalPath,
-      canonical: item.canonicalPath,
+      canonicalPath,
+      canonical: canonicalPath,
       index: isSpanishXbySite(site) || item.explicit || indexableDreamshootDefaultTool,
       follow: true,
       robots: {

@@ -236,6 +236,18 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
   }
 ] as const;
 
+export function mydreamshootsVideoGenerationCategoriesForSite(siteId: string) {
+  return siteId === "site_dreamshoot"
+    ? mydreamshootsVideoGenerationCategories
+    : mydreamshootsVideoGenerationCategories.slice(0, 2);
+}
+
+export function mydreamshootsVideoGenerationThemeSeedsForSite(siteId: string) {
+  return siteId === "site_dreamshoot"
+    ? mydreamshootsVideoGenerationThemeSeeds
+    : mydreamshootsVideoGenerationThemeSeeds.slice(0, 2);
+}
+
 export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "talking-photo",
   "cinematic-video",

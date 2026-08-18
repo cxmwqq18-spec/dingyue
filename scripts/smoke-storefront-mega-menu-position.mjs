@@ -37,7 +37,8 @@ const expectedVideoTopicLabels = [
   "YouTube Video",
   "Story Video",
   "Meme Video",
-  "Product Video"
+  "Product Video",
+  "Product Ad Video"
 ];
 const anonymousEntries = [
   { label: "MyDreamShoots home", path: `/site/${siteSlug}` },
@@ -162,7 +163,7 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
         viewAllThemesLinks,
         hasLegacyVideoToolLabels: /Profile Clip|Fan Poster Motion|Creator Intro Video|Product Teaser Clip|Animated Avatar|Fashion Reel|Album Story Video/.test(panelText),
         hasHiddenVideoWorkflowLabels: /Text to video|Image to Video/.test(panelText),
-        hasVideoTopicDescriptions: /Explore a talking-photo workflow|Plan story-driven cinematic clips|Create TikTok-first vertical video briefs|Shape Reels around cover-aware framing|Adapt one master story|Plan long-form YouTube drafts|Shape story-led videos around setup|Turn reactions, POV setups|Turn product photos into clear video directions/.test(panelText),
+        hasVideoTopicDescriptions: /Explore a talking-photo workflow|Plan story-driven cinematic clips|Create TikTok-first vertical video briefs|Shape Reels around cover-aware framing|Adapt one master story|Plan long-form YouTube drafts|Shape story-led videos around setup|Turn reactions, POV setups|Turn product photos into clear video directions|Build product ads around one audience/.test(panelText),
         hasVideoCategoriesLabel: /\bCATEGOR(?:Y|IES)\b/i.test(panelText),
         hasTenVideoThemesLabel: /10\s+THEMES/i.test(panelText)
       };

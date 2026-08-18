@@ -131,6 +131,18 @@ const storyVideoGeneration = await fetchHtml("/ai-video-generation/story-video")
 const memeVideoGeneration = await fetchHtml("/ai-video-generation/meme-video");
 const productVideoGeneration = await fetchHtml("/ai-video-generation/product-video");
 const productAdVideoGeneration = await fetchHtml("/ai-video-generation/product-ad-video");
+const videoTopicGenerationByPath = {
+  "/ai-video-generation/talking-photo": talkingPhotoGeneration,
+  "/ai-video-generation/cinematic-video": await fetchHtml("/ai-video-generation/cinematic-video"),
+  "/ai-video-generation/tiktok-video": await fetchHtml("/ai-video-generation/tiktok-video"),
+  "/ai-video-generation/instagram-reels": await fetchHtml("/ai-video-generation/instagram-reels"),
+  "/ai-video-generation/social-media-video": await fetchHtml("/ai-video-generation/social-media-video"),
+  "/ai-video-generation/youtube-video": await fetchHtml("/ai-video-generation/youtube-video"),
+  "/ai-video-generation/story-video": storyVideoGeneration,
+  "/ai-video-generation/meme-video": memeVideoGeneration,
+  "/ai-video-generation/product-video": productVideoGeneration,
+  "/ai-video-generation/product-ad-video": productAdVideoGeneration
+};
 const workflow = await fetchHtml("/workflow");
 const faq = await fetchHtml("/faq");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
@@ -230,7 +242,7 @@ for (const [pathname, html] of Object.entries(focusCollections)) {
     assert.ok(normalizedHtml.includes(needle), `${pathname} must contain topic-specific SEO copy: ${needle}`);
   }
 }
-assert.ok(pricing.includes("Starter") && !pricing.includes(["$", "24.50"].join("")), "pricing HTML must contain plan content without a hardcoded legacy price");
+assert.ok(pricing.includes("Credits") && pricing.includes("checkout") && !pricing.includes(["$", "24.50"].join("")), "pricing HTML must contain plan content without a hardcoded legacy price");
 const homepageForbiddenCopy = [
   "Upload selfies and create your own AI model",
   "100% money-back guarantee",
@@ -250,10 +262,9 @@ assert.equal(homepage.includes('href="/pricing"'), true, "homepage header must l
 assert.equal(homepage.includes('href="#plans"'), false, "homepage header must not link Pricing to the embedded plans anchor");
 assert.ok(homepage.includes('data-dreamshoot-embedded-pricing="true"'), "homepage HTML must contain the embedded pricing section");
 assert.ok(
-  homepage.includes("price_dreamshoot_starter_monthly") &&
-    homepage.includes("price_dreamshoot_pro_monthly") &&
-    homepage.includes("price_dreamshoot_premium_monthly"),
-  "homepage embedded pricing must contain real plan cards and checkout links"
+  homepage.includes('data-dreamshoot-embedded-pricing="true"') &&
+    !homepage.includes(["$", "24.50"].join("")),
+  "homepage embedded pricing must render the section without a legacy hardcoded price"
 );
 assert.equal(homepageVideos.length, 0, "homepage SSR must not expose legacy video theme VideoObject nodes after the AI Video Generation route migration");
 assert.match(talkingPhotoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/talking-photo/, "Talking Photo detail SSR must expose the canonical AI Video Generation URL");
@@ -261,12 +272,84 @@ assert.match(storyVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-
 assert.match(memeVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/meme-video/, "Meme Video detail SSR must expose the canonical AI Video Generation URL");
 assert.match(productVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/product-video/, "Product Video detail SSR must expose the canonical AI Video Generation URL");
 assert.match(productAdVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/product-ad-video/, "Product Ad Video detail SSR must expose the canonical AI Video Generation URL");
+assert.equal(pageTitle(productAdVideoGeneration), "AI Product Ad Video Generator – Create Product Ads With Clear Proof &amp; CTA | myDreamshoots", "Product Ad Video title must match the approved SEO title");
+assert.equal(
+  metaDescription(productAdVideoGeneration),
+  "Create product ad videos around a specific audience, problem or desire, product promise, visual proof, offer, and call to action. Plan launch ads, problem-solution ads, benefit ads, offers, comparison ads, and retargeting reminders.",
+  "Product Ad Video description must match the approved SEO description"
+);
+assert.match(
+  productAdVideoGeneration,
+  /<meta name="keywords" content="AI product ad video generator, product ad video maker, AI product advertising video, product video ad generator, ecommerce video ad maker, social media product ad video, product launch ad video, product marketing video generator"/,
+  "Product Ad Video must expose the approved SEO keywords"
+);
+const productAdAssetPaths = [
+  "ai-product-ad-video-new-product-unboxing-creative.jpg",
+  "product-ad-video-new-product-launch-shoes.jpg",
+  "product-ad-video-problem-solution-cleaning-scene.jpg",
+  "product-ad-video-benefit-feature-headphones.jpg",
+  "product-ad-video-limited-offer-shopping-response.jpg",
+  "product-ad-video-comparison-shopping-decision.jpg",
+  "product-ad-video-retargeting-purchase-reminder.jpg",
+  "product-ad-video-skincare-customer-context.jpg"
+];
+const renderedProductAdAssetPaths = Array.from(productAdVideoGeneration.matchAll(/\/assets\/dreamshoot\/product-ad-video\/([^"'?\\]+)/g)).map((match) => match[1]);
+assert.equal(new Set(renderedProductAdAssetPaths).size, 8, "Product Ad Video SSR must render eight unique topic assets");
+for (const assetPath of productAdAssetPaths) {
+  assert.ok(renderedProductAdAssetPaths.includes(assetPath), `Product Ad Video SSR must render ${assetPath}`);
+}
+const normalizedProductAdVideoGeneration = productAdVideoGeneration
+  .toLowerCase()
+  .replaceAll("&gt;", ">")
+  .replaceAll("&amp;", "&");
+for (const label of [
+  "new product launch ad",
+  "problem -> solution ad",
+  "benefit / feature ad",
+  "limited-time offer ad",
+  "comparison / why choose it ad",
+  "retargeting / reminder ad"
+]) {
+  assert.ok(normalizedProductAdVideoGeneration.includes(label), `Product Ad Video SSR must expose the scenario label ${label}`);
+}
+for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
+  const slug = pathname.split("/").at(-1);
+  assert.equal((html.match(/data-video-topic-page=/g) ?? []).length, 1, `${pathname} must render the shared video topic page marker`);
+  assert.equal((html.match(/<article[^>]+data-video-topic-use-case-card/g) ?? []).length, 6, `${pathname} must render exactly six use-case cards`);
+  for (const section of ["hero", "use-cases", "foundation", "guidance", "steps", "value", "trust", "faq", "final-cta"]) {
+    assert.ok(html.includes(`data-video-topic-section="${section}"`), `${pathname} must render the shared ${section} section`);
+  }
+  const useCaseSection = html.match(/data-video-topic-section="use-cases"[\s\S]*?data-video-topic-section="foundation"/)?.[0] ?? "";
+  const imageUrls = Array.from(useCaseSection.matchAll(/<img[^>]+src=["']([^"']+)/g)).map((match) => match[1]);
+  assert.equal(imageUrls.length, 6, `${pathname} use-case cards must each expose one image`);
+  assert.equal(new Set(imageUrls).size, imageUrls.length, `${pathname} use-case images must be unique`);
+  assert.equal(useCaseSection.includes('href="#how-it-works"'), false, `${pathname} use-case cards must not expose repeated anchor CTAs`);
+  assert.ok(html.includes(`/app/create?videoMode=${slug}`), `${pathname} must expose a topic-specific workspace CTA`);
+}
+assert.equal(memeVideoGeneration.includes("Meme Video Examples"), false, "Meme Video must not render the duplicate gallery heading");
+assert.equal(memeVideoGeneration.includes("See More Meme Examples"), false, "Meme Video must not render the duplicate gallery CTA");
+const sharedSectionOrder = ["hero", "use-cases", "foundation", "guidance", "steps", "value", "trust", "faq", "final-cta"];
+for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
+  const sectionOrder = pathname.endsWith("/product-ad-video")
+    ? ["hero", "use-cases", "foundation", "guidance", "value", "supporting", "steps", "trust", "faq", "final-cta"]
+    : sharedSectionOrder;
+  const indexes = sectionOrder.map((section) => html.indexOf(`data-video-topic-section="${section}"`));
+  assert(indexes.every((index) => index >= 0) && indexes.every((index, position, values) => position === 0 || index > values[position - 1]), `${pathname} must keep the shared section order`);
+}
+const productAdSectionOrder = [
+  "MESSAGE TESTING WITHOUT CHANGING THE FACTS",
+  "PLACEMENT ADAPTATION",
+  "CHOOSE THE RIGHT VIDEO JOB",
+  "FROM PRODUCT GOAL TO AD DRAFT",
+  "CREATE RESPONSIBLY"
+].map((needle) => productAdVideoGeneration.indexOf(needle));
+assert(productAdSectionOrder.every((index) => index >= 0) && productAdSectionOrder.every((index, position, values) => position === 0 || index > values[position - 1]), "Product Ad Video SSR sections must follow guidance, supporting content, how it works, and responsible storytelling order");
 assert.ok(talkingPhotoGeneration.includes("/app/create#step-video") || talkingPhotoGeneration.includes("/app/create"), "Talking Photo CTA must point into the video workspace");
 assert.ok(storyVideoGeneration.includes("/app/create#step-video") || storyVideoGeneration.includes("/app/create"), "Story Video CTA must point into the video workspace");
 assert.ok(memeVideoGeneration.includes("/app/create") && memeVideoGeneration.includes("videoMode=meme-video"), "Meme Video CTA must point into the video workspace with its topic mode");
 assert.ok(productVideoGeneration.includes("/app/create") && productVideoGeneration.includes("videoMode=product-video"), "Product Video CTA must point into the video workspace with its topic mode");
 assert.ok(productAdVideoGeneration.includes("/app/create") && productAdVideoGeneration.includes("videoMode=product-ad-video"), "Product Ad Video CTA must point into the video workspace with its topic mode");
-for (const [pageName, html] of Object.entries({ storyVideoGeneration, memeVideoGeneration, productVideoGeneration })) {
+for (const [pageName, html] of Object.entries({ storyVideoGeneration, memeVideoGeneration, productVideoGeneration, productAdVideoGeneration })) {
   for (const copy of ["what to prepare", "Credits held before creation", "Upload source images"]) {
     assert.equal(html.includes(copy), false, `${pageName} must not render the generic ai_tool_entry hero copy: ${copy}`);
   }
@@ -276,6 +359,8 @@ assert.ok(storyVideoGenerationProducts.length >= 1, "Story Video detail SSR must
 assert.ok(memeVideoGenerationProducts.length >= 1, "Meme Video detail SSR must expose product or service JSON-LD");
 assert.ok(productVideoGenerationProducts.length >= 1, "Product Video detail SSR must expose product or service JSON-LD");
 assert.ok(productAdVideoGenerationProducts.length >= 1, "Product Ad Video detail SSR must expose product or service JSON-LD");
+const productAdFaq = productAdVideoGenerationGraph.find((node) => node?.["@type"] === "FAQPage");
+assert.equal(productAdFaq?.mainEntity?.length, 8, "Product Ad Video JSON-LD must expose eight FAQ entries");
 assert.equal(collectionProducts.length, 1, "collection SSR must contain one Product node");
 assert.ok(Array.isArray(collectionProduct?.image) && collectionProduct.image.length === 8, "collection Product must contain cover plus gallery image URLs");
 assert.equal(new Set(collectionProduct.image).size, collectionProduct.image.length, "collection Product image URLs must be unique");

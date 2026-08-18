@@ -1,6 +1,7 @@
 export type TalkingPhotoImage = {
   src: string;
   alt: string;
+  objectPosition?: string;
 };
 
 export type TalkingPhotoUseCase = {

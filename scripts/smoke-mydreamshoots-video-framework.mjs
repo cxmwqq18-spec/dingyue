@@ -4,6 +4,8 @@ import path from "node:path";
 const repoRoot = process.cwd();
 const state = JSON.parse(fs.readFileSync(path.join(repoRoot, "data", "platform-state.json"), "utf8"));
 const frameworkSource = fs.readFileSync(path.join(repoRoot, "src", "lib", "mydreamshoots-video-framework.ts"), "utf8");
+const siteStoreSource = fs.readFileSync(path.join(repoRoot, "src", "lib", "stores", "site-store.ts"), "utf8");
+const themeRendererSource = fs.readFileSync(path.join(repoRoot, "src", "components", "theme-renderer.tsx"), "utf8");
 const targetSiteIds = ["site_dreamshoot", "site_grownstride_test"];
 const baseExpectedCategories = [
   ["text-to-video", "Text to video", 10],
@@ -39,7 +41,6 @@ function assert(condition, message, details) {
 for (const siteId of targetSiteIds) {
   const toolCategories = (state.toolCategories ?? []).filter((row) => row.siteId === siteId);
   const toolMenuItems = (state.toolMenuItems ?? []).filter((row) => row.siteId === siteId);
-  const videoThemes = (state.videoThemes ?? []).filter((row) => row.siteId === siteId);
   const videoCategories = (state.videoThemeCategories ?? [])
     .filter((row) => row.siteId === siteId && row.status === "active")
     .sort((left, right) => left.sortOrder - right.sortOrder);
@@ -52,6 +53,10 @@ for (const siteId of targetSiteIds) {
     assert(category.label === label && category.sortOrder === sortOrder, `${siteId} ${slug} video category does not match the framework`, { category, expected: { label, sortOrder } });
   }
 }
+assert(frameworkSource.includes("mydreamshootsVideoGenerationCategoriesForSite"), "video framework must expose site-scoped category seeds");
+assert(frameworkSource.includes("siteId === \"site_dreamshoot\""), "full video framework categories must be limited to site_dreamshoot");
+assert(siteStoreSource.includes("mydreamshootsVideoGenerationCategoriesForSite(siteId)"), "relational video framework initialization must use site-scoped category seeds");
+assert(themeRendererSource.includes("if (site.id !== \"site_dreamshoot\") return []"), "public video header topics must stay scoped to site_dreamshoot");
 
 for (const siteId of ["site_aidreamcapes", "site_aidreamcapes_xby", "site_mydreamshoots_xby"]) {
   const toolCount = (state.toolMenuItems ?? []).filter((row) => row.siteId === siteId).length;

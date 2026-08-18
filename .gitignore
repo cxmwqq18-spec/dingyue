@@ -25,5 +25,9 @@ tmp/
 public/current-*.png
 public/qa-*.png
 data/customer-assets/
+docs/audits/**/local-playwright/
+docs/audits/**/screenshots/
+docs/audits/**/*-evidence.json
+docs/audits/**/similarity-analysis.json
 releases/backups/
 releases/.tmp/
