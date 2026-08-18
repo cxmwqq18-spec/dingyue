@@ -22,9 +22,11 @@ import {
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
-import { publicContentPageSlug } from "@/lib/site-route-canonical";
+import { legacyPublicPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { customerSessionCookie } from "@/lib/session";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamcapesSite as isAidreamcapesCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
+import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getSiteByHostForPublicAuth, getVideoThemeSlugRedirectRelational } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
@@ -239,12 +241,15 @@ function searchParamsSuffix(query: Record<string, string | string[] | undefined>
   return serialized ? `?${serialized}` : "";
 }
 
-function isMydreamshootsSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
-  return /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
+function isMydreamshootsSite(site: { id?: string; slug: string; name: string; branding: { logoText: string } }): boolean {
+  const hasVideoCapability = site.id
+    ? usesAiGenerationPublicRoutes({ id: site.id, slug: site.slug })
+    : site.slug.trim().toLowerCase() === "mydreamshoots";
+  return hasVideoCapability && site.slug.trim().toLowerCase() === "mydreamshoots";
 }
 
 function isAidreamcapesSite(site: { slug: string; name: string; branding: { logoText: string } }): boolean {
-  return /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`);
+  return isAidreamcapesCapabilitySite({ id: "", slug: site.slug });
 }
 
 function isCollectionRouteRequest(path: string[]): boolean {
@@ -263,7 +268,7 @@ function collectionRouteLookupSlug(path: string[]): string {
 
 function isMydreamshootsPublicSlug(slug: string | undefined): boolean {
   const value = slug ?? "";
-  return (value === "grownstride" || /dreamshoot/i.test(value)) && !/aidreamcapes|aidreamshoots/i.test(value);
+  return value === "grownstride" || value === "mydreamshoots";
 }
 
 function fallbackCollectionRootPathForHost(host: string | null | undefined): string {
@@ -314,8 +319,11 @@ function legacyBlogRedirectPath(
   return undefined;
 }
 
-function redirectLegacyBlogArticle(site: { slug: string; name: string; branding: { logoText: string } }, slug: string): void {
+function redirectLegacyBlogArticle(site: { slug: string; name: string; branding: { logoText: string } }, slug: string, query: Record<string, string | string[] | undefined> = {}): void {
   if (!slug.startsWith("/blog/")) return;
+  if (isMydreamshootsSite(site) && slug === "/blog/world-cup-fan-photos-photo-package-guide" && process.env.MDS_SOCCER_MIGRATION_APPROVED === "1") {
+    permanentRedirect(`/blog/soccer-fan-photo-guide${searchParamsSuffix(query)}`);
+  }
   const articleSlug = slug.slice("/blog/".length);
   const redirectPath = isAidreamcapesSite(site)
     ? legacyBlogRedirectPath(
@@ -464,6 +472,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (!state) return {};
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) return {};
+  const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
   if (path[0] === "tools" && isMydreamshootsSite(site) && !isAidreamcapesSite(site)) return {};
   const slug = publicContentPageSlug(`/${path.join("/")}`);
   if (isVideoGenerationRequest) {
@@ -474,6 +483,8 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
       if (redirectRecord?.theme?.status === "active") {
         const redirected = await resolveHostToolPageWithFallback(hostCandidates, redirectRecord.theme.slug);
         if (!redirected) return {};
+        const redirectedSnapshot = createPublishedSiteSnapshot(redirected.state, redirected.site, { source: "platform-state" });
+        if (resolvePublishedRouteDisposition(redirectedSnapshot, `/ai-video-generation/${redirectRecord.theme.slug}`).kind !== "render") return {};
         return metadataForPublishedStorefrontDirectoryPage({
           site: redirected.site,
           page: redirected.page,
@@ -481,11 +492,14 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
           directorySlug: redirectRecord.theme.slug,
           path: redirectRecord.theme.slug,
           products: redirected.state.products,
-          creativePacks: redirected.state.creativePacks
+          creativePacks: redirected.state.creativePacks,
+          snapshot: redirectedSnapshot
         });
       }
       const resolved = await resolveHostToolPageWithFallback(hostCandidates, videoGenerationRoute.itemSlug);
       if (!resolved) return {};
+      const resolvedSnapshot = createPublishedSiteSnapshot(resolved.state, resolved.site, { source: "platform-state" });
+      if (resolvePublishedRouteDisposition(resolvedSnapshot, videoGenerationRoute.canonicalPath).kind !== "render") return {};
       return metadataForPublishedStorefrontDirectoryPage({
         site: resolved.site,
         page: resolved.page,
@@ -493,11 +507,13 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
         directorySlug: videoGenerationRoute.itemSlug,
         path: videoGenerationRoute.canonicalPath,
         products: resolved.state.products,
-        creativePacks: resolved.state.creativePacks
+        creativePacks: resolved.state.creativePacks,
+        snapshot: resolvedSnapshot
       });
     }
+    if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") return {};
     const page = findPage(site, "/ai-video-generation");
-    return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks }) : {};
+    return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
   }
   if (path[0] === "tools" && path[1]) {
     const resolved = await resolveHostToolPageWithFallback(hostCandidates, path[1]);
@@ -515,6 +531,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     const collectionRoute = parsePublicCollectionRouteForSite(site, path);
     if (!collectionRoute) return {};
     if (collectionRoute.collectionSlug && !canResolveCollectionSlugForSite(state, site, collectionRoute.collectionSlug)) return {};
+    if (resolvePublishedRouteDisposition(snapshot, collectionRootPageSlug).kind !== "render") return {};
     const page = findPage(site, publicCollectionRootPathForSite(site)) ?? findPage(site, "/collections");
     if (collectionRoute.collectionSlug && page) {
       return metadataForPublishedStorefrontDirectoryPage({
@@ -524,13 +541,15 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
         directorySlug: collectionRoute.collectionSlug,
         path: collectionRoute.canonicalPath,
         products: state.products,
-        creativePacks: state.creativePacks
+        creativePacks: state.creativePacks,
+        snapshot
       });
     }
-    return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks }) : {};
+    return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
   }
+  if (resolvePublishedRouteDisposition(snapshot, slug).kind !== "render") return {};
   const page = findPage(site, slug);
-  return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks }) : {};
+  return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
 }
 
 export default async function HostStorefrontCatchAllPage({
@@ -558,18 +577,6 @@ export default async function HostStorefrontCatchAllPage({
       redirect(`/site/${defaultSiteSlug}${firstSegment === "help" ? "/faq" : slug}${searchParamsSuffix(query)}`);
     }
   }
-  if (slug === "/about") redirect("/about-us");
-  if (slug === "/contact") redirect("/contact-us");
-  if (slug === "/examples") redirect(fallbackCollectionRootPathForHost(host));
-  if (slug === "/packages") redirect(fallbackCollectionRootPathForHost(host));
-  if (slug === "/privacy-policy" || slug === "/policies/privacy" || slug === "/policies/privacy-policy") redirect("/privacy");
-  if (slug === "/terms-of-service" || slug === "/policies/terms" || slug === "/policies/terms-of-service") redirect("/terms");
-  if (slug === "/cookie-policy" || slug === "/policies/cookies" || slug === "/policies/cookie-policy") redirect("/cookies");
-  if (slug === "/refund-policy" || slug === "/policies/refund" || slug === "/policies/refunds") redirect("/refunds");
-  if (slug === "/content-policy" || slug === "/policies/content") redirect("/content");
-  if (slug === "/shipping-policy" || slug === "/delivery-policy" || slug === "/policies/shipping" || slug === "/policies/delivery" || slug === "/policies/delivery-policy") redirect("/shipping");
-  if (slug === "/children-privacy-policy" || slug === "/childrens-privacy" || slug === "/policies/children-privacy" || slug === "/policies/children" || slug === "/policies/children-privacy-policy" || slug === "/policies/childrens-privacy") redirect("/children-privacy");
-  if (slug === "/state-privacy-rights" || slug === "/california-privacy" || slug === "/ccpa" || slug === "/policies/state-privacy" || slug === "/policies/state-privacy-rights" || slug === "/policies/california-privacy" || slug === "/policies/ccpa") redirect("/state-privacy");
   if (slug === "/tool") {
     if (isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]))) notFound();
     redirect("/tools");
@@ -595,11 +602,12 @@ export default async function HostStorefrontCatchAllPage({
   const isCollectionRequest = isCollectionRouteRequest(path);
   const isVideoGenerationRequest = isVideoGenerationRouteRequest(path);
   const collectionRootPageSlug = fallbackCollectionRootPathForHost(host);
+  const legacyPathTarget = legacyPublicPathTarget(slug, collectionRootPageSlug);
   const publicPageSlug = isCollectionRequest
     ? collectionRootPageSlug
     : isVideoGenerationRequest
     ? path[1] ? `/ai-video-generation/${path[1]}` : "/ai-video-generation"
-    : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
+    : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(`/${path.join("/")}`);
   const collectionLookupSlug = collectionRouteLookupSlug(path);
   const videoLookupSlug = isVideoGenerationRequest ? path[1] || "" : "";
   const state = needsPrivateRuntime
@@ -614,6 +622,13 @@ export default async function HostStorefrontCatchAllPage({
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) notFound();
+  const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
+  const legacyTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForHost(host));
+  if (legacyTarget) {
+    const disposition = resolvePublishedRedirectDisposition(snapshot, slug, legacyTarget);
+    if (disposition.kind === "redirect" && disposition.targetPath) permanentRedirect(publicSiteUrl(site, disposition.targetPath));
+    notFound();
+  }
   if (slug === "/login" && (await hasValidCustomerSessionForSite(site))) {
     const query = searchParams ? await searchParams : {};
     redirect(safeHostCustomerNextPath(query.next));
@@ -621,7 +636,8 @@ export default async function HostStorefrontCatchAllPage({
   if (slug === "/help" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/faq");
   if (slug === "/how-it-works" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/workflow");
   if (firstSegment === "tools" && isMydreamshootsSite(site) && !isAidreamcapesSite(site)) notFound();
-  redirectLegacyBlogArticle(site, slug);
+  const routeQuery = searchParams ? await searchParams : {};
+  redirectLegacyBlogArticle(site, slug, routeQuery);
   const resolvedToolPage = firstSegment === "tools" && path[1]
     ? await resolveHostToolPageWithFallback(hostCandidates, path[1])
     : undefined;
@@ -665,6 +681,7 @@ export default async function HostStorefrontCatchAllPage({
   if (isVideoGenerationRequest) {
     if (!videoGenerationRoute) notFound();
     if (videoGenerationRoute.itemSlug) {
+      if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") notFound();
       const redirectRecord = await getVideoThemeSlugRedirectRelational(site.id, videoGenerationRoute.itemSlug);
       if (redirectRecord?.theme?.status === "active" && redirectRecord.theme.slug !== videoGenerationRoute.itemSlug) {
         permanentRedirect(publicSiteUrl(site, `/ai-video-generation/${redirectRecord.theme.slug}`));
@@ -684,6 +701,7 @@ export default async function HostStorefrontCatchAllPage({
         resolvedPage: resolvedVideoToolPage.page
       });
     }
+    if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") notFound();
     return renderStorefrontPage({
       site,
       slug: "/ai-video-generation",
@@ -701,11 +719,13 @@ export default async function HostStorefrontCatchAllPage({
   if (isCollectionRequest && !collectionRoute) notFound();
   const collectionCategory = collectionRoute?.collectionSlug ?? "";
   if (collectionRoute) {
+    if (resolvePublishedRouteDisposition(snapshot, collectionRootPageSlug).kind !== "render") notFound();
     const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(site, "collection", collectionRoute.collectionSlug);
     if (canonicalCollectionPath !== collectionRoute.canonicalPath) permanentRedirect(publicSiteUrl(site, canonicalCollectionPath));
   }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, site, collectionCategory)) notFound();
   const pageSlug = collectionRoute ? publicCollectionRootPathForSite(site) : publicContentPageSlug(`/${path.join("/")}`);
+  if (!collectionRoute && resolvePublishedRouteDisposition(snapshot, pageSlug).kind !== "render") notFound();
   if (!collectionRoute && !findPage(site, pageSlug) && !canUseStorefrontPartnerTemplate(site, pageSlug)) notFound();
   const storefrontQuery = collectionCategory ? { ...query, category: collectionCategory } : query;
   return renderStorefrontPage({

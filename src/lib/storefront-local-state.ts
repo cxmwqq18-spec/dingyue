@@ -7,6 +7,7 @@ import {
   readStorefrontPublicRuntimeStateBySlugFromDatabase
 } from "@/lib/storefront-state";
 import { publicSiteSlug } from "@/lib/domain-routing";
+import { usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 import {
   isAnyLocalStorefrontReadPreference,
   isDatabaseStorefrontReadPreference,
@@ -116,7 +117,7 @@ function prefersLocalPersistenceBackend(): boolean {
 
 function isSynchronizedDreamshootSite(siteSlug?: string): boolean {
   if (!siteSlug) return false;
-  return /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSiteSlug(siteSlug));
+  return usesAiGenerationPublicSlug(publicSiteSlug(siteSlug));
 }
 
 export function preferLocalPathModeState(siteSlug?: string): boolean {
@@ -151,7 +152,7 @@ function databaseSourceError(kind: "runtime" | "metadata", siteSlug: string, pag
 
 function legacyPageSlugForSite(siteSlug: string, pageSlug: string): string | undefined {
   if (pageSlug !== "/faq") return undefined;
-  return /mydreamshoots|dreamshoot|aidreamcapes/i.test(siteSlug) ? "/help" : undefined;
+  return usesAiGenerationPublicSlug(siteSlug) ? "/help" : undefined;
 }
 
 export async function readPathModePublicRuntimeState(siteSlug: string, pageSlug: string, contextSlug?: string): Promise<PlatformState | undefined> {

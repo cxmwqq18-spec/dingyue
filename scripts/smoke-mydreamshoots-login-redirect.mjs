@@ -18,6 +18,14 @@ function assert(condition, message) {
 async function assertLoginMediaLayout(page) {
   const primaryImage = page.locator('section[id="start"] img').first();
   await primaryImage.waitFor({ state: "visible", timeout: 30000 });
+  await page.waitForFunction(
+    () => {
+      const image = document.querySelector('section[id="start"] img');
+      return Boolean(image && window.getComputedStyle(image).objectFit === "cover");
+    },
+    undefined,
+    { timeout: 10000 }
+  );
   const layout = await primaryImage.evaluate((image) => {
     const imageRect = image.getBoundingClientRect();
     const frame = image.closest("div.relative");
@@ -58,6 +66,11 @@ function uid(prefix) {
   return `${prefix}_${Date.now().toString(36)}_${crypto.randomBytes(4).toString("hex")}`;
 }
 
+async function waitForApprovedPath(page, pathName, timeout = 60000) {
+  const accepted = new Set([pathName, `/site/${siteSlug}${pathName}`]);
+  await page.waitForURL((url) => accepted.has(url.pathname), { timeout });
+}
+
 async function createSmokeCustomer() {
   const customerId = uid("cust_login");
   const email = `${customerId}@example.test`;
@@ -93,15 +106,21 @@ async function smokeLoginRedirect() {
       if (response.url().includes("/auth/login")) loginResponses.push(`${response.status()} ${response.url()}`);
     });
 
-    await page.goto(`/site/${siteSlug}/login`, { waitUntil: "networkidle" });
+    const expectedWorkspacePath = `/site/${siteSlug}/app/create`;
+    const expectedNextPath = `${expectedWorkspacePath}?nextHash=step-video`;
+    await page.goto(expectedNextPath, { waitUntil: "networkidle" });
+    await page.waitForFunction((expectedPath) => window.location.pathname === expectedPath, `/site/${siteSlug}/login`, { timeout: 45000 });
+    const loginUrl = new URL(page.url());
+    assert(loginUrl.searchParams.get("next") === expectedNextPath, `protected route did not preserve the encoded workspace target: ${page.url()}`);
     await assertLoginMediaLayout(page);
     await page.getByLabel("Email").fill(smoke.email);
     await page.getByLabel("Password").fill(smoke.password);
     await page.locator('form button[type="submit"]').last().click({ noWaitAfter: true });
-    await page.waitForFunction((expectedPath) => window.location.pathname === expectedPath, `/site/${siteSlug}/app/create`, { timeout: 45000 });
+    await page.waitForFunction((expectedPath) => window.location.pathname === expectedPath, expectedWorkspacePath, { timeout: 45000 });
+    await page.waitForFunction(() => window.location.hash === "#step-video" && !new URLSearchParams(window.location.search).has("nextHash"), undefined, { timeout: 45000 });
     await waitForWorkspaceUi(page, "login redirect");
     assert(loginResponses.some((entry) => entry.startsWith("200 ")), `login API did not return 200: ${loginResponses.join(", ")}`);
-    console.log(`✓ login redirects to /site/${siteSlug}/app/create and renders the create workspace`);
+    console.log(`✓ login restores /site/${siteSlug}/app/create#step-video and renders the video workspace`);
     const customerCookies = (await page.context().cookies(baseUrl)).filter((cookie) => cookie.name.startsWith("customer_session_") || cookie.name.startsWith("customer_csrf_"));
     assert(customerCookies.some((cookie) => cookie.name === `customer_session_${siteId}`), "path-mode login did not set the customer session cookie");
 
@@ -117,14 +136,14 @@ async function smokeLoginRedirect() {
       await hostPage.goto("/", { waitUntil: "commit", timeout: 60000 });
       await hostPage.getByRole("link", { name: /^Workspace$/ }).first().waitFor({ state: "visible", timeout: 30000 });
       await hostPage.getByRole("link", { name: /^Workspace$/ }).first().click({ noWaitAfter: true });
-      await hostPage.waitForFunction(() => window.location.pathname === "/app/create", undefined, { timeout: 60000 });
+      await waitForApprovedPath(hostPage, "/app/create");
       await hostPage.goto("/", { waitUntil: "commit", timeout: 60000 });
       await hostPage.getByRole("link", { name: /Open account/i }).first().waitFor({ state: "visible", timeout: 30000 });
       await hostPage.getByRole("link", { name: /Open account/i }).first().click({ noWaitAfter: true });
-      await hostPage.waitForFunction(() => window.location.pathname === "/account", undefined, { timeout: 60000 });
+      await waitForApprovedPath(hostPage, "/account");
       await hostPage.getByRole("link", { name: /Open workspace/i }).first().waitFor({ state: "visible", timeout: 30000 });
       await hostPage.getByRole("link", { name: /Open workspace/i }).first().click({ noWaitAfter: true });
-      await hostPage.waitForFunction(() => window.location.pathname === "/app/create", undefined, { timeout: 60000 });
+      await waitForApprovedPath(hostPage, "/app/create");
       console.log(`✓ host-mode Workspace, account, and account-center workspace clicks land on the approved paths for ${hostModePublicHost}`);
     } finally {
       await hostContext.close();

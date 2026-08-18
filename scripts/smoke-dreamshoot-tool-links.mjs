@@ -139,7 +139,7 @@ assert(storefrontRender.includes('"virtual-try-on"'), "tool resolver must suppor
 assert(renderer.includes("focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"), "mega tool links must keep a visible keyboard focus style");
 assert(storefrontRender.includes("normalizeToolLookup"), "tool resolver must normalize incoming tool slugs");
 assert(storefrontRender.includes("image-studio") && storefrontRender.includes("image_generator"), "legacy image-studio and image_generator slugs must remain compatible");
-assert(storefrontRender.includes("/dreamshoot/i.test"), "myDreamshoots semantic aliases must stay scoped to myDreamshoots sites");
+assert(storefrontRender.includes("usesAiGenerationPublicRoutes") && !/\/dreamshoot\/i\.test/.test(storefrontRender), "myDreamshoots semantic aliases must use exact site capability checks");
 
 console.log(JSON.stringify({
   ok: true,

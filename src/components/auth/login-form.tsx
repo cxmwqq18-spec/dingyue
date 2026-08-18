@@ -291,7 +291,12 @@ export function LoginForm({
 
   function openCustomerWorkspace() {
     const fallbackHref = sitePath("/app/create");
-    const href = returnTo && returnTo.startsWith(sitePath("/")) ? returnTo : fallbackHref;
+    const basePath = sitePath("/").replace(/\/$/, "");
+    const candidate = returnTo?.trim() ?? "";
+    const isSafeSameSitePath = candidate.startsWith("/") && !candidate.startsWith("//") && !candidate.includes("\\") && (
+      !basePath || candidate === basePath || candidate.startsWith(`${basePath}/`)
+    );
+    const href = isSafeSameSitePath ? candidate : fallbackHref;
     dispatchCustomerBootstrapInvalidation({ reason: "login", siteSlug });
     window.dispatchEvent(new CustomEvent("storefront:navigation-start", { detail: { href } }));
     window.location.assign(href);

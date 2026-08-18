@@ -194,6 +194,13 @@ for (const item of expected) {
   assert((settings.secondaryTargetHref ?? "") === (item.secondaryTargetHref ?? ""), `${item.slug} secondary CTA href matches`);
   assert(JSON.stringify(relatedLinkPairs(settings.relatedLinks)) === JSON.stringify(item.relatedLinks), `${item.slug} related links match`);
   assert(settings.author === "myDreamshoots editorial team" && settings.authorType === "Organization", `${item.slug} uses Organization author`);
+  assert(settings.authorUrl === "/about-us" && settings.reviewOwner === "myDreamshoots editorial team", `${item.slug} declares author and review owner`);
+  assert(settings.evidenceType === "editorial-guidance" && settings.evidenceDate === "2026-08-18", `${item.slug} declares evidence boundary`);
+  assert(typeof settings.entityName === "string" && settings.entityName.length > 0, `${item.slug} declares entityName`);
+  for (const field of ["productSlug", "userIntent", "suitableUses", "unsuitableUses", "inputRequirements", "verifiedLimitations", "comparisonTargets", "reviewChecklist", "rightsWarnings", "relatedGuides"]) {
+    const value = settings[field];
+    assert((Array.isArray(value) ? value.length > 0 : typeof value === "string" && value.length > 0), `${item.slug} declares ${field}`);
+  }
   assert(settings.publishedAt === "2026-07-28" && settings.updatedAt === "2026-08-18", `${item.slug} dates match remediation policy`);
   assert(typeof settings.imageAlt === "string" && settings.imageAlt.length >= 45, `${item.slug} has descriptive image alt`);
   assert(fs.existsSync(imageFile(settings.imageUrl)), `${item.slug} cover asset exists`, settings.imageUrl);
@@ -236,6 +243,14 @@ for (const item of expected) {
     relatedLinks: relatedLinkPairs(settings.relatedLinks).length
   });
 }
+
+const profileCardsPage = site?.pages.find((page) => page.slug === "/blog/profile-cards-photo-package-guide");
+const profileCardsSection = profileCardsPage?.publishedJson?.sections?.blog_detail_1;
+assert(Boolean(profileCardsPage), "/blog/profile-cards-photo-package-guide exists as an independent article");
+assert(profileCardsSection?.settings?.title === "Profile Card Photos: Plan a Consistent Image Set for Personal and Creator Uses", "profile cards has an independent title");
+assert(typeof profileCardsSection?.settings?.body === "string" && profileCardsSection.settings.body.length >= 3400, "profile cards has independent substantive guidance");
+assert(!/anime avatar|photo package category|start with headshot/i.test(String(profileCardsSection?.settings?.body ?? "")), "profile cards avoids the old duplicate template");
+assert(profileCardsSection?.settings?.targetHref === "/ai-image-generation/avatar", "profile cards maps to Avatar");
 
 let maximumSimilarity = { score: 0, pair: [] };
 for (let leftIndex = 0; leftIndex < pages.length; leftIndex += 1) {

@@ -274,9 +274,7 @@ export function isMydreamshootsVideoFrameworkSiteId(siteId: string | null | unde
 }
 
 export function isMydreamshootsVideoFrameworkSite(site: VideoFrameworkSite): boolean {
-  if (isMydreamshootsVideoFrameworkSiteId(site.id)) return true;
-  const identity = `${site.slug} ${site.name} ${site.primaryDomain} ${site.branding?.logoText ?? ""}`.toLowerCase();
-  return /\bmydreamshoots\b/.test(identity) && !/aidream/i.test(identity);
+  return isMydreamshootsVideoFrameworkSiteId(site.id) || site.slug.trim().toLowerCase() === "mydreamshoots";
 }
 
 export function videoGenerationCreatePath(slug?: string): string {

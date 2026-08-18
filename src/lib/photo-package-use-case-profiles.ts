@@ -1,5 +1,11 @@
 import rawProfiles from "./photo-package-use-case-profiles.json";
 
+export type PhotoPackageUseCaseFaqItem = {
+  id: string;
+  question: string;
+  answer: string;
+};
+
 export type PhotoPackageUseCaseProfile = {
   headline: string;
   cardDescription: string;
@@ -14,6 +20,22 @@ export type PhotoPackageUseCaseProfile = {
   reviewPoints?: string[];
   coverNote: string;
   safetyNote?: string;
+  pageEntityId?: string;
+  copyRevision?: string;
+  seoTitle?: string;
+  galleryTitle?: string;
+  galleryIntro?: string;
+  ctaEyebrow?: string;
+  ctaTitle?: string;
+  ctaSubtitle?: string;
+  ctaLabel?: string;
+  faqEyebrow?: string;
+  faqTitle?: string;
+  faqItems?: PhotoPackageUseCaseFaqItem[];
+  relatedEyebrow?: string;
+  relatedTitle?: string;
+  relatedSubtitle?: string;
+  relatedCtaLabel?: string;
 };
 
 type PhotoPackageUseCaseProfileBundle = {

@@ -1,5 +1,6 @@
 import type { CreativePack, Site } from "@/lib/types";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamcapesSite as isAidreamcapesCapabilitySite } from "@/lib/storefront-context/capabilities";
 
 export type StorefrontMediaAltLocale = "en" | "es";
 export type StorefrontMediaAltRole = "cover" | "gallery" | "card" | "featured" | "related" | "poster" | "article";
@@ -287,9 +288,8 @@ export function storefrontMediaAltLocaleForSite(site: AltSite | undefined): Stor
 
 export function storefrontMediaBrandName(site: AltSite | undefined): string {
   const host = String(site?.primaryDomain ?? "").toLowerCase();
-  const identity = `${site?.id ?? ""} ${site?.slug ?? ""} ${site?.name ?? ""} ${site?.branding?.logoText ?? ""}`.toLowerCase();
-  if (host.includes("aidreamshoots.eu") || identity.includes("aidreamshoots")) return "AIdreamshoots";
-  if (host.includes("aidreamcapes") || identity.includes("aidreamcapes")) return "AIdreamcapes";
+  if (host === "aidreamshoots.eu" || site?.slug === "aidreamshoots") return "AIdreamshoots";
+  if (site && isAidreamcapesCapabilitySite(site)) return "AIdreamcapes";
   return "MyDreamShoots";
 }
 

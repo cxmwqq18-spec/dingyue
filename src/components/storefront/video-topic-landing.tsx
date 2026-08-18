@@ -133,8 +133,8 @@ function InternalLink({ site, href, children, className }: { site: Site; href: s
 function SectionHeader({ eyebrow, title, body, light = false }: { eyebrow: string; title: string; body?: string; light?: boolean }) {
   return (
     <div className="max-w-3xl">
-      <p className={`text-xs font-semibold uppercase tracking-[0.22em] ${light ? "text-[#6652bd]" : "text-[#b8a7ff]"}`}>{eyebrow}</p>
-      <h2 className={`mt-4 text-balance text-3xl font-semibold leading-[1.02] tracking-[-0.035em] sm:text-5xl ${light ? "text-[#191622]" : "text-white"}`}>{title}</h2>
+      <p className={`text-xs font-semibold uppercase tracking-normal ${light ? "text-[#6652bd]" : "text-[#b8a7ff]"}`}>{eyebrow}</p>
+      <h2 className={`mt-4 text-balance text-3xl font-semibold leading-[1.02] tracking-normal sm:text-5xl ${light ? "text-[#191622]" : "text-white"}`}>{title}</h2>
       {body ? <p className={`mt-5 max-w-2xl text-base leading-7 ${light ? "text-[#625e6f]" : "text-white/68"}`}>{body}</p> : null}
     </div>
   );
@@ -177,18 +177,18 @@ function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }
           loading="lazy"
           decoding="async"
         />
-        <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-[#17151f]/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/80 backdrop-blur">
+        <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-[#17151f]/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/80 backdrop-blur">
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>
       <div className="flex min-h-[22rem] flex-1 flex-col p-6 sm:p-7">
-        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#b8a7ff]">{label}</p>
+        <p className="text-xs font-semibold uppercase tracking-normal text-[#b8a7ff]">{label}</p>
         {item.problem ? <p className="mt-3 min-h-[4.5rem] text-sm leading-6 text-white/65">{item.problem}</p> : null}
         <h3 className={`${item.problem ? "mt-6" : "mt-3"} min-h-[3.5rem] text-xl font-semibold leading-tight text-white`}>{item.title}</h3>
         <p className="mt-3 flex-1 text-sm leading-6 text-white/68">{item.body}</p>
         {noteLabel && noteBody ? (
           <div className="mt-5 min-h-[6.5rem] rounded-2xl border border-[#c4b5fd]/20 bg-[#c4b5fd]/[0.07] p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[#c4b5fd]">{noteLabel}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-normal text-[#c4b5fd]">{noteLabel}</p>
             <p className="mt-2 text-sm leading-6 text-white/82">{noteBody}</p>
           </div>
         ) : null}
@@ -218,7 +218,7 @@ function SupportingCard({ card, light = false }: { card: VideoTopicSupportingCar
       <p className={`mt-3 flex-1 text-sm leading-6 ${light ? "text-[#625e6f]" : "text-white/65"}`}>{card.body}</p>
       {card.exampleLabel && card.exampleBody ? (
         <div className={`mt-5 rounded-2xl border p-4 ${light ? "border-[#d2c9ef] bg-[#f5f2ff]" : "border-white/10 bg-white/[0.04]"}`}>
-          <p className={`text-[11px] font-semibold uppercase tracking-[0.15em] ${light ? "text-[#6652bd]" : "text-[#b8a7ff]"}`}>{card.exampleLabel}</p>
+          <p className={`text-[11px] font-semibold uppercase tracking-normal ${light ? "text-[#6652bd]" : "text-[#b8a7ff]"}`}>{card.exampleLabel}</p>
           <p className={`mt-2 text-sm leading-6 ${light ? "text-[#3f3b4c]" : "text-white/82"}`}>{card.exampleBody}</p>
         </div>
       ) : null}
@@ -383,14 +383,13 @@ function normalizeTalkingContent(content: TalkingPhotoContent): VideoTopicConten
 
 function VideoTopicLanding({ content, contentKey, section, site }: { content: VideoTopicContent; contentKey: string; section: SectionInstance; site: Site }) {
   const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
-  const productAdVideo = contentKey === "product-ad-video";
   return (
     <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-video-topic-page={contentKey}>
       <section className="relative border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#c4b5fd]">{content.hero.eyebrow}</p>
-            <h1 className="mt-5 max-w-[720px] text-balance text-4xl font-semibold leading-[0.96] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">{content.hero.title}</h1>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.hero.eyebrow}</p>
+            <h1 className="mt-5 max-w-[720px] text-balance text-4xl font-semibold leading-[0.96] tracking-normal text-white sm:text-6xl lg:text-7xl">{content.hero.title}</h1>
             <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">{content.hero.body}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ActionLink href={primaryHref} label={content.hero.primaryCta} site={site} />
@@ -401,7 +400,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
           </div>
           <figure className="relative lg:justify-self-end">
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <div className="relative aspect-[16/9] overflow-hidden rounded-[21px]">
+              <div className="relative aspect-[16/9] overflow-hidden rounded-[21px]" data-video-topic-hero-media>
                 <img
                   src={content.hero.image.src}
                   alt={content.hero.image.alt}
@@ -439,7 +438,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
             <DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" />
             <DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone={content.foundation.rightTone === "neutral" ? "neutral" : "avoid"} />
             <div className="sm:col-span-2 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+              <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
               <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
             </div>
           </div>
@@ -453,8 +452,6 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
         </div>
       </section>
 
-      {productAdVideo ? <ValueSection section={content.value} /> : null}
-
       {content.supportingGroups.length ? (
         <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="supporting" data-video-topic-section="supporting">
           <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -466,7 +463,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
             <div className="mt-12 space-y-16">
               {content.supportingGroups.map((group) => (
                 <div key={group.title}>
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#b8a7ff]">{group.eyebrow}</p>
+                  <p className="text-xs font-semibold uppercase tracking-normal text-[#b8a7ff]">{group.eyebrow}</p>
                   <h3 className="mt-3 max-w-3xl text-2xl font-semibold leading-tight text-white sm:text-3xl">{group.title}</h3>
                   <p className="mt-3 max-w-2xl text-base leading-7 text-white/68">{group.intro}</p>
                   <SectionCards cards={group.items} />
@@ -483,7 +480,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
           <div className="mt-12 grid items-stretch gap-4 lg:grid-cols-4">
             {content.steps.items.map((item, index) => (
               <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" key={item.title}>
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#c4b5fd]">0{index + 1}</span>
+                <span className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">0{index + 1}</span>
                 <h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
               </article>
@@ -495,7 +492,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
         </div>
       </section>
 
-      {!productAdVideo ? <ValueSection section={content.value} /> : null}
+      <ValueSection section={content.value} />
 
       <section className="border-b border-white/10 bg-[#191525] px-5 py-16 sm:px-8 sm:py-24" id="trust" data-video-topic-section="trust">
         <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -533,8 +530,8 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
 
       <section className="bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" data-video-topic-section="final-cta">
         <div className="mx-auto max-w-[var(--site-content-width)] rounded-[28px] border border-[#c4b5fd]/25 bg-[#191525] px-6 py-12 text-center sm:px-10 sm:py-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#c4b5fd]">{content.finalCta.eyebrow}</p>
-          <h2 className="mx-auto mt-4 max-w-3xl text-balance text-3xl font-semibold leading-[1.03] tracking-[-0.035em] text-white sm:text-5xl">{content.finalCta.title}</h2>
+          <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.finalCta.eyebrow}</p>
+          <h2 className="mx-auto mt-4 max-w-3xl text-balance text-3xl font-semibold leading-[1.03] tracking-normal text-white sm:text-5xl">{content.finalCta.title}</h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/68">{content.finalCta.body}</p>
           <div className="mt-8 flex justify-center">
             <ActionLink href={primaryHref} label={content.finalCta.cta} site={site} />

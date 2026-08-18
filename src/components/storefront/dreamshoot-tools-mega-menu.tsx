@@ -20,6 +20,7 @@ import { StorefrontInstantLink } from "@/components/storefront/storefront-instan
 import { cleanHost, hostAwareSitePath } from "@/lib/domain-routing";
 import { isMydreamshootsVideoFrameworkSite } from "@/lib/mydreamshoots-video-framework";
 import { isMydreamshootsVideoGenerationSlug, publicVideoGenerationPathForSite } from "@/lib/photo-package-taxonomy";
+import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { themeValueToString } from "@/lib/theme-values";
 import type { SectionBlockInstance, Site, ToolMenuItem } from "@/lib/types";
@@ -162,7 +163,7 @@ function hrefFor(site: DreamShootToolsMenuSite, href: string): string {
     const toolSlug = href.slice("/tools/".length).split(/[?#]/)[0] ?? "";
     return routedSitePath(site, isMydreamshootsVideoGenerationSlug(toolSlug) ? publicVideoGenerationPathForSite(site, toolSlug) : "/ai-video-generation");
   }
-  if ((href === "/tools/image-studio" || href === "/tools/ai-image-studio") && /dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) {
+  if ((href === "/tools/image-studio" || href === "/tools/ai-image-studio") && isPrimaryMyDreamShootsSite(site)) {
     return routedSitePath(site, "/tools");
   }
   return routedSitePath(site, href);
@@ -177,12 +178,11 @@ function slugify(value: string): string {
 }
 
 function isAidreamcapesSite(site: DreamShootToolsMenuSite): boolean {
-  return /aidreamcapes/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  return isAidreamcapesCapabilitySite(site);
 }
 
 function isPrimaryMyDreamShootsSite(site: DreamShootToolsMenuSite): boolean {
-  const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`;
-  return /mydreamshoots|dreamshoot/i.test(identity) && !/aidreamcapes|aidreamshoots/i.test(identity);
+  return isPrimaryMydreamshootsCapabilitySite(site);
 }
 
 function isSpanishXbySite(site: DreamShootToolsMenuSite): boolean {

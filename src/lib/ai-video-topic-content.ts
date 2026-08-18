@@ -1432,7 +1432,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         `${memeImageRoot}/meme-video-hero-relax-quick-favor.png`,
         "Surprised dog meme with captions about finally relaxing before someone asks for a quick favor",
         1086,
-        1448
+        1448,
+        "50% 50%"
       ),
       highlights: ["Relatable Concepts", "Smart Timing", "Punchy Captions", "Built to Share"],
       mediaAspectRatio: "16 / 9",
@@ -1511,7 +1512,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
             `${memeImageRoot}/meme-video-tiny-revision-sure.png`,
             "Reaction meme replying sure to a request for one tiny revision",
             1086,
-            1448
+            1448,
+            "50% 50%"
           )
         }),
         makeUseCaseCard({

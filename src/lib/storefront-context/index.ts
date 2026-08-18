@@ -3,7 +3,7 @@ import "server-only";
 import { prisma } from "@/lib/prisma";
 import { toCreativePack, mapProduct, toSite, toThemePublication } from "@/lib/stores/prisma-mappers";
 import { resolveStorefrontContext } from "./core";
-import type { StorefrontContext, StorefrontContextAdapter, StorefrontPublishScope } from "./types";
+import type { DraftStorefrontContextAdapter, PublishedStorefrontContextAdapter, StorefrontContext, StorefrontPublishScope } from "./types";
 
 const publishedContextCache = new Map<string, { context: StorefrontContext; expiresAt: number }>();
 const siteContextKeys = new Map<string, Set<string>>();
@@ -40,7 +40,9 @@ function cachePublishedContext(siteId: string, context: StorefrontContext, expir
   return context;
 }
 
-function nextPriceBoundary(bundle: Awaited<ReturnType<StorefrontContextAdapter["loadPublishedBundle"]>>, now: number): number | undefined {
+type PrismaContextBundle = Awaited<ReturnType<typeof loadPrismaBundle>>;
+
+function nextPriceBoundary(bundle: Pick<PrismaContextBundle, "products">, now: number): number | undefined {
   const boundaries = bundle.products.flatMap((product) => product.prices.flatMap((price) => [price.effectiveFrom, price.effectiveTo]))
     .map((value) => (value ? Date.parse(value) : Number.NaN))
     .filter((value) => Number.isFinite(value) && value > now);
@@ -77,17 +79,21 @@ async function loadPrismaBundle(siteId: string) {
     products: siteRecord.products.map(mapProduct),
     creativePacks: siteRecord.creativePacks.map(toCreativePack),
     publication: siteRecord.publications[0] ? toThemePublication(siteRecord.publications[0]) : undefined,
+    factsRevision: siteRecord.publications[0]?.factsRevision ?? undefined,
     buildId: release?.codeCommit
   };
 }
 
-const prismaAdapter: StorefrontContextAdapter = {
+const prismaPublishedAdapter: PublishedStorefrontContextAdapter = {
   async loadPublishedBundle(siteId, path) {
     const bundle = await loadPrismaBundle(siteId);
     const page = bundle.site.pages.find((candidate) => candidate.slug === normalizedPath(path));
     if (!page) throw new Error("theme_page_not_found");
     return { ...bundle, page };
-  },
+  }
+};
+
+const prismaDraftAdapter: DraftStorefrontContextAdapter = {
   async loadDraftBundle(siteId, pageId) {
     const bundle = await loadPrismaBundle(siteId);
     const page = bundle.site.pages.find((candidate) => candidate.id === pageId);
@@ -99,12 +105,12 @@ const prismaAdapter: StorefrontContextAdapter = {
 export async function loadPublishedStorefrontContext({
   siteId,
   path,
-  adapter = prismaAdapter,
+  adapter = prismaPublishedAdapter,
   now
 }: {
   siteId: string;
   path: string;
-  adapter?: StorefrontContextAdapter;
+  adapter?: PublishedStorefrontContextAdapter;
   now?: Date;
 }): Promise<StorefrontContext> {
   const observedAt = now ?? new Date();
@@ -119,17 +125,51 @@ export async function loadDraftStorefrontContext({
   siteId,
   pageId,
   publishScope,
-  adapter = prismaAdapter,
+  adapter = prismaDraftAdapter,
   now
 }: {
   siteId: string;
   pageId: string;
   publishScope: StorefrontPublishScope;
-  adapter?: StorefrontContextAdapter;
+  adapter?: DraftStorefrontContextAdapter;
   now?: Date;
 }): Promise<StorefrontContext> {
   return resolveStorefrontContext(await adapter.loadDraftBundle(siteId, pageId), "draft", { now, scope: publishScope });
 }
 
 export { projectPublicCreativePacks, projectPublicPricingOffers, selectOfferPrice } from "./core";
-export type { ResolvedOffer, ResolvedPageSeo, StorefrontContext, StorefrontContextAdapter, StorefrontPublishScope } from "./types";
+export { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
+export { applyTitleTemplate, canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath, storefrontBaseUrl, storefrontOrigin } from "./seo-projection";
+export { isAidreamcapesSite, isPrimaryMydreamshootsSite, isPrimaryMydreamshootsSlug, resolveSiteCapability, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "./capabilities";
+export {
+  createPublishedSiteSnapshot,
+  loadPublishedSiteSnapshotBySiteId,
+  loadPublishedSiteSnapshotByHost,
+  resolveEffectiveIndexability,
+  resolveEffectivePublishedPage,
+  resolvePublishedRouteDisposition,
+  resolvePublishedRedirectDisposition,
+  resolvePublicCollectionItems,
+  resolvePublicPageMedia,
+  resolvePublicPricingOffers,
+  resolvePublishedStorefrontContext,
+  snapshotContextBundle
+} from "./snapshot";
+export type {
+  DraftStorefrontContextAdapter,
+  EffectiveIndexability,
+  EffectivePublishedPage,
+  EntityReference,
+  PublicationBoundary,
+  PublishedSiteSnapshot,
+  PublishedStorefrontContextAdapter,
+  PublicCollectionItem,
+  PublicPageMediaProjection,
+  PublicPricingOffer,
+  ResolvedOffer,
+  ResolvedPageSeo,
+  RouteDisposition,
+  SiteCapability,
+  StorefrontContext,
+  StorefrontPublishScope
+} from "./types";

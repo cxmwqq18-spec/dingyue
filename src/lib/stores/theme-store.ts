@@ -91,6 +91,13 @@ function clearSiteThemeReadCache(siteId: string) {
   clearSiteReadCache();
 }
 
+async function finalizePublishedTheme(siteId: string, publicationId: string): Promise<void> {
+  clearSiteThemeReadCache(siteId);
+  clearStorefrontContextCache(siteId);
+  const readback = await prisma.themePublication.findFirst({ where: { siteId, id: publicationId }, select: { id: true, siteId: true, version: true, factsRevision: true } });
+  if (!readback) throw new RelationalStoreError("theme_publish_readback_failed", 500);
+}
+
 export type SaasThemeAction =
   | ({ type: "change"; scope: "page_section"; pageId: string; sectionId: string; name: string; value: ThemeSettingValue } & { themeKey?: string })
   | ({ type: "change"; scope: "page_block"; pageId: string; sectionId: string; blockId: string; name: string; value: ThemeSettingValue } & { themeKey?: string })
@@ -1248,7 +1255,7 @@ export async function publishDraftPageRelational(
     });
     return { site, draftVersion, pageDraftVersions, settingsDraftVersion: site.themeSettings.draftMeta, publication, publishedVersion };
   }, { timeout: 120000 });
-  clearStorefrontContextCache(siteId);
+  await finalizePublishedTheme(siteId, result.publication.id);
   return result;
 }
 
@@ -1410,7 +1417,7 @@ export async function publishDraftSiteRelational(
     await addAuditLogRelational(tx, { siteId, actorType: "site_admin", actorId: actor, action: "theme_site_published", targetType: "theme", targetId: siteId, metadata: { version: publishedVersion, manifestHash: manifest.manifestHash, pageIds: manifest.pageIds.join(",") } });
     return { site, publication: toThemePublication(publicationRecord), publishedVersion };
   }, { timeout: 120000 });
-  clearStorefrontContextCache(siteId);
+  await finalizePublishedTheme(siteId, result.publication.id);
   return result;
 }
 

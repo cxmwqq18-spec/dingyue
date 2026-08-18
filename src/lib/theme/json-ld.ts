@@ -3,10 +3,13 @@ import path from "node:path";
 
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { projectPublicCreativePacks, projectPublicPricingOffers } from "@/lib/storefront-context/core";
+import { storefrontBaseUrl, storefrontOrigin } from "@/lib/storefront-context/seo-projection";
 import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
+import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
 
 export type JsonLdNode = Record<string, unknown>;
@@ -40,11 +43,12 @@ function cleanPaidStorefrontText(value: unknown, fallback = ""): string {
 }
 
 function siteBrandName(site: Site): string {
+  if (isPrimaryMydreamshootsCapabilitySite(site)) return "MyDreamShoots";
   return cleanText(site.branding.logoText, site.name);
 }
 
 function isAidreamcapesSite(site: Site): boolean {
-  return /aidreamcapes/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  return isAidreamcapesCapabilitySite(site);
 }
 
 function isSpanishXbySite(site: Site): boolean {
@@ -52,8 +56,7 @@ function isSpanishXbySite(site: Site): boolean {
 }
 
 function isPrimaryMyDreamShootsSite(site: Site): boolean {
-  if (isAidreamcapesSite(site) || isSpanishXbySite(site)) return false;
-  return /site_dreamshoot|mydreamshoots|dreamshoot/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  return isPrimaryMydreamshootsCapabilitySite(site);
 }
 
 function collapseSpanishXbyBrandRepeats(value: string): string {
@@ -210,22 +213,6 @@ function faqAnswerText(block: SectionBlockInstance): string {
     .join(" ");
 }
 
-function siteOriginUrl(site: Site): string {
-  const domain = cleanText(site.primaryDomain);
-  if (!domain) return "http://localhost:3000";
-  if (domain.includes("localhost")) return `http://${domain}`;
-  if (domain.startsWith("http://") || domain.startsWith("https://")) return domain.replace(/\/$/, "");
-  return `https://${domain}`;
-}
-
-function siteBaseUrl(site: Site, routeMode: "host" | "path"): string {
-  const origin = siteOriginUrl(site);
-  if (routeMode === "host") return origin;
-  const domain = cleanText(site.primaryDomain);
-  const hasCanonicalDomain = Boolean(domain && !domain.includes("localhost"));
-  return hasCanonicalDomain ? origin : `${origin}/site/${site.slug}`;
-}
-
 const storefrontPublicWatermarkCacheVersion = "20260811watermark30sync2";
 
 function withStorefrontPublicWatermarkCacheVersion(value: string): string {
@@ -259,7 +246,7 @@ function withStorefrontPublicWatermarkCacheVersion(value: string): string {
 function absoluteUrl(site: Site, routeMode: "host" | "path", pathOrUrl = "/"): string {
   const value = withStorefrontPublicWatermarkCacheVersion(cleanText(pathOrUrl, "/"));
   if (value.startsWith("http://") || value.startsWith("https://")) return value;
-  const base = siteOriginUrl(site).replace(/\/$/, "");
+  const base = storefrontOrigin(site).replace(/\/$/, "");
   return `${base}${value.startsWith("/") ? value : `/${value}`}`;
 }
 
@@ -354,10 +341,10 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
   const sameAs = (context?.profile?.identity.sameAs ?? []).filter((url) => /^https?:\/\//i.test(url));
   return {
     "@type": "Organization",
-    "@id": `${siteBaseUrl(site, routeMode)}#organization`,
+    "@id": `${storefrontBaseUrl(site, routeMode)}#organization`,
     name: siteBrandName(site),
     ...(profile.legalName ? { legalName: profile.legalName } : {}),
-    url: siteBaseUrl(site, routeMode),
+    url: storefrontBaseUrl(site, routeMode),
     description: cleanSchemaText(site, site.branding.description),
     ...(profile.email ? { email: profile.email } : {}),
     ...(profile.phone ? { telephone: profile.phone } : {}),
@@ -462,6 +449,7 @@ function themeFaqQuestions(site: Site, input: JsonLdInput | undefined, section: 
 
 function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: JsonLdInput): JsonLdNode | undefined {
   if (!hasPageSections(pageJson)) return undefined;
+  if (input?.pagePath.startsWith("/blog/")) return undefined;
   const questions = pageJson.sectionsOrder.flatMap((sectionId) => {
     const section = pageJson.sections[sectionId];
     if (section?.type === "dreamshoot_theme_faq") {
@@ -496,6 +484,7 @@ function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string,
   const image = articleSectionValue(pageJson, "imageUrl") || sectionValue(pageJson, "backgroundImage");
   const author = articleSectionValue(pageJson, "author") || siteBrandName(site);
   const authorType = articleSectionValue(pageJson, "authorType") === "Organization" ? "Organization" : "Person";
+  const authorUrl = articleSectionValue(pageJson, "authorUrl");
   const datePublished = articleSectionValue(pageJson, "publishedAt");
   const dateModified = articleSectionValue(pageJson, "updatedAt") || datePublished;
   const tags = listText(sectionOfType(pageJson, "blog_article")?.settings.tags);
@@ -503,11 +492,15 @@ function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string,
     "@type": "BlogPosting",
     headline: articleSectionValue(pageJson, "title") || title,
     description: articleSectionValue(pageJson, "summary") || description,
-    author: { "@type": authorType, name: cleanSchemaText(site, author) },
+    author: {
+      "@type": authorType,
+      name: cleanSchemaText(site, author),
+      ...(authorUrl ? { url: absoluteUrl(site, routeMode, authorUrl) } : {})
+    },
     publisher: {
       "@type": "Organization",
       name: siteBrandName(site),
-      url: siteBaseUrl(site, routeMode)
+      url: storefrontBaseUrl(site, routeMode)
     },
     mainEntityOfPage: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath)),
     ...(datePublished ? { datePublished } : {}),
@@ -533,12 +526,12 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
     const siteName = siteBrandName(input.site);
     const url = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, path));
     const activeOffers = projectPublicPricingOffers(input.context);
-    const offers = activeOffers.map(({ product, price }) => ({
+    const offers = activeOffers.map(({ product, price, checkoutEnabled }) => ({
         "@type": "Offer",
         name: price.label || product.name,
         price: (price.amountCents / 100).toFixed(2),
         priceCurrency: price.currency.toUpperCase(),
-        availability: "https://schema.org/InStock",
+        availability: checkoutEnabled ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
         category: isSpanishXbySite(input.site)
           ? product.type === "subscription" ? "suscripcion de fotos IA" : "paquete de creditos IA"
           : product.type === "subscription" ? "AI photo subscription" : "AI photo credit pack",
@@ -767,7 +760,7 @@ function packProductSchema({
     url: offerUrl,
     priceCurrency: offerSource.price.currency.toUpperCase(),
     price: (offerSource.price.amountCents / 100).toFixed(2),
-    availability: "https://schema.org/InStock",
+    availability: offerSource?.checkoutEnabled ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
     itemCondition: "https://schema.org/NewCondition"
   } : undefined;
   const additionalProperty: JsonLdNode[] = [
@@ -879,11 +872,11 @@ function collectionPageSchema(input: JsonLdInput, title: string, description: st
       name: title,
       description,
       url,
-      isPartOf: { "@id": `${siteBaseUrl(input.site, input.routeMode)}#website` },
+      isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
       publisher: {
         "@type": "Organization",
         name: siteBrandName(input.site),
-        url: siteBaseUrl(input.site, input.routeMode)
+        url: storefrontBaseUrl(input.site, input.routeMode)
       }
     },
     {
@@ -899,9 +892,9 @@ function collectionPageSchema(input: JsonLdInput, title: string, description: st
 function websiteSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
   return {
     "@type": "WebSite",
-    "@id": `${siteBaseUrl(site, routeMode)}#website`,
+    "@id": `${storefrontBaseUrl(site, routeMode)}#website`,
     name: siteBrandName(site),
-    url: siteBaseUrl(site, routeMode)
+    url: storefrontBaseUrl(site, routeMode)
   };
 }
 
@@ -911,16 +904,16 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
   const siteName = siteBrandName(input.site);
   return {
     "@type": "SoftwareApplication",
-    "@id": `${siteBaseUrl(input.site, input.routeMode)}#app`,
+    "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#app`,
     name: siteName,
     description,
     applicationCategory: "PhotographyApplication",
     operatingSystem: "Web",
     url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath)),
-    provider: { "@id": `${siteBaseUrl(input.site, input.routeMode)}#organization` },
+    provider: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
     offers: {
       "@type": "OfferCatalog",
-      "@id": `${siteBaseUrl(input.site, input.routeMode)}#plans`,
+      "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#plans`,
       name: isSpanishXbySite(input.site)
         ? isAidreamcapesSite(input.site) ? `Paquetes de retrato de viaje y creditos ${siteName}` : `Paquetes de fotos y creditos ${siteName}`
         : isAidreamcapesSite(input.site) ? "Aidreamcapes occasion portrait packages and credits" : "MyDreamShoots photo packages and credits",
@@ -1014,11 +1007,13 @@ export function buildToolDirectoryJsonLd({
       provider: {
         "@type": "Organization",
         name: siteName,
-        url: siteBaseUrl(site, routeMode)
+        url: storefrontBaseUrl(site, routeMode)
       },
       offers: {
         "@type": "Offer",
-        availability: "https://schema.org/InStock",
+        availability: context.offers.active.some((offer) => offer.checkoutEnabled)
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
         category: isSpanishXbySite(site)
           ? isAidreamcapesSite(site) ? "herramienta de retratos de viaje IA" : "herramienta de fotos IA"
           : isAidreamcapesSite(site) ? "AI occasion portrait tool" : "AI photo tool",
@@ -1033,7 +1028,7 @@ export function buildToolDirectoryJsonLd({
       provider: {
         "@type": "Organization",
         name: siteName,
-        url: siteBaseUrl(site, routeMode)
+        url: storefrontBaseUrl(site, routeMode)
       },
       url
     },
@@ -1085,14 +1080,15 @@ export function buildCollectionDirectoryJsonLd({
   const title = context.seo.title;
   const description = context.seo.description;
   const matchingPacks = projectPublicCreativePacks(context, creativePacks)
-    .filter((pack) => packMatchesCollectionSlug(site, pack, item.slug))
-    .slice(0, 12);
-  const hasMatchingPacks = matchingPacks.length > 0;
+    .filter((pack) => packMatchesCollectionSlug(site, pack, item.slug));
   const faqPack = matchingPacks[0];
   const faqLabel = cleanText(faqPack?.name, item.label);
   const faqOutputCount = faqPack?.outputCount;
   const faqCreditCost = faqPack?.creditCost;
-  const collectionFaqItems = !faqPack ? [] : isSpanishXbySite(site)
+  const collectionPageCopy = !isSpanishXbySite(site) && isPrimaryMyDreamShootsSite(site) ? mydreamshootsPageCopyForSlug(item.slug) : undefined;
+  const collectionFaqItems = collectionPageCopy
+    ? collectionPageCopy.faqItems.map((faqItem) => [faqItem.question, faqItem.answer] as [string, string])
+    : !faqPack ? [] : isSpanishXbySite(site)
     ? [
         [`Que es el paquete ${faqLabel}?`, isAidreamcapesSite(site)
           ? `${faqLabel} es un album privado que convierte fotos fuente aprobadas en una galeria de ocasion con creditos visibles y resultados listos para descargar.`
@@ -1116,17 +1112,12 @@ export function buildCollectionDirectoryJsonLd({
         [isAidreamcapesSite(site) ? "Where do finished albums go?" : "Where do finished images go?", isAidreamcapesSite(site) ? "Finished Aidreamcapes images stay inside your signed-in private gallery, where you can review faces, hands, marks, crops, and overall realism before downloading the results that fit your occasion." : "Finished results stay inside your signed-in private gallery, where you can review identity details, hands, backgrounds, crops, and overall realism before downloading the images that fit your intended channel."],
         ["What happens if generation fails?", "If a provider request is interrupted before delivery, reserved credits are released or returned according to the request status so you can retry from the workspace. Keep the job reference if you contact support about a failed generation, missing gallery, or credit question."]
       ];
-  const itemListElement = (hasMatchingPacks ? matchingPacks : item.useCases.map((useCase, index) => ({
-    id: `${item.slug}_${index}`,
-    name: useCase,
-    description: item.description,
-    imageUrl: ""
-  }))).map((entry, index) => {
+  const itemListElement = matchingPacks.map((entry, index) => {
     const pack = entry as CreativePack;
-    const name = cleanText(pack.name, item.useCases[index] ?? item.label);
+    const name = cleanText(pack.name, item.label);
     const image = cleanText(pack.imageUrl);
     const entrySlug = canonicalCollectionSlugForCandidate(site, pack.categoryRecord?.slug || pack.category || pack.name);
-    const entryPagePath = hasMatchingPacks && entrySlug ? canonicalSeoDirectoryPathForSite(site, "collection", entrySlug) : pagePath;
+    const entryPagePath = entrySlug ? canonicalSeoDirectoryPathForSite(site, "collection", entrySlug) : pagePath;
     const entryPath = schemaPagePath(site, routeMode, entryPagePath);
     return {
       "@type": "ListItem",
@@ -1147,8 +1138,8 @@ export function buildCollectionDirectoryJsonLd({
       name: title,
       description,
       url,
-      isPartOf: { "@id": `${siteBaseUrl(site, routeMode)}#website` },
-      publisher: { "@type": "Organization", name: siteName, url: siteBaseUrl(site, routeMode) }
+      isPartOf: { "@id": `${storefrontBaseUrl(site, routeMode)}#website` },
+      publisher: { "@type": "Organization", name: siteName, url: storefrontBaseUrl(site, routeMode) }
     },
     {
       "@type": "ItemList",

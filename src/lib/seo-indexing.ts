@@ -13,6 +13,7 @@ import {
 import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublicCollectionItems } from "@/lib/storefront-context";
 import type { CreativePack, PlatformState, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
@@ -34,109 +35,6 @@ const GROWNSTRIDE_RESERVED_HOSTS = new Set(["grownstride.com", "www.grownstride.
 function cleanText(value: unknown, fallback = ""): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() || fallback : fallback;
 }
-
-const FALLBACK_INDEXABLE_PATHS = [
-  "/",
-  "/pricing",
-  "/workflow",
-  "/ai-image-generation",
-  "/ai-video-generation",
-  ...MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS.map((slug) => `/ai-video-generation/${slug}`),
-  "/privacy",
-  "/terms",
-  "/cookies",
-  "/refunds",
-  "/content",
-  "/shipping",
-  "/faq",
-  "/blog",
-  "/blog/creator-portraits-photo-package-guide",
-  "/blog/fashion-editorial-photo-package-guide",
-  "/blog/product-style-photo-package-guide",
-  "/blog/profile-cards-photo-package-guide",
-  "/blog/social-cards-photo-package-guide",
-  "/blog/anime-avatar-photo-package-guide",
-  "/blog/wedding-portraits-photo-package-guide",
-  "/blog/desi-wedding-photo-package-guide",
-  "/blog/indian-wedding-photo-package-guide",
-  "/blog/engagement-photo-package-guide",
-  "/blog/valentine-photos-photo-package-guide",
-  "/blog/cyberpunk-photo-package-guide",
-  "/blog/gala-photos-photo-package-guide",
-  "/blog/mafia-photo-package-guide",
-  "/blog/nature-photo-package-guide",
-  "/blog/outdoor-creator-scenes-photo-package-guide",
-  "/blog/boudoir-photo-package-guide",
-  "/blog/hairstyle-photo-package-guide",
-  "/blog/virtual-try-on-photo-package-guide",
-  "/blog/world-cup-fan-photos-photo-package-guide",
-  "/blog/ai-video-add-ons-photo-package-guide",
-  "/blog/magic-upscaler-photo-package-guide",
-  "/blog/professional-headshots-photo-package-guide",
-  "/blog/christmas-couple-photo-package-guide",
-  "/blog/christmas-photos-photo-package-guide",
-  "/blog/holiday-photo-package-guide",
-  "/blog/halloween-party-photos-photo-package-guide",
-  "/blog/thanksgiving-group-photos-photo-package-guide"
-];
-const AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS = [
-  "/",
-  "/pricing",
-  "/workflow",
-  "/collections",
-  "/tools",
-  "/privacy",
-  "/terms",
-  "/cookies",
-  "/refunds",
-  "/content",
-  "/shipping",
-  "/faq",
-  "/collections/fan-scene-albums",
-  "/collections/game-day-group-photos",
-  "/collections/premiere-style-portraits",
-  "/collections/christmas-group-albums",
-  "/collections/thanksgiving-memory-sets",
-  "/collections/halloween-party-portraits",
-  "/collections/seasonal-celebration-photos",
-  "/tools/fan-scene-album-builder",
-  "/tools/game-day-group-portrait-maker",
-  "/tools/premiere-portrait-set-builder",
-  "/tools/christmas-group-album-studio",
-  "/tools/thanksgiving-keepsake-set-maker",
-  "/tools/halloween-party-portrait-maker",
-  "/tools/new-year-countdown-album-maker",
-  "/tools/permission-safe-photo-planner",
-  "/blog",
-  "/blog/private-fan-scene-album-photo-package-guide",
-  "/blog/game-day-group-portraits-photo-package-guide",
-  "/blog/premiere-flash-portraits-photo-package-guide",
-  "/blog/christmas-group-album-photo-package-guide",
-  "/blog/backstage-meetup-portraits-photo-package-guide",
-  "/blog/creator-supporter-photo-wall-photo-package-guide",
-  "/blog/fan-keepsake-card-set-photo-package-guide",
-  "/blog/stadium-night-fan-set-photo-package-guide",
-  "/blog/tunnel-entrance-fan-portraits-photo-package-guide",
-  "/blog/championship-watch-party-album-photo-package-guide",
-  "/blog/spotlight-couple-portrait-set-photo-package-guide",
-  "/blog/vip-arrival-photo-set-photo-package-guide",
-  "/blog/award-night-keepsake-album-photo-package-guide",
-  "/blog/holiday-party-photo-wall-photo-package-guide",
-  "/blog/cozy-card-portrait-set-photo-package-guide",
-  "/blog/winter-fan-greeting-album-photo-package-guide",
-  "/blog/autumn-host-photo-story-photo-package-guide",
-  "/blog/thanksgiving-keepsake-table-set-photo-package-guide",
-  "/blog/gratitude-group-portrait-album-photo-package-guide",
-  "/blog/friendsgiving-memory-set-photo-package-guide",
-  "/blog/halloween-party-portrait-set-photo-package-guide",
-  "/blog/haunted-premiere-portrait-set-photo-package-guide",
-  "/blog/costume-cast-photo-album-photo-package-guide",
-  "/blog/spooky-fan-card-portraits-photo-package-guide",
-  "/blog/birthday-fan-moment-set-photo-package-guide",
-  "/blog/family-occasion-portrait-album-photo-package-guide",
-  "/blog/seasonal-celebration-photo-set-photo-package-guide",
-  "/blog/new-year-countdown-group-album-photo-package-guide"
-];
 
 const BLOCKED_PAGE_TYPES = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
 const BLOCKED_PATH_PREFIXES = ["/404", "/account", "/admin", "/album", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/platform", "/search", "/site"];
@@ -161,11 +59,6 @@ const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_SLUGS = new Set<string>(MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS);
 const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/best-packages", "/best-ai-image", "/best-ai-video"];
 const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"];
-const SITEMAP_STATIC_FALLBACK_LASTMOD = "2026-08-01T00:00:00.000Z";
-const DREAMSHOOT_FALLBACK_SITE = { id: DREAMSHOOT_SITE_ID, slug: "mydreamshoots", name: "MyDreamShoots", primaryDomain: "www.mydreamshoots.com" } as Site;
-const AIDREAMCAPES_FALLBACK_SITE = { id: AIDREAMCAPES_SITE_ID, slug: "aidreamcapes", name: "Aidreamcapes", primaryDomain: "www.aidreamcapes.com" } as Site;
-const AIDREAMSHOOTS_EU_FALLBACK_SITE = { id: "site_mydreamshoots_xby", slug: "aidreamshoots", name: "AIdreamshoots", primaryDomain: "aidreamshoots.eu" } as Site;
-const AIDREAMCAPES_EU_FALLBACK_SITE = { id: "site_aidreamcapes_xby", slug: "aidreamcapes-eu", name: "Aidreamcapes.eu", primaryDomain: "aidreamcapes.eu" } as Site;
 const CANONICAL_PUBLIC_PATHS = new Map([
   ["/about", "/about-us"],
   ["/contact", "/contact-us"],
@@ -354,21 +247,6 @@ function normalizeSitemapDate(value: unknown): string | undefined {
   return Number.isFinite(timestamp) ? new Date(timestamp).toISOString() : undefined;
 }
 
-function latestSitemapDate(values: unknown[]): string | undefined {
-  return values
-    .map(normalizeSitemapDate)
-    .filter((value): value is string => Boolean(value))
-    .sort((a, b) => Date.parse(b) - Date.parse(a))[0];
-}
-
-function sitemapPathFromUrl(loc: string): string {
-  try {
-    return normalizePath(new URL(loc).pathname);
-  } catch {
-    return "/";
-  }
-}
-
 function isCollectionDirectoryPath(path: string): boolean {
   return path === "/collections" || path.startsWith("/collections/") || path === "/ai-image-generation" || path.startsWith("/ai-image-generation/");
 }
@@ -390,80 +268,6 @@ function sitemapPriorityForPath(path: string): string {
   if (normalized === "/tools" || normalized === "/collections" || normalized === "/ai-image-generation" || normalized === "/ai-video-generation" || normalized === "/blog") return "0.9";
   if (normalized.startsWith("/tools/") || normalized.startsWith("/collections/") || normalized.startsWith("/ai-image-generation/") || normalized.startsWith("/ai-video-generation/")) return "0.8";
   return "0.7";
-}
-
-function sitemapFallbackEntry(loc: string): SitemapEntry {
-  const path = sitemapPathFromUrl(loc);
-  return {
-    loc,
-    images: [],
-    lastmod: SITEMAP_STATIC_FALLBACK_LASTMOD,
-    changefreq: sitemapChangeFrequencyForPath(path),
-    priority: sitemapPriorityForPath(path)
-  };
-}
-
-function latestThemePublicationLastmod(state: PlatformState, siteId: string): string | undefined {
-  return latestSitemapDate(
-    state.themePublications
-      .filter((publication) => publication.siteId === siteId)
-      .map((publication) => publication.publishedAt)
-  );
-}
-
-function sitemapLastmodForPath(
-  state: PlatformState,
-  site: Site,
-  path: string,
-  sitePages: ThemePage[],
-  activePacks: CreativePack[],
-  sitePublicationLastmod: string | undefined
-): string {
-  const normalizedPath = normalizePath(path);
-  const matchingPage = sitePages.find((page) => pageSitemapPathForSite(site, page) === normalizedPath);
-  const pageLastmod = matchingPage ? latestSitemapDate([matchingPage.updatedAt, matchingPage.createdAt]) : undefined;
-  if (pageLastmod) return pageLastmod;
-
-  if (isCollectionDirectoryPath(normalizedPath)) {
-    const categorySlug = normalizedPath === publicCollectionPathForSite(site, "")
-      ? ""
-      : canonicalSeoDirectorySlugForSite(site, "collection", normalizedPath);
-    const matchingCategory = (state.creativePackCategories ?? []).find((category) => {
-      if (category.siteId !== site.id || category.status !== "active") return false;
-      if (!categorySlug) return true;
-      return canonicalSeoDirectorySlugForSite(site, "collection", category.slug || category.label) === categorySlug;
-    });
-    const matchingPacks = activePacks.filter((pack) => normalizedPath === publicCollectionPathForSite(site, "") || collectionSlugsForPack(site, pack).includes(categorySlug));
-    const collectionLastmod = latestSitemapDate([
-      matchingCategory?.createdAt,
-      ...matchingPacks.map((pack) => pack.createdAt)
-    ]);
-    if (collectionLastmod) return collectionLastmod;
-  }
-
-  if (normalizedPath === "/tools" || normalizedPath.startsWith("/tools/") || isVideoGenerationDirectoryPath(site, normalizedPath)) {
-    const videoRoute = parsePublicVideoGenerationRouteForSite(site, normalizedPath);
-    const toolSlug = videoRoute?.itemSlug ?? (normalizedPath.startsWith("/tools/") ? normalizedPath.slice("/tools/".length) : "");
-    const matchingTools = (state.toolMenuItems ?? []).filter((item) => {
-      if (item.siteId !== site.id || item.status !== "active") return false;
-      if (!toolSlug) return true;
-      const itemPath = sitePathFromHref(site, item.href || pathFromSlug("/tools", item.slug));
-      return itemPath === normalizedPath || slugifySegment(item.slug) === slugifySegment(toolSlug) || slugifySegment(item.slug) === slugifySegment(String(videoRoute?.itemSlug ?? ""));
-    });
-    const matchingCategoryIds = new Set(matchingTools.map((item) => item.categoryId).filter(Boolean));
-    const matchingCategories = (state.toolCategories ?? []).filter((category) => {
-      if (category.siteId !== site.id || category.status !== "active") return false;
-      if (!toolSlug) return true;
-      return matchingCategoryIds.has(category.id);
-    });
-    const toolLastmod = latestSitemapDate([
-      ...matchingTools.flatMap((item) => [item.updatedAt, item.createdAt]),
-      ...matchingCategories.flatMap((category) => [category.updatedAt, category.createdAt])
-    ]);
-    if (toolLastmod) return toolLastmod;
-  }
-
-  return sitePublicationLastmod ?? SITEMAP_STATIC_FALLBACK_LASTMOD;
 }
 
 function isSitemapImageKey(key: string): boolean {
@@ -583,7 +387,10 @@ function sitemapImageTitleForPage(page: ThemePage): string {
   const seoTitle = cleanText(page.publishedJson.seo?.title)
     .replace(/\s*[|-]\s*(?:myDreamshoots|MyDreamShoots|Aidreamcapes)\s*$/i, "")
     .trim();
-  return cleanText(seoTitle, cleanText(page.title, "MyDreamShoots page image"));
+  const title = cleanText(seoTitle, cleanText(page.title, "MyDreamShoots page image"));
+  return title.split(/\s+/).length >= 8
+    ? title
+    : `${title} for private AI photo creation workflows`;
 }
 
 function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): SitemapImageEntry[] {
@@ -648,48 +455,39 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
 }
 
 function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[] {
-  const urls = getSitemapUrlsForSite(state, site);
-  const entries = new Map(urls.map((loc) => [loc, { loc, images: [] } as SitemapEntry]));
-  const activePacks = state.creativePacks.filter((pack) => pack.siteId === site.id && pack.status === "active");
-  const sitePages = pagesForSite(site);
-  const sitePublicationLastmod = latestThemePublicationLastmod(state, site.id);
-
-  const collectionsEntry = entries.get(sitemapUrl(site, publicCollectionPathForSite(site, "")));
-  if (collectionsEntry) {
-    appendSitemapImages(
-      collectionsEntry,
-      activePacks
-        .slice(0, 12)
-        .flatMap((pack) => packSitemapImages(site, pack, 1))
-    );
-  }
-
-  for (const pack of activePacks) {
-    const packPath = canonicalDirectoryPathForSite(site, creativePackCollectionHref(pack));
-    const loc = sitemapUrl(site, packPath);
-    const entry = entries.get(loc);
-    if (!entry) continue;
-    appendSitemapImages(entry, packSitemapImages(site, pack));
-  }
-
-  for (const page of sitePages) {
-    const pagePath = pageSitemapPathForSite(site, page);
-    if (!pagePath) continue;
-    const entry = entries.get(sitemapUrl(site, pagePath));
-    if (!entry) continue;
-    appendSitemapImages(entry, collectPageSitemapImages(site, page));
-  }
-
-  return urls.map((loc) => {
-    const entry = entries.get(loc) ?? { loc, images: [] };
-    const path = sitemapPathFromUrl(loc);
-    return {
-      ...entry,
-      lastmod: sitemapLastmodForPath(state, site, path, sitePages, activePacks, sitePublicationLastmod),
+  const snapshot = createPublishedSiteSnapshot(state, site);
+  const collectionItems = resolvePublicCollectionItems(snapshot);
+  const entries = new Map<string, SitemapEntry>();
+  for (const page of snapshot.pages) {
+    const canonicalPath = canonicalPathForSitemapPage(page);
+    if (resolvePublishedRouteDisposition(snapshot, canonicalPath).kind !== "render") continue;
+    const effective = resolveEffectivePublishedPage(snapshot, canonicalPath);
+    if (effective.routeDisposition.kind !== "render" || !effective.indexability.sitemapEligible) continue;
+    const loc = effective.context.seo.canonicalUrl;
+    const path = effective.context.seo.canonicalPath;
+    entries.set(loc, {
+      loc,
+      images: collectPageSitemapImages(site, page),
+      lastmod: normalizeSitemapDate(page.updatedAt ?? snapshot.publication?.publishedAt),
       changefreq: sitemapChangeFrequencyForPath(path),
       priority: sitemapPriorityForPath(path)
-    };
-  });
+      });
+  }
+  const collectionPath = publicCollectionPathForSite(site, "");
+  const collectionPage = snapshot.pages.find((page) => canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page)) === canonicalDirectoryPathForSite(site, collectionPath));
+  if (collectionPage && collectionItems.length) {
+    const effective = resolveEffectivePublishedPage(snapshot, collectionPage.slug);
+    if (effective.routeDisposition.kind === "render" && effective.indexability.sitemapEligible) {
+      const loc = effective.context.seo.canonicalUrl;
+      const entry = entries.get(loc);
+      if (entry) entry.images = collectionItems.flatMap((item) => packSitemapImages(site, item.source, 1));
+    }
+  }
+  return [...entries.values()].sort((left, right) => left.loc.localeCompare(right.loc));
+}
+
+function canonicalPathForSitemapPage(page: ThemePage): string {
+  return normalizePath(page.publishedJson.seo?.canonical ?? page.publishedJson.seo?.canonicalPath ?? page.slug);
 }
 
 function slugifySegment(value: string): string {
@@ -1106,16 +904,11 @@ async function readIndexableStateAndSites(): Promise<{ state: PlatformState; sit
     const sites = findIndexableSites(state);
     if (sites.length) return { state, sites };
   } catch {
-    // Fall through to the legacy JSON state so robots/sitemap stay available during data migrations.
-  }
-
-  try {
-    const state = await readStorefrontPlatformStateFromLegacyJson();
-    const sites = findIndexableSites(state);
-    return sites.length ? { state, sites } : undefined;
-  } catch {
+    // Production Postgres failures fail closed. Legacy JSON is an explicit local/test mode only.
     return undefined;
   }
+
+  return undefined;
 }
 
 async function readLegacyIndexableStateAndSites(): Promise<{ state: PlatformState; sites: Site[] } | undefined> {
@@ -1130,73 +923,32 @@ async function readLegacyIndexableStateAndSites(): Promise<{ state: PlatformStat
 
 export async function getMydreamshootsSitemapUrls(): Promise<string[]> {
   const runtime = await readIndexableStateAndSites();
-  if (!runtime) return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
+  if (!runtime) return [];
   const site = runtime?.sites.find(isDreamshootSite);
-  if (!site) return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
+  if (!site) return [];
   return getSitemapUrlsForSite(runtime.state, site);
 }
 
 export async function getAidreamcapesSitemapUrls(): Promise<string[]> {
-  const fallback = fallbackUrlsForSite(AIDREAMCAPES_FALLBACK_SITE, AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS);
   const runtime = await readIndexableStateAndSites();
-  if (!runtime) return fallback;
+  if (!runtime) return [];
   const site = runtime.sites.find(isAidreamcapesSite);
-  return site ? getSitemapUrlsForSite(runtime.state, site) : fallback;
+  return site ? getSitemapUrlsForSite(runtime.state, site) : [];
 }
 
 function getSitemapUrlsForSite(state: PlatformState, site: Site): string[] {
-  const sitePages = pagesForSite(site);
-  const paths = sitePages.length
-    ? sitePages.map((page) => pageSitemapPathForSite(site, page)).filter(Boolean)
-    : FALLBACK_INDEXABLE_PATHS;
-
-  paths.push(...collectExplicitSeoDirectoryPaths(site));
-  paths.push(...collectDynamicIndexablePaths(state, site));
-
-  if (!isDreamshootSite(site)) {
-    for (const path of REQUIRED_INDEXABLE_TOOL_PATHS) {
-      if (isExplicitSeoDirectoryContentForSite(site, "tool", path)) paths.push(canonicalToolPathForSite(site, path));
-    }
-  }
-
-  if (isDreamshootSite(site) || isAidreamcapesSite(site)) {
-    paths.push(...REQUIRED_INDEXABLE_CONTENT_PATHS);
-  }
-
-  if (isAidreamcapesSite(site)) {
-    paths.push(...AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS.filter((path) => path.startsWith("/blog/")));
-  }
-
-  for (const path of REQUIRED_INDEXABLE_POLICY_PATHS) {
-    const page = pagesForSite(site).find((candidate) => canonicalPublicPath(normalizePath(candidate.slug)) === canonicalPublicPath(normalizePath(path)));
-    if (!page || page.publishedJson.seo?.robots?.index === false || page.publishedJson.seo?.index === false) continue;
-    if (isDreamshootSite(site) || isAidreamcapesSite(site)) paths.push(page.publishedJson.seo?.canonical ?? page.publishedJson.seo?.canonicalPath ?? page.slug);
-  }
-
-  return Array.from(
-    new Set(paths
-      .map((path) => canonicalDirectoryPathForSite(site, canonicalPublicPath(normalizePath(path))))
-      .filter((path) => isSitemapIndexablePath(site, path))
-      .map((path) => sitemapUrl(site, path)))
-  ).sort((a, b) => {
-    const origin = siteOrigin(site) || MYDREAMSHOOTS_ORIGIN;
-    if (a === origin) return -1;
-    if (b === origin) return 1;
-    return a.localeCompare(b);
-  });
+  return sitemapEntriesForSite(state, site).map((entry) => entry.loc);
 }
 
 export async function getStorefrontSitemapUrls(): Promise<string[]> {
   const runtime = await readIndexableStateAndSites();
-  if (!runtime) return FALLBACK_INDEXABLE_PATHS.map((path) => (path === "/" ? MYDREAMSHOOTS_ORIGIN : `${MYDREAMSHOOTS_ORIGIN}${path}`));
+  if (!runtime) return [];
   return runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site));
 }
 
 export async function getStorefrontSitemapEntries(): Promise<SitemapEntry[]> {
   const runtime = await readIndexableStateAndSites();
-  if (!runtime) {
-    return FALLBACK_INDEXABLE_PATHS.map((path) => sitemapFallbackEntry(path === "/" ? MYDREAMSHOOTS_ORIGIN : `${MYDREAMSHOOTS_ORIGIN}${path}`));
-  }
+  if (!runtime) return [];
   return runtime.sites.flatMap((site) => sitemapEntriesForSite(runtime.state, site));
 }
 
@@ -1222,34 +974,8 @@ function prefersLegacyStateForPersistenceBackend(): boolean {
   return Boolean(backend && backend !== "postgres");
 }
 
-function fallbackUrlsForOrigin(origin: string, paths: string[]): string[] {
-  return paths.map((path) => (path === "/" ? origin : `${origin}${path}`));
-}
-
-function fallbackPathsForSite(site: Site, basePaths: string[]): string[] {
-  return Array.from(new Set([
-    ...basePaths,
-    ...collectExplicitSeoDirectoryPaths(site),
-    ...REQUIRED_INDEXABLE_POLICY_PATHS
-  ]));
-}
-
-function fallbackUrlsForSite(site: Site, basePaths: string[]): string[] {
-  return fallbackUrlsForOrigin(siteOrigin(site), fallbackPathsForSite(site, basePaths));
-}
-
-function publicFallbackSitemapUrlsForHost(hosts: string[]): string[] {
-  if (hosts.some(isAidreamshootsEuHost)) return fallbackUrlsForSite(AIDREAMSHOOTS_EU_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
-  if (hosts.some(isAidreamcapesEuHost)) return fallbackUrlsForSite(AIDREAMCAPES_EU_FALLBACK_SITE, AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS);
-  if (hosts.some(isAidreamcapesHost)) return fallbackUrlsForSite(AIDREAMCAPES_FALLBACK_SITE, AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS);
-  if (hosts.some(isMydreamshootsHost)) return fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS);
-  if (hosts.some(isLocalDevelopmentHost)) {
-    return [
-      ...fallbackUrlsForSite(DREAMSHOOT_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS),
-      ...fallbackUrlsForSite(AIDREAMCAPES_FALLBACK_SITE, AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS)
-    ];
-  }
-  return [];
+function usesExplicitLegacySitemapPreview(): boolean {
+  return (process.env.STOREFRONT_PATH_MODE_READS ?? "").trim().toLowerCase() === "local-preview";
 }
 
 export async function getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>): Promise<string[]> {
@@ -1267,20 +993,14 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
   const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
   const isLocalHostRequest = !publicHostCandidates.length && normalizedHosts.some(isLocalDevelopmentHost);
   if (siteHostCandidates.some(isReservedGrownstrideHost)) return [];
-  const shouldUseLegacyStateFirst = prefersLegacyStateForPersistenceBackend() || isLocalHostRequest || process.env.NODE_ENV !== "production";
+  const shouldUseLegacyStateFirst = isLocalHostRequest || usesExplicitLegacySitemapPreview();
   const runtime = shouldUseLegacyStateFirst ? await readLegacyIndexableStateAndSites() : await readIndexableStateAndSites();
-  if (!runtime) {
-    return publicFallbackSitemapUrlsForHost(siteHostCandidates).map(sitemapFallbackEntry);
-  }
+  if (!runtime) return [];
   if (isLocalHostRequest) return runtime.sites.flatMap((site) => sitemapEntriesForSite(runtime.state, site));
   const site =
     getSiteByHostCandidatesFromState(runtime.state, siteHostCandidates) ??
     runtime.sites.find((item) => siteHostCandidates.some((host) => isHostForSite(item, host)));
   if (site) return sitemapEntriesForSite(runtime.state, site);
-  if (siteHostCandidates.some(isAidreamshootsEuHost)) return fallbackUrlsForSite(AIDREAMSHOOTS_EU_FALLBACK_SITE, FALLBACK_INDEXABLE_PATHS).map(sitemapFallbackEntry);
-  if (siteHostCandidates.some(isAidreamcapesEuHost)) return fallbackUrlsForSite(AIDREAMCAPES_EU_FALLBACK_SITE, AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS).map(sitemapFallbackEntry);
-  if (siteHostCandidates.some(isAidreamcapesHost)) return (await getAidreamcapesSitemapUrls()).map(sitemapFallbackEntry);
-  if (siteHostCandidates.some(isMydreamshootsHost)) return (await getMydreamshootsSitemapUrls()).map(sitemapFallbackEntry);
   return [];
 }
 

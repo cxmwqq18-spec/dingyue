@@ -1,4 +1,5 @@
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamcapesSite as isAidreamcapesCapabilitySite } from "@/lib/storefront-context/capabilities";
 import type { SectionBlockInstance, Site } from "@/lib/types";
 
 type ToolFaqSite = Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> };
@@ -25,7 +26,7 @@ function sanitizeId(value: string): string {
 
 function isAidreamcapesSite(site: ToolFaqSite | undefined): boolean {
   if (!site) return false;
-  return /aidreamcapes/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  return isAidreamcapesCapabilitySite(site);
 }
 
 function isSpanishSite(site: ToolFaqSite | undefined): boolean {

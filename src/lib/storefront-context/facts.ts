@@ -1,6 +1,12 @@
 import type { Price, StorefrontProfileJson } from "@/lib/types";
 
-type PriceFact = Pick<Price, "status" | "stripePriceId" | "amountCents" | "currency" | "providerVerifiedAt" | "providerFingerprint"> & {
+type PriceFact = {
+  status?: string | null;
+  stripePriceId?: string | null;
+  amountCents?: number | null;
+  currency?: string | null;
+  providerVerifiedAt?: string | Date | null;
+  providerFingerprint?: string | null;
   interval?: string | null;
   effectiveFrom?: string | Date | null;
   effectiveTo?: string | Date | null;
@@ -18,6 +24,7 @@ export function isPublicPriceFact(price: PriceFact, now = new Date(), expectedCu
   if (!price.interval) return false;
   if (!/^price_[a-zA-Z0-9_]+$/.test(price.stripePriceId ?? "")) return false;
   if (!price.providerVerifiedAt || !price.providerFingerprint) return false;
+  if (!price.currency) return false;
   if (expectedCurrency && price.currency.trim().toLowerCase() !== expectedCurrency.trim().toLowerCase()) return false;
   const current = now.getTime();
   const from = timestamp(price.effectiveFrom);

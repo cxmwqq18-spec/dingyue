@@ -7,7 +7,7 @@ import { StoreError } from "@/lib/server-store";
 import { mapCreditLedger, mapCustomer, mapPaymentEvent, mapPrice, mapProduct } from "@/lib/stores/prisma-mappers";
 import { clearSiteReadCache } from "@/lib/stores/site-store";
 import { fakeStripePriceAdapter, verifyPriceReadOnly, type StripePriceReadAdapter } from "@/lib/stripe-price-verification";
-import { clearStorefrontContextCache } from "@/lib/storefront-context";
+import { clearStorefrontContextCache, isPublicPriceFact } from "@/lib/storefront-context";
 
 type Tx = Prisma.TransactionClient;
 const validPriceIntervals = ["month", "quarter", "half_year", "year", "one_time"] as const;
@@ -83,13 +83,7 @@ async function readPublicPriceForCheckout(tx: Tx, siteId: string, priceId: strin
   });
   if (!price || price.product.siteId !== siteId) throw new StoreError("price_not_found_for_site", 404);
   const now = Date.now();
-  const publicPrice = price.status === "active"
-    && /^price_[a-zA-Z0-9_]+$/.test(price.stripePriceId ?? "")
-    && price.amountCents > 0
-    && price.currency.trim().toLowerCase() === site.currency.trim().toLowerCase()
-    && Boolean(price.providerVerifiedAt && price.providerFingerprint)
-    && (!price.effectiveFrom || price.effectiveFrom.getTime() <= now)
-    && (!price.effectiveTo || price.effectiveTo.getTime() > now);
+  const publicPrice = isPublicPriceFact(price, new Date(now), site.currency);
   if (!publicPrice) throw new StoreError("price_not_public", 409);
   if (price.product.status !== "active") throw new StoreError("product_not_active", 409);
   if (!Number.isInteger(price.creditsGranted) || price.creditsGranted <= 0) throw new StoreError("price_has_no_credits", 409);

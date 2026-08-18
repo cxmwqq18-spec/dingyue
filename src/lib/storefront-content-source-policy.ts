@@ -1,4 +1,5 @@
 import { publicSiteSlug } from "@/lib/domain-routing";
+import { usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 
 const databasePreferences = new Set(["database", "db", "relational"]);
 const legacyLocalPreferences = new Set(["local", "json", "legacy", "file"]);
@@ -47,8 +48,7 @@ export function isMydreamshootsContentSourceSite(site: {
   if (!site) return false;
   if (isMydreamshootsContentSourceSiteId(site.id)) return true;
   if (isMydreamshootsContentSourceSlug(site.slug)) return true;
-  const identity = `${site.slug ?? ""} ${site.name ?? ""} ${site.primaryDomain ?? ""} ${site.branding?.logoText ?? ""}`.toLowerCase();
-  return identity.includes("mydreamshoots") || identity.includes("mydreamshoots.com") || identity.includes("aidreamcapes") || identity.includes("aidreamcapes.com");
+  return usesAiGenerationPublicSlug(publicSiteSlug(site.slug ?? ""));
 }
 
 export function requiresMydreamshootsPublishedSource(siteSlug: string | undefined, preference: string | undefined): boolean {

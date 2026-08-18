@@ -91,6 +91,68 @@ const requiredUseCaseProfileFields = [
   "coverNote",
   "safetyNote"
 ];
+const requiredPageCopySlugs = [
+  "engagement-photo",
+  "wedding-photo",
+  "valentines-photo",
+  "christmas-photo",
+  "halloween-photo",
+  "thanksgiving-photo",
+  "holiday",
+  "singles-awareness-day",
+  "black-friday"
+];
+const requiredPageCopyFields = [
+  "pageEntityId",
+  "copyRevision",
+  "seoTitle",
+  "galleryTitle",
+  "ctaTitle",
+  "ctaSubtitle",
+  "ctaLabel",
+  "faqTitle",
+  "relatedTitle",
+  "relatedSubtitle",
+  "relatedCtaLabel"
+];
+const expectedPageCopyTitles = {
+  "engagement-photo": {
+    seoTitle: "AI Engagement Photos for Proposals & Announcements | myDreamshoots",
+    galleryTitle: "12 AI Engagement Photo Examples for Proposals and Announcements"
+  },
+  "wedding-photo": {
+    seoTitle: "AI Wedding Photos for Save-the-Dates & Ceremony Moodboards | myDreamshoots",
+    galleryTitle: "12 AI Wedding Photo Examples for Save-the-Dates and Ceremony Moodboards"
+  },
+  "valentines-photo": {
+    seoTitle: "AI Valentine's Day Photos for Date Night & Gifts | myDreamshoots",
+    galleryTitle: "12 AI Valentine's Day Photo Examples for Date Night Cards and Gifts"
+  },
+  "christmas-photo": {
+    seoTitle: "AI Christmas Photos for Greeting Cards & Winter Portraits | myDreamshoots",
+    galleryTitle: "12 AI Christmas Photo Examples for Greeting Cards and Winter Portraits"
+  },
+  "halloween-photo": {
+    seoTitle: "AI Halloween Photos for Costume Portraits & Party Cards | myDreamshoots",
+    galleryTitle: "12 AI Halloween Photo Examples for Costume Portraits, Party Cards, and Spooky Albums"
+  },
+  "thanksgiving-photo": {
+    seoTitle: "AI Thanksgiving Photos for Gratitude Cards & Dinner Portraits | myDreamshoots",
+    galleryTitle: "12 AI Thanksgiving Photo Examples for Gratitude Cards and Family Keepsakes"
+  },
+  holiday: {
+    seoTitle: "AI Holiday Photos for Seasonal Cards & Festive Profiles | myDreamshoots",
+    galleryTitle: "12 AI Holiday Photo Examples for Seasonal Cards and Festive Profiles"
+  },
+  "singles-awareness-day": {
+    seoTitle: "AI Singles Awareness Day Photos for Self-Love & Solo Portraits | myDreamshoots",
+    galleryTitle: "12 AI Singles Awareness Day Photo Examples for Self-Love and Solo Confidence"
+  },
+  "black-friday": {
+    seoTitle: "AI Black Friday Photos for Sale Banners & Social Ads | myDreamshoots",
+    galleryTitle: "12 AI Black Friday Photo Examples for Sale Banners and Social Ads"
+  }
+};
 const bannedTemplateProfilePhrases = [
   "turn approved uploads into a focused private photo set",
   "A private gallery of",
@@ -103,6 +165,8 @@ const profileInvalidRows = [];
 const packProfileInvalidRows = [];
 const profileTemplateRows = [];
 const profileTopicRows = [];
+const pageCopyInvalidRows = [];
+const pageCopyProjectionDriftRows = [];
 for (const item of mydreamshootsTaxonomy.items ?? []) {
   const profile = mydreamshootsUseCaseProfiles[item.slug];
   if (!profile) {
@@ -138,6 +202,48 @@ for (const item of mydreamshootsTaxonomy.items ?? []) {
     profileTopicRows.push({ slug: item.slug, topicTokens });
   }
 }
+const seenFaqIds = new Map();
+for (const slug of requiredPageCopySlugs) {
+  const profile = mydreamshootsUseCaseProfiles[slug];
+  const expected = expectedPageCopyTitles[slug];
+  const invalidFields = [];
+  if (!profile) {
+    pageCopyInvalidRows.push({ slug, invalidFields: ["missing"] });
+    continue;
+  }
+  for (const field of requiredPageCopyFields) {
+    const value = profile[field];
+    if (typeof value !== "string" || !value.trim()) invalidFields.push(field);
+  }
+  if (profile.pageEntityId !== `mydreamshoots:ai-image-theme:${slug}`) invalidFields.push("pageEntityId:canonicalSlug");
+  if (profile.seoTitle !== expected.seoTitle) invalidFields.push("seoTitle:approvedCopy");
+  if (profile.galleryTitle !== expected.galleryTitle) invalidFields.push("galleryTitle:approvedCopy");
+  if (!Array.isArray(profile.faqItems) || profile.faqItems.length !== 4) {
+    invalidFields.push("faqItems:count");
+  } else {
+    for (const faqItem of profile.faqItems) {
+      if (!faqItem?.id?.trim() || !faqItem?.question?.trim() || !faqItem?.answer?.trim()) invalidFields.push("faqItems:shape");
+      const previous = seenFaqIds.get(faqItem.id);
+      if (previous) invalidFields.push(`faqItems:duplicate:${faqItem.id}:${previous}`);
+      seenFaqIds.set(faqItem.id, slug);
+    }
+  }
+  if (invalidFields.length) {
+    pageCopyInvalidRows.push({ slug, invalidFields });
+  }
+  const projection = dreamshootPackProfiles[slug];
+  const driftFields = [
+    ...requiredPageCopyFields,
+    "galleryIntro",
+    "ctaEyebrow",
+    "faqEyebrow",
+    "faqItems",
+    "relatedEyebrow"
+  ].filter((field) => JSON.stringify(profile[field]) !== JSON.stringify(projection?.[field]));
+  if (driftFields.length) {
+    pageCopyProjectionDriftRows.push({ slug, driftFields });
+  }
+}
 
 assert(mydreamshootsSite, "MyDreamShoots site must exist in platform state");
 assert(aidreamcapesSite, "AIDreamCapes site must exist in platform state");
@@ -166,13 +272,23 @@ assert(
   "MyDreamShoots direct theme SEO profiles must contain topic-specific vocabulary",
   { profileTopicRows }
 );
+assert(
+  !pageCopyInvalidRows.length,
+  "The nine MyDreamShoots dynamic pages must have exact per-canonical-slug page copy fields",
+  { pageCopyInvalidRows }
+);
+assert(
+  !pageCopyProjectionDriftRows.length,
+  "dreamshoot-pack-profiles.json must remain a generated projection of the page copy fields",
+  { pageCopyProjectionDriftRows }
+);
 
 const slugRows = mydreamshootsSite.pages.map((page) => ({
   id: page.id,
   slug: normalizePath(page.slug),
   pageType: page.pageType,
   title: page.title,
-  index: mydreamshootsSite.themeSettings?.publishedJson?.seo?.pages?.[page.id]?.index
+  index: page.publishedJson?.seo?.index ?? page.publishedJson?.seo?.robots?.index
 }));
 const duplicateSlugRows = Array.from(
   slugRows.reduce((map, row) => map.set(row.slug, [...(map.get(row.slug) ?? []), row]), new Map())
@@ -455,41 +571,34 @@ assert(
 );
 
 for (const pathName of ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping"]) {
-  assert(seoIndexing.includes(`"${pathName}"`), "fallback and required policy sitemap paths must use canonical short paths", { pathName });
+  assert(seoIndexing.includes(`"${pathName}"`), "required policy paths must use canonical short paths", { pathName });
 }
 
 for (const pathName of ["/policies/privacy", "/policies/terms", "/policies/refunds", "/policies/shipping", "/policies/content", "/policies/cookies"]) {
-  assert(!seoIndexing.includes(`  "${pathName}",`), "fallback and required policy sitemap paths must not use long policy paths", { pathName });
+  assert(!seoIndexing.includes(`  "${pathName}",`), "required policy paths must not use long policy paths", { pathName });
 }
 
 assert(
-  seoIndexing.includes("new Set(paths") &&
-    seoIndexing.includes(".filter((path) => isSitemapIndexablePath(site, path))") &&
-    seoIndexing.includes(".map((path) => sitemapUrl(site, path))"),
-  "sitemap URL expansion must filter noindex paths and dedupe canonical paths after static, dynamic, and required paths are merged"
+  seoIndexing.includes("createPublishedSiteSnapshot(state, site)") &&
+    seoIndexing.includes("const canonicalPath = canonicalPathForSitemapPage(page)") &&
+    seoIndexing.includes('resolvePublishedRouteDisposition(snapshot, canonicalPath).kind !== "render"') &&
+    seoIndexing.includes("resolveEffectivePublishedPage(snapshot, canonicalPath)") &&
+    seoIndexing.includes("page.publishedJson.seo?.canonical") &&
+    seoIndexing.includes("effective.indexability.sitemapEligible") &&
+    seoIndexing.includes("effective.context.seo.canonicalUrl"),
+  "sitemap must use one published snapshot, effective page disposition, indexability, and canonical URL"
 );
 assert(
-    seoIndexing.includes("getExplicitSeoDirectorySlugsForSite") &&
-    seoIndexing.includes("canonicalSeoDirectoryPathForSite") &&
-    seoIndexing.includes("collectExplicitSeoDirectoryPaths(site)") &&
-    seoIndexing.includes('canonicalSeoDirectoryPathForSite(site, "collection", slug)') &&
-    seoIndexing.includes('canonicalToolPathForSite(site, `/tools/${slug}`)') &&
-    seoIndexing.includes("publicVideoGenerationPathForSite(site, toolSlug)") &&
-    seoIndexing.includes("publicCollectionPathForSite(site, collectionSlugFromDirectoryPath(site, normalized))"),
-  "sitemap URL expansion must include explicit SEO directory pages using canonical collection and video paths"
+    seoIndexing.includes("resolvePublicCollectionItems(snapshot)") &&
+    seoIndexing.includes("const collectionPage = snapshot.pages.find") &&
+    seoIndexing.includes("effective.context.seo.canonicalUrl"),
+  "sitemap collection entries must come from the published snapshot and canonical effective page"
 );
 assert(
-    seoIndexing.includes("DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS") &&
-    seoIndexing.includes('`/ai-video-generation/${slug}`') &&
-    seoIndexing.includes("MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS") &&
-    seoIndexing.includes("state.toolMenuItems ?? []") &&
-    seoIndexing.includes("state.creativePackCategories ?? []") &&
-    seoIndexing.includes("collectInternalHrefPaths(state, site, paths, site.themeSettings.publishedJson)") &&
-    seoIndexing.includes('"/about-us"') &&
-    seoIndexing.includes('"/contact-us"') &&
-    seoIndexing.includes('"/children-privacy"') &&
-    seoIndexing.includes('"/state-privacy"'),
-  "sitemap URL expansion must cover video generators, package categories, theme hrefs, and canonical public support pages"
+    seoIndexing.includes("for (const page of snapshot.pages)") &&
+    seoIndexing.includes("effective.routeDisposition.kind !== \"render\"") &&
+    seoIndexing.includes("effective.indexability.sitemapEligible"),
+  "sitemap must only include published page entities that are renderable and sitemap eligible"
 );
 assert(
     dreamshootSeoContent.includes("dreamshootDefaultPublicToolSlugs") &&
@@ -535,14 +644,15 @@ assert(
   "sitemap route must select URLs using the request host, emit per-entry sitemap metadata, and avoid request-time lastmod"
 );
 assert(
-  seoIndexing.includes("SITEMAP_STATIC_FALLBACK_LASTMOD") &&
-    seoIndexing.includes("lastmod?: string") &&
-    seoIndexing.includes("latestThemePublicationLastmod") &&
-    seoIndexing.includes("sitemapLastmodForPath") &&
+  seoIndexing.includes("lastmod?: string") &&
     seoIndexing.includes("sitemapChangeFrequencyForPath") &&
+    seoIndexing.includes("normalizeSitemapDate") &&
+    !seoIndexing.includes("SITEMAP_STATIC_FALLBACK_LASTMOD") &&
+    !seoIndexing.includes("sitemapFallbackEntry") &&
+    !seoIndexing.includes("publicFallbackSitemapUrlsForHost") &&
     seoIndexing.includes('return "monthly"') &&
     seoIndexing.includes('return "weekly"'),
-  "sitemap entries must carry stable lastmod values and page-type changefreq metadata from indexing"
+  "sitemap entries must carry stable publication timestamps and page-type changefreq metadata without static fallback"
 );
 assert(
   seoIndexing.includes("getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>") &&
@@ -590,7 +700,7 @@ console.log(JSON.stringify({
     forbiddenLegacyPolicyHrefs: badLegacyHrefHits.length
   },
   syntheticRoutes: ["/workflow", "/creators-circle", "/partner-registration"],
-  sitemapStrategy: "dedupe merged static, dynamic, required, and policy canonical URLs per request host",
+  sitemapStrategy: "published snapshot pages only; renderable, indexable, canonical URLs per request host",
   hostAwareSitemaps: {
     mydreamshoots: "www.mydreamshoots.com only",
     aidreamcapes: "www.aidreamcapes.com only"

@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
+import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { STOREFRONT_PUBLIC_HOST_HEADER } from "@/lib/storefront-route-mode";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
@@ -26,127 +26,6 @@ const HOP_BY_HOP_HEADERS = new Set([
   "te",
   "trailer"
 ]);
-const AIDREAMCAPES_COLLECTION_REDIRECTS: Record<string, string> = {
-  adventure: "road-trip-frames",
-  aventura: "game-day-group-photos",
-  city: "old-quarter-walks",
-  ciudad: "premiere-style-portraits",
-  coastal: "coastal-light-sets",
-  familia: "thanksgiving-memory-sets",
-  costero: "coastal-light-sets",
-  destination: "route-portrait-albums",
-  destino: "route-portrait-albums",
-  postcard: "postcard-story-sets",
-  postal: "postcard-story-sets",
-  "ano-nuevo": "new-year-countdown-albums",
-  "cumpleanos": "birthday-fan-moment-sets",
-  "cafe-corner-stories": "premiere-style-portraits",
-  "cafe-street-journals": "cafe-street-stories",
-  "destination-portrait-albums": "route-portrait-albums",
-  "coastal-getaways": "coastal-light-sets",
-  "old-city-walks": "old-quarter-walks",
-  "mountain-trails": "alpine-trail-frames",
-  navidad: "christmas-group-albums",
-  "itinerary-moodboards": "route-moodboards",
-  "route-moodboard": "seasonal-celebration-photos",
-  "postcard-social-sets": "postcard-story-sets",
-  "social-keepsakes": "seasonal-celebration-photos",
-  montana: "alpine-trail-frames",
-  viaje: "fan-scene-albums",
-  "travel-profile-stories": "solo-traveler-profiles",
-  "lagoon-route-studys": "lagoon-route-studies",
-  nature: "nature-portrait-studio",
-  boudoir: "boudoir-editorial-portraits",
-  hairstyle: "hairstyle-try-on-stories",
-  headshot: "professional-headshot-studio",
-  headshots: "professional-headshot-studio",
-  holiday: "holiday-couple-cards",
-  gala: "gala-night-portraits",
-  heritage: "heritage-celebration-portraits"
-};
-const MYDREAMSHOOTS_COLLECTION_REDIRECTS: Record<string, string> = {};
-const MYDREAMSHOOTS_TOOL_REDIRECTS: Record<string, string> = {
-  "talking-photo": "talking-photo",
-  "profile-clip": "profile-clip",
-  "fan-poster-motion": "fan-poster-motion",
-  "creator-intro-video": "creator-intro-video",
-  "product-teaser-clip": "product-teaser-clip",
-  "animated-avatar": "animated-avatar",
-  "fashion-reel": "fashion-reel",
-  "album-story-video": "album-story-video"
-};
-const AIDREAMCAPES_TOOL_REDIRECTS: Record<string, string> = {
-  "ai-image-studio": "",
-  "background-changer": "fan-scene-album-builder",
-  "background-remover": "fan-scene-album-builder",
-  "couple-escape-album": "birthday-fan-moment-maker",
-  "dreamscape-generator": "fan-scene-album-builder",
-  headshot: "premiere-portrait-set-builder",
-  "image-generator": "fan-scene-album-builder",
-  "image-to-video": "new-year-countdown-album-maker",
-  "image-studio": "",
-  "portrait-generator": "fan-scene-album-builder",
-  "portrait-maker": "fan-scene-album-builder",
-  "product-reverie": "permission-safe-photo-planner",
-  "soft-glam": "premiere-portrait-set-builder",
-  "wedding-portraits": "birthday-fan-moment-maker",
-  "world-cup-fan-photos": "game-day-group-portrait-maker",
-  "route-portrait-engine": "fan-scene-album-builder",
-  "coastal-portrait": "christmas-group-album-studio",
-  "island-resort-scenes": "new-year-countdown-album-maker",
-  "scenic-overlook-story": "game-day-group-portrait-maker",
-  "travel-profile-story": "fan-scene-album-builder",
-  "editorial-getaway": "premiere-portrait-set-builder",
-  "cafe-street-story": "premiere-portrait-set-builder",
-  "cinematic-travel": "game-day-group-portrait-maker",
-  "route-moodboard": "permission-safe-photo-planner",
-  "social-keepsake": "birthday-fan-moment-maker",
-  "family-travel-keepsakes": "thanksgiving-keepsake-set-maker",
-  "seasonal-celebration-album-maker": "new-year-countdown-album-maker",
-  "travel-journal-cover-maker": "new-year-countdown-album-maker"
-};
-const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
-  "/about": "/about-us",
-  "/california-privacy": "/state-privacy",
-  "/ccpa": "/state-privacy",
-  "/children-privacy-policy": "/children-privacy",
-  "/childrens-privacy": "/children-privacy",
-  "/contact": "/contact-us",
-  "/content-policy": "/content",
-  "/cookie-policy": "/cookies",
-  "/delivery-policy": "/shipping",
-  "/examples": "/collections",
-  "/packages": "/collections",
-  "/policies/california-privacy": "/state-privacy",
-  "/policies/ccpa": "/state-privacy",
-  "/policies/children": "/children-privacy",
-  "/policies/children-privacy": "/children-privacy",
-  "/policies/children-privacy-policy": "/children-privacy",
-  "/policies/childrens-privacy": "/children-privacy",
-  "/policies/content": "/content",
-  "/policies/cookie-policy": "/cookies",
-  "/policies/cookies": "/cookies",
-  "/policies/delivery": "/shipping",
-  "/policies/delivery-policy": "/shipping",
-  "/policies/privacy": "/privacy",
-  "/policies/privacy-policy": "/privacy",
-  "/policies/refund": "/refunds",
-  "/policies/refunds": "/refunds",
-  "/policies/shipping": "/shipping",
-  "/policies/state-privacy": "/state-privacy",
-  "/policies/state-privacy-rights": "/state-privacy",
-  "/policies/terms": "/terms",
-  "/policies/terms-of-service": "/terms",
-  "/privacy-policy": "/privacy",
-  "/refund-policy": "/refunds",
-  "/shipping-policy": "/shipping",
-  "/state-privacy-rights": "/state-privacy",
-  "/terms-of-service": "/terms",
-  "/tool": "/tools"
-};
-const MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
-  "/headshot": "/ai-image-generation/headshot"
-};
 const LOCAL_DEFAULT_STOREFRONT_PATHS = new Set(["/ai-image-generation", "/ai-video-generation", "/pricing", "/help"]);
 const LOCAL_DEFAULT_STOREFRONT_PREFIXES = ["/account", "/app", "/dashboard", "/login"];
 
@@ -247,122 +126,6 @@ function storefrontHeadOrderRequired(request: NextRequest): boolean {
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
   if (INTERNAL_PATH_RE.test(pathname) || isPrivateStorefrontHtmlRequest(request)) return false;
   return TARGET_SITE_PATH_RE.test(pathname) || TARGET_HOST_RE.test(host);
-}
-
-function normalizePathSlug(value: string): string {
-  const decoded = (() => {
-    try {
-      return decodeURIComponent(value);
-    } catch {
-      return value;
-    }
-  })();
-  return decoded
-    .trim()
-    .toLowerCase()
-    .replace(/[_\s]+/g, "-")
-    .replace(/[^a-z0-9-]+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-function aidreamcapesCollectionRedirect(request: NextRequest): NextResponse | undefined {
-  const pathname = request.nextUrl.pathname;
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-  const pathMatch = pathname.match(/^\/site\/(aidreamcapes(?:-xby|-eu)?)\/collections\/([^/]+)(\/)?$/i);
-  const hostMatch = TARGET_HOST_RE.test(host) && /aidreamcapes/i.test(host)
-    ? pathname.match(/^\/collections\/([^/]+)(\/)?$/i)
-    : undefined;
-  const match = pathMatch ?? hostMatch;
-  if (!match) return undefined;
-
-  const currentSlug = normalizePathSlug(pathMatch ? match[2] ?? "" : match[1] ?? "");
-  const canonicalSlug = AIDREAMCAPES_COLLECTION_REDIRECTS[currentSlug];
-  if (!canonicalSlug) return undefined;
-
-  const nextUrl = request.nextUrl.clone();
-  nextUrl.pathname = pathMatch ? `/site/${pathMatch[1]?.toLowerCase()}/collections/${canonicalSlug}` : `/collections/${canonicalSlug}`;
-  return NextResponse.redirect(nextUrl, 308);
-}
-
-function directoryCanonicalRedirect(request: NextRequest): NextResponse | undefined {
-  const pathname = request.nextUrl.pathname;
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-
-  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)\/(collections|tools)(?:\/([^/]+))?(\/)?$/i);
-  const hostMatch = TARGET_HOST_RE.test(host)
-    ? pathname.match(/^\/(collections|tools)(?:\/([^/]+))?(\/)?$/i)
-    : undefined;
-  if (!pathMatch && !hostMatch) return undefined;
-
-  const normalizedHost = host.toLowerCase();
-  const siteSlug =
-    pathMatch?.[1]?.toLowerCase() ??
-    (normalizedHost.includes("aidreamcapes") ? "aidreamcapes" : normalizedHost.includes("grownstride") ? "grownstride" : "mydreamshoots");
-  const siteFamily = siteSlug.startsWith("aidreamcapes") ? "aidreamcapes" : "mydreamshoots";
-  const kind = (pathMatch?.[2] ?? hostMatch?.[1] ?? "").toLowerCase();
-  const currentSlug = normalizePathSlug(pathMatch?.[3] ?? hostMatch?.[2] ?? "");
-  const spanishXbyCanonicalSlug = kind === "collections" && isSpanishStorefrontRequestIdentity(`${siteSlug} ${host}`)
-    ? canonicalSpanishXbyCollectionSlug(currentSlug)
-    : currentSlug;
-  const mydreamshootsToolTarget =
-    siteFamily === "mydreamshoots" && kind === "tools" ? MYDREAMSHOOTS_TOOL_REDIRECTS[currentSlug] : undefined;
-  if (siteFamily === "mydreamshoots" && kind === "tools" && (!currentSlug || mydreamshootsToolTarget)) {
-    const nextUrl = publicOriginForRequest(request);
-    const targetPath = mydreamshootsToolTarget ? `/ai-video-generation/${mydreamshootsToolTarget}` : "/ai-video-generation";
-    nextUrl.pathname = pathMatch ? `/site/${siteSlug}${targetPath}` : targetPath;
-    nextUrl.search = request.nextUrl.search;
-    return NextResponse.redirect(nextUrl, 308);
-  }
-  const redirectMap =
-    spanishXbyCanonicalSlug !== currentSlug
-      ? undefined
-      : siteFamily === "aidreamcapes" && kind === "collections"
-      ? AIDREAMCAPES_COLLECTION_REDIRECTS
-      : siteFamily === "mydreamshoots" && kind === "collections"
-        ? MYDREAMSHOOTS_COLLECTION_REDIRECTS
-        : siteFamily === "mydreamshoots" && kind === "tools"
-          ? undefined
-          : siteFamily === "aidreamcapes" && kind === "tools"
-            ? AIDREAMCAPES_TOOL_REDIRECTS
-          : undefined;
-  const canonicalSlug = spanishXbyCanonicalSlug !== currentSlug ? spanishXbyCanonicalSlug : redirectMap?.[currentSlug];
-  if (canonicalSlug === undefined) return undefined;
-
-  const nextUrl = request.nextUrl.clone();
-  nextUrl.pathname = canonicalSlug
-    ? pathMatch
-      ? `/site/${siteSlug}/${kind}/${canonicalSlug}`
-      : `/${kind}/${canonicalSlug}`
-    : pathMatch
-      ? `/site/${siteSlug}/${kind}`
-      : `/${kind}`;
-  return NextResponse.redirect(nextUrl, 308);
-}
-
-function legacyPublicPathRedirect(request: NextRequest): NextResponse | undefined {
-  const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-  const pathMatch = pathname.match(/^\/site\/((?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)(\/.*)$/i);
-  const scopedPath = pathMatch?.[2]?.toLowerCase() ?? "";
-  const hostPath = TARGET_HOST_RE.test(host) ? pathname.toLowerCase() : "";
-  const siteSlug = pathMatch?.[1]?.toLowerCase() ?? (String(host).toLowerCase().includes("mydreamshoots") ? "mydreamshoots" : "");
-  const isPrimaryDreamshoot = /dreamshoot/i.test(siteSlug) && !/aidreamshoots|aidreamcapes/i.test(siteSlug);
-  let targetPath = isPrimaryDreamshoot
-    ? MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS[scopedPath] ?? MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS[hostPath]
-    : undefined;
-  targetPath ??= LEGACY_PUBLIC_PATH_REDIRECTS[scopedPath] ?? LEGACY_PUBLIC_PATH_REDIRECTS[hostPath];
-  if (!targetPath) return undefined;
-  if (targetPath === "/tools" && isPrimaryDreamshoot) {
-    return undefined;
-  }
-  if (targetPath === "/collections" && isPrimaryDreamshoot) {
-    targetPath = "/ai-image-generation";
-  }
-
-  const nextUrl = request.nextUrl.clone();
-  nextUrl.pathname = pathMatch ? `/site/${pathMatch[1].toLowerCase()}${targetPath}` : targetPath;
-  return NextResponse.redirect(nextUrl, 308);
 }
 
 function localDefaultStorefrontRedirect(request: NextRequest): NextResponse | undefined {
@@ -800,7 +563,7 @@ export async function middleware(request: NextRequest) {
   const skipInternalRewrite = request.headers.get(REORDER_SKIP_HEADER) === "1";
   if (skipInternalRewrite) return applyGrownstrideNoindex(nextWithPathname(request), request);
 
-  const redirectResponse = grownstrideLegacyHostRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request) ?? legacyPublicPathRedirect(request) ?? directoryCanonicalRedirect(request) ?? aidreamcapesCollectionRedirect(request);
+  const redirectResponse = grownstrideLegacyHostRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request);
   if (redirectResponse) return finalizeStorefrontResponse(redirectResponse, request);
   if (!shouldRewriteStorefrontHtml(request)) return finalizeStorefrontResponse(nextWithPathname(request), request);
 

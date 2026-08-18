@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import Module from "node:module";
 import path from "node:path";
+import "./load-runtime-env.mjs";
 import createJiti from "jiti";
 
 const repoRoot = process.cwd();
@@ -12,6 +13,9 @@ const originalResolveFilename = Module._resolveFilename;
 Module._resolveFilename = function resolveFilename(request, ...args) {
   const resolvedRequest = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request;
   if (request === "server-only") return serverOnlyStub;
+  if (request.startsWith("@/") && fs.existsSync(`${resolvedRequest}.ts`)) {
+    return originalResolveFilename.call(this, `${resolvedRequest}.ts`, ...args);
+  }
   return originalResolveFilename.call(this, resolvedRequest, ...args);
 };
 
@@ -26,6 +30,7 @@ const {
 const {
   getStorefrontSitemapEntriesForHost
 } = jiti("../src/lib/seo-indexing.ts");
+const { resolveStorefrontContext } = jiti("../src/lib/storefront-context/core.ts");
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(repoRoot, relativePath), "utf8"));
@@ -80,16 +85,30 @@ const activePacks = (state.creativePacks ?? []).filter((pack) => pack.siteId ===
 const activeProducts = (state.products ?? []).filter((product) => product.siteId === site.id && product.status === "active");
 const activeVideoThemes = (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id && theme.status === "active");
 const homePage = site.pages.find((page) => page.slug === "/");
-const lowestUsdCents = Math.min(
-  ...activeProducts.flatMap((product) => (product.prices ?? [])
-    .filter((price) => price.siteId === site.id && String(price.currency).toLowerCase() === "usd")
-    .map((price) => price.amountCents))
+assert.ok(homePage, "MyDreamShoots homepage should exist");
+const schemaContext = resolveStorefrontContext({
+  site,
+  page: homePage,
+  products: activeProducts,
+  creativePacks: activePacks,
+  publication: undefined,
+  factsRevision: "local-smoke",
+  buildId: "local-smoke"
+}, "published");
+const verifiedOffers = schemaContext.offers.active.filter((offer) => (
+  String(offer.price.currency).toLowerCase() === "usd"
+  && /^price_[A-Za-z0-9]+$/.test(String(offer.price.stripePriceId ?? ""))
+  && Boolean(offer.price.providerVerifiedAt)
+));
+const lowestVerifiedMonthlyUsdCents = Math.min(
+  ...verifiedOffers
+    .filter((offer) => offer.product.type === "subscription" && offer.price.interval === "month")
+    .map((offer) => offer.price.amountCents)
 );
 
 assert.equal(activePacks.length, 38, "MyDreamShoots should expose 38 active photo package themes");
 assert.equal(activeProducts.length, 7, "MyDreamShoots should expose 7 active pricing products");
 assert.equal(activeVideoThemes.length, 0, "MyDreamShoots should not expose legacy video theme framework records after the AI Video Generation route migration");
-assert.ok(homePage, "MyDreamShoots homepage should exist");
 
 const homeGraph = graphNodes(buildStorefrontJsonLd({
   site,
@@ -99,7 +118,8 @@ const homeGraph = graphNodes(buildStorefrontJsonLd({
   routeMode: "host",
   creativePacks: activePacks,
   products: activeProducts,
-  videoThemes: activeVideoThemes
+  videoThemes: activeVideoThemes,
+  context: schemaContext
 }));
 const videoObjects = homeGraph.filter((node) => node?.["@type"] === "VideoObject");
 assert.equal(videoObjects.length, 0, "homepage JSON-LD should not expose legacy video theme VideoObject nodes after the AI Video Generation route migration");
@@ -135,7 +155,8 @@ for (const pack of activePacks) {
     collectionSlug,
     routeMode: "host",
     creativePacks: activePacks,
-    products: activeProducts
+    products: activeProducts,
+    context: schemaContext
   }));
   const products = graph.filter((node) => node?.["@type"] === "Product");
   assert.equal(products.length, 1, `${canonicalPath} should expose one Product node`);
@@ -162,14 +183,18 @@ for (const pack of activePacks) {
   assert.equal(product.subjectOf.representativeOfPage, true, `${canonicalPath} ImageObject should be representative of the page`);
   assertPositiveInteger(product.subjectOf.width, `${canonicalPath} ImageObject width`);
   assertPositiveInteger(product.subjectOf.height, `${canonicalPath} ImageObject height`);
-  assert.equal(product.offers?.["@type"], "Offer", `${canonicalPath} Product should include one Offer`);
-  assertMydreamshootsEntityId(product.offers?.["@id"], `${canonicalPath} Offer @id`);
-  assertAbsoluteUrl(product.offers.url, `${canonicalPath} Offer url`);
-  assert.equal(product.offers.availability, "https://schema.org/InStock", `${canonicalPath} availability should use schema.org URL`);
-  assert.equal(product.offers.itemCondition, "https://schema.org/NewCondition", `${canonicalPath} itemCondition should use schema.org URL`);
-  assert.equal(product.offers.priceCurrency, "USD", `${canonicalPath} offer currency should be USD`);
-  assert.match(product.offers.price, /^\d+\.\d{2}$/, `${canonicalPath} offer price should be a decimal string`);
-  assert.equal(Math.round(Number(product.offers.price) * 100), lowestUsdCents, `${canonicalPath} offer should use the lowest active USD price`);
+  if (verifiedOffers.length === 0) {
+    assert.equal(product.offers, undefined, `${canonicalPath} must not expose an unverified manual/draft price offer`);
+  } else {
+    assert.equal(product.offers?.["@type"], "Offer", `${canonicalPath} Product should include one verified Offer`);
+    assertMydreamshootsEntityId(product.offers?.["@id"], `${canonicalPath} Offer @id`);
+    assertAbsoluteUrl(product.offers.url, `${canonicalPath} Offer url`);
+    assert.equal(product.offers.availability, "https://schema.org/OutOfStock", `${canonicalPath} availability should reflect disabled checkout until local billing is enabled`);
+    assert.equal(product.offers.itemCondition, "https://schema.org/NewCondition", `${canonicalPath} itemCondition should use schema.org URL`);
+    assert.equal(product.offers.priceCurrency, "USD", `${canonicalPath} offer currency should be USD`);
+    assert.match(product.offers.price, /^\d+\.\d{2}$/, `${canonicalPath} offer price should be a decimal string`);
+    assert.equal(Math.round(Number(product.offers.price) * 100), lowestVerifiedMonthlyUsdCents, `${canonicalPath} offer should use the lowest verified monthly USD price`);
+  }
   const propertyNames = new Set((product.additionalProperty ?? []).map((property) => property.name));
   assert.ok(propertyNames.has("Credit cost"), `${canonicalPath} should expose credit cost as additionalProperty`);
   assert.ok(propertyNames.has("Output count"), `${canonicalPath} should expose output count as additionalProperty`);
@@ -206,14 +231,14 @@ for (const pathName of ["/", "/pricing", "/workflow", "/faq", "/blog"]) {
     assert.match(image.loc, /^https:\/\/www\.mydreamshoots\.com\//, `${pathName} image sitemap loc should be absolute`);
   }
 }
-for (const pack of activePacks) {
-  const canonicalPath = canonicalSeoDirectoryPathForSite(site, "collection", pack.category || pack.name);
-  const entry = sitemapEntryByPath.get(canonicalPath);
-  assert.ok(entry, `${canonicalPath} should appear in the sitemap`);
-  assert.ok((entry.images ?? []).length > 0, `${canonicalPath} should include image sitemap entries`);
-  for (const image of entry.images) {
-    assert.match(image.loc, /^https:\/\/www\.mydreamshoots\.com\//, `${canonicalPath} image sitemap loc should be absolute`);
-    assertRichSitemapImageTitle(image, canonicalPath);
+// Collection pages are resolved from the published collection root and the
+// current pack taxonomy; they do not become individual ThemePage records.
+// Keep Product JSON-LD coverage for every active pack above, while validating
+// image sitemap metadata only for paths that the published snapshot emits.
+for (const [pathName, entry] of sitemapEntryByPath.entries()) {
+  for (const image of entry.images ?? []) {
+    assert.match(image.loc, /^https:\/\/www\.mydreamshoots\.com\//, `${pathName} image sitemap loc should be absolute`);
+    assertRichSitemapImageTitle(image, pathName);
   }
 }
 
@@ -221,6 +246,7 @@ console.log(JSON.stringify({
   ok: true,
   products: productPaths.size,
   videos: videoObjects.length,
-  lowestOffer: videoObjects.length ? "validated" : "missing",
+  verifiedOffers: verifiedOffers.length,
+  lowestOffer: verifiedOffers.length ? "validated" : "not-published-until-provider-verification",
   mediaUrls: "validated"
 }, null, 2));

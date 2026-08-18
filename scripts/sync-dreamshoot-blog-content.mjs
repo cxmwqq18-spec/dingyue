@@ -17,7 +17,14 @@ const MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS = [
   "/blog/wedding-portraits-photo-package-guide",
   "/blog/world-cup-fan-photos-photo-package-guide"
 ];
-const mydreamshootsPriorityBlogSlugSet = new Set(MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS);
+const MYDREAMSHOOTS_OPTIONAL_REMEDIATION_BLOG_SLUGS = [
+  "/blog/profile-cards-photo-package-guide"
+];
+const SOCCER_MIGRATION_APPROVED = process.env.MDS_SOCCER_MIGRATION_APPROVED === "1";
+const mydreamshootsPriorityBlogSlugSet = new Set([
+  ...MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS,
+  ...MYDREAMSHOOTS_OPTIONAL_REMEDIATION_BLOG_SLUGS
+]);
 
 function cliOption(name) {
   const prefix = `--${name}=`;
@@ -682,6 +689,151 @@ const mydreamshootsBlogSafeImageOverrides = new Map([
   ["magic-upscaler", "/assets/dreamshoot/generated/20260622-pack-fill/magic-upscaler-pack.webp?v=20260803blogsafe1"]
 ]);
 
+const mydreamshootsArticleFacts = {
+  "/blog/cyberpunk-photo-package-guide": {
+    entityName: "Cyberpunk AI photos",
+    productSlug: "cyberpunk",
+    userIntent: "Plan a neon, fictional cyberpunk portrait and review it before download.",
+    suitableUses: ["fictional portraits", "creative moodboards", "private social drafts"],
+    unsuitableUses: ["proof of a real venue or event", "official brand advertising without permission"],
+    inputRequirements: ["clear current portrait", "one focused lighting direction", "permission to use source photos"],
+    verifiedLimitations: ["Generated neon, text, reflections, and accessories require visual review."],
+    comparisonTargets: ["Urban", "Nightlife", "Headshot"],
+    reviewChecklist: ["identity", "neon spill", "background text", "hands and accessories", "final crop"],
+    rightsWarnings: ["Do not imply affiliation with fictional or real brands, venues, or events."],
+    relatedGuides: ["Mafia", "Gala Photos", "Nightlife"]
+  },
+  "/blog/mafia-photo-package-guide": {
+    entityName: "Mafia-style AI photos",
+    productSlug: "mafia",
+    userIntent: "Plan a fictional noir character portrait without suggesting real criminal activity.",
+    suitableUses: ["fictional character concepts", "cinematic moodboards", "private creative portraits"],
+    unsuitableUses: ["evidence of real criminal ties", "threats, impersonation, or unlawful promotion"],
+    inputRequirements: ["clear current portrait", "wardrobe and lighting direction", "permission to use source photos"],
+    verifiedLimitations: ["Generated props, signage, hands, and facial details require review."],
+    comparisonTargets: ["Cyberpunk", "Gala Photos", "Nightlife"],
+    reviewChecklist: ["identity", "wardrobe joins", "hands", "props and signage", "fictional framing"],
+    rightsWarnings: ["Keep the scene clearly fictional and do not attach it to a real crime or organization."],
+    relatedGuides: ["Cyberpunk", "Gala Photos", "Nightlife"]
+  },
+  "/blog/magic-upscaler-photo-package-guide": {
+    entityName: "Magic Upscaler workflow",
+    productSlug: "photo-enhancer",
+    userIntent: "Improve perceived clarity while preserving the original as the reference file.",
+    suitableUses: ["cleaner personal downloads", "larger display copies", "reviewable edited derivatives"],
+    unsuitableUses: ["proof that missing detail was recovered exactly", "official identity or historical evidence"],
+    inputRequirements: ["highest-quality source available", "known intended crop", "original retained beside the derivative"],
+    verifiedLimitations: ["Enhancement may interpret missing detail and cannot guarantee exact recovery."],
+    comparisonTargets: ["Photo Enhancer", "Unblur Image", "Old Photo Restoration"],
+    reviewChecklist: ["face identity", "halos", "false texture", "text and straight edges", "normal-size crop"],
+    rightsWarnings: ["Use only images you own or have permission to edit."],
+    relatedGuides: ["Photo Enhancer", "Unblur Image", "Old Photo Restoration"]
+  },
+  "/blog/nature-photo-package-guide": {
+    entityName: "Nature AI portrait direction",
+    productSlug: "travel",
+    userIntent: "Plan a forest, mountain, lake, or meadow portrait through the Travel package.",
+    suitableUses: ["creative outdoor portraits", "travel moodboards", "private lifestyle drafts"],
+    unsuitableUses: ["proof of a real trip or location", "documentary evidence of wildlife or weather"],
+    inputRequirements: ["clear current portrait", "one landscape, season, and time of day", "permission to use source photos"],
+    verifiedLimitations: ["Generated landscapes, weather, scale, and reflections require review."],
+    comparisonTargets: ["Travel", "Outdoor Creator", "Urban"],
+    reviewChecklist: ["horizon", "subject scale", "shadows", "hair and clothing edges", "weather consistency"],
+    rightsWarnings: ["Do not present a generated landscape as proof of visiting a real place."],
+    relatedGuides: ["Travel", "Outdoor Creator", "Urban"]
+  },
+  "/blog/outdoor-creator-scenes-photo-package-guide": {
+    entityName: "Outdoor Creator scene comparison",
+    productSlug: "urban|travel",
+    userIntent: "Choose Urban streets or Travel scenery for a creator image with a usable crop.",
+    suitableUses: ["profile and story drafts", "creator moodboards", "campaign concept images"],
+    unsuitableUses: ["undisclosed brand endorsement", "proof of a real destination or sponsorship"],
+    inputRequirements: ["publishing channel", "crop and text-safe space", "permission to use source photos"],
+    verifiedLimitations: ["Generated logos, text, location details, and brand context require review."],
+    comparisonTargets: ["Urban", "Travel", "Nature"],
+    reviewChecklist: ["channel crop", "negative space", "identity", "brand marks", "disclosure context"],
+    rightsWarnings: ["Remove or disclose unapproved marks and do not imply sponsorship."],
+    relatedGuides: ["Urban", "Travel", "Nature"]
+  },
+  "/blog/valentine-photos-photo-package-guide": {
+    entityName: "Valentine's Day AI photos",
+    productSlug: "valentines-photo",
+    userIntent: "Plan a consent-aware couple or single-person Valentine card and keepsake image.",
+    suitableUses: ["personal cards", "private couple portraits", "gift and keepsake drafts"],
+    unsuitableUses: ["using another person without consent", "official relationship or event proof"],
+    inputRequirements: ["permission-safe source photos for each person", "single or couple brief", "card crop and text space"],
+    verifiedLimitations: ["Hands, paired identity, lettering, and card composition require review."],
+    comparisonTargets: ["Engagement", "Wedding", "Valentine's Day Photos"],
+    reviewChecklist: ["both identities", "consent", "hands", "card-safe space", "relationship context"],
+    rightsWarnings: ["Obtain consent from every depicted person and do not imply a real engagement or wedding."],
+    relatedGuides: ["Engagement", "Wedding", "Valentine's Day Photos"]
+  },
+  "/blog/virtual-try-on-photo-package-guide": {
+    entityName: "AI Virtual Try-On preview",
+    productSlug: "virtual-try-on",
+    userIntent: "Compare outfit direction visually without treating the preview as an exact fit or product guarantee.",
+    suitableUses: ["outfit moodboards", "private style comparisons", "creative wardrobe planning"],
+    unsuitableUses: ["size, fit, fabric, or color guarantee", "retail product proof without checking the real item"],
+    inputRequirements: ["clear person source", "authorized garment reference", "intended crop and pose"],
+    verifiedLimitations: ["The preview cannot guarantee size, drape, material, color, or final retail appearance."],
+    comparisonTargets: ["Virtual Try-On", "Hairstyle", "Portrait Retouch"],
+    reviewChecklist: ["body and garment edges", "hands", "fabric joins", "color", "fit disclaimer"],
+    rightsWarnings: ["Use person and garment references only with permission or a valid license."],
+    relatedGuides: ["Virtual Try-On", "Hairstyle", "Portrait Retouch"]
+  },
+  "/blog/wedding-portraits-photo-package-guide": {
+    entityName: "AI Wedding Portraits",
+    productSlug: "wedding-photo",
+    userIntent: "Plan save-the-date, moodboard, and keepsake concepts without presenting them as a real wedding record.",
+    suitableUses: ["save-the-date concepts", "moodboards", "private keepsake drafts"],
+    unsuitableUses: ["official marriage or event records", "depicting someone without consent"],
+    inputRequirements: ["permission-safe source photos", "intended stationery or keepsake use", "cultural and styling notes"],
+    verifiedLimitations: ["Paired identity, hands, text, attire, and cultural details require careful review."],
+    comparisonTargets: ["Engagement", "Valentine", "Wedding Photo"],
+    reviewChecklist: ["both identities", "consent", "hands and rings", "text-safe space", "cultural fit"],
+    rightsWarnings: ["Obtain consent and avoid implying that generated imagery documents a real ceremony."],
+    relatedGuides: ["Engagement", "Valentine", "Wedding Photo"]
+  },
+  "/blog/world-cup-fan-photos-photo-package-guide": {
+    entityName: "AI soccer fan photos",
+    productSlug: "soccer",
+    userIntent: "Plan a generic soccer match-day poster without official marks or player likenesses.",
+    suitableUses: ["personal supporter portraits", "generic match-day posters", "private fan concepts"],
+    unsuitableUses: ["official tournament or club promotion", "unapproved team, sponsor, or player depiction"],
+    inputRequirements: ["clear supporter portrait", "generic colors or invented details", "poster crop and text-safe space"],
+    verifiedLimitations: ["Generated crests, text, uniforms, and player-like faces require review and removal when unauthorized."],
+    comparisonTargets: ["Soccer", "Avatar", "Content policy"],
+    reviewChecklist: ["generic wording", "no crests", "no sponsors", "no player likeness", "poster crop"],
+    rightsWarnings: ["Use generic Soccer language and obtain written brand/IP approval before any migration or release."],
+    relatedGuides: ["Soccer", "Avatar", "Content policy"]
+  },
+  "/blog/profile-cards-photo-package-guide": {
+    entityName: "Profile card photo workflow",
+    productSlug: "avatar",
+    userIntent: "Create a consistent profile-card image set for approved personal or creator uses.",
+    suitableUses: ["profile cards", "creator introductions", "private identity moodboards"],
+    unsuitableUses: ["government IDs", "impersonation", "representing another person without permission"],
+    inputRequirements: ["clear current portrait", "target card crop", "approved name or role copy added separately"],
+    verifiedLimitations: ["Generated text, identity details, and crop suitability require review."],
+    comparisonTargets: ["Avatar", "Headshot", "Portrait Retouch"],
+    reviewChecklist: ["face consistency", "card crop", "text-safe space", "hands and hair", "disclosure"],
+    rightsWarnings: ["Use only approved portraits and add factual profile copy in a separate design step."],
+    relatedGuides: ["Avatar", "Headshot", "Portrait Retouch"]
+  }
+};
+
+function articleFactsFor(slug) {
+  const facts = mydreamshootsArticleFacts[slug] ?? {};
+  return {
+    authorUrl: "/about-us",
+    reviewOwner: "myDreamshoots editorial team",
+    reviewedAt: "2026-08-18",
+    evidenceDate: "2026-08-18",
+    evidenceType: "editorial-guidance",
+    ...clone(facts)
+  };
+}
+
 function makePriorityBlogArticle(input) {
   const idSlug = input.slug.replace(/^\/blog\//, "").replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
   return {
@@ -696,11 +848,58 @@ function makePriorityBlogArticle(input) {
     primaryHref: "/ai-image-generation",
     secondaryCta: "View pricing",
     secondaryHref: "/pricing",
+    ...articleFactsFor(input.slug),
     ...input
   };
 }
 
 const mydreamshootsPriorityArticleOverrides = new Map([
+  makePriorityBlogArticle({
+    slug: "/blog/profile-cards-photo-package-guide",
+    pageTitle: "Profile card photo guide",
+    title: "Profile Card Photos: Plan a Consistent Image Set for Personal and Creator Uses",
+    summary: "Plan profile-card portraits around one approved identity, a clear crop, and factual copy added after image review. Use the Avatar package for visual concepts, not official identification.",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/profile-cards/profile-cards-01.webp?v=20260715b",
+    imageAlt: "Profile-card portrait concept with a clear face, simple background, and crop-ready framing.",
+    tags: "Profile card photos|Avatar package|Creator profiles|Identity-safe planning",
+    targetLabel: "Open Avatar",
+    targetHref: "/ai-image-generation/avatar",
+    relatedLinks: [
+      { label: "Explore Avatar profile formats", href: "/ai-image-generation/avatar" },
+      { label: "Read the Headshot guide", href: "/blog/headshot-photo-package-guide" },
+      { label: "Compare Portrait Retouch", href: "/ai-image-generation/portrait-retouch" }
+    ],
+    seoTitle: "Profile card photo planning guide | myDreamshoots",
+    seoDescription: "Plan consistent profile-card portraits through Avatar, then review identity, crop, text-safe space, permissions, and disclosure before publishing.",
+    seoKeywords: "profile card photos, Avatar profile portraits, creator profile image, identity-safe AI photos, profile crop guide",
+    body: html`
+      <p>A profile card has a narrow job: help a viewer recognize the approved person and understand the context around the image. Use this guide when you need a small set of consistent portrait concepts for a creator introduction, personal profile, or private moodboard. The Avatar package supplies the visual direction; factual name, role, and contact copy should be added separately after review.</p>
+      <h2 id="profile-card-define-use">Define the profile-card use first</h2>
+      <p>Write down where the image will appear before choosing a crop. A square profile card needs immediate face recognition. A vertical creator card can show more shoulder or wardrobe context. A website header may need negative space for approved copy. The same generated portrait can fail one format and work well in another, so the card dimensions belong in the brief.</p>
+      <p>Keep the use personal or creator-focused. Do not treat an AI portrait as a government ID, identity verification document, employment credential, or proof that another person approved the profile. If the card represents a team or organization, confirm the depicted person's permission and add factual text outside the image workflow.</p>
+      <h2 id="profile-card-source-photos">Prepare one stable identity base</h2>
+      <p>Use current, clear portraits with a visible face, hairline, and natural expression. A close portrait supports identity review; a half-body image can help with shoulders, posture, and clothing. Avoid mixing heavily filtered selfies, old life stages, sunglasses, group photos, and different people in one request. The profile-card workflow is easier to judge when the source evidence points to one person.</p>
+      <p>Choose only photos you own or have permission to use. If a creator or teammate supplies the source, keep the approval record with the project. The page does not verify ownership for you, and a private gallery does not remove the need for consent.</p>
+      <h2 id="profile-card-crop-and-background">Plan the crop and background together</h2>
+      <table><thead><tr><th>Card need</th><th>Planning cue</th><th>Review focus</th></tr></thead><tbody><tr><td>Square profile</td><td>Face-forward framing and quiet background.</td><td>Recognition at small size, eye line, and edge crop.</td></tr><tr><td>Creator introduction</td><td>Shoulder or half-body room for personality.</td><td>Expression, wardrobe, and text-safe area.</td></tr><tr><td>Website header</td><td>Wide composition with approved negative space.</td><td>Subject placement, readability, and responsive crop.</td></tr><tr><td>Private moodboard</td><td>Several related crops with one visual identity.</td><td>Consistency across background, light, and expression.</td></tr></tbody></table>
+      <p>Keep background detail subordinate to the face. A busy scene can make the card look energetic, but it can also make the person hard to identify or leave no space for factual copy. If the image will carry text, generate clean space and add the final words in a design tool rather than trusting generated lettering.</p>
+      <h2 id="profile-card-avatar-comparison">Choose Avatar, Headshot, or Portrait Retouch</h2>
+      <p>Use <a href="/ai-image-generation/avatar">Avatar</a> when the profile image needs a recognizable but stylized format. Use <a href="/ai-image-generation/headshot">Headshot</a> when professional restraint matters more than a card concept. Use <a href="/ai-image-generation/portrait-retouch">Portrait Retouch</a> when the source is already sharp and the main need is controlled cleanup. Review the live product cards for current outputs and credit cost before starting.</p>
+      <h2 id="profile-card-review">Review identity and card safety</h2>
+      <p>Review the full image at the final card size, then inspect it at 100 percent. Attractive lighting cannot compensate for a changed face, invented text, or a crop that removes the recognisable features a profile needs.</p>
+      <ul><li>Compare eyes, face shape, hairline, expression, and skin tone with the approved source.</li><li>Check hands, glasses, jewelry, collars, and hair edges for impossible joins.</li><li>Inspect background text, logos, badges, and invented credentials.</li><li>Confirm the crop leaves room for approved name or role copy if the design needs it.</li><li>Make sure the image does not imply an official ID, employer endorsement, or identity verification.</li><li>Keep the original source and note which output was selected for the card.</li></ul>
+      <h2 id="profile-card-copy-boundary">Add factual copy after image review</h2>
+      <p>Keep generated imagery and factual profile information separate. Add a verified name, role, link, or contact detail in the layout system after the portrait passes review. Do not ask the image model to invent a company title, credential, phone number, or brand mark. If the profile is sponsored or materially AI-edited, follow the destination's disclosure rules.</p>
+      <h2 id="profile-card-faq">Profile card photo FAQ</h2>
+      <h3 id="profile-card-faq-id">Can I use the image as an official ID?</h3>
+      <p>No. Treat it as a creative profile image, not an identity document or verification record. Follow the receiving service's real-photo requirements.</p>
+      <h3 id="profile-card-faq-text">Should I generate the words inside the image?</h3>
+      <p>Use generated space for the layout and add final names, roles, dates, and links in a design tool. Generated text can be inaccurate or unreadable.</p>
+      <h3 id="profile-card-faq-people">Can I make a card for another person?</h3>
+      <p>Only with that person's permission and an approved source photo. Do not use the workflow to impersonate someone or imply that they endorsed a profile.</p>
+      <p>A strong profile-card workflow is a small editorial system: approved source, clear format, visual review, and factual copy added with care. Use the private gallery to compare options before publishing any card.</p>
+    `
+  }),
   makePriorityBlogArticle({
     slug: "/blog/cyberpunk-photo-package-guide",
     pageTitle: "Cyberpunk AI photo guide",
@@ -961,8 +1160,8 @@ const mydreamshootsPriorityArticleOverrides = new Map([
     pageTitle: "AI Virtual Try-On guide",
     title: "AI Virtual Try-On Guide: Plan Outfits Without Treating the Preview as Exact Fit",
     summary: "Use Virtual Try-On to compare outfit direction, color, silhouette, and creator styling. Prepare a clear portrait and approved clothing reference, then treat the result as a visual concept rather than a fit guarantee.",
-    imageUrl: "/assets/dreamshoot/generated/pack-galleries/virtual-try-on/virtual-try-on-01.webp?v=20260715b",
-    imageAlt: "Woman standing beside a clothing rack while planning a virtual try-on outfit.",
+    imageUrl: "/assets/dreamshoot/generated/blog/virtual-try-on-workflow-cover.webp?v=20260818local1",
+    imageAlt: "Three-panel virtual try-on workflow example showing a source portrait, an outfit reference, and an AI preview.",
     tags: "AI Virtual Try-On|Outfit planning|Clothing references|Fit limitation",
     targetLabel: "Open Virtual Try-On",
     targetHref: "/ai-image-generation/virtual-try-on",
@@ -1088,6 +1287,8 @@ const mydreamshootsPriorityArticleOverrides = new Map([
 ].map((article) => [article.slug, article]));
 
 const mydreamshootsPriorityBlogSlugByPackSlug = new Map([
+  ["profile-cards", "/blog/profile-cards-photo-package-guide"],
+  ["avatar", "/blog/profile-cards-photo-package-guide"],
   ["cyberpunk", "/blog/cyberpunk-photo-package-guide"],
   ["mafia", "/blog/mafia-photo-package-guide"],
   ["photo-enhancer", "/blog/magic-upscaler-photo-package-guide"],
@@ -1295,6 +1496,31 @@ function assertUniqueArticleCovers(config) {
       throw new Error(`${config.slug} blog cover file reused by ${previousShaArticle} and ${article.slug}: ${normalizedUrl}`);
     }
     seenShas.set(imageSha, article.slug);
+  }
+}
+
+function assertMyDreamShootsArticleFacts(config) {
+  if (config.siteId !== MYDREAMSHOOTS_SITE_ID) return;
+  for (const slug of mydreamshootsPriorityBlogSlugSet) {
+    const article = config.articles.find((item) => item.slug === slug);
+    if (!article) continue;
+    const required = ["entityName", "productSlug", "userIntent", "inputRequirements", "verifiedLimitations", "reviewChecklist", "rightsWarnings", "evidenceType", "evidenceDate"];
+    const missing = required.filter((key) => {
+      const value = article[key];
+      return Array.isArray(value) ? value.length === 0 : !String(value ?? "").trim();
+    });
+    if (missing.length) throw new Error(`${slug} is missing entity facts: ${missing.join(", ")}`);
+    if (article.evidenceType !== "editorial-guidance") {
+      throw new Error(`${slug} must declare evidenceType=editorial-guidance until controlled evidence is recorded.`);
+    }
+    if (!Array.isArray(article.relatedLinks) || !article.relatedLinks.length || !Array.isArray(article.relatedGuides) || !article.relatedGuides.length) {
+      throw new Error(`${slug} must declare related guides through the editorial whitelist.`);
+    }
+    for (const link of article.relatedLinks) {
+      if (!link || typeof link.href !== "string" || !/^\/(?:ai-image-generation|blog|policies)\//.test(link.href)) {
+        throw new Error(`${slug} has a non-local related guide href: ${String(link?.href ?? "")}`);
+      }
+    }
   }
 }
 
@@ -1692,7 +1918,23 @@ for (const config of siteConfigs) {
         ...config.articles,
         ...buildCoverageArticles(sourceState, config.siteId, config.brand, config.articles)
       ];
+  if (config.siteId === MYDREAMSHOOTS_SITE_ID && SOCCER_MIGRATION_APPROVED && !config.articles.some((article) => article.slug === "/blog/soccer-fan-photo-guide")) {
+    const legacySoccerArticle = config.articles.find((article) => article.slug === "/blog/world-cup-fan-photos-photo-package-guide");
+    if (legacySoccerArticle) {
+      config.articles.push({
+        ...clone(legacySoccerArticle),
+        id: `${MYDREAMSHOOTS_SITE_ID}_blog_theme_soccer_fan_photo_guide`,
+        slug: "/blog/soccer-fan-photo-guide",
+        pageTitle: "Soccer fan photo guide",
+        imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-02.webp?v=20260715b",
+        imageAlt: "Personal soccer supporter portrait in generic colors with a clean poster crop.",
+        seoTitle: "Soccer fan photo planning guide | myDreamshoots",
+        seoDescription: "Plan personal soccer supporter portraits and generic match-day posters with approved source photos, clean crops, and no official marks."
+      });
+    }
+  }
   assertUniqueArticleCovers(config);
+  assertMyDreamShootsArticleFacts(config);
 }
 
 function toTemplate(pageJson) {
@@ -1782,34 +2024,6 @@ function ensureHeader(settings) {
   });
 }
 
-function ensureSeoPages(settings, site) {
-  settings.seo ??= {
-    siteTitle: site.name,
-    siteDescription: site.branding?.description ?? "",
-    titleTemplate: `%s | ${site.name}`,
-    robots: { index: true, follow: true },
-    pages: {}
-  };
-  const previousPages = settings.seo.pages ?? {};
-  const nextPages = {};
-  for (const page of site.pages.filter((item) => item.slug !== "/blog" && !item.slug.startsWith("/blog/"))) {
-    if (previousPages[page.id]) nextPages[page.id] = previousPages[page.id];
-  }
-  for (const page of site.pages.filter((item) => item.slug === "/blog" || item.slug.startsWith("/blog/"))) {
-    const pageSeo = page.publishedJson.seo ?? {};
-    nextPages[page.id] = {
-      title: pageSeo.title ?? page.title,
-      description: pageSeo.description ?? "",
-      keywords: pageSeo.keywords ?? "",
-      ogImage: pageSeo.ogImage ?? "",
-      canonicalPath: pageSeo.canonicalPath ?? page.slug,
-      index: pageSeo.robots?.index ?? true,
-      follow: pageSeo.robots?.follow ?? true
-    };
-  }
-  settings.seo.pages = nextPages;
-}
-
 function makeBlogHomeJson(config, existingPage) {
   const existing = existingPage?.publishedJson ?? {};
   const sections = clone(existing.sections ?? {});
@@ -1868,6 +2082,22 @@ function makeArticleJson(config, article, existingPage, sourceArticlePage) {
     targetHref,
     secondaryTargetLabel: article.secondaryTargetLabel,
     secondaryTargetHref: article.secondaryTargetHref,
+    entityName: article.entityName,
+    productSlug: article.productSlug,
+    userIntent: article.userIntent,
+    suitableUses: clone(article.suitableUses ?? []),
+    unsuitableUses: clone(article.unsuitableUses ?? []),
+    inputRequirements: clone(article.inputRequirements ?? []),
+    verifiedLimitations: clone(article.verifiedLimitations ?? []),
+    comparisonTargets: clone(article.comparisonTargets ?? []),
+    reviewChecklist: clone(article.reviewChecklist ?? []),
+    rightsWarnings: clone(article.rightsWarnings ?? []),
+    relatedGuides: clone(article.relatedGuides ?? []),
+    authorUrl: article.authorUrl,
+    reviewOwner: article.reviewOwner,
+    reviewedAt: article.reviewedAt,
+    evidenceDate: article.evidenceDate,
+    evidenceType: article.evidenceType,
     relatedLinks: clone(article.relatedLinks ?? []),
     body: article.body
   });
@@ -1942,59 +2172,11 @@ function removeStaleBlogArticles(site, expectedArticleSlugs) {
   });
 }
 
-function readConstStringArray(source, constName) {
-  const match = source.match(new RegExp(`const ${constName} = \\[([\\s\\S]*?)\\];`));
-  if (!match) throw new Error(`missing_${constName}`);
-  return Array.from(match[1].matchAll(/"([^"]+)"/g), (item) => item[1]);
-}
-
-function formatConstStringArray(constName, values) {
-  return `const ${constName} = [\n${values.map((value) => `  ${JSON.stringify(value)}`).join(",\n")}\n];`;
-}
-
-function replaceConstStringArray(source, constName, values) {
-  return source.replace(
-    new RegExp(`const ${constName} = \\[[\\s\\S]*?\\];`),
-    formatConstStringArray(constName, values)
-  );
-}
-
-function fallbackPathsForSite(site, existingPaths) {
-  const blogPaths = site.pages
-    .filter((page) => page.slug === "/blog" || page.slug.startsWith("/blog/"))
-    .map((page) => page.slug);
-  const next = [
-    ...existingPaths.filter((item) => !item.startsWith("/blog")),
-    ...blogPaths
-  ];
-  return Array.from(new Set(next));
-}
-
-function syncSeoFallbacks(state, { write = true } = {}) {
-  const seoIndexingPath = path.join(process.cwd(), "src/lib/seo-indexing.ts");
-  const source = fs.readFileSync(seoIndexingPath, "utf8");
-  const dreamshootSite = state.sites.find((site) => site.id === "site_dreamshoot" || site.slug === "mydreamshoots");
-  const aidreamcapesSite = state.sites.find((site) => site.id === "site_aidreamcapes" || site.slug === "aidreamcapes");
-  if (!dreamshootSite || !aidreamcapesSite) return { updated: false };
-
-  const dreamshootFallback = fallbackPathsForSite(
-    dreamshootSite,
-    readConstStringArray(source, "FALLBACK_INDEXABLE_PATHS")
-  );
-  const aidreamcapesFallback = fallbackPathsForSite(
-    aidreamcapesSite,
-    readConstStringArray(source, "AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS")
-  );
-  const next = replaceConstStringArray(
-    replaceConstStringArray(source, "FALLBACK_INDEXABLE_PATHS", dreamshootFallback),
-    "AIDREAMCAPES_FALLBACK_INDEXABLE_PATHS",
-    aidreamcapesFallback
-  );
-  if (write && next !== source) fs.writeFileSync(seoIndexingPath, next);
+function syncSeoFallbacks() {
   return {
-    updated: next !== source,
-    mydreamshoots: dreamshootFallback.length,
-    aidreamcapes: aidreamcapesFallback.length
+    updated: false,
+    skipped: true,
+    reason: "sitemap_is_derived_from_published_snapshot_pages"
   };
 }
 
@@ -2041,8 +2223,6 @@ function syncSite(state, config) {
   }
 
   removeStaleBlogArticles(site, new Set(config.articles.map((article) => article.slug)));
-  ensureSeoPages(site.themeSettings.draftJson, site);
-  ensureSeoPages(site.themeSettings.publishedJson, site);
   syncSiteThemes(state, site);
   syncPublicationSnapshots(state, site);
 }
@@ -2060,12 +2240,9 @@ function seoSettingsForPage(page) {
   };
 }
 
-function mergeScopedSeoPages(settings, pages) {
-  const next = clone(settings ?? {});
-  next.seo ??= { pages: {} };
-  next.seo.pages ??= {};
-  for (const page of pages) next.seo.pages[page.id] = seoSettingsForPage(page);
-  return next;
+function mergeScopedSeoPages(settings) {
+  // Page SEO belongs to ThemePage JSON; the legacy settings map is compatibility-only.
+  return clone(settings ?? {});
 }
 
 function syncScopedPublicationSnapshots(state, site, pages) {

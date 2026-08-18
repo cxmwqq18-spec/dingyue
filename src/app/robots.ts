@@ -29,6 +29,14 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
   const sitemap = storefrontSitemapUrlForHost([
     ...hostCandidates
   ]);
+  if (!sitemap) {
+    return {
+      rules: {
+        userAgent: "*",
+        disallow: "/"
+      }
+    };
+  }
   return {
     rules: {
       userAgent: "*",

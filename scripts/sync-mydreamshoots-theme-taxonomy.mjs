@@ -26,6 +26,30 @@ const generatedThemeSlugs = new Set([
   "color-correction",
   "old-photo-restoration"
 ]);
+const requiredPageCopySlugs = new Set([
+  "engagement-photo",
+  "wedding-photo",
+  "valentines-photo",
+  "christmas-photo",
+  "halloween-photo",
+  "thanksgiving-photo",
+  "holiday",
+  "singles-awareness-day",
+  "black-friday"
+]);
+const requiredPageCopyFields = [
+  "pageEntityId",
+  "copyRevision",
+  "seoTitle",
+  "galleryTitle",
+  "ctaTitle",
+  "ctaSubtitle",
+  "ctaLabel",
+  "faqTitle",
+  "relatedTitle",
+  "relatedSubtitle",
+  "relatedCtaLabel"
+];
 const AI_IMAGE_GENERATION_ROOT = "/ai-image-generation";
 const AI_VIDEO_GENERATION_ROOT = "/ai-video-generation";
 const MYDREAMSHOOTS_ORIGIN_PATTERN = "https?:\\/\\/(?:www\\.)?mydreamshoots\\.com";
@@ -168,6 +192,21 @@ function profileForItem(item) {
   const profile = mydreamshootsDirectProfiles[item.slug];
   if (!profile) {
     throw new Error(`Missing direct MyDreamShoots SEO profile for ${item.slug}. Add it to photo-package-use-case-profiles.json before syncing.`);
+  }
+  if (requiredPageCopySlugs.has(item.slug)) {
+    const missingFields = requiredPageCopyFields.filter((field) => typeof profile[field] !== "string" || !profile[field].trim());
+    const invalidFaqItems = !Array.isArray(profile.faqItems) ||
+      profile.faqItems.length < 4 ||
+      profile.faqItems.some((faqItem) => !faqItem?.id?.trim() || !faqItem?.question?.trim() || !faqItem?.answer?.trim());
+    if (profile.pageEntityId !== `mydreamshoots:ai-image-theme:${item.slug}`) {
+      missingFields.push("pageEntityId:canonicalSlug");
+    }
+    if (invalidFaqItems) {
+      missingFields.push("faqItems");
+    }
+    if (missingFields.length) {
+      throw new Error(`PAGE_COPY_REVIEW_REQUIRED:${item.slug}:${missingFields.join(",")}`);
+    }
   }
   return structuredClone(profile);
 }

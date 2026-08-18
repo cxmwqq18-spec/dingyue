@@ -18,11 +18,9 @@ const HIDDEN_VIDEO_SLUGS = [
   "text-to-video",
   "image-to-video"
 ];
-const LEGACY_VIDEO_REDIRECT_SLUGS = [
-  "talking-photo"
-];
 const LEGACY_VIDEO_GONE_SLUGS = [
   ...HIDDEN_VIDEO_SLUGS,
+  "talking-photo",
   "cinematic-video",
   "tiktok-video",
   "instagram-reels",
@@ -57,8 +55,7 @@ function parseArgs(argv) {
 }
 
 function normalizeBaseUrl(value) {
-  if (!value) throw new Error("Missing --base-url");
-  return String(value).replace(/\/+$/, "");
+  return String(value || process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/+$/, "");
 }
 
 function isLocalBaseUrl(baseUrl) {
@@ -80,7 +77,7 @@ function readTaxonomySlugs() {
   return Array.from(new Set((taxonomy.items ?? []).map((item) => item.slug).filter(Boolean))).sort();
 }
 
-async function fetchRoute(baseUrl, route, options = {}) {
+async function fetchRouteOnce(baseUrl, route, options = {}) {
   const url = routeUrl(baseUrl, route, options);
   const response = await fetch(url, {
     method: "GET",
@@ -100,6 +97,19 @@ async function fetchRoute(baseUrl, route, options = {}) {
     finalUrl: response.url,
     text
   };
+}
+
+async function fetchRoute(baseUrl, route, options = {}) {
+  let lastError;
+  for (let attempt = 1; attempt <= 4; attempt += 1) {
+    try {
+      return await fetchRouteOnce(baseUrl, route, options);
+    } catch (error) {
+      lastError = error;
+      if (attempt < 4) await new Promise((resolve) => setTimeout(resolve, 500 * attempt));
+    }
+  }
+  throw lastError;
 }
 
 function hasOldCollectionLink(text) {
@@ -122,8 +132,7 @@ async function main() {
   const legacyImageRoutes = ["/collections", ...imageSlugs.map((slug) => `/collections/${slug}`)];
   const videoRoutes = ["/ai-video-generation", ...DEFAULT_VIDEO_SLUGS.map((slug) => `/ai-video-generation/${slug}`)];
   const hiddenVideoRoutes = HIDDEN_VIDEO_SLUGS.map((slug) => `/ai-video-generation/${slug}`);
-  const legacyVideoRedirectRoutes = ["/tools", ...LEGACY_VIDEO_REDIRECT_SLUGS.map((slug) => `/tools/${slug}`)];
-  const legacyVideoGoneRoutes = LEGACY_VIDEO_GONE_SLUGS.map((slug) => `/tools/${slug}`);
+  const legacyVideoGoneRoutes = ["/tools", ...LEGACY_VIDEO_GONE_SLUGS.map((slug) => `/tools/${slug}`)];
   const keyRoutes = ["/", "/login", "/pricing", "/workflow", "/faq", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog"];
   const htmlScanRoutes = ["/", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog", "/sitemap.xml"];
   const failures = [];
@@ -148,22 +157,6 @@ async function main() {
     const final = await fetchRoute(baseUrl, route, { readBody: false });
     if (final.status !== 200) {
       failures.push({ kind: "legacy_final_status", route, expected: 200, actual: final.status, finalUrl: final.finalUrl });
-    }
-  }
-
-  for (const route of legacyVideoRedirectRoutes) {
-    const first = await fetchRoute(baseUrl, route, { redirect: "manual", readBody: false });
-    if (![301, 302, 307, 308].includes(first.status)) {
-      failures.push({ kind: "legacy_video_redirect_status", route, expected: "301/302/307/308", actual: first.status });
-      continue;
-    }
-    if (!String(first.location ?? "").includes("/ai-video-generation")) {
-      failures.push({ kind: "legacy_video_redirect_location", route, location: first.location });
-      continue;
-    }
-    const final = await fetchRoute(baseUrl, route, { readBody: false });
-    if (final.status !== 200) {
-      failures.push({ kind: "legacy_video_final_status", route, expected: 200, actual: final.status, finalUrl: final.finalUrl });
     }
   }
 
@@ -207,7 +200,6 @@ async function main() {
       legacyImageRoutes: legacyImageRoutes.length,
       videoRoutes: videoRoutes.length,
       hiddenVideoRoutes: hiddenVideoRoutes.length,
-      legacyVideoRedirectRoutes: legacyVideoRedirectRoutes.length,
       legacyVideoGoneRoutes: legacyVideoGoneRoutes.length,
       htmlScanRoutes: htmlScanRoutes.length
     },

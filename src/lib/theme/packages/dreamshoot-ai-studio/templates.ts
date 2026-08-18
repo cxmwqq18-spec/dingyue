@@ -1,5 +1,6 @@
 import type { SectionBlockInstance, SectionInstance, SectionType, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
+import { isAidreamcapesSite as isAidreamcapesCapabilitySite } from "@/lib/storefront-context/capabilities";
 
 export type MydreamShootsAiStudioTemplateKey =
   | ThemePackageTemplateKey
@@ -45,7 +46,7 @@ function seoForPublicPage(_path: string, _site?: DreamshootPublicSeoSiteSeed): T
 }
 
 function isAidreamcapesTemplateSite(site?: DreamshootPublicSeoSiteSeed): boolean {
-  return /aidreamcapes/i.test(`${site?.slug ?? ""} ${site?.name ?? ""} ${site?.primaryDomain ?? ""} ${site?.branding?.logoText ?? ""}`);
+  return Boolean(site && isAidreamcapesCapabilitySite(site));
 }
 
 const storefrontAssetVersion = "20260801visualfix1";

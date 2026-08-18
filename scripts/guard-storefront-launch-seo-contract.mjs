@@ -8,6 +8,8 @@ const statePath = path.join(repoRoot, "data", "platform-state.json");
 const packagePath = path.join(repoRoot, "package.json");
 const siteRouteCanonicalPath = path.join(repoRoot, "src", "lib", "site-route-canonical.ts");
 const middlewarePath = path.join(repoRoot, "src", "middleware.ts");
+const hostCatchAllPath = path.join(repoRoot, "src", "app", "[...path]", "page.tsx");
+const siteCatchAllPath = path.join(repoRoot, "src", "app", "site", "[siteSlug]", "[...path]", "page.tsx");
 
 const storefrontSiteIds = ["site_dreamshoot", "site_aidreamcapes"];
 
@@ -133,10 +135,14 @@ function assertDeployPrecheck() {
 function assertLegacyPolicyAliases() {
   const canonicalSource = readText(siteRouteCanonicalPath);
   const middlewareSource = readText(middlewarePath);
+  const hostCatchAllSource = readText(hostCatchAllPath);
+  const siteCatchAllSource = readText(siteCatchAllPath);
   for (const [alias, target] of legacyPolicyAliases) {
     assert.ok(canonicalSource.includes(`"${alias}"`), `site-route-canonical must normalize ${alias}`);
-    assert.ok(middlewareSource.includes(`"${alias}": "${target}"`) || middlewareSource.includes(`"${alias}"`), `middleware must redirect ${alias} to ${target}`);
+    assert.ok(hostCatchAllSource.includes("legacyPublicPathTarget") && siteCatchAllSource.includes("legacyPublicPathTarget"), `published catch-all must validate ${alias} through the snapshot redirect gate`);
+    assert.ok(canonicalSource.includes(`"${alias}": "${target}"`), `site-route-canonical must map ${alias} to ${target}`);
   }
+  assert.ok(!/legacyPublicPathRedirect|directoryCanonicalRedirect|aidreamcapesCollectionRedirect/.test(middlewareSource), "middleware must not bypass published snapshot redirect validation");
 }
 
 const state = readJson(statePath);

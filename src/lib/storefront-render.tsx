@@ -36,10 +36,11 @@ import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/custome
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
-import { loadPublishedStorefrontContext } from "@/lib/storefront-context";
+import { createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
+import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } from "@/lib/dreamshoot-tool-faq";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
@@ -2039,18 +2040,15 @@ function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Si
 }
 
 function isAidreamcapesStorefront(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
-  return `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase().includes("aidreamcapes");
+  return isAidreamcapesCapabilitySite(site);
 }
 
 function isPrimaryMydreamshootsStorefront(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
-  const identity = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`.toLowerCase();
-  const isSpanishXby = identity.includes("site_mydreamshoots_xby") || identity.includes("site_aidreamcapes_xby") || identity.includes("aidreamshoots.eu") || identity.includes("aidreamcapes.eu");
-  if (!identity || isAidreamcapesStorefront(site) || isSpanishXby) return false;
-  return identity.includes("site_dreamshoot") || identity.includes("mydreamshoots") || identity.includes("dreamshoot");
+  return isPrimaryMydreamshootsCapabilitySite(site);
 }
 
 function usesSharedDreamShootNavigation(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
-  return /mydreamshoots|dreamshoot/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`) || isAidreamcapesStorefront(site);
+  return usesAiGenerationPublicRoutes(site) || isAidreamcapesStorefront(site);
 }
 
 function toolDetailFaqBlocksForSite(
@@ -2316,7 +2314,7 @@ const aidreamcapesToolAliases = new Map<string, string>([
 export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlug: string, siteAiApps = getSiteAppsFromState(state, site.id), creativePacks = getSiteCreativePacksFromState(state, site.id)) {
   const normalizedToolSlug = normalizeToolLookup(toolSlug);
   const isAidreamcapes = isAidreamcapesStorefront(site);
-  const isPrimaryMydreamshoots = !isAidreamcapes && /mydreamshoots|dreamshoot/i.test(`${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  const isPrimaryMydreamshoots = isPrimaryMydreamshootsStorefront(site);
   const databaseVideoTheme = (state.videoThemes ?? []).find((theme) =>
     theme.siteId === site.id &&
     theme.status === "active" &&
@@ -2357,7 +2355,7 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     }
   }
 
-  if (/dreamshoot/i.test(`${site.slug} ${site.name} ${site.branding.logoText}`)) {
+  if (isPrimaryMydreamshootsStorefront(site)) {
     for (const alias of dreamshootImageStudioToolAliases) {
       setLegacyAlias(alias, "/tools/image-studio");
       setLegacyAlias(`/tools/${alias}`, "/tools/image-studio");
@@ -2450,6 +2448,7 @@ function renderThemePage({
   settings,
   jsonLd,
   storefrontContext,
+  publishedPaths,
   lightweightChrome = false
 }: {
   currentSite: Site;
@@ -2467,9 +2466,38 @@ function renderThemePage({
   settings: Site["themeSettings"]["publishedJson"];
   jsonLd?: JsonLdNode[];
   storefrontContext?: StorefrontContext;
+  publishedPaths?: string[];
   lightweightChrome?: boolean;
 }) {
   const jsonLdNodes = jsonLd;
+  const navigationPagePaths = new Set(currentSite.pages.flatMap((publishedPage) => [
+    publishedPage.slug,
+    publishedPage.publishedJson.seo?.canonical,
+    publishedPage.publishedJson.seo?.canonicalPath
+  ].filter((value): value is string => Boolean(value))));
+  const guardedNavigationPaths = new Set([
+    "/children-privacy",
+    "/content",
+    "/cookies",
+    "/creators-circle",
+    "/privacy",
+    "/refunds",
+    "/state-privacy",
+    "/terms"
+  ]);
+  const navigationLinkIsPublished = (href: string) => {
+    const path = href.split(/[?#]/)[0] || "/";
+    if (!guardedNavigationPaths.has(path)) return true;
+    if (publishedPaths) return publishedPaths.includes(path);
+    return navigationPagePaths.has(path) || navigationPagePaths.has(publicContentPageSlug(path));
+  };
+  const resolvedSettings = {
+    ...settings,
+    navigation: {
+      headerLinks: settings.navigation.headerLinks.filter((link) => navigationLinkIsPublished(link.href)),
+      footerLinks: settings.navigation.footerLinks.filter((link) => navigationLinkIsPublished(link.href))
+    }
+  };
   const activePackIds = storefrontContext
     ? new Set(storefrontContext.catalog.activePacks.map((pack) => pack.id))
     : undefined;
@@ -2484,7 +2512,7 @@ function renderThemePage({
     : navigationCreativePacks;
 
   return (
-    <div style={themeStyleVars(settings)}>
+    <div style={themeStyleVars(resolvedSettings)}>
       <ThemeRenderer
         creativePackCategories={renderData.creativePackCategories}
         creativePacks={resolvedCreativePacks}
@@ -2494,7 +2522,7 @@ function renderThemePage({
         query={query}
         routeMode={routeMode}
         runtime={runtime}
-        settings={settings}
+        settings={resolvedSettings}
         site={clientSiteForThemeRender(currentSite, page, pagePath)}
         siteAiApps={renderData.siteAiApps}
         navigationCreativePackCategories={navigationCreativePackCategories}
@@ -2533,8 +2561,10 @@ export async function renderStorefrontPage({
   const shouldDeferCustomerRuntime = deferCustomerRuntime && publicCustomerBootstrapEnabled();
   const shouldCompletePublicPacks = !preferLocalPathModeState(site.slug);
   const state = await getStateForStorefrontRender(site, routeMode, providedState);
-  const currentSite = state.sites.find((item) => item.id === site.id);
-  if (!currentSite) notFound();
+  const stateSite = state.sites.find((item) => item.id === site.id);
+  if (!stateSite) notFound();
+  const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
+  const currentSite = publishedSnapshot.site;
   const collectionCategory = typeof query.category === "string" ? query.category : "";
   const collectionRootPath = publicCollectionRootPathForSite(currentSite);
   const isCollectionDirectoryPage = slug === "/collections" || slug === collectionRootPath;
@@ -2563,7 +2593,7 @@ export async function renderStorefrontPage({
     ? renderData.videoThemes
     : undefined;
   currentSite.mediaAssets = renderData.mediaAssets;
-  const directPage = findPage(currentSite, slug) ?? syntheticDreamShootPartnerPage(currentSite, slug);
+  const directPage = findPage(currentSite, slug);
   if (!directPage) notFound();
   const page = directPage;
   if (isFocusedCollectionPage) {
@@ -2573,7 +2603,7 @@ export async function renderStorefrontPage({
   const sessionId = shouldDeferCustomerRuntime ? undefined : await readCustomerSessionId(currentSite.id);
   const usesDreamShootToolsDirectory =
     slug === "/tools" &&
-    (/dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`) || isAidreamcapesStorefront(currentSite));
+    (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
   const usesDreamShootVideoGenerationDirectory = slug === "/ai-video-generation" && isPrimaryMydreamshootsStorefront(currentSite);
   const pageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)
@@ -2646,24 +2676,7 @@ export async function renderStorefrontPage({
     ...(slug === "/login" ? { auth: getDefaultCustomerAuth(state, currentSite.id, typeof query.error === "string" ? query.error : undefined) } : {})
   };
   const renderedPage = { ...page, publishedJson: pageJson };
-  const storefrontContext = await loadPublishedStorefrontContext({
-    siteId: currentSite.id,
-    path: renderPagePath,
-    adapter: {
-      async loadPublishedBundle() {
-        return {
-          site: currentSite,
-          page: renderedPage,
-          products: renderData.products,
-          creativePacks: renderData.creativePacks,
-          publication: currentSite.latestPublication
-        };
-      },
-      async loadDraftBundle() {
-        throw new Error("published_render_adapter_does_not_load_drafts");
-      }
-    }
-  });
+  const storefrontContext = resolvePublishedStorefrontContext(publishedSnapshot, renderedPage);
 
   return renderThemePage({
     currentSite,
@@ -2680,6 +2693,7 @@ export async function renderStorefrontPage({
     runtime: runtimeWithAuth,
     settings,
     storefrontContext,
+    publishedPaths: publishedSnapshot.publishedPaths,
     jsonLd: isFocusedCollectionPage
       ? buildCollectionDirectoryJsonLd({
           site: currentSite,
@@ -2794,7 +2808,7 @@ export async function renderStorefrontSectionPayloads({
 
   const usesDreamShootToolsDirectory =
     internalSlug === "/tools" &&
-    (/dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`) || isAidreamcapesStorefront(currentSite));
+    (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
   const usesDreamShootVideoGenerationDirectory = internalSlug === "/ai-video-generation" && isPrimaryMydreamshootsStorefront(currentSite);
   const pageJson: ThemePageJson = internalSlug === "/account"
     ? withAccountDashboardPage(directPage.publishedJson)
@@ -2812,24 +2826,7 @@ export async function renderStorefrontSectionPayloads({
 
   const settings = currentSite.themeSettings.publishedJson;
   const renderedPage = { ...directPage, publishedJson: pageJson };
-  const storefrontContext = await loadPublishedStorefrontContext({
-    siteId: currentSite.id,
-    path: renderPagePath,
-    adapter: {
-      async loadPublishedBundle() {
-        return {
-          site: currentSite,
-          page: renderedPage,
-          products: renderData.products,
-          creativePacks: renderData.creativePacks,
-          publication: currentSite.latestPublication
-        };
-      },
-      async loadDraftBundle() {
-        throw new Error("published_section_adapter_does_not_load_drafts");
-      }
-    }
-  });
+  const storefrontContext = resolvePublishedStorefrontContext(createPublishedSiteSnapshot(sectionState, currentSite), renderedPage);
   const runtimeByMode = new Map<"empty" | "full" | "light", Promise<ThemeRuntimeData>>();
   let sectionSessionId: string | undefined;
   async function runtimeForSection(singleSectionPageJson: ThemePageJson, section: SectionInstance): Promise<ThemeRuntimeData | undefined> {
@@ -2995,7 +2992,7 @@ export async function renderStorefrontSectionPayload({
 
   const usesDreamShootToolsDirectory =
     internalSlug === "/tools" &&
-    (/dreamshoot/i.test(`${currentSite.slug} ${currentSite.name} ${currentSite.branding.logoText}`) || isAidreamcapesStorefront(currentSite));
+    (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
   const pageJson: ThemePageJson = internalSlug === "/account"
     ? withAccountDashboardPage(directPage.publishedJson)
     : toolDetailSlug && resolvedToolDetail?.matched
@@ -3017,24 +3014,7 @@ export async function renderStorefrontSectionPayload({
   };
   const settings = currentSite.themeSettings.publishedJson;
   const renderedPage = { ...directPage, publishedJson: pageJson };
-  const storefrontContext = await loadPublishedStorefrontContext({
-    siteId: currentSite.id,
-    path: renderPagePath,
-    adapter: {
-      async loadPublishedBundle() {
-        return {
-          site: currentSite,
-          page: renderedPage,
-          products: renderData.products,
-          creativePacks: renderData.creativePacks,
-          publication: currentSite.latestPublication
-        };
-      },
-      async loadDraftBundle() {
-        throw new Error("published_section_adapter_does_not_load_drafts");
-      }
-    }
-  });
+  const storefrontContext = resolvePublishedStorefrontContext(createPublishedSiteSnapshot(state, currentSite), renderedPage);
   let pageRenderData = withPageMediaAssets(
     currentSite,
     singleSectionPageJson,
@@ -3494,14 +3474,16 @@ export async function renderToolPage({
   resolvedPage?: ThemePage;
 }) {
   const state = await getStateForStorefrontRender(site, routeMode, providedState);
-  const currentSite = state.sites.find((item) => item.id === site.id);
-  if (!currentSite) notFound();
+  const stateSite = state.sites.find((item) => item.id === site.id);
+  if (!stateSite) notFound();
+  const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
+  const currentSite = publishedSnapshot.site;
   const renderData = getSiteRenderData(state, currentSite.id);
-  const resolved = resolvedPage
+  const candidate = resolvedPage
     ? { page: resolvedPage, matched: true }
     : resolveToolPageForSite(state, currentSite, toolSlug, renderData.siteAiApps, renderData.creativePacks);
-  const { page, matched } = resolved;
-  if (!matched) notFound();
+  const page = publishedSnapshot.pages.find((publishedPage) => publishedPage.id === candidate.page.id);
+  if (!candidate.matched || !page) notFound();
   const toolRenderData = trimToolDetailRenderData(renderData);
   currentSite.mediaAssets = toolRenderData.mediaAssets;
   const settings = currentSite.themeSettings.publishedJson;
@@ -3539,24 +3521,7 @@ export async function renderToolPage({
   );
   currentSite.mediaAssets = pageRenderData.mediaAssets;
   const renderedPage = { ...page, publishedJson: pageJson };
-  const storefrontContext = await loadPublishedStorefrontContext({
-    siteId: currentSite.id,
-    path: publicPath ?? page.slug,
-    adapter: {
-      async loadPublishedBundle() {
-        return {
-          site: currentSite,
-          page: renderedPage,
-          products: renderData.products,
-          creativePacks: renderData.creativePacks,
-          publication: currentSite.latestPublication
-        };
-      },
-      async loadDraftBundle() {
-        throw new Error("published_render_adapter_does_not_load_drafts");
-      }
-    }
-  });
+  const storefrontContext = resolvePublishedStorefrontContext(publishedSnapshot, renderedPage);
   return renderThemePage({
     currentSite,
     page: pageJson,
@@ -3572,6 +3537,7 @@ export async function renderToolPage({
     runtime: runtimeWithEmptyCollections(),
     settings,
     storefrontContext,
+    publishedPaths: publishedSnapshot.publishedPaths,
     jsonLd: buildToolDirectoryJsonLd({
       site: currentSite,
       toolSlug,

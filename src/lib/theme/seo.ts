@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
-import { isMydreamshootsVideoGenerationSlug, publicCollectionPathForSite, publicVideoGenerationPathForSite } from "@/lib/photo-package-taxonomy";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
+import { storefrontOrigin } from "@/lib/storefront-context/seo-projection";
 import type { Site, ThemePage, ThemeSettings } from "@/lib/types";
 
 function cleanText(value: string | undefined, fallback = ""): string {
@@ -26,25 +26,6 @@ function pageTitle(site: Site, page: Pick<ThemePage, "title" | "pageType" | "slu
     .join(" ");
 }
 
-function canonicalPath(value: string | undefined, fallback: string): string {
-  const path = cleanText(value) || fallback || "/";
-  if (/^https?:\/\//i.test(path)) return path;
-  return path.startsWith("/") ? path : `/${path}`;
-}
-
-function canonicalPathForSite(site: Site, path: string): string {
-  if (path === "/collections" || path === "/ai-image-generation") return publicCollectionPathForSite(site, "");
-  if (path.startsWith("/collections/")) return publicCollectionPathForSite(site, path.slice("/collections/".length));
-  if (path.startsWith("/ai-image-generation/")) return publicCollectionPathForSite(site, path.slice("/ai-image-generation/".length));
-  const siteToken = `${site.id} ${site.slug} ${site.primaryDomain}`.toLowerCase();
-  if (siteToken.includes("dreamshoot") && path === "/tools") return publicVideoGenerationPathForSite(site, "");
-  if (siteToken.includes("dreamshoot") && path.startsWith("/tools/")) {
-    const slug = path.slice("/tools/".length);
-    if (isMydreamshootsVideoGenerationSlug(slug)) return publicVideoGenerationPathForSite(site, slug);
-  }
-  return path;
-}
-
 function robotsForPage(page: Pick<ThemePage, "slug" | "pageType">): { index: boolean; follow: boolean } {
   const blockedTypes = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
   const blockedPrefixes = ["/account", "/admin", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/search"];
@@ -52,19 +33,11 @@ function robotsForPage(page: Pick<ThemePage, "slug" | "pageType">): { index: boo
   return { index: !blocked, follow: true };
 }
 
-function siteBaseUrl(site: Site): string {
-  const domain = site.primaryDomain.trim();
-  if (!domain) return `http://localhost:3002/site/${site.slug}`;
-  if (/^https?:\/\//i.test(domain)) return domain.replace(/\/$/, "");
-  if (/localhost|127\.0\.0\.1/i.test(domain)) return `http://${domain}`;
-  return `https://${domain}`;
-}
-
 function absoluteUrl(site: Site, pathOrUrl: string | undefined): string | undefined {
   const value = cleanText(pathOrUrl);
   if (!value) return undefined;
   if (/^https?:\/\//i.test(value)) return value;
-  return `${siteBaseUrl(site)}${value.startsWith("/") ? value : `/${value}`}`;
+  return `${storefrontOrigin(site)}${value.startsWith("/") ? value : `/${value}`}`;
 }
 
 function settingText(value: unknown): string | undefined {
@@ -99,23 +72,13 @@ export function withNormalizedSeo(site: Site, settings: ThemeSettings): ThemeSet
   return { ...settings, seo: normalizeThemeSeo(site, settings) };
 }
 
-export function applyTitleTemplate(title: string, template: string, site: Site): string {
-  const normalizedTitle = cleanText(title, brandName(site));
-  const normalizedTemplate = cleanText(template, titleTemplate(site));
-  if (!normalizedTemplate || normalizedTemplate === normalizedTitle) return normalizedTitle;
-  if (!normalizedTemplate.includes("%s")) return `${normalizedTitle} | ${normalizedTemplate}`;
-  const suffix = normalizedTemplate.replace("%s", "").replace(/^[\s|:-]+|[\s|:-]+$/g, "");
-  if (suffix && normalizedTitle.toLowerCase().includes(suffix.toLowerCase())) return normalizedTitle;
-  return normalizedTemplate.replace("%s", normalizedTitle);
-}
-
 export function metadataForThemePage(site: Site, page: ThemePage, resolved: StorefrontContext): Metadata {
   return metadataForSingleThemePage(site, page, resolved);
 }
 
 export function metadataForSingleThemePage(site: Site, page: ThemePage, context: StorefrontContext): Metadata {
   const seo = context.seo;
-  const canonical = absoluteUrl(site, canonicalPathForSite(site, seo.canonicalPath)) ?? seo.canonicalUrl;
+  const canonical = seo.canonicalUrl;
   const ogImage = absoluteUrl(site, seo.ogImage);
   return {
     title: seo.title,

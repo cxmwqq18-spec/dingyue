@@ -1,42 +1,49 @@
 import "server-only";
 
 import { withSeoDirectorySeo, type SeoDirectoryKind } from "@/lib/dreamshoot-seo-content";
-import { loadPublishedStorefrontContext } from "@/lib/storefront-context";
+import { createPublishedSiteSnapshot, resolvePublishedStorefrontContext, type PublishedSiteSnapshot } from "@/lib/storefront-context";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
-import type { CreativePack, Product, Site, ThemePage } from "@/lib/types";
+import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/lib/types";
 
 export async function metadataForPublishedStorefrontPage({
   site,
   page,
   path = page.slug,
   products = [],
-  creativePacks = []
+  creativePacks = [],
+  preferProvidedPageJson = false,
+  snapshot: providedSnapshot
 }: {
   site: Site;
   page: ThemePage;
   path?: string;
   products?: Product[];
   creativePacks?: CreativePack[];
+  preferProvidedPageJson?: boolean;
+  snapshot?: PublishedSiteSnapshot;
 }) {
-  const context = await loadPublishedStorefrontContext({
-    siteId: site.id,
-    path,
-    adapter: {
-      async loadPublishedBundle() {
-        return {
-          site,
-          page,
-          products: products.filter((product) => product.siteId === site.id),
-          creativePacks: creativePacks.filter((pack) => pack.siteId === site.id),
-          publication: site.latestPublication
-        };
-      },
-      async loadDraftBundle() {
-        throw new Error("published_metadata_adapter_does_not_load_drafts");
-      }
+  const snapshot = providedSnapshot ?? createPublishedSiteSnapshot({
+    sites: [site],
+    products: products.filter((product) => product.siteId === site.id),
+    creativePacks: creativePacks.filter((pack) => pack.siteId === site.id),
+    mediaAssets: site.mediaAssets ?? [],
+    publications: site.latestPublication ? [site.latestPublication] : []
+  } as unknown as PlatformState, site);
+  const snapshotPage = preferProvidedPageJson
+    ? page
+    : snapshot.pages.find((candidate) => candidate.id === page.id) ?? page;
+  const context = resolvePublishedStorefrontContext(snapshot, snapshotPage);
+  const metadata = metadataForSingleThemePage(snapshot.site, snapshotPage, context);
+  const existingOther = (metadata.other ?? {}) as Record<string, string | number | (string | number)[]>;
+  return {
+    ...metadata,
+    other: {
+      ...existingOther,
+      "storefront-publication": context.revisions.publicationId ?? "unpublished",
+      "storefront-facts-revision": context.revisions.factsRevision,
+      "storefront-build": context.revisions.buildId
     }
-  });
-  return metadataForSingleThemePage(site, page, context);
+  };
 }
 
 export async function metadataForPublishedStorefrontDirectoryPage({
@@ -46,7 +53,8 @@ export async function metadataForPublishedStorefrontDirectoryPage({
   directorySlug,
   path,
   products = [],
-  creativePacks = []
+  creativePacks = [],
+  snapshot
 }: {
   site: Site;
   page: ThemePage;
@@ -55,16 +63,20 @@ export async function metadataForPublishedStorefrontDirectoryPage({
   path?: string;
   products?: Product[];
   creativePacks?: CreativePack[];
+  snapshot?: PublishedSiteSnapshot;
 }) {
+  const publishedBasePage = snapshot?.pages.find((candidate) => candidate.id === page.id) ?? page;
   const resolvedPage = {
-    ...page,
-    publishedJson: withSeoDirectorySeo(page.publishedJson, kind, directorySlug, site)
+    ...publishedBasePage,
+    publishedJson: withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, snapshot?.site ?? site)
   };
   return metadataForPublishedStorefrontPage({
     site,
     page: resolvedPage,
     path: path ?? resolvedPage.publishedJson.seo?.canonicalPath ?? page.slug,
     products,
-    creativePacks
+    creativePacks,
+    preferProvidedPageJson: true,
+    snapshot
   });
 }

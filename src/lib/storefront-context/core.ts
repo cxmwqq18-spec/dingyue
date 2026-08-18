@@ -2,6 +2,7 @@ import type { Price, StorefrontProfileJson, ThemePageJson, ThemeSettings } from 
 import type { ResolvedOffer, ResolvedPageSeo, StorefrontContext, StorefrontContextBundle, StorefrontContextMode, StorefrontPublishScope } from "./types";
 import { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
 import { resolveSiteCapability } from "./capabilities";
+import { applyTitleTemplate, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 
 function clean(value: unknown): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
@@ -23,50 +24,19 @@ function revisionHash(value: string): string {
     .slice(0, 20);
 }
 
-function origin(primaryDomain: string): string {
-  const domain = clean(primaryDomain);
-  if (!domain) return "http://localhost:3002";
-  if (/^https?:\/\//i.test(domain)) return domain.replace(/\/$/, "");
-  if (/localhost|127\.0\.0\.1/i.test(domain)) return `http://${domain}`;
-  return `https://${domain}`;
-}
-
-function canonicalPath(value: unknown, fallback: string): string {
-  const path = clean(value) || fallback || "/";
-  if (/^https?:\/\//i.test(path)) {
-    try {
-      return new URL(path).pathname || "/";
-    } catch {
-      return fallback || "/";
-    }
-  }
-  return path.startsWith("/") ? path : `/${path}`;
-}
-
-function applyTitleTemplate(title: string, settings: ThemeSettings, brand: string): string {
-  const template = clean(settings.seo?.titleTemplate);
-  if (!template) return title || brand;
-  if (template.includes("%s")) {
-    const suffix = template.replace("%s", "").replace(/^[\s|:-]+|[\s|:-]+$/g, "");
-    if (suffix && title.toLowerCase().includes(suffix.toLowerCase())) return title || brand;
-    return template.replace("%s", title || brand);
-  }
-  return title === template ? title : `${title} | ${template}`;
-}
-
 function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, settings: ThemeSettings): ResolvedPageSeo {
   const pageSeo = pageJson.seo;
   const brand = clean(bundle.site.branding.logoText) || clean(bundle.site.name);
   const rawTitle = clean(pageSeo?.title) || clean(bundle.page.title) || brand;
   const description = clean(pageSeo?.description);
-  const path = canonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
+  const path = normalizeCanonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
   const defaultIndex = bundle.page.pageType !== "not_found" && bundle.page.slug !== "/404";
   return {
     title: applyTitleTemplate(rawTitle, settings, brand),
     description,
     keywords: clean(pageSeo?.keywords) || clean(settings.seo?.siteKeywords) || undefined,
     canonicalPath: path,
-    canonicalUrl: `${origin(bundle.site.primaryDomain)}${path === "/" ? "" : path}`,
+    canonicalUrl: canonicalUrlForSite(bundle.site, path),
     ogImage: clean(pageSeo?.ogImage) || clean(settings.seo?.defaultOgImage) || undefined,
     index: defaultIndex && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true),
     follow: pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true,
@@ -236,7 +206,9 @@ export function resolveStorefrontContext(
     },
     revisions: {
       publicationId: bundle.publication?.id,
-      factsRevision: revision(bundle, mode, pageJson, settings, profile),
+      factsRevision: mode === "published" && bundle.factsRevision
+        ? bundle.factsRevision
+        : revision(bundle, mode, pageJson, settings, profile),
       buildId: bundle.buildId || process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local"
     },
     capability: resolveSiteCapability(bundle.site),

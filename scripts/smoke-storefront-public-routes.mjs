@@ -6,7 +6,7 @@ const focusHost = process.env.STOREFRONT_PUBLIC_ROUTES_FOCUS_HOST || "";
 const skipMediaChecks = process.env.STOREFRONT_PUBLIC_ROUTES_SKIP_MEDIA === "1";
 // This change set is scoped to the two .com storefronts; .eu remains covered by the language/SSR smokes.
 const routeChecks = [
-  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/ai-image-generation", "/ai-image-generation/portrait-photo", "/ai-image-generation/headshot", "/ai-image-generation/avatar", "/ai-image-generation/background-changer", "/ai-image-generation/motion-generator", "/ai-video-generation", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/product-ad-video", "/best-packages", "/best-ai-image", "/best-ai-video", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] },
+  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/ai-image-generation", "/ai-image-generation/portrait-photo", "/ai-image-generation/headshot", "/ai-image-generation/avatar", "/ai-image-generation/background-changer", "/ai-image-generation/motion-generator", "/ai-video-generation", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/best-packages", "/best-ai-image", "/best-ai-video", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/cookies", "/terms", "/refunds"] },
   { host: "www.aidreamcapes.com", paths: ["/", "/workflow", "/collections", "/collections/fan-scene-albums", "/collections/private-fan-scene-albums", "/collections/game-day-group-photos", "/collections/game-day-group-portraits", "/collections/christmas-holiday-albums", "/collections/christmas-group-albums", "/collections/new-year-countdown-albums", "/tools", "/tools/fan-scene-album-builder", "/tools/game-day-group-portrait-maker", "/tools/christmas-group-album-studio", "/tools/new-year-countdown-album-maker", "/tools/permission-safe-photo-planner", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog/private-fan-scene-album-photo-package-guide", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] }
 ];
 const imageAltRouteChecks = [
@@ -29,7 +29,6 @@ const legacyRedirectChecks = [
   { host: "www.mydreamshoots.com", path: "/collections", target: "/ai-image-generation" },
   { host: "www.mydreamshoots.com", path: "/collections/engagement-photo", target: "/ai-image-generation/engagement-photo" },
   { host: "www.mydreamshoots.com", path: "/collections/headshot", target: "/ai-image-generation/headshot" },
-  { host: "www.mydreamshoots.com", path: "/tools", target: "/ai-video-generation" },
   { host: "www.aidreamcapes.com", path: "/collections/route-portrait-albums", target: "/collections/fan-scene-albums" },
   { host: "www.aidreamcapes.com", path: "/collections/coastal-light-sets", target: "/collections/christmas-group-albums" },
   { host: "www.aidreamcapes.com", path: "/collections/old-quarter-walks", target: "/collections/premiere-style-portraits" },
@@ -41,6 +40,7 @@ const legacyRedirectChecks = [
   { host: "www.aidreamcapes.com", path: "/blog/holiday-memory-albums-guide", target: "/blog/christmas-group-album-photo-package-guide" }
 ];
 const legacyGoneChecks = [
+  { host: "www.mydreamshoots.com", path: "/tools" },
   { host: "www.mydreamshoots.com", path: "/collections/wedding-portraits" },
   { host: "www.mydreamshoots.com", path: "/collections/profile-cards" },
   { host: "www.mydreamshoots.com", path: "/collections/headshots" },

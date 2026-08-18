@@ -22,6 +22,7 @@ import {
 import { normalizePlatformAiProviderType, platformProviderTypeForAppType } from "@/lib/ai-provider-type";
 import { shouldFallbackRelationalRead, shouldUseRelationalReadFallbackCircuit, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import { isMydreamshootsContentSourceSiteId } from "@/lib/storefront-content-source-policy";
+import { usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
 import { videoProviderModelFamiliesForProviders } from "@/lib/video-provider-family";
 import { runnableVideoProviderModelFamiliesForRequest } from "@/lib/video-provider-availability";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit, isVideoProviderModel } from "@/lib/video-provider-limits";
@@ -68,6 +69,7 @@ import {
   mapCustomer,
   toCreativePack,
   toMediaAsset,
+  toStorefrontProfile,
   toThemePublication,
   toThemePage,
   toPublicSiteAdminRelational,
@@ -296,7 +298,7 @@ function isSynchronizedDreamshootNavigationSite(site: Pick<Site, "id" | "slug" |
   const primaryDomain = "primaryDomain" in site
     ? site.primaryDomain
     : site.domains?.find((domain) => domain.isPrimary)?.domain ?? site.domains?.[0]?.domain ?? "";
-  return /mydreamshoots|dreamshoot|aidreamcapes/i.test(`${site.slug} ${site.name} ${primaryDomain ?? ""} ${String(branding.logoText ?? "")}`);
+  return usesAiGenerationPublicRoutes({ id: "id" in site ? site.id : "", slug: site.slug });
 }
 
 type StorefrontPublicNavigationData = {
@@ -417,6 +419,8 @@ const collectionDetailSiteSelect = {
       publishedJson: true
     }
   },
+  storefrontProfile: true,
+  publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
 type CollectionDetailSiteRecord = Prisma.SiteGetPayload<{ select: typeof collectionDetailSiteSelect }>;
 const publicRuntimeSiteSelect = {
@@ -463,7 +467,9 @@ const publicRuntimeSiteSelect = {
     select: {
       publishedJson: true
     }
-  }
+  },
+  storefrontProfile: true,
+  publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
 type PublicRuntimeSiteRecord = Prisma.SiteGetPayload<{ select: typeof publicRuntimeSiteSelect }>;
 const customerRuntimeSiteSelect = {
@@ -513,7 +519,9 @@ const customerRuntimeSiteSelect = {
       chargesEnabled: true,
       payoutsEnabled: true
     }
-  }
+  },
+  storefrontProfile: true,
+  publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
 type CustomerRuntimeSiteRecord = Prisma.SiteGetPayload<{ select: typeof customerRuntimeSiteSelect }>;
 const adminLoginSiteSelect = {
@@ -549,7 +557,8 @@ const adminLoginSiteSelect = {
       draftJson: true,
       publishedJson: true
     }
-  }
+  },
+  storefrontProfile: true
 } satisfies Prisma.SiteSelect;
 type AdminLoginSiteRecord = Prisma.SiteGetPayload<{ select: typeof adminLoginSiteSelect }>;
 const publicMetadataSiteSelect = {
@@ -592,7 +601,9 @@ const publicMetadataSiteSelect = {
       draftJson: true,
       publishedJson: true
     }
-  }
+  },
+  storefrontProfile: true,
+  publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
 type PublicMetadataSiteRecord = Prisma.SiteGetPayload<{ select: typeof publicMetadataSiteSelect }>;
 const collectionDetailCreativePackSelect = {
@@ -906,6 +917,7 @@ function toPublicSiteShell(
 ): Site {
   const primaryDomain = record.domains.find((domain) => domain.isPrimary)?.domain ?? record.domains[0]?.domain ?? "";
   const settingsRecord = "settings" in record ? record.settings : undefined;
+  const profileRecord = "storefrontProfile" in record ? record.storefrontProfile : undefined;
   return {
     id: record.id,
     name: record.name,
@@ -923,6 +935,8 @@ function toPublicSiteShell(
       payoutsEnabled: Boolean(record.connect?.payoutsEnabled)
     },
     themeSettings: toAdminShellThemeSettings(settingsRecord),
+    storefrontProfile: toStorefrontProfile(profileRecord),
+    latestPublication: record.publications[0] ? toThemePublication(record.publications[0]) : undefined,
     pages: record.pages.map((page) => toThemePage({
       ...page,
       draftJson: page.publishedJson
@@ -2916,7 +2930,7 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
             WHERE sa."siteId" = s."id"
           ), '[]'::jsonb) AS "siteAiApps",
           COALESCE((
-            SELECT jsonb_agg(jsonb_build_object('id', ma."id"))
+            SELECT jsonb_agg(jsonb_build_object('id', ma."id", 'ownerId', ma."siteId", 'entityRevision', md5(ma."id" || ':' || ma."updatedAt"::text)))
             FROM "MediaAsset" ma
             WHERE ma."siteId" = s."id"
           ), '[]'::jsonb) AS "mediaAssets"

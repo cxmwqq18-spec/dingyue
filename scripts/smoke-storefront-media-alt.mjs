@@ -22,6 +22,12 @@ vm.runInNewContext(compiled, {
     if (id === "@/lib/spanish-storefronts") {
       return { isSpanishStorefrontSite: (site) => /(?:aidreamshoots|aidreamcapes)\.eu/i.test(String(site?.primaryDomain ?? "")) };
     }
+    if (id === "@/lib/storefront-context/capabilities") {
+      return {
+        isAidreamcapesSite: (site) => ["site_aidreamcapes", "site_aidreamcapes_xby"].includes(String(site?.id ?? ""))
+          || ["aidreamcapes", "aidreamcapes-eu"].includes(String(site?.slug ?? "").trim().toLowerCase())
+      };
+    }
     throw new Error(`Unexpected module import in smoke: ${id}`);
   }
 });

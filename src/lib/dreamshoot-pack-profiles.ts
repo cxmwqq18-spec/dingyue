@@ -1,4 +1,5 @@
 import profiles from "./dreamshoot-pack-profiles.json";
+import type { PhotoPackageUseCaseFaqItem } from "@/lib/photo-package-use-case-profiles";
 import { photoPackageSlug } from "@/lib/photo-package-taxonomy";
 
 export type DreamshootPackProfile = {
@@ -14,6 +15,22 @@ export type DreamshootPackProfile = {
   styleNotes: string[];
   coverNote: string;
   safetyNote?: string;
+  pageEntityId?: string;
+  copyRevision?: string;
+  seoTitle?: string;
+  galleryTitle?: string;
+  galleryIntro?: string;
+  ctaEyebrow?: string;
+  ctaTitle?: string;
+  ctaSubtitle?: string;
+  ctaLabel?: string;
+  faqEyebrow?: string;
+  faqTitle?: string;
+  faqItems?: PhotoPackageUseCaseFaqItem[];
+  relatedEyebrow?: string;
+  relatedTitle?: string;
+  relatedSubtitle?: string;
+  relatedCtaLabel?: string;
 };
 
 type ProfilePackLike = {

@@ -117,10 +117,9 @@ async function assertHeaders() {
   }
 }
 
-function assertRedirectSource(source, from, to) {
-  const conditionIndex = source.indexOf(`slug === "${from}"`);
-  const targetIndex = source.indexOf(to);
-  assert.ok(conditionIndex >= 0 && targetIndex > conditionIndex, `${from} should redirect to ${to}`);
+function assertRedirectSource(source, canonicalSource, from, to) {
+  assert.ok(source.includes("legacyPublicPathTarget"), "catch-all should use the shared legacy public path redirect map");
+  assert.ok(canonicalSource.includes(`"${from}": "${to}"`), `${from} should map to ${to} in the shared canonical redirect map`);
 }
 
 assertMetadataSource("/workflow");
@@ -133,14 +132,13 @@ await assertHeaders();
 assert.ok(middleware.includes("guardCookieEnabled !== true"), "storefront guard cookie should be opt-in so public HTML stays cacheable by default");
 assert.match(middleware, /cloudflare-cdn-cache-control/i, "HTML rewrite responses should keep Cloudflare CDN cache headers");
 assert.match(middleware, /rewriteStorefrontHtmlStream/i, "public HTML rewrite should stream after the head instead of buffering the full page");
-assertRedirectSource(hostCatchAll, "/refund-policy", 'redirect("/refunds")');
-assertRedirectSource(hostCatchAll, "/content-policy", 'redirect("/content")');
-assertRedirectSource(siteCatchAll, "/refund-policy", 'redirect(routePath("/refunds"))');
-assertRedirectSource(siteCatchAll, "/content-policy", 'redirect(routePath("/content"))');
+assertRedirectSource(hostCatchAll, siteRouteCanonical, "/refund-policy", "/refunds");
+assertRedirectSource(hostCatchAll, siteRouteCanonical, "/content-policy", "/content");
+assertRedirectSource(siteCatchAll, siteRouteCanonical, "/refund-policy", "/refunds");
+assertRedirectSource(siteCatchAll, siteRouteCanonical, "/content-policy", "/content");
 for (const [alias, target] of legacyPolicyAliases) {
-  assert.ok(hostCatchAll.includes(`slug === "${alias}"`), `host catch-all should redirect legacy policy alias ${alias}`);
-  assert.ok(siteCatchAll.includes(`slug === "${alias}"`), `site catch-all should redirect legacy policy alias ${alias}`);
-  assert.ok(middleware.includes(`"${alias}": "${target}"`), `middleware should redirect legacy policy alias ${alias} to ${target}`);
+  assert.ok(hostCatchAll.includes("legacyPublicPathTarget"), `host catch-all should use shared legacy policy redirect logic for ${alias}`);
+  assert.ok(siteCatchAll.includes("legacyPublicPathTarget"), `site catch-all should use shared legacy policy redirect logic for ${alias}`);
   assert.ok(siteRouteCanonical.includes(`"${alias}"`), `canonical helpers should normalize legacy policy alias ${alias}`);
 }
 assert.match(
@@ -220,8 +218,8 @@ assert.doesNotMatch(
 );
 assert.match(
   siteRouteCanonical,
-  /mydreamshoots\|dreamshoot\|aidreamcapes/,
-  "paired storefront canonical redirects should include both MyDreamShoots and Aidreamcapes identities"
+  /usesAiGenerationPublicSlug[\s\S]*canonicalSiteSlug/,
+  "paired storefront canonical redirects should use shared capability and site-slug identity helpers"
 );
 assert.ok(
   siteRouteCanonical.includes("requestedPath === `${sitePrefix}/`") &&

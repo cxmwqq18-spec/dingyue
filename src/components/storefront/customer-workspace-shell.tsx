@@ -1381,7 +1381,7 @@ export function CustomerWorkspaceShell({
     : runtime
       ? hasActiveWorkspaceSubscription(runtime.subscriptions) ? "active" : "required"
       : "loading";
-  const isAidreamcapes = /aidreamcapes/i.test(`${site.slug} ${site.name} ${site.primaryDomain} ${site.branding.logoText}`);
+  const isAidreamcapes = site.id === "site_aidreamcapes" || site.id === "site_aidreamcapes_xby" || ["aidreamcapes", "aidreamcapes-eu"].includes(site.slug.trim().toLowerCase());
   const [activePanel, setActivePanel] = useState<CustomerWorkspacePanel>(initialPanel);
   const [resourceTab, setResourceTab] = useState<WorkspaceResourceTab>("all");
   const [preferredCreateMode, setPreferredCreateMode] = useState<WorkspaceCreateMode>("theme");
@@ -3155,7 +3155,16 @@ export function CustomerWorkspaceShell({
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const rawAnchor = window.location.hash.replace("#", "");
+    let rawAnchor = window.location.hash.replace("#", "");
+    const queryAnchor = searchParams.get("nextHash")?.trim() ?? "";
+    const allowedQueryAnchors = new Set(["step-upload", "step-create", "step-video", "source-photos", "review-request"]);
+    if (!rawAnchor && allowedQueryAnchors.has(queryAnchor)) {
+      rawAnchor = queryAnchor;
+      const nextUrl = new URL(window.location.href);
+      nextUrl.searchParams.delete("nextHash");
+      nextUrl.hash = queryAnchor;
+      window.history.replaceState(null, "", `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`);
+    }
     const anchor = rawAnchor as WorkspaceAnchor | "";
     if (!anchor) return;
     if (anchor === "step-upload") {
@@ -3198,7 +3207,7 @@ export function CustomerWorkspaceShell({
         ? "video-workspace-videos"
         : rawAnchor;
     window.setTimeout(() => document.getElementById(scrollTarget)?.scrollIntoView({ block: "start" }), 0);
-  }, [tabItems]);
+  }, [searchParams, tabItems]);
 
   useEffect(() => {
     const nextSamples = hydratedAssets.filter(isSampleCandidateAsset);

@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import { mapProduct } from "@/lib/stores/prisma-mappers";
 import { createStripeCheckoutSession, stripeCheckoutReadiness } from "@/lib/stripe-checkout";
+import { isPublicPriceFact } from "@/lib/storefront-context";
 import type { NextRequest } from "next/server";
 
 const CHECKOUT_RETRY_RATE_LIMIT = { windowMs: 60000, maxRequests: 12, keyPrefix: "checkout" };
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     return NextResponse.json({ error: "price_not_found_for_site" }, { status: 404 });
   }
   const now = Date.now();
-  if (price.status !== "active" || !/^price_[a-zA-Z0-9_]+$/.test(price.stripePriceId ?? "") || price.amountCents <= 0 || price.currency.trim().toLowerCase() !== site.currency.trim().toLowerCase() || !price.providerVerifiedAt || !price.providerFingerprint || (price.effectiveFrom && price.effectiveFrom.getTime() > now) || (price.effectiveTo && price.effectiveTo.getTime() <= now)) {
+  if (!isPublicPriceFact(price, new Date(now), site.currency)) {
     return NextResponse.json({ error: "price_not_public" }, { status: 409 });
   }
   const checkoutMode = checkoutModeForInterval(price.interval);

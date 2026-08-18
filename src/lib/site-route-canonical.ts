@@ -1,5 +1,6 @@
 import { permanentRedirect, redirect } from "next/navigation";
 import { canonicalSiteSlug, cleanHost, isPlatformHost, publicSiteSlug } from "@/lib/domain-routing";
+import { usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 
 function isCanonicalPublicHost(host: string | null | undefined): boolean {
   const value = cleanHost(host);
@@ -68,6 +69,51 @@ export function publicContentPageSlug(pathname: string): string {
   return policyPageSlug(requestedPath);
 }
 
+const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
+  "/help": "/faq",
+  "/how-it-works": "/workflow",
+  "/about": "/about-us",
+  "/contact": "/contact-us",
+  "/privacy-policy": "/privacy",
+  "/policies/privacy": "/privacy",
+  "/policies/privacy-policy": "/privacy",
+  "/terms-of-service": "/terms",
+  "/policies/terms": "/terms",
+  "/policies/terms-of-service": "/terms",
+  "/cookie-policy": "/cookies",
+  "/policies/cookies": "/cookies",
+  "/policies/cookie-policy": "/cookies",
+  "/refund-policy": "/refunds",
+  "/policies/refund": "/refunds",
+  "/policies/refunds": "/refunds",
+  "/content-policy": "/content",
+  "/policies/content": "/content",
+  "/shipping-policy": "/shipping",
+  "/delivery-policy": "/shipping",
+  "/policies/shipping": "/shipping",
+  "/policies/delivery": "/shipping",
+  "/policies/delivery-policy": "/shipping",
+  "/children-privacy-policy": "/children-privacy",
+  "/childrens-privacy": "/children-privacy",
+  "/policies/children-privacy": "/children-privacy",
+  "/policies/children": "/children-privacy",
+  "/policies/children-privacy-policy": "/children-privacy",
+  "/policies/childrens-privacy": "/children-privacy",
+  "/state-privacy-rights": "/state-privacy",
+  "/california-privacy": "/state-privacy",
+  "/ccpa": "/state-privacy",
+  "/policies/state-privacy": "/state-privacy",
+  "/policies/state-privacy-rights": "/state-privacy",
+  "/policies/california-privacy": "/state-privacy",
+  "/policies/ccpa": "/state-privacy"
+};
+
+export function legacyPublicPathTarget(pathname: string, fallbackCollectionPath = "/collections"): string | undefined {
+  const normalized = normalizedPathname(pathname);
+  if (normalized === "/examples" || normalized === "/packages") return fallbackCollectionPath;
+  return LEGACY_PUBLIC_PATH_REDIRECTS[normalized];
+}
+
 export function redirectPublicSitePathToCanonicalHost({
   host,
   pathname,
@@ -87,7 +133,7 @@ export function redirectPublicSitePathToCanonicalHost({
       permanentRedirect("/");
     }
     const normalizedPath = shortPolicyPath(requestedPath);
-    const pairedStorePath = /mydreamshoots|dreamshoot|aidreamcapes/i.test(publicSlug)
+    const pairedStorePath = usesAiGenerationPublicSlug(publicSlug)
       ? normalizedPath === "/help"
         ? "/faq"
         : normalizedPath === "/how-it-works" || normalizedPath === "/#workflow"

@@ -1,5 +1,6 @@
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import type { CreativePack, CreativePackCategory, Site } from "@/lib/types";
+import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 
 export type PhotoPackageMegaGroup = {
   label: string;
@@ -105,14 +106,12 @@ function siteIdentityToken(site: CollectionRouteSiteIdentity | undefined): strin
 }
 
 function isAidreamcapesRouteSite(site: CollectionRouteSiteIdentity | undefined): boolean {
-  return siteIdentityToken(site).includes("aidreamcapes");
+  return Boolean(site && isAidreamcapesCapabilitySite({ id: site.id ?? site.siteId ?? "", slug: site.slug ?? "" }));
 }
 
 export function isMydreamshootsCollectionRouteSite(site: CollectionRouteSiteIdentity | undefined): boolean {
-  const token = siteIdentityToken(site);
-  if (!token || isAidreamcapesRouteSite(site)) return false;
-  if (token.includes("site_mydreamshoots_xby") || token.includes("aidreamshoots.eu")) return false;
-  return token.includes("site_dreamshoot") || token.includes("mydreamshoots") || token.includes("dreamshoot");
+  if (!site || isAidreamcapesRouteSite(site)) return false;
+  return isPrimaryMydreamshootsCapabilitySite({ id: site.id ?? site.siteId ?? "", slug: site.slug ?? "" });
 }
 
 export function mydreamshootsCollectionGroupSlugForItem(slug: string | undefined): string | undefined {
@@ -314,7 +313,7 @@ const dreamshootCollectionHrefSlugAliases: Record<string, string> = {};
 const dreamshootPackageGroupSlugOverrides: Record<string, string> = {};
 
 function shouldUseAidreamcapesCollectionAliases(siteIds: Array<string | undefined>): boolean {
-  return siteIds.some((siteId) => (siteId ?? "").toLowerCase().includes("aidreamcapes"));
+  return siteIds.some((siteId) => ["site_aidreamcapes", "site_aidreamcapes_xby"].includes(siteId ?? ""));
 }
 
 export function photoPackageCollectionHrefForSlug(

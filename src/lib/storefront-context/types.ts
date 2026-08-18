@@ -1,4 +1,4 @@
-import type { CreativePack, MediaAsset, Price, Product, Site, StorefrontProfileJson, ThemePage, ThemePublication, ThemeSettings } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, MediaAsset, Price, Product, Site, StorefrontProfileJson, ThemePage, ThemePageJson, ThemePublication, ThemeSettings, VideoTheme } from "@/lib/types";
 
 export type StorefrontContextMode = "draft" | "published";
 
@@ -22,16 +22,24 @@ export type ResolvedOffer = {
 };
 
 export type EntityReference = {
-  entityType: "page" | "product" | "price" | "creative_pack" | "media";
+  entityType: "page" | "theme_settings" | "product" | "price" | "creative_pack" | "video_theme" | "media";
   entityId: string;
   ownerId: string;
   revision: string;
+  updatedAt?: string;
+};
+
+export type PublicationBoundary = {
+  siteId: string;
+  source: "postgres" | "platform-state";
+  publicationId: string | null;
+  publicationVersion: number | null;
 };
 
 export type RouteDisposition =
-  | { kind: "render"; path: string; pageId: string }
-  | { kind: "redirect"; path: string; targetPath: string; targetPageId: string }
-  | { kind: "not_found"; path: string };
+  | { kind: "render"; status: 200; path: string; pageId: string }
+  | { kind: "redirect"; status: 301 | 302 | 307 | 308; path: string; targetPath: string; targetUrl: string; targetPageId: string }
+  | { kind: "not_found"; status: 404; path: string };
 
 export type SiteCapability = {
   usesAiGenerationPublicRoutes: boolean;
@@ -107,6 +115,7 @@ export type StorefrontContext = {
   capability: SiteCapability;
   indexability: EffectiveIndexability;
   missingFacts: string[];
+  publishedPaths?: string[];
 };
 
 export type StorefrontContextBundle = {
@@ -115,6 +124,7 @@ export type StorefrontContextBundle = {
   products: Product[];
   creativePacks: CreativePack[];
   publication?: ThemePublication;
+  factsRevision?: string;
   buildId?: string;
 };
 
@@ -129,7 +139,9 @@ export interface DraftStorefrontContextAdapter {
 export interface StorefrontContextAdapter extends PublishedStorefrontContextAdapter, DraftStorefrontContextAdapter {}
 
 export type PublishedSiteSnapshot = {
+  boundary: PublicationBoundary;
   site: Site;
+  themeSettings: ThemeSettings;
   publication?: ThemePublication;
   publicationVersion?: number;
   publicationId?: string;
@@ -139,6 +151,8 @@ export type PublishedSiteSnapshot = {
   publishedPaths: string[];
   products: Product[];
   creativePacks: CreativePack[];
+  creativePackCategories: CreativePackCategory[];
+  videoThemes: VideoTheme[];
   mediaAssets: MediaAsset[];
   profile?: StorefrontProfileJson;
   capability: SiteCapability;
@@ -146,6 +160,12 @@ export type PublishedSiteSnapshot = {
 };
 
 export type EffectivePublishedPage = {
+  boundary: PublicationBoundary;
+  siteId: string;
+  pageId: string | null;
+  requestedPath: string;
+  publicPath: string;
+  pageJson: ThemePageJson | null;
   page: ThemePage;
   context: StorefrontContext;
   routeDisposition: RouteDisposition;

@@ -520,7 +520,7 @@ function MediaThumb({
 }
 
 function isPrimaryMyDreamShootsSlug(siteSlug: string): boolean {
-  return /mydreamshoots|dreamshoot/i.test(siteSlug) && !/aidreamcapes|aidreamshoots/i.test(siteSlug);
+  return siteSlug.trim().toLowerCase() === "mydreamshoots";
 }
 
 function OverviewCard({ basePath, fallbackCustomer, runtime, siteSlug }: { basePath: string; fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData; siteSlug: string }) {

@@ -1,5 +1,6 @@
 import { normalizeThemeSeo } from "@/lib/theme/seo";
 import { themeValueToString } from "@/lib/theme-values";
+import { isPublicPriceFact, missingStorefrontProfileFacts } from "@/lib/storefront-context";
 import type { SectionBlockInstance, SectionInstance, Site, StorefrontProfileJson, ThemePage, ThemeSettings, ThemeSettingValue } from "@/lib/types";
 
 export type PublishPreflightSeverity = "pass" | "warn" | "block";
@@ -48,6 +49,8 @@ export type PublishPreflightSiteAiApp = {
 
 export type PublishPreflightMediaAsset = {
   id: string;
+  ownerId?: string;
+  entityRevision?: string;
 };
 
 const mediaKeys = new Set([
@@ -174,15 +177,7 @@ function productPriceCount(products: PublishPreflightProduct[], siteCurrency: st
 }
 
 function validPublishedPrice(price: PublishPreflightProduct["prices"][number], now = Date.now(), siteCurrency?: string): boolean {
-  const effectiveFrom = price.effectiveFrom ? Date.parse(price.effectiveFrom) : undefined;
-  const effectiveTo = price.effectiveTo ? Date.parse(price.effectiveTo) : undefined;
-  return price.status === "active"
-    && Boolean(price.stripePriceId && /^price_/.test(price.stripePriceId))
-    && price.amountCents > 0
-    && Boolean(price.currency && price.interval && price.providerVerifiedAt && price.providerFingerprint)
-    && (!siteCurrency || price.currency?.trim().toLowerCase() === siteCurrency.trim().toLowerCase())
-    && (effectiveFrom === undefined || (Number.isFinite(effectiveFrom) && effectiveFrom <= now))
-    && (effectiveTo === undefined || (Number.isFinite(effectiveTo) && effectiveTo > now));
+  return isPublicPriceFact(price as Parameters<typeof isPublicPriceFact>[0], new Date(now), siteCurrency);
 }
 
 function collectLiveBindings(value: unknown, found = new Set<string>()): Set<string> {
@@ -304,6 +299,7 @@ export function runThemePublishPreflight({
   const brokenLinks = [...headerLinks, ...footerLinks].filter((link) => !link.label.trim() || hasBrokenLink(link.href));
   const mediaIds = new Set(mediaAssets.map((asset) => asset.id));
   const missingMediaRefs = collectMediaReferencesFromSections(sections).filter((ref) => !mediaIds.has(ref));
+  const mediaOwnerReviewRequired = mediaAssets.filter((asset) => mediaIds.has(asset.id) && (!asset.ownerId || !asset.entityRevision || asset.ownerId !== site.id));
   const pagesMissingSeoTitle = site.pages.filter((page) => !page.draftJson.seo?.title?.trim());
   const pagesMissingSeoDescription = site.pages.filter((page) => !page.draftJson.seo?.description?.trim());
   const pagesWithShortSeoDescription = site.pages.filter((page) => {
@@ -353,23 +349,13 @@ export function runThemePublishPreflight({
       : warn("page_count", "pages", "页面覆盖偏少", `当前只有 ${site.pages.length} 个页面，DreamShootAI 主题目标应覆盖首页、定价、工具、登录、工作台、相册、政策、帮助和博客。`)
   );
 
-  const profileMissing = [
-    !storefrontProfile?.identity.legalName ? "legalName" : "",
-    !storefrontProfile?.identity.entityType ? "entityType" : "",
-    !address?.line1 || !address.city || !address.region || !address.postalCode || !address.country ? "address" : "",
-    !storefrontProfile?.identity.supportEmail ? "supportEmail" : "",
-    storefrontProfile?.policyFacts.usesCustomerMediaForTraining === undefined ? "usesCustomerMediaForTraining" : "",
-    storefrontProfile?.policyFacts.sourceMediaRetentionDays ? "" : "sourceMediaRetentionDays",
-    storefrontProfile?.policyFacts.refundReviewRequired === undefined ? "refundReviewRequired" : "",
-    storefrontProfile?.policyFacts.refundWindowDays ? "" : "refundWindowDays",
-    storefrontProfile?.policyFacts.effectiveDate ? "" : "effectiveDate"
-  ].filter(Boolean);
+  const profileMissing = missingStorefrontProfileFacts(storefrontProfile).map((fact) => fact.replace(/^profile\.(identity|policyFacts)\./, ""));
   checks.push(profileMissing.length ? block("storefront_profile", "settings", "站点资料未确认", `Profile 缺少: ${profileMissing.join(", ")}。法人资料未确认时禁止整站发布。`) : pass("storefront_profile", "settings", "站点资料完整", "Footer、Contact、About 和 Organization Schema 共享同一份已发布 Profile。"));
   checks.push(invalidActivePrices.length ? block("price_provider_verification", "commerce", "报价未完成 provider 校验", `${invalidActivePrices.length} 个 active Price 缺少有效 Stripe read-only fingerprint。`) : pass("price_provider_verification", "commerce", "报价 provider 校验有效", "公开报价均有 active 状态、有效 Price ID 和 provider fingerprint。"));
   checks.push(invalidCreativePacks.length ? block("creative_pack_facts", "ai", "CreativePack 数值非法", `${invalidCreativePacks.map((pack) => pack.id).slice(0, 5).join(", ")} 的 credits/outputCount 必须大于 0。`) : pass("creative_pack_facts", "ai", "CreativePack 数值有效", "前台不会为缺失 credits 或 outputCount 伪造默认值。"));
   checks.push(unresolvedBindings.length ? block("storefront_bindings", "pages", "存在未解析事实 binding", unresolvedBindings.join(", ")) : pass("storefront_bindings", "pages", "事实 binding 可解析", "页面只使用白名单事实 binding，且当前值均可解析。"));
   checks.push(policyContradictions.length ? block("policy_fact_consistency", "settings", "Trust 文案与政策事实冲突", Array.from(new Set(policyContradictions)).join(", ")) : pass("policy_fact_consistency", "settings", "Trust 文案与政策事实一致", "政策数字和训练/退款声明由 Profile facts 或白名单 binding 提供。"));
-  checks.push(pass("seo_schema_context", "pages", "SEO 与 Schema 使用同一解析结果", `页面 SEO 来自 ThemePage 草稿；站点默认值由 ${seo.siteTitle || "site defaults"} 提供。发布渲染不会读取 ThemeSettings.seo.pages。`));
+  checks.push(pass("seo_schema_context", "pages", "SEO 与 Schema 使用同一解析结果", `页面 SEO 来自 ThemePage 草稿；站点默认值由 ${seo.siteTitle || "site defaults"} 提供。发布渲染不会读取旧的页面级全局 SEO 字段。`));
 
   checks.push(
     emptyPages.length
@@ -456,9 +442,12 @@ export function runThemePublishPreflight({
   }
 
   checks.push(
-    missingMediaRefs.length
-      ? warn("media_refs", "media", "部分媒体引用未入库", `${missingMediaRefs.slice(0, 6).join(", ")} 不在当前站点 media_assets 中，前台会走 fallback 或外部路径。`)
-      : pass("media_refs", "media", "媒体引用有效", "draft 中的站点媒体引用都能在 media_assets 找到。")
+    missingMediaRefs.length || mediaOwnerReviewRequired.length
+      ? block("media_refs", "media", "媒体归属/版本需要复核", [
+          missingMediaRefs.length ? `missing: ${missingMediaRefs.slice(0, 6).join(", ")}` : "",
+          mediaOwnerReviewRequired.length ? `owner/revision: ${mediaOwnerReviewRequired.slice(0, 6).map((asset) => asset.id).join(", ")}` : ""
+        ].filter(Boolean).join("; "))
+      : pass("media_refs", "media", "媒体引用有效", "draft 中的站点媒体引用都有本站 owner 和 entity revision。")
   );
 
   checks.push(

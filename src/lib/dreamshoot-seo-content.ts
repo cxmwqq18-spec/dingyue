@@ -1,5 +1,6 @@
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
 import { dreamshootPackProfileForSlug, type DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
+import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import {
   aidreamcapesCategoryUseCaseProfileForSlug,
@@ -13,6 +14,7 @@ import {
   publicVideoGenerationPathForSite
 } from "@/lib/photo-package-taxonomy";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 
 export type SeoDirectoryKind = "collection" | "tool";
 
@@ -72,8 +74,7 @@ const mydreamshootsThemeTaxonomyData = mydreamshootsThemeTaxonomy as MyDreamshoo
 
 function isAidreamcapesSite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }): boolean {
   if (!site) return false;
-  const value = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding?.logoText ?? ""}`.toLowerCase();
-  return value.includes("aidreamcapes");
+  return isAidreamcapesCapabilitySite(site);
 }
 
 function isSpanishXbySite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }): boolean {
@@ -82,8 +83,7 @@ function isSpanishXbySite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDom
 
 function isPrimaryMydreamshootsSite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }): boolean {
   if (!site || isAidreamcapesSite(site) || isSpanishXbySite(site)) return false;
-  const value = `${site.id} ${site.slug} ${site.name} ${site.primaryDomain} ${site.branding?.logoText ?? ""}`.toLowerCase();
-  return value.includes("site_dreamshoot") || value.includes("mydreamshoots") || value.includes("dreamshoot");
+  return isPrimaryMydreamshootsCapabilitySite(site);
 }
 
 function spanishXbyBrandName(site?: Pick<Site, "name"> & { branding?: Pick<Site["branding"], "logoText"> }): string {
@@ -2574,7 +2574,8 @@ function _collectionTitleTopic(label: string): string {
 }
 
 function isAidreamcapesBrand(brandName: string): boolean {
-  return brandName.toLowerCase().includes("aidreamcapes");
+  const normalized = brandName.trim().toLowerCase().replace(/[^a-z]/g, "");
+  return normalized === "aidreamcapes" || normalized === "aidreamcapesai";
 }
 
 function brandPossessive(brandName: string): string {
@@ -2708,9 +2709,9 @@ function collectionSeedWithUseCaseProfile(
   brandName: string
 ): SeoDirectorySeed {
   const titleScenario = profile.tags.slice(0, 2).join(" and ");
-  const title = titleScenario
+  const title = profile.seoTitle || (titleScenario
     ? `${profile.metaLabel} for ${titleScenario} | ${brandName}`
-    : `${profile.metaLabel} | ${brandName}`;
+    : `${profile.metaLabel} | ${brandName}`);
   const description = truncateSeoDescription(profile.cardDescription);
   const keywordParts = [
     ...seed.keywords.split(",").map((keyword) => keyword.trim()),
@@ -2731,7 +2732,7 @@ function collectionSeedWithUseCaseProfile(
     title,
     description,
     keywords: Array.from(new Set(keywordParts.filter(Boolean))).join(", "),
-    h2: profile.headline,
+    h2: profile.galleryTitle || profile.headline,
     h3: ["What this creates", "Best use cases", "Workflow and review"],
     intro: profile.detailIntro,
     details: Array.from(new Set(details)).slice(0, 5),
@@ -2832,7 +2833,7 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
   const collectionProfile = kind === "collection" && !spanishXby
     ? aidreamcapes
       ? aidreamcapesCategoryUseCaseProfileForSlug(canonicalSlug)
-      : mydreamshootsCategoryUseCaseProfileForSlug(canonicalSlug) ?? dreamshootPackProfileForSlug(canonicalSlug)
+      : mydreamshootsPageCopyForSlug(canonicalSlug) ?? mydreamshootsCategoryUseCaseProfileForSlug(canonicalSlug) ?? dreamshootPackProfileForSlug(canonicalSlug)
     : undefined;
   const sourceWithProfile = collectionProfile
     ? collectionSeedWithUseCaseProfile(source, collectionProfile, brandName)
@@ -2892,6 +2893,7 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
     settings: {
       anchor: `${kind}-${item.slug}`,
       kind,
+      headingLevel: options.focused && kind === "collection" ? "h1" : "h2",
       label: item.label,
       title: item.h2,
       subtitle: item.intro,

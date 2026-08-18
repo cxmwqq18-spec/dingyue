@@ -695,7 +695,44 @@
         "Keep the brief focused on the real relationship moment instead of mixing wedding, holiday, and fantasy cues."
       ],
       "coverNote": "Engagement sets work best with clear couple references and a simple note about proposal, announcement, or keepsake use.",
-      "safetyNote": "Only upload and publish photos of another person when you have permission."
+      "safetyNote": "Only upload and publish photos of another person when you have permission.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:engagement-photo",
+      "copyRevision": "2026-08-18.engagement-photo",
+      "seoTitle": "AI Engagement Photos for Proposals & Announcements | myDreamshoots",
+      "galleryTitle": "12 AI Engagement Photo Examples for Proposals and Announcements",
+      "galleryIntro": "Review proposal, announcement, ring-forward, and couple story examples before opening the engagement workflow.",
+      "ctaEyebrow": "Start the engagement set",
+      "ctaTitle": "Create engagement photos in your private studio.",
+      "ctaSubtitle": "Turn approved couple photos into proposal memories, ring reveal moments, announcements, and save-the-date drafts while keeping the flow private and credit-aware.",
+      "ctaLabel": "Create Engagement Photos",
+      "faqEyebrow": "Engagement FAQ",
+      "faqTitle": "Engagement photos before you create",
+      "faqItems": [
+        {
+          "id": "engagement_separate_partner_photos",
+          "question": "Can I create an engagement set when we do not have a recent photo together?",
+          "answer": "Use the source-photo options shown in the creation flow. When separate references are accepted, choose recent, well-lit images of both partners at similar angles and quality, then review both faces, hands, and body proportions in every result."
+        },
+        {
+          "id": "engagement_ring_reveal_review",
+          "question": "Can the AI keep my real engagement ring exactly the same?",
+          "answer": "Not reliably. Small jewelry, fingers, ring shape, and hand placement can change during generation. Use a clear ring reference when the workflow allows it, and inspect the ring and both hands before publishing or printing."
+        },
+        {
+          "id": "engagement_announcement_save_the_date",
+          "question": "Can I use the images for a proposal announcement or save-the-date draft?",
+          "answer": "Yes, as creative announcement or save-the-date visuals. Choose a crop with clear space for copy, then add names, dates, and other exact wording afterward so the text stays accurate."
+        },
+        {
+          "id": "engagement_vs_wedding_photo",
+          "question": "Should I choose Engagement Photo or Wedding Photo?",
+          "answer": "Choose Engagement Photo for proposal memories, ring-focused portraits, engagement announcements, and save-the-date concepts. Choose Wedding Photo for bridal, formal couple, invitation, wedding-site, or ceremony-inspired styling."
+        }
+      ],
+      "relatedEyebrow": "Related engagement ideas",
+      "relatedTitle": "More proposal and couple photo ideas",
+      "relatedSubtitle": "Compare nearby couple, wedding, and romantic themes before you upload source photos or spend credits.",
+      "relatedCtaLabel": "View all packages"
     },
     "wedding-photo": {
       "headline": "AI Wedding Photos for Save-the-Dates, Ceremony Moodboards, and Keepsakes",
@@ -734,7 +771,44 @@
         "Check cultural or ceremonial details carefully before sharing."
       ],
       "coverNote": "Wedding photos are strongest when both partners have clear face references and the intended wedding mood is specific.",
-      "safetyNote": "Use generated wedding images as creative concepts or keepsakes, not as proof of a real ceremony."
+      "safetyNote": "Use generated wedding images as creative concepts or keepsakes, not as proof of a real ceremony.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:wedding-photo",
+      "copyRevision": "2026-08-18.wedding-photo",
+      "seoTitle": "AI Wedding Photos for Save-the-Dates & Ceremony Moodboards | myDreamshoots",
+      "galleryTitle": "12 AI Wedding Photo Examples for Save-the-Dates and Ceremony Moodboards",
+      "galleryIntro": "Review wedding-inspired concepts for cards, invitations, ceremony moodboards, and private keepsakes before starting.",
+      "ctaEyebrow": "Start the wedding set",
+      "ctaTitle": "Create wedding photos in your private studio.",
+      "ctaSubtitle": "Turn approved couple photos into save-the-date concepts, invitation visuals, wedding-site images, ceremony moodboards, and keepsakes.",
+      "ctaLabel": "Create Wedding Photos",
+      "faqEyebrow": "Wedding FAQ",
+      "faqTitle": "Wedding photos before you create",
+      "faqItems": [
+        {
+          "id": "wedding_concept_vs_real_event",
+          "question": "Are AI wedding images a substitute for real wedding photography?",
+          "answer": "No. Use them as wedding-inspired concepts, planning visuals, or personal keepsakes. They should not be presented as documentary proof of a ceremony or event that did not occur."
+        },
+        {
+          "id": "wedding_save_the_date_invitation_site",
+          "question": "Can I use a result for a save-the-date, invitation, or wedding website?",
+          "answer": "Yes, as a design visual after review. Generate a composition with suitable text space, then add names, dates, addresses, venue details, and RSVP information afterward so every important detail remains exact."
+        },
+        {
+          "id": "wedding_partner_recognition_sources",
+          "question": "What source photos help both partners stay recognizable?",
+          "answer": "Use recent, clear portraits of both people with similar image quality, lighting, and visible facial angles. Review each face separately because identity, expression, and small facial details can still vary in a two-person generation."
+        },
+        {
+          "id": "wedding_bridal_ceremony_review",
+          "question": "Which details should I inspect in bridal or ceremony-inspired scenes?",
+          "answer": "Check hands, rings, lace, embroidery, veils, jewelry, bouquets, fabric edges, and any cultural or ceremonial details. Complex clothing and small accessories may change even when both faces look correct."
+        }
+      ],
+      "relatedEyebrow": "Related wedding ideas",
+      "relatedTitle": "More wedding and invitation photo ideas",
+      "relatedSubtitle": "Compare engagement, romantic, and formal couple themes before you choose a wedding direction.",
+      "relatedCtaLabel": "View all packages"
     },
     "valentines-photo": {
       "headline": "AI Valentines Photos for Date Night Cards, Gifts, and Romantic Posts",
@@ -773,7 +847,44 @@
         "Keep the tone romantic and personal instead of mixing unrelated holiday themes."
       ],
       "coverNote": "Valentines photos work best with expressive source photos and a clear note about card, gift, or social use.",
-      "safetyNote": "Share couple images only when every person shown is comfortable with the final use."
+      "safetyNote": "Share couple images only when every person shown is comfortable with the final use.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:valentines-photo",
+      "copyRevision": "2026-08-18.valentines-photo",
+      "seoTitle": "AI Valentine's Day Photos for Date Night & Gifts | myDreamshoots",
+      "galleryTitle": "12 AI Valentine's Day Photo Examples for Date Night Cards and Gifts",
+      "galleryIntro": "Review date-night, card-ready, gift, couple, and self-love examples before starting a seasonal romantic set.",
+      "ctaEyebrow": "Start the Valentine's set",
+      "ctaTitle": "Create Valentine's Day photos in your private studio.",
+      "ctaSubtitle": "Turn approved portraits into date-night cards, gift images, romantic posts, long-distance keepsakes, or a self-love seasonal set.",
+      "ctaLabel": "Create Valentine's Day Photos",
+      "faqEyebrow": "Valentine's FAQ",
+      "faqTitle": "Valentine's Day photos before you create",
+      "faqItems": [
+        {
+          "id": "valentines_not_only_couples",
+          "question": "Is Valentine's Day Photo only for romantic couples?",
+          "answer": "No. The visual direction can also support a friend, family, or self-love card when that fits the people and photos you have permission to use. Keep the brief clear about who is shown and the relationship or message you want the image to communicate."
+        },
+        {
+          "id": "valentines_digital_card_printed_gift",
+          "question": "Can I use a result as a digital card or printed gift?",
+          "answer": "Yes, after reviewing the crop and image details at the size you plan to use. Leave clean space for the message and add names or exact wording afterward rather than relying on generated text."
+        },
+        {
+          "id": "valentines_mood_choice",
+          "question": "Which Valentine's mood should I choose?",
+          "answer": "Choose one clear direction such as date-night, floral, candlelit, playful, soft studio, or elegant evening. A focused mood usually produces a more coherent set than mixing several unrelated romantic styles in one request."
+        },
+        {
+          "id": "valentines_vs_engagement_photo",
+          "question": "How is Valentine's Day Photo different from Engagement Photo?",
+          "answer": "Valentine's Day Photo focuses on seasonal romance, cards, gifts, and date-night imagery. Engagement Photo is designed around proposals, ring-forward moments, announcements, and save-the-date concepts."
+        }
+      ],
+      "relatedEyebrow": "Related romantic ideas",
+      "relatedTitle": "More romantic card and gift ideas",
+      "relatedSubtitle": "Compare couple, engagement, holiday, and solo-confidence themes before spending credits.",
+      "relatedCtaLabel": "View all packages"
     },
     "christmas-photo": {
       "headline": "AI Christmas Photos for Greeting Cards, Winter Portraits, and Holiday Albums",
@@ -812,7 +923,44 @@
         "Avoid protected brand characters or commercial holiday marks unless you have permission."
       ],
       "coverNote": "Christmas sets perform best with clear faces and a specific card, album, or profile use case.",
-      "safetyNote": "Only upload photos of children or family members when you have appropriate permission."
+      "safetyNote": "Only upload photos of children or family members when you have appropriate permission.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:christmas-photo",
+      "copyRevision": "2026-08-18.christmas-photo",
+      "seoTitle": "AI Christmas Photos for Greeting Cards & Winter Portraits | myDreamshoots",
+      "galleryTitle": "12 AI Christmas Photo Examples for Greeting Cards and Winter Portraits",
+      "galleryIntro": "Review greeting-card, winter portrait, cozy family, and festive profile examples before opening the Christmas workflow.",
+      "ctaEyebrow": "Start the Christmas set",
+      "ctaTitle": "Create Christmas photos in your private studio.",
+      "ctaSubtitle": "Turn approved portraits into festive cards, cozy winter scenes, family-style crops, seasonal profiles, and private holiday albums.",
+      "ctaLabel": "Create Christmas Photos",
+      "faqEyebrow": "Christmas FAQ",
+      "faqTitle": "Christmas photos before you create",
+      "faqItems": [
+        {
+          "id": "christmas_family_or_pets",
+          "question": "Can I include family members or pets in a Christmas photo set?",
+          "answer": "Use only the people or pets supported by the current creation flow, with clear references and permission for every person shown. Review each face, hand, paw, and interaction carefully because multi-subject scenes contain more details that can drift."
+        },
+        {
+          "id": "christmas_source_clothing_decorations",
+          "question": "Do the source photos need Christmas clothing or decorations?",
+          "answer": "No. Clear identity references matter more than wearing festive clothing in the source photos. Choose a Christmas direction in the brief, but review generated outfits, ornaments, lights, and small decorations because exact details can vary."
+        },
+        {
+          "id": "christmas_card_profile_crops",
+          "question": "Should I prepare different crops for a Christmas card and a profile photo?",
+          "answer": "Yes. A card usually needs horizontal or vertical space for a greeting, while a profile image needs a tighter face-centered crop. Generate the image first and add the final greeting, names, and year afterward."
+        },
+        {
+          "id": "christmas_vs_holiday_photo",
+          "question": "When should I use Christmas Photo instead of Holiday?",
+          "answer": "Choose Christmas Photo when Christmas-specific cues such as a tree, ornaments, red-and-green styling, or a Christmas card context matter. Choose Holiday for a broader winter or festive look that is not tied to one celebration."
+        }
+      ],
+      "relatedEyebrow": "Related festive ideas",
+      "relatedTitle": "More festive and family photo ideas",
+      "relatedSubtitle": "Compare Christmas, Holiday, Thanksgiving, and group-friendly themes before starting a private set.",
+      "relatedCtaLabel": "View all packages"
     },
     "halloween-photo": {
       "headline": "AI Halloween Photos for Costume Portraits, Party Cards, and Spooky Albums",
@@ -851,7 +999,44 @@
         "Choose readable crops for profile images and wider frames for invitations."
       ],
       "coverNote": "Halloween outputs are strongest when the source portrait has expression and the spooky style is clearly chosen.",
-      "safetyNote": "Avoid protected characters, celebrity likenesses, or images meant to scare, shame, or impersonate someone."
+      "safetyNote": "Avoid protected characters, celebrity likenesses, or images meant to scare, shame, or impersonate someone.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:halloween-photo",
+      "copyRevision": "2026-08-18.halloween-photo",
+      "seoTitle": "AI Halloween Photos for Costume Portraits & Party Cards | myDreamshoots",
+      "galleryTitle": "12 AI Halloween Photo Examples for Costume Portraits, Party Cards, and Spooky Albums",
+      "galleryIntro": "Review costume-friendly portraits, party-card crops, original spooky moods, and private album examples before creating.",
+      "ctaEyebrow": "Start the Halloween set",
+      "ctaTitle": "Create Halloween photos in your private studio.",
+      "ctaSubtitle": "Turn approved photos into costume-inspired portraits, original spooky characters, party invitations, profile crops, and private Halloween albums.",
+      "ctaLabel": "Create Halloween Photos",
+      "faqEyebrow": "Halloween FAQ",
+      "faqTitle": "Halloween photos before you create",
+      "faqItems": [
+        {
+          "id": "halloween_coordinated_costumes",
+          "question": "Can a couple or family use one coordinated Halloween costume direction?",
+          "answer": "Yes, when the current creation flow supports the required subjects. Use clear references for everyone, keep the costume direction consistent, and review faces, hands, costume boundaries, and interactions across the group."
+        },
+        {
+          "id": "halloween_protected_characters_logos",
+          "question": "Can I request an exact movie character, comic character, or brand logo?",
+          "answer": "Use an original spooky, gothic, fantasy, or costume direction instead of relying on exact reproduction of a protected character or logo. Only use third-party names, costumes, marks, or assets when you have the right to do so."
+        },
+        {
+          "id": "halloween_makeup_mask_recognition",
+          "question": "Will heavy makeup or a mask keep the person recognizable?",
+          "answer": "Not always. Masks, face paint, shadows, and prosthetic-style effects can reduce identity consistency. Start with unobstructed source photos and review the eyes, face shape, skin details, and mask boundaries before sharing."
+        },
+        {
+          "id": "halloween_party_invitation",
+          "question": "Can I use a Halloween image for a party invitation?",
+          "answer": "Yes, as the visual portion of the invitation. Leave clear space for copy, then add the exact date, time, address, age guidance, and RSVP details afterward so the event information remains accurate."
+        }
+      ],
+      "relatedEyebrow": "Related spooky ideas",
+      "relatedTitle": "More costume and spooky photo ideas",
+      "relatedSubtitle": "Compare Halloween, nightlife, creator, and seasonal themes before choosing a private gallery direction.",
+      "relatedCtaLabel": "View all packages"
     },
     "thanksgiving-photo": {
       "headline": "AI Thanksgiving Photos for Gratitude Cards, Dinner Portraits, and Family Keepsakes",
@@ -890,7 +1075,44 @@
         "Keep the scene personal rather than overloaded with unrelated holiday props."
       ],
       "coverNote": "Thanksgiving photos work best with clear source faces and a specific card, dinner, group, or keepsake goal.",
-      "safetyNote": "Ask permission before uploading or sharing family and group photos."
+      "safetyNote": "Ask permission before uploading or sharing family and group photos.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:thanksgiving-photo",
+      "copyRevision": "2026-08-18.thanksgiving-photo",
+      "seoTitle": "AI Thanksgiving Photos for Gratitude Cards & Dinner Portraits | myDreamshoots",
+      "galleryTitle": "12 AI Thanksgiving Photo Examples for Gratitude Cards and Family Keepsakes",
+      "galleryIntro": "Review gratitude-card, Friendsgiving, dinner-table, group, and private family keepsake examples before creating.",
+      "ctaEyebrow": "Start the Thanksgiving set",
+      "ctaTitle": "Create Thanksgiving photos in your private studio.",
+      "ctaSubtitle": "Turn approved photos into gratitude cards, dinner-table scenes, Friendsgiving crops, group portraits, and warm family-style keepsakes.",
+      "ctaLabel": "Create Thanksgiving Photos",
+      "faqEyebrow": "Thanksgiving FAQ",
+      "faqTitle": "Thanksgiving photos before you create",
+      "faqItems": [
+        {
+          "id": "thanksgiving_separate_friends_family_portraits",
+          "question": "Can I build a Friendsgiving or family scene from separate portraits?",
+          "answer": "Use the source-photo options supported by the current creation flow. When separate references are accepted, choose clear images with similar lighting and recent appearance, then review every face, hand, and person-to-person interaction in the finished scene."
+        },
+        {
+          "id": "thanksgiving_group_recognition",
+          "question": "How can I keep every family member recognizable in a group image?",
+          "answer": "Use balanced references for each person rather than one strong portrait and several low-quality crops. Review each face individually, especially smaller faces farther from the camera, because group generations can vary in identity and expression."
+        },
+        {
+          "id": "thanksgiving_layout_choice",
+          "question": "Which layout works for a gratitude card, dinner invitation, or social post?",
+          "answer": "Choose the final use before generating: a horizontal or vertical layout for a card, a text-safe invitation composition, or a square or vertical crop for social media. Add exact greetings and event details afterward."
+        },
+        {
+          "id": "thanksgiving_dinner_scene_review",
+          "question": "What details need extra review in a Thanksgiving dinner scene?",
+          "answer": "Inspect hands, cutlery, glasses, plates, food, table edges, and repeated objects at full size. These small scene details may look plausible at first glance but still need review before printing or sharing."
+        }
+      ],
+      "relatedEyebrow": "Related gathering ideas",
+      "relatedTitle": "More gratitude and dinner photo ideas",
+      "relatedSubtitle": "Compare Thanksgiving, Holiday, Christmas, and group-friendly themes before choosing a set.",
+      "relatedCtaLabel": "View all packages"
     },
     "headshot": {
       "headline": "AI Headshots for LinkedIn, Resumes, Founder Bios, and Team Pages",
@@ -1046,7 +1268,44 @@
         "Check that products, faces, and hands look natural before using an image in ads."
       ],
       "coverNote": "Black Friday images work best when the source photo and intended channel are clear: banner, feed post, ad, or storefront hero.",
-      "safetyNote": "Only use products, logos, brand assets, and promotional claims that you own or have permission to advertise."
+      "safetyNote": "Only use products, logos, brand assets, and promotional claims that you own or have permission to advertise.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:black-friday",
+      "copyRevision": "2026-08-18.black-friday",
+      "seoTitle": "AI Black Friday Photos for Sale Banners & Social Ads | myDreamshoots",
+      "galleryTitle": "12 AI Black Friday Photo Examples for Sale Banners and Social Ads",
+      "galleryIntro": "Review sale banner, social ad, shopping feed, product promo, creator campaign, and Cyber Week examples before starting.",
+      "ctaEyebrow": "Start the campaign set",
+      "ctaTitle": "Create Black Friday campaign images in your private studio.",
+      "ctaSubtitle": "Turn approved product or creator photos into sale banners, social ads, shopping-feed visuals, storefront promos, and Cyber Week campaign drafts.",
+      "ctaLabel": "Create Black Friday Photos",
+      "faqEyebrow": "Black Friday FAQ",
+      "faqTitle": "Black Friday photos before you create",
+      "faqItems": [
+        {
+          "id": "black_friday_campaign_formats",
+          "question": "Which formats should I plan for a Black Friday campaign?",
+          "answer": "Plan text-safe crops for the channels you actually use, such as a square or 4:5 feed post, a 9:16 story, a wide website or email banner, and a product or creator promo card. Confirm the final dimensions in your design tool before publishing."
+        },
+        {
+          "id": "black_friday_price_claims",
+          "question": "When should I add prices, discount percentages, coupon codes, and dates?",
+          "answer": "Add them after image generation in a design tool. Prices, percentages, coupon codes, dates, availability, and legal offer terms must be copied from the verified campaign source rather than generated inside the image."
+        },
+        {
+          "id": "black_friday_brand_assets",
+          "question": "Can I use product photos, logos, or other brand assets?",
+          "answer": "Only use assets you own or are authorized to use. Keep approved product and brand files separate where possible, then place exact logos and small text during final design because generated marks and lettering may be inaccurate."
+        },
+        {
+          "id": "black_friday_vs_general_creator_image",
+          "question": "How is Black Friday different from a general product or creator image?",
+          "answer": "Black Friday should be campaign-oriented, with high-contrast retail styling, clear offer space, sale-focused crops, and channel-ready layouts. A general product or creator image does not need the same promotion, countdown, or Cyber Week context."
+        }
+      ],
+      "relatedEyebrow": "Related campaign ideas",
+      "relatedTitle": "More sale and campaign photo ideas",
+      "relatedSubtitle": "Compare product, creator, shopping, and campaign-oriented themes before opening a Black Friday set.",
+      "relatedCtaLabel": "View all packages"
     },
     "only-fans": {
       "headline": "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers",
@@ -1124,7 +1383,44 @@
         "Avoid making the page feel like a breakup joke or generic romance category."
       ],
       "coverNote": "Singles Awareness Day photos perform best with clear solo references and a chosen use case such as profile, card, or social post.",
-      "safetyNote": "Only upload your own photos or images you have permission to use."
+      "safetyNote": "Only upload your own photos or images you have permission to use.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:singles-awareness-day",
+      "copyRevision": "2026-08-18.singles-awareness-day",
+      "seoTitle": "AI Singles Awareness Day Photos for Self-Love & Solo Portraits | myDreamshoots",
+      "galleryTitle": "12 AI Singles Awareness Day Photo Examples for Self-Love and Solo Confidence",
+      "galleryIntro": "Review self-love, solo confidence, dating-profile, independence, and upbeat celebration examples before creating.",
+      "ctaEyebrow": "Start the solo set",
+      "ctaTitle": "Create Singles Awareness Day photos in your private studio.",
+      "ctaSubtitle": "Turn approved solo portraits into self-love cards, confident profile refreshes, independence-themed posts, and upbeat private albums.",
+      "ctaLabel": "Create Singles Awareness Day Photos",
+      "faqEyebrow": "Singles FAQ",
+      "faqTitle": "Singles Awareness Day photos before you create",
+      "faqItems": [
+        {
+          "id": "singles_positive_theme",
+          "question": "Does Singles Awareness Day have to be about a breakup or an anti-Valentine joke?",
+          "answer": "No. The theme can focus on self-confidence, independence, self-gifting, friendship, or a polished solo celebration. Choose a tone that feels positive and intentional rather than treating single status as a negative condition."
+        },
+        {
+          "id": "singles_dating_profile_crop",
+          "question": "Can I prepare a dating-profile crop from the same photo set?",
+          "answer": "A clean, face-centered result may be suitable after review. Choose a natural crop, make sure the image still represents you appropriately, and follow the destination dating platform's rules for edited or AI-generated images."
+        },
+        {
+          "id": "singles_source_photos",
+          "question": "Which source photos make a stronger solo portrait set?",
+          "answer": "Use recent, well-lit photos with a clear face, natural expressions, and a few useful angles. Avoid relying on one heavily filtered selfie, because angle and expression variety helps you review whether the finished set still looks consistent."
+        },
+        {
+          "id": "singles_not_generic_profile",
+          "question": "How can I keep the result from looking like a generic profile portrait?",
+          "answer": "Choose a visible solo-celebration idea such as a self-gift, solo dinner, confident studio look, bold red-and-black styling, or an independence-themed card composition. The setting and purpose should communicate more than a standard headshot."
+        }
+      ],
+      "relatedEyebrow": "Related solo ideas",
+      "relatedTitle": "More solo confidence photo ideas",
+      "relatedSubtitle": "Compare solo, creator, portrait, and romantic seasonal themes before choosing a private photo direction.",
+      "relatedCtaLabel": "View all packages"
     },
     "cyberpunk": {
       "headline": "AI Cyberpunk Photos for Neon City Portraits and Futuristic Profile Art",
@@ -1241,7 +1537,44 @@
         "Avoid protected holiday characters or brand marks unless you have permission."
       ],
       "coverNote": "Holiday photos work best with a clear card, profile, campaign, or keepsake goal.",
-      "safetyNote": "Only upload and share photos of other people with permission."
+      "safetyNote": "Only upload and share photos of other people with permission.",
+      "pageEntityId": "mydreamshoots:ai-image-theme:holiday",
+      "copyRevision": "2026-08-18.holiday",
+      "seoTitle": "AI Holiday Photos for Seasonal Cards & Festive Profiles | myDreamshoots",
+      "galleryTitle": "12 AI Holiday Photo Examples for Seasonal Cards and Festive Profiles",
+      "galleryIntro": "Review broad seasonal card, winter, festive profile, cozy portrait, and neutral year-end examples before creating.",
+      "ctaEyebrow": "Start the holiday set",
+      "ctaTitle": "Create holiday photos in your private studio.",
+      "ctaSubtitle": "Turn approved photos into broad seasonal cards, warm profile crops, neutral festive posts, year-end greetings, and private keepsake albums.",
+      "ctaLabel": "Create Holiday Photos",
+      "faqEyebrow": "Holiday FAQ",
+      "faqTitle": "Holiday photos before you create",
+      "faqItems": [
+        {
+          "id": "holiday_vs_christmas_thanksgiving",
+          "question": "How is Holiday different from Christmas Photo and Thanksgiving Photo?",
+          "answer": "Holiday is the broad seasonal option for winter, year-end, or neutral festive imagery. Christmas Photo is for specifically Christmas cues, while Thanksgiving Photo focuses on autumn gatherings, gratitude cards, Friendsgiving, and dinner-table scenes."
+        },
+        {
+          "id": "holiday_general_occasions",
+          "question": "Which occasions can a general Holiday photo set cover?",
+          "answer": "It can support broad year-end cards, winter portraits, seasonal profile updates, festive posts, and neutral keepsakes when you do not want the image tied to one specific celebration. Choose symbols and wording that fit the audience you plan to share it with."
+        },
+        {
+          "id": "holiday_mood_direction",
+          "question": "How do I choose a cozy, festive, or neutral Holiday direction?",
+          "answer": "Choose one dominant mood and color direction before generating: warm indoor light for cozy, brighter decorations for festive, or restrained winter colors for neutral. Avoid combining several unrelated holidays in one brief unless that is intentional."
+        },
+        {
+          "id": "holiday_year_end_greeting_text",
+          "question": "Can I add a year-end greeting inside the generated image?",
+          "answer": "Use the generated image as the visual and add the exact greeting afterward. Leave clean text space during generation so names, dates, languages, and year-end wording can be added accurately in the final layout."
+        }
+      ],
+      "relatedEyebrow": "Related seasonal ideas",
+      "relatedTitle": "More seasonal and year-end photo ideas",
+      "relatedSubtitle": "Compare broad Holiday, Christmas, Thanksgiving, and romantic seasonal pages before opening a theme.",
+      "relatedCtaLabel": "View all packages"
     },
     "cannes": {
       "headline": "AI Cannes Photos for Festival Glamour, Premiere Looks, and Flash Portraits",
