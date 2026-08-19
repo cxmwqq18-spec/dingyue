@@ -247,7 +247,7 @@ for (const item of expected) {
 const profileCardsPage = site?.pages.find((page) => page.slug === "/blog/profile-cards-photo-package-guide");
 const profileCardsSection = profileCardsPage?.publishedJson?.sections?.blog_detail_1;
 assert(Boolean(profileCardsPage), "/blog/profile-cards-photo-package-guide exists as an independent article");
-assert(profileCardsSection?.settings?.title === "Profile Card Photos: Plan a Consistent Image Set for Personal and Creator Uses", "profile cards has an independent title");
+assert(profileCardsSection?.settings?.title === "Profile Card Photos for Consistent Bios and Social Profiles", "profile cards has an independent title");
 assert(typeof profileCardsSection?.settings?.body === "string" && profileCardsSection.settings.body.length >= 3400, "profile cards has independent substantive guidance");
 assert(!/anime avatar|photo package category|start with headshot/i.test(String(profileCardsSection?.settings?.body ?? "")), "profile cards avoids the old duplicate template");
 assert(profileCardsSection?.settings?.targetHref === "/ai-image-generation/avatar", "profile cards maps to Avatar");

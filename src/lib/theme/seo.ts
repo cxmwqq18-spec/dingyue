@@ -80,6 +80,11 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
   const seo = context.seo;
   const canonical = seo.canonicalUrl;
   const ogImage = absoluteUrl(site, seo.ogImage);
+  const articleSettings = page.publishedJson.sections?.blog_detail_1?.settings;
+  const isArticle = page.slug.startsWith("/blog/") || page.pageType === "article";
+  const articlePublishedTime = isArticle ? settingText(articleSettings?.publishedAt) : undefined;
+  const articleModifiedTime = isArticle ? settingText(articleSettings?.updatedAt) : undefined;
+  const articleImageAlt = isArticle ? settingText(articleSettings?.imageAlt) : undefined;
   return {
     title: seo.title,
     description: seo.description,
@@ -91,7 +96,10 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
       description: seo.description,
       url: canonical,
       siteName: cleanText(context.settings.seo?.siteTitle, brandName(site)),
-      images: ogImage ? [{ url: ogImage }] : undefined
+      ...(isArticle ? { type: "article" as const } : {}),
+      ...(articlePublishedTime ? { publishedTime: articlePublishedTime } : {}),
+      ...(articleModifiedTime ? { modifiedTime: articleModifiedTime } : {}),
+      images: ogImage ? [{ url: ogImage, ...(articleImageAlt ? { alt: articleImageAlt } : {}) }] : undefined
     },
     twitter: {
       card: ogImage ? "summary_large_image" : "summary",

@@ -67,30 +67,21 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
 };
 const DREAMSHOOT_LEGACY_BLOG_CATEGORY_REDIRECTS: Record<string, string> = {
   "ai-video-add-ons": "/blog/video-photo-package-guide",
-  "anime-avatar": "/blog/avatar-photo-package-guide",
   boudoir: "/blog/creative-photo-package-guide",
   "christmas-couple": "/blog/seasonal-photo-package-guide",
   "christmas-photos": "/blog/seasonal-photo-package-guide",
-  "creator-portraits": "/blog/creator-photo-package-guide",
   "desi-wedding": "/blog/cultural-wedding-photo-guide",
   engagement: "/blog/couple-photo-package-guide",
-  "fashion-editorial": "/blog/creator-photo-package-guide",
-  "gala-photos": "/blog/creative-photo-package-guide",
-  hairstyle: "/blog/beauty-style-photo-guide",
   "halloween-party-photos": "/blog/seasonal-photo-package-guide",
   holiday: "/blog/seasonal-photo-package-guide",
   "indian-wedding": "/blog/cultural-wedding-photo-guide",
-  "product-style": "/blog/creator-photo-package-guide",
-  "professional-headshots": "/blog/headshot-photo-package-guide",
-  "profile-cards": "/blog/creator-photo-package-guide",
-  "social-cards": "/blog/creator-photo-package-guide",
+
   "thanksgiving-group-photos": "/blog/seasonal-photo-package-guide"
 };
 const DREAMSHOOT_LEGACY_BLOG_TOOL_REDIRECTS: Record<string, string> = {
   "ai-photo-edit": "/blog/utility-image-prep-guide",
   "album-story-video": "/blog/video-photo-package-guide",
   "animated-avatar": "/blog/avatar-photo-package-guide",
-  "anime-avatar": "/blog/avatar-photo-package-guide",
   "background-changer": "/blog/utility-image-prep-guide",
   "background-remover": "/blog/utility-image-prep-guide",
   "color-correction": "/blog/utility-image-prep-guide",

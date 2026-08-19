@@ -2,6 +2,10 @@ import "./load-runtime-env.mjs";
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
+import {
+  MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS,
+  mydreamshootsBlogSeoRemediationArticles
+} from "./mydreamshoots-blog-seo-remediation-articles.mjs";
 
 const statePath = path.join(process.cwd(), "data/platform-state.json");
 const mydreamshootsTaxonomyPath = path.join(process.cwd(), "src", "lib", "mydreamshoots-theme-taxonomy.json");
@@ -17,13 +21,10 @@ const MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS = [
   "/blog/wedding-portraits-photo-package-guide",
   "/blog/world-cup-fan-photos-photo-package-guide"
 ];
-const MYDREAMSHOOTS_OPTIONAL_REMEDIATION_BLOG_SLUGS = [
-  "/blog/profile-cards-photo-package-guide"
-];
 const SOCCER_MIGRATION_APPROVED = process.env.MDS_SOCCER_MIGRATION_APPROVED === "1";
 const mydreamshootsPriorityBlogSlugSet = new Set([
   ...MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS,
-  ...MYDREAMSHOOTS_OPTIONAL_REMEDIATION_BLOG_SLUGS
+  ...MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS
 ]);
 
 function cliOption(name) {
@@ -1477,9 +1478,12 @@ function imageShaForUrl(imageUrl) {
 }
 
 function assertUniqueArticleCovers(config) {
+  const articlesToCheck = config.siteId === MYDREAMSHOOTS_SITE_ID
+    ? config.articles.filter((article) => mydreamshootsPriorityBlogSlugSet.has(article.slug))
+    : config.articles;
   const seenUrls = new Map();
   const seenShas = new Map();
-  for (const article of config.articles) {
+  for (const article of articlesToCheck) {
     if (!article.imageUrl) {
       throw new Error(`${config.slug}${article.slug} is missing imageUrl`);
     }
@@ -1501,10 +1505,22 @@ function assertUniqueArticleCovers(config) {
 
 function assertMyDreamShootsArticleFacts(config) {
   if (config.siteId !== MYDREAMSHOOTS_SITE_ID) return;
+  const seoRemediationSlugs = new Set(MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS);
   for (const slug of mydreamshootsPriorityBlogSlugSet) {
     const article = config.articles.find((item) => item.slug === slug);
     if (!article) continue;
-    const required = ["entityName", "productSlug", "userIntent", "inputRequirements", "verifiedLimitations", "reviewChecklist", "rightsWarnings", "evidenceType", "evidenceDate"];
+    const required = [
+      "entityName",
+      ...(seoRemediationSlugs.has(slug) ? ["primaryKeyword", "searchIntent"] : []),
+      "productSlug",
+      "userIntent",
+      "inputRequirements",
+      "verifiedLimitations",
+      "reviewChecklist",
+      "rightsWarnings",
+      "evidenceType",
+      "evidenceDate"
+    ];
     const missing = required.filter((key) => {
       const value = article[key];
       return Array.isArray(value) ? value.length === 0 : !String(value ?? "").trim();
@@ -1517,7 +1533,7 @@ function assertMyDreamShootsArticleFacts(config) {
       throw new Error(`${slug} must declare related guides through the editorial whitelist.`);
     }
     for (const link of article.relatedLinks) {
-      if (!link || typeof link.href !== "string" || !/^\/(?:ai-image-generation|blog|policies)\//.test(link.href)) {
+      if (!link || typeof link.href !== "string" || !/^\/(?:ai-image-generation(?:\/|$)|blog\/|policies\/|content$)/.test(link.href)) {
         throw new Error(`${slug} has a non-local related guide href: ${String(link?.href ?? "")}`);
       }
     }
@@ -1918,6 +1934,13 @@ for (const config of siteConfigs) {
         ...config.articles,
         ...buildCoverageArticles(sourceState, config.siteId, config.brand, config.articles)
       ];
+  if (config.siteId === MYDREAMSHOOTS_SITE_ID) {
+    const remediationSlugs = new Set(MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS);
+    config.articles = [
+      ...config.articles.filter((article) => !remediationSlugs.has(article.slug)),
+      ...mydreamshootsBlogSeoRemediationArticles.map((article) => makePriorityBlogArticle(article))
+    ];
+  }
   if (config.siteId === MYDREAMSHOOTS_SITE_ID && SOCCER_MIGRATION_APPROVED && !config.articles.some((article) => article.slug === "/blog/soccer-fan-photo-guide")) {
     const legacySoccerArticle = config.articles.find((article) => article.slug === "/blog/world-cup-fan-photos-photo-package-guide");
     if (legacySoccerArticle) {
@@ -2083,6 +2106,8 @@ function makeArticleJson(config, article, existingPage, sourceArticlePage) {
     secondaryTargetLabel: article.secondaryTargetLabel,
     secondaryTargetHref: article.secondaryTargetHref,
     entityName: article.entityName,
+    primaryKeyword: article.primaryKeyword,
+    searchIntent: article.searchIntent,
     productSlug: article.productSlug,
     userIntent: article.userIntent,
     suitableUses: clone(article.suitableUses ?? []),

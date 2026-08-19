@@ -248,6 +248,11 @@ function normalizeSitemapDate(value: unknown): string | undefined {
   return Number.isFinite(timestamp) ? new Date(timestamp).toISOString() : undefined;
 }
 
+function pageContentLastModified(page: ThemePage, fallback: unknown): string | undefined {
+  const articleUpdatedAt = page.publishedJson.sections?.blog_detail_1?.settings?.updatedAt;
+  return normalizeSitemapDate(articleUpdatedAt ?? page.updatedAt ?? fallback);
+}
+
 function isCollectionDirectoryPath(path: string): boolean {
   return path === "/collections" || path.startsWith("/collections/") || path === "/ai-image-generation" || path.startsWith("/ai-image-generation/");
 }
@@ -469,7 +474,7 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
     entries.set(loc, {
       loc,
       images: collectPageSitemapImages(site, page),
-      lastmod: normalizeSitemapDate(page.updatedAt ?? snapshot.publication?.publishedAt),
+      lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
       changefreq: sitemapChangeFrequencyForPath(path),
       priority: sitemapPriorityForPath(path)
       });

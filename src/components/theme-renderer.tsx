@@ -3202,6 +3202,8 @@ type StorefrontImageProps = {
   src: string;
   alt?: string;
   className?: string;
+  width?: number;
+  height?: number;
   sizes?: string;
   priority?: boolean;
   loading?: "eager" | "lazy";
@@ -3323,6 +3325,8 @@ function StorefrontImage({
   src,
   alt,
   className,
+  width,
+  height,
   sizes = "(max-width: 768px) 100vw, 33vw",
   priority = false,
   loading,
@@ -3344,8 +3348,10 @@ function StorefrontImage({
         className={resolvedClassName}
         decoding={priority ? "sync" : "async"}
         fetchPriority={resolvedFetchPriority}
+        height={height}
         loading={resolvedLoading}
         src={resolvedSrc}
+        width={width}
         {...previewAttrs}
       />
     );
@@ -7787,6 +7793,8 @@ function renderLegacySaasSection({
               src={coverImage}
               alt={sectionVisualAltForSite(site, section, coverImage, title, { description: summary, explicitAlt: setting(section, "imageAlt", ""), role: "cover" })}
               preview={false}
+              width={1024}
+              height={1024}
               sizes="(max-width: 768px) 100vw, 896px"
             />
           </div>

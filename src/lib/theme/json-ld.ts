@@ -340,12 +340,16 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
   const address = companyAddressSchema(profile);
   const identifiers = companyIdentifiers(profile);
   const sameAs = (context?.profile?.identity.sameAs ?? []).filter((url) => /^https?:\/\//i.test(url));
+  const logo = isPrimaryMyDreamShootsSite(site)
+    ? absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
+    : undefined;
   return {
     "@type": "Organization",
     "@id": `${storefrontBaseUrl(site, routeMode)}#organization`,
     name: siteBrandName(site),
     ...(profile.legalName ? { legalName: profile.legalName } : {}),
     url: storefrontBaseUrl(site, routeMode),
+    ...(logo ? { logo: { "@type": "ImageObject", url: logo, contentUrl: logo } } : {}),
     description: cleanSchemaText(site, site.branding.description),
     ...(profile.email ? { email: profile.email } : {}),
     ...(profile.phone ? { telephone: profile.phone } : {}),
@@ -501,7 +505,14 @@ function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string,
     publisher: {
       "@type": "Organization",
       name: siteBrandName(site),
-      url: storefrontBaseUrl(site, routeMode)
+      url: storefrontBaseUrl(site, routeMode),
+      ...(isPrimaryMyDreamShootsSite(site) ? {
+        logo: {
+          "@type": "ImageObject",
+          url: absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b"),
+          contentUrl: absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
+        }
+      } : {})
     },
     mainEntityOfPage: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath)),
     ...(datePublished ? { datePublished } : {}),

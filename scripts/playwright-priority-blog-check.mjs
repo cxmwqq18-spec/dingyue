@@ -55,8 +55,65 @@ const pages = [
     h1: "AI Soccer Fan Photos: Match-Day Posters Without Official Marks",
     targetHrefs: ["/ai-image-generation/soccer"],
     forbiddenVisibleText: /world cup/i
+  },
+  {
+    slug: "/blog/anime-avatar-photo-package-guide",
+    h1: "How to Plan an Anime Avatar Photo Set",
+    targetHrefs: ["/ai-image-generation/avatar"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/creator-portraits-photo-package-guide",
+    h1: "Creator Portraits for Media Kits, Thumbnails, and Brand Profiles",
+    targetHrefs: ["/ai-image-generation/portrait-photo"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/fashion-editorial-photo-package-guide",
+    h1: "How to Plan AI Fashion Editorial Photos",
+    targetHrefs: ["/ai-image-generation"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/gala-photos-photo-package-guide",
+    h1: "AI Gala Photos for Formal and Evening Portraits",
+    targetHrefs: ["/ai-image-generation/gala-photo"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/hairstyle-photo-package-guide",
+    h1: "AI Hairstyle Preview: What to Prepare and What to Check",
+    targetHrefs: ["/ai-image-generation/hairstyle-generator"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/product-style-photo-package-guide",
+    h1: "AI Product Style Photos for Lifestyle and Campaign Drafts",
+    targetHrefs: ["/ai-image-generation"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/professional-headshots-photo-package-guide",
+    h1: "Professional AI Headshots for LinkedIn, Resumes, and Team Profiles",
+    targetHrefs: ["/ai-image-generation/headshot"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/profile-cards-photo-package-guide",
+    h1: "Profile Card Photos for Consistent Bios and Social Profiles",
+    targetHrefs: ["/ai-image-generation/avatar"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/social-cards-photo-package-guide",
+    h1: "AI Social Card Photos for Shareable Content and Publishing",
+    targetHrefs: ["/ai-image-generation"],
+    dateModified: "2026-08-19"
   }
 ];
+const selectedPages = process.env.BLOG_PRIORITY_SCOPE === "seo-remediation"
+  ? pages.filter((page) => page.dateModified === "2026-08-19")
+  : pages;
 
 const viewports = {
   desktop: { width: 1440, height: 1000 },
@@ -101,8 +158,13 @@ async function inspect(context, spec, routeKind, viewportName, index) {
 
   let responseStatus = null;
   let location = "";
+  let headStatus = null;
+  let headLocation = "";
   let navigationError = null;
   try {
+    const headResponse = await context.request.head(requestedUrl, { maxRedirects: 0, timeout: 15_000 });
+    headStatus = headResponse.status();
+    headLocation = headResponse.headers().location ?? "";
     const response = await context.request.get(requestedUrl, { maxRedirects: 0, timeout: 15_000 });
     responseStatus = response.status();
     location = response.headers().location ?? "";
@@ -178,6 +240,12 @@ async function inspect(context, spec, routeKind, viewportName, index) {
         postingDateModified: posting?.dateModified ?? "",
         postingImage: posting?.image ?? "",
         postingMainEntity: typeof posting?.mainEntityOfPage === "string" ? posting.mainEntityOfPage : posting?.mainEntityOfPage?.["@id"] ?? "",
+        ogType: document.querySelector('meta[property="og:type"]')?.getAttribute("content") ?? "",
+        ogPublishedTime: document.querySelector('meta[property="article:published_time"]')?.getAttribute("content") ?? "",
+        ogModifiedTime: document.querySelector('meta[property="article:modified_time"]')?.getAttribute("content") ?? "",
+        articleImageDimensions: images.map((image) => ({ width: image.getAttribute("width") ?? "", height: image.getAttribute("height") ?? "" })),
+        organizationCount: structuredData.filter((entry) => entry?.["@type"] === "Organization").length,
+        breadcrumbCount: structuredData.filter((entry) => entry?.["@type"] === "BreadcrumbList").length,
         viewportWidth: document.documentElement.clientWidth,
         documentScrollWidth: document.documentElement.scrollWidth,
         overflowingArticleElements
@@ -198,6 +266,8 @@ async function inspect(context, spec, routeKind, viewportName, index) {
   const failures = [];
   if (responseStatus !== 200) failures.push(`expected HTTP 200, received ${responseStatus}`);
   if (location) failures.push(`unexpected redirect location ${location}`);
+  if (headStatus !== 200) failures.push(`expected HEAD 200, received ${headStatus}`);
+  if (headLocation) failures.push(`unexpected HEAD redirect location ${headLocation}`);
   if (navigationError) failures.push(navigationError);
   if (signals.title === "") failures.push("missing title");
   if ((signals.description ?? "").length < 80) failures.push("meta description is missing or too short");
@@ -218,7 +288,12 @@ async function inspect(context, spec, routeKind, viewportName, index) {
   if (signals.faqSchemaCount !== 0) failures.push(`unexpected FAQPage schema count ${signals.faqSchemaCount}`);
   if (signals.postingHeadline !== spec.h1) failures.push(`BlogPosting headline mismatch: ${signals.postingHeadline || "<missing>"}`);
   if (signals.postingAuthorType !== "Organization") failures.push(`BlogPosting author type is ${signals.postingAuthorType || "<missing>"}`);
-  if (signals.postingDateModified !== "2026-08-18") failures.push(`BlogPosting dateModified is ${signals.postingDateModified || "<missing>"}`);
+  if (signals.postingDateModified !== (spec.dateModified ?? "2026-08-18")) failures.push(`BlogPosting dateModified is ${signals.postingDateModified || "<missing>"}`);
+  if (spec.dateModified && signals.ogType !== "article") failures.push(`Open Graph type is ${signals.ogType || "<missing>"}`);
+  if (spec.dateModified && !signals.ogPublishedTime) failures.push("article published time is missing");
+  if (spec.dateModified && !signals.ogModifiedTime) failures.push("article modified time is missing");
+  if (spec.dateModified && (signals.organizationCount < 1 || signals.breadcrumbCount < 1)) failures.push("Organization or BreadcrumbList schema is missing");
+  if (spec.dateModified && (signals.articleImageDimensions ?? []).some((item) => !item.width || !item.height)) failures.push("article cover image dimensions are missing");
   if (!signals.postingImage) failures.push("BlogPosting image is missing");
   if (signals.postingMainEntity !== expectedCanonical) failures.push(`BlogPosting canonical mismatch: ${signals.postingMainEntity || "<missing>"}`);
   if ((signals.documentScrollWidth ?? 0) > (signals.viewportWidth ?? 0) + 1) failures.push(`document overflows horizontally: ${signals.documentScrollWidth}px > ${signals.viewportWidth}px`);
@@ -237,6 +312,8 @@ async function inspect(context, spec, routeKind, viewportName, index) {
     requestedUrl,
     status: responseStatus,
     location,
+    headStatus,
+    headLocation,
     screenshot: responseStatus === 200 ? screenshotName : "",
     navigationError,
     browserErrors,
@@ -251,7 +328,7 @@ const results = [];
 for (const [routeKind, extraHTTPHeaders] of [["host", { "x-forwarded-host": "www.mydreamshoots.com" }], ["site", {}]]) {
   for (const [viewportName, viewport] of Object.entries(viewports)) {
     const context = await browser.newContext({ extraHTTPHeaders, viewport });
-    for (const [index, spec] of pages.entries()) {
+    for (const [index, spec] of selectedPages.entries()) {
       results.push(await inspect(context, spec, routeKind, viewportName, index));
     }
     await context.close();
@@ -263,7 +340,7 @@ const desktopHostResults = results.filter((result) => result.routeKind === "host
 const globalFailures = [];
 for (const field of ["title", "description", "h1"]) {
   const values = desktopHostResults.map((result) => result[field]);
-  if (new Set(values).size !== pages.length) globalFailures.push(`${field} values are not unique across all nine pages`);
+  if (new Set(values).size !== selectedPages.length) globalFailures.push(`${field} values are not unique across selected pages`);
 }
 
 const report = {
