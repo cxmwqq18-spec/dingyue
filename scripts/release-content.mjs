@@ -77,6 +77,7 @@ function hashValue(value) {
 
 function sanitize(value, key = "") {
   if (secretKeyPattern.test(key)) return undefined;
+  if (value instanceof Date) return value.toISOString();
   if (Array.isArray(value)) return value.map((item) => sanitize(item)).filter((item) => item !== undefined);
   if (value && typeof value === "object") {
     const next = {};
