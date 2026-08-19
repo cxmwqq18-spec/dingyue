@@ -1067,6 +1067,9 @@ export function buildCollectionDirectoryJsonLd({
   context: StorefrontContext;
 }): JsonLdNode[] {
   const pageSlug = canonicalCollectionSlugForCandidate(site, collectionSlug) || slugifySchemaPart(collectionSlug);
+  if (isPrimaryMyDreamShootsSite(site) && collectionRefs && (!context.pageCopy || !collectionRefs.some((ref) => ref.status === "published" && ref.collectionSlug === pageSlug))) {
+    return [];
+  }
   const pagePath = pageSlug ? canonicalSeoDirectoryPathForSite(site, "collection", pageSlug) : canonicalSeoDirectoryPathForSite(site, "collection", "");
   const collectionLabel = cleanText(collectionSlug, pageSlug).replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()) || "Photo Packages";
   const fallbackCollectionLabel = isSpanishXbySite(site) ? "Paquetes de fotos" : collectionLabel;

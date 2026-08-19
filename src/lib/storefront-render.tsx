@@ -2584,7 +2584,7 @@ export async function renderStorefrontPage({
   const stateSite = state.sites.find((item) => item.id === site.id);
   if (!stateSite) notFound();
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
-  if (publishedSnapshot.snapshotIntegrity === "invalid") notFound();
+  if (publishedSnapshot.snapshotIntegrity !== "valid" && stateSite.id === "site_dreamshoot") notFound();
   const immutableSeoProjection = publishedSnapshot.snapshotIntegrity === "valid" && publishedSnapshot.publication?.snapshot.seoProjectionVersion === 1;
   const shouldCompletePublicPacks = !immutableSeoProjection && !preferLocalPathModeState(site.slug);
   const currentSite = publishedSnapshot.site;
@@ -2800,15 +2800,19 @@ export async function renderStorefrontSectionPayloads({
   const requestSlug = slug;
   const internalSlug = internalPageSlugForPublicPath(requestSlug);
   const requestQuery = queryWithPublicCollectionCategory(requestSlug, query);
-  const shouldCompletePublicPacks = !(routeMode === "path" && preferLocalPathModeState(publicSlug));
   const state = await getPublicSectionStateForRoute(publicSlug, internalSlug, routeMode, requestedSectionIds, requestQuery);
   if (!state) return [];
-  const currentSite = state.sites.find((item) =>
+  const stateSite = state.sites.find((item) =>
     item.slug === siteSlug ||
     publicSiteSlug(item.slug) === publicSlug ||
     canonicalSiteSlug(item.slug) === canonicalSiteSlug(siteSlug)
   );
-  if (!currentSite) return [];
+  if (!stateSite) return [];
+  const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
+  if (publishedSnapshot.snapshotIntegrity !== "valid" && stateSite.id === "site_dreamshoot") return [];
+  const currentSite = publishedSnapshot.site;
+  const immutableSeoProjection = publishedSnapshot.snapshotIntegrity === "valid" && publishedSnapshot.publication?.snapshot.seoProjectionVersion === 1;
+  const shouldCompletePublicPacks = !immutableSeoProjection && !(routeMode === "path" && preferLocalPathModeState(publicSlug));
   const sectionState = state;
   const sectionSite = currentSite;
 
@@ -2817,7 +2821,7 @@ export async function renderStorefrontSectionPayloads({
   const collectionCategory = collectionRoute?.collectionSlug ?? (typeof requestQuery.category === "string" ? requestQuery.category : "");
   const renderPagePath = collectionRoute?.canonicalPath ?? requestSlug;
   const isFocusedCollectionPage = internalSlug === "/collections" && Boolean(collectionCategory);
-  const renderData = getSiteRenderData(state, currentSite.id);
+  const renderData = getPublishedSiteRenderData(state, publishedSnapshot);
   currentSite.mediaAssets = renderData.mediaAssets;
   const toolDetailSlug = internalSlug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
   const resolvedToolDetail = toolDetailSlug
@@ -2851,7 +2855,7 @@ export async function renderStorefrontSectionPayloads({
 
   const settings = currentSite.themeSettings.publishedJson;
   const renderedPage = { ...directPage, publishedJson: pageJson };
-  const storefrontContext = resolvePublishedStorefrontContext(createPublishedSiteSnapshot(sectionState, currentSite), renderedPage);
+  const storefrontContext = resolvePublishedStorefrontContext(publishedSnapshot, renderedPage);
   const runtimeByMode = new Map<"empty" | "full" | "light", Promise<ThemeRuntimeData>>();
   let sectionSessionId: string | undefined;
   async function runtimeForSection(singleSectionPageJson: ThemePageJson, section: SectionInstance): Promise<ThemeRuntimeData | undefined> {
@@ -2986,22 +2990,26 @@ export async function renderStorefrontSectionPayload({
   const requestSlug = slug;
   const internalSlug = internalPageSlugForPublicPath(requestSlug);
   const requestQuery = queryWithPublicCollectionCategory(requestSlug, query);
-  const shouldCompletePublicPacks = !(routeMode === "path" && preferLocalPathModeState(publicSlug));
   const state = await getPublicSectionStateForRoute(publicSlug, internalSlug, routeMode, [sectionId], requestQuery);
   if (!state) return undefined;
-  const currentSite = state.sites.find((item) =>
+  const stateSite = state.sites.find((item) =>
     item.slug === siteSlug ||
     publicSiteSlug(item.slug) === publicSlug ||
     canonicalSiteSlug(item.slug) === canonicalSiteSlug(siteSlug)
   );
-  if (!currentSite) return undefined;
+  if (!stateSite) return undefined;
+  const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
+  if (publishedSnapshot.snapshotIntegrity !== "valid" && stateSite.id === "site_dreamshoot") return undefined;
+  const currentSite = publishedSnapshot.site;
+  const immutableSeoProjection = publishedSnapshot.snapshotIntegrity === "valid" && publishedSnapshot.publication?.snapshot.seoProjectionVersion === 1;
+  const shouldCompletePublicPacks = !immutableSeoProjection && !(routeMode === "path" && preferLocalPathModeState(publicSlug));
 
   const collectionRoute = isCollectionPublicPath(requestSlug) ? parsePublicCollectionRouteForSite(currentSite, requestSlug) : undefined;
   if (isCollectionPublicPath(requestSlug) && !collectionRoute) return undefined;
   const collectionCategory = collectionRoute?.collectionSlug ?? (typeof requestQuery.category === "string" ? requestQuery.category : "");
   const renderPagePath = collectionRoute?.canonicalPath ?? requestSlug;
   const isFocusedCollectionPage = internalSlug === "/collections" && Boolean(collectionCategory);
-  const renderData = getSiteRenderData(state, currentSite.id);
+  const renderData = getPublishedSiteRenderData(state, publishedSnapshot);
   currentSite.mediaAssets = renderData.mediaAssets;
   const toolDetailSlug = internalSlug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
   const resolvedToolDetail = toolDetailSlug
@@ -3039,7 +3047,7 @@ export async function renderStorefrontSectionPayload({
   };
   const settings = currentSite.themeSettings.publishedJson;
   const renderedPage = { ...directPage, publishedJson: pageJson };
-  const storefrontContext = resolvePublishedStorefrontContext(createPublishedSiteSnapshot(state, currentSite), renderedPage);
+  const storefrontContext = resolvePublishedStorefrontContext(publishedSnapshot, renderedPage);
   let pageRenderData = withPageMediaAssets(
     currentSite,
     singleSectionPageJson,
@@ -3502,8 +3510,9 @@ export async function renderToolPage({
   const stateSite = state.sites.find((item) => item.id === site.id);
   if (!stateSite) notFound();
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
+  if (publishedSnapshot.snapshotIntegrity !== "valid" && stateSite.id === "site_dreamshoot") notFound();
   const currentSite = publishedSnapshot.site;
-  const renderData = getSiteRenderData(state, currentSite.id);
+  const renderData = getPublishedSiteRenderData(state, publishedSnapshot);
   const candidate = resolvedPage
     ? { page: resolvedPage, matched: true }
     : resolveToolPageForSite(state, currentSite, toolSlug, renderData.siteAiApps, renderData.creativePacks);
