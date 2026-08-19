@@ -813,6 +813,18 @@ export interface ThemePublication {
     themeSettings: ThemeSettings;
     storefrontProfile?: StorefrontProfileJson;
     saasTheme?: unknown;
+    seoProjectionVersion?: 1;
+    publishedRoutes?: unknown[];
+    publishedPageCopy?: unknown[];
+    publishedPageMedia?: unknown[];
+    publishedPackFacts?: unknown[];
+    publishedCollectionRefs?: unknown[];
+    revisions?: {
+      factsRevision?: string;
+      routeRevision?: string;
+      copyRevision?: string;
+      mediaRevision?: string;
+    };
   };
   pageCount?: number;
   sectionCount?: number;

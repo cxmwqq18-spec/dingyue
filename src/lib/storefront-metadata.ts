@@ -69,10 +69,12 @@ export async function metadataForPublishedStorefrontDirectoryPage({
   const publishedBasePage = snapshot?.pages.find((candidate) => candidate.id === page.id) ?? page;
   const publishedSite = snapshot?.site ?? site;
   const route = publishedSite.id === "site_dreamshoot" && kind === "collection"
-    ? mydreamshootsPublishedRouteForSlug(directorySlug)
+    ? snapshot?.publishedRoutes.find((candidate) => candidate.canonicalSlug === directorySlug)
+      ?? (!snapshot ? mydreamshootsPublishedRouteForSlug(directorySlug) : undefined)
     : undefined;
   const pageMedia = route
-    ? resolveMydreamshootsPublishedPageMedia(route, snapshot?.creativePacks ?? creativePacks)
+    ? snapshot?.publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId)
+      ?? resolveMydreamshootsPublishedPageMedia(route, snapshot?.creativePacks ?? creativePacks)
     : undefined;
   const resolvedPage = {
     ...publishedBasePage,

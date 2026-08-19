@@ -241,6 +241,8 @@
       "slug": "black-friday",
       "sourceCategorySlug": "creator-portraits",
       "reusePackId": "pack_dreamshoot_black_friday",
+      "mediaReviewStatus": "review_required",
+      "mediaReviewReason": "PAGE_COPY_MEDIA_ENTITY_MISMATCH",
       "groupSlug": "professional",
       "label": "Black Friday",
       "description": "Create bold Black Friday campaign portraits, sale-ready creator visuals, dark studio images, and seasonal promotional album concepts.",

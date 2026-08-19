@@ -1,4 +1,5 @@
 import type { CreativePack, CreativePackCategory, MediaAsset, Price, Product, Site, StorefrontProfileJson, ThemePage, ThemePageJson, ThemePublication, ThemeSettings, VideoTheme } from "@/lib/types";
+import type { MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 
 export type StorefrontContextMode = "draft" | "published";
 
@@ -119,6 +120,7 @@ export type StorefrontContext = {
   capability: SiteCapability;
   indexability: EffectiveIndexability;
   missingFacts: string[];
+  pageCopy?: MyDreamshootsPageCopy;
   publishedPaths?: string[];
 };
 
@@ -130,6 +132,7 @@ export type StorefrontContextBundle = {
   publication?: ThemePublication;
   factsRevision?: string;
   buildId?: string;
+  publishedPageCopies?: Record<string, MyDreamshootsPageCopy>;
 };
 
 export interface PublishedStorefrontContextAdapter {
@@ -169,6 +172,11 @@ export type PublishedSiteSnapshot = {
     mediaEntityId: string;
     reviewReason?: string;
   }>;
+  publishedPageCopy: Array<{ pageEntityId: string; copyRevision: string; canonicalSlug: string; copy: MyDreamshootsPageCopy }>;
+  publishedPageMedia: Array<{ mediaEntityId: string; ownerPageEntityId: string; sourcePackId: string; role: "hero"; pageEntityId: string; entityRevision: string; packId: string; primaryImage: string; galleryImages: string[]; imageAlts: string[]; status: "ready" | "review_required"; reviewReason?: string }>;
+  publishedPackFacts: Array<{ packId: string; creditCost: number; outputCount: number; revision: string }>;
+  publishedCollectionRefs: Array<Record<string, unknown>>;
+  snapshotRevisions: { factsRevision?: string; routeRevision?: string; copyRevision?: string; mediaRevision?: string };
   products: Product[];
   creativePacks: CreativePack[];
   creativePackCategories: CreativePackCategory[];

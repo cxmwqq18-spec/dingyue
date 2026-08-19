@@ -14,7 +14,6 @@ import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
-import { resolveMydreamshootsPublishedPageMedia } from "@/lib/mydreamshoots-published-contract";
 import type { CreativePack, PlatformState, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
@@ -491,7 +490,7 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
   }
   if (site.id === "site_dreamshoot" && collectionPage) {
     for (const route of snapshot.publishedRoutes.filter((candidate) => candidate.indexable && candidate.sitemapEligible)) {
-      const media = resolveMydreamshootsPublishedPageMedia(route, snapshot.creativePacks);
+      const media = snapshot.publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId);
       if (!media || media.status !== "ready") continue;
       const page = {
         ...collectionPage,

@@ -32,13 +32,17 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
   const description = clean(pageSeo?.description);
   const path = normalizeCanonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
   const defaultIndex = bundle.page.pageType !== "not_found" && bundle.page.slug !== "/404";
+  const pageScopedSocial = bundle.site.id === "site_dreamshoot" && (
+    path === "/about-us" || path === "/faq" || path === "/pricing" || path === "/workflow" ||
+    path === "/best-ai-image" || path === "/ai-image-generation" || /^\/ai-image-generation\//.test(path)
+  );
   return {
     title: applyTitleTemplate(rawTitle, settings, brand),
     description,
     keywords: clean(pageSeo?.keywords) || clean(settings.seo?.siteKeywords) || undefined,
     canonicalPath: path,
     canonicalUrl: canonicalUrlForSite(bundle.site, path),
-    ogImage: clean(pageSeo?.ogImage) || clean(settings.seo?.defaultOgImage) || undefined,
+    ogImage: clean(pageSeo?.ogImage) || (pageScopedSocial ? undefined : clean(settings.seo?.defaultOgImage) || undefined),
     index: defaultIndex && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true),
     follow: pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true,
     sitemapEligible: defaultIndex && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true)
@@ -191,7 +195,9 @@ export function resolveStorefrontContext(
   const seo = resolveSeo(bundle, pageJson, settings);
   const missingFacts = missingStorefrontProfileFacts(profile);
   const pageCopySlug = seo.canonicalPath.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1];
-  const pageCopy = pageCopySlug
+  const pageCopy = pageCopySlug && mode === "published" && bundle.publishedPageCopies
+    ? bundle.publishedPageCopies[pageCopySlug]
+    : pageCopySlug
     ? mydreamshootsPageCopyForRoute({
         siteId: bundle.site.id,
         routeKind: "ai-image-theme-leaf",
@@ -230,7 +236,8 @@ export function resolveStorefrontContext(
       follow: seo.follow,
       sitemapEligible: seo.sitemapEligible
     },
-    missingFacts
+    missingFacts,
+    pageCopy
   };
 }
 

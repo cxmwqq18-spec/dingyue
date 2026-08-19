@@ -53,7 +53,7 @@ import type {
   VideoTheme,
   VideoThemeCategory
 } from "@/lib/types";
-import type { PublishPreflightMediaAsset, PublishPreflightProduct, PublishPreflightSiteAiApp } from "@/lib/theme/publish-preflight";
+import type { PublishPreflightCreativePack, PublishPreflightMediaAsset, PublishPreflightProduct, PublishPreflightSiteAiApp } from "@/lib/theme/publish-preflight";
 
 import {
   addAuditLogRelational,
@@ -2814,7 +2814,7 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
   site?: Site;
   dirtyPageIds: string[];
   products: PublishPreflightProduct[];
-  creativePacks: Array<{ id: string; status: string; creditCost: number; outputCount: number }>;
+  creativePacks: PublishPreflightCreativePack[];
   storefrontProfile?: import("@/lib/types").StorefrontProfileJson;
   siteAiApps: PublishPreflightSiteAiApp[];
   mediaAssets: PublishPreflightMediaAsset[];
@@ -2851,7 +2851,7 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
         }>;
         dirtyPageIds: string[];
         products: PublishPreflightProduct[];
-        creativePacks: Array<{ id: string; status: string; creditCost: number; outputCount: number }>;
+        creativePacks: PublishPreflightCreativePack[];
         storefrontProfile?: import("@/lib/types").StorefrontProfileJson;
         siteAiApps: PublishPreflightSiteAiApp[];
         mediaAssets: PublishPreflightMediaAsset[];
@@ -2914,8 +2914,19 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
             WHERE pr."siteId" = s."id"
           ), '[]'::jsonb) AS "products",
           COALESCE((
-            SELECT jsonb_agg(jsonb_build_object('id', cp."id", 'status', cp."status", 'creditCost', cp."creditCost", 'outputCount', cp."outputCount"))
+            SELECT jsonb_agg(jsonb_build_object(
+              'id', cp."id",
+              'status', cp."status",
+              'creditCost', cp."creditCost",
+              'outputCount', cp."outputCount",
+              'category', cp."category",
+              'categoryRecord', CASE WHEN c."id" IS NULL THEN NULL ELSE jsonb_build_object('slug', c."slug") END,
+              'imageUrl', cp."imageUrl",
+              'galleryImages', cp."galleryImages",
+              'galleryImageAlts', cp."galleryImageAlts"
+            ))
             FROM "CreativePack" cp
+            LEFT JOIN "CreativePackCategory" c ON c."id" = cp."categoryId"
             WHERE cp."siteId" = s."id"
           ), '[]'::jsonb) AS "creativePacks",
           CASE WHEN sp."id" IS NULL THEN NULL ELSE sp."draftJson" END AS "storefrontProfile",

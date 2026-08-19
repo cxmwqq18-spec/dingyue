@@ -7,7 +7,6 @@ import { storefrontBaseUrl, storefrontOrigin } from "@/lib/storefront-context/se
 import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
-import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import { mydreamshootsPublishedRouteForSlug, resolveMydreamshootsPublishedPageMedia } from "@/lib/mydreamshoots-published-contract";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
@@ -1104,12 +1103,7 @@ export function buildCollectionDirectoryJsonLd({
   const faqOutputCount = faqPack?.outputCount;
   const faqCreditCost = faqPack?.creditCost;
   const collectionPageCopy = pageSlug && !isSpanishXbySite(site) && isPrimaryMyDreamShootsSite(site)
-    ? mydreamshootsPageCopyForRoute({
-        siteId: site.id,
-        routeKind: "ai-image-theme-leaf",
-        canonicalSlug: item.slug,
-        canonicalPath: canonicalSeoDirectoryPathForSite(site, "collection", item.slug)
-      })
+    ? context.pageCopy
     : undefined;
   const collectionFaqItems = collectionPageCopy
     ? collectionPageCopy.faqItems.map((faqItem) => [faqItem.question, faqItem.answer] as [string, string])

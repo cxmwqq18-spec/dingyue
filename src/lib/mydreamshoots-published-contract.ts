@@ -42,6 +42,9 @@ export type MyDreamshootsPublishedPageMediaProjection = {
   canonicalPath: string;
   pageEntityId: string;
   mediaEntityId: string;
+  ownerPageEntityId: string;
+  sourcePackId: string;
+  role: "hero";
   entityRevision: string;
   packId: string;
   primaryImage: string;
@@ -51,7 +54,7 @@ export type MyDreamshootsPublishedPageMediaProjection = {
   reviewReason?: string;
 };
 
-function normalizeSlug(value: string | null | undefined): string {
+export function normalizePublishedSlug(value: string | null | undefined): string {
   return String(value ?? "")
     .trim()
     .toLowerCase()
@@ -77,7 +80,7 @@ function expectedPackId(item: TaxonomyItem): string {
 
 export function mydreamshootsPublishedRouteManifest(): MyDreamshootsPublishedRouteManifestRow[] {
   return taxonomyItems.map((item) => {
-    const canonicalSlug = normalizeSlug(item.slug);
+    const canonicalSlug = normalizePublishedSlug(item.slug);
     const canonicalPath = `/ai-image-generation/${canonicalSlug}`;
     const pageEntityId = `mydreamshoots:ai-image-theme:${canonicalSlug}`;
     const copy = mydreamshootsPageCopyForSlug(canonicalSlug);
@@ -108,7 +111,7 @@ export function mydreamshootsPublishedRouteManifest(): MyDreamshootsPublishedRou
 }
 
 export function mydreamshootsPublishedRouteForSlug(value: string | null | undefined): MyDreamshootsPublishedRouteManifestRow | undefined {
-  const slug = normalizeSlug(value);
+  const slug = normalizePublishedSlug(value);
   if (!slug) return undefined;
   return mydreamshootsPublishedRouteManifest().find((row) => row.canonicalSlug === slug);
 }
@@ -126,7 +129,7 @@ export function resolveMydreamshootsPublishedPageMedia(
   const pack = creativePacks.find((candidate) => (
     candidate.siteId === route.siteId
     && candidate.status === "active"
-    && normalizeSlug(candidate.categoryRecord?.slug || candidate.category) === route.canonicalSlug
+    && normalizePublishedSlug(candidate.categoryRecord?.slug || candidate.category) === route.canonicalSlug
   ));
   if (!pack) return undefined;
 
@@ -145,6 +148,9 @@ export function resolveMydreamshootsPublishedPageMedia(
     canonicalPath: route.canonicalPath,
     pageEntityId: route.pageEntityId,
     mediaEntityId: route.mediaEntityId,
+    ownerPageEntityId: route.pageEntityId,
+    sourcePackId: pack.id,
+    role: "hero",
     entityRevision: revision([route.pageEntityId, pack.id, images, imageAlts]),
     packId: pack.id,
     primaryImage: images[0] ?? "",

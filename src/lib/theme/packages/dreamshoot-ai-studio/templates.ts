@@ -367,11 +367,11 @@ const homeSections: ThemePageJson["sections"] = {
     },
     [
       block("seasonal_worldcup_1", "seasonal_image", { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: assets.worldCupStadiumPortrait, collectionSlug: "soccer", shape: "tall" }),
-      block("seasonal_worldcup_2", "seasonal_image", { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: assets.worldCupFriendFans, collectionSlug: "gala-photo", shape: "wide" }),
-      block("seasonal_worldcup_3", "seasonal_image", { label: "Match-day Avatar", meta: "Profile-ready crop", imageUrl: assets.worldCupAvatar, collectionSlug: "avatar", shape: "square" }),
+      block("seasonal_worldcup_2", "seasonal_image", { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: assets.worldCupFriendFans, collectionSlug: "soccer", shape: "wide" }),
+      block("seasonal_worldcup_3", "seasonal_image", { label: "Match-day Avatar", meta: "Profile-ready crop", imageUrl: assets.worldCupAvatar, collectionSlug: "soccer", shape: "square" }),
       block("seasonal_worldcup_4", "seasonal_image", { label: "Fan Poster", meta: "Story and feed artwork", imageUrl: assets.worldCupFanPoster, collectionSlug: "soccer", shape: "tall" }),
-      block("seasonal_worldcup_5", "seasonal_image", { label: "Social Story", meta: "Mobile-first layout", imageUrl: assets.worldCupSocialStory, collectionSlug: "thanksgiving-photo", shape: "tall" }),
-      block("seasonal_worldcup_6", "seasonal_image", { label: "Banner / Cover", meta: "Wide campaign image", imageUrl: assets.worldCupBanner, collectionSlug: "holiday", shape: "wide" })
+      block("seasonal_worldcup_5", "seasonal_image", { label: "Social Story", meta: "Mobile-first layout", imageUrl: assets.worldCupSocialStory, collectionSlug: "soccer", shape: "tall" }),
+      block("seasonal_worldcup_6", "seasonal_image", { label: "Banner / Cover", meta: "Wide campaign image", imageUrl: assets.worldCupBanner, collectionSlug: "soccer", shape: "wide" })
     ]
   ),
   featured_christmas_1: section(

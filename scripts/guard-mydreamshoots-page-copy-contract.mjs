@@ -26,6 +26,7 @@ const useCaseProfiles = readJson("src/lib/photo-package-use-case-profiles.json")
 const packProfiles = readJson("src/lib/dreamshoot-pack-profiles.json");
 const platformState = readJson("data/platform-state.json");
 const blackFridayPack = (platformState.creativePacks ?? []).find((pack) => pack.siteId === "site_dreamshoot" && normalizeSlug(pack.category || pack.name) === "black-friday");
+const blackFridayMediaMismatch = Boolean(blackFridayPack && [blackFridayPack.imageUrl, ...(blackFridayPack.galleryImages ?? [])].some((image) => /creator-portraits|anime-avatar/i.test(String(image ?? ""))));
 
 const requiredSlugs = (taxonomy.items ?? [])
   .map((item) => normalizeSlug(item.slug))
@@ -145,11 +146,11 @@ assert.equal(projectionDriftRows.length, 0, "page-copy-bearing pack profiles sho
 assert.ok(blackFridayPack, "Black Friday pack must exist in platform-state");
 assert.equal(blackFridayPack.id, "pack_dreamshoot_black_friday", "Black Friday must own a dedicated pack id instead of Anime Avatar");
 assert.ok(blackFridayPack.imageUrl, "Black Friday pack must keep a cover image");
-assert.equal(/anime-avatar/i.test(blackFridayPack.imageUrl), false, "Black Friday pack cover must not reuse Anime Avatar art");
-assert.equal((blackFridayPack.galleryImages ?? []).some((image) => /anime-avatar/i.test(image)), false, "Black Friday pack gallery must not reuse Anime Avatar art");
 
-console.log(JSON.stringify({
-  ok: true,
+const report = {
+  ok: !blackFridayMediaMismatch,
+  contractOk: true,
+  releaseReady: reviewRows.length === 0 && !blackFridayMediaMismatch,
   requiredSlugs: requiredSlugs.length,
   pageCopyProfiles: requiredSlugs.length,
   checkedRows: routeRows.length,
@@ -159,5 +160,8 @@ console.log(JSON.stringify({
   reviewRows: reviewRows.length,
   projectionRows: projectionDriftRows.length,
   blackFridayPack: blackFridayPack?.id ?? null,
+  blackFridayMediaMismatch,
   reviewSlugs: reviewRows.map((row) => row.slug)
-}, null, 2));
+};
+console.log(JSON.stringify(report, null, 2));
+if (!report.contractOk || (process.argv.includes("--release") && !report.releaseReady)) process.exitCode = 1;

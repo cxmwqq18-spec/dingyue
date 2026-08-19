@@ -238,10 +238,10 @@ assert(
 );
 assert(
   dreamshootSeoContent.includes("mydreamshootsPageCopyForRoute(") &&
-    themeRenderer.includes("mydreamshootsPageCopyForRoute(") &&
-    jsonLd.includes("mydreamshootsPageCopyForRoute(") &&
+    themeRenderer.includes("storefrontContext?.pageCopy") &&
+    jsonLd.includes("context.pageCopy") &&
     themeRenderer.includes("targetCopy?.cardDescription"),
-  "MyDreamShoots SEO and renderer code must resolve exact page copy through the route-aware resolver"
+  "MyDreamShoots published renderer and JSON-LD must consume the snapshotted page copy"
 );
 assert(
   storefrontContextTypes.includes('"page_copy"') &&

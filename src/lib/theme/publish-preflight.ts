@@ -1,7 +1,7 @@
 import { normalizeThemeSeo } from "@/lib/theme/seo";
 import { themeValueToString } from "@/lib/theme-values";
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
-import { mydreamshootsPublishedRouteManifest } from "@/lib/mydreamshoots-published-contract";
+import { mydreamshootsPublishedRouteManifest, normalizePublishedSlug } from "@/lib/mydreamshoots-published-contract";
 import { isPublicPriceFact, missingStorefrontProfileFacts } from "@/lib/storefront-context";
 import type { SectionBlockInstance, SectionInstance, Site, StorefrontProfileJson, ThemePage, ThemeSettings, ThemeSettingValue } from "@/lib/types";
 
@@ -47,9 +47,10 @@ export type PublishPreflightCreativePack = {
   creditCost: number;
   outputCount: number;
   category?: string;
-  categoryRecord?: { slug?: string };
-  imageUrl?: string;
-  galleryImages?: string[];
+  categoryRecord?: { slug?: string } | null;
+  imageUrl?: string | null;
+  galleryImages?: string[] | null;
+  galleryImageAlts?: string[] | null;
 };
 
 export type PublishPreflightSiteAiApp = {
@@ -327,9 +328,16 @@ export function runThemePublishPreflight({
       } catch (error) {
         pageCopyRouteFailures.push(`${route.canonicalSlug}:${error instanceof Error ? error.message : "PAGE_COPY_REVIEW_REQUIRED"}`);
       }
-      const matchingPack = creativePacks.find((pack) => pack.status === "active" && pack.id === route.expectedPackId && (pack.categoryRecord?.slug || pack.category) === route.canonicalSlug);
+      const matchingPack = creativePacks.find((pack) => pack.status === "active" && pack.id === route.expectedPackId && normalizePublishedSlug(pack.categoryRecord?.slug || pack.category) === route.canonicalSlug);
       if (!matchingPack || !matchingPack.imageUrl || (matchingPack.galleryImages ?? []).length === 0 || route.status !== "published") {
-        pageCopyMediaFailures.push(`${route.canonicalSlug}:PAGE_COPY_MEDIA_ENTITY_MISMATCH`);
+        const reason = route.status !== "published" && route.reviewReason
+          ? route.reviewReason
+          : !matchingPack
+            ? "PAGE_COPY_MEDIA_ENTITY_MISMATCH"
+            : !matchingPack.imageUrl || (matchingPack.galleryImages ?? []).length === 0
+              ? "PAGE_MEDIA_REQUIRED"
+              : "PAGE_COPY_MEDIA_ENTITY_MISMATCH";
+        pageCopyMediaFailures.push(`${route.canonicalSlug}:${reason}`);
       }
     }
     for (const page of site.pages) {
