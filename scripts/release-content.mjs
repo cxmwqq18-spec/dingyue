@@ -197,6 +197,15 @@ async function readContentSnapshot(prisma, siteId, options = {}) {
       : prisma.themePublication.findMany({ where: { siteId } }),
     scoped ? [] : prisma.mediaAsset.findMany({ where: { siteId } })
   ]);
+  const scopedPublications = scoped
+    ? themePublications.map((publication) => ({
+        ...publication,
+        snapshot: {
+          ...clone(publication.snapshot),
+          pages: asArray(publication.snapshot?.pages).filter((page) => scopedSlugs.includes(page.slug))
+        }
+      }))
+    : themePublications;
   return normalizeSnapshot({
     toolCategories,
     toolMenuItems,
@@ -207,7 +216,7 @@ async function readContentSnapshot(prisma, siteId, options = {}) {
     themePages,
     themeSettings: themeSettings ? [themeSettings] : [],
     siteThemes,
-    themePublications,
+    themePublications: scopedPublications,
     mediaAssets
   });
 }
