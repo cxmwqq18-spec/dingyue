@@ -1111,6 +1111,78 @@ export function toSiteAiApp(record: {
   };
 }
 
+function isString(value: unknown): value is string {
+  return typeof value === "string" && value.length > 0;
+}
+
+function stablePublicationValue(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(stablePublicationValue);
+  if (!value || typeof value !== "object") return value;
+  return Object.fromEntries(Object.entries(value as Record<string, unknown>)
+    .filter(([, item]) => item !== undefined)
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, item]) => [key, stablePublicationValue(item)]));
+}
+
+function mappedPublicationSnapshotHash(snapshot: import("@/lib/types").ThemePublication["snapshot"]): string {
+  const unhashed = { ...snapshot, revisions: { ...(snapshot.revisions ?? {}), snapshotHash: undefined } };
+  return crypto.createHash("sha256").update(JSON.stringify(stablePublicationValue(unhashed))).digest("hex");
+}
+
+function decodeThemePublicationSnapshot(value: unknown): import("@/lib/types").ThemePublication["snapshot"] {
+  const snapshot = cloneJson(value) as import("@/lib/types").ThemePublication["snapshot"];
+  if (!snapshot || typeof snapshot !== "object" || !Array.isArray(snapshot.pages)) {
+    return { pages: [], themeSettings: {} as import("@/lib/types").ThemeSettings };
+  }
+  if (snapshot.seoProjectionVersion !== 1) return snapshot;
+  const records = (items: unknown): Record<string, unknown>[] => Array.isArray(items)
+    ? items.filter((item): item is Record<string, unknown> => Boolean(item && typeof item === "object" && !Array.isArray(item)))
+    : [];
+  snapshot.publishedRoutes = records(snapshot.publishedRoutes).filter((item) =>
+    item.siteId === "site_dreamshoot" && item.routeKind === "ai-image-theme-leaf" &&
+    isString(item.canonicalSlug) && isString(item.canonicalPath) && isString(item.pageEntityId) &&
+    isString(item.copyRevision) && isString(item.expectedPackId) && isString(item.mediaEntityId) &&
+    (item.status === "published" || item.status === "review_required") &&
+    typeof item.indexable === "boolean" && typeof item.sitemapEligible === "boolean"
+  ) as unknown as import("@/lib/types").PublishedRouteProjection[];
+  snapshot.publishedPageCopy = records(snapshot.publishedPageCopy).filter((item) =>
+    isString(item.pageEntityId) && isString(item.copyRevision) && isString(item.canonicalSlug) && Boolean(item.copy && typeof item.copy === "object" && !Array.isArray(item.copy))
+  ) as unknown as import("@/lib/types").PublishedPageCopyProjection[];
+  snapshot.publishedPageMedia = records(snapshot.publishedPageMedia).filter((item) =>
+    isString(item.mediaEntityId) && isString(item.ownerPageEntityId) && isString(item.sourcePackId) &&
+    isString(item.pageEntityId) && isString(item.entityRevision) && Array.isArray(item.galleryImages) &&
+    Array.isArray(item.imageAlts) && (item.status === "ready" || item.status === "review_required")
+  ) as unknown as import("@/lib/types").PublishedPageMediaProjection[];
+  snapshot.publishedPackFacts = records(snapshot.publishedPackFacts).filter((item) =>
+    isString(item.packId) && typeof item.creditCost === "number" && typeof item.outputCount === "number" && isString(item.revision)
+  ) as unknown as import("@/lib/types").PublishedSeoSnapshotProjection["publishedPackFacts"];
+  snapshot.publishedOffers = records(snapshot.publishedOffers).filter((item) =>
+    isString(item.productId) && isString(item.priceId) && isString(item.siteId) && isString(item.productName) &&
+    isString(item.priceLabel) && isString(item.stripePriceId) && typeof item.amountCents === "number" &&
+    typeof item.checkoutEnabled === "boolean" && isString(item.revision)
+  ) as unknown as import("@/lib/types").PublishedOfferProjection[];
+  snapshot.publishedCollectionRefs = records(snapshot.publishedCollectionRefs).filter((item) =>
+    isString(item.collectionSlug) && isString(item.sourcePackId) && isString(item.pageEntityId) &&
+    isString(item.canonicalPath) && isString(item.label) && isString(item.mediaEntityId) &&
+    typeof item.creditCost === "number" && typeof item.outputCount === "number" &&
+    (item.status === "published" || item.status === "review_required")
+  ) as unknown as import("@/lib/types").PublishedCollectionRef[];
+  if (!snapshot.publishedFacts || typeof snapshot.publishedFacts !== "object" || !isString(snapshot.publishedFacts.claimRevision)) {
+    snapshot.publishedFacts = { claimRevision: "invalid" };
+  }
+  if (!snapshot.revisions || typeof snapshot.revisions !== "object") snapshot.revisions = {};
+  const expectedHash = snapshot.revisions.snapshotHash;
+  if (!expectedHash || mappedPublicationSnapshotHash(snapshot) !== expectedHash) {
+    snapshot.publishedRoutes = [];
+    snapshot.publishedPageCopy = [];
+    snapshot.publishedPageMedia = [];
+    snapshot.publishedPackFacts = [];
+    snapshot.publishedOffers = [];
+    snapshot.publishedCollectionRefs = [];
+  }
+  return snapshot;
+}
+
 export function toThemePublication(record: {
   id: string;
   siteId: string;
@@ -1125,7 +1197,7 @@ export function toThemePublication(record: {
   publishedBy: string;
   publishedAt: Date | string;
 }): import("@/lib/types").ThemePublication {
-  const snapshot = cloneJson(record.snapshot) as import("@/lib/types").ThemePublication["snapshot"];
+  const snapshot = decodeThemePublicationSnapshot(record.snapshot);
   const pageCount = record.pageCount ?? snapshot.pages.length;
   const sectionCount =
     record.sectionCount ??
@@ -1143,6 +1215,7 @@ export function toThemePublication(record: {
       ? cloneJson(record.scope) as import("@/lib/types").ThemePublication["scope"]
       : undefined,
     manifestHash: record.manifestHash ?? undefined,
+    snapshotHash: snapshot.revisions?.snapshotHash,
     factsRevision: record.factsRevision ?? undefined,
     publishedBy: record.publishedBy,
     publishedAt: toIsoString(record.publishedAt) ?? new Date().toISOString()

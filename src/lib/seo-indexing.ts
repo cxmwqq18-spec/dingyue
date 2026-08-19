@@ -485,7 +485,10 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
     if (effective.routeDisposition.kind === "render" && effective.indexability.sitemapEligible) {
       const loc = effective.context.seo.canonicalUrl;
       const entry = entries.get(loc);
-      if (entry) entry.images = collectionItems.flatMap((item) => packSitemapImages(site, item.source, 1));
+      if (entry) entry.images = collectionItems.map((item) => ({
+        loc: absoluteMediaUrl(site, item.imageUrl),
+        title: item.imageAlt
+      })).filter((image) => image.loc);
     }
   }
   if (site.id === "site_dreamshoot" && collectionPage) {
@@ -508,7 +511,6 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
       };
       const loc = context.seo.canonicalUrl;
       if (!effective.indexability.sitemapEligible || resolvePublishedRouteDisposition(snapshot, route.canonicalPath).kind !== "render") continue;
-      const pack = snapshot.creativePacks.find((candidate) => candidate.id === media.packId);
       const mediaImages = [media.primaryImage, ...media.galleryImages]
         .map((value, index) => ({
           loc: absoluteMediaUrl(site, value),
@@ -517,7 +519,7 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
         .filter((image) => image.loc);
       entries.set(loc, {
         loc,
-        images: mediaImages.length ? mediaImages : pack ? packSitemapImages(site, pack) : [],
+        images: mediaImages,
         lastmod: normalizeSitemapDate(snapshot.publication?.publishedAt),
         changefreq: sitemapChangeFrequencyForPath(route.canonicalPath),
         priority: sitemapPriorityForPath(route.canonicalPath)

@@ -804,6 +804,112 @@ export interface MediaAsset {
   createdAt: string;
 }
 
+export interface PublishedOfferProjection {
+  productId: string;
+  priceId: string;
+  siteId: string;
+  productName: string;
+  productType: "subscription" | "credit_pack";
+  productMetadata?: ProductMetadata;
+  priceLabel: string;
+  interval: PriceInterval;
+  amountCents: number;
+  currency: string;
+  creditsGranted: number;
+  stripePriceId: string;
+  priceMetadata?: Price["metadata"];
+  checkoutEnabled: boolean;
+  revision: string;
+}
+
+export interface PublishedFactsProjection {
+  identity?: StorefrontProfileJson["identity"];
+  creditLifecycle?: { reserve?: string; consume?: string; release?: string };
+  privacy?: { customerMediaTraining?: boolean; sourceMediaRetentionDays?: number };
+  refund?: { reviewRequired?: boolean; windowDays?: number; effectiveDate?: string };
+  security?: { checkoutProvider?: string; transportClaimKey?: string; storageClaimKey?: string };
+  claimRevision: string;
+}
+
+export interface PublishedCollectionRef {
+  collectionSlug: string;
+  sourcePackId: string;
+  pageEntityId: string;
+  canonicalPath: string;
+  label: string;
+  summary: string;
+  image: string;
+  imageAlt: string;
+  mediaEntityId: string;
+  categorySlug?: string;
+  creditCost: number;
+  outputCount: number;
+  entityRevision: string;
+  status: "published" | "review_required";
+}
+
+export interface PublishedPageCopyProjection {
+  pageEntityId: string;
+  copyRevision: string;
+  canonicalSlug: string;
+  copy: Record<string, unknown>;
+}
+
+export interface PublishedPageMediaProjection {
+  mediaEntityId: string;
+  ownerPageEntityId: string;
+  sourcePackId: string;
+  role: "hero";
+  pageEntityId: string;
+  entityRevision: string;
+  packId: string;
+  primaryImage: string;
+  galleryImages: string[];
+  imageAlts: string[];
+  status: "ready" | "review_required";
+  reviewReason?: string;
+}
+
+export interface PublishedRouteProjection {
+  siteId: "site_dreamshoot";
+  routeKind: "ai-image-theme-leaf";
+  canonicalSlug: string;
+  canonicalPath: string;
+  pageEntityId: string;
+  copyRevision: string;
+  copySource: "page-copy" | "missing";
+  fallbackUsed: false;
+  status: "published" | "review_required";
+  indexable: boolean;
+  sitemapEligible: boolean;
+  expectedPackId: string;
+  mediaEntityId: string;
+  reviewReason?: string;
+}
+
+export interface PublishedSeoSnapshotRevisions {
+  factsRevision?: string;
+  routeRevision?: string;
+  copyRevision?: string;
+  mediaRevision?: string;
+  packRevision?: string;
+  offerRevision?: string;
+  collectionRevision?: string;
+  snapshotHash?: string;
+}
+
+export interface PublishedSeoSnapshotProjection {
+  seoProjectionVersion: 1;
+  publishedRoutes: PublishedRouteProjection[];
+  publishedPageCopy: PublishedPageCopyProjection[];
+  publishedPageMedia: PublishedPageMediaProjection[];
+  publishedPackFacts: Array<{ packId: string; creditCost: number; outputCount: number; revision: string }>;
+  publishedOffers: PublishedOfferProjection[];
+  publishedFacts: PublishedFactsProjection;
+  publishedCollectionRefs: PublishedCollectionRef[];
+  revisions: PublishedSeoSnapshotRevisions;
+}
+
 export interface ThemePublication {
   id: string;
   siteId: string;
@@ -814,17 +920,14 @@ export interface ThemePublication {
     storefrontProfile?: StorefrontProfileJson;
     saasTheme?: unknown;
     seoProjectionVersion?: 1;
-    publishedRoutes?: unknown[];
-    publishedPageCopy?: unknown[];
-    publishedPageMedia?: unknown[];
-    publishedPackFacts?: unknown[];
-    publishedCollectionRefs?: unknown[];
-    revisions?: {
-      factsRevision?: string;
-      routeRevision?: string;
-      copyRevision?: string;
-      mediaRevision?: string;
-    };
+    publishedRoutes?: PublishedSeoSnapshotProjection["publishedRoutes"];
+    publishedPageCopy?: PublishedSeoSnapshotProjection["publishedPageCopy"];
+    publishedPageMedia?: PublishedSeoSnapshotProjection["publishedPageMedia"];
+    publishedPackFacts?: PublishedSeoSnapshotProjection["publishedPackFacts"];
+    publishedOffers?: PublishedSeoSnapshotProjection["publishedOffers"];
+    publishedFacts?: PublishedSeoSnapshotProjection["publishedFacts"];
+    publishedCollectionRefs?: PublishedSeoSnapshotProjection["publishedCollectionRefs"];
+    revisions?: PublishedSeoSnapshotProjection["revisions"];
   };
   pageCount?: number;
   sectionCount?: number;
@@ -836,6 +939,7 @@ export interface ThemePublication {
     includeStorefrontProfile: boolean;
   };
   manifestHash?: string;
+  snapshotHash?: string;
   factsRevision?: string;
   publishedBy: string;
   publishedAt: string;

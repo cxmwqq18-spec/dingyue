@@ -11710,12 +11710,7 @@ function SectionView({
                   <p className="mt-2 line-clamp-3 min-h-[3.9rem] text-sm leading-5 text-white/56">
                     {(() => {
                       const targetSlug = dreamshootCategorySlug(pack.categoryRecord?.slug || pack.category || pack.name);
-                      const targetCopy = !aidreamcapes && !spanishXbyRelated ? mydreamshootsPageCopyForRoute({
-                        siteId: site.id,
-                        routeKind: "ai-image-theme-leaf",
-                        canonicalSlug: targetSlug,
-                        canonicalPath: `/ai-image-generation/${targetSlug}`
-                      }) : undefined;
+                      const targetCopy = !aidreamcapes && !spanishXbyRelated ? storefrontContext?.pageCopyMap?.[targetSlug] : undefined;
                       return targetCopy?.cardDescription ?? dreamshootPackageThemeIntro(pack);
                     })()}
                   </p>

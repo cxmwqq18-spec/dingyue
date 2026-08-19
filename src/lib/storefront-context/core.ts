@@ -228,7 +228,11 @@ export function resolveStorefrontContext(
       buildId: bundle.buildId || process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local",
       pageEntityId: pageCopy?.pageEntityId,
       copyRevision: pageCopy?.copyRevision,
-      canonicalSlug: pageCopy ? pageCopySlug : undefined
+      canonicalSlug: pageCopy ? pageCopySlug : undefined,
+      snapshotRevision: bundle.publication?.snapshot.revisions?.snapshotHash,
+      routeRevision: bundle.publication?.snapshot.revisions?.routeRevision,
+      offerRevision: bundle.publication?.snapshot.revisions?.offerRevision,
+      collectionRevision: bundle.publication?.snapshot.revisions?.collectionRevision
     },
     capability: resolveSiteCapability(bundle.site),
     indexability: {
@@ -237,7 +241,8 @@ export function resolveStorefrontContext(
       sitemapEligible: seo.sitemapEligible
     },
     missingFacts,
-    pageCopy
+    pageCopy,
+    pageCopyMap: mode === "published" ? bundle.publishedPageCopies : undefined
   };
 }
 

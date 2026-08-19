@@ -1,5 +1,4 @@
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
-import type { DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import {
@@ -2695,7 +2694,7 @@ function enrichCollectionGuide(seed: SeoDirectorySeed, brandName: string): SeoDi
   };
 }
 
-type SeoUseCaseProfile = DreamshootPackProfile | PhotoPackageUseCaseProfile;
+type SeoUseCaseProfile = PhotoPackageUseCaseProfile;
 
 function truncateSeoDescription(value: string, maxLength = 220): string {
   if (value.length <= maxLength) return value;
@@ -2727,6 +2726,17 @@ function collectionSeedWithUseCaseProfile(
     ...seed.details
   ].filter(Boolean);
 
+  if (profile.pageEntityId?.startsWith("mydreamshoots:ai-image-theme:")) {
+    return {
+      ...seed,
+      title,
+      description,
+      keywords: Array.from(new Set(keywordParts.filter(Boolean))).join(", "),
+      h2: profile.galleryTitle || profile.headline,
+      ctaLabel: profile.ctaLabel || seed.ctaLabel,
+      ctaHref: seed.ctaHref
+    };
+  }
   return {
     ...seed,
     title,

@@ -9,8 +9,8 @@ const publishedContextCache = new Map<string, { context: StorefrontContext; expi
 const siteContextKeys = new Map<string, Set<string>>();
 const PUBLISHED_CONTEXT_MAX_TTL_MS = 60_000;
 
-export function storefrontContextCacheKey(params: { siteId: string; pageId?: string; publicationId?: string; factsRevision: string; pageEntityId?: string; copyRevision?: string; pageMediaRevision?: string }): string {
-  return `${params.siteId}:${params.publicationId ?? "unpublished"}:${params.factsRevision}:${params.pageId ?? "site"}:${params.pageEntityId ?? "page"}:${params.copyRevision ?? "copy"}:${params.pageMediaRevision ?? "media"}`;
+export function storefrontContextCacheKey(params: { siteId: string; pageId?: string; publicationId?: string; factsRevision: string; pageEntityId?: string; copyRevision?: string; pageMediaRevision?: string; snapshotRevision?: string; routeRevision?: string; offerRevision?: string; collectionRevision?: string }): string {
+  return `${params.siteId}:${params.publicationId ?? "unpublished"}:${params.snapshotRevision ?? "snapshot"}:${params.routeRevision ?? "route"}:${params.factsRevision}:${params.offerRevision ?? "offer"}:${params.collectionRevision ?? "collection"}:${params.pageId ?? "site"}:${params.pageEntityId ?? "page"}:${params.copyRevision ?? "copy"}:${params.pageMediaRevision ?? "media"}`;
 }
 
 export function clearStorefrontContextCache(siteId: string): void {
@@ -26,7 +26,11 @@ function cachePublishedContext(siteId: string, context: StorefrontContext, expir
     factsRevision: context.revisions.factsRevision,
     pageEntityId: context.revisions.pageEntityId,
     copyRevision: context.revisions.copyRevision,
-    pageMediaRevision: context.revisions.pageMediaRevision
+    pageMediaRevision: context.revisions.pageMediaRevision,
+    snapshotRevision: context.revisions.snapshotRevision,
+    routeRevision: context.revisions.routeRevision,
+    offerRevision: context.revisions.offerRevision,
+    collectionRevision: context.revisions.collectionRevision
   });
   const cached = publishedContextCache.get(key);
   if (cached && cached.expiresAt > Date.now()) return cached.context;

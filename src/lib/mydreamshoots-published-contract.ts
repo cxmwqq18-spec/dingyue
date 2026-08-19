@@ -1,6 +1,6 @@
 import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
-import type { CreativePack } from "@/lib/types";
+import type { CreativePack, PublishedRouteProjection } from "@/lib/types";
 
 const SITE_ID = "site_dreamshoot";
 const ROUTE_KIND = "ai-image-theme-leaf";
@@ -18,22 +18,7 @@ const taxonomyItems = (mydreamshootsThemeTaxonomy.items ?? []) as TaxonomyItem[]
 
 export type MyDreamshootsPublishedRouteStatus = "published" | "review_required";
 
-export type MyDreamshootsPublishedRouteManifestRow = {
-  siteId: typeof SITE_ID;
-  routeKind: typeof ROUTE_KIND;
-  canonicalSlug: string;
-  canonicalPath: string;
-  pageEntityId: string;
-  copyRevision: string;
-  copySource: "page-copy" | "missing";
-  fallbackUsed: false;
-  status: MyDreamshootsPublishedRouteStatus;
-  indexable: boolean;
-  sitemapEligible: boolean;
-  expectedPackId: string;
-  mediaEntityId: string;
-  reviewReason?: string;
-};
+export type MyDreamshootsPublishedRouteManifestRow = PublishedRouteProjection;
 
 export type MyDreamshootsPublishedPageMediaProjection = {
   siteId: typeof SITE_ID;
@@ -53,6 +38,10 @@ export type MyDreamshootsPublishedPageMediaProjection = {
   status: "ready" | "review_required";
   reviewReason?: string;
 };
+
+export function publishedMediaEntityId(pageEntityId: string): string {
+  return `${pageEntityId}:media`;
+}
 
 export function normalizePublishedSlug(value: string | null | undefined): string {
   return String(value ?? "")
@@ -100,7 +89,7 @@ export function mydreamshootsPublishedRouteManifest(): MyDreamshootsPublishedRou
       indexable,
       sitemapEligible: indexable,
       expectedPackId: expectedPackId(item),
-      mediaEntityId: `${pageEntityId}:media`,
+      mediaEntityId: publishedMediaEntityId(pageEntityId),
       ...(!copyReady
         ? { reviewReason: "PAGE_COPY_REVIEW_REQUIRED" }
         : !mediaReady
@@ -131,35 +120,39 @@ export function resolveMydreamshootsPublishedPageMedia(
     && candidate.status === "active"
     && normalizePublishedSlug(candidate.categoryRecord?.slug || candidate.category) === route.canonicalSlug
   ));
-  if (!pack) return undefined;
+  return buildPublishedPageMediaProjection(route, pack);
+}
 
-  const images = Array.from(new Set([pack.imageUrl, ...(pack.galleryImages ?? [])].map((value) => String(value ?? "").trim()).filter(Boolean)));
-  const ownerMatches = pack.id === route.expectedPackId;
-  const ready = route.status === "published" && ownerMatches && images.length >= 2;
-  const imageAlts = images.map((_, index) => (
-    index === 0
-      ? `MyDreamShoots ${route.canonicalSlug.replace(/-/g, " ")} AI photo package cover for private gallery review`
-      : `MyDreamShoots ${route.canonicalSlug.replace(/-/g, " ")} AI photo example for private gallery review`
-  ));
+export function buildPublishedPageMediaProjection(
+  route: MyDreamshootsPublishedRouteManifestRow,
+  pack: { id: string; status: string; category?: string | null; categoryRecord?: { slug?: string | null } | null; imageUrl?: string | null; galleryImages?: string[] | null; galleryImageAlts?: string[] | null } | undefined
+): MyDreamshootsPublishedPageMediaProjection | undefined {
+  if (!pack) return undefined;
+  const images = Array.from(new Set([pack.imageUrl, ...(pack.galleryImages ?? [])]
+    .map((value) => String(value ?? "").trim())
+    .filter(Boolean)));
+  const categorySlug = normalizePublishedSlug(pack.categoryRecord?.slug || pack.category);
+  const ownerMatches = pack.id === route.expectedPackId && categorySlug === route.canonicalSlug;
+  const alts = images.map((_, index) => String(pack.galleryImageAlts?.[index] ?? "").trim());
+  const altsReady = alts.length === images.length && alts.every(Boolean);
+  const ready = route.status === "published" && pack.status === "active" && ownerMatches && images.length >= 2 && altsReady;
   return {
     siteId: route.siteId,
     routeKind: route.routeKind,
     canonicalSlug: route.canonicalSlug,
     canonicalPath: route.canonicalPath,
     pageEntityId: route.pageEntityId,
-    mediaEntityId: route.mediaEntityId,
+    mediaEntityId: publishedMediaEntityId(route.pageEntityId),
     ownerPageEntityId: route.pageEntityId,
     sourcePackId: pack.id,
     role: "hero",
-    entityRevision: revision([route.pageEntityId, pack.id, images, imageAlts]),
+    entityRevision: revision([route.pageEntityId, pack.id, images, alts]),
     packId: pack.id,
     primaryImage: images[0] ?? "",
     galleryImages: images.slice(1),
-    imageAlts,
+    imageAlts: alts,
     status: ready ? "ready" : "review_required",
-    ...(!ready
-      ? { reviewReason: route.reviewReason || (!ownerMatches ? "PAGE_COPY_MEDIA_ENTITY_MISMATCH" : "PAGE_MEDIA_REQUIRED") }
-      : {})
+    ...(!ready ? { reviewReason: route.reviewReason || (!ownerMatches ? "PAGE_COPY_MEDIA_ENTITY_MISMATCH" : "PAGE_MEDIA_REQUIRED") } : {})
   };
 }
 

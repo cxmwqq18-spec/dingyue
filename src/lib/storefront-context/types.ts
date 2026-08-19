@@ -1,4 +1,4 @@
-import type { CreativePack, CreativePackCategory, MediaAsset, Price, Product, Site, StorefrontProfileJson, ThemePage, ThemePageJson, ThemePublication, ThemeSettings, VideoTheme } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, MediaAsset, Price, Product, PublishedCollectionRef, PublishedPageMediaProjection, PublishedOfferProjection, PublishedFactsProjection, PublishedRouteProjection, Site, StorefrontProfileJson, ThemePage, ThemePageJson, ThemePublication, ThemeSettings, VideoTheme } from "@/lib/types";
 import type { MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 
 export type StorefrontContextMode = "draft" | "published";
@@ -65,7 +65,6 @@ export type PublicCollectionItem = {
   imageAlt: string;
   creditCost: number;
   outputCount: number;
-  source: CreativePack;
 };
 
 export type PublicPricingOffer = ResolvedOffer & {
@@ -116,11 +115,16 @@ export type StorefrontContext = {
     copyRevision?: string;
     pageMediaRevision?: string;
     canonicalSlug?: string;
+    snapshotRevision?: string;
+    routeRevision?: string;
+    offerRevision?: string;
+    collectionRevision?: string;
   };
   capability: SiteCapability;
   indexability: EffectiveIndexability;
   missingFacts: string[];
   pageCopy?: MyDreamshootsPageCopy;
+  pageCopyMap?: Record<string, MyDreamshootsPageCopy>;
   publishedPaths?: string[];
 };
 
@@ -156,27 +160,15 @@ export type PublishedSiteSnapshot = {
   buildId: string;
   pages: ThemePage[];
   publishedPaths: string[];
-  publishedRoutes: Array<{
-    siteId: "site_dreamshoot";
-    routeKind: "ai-image-theme-leaf";
-    canonicalSlug: string;
-    canonicalPath: string;
-    pageEntityId: string;
-    copyRevision: string;
-    copySource: "page-copy" | "missing";
-    fallbackUsed: false;
-    status: "published" | "review_required";
-    indexable: boolean;
-    sitemapEligible: boolean;
-    expectedPackId: string;
-    mediaEntityId: string;
-    reviewReason?: string;
-  }>;
+  publishedRoutes: PublishedRouteProjection[];
   publishedPageCopy: Array<{ pageEntityId: string; copyRevision: string; canonicalSlug: string; copy: MyDreamshootsPageCopy }>;
-  publishedPageMedia: Array<{ mediaEntityId: string; ownerPageEntityId: string; sourcePackId: string; role: "hero"; pageEntityId: string; entityRevision: string; packId: string; primaryImage: string; galleryImages: string[]; imageAlts: string[]; status: "ready" | "review_required"; reviewReason?: string }>;
+  publishedPageMedia: PublishedPageMediaProjection[];
   publishedPackFacts: Array<{ packId: string; creditCost: number; outputCount: number; revision: string }>;
-  publishedCollectionRefs: Array<Record<string, unknown>>;
-  snapshotRevisions: { factsRevision?: string; routeRevision?: string; copyRevision?: string; mediaRevision?: string };
+  publishedOffers: PublishedOfferProjection[];
+  publishedFacts?: PublishedFactsProjection;
+  publishedCollectionRefs: PublishedCollectionRef[];
+  snapshotRevisions: { factsRevision?: string; routeRevision?: string; copyRevision?: string; mediaRevision?: string; packRevision?: string; offerRevision?: string; collectionRevision?: string; snapshotHash?: string };
+  legacyProjectionRequired?: boolean;
   products: Product[];
   creativePacks: CreativePack[];
   creativePackCategories: CreativePackCategory[];

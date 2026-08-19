@@ -11,6 +11,7 @@ const themeStore = read("src/lib/stores/theme-store.ts");
 const snapshot = read("src/lib/storefront-context/snapshot.ts");
 const metadata = read("src/lib/storefront-metadata.ts");
 const templates = read("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
+const blogSync = read("scripts/sync-dreamshoot-blog-content.mjs");
 
 for (const field of ["publishedRoutes", "publishedPageCopy", "publishedPageMedia", "publishedPackFacts", "publishedCollectionRefs", "revisions"]) {
   assert.match(types, new RegExp(`${field}\\?`), `ThemePublication snapshot must persist ${field}`);
@@ -22,6 +23,8 @@ assert.match(snapshot, /hasImmutableSeoProjection/, "current-format snapshots mu
 assert.match(snapshot, /publication\?\.snapshot\?\.publishedPageMedia/, "runtime media must prefer the immutable publication snapshot");
 assert.match(metadata, /snapshot\?\.publishedPageMedia\.find/, "metadata must consume published media projection");
 assert.match(snapshot, /route\.status !== "published"/, "review-required leaf routes must fail closed");
+assert.doesNotMatch(blogSync, /themePublication\.update(?:Many)?\s*\(/, "blog sync must not mutate existing publications");
+assert.match(blogSync, /immutable_publication_requires_publish_service/, "blog sync must direct changes through the publish service");
 
 const soccerBlock = templates.slice(templates.indexOf('block("seasonal_worldcup_1"'), templates.indexOf('anchor: "christmas-holiday-pack"'));
 assert.equal((soccerBlock.match(/collectionSlug: "soccer"/g) ?? []).length, 6, "all six Soccer cards must target the Soccer entity");
@@ -39,7 +42,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
   return originalResolveFilename.call(this, request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request, ...args);
 };
 const jiti = createJiti(import.meta.url);
-const { createPublishedSiteSnapshot, resolvePublishedRouteDisposition } = jiti("../src/lib/storefront-context/snapshot.ts");
+const { createPublishedSiteSnapshot, resolvePublishedRouteDisposition, resolvePublicCollectionItems, resolvePublicPricingOffers } = jiti("../src/lib/storefront-context/snapshot.ts");
 const state = JSON.parse(read("data/platform-state.json"));
 const sourceSite = state.sites.find((site) => site.id === "site_dreamshoot");
 assert.ok(sourceSite, "MyDreamShoots fixture site is required");
@@ -66,6 +69,10 @@ const site = { ...sourceSite, latestPublication: publication };
 const isolatedState = { ...state, sites: [site], themePublications: [publication] };
 const emptyProjectionSnapshot = createPublishedSiteSnapshot(isolatedState, site);
 assert.deepEqual(emptyProjectionSnapshot.publishedRoutes, [], "an intentional empty route projection must not repopulate from current taxonomy");
+assert.deepEqual(emptyProjectionSnapshot.products, [], "v1 runtime must not inject current products");
+assert.deepEqual(emptyProjectionSnapshot.creativePacks, [], "v1 runtime must not inject current creative packs");
+assert.deepEqual(resolvePublicCollectionItems(emptyProjectionSnapshot), [], "an empty collection projection must remain authoritative");
+assert.deepEqual(resolvePublicPricingOffers(emptyProjectionSnapshot), [], "an empty offer projection must remain authoritative");
 assert.equal(resolvePublishedRouteDisposition(emptyProjectionSnapshot, "/ai-image-generation/headshot").kind, "not_found", "a route absent from the publication must fail closed");
 
 console.log("MyDreamShoots immutable publication snapshot contract passed");

@@ -2169,22 +2169,9 @@ function upsertPage(site, page) {
 }
 
 function syncPublicationSnapshots(state, site) {
-  for (const publication of state.themePublications ?? []) {
-    if (publication.siteId !== site.id) continue;
-    publication.snapshot ??= {};
-    publication.snapshot.pages = site.pages.map((page) => ({
-      id: page.id,
-      slug: page.slug,
-      publishedJson: clone(page.publishedJson)
-    }));
-    publication.snapshot.themeSettings = clone(site.themeSettings.publishedJson);
-    if (publication.snapshot.saasTheme?.templates) {
-      const blogHome = site.pages.find((page) => page.slug === "/blog");
-      const firstArticle = site.pages.find((page) => page.slug.startsWith("/blog/"));
-      if (blogHome) publication.snapshot.saasTheme.templates.blog = toTemplate(blogHome.publishedJson);
-      if (firstArticle) publication.snapshot.saasTheme.templates["blog-detail"] = toTemplate(firstArticle.publishedJson);
-    }
-  }
+  // Published snapshots are immutable. The publish service must create a new
+  // publication row after these draft/current changes are reviewed.
+  return { skipped: true, reason: "immutable_publication_requires_publish_service" };
 }
 
 function syncSiteThemes(state, site) {
@@ -2283,19 +2270,7 @@ function mergeScopedSeoPages(settings) {
 }
 
 function syncScopedPublicationSnapshots(state, site, pages) {
-  for (const publication of state.themePublications ?? []) {
-    if (publication.siteId !== site.id) continue;
-    publication.snapshot ??= {};
-    const snapshotPages = Array.isArray(publication.snapshot.pages) ? publication.snapshot.pages : [];
-    for (const page of pages) {
-      const entry = { id: page.id, slug: page.slug, publishedJson: clone(page.publishedJson) };
-      const index = snapshotPages.findIndex((item) => item?.slug === page.slug || item?.id === page.id);
-      if (index >= 0) snapshotPages[index] = entry;
-      else snapshotPages.push(entry);
-    }
-    publication.snapshot.pages = snapshotPages;
-    publication.snapshot.themeSettings = mergeScopedSeoPages(publication.snapshot.themeSettings, pages);
-  }
+  return { skipped: true, reason: "immutable_publication_requires_publish_service", pageCount: pages.length };
 }
 
 function syncScopedSite(state, config, slugs) {
@@ -2358,7 +2333,7 @@ async function updateScopedDatabase(state, pages) {
       for (const page of pages) {
         const existing = await tx.themePage.findUnique({
           where: { siteId_slug: { siteId: MYDREAMSHOOTS_SITE_ID, slug: page.slug } },
-          select: { id: true }
+          select: { id: true, publishedJson: true }
         });
         const id = existing?.id ?? page.id;
         const data = {
@@ -2367,12 +2342,11 @@ async function updateScopedDatabase(state, pages) {
           templateKey: page.templateKey,
           slug: page.slug,
           title: page.title,
-          draftJson: toPrismaJson(page.draftJson),
-          publishedJson: toPrismaJson(page.publishedJson)
+          draftJson: toPrismaJson(page.draftJson)
         };
         await tx.themePage.upsert({
           where: { id },
-          create: { id, ...data },
+          create: { id, ...data, publishedJson: toPrismaJson(existing?.publishedJson ?? { ...page.publishedJson, seo: { ...page.publishedJson.seo, index: false, robots: { index: false, follow: false } } }) },
           update: data
         });
         databasePages.push({ ...page, id });
@@ -2383,28 +2357,12 @@ async function updateScopedDatabase(state, pages) {
       await tx.themeSettings.update({
         where: { siteId: MYDREAMSHOOTS_SITE_ID },
         data: {
-          draftJson: toPrismaJson(mergeScopedSeoPages(themeSettings.draftJson, databasePages)),
-          publishedJson: toPrismaJson(mergeScopedSeoPages(themeSettings.publishedJson, databasePages))
+          draftJson: toPrismaJson(mergeScopedSeoPages(themeSettings.draftJson, databasePages))
         }
       });
 
-      const publications = await tx.themePublication.findMany({ where: { siteId: MYDREAMSHOOTS_SITE_ID } });
-      for (const publication of publications) {
-        const snapshot = clone(publication.snapshot ?? {});
-        const snapshotPages = Array.isArray(snapshot.pages) ? snapshot.pages : [];
-        for (const page of databasePages) {
-          const entry = { id: page.id, slug: page.slug, publishedJson: clone(page.publishedJson) };
-          const index = snapshotPages.findIndex((item) => item?.slug === page.slug || item?.id === page.id);
-          if (index >= 0) snapshotPages[index] = entry;
-          else snapshotPages.push(entry);
-        }
-        snapshot.pages = snapshotPages;
-        snapshot.themeSettings = mergeScopedSeoPages(snapshot.themeSettings, databasePages);
-        await tx.themePublication.update({
-          where: { id: publication.id },
-          data: { snapshot: toPrismaJson(snapshot) }
-        });
-      }
+      // Never mutate an existing ThemePublication. The pages above remain
+      // draft/current until the normal publish transaction creates a new row.
 
       const stateDocument = await tx.platformStateDocument.findUnique({ where: { id: "platform" } });
       if (stateDocument?.state && Array.isArray(stateDocument.state.sites)) {
@@ -2421,16 +2379,14 @@ async function updateScopedDatabase(state, pages) {
               templateKey: page.templateKey,
               slug: page.slug,
               title: page.title,
-              draftJson: clone(page.draftJson),
-              publishedJson: clone(page.publishedJson)
+              draftJson: clone(page.draftJson)
             };
             if (index >= 0) stateSite.pages[index] = { ...stateSite.pages[index], ...entry };
             else stateSite.pages.push(entry);
           }
           stateSite.themeSettings = {
             ...stateSite.themeSettings,
-            draftJson: mergeScopedSeoPages(stateSite.themeSettings?.draftJson, databasePages),
-            publishedJson: mergeScopedSeoPages(stateSite.themeSettings?.publishedJson, databasePages)
+            draftJson: mergeScopedSeoPages(stateSite.themeSettings?.draftJson, databasePages)
           };
           await tx.platformStateDocument.update({ where: { id: "platform" }, data: { state: toPrismaJson(nextState) } });
         }
