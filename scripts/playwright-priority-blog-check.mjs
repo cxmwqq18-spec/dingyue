@@ -58,61 +58,133 @@ const pages = [
   },
   {
     slug: "/blog/anime-avatar-photo-package-guide",
+    scope: "seo-remediation",
     h1: "How to Plan an Anime Avatar Photo Set",
     targetHrefs: ["/ai-image-generation/avatar"],
     dateModified: "2026-08-19"
   },
   {
     slug: "/blog/creator-portraits-photo-package-guide",
+    scope: "seo-remediation",
     h1: "Creator Portraits for Media Kits, Thumbnails, and Brand Profiles",
     targetHrefs: ["/ai-image-generation/portrait-photo"],
     dateModified: "2026-08-19"
   },
   {
     slug: "/blog/fashion-editorial-photo-package-guide",
+    scope: "seo-remediation",
     h1: "How to Plan AI Fashion Editorial Photos",
     targetHrefs: ["/ai-image-generation"],
     dateModified: "2026-08-19"
   },
   {
     slug: "/blog/gala-photos-photo-package-guide",
+    scope: "seo-remediation",
     h1: "AI Gala Photos for Formal and Evening Portraits",
     targetHrefs: ["/ai-image-generation/gala-photo"],
     dateModified: "2026-08-19"
   },
   {
     slug: "/blog/hairstyle-photo-package-guide",
+    scope: "seo-remediation",
     h1: "AI Hairstyle Preview: What to Prepare and What to Check",
     targetHrefs: ["/ai-image-generation/hairstyle-generator"],
     dateModified: "2026-08-19"
   },
   {
     slug: "/blog/product-style-photo-package-guide",
+    scope: "seo-remediation",
     h1: "AI Product Style Photos for Lifestyle and Campaign Drafts",
     targetHrefs: ["/ai-image-generation"],
     dateModified: "2026-08-19"
   },
   {
     slug: "/blog/professional-headshots-photo-package-guide",
+    scope: "seo-remediation",
     h1: "Professional AI Headshots for LinkedIn, Resumes, and Team Profiles",
     targetHrefs: ["/ai-image-generation/headshot"],
     dateModified: "2026-08-19"
   },
   {
     slug: "/blog/profile-cards-photo-package-guide",
+    scope: "seo-remediation",
     h1: "Profile Card Photos for Consistent Bios and Social Profiles",
     targetHrefs: ["/ai-image-generation/avatar"],
     dateModified: "2026-08-19"
   },
   {
     slug: "/blog/social-cards-photo-package-guide",
+    scope: "seo-remediation",
     h1: "AI Social Card Photos for Shareable Content and Publishing",
     targetHrefs: ["/ai-image-generation"],
     dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/boudoir-photo-package-guide",
+    scope: "seasonal-occasion",
+    h1: "How to Plan Tasteful AI Boudoir Photos for Private Portraits",
+    targetHrefs: ["/ai-image-generation/boudoir"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/christmas-couple-photo-package-guide",
+    scope: "seasonal-occasion",
+    h1: "How to Plan Christmas Couple Photos for Cards and Keepsakes",
+    targetHrefs: ["/ai-image-generation"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/christmas-photos-photo-package-guide",
+    scope: "seasonal-occasion",
+    h1: "How to Plan Christmas Photos for Cards and Family Albums",
+    targetHrefs: ["/ai-image-generation/christmas-photo"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/desi-wedding-photo-package-guide",
+    scope: "seasonal-occasion",
+    h1: "How to Plan AI Desi Wedding Photos for Celebrations and Albums",
+    targetHrefs: ["/ai-image-generation"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/engagement-photo-package-guide",
+    scope: "seasonal-occasion",
+    h1: "How to Plan AI Engagement Photos for Proposals and Announcements",
+    targetHrefs: ["/ai-image-generation/engagement-photo"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/halloween-party-photos-photo-package-guide",
+    scope: "seasonal-occasion",
+    h1: "How to Plan Halloween Party Photos for Costumes and Group Cards",
+    targetHrefs: ["/ai-image-generation/halloween-photo"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/holiday-photo-package-guide",
+    scope: "seasonal-occasion",
+    h1: "How to Plan AI Holiday Photos for Cards and Seasonal Profiles",
+    targetHrefs: ["/ai-image-generation/holiday"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/indian-wedding-photo-package-guide",
+    scope: "seasonal-occasion",
+    h1: "How to Plan AI Indian Wedding Photos for Ceremony Portraits",
+    targetHrefs: ["/ai-image-generation"],
+    dateModified: "2026-08-19"
+  },
+  {
+    slug: "/blog/thanksgiving-group-photos-photo-package-guide",
+    scope: "seasonal-occasion",
+    h1: "How to Plan Thanksgiving Group Photos for Cards and Gatherings",
+    targetHrefs: ["/ai-image-generation/thanksgiving-photo"],
+    dateModified: "2026-08-19"
   }
 ];
-const selectedPages = process.env.BLOG_PRIORITY_SCOPE === "seo-remediation"
-  ? pages.filter((page) => page.dateModified === "2026-08-19")
+const selectedPages = process.env.BLOG_PRIORITY_SCOPE
+  ? pages.filter((page) => page.scope === process.env.BLOG_PRIORITY_SCOPE)
   : pages;
 
 const viewports = {

@@ -66,17 +66,7 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "travel-journal-cover-maker": "/tools/new-year-countdown-album-maker"
 };
 const DREAMSHOOT_LEGACY_BLOG_CATEGORY_REDIRECTS: Record<string, string> = {
-  "ai-video-add-ons": "/blog/video-photo-package-guide",
-  boudoir: "/blog/creative-photo-package-guide",
-  "christmas-couple": "/blog/seasonal-photo-package-guide",
-  "christmas-photos": "/blog/seasonal-photo-package-guide",
-  "desi-wedding": "/blog/cultural-wedding-photo-guide",
-  engagement: "/blog/couple-photo-package-guide",
-  "halloween-party-photos": "/blog/seasonal-photo-package-guide",
-  holiday: "/blog/seasonal-photo-package-guide",
-  "indian-wedding": "/blog/cultural-wedding-photo-guide",
-
-  "thanksgiving-group-photos": "/blog/seasonal-photo-package-guide"
+  "ai-video-add-ons": "/blog/video-photo-package-guide"
 };
 const DREAMSHOOT_LEGACY_BLOG_TOOL_REDIRECTS: Record<string, string> = {
   "ai-photo-edit": "/blog/utility-image-prep-guide",

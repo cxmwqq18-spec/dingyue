@@ -6,6 +6,10 @@ import {
   MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS,
   mydreamshootsBlogSeoRemediationArticles
 } from "./mydreamshoots-blog-seo-remediation-articles.mjs";
+import {
+  MYDREAMSHOOTS_SEASONAL_OCCASION_BLOG_SEO_SLUGS,
+  mydreamshootsSeasonalOccasionBlogSeoArticles
+} from "./mydreamshoots-seasonal-occasion-blog-seo-articles.mjs";
 
 const statePath = path.join(process.cwd(), "data/platform-state.json");
 const mydreamshootsTaxonomyPath = path.join(process.cwd(), "src", "lib", "mydreamshoots-theme-taxonomy.json");
@@ -24,7 +28,8 @@ const MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS = [
 const SOCCER_MIGRATION_APPROVED = process.env.MDS_SOCCER_MIGRATION_APPROVED === "1";
 const mydreamshootsPriorityBlogSlugSet = new Set([
   ...MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS,
-  ...MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS
+  ...MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS,
+  ...MYDREAMSHOOTS_SEASONAL_OCCASION_BLOG_SEO_SLUGS
 ]);
 
 function cliOption(name) {
@@ -1505,13 +1510,16 @@ function assertUniqueArticleCovers(config) {
 
 function assertMyDreamShootsArticleFacts(config) {
   if (config.siteId !== MYDREAMSHOOTS_SITE_ID) return;
-  const seoRemediationSlugs = new Set(MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS);
+  const seoProfileSlugs = new Set([
+    ...MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS,
+    ...MYDREAMSHOOTS_SEASONAL_OCCASION_BLOG_SEO_SLUGS
+  ]);
   for (const slug of mydreamshootsPriorityBlogSlugSet) {
     const article = config.articles.find((item) => item.slug === slug);
     if (!article) continue;
     const required = [
       "entityName",
-      ...(seoRemediationSlugs.has(slug) ? ["primaryKeyword", "searchIntent"] : []),
+      ...(seoProfileSlugs.has(slug) ? ["primaryKeyword", "searchIntent"] : []),
       "productSlug",
       "userIntent",
       "inputRequirements",
@@ -1935,10 +1943,14 @@ for (const config of siteConfigs) {
         ...buildCoverageArticles(sourceState, config.siteId, config.brand, config.articles)
       ];
   if (config.siteId === MYDREAMSHOOTS_SITE_ID) {
-    const remediationSlugs = new Set(MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS);
+    const remediationSlugs = new Set([
+      ...MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS,
+      ...MYDREAMSHOOTS_SEASONAL_OCCASION_BLOG_SEO_SLUGS
+    ]);
     config.articles = [
       ...config.articles.filter((article) => !remediationSlugs.has(article.slug)),
-      ...mydreamshootsBlogSeoRemediationArticles.map((article) => makePriorityBlogArticle(article))
+      ...mydreamshootsBlogSeoRemediationArticles.map((article) => makePriorityBlogArticle(article)),
+      ...mydreamshootsSeasonalOccasionBlogSeoArticles.map((article) => makePriorityBlogArticle(article))
     ];
   }
   if (config.siteId === MYDREAMSHOOTS_SITE_ID && SOCCER_MIGRATION_APPROVED && !config.articles.some((article) => article.slug === "/blog/soccer-fan-photo-guide")) {

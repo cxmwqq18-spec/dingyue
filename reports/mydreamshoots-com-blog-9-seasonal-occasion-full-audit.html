@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MyDreamShoots 9 Blog URLs SEO Audit</title>
+  <style>
+    :root { color-scheme: light; --ink: #17202a; --muted: #5f6b76; --line: #d8dee4; --critical: #9f1d35; --warn: #8a5a00; --pass: #176b45; --bg: #f6f8fa; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--bg); font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { max-width: 1120px; margin: 0 auto; padding: 48px 24px 72px; }
+    h1 { margin: 0 0 8px; font-size: 2rem; line-height: 1.2; }
+    h2 { margin: 36px 0 12px; font-size: 1.35rem; }
+    p { margin: 10px 0; }
+    .meta, .limitation { color: var(--muted); }
+    .verdict { margin: 24px 0; padding: 18px 20px; border-left: 4px solid var(--critical); background: #fff; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .card { padding: 16px; background: #fff; border: 1px solid var(--line); border-radius: 6px; }
+    .card strong { display: block; margin-bottom: 4px; }
+    .critical { color: var(--critical); }
+    .warn { color: var(--warn); }
+    .pass { color: var(--pass); }
+    table { width: 100%; border-collapse: collapse; background: #fff; font-size: .93rem; }
+    th, td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eef2f5; }
+    code { padding: 1px 4px; background: #eef2f5; border-radius: 3px; }
+    a { color: #125b9a; }
+    @media (max-width: 760px) { main { padding: 32px 16px 56px; } .grid { grid-template-columns: 1fr; } table { display: block; overflow-x: auto; white-space: nowrap; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>MyDreamShoots 九页季节与场合博客 SEO 审计</h1>
+    <p class="meta">审计日期：2026-08-19 · 范围：9 个博客 URL及公开站点信号</p>
+    <div class="verdict">
+      <strong>总体判断：需要 P0 级整改。</strong>
+      <p>9 个页面 GET 返回 200，但 HEAD 全部返回 308 到旧聚合主题页；正文 5-gram Jaccard 为 0.763–0.814，属于同一通用模板的主题名替换。3 个产品 CTA 明确落到错误实体，不能直接按当前状态继续扩展收录。</p>
+    </div>
+
+    <div class="grid">
+      <div class="card"><strong class="critical">P0 · 路由</strong>9/9 GET 200；9/9 HEAD 308。Boudoir 旧目标继续 404。</div>
+      <div class="card"><strong class="critical">P0 · 重复</strong>正文 17 段、728–748 词；正文相似度远高于独立实体阈值。</div>
+      <div class="card"><strong class="critical">P0 · CTA</strong>Christmas Couple → Nightlife；Desi Wedding → Cannes；Indian Wedding → Rich Lifestyle。</div>
+      <div class="card"><strong class="warn">P1 · 元数据</strong>H1 和 title 都没有充分表达 cards、group、proposal、ceremony、party 等实际意图。</div>
+      <div class="card"><strong class="warn">P1 · Schema</strong>BlogPosting 可解析，但 Organization 缺少 logo；9 页缺少 <code>og:type=article</code>。</div>
+      <div class="card"><strong class="warn">P1 · 内链</strong>批量链接 AI Video Add-ons、Avatar，并错误显示两次 Open Avatar theme。</div>
+    </div>
+
+    <h2>线上检查</h2>
+    <table>
+      <thead><tr><th>检查项</th><th>结果</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>GET</td><td class="pass">9/9 200</td><td>目标 URL 可通过普通 GET 渲染。</td></tr>
+        <tr><td>HEAD</td><td class="critical">9/9 308</td><td>指向旧博客聚合页，路由方法行为不一致。</td></tr>
+        <tr><td>robots.txt</td><td class="pass">200</td><td>公开可访问，并声明 sitemap。</td></tr>
+        <tr><td>sitemap.xml</td><td class="pass">200</td><td>9 个目标 URL 均存在；lastmod 集中在同一部署批次。</td></tr>
+        <tr><td>JSON-LD</td><td class="warn">部分通过</td><td>BlogPosting、BreadcrumbList 可解析；Organization 缺 logo，作者 URL/publisher logo 需要补强。</td></tr>
+        <tr><td>OG/Twitter</td><td class="warn">OG 不完整</td><td>图片、标题、描述存在；缺少 <code>og:type=article</code>。</td></tr>
+      </tbody>
+    </table>
+
+    <h2>整改顺序</h2>
+    <ol>
+      <li>移除 9 个 canonical blog slug 的 legacy redirect map 条目，清理 CDN/Next 缓存，验收 GET/HEAD 均为 200 且无 Location。</li>
+      <li>为 9 个 slug 建立独立 article profile，重写 H1、title、description、正文、FAQ、图片 alt、CTA 和相关链接。</li>
+      <li>禁止 Christmas Couple、Desi Wedding、Indian Wedding 继续映射到 Nightlife、Cannes、Rich Lifestyle；没有准确公开路由时使用准确的站点级 AI Image Generation CTA。</li>
+      <li>统一 Organization logo、author URL、BlogPosting headline/mainEntityOfPage、BreadcrumbList、OG article fields 和实际更新时间。</li>
+      <li>发布前运行 9 页 GET/HEAD、canonical、sitemap、JSON-LD、内链、5-gram similarity 与桌面/390px Playwright 验收。</li>
+    </ol>
+
+    <p><a href="../docs/audits/mydreamshoots-blog-9-seasonal-occasion-seo-audit-remediation-plan-20260819.md">查看完整 Markdown 整改方案</a></p>
+    <p class="limitation">限制：未包含 GSC、crawl log、真实 query/CTR、反向链接、竞品基准和 PageSpeed/CWV 实测；PageSpeed API key 未配置。</p>
+  </main>
+</body>
+</html>
