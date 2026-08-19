@@ -1,6 +1,7 @@
 import "server-only";
 
 import { withSeoDirectorySeo, type SeoDirectoryKind } from "@/lib/dreamshoot-seo-content";
+import { mydreamshootsPublishedRouteForSlug, resolveMydreamshootsPublishedPageMedia } from "@/lib/mydreamshoots-published-contract";
 import { createPublishedSiteSnapshot, resolvePublishedStorefrontContext, type PublishedSiteSnapshot } from "@/lib/storefront-context";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/lib/types";
@@ -66,9 +67,24 @@ export async function metadataForPublishedStorefrontDirectoryPage({
   snapshot?: PublishedSiteSnapshot;
 }) {
   const publishedBasePage = snapshot?.pages.find((candidate) => candidate.id === page.id) ?? page;
+  const publishedSite = snapshot?.site ?? site;
+  const route = publishedSite.id === "site_dreamshoot" && kind === "collection"
+    ? mydreamshootsPublishedRouteForSlug(directorySlug)
+    : undefined;
+  const pageMedia = route
+    ? resolveMydreamshootsPublishedPageMedia(route, snapshot?.creativePacks ?? creativePacks)
+    : undefined;
   const resolvedPage = {
     ...publishedBasePage,
-    publishedJson: withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, snapshot?.site ?? site)
+    publishedJson: {
+      ...withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite),
+      seo: {
+        ...withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite).seo,
+        ...(route
+          ? { ogImage: pageMedia?.status === "ready" && pageMedia.primaryImage ? pageMedia.primaryImage : undefined }
+          : {})
+      }
+    }
   };
   return metadataForPublishedStorefrontPage({
     site,

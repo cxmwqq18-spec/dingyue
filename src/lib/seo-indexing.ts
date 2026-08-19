@@ -1,6 +1,6 @@
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPlatformStateFromLegacyJson } from "@/lib/storefront-state";
 import { getSiteByHostCandidatesFromState } from "@/lib/domain-routing";
-import { canonicalSeoDirectoryPathForSite, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
+import { canonicalSeoDirectoryPathForSite, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
 import {
   MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS,
   creativePackCollectionHref,
@@ -13,7 +13,8 @@ import {
 import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
-import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublicCollectionItems } from "@/lib/storefront-context";
+import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
+import { resolveMydreamshootsPublishedPageMedia } from "@/lib/mydreamshoots-published-contract";
 import type { CreativePack, PlatformState, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
@@ -481,6 +482,42 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
       const loc = effective.context.seo.canonicalUrl;
       const entry = entries.get(loc);
       if (entry) entry.images = collectionItems.flatMap((item) => packSitemapImages(site, item.source, 1));
+    }
+  }
+  if (site.id === "site_dreamshoot" && collectionPage) {
+    for (const route of snapshot.publishedRoutes.filter((candidate) => candidate.indexable && candidate.sitemapEligible)) {
+      const media = resolveMydreamshootsPublishedPageMedia(route, snapshot.creativePacks);
+      if (!media || media.status !== "ready") continue;
+      const page = {
+        ...collectionPage,
+        publishedJson: withSeoDirectorySeo(collectionPage.publishedJson, "collection", route.canonicalSlug, site)
+      };
+      const context = resolvePublishedStorefrontContext(snapshot, page);
+      const effective = {
+        ...resolveEffectivePublishedPage(snapshot, collectionPage.slug),
+        context,
+        indexability: {
+          index: true,
+          follow: true,
+          sitemapEligible: true
+        }
+      };
+      const loc = context.seo.canonicalUrl;
+      if (!effective.indexability.sitemapEligible || resolvePublishedRouteDisposition(snapshot, route.canonicalPath).kind !== "render") continue;
+      const pack = snapshot.creativePacks.find((candidate) => candidate.id === media.packId);
+      const mediaImages = [media.primaryImage, ...media.galleryImages]
+        .map((value, index) => ({
+          loc: absoluteMediaUrl(site, value),
+          title: media.imageAlts[index]
+        }))
+        .filter((image) => image.loc);
+      entries.set(loc, {
+        loc,
+        images: mediaImages.length ? mediaImages : pack ? packSitemapImages(site, pack) : [],
+        lastmod: normalizeSitemapDate(snapshot.publication?.publishedAt),
+        changefreq: sitemapChangeFrequencyForPath(route.canonicalPath),
+        priority: sitemapPriorityForPath(route.canonicalPath)
+      });
     }
   }
   return [...entries.values()].sort((left, right) => left.loc.localeCompare(right.loc));

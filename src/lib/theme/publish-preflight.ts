@@ -1,6 +1,7 @@
 import { normalizeThemeSeo } from "@/lib/theme/seo";
 import { themeValueToString } from "@/lib/theme-values";
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
+import { mydreamshootsPublishedRouteManifest } from "@/lib/mydreamshoots-published-contract";
 import { isPublicPriceFact, missingStorefrontProfileFacts } from "@/lib/storefront-context";
 import type { SectionBlockInstance, SectionInstance, Site, StorefrontProfileJson, ThemePage, ThemeSettings, ThemeSettingValue } from "@/lib/types";
 
@@ -40,7 +41,16 @@ export type PublishPreflightProduct = {
   prices: Array<{ stripePriceId: string | null; amountCents: number; status?: string; currency?: string; interval?: string; providerVerifiedAt?: string | null; providerFingerprint?: string | null; effectiveFrom?: string | null; effectiveTo?: string | null }>;
 };
 
-export type PublishPreflightCreativePack = { id: string; status: string; creditCost: number; outputCount: number };
+export type PublishPreflightCreativePack = {
+  id: string;
+  status: string;
+  creditCost: number;
+  outputCount: number;
+  category?: string;
+  categoryRecord?: { slug?: string };
+  imageUrl?: string;
+  galleryImages?: string[];
+};
 
 export type PublishPreflightSiteAiApp = {
   id: string;
@@ -302,7 +312,26 @@ export function runThemePublishPreflight({
   const missingMediaRefs = collectMediaReferencesFromSections(sections).filter((ref) => !mediaIds.has(ref));
   const mediaOwnerReviewRequired = mediaAssets.filter((asset) => mediaIds.has(asset.id) && (!asset.ownerId || !asset.entityRevision || asset.ownerId !== site.id));
   const pageCopyFailures: string[] = [];
+  const pageCopyRouteFailures: string[] = [];
+  const pageCopyRevisionFailures: string[] = [];
+  const pageCopyFaqFailures: string[] = [];
+  const pageCopyMediaFailures: string[] = [];
   if (site.id === "site_dreamshoot") {
+    for (const route of mydreamshootsPublishedRouteManifest()) {
+      if (route.copySource !== "page-copy") pageCopyRouteFailures.push(`${route.canonicalSlug}:PAGE_COPY_REVIEW_REQUIRED`);
+      if (route.pageEntityId !== `mydreamshoots:ai-image-theme:${route.canonicalSlug}`) pageCopyRouteFailures.push(`${route.canonicalSlug}:PAGE_COPY_ENTITY_MISMATCH`);
+      if (!route.copyRevision.trim()) pageCopyRevisionFailures.push(`${route.canonicalSlug}:PAGE_COPY_REVISION_MISSING`);
+      try {
+        const copy = mydreamshootsPageCopyForRoute({ siteId: site.id, routeKind: "ai-image-theme-leaf", canonicalSlug: route.canonicalSlug, canonicalPath: route.canonicalPath });
+        if (!copy || !Array.isArray(copy.faqItems) || copy.faqItems.length < 4) pageCopyFaqFailures.push(`${route.canonicalSlug}:PAGE_COPY_FAQ_REQUIRED`);
+      } catch (error) {
+        pageCopyRouteFailures.push(`${route.canonicalSlug}:${error instanceof Error ? error.message : "PAGE_COPY_REVIEW_REQUIRED"}`);
+      }
+      const matchingPack = creativePacks.find((pack) => pack.status === "active" && pack.id === route.expectedPackId && (pack.categoryRecord?.slug || pack.category) === route.canonicalSlug);
+      if (!matchingPack || !matchingPack.imageUrl || (matchingPack.galleryImages ?? []).length === 0 || route.status !== "published") {
+        pageCopyMediaFailures.push(`${route.canonicalSlug}:PAGE_COPY_MEDIA_ENTITY_MISMATCH`);
+      }
+    }
     for (const page of site.pages) {
       const canonicalSlug = page.slug.match(/^\/ai-image-generation\/([^/?#]+)/)?.[1];
       if (!canonicalSlug) continue;
@@ -385,6 +414,24 @@ export function runThemePublishPreflight({
       ? block("empty_pages", "pages", "存在空页面", `${emptyPages.map((page) => page.title).join(", ")} 没有任何 section，发布后会形成空模板。`)
       : pass("empty_pages", "pages", "页面结构完整", "所有 draft 页面都有 section 顺序。")
   );
+
+  if (site.id === "site_dreamshoot") {
+    checks.push(pageCopyRouteFailures.length
+      ? block("PAGE_COPY_REVIEW_REQUIRED", "pages", "MyDreamShoots page copy requires review", pageCopyRouteFailures.slice(0, 8).join("; "))
+      : pass("PAGE_COPY_REVIEW_REQUIRED", "pages", "MyDreamShoots page copy is exact", "Every published route manifest row resolves to its direct page-copy owner."));
+    checks.push(pageCopyRouteFailures.some((failure) => failure.includes("PAGE_COPY_ENTITY_MISMATCH"))
+      ? block("PAGE_COPY_ENTITY_MISMATCH", "pages", "Page copy entity mismatch", pageCopyRouteFailures.filter((failure) => failure.includes("PAGE_COPY_ENTITY_MISMATCH")).slice(0, 8).join("; "))
+      : pass("PAGE_COPY_ENTITY_MISMATCH", "pages", "Page copy entities match routes", "Every pageEntityId matches its canonical slug."));
+    checks.push(pageCopyRevisionFailures.length
+      ? block("PAGE_COPY_REVISION_MISSING", "pages", "Page copy revision missing", pageCopyRevisionFailures.slice(0, 8).join("; "))
+      : pass("PAGE_COPY_REVISION_MISSING", "pages", "Page copy revisions present", "Every route manifest row has a non-empty copyRevision."));
+    checks.push(pageCopyFaqFailures.length
+      ? block("PAGE_COPY_FAQ_REQUIRED", "pages", "Page copy FAQ incomplete", pageCopyFaqFailures.slice(0, 8).join("; "))
+      : pass("PAGE_COPY_FAQ_REQUIRED", "pages", "Page copy FAQ complete", "Every route copy contains at least four valid FAQ items."));
+    checks.push(pageCopyMediaFailures.length
+      ? block("PAGE_COPY_MEDIA_ENTITY_MISMATCH", "media", "Page media entity mismatch", pageCopyMediaFailures.slice(0, 8).join("; "))
+      : pass("PAGE_COPY_MEDIA_ENTITY_MISMATCH", "media", "Page media entities match routes", "Every indexable route has an exact active pack owner with cover and gallery media."));
+  }
 
   checks.push(
     missingSectionRefs.length

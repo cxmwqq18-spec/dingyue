@@ -4,6 +4,7 @@ import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storef
 import type { MediaAsset, PlatformState, Site, ThemePage } from "@/lib/types";
 import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
+import { mydreamshootsPublishedRouteManifest, mydreamshootsPublishedRouteForPath, resolveMydreamshootsPublishedPageMedia } from "@/lib/mydreamshoots-published-contract";
 import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
 import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
@@ -87,7 +88,11 @@ export function createPublishedSiteSnapshot(
       ? { ...site.storefrontProfile, publishedJson: publishedProfile }
       : site.storefrontProfile
   };
-  const publishedPaths = Array.from(new Set(pages.flatMap((page) => [normalizePath(page.slug), canonicalPathForPage(page)])));
+  const publishedRoutes = site.id === "site_dreamshoot" ? mydreamshootsPublishedRouteManifest() : [];
+  const publishedPaths = Array.from(new Set([
+    ...pages.flatMap((page) => [normalizePath(page.slug), canonicalPathForPage(page)]),
+    ...publishedRoutes.filter((route) => route.status === "published").map((route) => route.canonicalPath)
+  ]));
   const products = state.products.filter((product) => product.siteId === site.id);
   const creativePacks = state.creativePacks.filter((pack) => pack.siteId === site.id);
   const creativePackCategories = (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
@@ -107,12 +112,30 @@ export function createPublishedSiteSnapshot(
       });
       return copy ? [{ entityType: "page_copy" as const, entityId: copy.pageEntityId, ownerId: site.id, revision: copy.copyRevision }] : [];
     }),
+    ...publishedRoutes.map((route) => ({
+      entityType: "route_manifest" as const,
+      entityId: route.canonicalPath,
+      ownerId: route.pageEntityId,
+      revision: route.copyRevision || revision(route),
+      updatedAt: route.copyRevision
+    })),
     { entityType: "theme_settings" as const, entityId: site.id, ownerId: site.id, revision: revision(publishedSettings.publishedJson) },
     ...products.flatMap((product) => [
       { entityType: "product" as const, entityId: product.id, ownerId: site.id, revision: revision([product.id, product.metadata, product.status]) },
       ...product.prices.map((price) => ({ entityType: "price" as const, entityId: price.id, ownerId: site.id, revision: revision([price.id, price.amountCents, price.currency, price.interval, price.status, price.effectiveFrom, price.effectiveTo]) }))
     ]),
     ...creativePacks.map((pack) => ({ entityType: "creative_pack" as const, entityId: pack.id, ownerId: site.id, revision: revision([pack.id, pack.createdAt, pack.status, pack.creditCost, pack.outputCount, pack.imageUrl, pack.galleryImages]), updatedAt: pack.createdAt })),
+    ...(site.id === "site_dreamshoot"
+      ? mydreamshootsPublishedRouteManifest()
+        .map((route) => resolveMydreamshootsPublishedPageMedia(route, creativePacks))
+        .filter(Boolean)
+        .map((media) => ({
+          entityType: "page_media" as const,
+          entityId: media!.mediaEntityId,
+          ownerId: media!.pageEntityId,
+          revision: media!.entityRevision
+        }))
+      : []),
     ...videoThemes.map((theme) => ({ entityType: "video_theme" as const, entityId: theme.id, ownerId: site.id, revision: revision([theme.id, theme.createdAt, theme.status, theme.slug, theme.imageUrl, theme.galleryImages]), updatedAt: theme.createdAt })),
     ...mediaAssets.map((asset) => ({ entityType: "media" as const, entityId: asset.id, ownerId: site.id, revision: revision([asset.id, asset.createdAt, asset.storageKey, asset.previewUrl, asset.originUrl]) }))
   ];
@@ -138,6 +161,7 @@ export function createPublishedSiteSnapshot(
     buildId: process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local",
     pages,
     publishedPaths,
+    publishedRoutes,
     products,
     creativePacks,
     creativePackCategories,
@@ -164,16 +188,27 @@ export async function loadPublishedSiteSnapshotBySiteId(siteId: string): Promise
 }
 
 export function resolvePublishedStorefrontContext(snapshot: PublishedSiteSnapshot, page: ThemePage) {
-  return { ...resolveStorefrontContext(bundleFor(snapshot, page), "published"), publishedPaths: snapshot.publishedPaths };
+  const context = resolveStorefrontContext(bundleFor(snapshot, page), "published");
+  const route = snapshot.publishedRoutes.find((candidate) => candidate.canonicalPath === normalizePath(context.seo.canonicalPath));
+  const media = route ? resolveMydreamshootsPublishedPageMedia(route, snapshot.creativePacks) : undefined;
+  return {
+    ...context,
+    revisions: {
+      ...context.revisions,
+      pageMediaRevision: media?.entityRevision
+    },
+    publishedPaths: snapshot.publishedPaths
+  };
 }
 
 export function resolveEffectiveIndexability(snapshot: PublishedSiteSnapshot, page: ThemePage, context = resolveStorefrontContext(bundleFor(snapshot, page), "published")): EffectiveIndexability {
   const blocked = page.pageType === "not_found" || page.slug === "/404" || isPrivateStorefrontPath(page.slug) || isPrivateStorefrontPath(context.seo.canonicalPath);
-  const index = !blocked && context.seo.index;
+  const publishedRoute = snapshot.publishedRoutes.find((route) => route.canonicalPath === normalizePath(context.seo.canonicalPath));
+  const index = !blocked && context.seo.index && (publishedRoute ? publishedRoute.indexable : true);
   return {
     index,
     follow: blocked ? false : context.seo.follow,
-    sitemapEligible: index && context.seo.sitemapEligible && snapshot.publishedPaths.includes(normalizePath(context.seo.canonicalPath))
+    sitemapEligible: index && context.seo.sitemapEligible && snapshot.publishedPaths.includes(normalizePath(context.seo.canonicalPath)) && (publishedRoute ? publishedRoute.sitemapEligible : true)
   };
 }
 
@@ -225,6 +260,12 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
   const legacyTarget = legacyPublicPathTarget(requestedPath, publicCollectionRootPathForSite(snapshot.site));
   if (legacyTarget) return resolvePublishedRedirectDisposition(snapshot, requestedPath, legacyTarget);
+  if (snapshot.site.id === "site_dreamshoot" && requestedPath.startsWith("/ai-image-generation/")) {
+    const route = mydreamshootsPublishedRouteForPath(requestedPath);
+    if (!route) return { kind: "not_found", status: 404, path: requestedPath };
+    const rootPage = snapshot.pages.find((page) => canonicalPathForPage(page) === publicCollectionRootPathForSite(snapshot.site) || normalizePath(page.slug) === publicCollectionRootPathForSite(snapshot.site));
+    if (rootPage) return { kind: "render", status: 200, path: requestedPath, pageId: rootPage.id };
+  }
   return resolveEffectivePublishedPage(snapshot, path).routeDisposition;
 }
 

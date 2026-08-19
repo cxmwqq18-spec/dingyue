@@ -156,7 +156,44 @@
       "Avoid protected franchise imagery, logos, or character imitation."
     ],
     "coverNote": "Cyberpunk results are strongest with expressive face references and a clear choice between profile icon, poster, or social campaign.",
-    "safetyNote": "Use original futuristic styling and avoid copying protected characters, trademarks, or another person's likeness."
+    "safetyNote": "Use original futuristic styling and avoid copying protected characters, trademarks, or another person's likeness.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:cyberpunk",
+    "copyRevision": "2026-08-18.cyberpunk",
+    "seoTitle": "AI Cyberpunk Photos for Neon City Portraits and Futuristic Profile Art | myDreamshoots",
+    "galleryTitle": "12 AI Cyberpunk Photo Examples for Cyberpunk, Neon, Cinematic",
+    "galleryIntro": "Review cyberpunk, neon, cinematic examples before opening the cyberpunk workflow.",
+    "ctaEyebrow": "Start the cyberpunk set",
+    "ctaTitle": "Create cyberpunk images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into cyberpunk, neon, cinematic with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Cyberpunk Photos",
+    "faqEyebrow": "Cyberpunk FAQ",
+    "faqTitle": "Cyberpunk photos before you create",
+    "faqItems": [
+      {
+        "id": "cyberpunk_what_is_it",
+        "question": "What visual direction defines a Cyberpunk portrait?",
+        "answer": "Choose one futuristic direction such as neon street, rain reflection, elevated transit, or a sci-fi studio. Keep the face readable while letting color, light, and architecture carry the cyberpunk mood."
+      },
+      {
+        "id": "cyberpunk_source_photos",
+        "question": "How do I keep a Cyberpunk avatar recognizable?",
+        "answer": "Use a clear face reference and ask for controlled neon rather than full-face shadow or opaque effects. Check the eyes, jawline, hair, and small-size crop before using it as a gaming or community avatar."
+      },
+      {
+        "id": "cyberpunk_use_results",
+        "question": "Can Cyberpunk copy a movie, game, or protected character?",
+        "answer": "Use original futuristic styling, colors, and props. Do not ask for a protected character, franchise costume, logo, or another person’s likeness without permission."
+      },
+      {
+        "id": "cyberpunk_before_generate",
+        "question": "Should I make a square avatar or a poster crop?",
+        "answer": "Choose a square crop for a profile or gaming handle, a vertical crop for a poster or music visual, and a wider frame for a campaign banner. Keep the same identity reference when generating multiple formats."
+      }
+    ],
+    "relatedEyebrow": "Related cyberpunk ideas",
+    "relatedTitle": "More cyberpunk and nearby themes",
+    "relatedSubtitle": "Compare cyberpunk, neon, cinematic and adjacent themes before opening a cyberpunk set.",
+    "relatedCtaLabel": "View all packages"
   },
   "gala-photos": {
     "headline": "AI Gala Photo Generator",
@@ -234,7 +271,44 @@
       "Use cleaner crops for profiles and wider frames for poster concepts."
     ],
     "coverNote": "Mafia-style portraits work best with expressive source photos and a clear noir or character concept.",
-    "safetyNote": "Do not create images that threaten, harass, impersonate, or imply real criminal conduct."
+    "safetyNote": "Do not create images that threaten, harass, impersonate, or imply real criminal conduct.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:mafia",
+    "copyRevision": "2026-08-18.mafia",
+    "seoTitle": "AI Mafia Photos for Noir Character Portraits and Cinematic Profile Art | myDreamshoots",
+    "galleryTitle": "12 AI Mafia Photo Examples for Noir, Character, Cinematic",
+    "galleryIntro": "Review noir, character, cinematic examples before opening the mafia workflow.",
+    "ctaEyebrow": "Start the mafia set",
+    "ctaTitle": "Create mafia images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into noir, character, cinematic with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Mafia Photos",
+    "faqEyebrow": "Mafia FAQ",
+    "faqTitle": "Mafia photos before you create",
+    "faqItems": [
+      {
+        "id": "mafia_what_is_it",
+        "question": "Is Mafia intended to depict real criminal activity?",
+        "answer": "No. It is a fictional noir and character-concept style with tailored wardrobe, moody interiors, and cinematic light. Keep the story clearly fictional and avoid claims of real affiliation or conduct."
+      },
+      {
+        "id": "mafia_source_photos",
+        "question": "What source and styling work best for a Mafia-inspired portrait?",
+        "answer": "Use an expressive portrait and choose a suit, vintage room, street, or poster direction. Keep props non-threatening and avoid weapons, graphic violence, or details that turn a character concept into a threat."
+      },
+      {
+        "id": "mafia_use_results",
+        "question": "Which Mafia crop fits a profile or poster?",
+        "answer": "Use a clean head-and-shoulders crop for a character profile, a half-body frame for wardrobe, and a wider composition for a cinematic poster. Keep the face recognizable in every format."
+      },
+      {
+        "id": "mafia_before_generate",
+        "question": "Can I use a Mafia image to imply someone is involved in crime?",
+        "answer": "No. Do not use the image to threaten, harass, impersonate, or accuse a real person. Label it as fictional or generated when the surrounding copy could be read as a factual claim."
+      }
+    ],
+    "relatedEyebrow": "Related mafia ideas",
+    "relatedTitle": "More mafia and nearby themes",
+    "relatedSubtitle": "Compare noir, character, cinematic and adjacent themes before opening a mafia set.",
+    "relatedCtaLabel": "View all packages"
   },
   "nature": {
     "headline": "AI Nature Adventure Photo Generator",
@@ -351,7 +425,44 @@
       "Treat try-on outputs as planning visuals, not exact garment fit guarantees."
     ],
     "coverNote": "Virtual try-on works best with clear body framing, simple lighting, and a specific outfit direction.",
-    "safetyNote": "Do not use try-on images to misrepresent a product, brand, or person without permission."
+    "safetyNote": "Do not use try-on images to misrepresent a product, brand, or person without permission.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:virtual-try-on",
+    "copyRevision": "2026-08-18.virtual-try-on",
+    "seoTitle": "AI Virtual Try-On Photos for Outfit Ideas, Wardrobe Moodboards, and Fashion Planning | myDreamshoots",
+    "galleryTitle": "12 AI Virtual Try-On Photo Examples for Virtual Try-On, Outfit, Fashion",
+    "galleryIntro": "Review virtual try-on, outfit, fashion examples before opening the virtual-try-on workflow.",
+    "ctaEyebrow": "Start the virtual try-on set",
+    "ctaTitle": "Create virtual try-on images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into virtual try-on, outfit, fashion with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Virtual Try-On Photos",
+    "faqEyebrow": "Virtual Try-On FAQ",
+    "faqTitle": "Virtual Try-On photos before you create",
+    "faqItems": [
+      {
+        "id": "virtual_try_on_what_is_it",
+        "question": "Does Virtual Try-On guarantee how clothing will fit?",
+        "answer": "No. It helps compare outfit direction, color, silhouette, and styling mood. Treat the result as a planning visual, not an exact garment-fit, size, fabric, or product-performance guarantee."
+      },
+      {
+        "id": "virtual_try_on_source_photos",
+        "question": "What clothing reference should I upload?",
+        "answer": "Use a clear portrait or body-framed source plus a garment reference you own or are allowed to use. Describe the key features-cut, color, sleeve, neckline, or occasion-so the comparison has a defined target."
+      },
+      {
+        "id": "virtual_try_on_use_results",
+        "question": "How can I compare several Virtual Try-On looks fairly?",
+        "answer": "Keep the face, pose, camera angle, and lighting direction stable, then change one outfit variable at a time. Review hands, seams, body proportions, and neckline before choosing a concept."
+      },
+      {
+        "id": "virtual_try_on_before_generate",
+        "question": "Can I use branded garments or a person’s image in Try-On?",
+        "answer": "Only with the necessary permission. Avoid protected logos and do not use another person’s portrait to simulate a purchase, endorsement, or product review they did not approve."
+      }
+    ],
+    "relatedEyebrow": "Related virtual try-on ideas",
+    "relatedTitle": "More virtual try-on and nearby themes",
+    "relatedSubtitle": "Compare virtual try-on, outfit, fashion and adjacent themes before opening a virtual try-on set.",
+    "relatedCtaLabel": "View all packages"
   },
   "profile-cards": {
     "headline": "AI Profile Card Generator",
@@ -823,7 +934,44 @@
       "Use private downloads unless every person shown agrees to the final use."
     ],
     "coverNote": "Boudoir-inspired photos work best with adult source images, clear consent, and a tasteful non-explicit styling direction.",
-    "safetyNote": "Adults and consent only. Do not upload minors, non-consenting people, stolen images, or explicit requests."
+    "safetyNote": "Adults and consent only. Do not upload minors, non-consenting people, stolen images, or explicit requests.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:boudoir",
+    "copyRevision": "2026-08-18.boudoir",
+    "seoTitle": "Private AI Boudoir Photos for Tasteful Adult Portraits and Confidence Sets | myDreamshoots",
+    "galleryTitle": "12 AI Boudoir Photo Examples for Boudoir, Private, Editorial",
+    "galleryIntro": "Review boudoir, private, editorial examples before opening the boudoir workflow.",
+    "ctaEyebrow": "Start the boudoir set",
+    "ctaTitle": "Create boudoir images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into boudoir, private, editorial with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Boudoir Photos",
+    "faqEyebrow": "Boudoir FAQ",
+    "faqTitle": "Boudoir photos before you create",
+    "faqItems": [
+      {
+        "id": "boudoir_what_is_it",
+        "question": "What kind of Boudoir images are allowed here?",
+        "answer": "Use a tasteful, non-explicit adult portrait direction built around soft light, elegant wardrobe, silhouette, confidence, or a private keepsake. Do not request nudity, minors, or sexualized images of anyone without consent."
+      },
+      {
+        "id": "boudoir_source_photos",
+        "question": "How should I handle Boudoir source photos?",
+        "answer": "Upload only adult images you own or have permission to use, keep the gallery private, and remove any source that includes a non-consenting person. Review access and download settings before sharing."
+      },
+      {
+        "id": "boudoir_use_results",
+        "question": "Which styling choices make a Boudoir set feel editorial rather than explicit?",
+        "answer": "Use soft studio light, robe or elegant wardrobe cues, controlled silhouettes, and restrained crops. Keep the prompt about mood and confidence instead of anatomy or explicit exposure."
+      },
+      {
+        "id": "boudoir_before_generate",
+        "question": "Can I create an anniversary or gift concept with Boudoir?",
+        "answer": "Yes, for consenting adults and private, non-explicit use. Confirm the recipient, storage, and sharing permissions before downloading, and do not forward the image beyond the agreed audience."
+      }
+    ],
+    "relatedEyebrow": "Related boudoir ideas",
+    "relatedTitle": "More boudoir and nearby themes",
+    "relatedSubtitle": "Compare boudoir, private, editorial and adjacent themes before opening a boudoir set.",
+    "relatedCtaLabel": "View all packages"
   },
   "holiday": {
     "headline": "AI Holiday Photos for Seasonal Cards, Festive Profiles, and Warm Albums",
@@ -1632,7 +1780,44 @@
       "Avoid official characters, protected logos, or another person's likeness without permission."
     ],
     "coverNote": "Avatar packs perform best with clean face references, simple backgrounds, and a clear final platform in mind.",
-    "safetyNote": "Use original avatar styles and do not imitate protected characters, official marks, or people who did not consent."
+    "safetyNote": "Use original avatar styles and do not imitate protected characters, official marks, or people who did not consent.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:avatar",
+    "copyRevision": "2026-08-18.avatar",
+    "seoTitle": "AI Avatars for Profiles, Gaming Handles, and Community Identity | myDreamshoots",
+    "galleryTitle": "12 AI Avatar Photo Examples for Avatar, Profile, Social",
+    "galleryIntro": "Review avatar, profile, social examples before opening the avatar workflow.",
+    "ctaEyebrow": "Start the avatar set",
+    "ctaTitle": "Create avatar images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into avatar, profile, social with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Avatar Photos",
+    "faqEyebrow": "Avatar FAQ",
+    "faqTitle": "Avatar photos before you create",
+    "faqItems": [
+      {
+        "id": "avatar_what_is_it",
+        "question": "How should I frame Avatar images for a small profile icon?",
+        "answer": "Use a centered face with enough space around the hair and shoulders for a square crop. Generate one close PFP version and one slightly wider version so the same identity still reads on Discord, gaming, and creator profiles."
+      },
+      {
+        "id": "avatar_source_photos",
+        "question": "Will Avatar keep my face recognizable at mobile icon size?",
+        "answer": "Review the smallest preview first. Keep the option whose eyes, hairline, and overall face remain clear after reduction, and discard stylized versions that only look good when enlarged."
+      },
+      {
+        "id": "avatar_use_results",
+        "question": "Can I create different Avatar styles for gaming, Discord, and creator pages?",
+        "answer": "Yes. Keep the source identity and change only the art direction-such as clean illustrated, realistic streamer, or bold gaming profile-then compare the sets side by side before choosing a platform-specific crop."
+      },
+      {
+        "id": "avatar_before_generate",
+        "question": "What should I avoid when publishing an AI Avatar?",
+        "answer": "Do not copy a protected game character, team mark, or another person’s likeness. Use an original style, confirm permission for every face, and check whether the destination platform requires an AI label."
+      }
+    ],
+    "relatedEyebrow": "Related avatar ideas",
+    "relatedTitle": "More avatar and nearby themes",
+    "relatedSubtitle": "Compare avatar, profile, social and adjacent themes before opening a avatar set.",
+    "relatedCtaLabel": "View all packages"
   },
   "headshot": {
     "headline": "AI Headshots for LinkedIn, Resumes, Founder Bios, and Team Pages",
@@ -1671,7 +1856,44 @@
       "Do not use generated headshots for passports, official IDs, or legal documents."
     ],
     "coverNote": "Headshots are strongest when source photos are recent, sharp, and show the person from multiple natural angles.",
-    "safetyNote": "Only create professional portraits for yourself or people who gave permission; do not impersonate others."
+    "safetyNote": "Only create professional portraits for yourself or people who gave permission; do not impersonate others.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:headshot",
+    "copyRevision": "2026-08-18.headshot",
+    "seoTitle": "AI Headshots for LinkedIn, Resumes, Founder Bios, and Team Pages | myDreamshoots",
+    "galleryTitle": "12 AI Headshot Photo Examples for Headshot, LinkedIn, Professional",
+    "galleryIntro": "Review headshot, linkedin, professional examples before opening the headshot workflow.",
+    "ctaEyebrow": "Start the headshot set",
+    "ctaTitle": "Create headshot images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into headshot, linkedin, professional with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Headshot Photos",
+    "faqEyebrow": "Headshot FAQ",
+    "faqTitle": "Headshot photos before you create",
+    "faqItems": [
+      {
+        "id": "headshot_what_is_it",
+        "question": "Is Headshot suitable for LinkedIn, resumes, and founder bios?",
+        "answer": "It is intended for polished professional profiles, speaker pages, resumes, and team directories. Choose the crop and wardrobe that match the role, but do not present the result as an official identity document or a record of real attendance."
+      },
+      {
+        "id": "headshot_source_photos",
+        "question": "What should I wear or show in a Headshot source photo?",
+        "answer": "Use recent, sharp portraits with the face unobstructed and a simple neckline or jacket visible. A neutral wall or clean indoor light gives the generator more room to produce a credible business background than a heavily filtered selfie."
+      },
+      {
+        "id": "headshot_use_results",
+        "question": "Can a Headshot replace a passport or other official ID photo?",
+        "answer": "No. Use it for profiles, bios, job-search pages, and presentation materials only. Official IDs have their own photography, background, and verification rules that an AI-generated portrait does not satisfy."
+      },
+      {
+        "id": "headshot_before_generate",
+        "question": "What should I review before publishing a professional Headshot?",
+        "answer": "Check eye direction, teeth, hairline, jacket edges, skin texture, and whether the background implies an employer or office you do not have. Keep the version that looks credible without inventing a role, venue, or affiliation."
+      }
+    ],
+    "relatedEyebrow": "Related headshot ideas",
+    "relatedTitle": "More headshot and nearby themes",
+    "relatedSubtitle": "Compare headshot, linkedin, professional and adjacent themes before opening a headshot set.",
+    "relatedCtaLabel": "View all packages"
   },
   "gala-photo": {
     "headline": "AI Gala Photos for Formal Events, Red-Carpet Mood, and Elegant Portraits",
@@ -1710,7 +1932,44 @@
       "Avoid implying attendance at a real event unless the context is clearly creative."
     ],
     "coverNote": "Gala images work best with clear face references and a specific formal mood such as red carpet, ballroom, or flash portrait.",
-    "safetyNote": "Do not use gala images to falsely suggest real event access, awards, or endorsements."
+    "safetyNote": "Do not use gala images to falsely suggest real event access, awards, or endorsements.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:gala-photo",
+    "copyRevision": "2026-08-18.gala-photo",
+    "seoTitle": "AI Gala Photos for Formal Events, Red-Carpet Mood, and Elegant Portraits | myDreamshoots",
+    "galleryTitle": "12 AI Gala Photo Photo Examples for Gala, Formal, Event",
+    "galleryIntro": "Review gala, formal, event examples before opening the gala-photo workflow.",
+    "ctaEyebrow": "Start the gala photo set",
+    "ctaTitle": "Create gala photo images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into gala, formal, event with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Gala Photo Photos",
+    "faqEyebrow": "Gala Photo FAQ",
+    "faqTitle": "Gala Photo photos before you create",
+    "faqItems": [
+      {
+        "id": "gala_photo_what_is_it",
+        "question": "What kind of event look does Gala Photo create?",
+        "answer": "It creates formal evening and red-carpet-inspired portraits with polished light, elegant styling, and private album review. It is a visual concept for an event mood, not proof that you attended a real gala."
+      },
+      {
+        "id": "gala_photo_source_photos",
+        "question": "What source photos work best for a Gala Photo set?",
+        "answer": "Use a sharp portrait with the face, hair, and shoulders visible, plus a wardrobe reference if the neckline or sleeve matters. Avoid tiny crops where jewelry and fabric details are already lost."
+      },
+      {
+        "id": "gala_photo_use_results",
+        "question": "Which details should I inspect in a formal Gala result?",
+        "answer": "Check hands, jewelry, neckline, lapels, reflections, and the direction of event lighting. A glamorous result is usable only when these details remain believable at the final crop."
+      },
+      {
+        "id": "gala_photo_before_generate",
+        "question": "Can I post Gala Photo results as if they show a real event?",
+        "answer": "Post them as inspired or generated visuals unless the surrounding text clearly says otherwise. Do not add a real venue, sponsor, celebrity, or event-attendance claim that the image cannot substantiate."
+      }
+    ],
+    "relatedEyebrow": "Related gala photo ideas",
+    "relatedTitle": "More gala photo and nearby themes",
+    "relatedSubtitle": "Compare gala, formal, event and adjacent themes before opening a gala photo set.",
+    "relatedCtaLabel": "View all packages"
   },
   "portrait-photo": {
     "headline": "AI Portrait Photos for Personal Brands, Media Kits, and Creator Profiles",
@@ -1749,7 +2008,44 @@
       "Review skin, hands, background, and wardrobe details before use."
     ],
     "coverNote": "Portrait photos work best with a mix of close-up and half-body source images.",
-    "safetyNote": "Do not create or publish portraits of someone who did not consent."
+    "safetyNote": "Do not create or publish portraits of someone who did not consent.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:portrait-photo",
+    "copyRevision": "2026-08-18.portrait-photo",
+    "seoTitle": "AI Portrait Photos for Personal Brands, Media Kits, and Creator Profiles | myDreamshoots",
+    "galleryTitle": "12 AI Portrait Photo Photo Examples for Portrait, Creator, Personal Brand",
+    "galleryIntro": "Review portrait, creator, personal brand examples before opening the portrait-photo workflow.",
+    "ctaEyebrow": "Start the portrait photo set",
+    "ctaTitle": "Create portrait photo images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into portrait, creator, personal brand with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Portrait Photo Photos",
+    "faqEyebrow": "Portrait Photo FAQ",
+    "faqTitle": "Portrait Photo photos before you create",
+    "faqItems": [
+      {
+        "id": "portrait_photo_what_is_it",
+        "question": "When should I choose Portrait Photo instead of Headshot?",
+        "answer": "Choose Portrait Photo when you need a flexible personal-brand set for a website, newsletter, media kit, launch, or social campaign. Choose Headshot when the primary job is a conservative business profile or resume image."
+      },
+      {
+        "id": "portrait_photo_source_photos",
+        "question": "Should I upload both close-up and half-body references?",
+        "answer": "Yes. A close-up gives the model facial detail, while a half-body image provides posture, clothing, and crop context. Keep the references from the same person and avoid mixing unrelated filters or ages."
+      },
+      {
+        "id": "portrait_photo_use_results",
+        "question": "Can one Portrait Photo set cover a newsletter, website, and social launch?",
+        "answer": "Plan the channels before generating: use a tighter crop for an author bio, a half-body frame for a landing page, and a wider composition for a launch or social banner. Save only the variants that preserve the same visual identity."
+      },
+      {
+        "id": "portrait_photo_before_generate",
+        "question": "How do I keep a personal-brand portrait set consistent?",
+        "answer": "Keep the same color mood, wardrobe direction, and face reference across the request. Compare backgrounds and expression before downloading so the set feels like one campaign rather than unrelated AI portraits."
+      }
+    ],
+    "relatedEyebrow": "Related portrait photo ideas",
+    "relatedTitle": "More portrait photo and nearby themes",
+    "relatedSubtitle": "Compare portrait, creator, personal brand and adjacent themes before opening a portrait photo set.",
+    "relatedCtaLabel": "View all packages"
   },
   "black-friday": {
     "headline": "AI Black Friday Photos for Sale Banners, Social Ads, and Promo Campaigns",
@@ -1864,7 +2160,44 @@
       "Choose images that feel polished and subscriber-ready without violating platform rules."
     ],
     "coverNote": "Only Fans creator photos work best with clear adult source images and a specific profile, teaser, or promo channel in mind.",
-    "safetyNote": "For consenting adults only. Keep all requests non-explicit, permission-safe, and compliant with the platform where the image will be used."
+    "safetyNote": "For consenting adults only. Keep all requests non-explicit, permission-safe, and compliant with the platform where the image will be used.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:only-fans",
+    "copyRevision": "2026-08-18.only-fans",
+    "seoTitle": "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers | myDreamshoots",
+    "galleryTitle": "12 AI Only Fans Photo Examples for Creator, Subscription, Profile",
+    "galleryIntro": "Review creator, subscription, profile examples before opening the only-fans workflow.",
+    "ctaEyebrow": "Start the only fans set",
+    "ctaTitle": "Create only fans images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into creator, subscription, profile with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Only Fans Photos",
+    "faqEyebrow": "Only Fans FAQ",
+    "faqTitle": "Only Fans photos before you create",
+    "faqItems": [
+      {
+        "id": "only_fans_what_is_it",
+        "question": "Should I use Only Fans for a profile photo or a promo teaser?",
+        "answer": "Use it for tasteful, non-explicit creator branding: a subscription profile, bio image, banner, feed teaser, or private moodboard. Choose the crop and wardrobe for the exact channel instead of asking one image to serve every use."
+      },
+      {
+        "id": "only_fans_source_photos",
+        "question": "What source-photo permissions are required for Only Fans?",
+        "answer": "Every person shown must be an adult who agreed to the upload and the intended image use. Keep the source photos private, remove screenshots or stolen images, and do not upload anyone whose consent you cannot document."
+      },
+      {
+        "id": "only_fans_use_results",
+        "question": "How should I keep Only Fans results platform-safe?",
+        "answer": "Keep prompts non-explicit and review clothing, pose, face, and background before download. Follow the destination platform’s content rules and disclose AI use when its policy or your audience expects it."
+      },
+      {
+        "id": "only_fans_before_generate",
+        "question": "Can I share an Only Fans result publicly after generation?",
+        "answer": "Only when the person shown has approved that specific use and the destination allows it. Start with private review, remove identifying details when needed, and do not reuse a subscriber or creator image outside the agreed channel."
+      }
+    ],
+    "relatedEyebrow": "Related only fans ideas",
+    "relatedTitle": "More only fans and nearby themes",
+    "relatedSubtitle": "Compare creator, subscription, profile and adjacent themes before opening a only fans set.",
+    "relatedCtaLabel": "View all packages"
   },
   "singles-awareness-day": {
     "headline": "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes",
@@ -1979,7 +2312,44 @@
       "Check flash highlights and skin texture for a natural editorial look."
     ],
     "coverNote": "Cannes photos work best with confident portraits and a clear glamour direction such as premiere, flash, or luxury terrace.",
-    "safetyNote": "Do not use official festival logos, red-carpet marks, celebrity likenesses, or false endorsement cues."
+    "safetyNote": "Do not use official festival logos, red-carpet marks, celebrity likenesses, or false endorsement cues.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:cannes",
+    "copyRevision": "2026-08-18.cannes",
+    "seoTitle": "AI Cannes Photos for Festival Glamour, Premiere Looks, and Flash Portraits | myDreamshoots",
+    "galleryTitle": "12 AI Cannes Photo Examples for Cannes, Festival, Glamour",
+    "galleryIntro": "Review cannes, festival, glamour examples before opening the cannes workflow.",
+    "ctaEyebrow": "Start the cannes set",
+    "ctaTitle": "Create cannes images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into cannes, festival, glamour with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Cannes Photos",
+    "faqEyebrow": "Cannes FAQ",
+    "faqTitle": "Cannes photos before you create",
+    "faqItems": [
+      {
+        "id": "cannes_what_is_it",
+        "question": "Is Cannes a real festival-attendance generator?",
+        "answer": "No. It creates Cannes-inspired festival glamour, premiere-arrival, flash, and editorial portraits. Do not present the result as proof of attendance, accreditation, sponsorship, or an official festival relationship."
+      },
+      {
+        "id": "cannes_source_photos",
+        "question": "What source photos work best for a Cannes-inspired portrait?",
+        "answer": "Use a sharp portrait with clear eyes, hair, and shoulders, plus an eveningwear reference if the silhouette matters. Leave room for flash highlights and avoid a source that is already clipped or heavily filtered."
+      },
+      {
+        "id": "cannes_use_results",
+        "question": "Can I add festival logos or celebrity likenesses?",
+        "answer": "Use generic event styling unless you have permission for a logo, red-carpet mark, venue name, or another person’s likeness. Remove accidental text and marks before publishing."
+      },
+      {
+        "id": "cannes_before_generate",
+        "question": "Which Cannes crop should I choose for a profile or editorial post?",
+        "answer": "Use a tight flash portrait for a profile, a half-body frame to show the formal look, and a wider arrival crop for an editorial post. Keep the result labeled as inspired or generated when context could mislead."
+      }
+    ],
+    "relatedEyebrow": "Related cannes ideas",
+    "relatedTitle": "More cannes and nearby themes",
+    "relatedSubtitle": "Compare cannes, festival, glamour and adjacent themes before opening a cannes set.",
+    "relatedCtaLabel": "View all packages"
   },
   "nightlife": {
     "headline": "AI Nightlife Photos for City Lights, Lounge Portraits, and After-Dark Profiles",
@@ -2018,7 +2388,44 @@
       "Choose text-safe crops when the image supports event announcements."
     ],
     "coverNote": "Nightlife photos work best with a clear channel in mind: profile, event post, story, or campaign image.",
-    "safetyNote": "Avoid implying real venue access, endorsements, or unsafe behavior."
+    "safetyNote": "Avoid implying real venue access, endorsements, or unsafe behavior.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:nightlife",
+    "copyRevision": "2026-08-18.nightlife",
+    "seoTitle": "AI Nightlife Photos for City Lights, Lounge Portraits, and After-Dark Profiles | myDreamshoots",
+    "galleryTitle": "12 AI Nightlife Photo Examples for Nightlife, City, Evening",
+    "galleryIntro": "Review nightlife, city, evening examples before opening the nightlife workflow.",
+    "ctaEyebrow": "Start the nightlife set",
+    "ctaTitle": "Create nightlife images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into nightlife, city, evening with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Nightlife Photos",
+    "faqEyebrow": "Nightlife FAQ",
+    "faqTitle": "Nightlife photos before you create",
+    "faqItems": [
+      {
+        "id": "nightlife_what_is_it",
+        "question": "What nightlife scenes can I request?",
+        "answer": "Choose one clear direction such as neon street, cocktail lounge, rooftop, or evening creator portrait. A single scene brief produces a more coherent set than mixing holiday interiors, clubs, and city streets in one request."
+      },
+      {
+        "id": "nightlife_source_photos",
+        "question": "What source photos work best for a Nightlife portrait?",
+        "answer": "Use a sharp face reference with visible eyes and natural skin detail; the source itself does not need to be dark. The generator can add evening light, but it cannot reliably recover a face hidden by heavy shadows or blur."
+      },
+      {
+        "id": "nightlife_use_results",
+        "question": "Which Nightlife crop fits a story post or profile?",
+        "answer": "Use a tighter portrait for a profile or dating-style refresh, a vertical crop for a story, and a wider frame for a rooftop or lounge announcement. Check that neon signs and bright lights do not cover the face."
+      },
+      {
+        "id": "nightlife_before_generate",
+        "question": "Can a Nightlife image imply that I visited a real club or venue?",
+        "answer": "It should not. Keep venue names, recognizable logos, and location claims out of the prompt unless you have permission and the image is clearly labeled as a generated concept."
+      }
+    ],
+    "relatedEyebrow": "Related nightlife ideas",
+    "relatedTitle": "More nightlife and nearby themes",
+    "relatedSubtitle": "Compare nightlife, city, evening and adjacent themes before opening a nightlife set.",
+    "relatedCtaLabel": "View all packages"
   },
   "rich-lifestyle": {
     "headline": "AI Rich Lifestyle Photos for Luxury Portraits, Premium Profiles, and Travel Mood",
@@ -2057,7 +2464,44 @@
       "Choose polished crops that support personal brand rather than fake status claims."
     ],
     "coverNote": "Rich lifestyle images work best with clean portrait sources and a specific luxury setting or channel.",
-    "safetyNote": "Do not use protected brand assets, vehicle badges, property logos, or false endorsement signals without permission."
+    "safetyNote": "Do not use protected brand assets, vehicle badges, property logos, or false endorsement signals without permission.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:rich-lifestyle",
+    "copyRevision": "2026-08-18.rich-lifestyle",
+    "seoTitle": "AI Rich Lifestyle Photos for Luxury Portraits, Premium Profiles, and Travel Mood | myDreamshoots",
+    "galleryTitle": "12 AI Rich Lifestyle Photo Examples for Luxury, Lifestyle, Premium",
+    "galleryIntro": "Review luxury, lifestyle, premium examples before opening the rich-lifestyle workflow.",
+    "ctaEyebrow": "Start the rich lifestyle set",
+    "ctaTitle": "Create rich lifestyle images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into luxury, lifestyle, premium with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Rich Lifestyle Photos",
+    "faqEyebrow": "Rich Lifestyle FAQ",
+    "faqTitle": "Rich Lifestyle photos before you create",
+    "faqItems": [
+      {
+        "id": "rich_lifestyle_what_is_it",
+        "question": "What does Rich Lifestyle add beyond a normal portrait?",
+        "answer": "It adds an aspirational setting-such as a refined interior, rooftop, resort, car-free travel mood, or premium studio-while keeping the person as the subject. Treat the result as a lifestyle concept, not proof of wealth or ownership."
+      },
+      {
+        "id": "rich_lifestyle_source_photos",
+        "question": "What references help create a believable Rich Lifestyle scene?",
+        "answer": "Provide a clear portrait and one setting direction at a time: hotel-like interior, rooftop sunset, resort morning, or polished studio. Too many luxury cues in one prompt often create visual clutter and inconsistent lighting."
+      },
+      {
+        "id": "rich_lifestyle_use_results",
+        "question": "Can Rich Lifestyle include luxury brands, cars, or properties?",
+        "answer": "Use generic styling unless you own the rights to a visible logo, vehicle badge, property name, or campaign asset. Remove accidental marks before publishing so the image does not imply sponsorship or ownership."
+      },
+      {
+        "id": "rich_lifestyle_before_generate",
+        "question": "What should I review before using a Rich Lifestyle image?",
+        "answer": "Check perspective, reflections, hands, fabric, architectural lines, and any text in the background. Keep the version whose premium setting supports your personal brand without making a factual status claim."
+      }
+    ],
+    "relatedEyebrow": "Related rich lifestyle ideas",
+    "relatedTitle": "More rich lifestyle and nearby themes",
+    "relatedSubtitle": "Compare luxury, lifestyle, premium and adjacent themes before opening a rich lifestyle set.",
+    "relatedCtaLabel": "View all packages"
   },
   "bikini": {
     "headline": "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets",
@@ -2096,7 +2540,44 @@
       "Use private review before sharing any image publicly."
     ],
     "coverNote": "Bikini photos work best with adult source images, clear consent, and a specific resort or beachwear direction.",
-    "safetyNote": "Adults and consent only. Keep output non-explicit and permission-safe."
+    "safetyNote": "Adults and consent only. Keep output non-explicit and permission-safe.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:bikini",
+    "copyRevision": "2026-08-18.bikini",
+    "seoTitle": "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets | myDreamshoots",
+    "galleryTitle": "12 AI Bikini Photo Examples for Beachwear, Resort, Portrait",
+    "galleryIntro": "Review beachwear, resort, portrait examples before opening the bikini workflow.",
+    "ctaEyebrow": "Start the bikini set",
+    "ctaTitle": "Create bikini images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into beachwear, resort, portrait with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Bikini Photos",
+    "faqEyebrow": "Bikini FAQ",
+    "faqTitle": "Bikini photos before you create",
+    "faqItems": [
+      {
+        "id": "bikini_what_is_it",
+        "question": "How is Bikini different from Boudoir or Swimsuit?",
+        "answer": "Bikini is centered on tasteful beachwear, resort light, poolside mood, and confidence portraits. Boudoir is a private non-explicit editorial mood, while Swimsuit emphasizes resort styling and wardrobe-preview planning."
+      },
+      {
+        "id": "bikini_source_photos",
+        "question": "What permission is required for Bikini source photos?",
+        "answer": "Use adult source photos that you own or have explicit permission to use. Keep the upload private, do not use minors or stolen images, and make sure every person agrees to the intended output and sharing channel."
+      },
+      {
+        "id": "bikini_use_results",
+        "question": "What should I review in a Bikini result?",
+        "answer": "Check swimwear edges, straps, hands, body proportions, face consistency, and whether the pose remains tasteful and non-explicit. Reject any result that adds a person, mark, or body detail that was not requested."
+      },
+      {
+        "id": "bikini_before_generate",
+        "question": "Can I use a Bikini result in a public creator post?",
+        "answer": "Only with the adult subject’s approval and when the destination allows the content. Start with private review, avoid explicit framing, and disclose AI use where the platform or audience requires it."
+      }
+    ],
+    "relatedEyebrow": "Related bikini ideas",
+    "relatedTitle": "More bikini and nearby themes",
+    "relatedSubtitle": "Compare beachwear, resort, portrait and adjacent themes before opening a bikini set.",
+    "relatedCtaLabel": "View all packages"
   },
   "swimsuit": {
     "headline": "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews",
@@ -2135,7 +2616,44 @@
       "Review every output before public sharing."
     ],
     "coverNote": "Swimsuit images work best with adult source photos, clear consent, and a specific preview or profile use case.",
-    "safetyNote": "Adults and consent only. Do not upload minors, non-consenting people, or explicit requests."
+    "safetyNote": "Adults and consent only. Do not upload minors, non-consenting people, or explicit requests.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:swimsuit",
+    "copyRevision": "2026-08-18.swimsuit",
+    "seoTitle": "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews | myDreamshoots",
+    "galleryTitle": "12 AI Swimsuit Photo Examples for Swimsuit, Resort, Style",
+    "galleryIntro": "Review swimsuit, resort, style examples before opening the swimsuit workflow.",
+    "ctaEyebrow": "Start the swimsuit set",
+    "ctaTitle": "Create swimsuit images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into swimsuit, resort, style with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Swimsuit Photos",
+    "faqEyebrow": "Swimsuit FAQ",
+    "faqTitle": "Swimsuit photos before you create",
+    "faqItems": [
+      {
+        "id": "swimsuit_what_is_it",
+        "question": "How is Swimsuit different from Bikini?",
+        "answer": "Swimsuit focuses on resort styling, beach profiles, and wardrobe-preview planning; Bikini is a narrower beachwear confidence direction. Keep the prompt centered on non-explicit adult styling in either case."
+      },
+      {
+        "id": "swimsuit_source_photos",
+        "question": "What source-photo rules apply to Swimsuit?",
+        "answer": "Use adult source photos that you own or have permission to use, with consent for the intended result. Keep uploads private and do not use minors, stolen images, or people who did not agree."
+      },
+      {
+        "id": "swimsuit_use_results",
+        "question": "Can Swimsuit predict the exact fit of a real garment?",
+        "answer": "No. It is a visual styling and moodboard preview, not a size, fabric, or fit guarantee. Use it to compare colors, silhouettes, and resort direction before a real purchase or shoot."
+      },
+      {
+        "id": "swimsuit_before_generate",
+        "question": "Can I publish a Swimsuit result on a public profile?",
+        "answer": "Only after checking the adult subject’s consent, crop, wardrobe edges, and the destination platform’s rules. Keep the image non-explicit and disclose AI use when required."
+      }
+    ],
+    "relatedEyebrow": "Related swimsuit ideas",
+    "relatedTitle": "More swimsuit and nearby themes",
+    "relatedSubtitle": "Compare swimsuit, resort, style and adjacent themes before opening a swimsuit set.",
+    "relatedCtaLabel": "View all packages"
   },
   "travel": {
     "headline": "AI Travel Photos for Destination Portraits, Route Stories, and Creator Albums",
@@ -2174,7 +2692,44 @@
       "Use wider frames for story scenes and tighter crops for profile refreshes."
     ],
     "coverNote": "Travel photos work best with clear portraits and a specific destination mood such as coast, city, resort, or scenic route.",
-    "safetyNote": "Do not present generated destination imagery as real travel documentation when accuracy matters."
+    "safetyNote": "Do not present generated destination imagery as real travel documentation when accuracy matters.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:travel",
+    "copyRevision": "2026-08-18.travel",
+    "seoTitle": "AI Travel Photos for Destination Portraits, Route Stories, and Creator Albums | myDreamshoots",
+    "galleryTitle": "12 AI Travel Photo Examples for Travel, Destination, Lifestyle",
+    "galleryIntro": "Review travel, destination, lifestyle examples before opening the travel workflow.",
+    "ctaEyebrow": "Start the travel set",
+    "ctaTitle": "Create travel images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into travel, destination, lifestyle with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Travel Photos",
+    "faqEyebrow": "Travel FAQ",
+    "faqTitle": "Travel photos before you create",
+    "faqItems": [
+      {
+        "id": "travel_what_is_it",
+        "question": "What kind of Travel story should I choose?",
+        "answer": "Pick one destination mood-coastal escape, old-city walk, mountain route, resort morning, or outdoor creator scene-before generating. A focused direction keeps the gallery readable and avoids mixing unrelated locations."
+      },
+      {
+        "id": "travel_source_photos",
+        "question": "Can a Travel image prove that I visited a destination?",
+        "answer": "No. It is a generated destination concept or creator visual. Do not use it as travel documentation, location proof, or evidence of being at a real landmark."
+      },
+      {
+        "id": "travel_use_results",
+        "question": "Which Travel crop should I use for a profile, story, or postcard?",
+        "answer": "Use a tighter portrait for a profile, a vertical frame for a route story, and a wider composition for a postcard or album cover. Keep the face readable when the landscape is doing most of the visual work."
+      },
+      {
+        "id": "travel_before_generate",
+        "question": "What should I check when a Travel image contains a landmark?",
+        "answer": "Inspect signs, architecture, geography, and lighting for invented or misleading details. If the page does not have destination-specific evidence, describe the image as destination-inspired rather than naming a real place."
+      }
+    ],
+    "relatedEyebrow": "Related travel ideas",
+    "relatedTitle": "More travel and nearby themes",
+    "relatedSubtitle": "Compare travel, destination, lifestyle and adjacent themes before opening a travel set.",
+    "relatedCtaLabel": "View all packages"
   },
   "soccer": {
     "headline": "AI Soccer Fan Photos for Match-Day Posters, Stadium Portraits, and Profile Avatars",
@@ -2213,7 +2768,44 @@
       "Choose square crops for avatars and wide layouts for banners."
     ],
     "coverNote": "Soccer fan photos work best with clear portraits and a safe match-day direction that does not depend on official branding.",
-    "safetyNote": "For personal fan use only unless you have permission for official marks, logos, player likenesses, celebrity likenesses, or brand assets."
+    "safetyNote": "For personal fan use only unless you have permission for official marks, logos, player likenesses, celebrity likenesses, or brand assets.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:soccer",
+    "copyRevision": "2026-08-18.soccer",
+    "seoTitle": "AI Soccer Fan Photos for Match-Day Posters, Stadium Portraits, and Profile Avatars | myDreamshoots",
+    "galleryTitle": "12 AI Soccer Photo Examples for Soccer, Fan Photos, Match Day",
+    "galleryIntro": "Review soccer, fan photos, match day examples before opening the soccer workflow.",
+    "ctaEyebrow": "Start the soccer set",
+    "ctaTitle": "Create soccer images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into soccer, fan photos, match day with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Soccer Photos",
+    "faqEyebrow": "Soccer FAQ",
+    "faqTitle": "Soccer photos before you create",
+    "faqItems": [
+      {
+        "id": "soccer_what_is_it",
+        "question": "Is Soccer for fan portraits or official team artwork?",
+        "answer": "It is for personal supporter portraits, match-day mood, stadium-style posters, and profile avatars. Do not treat the result as official club artwork or as a licensed team campaign unless you have the relevant permission."
+      },
+      {
+        "id": "soccer_source_photos",
+        "question": "What should I do about jerseys, logos, and player likenesses?",
+        "answer": "Use generic colors and supporter styling unless you have permission for a club mark, sponsor, league badge, or player likeness. Review the shirt, scarf, and stadium signage before downloading the final crop."
+      },
+      {
+        "id": "soccer_use_results",
+        "question": "Which Soccer crop works for a match-day poster?",
+        "answer": "Use a wider frame for stadium energy and a clean vertical or square crop for a supporter avatar. Leave text-safe space if you will add a fixture title later, and do not let generated signage carry the message."
+      },
+      {
+        "id": "soccer_before_generate",
+        "question": "Can I publish a Soccer result on social media?",
+        "answer": "Yes for personal fan content when the people shown have approved the use and the image does not imply an official relationship. Follow the platform’s AI-label rules and remove any accidental protected mark before posting."
+      }
+    ],
+    "relatedEyebrow": "Related soccer ideas",
+    "relatedTitle": "More soccer and nearby themes",
+    "relatedSubtitle": "Compare soccer, fan photos, match day and adjacent themes before opening a soccer set.",
+    "relatedCtaLabel": "View all packages"
   },
   "urban": {
     "headline": "AI Urban Photos for Street Portraits, City Profiles, and Creator Scenes",
@@ -2252,7 +2844,44 @@
       "Avoid graffiti, logos, or signage that could create unwanted claims."
     ],
     "coverNote": "Urban photos work best with expressive portraits and a clear city setting or channel goal.",
-    "safetyNote": "Do not imply endorsement by real venues, brands, or city authorities unless you have permission."
+    "safetyNote": "Do not imply endorsement by real venues, brands, or city authorities unless you have permission.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:urban",
+    "copyRevision": "2026-08-18.urban",
+    "seoTitle": "AI Urban Photos for Street Portraits, City Profiles, and Creator Scenes | myDreamshoots",
+    "galleryTitle": "12 AI Urban Photo Examples for Urban, City, Creator",
+    "galleryIntro": "Review urban, city, creator examples before opening the urban workflow.",
+    "ctaEyebrow": "Start the urban set",
+    "ctaTitle": "Create urban images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into urban, city, creator with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Urban Photos",
+    "faqEyebrow": "Urban FAQ",
+    "faqTitle": "Urban photos before you create",
+    "faqItems": [
+      {
+        "id": "urban_what_is_it",
+        "question": "How is Urban different from Travel or Street Style?",
+        "answer": "Urban focuses on city texture-streets, concrete, rooftops, transit, alleys, and modern architecture. Travel is destination storytelling, while Street Style makes the outfit and fashion direction the primary subject."
+      },
+      {
+        "id": "urban_source_photos",
+        "question": "What city references help an Urban portrait feel specific?",
+        "answer": "Choose one setting such as a subway entrance, rooftop, alley, concrete facade, or neighborhood street. Keep the background recognizable but quieter than the face so the portrait remains usable as a profile or creator image."
+      },
+      {
+        "id": "urban_use_results",
+        "question": "Should Urban images include real signs or brand logos?",
+        "answer": "Use generic signage and textures unless you have permission for a visible logo, venue, or city mark. Review letters and storefront details because generated text can create an accidental claim."
+      },
+      {
+        "id": "urban_before_generate",
+        "question": "Which Urban crop is best for a profile versus a story?",
+        "answer": "Choose a clean square or half-body crop for a profile, a wider vertical frame for a street story, and a banner crop when the architecture needs room. Keep the subject separated from busy traffic or graffiti."
+      }
+    ],
+    "relatedEyebrow": "Related urban ideas",
+    "relatedTitle": "More urban and nearby themes",
+    "relatedSubtitle": "Compare urban, city, creator and adjacent themes before opening a urban set.",
+    "relatedCtaLabel": "View all packages"
   },
   "street-style": {
     "headline": "AI Street Style Photos for Fashion Profiles, Outfit Concepts, and Editorial City Looks",
@@ -2291,7 +2920,44 @@
       "Choose stronger poses for editorial images and simpler crops for profiles."
     ],
     "coverNote": "Street style images work best with clear face references plus outfit direction or wardrobe examples.",
-    "safetyNote": "Avoid protected brand marks, counterfeit product claims, or implying affiliation with a fashion label."
+    "safetyNote": "Avoid protected brand marks, counterfeit product claims, or implying affiliation with a fashion label.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:street-style",
+    "copyRevision": "2026-08-18.street-style",
+    "seoTitle": "AI Street Style Photos for Fashion Profiles, Outfit Concepts, and Editorial City Looks | myDreamshoots",
+    "galleryTitle": "12 AI Street Style Photo Examples for Street Style, Fashion, Editorial",
+    "galleryIntro": "Review street style, fashion, editorial examples before opening the street-style workflow.",
+    "ctaEyebrow": "Start the street style set",
+    "ctaTitle": "Create street style images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into street style, fashion, editorial with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Street Style Photos",
+    "faqEyebrow": "Street Style FAQ",
+    "faqTitle": "Street Style photos before you create",
+    "faqItems": [
+      {
+        "id": "street_style_what_is_it",
+        "question": "What source photos help Street Style show the outfit clearly?",
+        "answer": "Use a full-body or three-quarter reference when clothing matters, plus a clear face image for identity. Include one wardrobe direction-streetwear, casual luxe, editorial, or bold fashion-rather than mixing several unrelated looks."
+      },
+      {
+        "id": "street_style_source_photos",
+        "question": "How is Street Style different from Urban?",
+        "answer": "Street Style makes clothing, pose, and fashion composition the primary subject. Urban makes city texture and location mood the primary subject, so a street backdrop alone does not turn a page into Street Style."
+      },
+      {
+        "id": "street_style_use_results",
+        "question": "Can Street Style use recognizable fashion logos?",
+        "answer": "Use generic garments unless you have permission for a logo, label, or campaign asset. Check shoes, bags, storefronts, and signage because accidental marks can imply a brand relationship."
+      },
+      {
+        "id": "street_style_before_generate",
+        "question": "Which Street Style crop works for an OOTD post versus a campaign?",
+        "answer": "Use a full-body or three-quarter frame for OOTD and wardrobe planning, and a tighter editorial crop when the face and pose are the campaign focus. Keep the outfit readable in both."
+      }
+    ],
+    "relatedEyebrow": "Related street style ideas",
+    "relatedTitle": "More street style and nearby themes",
+    "relatedSubtitle": "Compare street style, fashion, editorial and adjacent themes before opening a street style set.",
+    "relatedCtaLabel": "View all packages"
   },
   "hairstyle-generator": {
     "headline": "AI Hairstyle Generator for Hair Color, Cut Ideas, and Salon Preview Portraits",
@@ -2330,7 +2996,44 @@
       "Check that the face, hairline, and ear area still look natural."
     ],
     "coverNote": "Hairstyle previews work best with sharp photos where the current hair shape is visible.",
-    "safetyNote": "Use hairstyle previews for inspiration; real salon results depend on hair condition, stylist, and products."
+    "safetyNote": "Use hairstyle previews for inspiration; real salon results depend on hair condition, stylist, and products.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:hairstyle-generator",
+    "copyRevision": "2026-08-18.hairstyle-generator",
+    "seoTitle": "AI Hairstyle Generator for Hair Color, Cut Ideas, and Salon Preview Portraits | myDreamshoots",
+    "galleryTitle": "12 AI Hairstyle Generator Photo Examples for Hairstyle, Hair Color, Preview",
+    "galleryIntro": "Review hairstyle, hair color, preview examples before opening the hairstyle-generator workflow.",
+    "ctaEyebrow": "Start the hairstyle generator set",
+    "ctaTitle": "Create hairstyle generator images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into hairstyle, hair color, preview with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Hairstyle Generator Photos",
+    "faqEyebrow": "Hairstyle Generator FAQ",
+    "faqTitle": "Hairstyle Generator photos before you create",
+    "faqItems": [
+      {
+        "id": "hairstyle_generator_what_is_it",
+        "question": "What source photos work best for Hairstyle Generator?",
+        "answer": "Use a clear front or three-quarter portrait with the hairline, ears, and current length visible. A second side view helps when you are comparing a bob, fringe, curls, or a dramatic length change."
+      },
+      {
+        "id": "hairstyle_generator_source_photos",
+        "question": "Can Hairstyle Generator guarantee how a cut or color will look in real life?",
+        "answer": "No. It is a visual preview for style comparison, not a salon measurement or color guarantee. Use it to shortlist ideas, then confirm length, texture, maintenance, and color with a stylist."
+      },
+      {
+        "id": "hairstyle_generator_use_results",
+        "question": "How should I compare bangs, curls, and shorter cuts?",
+        "answer": "Generate one change at a time and compare the forehead, cheek framing, hairline, and texture around the ears. Keeping the face and lighting constant makes the differences easier to judge."
+      },
+      {
+        "id": "hairstyle_generator_before_generate",
+        "question": "Can I show a Hairstyle result to a stylist?",
+        "answer": "Yes, as an inspiration reference. Tell the stylist which parts are the intended direction and which parts are AI approximation, especially color, density, curl pattern, and length."
+      }
+    ],
+    "relatedEyebrow": "Related hairstyle generator ideas",
+    "relatedTitle": "More hairstyle generator and nearby themes",
+    "relatedSubtitle": "Compare hairstyle, hair color, preview and adjacent themes before opening a hairstyle generator set.",
+    "relatedCtaLabel": "View all packages"
   },
   "motion-generator": {
     "headline": "AI Motion Generator Photos for Image-to-Video, Camera Moves, and Storyboard Starters",
@@ -2369,7 +3072,44 @@
       "Match the crop to the final channel: vertical reels, square posts, or widescreen video."
     ],
     "coverNote": "Motion generator images work best when the subject is clear, the frame has movement space, and the final video format is known.",
-    "safetyNote": "Only animate images you own or have permission to use, and avoid implying real actions, endorsements, or events that did not happen."
+    "safetyNote": "Only animate images you own or have permission to use, and avoid implying real actions, endorsements, or events that did not happen.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:motion-generator",
+    "copyRevision": "2026-08-18.motion-generator",
+    "seoTitle": "AI Motion Generator Photos for Image-to-Video, Camera Moves, and Storyboard Starters | myDreamshoots",
+    "galleryTitle": "12 AI Motion Generator Photo Examples for Motion, GIF, Video Starter",
+    "galleryIntro": "Review motion, gif, video starter examples before opening the motion-generator workflow.",
+    "ctaEyebrow": "Start the motion generator set",
+    "ctaTitle": "Create motion generator images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into motion, gif, video starter with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Motion Generator Photos",
+    "faqEyebrow": "Motion Generator FAQ",
+    "faqTitle": "Motion Generator photos before you create",
+    "faqItems": [
+      {
+        "id": "motion_generator_what_is_it",
+        "question": "Does Motion Generator create a finished video or a motion-ready image?",
+        "answer": "This page is for motion-ready photo concepts, animated portrait frames, and starter directions. Treat the result as an image or storyboard input unless the separate video workflow explicitly confirms a rendered video output."
+      },
+      {
+        "id": "motion_generator_source_photos",
+        "question": "What camera direction should I specify for a Motion Generator frame?",
+        "answer": "Choose one movement-slow push-in, lateral slide, orbit, parallax, or a short loop-and keep the subject pose readable. A single camera cue produces a clearer starter frame than stacking several movements."
+      },
+      {
+        "id": "motion_generator_use_results",
+        "question": "What source image works best for a motion-ready portrait?",
+        "answer": "Use a sharp subject with clear face, hands, and separation from the background. Leave enough space in the direction of movement so a later video step does not crop the face or important props."
+      },
+      {
+        "id": "motion_generator_before_generate",
+        "question": "Can I publish a Motion Generator result as a finished video?",
+        "answer": "Only if the downstream video tool has actually rendered and you have reviewed that output. Do not describe a still frame or concept image as a completed animation, and follow platform disclosure rules for AI motion."
+      }
+    ],
+    "relatedEyebrow": "Related motion generator ideas",
+    "relatedTitle": "More motion generator and nearby themes",
+    "relatedSubtitle": "Compare motion, gif, video starter and adjacent themes before opening a motion generator set.",
+    "relatedCtaLabel": "View all packages"
   },
   "background-changer": {
     "headline": "AI Background Changer Photos for Portrait Scenes, Product Context, and Profile Refreshes",
@@ -2408,7 +3148,44 @@
       "Avoid backgrounds that imply locations or endorsements you cannot claim."
     ],
     "coverNote": "Background changes work best with a clear subject edge and a specific final context.",
-    "safetyNote": "Do not use background changes to mislead viewers about real location, attendance, product use, or endorsement."
+    "safetyNote": "Do not use background changes to mislead viewers about real location, attendance, product use, or endorsement.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:background-changer",
+    "copyRevision": "2026-08-18.background-changer",
+    "seoTitle": "AI Background Changer Photos for Portrait Scenes, Product Context, and Profile Refreshes | myDreamshoots",
+    "galleryTitle": "12 AI Background Changer Photo Examples for Background, Edit, Scene",
+    "galleryIntro": "Review background, edit, scene examples before opening the background-changer workflow.",
+    "ctaEyebrow": "Start the background changer set",
+    "ctaTitle": "Create background changer images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into background, edit, scene with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Background Changer Photos",
+    "faqEyebrow": "Background Changer FAQ",
+    "faqTitle": "Background Changer photos before you create",
+    "faqItems": [
+      {
+        "id": "background_changer_what_is_it",
+        "question": "What does Background Changer keep from the original photo?",
+        "answer": "It should preserve the selected person or product while changing the surrounding context. Start with a clear subject edge and state whether the final job is a portrait backdrop, product scene, office setting, or lifestyle image."
+      },
+      {
+        "id": "background_changer_source_photos",
+        "question": "How do I judge a realistic background replacement?",
+        "answer": "Compare hair, hands, product edges, cast shadows, reflections, and light direction. Reject a version when the new room or outdoor scene is brighter, darker, or geometrically inconsistent with the subject."
+      },
+      {
+        "id": "background_changer_use_results",
+        "question": "Which background should I choose for a profile or product image?",
+        "answer": "Use a simple studio or office backdrop for a professional profile, a controlled lifestyle scene for a creator image, and a clean product context for an item listing. Avoid adding a location that the image is not meant to claim."
+      },
+      {
+        "id": "background_changer_before_generate",
+        "question": "Can a changed background make it look like I was somewhere else?",
+        "answer": "It can create a visual concept, but it should not be presented as proof of attendance, product use, or endorsement. Label generated scenes when the surrounding context could materially mislead viewers."
+      }
+    ],
+    "relatedEyebrow": "Related background changer ideas",
+    "relatedTitle": "More background changer and nearby themes",
+    "relatedSubtitle": "Compare background, edit, scene and adjacent themes before opening a background changer set.",
+    "relatedCtaLabel": "View all packages"
   },
   "background-remover": {
     "headline": "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets",
@@ -2447,7 +3224,44 @@
       "Use removal for cleanup, not to hide important context in sensitive images."
     ],
     "coverNote": "Background removal works best when the subject is sharp and not blended into the original scene.",
-    "safetyNote": "Do not remove backgrounds to misrepresent evidence, products, identity, or real-world context."
+    "safetyNote": "Do not remove backgrounds to misrepresent evidence, products, identity, or real-world context.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:background-remover",
+    "copyRevision": "2026-08-18.background-remover",
+    "seoTitle": "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets | myDreamshoots",
+    "galleryTitle": "12 AI Background Remover Photo Examples for Background, Cutout, Clean",
+    "galleryIntro": "Review background, cutout, clean examples before opening the background-remover workflow.",
+    "ctaEyebrow": "Start the background remover set",
+    "ctaTitle": "Create background remover images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into background, cutout, clean with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Background Remover Photos",
+    "faqEyebrow": "Background Remover FAQ",
+    "faqTitle": "Background Remover photos before you create",
+    "faqItems": [
+      {
+        "id": "background_remover_what_is_it",
+        "question": "Which edges need the most review after removing a background?",
+        "answer": "Inspect loose hair, fingers, glasses, thin straps, product handles, and translucent materials first. These edges often need a second pass or a simpler background before the cutout is ready to use."
+      },
+      {
+        "id": "background_remover_source_photos",
+        "question": "Should I choose a transparent-style cutout or a white backdrop?",
+        "answer": "Use a transparent-style result when a designer will place the subject into another layout, and a white or neutral backdrop when the asset is going directly into a listing or profile card. Confirm the output format before download."
+      },
+      {
+        "id": "background_remover_use_results",
+        "question": "Is Background Remover suitable for ecommerce listing assets?",
+        "answer": "Yes for clean product isolation when the item, color, and proportions remain accurate. Review the outline, shadow, and product details so the cutout does not hide damage or change what is being sold."
+      },
+      {
+        "id": "background_remover_before_generate",
+        "question": "When should I keep the original background instead of removing it?",
+        "answer": "Keep it when the background is part of evidence, safety context, location, or product condition. Removing context is a design choice, not a way to rewrite what happened in the original photo."
+      }
+    ],
+    "relatedEyebrow": "Related background remover ideas",
+    "relatedTitle": "More background remover and nearby themes",
+    "relatedSubtitle": "Compare background, cutout, clean and adjacent themes before opening a background remover set.",
+    "relatedCtaLabel": "View all packages"
   },
   "magic-eraser": {
     "headline": "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images",
@@ -2486,7 +3300,44 @@
       "Avoid removing context that changes the truth of a sensitive image."
     ],
     "coverNote": "Magic Eraser works best for small or medium distractions with enough surrounding texture to repair the area.",
-    "safetyNote": "Do not use cleanup edits to falsify documents, evidence, product condition, or another person's actions."
+    "safetyNote": "Do not use cleanup edits to falsify documents, evidence, product condition, or another person's actions.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:magic-eraser",
+    "copyRevision": "2026-08-18.magic-eraser",
+    "seoTitle": "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images | myDreamshoots",
+    "galleryTitle": "12 AI Magic Eraser Photo Examples for Erase, Cleanup, Edit",
+    "galleryIntro": "Review erase, cleanup, edit examples before opening the magic-eraser workflow.",
+    "ctaEyebrow": "Start the magic eraser set",
+    "ctaTitle": "Create magic eraser images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into erase, cleanup, edit with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Magic Eraser Photos",
+    "faqEyebrow": "Magic Eraser FAQ",
+    "faqTitle": "Magic Eraser photos before you create",
+    "faqItems": [
+      {
+        "id": "magic_eraser_what_is_it",
+        "question": "What is Magic Eraser best at removing?",
+        "answer": "Use it for small distractions such as a photobomber, stray object, clutter, cable, or minor background mark. It is not a substitute for rebuilding a large missing subject or changing the entire scene."
+      },
+      {
+        "id": "magic_eraser_source_photos",
+        "question": "What should I inspect after erasing something near hair or hands?",
+        "answer": "Zoom in on the boundary and compare texture, fingers, hair strands, shadows, and repeated patterns. If the erased area creates a melted edge or repeated background, use a simpler edit or keep the original."
+      },
+      {
+        "id": "magic_eraser_use_results",
+        "question": "Can Magic Eraser remove a person in the background?",
+        "answer": "It may help with a small background photobomber when the surrounding scene is simple. Do not erase a person, object, or mark when it changes the meaning of an event, safety record, or documentary image."
+      },
+      {
+        "id": "magic_eraser_before_generate",
+        "question": "Should I keep the original after using Magic Eraser?",
+        "answer": "Yes. Save the original and compare it with the edited version before publishing. The change should be limited to the named distraction, with no unexpected alteration to the subject or context."
+      }
+    ],
+    "relatedEyebrow": "Related magic eraser ideas",
+    "relatedTitle": "More magic eraser and nearby themes",
+    "relatedSubtitle": "Compare erase, cleanup, edit and adjacent themes before opening a magic eraser set.",
+    "relatedCtaLabel": "View all packages"
   },
   "photo-enhancer": {
     "headline": "AI Photo Enhancer for Sharper Portraits, Clearer Details, and Better Downloads",
@@ -2525,7 +3376,44 @@
       "Compare the enhanced image against the original before replacing it."
     ],
     "coverNote": "Photo enhancement works best when the original contains enough real detail to recover.",
-    "safetyNote": "Do not enhance images to mislead viewers about product condition, identity, or documentary accuracy."
+    "safetyNote": "Do not enhance images to mislead viewers about product condition, identity, or documentary accuracy.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:photo-enhancer",
+    "copyRevision": "2026-08-18.photo-enhancer",
+    "seoTitle": "AI Photo Enhancer for Sharper Portraits, Clearer Details, and Better Downloads | myDreamshoots",
+    "galleryTitle": "12 AI Photo Enhancer Photo Examples for Enhance, Clarity, Sharpness",
+    "galleryIntro": "Review enhance, clarity, sharpness examples before opening the photo-enhancer workflow.",
+    "ctaEyebrow": "Start the photo enhancer set",
+    "ctaTitle": "Create photo enhancer images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into enhance, clarity, sharpness with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Photo Enhancer Photos",
+    "faqEyebrow": "Photo Enhancer FAQ",
+    "faqTitle": "Photo Enhancer photos before you create",
+    "faqItems": [
+      {
+        "id": "photo_enhancer_what_is_it",
+        "question": "When should I use Photo Enhancer instead of Unblur Image?",
+        "answer": "Use Photo Enhancer for a broader lift to clarity, tone, and download readiness; use Unblur Image when mild blur or softness is the main problem. If the source has severe blur, neither tool can guarantee missing detail."
+      },
+      {
+        "id": "photo_enhancer_source_photos",
+        "question": "What source photo gives Photo Enhancer the best chance of success?",
+        "answer": "Use the largest original file available, with visible face or product detail and limited compression. A screenshot, tiny social download, or heavily filtered image leaves less real information to improve."
+      },
+      {
+        "id": "photo_enhancer_use_results",
+        "question": "How should I review enhanced text or product details?",
+        "answer": "Zoom into small lettering, edges, logos, and color-critical surfaces. Keep the original beside the enhanced version so sharpening does not create invented text, seams, or product features."
+      },
+      {
+        "id": "photo_enhancer_before_generate",
+        "question": "Will Photo Enhancer make every low-quality photo sharp?",
+        "answer": "No. It can improve visible structure and presentation, but it cannot guarantee a true recovery from missing pixels, motion blur, or clipped exposure. Use the result only after a side-by-side realism check."
+      }
+    ],
+    "relatedEyebrow": "Related photo enhancer ideas",
+    "relatedTitle": "More photo enhancer and nearby themes",
+    "relatedSubtitle": "Compare enhance, clarity, sharpness and adjacent themes before opening a photo enhancer set.",
+    "relatedCtaLabel": "View all packages"
   },
   "portrait-retouch": {
     "headline": "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos",
@@ -2564,7 +3452,44 @@
       "Compare before and after images before using the retouched version publicly."
     ],
     "coverNote": "Portrait retouch works best with clear, high-resolution source portraits and realistic expectations.",
-    "safetyNote": "Do not retouch someone else's portrait in a way that misrepresents them without consent."
+    "safetyNote": "Do not retouch someone else's portrait in a way that misrepresents them without consent.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:portrait-retouch",
+    "copyRevision": "2026-08-18.portrait-retouch",
+    "seoTitle": "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos | myDreamshoots",
+    "galleryTitle": "12 AI Portrait Retouch Photo Examples for Retouch, Portrait, Natural",
+    "galleryIntro": "Review retouch, portrait, natural examples before opening the portrait-retouch workflow.",
+    "ctaEyebrow": "Start the portrait retouch set",
+    "ctaTitle": "Create portrait retouch images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into retouch, portrait, natural with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Portrait Retouch Photos",
+    "faqEyebrow": "Portrait Retouch FAQ",
+    "faqTitle": "Portrait Retouch photos before you create",
+    "faqItems": [
+      {
+        "id": "portrait_retouch_what_is_it",
+        "question": "What makes a Portrait Retouch look natural?",
+        "answer": "Keep skin texture, face shape, expression, and age cues visible while correcting small distractions and uneven light. If pores, hairline, or expression disappear, the retouch has gone beyond a natural profile polish."
+      },
+      {
+        "id": "portrait_retouch_source_photos",
+        "question": "Can Portrait Retouch change someone’s face or age?",
+        "answer": "It should not change identity or create a misleading age impression. Use it for light balance, skin cleanup, crop refinement, and background tidying, with permission from the person shown."
+      },
+      {
+        "id": "portrait_retouch_use_results",
+        "question": "Is Portrait Retouch better for a business profile or a dating image?",
+        "answer": "It can support either when the finish remains realistic. Pick a restrained crop and light cleanup for a business profile; for a personal profile, keep the expression and features that the person wants viewers to recognize."
+      },
+      {
+        "id": "portrait_retouch_before_generate",
+        "question": "What should I compare before downloading a retouched portrait?",
+        "answer": "Place the original and retouched versions side by side and check eyes, teeth, hairline, skin texture, face shape, and background. Keep the version that looks polished without changing what the person actually looks like."
+      }
+    ],
+    "relatedEyebrow": "Related portrait retouch ideas",
+    "relatedTitle": "More portrait retouch and nearby themes",
+    "relatedSubtitle": "Compare retouch, portrait, natural and adjacent themes before opening a portrait retouch set.",
+    "relatedCtaLabel": "View all packages"
   },
   "unblur-image": {
     "headline": "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail",
@@ -2603,7 +3528,44 @@
       "Avoid treating restored details as guaranteed facts when the source was unclear."
     ],
     "coverNote": "Unblur works best when the original photo still contains visible structure and recognizable facial detail.",
-    "safetyNote": "Do not use deblurred images as forensic proof when the original photo was ambiguous."
+    "safetyNote": "Do not use deblurred images as forensic proof when the original photo was ambiguous.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:unblur-image",
+    "copyRevision": "2026-08-18.unblur-image",
+    "seoTitle": "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail | myDreamshoots",
+    "galleryTitle": "12 AI Unblur Image Photo Examples for Unblur, Sharpness, Restore",
+    "galleryIntro": "Review unblur, sharpness, restore examples before opening the unblur-image workflow.",
+    "ctaEyebrow": "Start the unblur image set",
+    "ctaTitle": "Create unblur image images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into unblur, sharpness, restore with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Unblur Image Photos",
+    "faqEyebrow": "Unblur Image FAQ",
+    "faqTitle": "Unblur Image photos before you create",
+    "faqItems": [
+      {
+        "id": "unblur_image_what_is_it",
+        "question": "What level of blur can Unblur Image reasonably improve?",
+        "answer": "It works best on mild to moderate softness, small shake, or low-detail portraits where some structure remains visible. Severely missing pixels, blown highlights, and motion trails cannot be guaranteed to return."
+      },
+      {
+        "id": "unblur_image_source_photos",
+        "question": "Which details should I inspect after unblurring?",
+        "answer": "Compare the face, eyes, text, hairline, fingers, edges, and repeated textures with the original. Keep the result only when the added sharpness still matches the source instead of inventing detail."
+      },
+      {
+        "id": "unblur_image_use_results",
+        "question": "How is Unblur Image different from Photo Enhancer?",
+        "answer": "Unblur Image targets softness and blur first; Photo Enhancer is broader and may lift tone, clarity, and download readiness. Choose the narrower tool when blur is the specific problem."
+      },
+      {
+        "id": "unblur_image_before_generate",
+        "question": "Can a deblurred image be used as forensic proof?",
+        "answer": "No. A generated or restored detail is not reliable evidence when the original image was ambiguous. Keep the source, label the result as processed, and use it only for an appropriate visual purpose."
+      }
+    ],
+    "relatedEyebrow": "Related unblur image ideas",
+    "relatedTitle": "More unblur image and nearby themes",
+    "relatedSubtitle": "Compare unblur, sharpness, restore and adjacent themes before opening a unblur image set.",
+    "relatedCtaLabel": "View all packages"
   },
   "color-correction": {
     "headline": "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood",
@@ -2642,7 +3604,44 @@
       "Check product colors carefully when color accuracy affects sales."
     ],
     "coverNote": "Color correction works best when the original exposure still retains detail in faces, shadows, and highlights.",
-    "safetyNote": "Do not color-correct product images in a way that misrepresents actual product color or condition."
+    "safetyNote": "Do not color-correct product images in a way that misrepresents actual product color or condition.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:color-correction",
+    "copyRevision": "2026-08-18.color-correction",
+    "seoTitle": "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood | myDreamshoots",
+    "galleryTitle": "12 AI Color Correction Photo Examples for Color, Exposure, Tone",
+    "galleryIntro": "Review color, exposure, tone examples before opening the color-correction workflow.",
+    "ctaEyebrow": "Start the color correction set",
+    "ctaTitle": "Create color correction images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into color, exposure, tone with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Color Correction Photos",
+    "faqEyebrow": "Color Correction FAQ",
+    "faqTitle": "Color Correction photos before you create",
+    "faqItems": [
+      {
+        "id": "color_correction_what_is_it",
+        "question": "What problems is Color Correction best for?",
+        "answer": "Use it for a yellow indoor cast, green or blue tint, flat exposure, dull contrast, or a mismatched mood across a set. It is not a replacement for recreating detail that the source never captured."
+      },
+      {
+        "id": "color_correction_source_photos",
+        "question": "Can I use Color Correction for product photos?",
+        "answer": "Yes, but compare the result with the real item under neutral light. Do not push color, saturation, or white balance so far that the listing promises a different product color."
+      },
+      {
+        "id": "color_correction_use_results",
+        "question": "How do I match several photos to one album mood?",
+        "answer": "Choose one target temperature and contrast level, then compare skin, whites, shadows, and background tones across the set. Correct the outlier instead of applying a dramatic filter to every photo."
+      },
+      {
+        "id": "color_correction_before_generate",
+        "question": "What can Color Correction not recover?",
+        "answer": "It can rebalance visible tone and exposure, but it cannot reliably restore a face hidden in clipped highlights, deep shadow, or severe blur. Keep the original beside the corrected version before publishing."
+      }
+    ],
+    "relatedEyebrow": "Related color correction ideas",
+    "relatedTitle": "More color correction and nearby themes",
+    "relatedSubtitle": "Compare color, exposure, tone and adjacent themes before opening a color correction set.",
+    "relatedCtaLabel": "View all packages"
   },
   "old-photo-restoration": {
     "headline": "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits",
@@ -2681,7 +3680,44 @@
       "Keep an untouched original copy for reference."
     ],
     "coverNote": "Old photo restoration works best from a high-resolution scan or evenly lit photograph of the original print.",
-    "safetyNote": "Treat restored family and memorial images respectfully, and avoid presenting reconstructed details as guaranteed historical fact."
+    "safetyNote": "Treat restored family and memorial images respectfully, and avoid presenting reconstructed details as guaranteed historical fact.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:old-photo-restoration",
+    "copyRevision": "2026-08-18.old-photo-restoration",
+    "seoTitle": "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits | myDreamshoots",
+    "galleryTitle": "12 AI OLD Photo Restoration Photo Examples for Restoration, Old Photos, Keepsake",
+    "galleryIntro": "Review restoration, old photos, keepsake examples before opening the old-photo-restoration workflow.",
+    "ctaEyebrow": "Start the old photo restoration set",
+    "ctaTitle": "Create old photo restoration images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into restoration, old photos, keepsake with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Old Photo Restoration Photos",
+    "faqEyebrow": "Old Photo Restoration FAQ",
+    "faqTitle": "Old Photo Restoration photos before you create",
+    "faqItems": [
+      {
+        "id": "old_photo_restoration_what_is_it",
+        "question": "What damage can Old Photo Restoration address?",
+        "answer": "It is suited to visible fading, scratches, dust, low contrast, and mild softness in family portraits or keepsakes. Start with the highest-resolution scan you have and keep the original file unchanged."
+      },
+      {
+        "id": "old_photo_restoration_source_photos",
+        "question": "Can restoration recover details that are completely missing?",
+        "answer": "No. It can make existing structure clearer, but it cannot verify or faithfully recover a face, text, or object that was never captured. Mark uncertain details as reconstructed rather than historical fact."
+      },
+      {
+        "id": "old_photo_restoration_use_results",
+        "question": "Should I choose a colorized version or keep the original tone?",
+        "answer": "Keep an archival monochrome or original-tone version when historical accuracy matters, and create a separate colorized copy for a family presentation. Label the colorized result so the two purposes are not confused."
+      },
+      {
+        "id": "old_photo_restoration_before_generate",
+        "question": "Can I restore a relative’s old photo for public sharing?",
+        "answer": "Keep the source private and confirm that the people or rights holders involved allow the intended publication. A family keepsake can still contain sensitive identity, memorial, or privacy information."
+      }
+    ],
+    "relatedEyebrow": "Related old photo restoration ideas",
+    "relatedTitle": "More old photo restoration and nearby themes",
+    "relatedSubtitle": "Compare restoration, old photos, keepsake and adjacent themes before opening a old photo restoration set.",
+    "relatedCtaLabel": "View all packages"
   },
   "edit-by-prompt": {
     "headline": "AI Edit By Prompt for Safe Scene Changes, Style Adjustments, and Custom Photo Edits",
@@ -2720,6 +3756,43 @@
       "Check that the edit does not alter identity, product truth, or important context."
     ],
     "coverNote": "Prompt editing works best when the instruction is specific and the source image already has a clear subject.",
-    "safetyNote": "Do not use prompt edits to impersonate, deceive, falsify evidence, create explicit content, or change someone's image without permission."
+    "safetyNote": "Do not use prompt edits to impersonate, deceive, falsify evidence, create explicit content, or change someone's image without permission.",
+    "pageEntityId": "mydreamshoots:ai-image-theme:edit-by-prompt",
+    "copyRevision": "2026-08-18.edit-by-prompt",
+    "seoTitle": "AI Edit By Prompt for Safe Scene Changes, Style Adjustments, and Custom Photo Edits | myDreamshoots",
+    "galleryTitle": "12 AI Edit By Prompt Photo Examples for Prompt, Edit, Creative",
+    "galleryIntro": "Review prompt, edit, creative examples before opening the edit-by-prompt workflow.",
+    "ctaEyebrow": "Start the edit by prompt set",
+    "ctaTitle": "Create edit by prompt images in your private studio.",
+    "ctaSubtitle": "Turn approved source photos into prompt, edit, creative with visible credit cost and private gallery review.",
+    "ctaLabel": "Create Edit By Prompt Photos",
+    "faqEyebrow": "Edit By Prompt FAQ",
+    "faqTitle": "Edit By Prompt photos before you create",
+    "faqItems": [
+      {
+        "id": "edit_by_prompt_what_is_it",
+        "question": "How should I write an Edit By Prompt request?",
+        "answer": "Name one main change, the area it affects, and what must stay unchanged-for example, “replace the plain wall with a warm studio backdrop, keep the face and shirt.” Specific prompts are easier to compare than a list of unrelated edits."
+      },
+      {
+        "id": "edit_by_prompt_source_photos",
+        "question": "Can Edit By Prompt change one object without redesigning the whole image?",
+        "answer": "It can be used for a focused local edit such as changing a background, adjusting an outfit color, or removing a small distraction. State the untouched subject, pose, and lighting so the result does not drift into a new scene."
+      },
+      {
+        "id": "edit_by_prompt_use_results",
+        "question": "What should I compare against the original after a prompt edit?",
+        "answer": "Check face identity, hands, text, object count, shadows, and the exact region named in the prompt. Keep the edit only when it solves the requested change without introducing a new factual detail."
+      },
+      {
+        "id": "edit_by_prompt_before_generate",
+        "question": "Which prompt edits should I avoid?",
+        "answer": "Do not request impersonation, non-consensual edits, forged documents, deceptive evidence, or protected characters and logos. Use source photos you own or have permission to modify."
+      }
+    ],
+    "relatedEyebrow": "Related edit by prompt ideas",
+    "relatedTitle": "More edit by prompt and nearby themes",
+    "relatedSubtitle": "Compare prompt, edit, creative and adjacent themes before opening a edit by prompt set.",
+    "relatedCtaLabel": "View all packages"
   }
 }

@@ -77,6 +77,7 @@ function schemaSlug(value) {
 }
 
 const state = readJson("data/platform-state.json");
+const localTaxonomy = readJson("src/lib/mydreamshoots-theme-taxonomy.json");
 const site = state.sites.find((item) => item.id === "site_dreamshoot");
 assert.ok(site, "MyDreamShoots site must exist");
 assert.equal(site.primaryDomain, "www.mydreamshoots.com", "MyDreamShoots primary domain should stay production canonical");
@@ -111,6 +112,7 @@ assert.equal(activePacks.length, 38, "MyDreamShoots should expose 38 active phot
 assert.equal(activeProducts.length, 7, "MyDreamShoots should expose 7 active pricing products");
 assert.equal(activeVideoThemes.length, 0, "MyDreamShoots should not expose legacy video theme framework records after the AI Video Generation route migration");
 assert.ok(blackFridayPack, "Black Friday pack should exist");
+assert.equal(blackFridayPack.id, "pack_dreamshoot_black_friday", "Black Friday should have a dedicated page-owned pack id");
 assert.equal(/anime-avatar/i.test(blackFridayPack.imageUrl ?? ""), false, "Black Friday pack cover must not reuse Anime Avatar art");
 assert.equal((blackFridayPack.galleryImages ?? []).some((image) => /anime-avatar/i.test(image)), false, "Black Friday pack gallery must not reuse Anime Avatar art");
 
@@ -218,6 +220,17 @@ assert.equal(homeGraph.some((node) => node?.["@type"] === "Review" || node?.["@t
 
 const sitemapEntries = await getStorefrontSitemapEntriesForHost(["www.mydreamshoots.com"]);
 const sitemapEntryByPath = new Map(sitemapEntries.map((entry) => [new URL(entry.loc).pathname, entry]));
+const reviewSlugs = new Set((localTaxonomy.items ?? []).filter((item) => item.mediaReviewStatus === "review_required").map((item) => item.slug));
+for (const item of localTaxonomy.items ?? []) {
+  const pathname = `/ai-image-generation/${item.slug}`;
+  const entry = sitemapEntryByPath.get(pathname);
+  if (reviewSlugs.has(item.slug)) {
+    assert.equal(entry, undefined, `${pathname} must stay out of the sitemap while its page media owner is under review`);
+  } else {
+    assert.ok(entry, `${pathname} should have a published route manifest sitemap entry`);
+    assert.ok((entry.images ?? []).length > 0, `${pathname} should project its page-owned media into the image sitemap`);
+  }
+}
 function assertRichSitemapImageTitle(image, pathName) {
   const title = String(image.title ?? "").replace(/\s+/g, " ").trim();
   assert.ok(title, `${pathName} image sitemap entry should include a title`);

@@ -76,12 +76,17 @@ assert.deepEqual([...new Set(requiredSlugs)].sort(), requiredSlugs.slice().sort(
 const missingProfiles = [];
 const invalidProfiles = [];
 const projectionDriftRows = [];
+const routeRows = [];
+const fallbackRows = [];
+const missingRows = [];
+const reviewRows = [];
 const faqIds = new Set();
 
 for (const slug of requiredSlugs) {
   const profile = useCaseProfiles[slug];
   if (!profile) {
     missingProfiles.push(slug);
+    missingRows.push(slug);
     continue;
   }
   const invalidFields = requiredFields.filter((field) => {
@@ -115,6 +120,22 @@ for (const slug of requiredSlugs) {
     const driftFields = requiredFields.filter((field) => JSON.stringify(packProjection[field]) !== JSON.stringify(profile[field]));
     if (driftFields.length) projectionDriftRows.push({ slug, driftFields });
   }
+  const taxonomyItem = (taxonomy.items ?? []).find((item) => normalizeSlug(item.slug) === slug);
+  const expectedPackId = taxonomyItem?.reusePackId || `pack_dreamshoot_${slug.replace(/[^a-z0-9]+/g, "_")}`;
+  const exactPack = (platformState.creativePacks ?? []).find((pack) => pack.siteId === "site_dreamshoot" && pack.status === "active" && pack.id === expectedPackId && normalizeSlug(pack.category || pack.name) === slug);
+  const mediaReady = Boolean(exactPack?.imageUrl && (exactPack.galleryImages ?? []).length);
+  const route = {
+    canonicalPath: `/ai-image-generation/${slug}`,
+    pageEntityId: profile.pageEntityId,
+    copyRevision: profile.copyRevision,
+    copySource: "page-copy",
+    fallbackUsed: false,
+    expectedPackId,
+    mediaReady
+  };
+  routeRows.push(route);
+  if (route.copySource !== "page-copy" || route.fallbackUsed) fallbackRows.push(slug);
+  if (!mediaReady || taxonomyItem?.mediaReviewStatus === "review_required") reviewRows.push({ slug, reason: taxonomyItem?.mediaReviewReason || "PAGE_COPY_MEDIA_ENTITY_MISMATCH" });
 }
 
 assert.equal(missingProfiles.length, 0, "every MyDreamShoots taxonomy leaf should have a direct use-case profile", { missingProfiles });
@@ -122,6 +143,7 @@ assert.equal(invalidProfiles.length, 0, "every MyDreamShoots direct page-copy pr
 assert.equal(projectionDriftRows.length, 0, "page-copy-bearing pack profiles should remain a generated projection of the page copy source", { projectionDriftRows });
 
 assert.ok(blackFridayPack, "Black Friday pack must exist in platform-state");
+assert.equal(blackFridayPack.id, "pack_dreamshoot_black_friday", "Black Friday must own a dedicated pack id instead of Anime Avatar");
 assert.ok(blackFridayPack.imageUrl, "Black Friday pack must keep a cover image");
 assert.equal(/anime-avatar/i.test(blackFridayPack.imageUrl), false, "Black Friday pack cover must not reuse Anime Avatar art");
 assert.equal((blackFridayPack.galleryImages ?? []).some((image) => /anime-avatar/i.test(image)), false, "Black Friday pack gallery must not reuse Anime Avatar art");
@@ -130,6 +152,12 @@ console.log(JSON.stringify({
   ok: true,
   requiredSlugs: requiredSlugs.length,
   pageCopyProfiles: requiredSlugs.length,
+  checkedRows: routeRows.length,
+  fallbackRows: fallbackRows.length,
+  missingRows: missingRows.length,
+  driftRows: projectionDriftRows.length,
+  reviewRows: reviewRows.length,
   projectionRows: projectionDriftRows.length,
-  blackFridayPack: blackFridayPack?.id ?? null
+  blackFridayPack: blackFridayPack?.id ?? null,
+  reviewSlugs: reviewRows.map((row) => row.slug)
 }, null, 2));

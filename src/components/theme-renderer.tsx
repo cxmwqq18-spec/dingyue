@@ -29,12 +29,9 @@ import { TalkingPhotoLanding } from "@/components/storefront/talking-photo-landi
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
 import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
 import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
-import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
-import { dreamshootPackProfileForPack, dreamshootPackProfileForSlug, type DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
 import { mydreamshootsPageCopyForRoute, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 import {
   aidreamcapesCategoryUseCaseProfileForSlug,
-  mydreamshootsCategoryUseCaseProfileForSlug,
   type PhotoPackageUseCaseProfile
 } from "@/lib/photo-package-use-case-profiles";
 import { shortPolicyPath } from "@/lib/site-route-canonical";
@@ -3955,17 +3952,20 @@ function creativePackCollectionTokens(pack: CreativePack): string[] {
   return sharedCreativePackCategoryTokens(pack);
 }
 
-function activeCreativePacksForCollectionSlug(creativePacks: CreativePack[], slug: string): CreativePack[] {
+function activeCreativePacksForCollectionSlug(creativePacks: CreativePack[], slug: string, site?: Site): CreativePack[] {
   const selectedSlug = dreamshootCategorySlug(slug);
   if (!selectedSlug) return [];
   return creativePacks.filter((pack) => {
     if (pack.status !== "active" || pack.creditCost <= 0 || pack.outputCount <= 0) return false;
+    if (site && isMyDreamShootsProfileSite(site)) {
+      return dreamshootCategorySlug(pack.categoryRecord?.slug || pack.category) === selectedSlug;
+    }
     return creativePackCollectionTokens(pack).includes(selectedSlug);
   });
 }
 
-function activeCreativePackForCollectionSlug(creativePacks: CreativePack[], slug: string): CreativePack | undefined {
-  return activeCreativePacksForCollectionSlug(creativePacks, slug)[0];
+function activeCreativePackForCollectionSlug(creativePacks: CreativePack[], slug: string, site?: Site): CreativePack | undefined {
+  return activeCreativePacksForCollectionSlug(creativePacks, slug, site)[0];
 }
 
 function uniqueStringList(values: string[]): string[] {
@@ -5341,17 +5341,22 @@ function normalizeStorefrontCatalogCards(
   });
 }
 
-type StorefrontPackageProfile = DreamshootPackProfile | PhotoPackageUseCaseProfile | MyDreamshootsPageCopy;
+type StorefrontPackageProfile = PhotoPackageUseCaseProfile | MyDreamshootsPageCopy;
 
 function myDreamShootsProfileForPack(site: Site, pack: CreativePack | null | undefined): StorefrontPackageProfile | undefined {
   if (!isMyDreamShootsProfileSite(site)) {
     return undefined;
   }
 
-  return dreamshootPackProfileForPack(pack)
-    ?? mydreamshootsCategoryUseCaseProfileForSlug(pack?.categoryRecord?.slug)
-    ?? mydreamshootsCategoryUseCaseProfileForSlug(pack?.categoryRecord?.parent?.slug)
-    ?? mydreamshootsCategoryUseCaseProfileForSlug(pack?.category);
+  const slug = pack?.categoryRecord?.slug || pack?.category;
+  return slug
+    ? mydreamshootsPageCopyForRoute({
+        siteId: site.id,
+        routeKind: "ai-image-theme-leaf",
+        canonicalSlug: slug,
+        canonicalPath: `/ai-image-generation/${slug}`
+      })
+    : undefined;
 }
 
 function myDreamShootsProfileForSlug(site: Site, slug: string | null | undefined): StorefrontPackageProfile | undefined {
@@ -5364,7 +5369,7 @@ function myDreamShootsProfileForSlug(site: Site, slug: string | null | undefined
     routeKind: "ai-image-theme-leaf",
     canonicalSlug: slug,
     canonicalPath: slug ? `/ai-image-generation/${slug}` : undefined
-  }) ?? dreamshootPackProfileForSlug(slug) ?? mydreamshootsCategoryUseCaseProfileForSlug(slug);
+  });
 }
 
 function aidreamcapesProfileForSlug(site: Site, slug: string | null | undefined): PhotoPackageUseCaseProfile | undefined {
@@ -11134,7 +11139,7 @@ function SectionView({
     const _editorial = setting(section, "layout", "seo_grid") === "editorial";
     const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation" ? "h1" : "h2") === "h1" ? "h1" : "h2";
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
-    const selectedPacks = activeCreativePacksForCollectionSlug(creativePacks, selectedCollectionSlug);
+    const selectedPacks = activeCreativePacksForCollectionSlug(creativePacks, selectedCollectionSlug, site);
     const selectedPack = selectedPacks.length === 1 ? selectedPacks[0] : undefined;
     const selectedPageCopy = !aidreamcapes && !spanishXbyTaxonomy ? mydreamshootsPageCopyForRoute({
       siteId: site.id,
@@ -11469,7 +11474,7 @@ function SectionView({
     const aidreamcapesThemeCta = isAidreamcapesSite(site);
     const spanishXbyThemeCta = isSpanishXbySite(site);
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
-    const selectedPack = activeCreativePackForCollectionSlug(creativePacks, selectedCollectionSlug);
+    const selectedPack = activeCreativePackForCollectionSlug(creativePacks, selectedCollectionSlug, site);
     if (!selectedPack) return null;
     const selectedPageCopy = !aidreamcapesThemeCta && !spanishXbyThemeCta ? mydreamshootsPageCopyForRoute({
       siteId: site.id,
@@ -11596,7 +11601,7 @@ function SectionView({
     const aidreamcapesThemeFaq = isAidreamcapesSite(site);
     const spanishXbyThemeFaq = isSpanishXbySite(site);
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
-    const selectedPack = activeCreativePackForCollectionSlug(creativePacks, selectedCollectionSlug);
+    const selectedPack = activeCreativePackForCollectionSlug(creativePacks, selectedCollectionSlug, site);
     if (!selectedPack) return null;
     const selectedPageCopy = !aidreamcapesThemeFaq && !spanishXbyThemeFaq ? mydreamshootsPageCopyForRoute({
       siteId: site.id,
@@ -11672,7 +11677,7 @@ function SectionView({
       canonicalSlug: selectedCollectionSlug,
       canonicalPath: selectedCollectionSlug ? `/ai-image-generation/${selectedCollectionSlug}` : undefined
     }) : undefined;
-    const selectedPacks = activeCreativePacksForCollectionSlug(creativePacks, selectedCollectionSlug);
+    const selectedPacks = activeCreativePacksForCollectionSlug(creativePacks, selectedCollectionSlug, site);
     const selectedPackIds = new Set(selectedPacks.map((pack) => pack.id));
     const relatedPacks = creativePacks
       .filter((pack) => pack.status === "active" && !selectedPackIds.has(pack.id))
@@ -11965,7 +11970,7 @@ function SectionView({
         const hrefSlug = dreamshootCategorySlug(href.replace(/^\/collections\//, ""));
         const titleSlug = dreamshootCategorySlug(title);
         const taxonomyPacks = relatedPacksForTaxonomyCard(site, creativePacks, creativePackCategories, card.id, href);
-        const hrefPacks = activeCreativePacksForCollectionSlug(creativePacks, hrefSlug);
+        const hrefPacks = activeCreativePacksForCollectionSlug(creativePacks, hrefSlug, site);
         const titlePacks = creativePacks.filter((pack) =>
           pack.status === "active" &&
           [pack.name, pack.category, pack.categoryRecord?.slug, pack.categoryRecord?.label]
@@ -14861,7 +14866,7 @@ function SectionView({
     if (section.type === "generation_form") {
       const initialCategorySlug = queryValue(renderContext.query.category);
       const initialCategoryPackId = initialCategorySlug
-        ? activeCreativePackForCollectionSlug(creativePacks, initialCategorySlug)?.id
+        ? activeCreativePackForCollectionSlug(creativePacks, initialCategorySlug, site)?.id
         : undefined;
       return (
         <section className={`${sectionTheme.shell} scroll-mt-28 px-5 py-8 ${sectionText}`} id="create">

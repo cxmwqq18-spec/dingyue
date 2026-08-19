@@ -240,7 +240,7 @@
     {
       "slug": "black-friday",
       "sourceCategorySlug": "creator-portraits",
-      "reusePackId": "pack_dreamshoot_anime_avatar",
+      "reusePackId": "pack_dreamshoot_black_friday",
       "groupSlug": "professional",
       "label": "Black Friday",
       "description": "Create bold Black Friday campaign portraits, sale-ready creator visuals, dark studio images, and seasonal promotional album concepts.",
@@ -355,7 +355,9 @@
         "Cannes",
         "Festival",
         "Glamour"
-      ]
+      ],
+      "mediaReviewStatus": "review_required",
+      "mediaReviewReason": "PAGE_COPY_MEDIA_ENTITY_MISMATCH:cannes"
     },
     {
       "slug": "nightlife",
@@ -372,7 +374,9 @@
         "Nightlife",
         "City",
         "Evening"
-      ]
+      ],
+      "mediaReviewStatus": "review_required",
+      "mediaReviewReason": "PAGE_COPY_MEDIA_ENTITY_MISMATCH:nightlife"
     },
     {
       "slug": "rich-lifestyle",
@@ -389,7 +393,9 @@
         "Luxury",
         "Lifestyle",
         "Premium"
-      ]
+      ],
+      "mediaReviewStatus": "review_required",
+      "mediaReviewReason": "PAGE_COPY_MEDIA_ENTITY_MISMATCH:rich-lifestyle"
     },
     {
       "slug": "bikini",
@@ -475,7 +481,9 @@
         "Urban",
         "City",
         "Creator"
-      ]
+      ],
+      "mediaReviewStatus": "review_required",
+      "mediaReviewReason": "PAGE_COPY_MEDIA_ENTITY_MISMATCH:urban"
     },
     {
       "slug": "street-style",

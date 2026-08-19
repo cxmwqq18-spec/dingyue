@@ -9,8 +9,8 @@ const publishedContextCache = new Map<string, { context: StorefrontContext; expi
 const siteContextKeys = new Map<string, Set<string>>();
 const PUBLISHED_CONTEXT_MAX_TTL_MS = 60_000;
 
-export function storefrontContextCacheKey(params: { siteId: string; pageId?: string; publicationId?: string; factsRevision: string }): string {
-  return `${params.siteId}:${params.publicationId ?? "unpublished"}:${params.factsRevision}:${params.pageId ?? "site"}`;
+export function storefrontContextCacheKey(params: { siteId: string; pageId?: string; publicationId?: string; factsRevision: string; pageEntityId?: string; copyRevision?: string; pageMediaRevision?: string }): string {
+  return `${params.siteId}:${params.publicationId ?? "unpublished"}:${params.factsRevision}:${params.pageId ?? "site"}:${params.pageEntityId ?? "page"}:${params.copyRevision ?? "copy"}:${params.pageMediaRevision ?? "media"}`;
 }
 
 export function clearStorefrontContextCache(siteId: string): void {
@@ -19,7 +19,15 @@ export function clearStorefrontContextCache(siteId: string): void {
 }
 
 function cachePublishedContext(siteId: string, context: StorefrontContext, expiresAt: number): StorefrontContext {
-  const key = storefrontContextCacheKey({ siteId, pageId: context.page.id, publicationId: context.revisions.publicationId, factsRevision: context.revisions.factsRevision });
+  const key = storefrontContextCacheKey({
+    siteId,
+    pageId: context.page.id,
+    publicationId: context.revisions.publicationId,
+    factsRevision: context.revisions.factsRevision,
+    pageEntityId: context.revisions.pageEntityId,
+    copyRevision: context.revisions.copyRevision,
+    pageMediaRevision: context.revisions.pageMediaRevision
+  });
   const cached = publishedContextCache.get(key);
   if (cached && cached.expiresAt > Date.now()) return cached.context;
   if (cached) publishedContextCache.delete(key);

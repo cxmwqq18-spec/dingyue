@@ -117,6 +117,10 @@ function canonicalHref(html) {
   return firstMatch(html, /<link\s+rel=["']canonical["']\s+href=["']([^"']*)["']/i);
 }
 
+function robotsContent(html) {
+  return firstMatch(html, /<meta\s+name=["']robots["']\s+content=["']([^"']*)["']/i);
+}
+
 function pageTitle(html) {
   return firstMatch(html, /<title>([\s\S]*?)<\/title>/i).replace(/\s+/g, " ").trim();
 }
@@ -268,6 +272,13 @@ for (const [pathname, html] of Object.entries(focusCollections)) {
   assert.equal(canonical, `https://www.mydreamshoots.com${pathname}`, `${pathname} must expose the canonical AI Image Generation URL`);
   assert.equal(decodeHtmlEntities(title), pageCopy.seoTitle, `${pathname} must expose the approved page-copy SEO title`);
   assert.equal(decodeHtmlEntities(description), pageCopy.cardDescription, `${pathname} must keep the approved meta description`);
+  const mediaReviewRequired = localTaxonomy.items?.find((item) => item.slug === slug)?.mediaReviewStatus === "review_required";
+  if (mediaReviewRequired) {
+    assert.match(robotsContent(html), /noindex/i, `${pathname} must be noindex while its page media owner is under review`);
+    assert.equal(sitemap.includes(`https://www.mydreamshoots.com${pathname}`), false, `${pathname} must not enter the sitemap while its page media owner is under review`);
+  } else {
+    assert.doesNotMatch(robotsContent(html), /noindex/i, `${pathname} should remain indexable after its page media contract passes`);
+  }
   assert.ok(text.includes(pageCopy.galleryTitle), `${pathname} must render the approved gallery H2`);
   assert.ok(text.includes(pageCopy.ctaTitle), `${pathname} must render the approved page-copy CTA title`);
   for (const copy of forbiddenGenericThemeCopy) {
@@ -277,6 +288,7 @@ for (const [pathname, html] of Object.entries(focusCollections)) {
   assert.ok(topicTokens.some((needle) => normalizedHtml.includes(needle)), `${pathname} must contain topic-specific SEO copy: ${topicTokens.join(", ")}`);
   if (slug === "black-friday") {
     assert.equal(/anime avatar|avatar package/i.test(text), false, `${pathname} must not inherit Anime Avatar page copy`);
+    assert.equal(/anime-avatar/i.test(html), false, `${pathname} must not expose Anime Avatar media in HTML, JSON-LD, or social metadata`);
   }
   if (slug === "singles-awareness-day") {
     assert.equal(/media kits|sponsor decks/i.test(text), false, `${pathname} must not inherit generic creator portrait page copy`);

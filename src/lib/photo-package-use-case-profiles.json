@@ -90,23 +90,23 @@
       "faqItems": [
         {
           "id": "avatar_what_is_it",
-          "question": "What is Avatar?",
-          "answer": "Design polished AI avatars, profile crops, personal bio visuals, and clean social identity images from private uploads. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "How should I frame Avatar images for a small profile icon?",
+          "answer": "Use a centered face with enough space around the hair and shoulders for a square crop. Generate one close PFP version and one slightly wider version so the same identity still reads on Discord, gaming, and creator profiles."
         },
         {
           "id": "avatar_source_photos",
-          "question": "What source photos work best for Avatar?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "Will Avatar keep my face recognizable at mobile icon size?",
+          "answer": "Review the smallest preview first. Keep the option whose eyes, hairline, and overall face remain clear after reduction, and discard stylized versions that only look good when enlarged."
         },
         {
           "id": "avatar_use_results",
-          "question": "Can I use Avatar results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Can I create different Avatar styles for gaming, Discord, and creator pages?",
+          "answer": "Yes. Keep the source identity and change only the art direction-such as clean illustrated, realistic streamer, or bold gaming profile-then compare the sets side by side before choosing a platform-specific crop."
         },
         {
           "id": "avatar_before_generate",
-          "question": "What should I check before generating Avatar images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "What should I avoid when publishing an AI Avatar?",
+          "answer": "Do not copy a protected game character, team mark, or another person’s likeness. Use an original style, confirm permission for every face, and check whether the destination platform requires an AI label."
         }
       ],
       "relatedEyebrow": "Related avatar ideas",
@@ -1203,23 +1203,23 @@
       "faqItems": [
         {
           "id": "headshot_what_is_it",
-          "question": "What is Headshot?",
-          "answer": "Generate realistic AI headshots for LinkedIn, resumes, founder bios, speaker pages, and professional team profiles. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "Is Headshot suitable for LinkedIn, resumes, and founder bios?",
+          "answer": "It is intended for polished professional profiles, speaker pages, resumes, and team directories. Choose the crop and wardrobe that match the role, but do not present the result as an official identity document or a record of real attendance."
         },
         {
           "id": "headshot_source_photos",
-          "question": "What source photos work best for Headshot?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What should I wear or show in a Headshot source photo?",
+          "answer": "Use recent, sharp portraits with the face unobstructed and a simple neckline or jacket visible. A neutral wall or clean indoor light gives the generator more room to produce a credible business background than a heavily filtered selfie."
         },
         {
           "id": "headshot_use_results",
-          "question": "Can I use Headshot results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Can a Headshot replace a passport or other official ID photo?",
+          "answer": "No. Use it for profiles, bios, job-search pages, and presentation materials only. Official IDs have their own photography, background, and verification rules that an AI-generated portrait does not satisfy."
         },
         {
           "id": "headshot_before_generate",
-          "question": "What should I check before generating Headshot images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "What should I review before publishing a professional Headshot?",
+          "answer": "Check eye direction, teeth, hairline, jacket edges, skin texture, and whether the background implies an employer or office you do not have. Keep the version that looks credible without inventing a role, venue, or affiliation."
         }
       ],
       "relatedEyebrow": "Related headshot ideas",
@@ -1279,23 +1279,23 @@
       "faqItems": [
         {
           "id": "gala_photo_what_is_it",
-          "question": "What is Gala Photo?",
-          "answer": "Create gala-night portraits with formal styling, polished event lighting, red-carpet mood, and private album delivery. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What kind of event look does Gala Photo create?",
+          "answer": "It creates formal evening and red-carpet-inspired portraits with polished light, elegant styling, and private album review. It is a visual concept for an event mood, not proof that you attended a real gala."
         },
         {
           "id": "gala_photo_source_photos",
-          "question": "What source photos work best for Gala Photo?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What source photos work best for a Gala Photo set?",
+          "answer": "Use a sharp portrait with the face, hair, and shoulders visible, plus a wardrobe reference if the neckline or sleeve matters. Avoid tiny crops where jewelry and fabric details are already lost."
         },
         {
           "id": "gala_photo_use_results",
-          "question": "Can I use Gala Photo results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Which details should I inspect in a formal Gala result?",
+          "answer": "Check hands, jewelry, neckline, lapels, reflections, and the direction of event lighting. A glamorous result is usable only when these details remain believable at the final crop."
         },
         {
           "id": "gala_photo_before_generate",
-          "question": "What should I check before generating Gala Photo images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can I post Gala Photo results as if they show a real event?",
+          "answer": "Post them as inspired or generated visuals unless the surrounding text clearly says otherwise. Do not add a real venue, sponsor, celebrity, or event-attendance claim that the image cannot substantiate."
         }
       ],
       "relatedEyebrow": "Related gala photo ideas",
@@ -1355,23 +1355,23 @@
       "faqItems": [
         {
           "id": "portrait_photo_what_is_it",
-          "question": "What is Portrait Photo?",
-          "answer": "Build creator portraits, personal-brand images, media-kit photos, founder visuals, and polished profile albums. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "When should I choose Portrait Photo instead of Headshot?",
+          "answer": "Choose Portrait Photo when you need a flexible personal-brand set for a website, newsletter, media kit, launch, or social campaign. Choose Headshot when the primary job is a conservative business profile or resume image."
         },
         {
           "id": "portrait_photo_source_photos",
-          "question": "What source photos work best for Portrait Photo?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "Should I upload both close-up and half-body references?",
+          "answer": "Yes. A close-up gives the model facial detail, while a half-body image provides posture, clothing, and crop context. Keep the references from the same person and avoid mixing unrelated filters or ages."
         },
         {
           "id": "portrait_photo_use_results",
-          "question": "Can I use Portrait Photo results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Can one Portrait Photo set cover a newsletter, website, and social launch?",
+          "answer": "Plan the channels before generating: use a tighter crop for an author bio, a half-body frame for a landing page, and a wider composition for a launch or social banner. Save only the variants that preserve the same visual identity."
         },
         {
           "id": "portrait_photo_before_generate",
-          "question": "What should I check before generating Portrait Photo images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "How do I keep a personal-brand portrait set consistent?",
+          "answer": "Keep the same color mood, wardrobe direction, and face reference across the request. Compare backgrounds and expression before downloading so the set feels like one campaign rather than unrelated AI portraits."
         }
       ],
       "relatedEyebrow": "Related portrait photo ideas",
@@ -1507,23 +1507,23 @@
       "faqItems": [
         {
           "id": "only_fans_what_is_it",
-          "question": "What is Only Fans?",
-          "answer": "Create creator subscription profile photos, tasteful promo portraits, bio images, and private content-safe visual sets for consenting adults. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything. For consenting adults only."
+          "question": "Should I use Only Fans for a profile photo or a promo teaser?",
+          "answer": "Use it for tasteful, non-explicit creator branding: a subscription profile, bio image, banner, feed teaser, or private moodboard. Choose the crop and wardrobe for the exact channel instead of asking one image to serve every use."
         },
         {
           "id": "only_fans_source_photos",
-          "question": "What source photos work best for Only Fans?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job. For consenting adults only."
+          "question": "What source-photo permissions are required for Only Fans?",
+          "answer": "Every person shown must be an adult who agreed to the upload and the intended image use. Keep the source photos private, remove screenshots or stolen images, and do not upload anyone whose consent you cannot document."
         },
         {
           "id": "only_fans_use_results",
-          "question": "Can I use Only Fans results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Keep the use private unless your destination rules and consent terms clearly allow sharing. For consenting adults only."
+          "question": "How should I keep Only Fans results platform-safe?",
+          "answer": "Keep prompts non-explicit and review clothing, pose, face, and background before download. Follow the destination platform’s content rules and disclose AI use when its policy or your audience expects it."
         },
         {
           "id": "only_fans_before_generate",
-          "question": "What should I check before generating Only Fans images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can I share an Only Fans result publicly after generation?",
+          "answer": "Only when the person shown has approved that specific use and the destination allows it. Start with private review, remove identifying details when needed, and do not reuse a subscriber or creator image outside the agreed channel."
         }
       ],
       "relatedEyebrow": "Related only fans ideas",
@@ -1659,23 +1659,23 @@
       "faqItems": [
         {
           "id": "cyberpunk_what_is_it",
-          "question": "What is Cyberpunk?",
-          "answer": "Turn portraits into neon cyberpunk city images with futuristic wardrobe, cinematic lighting, and poster-ready crops. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What visual direction defines a Cyberpunk portrait?",
+          "answer": "Choose one futuristic direction such as neon street, rain reflection, elevated transit, or a sci-fi studio. Keep the face readable while letting color, light, and architecture carry the cyberpunk mood."
         },
         {
           "id": "cyberpunk_source_photos",
-          "question": "What source photos work best for Cyberpunk?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "How do I keep a Cyberpunk avatar recognizable?",
+          "answer": "Use a clear face reference and ask for controlled neon rather than full-face shadow or opaque effects. Check the eyes, jawline, hair, and small-size crop before using it as a gaming or community avatar."
         },
         {
           "id": "cyberpunk_use_results",
-          "question": "Can I use Cyberpunk results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Can Cyberpunk copy a movie, game, or protected character?",
+          "answer": "Use original futuristic styling, colors, and props. Do not ask for a protected character, franchise costume, logo, or another person’s likeness without permission."
         },
         {
           "id": "cyberpunk_before_generate",
-          "question": "What should I check before generating Cyberpunk images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Should I make a square avatar or a poster crop?",
+          "answer": "Choose a square crop for a profile or gaming handle, a vertical crop for a poster or music visual, and a wider frame for a campaign banner. Keep the same identity reference when generating multiple formats."
         }
       ],
       "relatedEyebrow": "Related cyberpunk ideas",
@@ -1735,23 +1735,23 @@
       "faqItems": [
         {
           "id": "boudoir_what_is_it",
-          "question": "What is Boudoir?",
-          "answer": "Create tasteful private boudoir-inspired portraits with soft editorial light, elegant styling, and consent-first review. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything. For consenting adults only."
+          "question": "What kind of Boudoir images are allowed here?",
+          "answer": "Use a tasteful, non-explicit adult portrait direction built around soft light, elegant wardrobe, silhouette, confidence, or a private keepsake. Do not request nudity, minors, or sexualized images of anyone without consent."
         },
         {
           "id": "boudoir_source_photos",
-          "question": "What source photos work best for Boudoir?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job. For consenting adults only."
+          "question": "How should I handle Boudoir source photos?",
+          "answer": "Upload only adult images you own or have permission to use, keep the gallery private, and remove any source that includes a non-consenting person. Review access and download settings before sharing."
         },
         {
           "id": "boudoir_use_results",
-          "question": "Can I use Boudoir results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Keep the use private unless your destination rules and consent terms clearly allow sharing. For consenting adults only."
+          "question": "Which styling choices make a Boudoir set feel editorial rather than explicit?",
+          "answer": "Use soft studio light, robe or elegant wardrobe cues, controlled silhouettes, and restrained crops. Keep the prompt about mood and confidence instead of anatomy or explicit exposure."
         },
         {
           "id": "boudoir_before_generate",
-          "question": "What should I check before generating Boudoir images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can I create an anniversary or gift concept with Boudoir?",
+          "answer": "Yes, for consenting adults and private, non-explicit use. Confirm the recipient, storage, and sharing permissions before downloading, and do not forward the image beyond the agreed audience."
         }
       ],
       "relatedEyebrow": "Related boudoir ideas",
@@ -1887,23 +1887,23 @@
       "faqItems": [
         {
           "id": "cannes_what_is_it",
-          "question": "What is Cannes?",
-          "answer": "Create Cannes-inspired festival portraits with glamorous arrival energy, flash photography mood, and elegant editorial crops. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "Is Cannes a real festival-attendance generator?",
+          "answer": "No. It creates Cannes-inspired festival glamour, premiere-arrival, flash, and editorial portraits. Do not present the result as proof of attendance, accreditation, sponsorship, or an official festival relationship."
         },
         {
           "id": "cannes_source_photos",
-          "question": "What source photos work best for Cannes?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What source photos work best for a Cannes-inspired portrait?",
+          "answer": "Use a sharp portrait with clear eyes, hair, and shoulders, plus an eveningwear reference if the silhouette matters. Leave room for flash highlights and avoid a source that is already clipped or heavily filtered."
         },
         {
           "id": "cannes_use_results",
-          "question": "Can I use Cannes results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Can I add festival logos or celebrity likenesses?",
+          "answer": "Use generic event styling unless you have permission for a logo, red-carpet mark, venue name, or another person’s likeness. Remove accidental text and marks before publishing."
         },
         {
           "id": "cannes_before_generate",
-          "question": "What should I check before generating Cannes images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Which Cannes crop should I choose for a profile or editorial post?",
+          "answer": "Use a tight flash portrait for a profile, a half-body frame to show the formal look, and a wider arrival crop for an editorial post. Keep the result labeled as inspired or generated when context could mislead."
         }
       ],
       "relatedEyebrow": "Related cannes ideas",
@@ -1963,23 +1963,23 @@
       "faqItems": [
         {
           "id": "nightlife_what_is_it",
-          "question": "What is Nightlife?",
-          "answer": "Create nightlife portraits with city lights, evening wardrobe, lounge mood, and private after-dark creator albums. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What nightlife scenes can I request?",
+          "answer": "Choose one clear direction such as neon street, cocktail lounge, rooftop, or evening creator portrait. A single scene brief produces a more coherent set than mixing holiday interiors, clubs, and city streets in one request."
         },
         {
           "id": "nightlife_source_photos",
-          "question": "What source photos work best for Nightlife?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What source photos work best for a Nightlife portrait?",
+          "answer": "Use a sharp face reference with visible eyes and natural skin detail; the source itself does not need to be dark. The generator can add evening light, but it cannot reliably recover a face hidden by heavy shadows or blur."
         },
         {
           "id": "nightlife_use_results",
-          "question": "Can I use Nightlife results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Which Nightlife crop fits a story post or profile?",
+          "answer": "Use a tighter portrait for a profile or dating-style refresh, a vertical crop for a story, and a wider frame for a rooftop or lounge announcement. Check that neon signs and bright lights do not cover the face."
         },
         {
           "id": "nightlife_before_generate",
-          "question": "What should I check before generating Nightlife images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can a Nightlife image imply that I visited a real club or venue?",
+          "answer": "It should not. Keep venue names, recognizable logos, and location claims out of the prompt unless you have permission and the image is clearly labeled as a generated concept."
         }
       ],
       "relatedEyebrow": "Related nightlife ideas",
@@ -2039,23 +2039,23 @@
       "faqItems": [
         {
           "id": "rich_lifestyle_what_is_it",
-          "question": "What is Rich Lifestyle?",
-          "answer": "Build polished rich lifestyle portraits with luxury interiors, elevated wardrobe, travel mood, and premium creator crops. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What does Rich Lifestyle add beyond a normal portrait?",
+          "answer": "It adds an aspirational setting-such as a refined interior, rooftop, resort, car-free travel mood, or premium studio-while keeping the person as the subject. Treat the result as a lifestyle concept, not proof of wealth or ownership."
         },
         {
           "id": "rich_lifestyle_source_photos",
-          "question": "What source photos work best for Rich Lifestyle?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What references help create a believable Rich Lifestyle scene?",
+          "answer": "Provide a clear portrait and one setting direction at a time: hotel-like interior, rooftop sunset, resort morning, or polished studio. Too many luxury cues in one prompt often create visual clutter and inconsistent lighting."
         },
         {
           "id": "rich_lifestyle_use_results",
-          "question": "Can I use Rich Lifestyle results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Can Rich Lifestyle include luxury brands, cars, or properties?",
+          "answer": "Use generic styling unless you own the rights to a visible logo, vehicle badge, property name, or campaign asset. Remove accidental marks before publishing so the image does not imply sponsorship or ownership."
         },
         {
           "id": "rich_lifestyle_before_generate",
-          "question": "What should I check before generating Rich Lifestyle images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "What should I review before using a Rich Lifestyle image?",
+          "answer": "Check perspective, reflections, hands, fabric, architectural lines, and any text in the background. Keep the version whose premium setting supports your personal brand without making a factual status claim."
         }
       ],
       "relatedEyebrow": "Related rich lifestyle ideas",
@@ -2115,23 +2115,23 @@
       "faqItems": [
         {
           "id": "bikini_what_is_it",
-          "question": "What is Bikini?",
-          "answer": "Create beachwear-inspired bikini portraits with resort light, confident styling, private review, and consent-first image handling. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything. For consenting adults only."
+          "question": "How is Bikini different from Boudoir or Swimsuit?",
+          "answer": "Bikini is centered on tasteful beachwear, resort light, poolside mood, and confidence portraits. Boudoir is a private non-explicit editorial mood, while Swimsuit emphasizes resort styling and wardrobe-preview planning."
         },
         {
           "id": "bikini_source_photos",
-          "question": "What source photos work best for Bikini?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job. For consenting adults only."
+          "question": "What permission is required for Bikini source photos?",
+          "answer": "Use adult source photos that you own or have explicit permission to use. Keep the upload private, do not use minors or stolen images, and make sure every person agrees to the intended output and sharing channel."
         },
         {
           "id": "bikini_use_results",
-          "question": "Can I use Bikini results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Keep the use private unless your destination rules and consent terms clearly allow sharing. For consenting adults only."
+          "question": "What should I review in a Bikini result?",
+          "answer": "Check swimwear edges, straps, hands, body proportions, face consistency, and whether the pose remains tasteful and non-explicit. Reject any result that adds a person, mark, or body detail that was not requested."
         },
         {
           "id": "bikini_before_generate",
-          "question": "What should I check before generating Bikini images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can I use a Bikini result in a public creator post?",
+          "answer": "Only with the adult subject’s approval and when the destination allows the content. Start with private review, avoid explicit framing, and disclose AI use where the platform or audience requires it."
         }
       ],
       "relatedEyebrow": "Related bikini ideas",
@@ -2191,23 +2191,23 @@
       "faqItems": [
         {
           "id": "swimsuit_what_is_it",
-          "question": "What is Swimsuit?",
-          "answer": "Preview swimsuit and resort portrait ideas with beach lighting, wardrobe planning, creator crops, and private gallery review. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything. For consenting adults only."
+          "question": "How is Swimsuit different from Bikini?",
+          "answer": "Swimsuit focuses on resort styling, beach profiles, and wardrobe-preview planning; Bikini is a narrower beachwear confidence direction. Keep the prompt centered on non-explicit adult styling in either case."
         },
         {
           "id": "swimsuit_source_photos",
-          "question": "What source photos work best for Swimsuit?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job. For consenting adults only."
+          "question": "What source-photo rules apply to Swimsuit?",
+          "answer": "Use adult source photos that you own or have permission to use, with consent for the intended result. Keep uploads private and do not use minors, stolen images, or people who did not agree."
         },
         {
           "id": "swimsuit_use_results",
-          "question": "Can I use Swimsuit results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Keep the use private unless your destination rules and consent terms clearly allow sharing. For consenting adults only."
+          "question": "Can Swimsuit predict the exact fit of a real garment?",
+          "answer": "No. It is a visual styling and moodboard preview, not a size, fabric, or fit guarantee. Use it to compare colors, silhouettes, and resort direction before a real purchase or shoot."
         },
         {
           "id": "swimsuit_before_generate",
-          "question": "What should I check before generating Swimsuit images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can I publish a Swimsuit result on a public profile?",
+          "answer": "Only after checking the adult subject’s consent, crop, wardrobe edges, and the destination platform’s rules. Keep the image non-explicit and disclose AI use when required."
         }
       ],
       "relatedEyebrow": "Related swimsuit ideas",
@@ -2267,23 +2267,23 @@
       "faqItems": [
         {
           "id": "travel_what_is_it",
-          "question": "What is Travel?",
-          "answer": "Create travel portraits with scenic streets, coastal escapes, outdoor light, destination mood, and private creator albums. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What kind of Travel story should I choose?",
+          "answer": "Pick one destination mood-coastal escape, old-city walk, mountain route, resort morning, or outdoor creator scene-before generating. A focused direction keeps the gallery readable and avoids mixing unrelated locations."
         },
         {
           "id": "travel_source_photos",
-          "question": "What source photos work best for Travel?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "Can a Travel image prove that I visited a destination?",
+          "answer": "No. It is a generated destination concept or creator visual. Do not use it as travel documentation, location proof, or evidence of being at a real landmark."
         },
         {
           "id": "travel_use_results",
-          "question": "Can I use Travel results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Which Travel crop should I use for a profile, story, or postcard?",
+          "answer": "Use a tighter portrait for a profile, a vertical frame for a route story, and a wider composition for a postcard or album cover. Keep the face readable when the landscape is doing most of the visual work."
         },
         {
           "id": "travel_before_generate",
-          "question": "What should I check before generating Travel images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "What should I check when a Travel image contains a landmark?",
+          "answer": "Inspect signs, architecture, geography, and lighting for invented or misleading details. If the page does not have destination-specific evidence, describe the image as destination-inspired rather than naming a real place."
         }
       ],
       "relatedEyebrow": "Related travel ideas",
@@ -2343,23 +2343,23 @@
       "faqItems": [
         {
           "id": "soccer_what_is_it",
-          "question": "What is Soccer?",
-          "answer": "Create soccer fan portraits, stadium-style posters, match-day profile images, and private supporter albums without official marks. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "Is Soccer for fan portraits or official team artwork?",
+          "answer": "It is for personal supporter portraits, match-day mood, stadium-style posters, and profile avatars. Do not treat the result as official club artwork or as a licensed team campaign unless you have the relevant permission."
         },
         {
           "id": "soccer_source_photos",
-          "question": "What source photos work best for Soccer?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What should I do about jerseys, logos, and player likenesses?",
+          "answer": "Use generic colors and supporter styling unless you have permission for a club mark, sponsor, league badge, or player likeness. Review the shirt, scarf, and stadium signage before downloading the final crop."
         },
         {
           "id": "soccer_use_results",
-          "question": "Can I use Soccer results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Which Soccer crop works for a match-day poster?",
+          "answer": "Use a wider frame for stadium energy and a clean vertical or square crop for a supporter avatar. Leave text-safe space if you will add a fixture title later, and do not let generated signage carry the message."
         },
         {
           "id": "soccer_before_generate",
-          "question": "What should I check before generating Soccer images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can I publish a Soccer result on social media?",
+          "answer": "Yes for personal fan content when the people shown have approved the use and the image does not imply an official relationship. Follow the platform’s AI-label rules and remove any accidental protected mark before posting."
         }
       ],
       "relatedEyebrow": "Related soccer ideas",
@@ -2419,23 +2419,23 @@
       "faqItems": [
         {
           "id": "urban_what_is_it",
-          "question": "What is Urban?",
-          "answer": "Build urban portraits with street scenes, city textures, modern wardrobe, creator energy, and private gallery delivery. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "How is Urban different from Travel or Street Style?",
+          "answer": "Urban focuses on city texture-streets, concrete, rooftops, transit, alleys, and modern architecture. Travel is destination storytelling, while Street Style makes the outfit and fashion direction the primary subject."
         },
         {
           "id": "urban_source_photos",
-          "question": "What source photos work best for Urban?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What city references help an Urban portrait feel specific?",
+          "answer": "Choose one setting such as a subway entrance, rooftop, alley, concrete facade, or neighborhood street. Keep the background recognizable but quieter than the face so the portrait remains usable as a profile or creator image."
         },
         {
           "id": "urban_use_results",
-          "question": "Can I use Urban results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Should Urban images include real signs or brand logos?",
+          "answer": "Use generic signage and textures unless you have permission for a visible logo, venue, or city mark. Review letters and storefront details because generated text can create an accidental claim."
         },
         {
           "id": "urban_before_generate",
-          "question": "What should I check before generating Urban images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Which Urban crop is best for a profile versus a story?",
+          "answer": "Choose a clean square or half-body crop for a profile, a wider vertical frame for a street story, and a banner crop when the architecture needs room. Keep the subject separated from busy traffic or graffiti."
         }
       ],
       "relatedEyebrow": "Related urban ideas",
@@ -2495,23 +2495,23 @@
       "faqItems": [
         {
           "id": "street_style_what_is_it",
-          "question": "What is Street Style?",
-          "answer": "Generate street style portraits with fashion-forward wardrobe, editorial poses, city backdrops, and creator-ready crops. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What source photos help Street Style show the outfit clearly?",
+          "answer": "Use a full-body or three-quarter reference when clothing matters, plus a clear face image for identity. Include one wardrobe direction-streetwear, casual luxe, editorial, or bold fashion-rather than mixing several unrelated looks."
         },
         {
           "id": "street_style_source_photos",
-          "question": "What source photos work best for Street Style?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "How is Street Style different from Urban?",
+          "answer": "Street Style makes clothing, pose, and fashion composition the primary subject. Urban makes city texture and location mood the primary subject, so a street backdrop alone does not turn a page into Street Style."
         },
         {
           "id": "street_style_use_results",
-          "question": "Can I use Street Style results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Can Street Style use recognizable fashion logos?",
+          "answer": "Use generic garments unless you have permission for a logo, label, or campaign asset. Check shoes, bags, storefronts, and signage because accidental marks can imply a brand relationship."
         },
         {
           "id": "street_style_before_generate",
-          "question": "What should I check before generating Street Style images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Which Street Style crop works for an OOTD post versus a campaign?",
+          "answer": "Use a full-body or three-quarter frame for OOTD and wardrobe planning, and a tighter editorial crop when the face and pose are the campaign focus. Keep the outfit readable in both."
         }
       ],
       "relatedEyebrow": "Related street style ideas",
@@ -2571,23 +2571,23 @@
       "faqItems": [
         {
           "id": "mafia_what_is_it",
-          "question": "What is Mafia?",
-          "answer": "Create cinematic mafia-inspired noir portraits with tailored wardrobe, moody light, character energy, and private albums. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "Is Mafia intended to depict real criminal activity?",
+          "answer": "No. It is a fictional noir and character-concept style with tailored wardrobe, moody interiors, and cinematic light. Keep the story clearly fictional and avoid claims of real affiliation or conduct."
         },
         {
           "id": "mafia_source_photos",
-          "question": "What source photos work best for Mafia?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What source and styling work best for a Mafia-inspired portrait?",
+          "answer": "Use an expressive portrait and choose a suit, vintage room, street, or poster direction. Keep props non-threatening and avoid weapons, graphic violence, or details that turn a character concept into a threat."
         },
         {
           "id": "mafia_use_results",
-          "question": "Can I use Mafia results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Which Mafia crop fits a profile or poster?",
+          "answer": "Use a clean head-and-shoulders crop for a character profile, a half-body frame for wardrobe, and a wider composition for a cinematic poster. Keep the face recognizable in every format."
         },
         {
           "id": "mafia_before_generate",
-          "question": "What should I check before generating Mafia images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can I use a Mafia image to imply someone is involved in crime?",
+          "answer": "No. Do not use the image to threaten, harass, impersonate, or accuse a real person. Label it as fictional or generated when the surrounding copy could be read as a factual claim."
         }
       ],
       "relatedEyebrow": "Related mafia ideas",
@@ -2647,23 +2647,23 @@
       "faqItems": [
         {
           "id": "hairstyle_generator_what_is_it",
-          "question": "What is Hairstyle Generator?",
-          "answer": "Preview hairstyle, hair color, texture, and salon inspiration portraits before choosing a real-world look or creator refresh. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What source photos work best for Hairstyle Generator?",
+          "answer": "Use a clear front or three-quarter portrait with the hairline, ears, and current length visible. A second side view helps when you are comparing a bob, fringe, curls, or a dramatic length change."
         },
         {
           "id": "hairstyle_generator_source_photos",
-          "question": "What source photos work best for Hairstyle Generator?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "Can Hairstyle Generator guarantee how a cut or color will look in real life?",
+          "answer": "No. It is a visual preview for style comparison, not a salon measurement or color guarantee. Use it to shortlist ideas, then confirm length, texture, maintenance, and color with a stylist."
         },
         {
           "id": "hairstyle_generator_use_results",
-          "question": "Can I use Hairstyle Generator results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "How should I compare bangs, curls, and shorter cuts?",
+          "answer": "Generate one change at a time and compare the forehead, cheek framing, hairline, and texture around the ears. Keeping the face and lighting constant makes the differences easier to judge."
         },
         {
           "id": "hairstyle_generator_before_generate",
-          "question": "What should I check before generating Hairstyle Generator images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can I show a Hairstyle result to a stylist?",
+          "answer": "Yes, as an inspiration reference. Tell the stylist which parts are the intended direction and which parts are AI approximation, especially color, density, curl pattern, and length."
         }
       ],
       "relatedEyebrow": "Related hairstyle generator ideas",
@@ -2723,23 +2723,23 @@
       "faqItems": [
         {
           "id": "virtual_try_on_what_is_it",
-          "question": "What is Virtual Try-On?",
-          "answer": "Preview outfit directions, wardrobe moodboards, fashion looks, and creator styling ideas from private source photos. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "Does Virtual Try-On guarantee how clothing will fit?",
+          "answer": "No. It helps compare outfit direction, color, silhouette, and styling mood. Treat the result as a planning visual, not an exact garment-fit, size, fabric, or product-performance guarantee."
         },
         {
           "id": "virtual_try_on_source_photos",
-          "question": "What source photos work best for Virtual Try-On?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What clothing reference should I upload?",
+          "answer": "Use a clear portrait or body-framed source plus a garment reference you own or are allowed to use. Describe the key features-cut, color, sleeve, neckline, or occasion-so the comparison has a defined target."
         },
         {
           "id": "virtual_try_on_use_results",
-          "question": "Can I use Virtual Try-On results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "How can I compare several Virtual Try-On looks fairly?",
+          "answer": "Keep the face, pose, camera angle, and lighting direction stable, then change one outfit variable at a time. Review hands, seams, body proportions, and neckline before choosing a concept."
         },
         {
           "id": "virtual_try_on_before_generate",
-          "question": "What should I check before generating Virtual Try-On images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can I use branded garments or a person’s image in Try-On?",
+          "answer": "Only with the necessary permission. Avoid protected logos and do not use another person’s portrait to simulate a purchase, endorsement, or product review they did not approve."
         }
       ],
       "relatedEyebrow": "Related virtual try-on ideas",
@@ -2799,23 +2799,23 @@
       "faqItems": [
         {
           "id": "motion_generator_what_is_it",
-          "question": "What is Motion Generator?",
-          "answer": "Create motion-ready photo concepts, animated portrait frames, GIF-style direction, and short video starter images. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "Does Motion Generator create a finished video or a motion-ready image?",
+          "answer": "This page is for motion-ready photo concepts, animated portrait frames, and starter directions. Treat the result as an image or storyboard input unless the separate video workflow explicitly confirms a rendered video output."
         },
         {
           "id": "motion_generator_source_photos",
-          "question": "What source photos work best for Motion Generator?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What camera direction should I specify for a Motion Generator frame?",
+          "answer": "Choose one movement-slow push-in, lateral slide, orbit, parallax, or a short loop-and keep the subject pose readable. A single camera cue produces a clearer starter frame than stacking several movements."
         },
         {
           "id": "motion_generator_use_results",
-          "question": "Can I use Motion Generator results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "What source image works best for a motion-ready portrait?",
+          "answer": "Use a sharp subject with clear face, hands, and separation from the background. Leave enough space in the direction of movement so a later video step does not crop the face or important props."
         },
         {
           "id": "motion_generator_before_generate",
-          "question": "What should I check before generating Motion Generator images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can I publish a Motion Generator result as a finished video?",
+          "answer": "Only if the downstream video tool has actually rendered and you have reviewed that output. Do not describe a still frame or concept image as a completed animation, and follow platform disclosure rules for AI motion."
         }
       ],
       "relatedEyebrow": "Related motion generator ideas",
@@ -2875,23 +2875,23 @@
       "faqItems": [
         {
           "id": "background_changer_what_is_it",
-          "question": "What is Background Changer?",
-          "answer": "Create collection-style background replacement concepts for portraits, products, profile photos, and private gallery images. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What does Background Changer keep from the original photo?",
+          "answer": "It should preserve the selected person or product while changing the surrounding context. Start with a clear subject edge and state whether the final job is a portrait backdrop, product scene, office setting, or lifestyle image."
         },
         {
           "id": "background_changer_source_photos",
-          "question": "What source photos work best for Background Changer?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "How do I judge a realistic background replacement?",
+          "answer": "Compare hair, hands, product edges, cast shadows, reflections, and light direction. Reject a version when the new room or outdoor scene is brighter, darker, or geometrically inconsistent with the subject."
         },
         {
           "id": "background_changer_use_results",
-          "question": "Can I use Background Changer results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Which background should I choose for a profile or product image?",
+          "answer": "Use a simple studio or office backdrop for a professional profile, a controlled lifestyle scene for a creator image, and a clean product context for an item listing. Avoid adding a location that the image is not meant to claim."
         },
         {
           "id": "background_changer_before_generate",
-          "question": "What should I check before generating Background Changer images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can a changed background make it look like I was somewhere else?",
+          "answer": "It can create a visual concept, but it should not be presented as proof of attendance, product use, or endorsement. Label generated scenes when the surrounding context could materially mislead viewers."
         }
       ],
       "relatedEyebrow": "Related background changer ideas",
@@ -2951,23 +2951,23 @@
       "faqItems": [
         {
           "id": "background_remover_what_is_it",
-          "question": "What is Background Remover?",
-          "answer": "Prepare clean background removal and cutout-style images for profiles, listings, creator graphics, and private downloads. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "Which edges need the most review after removing a background?",
+          "answer": "Inspect loose hair, fingers, glasses, thin straps, product handles, and translucent materials first. These edges often need a second pass or a simpler background before the cutout is ready to use."
         },
         {
           "id": "background_remover_source_photos",
-          "question": "What source photos work best for Background Remover?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "Should I choose a transparent-style cutout or a white backdrop?",
+          "answer": "Use a transparent-style result when a designer will place the subject into another layout, and a white or neutral backdrop when the asset is going directly into a listing or profile card. Confirm the output format before download."
         },
         {
           "id": "background_remover_use_results",
-          "question": "Can I use Background Remover results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Is Background Remover suitable for ecommerce listing assets?",
+          "answer": "Yes for clean product isolation when the item, color, and proportions remain accurate. Review the outline, shadow, and product details so the cutout does not hide damage or change what is being sold."
         },
         {
           "id": "background_remover_before_generate",
-          "question": "What should I check before generating Background Remover images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "When should I keep the original background instead of removing it?",
+          "answer": "Keep it when the background is part of evidence, safety context, location, or product condition. Removing context is a design choice, not a way to rewrite what happened in the original photo."
         }
       ],
       "relatedEyebrow": "Related background remover ideas",
@@ -3027,23 +3027,23 @@
       "faqItems": [
         {
           "id": "magic_eraser_what_is_it",
-          "question": "What is Magic Eraser?",
-          "answer": "Remove distractions, small objects, clutter, and unwanted visual details while keeping the main photo natural. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What is Magic Eraser best at removing?",
+          "answer": "Use it for small distractions such as a photobomber, stray object, clutter, cable, or minor background mark. It is not a substitute for rebuilding a large missing subject or changing the entire scene."
         },
         {
           "id": "magic_eraser_source_photos",
-          "question": "What source photos work best for Magic Eraser?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What should I inspect after erasing something near hair or hands?",
+          "answer": "Zoom in on the boundary and compare texture, fingers, hair strands, shadows, and repeated patterns. If the erased area creates a melted edge or repeated background, use a simpler edit or keep the original."
         },
         {
           "id": "magic_eraser_use_results",
-          "question": "Can I use Magic Eraser results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Can Magic Eraser remove a person in the background?",
+          "answer": "It may help with a small background photobomber when the surrounding scene is simple. Do not erase a person, object, or mark when it changes the meaning of an event, safety record, or documentary image."
         },
         {
           "id": "magic_eraser_before_generate",
-          "question": "What should I check before generating Magic Eraser images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Should I keep the original after using Magic Eraser?",
+          "answer": "Yes. Save the original and compare it with the edited version before publishing. The change should be limited to the named distraction, with no unexpected alteration to the subject or context."
         }
       ],
       "relatedEyebrow": "Related magic eraser ideas",
@@ -3103,23 +3103,23 @@
       "faqItems": [
         {
           "id": "photo_enhancer_what_is_it",
-          "question": "What is Photo Enhancer?",
-          "answer": "Enhance soft, dark, compressed, or low-detail photos for clearer downloads, profile images, and private gallery review. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "When should I use Photo Enhancer instead of Unblur Image?",
+          "answer": "Use Photo Enhancer for a broader lift to clarity, tone, and download readiness; use Unblur Image when mild blur or softness is the main problem. If the source has severe blur, neither tool can guarantee missing detail."
         },
         {
           "id": "photo_enhancer_source_photos",
-          "question": "What source photos work best for Photo Enhancer?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "What source photo gives Photo Enhancer the best chance of success?",
+          "answer": "Use the largest original file available, with visible face or product detail and limited compression. A screenshot, tiny social download, or heavily filtered image leaves less real information to improve."
         },
         {
           "id": "photo_enhancer_use_results",
-          "question": "Can I use Photo Enhancer results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "How should I review enhanced text or product details?",
+          "answer": "Zoom into small lettering, edges, logos, and color-critical surfaces. Keep the original beside the enhanced version so sharpening does not create invented text, seams, or product features."
         },
         {
           "id": "photo_enhancer_before_generate",
-          "question": "What should I check before generating Photo Enhancer images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Will Photo Enhancer make every low-quality photo sharp?",
+          "answer": "No. It can improve visible structure and presentation, but it cannot guarantee a true recovery from missing pixels, motion blur, or clipped exposure. Use the result only after a side-by-side realism check."
         }
       ],
       "relatedEyebrow": "Related photo enhancer ideas",
@@ -3179,23 +3179,23 @@
       "faqItems": [
         {
           "id": "portrait_retouch_what_is_it",
-          "question": "What is Portrait Retouch?",
-          "answer": "Retouch portraits with natural skin texture, balanced light, cleaner crops, and private review-friendly realism. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What makes a Portrait Retouch look natural?",
+          "answer": "Keep skin texture, face shape, expression, and age cues visible while correcting small distractions and uneven light. If pores, hairline, or expression disappear, the retouch has gone beyond a natural profile polish."
         },
         {
           "id": "portrait_retouch_source_photos",
-          "question": "What source photos work best for Portrait Retouch?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "Can Portrait Retouch change someone’s face or age?",
+          "answer": "It should not change identity or create a misleading age impression. Use it for light balance, skin cleanup, crop refinement, and background tidying, with permission from the person shown."
         },
         {
           "id": "portrait_retouch_use_results",
-          "question": "Can I use Portrait Retouch results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Is Portrait Retouch better for a business profile or a dating image?",
+          "answer": "It can support either when the finish remains realistic. Pick a restrained crop and light cleanup for a business profile; for a personal profile, keep the expression and features that the person wants viewers to recognize."
         },
         {
           "id": "portrait_retouch_before_generate",
-          "question": "What should I check before generating Portrait Retouch images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "What should I compare before downloading a retouched portrait?",
+          "answer": "Place the original and retouched versions side by side and check eyes, teeth, hairline, skin texture, face shape, and background. Keep the version that looks polished without changing what the person actually looks like."
         }
       ],
       "relatedEyebrow": "Related portrait retouch ideas",
@@ -3255,23 +3255,23 @@
       "faqItems": [
         {
           "id": "unblur_image_what_is_it",
-          "question": "What is Unblur Image?",
-          "answer": "Improve blurred or soft images with clearer facial detail, sharper edges, and natural-looking private downloads. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What level of blur can Unblur Image reasonably improve?",
+          "answer": "It works best on mild to moderate softness, small shake, or low-detail portraits where some structure remains visible. Severely missing pixels, blown highlights, and motion trails cannot be guaranteed to return."
         },
         {
           "id": "unblur_image_source_photos",
-          "question": "What source photos work best for Unblur Image?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "Which details should I inspect after unblurring?",
+          "answer": "Compare the face, eyes, text, hairline, fingers, edges, and repeated textures with the original. Keep the result only when the added sharpness still matches the source instead of inventing detail."
         },
         {
           "id": "unblur_image_use_results",
-          "question": "Can I use Unblur Image results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "How is Unblur Image different from Photo Enhancer?",
+          "answer": "Unblur Image targets softness and blur first; Photo Enhancer is broader and may lift tone, clarity, and download readiness. Choose the narrower tool when blur is the specific problem."
         },
         {
           "id": "unblur_image_before_generate",
-          "question": "What should I check before generating Unblur Image images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can a deblurred image be used as forensic proof?",
+          "answer": "No. A generated or restored detail is not reliable evidence when the original image was ambiguous. Keep the source, label the result as processed, and use it only for an appropriate visual purpose."
         }
       ],
       "relatedEyebrow": "Related unblur image ideas",
@@ -3331,23 +3331,23 @@
       "faqItems": [
         {
           "id": "color_correction_what_is_it",
-          "question": "What is Color Correction?",
-          "answer": "Correct color casts, exposure imbalance, flat lighting, and dull tones while keeping portraits and scenes realistic. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What problems is Color Correction best for?",
+          "answer": "Use it for a yellow indoor cast, green or blue tint, flat exposure, dull contrast, or a mismatched mood across a set. It is not a replacement for recreating detail that the source never captured."
         },
         {
           "id": "color_correction_source_photos",
-          "question": "What source photos work best for Color Correction?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "Can I use Color Correction for product photos?",
+          "answer": "Yes, but compare the result with the real item under neutral light. Do not push color, saturation, or white balance so far that the listing promises a different product color."
         },
         {
           "id": "color_correction_use_results",
-          "question": "Can I use Color Correction results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "How do I match several photos to one album mood?",
+          "answer": "Choose one target temperature and contrast level, then compare skin, whites, shadows, and background tones across the set. Correct the outlier instead of applying a dramatic filter to every photo."
         },
         {
           "id": "color_correction_before_generate",
-          "question": "What should I check before generating Color Correction images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "What can Color Correction not recover?",
+          "answer": "It can rebalance visible tone and exposure, but it cannot reliably restore a face hidden in clipped highlights, deep shadow, or severe blur. Keep the original beside the corrected version before publishing."
         }
       ],
       "relatedEyebrow": "Related color correction ideas",
@@ -3407,23 +3407,23 @@
       "faqItems": [
         {
           "id": "old_photo_restoration_what_is_it",
-          "question": "What is Old Photo Restoration?",
-          "answer": "Restore old or damaged photos with clearer detail, reduced scratches, improved tone, and respectful family keepsake handling. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "What damage can Old Photo Restoration address?",
+          "answer": "It is suited to visible fading, scratches, dust, low contrast, and mild softness in family portraits or keepsakes. Start with the highest-resolution scan you have and keep the original file unchanged."
         },
         {
           "id": "old_photo_restoration_source_photos",
-          "question": "What source photos work best for Old Photo Restoration?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "Can restoration recover details that are completely missing?",
+          "answer": "No. It can make existing structure clearer, but it cannot verify or faithfully recover a face, text, or object that was never captured. Mark uncertain details as reconstructed rather than historical fact."
         },
         {
           "id": "old_photo_restoration_use_results",
-          "question": "Can I use Old Photo Restoration results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "Should I choose a colorized version or keep the original tone?",
+          "answer": "Keep an archival monochrome or original-tone version when historical accuracy matters, and create a separate colorized copy for a family presentation. Label the colorized result so the two purposes are not confused."
         },
         {
           "id": "old_photo_restoration_before_generate",
-          "question": "What should I check before generating Old Photo Restoration images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Can I restore a relative’s old photo for public sharing?",
+          "answer": "Keep the source private and confirm that the people or rights holders involved allow the intended publication. A family keepsake can still contain sensitive identity, memorial, or privacy information."
         }
       ],
       "relatedEyebrow": "Related old photo restoration ideas",
@@ -3483,23 +3483,23 @@
       "faqItems": [
         {
           "id": "edit_by_prompt_what_is_it",
-          "question": "What is Edit By Prompt?",
-          "answer": "Use a written prompt to request safe photo edits, scene changes, style adjustments, and private image variations. It keeps the workflow centered on one private gallery so you can review the result before you spend more credits or publish anything."
+          "question": "How should I write an Edit By Prompt request?",
+          "answer": "Name one main change, the area it affects, and what must stay unchanged-for example, “replace the plain wall with a warm studio backdrop, keep the face and shirt.” Specific prompts are easier to compare than a list of unrelated edits."
         },
         {
           "id": "edit_by_prompt_source_photos",
-          "question": "What source photos work best for Edit By Prompt?",
-          "answer": "Use clear photos you own or have permission to use, with the subject easy to see and no unnecessary filters, screenshots, or heavy crops. Follow the visual cue in the prompt and keep the request focused on the same job."
+          "question": "Can Edit By Prompt change one object without redesigning the whole image?",
+          "answer": "It can be used for a focused local edit such as changing a background, adjusting an outfit color, or removing a small distraction. State the untouched subject, pose, and lighting so the result does not drift into a new scene."
         },
         {
           "id": "edit_by_prompt_use_results",
-          "question": "Can I use Edit By Prompt results for social media or client work?",
-          "answer": "Use the finished images only when the people, brands, and permissions involved allow it. Review the final crop and any platform rules before sharing anything publicly or in client-facing work."
+          "question": "What should I compare against the original after a prompt edit?",
+          "answer": "Check face identity, hands, text, object count, shadows, and the exact region named in the prompt. Keep the edit only when it solves the requested change without introducing a new factual detail."
         },
         {
           "id": "edit_by_prompt_before_generate",
-          "question": "What should I check before generating Edit By Prompt images?",
-          "answer": "Confirm the visible credit cost, choose the exact use case, and make sure the category matches the outcome you want. A tighter brief usually makes the private gallery easier to judge."
+          "question": "Which prompt edits should I avoid?",
+          "answer": "Do not request impersonation, non-consensual edits, forged documents, deceptive evidence, or protected characters and logos. Use source photos you own or have permission to modify."
         }
       ],
       "relatedEyebrow": "Related edit by prompt ideas",

@@ -22,7 +22,7 @@ export type ResolvedOffer = {
 };
 
 export type EntityReference = {
-  entityType: "page" | "page_copy" | "theme_settings" | "product" | "price" | "creative_pack" | "video_theme" | "media";
+  entityType: "page" | "page_copy" | "route_manifest" | "page_media" | "theme_settings" | "product" | "price" | "creative_pack" | "video_theme" | "media";
   entityId: string;
   ownerId: string;
   revision: string;
@@ -113,6 +113,7 @@ export type StorefrontContext = {
     buildId: string;
     pageEntityId?: string;
     copyRevision?: string;
+    pageMediaRevision?: string;
     canonicalSlug?: string;
   };
   capability: SiteCapability;
@@ -152,6 +153,22 @@ export type PublishedSiteSnapshot = {
   buildId: string;
   pages: ThemePage[];
   publishedPaths: string[];
+  publishedRoutes: Array<{
+    siteId: "site_dreamshoot";
+    routeKind: "ai-image-theme-leaf";
+    canonicalSlug: string;
+    canonicalPath: string;
+    pageEntityId: string;
+    copyRevision: string;
+    copySource: "page-copy" | "missing";
+    fallbackUsed: false;
+    status: "published" | "review_required";
+    indexable: boolean;
+    sitemapEligible: boolean;
+    expectedPackId: string;
+    mediaEntityId: string;
+    reviewReason?: string;
+  }>;
   products: Product[];
   creativePacks: CreativePack[];
   creativePackCategories: CreativePackCategory[];

@@ -1,10 +1,9 @@
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
-import { dreamshootPackProfileForSlug, type DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
+import type { DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import {
   aidreamcapesCategoryUseCaseProfileForSlug,
-  mydreamshootsCategoryUseCaseProfileForSlug,
   type PhotoPackageUseCaseProfile
 } from "@/lib/photo-package-use-case-profiles";
 import {
@@ -15,6 +14,7 @@ import {
 } from "@/lib/photo-package-taxonomy";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
+import { mydreamshootsPublishedRouteForSlug } from "@/lib/mydreamshoots-published-contract";
 
 export type SeoDirectoryKind = "collection" | "tool";
 
@@ -2839,7 +2839,7 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
           routeKind: "ai-image-theme-leaf",
           canonicalSlug,
           canonicalPath: canonicalSeoDirectoryPathForSite(site, kind, canonicalSlug)
-        }) ?? mydreamshootsCategoryUseCaseProfileForSlug(canonicalSlug) ?? dreamshootPackProfileForSlug(canonicalSlug)
+        })
     : undefined;
   const sourceWithProfile = collectionProfile
     ? collectionSeedWithUseCaseProfile(source, collectionProfile, brandName)
@@ -2861,6 +2861,10 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
 export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, site?: Site): ThemePageJson {
   const item = getSeoDirectoryContentForSite(site, kind, rawSlug);
   const canonicalPath = item.canonicalPath;
+  const publishedRoute = site?.id === "site_dreamshoot" && kind === "collection"
+    ? mydreamshootsPublishedRouteForSlug(item.slug)
+    : undefined;
+  const routeIndexable = publishedRoute ? publishedRoute.indexable : true;
   const indexableDreamshootDefaultTool =
     kind === "tool" &&
     !isAidreamcapesSite(site) &&
@@ -2874,10 +2878,10 @@ export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryK
       keywords: item.keywords,
       canonicalPath,
       canonical: canonicalPath,
-      index: isSpanishXbySite(site) || item.explicit || indexableDreamshootDefaultTool,
+      index: routeIndexable && (isSpanishXbySite(site) || item.explicit || indexableDreamshootDefaultTool),
       follow: true,
       robots: {
-        index: isSpanishXbySite(site) || item.explicit || indexableDreamshootDefaultTool,
+        index: routeIndexable && (isSpanishXbySite(site) || item.explicit || indexableDreamshootDefaultTool),
         follow: true
       }
     }

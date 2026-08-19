@@ -158,6 +158,7 @@ function normalizeSlug(value) {
 }
 
 function packIdForItem(item) {
+  if (item.slug === "black-friday") return "pack_dreamshoot_black_friday";
   return item.reusePackId || `pack_dreamshoot_${slugUnderscore(item.slug)}`;
 }
 
@@ -372,7 +373,7 @@ function categoryFieldsForRoot(root) {
   };
 }
 
-function categoryFieldsForItem(item, parentId, sortOrder) {
+function categoryFieldsForItem(item, parentId, sortOrder, sourcePack) {
   const profile = profileForItem(item);
   const generatedMedia = generatedThemeMediaForSlug(item.slug);
   return {
@@ -386,7 +387,7 @@ function categoryFieldsForItem(item, parentId, sortOrder) {
     icon: item.icon,
     sortOrder,
     status: "active",
-    ...(generatedMedia ? { imageUrl: generatedMedia.imageUrl } : {}),
+    ...(generatedMedia?.imageUrl || sourcePack?.imageUrl ? { imageUrl: generatedMedia?.imageUrl || sourcePack.imageUrl } : {}),
     updatedAt: UPDATE_TIMESTAMP
   };
 }
@@ -1020,13 +1021,13 @@ for (const [index, item] of taxonomy.items.entries()) {
     categories.push(category);
     changes.push({ targetType: "CreativePackCategory", id: category.id, field: "create", after: targetSlug });
   }
-  const fields = categoryFieldsForItem(item, parentId, (index + 1) * 10);
-  updateCategory(category, fields, changes);
+  const packId = packIdForItem(item);
+  const sourcePack = originalPackById.get(item.reusePackId || item.sourcePackId || packId) || originalPackById.get(item.sourcePackId);
+  const categoryFields = categoryFieldsForItem(item, parentId, (index + 1) * 10, sourcePack);
+  updateCategory(category, categoryFields, changes);
   targetCategoryIds.add(category.id);
   syncedCategories.push(structuredClone(category));
 
-  const packId = packIdForItem(item);
-  const sourcePack = originalPackById.get(item.reusePackId || item.sourcePackId || packId) || originalPackById.get(item.sourcePackId);
   let pack = packs.find((candidate) => candidate.siteId === SITE_ID && candidate.id === packId);
   if (!pack) {
     pack = {

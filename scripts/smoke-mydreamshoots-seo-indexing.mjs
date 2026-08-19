@@ -41,6 +41,7 @@ function walk(value, visit, pathSegments = []) {
 }
 
 const seoIndexing = readText("src/lib/seo-indexing.ts");
+const publishedContract = readText("src/lib/mydreamshoots-published-contract.ts");
 const jsonLd = readText("src/lib/theme/json-ld.ts");
 const dreamshootSeoContent = readText("src/lib/dreamshoot-seo-content.ts");
 const robots = readText("src/app/robots.ts");
@@ -554,6 +555,14 @@ assert(
     seoIndexing.includes("effective.indexability.sitemapEligible") &&
     seoIndexing.includes("effective.context.seo.canonicalUrl"),
   "sitemap must use one published snapshot, effective page disposition, indexability, and canonical URL"
+);
+assert(
+  publishedContract.includes("mydreamshootsPublishedRouteManifest") &&
+    publishedContract.includes('copySource: "page-copy" | "missing"') &&
+    publishedContract.includes("fallbackUsed: false") &&
+    publishedContract.includes("mediaEntityId") &&
+    publishedContract.includes("review_required"),
+  "MyDreamShoots published route and media contracts must fail closed without generic fallback"
 );
 assert(
     seoIndexing.includes("resolvePublicCollectionItems(snapshot)") &&

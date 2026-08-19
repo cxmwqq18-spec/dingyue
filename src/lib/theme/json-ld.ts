@@ -8,6 +8,7 @@ import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
+import { mydreamshootsPublishedRouteForSlug, resolveMydreamshootsPublishedPageMedia } from "@/lib/mydreamshoots-published-contract";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
@@ -712,6 +713,9 @@ function subjectImageForPack(pack: CreativePack): string {
 }
 
 function packMatchesCollectionSlug(site: Site, pack: CreativePack, slug: string): boolean {
+  if (isPrimaryMyDreamShootsSite(site)) {
+    return canonicalCollectionSlugForCandidate(site, pack.categoryRecord?.slug || pack.category) === slug;
+  }
   const candidates = [
     pack.categoryRecord?.slug,
     pack.categoryRecord?.parent?.slug,
@@ -1079,13 +1083,16 @@ export function buildCollectionDirectoryJsonLd({
   const siteName = siteBrandName(site);
   const title = context.seo.title;
   const description = context.seo.description;
+  const publishedRoute = isPrimaryMyDreamShootsSite(site) ? mydreamshootsPublishedRouteForSlug(item.slug) : undefined;
+  const pageMedia = publishedRoute ? resolveMydreamshootsPublishedPageMedia(publishedRoute, creativePacks) : undefined;
   const matchingPacks = projectPublicCreativePacks(context, creativePacks)
-    .filter((pack) => packMatchesCollectionSlug(site, pack, item.slug));
+    .filter((pack) => packMatchesCollectionSlug(site, pack, item.slug))
+    .filter((pack) => !pageMedia || pack.id === pageMedia.packId);
   const faqPack = matchingPacks[0];
   const faqLabel = cleanText(faqPack?.name, item.label);
   const faqOutputCount = faqPack?.outputCount;
   const faqCreditCost = faqPack?.creditCost;
-  const collectionPageCopy = !isSpanishXbySite(site) && isPrimaryMyDreamShootsSite(site)
+  const collectionPageCopy = pageSlug && !isSpanishXbySite(site) && isPrimaryMyDreamShootsSite(site)
     ? mydreamshootsPageCopyForRoute({
         siteId: site.id,
         routeKind: "ai-image-theme-leaf",
