@@ -42,9 +42,7 @@ export async function metadataForPublishedStorefrontPage({
       ...existingOther,
       "storefront-publication": context.revisions.publicationId ?? "unpublished",
       "storefront-facts-revision": context.revisions.factsRevision,
-      "storefront-build": context.revisions.buildId,
-      "storefront-snapshot-revision": context.revisions.snapshotRevision ?? "legacy",
-      "storefront-route-revision": context.revisions.routeRevision ?? "legacy"
+      "storefront-build": context.revisions.buildId
     }
   };
 }
@@ -76,31 +74,14 @@ export async function metadataForPublishedStorefrontDirectoryPage({
     : undefined;
   const pageMedia = route
     ? snapshot?.publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId)
-      ?? (!snapshot ? resolveMydreamshootsPublishedPageMedia(route, creativePacks) : undefined)
+      ?? resolveMydreamshootsPublishedPageMedia(route, snapshot?.creativePacks ?? creativePacks)
     : undefined;
-  const pageCopy = route && snapshot
-    ? snapshot.publishedPageCopy.find((candidate) => candidate.pageEntityId === route.pageEntityId)?.copy
-    : undefined;
-  const directoryPageJson = route && snapshot
-    ? {
-        ...publishedBasePage.publishedJson,
-        seo: {
-          ...publishedBasePage.publishedJson.seo,
-          title: pageCopy?.seoTitle,
-          description: pageCopy?.cardDescription,
-          canonicalPath: route.canonicalPath,
-          canonical: route.canonicalPath,
-          index: route.indexable && pageMedia?.status === "ready",
-          robots: { index: route.indexable && pageMedia?.status === "ready", follow: true }
-        }
-      }
-    : withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite);
   const resolvedPage = {
     ...publishedBasePage,
     publishedJson: {
-      ...directoryPageJson,
+      ...withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite),
       seo: {
-        ...directoryPageJson.seo,
+        ...withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite).seo,
         ...(route
           ? { ogImage: pageMedia?.status === "ready" && pageMedia.primaryImage ? pageMedia.primaryImage : undefined }
           : {})

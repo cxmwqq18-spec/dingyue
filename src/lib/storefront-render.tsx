@@ -36,8 +36,8 @@ import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/custome
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
-import { createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, publishedCreativePacksForRender, publishedProductsForRender, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
-import type { PublishedSiteSnapshot, StorefrontContext } from "@/lib/storefront-context/types";
+import { createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
+import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
@@ -104,27 +104,6 @@ function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData
     toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === siteId),
     videoThemeCategories: (state.videoThemeCategories ?? []).filter((category) => category.siteId === siteId),
     videoThemes: (state.videoThemes ?? []).filter((theme) => theme.siteId === siteId)
-  };
-}
-
-function getPublishedSiteRenderData(state: PlatformState, snapshot: PublishedSiteSnapshot): SiteRenderData {
-  if (snapshot.snapshotIntegrity !== "valid" || snapshot.publication?.snapshot.seoProjectionVersion !== 1) {
-    return getSiteRenderData(state, snapshot.site.id);
-  }
-  const creativePacks = publishedCreativePacksForRender(snapshot);
-  const categoryMap = new Map<string, CreativePackCategory>();
-  for (const pack of creativePacks) {
-    if (pack.categoryRecord) categoryMap.set(pack.categoryRecord.id, pack.categoryRecord);
-  }
-  return {
-    creativePackCategories: [...categoryMap.values()],
-    creativePacks,
-    mediaAssets: [],
-    products: publishedProductsForRender(snapshot),
-    siteAiApps: (state.siteAiApps ?? []).filter((app) => app.siteId === snapshot.site.id),
-    toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === snapshot.site.id),
-    videoThemeCategories: [],
-    videoThemes: []
   };
 }
 
@@ -2580,13 +2559,11 @@ export async function renderStorefrontPage({
   deferCustomerRuntime?: boolean;
 }) {
   const shouldDeferCustomerRuntime = deferCustomerRuntime && publicCustomerBootstrapEnabled();
+  const shouldCompletePublicPacks = !preferLocalPathModeState(site.slug);
   const state = await getStateForStorefrontRender(site, routeMode, providedState);
   const stateSite = state.sites.find((item) => item.id === site.id);
   if (!stateSite) notFound();
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
-  if (publishedSnapshot.snapshotIntegrity !== "valid" && stateSite.id === "site_dreamshoot") notFound();
-  const immutableSeoProjection = publishedSnapshot.snapshotIntegrity === "valid" && publishedSnapshot.publication?.snapshot.seoProjectionVersion === 1;
-  const shouldCompletePublicPacks = !immutableSeoProjection && !preferLocalPathModeState(site.slug);
   const currentSite = publishedSnapshot.site;
   const collectionCategory = typeof query.category === "string" ? query.category : "";
   const collectionRootPath = publicCollectionRootPathForSite(currentSite);
@@ -2597,7 +2574,7 @@ export async function renderStorefrontPage({
       ? publicCollectionPathForSite(currentSite, collectionCategory)
       : slug
   );
-  const renderData = getPublishedSiteRenderData(state, publishedSnapshot);
+  const renderData = getSiteRenderData(state, currentSite.id);
   const focusedCollectionRenderData = isFocusedCollectionPage ? trimFocusedCollectionRenderData(renderData, collectionCategory) : renderData;
   const useSharedNavigation = usesSharedDreamShootNavigation(currentSite);
   const navigationCreativePackCategories = useSharedNavigation
@@ -2722,9 +2699,7 @@ export async function renderStorefrontPage({
           site: currentSite,
           collectionSlug: collectionCategory,
           routeMode,
-          ...(immutableSeoProjection
-            ? { collectionRefs: publishedSnapshot.publishedCollectionRefs }
-            : { creativePacks: trimCreativePacksForStorefront(focusedCollectionRenderData, publicDirectoryPackLimit) }),
+          creativePacks: trimCreativePacksForStorefront(focusedCollectionRenderData, publicDirectoryPackLimit),
           context: storefrontContext
         })
       : buildStorefrontJsonLd({
@@ -2734,7 +2709,7 @@ export async function renderStorefrontPage({
           pagePath: renderPagePath,
           routeMode,
           creativePacks: pageRenderData.creativePacks,
-          products: pageRenderData.products,
+          products: state.products,
           context: storefrontContext,
           videoThemes: pageRenderData.videoThemes
         }),
@@ -2800,19 +2775,15 @@ export async function renderStorefrontSectionPayloads({
   const requestSlug = slug;
   const internalSlug = internalPageSlugForPublicPath(requestSlug);
   const requestQuery = queryWithPublicCollectionCategory(requestSlug, query);
+  const shouldCompletePublicPacks = !(routeMode === "path" && preferLocalPathModeState(publicSlug));
   const state = await getPublicSectionStateForRoute(publicSlug, internalSlug, routeMode, requestedSectionIds, requestQuery);
   if (!state) return [];
-  const stateSite = state.sites.find((item) =>
+  const currentSite = state.sites.find((item) =>
     item.slug === siteSlug ||
     publicSiteSlug(item.slug) === publicSlug ||
     canonicalSiteSlug(item.slug) === canonicalSiteSlug(siteSlug)
   );
-  if (!stateSite) return [];
-  const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
-  if (publishedSnapshot.snapshotIntegrity !== "valid" && stateSite.id === "site_dreamshoot") return [];
-  const currentSite = publishedSnapshot.site;
-  const immutableSeoProjection = publishedSnapshot.snapshotIntegrity === "valid" && publishedSnapshot.publication?.snapshot.seoProjectionVersion === 1;
-  const shouldCompletePublicPacks = !immutableSeoProjection && !(routeMode === "path" && preferLocalPathModeState(publicSlug));
+  if (!currentSite) return [];
   const sectionState = state;
   const sectionSite = currentSite;
 
@@ -2821,7 +2792,7 @@ export async function renderStorefrontSectionPayloads({
   const collectionCategory = collectionRoute?.collectionSlug ?? (typeof requestQuery.category === "string" ? requestQuery.category : "");
   const renderPagePath = collectionRoute?.canonicalPath ?? requestSlug;
   const isFocusedCollectionPage = internalSlug === "/collections" && Boolean(collectionCategory);
-  const renderData = getPublishedSiteRenderData(state, publishedSnapshot);
+  const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
   const toolDetailSlug = internalSlug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
   const resolvedToolDetail = toolDetailSlug
@@ -2855,7 +2826,7 @@ export async function renderStorefrontSectionPayloads({
 
   const settings = currentSite.themeSettings.publishedJson;
   const renderedPage = { ...directPage, publishedJson: pageJson };
-  const storefrontContext = resolvePublishedStorefrontContext(publishedSnapshot, renderedPage);
+  const storefrontContext = resolvePublishedStorefrontContext(createPublishedSiteSnapshot(sectionState, currentSite), renderedPage);
   const runtimeByMode = new Map<"empty" | "full" | "light", Promise<ThemeRuntimeData>>();
   let sectionSessionId: string | undefined;
   async function runtimeForSection(singleSectionPageJson: ThemePageJson, section: SectionInstance): Promise<ThemeRuntimeData | undefined> {
@@ -2990,26 +2961,22 @@ export async function renderStorefrontSectionPayload({
   const requestSlug = slug;
   const internalSlug = internalPageSlugForPublicPath(requestSlug);
   const requestQuery = queryWithPublicCollectionCategory(requestSlug, query);
+  const shouldCompletePublicPacks = !(routeMode === "path" && preferLocalPathModeState(publicSlug));
   const state = await getPublicSectionStateForRoute(publicSlug, internalSlug, routeMode, [sectionId], requestQuery);
   if (!state) return undefined;
-  const stateSite = state.sites.find((item) =>
+  const currentSite = state.sites.find((item) =>
     item.slug === siteSlug ||
     publicSiteSlug(item.slug) === publicSlug ||
     canonicalSiteSlug(item.slug) === canonicalSiteSlug(siteSlug)
   );
-  if (!stateSite) return undefined;
-  const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
-  if (publishedSnapshot.snapshotIntegrity !== "valid" && stateSite.id === "site_dreamshoot") return undefined;
-  const currentSite = publishedSnapshot.site;
-  const immutableSeoProjection = publishedSnapshot.snapshotIntegrity === "valid" && publishedSnapshot.publication?.snapshot.seoProjectionVersion === 1;
-  const shouldCompletePublicPacks = !immutableSeoProjection && !(routeMode === "path" && preferLocalPathModeState(publicSlug));
+  if (!currentSite) return undefined;
 
   const collectionRoute = isCollectionPublicPath(requestSlug) ? parsePublicCollectionRouteForSite(currentSite, requestSlug) : undefined;
   if (isCollectionPublicPath(requestSlug) && !collectionRoute) return undefined;
   const collectionCategory = collectionRoute?.collectionSlug ?? (typeof requestQuery.category === "string" ? requestQuery.category : "");
   const renderPagePath = collectionRoute?.canonicalPath ?? requestSlug;
   const isFocusedCollectionPage = internalSlug === "/collections" && Boolean(collectionCategory);
-  const renderData = getPublishedSiteRenderData(state, publishedSnapshot);
+  const renderData = getSiteRenderData(state, currentSite.id);
   currentSite.mediaAssets = renderData.mediaAssets;
   const toolDetailSlug = internalSlug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
   const resolvedToolDetail = toolDetailSlug
@@ -3047,7 +3014,7 @@ export async function renderStorefrontSectionPayload({
   };
   const settings = currentSite.themeSettings.publishedJson;
   const renderedPage = { ...directPage, publishedJson: pageJson };
-  const storefrontContext = resolvePublishedStorefrontContext(publishedSnapshot, renderedPage);
+  const storefrontContext = resolvePublishedStorefrontContext(createPublishedSiteSnapshot(state, currentSite), renderedPage);
   let pageRenderData = withPageMediaAssets(
     currentSite,
     singleSectionPageJson,
@@ -3510,9 +3477,8 @@ export async function renderToolPage({
   const stateSite = state.sites.find((item) => item.id === site.id);
   if (!stateSite) notFound();
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
-  if (publishedSnapshot.snapshotIntegrity !== "valid" && stateSite.id === "site_dreamshoot") notFound();
   const currentSite = publishedSnapshot.site;
-  const renderData = getPublishedSiteRenderData(state, publishedSnapshot);
+  const renderData = getSiteRenderData(state, currentSite.id);
   const candidate = resolvedPage
     ? { page: resolvedPage, matched: true }
     : resolveToolPageForSite(state, currentSite, toolSlug, renderData.siteAiApps, renderData.creativePacks);

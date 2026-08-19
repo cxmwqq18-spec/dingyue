@@ -35,12 +35,10 @@ import {
 } from "@/lib/theme/packages";
 import { runThemePublishPreflight, summarizeThemeGlobalVisuals, type PublishPreflightCreativePack } from "@/lib/theme/publish-preflight";
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
-import { buildPublishedPageMediaProjection, mydreamshootsPublishedRouteManifest } from "@/lib/mydreamshoots-published-contract";
+import { mydreamshootsPublishedRouteManifest } from "@/lib/mydreamshoots-published-contract";
 import { normalizeGlobalSection } from "@/lib/theme/section-normalize";
-import { publicationSnapshotHash, publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import type {
   MediaAsset,
-  Product,
   SectionBlockInstance,
   SectionInstance,
   Site,
@@ -65,7 +63,6 @@ import {
   RelationalStoreError,
   themeSettingsDraftJsonWithMeta,
   toMediaAsset,
-  mapProduct,
   toSite,
   toSiteTheme,
   toThemeCopy,
@@ -99,12 +96,8 @@ function clearSiteThemeReadCache(siteId: string) {
 async function finalizePublishedTheme(siteId: string, publicationId: string): Promise<void> {
   clearSiteThemeReadCache(siteId);
   clearStorefrontContextCache(siteId);
-  const readback = await prisma.themePublication.findFirst({ where: { siteId, id: publicationId }, select: { id: true, siteId: true, version: true, factsRevision: true, snapshot: true } });
-  const snapshot = readback?.snapshot && typeof readback.snapshot === "object" && !Array.isArray(readback.snapshot)
-    ? readback.snapshot as unknown as ThemePublication["snapshot"]
-    : undefined;
-  const snapshotHash = snapshot?.revisions?.snapshotHash;
-  if (!readback || !snapshotHash || publicationSnapshotIntegrity(snapshot) !== "valid") throw new RelationalStoreError("theme_publish_readback_failed", 500);
+  const readback = await prisma.themePublication.findFirst({ where: { siteId, id: publicationId }, select: { id: true, siteId: true, version: true, factsRevision: true } });
+  if (!readback) throw new RelationalStoreError("theme_publish_readback_failed", 500);
 }
 
 export type SaasThemeAction =
@@ -155,8 +148,7 @@ async function getSiteWithThemeRecords(db: PrismaLike, siteId: string) {
   return site;
 }
 
-function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePacks: PublishPreflightCreativePack[] = [], products: Product[] = []): ThemePublication["snapshot"] {
-  const publishedAt = Date.now();
+function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePacks: PublishPreflightCreativePack[] = [], factsRevision?: string): ThemePublication["snapshot"] {
   const publishedRoutes = site.id === "site_dreamshoot" ? mydreamshootsPublishedRouteManifest() : [];
   const publishedPageCopy = publishedRoutes.map((route) => {
     const copy = mydreamshootsPageCopyForRoute({
@@ -174,7 +166,27 @@ function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePac
     };
   });
   const publishedPageMedia = site.id === "site_dreamshoot"
-    ? publishedRoutes.map((route) => buildPublishedPageMediaProjection(route, creativePacks.find((candidate) => candidate.id === route.expectedPackId))).filter((value): value is NonNullable<typeof value> => Boolean(value))
+    ? publishedRoutes.map((route) => {
+        const pack = creativePacks.find((candidate) => candidate.id === route.expectedPackId);
+        if (!pack) return undefined;
+        const images = Array.from(new Set([pack.imageUrl, ...(pack.galleryImages ?? [])].filter((value): value is string => Boolean(value && value.trim()))));
+        const legacyMediaRevision = crypto.createHash("sha256").update(JSON.stringify([pack.id, images])).digest("hex").slice(0, 20);
+        const suppliedAlts = pack.galleryImageAlts ?? [];
+        return {
+          mediaEntityId: `legacy-pack-media:${pack.id}:${legacyMediaRevision}`,
+          ownerPageEntityId: route.pageEntityId,
+          sourcePackId: pack.id,
+          role: "hero" as const,
+          pageEntityId: route.pageEntityId,
+          entityRevision: legacyMediaRevision,
+          packId: pack.id,
+          primaryImage: images[0] ?? "",
+          galleryImages: images.slice(1),
+          imageAlts: images.map((_, index) => suppliedAlts[index] || `${route.canonicalSlug.replace(/-/g, " ")} ${index === 0 ? "cover" : `example ${index}`}`),
+          status: route.status === "published" && images.length >= 2 ? "ready" as const : "review_required" as const,
+          ...(route.status !== "published" ? { reviewReason: route.reviewReason } : {})
+        };
+      }).filter(Boolean)
     : [];
   const publishedPackFacts = creativePacks.map((pack) => ({
     packId: pack.id,
@@ -185,86 +197,7 @@ function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePac
   const routeRevision = crypto.createHash("sha256").update(JSON.stringify(publishedRoutes)).digest("hex").slice(0, 20);
   const copyRevision = crypto.createHash("sha256").update(JSON.stringify(publishedPageCopy)).digest("hex").slice(0, 20);
   const mediaRevision = crypto.createHash("sha256").update(JSON.stringify(publishedPageMedia)).digest("hex").slice(0, 20);
-  const publishedOffers = products
-    .flatMap((product) => product.prices
-      .filter((price) => product.status === "active" && product.type === "subscription" && price.status === "active" && price.amountCents > 0)
-      .filter((price) => ["month", "quarter", "half_year"].includes(price.interval))
-      .filter((price) => Boolean(
-        price.stripePriceId && /^price_[a-zA-Z0-9_]+$/.test(price.stripePriceId) &&
-        price.currency.toLowerCase() === site.currency.toLowerCase() &&
-        price.providerVerifiedAt && price.providerFingerprint &&
-        (!price.effectiveFrom || new Date(price.effectiveFrom).getTime() <= publishedAt) &&
-        (!price.effectiveTo || new Date(price.effectiveTo).getTime() > publishedAt)
-      ))
-      .map((price) => ({
-        productId: product.id,
-        priceId: price.id,
-        siteId: product.siteId,
-        productName: product.name,
-        productType: product.type,
-        productMetadata: product.metadata,
-        priceLabel: price.label,
-        interval: price.interval,
-        amountCents: price.amountCents,
-        currency: price.currency,
-        creditsGranted: price.creditsGranted,
-        stripePriceId: price.stripePriceId,
-        priceMetadata: price.metadata,
-        checkoutEnabled: Boolean(site.connect?.chargesEnabled && site.connect?.payoutsEnabled),
-        revision: crypto.createHash("sha256").update(JSON.stringify([product, price])).digest("hex").slice(0, 20)
-      })));
-  const offerRevision = crypto.createHash("sha256").update(JSON.stringify(publishedOffers)).digest("hex").slice(0, 20);
-  const publishedFacts = {
-    identity: site.storefrontProfile?.publishedJson?.identity,
-    privacy: {
-      customerMediaTraining: site.storefrontProfile?.publishedJson?.policyFacts?.usesCustomerMediaForTraining,
-      sourceMediaRetentionDays: site.storefrontProfile?.publishedJson?.policyFacts?.sourceMediaRetentionDays
-    },
-    refund: {
-      reviewRequired: site.storefrontProfile?.publishedJson?.policyFacts?.refundReviewRequired,
-      windowDays: site.storefrontProfile?.publishedJson?.policyFacts?.refundWindowDays,
-      effectiveDate: site.storefrontProfile?.publishedJson?.policyFacts?.effectiveDate
-    },
-    claimRevision: crypto.createHash("sha256").update(JSON.stringify(site.storefrontProfile?.publishedJson ?? {})).digest("hex").slice(0, 20)
-  };
-  const publishedFactsRevision = crypto.createHash("sha256").update(JSON.stringify(publishedFacts)).digest("hex").slice(0, 20);
-  const collectionRefs = publishedRoutes.map((route) => {
-    const copy = publishedPageCopy.find((item) => item.canonicalSlug === route.canonicalSlug)?.copy as Record<string, unknown> | undefined;
-    const media = publishedPageMedia.find((item) => item?.pageEntityId === route.pageEntityId);
-    const pack = creativePacks.find((item) => item.id === route.expectedPackId);
-    return {
-      collectionSlug: route.canonicalSlug,
-      sourcePackId: route.expectedPackId,
-      pageEntityId: route.pageEntityId,
-      canonicalPath: route.canonicalPath,
-      label: String(copy?.headline ?? route.canonicalSlug),
-      summary: String(copy?.cardDescription ?? ""),
-      image: media?.primaryImage ?? "",
-      imageAlt: media?.imageAlts?.[0] ?? "",
-      mediaEntityId: media?.mediaEntityId ?? route.mediaEntityId,
-      categorySlug: pack?.categoryRecord?.slug ?? pack?.category,
-      creditCost: pack?.creditCost ?? 0,
-      outputCount: pack?.outputCount ?? 0,
-      entityRevision: crypto.createHash("sha256").update(JSON.stringify([route, media])).digest("hex").slice(0, 20),
-      status: route.status === "published" && media?.status === "ready" ? "published" as const : "review_required" as const
-    };
-  });
-  const collectionRevision = crypto.createHash("sha256").update(JSON.stringify(collectionRefs)).digest("hex").slice(0, 20);
-  const publishedCreativePacks = collectionRefs.map((ref) => ({
-    packId: ref.sourcePackId,
-    pageEntityId: ref.pageEntityId,
-    collectionSlug: ref.collectionSlug,
-    label: ref.label,
-    summary: ref.summary,
-    creditCost: ref.creditCost,
-    outputCount: ref.outputCount,
-    mediaEntityId: ref.mediaEntityId,
-    image: ref.image,
-    imageAlt: ref.imageAlt,
-    revision: ref.entityRevision,
-    status: ref.status
-  }));
-  const snapshot: ThemePublication["snapshot"] = {
+  return {
     seoProjectionVersion: 1,
     pages: site.pages.map((page) => ({
       id: page.id,
@@ -285,17 +218,12 @@ function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePac
         }
       : undefined,
     publishedRoutes,
-    publishedPageCopy: publishedPageCopy.filter((item): item is typeof item & { copy: Record<string, unknown> } => Boolean(item.copy)),
+    publishedPageCopy,
     publishedPageMedia,
     publishedPackFacts,
-    publishedOffers,
-    publishedFacts,
-    publishedCollectionRefs: collectionRefs,
-    publishedCreativePacks,
-    revisions: { factsRevision: publishedFactsRevision, routeRevision, copyRevision, mediaRevision, offerRevision, collectionRevision }
+    publishedCollectionRefs: [],
+    revisions: { factsRevision, routeRevision, copyRevision, mediaRevision }
   };
-  snapshot.revisions = { ...snapshot.revisions, snapshotHash: publicationSnapshotHash(snapshot) };
-  return snapshot;
 }
 
 function buildPublicationSnapshotStats(snapshot: ThemePublication["snapshot"]) {
@@ -1369,14 +1297,8 @@ export async function publishDraftPageRelational(
       }
     });
 
-    const publicationProducts = (await tx.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: { id: "asc" } })).map(mapProduct);
-    const publicationPacks = await tx.creativePack.findMany({
-      where: { siteId },
-      select: { id: true, status: true, creditCost: true, outputCount: true, category: true, imageUrl: true, galleryImages: true, galleryImageAlts: true, categoryRecord: { select: { slug: true } } },
-      orderBy: { id: "asc" }
-    });
-    const snapshot = buildPublicationSnapshot(site, undefined, publicationPacks.map((pack) => normalizedPublishPack(pack as PublishPreflightCreativePack)), publicationProducts);
-    const factsRevision = snapshot.revisions?.factsRevision;
+    const factsRevision = crypto.createHash("sha256").update(JSON.stringify({ pageId, version: publishedVersion })).digest("hex").slice(0, 20);
+    const snapshot = buildPublicationSnapshot(site, undefined, targetContext.catalog.activePacks, factsRevision);
     const snapshotStats = buildPublicationSnapshotStats(snapshot);
     const publicationRecord = await tx.themePublication.create({
       data: {
@@ -1499,7 +1421,7 @@ export async function publishDraftSiteRelational(
     ) {
       throw new RelationalStoreError("storefront_profile_incomplete", 409);
     }
-    const [activePrices, invalidPackCount, otherSites, publicationPacks, publicationProductRows] = await Promise.all([
+    const [activePrices, invalidPackCount, otherSites, publicationPacks] = await Promise.all([
       tx.price.findMany({
         where: { siteId, status: "active", product: { status: "active" } },
         select: { id: true, stripePriceId: true, currency: true, interval: true, amountCents: true, providerVerifiedAt: true, providerFingerprint: true, effectiveFrom: true, effectiveTo: true }
@@ -1510,8 +1432,7 @@ export async function publishDraftSiteRelational(
         where: { siteId },
         select: { id: true, status: true, creditCost: true, outputCount: true, category: true, imageUrl: true, galleryImages: true, galleryImageAlts: true, categoryRecord: { select: { slug: true } } },
         orderBy: { id: "asc" }
-      }),
-      tx.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: { id: "asc" } })
+      })
     ]);
     const normalizedPreflightPacks = preflightBundle.creativePacks.map(normalizedPublishPack).sort((left, right) => left.id.localeCompare(right.id));
     const normalizedPublicationPacks = publicationPacks.map((pack) => normalizedPublishPack(pack as PublishPreflightCreativePack)).sort((left, right) => left.id.localeCompare(right.id));
@@ -1558,8 +1479,8 @@ export async function publishDraftSiteRelational(
       profile.publishedJson = cloneJson(normalizedPublishedProfile!);
       await tx.storefrontProfile.update({ where: { siteId }, data: { publishedJson: cloneJson(profile.publishedJson) as unknown as Prisma.InputJsonValue } });
     }
-    const snapshot = buildPublicationSnapshot(site, undefined, normalizedPublicationPacks, publicationProductRows.map(mapProduct));
-    const factsRevision = snapshot.revisions?.factsRevision;
+    const factsRevision = crypto.createHash("sha256").update(JSON.stringify({ pages: manifest.pageIds, profile: normalizedPublishedProfile, version: publishedVersion })).digest("hex").slice(0, 20);
+    const snapshot = buildPublicationSnapshot(site, undefined, normalizedPublicationPacks, factsRevision);
     const snapshotStats = buildPublicationSnapshotStats(snapshot);
     const publicationRecord = await tx.themePublication.create({
       data: {

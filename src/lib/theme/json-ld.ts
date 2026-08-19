@@ -7,9 +7,10 @@ import { storefrontBaseUrl, storefrontOrigin } from "@/lib/storefront-context/se
 import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
+import { mydreamshootsPublishedRouteForSlug, resolveMydreamshootsPublishedPageMedia } from "@/lib/mydreamshoots-published-contract";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
-import type { CreativePack, Product, PublishedCollectionRef, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
+import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
 
 export type JsonLdNode = Record<string, unknown>;
 
@@ -1055,21 +1056,16 @@ export function buildCollectionDirectoryJsonLd({
   site,
   collectionSlug,
   routeMode,
-  collectionRefs,
   creativePacks = [],
   context
 }: {
   site: Site;
   collectionSlug: string;
   routeMode: "host" | "path";
-  collectionRefs?: PublishedCollectionRef[];
   creativePacks?: CreativePack[];
   context: StorefrontContext;
 }): JsonLdNode[] {
   const pageSlug = canonicalCollectionSlugForCandidate(site, collectionSlug) || slugifySchemaPart(collectionSlug);
-  if (isPrimaryMyDreamShootsSite(site) && collectionRefs && (!context.pageCopy || !collectionRefs.some((ref) => ref.status === "published" && ref.collectionSlug === pageSlug))) {
-    return [];
-  }
   const pagePath = pageSlug ? canonicalSeoDirectoryPathForSite(site, "collection", pageSlug) : canonicalSeoDirectoryPathForSite(site, "collection", "");
   const collectionLabel = cleanText(collectionSlug, pageSlug).replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()) || "Photo Packages";
   const fallbackCollectionLabel = isSpanishXbySite(site) ? "Paquetes de fotos" : collectionLabel;
@@ -1097,20 +1093,21 @@ export function buildCollectionDirectoryJsonLd({
   const siteName = siteBrandName(site);
   const title = context.seo.title;
   const description = context.seo.description;
-  const matchingRefs = collectionRefs?.filter((ref) => ref.status === "published" && ref.collectionSlug === pageSlug) ?? [];
-  const matchingPacks = collectionRefs ? [] : projectPublicCreativePacks(context, creativePacks)
-    .filter((pack) => packMatchesCollectionSlug(site, pack, item.slug));
+  const publishedRoute = isPrimaryMyDreamShootsSite(site) ? mydreamshootsPublishedRouteForSlug(item.slug) : undefined;
+  const pageMedia = publishedRoute ? resolveMydreamshootsPublishedPageMedia(publishedRoute, creativePacks) : undefined;
+  const matchingPacks = projectPublicCreativePacks(context, creativePacks)
+    .filter((pack) => packMatchesCollectionSlug(site, pack, item.slug))
+    .filter((pack) => !pageMedia || pack.id === pageMedia.packId);
   const faqPack = matchingPacks[0];
-  const faqRef = matchingRefs[0];
-  const faqLabel = cleanText(faqRef?.label ?? faqPack?.name, item.label);
-  const faqOutputCount = faqRef?.outputCount ?? faqPack?.outputCount;
-  const faqCreditCost = faqRef?.creditCost ?? faqPack?.creditCost;
+  const faqLabel = cleanText(faqPack?.name, item.label);
+  const faqOutputCount = faqPack?.outputCount;
+  const faqCreditCost = faqPack?.creditCost;
   const collectionPageCopy = pageSlug && !isSpanishXbySite(site) && isPrimaryMyDreamShootsSite(site)
     ? context.pageCopy
     : undefined;
   const collectionFaqItems = collectionPageCopy
     ? collectionPageCopy.faqItems.map((faqItem) => [faqItem.question, faqItem.answer] as [string, string])
-    : !faqPack && !faqRef ? [] : isSpanishXbySite(site)
+    : !faqPack ? [] : isSpanishXbySite(site)
     ? [
         [`Que es el paquete ${faqLabel}?`, isAidreamcapesSite(site)
           ? `${faqLabel} es un album privado que convierte fotos fuente aprobadas en una galeria de ocasion con creditos visibles y resultados listos para descargar.`
@@ -1134,18 +1131,7 @@ export function buildCollectionDirectoryJsonLd({
         [isAidreamcapesSite(site) ? "Where do finished albums go?" : "Where do finished images go?", isAidreamcapesSite(site) ? "Finished Aidreamcapes images stay inside your signed-in private gallery, where you can review faces, hands, marks, crops, and overall realism before downloading the results that fit your occasion." : "Finished results stay inside your signed-in private gallery, where you can review identity details, hands, backgrounds, crops, and overall realism before downloading the images that fit your intended channel."],
         ["What happens if generation fails?", "If a provider request is interrupted before delivery, reserved credits are released or returned according to the request status so you can retry from the workspace. Keep the job reference if you contact support about a failed generation, missing gallery, or credit question."]
       ];
-  const itemListElement = matchingRefs.length ? matchingRefs.map((ref, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    item: {
-      "@type": "Service",
-      "@id": `${absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, ref.canonicalPath))}#${ref.pageEntityId}`,
-      name: ref.label,
-      description: ref.summary,
-      url: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, ref.canonicalPath)),
-      image: absoluteUrl(site, routeMode, ref.image)
-    }
-  })) : matchingPacks.map((entry, index) => {
+  const itemListElement = matchingPacks.map((entry, index) => {
     const pack = entry as CreativePack;
     const name = cleanText(pack.name, item.label);
     const image = cleanText(pack.imageUrl);

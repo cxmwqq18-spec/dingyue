@@ -1,12 +1,13 @@
 import "server-only";
 
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
-import type { CreativePack, MediaAsset, PlatformState, Product, PublishedFactsProjection, Site, StorefrontProfileJson, ThemePage } from "@/lib/types";
+import type { MediaAsset, PlatformState, Site, ThemePage } from "@/lib/types";
 import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
+import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
+import { mydreamshootsPublishedRouteManifest, mydreamshootsPublishedRouteForPath, mydreamshootsPublishedPageMediaProjections, resolveMydreamshootsPublishedPageMedia } from "@/lib/mydreamshoots-published-contract";
 import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
-import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
-import { resolveStorefrontContext } from "./core";
+import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
 import { resolveSiteCapability } from "./capabilities";
 import { canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 import type {
@@ -45,108 +46,16 @@ function isPrivateStorefrontPath(path: string): boolean {
   return value === "/account" || value === "/app" || value.startsWith("/app/") || value === "/album" || value.startsWith("/album/") || value === "/cart" || value === "/checkout" || value === "/dashboard" || value === "/login" || value === "/logout";
 }
 
-function profileFromPublishedFacts(facts: PublishedFactsProjection | undefined): StorefrontProfileJson | undefined {
-  if (!facts) return undefined;
-  return {
-    identity: { ...(facts.identity ?? {}), sameAs: facts.identity?.sameAs ?? [] },
-    policyFacts: {
-      usesCustomerMediaForTraining: facts.privacy?.customerMediaTraining,
-      sourceMediaRetentionDays: facts.privacy?.sourceMediaRetentionDays,
-      refundReviewRequired: facts.refund?.reviewRequired,
-      refundWindowDays: facts.refund?.windowDays,
-      effectiveDate: facts.refund?.effectiveDate
-    }
-  };
-}
-
-export function publishedCreativePacksForRender(snapshot: PublishedSiteSnapshot): CreativePack[] {
-  const mediaByPage = new Map(snapshot.publishedPageMedia.map((media) => [media.pageEntityId, media]));
-  return snapshot.publishedCreativePacks
-    .filter((pack) => pack.status === "published")
-    .map((pack) => {
-      const media = mediaByPage.get(pack.pageEntityId);
-      return {
-        id: pack.packId,
-        siteId: snapshot.site.id,
-        name: pack.label,
-        headline: pack.label,
-        description: pack.summary,
-        category: pack.collectionSlug,
-        aiAppSlug: "image-generation",
-        status: "active" as const,
-        creditCost: pack.creditCost,
-        outputCount: pack.outputCount,
-        trainingRequired: false,
-        generationCount: 0,
-        conversionRate: 0,
-        createdAt: snapshot.publication?.publishedAt ?? new Date(0).toISOString(),
-        imageUrl: pack.image,
-        galleryImages: media?.galleryImages ?? [],
-        galleryImageAlts: media?.imageAlts ?? [pack.imageAlt],
-        categoryRecord: {
-          id: `published-category:${pack.collectionSlug}`,
-          siteId: snapshot.site.id,
-          slug: pack.collectionSlug,
-          label: pack.label,
-          sortOrder: 0,
-          status: "active" as const,
-          createdAt: snapshot.publication?.publishedAt ?? new Date(0).toISOString()
-        }
-      };
-    });
-}
-
-export function publishedProductsForRender(snapshot: PublishedSiteSnapshot): Product[] {
-  return Array.from(new Set(snapshot.publishedOffers.map((offer) => offer.productId))).map((productId) => {
-    const offer = snapshot.publishedOffers.find((candidate) => candidate.productId === productId)!;
-    return {
-      id: productId,
-      siteId: offer.siteId,
-      name: offer.productName,
-      type: offer.productType,
-      status: "active" as const,
-      metadata: offer.productMetadata,
-      prices: snapshot.publishedOffers.filter((candidate) => candidate.productId === productId).map((candidate) => ({
-        id: candidate.priceId,
-        siteId: candidate.siteId,
-        productId: candidate.productId,
-        label: candidate.priceLabel,
-        amountCents: candidate.amountCents,
-        currency: candidate.currency,
-        interval: candidate.interval,
-        creditsGranted: candidate.creditsGranted,
-        stripePriceId: candidate.stripePriceId,
-        metadata: candidate.priceMetadata,
-        status: "active" as const
-      }))
-    };
-  });
-}
-
 function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): StorefrontContextBundle {
-  const immutableProjection = snapshot.publication?.snapshot.seoProjectionVersion === 1;
-  const projectedProducts = publishedProductsForRender(snapshot);
   return {
-    site: {
-      ...snapshot.site,
-      connect: immutableProjection && snapshot.site.connect
-        ? {
-            ...snapshot.site.connect,
-            chargesEnabled: snapshot.publishedOffers.some((offer) => offer.checkoutEnabled),
-            payoutsEnabled: snapshot.publishedOffers.some((offer) => offer.checkoutEnabled)
-          }
-        : snapshot.site.connect
-    },
+    site: snapshot.site,
     page,
-    products: immutableProjection ? projectedProducts : snapshot.products,
-    creativePacks: immutableProjection ? publishedCreativePacksForRender(snapshot) : snapshot.creativePacks,
+    products: snapshot.products,
+    creativePacks: snapshot.creativePacks,
     publication: snapshot.publication,
     factsRevision: snapshot.factsRevision,
     buildId: snapshot.buildId,
-    publishedPageCopies: Object.fromEntries(snapshot.publishedPageCopy.map((projection) => [projection.canonicalSlug, projection.copy])),
-    publishedFacts: snapshot.publishedFacts,
-    publishedCreativePacks: snapshot.publishedCreativePacks,
-    snapshotIntegrity: snapshot.snapshotIntegrity
+    publishedPageCopies: Object.fromEntries(snapshot.publishedPageCopy.map((projection) => [projection.canonicalSlug, projection.copy]))
   };
 }
 
@@ -158,10 +67,7 @@ export function createPublishedSiteSnapshot(
   const publication = site.latestPublication ?? (state.themePublications ?? [])
     .filter((candidate) => candidate.siteId === site.id)
     .sort((left, right) => right.version - left.version)[0];
-  const snapshotIntegrity = publication?.snapshotIntegrity ?? publicationSnapshotIntegrity(publication?.snapshot);
-  const hasImmutableSeoProjection = publication?.snapshot?.seoProjectionVersion === 1 && snapshotIntegrity === "valid";
-  const publicationSnapshot = snapshotIntegrity === "invalid" ? undefined : publication?.snapshot;
-  const publishedPageSnapshots = new Map((publicationSnapshot?.pages ?? []).map((page) => [page.id, page]));
+  const publishedPageSnapshots = new Map((publication?.snapshot.pages ?? []).map((page) => [page.id, page]));
   const pages = publishedPages(site)
     .map((page) => {
       const publishedPage = publishedPageSnapshots.get(page.id);
@@ -170,14 +76,11 @@ export function createPublishedSiteSnapshot(
         : page;
     })
     .filter((page) => Boolean(publication && publishedPageSnapshots.has(page.id)));
-  const publicationThemeSettings = publicationSnapshot?.themeSettings;
+  const publicationThemeSettings = publication?.snapshot?.themeSettings;
   const publishedSettings = publicationThemeSettings
     ? { ...site.themeSettings, publishedJson: publicationThemeSettings }
     : site.themeSettings;
-  const factsProjection = hasImmutableSeoProjection ? publicationSnapshot?.publishedFacts : undefined;
-  const publishedProfile = hasImmutableSeoProjection
-    ? profileFromPublishedFacts(factsProjection)
-    : publicationSnapshot?.storefrontProfile ?? site.storefrontProfile?.publishedJson;
+  const publishedProfile = publication?.snapshot.storefrontProfile ?? site.storefrontProfile?.publishedJson;
   const publishedSite = {
     ...site,
     pages,
@@ -186,21 +89,22 @@ export function createPublishedSiteSnapshot(
       ? { ...site.storefrontProfile, publishedJson: publishedProfile }
       : site.storefrontProfile
   };
-  const snapshotRoutes = publicationSnapshot?.publishedRoutes;
-  const publishedRoutes = site.id === "site_dreamshoot"
-    ? hasImmutableSeoProjection
-      ? (Array.isArray(snapshotRoutes) ? snapshotRoutes as PublishedSiteSnapshot["publishedRoutes"] : [])
-      : []
-    : [];
+  const hasImmutableSeoProjection = publication?.snapshot?.seoProjectionVersion === 1;
+  const snapshotRoutes = publication?.snapshot?.publishedRoutes;
+  const publishedRoutes = site.id === "site_dreamshoot" && hasImmutableSeoProjection
+    ? (Array.isArray(snapshotRoutes) ? snapshotRoutes as PublishedSiteSnapshot["publishedRoutes"] : [])
+    : site.id === "site_dreamshoot" && Array.isArray(snapshotRoutes) && snapshotRoutes.length
+    ? snapshotRoutes as PublishedSiteSnapshot["publishedRoutes"]
+    : site.id === "site_dreamshoot" ? mydreamshootsPublishedRouteManifest() : [];
   const publishedPaths = Array.from(new Set([
     ...pages.flatMap((page) => [normalizePath(page.slug), canonicalPathForPage(page)]),
     ...publishedRoutes.filter((route) => route.status === "published").map((route) => route.canonicalPath)
   ]));
-  const products = hasImmutableSeoProjection ? [] : state.products.filter((product) => product.siteId === site.id);
-  const creativePacks = hasImmutableSeoProjection ? [] : state.creativePacks.filter((pack) => pack.siteId === site.id);
-  const creativePackCategories = hasImmutableSeoProjection ? [] : (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
-  const videoThemes = hasImmutableSeoProjection ? [] : (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id);
-  const mediaAssets = hasImmutableSeoProjection ? [] : state.mediaAssets.filter((asset) => asset.siteId === site.id);
+  const products = state.products.filter((product) => product.siteId === site.id);
+  const creativePacks = state.creativePacks.filter((pack) => pack.siteId === site.id);
+  const creativePackCategories = (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
+  const videoThemes = (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id);
+  const mediaAssets = state.mediaAssets.filter((asset) => asset.siteId === site.id);
   const baseEntityReferences: EntityReference[] = [
     ...pages.map((page) => ({ entityType: "page" as const, entityId: page.id, ownerId: site.id, revision: page.draftMeta?.etag ?? revision([page.id, page.publishedJson.version, page.updatedAt]), updatedAt: page.updatedAt })),
     ...publishedRoutes.map((route) => ({
@@ -219,25 +123,27 @@ export function createPublishedSiteSnapshot(
     ...videoThemes.map((theme) => ({ entityType: "video_theme" as const, entityId: theme.id, ownerId: site.id, revision: revision([theme.id, theme.createdAt, theme.status, theme.slug, theme.imageUrl, theme.galleryImages]), updatedAt: theme.createdAt })),
     ...mediaAssets.map((asset) => ({ entityType: "media" as const, entityId: asset.id, ownerId: site.id, revision: revision([asset.id, asset.createdAt, asset.storageKey, asset.previewUrl, asset.originUrl]) }))
   ];
-  const snapshotRevisions = publicationSnapshot?.revisions ?? {};
-  const publishedPageCopy = hasImmutableSeoProjection && Array.isArray(publicationSnapshot?.publishedPageCopy)
-    ? publicationSnapshot.publishedPageCopy as PublishedSiteSnapshot["publishedPageCopy"]
-    : [];
-  const publishedPageMedia = hasImmutableSeoProjection && Array.isArray(publicationSnapshot?.publishedPageMedia)
-    ? publicationSnapshot.publishedPageMedia as PublishedSiteSnapshot["publishedPageMedia"]
-    : [];
-  const publishedPackFacts = hasImmutableSeoProjection && Array.isArray(publicationSnapshot?.publishedPackFacts)
-    ? publicationSnapshot.publishedPackFacts as PublishedSiteSnapshot["publishedPackFacts"]
-    : [];
-  const publishedOffers = hasImmutableSeoProjection
-    ? (Array.isArray(publicationSnapshot?.publishedOffers) ? publicationSnapshot.publishedOffers : [])
-    : [];
-  const publishedFacts = hasImmutableSeoProjection ? publicationSnapshot?.publishedFacts : undefined;
-  const publishedCollectionRefs = hasImmutableSeoProjection && Array.isArray(publicationSnapshot?.publishedCollectionRefs)
-    ? publicationSnapshot.publishedCollectionRefs as PublishedSiteSnapshot["publishedCollectionRefs"]
-    : [];
-  const publishedCreativePacks = hasImmutableSeoProjection && Array.isArray(publicationSnapshot?.publishedCreativePacks)
-    ? publicationSnapshot.publishedCreativePacks
+  const snapshotRevisions = publication?.snapshot?.revisions ?? {};
+  const publishedPageCopy = hasImmutableSeoProjection
+    ? (Array.isArray(publication?.snapshot?.publishedPageCopy) ? publication!.snapshot.publishedPageCopy as PublishedSiteSnapshot["publishedPageCopy"] : [])
+    : Array.isArray(publication?.snapshot?.publishedPageCopy)
+    ? publication!.snapshot.publishedPageCopy as PublishedSiteSnapshot["publishedPageCopy"]
+    : publishedRoutes.flatMap((route) => {
+        const copy = mydreamshootsPageCopyForRoute({ siteId: site.id, routeKind: route.routeKind, canonicalSlug: route.canonicalSlug, canonicalPath: route.canonicalPath });
+        return copy ? [{ pageEntityId: route.pageEntityId, copyRevision: route.copyRevision, canonicalSlug: route.canonicalSlug, copy }] : [];
+      });
+  const publishedPageMedia = hasImmutableSeoProjection
+    ? (Array.isArray(publication?.snapshot?.publishedPageMedia) ? publication!.snapshot.publishedPageMedia as PublishedSiteSnapshot["publishedPageMedia"] : [])
+    : Array.isArray(publication?.snapshot?.publishedPageMedia) && publication!.snapshot.publishedPageMedia.length
+    ? publication!.snapshot.publishedPageMedia as PublishedSiteSnapshot["publishedPageMedia"]
+    : (site.id === "site_dreamshoot" ? mydreamshootsPublishedPageMediaProjections(creativePacks) : []);
+  const publishedPackFacts = hasImmutableSeoProjection
+    ? (Array.isArray(publication?.snapshot?.publishedPackFacts) ? publication!.snapshot.publishedPackFacts as PublishedSiteSnapshot["publishedPackFacts"] : [])
+    : Array.isArray(publication?.snapshot?.publishedPackFacts)
+    ? publication!.snapshot.publishedPackFacts as PublishedSiteSnapshot["publishedPackFacts"]
+    : creativePacks.map((pack) => ({ packId: pack.id, creditCost: pack.creditCost, outputCount: pack.outputCount, revision: revision([pack.id, pack.creditCost, pack.outputCount]) }));
+  const publishedCollectionRefs = Array.isArray(publication?.snapshot?.publishedCollectionRefs)
+    ? publication!.snapshot.publishedCollectionRefs as PublishedSiteSnapshot["publishedCollectionRefs"]
     : [];
   const entityReferences: EntityReference[] = [
     ...baseEntityReferences,
@@ -270,13 +176,8 @@ export function createPublishedSiteSnapshot(
     publishedPageCopy,
     publishedPageMedia,
     publishedPackFacts,
-    publishedOffers,
-    publishedFacts,
     publishedCollectionRefs,
-    publishedCreativePacks,
     snapshotRevisions,
-    legacyProjectionRequired: Boolean(publication && !hasImmutableSeoProjection),
-    snapshotIntegrity,
     products,
     creativePacks,
     creativePackCategories,
@@ -319,12 +220,10 @@ export function resolvePublishedStorefrontContext(snapshot: PublishedSiteSnapsho
 }
 
 export function resolveEffectiveIndexability(snapshot: PublishedSiteSnapshot, page: ThemePage, context = resolveStorefrontContext(bundleFor(snapshot, page), "published")): EffectiveIndexability {
-  if (snapshot.snapshotIntegrity === "invalid") return { index: false, follow: false, sitemapEligible: false };
   const blocked = page.pageType === "not_found" || page.slug === "/404" || isPrivateStorefrontPath(page.slug) || isPrivateStorefrontPath(context.seo.canonicalPath);
   const publishedRoute = snapshot.publishedRoutes.find((route) => route.canonicalPath === normalizePath(context.seo.canonicalPath));
   const publishedMedia = publishedRoute ? snapshot.publishedPageMedia.find((media) => media.pageEntityId === publishedRoute.pageEntityId) : undefined;
-  const legacyLeafBlocked = Boolean(snapshot.legacyProjectionRequired && /^\/ai-image-generation\/[^/]+$/.test(normalizePath(context.seo.canonicalPath)));
-  const index = !blocked && !legacyLeafBlocked && context.seo.index && (publishedRoute ? publishedRoute.indexable && publishedMedia?.status === "ready" : true);
+  const index = !blocked && context.seo.index && (publishedRoute ? publishedRoute.indexable && publishedMedia?.status === "ready" : true);
   return {
     index,
     follow: blocked ? false : context.seo.follow,
@@ -377,7 +276,6 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
 
 export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot, path: string): RouteDisposition {
   const requestedPath = normalizePath(path);
-  if (snapshot.snapshotIntegrity === "invalid") return { kind: "not_found", status: 404, path: requestedPath };
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
   const legacyTarget = legacyPublicPathTarget(requestedPath, publicCollectionRootPathForSite(snapshot.site));
   if (legacyTarget) return resolvePublishedRedirectDisposition(snapshot, requestedPath, legacyTarget);
@@ -413,59 +311,39 @@ export function resolvePublishedRedirectDisposition(
 }
 
 export function resolvePublicCollectionItems(snapshot: PublishedSiteSnapshot): PublicCollectionItem[] {
-  return snapshot.publishedCollectionRefs
-    .filter((ref) => ref.status === "published" && ref.image && ref.imageAlt && ref.creditCost > 0 && ref.outputCount > 0)
-    .map((ref) => ({
-      id: ref.sourcePackId,
-      ownerId: ref.pageEntityId,
-      revision: ref.entityRevision,
-      name: ref.label,
-      description: ref.summary,
-      categorySlug: ref.categorySlug,
-      imageUrl: ref.image,
-      imageAlt: ref.imageAlt,
-      creditCost: ref.creditCost,
-      outputCount: ref.outputCount
-    }));
+  return snapshot.creativePacks
+    .filter((pack) => pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0)
+    .map((pack) => {
+      const imageUrl = pack.imageUrl?.trim() || pack.galleryImages?.find((image) => image.trim())?.trim() || "";
+      return {
+        id: pack.id,
+        ownerId: pack.siteId,
+        revision: snapshot.entityReferences.find((reference) => reference.entityType === "creative_pack" && reference.entityId === pack.id)?.revision ?? revision(pack),
+        name: pack.name,
+        description: pack.description || pack.headline,
+        categorySlug: pack.categoryRecord?.slug || pack.category || undefined,
+        imageUrl,
+        imageAlt: pack.name,
+        creditCost: pack.creditCost,
+        outputCount: pack.outputCount,
+        source: pack
+      };
+    })
+    .filter((item) => item.imageUrl);
 }
 
 export function resolvePublicPricingOffers(snapshot: PublishedSiteSnapshot, page?: ThemePage): PublicPricingOffer[] {
   const targetPage = page ?? snapshot.pages.find((candidate) => candidate.slug === "/pricing") ?? snapshot.pages[0];
   if (!targetPage) return [];
+  const context = resolveStorefrontContext(bundleFor(snapshot, targetPage), "published");
   const explicitProductIds = new Set<string>();
   for (const sectionId of targetPage.publishedJson.sectionsOrder) {
     const settings = targetPage.publishedJson.sections[sectionId]?.settings ?? {};
     const value = settings.featuredProductId;
     if (typeof value === "string" && value.trim()) explicitProductIds.add(value.trim());
   }
-  return snapshot.publishedOffers
-    .filter((projection) => !explicitProductIds.size || explicitProductIds.has(projection.productId))
-    .map((projection) => ({
-      product: {
-        id: projection.productId,
-        siteId: projection.siteId,
-        name: projection.productName,
-        type: projection.productType,
-        status: "active" as const,
-        metadata: projection.productMetadata,
-        prices: []
-      },
-      price: {
-        id: projection.priceId,
-        siteId: projection.siteId,
-        productId: projection.productId,
-        label: projection.priceLabel,
-        amountCents: projection.amountCents,
-        currency: projection.currency,
-        interval: projection.interval,
-        creditsGranted: projection.creditsGranted,
-        stripePriceId: projection.stripePriceId,
-        metadata: projection.priceMetadata,
-        status: "active" as const
-      },
-      formattedPrice: new Intl.NumberFormat("en-US", { style: "currency", currency: projection.currency.toUpperCase() }).format(projection.amountCents / 100),
-      checkoutEnabled: projection.checkoutEnabled
-    }));
+  return projectPublicPricingOffers(context)
+    .filter((offer) => !explicitProductIds.size || explicitProductIds.has(offer.product.id));
 }
 
 export function resolvePublicPageMedia(snapshot: PublishedSiteSnapshot, page: ThemePage): PublicPageMediaProjection[] {

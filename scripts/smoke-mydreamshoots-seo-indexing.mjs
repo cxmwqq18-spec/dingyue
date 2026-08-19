@@ -42,7 +42,6 @@ function walk(value, visit, pathSegments = []) {
 
 const seoIndexing = readText("src/lib/seo-indexing.ts");
 const publishedContract = readText("src/lib/mydreamshoots-published-contract.ts");
-const publishedContractTypes = `${publishedContract}\n${readText("src/lib/types.ts")}`;
 const jsonLd = readText("src/lib/theme/json-ld.ts");
 const dreamshootSeoContent = readText("src/lib/dreamshoot-seo-content.ts");
 const robots = readText("src/app/robots.ts");
@@ -559,10 +558,10 @@ assert(
 );
 assert(
   publishedContract.includes("mydreamshootsPublishedRouteManifest") &&
-    publishedContractTypes.includes('copySource: "page-copy" | "missing"') &&
-    publishedContractTypes.includes("fallbackUsed: false") &&
-    publishedContractTypes.includes("mediaEntityId") &&
-    publishedContractTypes.includes("review_required"),
+    publishedContract.includes('copySource: "page-copy" | "missing"') &&
+    publishedContract.includes("fallbackUsed: false") &&
+    publishedContract.includes("mediaEntityId") &&
+    publishedContract.includes("review_required"),
   "MyDreamShoots published route and media contracts must fail closed without generic fallback"
 );
 assert(

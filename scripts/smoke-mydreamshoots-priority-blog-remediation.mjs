@@ -195,13 +195,13 @@ for (const item of expected) {
   assert(JSON.stringify(relatedLinkPairs(settings.relatedLinks)) === JSON.stringify(item.relatedLinks), `${item.slug} related links match`);
   assert(settings.author === "myDreamshoots editorial team" && settings.authorType === "Organization", `${item.slug} uses Organization author`);
   assert(settings.authorUrl === "/about-us" && settings.reviewOwner === "myDreamshoots editorial team", `${item.slug} declares author and review owner`);
-  assert(settings.evidenceType === "editorial-guidance" && settings.evidenceDate === "2026-08-19", `${item.slug} declares evidence boundary`);
+  assert(settings.evidenceType === "editorial-guidance" && settings.evidenceDate === "2026-08-18", `${item.slug} declares evidence boundary`);
   assert(typeof settings.entityName === "string" && settings.entityName.length > 0, `${item.slug} declares entityName`);
   for (const field of ["productSlug", "userIntent", "suitableUses", "unsuitableUses", "inputRequirements", "verifiedLimitations", "comparisonTargets", "reviewChecklist", "rightsWarnings", "relatedGuides"]) {
     const value = settings[field];
     assert((Array.isArray(value) ? value.length > 0 : typeof value === "string" && value.length > 0), `${item.slug} declares ${field}`);
   }
-  assert(settings.publishedAt === "2026-07-28" && settings.updatedAt === "2026-08-19", `${item.slug} dates match remediation policy`);
+  assert(settings.publishedAt === "2026-07-28" && settings.updatedAt === "2026-08-18", `${item.slug} dates match remediation policy`);
   assert(typeof settings.imageAlt === "string" && settings.imageAlt.length >= 45, `${item.slug} has descriptive image alt`);
   assert(fs.existsSync(imageFile(settings.imageUrl)), `${item.slug} cover asset exists`, settings.imageUrl);
   assert(seo.canonicalPath === item.slug, `${item.slug} self-canonical path matches`);

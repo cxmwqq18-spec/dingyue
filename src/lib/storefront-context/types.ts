@@ -1,4 +1,4 @@
-import type { CreativePack, CreativePackCategory, MediaAsset, Price, Product, PublishedCollectionRef, PublishedPageMediaProjection, PublishedOfferProjection, PublishedFactsProjection, PublishedRouteProjection, PublishedCreativePackProjection, Site, StorefrontProfileJson, ThemePage, ThemePageJson, ThemePublication, ThemeSettings, VideoTheme } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, MediaAsset, Price, Product, Site, StorefrontProfileJson, ThemePage, ThemePageJson, ThemePublication, ThemeSettings, VideoTheme } from "@/lib/types";
 import type { MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 
 export type StorefrontContextMode = "draft" | "published";
@@ -65,6 +65,7 @@ export type PublicCollectionItem = {
   imageAlt: string;
   creditCost: number;
   outputCount: number;
+  source: CreativePack;
 };
 
 export type PublicPricingOffer = ResolvedOffer & {
@@ -115,18 +116,11 @@ export type StorefrontContext = {
     copyRevision?: string;
     pageMediaRevision?: string;
     canonicalSlug?: string;
-    snapshotRevision?: string;
-    routeRevision?: string;
-    offerRevision?: string;
-    collectionRevision?: string;
   };
   capability: SiteCapability;
   indexability: EffectiveIndexability;
   missingFacts: string[];
-  publishedFacts?: PublishedFactsProjection;
-  snapshotIntegrity: "valid" | "invalid" | "legacy";
   pageCopy?: MyDreamshootsPageCopy;
-  pageCopyMap?: Record<string, MyDreamshootsPageCopy>;
   publishedPaths?: string[];
 };
 
@@ -139,9 +133,6 @@ export type StorefrontContextBundle = {
   factsRevision?: string;
   buildId?: string;
   publishedPageCopies?: Record<string, MyDreamshootsPageCopy>;
-  publishedFacts?: PublishedFactsProjection;
-  publishedCreativePacks?: PublishedCreativePackProjection[];
-  snapshotIntegrity?: "valid" | "invalid" | "legacy";
 };
 
 export interface PublishedStorefrontContextAdapter {
@@ -165,17 +156,27 @@ export type PublishedSiteSnapshot = {
   buildId: string;
   pages: ThemePage[];
   publishedPaths: string[];
-  publishedRoutes: PublishedRouteProjection[];
+  publishedRoutes: Array<{
+    siteId: "site_dreamshoot";
+    routeKind: "ai-image-theme-leaf";
+    canonicalSlug: string;
+    canonicalPath: string;
+    pageEntityId: string;
+    copyRevision: string;
+    copySource: "page-copy" | "missing";
+    fallbackUsed: false;
+    status: "published" | "review_required";
+    indexable: boolean;
+    sitemapEligible: boolean;
+    expectedPackId: string;
+    mediaEntityId: string;
+    reviewReason?: string;
+  }>;
   publishedPageCopy: Array<{ pageEntityId: string; copyRevision: string; canonicalSlug: string; copy: MyDreamshootsPageCopy }>;
-  publishedPageMedia: PublishedPageMediaProjection[];
+  publishedPageMedia: Array<{ mediaEntityId: string; ownerPageEntityId: string; sourcePackId: string; role: "hero"; pageEntityId: string; entityRevision: string; packId: string; primaryImage: string; galleryImages: string[]; imageAlts: string[]; status: "ready" | "review_required"; reviewReason?: string }>;
   publishedPackFacts: Array<{ packId: string; creditCost: number; outputCount: number; revision: string }>;
-  publishedOffers: PublishedOfferProjection[];
-  publishedFacts?: PublishedFactsProjection;
-  publishedCollectionRefs: PublishedCollectionRef[];
-  publishedCreativePacks: PublishedCreativePackProjection[];
-  snapshotRevisions: { factsRevision?: string; routeRevision?: string; copyRevision?: string; mediaRevision?: string; packRevision?: string; offerRevision?: string; collectionRevision?: string; snapshotHash?: string };
-  legacyProjectionRequired?: boolean;
-  snapshotIntegrity: "valid" | "invalid" | "legacy";
+  publishedCollectionRefs: Array<Record<string, unknown>>;
+  snapshotRevisions: { factsRevision?: string; routeRevision?: string; copyRevision?: string; mediaRevision?: string };
   products: Product[];
   creativePacks: CreativePack[];
   creativePackCategories: CreativePackCategory[];

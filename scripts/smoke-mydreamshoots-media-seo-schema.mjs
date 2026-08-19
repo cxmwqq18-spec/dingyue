@@ -221,14 +221,10 @@ assert.equal(homeGraph.some((node) => node?.["@type"] === "Review" || node?.["@t
 const sitemapEntries = await getStorefrontSitemapEntriesForHost(["www.mydreamshoots.com"]);
 const sitemapEntryByPath = new Map(sitemapEntries.map((entry) => [new URL(entry.loc).pathname, entry]));
 const reviewSlugs = new Set((localTaxonomy.items ?? []).filter((item) => item.mediaReviewStatus === "review_required").map((item) => item.slug));
-const latestPublication = [...(state.themePublications ?? [])]
-  .filter((publication) => publication.siteId === "site_dreamshoot")
-  .sort((left, right) => right.version - left.version)[0];
-const legacyProjectionRequired = latestPublication?.snapshot?.seoProjectionVersion !== 1;
 for (const item of localTaxonomy.items ?? []) {
   const pathname = `/ai-image-generation/${item.slug}`;
   const entry = sitemapEntryByPath.get(pathname);
-  if (legacyProjectionRequired || reviewSlugs.has(item.slug)) {
+  if (reviewSlugs.has(item.slug)) {
     assert.equal(entry, undefined, `${pathname} must stay out of the sitemap while its page media owner is under review`);
   } else {
     assert.ok(entry, `${pathname} should have a published route manifest sitemap entry`);
@@ -243,9 +239,7 @@ function assertRichSitemapImageTitle(image, pathName) {
   assert.doesNotMatch(title, /Aidreamcapes/i, `${pathName} image sitemap title should not mention another brand`);
   assert.doesNotMatch(title, /^(?:image|photo|preview|thumbnail|hero|.+\s+preview)$/i, `${pathName} image sitemap title should not be a placeholder: ${title}`);
 }
-if (!legacyProjectionRequired) {
-  assert.ok((sitemapEntryByPath.get("/ai-image-generation")?.images ?? []).length > 0, "ai-image-generation sitemap entry should include image references");
-}
+assert.ok((sitemapEntryByPath.get("/ai-image-generation")?.images ?? []).length > 0, "ai-image-generation sitemap entry should include image references");
 for (const pathName of ["/", "/pricing", "/workflow", "/faq", "/blog"]) {
   const entry = sitemapEntryByPath.get(pathName);
   assert.ok(entry, `${pathName} sitemap entry should exist`);

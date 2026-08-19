@@ -29,7 +29,6 @@ import type {
 import { StoreError } from "@/lib/server-store";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType } from "@/lib/ai-provider-type";
 import { storefrontGalleryMediaPairs } from "@/lib/storefront-media-alt";
-import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import { normalizeVideoFrameLimit, normalizeVideoModelPricing } from "@/lib/video-frame-config";
 
 type ProductWithPrices = Prisma.ProductGetPayload<{ include: { prices: true } }>;
@@ -1112,14 +1111,6 @@ export function toSiteAiApp(record: {
   };
 }
 
-function decodeThemePublicationSnapshot(value: unknown): import("@/lib/types").ThemePublication["snapshot"] {
-  const cloned = cloneJson(value);
-  if (!cloned || typeof cloned !== "object" || Array.isArray(cloned)) {
-    return { pages: [], themeSettings: {} as import("@/lib/types").ThemeSettings };
-  }
-  return cloned as import("@/lib/types").ThemePublication["snapshot"];
-}
-
 export function toThemePublication(record: {
   id: string;
   siteId: string;
@@ -1134,7 +1125,7 @@ export function toThemePublication(record: {
   publishedBy: string;
   publishedAt: Date | string;
 }): import("@/lib/types").ThemePublication {
-  const snapshot = decodeThemePublicationSnapshot(record.snapshot);
+  const snapshot = cloneJson(record.snapshot) as import("@/lib/types").ThemePublication["snapshot"];
   const pageCount = record.pageCount ?? snapshot.pages.length;
   const sectionCount =
     record.sectionCount ??
@@ -1152,8 +1143,6 @@ export function toThemePublication(record: {
       ? cloneJson(record.scope) as import("@/lib/types").ThemePublication["scope"]
       : undefined,
     manifestHash: record.manifestHash ?? undefined,
-    snapshotHash: snapshot.revisions?.snapshotHash,
-    snapshotIntegrity: publicationSnapshotIntegrity(snapshot),
     factsRevision: record.factsRevision ?? undefined,
     publishedBy: record.publishedBy,
     publishedAt: toIsoString(record.publishedAt) ?? new Date().toISOString()

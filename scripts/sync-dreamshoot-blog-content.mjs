@@ -698,10 +698,6 @@ const mydreamshootsBlogSafeImageOverrides = new Map([
 const mydreamshootsArticleFacts = {
   "/blog/cyberpunk-photo-package-guide": {
     entityName: "Cyberpunk AI photos",
-    primaryKeyword: "cyberpunk AI photos",
-    searchIntent: "Plan a fictional cyberpunk portrait with neon styling and review it before publishing.",
-    seoTitle: "Cyberpunk private AI photo guide | myDreamshoots",
-    seoDescription: "Plan neon cyberpunk portraits with focused source photos, futuristic wardrobe cues, nearby style comparisons, and a practical artifact review checklist.",
     productSlug: "cyberpunk",
     userIntent: "Plan a neon, fictional cyberpunk portrait and review it before download.",
     suitableUses: ["fictional portraits", "creative moodboards", "private social drafts"],
@@ -715,10 +711,6 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/mafia-photo-package-guide": {
     entityName: "Mafia-style AI photos",
-    primaryKeyword: "Mafia-style AI photos",
-    searchIntent: "Plan a fictional noir character portrait with controlled lighting and permission-safe source photos.",
-    seoTitle: "Mafia AI photo planning guide | myDreamshoots",
-    seoDescription: "Plan a fictional Mafia-style noir portrait with tailored wardrobe, controlled interior light, permission-safe source photos, and a detailed review checklist.",
     productSlug: "mafia",
     userIntent: "Plan a fictional noir character portrait without suggesting real criminal activity.",
     suitableUses: ["fictional character concepts", "cinematic moodboards", "private creative portraits"],
@@ -732,10 +724,6 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/magic-upscaler-photo-package-guide": {
     entityName: "Magic Upscaler workflow",
-    primaryKeyword: "Magic Upscaler",
-    searchIntent: "Improve perceived photo clarity while preserving the original as the reference file.",
-    seoTitle: "Magic Upscaler and Photo Enhancer | myDreamshoots",
-    seoDescription: "Use Magic Upscaler through Photo Enhancer, choose the cleanest original, understand enhancement limits, and check halos, false texture, and identity changes.",
     productSlug: "photo-enhancer",
     userIntent: "Improve perceived clarity while preserving the original as the reference file.",
     suitableUses: ["cleaner personal downloads", "larger display copies", "reviewable edited derivatives"],
@@ -749,10 +737,6 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/nature-photo-package-guide": {
     entityName: "Nature AI portrait direction",
-    primaryKeyword: "nature AI portraits",
-    searchIntent: "Plan a forest, mountain, lake, or meadow portrait through the Travel package.",
-    seoTitle: "Nature AI portrait planning guide | myDreamshoots",
-    seoDescription: "Plan forest, mountain, lakeside, or meadow portraits through Travel, coordinate source photos with outdoor light, and review generated landscape artifacts.",
     productSlug: "travel",
     userIntent: "Plan a forest, mountain, lake, or meadow portrait through the Travel package.",
     suitableUses: ["creative outdoor portraits", "travel moodboards", "private lifestyle drafts"],
@@ -766,10 +750,6 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/outdoor-creator-scenes-photo-package-guide": {
     entityName: "Outdoor Creator scene comparison",
-    primaryKeyword: "outdoor creator photos",
-    searchIntent: "Choose Urban streets or Travel scenery for a creator image with a usable crop and safe publishing context.",
-    seoTitle: "Outdoor creator photos: Urban vs Travel | myDreamshoots",
-    seoDescription: "Compare Urban streets with scenic Travel locations for creator photos, then plan channel, crop, negative space, brand safety, and publication review.",
     productSlug: "urban|travel",
     userIntent: "Choose Urban streets or Travel scenery for a creator image with a usable crop.",
     suitableUses: ["profile and story drafts", "creator moodboards", "campaign concept images"],
@@ -783,10 +763,6 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/valentine-photos-photo-package-guide": {
     entityName: "Valentine's Day AI photos",
-    primaryKeyword: "Valentine's Day AI photos",
-    searchIntent: "Plan a consent-aware couple or single-person Valentine card and keepsake image.",
-    seoTitle: "Valentine's Day AI photo guide | myDreamshoots",
-    seoDescription: "Plan Valentine's Day couple portraits, cards, gifts, or social posts with approved source photos, clear consent, text-safe crops, and a focused review.",
     productSlug: "valentines-photo",
     userIntent: "Plan a consent-aware couple or single-person Valentine card and keepsake image.",
     suitableUses: ["personal cards", "private couple portraits", "gift and keepsake drafts"],
@@ -800,10 +776,6 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/virtual-try-on-photo-package-guide": {
     entityName: "AI Virtual Try-On preview",
-    primaryKeyword: "AI Virtual Try-On",
-    searchIntent: "Compare outfit direction visually without treating the preview as an exact fit or product guarantee.",
-    seoTitle: "AI Virtual Try-On planning guide | myDreamshoots",
-    seoDescription: "Plan outfits with AI Virtual Try-On using approved person and garment references, clear fit limits, and checks for body, fabric, logo, and identity artifacts.",
     productSlug: "virtual-try-on",
     userIntent: "Compare outfit direction visually without treating the preview as an exact fit or product guarantee.",
     suitableUses: ["outfit moodboards", "private style comparisons", "creative wardrobe planning"],
@@ -817,10 +789,6 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/wedding-portraits-photo-package-guide": {
     entityName: "AI Wedding Portraits",
-    primaryKeyword: "AI wedding portraits",
-    searchIntent: "Plan save-the-date, moodboard, and keepsake concepts without presenting them as a real wedding record.",
-    seoTitle: "AI Wedding portrait planning guide | myDreamshoots",
-    seoDescription: "Plan AI wedding portraits for save-the-dates, moodboards, invitations, websites, or keepsakes with couple consent, verified text, and careful detail review.",
     productSlug: "wedding-photo",
     userIntent: "Plan save-the-date, moodboard, and keepsake concepts without presenting them as a real wedding record.",
     suitableUses: ["save-the-date concepts", "moodboards", "private keepsake drafts"],
@@ -834,10 +802,6 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/world-cup-fan-photos-photo-package-guide": {
     entityName: "AI soccer fan photos",
-    primaryKeyword: "AI soccer fan photos",
-    searchIntent: "Plan a generic soccer match-day poster without official marks or player likenesses.",
-    seoTitle: "AI Soccer fan photo and poster guide | myDreamshoots",
-    seoDescription: "Plan soccer supporter portraits, avatars, banners, and match-day posters with generic colors, approved photos, no official marks, and brand-safety checks.",
     productSlug: "soccer",
     userIntent: "Plan a generic soccer match-day poster without official marks or player likenesses.",
     suitableUses: ["personal supporter portraits", "generic match-day posters", "private fan concepts"],
@@ -869,8 +833,8 @@ function articleFactsFor(slug) {
   return {
     authorUrl: "/about-us",
     reviewOwner: "myDreamshoots editorial team",
-    reviewedAt: "2026-08-19",
-    evidenceDate: "2026-08-19",
+    reviewedAt: "2026-08-18",
+    evidenceDate: "2026-08-18",
     evidenceType: "editorial-guidance",
     ...clone(facts)
   };
@@ -884,7 +848,7 @@ function makePriorityBlogArticle(input) {
     author: "myDreamshoots editorial team",
     authorType: "Organization",
     publishedAt: "2026-07-28",
-    updatedAt: "2026-08-19",
+    updatedAt: "2026-08-18",
     readMinutes: input.readMinutes ?? "7",
     primaryCta: "Browse AI photo packages",
     primaryHref: "/ai-image-generation",
@@ -1555,10 +1519,7 @@ function assertMyDreamShootsArticleFacts(config) {
     if (!article) continue;
     const required = [
       "entityName",
-      "primaryKeyword",
-      "searchIntent",
-      "seoTitle",
-      "seoDescription",
+      ...(seoProfileSlugs.has(slug) ? ["primaryKeyword", "searchIntent"] : []),
       "productSlug",
       "userIntent",
       "inputRequirements",
@@ -2159,8 +2120,6 @@ function makeArticleJson(config, article, existingPage, sourceArticlePage) {
     entityName: article.entityName,
     primaryKeyword: article.primaryKeyword,
     searchIntent: article.searchIntent,
-    seoTitle: article.seoTitle,
-    seoDescription: article.seoDescription,
     productSlug: article.productSlug,
     userIntent: article.userIntent,
     suitableUses: clone(article.suitableUses ?? []),
@@ -2210,9 +2169,22 @@ function upsertPage(site, page) {
 }
 
 function syncPublicationSnapshots(state, site) {
-  // Published snapshots are immutable. The publish service must create a new
-  // publication row after these draft/current changes are reviewed.
-  return { skipped: true, reason: "immutable_publication_requires_publish_service" };
+  for (const publication of state.themePublications ?? []) {
+    if (publication.siteId !== site.id) continue;
+    publication.snapshot ??= {};
+    publication.snapshot.pages = site.pages.map((page) => ({
+      id: page.id,
+      slug: page.slug,
+      publishedJson: clone(page.publishedJson)
+    }));
+    publication.snapshot.themeSettings = clone(site.themeSettings.publishedJson);
+    if (publication.snapshot.saasTheme?.templates) {
+      const blogHome = site.pages.find((page) => page.slug === "/blog");
+      const firstArticle = site.pages.find((page) => page.slug.startsWith("/blog/"));
+      if (blogHome) publication.snapshot.saasTheme.templates.blog = toTemplate(blogHome.publishedJson);
+      if (firstArticle) publication.snapshot.saasTheme.templates["blog-detail"] = toTemplate(firstArticle.publishedJson);
+    }
+  }
 }
 
 function syncSiteThemes(state, site) {
@@ -2311,7 +2283,19 @@ function mergeScopedSeoPages(settings) {
 }
 
 function syncScopedPublicationSnapshots(state, site, pages) {
-  return { skipped: true, reason: "immutable_publication_requires_publish_service", pageCount: pages.length };
+  for (const publication of state.themePublications ?? []) {
+    if (publication.siteId !== site.id) continue;
+    publication.snapshot ??= {};
+    const snapshotPages = Array.isArray(publication.snapshot.pages) ? publication.snapshot.pages : [];
+    for (const page of pages) {
+      const entry = { id: page.id, slug: page.slug, publishedJson: clone(page.publishedJson) };
+      const index = snapshotPages.findIndex((item) => item?.slug === page.slug || item?.id === page.id);
+      if (index >= 0) snapshotPages[index] = entry;
+      else snapshotPages.push(entry);
+    }
+    publication.snapshot.pages = snapshotPages;
+    publication.snapshot.themeSettings = mergeScopedSeoPages(publication.snapshot.themeSettings, pages);
+  }
 }
 
 function syncScopedSite(state, config, slugs) {
@@ -2374,7 +2358,7 @@ async function updateScopedDatabase(state, pages) {
       for (const page of pages) {
         const existing = await tx.themePage.findUnique({
           where: { siteId_slug: { siteId: MYDREAMSHOOTS_SITE_ID, slug: page.slug } },
-          select: { id: true, publishedJson: true }
+          select: { id: true }
         });
         const id = existing?.id ?? page.id;
         const data = {
@@ -2383,11 +2367,12 @@ async function updateScopedDatabase(state, pages) {
           templateKey: page.templateKey,
           slug: page.slug,
           title: page.title,
-          draftJson: toPrismaJson(page.draftJson)
+          draftJson: toPrismaJson(page.draftJson),
+          publishedJson: toPrismaJson(page.publishedJson)
         };
         await tx.themePage.upsert({
           where: { id },
-          create: { id, ...data, publishedJson: toPrismaJson(existing?.publishedJson ?? { ...page.publishedJson, seo: { ...page.publishedJson.seo, index: false, robots: { index: false, follow: false } } }) },
+          create: { id, ...data },
           update: data
         });
         databasePages.push({ ...page, id });
@@ -2398,12 +2383,28 @@ async function updateScopedDatabase(state, pages) {
       await tx.themeSettings.update({
         where: { siteId: MYDREAMSHOOTS_SITE_ID },
         data: {
-          draftJson: toPrismaJson(mergeScopedSeoPages(themeSettings.draftJson, databasePages))
+          draftJson: toPrismaJson(mergeScopedSeoPages(themeSettings.draftJson, databasePages)),
+          publishedJson: toPrismaJson(mergeScopedSeoPages(themeSettings.publishedJson, databasePages))
         }
       });
 
-      // Never mutate an existing ThemePublication. The pages above remain
-      // draft/current until the normal publish transaction creates a new row.
+      const publications = await tx.themePublication.findMany({ where: { siteId: MYDREAMSHOOTS_SITE_ID } });
+      for (const publication of publications) {
+        const snapshot = clone(publication.snapshot ?? {});
+        const snapshotPages = Array.isArray(snapshot.pages) ? snapshot.pages : [];
+        for (const page of databasePages) {
+          const entry = { id: page.id, slug: page.slug, publishedJson: clone(page.publishedJson) };
+          const index = snapshotPages.findIndex((item) => item?.slug === page.slug || item?.id === page.id);
+          if (index >= 0) snapshotPages[index] = entry;
+          else snapshotPages.push(entry);
+        }
+        snapshot.pages = snapshotPages;
+        snapshot.themeSettings = mergeScopedSeoPages(snapshot.themeSettings, databasePages);
+        await tx.themePublication.update({
+          where: { id: publication.id },
+          data: { snapshot: toPrismaJson(snapshot) }
+        });
+      }
 
       const stateDocument = await tx.platformStateDocument.findUnique({ where: { id: "platform" } });
       if (stateDocument?.state && Array.isArray(stateDocument.state.sites)) {
@@ -2420,14 +2421,16 @@ async function updateScopedDatabase(state, pages) {
               templateKey: page.templateKey,
               slug: page.slug,
               title: page.title,
-              draftJson: clone(page.draftJson)
+              draftJson: clone(page.draftJson),
+              publishedJson: clone(page.publishedJson)
             };
             if (index >= 0) stateSite.pages[index] = { ...stateSite.pages[index], ...entry };
             else stateSite.pages.push(entry);
           }
           stateSite.themeSettings = {
             ...stateSite.themeSettings,
-            draftJson: mergeScopedSeoPages(stateSite.themeSettings?.draftJson, databasePages)
+            draftJson: mergeScopedSeoPages(stateSite.themeSettings?.draftJson, databasePages),
+            publishedJson: mergeScopedSeoPages(stateSite.themeSettings?.publishedJson, databasePages)
           };
           await tx.platformStateDocument.update({ where: { id: "platform" }, data: { state: toPrismaJson(nextState) } });
         }

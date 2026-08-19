@@ -42,13 +42,8 @@ function readManifest(filePath) {
     fail("Release manifest was exported from a dirty working tree. Re-export it from a committed baseline.");
   }
   const currentCommit = git(["rev-parse", "HEAD"]);
-  try {
-    execFileSync("git", ["merge-base", "--is-ancestor", manifest.codeCommit, currentCommit], {
-      cwd: process.cwd(),
-      stdio: "ignore"
-    });
-  } catch {
-    fail(`Release manifest codeCommit ${manifest.codeCommit} is not an ancestor of current HEAD ${currentCommit}.`);
+  if (manifest.codeCommit !== currentCommit) {
+    fail(`Release manifest codeCommit ${manifest.codeCommit} does not match current HEAD ${currentCommit}.`);
   }
   if (!Array.isArray(manifest.sites) || manifest.sites.length !== 1) {
     fail("Release manifest must target exactly one site.");
