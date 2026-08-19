@@ -1,4 +1,4 @@
-import type { CreativePack, CreativePackCategory, MediaAsset, Price, Product, PublishedCollectionRef, PublishedPageMediaProjection, PublishedOfferProjection, PublishedFactsProjection, PublishedRouteProjection, Site, StorefrontProfileJson, ThemePage, ThemePageJson, ThemePublication, ThemeSettings, VideoTheme } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, MediaAsset, Price, Product, PublishedCollectionRef, PublishedPageMediaProjection, PublishedOfferProjection, PublishedFactsProjection, PublishedRouteProjection, PublishedCreativePackProjection, Site, StorefrontProfileJson, ThemePage, ThemePageJson, ThemePublication, ThemeSettings, VideoTheme } from "@/lib/types";
 import type { MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 
 export type StorefrontContextMode = "draft" | "published";
@@ -123,6 +123,8 @@ export type StorefrontContext = {
   capability: SiteCapability;
   indexability: EffectiveIndexability;
   missingFacts: string[];
+  publishedFacts?: PublishedFactsProjection;
+  snapshotIntegrity: "valid" | "invalid" | "legacy";
   pageCopy?: MyDreamshootsPageCopy;
   pageCopyMap?: Record<string, MyDreamshootsPageCopy>;
   publishedPaths?: string[];
@@ -137,6 +139,9 @@ export type StorefrontContextBundle = {
   factsRevision?: string;
   buildId?: string;
   publishedPageCopies?: Record<string, MyDreamshootsPageCopy>;
+  publishedFacts?: PublishedFactsProjection;
+  publishedCreativePacks?: PublishedCreativePackProjection[];
+  snapshotIntegrity?: "valid" | "invalid" | "legacy";
 };
 
 export interface PublishedStorefrontContextAdapter {
@@ -167,8 +172,10 @@ export type PublishedSiteSnapshot = {
   publishedOffers: PublishedOfferProjection[];
   publishedFacts?: PublishedFactsProjection;
   publishedCollectionRefs: PublishedCollectionRef[];
+  publishedCreativePacks: PublishedCreativePackProjection[];
   snapshotRevisions: { factsRevision?: string; routeRevision?: string; copyRevision?: string; mediaRevision?: string; packRevision?: string; offerRevision?: string; collectionRevision?: string; snapshotHash?: string };
   legacyProjectionRequired?: boolean;
+  snapshotIntegrity: "valid" | "invalid" | "legacy";
   products: Product[];
   creativePacks: CreativePack[];
   creativePackCategories: CreativePackCategory[];

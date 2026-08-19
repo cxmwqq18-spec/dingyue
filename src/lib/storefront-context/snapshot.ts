@@ -1,10 +1,11 @@
 import "server-only";
 
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
-import type { MediaAsset, PlatformState, Site, ThemePage } from "@/lib/types";
+import type { CreativePack, MediaAsset, PlatformState, Product, PublishedFactsProjection, Site, StorefrontProfileJson, ThemePage } from "@/lib/types";
 import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
 import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
+import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import { resolveStorefrontContext } from "./core";
 import { resolveSiteCapability } from "./capabilities";
 import { canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
@@ -44,9 +45,59 @@ function isPrivateStorefrontPath(path: string): boolean {
   return value === "/account" || value === "/app" || value.startsWith("/app/") || value === "/album" || value.startsWith("/album/") || value === "/cart" || value === "/checkout" || value === "/dashboard" || value === "/login" || value === "/logout";
 }
 
-function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): StorefrontContextBundle {
-  const immutableProjection = snapshot.publication?.snapshot.seoProjectionVersion === 1;
-  const projectedProducts = Array.from(new Set(snapshot.publishedOffers.map((offer) => offer.productId))).map((productId) => {
+function profileFromPublishedFacts(facts: PublishedFactsProjection | undefined): StorefrontProfileJson | undefined {
+  if (!facts) return undefined;
+  return {
+    identity: { ...(facts.identity ?? {}), sameAs: facts.identity?.sameAs ?? [] },
+    policyFacts: {
+      usesCustomerMediaForTraining: facts.privacy?.customerMediaTraining,
+      sourceMediaRetentionDays: facts.privacy?.sourceMediaRetentionDays,
+      refundReviewRequired: facts.refund?.reviewRequired,
+      refundWindowDays: facts.refund?.windowDays,
+      effectiveDate: facts.refund?.effectiveDate
+    }
+  };
+}
+
+export function publishedCreativePacksForRender(snapshot: PublishedSiteSnapshot): CreativePack[] {
+  const mediaByPage = new Map(snapshot.publishedPageMedia.map((media) => [media.pageEntityId, media]));
+  return snapshot.publishedCreativePacks
+    .filter((pack) => pack.status === "published")
+    .map((pack) => {
+      const media = mediaByPage.get(pack.pageEntityId);
+      return {
+        id: pack.packId,
+        siteId: snapshot.site.id,
+        name: pack.label,
+        headline: pack.label,
+        description: pack.summary,
+        category: pack.collectionSlug,
+        aiAppSlug: "image-generation",
+        status: "active" as const,
+        creditCost: pack.creditCost,
+        outputCount: pack.outputCount,
+        trainingRequired: false,
+        generationCount: 0,
+        conversionRate: 0,
+        createdAt: snapshot.publication?.publishedAt ?? new Date(0).toISOString(),
+        imageUrl: pack.image,
+        galleryImages: media?.galleryImages ?? [],
+        galleryImageAlts: media?.imageAlts ?? [pack.imageAlt],
+        categoryRecord: {
+          id: `published-category:${pack.collectionSlug}`,
+          siteId: snapshot.site.id,
+          slug: pack.collectionSlug,
+          label: pack.label,
+          sortOrder: 0,
+          status: "active" as const,
+          createdAt: snapshot.publication?.publishedAt ?? new Date(0).toISOString()
+        }
+      };
+    });
+}
+
+export function publishedProductsForRender(snapshot: PublishedSiteSnapshot): Product[] {
+  return Array.from(new Set(snapshot.publishedOffers.map((offer) => offer.productId))).map((productId) => {
     const offer = snapshot.publishedOffers.find((candidate) => candidate.productId === productId)!;
     return {
       id: productId,
@@ -70,6 +121,11 @@ function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): Storefront
       }))
     };
   });
+}
+
+function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): StorefrontContextBundle {
+  const immutableProjection = snapshot.publication?.snapshot.seoProjectionVersion === 1;
+  const projectedProducts = publishedProductsForRender(snapshot);
   return {
     site: {
       ...snapshot.site,
@@ -83,11 +139,14 @@ function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): Storefront
     },
     page,
     products: immutableProjection ? projectedProducts : snapshot.products,
-    creativePacks: snapshot.creativePacks,
+    creativePacks: immutableProjection ? publishedCreativePacksForRender(snapshot) : snapshot.creativePacks,
     publication: snapshot.publication,
     factsRevision: snapshot.factsRevision,
     buildId: snapshot.buildId,
-    publishedPageCopies: Object.fromEntries(snapshot.publishedPageCopy.map((projection) => [projection.canonicalSlug, projection.copy]))
+    publishedPageCopies: Object.fromEntries(snapshot.publishedPageCopy.map((projection) => [projection.canonicalSlug, projection.copy])),
+    publishedFacts: snapshot.publishedFacts,
+    publishedCreativePacks: snapshot.publishedCreativePacks,
+    snapshotIntegrity: snapshot.snapshotIntegrity
   };
 }
 
@@ -99,8 +158,10 @@ export function createPublishedSiteSnapshot(
   const publication = site.latestPublication ?? (state.themePublications ?? [])
     .filter((candidate) => candidate.siteId === site.id)
     .sort((left, right) => right.version - left.version)[0];
-  const hasImmutableSeoProjection = publication?.snapshot?.seoProjectionVersion === 1;
-  const publishedPageSnapshots = new Map((publication?.snapshot.pages ?? []).map((page) => [page.id, page]));
+  const snapshotIntegrity = publication?.snapshotIntegrity ?? publicationSnapshotIntegrity(publication?.snapshot);
+  const hasImmutableSeoProjection = publication?.snapshot?.seoProjectionVersion === 1 && snapshotIntegrity === "valid";
+  const publicationSnapshot = snapshotIntegrity === "invalid" ? undefined : publication?.snapshot;
+  const publishedPageSnapshots = new Map((publicationSnapshot?.pages ?? []).map((page) => [page.id, page]));
   const pages = publishedPages(site)
     .map((page) => {
       const publishedPage = publishedPageSnapshots.get(page.id);
@@ -109,13 +170,14 @@ export function createPublishedSiteSnapshot(
         : page;
     })
     .filter((page) => Boolean(publication && publishedPageSnapshots.has(page.id)));
-  const publicationThemeSettings = publication?.snapshot?.themeSettings;
+  const publicationThemeSettings = publicationSnapshot?.themeSettings;
   const publishedSettings = publicationThemeSettings
     ? { ...site.themeSettings, publishedJson: publicationThemeSettings }
     : site.themeSettings;
+  const factsProjection = hasImmutableSeoProjection ? publicationSnapshot?.publishedFacts : undefined;
   const publishedProfile = hasImmutableSeoProjection
-    ? publication?.snapshot.storefrontProfile
-    : publication?.snapshot.storefrontProfile ?? site.storefrontProfile?.publishedJson;
+    ? profileFromPublishedFacts(factsProjection)
+    : publicationSnapshot?.storefrontProfile ?? site.storefrontProfile?.publishedJson;
   const publishedSite = {
     ...site,
     pages,
@@ -124,7 +186,7 @@ export function createPublishedSiteSnapshot(
       ? { ...site.storefrontProfile, publishedJson: publishedProfile }
       : site.storefrontProfile
   };
-  const snapshotRoutes = publication?.snapshot?.publishedRoutes;
+  const snapshotRoutes = publicationSnapshot?.publishedRoutes;
   const publishedRoutes = site.id === "site_dreamshoot"
     ? hasImmutableSeoProjection
       ? (Array.isArray(snapshotRoutes) ? snapshotRoutes as PublishedSiteSnapshot["publishedRoutes"] : [])
@@ -157,22 +219,25 @@ export function createPublishedSiteSnapshot(
     ...videoThemes.map((theme) => ({ entityType: "video_theme" as const, entityId: theme.id, ownerId: site.id, revision: revision([theme.id, theme.createdAt, theme.status, theme.slug, theme.imageUrl, theme.galleryImages]), updatedAt: theme.createdAt })),
     ...mediaAssets.map((asset) => ({ entityType: "media" as const, entityId: asset.id, ownerId: site.id, revision: revision([asset.id, asset.createdAt, asset.storageKey, asset.previewUrl, asset.originUrl]) }))
   ];
-  const snapshotRevisions = publication?.snapshot?.revisions ?? {};
-  const publishedPageCopy = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedPageCopy)
-    ? publication!.snapshot.publishedPageCopy as PublishedSiteSnapshot["publishedPageCopy"]
+  const snapshotRevisions = publicationSnapshot?.revisions ?? {};
+  const publishedPageCopy = hasImmutableSeoProjection && Array.isArray(publicationSnapshot?.publishedPageCopy)
+    ? publicationSnapshot.publishedPageCopy as PublishedSiteSnapshot["publishedPageCopy"]
     : [];
-  const publishedPageMedia = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedPageMedia)
-    ? publication!.snapshot.publishedPageMedia as PublishedSiteSnapshot["publishedPageMedia"]
+  const publishedPageMedia = hasImmutableSeoProjection && Array.isArray(publicationSnapshot?.publishedPageMedia)
+    ? publicationSnapshot.publishedPageMedia as PublishedSiteSnapshot["publishedPageMedia"]
     : [];
-  const publishedPackFacts = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedPackFacts)
-    ? publication!.snapshot.publishedPackFacts as PublishedSiteSnapshot["publishedPackFacts"]
+  const publishedPackFacts = hasImmutableSeoProjection && Array.isArray(publicationSnapshot?.publishedPackFacts)
+    ? publicationSnapshot.publishedPackFacts as PublishedSiteSnapshot["publishedPackFacts"]
     : [];
   const publishedOffers = hasImmutableSeoProjection
-    ? (Array.isArray(publication?.snapshot?.publishedOffers) ? publication!.snapshot.publishedOffers : [])
+    ? (Array.isArray(publicationSnapshot?.publishedOffers) ? publicationSnapshot.publishedOffers : [])
     : [];
-  const publishedFacts = hasImmutableSeoProjection ? publication?.snapshot?.publishedFacts : undefined;
-  const publishedCollectionRefs = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedCollectionRefs)
-    ? publication!.snapshot.publishedCollectionRefs as unknown as PublishedSiteSnapshot["publishedCollectionRefs"]
+  const publishedFacts = hasImmutableSeoProjection ? publicationSnapshot?.publishedFacts : undefined;
+  const publishedCollectionRefs = hasImmutableSeoProjection && Array.isArray(publicationSnapshot?.publishedCollectionRefs)
+    ? publicationSnapshot.publishedCollectionRefs as PublishedSiteSnapshot["publishedCollectionRefs"]
+    : [];
+  const publishedCreativePacks = hasImmutableSeoProjection && Array.isArray(publicationSnapshot?.publishedCreativePacks)
+    ? publicationSnapshot.publishedCreativePacks
     : [];
   const entityReferences: EntityReference[] = [
     ...baseEntityReferences,
@@ -208,8 +273,10 @@ export function createPublishedSiteSnapshot(
     publishedOffers,
     publishedFacts,
     publishedCollectionRefs,
+    publishedCreativePacks,
     snapshotRevisions,
     legacyProjectionRequired: Boolean(publication && !hasImmutableSeoProjection),
+    snapshotIntegrity,
     products,
     creativePacks,
     creativePackCategories,
@@ -252,6 +319,7 @@ export function resolvePublishedStorefrontContext(snapshot: PublishedSiteSnapsho
 }
 
 export function resolveEffectiveIndexability(snapshot: PublishedSiteSnapshot, page: ThemePage, context = resolveStorefrontContext(bundleFor(snapshot, page), "published")): EffectiveIndexability {
+  if (snapshot.snapshotIntegrity === "invalid") return { index: false, follow: false, sitemapEligible: false };
   const blocked = page.pageType === "not_found" || page.slug === "/404" || isPrivateStorefrontPath(page.slug) || isPrivateStorefrontPath(context.seo.canonicalPath);
   const publishedRoute = snapshot.publishedRoutes.find((route) => route.canonicalPath === normalizePath(context.seo.canonicalPath));
   const publishedMedia = publishedRoute ? snapshot.publishedPageMedia.find((media) => media.pageEntityId === publishedRoute.pageEntityId) : undefined;
@@ -309,6 +377,7 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
 
 export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot, path: string): RouteDisposition {
   const requestedPath = normalizePath(path);
+  if (snapshot.snapshotIntegrity === "invalid") return { kind: "not_found", status: 404, path: requestedPath };
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
   const legacyTarget = legacyPublicPathTarget(requestedPath, publicCollectionRootPathForSite(snapshot.site));
   if (legacyTarget) return resolvePublishedRedirectDisposition(snapshot, requestedPath, legacyTarget);

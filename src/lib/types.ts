@@ -848,6 +848,21 @@ export interface PublishedCollectionRef {
   status: "published" | "review_required";
 }
 
+export interface PublishedCreativePackProjection {
+  packId: string;
+  pageEntityId: string;
+  collectionSlug: string;
+  label: string;
+  summary: string;
+  creditCost: number;
+  outputCount: number;
+  mediaEntityId: string;
+  image: string;
+  imageAlt: string;
+  revision: string;
+  status: "published" | "review_required";
+}
+
 export interface PublishedPageCopyProjection {
   pageEntityId: string;
   copyRevision: string;
@@ -907,6 +922,7 @@ export interface PublishedSeoSnapshotProjection {
   publishedOffers: PublishedOfferProjection[];
   publishedFacts: PublishedFactsProjection;
   publishedCollectionRefs: PublishedCollectionRef[];
+  publishedCreativePacks: PublishedCreativePackProjection[];
   revisions: PublishedSeoSnapshotRevisions;
 }
 
@@ -927,6 +943,7 @@ export interface ThemePublication {
     publishedOffers?: PublishedSeoSnapshotProjection["publishedOffers"];
     publishedFacts?: PublishedSeoSnapshotProjection["publishedFacts"];
     publishedCollectionRefs?: PublishedSeoSnapshotProjection["publishedCollectionRefs"];
+    publishedCreativePacks?: PublishedSeoSnapshotProjection["publishedCreativePacks"];
     revisions?: PublishedSeoSnapshotProjection["revisions"];
   };
   pageCount?: number;
@@ -940,6 +957,7 @@ export interface ThemePublication {
   };
   manifestHash?: string;
   snapshotHash?: string;
+  snapshotIntegrity?: "valid" | "invalid" | "legacy";
   factsRevision?: string;
   publishedBy: string;
   publishedAt: string;

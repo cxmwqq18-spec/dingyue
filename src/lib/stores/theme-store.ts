@@ -37,6 +37,7 @@ import { runThemePublishPreflight, summarizeThemeGlobalVisuals, type PublishPref
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import { buildPublishedPageMediaProjection, mydreamshootsPublishedRouteManifest } from "@/lib/mydreamshoots-published-contract";
 import { normalizeGlobalSection } from "@/lib/theme/section-normalize";
+import { publicationSnapshotHash, publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import type {
   MediaAsset,
   Product,
@@ -103,24 +104,7 @@ async function finalizePublishedTheme(siteId: string, publicationId: string): Pr
     ? readback.snapshot as unknown as ThemePublication["snapshot"]
     : undefined;
   const snapshotHash = snapshot?.revisions?.snapshotHash;
-  if (!readback || !snapshotHash || publicationSnapshotHash(snapshot) !== snapshotHash) throw new RelationalStoreError("theme_publish_readback_failed", 500);
-}
-
-function stableSnapshotValue(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(stableSnapshotValue);
-  if (!value || typeof value !== "object") return value;
-  return Object.fromEntries(Object.entries(value as Record<string, unknown>)
-    .filter(([, item]) => item !== undefined)
-    .sort(([left], [right]) => left.localeCompare(right))
-    .map(([key, item]) => [key, stableSnapshotValue(item)]));
-}
-
-function publicationSnapshotHash(snapshot: ThemePublication["snapshot"]): string {
-  const unhashed = {
-    ...snapshot,
-    revisions: { ...(snapshot.revisions ?? {}), snapshotHash: undefined }
-  };
-  return crypto.createHash("sha256").update(JSON.stringify(stableSnapshotValue(unhashed))).digest("hex");
+  if (!readback || !snapshotHash || publicationSnapshotIntegrity(snapshot) !== "valid") throw new RelationalStoreError("theme_publish_readback_failed", 500);
 }
 
 export type SaasThemeAction =
@@ -171,7 +155,7 @@ async function getSiteWithThemeRecords(db: PrismaLike, siteId: string) {
   return site;
 }
 
-function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePacks: PublishPreflightCreativePack[] = [], products: Product[] = [], factsRevision?: string): ThemePublication["snapshot"] {
+function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePacks: PublishPreflightCreativePack[] = [], products: Product[] = []): ThemePublication["snapshot"] {
   const publishedAt = Date.now();
   const publishedRoutes = site.id === "site_dreamshoot" ? mydreamshootsPublishedRouteManifest() : [];
   const publishedPageCopy = publishedRoutes.map((route) => {
@@ -243,6 +227,7 @@ function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePac
     },
     claimRevision: crypto.createHash("sha256").update(JSON.stringify(site.storefrontProfile?.publishedJson ?? {})).digest("hex").slice(0, 20)
   };
+  const publishedFactsRevision = crypto.createHash("sha256").update(JSON.stringify(publishedFacts)).digest("hex").slice(0, 20);
   const collectionRefs = publishedRoutes.map((route) => {
     const copy = publishedPageCopy.find((item) => item.canonicalSlug === route.canonicalSlug)?.copy as Record<string, unknown> | undefined;
     const media = publishedPageMedia.find((item) => item?.pageEntityId === route.pageEntityId);
@@ -265,6 +250,20 @@ function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePac
     };
   });
   const collectionRevision = crypto.createHash("sha256").update(JSON.stringify(collectionRefs)).digest("hex").slice(0, 20);
+  const publishedCreativePacks = collectionRefs.map((ref) => ({
+    packId: ref.sourcePackId,
+    pageEntityId: ref.pageEntityId,
+    collectionSlug: ref.collectionSlug,
+    label: ref.label,
+    summary: ref.summary,
+    creditCost: ref.creditCost,
+    outputCount: ref.outputCount,
+    mediaEntityId: ref.mediaEntityId,
+    image: ref.image,
+    imageAlt: ref.imageAlt,
+    revision: ref.entityRevision,
+    status: ref.status
+  }));
   const snapshot: ThemePublication["snapshot"] = {
     seoProjectionVersion: 1,
     pages: site.pages.map((page) => ({
@@ -292,7 +291,8 @@ function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePac
     publishedOffers,
     publishedFacts,
     publishedCollectionRefs: collectionRefs,
-    revisions: { factsRevision, routeRevision, copyRevision, mediaRevision, offerRevision, collectionRevision }
+    publishedCreativePacks,
+    revisions: { factsRevision: publishedFactsRevision, routeRevision, copyRevision, mediaRevision, offerRevision, collectionRevision }
   };
   snapshot.revisions = { ...snapshot.revisions, snapshotHash: publicationSnapshotHash(snapshot) };
   return snapshot;
@@ -1375,8 +1375,8 @@ export async function publishDraftPageRelational(
       select: { id: true, status: true, creditCost: true, outputCount: true, category: true, imageUrl: true, galleryImages: true, galleryImageAlts: true, categoryRecord: { select: { slug: true } } },
       orderBy: { id: "asc" }
     });
-    const factsRevision = crypto.createHash("sha256").update(JSON.stringify({ pageId, version: publishedVersion, products: publicationProducts, packs: publicationPacks })).digest("hex").slice(0, 20);
-    const snapshot = buildPublicationSnapshot(site, undefined, publicationPacks.map((pack) => normalizedPublishPack(pack as PublishPreflightCreativePack)), publicationProducts, factsRevision);
+    const snapshot = buildPublicationSnapshot(site, undefined, publicationPacks.map((pack) => normalizedPublishPack(pack as PublishPreflightCreativePack)), publicationProducts);
+    const factsRevision = snapshot.revisions?.factsRevision;
     const snapshotStats = buildPublicationSnapshotStats(snapshot);
     const publicationRecord = await tx.themePublication.create({
       data: {
@@ -1558,8 +1558,8 @@ export async function publishDraftSiteRelational(
       profile.publishedJson = cloneJson(normalizedPublishedProfile!);
       await tx.storefrontProfile.update({ where: { siteId }, data: { publishedJson: cloneJson(profile.publishedJson) as unknown as Prisma.InputJsonValue } });
     }
-    const factsRevision = crypto.createHash("sha256").update(JSON.stringify({ pages: manifest.pageIds, profile: normalizedPublishedProfile, version: publishedVersion })).digest("hex").slice(0, 20);
-    const snapshot = buildPublicationSnapshot(site, undefined, normalizedPublicationPacks, publicationProductRows.map(mapProduct), factsRevision);
+    const snapshot = buildPublicationSnapshot(site, undefined, normalizedPublicationPacks, publicationProductRows.map(mapProduct));
+    const factsRevision = snapshot.revisions?.factsRevision;
     const snapshotStats = buildPublicationSnapshotStats(snapshot);
     const publicationRecord = await tx.themePublication.create({
       data: {

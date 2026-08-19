@@ -187,9 +187,21 @@ export function resolveStorefrontContext(
   const settings = mode === "draft" && scope?.includeThemeSettings
     ? bundle.site.themeSettings.draftJson
     : bundle.site.themeSettings.publishedJson;
+  const publishedFactsProfile = bundle.publishedFacts
+    ? {
+        identity: { ...(bundle.publishedFacts.identity ?? {}), sameAs: bundle.publishedFacts.identity?.sameAs ?? [] },
+        policyFacts: {
+          usesCustomerMediaForTraining: bundle.publishedFacts.privacy?.customerMediaTraining,
+          sourceMediaRetentionDays: bundle.publishedFacts.privacy?.sourceMediaRetentionDays,
+          refundReviewRequired: bundle.publishedFacts.refund?.reviewRequired,
+          refundWindowDays: bundle.publishedFacts.refund?.windowDays,
+          effectiveDate: bundle.publishedFacts.refund?.effectiveDate
+        }
+      }
+    : undefined;
   const profile = normalizedProfile(mode === "draft" && scope?.includeStorefrontProfile
     ? bundle.site.storefrontProfile?.draftJson
-    : bundle.site.storefrontProfile?.publishedJson);
+    : mode === "published" && bundle.publishedFacts ? publishedFactsProfile : bundle.site.storefrontProfile?.publishedJson);
   const validPacks = bundle.creativePacks.filter((pack) => pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0);
   const invalidPacks = bundle.creativePacks.filter((pack) => pack.status === "active" && (pack.creditCost <= 0 || pack.outputCount <= 0));
   const seo = resolveSeo(bundle, pageJson, settings);
@@ -241,6 +253,8 @@ export function resolveStorefrontContext(
       sitemapEligible: seo.sitemapEligible
     },
     missingFacts,
+    publishedFacts: mode === "published" ? bundle.publishedFacts : undefined,
+    snapshotIntegrity: mode === "published" ? bundle.snapshotIntegrity ?? "legacy" : "legacy",
     pageCopy,
     pageCopyMap: mode === "published" ? bundle.publishedPageCopies : undefined
   };

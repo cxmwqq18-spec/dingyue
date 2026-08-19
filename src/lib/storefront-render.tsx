@@ -36,8 +36,8 @@ import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/custome
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
-import { createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
-import type { StorefrontContext } from "@/lib/storefront-context/types";
+import { createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, publishedCreativePacksForRender, publishedProductsForRender, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
+import type { PublishedSiteSnapshot, StorefrontContext } from "@/lib/storefront-context/types";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
@@ -104,6 +104,27 @@ function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData
     toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === siteId),
     videoThemeCategories: (state.videoThemeCategories ?? []).filter((category) => category.siteId === siteId),
     videoThemes: (state.videoThemes ?? []).filter((theme) => theme.siteId === siteId)
+  };
+}
+
+function getPublishedSiteRenderData(state: PlatformState, snapshot: PublishedSiteSnapshot): SiteRenderData {
+  if (snapshot.snapshotIntegrity !== "valid" || snapshot.publication?.snapshot.seoProjectionVersion !== 1) {
+    return getSiteRenderData(state, snapshot.site.id);
+  }
+  const creativePacks = publishedCreativePacksForRender(snapshot);
+  const categoryMap = new Map<string, CreativePackCategory>();
+  for (const pack of creativePacks) {
+    if (pack.categoryRecord) categoryMap.set(pack.categoryRecord.id, pack.categoryRecord);
+  }
+  return {
+    creativePackCategories: [...categoryMap.values()],
+    creativePacks,
+    mediaAssets: [],
+    products: publishedProductsForRender(snapshot),
+    siteAiApps: (state.siteAiApps ?? []).filter((app) => app.siteId === snapshot.site.id),
+    toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === snapshot.site.id),
+    videoThemeCategories: [],
+    videoThemes: []
   };
 }
 
@@ -2559,11 +2580,13 @@ export async function renderStorefrontPage({
   deferCustomerRuntime?: boolean;
 }) {
   const shouldDeferCustomerRuntime = deferCustomerRuntime && publicCustomerBootstrapEnabled();
-  const shouldCompletePublicPacks = !preferLocalPathModeState(site.slug);
   const state = await getStateForStorefrontRender(site, routeMode, providedState);
   const stateSite = state.sites.find((item) => item.id === site.id);
   if (!stateSite) notFound();
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
+  if (publishedSnapshot.snapshotIntegrity === "invalid") notFound();
+  const immutableSeoProjection = publishedSnapshot.snapshotIntegrity === "valid" && publishedSnapshot.publication?.snapshot.seoProjectionVersion === 1;
+  const shouldCompletePublicPacks = !immutableSeoProjection && !preferLocalPathModeState(site.slug);
   const currentSite = publishedSnapshot.site;
   const collectionCategory = typeof query.category === "string" ? query.category : "";
   const collectionRootPath = publicCollectionRootPathForSite(currentSite);
@@ -2574,7 +2597,7 @@ export async function renderStorefrontPage({
       ? publicCollectionPathForSite(currentSite, collectionCategory)
       : slug
   );
-  const renderData = getSiteRenderData(state, currentSite.id);
+  const renderData = getPublishedSiteRenderData(state, publishedSnapshot);
   const focusedCollectionRenderData = isFocusedCollectionPage ? trimFocusedCollectionRenderData(renderData, collectionCategory) : renderData;
   const useSharedNavigation = usesSharedDreamShootNavigation(currentSite);
   const navigationCreativePackCategories = useSharedNavigation
@@ -2699,7 +2722,9 @@ export async function renderStorefrontPage({
           site: currentSite,
           collectionSlug: collectionCategory,
           routeMode,
-          creativePacks: trimCreativePacksForStorefront(focusedCollectionRenderData, publicDirectoryPackLimit),
+          ...(immutableSeoProjection
+            ? { collectionRefs: publishedSnapshot.publishedCollectionRefs }
+            : { creativePacks: trimCreativePacksForStorefront(focusedCollectionRenderData, publicDirectoryPackLimit) }),
           context: storefrontContext
         })
       : buildStorefrontJsonLd({
@@ -2709,7 +2734,7 @@ export async function renderStorefrontPage({
           pagePath: renderPagePath,
           routeMode,
           creativePacks: pageRenderData.creativePacks,
-          products: state.products,
+          products: pageRenderData.products,
           context: storefrontContext,
           videoThemes: pageRenderData.videoThemes
         }),

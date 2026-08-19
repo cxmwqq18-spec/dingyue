@@ -157,6 +157,8 @@ export {
   createPublishedSiteSnapshot,
   loadPublishedSiteSnapshotBySiteId,
   loadPublishedSiteSnapshotByHost,
+  publishedCreativePacksForRender,
+  publishedProductsForRender,
   resolveEffectiveIndexability,
   resolveEffectivePublishedPage,
   resolvePublishedRouteDisposition,
