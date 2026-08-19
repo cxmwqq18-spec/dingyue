@@ -18,6 +18,11 @@ const defaultSiteId = argumentValue("--site-id") || process.env.RELEASE_SITE_ID 
 const manifestPathArgument = argumentValue("--manifest");
 const manifestRoot = path.join(repoRoot, "releases", "manifests");
 const backupRoot = path.join(repoRoot, "releases", "backups");
+const requestedThemePageSlugs = String(argumentValue("--slugs") || "")
+  .split(",")
+  .map((slug) => slug.trim())
+  .filter(Boolean)
+  .sort();
 const supportedTables = [
   "toolCategories",
   "toolMenuItems",
@@ -133,6 +138,13 @@ function assertManifestShape(manifest) {
   for (const key of Object.keys(manifest.tables || {})) {
     if (!supportedTables.includes(key)) fail(`Release manifest contains unsupported table ${key}.`);
   }
+  if (manifest.themePageSlugs !== undefined) {
+    if (!Array.isArray(manifest.themePageSlugs) || !manifest.themePageSlugs.length) fail("Scoped content manifest must include themePageSlugs.");
+    const allowed = new Set(asArray(manifest.tables?.themePages).map((page) => page.slug));
+    if (manifest.themePageSlugs.some((slug) => !allowed.has(slug))) fail("Scoped content manifest slug list does not match its ThemePage rows.");
+    if (asArray(manifest.tables?.themePublications).length !== 1) fail("Scoped content manifest must include exactly one immutable ThemePublication.");
+    if (asArray(manifest.replaceTables).length) fail("Scoped content manifest cannot replace shared tables.");
+  }
   const { manifestHash: _hash, createdAt: _createdAt, ...hashable } = manifest;
   if (hashValue(hashable) !== manifest.manifestHash) fail("Release manifest hash does not match its content.");
 }
@@ -152,7 +164,10 @@ function readManifest() {
   return { filePath, manifest };
 }
 
-async function readContentSnapshot(prisma, siteId) {
+async function readContentSnapshot(prisma, siteId, options = {}) {
+  const scopedSlugs = asArray(options.themePageSlugs);
+  const scoped = scopedSlugs.length > 0;
+  const publicationManifestHashes = asArray(options.publicationManifestHashes);
   const [
     toolCategories,
     toolMenuItems,
@@ -166,17 +181,21 @@ async function readContentSnapshot(prisma, siteId) {
     themePublications,
     mediaAssets
   ] = await Promise.all([
-    prisma.toolCategory.findMany({ where: { siteId } }),
-    prisma.toolMenuItem.findMany({ where: { siteId } }),
-    prisma.creativePackCategory.findMany({ where: { siteId } }),
-    prisma.creativePack.findMany({ where: { siteId } }),
-    prisma.videoThemeCategory.findMany({ where: { siteId } }),
-    prisma.videoTheme.findMany({ where: { siteId } }),
-    prisma.themePage.findMany({ where: { siteId } }),
-    prisma.themeSettings.findUnique({ where: { siteId } }),
-    prisma.siteTheme.findMany({ where: { siteId } }),
-    prisma.themePublication.findMany({ where: { siteId } }),
-    prisma.mediaAsset.findMany({ where: { siteId } })
+    scoped ? [] : prisma.toolCategory.findMany({ where: { siteId } }),
+    scoped ? [] : prisma.toolMenuItem.findMany({ where: { siteId } }),
+    scoped ? [] : prisma.creativePackCategory.findMany({ where: { siteId } }),
+    scoped ? [] : prisma.creativePack.findMany({ where: { siteId } }),
+    scoped ? [] : prisma.videoThemeCategory.findMany({ where: { siteId } }),
+    scoped ? [] : prisma.videoTheme.findMany({ where: { siteId } }),
+    prisma.themePage.findMany({ where: { siteId, ...(scoped ? { slug: { in: scopedSlugs } } : {}) } }),
+    scoped ? null : prisma.themeSettings.findUnique({ where: { siteId } }),
+    scoped ? [] : prisma.siteTheme.findMany({ where: { siteId } }),
+    scoped
+      ? publicationManifestHashes.length
+        ? prisma.themePublication.findMany({ where: { siteId, manifestHash: { in: publicationManifestHashes } } })
+        : prisma.themePublication.findMany({ where: { siteId }, orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 })
+      : prisma.themePublication.findMany({ where: { siteId } }),
+    scoped ? [] : prisma.mediaAsset.findMany({ where: { siteId } })
   ]);
   return normalizeSnapshot({
     toolCategories,
@@ -193,7 +212,8 @@ async function readContentSnapshot(prisma, siteId) {
   });
 }
 
-function buildManifest(snapshot, siteId) {
+function buildManifest(snapshot, siteId, themePageSlugs = []) {
+  const scoped = themePageSlugs.length > 0;
   const releaseId = argumentValue("--release-id") || `${gitValue(["rev-parse", "--short", "HEAD"]) || "local"}-content-${Date.now()}`;
   const codeCommit = gitValue(["rev-parse", "HEAD"]) || "unknown";
   const contentMigrations = [`${releaseId}:public-content`];
@@ -203,11 +223,12 @@ function buildManifest(snapshot, siteId) {
     codeCommit,
     workingTreeDirty: gitStatusDirty(),
     sites: [siteId],
-    scope: ["public-content", "navigation", "video-themes"],
+    scope: scoped ? ["public-content", "theme-pages", "theme-publication"] : ["public-content", "navigation", "video-themes"],
     schemaMigrations: parseSchemaMigrations(),
     contentMigrations,
-    replaceTables: [...replaceTables],
+    replaceTables: scoped ? [] : [...replaceTables],
     protectedTables: protectedSpecs.map((item) => item.key),
+    ...(scoped ? { themePageSlugs } : {}),
     tables: snapshot
   };
   return {
@@ -227,8 +248,12 @@ async function exportManifest() {
   const siteId = assertAllowedSite(defaultSiteId);
   const prisma = new PrismaClient();
   try {
-    const snapshot = await readContentSnapshot(prisma, siteId);
-    const manifest = buildManifest(snapshot, siteId);
+    const snapshot = await readContentSnapshot(prisma, siteId, { themePageSlugs: requestedThemePageSlugs });
+    if (requestedThemePageSlugs.length && snapshot.themePages.length !== requestedThemePageSlugs.length) {
+      const found = new Set(snapshot.themePages.map((page) => page.slug));
+      fail(`Scoped content export is missing ThemePage rows: ${requestedThemePageSlugs.filter((slug) => !found.has(slug)).join(", ")}`);
+    }
+    const manifest = buildManifest(snapshot, siteId, requestedThemePageSlugs);
     const filePath = manifestFilePath(manifest.releaseId);
     ensureParent(filePath);
     fs.writeFileSync(filePath, `${JSON.stringify(manifest, null, 2)}\n`);
@@ -295,7 +320,10 @@ async function planManifest() {
   const siteId = manifest.sites[0];
   const prisma = new PrismaClient();
   try {
-    const targetSnapshot = await readContentSnapshot(prisma, siteId);
+    const targetSnapshot = await readContentSnapshot(prisma, siteId, {
+      themePageSlugs: manifest.themePageSlugs,
+      publicationManifestHashes: asArray(manifest.tables.themePublications).map((publication) => publication.manifestHash).filter(Boolean)
+    });
     const changes = diffSnapshots(manifest.tables, targetSnapshot);
     console.log(JSON.stringify({
       ok: true,
@@ -397,7 +425,79 @@ function remapCategoryId(row, sourceCategories, targetIds) {
   return sourceCategory ? { ...row, categoryId: targetIds.get(sourceCategory.slug) || null } : row;
 }
 
-async function applySnapshot(tx, siteId, tables, replacements) {
+function withPublishedVersion(value, publishedVersion) {
+  const next = clone(value);
+  if (next && typeof next === "object") next.version = publishedVersion;
+  return next;
+}
+
+async function applyScopedThemeSnapshot(tx, siteId, tables, themePageSlugs, releaseId) {
+  const sourcePublication = asArray(tables.themePublications)[0];
+  if (!sourcePublication?.manifestHash) fail("Scoped content publication is missing manifestHash.");
+  const existingPublication = await tx.themePublication.findFirst({ where: { siteId, manifestHash: sourcePublication.manifestHash } });
+  if (existingPublication) return { publicationId: existingPublication.id, publishedVersion: existingPublication.version, alreadyApplied: true };
+
+  const latestPublication = await tx.themePublication.findFirst({ where: { siteId }, orderBy: [{ version: "desc" }, { publishedAt: "desc" }] });
+  if (!latestPublication) fail(`Scoped content apply requires an existing ThemePublication for ${siteId}.`);
+  const publishedVersion = (latestPublication?.version ?? 0) + 1;
+  const scopedSlugs = new Set(themePageSlugs);
+  const pageRows = asArray(tables.themePages).map((page) => ({
+    ...page,
+    draftJson: withPublishedVersion(page.draftJson, publishedVersion),
+    publishedJson: withPublishedVersion(page.publishedJson, publishedVersion)
+  }));
+  await upsertRows(tx, "themePages", pageRows);
+
+  const snapshot = clone(latestPublication.snapshot);
+  const sourcePages = new Map(asArray(sourcePublication.snapshot?.pages)
+    .filter((page) => scopedSlugs.has(page.slug))
+    .map((page) => [page.slug, page]));
+  snapshot.pages = asArray(snapshot.pages).map((page) => {
+    const sourcePage = sourcePages.get(page.slug);
+    if (!sourcePage) return page;
+    sourcePages.delete(page.slug);
+    return {
+      ...sourcePage,
+      draftJson: withPublishedVersion(sourcePage.draftJson, publishedVersion),
+      publishedJson: withPublishedVersion(sourcePage.publishedJson, publishedVersion)
+    };
+  });
+  for (const sourcePage of sourcePages.values()) {
+    snapshot.pages.push({
+      ...sourcePage,
+      draftJson: withPublishedVersion(sourcePage.draftJson, publishedVersion),
+      publishedJson: withPublishedVersion(sourcePage.publishedJson, publishedVersion)
+    });
+  }
+  snapshot.pages.sort((left, right) => left.slug.localeCompare(right.slug));
+  const sectionCount = snapshot.pages.reduce((sum, page) => sum + Object.keys(page.publishedJson?.sections ?? {}).length, 0);
+  const publicationId = `pub_${siteId}_release_${Date.now().toString(36)}`;
+  await tx.themePublication.create({
+    data: {
+      ...preparedData(sourcePublication, { omit: ["id", "version", "publishedAt", "pageCount", "sectionCount", "snapshotBytes", "scope"] }),
+      id: publicationId,
+      siteId,
+      version: publishedVersion,
+      snapshot,
+      pageCount: snapshot.pages.length,
+      sectionCount,
+      snapshotBytes: Buffer.byteLength(JSON.stringify(snapshot), "utf8"),
+      publishedAt: new Date(),
+      scope: {
+        ...clone(sourcePublication.scope),
+        releaseId,
+        sourcePublicationId: sourcePublication.id,
+        sourceVersion: sourcePublication.version
+      }
+    }
+  });
+  return { publicationId, publishedVersion, alreadyApplied: false };
+}
+
+async function applySnapshot(tx, siteId, tables, replacements, options = {}) {
+  if (asArray(options.themePageSlugs).length) {
+    return applyScopedThemeSnapshot(tx, siteId, tables, options.themePageSlugs, options.releaseId);
+  }
   const replaceSet = new Set(replacements);
   for (const table of ["toolMenuItems", "toolCategories", "videoThemes", "videoThemeCategories"]) {
     if (replaceSet.has(table)) await replaceRows(tx, table, siteId);
@@ -442,6 +542,7 @@ async function applySnapshot(tx, siteId, tables, replacements) {
   for (const table of ["themeSettings", "themePages", "siteThemes", "themePublications", "mediaAssets"]) {
     await upsertRows(tx, table, tables[table]);
   }
+  return {};
 }
 
 async function applyManifest() {
@@ -457,14 +558,20 @@ async function applyManifest() {
   const prisma = new PrismaClient();
   const backupPath = path.join(backupRoot, target, siteId, `${manifest.releaseId}.json`);
   try {
-    const beforeSnapshot = await readContentSnapshot(prisma, siteId);
+    const beforeSnapshot = await readContentSnapshot(prisma, siteId, {
+      themePageSlugs: manifest.themePageSlugs,
+      publicationManifestHashes: asArray(manifest.tables.themePublications).map((publication) => publication.manifestHash).filter(Boolean)
+    });
     const beforeProtected = await protectedFingerprint(prisma, siteId);
     ensureParent(backupPath);
     fs.writeFileSync(backupPath, `${JSON.stringify({ createdAt: new Date().toISOString(), siteId, snapshot: beforeSnapshot }, null, 2)}\n`);
 
     const changes = diffSnapshots(manifest.tables, beforeSnapshot);
     const result = await prisma.$transaction(async (tx) => {
-      await applySnapshot(tx, siteId, manifest.tables, manifest.replaceTables || [...replaceTables]);
+      const contentResult = await applySnapshot(tx, siteId, manifest.tables, manifest.replaceTables || [...replaceTables], {
+        themePageSlugs: manifest.themePageSlugs,
+        releaseId: manifest.releaseId
+      });
       const afterProtected = await protectedFingerprint(tx, siteId);
       if (stableValue(beforeProtected) !== stableValue(afterProtected)) {
         throw new Error("Protected production data changed during content apply; transaction will be rolled back.");
@@ -502,7 +609,7 @@ async function applyManifest() {
           appliedAt: new Date()
         }
       });
-      return { recordId: record.id, afterProtected };
+      return { recordId: record.id, afterProtected, contentResult };
     });
 
     console.log(JSON.stringify({
@@ -515,6 +622,7 @@ async function applyManifest() {
       manifestHash: manifest.manifestHash,
       backupPath,
       changes,
+      contentResult: result.contentResult,
       protected: result.afterProtected
     }, null, 2));
   } finally {

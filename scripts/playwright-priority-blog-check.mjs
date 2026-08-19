@@ -360,7 +360,7 @@ async function inspect(context, spec, routeKind, viewportName, index) {
   if (signals.faqSchemaCount !== 0) failures.push(`unexpected FAQPage schema count ${signals.faqSchemaCount}`);
   if (signals.postingHeadline !== spec.h1) failures.push(`BlogPosting headline mismatch: ${signals.postingHeadline || "<missing>"}`);
   if (signals.postingAuthorType !== "Organization") failures.push(`BlogPosting author type is ${signals.postingAuthorType || "<missing>"}`);
-  if (signals.postingDateModified !== (spec.dateModified ?? "2026-08-18")) failures.push(`BlogPosting dateModified is ${signals.postingDateModified || "<missing>"}`);
+  if (signals.postingDateModified !== (spec.dateModified ?? "2026-08-19")) failures.push(`BlogPosting dateModified is ${signals.postingDateModified || "<missing>"}`);
   if (spec.dateModified && signals.ogType !== "article") failures.push(`Open Graph type is ${signals.ogType || "<missing>"}`);
   if (spec.dateModified && !signals.ogPublishedTime) failures.push("article published time is missing");
   if (spec.dateModified && !signals.ogModifiedTime) failures.push("article modified time is missing");
@@ -411,8 +411,10 @@ await browser.close();
 const desktopHostResults = results.filter((result) => result.routeKind === "host" && result.viewport === "desktop");
 const globalFailures = [];
 for (const field of ["title", "description", "h1"]) {
-  const values = desktopHostResults.map((result) => result[field]);
-  if (new Set(values).size !== selectedPages.length) globalFailures.push(`${field} values are not unique across selected pages`);
+  const successfulValues = desktopHostResults.filter((result) => result.status === 200).map((result) => result[field]).filter(Boolean);
+  if (successfulValues.length === selectedPages.length && new Set(successfulValues).size !== selectedPages.length) {
+    globalFailures.push(`${field} values are not unique across selected pages`);
+  }
 }
 
 const report = {

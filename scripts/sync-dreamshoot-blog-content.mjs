@@ -698,6 +698,10 @@ const mydreamshootsBlogSafeImageOverrides = new Map([
 const mydreamshootsArticleFacts = {
   "/blog/cyberpunk-photo-package-guide": {
     entityName: "Cyberpunk AI photos",
+    primaryKeyword: "cyberpunk AI photos",
+    searchIntent: "Plan a fictional cyberpunk portrait with neon styling and review it before publishing.",
+    seoTitle: "Cyberpunk private AI photo guide | myDreamshoots",
+    seoDescription: "Plan neon cyberpunk portraits with focused source photos, futuristic wardrobe cues, nearby style comparisons, and a practical artifact review checklist.",
     productSlug: "cyberpunk",
     userIntent: "Plan a neon, fictional cyberpunk portrait and review it before download.",
     suitableUses: ["fictional portraits", "creative moodboards", "private social drafts"],
@@ -711,6 +715,10 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/mafia-photo-package-guide": {
     entityName: "Mafia-style AI photos",
+    primaryKeyword: "Mafia-style AI photos",
+    searchIntent: "Plan a fictional noir character portrait with controlled lighting and permission-safe source photos.",
+    seoTitle: "Mafia AI photo planning guide | myDreamshoots",
+    seoDescription: "Plan a fictional Mafia-style noir portrait with tailored wardrobe, controlled interior light, permission-safe source photos, and a detailed review checklist.",
     productSlug: "mafia",
     userIntent: "Plan a fictional noir character portrait without suggesting real criminal activity.",
     suitableUses: ["fictional character concepts", "cinematic moodboards", "private creative portraits"],
@@ -724,6 +732,10 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/magic-upscaler-photo-package-guide": {
     entityName: "Magic Upscaler workflow",
+    primaryKeyword: "Magic Upscaler",
+    searchIntent: "Improve perceived photo clarity while preserving the original as the reference file.",
+    seoTitle: "Magic Upscaler and Photo Enhancer | myDreamshoots",
+    seoDescription: "Use Magic Upscaler through Photo Enhancer, choose the cleanest original, understand enhancement limits, and check halos, false texture, and identity changes.",
     productSlug: "photo-enhancer",
     userIntent: "Improve perceived clarity while preserving the original as the reference file.",
     suitableUses: ["cleaner personal downloads", "larger display copies", "reviewable edited derivatives"],
@@ -737,6 +749,10 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/nature-photo-package-guide": {
     entityName: "Nature AI portrait direction",
+    primaryKeyword: "nature AI portraits",
+    searchIntent: "Plan a forest, mountain, lake, or meadow portrait through the Travel package.",
+    seoTitle: "Nature AI portrait planning guide | myDreamshoots",
+    seoDescription: "Plan forest, mountain, lakeside, or meadow portraits through Travel, coordinate source photos with outdoor light, and review generated landscape artifacts.",
     productSlug: "travel",
     userIntent: "Plan a forest, mountain, lake, or meadow portrait through the Travel package.",
     suitableUses: ["creative outdoor portraits", "travel moodboards", "private lifestyle drafts"],
@@ -750,6 +766,10 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/outdoor-creator-scenes-photo-package-guide": {
     entityName: "Outdoor Creator scene comparison",
+    primaryKeyword: "outdoor creator photos",
+    searchIntent: "Choose Urban streets or Travel scenery for a creator image with a usable crop and safe publishing context.",
+    seoTitle: "Outdoor creator photos: Urban vs Travel | myDreamshoots",
+    seoDescription: "Compare Urban streets with scenic Travel locations for creator photos, then plan channel, crop, negative space, brand safety, and publication review.",
     productSlug: "urban|travel",
     userIntent: "Choose Urban streets or Travel scenery for a creator image with a usable crop.",
     suitableUses: ["profile and story drafts", "creator moodboards", "campaign concept images"],
@@ -763,6 +783,10 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/valentine-photos-photo-package-guide": {
     entityName: "Valentine's Day AI photos",
+    primaryKeyword: "Valentine's Day AI photos",
+    searchIntent: "Plan a consent-aware couple or single-person Valentine card and keepsake image.",
+    seoTitle: "Valentine's Day AI photo guide | myDreamshoots",
+    seoDescription: "Plan Valentine's Day couple portraits, cards, gifts, or social posts with approved source photos, clear consent, text-safe crops, and a focused review.",
     productSlug: "valentines-photo",
     userIntent: "Plan a consent-aware couple or single-person Valentine card and keepsake image.",
     suitableUses: ["personal cards", "private couple portraits", "gift and keepsake drafts"],
@@ -776,6 +800,10 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/virtual-try-on-photo-package-guide": {
     entityName: "AI Virtual Try-On preview",
+    primaryKeyword: "AI Virtual Try-On",
+    searchIntent: "Compare outfit direction visually without treating the preview as an exact fit or product guarantee.",
+    seoTitle: "AI Virtual Try-On planning guide | myDreamshoots",
+    seoDescription: "Plan outfits with AI Virtual Try-On using approved person and garment references, clear fit limits, and checks for body, fabric, logo, and identity artifacts.",
     productSlug: "virtual-try-on",
     userIntent: "Compare outfit direction visually without treating the preview as an exact fit or product guarantee.",
     suitableUses: ["outfit moodboards", "private style comparisons", "creative wardrobe planning"],
@@ -789,6 +817,10 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/wedding-portraits-photo-package-guide": {
     entityName: "AI Wedding Portraits",
+    primaryKeyword: "AI wedding portraits",
+    searchIntent: "Plan save-the-date, moodboard, and keepsake concepts without presenting them as a real wedding record.",
+    seoTitle: "AI Wedding portrait planning guide | myDreamshoots",
+    seoDescription: "Plan AI wedding portraits for save-the-dates, moodboards, invitations, websites, or keepsakes with couple consent, verified text, and careful detail review.",
     productSlug: "wedding-photo",
     userIntent: "Plan save-the-date, moodboard, and keepsake concepts without presenting them as a real wedding record.",
     suitableUses: ["save-the-date concepts", "moodboards", "private keepsake drafts"],
@@ -802,6 +834,10 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/world-cup-fan-photos-photo-package-guide": {
     entityName: "AI soccer fan photos",
+    primaryKeyword: "AI soccer fan photos",
+    searchIntent: "Plan a generic soccer match-day poster without official marks or player likenesses.",
+    seoTitle: "AI Soccer fan photo and poster guide | myDreamshoots",
+    seoDescription: "Plan soccer supporter portraits, avatars, banners, and match-day posters with generic colors, approved photos, no official marks, and brand-safety checks.",
     productSlug: "soccer",
     userIntent: "Plan a generic soccer match-day poster without official marks or player likenesses.",
     suitableUses: ["personal supporter portraits", "generic match-day posters", "private fan concepts"],
@@ -833,8 +869,8 @@ function articleFactsFor(slug) {
   return {
     authorUrl: "/about-us",
     reviewOwner: "myDreamshoots editorial team",
-    reviewedAt: "2026-08-18",
-    evidenceDate: "2026-08-18",
+    reviewedAt: "2026-08-19",
+    evidenceDate: "2026-08-19",
     evidenceType: "editorial-guidance",
     ...clone(facts)
   };
@@ -848,7 +884,7 @@ function makePriorityBlogArticle(input) {
     author: "myDreamshoots editorial team",
     authorType: "Organization",
     publishedAt: "2026-07-28",
-    updatedAt: "2026-08-18",
+    updatedAt: "2026-08-19",
     readMinutes: input.readMinutes ?? "7",
     primaryCta: "Browse AI photo packages",
     primaryHref: "/ai-image-generation",
@@ -1519,7 +1555,10 @@ function assertMyDreamShootsArticleFacts(config) {
     if (!article) continue;
     const required = [
       "entityName",
-      ...(seoProfileSlugs.has(slug) ? ["primaryKeyword", "searchIntent"] : []),
+      "primaryKeyword",
+      "searchIntent",
+      "seoTitle",
+      "seoDescription",
       "productSlug",
       "userIntent",
       "inputRequirements",
@@ -2120,6 +2159,8 @@ function makeArticleJson(config, article, existingPage, sourceArticlePage) {
     entityName: article.entityName,
     primaryKeyword: article.primaryKeyword,
     searchIntent: article.searchIntent,
+    seoTitle: article.seoTitle,
+    seoDescription: article.seoDescription,
     productSlug: article.productSlug,
     userIntent: article.userIntent,
     suitableUses: clone(article.suitableUses ?? []),
