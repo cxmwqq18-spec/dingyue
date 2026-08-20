@@ -369,7 +369,6 @@ function applyToState(state) {
     const homePage = site?.pages?.find((page) => page.slug === "/" || page.pageType === "home");
     if (homePage) {
       if (applyFeaturedSectionsToPageJson(homePage.draftJson, store)) report.pages += 1;
-      if (applyFeaturedSectionsToPageJson(homePage.publishedJson, store)) report.pages += 1;
     }
 
     for (const theme of state.siteThemes ?? []) {
@@ -377,16 +376,6 @@ function applyToState(state) {
       if (applyFeaturedSectionsToThemeTemplate(theme.templates?.index, store)) report.themeTemplates += 1;
     }
 
-    for (const publication of state.themePublications ?? []) {
-      if (publication.siteId !== store.siteId) continue;
-      const homeSnapshot = publication.snapshot?.pages?.find((page) => page.slug === "/" || page.pageType === "home");
-      if (homeSnapshot?.publishedJson && applyFeaturedSectionsToPageJson(homeSnapshot.publishedJson, store)) {
-        report.publications += 1;
-      }
-      if (applyFeaturedSectionsToThemeTemplate(publication.snapshot?.saasTheme?.templates?.index, store)) {
-        report.publications += 1;
-      }
-    }
   }
 
   return report;
@@ -398,9 +387,6 @@ function applyFeaturedSectionsToPublicationSnapshot(snapshot, store) {
   let changed = false;
   const homeSnapshot = nextSnapshot.pages?.find((page) => page.slug === "/" || page.pageType === "home");
   if (homeSnapshot?.draftJson && applyFeaturedSectionsToPageJson(homeSnapshot.draftJson, store)) {
-    changed = true;
-  }
-  if (homeSnapshot?.publishedJson && applyFeaturedSectionsToPageJson(homeSnapshot.publishedJson, store)) {
     changed = true;
   }
   if (applyFeaturedSectionsToThemeTemplate(nextSnapshot.saasTheme?.templates?.index, store)) {

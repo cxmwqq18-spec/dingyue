@@ -334,22 +334,16 @@ function syncSeoAdditionsForSlug(pageJson, page, generatedTemplates) {
 
 function updatePageJsonPair(page, templates, context = {}) {
   const beforeDraft = page?.draftJson;
-  const beforePublished = page?.publishedJson;
   const draftJson = clone(beforeDraft);
-  const publishedJson = clone(beforePublished);
   const desiredFaq = desiredFaqForSlug(templates, page, context);
   const updates =
     syncSeoAdditionsForSlug(draftJson, page, templates) +
-    syncSeoAdditionsForSlug(publishedJson, page, templates) +
     syncFaqSection(draftJson, desiredFaq) +
-    syncFaqSection(publishedJson, desiredFaq) +
-    syncSeoAdditionsForSlug(draftJson, page, templates) +
-    syncSeoAdditionsForSlug(publishedJson, page, templates);
+    syncSeoAdditionsForSlug(draftJson, page, templates);
   return {
-    changed: updates > 0 && (changed(beforeDraft, draftJson) || changed(beforePublished, publishedJson)),
+    changed: updates > 0 && changed(beforeDraft, draftJson),
     updates,
-    draftJson,
-    publishedJson
+    draftJson
   };
 }
 
@@ -365,10 +359,10 @@ function syncFaqInTemplates(themeTemplates, generatedTemplates, context = {}) {
     updates += syncOrderFromGenerated(template, generatedTemplates, key);
     if (Array.isArray(template.pages)) {
       for (const page of template.pages) {
-        updates += syncSeoAdditionsForSlug(page?.draftJson, page, generatedTemplates) + syncSeoAdditionsForSlug(page?.publishedJson, page, generatedTemplates);
+        updates += syncSeoAdditionsForSlug(page?.draftJson, page, generatedTemplates);
         const pageDesired = desiredFaqForSlug(generatedTemplates, page, context);
-        updates += syncFaqSection(page?.draftJson, pageDesired) + syncFaqSection(page?.publishedJson, pageDesired);
-        updates += syncSeoAdditionsForSlug(page?.draftJson, page, generatedTemplates) + syncSeoAdditionsForSlug(page?.publishedJson, page, generatedTemplates);
+        updates += syncFaqSection(page?.draftJson, pageDesired);
+        updates += syncSeoAdditionsForSlug(page?.draftJson, page, generatedTemplates);
       }
     }
   }
@@ -382,12 +376,9 @@ function syncFaqInSnapshot(snapshot, generatedTemplates, context = {}) {
   updates += syncFaqInTemplates(snapshot.theme?.templates, generatedTemplates, context);
   for (const page of Array.isArray(snapshot.pages) ? snapshot.pages : []) {
     updates += syncSeoAdditionsForSlug(page?.draftJson, page, generatedTemplates);
-    updates += syncSeoAdditionsForSlug(page?.publishedJson, page, generatedTemplates);
     const desiredFaq = desiredFaqForSlug(generatedTemplates, page, context);
     updates += syncFaqSection(page?.draftJson, desiredFaq);
-    updates += syncFaqSection(page?.publishedJson, desiredFaq);
     updates += syncSeoAdditionsForSlug(page?.draftJson, page, generatedTemplates);
-    updates += syncSeoAdditionsForSlug(page?.publishedJson, page, generatedTemplates);
   }
   return updates;
 }
@@ -401,7 +392,6 @@ function updateSiteState(state, store, generatedTemplates) {
     const result = updatePageJsonPair(page, generatedTemplates, { store, site, state });
     if (!result.changed) continue;
     page.draftJson = result.draftJson;
-    page.publishedJson = result.publishedJson;
     report.pages += 1;
     report.faqSections += result.updates;
   }
@@ -422,35 +412,6 @@ function updateSiteState(state, store, generatedTemplates) {
     if (!updates || !changed(theme.templates, templates)) continue;
     theme.templates = templates;
     report.siteThemes += 1;
-    report.faqSections += updates;
-  }
-
-  for (const publication of state.themePublications ?? []) {
-    if (publication.siteId !== store.siteId) continue;
-    const snapshot = clone(publication.snapshot);
-    const updates = syncFaqInSnapshot(snapshot, generatedTemplates, { store, site, state });
-    if (!updates || !changed(publication.snapshot, snapshot)) continue;
-    publication.snapshot = snapshot;
-    publication.pageCount = Array.isArray(snapshot.pages) ? snapshot.pages.length : publication.pageCount;
-    publication.sectionCount = Array.isArray(snapshot.pages)
-      ? snapshot.pages.reduce((count, page) => count + Object.keys(page?.publishedJson?.sections ?? {}).length, 0)
-      : publication.sectionCount;
-    publication.snapshotBytes = Buffer.byteLength(JSON.stringify(snapshot), "utf8");
-    report.themePublications += 1;
-    report.faqSections += updates;
-  }
-
-  for (const publication of site.themePublications ?? []) {
-    const snapshot = clone(publication.snapshot);
-    const updates = syncFaqInSnapshot(snapshot, generatedTemplates, { store, site, state });
-    if (!updates || !changed(publication.snapshot, snapshot)) continue;
-    publication.snapshot = snapshot;
-    publication.pageCount = Array.isArray(snapshot.pages) ? snapshot.pages.length : publication.pageCount;
-    publication.sectionCount = Array.isArray(snapshot.pages)
-      ? snapshot.pages.reduce((count, page) => count + Object.keys(page?.publishedJson?.sections ?? {}).length, 0)
-      : publication.sectionCount;
-    publication.snapshotBytes = Buffer.byteLength(JSON.stringify(snapshot), "utf8");
-    report.themePublications += 1;
     report.faqSections += updates;
   }
 

@@ -684,10 +684,6 @@ function syncKnownMydreamSections(pageJson, stats, source) {
     setSectionSetting(sections, "mobile_video_1", key, value, stats, "02_generator_headings_links", source);
   }
 
-  if (isHomepagePageJson) {
-    removeHomepageSection(pageJson, "brand_strip_1", stats, "01_about_copy", source);
-  }
-
   for (const [key, value] of [
     ["label", copyTargets.packageLabel],
     ["title", copyTargets.packageTitle],
@@ -850,14 +846,16 @@ function syncTargetState(state) {
   const site = asArray(state.sites).find((item) => item.id === siteId);
   if (!site) throw new Error(`site ${siteId} not found in ${statePath}`);
 
-  syncCopy(site, stats);
-  syncKnownMydreamSectionsDeep(site, stats, `site:${site.id}`);
+  syncCopy(site.branding, stats, `site:${site.id}.branding`);
+  syncKnownMydreamSectionsDeep(site.themeSettings?.draftJson, stats, `site:${site.id}.themeSettings.draftJson`);
+  for (const page of asArray(site.pages)) {
+    syncKnownMydreamSectionsDeep(page.draftJson, stats, `site:${site.id}.pages.${page.slug}.draftJson`);
+  }
   syncHomepageVideoShowcaseRows(state, site, stats);
   syncSiteThemeTemplatesFromPages(state, site, stats);
 
   for (const collectionName of [
     "siteThemes",
-    "themePublications",
     "products",
     "siteAiApps",
     "creativePackCategories",
@@ -872,11 +870,6 @@ function syncTargetState(state) {
       syncCopy(item, stats);
       syncKnownMydreamSectionsDeep(item, stats, `${collectionName}:${item.id ?? "item"}`);
     }
-  }
-
-  for (const publication of asArray(state.themePublications).filter((entry) => entry.siteId === siteId)) {
-    if (!publication.snapshot || typeof publication.snapshot !== "object") continue;
-    publication.snapshot.themeSettings = clone(site.themeSettings?.publishedJson ?? {});
   }
 
   stats.examples = stats.examples.slice(0, 36);

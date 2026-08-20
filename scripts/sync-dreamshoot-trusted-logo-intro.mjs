@@ -141,21 +141,11 @@ function applyToState(state) {
     const homePage = (site.pages ?? []).find((page) => page.slug === "/" || page.pageType === "home");
     const pageResults = [];
     if (homePage?.draftJson) pageResults.push(applyTrustedLogoIntro(homePage.draftJson, sourceSection));
-    if (homePage?.publishedJson) pageResults.push(applyTrustedLogoIntro(homePage.publishedJson, sourceSection));
     const themeResults = [];
     for (const theme of (state.siteThemes ?? []).filter((item) => item.siteId === store.siteId)) {
       themeResults.push(applyTrustedLogoIntro(theme.templates?.index, sourceSection));
     }
-    const publicationResults = [];
-    for (const publication of (state.themePublications ?? []).filter((item) => item.siteId === store.siteId)) {
-      const result = applyToPublicationSnapshot(publication.snapshot, sourceSection);
-      if (result.changed) {
-        publication.snapshot = result.snapshot;
-        Object.assign(publication, publicationMetrics(result.snapshot));
-      }
-      publicationResults.push(summarizePublicationResult(result));
-    }
-    report.push({ siteId: store.siteId, pageResults, themeResults, publicationResults });
+    report.push({ siteId: store.siteId, pageResults, themeResults, publicationResults: [] });
   }
   return report;
 }
@@ -204,11 +194,9 @@ async function updateDatabase() {
       const pageResults = [];
       if (page) {
         const draftJson = clone(page.draftJson);
-        const publishedJson = clone(page.publishedJson);
         pageResults.push(applyTrustedLogoIntro(draftJson, sourceSection));
-        pageResults.push(applyTrustedLogoIntro(publishedJson, sourceSection));
         if (apply && pageResults.some((result) => result.changed)) {
-          writeOperations.push((tx) => tx.themePage.update({ where: { id: page.id }, data: { draftJson, publishedJson } }));
+          writeOperations.push((tx) => tx.themePage.update({ where: { id: page.id }, data: { draftJson } }));
         }
       }
 

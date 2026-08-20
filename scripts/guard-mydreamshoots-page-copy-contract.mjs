@@ -42,7 +42,7 @@ async function activeProjectionRowCount() {
         include: { publication: true }
       });
       return Array.isArray(active?.publication?.snapshot?.publishedPageEntities)
-        ? active.publication.snapshot.publishedPageEntities.length
+        ? active.publication.snapshot.publishedPageEntities.filter((page) => page?.status === "published" && page?.indexable === true).length
         : 0;
     } finally {
       await prisma.$disconnect();
@@ -55,6 +55,7 @@ async function activeProjectionRowCount() {
 const requiredSlugs = (taxonomy.items ?? [])
   .map((item) => normalizeSlug(item.slug))
   .filter(Boolean);
+const deferredSlugs = new Set(["motion-generator"]);
 const requiredFields = [
   "pageEntityId",
   "copyRevision",
@@ -163,6 +164,8 @@ for (const slug of requiredSlugs) {
   if (!String(profile.ctaHref ?? "").startsWith("/")) independenceReasons.push("CTA_HREF_MISSING");
   if (!Array.isArray(profile.relatedLinks) || profile.relatedLinks.length < 2) independenceReasons.push("RELATED_LINKS_INCOMPLETE");
   const indexable = independenceReasons.length === 0 && mediaReady && taxonomyItem?.mediaReviewStatus !== "review_required";
+  const deferred = deferredSlugs.has(slug);
+  const routeIndexable = indexable && !deferred;
   const route = {
     canonicalPath: `/ai-image-generation/${slug}`,
     pageEntityId: profile.pageEntityId,
@@ -171,14 +174,19 @@ for (const slug of requiredSlugs) {
     fallbackUsed: false,
     expectedPackId,
     mediaReady,
-    status: indexable ? "published" : "review_required",
-    indexable,
-    sitemapEligible: indexable,
-    reviewReasons: [...independenceReasons, ...(!mediaReady || taxonomyItem?.mediaReviewStatus === "review_required" ? [taxonomyItem?.mediaReviewReason || "PAGE_COPY_MEDIA_ENTITY_MISMATCH"] : [])]
+    deferred,
+    status: routeIndexable ? "published" : "review_required",
+    indexable: routeIndexable,
+    sitemapEligible: routeIndexable,
+    reviewReasons: [
+      ...independenceReasons,
+      ...(!mediaReady || taxonomyItem?.mediaReviewStatus === "review_required" ? [taxonomyItem?.mediaReviewReason || "PAGE_COPY_MEDIA_ENTITY_MISMATCH"] : []),
+      ...(deferred ? ["DEFERRED_AI_VIDEO_PAGE"] : [])
+    ]
   };
   routeRows.push(route);
   if (route.copySource !== "page-copy" || route.fallbackUsed) fallbackRows.push(slug);
-  if (!indexable) reviewRows.push({ slug, reasons: route.reviewReasons });
+  if (!routeIndexable) reviewRows.push({ slug, deferred, reasons: route.reviewReasons });
 }
 
 assert.equal(missingProfiles.length, 0, "every MyDreamShoots taxonomy leaf should have a direct use-case profile", { missingProfiles });
@@ -191,13 +199,22 @@ assert.ok(blackFridayPack.imageUrl, "Black Friday pack must keep a cover image")
 
 const reviewIsolationFailures = routeRows.filter((route) => route.status === "review_required" && (route.indexable || route.sitemapEligible));
 const activeProjectionRows = await activeProjectionRowCount();
+const blockingReviewRows = reviewRows.filter((row) => !row.deferred);
+const deferredRows = reviewRows.filter((row) => row.deferred);
+const expectedIndexableRows = requiredSlugs.length - deferredRows.length;
+const reviewIsolationReady = fallbackRows.length === 0 && reviewIsolationFailures.length === 0;
+const productionReleaseReady = reviewIsolationReady &&
+  blockingReviewRows.length === 0 &&
+  blackFridayMediaMismatch === false &&
+  activeProjectionRows === expectedIndexableRows;
 const report = {
-  ok: reviewIsolationFailures.length === 0,
+  ok: reviewIsolationReady,
   contractOk: true,
-  releaseReady: fallbackRows.length === 0 && reviewIsolationFailures.length === 0,
-  releaseReadyMeaning: "code_and_review_isolation_contract_only",
+  reviewIsolationReady,
+  productionReleaseReady,
+  expectedIndexableRows,
   sourceRows: requiredSlugs.length,
-  independentRows: routeRows.length - reviewRows.length,
+  independentRows: routeRows.filter((route) => route.status === "published").length,
   requiredSlugs: requiredSlugs.length,
   pageCopyProfiles: requiredSlugs.length,
   checkedRows: routeRows.length,
@@ -205,6 +222,8 @@ const report = {
   missingRows: missingRows.length,
   driftRows: packProfileOwnerRows.length,
   reviewRows: reviewRows.length,
+  blockingRows: blockingReviewRows,
+  deferredRows: deferredRows.length,
   prospectiveProjectionRows: routeRows.length,
   activeProjectionRows,
   blackFridayPack: blackFridayPack?.id ?? null,
@@ -213,4 +232,4 @@ const report = {
   reviewSlugs: reviewRows.map((row) => row.slug)
 };
 console.log(JSON.stringify(report, null, 2));
-if (!report.contractOk || (process.argv.includes("--release") && !report.releaseReady)) process.exitCode = 1;
+if (!report.contractOk || (process.argv.includes("--release") && !report.reviewIsolationReady) || (process.argv.includes("--production") && !report.productionReleaseReady)) process.exitCode = 1;

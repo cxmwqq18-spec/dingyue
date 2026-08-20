@@ -24,7 +24,8 @@ const homeOrderByStore = {
     "package_catalog_1",
     "proof_1",
     "faq_1",
-    "conversion_1"
+    "conversion_1",
+    "brand_strip_1"
   ],
   aidreamcapes: [
     "hero_1",
@@ -41,7 +42,7 @@ const homeOrderByStore = {
   ]
 };
 const removedHomeSectionsByStore = {
-  mydreamshoots: ["mobile_video_1", "tutorial_video_2", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "brand_strip_1"],
+  mydreamshoots: ["mobile_video_1", "tutorial_video_2", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
   aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
 };
 const bestPageTemplateKeys = ["best-packages", "best-ai-image", "best-ai-video"];
@@ -757,7 +758,7 @@ function applyStoreSpecificExistingSections(pageJson, store, featuredSections = 
   if (store.conversion) {
     sections.conversion_1 = clone(store.conversion);
   }
-  if (store.key !== "mydreamshoots") {
+  if (store.partnerStrip) {
     sections.brand_strip_1 = clone(store.partnerStrip);
   }
   applyFeaturedThanksgivingToHomeSections(sections, featuredSections);
@@ -793,11 +794,10 @@ function bestPageTemplatesForSite(site) {
 
 function bestPageOgImage(site, json) {
   const sections = json?.sections ?? {};
-  const homeSections = site.pages?.find((page) => page.slug === "/" || page.pageType === "home")?.publishedJson?.sections ?? {};
+  const homeSections = site.pages?.find((page) => page.slug === "/" || page.pageType === "home")?.draftJson?.sections ?? {};
   return firstSeasonalBlockImage(sections.featured_pack_1) ||
     firstSeasonalBlockImage(sections.featured_christmas_1) ||
     firstSeasonalBlockImage(sections.featured_thanksgiving_1) ||
-    site.themeSettings?.publishedJson?.seo?.defaultOgImage ||
     site.themeSettings?.draftJson?.seo?.defaultOgImage ||
     settingText(homeSections.hero_1, "heroVisualOverride") ||
     settingText(homeSections.hero_1, "imageUrl") ||
@@ -819,8 +819,7 @@ function bestThemePageRecord(site, templateKey, json) {
     templateKey,
     slug,
     title: bestPageTitle(templateKey),
-    draftJson: clone(pageJson),
-    publishedJson: clone(pageJson)
+    draftJson: clone(pageJson)
   };
 }
 
@@ -871,8 +870,7 @@ function upsertBestPagesInPublication(publication, site) {
       templateKey: page.templateKey,
       slug: page.slug,
       title: page.title,
-      draftJson: clone(page.draftJson),
-      publishedJson: clone(page.publishedJson)
+      draftJson: clone(page.draftJson)
     };
     const existingIndex = pages.findIndex((item) => item.slug === snapshotPage.slug);
     if (existingIndex >= 0) pages[existingIndex] = { ...pages[existingIndex], ...snapshotPage, id: pages[existingIndex].id || snapshotPage.id };
@@ -913,11 +911,9 @@ function applyStoreToState(state, store) {
   if (!site || !homePage) throw new Error(`missing_home_page:${store.key}`);
   const featuredSections = bestPageTemplatesForSite(site)["best-packages"]?.sections ?? {};
   if (applyStoreSpecificExistingSections(homePage.draftJson, store, featuredSections)) pageUpdates += 1;
-  if (applyStoreSpecificExistingSections(homePage.publishedJson, store, featuredSections)) pageUpdates += 1;
   for (const page of site.pages ?? []) {
     if (page.slug !== "/ai-image-generation") continue;
     if (applyMydreamshootsPackageDirectoryCopy(page.draftJson, store)) pageUpdates += 1;
-    if (applyMydreamshootsPackageDirectoryCopy(page.publishedJson, store)) pageUpdates += 1;
   }
   pageUpdates += upsertBestPagesForSite(site);
 
@@ -936,20 +932,6 @@ function applyStoreToState(state, store) {
     template.content_for_page = syntheticPage.sectionsOrder;
     themeUpdates += 1;
     if (applyMydreamshootsPackageDirectoryCopy(theme.templates?.packages, store)) themeUpdates += 1;
-  }
-
-  for (const publication of state.themePublications ?? []) {
-    if (publication.siteId !== store.siteId) continue;
-    const snapshotHome = publication.snapshot?.pages?.find((page) => page.slug === "/");
-    if (snapshotHome?.publishedJson && applyStoreSpecificExistingSections(snapshotHome.publishedJson, store, featuredSections)) {
-      publicationUpdates += 1;
-    }
-    const snapshotDirectory = publication.snapshot?.pages?.find((page) => page.slug === "/ai-image-generation");
-    if (snapshotDirectory?.publishedJson && applyMydreamshootsPackageDirectoryCopy(snapshotDirectory.publishedJson, store)) {
-      publicationUpdates += 1;
-    }
-    publicationUpdates += upsertBestPagesInPublication(publication, site);
-    refreshPublicationStats(publication);
   }
 
   return { pageUpdates, themeUpdates, publicationUpdates };
@@ -974,18 +956,11 @@ async function updateDatabase(state, selectedStores) {
       for (const templateKey of bestPageTemplateKeys) {
         const page = site?.pages?.find((item) => item.slug === bestPageSlug(templateKey));
         if (!page) continue;
-        await prisma.themePage.upsert({
-          where: { siteId_slug: { siteId: store.siteId, slug: page.slug } },
-          create: {
-            id: page.id,
-            siteId: store.siteId,
-            pageType: page.pageType,
-            templateKey: page.templateKey,
-            slug: page.slug,
-            title: page.title,
-            draftJson: page.draftJson
-          },
-          update: {
+        const existingPage = await prisma.themePage.findUnique({ where: { siteId_slug: { siteId: store.siteId, slug: page.slug } }, select: { id: true } });
+        if (!existingPage) throw new Error(`ThemePage ${page.slug} must exist before draft-only homepage layout sync.`);
+        await prisma.themePage.update({
+          where: { id: existingPage.id },
+          data: {
             pageType: page.pageType,
             templateKey: page.templateKey,
             title: page.title,

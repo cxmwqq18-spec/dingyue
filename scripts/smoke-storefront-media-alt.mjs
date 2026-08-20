@@ -188,14 +188,15 @@ const acceptedAlts = [];
 let galleryCount = 0;
 
 for (const pack of myDreamShootsPacks) {
-  const images = Array.isArray(pack.galleryImages) ? pack.galleryImages : [];
+  const images = [pack.imageUrl, ...(Array.isArray(pack.galleryImages) ? pack.galleryImages : [])]
+    .filter((imageUrl) => typeof imageUrl === "string" && imageUrl.trim());
   const alts = Array.isArray(pack.galleryImageAlts) ? pack.galleryImageAlts : [];
-  assert(images.length === alts.length, `${pack.id} gallery images and alts must have equal lengths`);
+  assert(images.length === alts.length, `${pack.id} cover/gallery images and alts must have equal lengths`);
   images.forEach((imageUrl, index) => {
     galleryCount += 1;
     const alt = String(alts[index] ?? "").trim();
     const identity = imageIdentity(imageUrl);
-    assertCleanAlt(alt, `${pack.id} gallery alt ${index + 1}`);
+    assertCleanAlt(alt, `${pack.id} ${index === 0 ? "cover" : `gallery alt ${index}`}`);
     const existing = altByImage.get(identity);
     if (existing) {
       assert(normalizeAlt(existing) === normalizeAlt(alt), `same image URL must keep the same alt: ${identity}`);
@@ -209,7 +210,7 @@ for (const pack of myDreamShootsPacks) {
 }
 
 assert(myDreamShootsPacks.length === 38, `expected 38 MyDreamShoots creative packs, found ${myDreamShootsPacks.length}`);
-assert(galleryCount === 456, `expected 456 MyDreamShoots gallery alts, found ${galleryCount}`);
+assert(galleryCount === 494, `expected 494 MyDreamShoots cover/gallery alts, found ${galleryCount}`);
 assert(myDreamShootsAssets.length === 23, `expected 23 MyDreamShoots media assets, found ${myDreamShootsAssets.length}`);
 for (const asset of myDreamShootsAssets) {
   assertCleanAlt(String(asset.altText ?? ""), `media asset ${asset.id}`);

@@ -94,7 +94,7 @@ async function validateManifest(manifest, state) {
     const category = categoryById.get(pack.categoryId);
     assert(category, `${slug} active category is missing from platform state`);
     assert(Array.isArray(result.galleryImages) && result.galleryImages.length === 12, `${slug} manifest should contain 12 gallery images`);
-    assert(Array.isArray(result.galleryImageAlts) && result.galleryImageAlts.length === 12, `${slug} manifest should contain 12 gallery alts`);
+    assert(Array.isArray(result.galleryImageAlts) && result.galleryImageAlts.length === 13, `${slug} manifest should contain one cover alt plus 12 gallery alts`);
 
     const stageCover = path.join(stageCoverRoot, slug, `${slug}-cover.webp`);
     await assertImage(stageCover, 1280, 960, `${slug} staged cover`);

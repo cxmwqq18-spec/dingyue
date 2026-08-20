@@ -8,6 +8,7 @@ import type {
   PublishedPageCopyProjection,
   PublishedPageEntityProjection,
   PublishedPageMediaProjection,
+  PublishedStandardPageMediaProjection,
   PublishedRouteProjection,
   ThemePublicationSnapshot,
   PublishedSeoSnapshot
@@ -40,10 +41,10 @@ function route(value: unknown): value is PublishedRouteProjection {
   }
   return value.routeKind === "ai-image-theme-leaf" && text(value.canonicalSlug) && text(value.canonicalPath) &&
     text(value.pageEntityId) && text(value.pageRevision) && text(value.copyRevision) &&
-    (value.copySource === "page-copy" || value.copySource === "missing") && value.fallbackUsed === false &&
+    (value.copySource === "page-copy" || value.copySource === "missing") && value.fallbackUsed === false && typeof value.deferred === "boolean" &&
     (value.status === "published" || value.status === "review_required") && typeof value.indexable === "boolean" &&
     typeof value.sitemapEligible === "boolean" && text(value.expectedPackId) && text(value.mediaEntityId) &&
-    (value.status === "published" ? value.indexable && value.sitemapEligible : !value.indexable && !value.sitemapEligible);
+    (value.status === "published" ? value.indexable && value.sitemapEligible && value.deferred === false : !value.indexable && !value.sitemapEligible);
 }
 
 function textArray(value: unknown, minimum = 0): value is string[] {
@@ -81,7 +82,15 @@ function media(value: unknown): value is PublishedPageMediaProjection {
     Array.isArray(value.imageAlts) && value.imageAlts.every((item) => typeof item === "string") &&
     value.imageAlts.length === value.galleryImages.length + 1 &&
     (value.status === "ready" || value.status === "review_required") &&
-    (value.status !== "ready" || (publicMediaUrl(value.primaryImage) && value.imageAlts.every(text)));
+    (value.status !== "ready" || (publicMediaUrl(value.primaryImage) && value.galleryImages.length === 12 && value.imageAlts.length === 13 && value.imageAlts.every(text)));
+}
+
+function standardMedia(value: unknown): value is PublishedStandardPageMediaProjection {
+  return record(value) && text(value.pageEntityId) && text(value.pageId) && text(value.canonicalPath) &&
+    text(value.mediaEntityId) && publicMediaUrl(value.primaryImage) && text(value.primaryImageAlt) &&
+    value.ogImage === value.primaryImage && value.twitterImage === value.primaryImage && value.jsonLdImage === value.primaryImage &&
+    Array.isArray(value.sitemapImages) && value.sitemapImages.length > 0 && value.sitemapImages.every(publicMediaUrl) &&
+    (value.status === "ready" || value.status === "review_required") && text(value.revision);
 }
 
 function offer(value: unknown): value is PublishedOfferProjection {
@@ -123,7 +132,9 @@ function factsCompleteForIndexablePages(value: PublishedFactsProjection, pages: 
   return text(identity?.legalName) && text(identity?.entityType) && text(address?.line1) && text(address?.city) &&
     text(address?.region) && text(address?.postalCode) && text(address?.country) && text(identity?.supportEmail) &&
     typeof privacy?.customerMediaTraining === "boolean" && Number.isInteger(privacy.sourceMediaRetentionDays) && Number(privacy.sourceMediaRetentionDays) > 0 &&
-    typeof refund?.reviewRequired === "boolean" && Number.isInteger(refund.windowDays) && Number(refund.windowDays) > 0 && text(refund.effectiveDate);
+    typeof refund?.reviewRequired === "boolean" && Number.isInteger(refund.windowDays) && Number(refund.windowDays) > 0 && text(refund.effectiveDate) &&
+    text(value.creditLifecycle?.reserve) && text(value.creditLifecycle?.consume) && text(value.creditLifecycle?.release) &&
+    text(value.security?.transportClaimKey) && text(value.security?.storageClaimKey);
 }
 
 function stable(value: unknown): unknown {
@@ -160,6 +171,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     Array.isArray(v1.publishedPageEntities) && v1.publishedPageEntities.every(pageEntity) &&
     Array.isArray(v1.publishedPageCopy) && v1.publishedPageCopy.every(pageCopy) &&
     Array.isArray(v1.publishedPageMedia) && v1.publishedPageMedia.every(media) &&
+    Array.isArray(v1.publishedStandardPageMedia) && v1.publishedStandardPageMedia.every(standardMedia) &&
     Array.isArray(v1.publishedPackFacts) &&
     Array.isArray(v1.publishedOffers) && v1.publishedOffers.every(offer) && facts(v1.publishedFacts) &&
     Array.isArray(v1.publishedCollectionRefs) && v1.publishedCollectionRefs.every(collection) &&
@@ -171,6 +183,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
 
   const publishedPageEntities = v1.publishedPageEntities;
   const publishedPageMedia = v1.publishedPageMedia;
+  const publishedStandardPageMedia = v1.publishedStandardPageMedia;
   const publishedRoutes = v1.publishedRoutes;
   const leafRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "ai-image-theme-leaf");
   const policyRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "policy");
@@ -199,7 +212,9 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const routePaths = publishedRoutes.map((item) => item.disposition === "redirect" ? item.aliasPath : item.canonicalPath);
   const entityIds = publishedPageEntities.map((item) => item.pageEntityId);
   const mediaIds = publishedPageMedia.map((item) => item.mediaEntityId);
+  const standardMediaIds = publishedStandardPageMedia.map((item) => item.mediaEntityId);
   const linkIds = links.map((item) => item.linkEntityId);
+  const expectedStandardPaths = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"];
   const completeCoverage = leafRoutes.length === publishedPageEntities.length && leafRoutes.length === publishedPageMedia.length &&
     leafRoutes.length === pageCopyRows.length && leafRoutes.length === collections.length &&
     policyRoutes.length === expectedPolicyPaths.length &&
@@ -210,6 +225,23 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     collections.every((item) => pages.has(item.pageEntityId) && mediaByPage.get(item.pageEntityId)?.mediaEntityId === item.mediaEntityId) &&
     policyRoutes.every((item) => snapshot.pages.some((page) => page.id === item.pageId && page.slug === item.canonicalPath)) &&
     redirectRoutes.every((item) => policyRoutes.some((routeItem) => routeItem.canonicalPath === item.targetPath));
+  const standardMediaAgree = publishedStandardPageMedia.length === expectedStandardPaths.length &&
+    expectedStandardPaths.every((path) => publishedStandardPageMedia.some((item) => {
+      const page = snapshot.pages.find((candidate) => candidate.id === item.pageId);
+      return item.canonicalPath === path && item.status === "ready" && page?.slug === path;
+    }));
+  const mediaOwnershipAgree = leafRoutes.every((item) => {
+    const page = pages.get(item.pageEntityId);
+    const pageMedia = mediaByPage.get(item.pageEntityId);
+    const collection = collections.find((candidate) => candidate.pageEntityId === item.pageEntityId);
+    return page?.mediaEntityId === item.mediaEntityId &&
+      pageMedia?.ownerPageEntityId === item.pageEntityId &&
+      pageMedia?.sourcePackId === item.expectedPackId &&
+      pageMedia?.packId === pageMedia.sourcePackId &&
+      collection?.ownerPageEntityId === item.pageEntityId &&
+      collection?.mediaEntityId === item.mediaEntityId &&
+      collection?.imageMediaEntityId === item.mediaEntityId;
+  });
   const linksAgree = links.every((item) => {
     const owner = pages.get(item.ownerPageEntityId);
     if (!owner) return false;
@@ -227,20 +259,22 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const aggregateRevisionsAgree = revisions.routeRevision === projectionRevision(snapshot.publishedRoutes) &&
     revisions.pageRevision === projectionRevision(snapshot.publishedPageEntities) &&
     revisions.copyRevision === projectionRevision(snapshot.publishedPageCopy) &&
-    revisions.mediaRevision === projectionRevision(snapshot.publishedPageMedia) &&
+    revisions.mediaRevision === projectionRevision({ leaf: snapshot.publishedPageMedia, standard: snapshot.publishedStandardPageMedia }) &&
     revisions.packRevision === projectionRevision(snapshot.publishedPackFacts) &&
     revisions.offerRevision === projectionRevision(snapshot.publishedOffers) &&
     revisions.factsRevision === projectionRevision(v1.publishedFacts) &&
     revisions.collectionRevision === projectionRevision(v1.publishedCollectionRefs) &&
     revisions.linkRevision === projectionRevision(v1.publishedLinkRefs) &&
-    revisions.policyRevision === projectionRevision({ privacy: v1.publishedFacts.privacy, refund: v1.publishedFacts.refund });
-  if (!factsCompleteForIndexablePages(v1.publishedFacts, publishedPageEntities) || !projectionsAgree || !completeCoverage || !linksAgree || !aggregateRevisionsAgree ||
-      !unique(routePaths) || !unique(entityIds) || !unique(mediaIds) || !unique(linkIds) || snapshot.snapshotHash !== revisions.snapshotHash) {
+    revisions.policyRevision === projectionRevision({ privacy: v1.publishedFacts.privacy, refund: v1.publishedFacts.refund, creditLifecycle: v1.publishedFacts.creditLifecycle, security: v1.publishedFacts.security });
+  if (!factsCompleteForIndexablePages(v1.publishedFacts, publishedPageEntities) || !projectionsAgree || !completeCoverage || !standardMediaAgree || !mediaOwnershipAgree || !linksAgree || !aggregateRevisionsAgree ||
+      !unique(routePaths) || !unique(entityIds) || !unique(mediaIds) || !unique(standardMediaIds) || !unique(linkIds) || snapshot.snapshotHash !== revisions.snapshotHash) {
     if (process.env.MYDREAMSHOOTS_SNAPSHOT_DEBUG === "1") {
       console.error(JSON.stringify({
         projectionsAgree,
         factsCompleteForIndexablePages: factsCompleteForIndexablePages(v1.publishedFacts, publishedPageEntities),
         completeCoverage,
+        standardMediaAgree,
+        mediaOwnershipAgree,
         linksAgree,
         aggregateRevisionsAgree,
         uniqueRoutePaths: unique(routePaths),

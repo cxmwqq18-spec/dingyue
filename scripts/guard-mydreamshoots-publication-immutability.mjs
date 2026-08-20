@@ -5,11 +5,14 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const scripts = fs.readdirSync(path.join(repoRoot, "scripts"))
-  .filter((name) => /^(?:sync|rectify|enrich|migrate)-(?:mydreamshoots|dreamshoot)/.test(name) && name.endsWith(".mjs"))
+  .filter((name) => /^(?:sync|rectify|enrich|migrate|repair)-(?:mydreamshoots|dreamshoot)/.test(name) && name.endsWith(".mjs"))
   .sort()
   .map((name) => `scripts/${name}`);
 const forbiddenPublication = /(?:\btx\.)?themePublication\.(?:update|updateMany|delete|deleteMany)\s*\(/g;
-const forbiddenPublishedJsonWrite = /(?:themePage|themeSettings|storefrontProfile)\.(?:update|updateMany|upsert|create)\s*\(\s*\{[\s\S]{0,500}?\bdata\s*:\s*\{[^}]*\bpublishedJson\s*:/g;
+const publishedRecordWrite = /(?:themePage|themeSettings|storefrontProfile)\.(?:update|updateMany|upsert)\s*\(/g;
+const forbiddenSnapshotMutation = /(?:syncPublicationSnapshots\s*\(|\bpublication\.snapshot(?:\.[a-zA-Z0-9_$]+)?\s*=)/g;
+const forbiddenPublishedAssignment = /(?:\b(?:page|homePage|site\.themeSettings|themeSettings)\.publishedJson\s*=|\b(?:page|homePage)\.publishedJson\.[a-zA-Z0-9_$]+\s*=)/g;
+const forbiddenPublicationIteration = /for\s*\(\s*const\s+publication\s+of\s+(?:state\.)?themePublications/g;
 const failures = [];
 
 for (const relative of scripts) {
@@ -19,9 +22,25 @@ for (const relative of scripts) {
     const line = source.slice(0, match.index).split("\n").length;
     failures.push({ file: relative, line, kind: "historical-publication-write", match: match[0] });
   }
-  for (const match of source.matchAll(forbiddenPublishedJsonWrite)) {
+  for (const match of source.matchAll(publishedRecordWrite)) {
+    const call = source.slice(match.index, match.index + 3200);
+    const end = call.search(/\n\s*\}\);/);
+    const body = end >= 0 ? call.slice(0, end + 4) : call;
+    if (!/(?:\bpublishedJson\s*:|\{\s*publishedJson\s*[,}])/.test(body)) continue;
     const line = source.slice(0, match.index).split("\n").length;
-    failures.push({ file: relative, line, kind: "published-json-write", match: match[0].split("\n")[0] });
+    failures.push({ file: relative, line, kind: "published-json-write", match: match[0] });
+  }
+  for (const match of source.matchAll(forbiddenSnapshotMutation)) {
+    const line = source.slice(0, match.index).split("\n").length;
+    failures.push({ file: relative, line, kind: "historical-snapshot-mutation", match: match[0] });
+  }
+  for (const match of source.matchAll(forbiddenPublishedAssignment)) {
+    const line = source.slice(0, match.index).split("\n").length;
+    failures.push({ file: relative, line, kind: "published-json-assignment", match: match[0] });
+  }
+  for (const match of source.matchAll(forbiddenPublicationIteration)) {
+    const line = source.slice(0, match.index).split("\n").length;
+    failures.push({ file: relative, line, kind: "historical-publication-iteration", match: match[0] });
   }
 }
 

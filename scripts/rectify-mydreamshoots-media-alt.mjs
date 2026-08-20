@@ -176,6 +176,16 @@ function subjectForPack(pack, imageUrl) {
   const sourceSlug = sourceSlugFromImageUrl(imageUrl);
   if (subjectBySourceSlug[sourceSlug]) return subjectBySourceSlug[sourceSlug];
 
+  const packSlug = String(pack.category || pack.name || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  if (sourceSlug && sourceSlug === packSlug) {
+    const headline = cleanAltText(pack.headline || pack.description || pack.name);
+    return headline || `${pack.name} themed portrait`;
+  }
+
   const packKey = `${pack.category ?? ""} ${pack.name ?? ""} ${pack.description ?? ""}`.toLowerCase();
   if (/(headshot|professional|linkedin|portrait retouch)/.test(packKey)) return subjectBySourceSlug["professional-headshots"];
   if (/(soccer|football|stadium|fan)/.test(packKey)) return subjectBySourceSlug["world-cup-fan-photos"];
@@ -188,8 +198,15 @@ function subjectForPack(pack, imageUrl) {
   return "Portrait with polished editorial styling";
 }
 
-function galleryCandidates(pack, imageUrl, index) {
+function galleryCandidates(pack, imageUrl, index, role = "gallery") {
   const subject = subjectForPack(pack, imageUrl);
+  if (role === "cover") {
+    return [
+      `${subject} used as the representative package cover.`,
+      `Representative package cover featuring a ${subject.charAt(0).toLowerCase() + subject.slice(1)}.`,
+      `${pack.name} cover featuring a focused ${subject.charAt(0).toLowerCase() + subject.slice(1)}.`
+    ];
+  }
   const scene = galleryScenes[index % galleryScenes.length];
   const alternateScene = galleryScenes[(index + 3) % galleryScenes.length];
   const subjectLower = subject.charAt(0).toLowerCase() + subject.slice(1);
@@ -233,13 +250,14 @@ function buildGalleryAlts(packs) {
   let total = 0;
   for (const pack of packs) {
     const galleryImages = Array.isArray(pack.galleryImages) ? pack.galleryImages : [];
-    pack.galleryImageAlts = galleryImages.map((imageUrl, index) => {
+    const images = [pack.imageUrl, ...galleryImages].filter((imageUrl) => typeof imageUrl === "string" && imageUrl.trim());
+    pack.galleryImageAlts = images.map((imageUrl, index) => {
       total += 1;
       return reserveAlt(
         registry,
         imageUrl,
-        galleryCandidates(pack, imageUrl, index),
-        `creative pack ${pack.id} gallery slot ${index + 1}`
+        galleryCandidates(pack, imageUrl, Math.max(0, index - 1), index === 0 ? "cover" : "gallery"),
+        `creative pack ${pack.id} ${index === 0 ? "cover" : `gallery slot ${index}`}`
       );
     });
   }
@@ -268,14 +286,15 @@ function validateState(state) {
   const registry = createAltRegistry();
   let galleryCount = 0;
   for (const pack of packs) {
-    const images = Array.isArray(pack.galleryImages) ? pack.galleryImages : [];
+    const images = [pack.imageUrl, ...(Array.isArray(pack.galleryImages) ? pack.galleryImages : [])]
+      .filter((imageUrl) => typeof imageUrl === "string" && imageUrl.trim());
     const alts = Array.isArray(pack.galleryImageAlts) ? pack.galleryImageAlts : [];
     if (images.length !== alts.length) {
-      throw new Error(`Gallery image/alt count mismatch for ${pack.id}: ${images.length}/${alts.length}`);
+      throw new Error(`Cover/gallery image/alt count mismatch for ${pack.id}: ${images.length}/${alts.length}`);
     }
     images.forEach((imageUrl, index) => {
       galleryCount += 1;
-      reserveAlt(registry, imageUrl, [alts[index]], `validated creative pack ${pack.id} gallery slot ${index + 1}`);
+      reserveAlt(registry, imageUrl, [alts[index]], `validated creative pack ${pack.id} ${index === 0 ? "cover" : `gallery slot ${index}`}`);
     });
   }
   for (const asset of assets) assertValidAlt(asset.altText, `validated media asset ${asset.id}`);
@@ -347,8 +366,8 @@ async function main() {
 
   const before = {
     packs: packs.length,
-    galleryCount: packs.reduce(
-      (total, pack) => total + (Array.isArray(pack.galleryImages) ? pack.galleryImages.length : 0),
+    mediaCount: packs.reduce(
+      (total, pack) => total + [pack.imageUrl, ...(Array.isArray(pack.galleryImages) ? pack.galleryImages : [])].filter(Boolean).length,
       0
     ),
     mediaAssets: assets.length
@@ -356,7 +375,7 @@ async function main() {
   const gallerySummary = buildGalleryAlts(packs);
   const mediaAssetCount = buildMediaAssetAlts(assets);
   const after = validateState(state);
-  if (after.galleryCount !== 456) throw new Error(`Expected 456 gallery alts, found ${after.galleryCount}`);
+  if (after.galleryCount !== 494) throw new Error(`Expected 494 cover/gallery alts, found ${after.galleryCount}`);
   if (after.mediaAssets !== 23) throw new Error(`Expected 23 media asset alts, found ${after.mediaAssets}`);
 
   if (applyJson) writeState(state);

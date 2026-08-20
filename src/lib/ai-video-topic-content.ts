@@ -15,6 +15,9 @@ export type AiVideoTopicCard = {
   noteBody?: string;
   exampleLabel?: string;
   exampleBody?: string;
+  details?: Array<{ label: string; body: string }>;
+  href?: string;
+  linkLabel?: string;
 };
 
 export type AiVideoTopicUseCase = AiVideoTopicCard & {
@@ -35,6 +38,7 @@ export type AiVideoTopicFoundation = {
   rightTone?: "avoid" | "neutral";
   expertLabel?: string;
   expertTip: string;
+  cards?: AiVideoTopicCard[];
 };
 
 export type AiVideoTopicGuidance = {
@@ -78,6 +82,7 @@ export type AiVideoTopicLandingContent = {
     mediaAspectRatio?: string;
     imageFit?: "cover" | "contain";
   };
+  quickAnswer?: AiVideoTopicGuidance;
   useCases: {
     eyebrow: string;
     title: string;
@@ -107,6 +112,8 @@ export type AiVideoTopicLandingContent = {
     intro: string;
     items: AiVideoTopicCard[];
   };
+  evidence?: AiVideoTopicGuidance;
+  examples?: AiVideoTopicGuidance;
   steps: {
     eyebrow: string;
     title: string;
@@ -2302,6 +2309,323 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       body: "Choose the audience, the real reason to care, the promise you can support, the proof that makes it believable, and the one next action this ad should earn.",
       cta: "Create My Product Ad",
       microcopy: "Use product material and claims you are allowed to publish, and review the finished ad for accuracy before sharing."
+    }
+  },
+  "ugc-ad-video": {
+    seo: {
+      title: "AI UGC Video Generator for Creator-Style Product Ads | myDreamshoots",
+      description:
+        "Create creator-style product ads with an AI UGC video generator. Plan hooks, speaker roles, product-in-use scenes, visible proof, voiceover, and clear CTAs—then validate every claim against your real product assets and generated output.",
+      keywords:
+        "AI UGC video generator, UGC ad video generator, AI UGC ad creator, UGC product video maker, creator-style product video, AI creator ad video, UGC style video ad, short-form creator ad generator",
+      canonicalPath: "/ai-video-generation/ugc-ad-video"
+    },
+    hero: {
+      eyebrow: "AI UGC VIDEO GENERATOR",
+      title: "AI UGC Video Generator for Creator-Style Product Ads",
+      body:
+        "Build UGC-style product videos around a clear creator role, a scroll-stopping hook, a real product moment, and proof the viewer can actually see. Keep AI, actors, paid creators, and real customers accurately represented while turning approved product inputs into creator-native ad concepts.",
+      primaryCta: "Create a UGC-Style Video",
+      secondaryCta: "See UGC Examples",
+      availabilityNote:
+        "The current video workspace is the verified creation path. This page does not claim a separate UGC-only generator or unverified creator controls.",
+      rightsCopy:
+        "Use only product claims, speaker identities, offers, and outputs you can verify. Do not present AI-generated people, actors, stock people, or scripted experiences as verified customer testimonials.",
+      imageNote: "Creator role -> Hook -> Product context -> Visible proof -> Output -> CTA",
+      highlights: ["Creator role", "Hook", "Product context", "Visible proof", "Output", "CTA"],
+      image: image(
+        "/assets/dreamshoot/ugc-ad-video/ai-ugc-video-creator-lip-product-hook.jpg",
+        "Creator filming a lip product with a smartphone and ring light for a UGC-style ad concept",
+        2160,
+        3840
+      )
+    },
+    quickAnswer: {
+      eyebrow: "SEARCH INTENT MATCH",
+      title: "What Should an AI UGC Video Generator Help You Decide?",
+      intro:
+        "A useful UGC generator should do more than make footage look like it came from a phone. Before generation, the brief needs to define who is speaking, why the opening matters, where the product appears, which details prove the claim, and what the viewer should do next.",
+      cards: [
+        { title: "Creator role", body: "Real customer, paid creator, employee, actor, AI avatar, or fictional spokesperson. The role changes which first-person claims are appropriate." },
+        { title: "Hook", body: "One question, observation, tension, contrast, or product moment that earns attention without inventing a result." },
+        { title: "Product context", body: "Show the product inside the routine, task, fit, application, comparison, or use case the audience is actually evaluating." },
+        { title: "Visible proof", body: "Put observable evidence close to the line it supports: product movement, screen state, size, texture, packaging, included items, workflow, fit, or another verifiable detail." },
+        { title: "CTA", body: "End with one next action that matches the destination page and the offer the viewer will actually find there." }
+      ]
+    },
+    useCases: {
+      eyebrow: "UGC JOBS",
+      title: "Choose the UGC Job Before You Choose the Style",
+      intro:
+        "Creator-native footage only works when the message has a clear job. Choose the moment the audience needs to understand before deciding how casual, polished, direct, or product-led the edit should feel.",
+      items: [
+        makeUseCaseCard({
+          scenarioLabel: "01 - UNBOXING",
+          title: "Give the Unboxing a Point of View",
+          problem: "The video opens a package but never gives the viewer a reason to care.",
+          body: "Start with the expectation or buying question. Show only the package details that change the decision: included items, size, setup, texture, fit, finish, or another visible detail.",
+          noteLabel: "Structure",
+          noteBody: "Expectation -> opening -> useful detail -> qualified reaction -> CTA",
+          cta: "Create an Unboxing UGC Ad",
+          image: image(
+            "/assets/dreamshoot/ugc-ad-video/ugc-ad-video-unboxing-first-impression.jpg",
+            "Adult filming a cosmetic product while opening an online order for an unboxing creator video",
+            4103,
+            6154
+          )
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "02 - ROUTINE",
+          title: "Put the Product Inside the Moment Where the Problem Happens",
+          problem: "The creator mentions a pain point, then the product appears like a disconnected sponsor insert.",
+          body: "Use one routine or friction the audience recognizes. Let the product enter at the point where it changes the action, and show the change rather than only describing it.",
+          noteLabel: "Structure",
+          noteBody: "Routine friction -> creator context -> product action -> observable change -> CTA",
+          cta: "Create a Problem-in-Routine UGC Ad",
+          image: image(
+            "/assets/dreamshoot/ugc-ad-video/ugc-ad-video-product-review-direct-to-camera.jpg",
+            "Adult woman presenting a personal-care product to a smartphone camera in a creator-style review setup",
+            3886,
+            5829
+          )
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "03 - DEMO",
+          title: "Let the Product Movement Carry Part of the Proof",
+          problem: "The speaker says the product is easy or useful without showing enough of the actual use.",
+          body: "Use hands, close shots, screens, application steps, or a short sequence to demonstrate the claim while the creator explains only what the footage cannot show by itself.",
+          noteLabel: "Structure",
+          noteBody: "Use case -> action -> visible detail -> takeaway -> CTA",
+          cta: "Create a Demo-in-Use UGC Ad",
+          image: image(
+            "/assets/dreamshoot/ugc-ad-video/ugc-ad-video-kitchen-product-demo.jpg",
+            "Smartphone on a tripod recording an adult woman demonstrating a task in a kitchen",
+            4160,
+            6240
+          )
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "04 - TRY-ON",
+          title: "Use Lifestyle Footage to Answer One Buying Question",
+          problem: "The footage is attractive but does not answer the practical buying question.",
+          body: "Choose one decision criterion—fit, scale, styling, application, portability, texture, convenience, or another visible attribute—and build the scene around that question.",
+          noteLabel: "Structure",
+          noteBody: "Question -> try/apply/use -> detail -> interpretation -> CTA",
+          cta: "Create a Try-On UGC Ad",
+          image: image(
+            "/assets/dreamshoot/ugc-ad-video/ugc-ad-video-fashion-try-on-creator.jpg",
+            "Adult woman filming a clothing try-on with a smartphone and ring light in front of a mirror",
+            6000,
+            4000
+          )
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "05 - TALKING POINTS",
+          title: "Write Talking Points for a Person, Not a Press Release",
+          problem: "The creator reads brand copy word for word and the UGC feels less natural than a standard ad.",
+          body: "Give the speaker one idea at a time. Keep objective product facts separate from subjective reactions. If the speaker is not a real customer, do not write verified-customer experience into the script.",
+          noteLabel: "Structure",
+          noteBody: "Hook -> context -> claim -> proof -> qualified opinion -> CTA",
+          cta: "Create a Direct-to-Camera UGC Ad",
+          image: image(
+            "/assets/dreamshoot/ugc-ad-video/ugc-ad-video-scripted-talking-points.jpg",
+            "Adult man using notes while recording a direct-to-camera video with a smartphone and ring light",
+            5707,
+            3805
+          )
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "06 - B-ROLL + VOICEOVER",
+          title: "Use Voiceover to Add Context the B-Roll Cannot Show",
+          problem: "The voiceover repeats exactly what the viewer can already see.",
+          body: "Let footage handle action, texture, environment, product detail, and sequence. Use voiceover for context, decision logic, comparison criteria, or a careful interpretation of what is visible.",
+          noteLabel: "Structure",
+          noteBody: "Hook -> useful B-roll -> context/proof -> takeaway -> CTA",
+          cta: "Create a B-Roll UGC Ad",
+          image: image(
+            "/assets/dreamshoot/ugc-ad-video/ugc-ad-video-broll-phone-recording-food.jpg",
+            "Hands holding a smartphone while recording food and product details for creator-style B-roll",
+            3024,
+            4032
+          )
+        })
+      ]
+    },
+    evidence: {
+      eyebrow: "V2 - FIRST-PARTY PRODUCT EVIDENCE",
+      title: "Show the Real Generator, Not Just the Category",
+      intro: "Stock creator photos explain the scenario. Real UI and real generated output prove the product.",
+      cards: [
+        { title: "Actual input state", body: "Replace this card with a verified myDreamshoots input screenshot and a caption describing the real asset type supplied.", exampleLabel: "Live product evidence required", exampleBody: "No first-party input capture was included in the delivery package." },
+        { title: "Actual workflow / controls", body: "Name only controls or instructions that exist in the current product. Do not add mock creator selectors, voices, ratios, durations, or integrations.", exampleLabel: "Live product evidence required", exampleBody: "Product and development verification is required before publishing control claims." },
+        { title: "Actual generated video", body: "Use a real output and matching thumbnail from the current myDreamshoots workflow. Do not use a stock creator photo as output evidence.", exampleLabel: "Live product evidence required", exampleBody: "A public generated UGC output was not supplied with this content package." },
+        { title: "Verified product facts", body: "Add only verified input, output, ratio, voice, pricing, export, timing, or commercial-use facts. Omit any field that has not been confirmed.", exampleLabel: "Live product evidence required", exampleBody: "Fact-strip fields remain intentionally empty until product verification is complete." }
+      ]
+    },
+    examples: {
+      eyebrow: "V2 - REAL EXAMPLES",
+      title: "Show What a Real UGC Brief Becomes",
+      intro: "At least three first-party examples: Input -> Brief -> Output -> Why it works.",
+      cards: [
+        {
+          title: "Product Demo UGC",
+          body: "Reserve this slot for a real myDreamshoots product demo case. The source, direction, output, and observable reason must all refer to the same generation.",
+          details: [
+            { label: "Input", body: "Real product asset - pending verified capture." },
+            { label: "Brief", body: "Actual direction used - pending product record." },
+            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
+            { label: "Why", body: "One observable reason the product action and proof work together - pending review." }
+          ],
+          exampleLabel: "First-party proof required",
+          exampleBody: "This card is an evidence-ready slot, not a fabricated customer result."
+        },
+        {
+          title: "Direct-to-Camera UGC",
+          body: "Use a verified direct-to-camera case and identify the speaker status accurately. A scripted actor, AI person, paid creator, and real customer require different wording.",
+          details: [
+            { label: "Input", body: "Real product asset and approved speaker direction - pending." },
+            { label: "Brief", body: "Actual hook, context, proof, and CTA - pending." },
+            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
+            { label: "Why", body: "Explain one visible proof or message decision - pending review." }
+          ],
+          exampleLabel: "First-party proof required",
+          exampleBody: "Do not present a stock person or scripted experience as a verified testimonial."
+        },
+        {
+          title: "B-Roll + Voiceover UGC",
+          body: "Use a verified B-roll case where the footage adds action and the voiceover adds context instead of repeating the same line.",
+          details: [
+            { label: "Input", body: "Real product asset and approved source direction - pending." },
+            { label: "Brief", body: "Actual B-roll sequence, context, and CTA - pending." },
+            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
+            { label: "Why", body: "Explain how the visible sequence carries part of the claim - pending review." }
+          ],
+          exampleLabel: "First-party proof required",
+          exampleBody: "The package does not include a generated output, so no result is claimed here."
+        }
+      ]
+    },
+    foundation: {
+      eyebrow: "BRIEF MODEL",
+      title: "Start With the Speaker and the Evidence",
+      intro: "A UGC brief makes six decisions before generation. The speaker's status determines what the message can truthfully imply.",
+      leftTitle: "Decisions",
+      leftItems: [],
+      rightTitle: "Boundaries",
+      rightItems: [],
+      rightTone: "avoid",
+      expertLabel: "EXPERT TIP",
+      expertTip: "If the script only works when the speaker pretends to be a real customer, rewrite the premise—not just the disclosure.",
+      cards: [
+        { title: "Creator Status", body: "Customer, creator, employee, actor, AI, or fictional spokesperson. State who is speaking and what that person can truthfully imply." },
+        { title: "Audience Moment", body: "Name the situation the viewer is already in when the product message becomes relevant." },
+        { title: "Hook", body: "Choose one question, observation, tension, contrast, or product moment that earns attention without a fake confession or invented result." },
+        { title: "Product Moment", body: "Decide where the product enters and what the viewer should see it do." },
+        { title: "Proof Boundary", body: "Separate product facts, observable evidence, and subjective opinion before writing the script." },
+        { title: "CTA", body: "Choose one next action that matches the message and the destination page." }
+      ]
+    },
+    guidance: {
+      eyebrow: "NATURAL SCRIPT MODEL",
+      title: "Make the Script Sound Human by Giving Every Line a Job",
+      intro: "Natural does not mean unscripted. Give each line a clear role, then let framing and pacing carry the creator-native feel.",
+      cards: [
+        { title: "Hook", body: "One question, observation, tension, or specific context that earns attention without a fake confession." },
+        { title: "Context", body: "Explain why this product matters in this moment and for this audience." },
+        { title: "Product moment", body: "Show the action while it is discussed so the product does not feel like a disconnected sponsor insert." },
+        { title: "Proof", body: "Keep visible evidence close to the claim it supports." },
+        { title: "Reaction", body: "Keep personal reactions personal rather than turning a subjective response into a universal result." },
+        { title: "CTA", body: "End with one next step, not a new unsupported promise." }
+      ]
+    },
+    platformExamples: {
+      eyebrow: "CREATOR-NATIVE FRAMING",
+      title: "Native Style Comes From Framing and Pacing—Not Fake Imperfection",
+      intro: "Choose a frame that makes the speaker, product, proof, captions, and next action readable. Keep the creative intentional even when it feels phone-first.",
+      items: [
+        { title: "Direct-to-camera", body: "Keep eye line, face, product, captions, and CTA readable. Identify the speaker status before using first-person language." },
+        { title: "Hands / product close-up", body: "Use when handling or product detail is part of the proof. Let the movement answer part of the buying question." },
+        { title: "B-roll sequence", body: "Build a visual progression instead of random lifestyle shots. Use voiceover for context the footage cannot show." },
+        { title: "Screen / workflow", body: "Use real interface states and readable source screens. Do not invent product UI, controls, or app results." }
+      ]
+    },
+    comparison: {
+      eyebrow: "PAGE DIFFERENTIATION / INTERNAL LINKING",
+      title: "UGC Ad Video Is a Specific Creator-Message Job",
+      intro: "Keep adjacent pages distinct by the customer decision they support. Use the existing AI Video Generation hub and Product Ad Video page when those are the better fit.",
+      items: [
+        { title: "UGC Ad Video", body: "Creator role, creator-native hook, conversational script, product-in-context proof, and speaker-status boundaries." },
+        { title: "Product Ad Video", body: "Campaign audience, product promise, offer, proof hierarchy, and purchase CTA.", href: "/ai-video-generation/product-ad-video", linkLabel: "Explore Product Ad Video" },
+        { title: "Video Ad", body: "Broader paid-video format, placement, ad creative, and channel adaptation. Use a dedicated page when that workflow is available." },
+        { title: "Talking Head Video", body: "Presenter or speaker delivery. A talking-head format is not automatically UGC and is not necessarily a product ad." },
+        { title: "AI Video Generation", body: "Return to the full video theme directory when the creative job is not yet clear.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" }
+      ]
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      title: "From UGC Brief to Generated Draft",
+      items: [
+        { title: "Choose the UGC job", body: "Unboxing, routine, demo, try-on, direct-to-camera, or B-roll + voiceover." },
+        { title: "Define speaker + audience moment", body: "Clarify who is speaking, what the viewer is deciding, and what the speaker can truthfully say." },
+        { title: "Add verified product inputs", body: "Use only input types the live myDreamshoots product actually accepts." },
+        { title: "Use supported controls", body: "Generate using only current, product-verified controls. Do not assume upload URLs, avatar selection, voice cloning, auto captions, or one-click resizing." },
+        { title: "Review the real output", body: "Check speaker identity, claim support, visible product detail, rights, disclosure, crop, captions, offer, and CTA before publishing." }
+      ],
+      cta: "Create a UGC-Style Video"
+    },
+    value: {
+      eyebrow: "MESSAGE TESTING",
+      title: "Test Hooks Without Inventing Experiences",
+      intro: "Change the angle while keeping identity, claims, product facts, offer terms, and material limitations stable.",
+      image: image(
+        "/assets/dreamshoot/ugc-ad-video/ugc-ad-video-creator-conversation-recording.jpg",
+        "Smartphone on a tripod recording two adults in a conversational creator-content setup",
+        4000,
+        6000
+      ),
+      items: [
+        { title: "Good variables to test", body: "Question versus observation hook, direct-to-camera versus voiceover, product-first versus context-first, proof order, B-roll sequence, CTA wording, and supported crop adaptation." },
+        { title: "Facts that must stay stable", body: "Whether the speaker is a real customer, what the speaker actually experienced, product functionality, specification data, price or offer terms, before-and-after conditions, and material limitations." },
+        { title: "Keep the output honest", body: "A different hook can change attention and pacing. It must not change the speaker's identity, the product's capabilities, or the meaning of the evidence." },
+        { title: "Review every variant", body: "Compare the finished drafts for claim support, product visibility, rights, disclosure, crop, captions, destination, and CTA consistency." }
+      ]
+    },
+    trust: {
+      eyebrow: "RESPONSIBLE / E-E-A-T",
+      title: "Creator Style Should Make the Message Easier to Understand—Not Harder to Verify",
+      intro: "Before publishing:",
+      items: [
+        { title: "Identify speaker status accurately", body: "Say whether the speaker is a customer, paid creator, employee, actor, AI-generated person, or fictional spokesperson." },
+        { title: "Do not turn stock people into customer stories", body: "Stock imagery can explain a scenario. It cannot prove a real customer experience or endorsement." },
+        { title: "Do not fabricate social proof", body: "Do not invent reviews, ratings, comments, likes, views, follower counts, or endorsements." },
+        { title: "Tie claims to evidence", body: "Keep objective product claims close to supportable product facts or visible proof." },
+        { title: "Keep opinions qualified", body: "A personal reaction should not become a guaranteed result for every viewer." },
+        { title: "Use fair comparisons", body: "Use before-and-after or comparison evidence only under fair, representative, supportable conditions." },
+        { title: "Do not invent commercial details", body: "Do not add packaging, UI, included items, shipping, price, availability, or offer terms that have not been verified." },
+        { title: "Review disclosure requirements", body: "Check the destination's current rules for AI people, synthetic media, sponsorship, and endorsements." },
+        { title: "Keep important conditions visible", body: "Keep limitations, exclusions, compatibility, returns, and material conditions visible when they affect the decision." },
+        { title: "Make CTA and destination consistent", body: "The next action and destination page should match the promise and decision in the creative." }
+      ]
+    },
+    faq: {
+      eyebrow: "FAQ",
+      title: "Questions That Belong on a UGC Generator Page",
+      items: [
+        { question: "What is an AI UGC video generator?", answer: "It is a tool or workflow for creating creator-style video ads from a defined product brief and supported source material. A useful workflow keeps the creator role, product context, visible proof, and CTA clear rather than only adding a phone-shot visual style." },
+        { question: "Is UGC the same as an influencer ad?", answer: "No. UGC-style content may involve customers, paid creators, employees, actors, AI-generated people, or fictional spokespeople. An influencer ad usually involves a specific creator relationship and may require additional disclosure." },
+        { question: "Can AI create testimonial-style ads?", answer: "AI can create the format, but it should not fabricate a real person's experience, rating, review, or endorsement and present it as genuine." },
+        { question: "Does UGC have to look low quality?", answer: "No. Creator-native content can be phone-first while still using clear audio, readable captions, intentional framing, and accurate product detail." },
+        { question: "Should the product appear in the first second?", answer: "Not always. The opening depends on the hook. The product should appear early enough that the story remains understandable and the viewer knows what the message is about." },
+        { question: "What should I prepare before generating a UGC ad?", answer: "Prepare the real product assets the tool accepts, supported product facts, the speaker role, one audience moment, one hook, the product action you want to show, and one CTA. Use the live product documentation to confirm exactly which input types and controls are available." },
+        { question: "What makes this page different from a general video ad generator page?", answer: "This page focuses on creator voice, speaker identity, conversational message design, product-in-context proof, and UGC-specific trust boundaries. A general video ad page should cover the broader paid-video job instead." }
+      ]
+    },
+    finalCta: {
+      eyebrow: "CREATE WITH VERIFIED PRODUCT INPUTS",
+      title: "Build a UGC-Style Ad Around a Real Product Moment",
+      body: "Choose who is speaking, what the viewer is deciding, what the product actually does on camera, which detail proves the claim, and one next action. Then generate with the current myDreamshoots workflow and review the real output before publishing.",
+      cta: "Create a UGC-Style Video",
+      microcopy: "Real inputs. Verifiable product claims. Clear speaker identity. Creator-native execution."
     }
   }
 };

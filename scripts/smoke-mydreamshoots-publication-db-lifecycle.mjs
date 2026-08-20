@@ -78,7 +78,7 @@ try {
           supportEmail: "local-test@example.com",
           sameAs: []
         },
-        policyFacts: { usesCustomerMediaForTraining: false, sourceMediaRetentionDays: 30, refundReviewRequired: true, refundWindowDays: 7, effectiveDate: "2026-08-19" }
+        policyFacts: { usesCustomerMediaForTraining: false, sourceMediaRetentionDays: 30, refundReviewRequired: true, refundWindowDays: 7, effectiveDate: "2026-08-19", creditLifecycle: { reserve: "Test reserve statement", consume: "Test consume statement", release: "Test release statement" }, security: { transportClaimKey: "Test transport statement", storageClaimKey: "Test storage statement" } }
       },
       publishedJson: {
         identity: {
@@ -88,7 +88,7 @@ try {
           supportEmail: "local-test@example.com",
           sameAs: []
         },
-        policyFacts: { usesCustomerMediaForTraining: false, sourceMediaRetentionDays: 30, refundReviewRequired: true, refundWindowDays: 7, effectiveDate: "2026-08-19" }
+        policyFacts: { usesCustomerMediaForTraining: false, sourceMediaRetentionDays: 30, refundReviewRequired: true, refundWindowDays: 7, effectiveDate: "2026-08-19", creditLifecycle: { reserve: "Test reserve statement", consume: "Test consume statement", release: "Test release statement" }, security: { transportClaimKey: "Test transport statement", storageClaimKey: "Test storage statement" } }
       }
     }
   };
@@ -137,6 +137,7 @@ try {
   assert.equal(publicationSnapshotIntegrity(secondSnapshot), "valid");
   const second = await publishSeoSnapshotRelational({ siteId, snapshot: secondSnapshot, actor: "smoke:publication-lifecycle" });
   createdPublicationIds.push(second.publication.id);
+  if (keepNewPublication) keepPublicationId = second.publication.id;
   assert.notEqual(second.publication.id, first.publication.id, "republish must create a new publication ID");
   assert.equal(second.publishedVersion, first.publishedVersion + 1, "republish must increment publication version");
   const firstAfterRepublish = await prisma.themePublication.findUnique({ where: { id: first.publication.id } });
@@ -167,9 +168,11 @@ try {
     : beforeActive?.publication && publicationSnapshotIntegrity(beforeActive.publication.snapshot) === "valid"
     ? beforeActive.publicationId
     : keepPublicationId;
-  if (restorePublicationId) {
+  const activeAtCleanup = await prisma.activeThemePublication.findUnique({ where: { siteId }, select: { publicationId: true } }).catch(() => undefined);
+  const testOwnedActivePointer = !activeAtCleanup?.publicationId || createdPublicationIds.includes(activeAtCleanup.publicationId);
+  if (testOwnedActivePointer && restorePublicationId) {
     await prisma.activeThemePublication.upsert({ where: { siteId }, create: { siteId, publicationId: restorePublicationId, activatedBy: "smoke:publication-lifecycle-restore" }, update: { publicationId: restorePublicationId, activatedAt: new Date(), activatedBy: "smoke:publication-lifecycle-restore" } }).catch(() => {});
-  } else {
+  } else if (testOwnedActivePointer) {
     await prisma.activeThemePublication.delete({ where: { siteId } }).catch(() => {});
   }
   const deletePublicationIds = createdPublicationIds.filter((id) => id !== restorePublicationId);

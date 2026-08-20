@@ -544,9 +544,12 @@ function galleryImageAltsForProfile(profile, pack, slug, count) {
   )
     .replace(/\s+/g, " ")
     .trim() || `${pack.name} AI photo package`;
-  return Array.from({ length: count }, (_, index) =>
-    `${subject}, ${galleryAltScenes[index % galleryAltScenes.length]}.`
-  );
+  return [
+    `${subject}, representative cover image for ${pack.name}.`,
+    ...Array.from({ length: count }, (_, index) =>
+      `${subject}, ${galleryAltScenes[index % galleryAltScenes.length]}.`
+    )
+  ];
 }
 
 function descriptionFor(pack, profile) {
@@ -658,10 +661,6 @@ function updateCollectionsPagesInSnapshot(value) {
         updateCollectionsPage(node.draftJson);
         count += 1;
       }
-      if (node.publishedJson?.sections) {
-        updateCollectionsPage(node.publishedJson);
-        count += 1;
-      }
       if (node.sections) {
         updateCollectionsPage(node);
         count += 1;
@@ -721,7 +720,6 @@ async function applyLocalState() {
     for (const page of site.pages ?? []) {
       if (page.slug !== "/collections") continue;
       updateCollectionsPage(page.draftJson);
-      updateCollectionsPage(page.publishedJson);
       pages += 1;
     }
   }
@@ -729,19 +727,7 @@ async function applyLocalState() {
   for (const page of state.themePages ?? []) {
     if (!siteIds.has(page.siteId) || page.slug !== "/collections") continue;
     updateCollectionsPage(page.draftJson);
-    updateCollectionsPage(page.publishedJson);
     pages += 1;
-  }
-
-  for (const publication of state.themePublications ?? []) {
-    if (!siteIds.has(publication.siteId)) continue;
-    const pagesSnapshot = publication.snapshot?.pages;
-    if (!Array.isArray(pagesSnapshot)) continue;
-    for (const page of pagesSnapshot) {
-      if (page.slug !== "/collections") continue;
-      updateCollectionsPage(page.draftJson);
-      updateCollectionsPage(page.publishedJson);
-    }
   }
 
   fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
@@ -797,13 +783,11 @@ async function applyPostgres(localResult) {
     let postgresPages = 0;
     for (const page of pageRecords) {
       const draftJson = structuredClone(page.draftJson);
-      const publishedJson = structuredClone(page.publishedJson);
       updateCollectionsPage(draftJson);
-      updateCollectionsPage(publishedJson);
-      if (changed(page.draftJson, draftJson) || changed(page.publishedJson, publishedJson)) {
+      if (changed(page.draftJson, draftJson)) {
         await prisma.themePage.update({
           where: { id: page.id },
-          data: { draftJson, publishedJson }
+          data: { draftJson }
         });
         postgresPages += 1;
       }

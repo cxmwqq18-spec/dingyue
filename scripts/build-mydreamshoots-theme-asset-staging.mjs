@@ -150,7 +150,10 @@ for (const [themeIndex, slug] of targetSlugs.entries()) {
     skipped: false,
     imageUrl: publicCoverUrl(slug),
     galleryImages: galleryPaths,
-    galleryImageAlts: galleryPaths.map((_, index) => `${slug} theme preview ${index + 1}, polished customer-facing photo example.`)
+    galleryImageAlts: [
+      `${activePacks.find((pack) => pack.slug === slug)?.name ?? slug} representative cover image with polished themed styling.`,
+      ...galleryPaths.map((_, index) => `${activePacks.find((pack) => pack.slug === slug)?.name ?? slug} photo in a distinct themed composition ${index + 1}.`)
+    ]
   });
 }
 

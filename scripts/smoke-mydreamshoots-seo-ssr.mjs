@@ -140,6 +140,18 @@ async function fetchHtml(pathname) {
   return response.body;
 }
 
+async function fetchPublishedOrReviewHtml(pathname) {
+  const response = await fetchText(pathname, "text/html");
+  const published = sitemapHasLoc(`https://${host}${pathname}`);
+  assert.ok(published ? response.status === 200 : [200, 404].includes(response.status), `${pathname} must render or fail closed while deferred`);
+  return response.status === 200 ? response.body : "";
+}
+
+function sitemapHasLoc(url) {
+  const escaped = url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`<loc>${escaped}</loc>`, "i").test(sitemap);
+}
+
 function graphNodes(html) {
   return [...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
     .flatMap((match) => {
@@ -204,7 +216,7 @@ for (const header of ["x-storefront-publication", "x-storefront-publication-vers
   assert.ok(robotsResponse.headers[header], `robots.txt must expose ${header}`);
 }
 const headshotPath = "/ai-image-generation/headshot";
-const headshotIsPublished = sitemap.includes(`https://${host}${headshotPath}`);
+const headshotIsPublished = sitemapHasLoc(`https://${host}${headshotPath}`);
 const collectionResponse = await fetchText(headshotPath, "text/html");
 assert.equal(collectionResponse.status, headshotIsPublished ? 200 : 404, `${headshotPath} status must match the active immutable snapshot`);
 const collection = headshotIsPublished ? collectionResponse.body : "";
@@ -212,18 +224,18 @@ const focusCollectionSlugs = (localTaxonomy.items ?? []).map((item) => item.slug
 const focusCollectionPaths = focusCollectionSlugs.map((slug) => `/ai-image-generation/${slug}`);
 const focusCollections = {};
 for (const pathname of focusCollectionPaths) {
-  const expectedPublished = sitemap.includes(`https://${host}${pathname}`);
+  const expectedPublished = sitemapHasLoc(`https://${host}${pathname}`);
   const response = await fetchText(pathname, "text/html");
   assert.equal(response.status, expectedPublished ? 200 : 404, `${pathname} status must match the active immutable snapshot`);
   if (expectedPublished) focusCollections[pathname] = response.body;
 }
-for (const pathname of focusCollectionPaths.filter((pathname) => !sitemap.includes(`https://${host}${pathname}`))) {
+for (const pathname of focusCollectionPaths.filter((pathname) => !sitemapHasLoc(`https://${host}${pathname}`))) {
   const response = await fetchStatusNoRedirect(pathname);
   assert.equal(response.status, 404, `${pathname} must return 404 while its page entity is review_required`);
   assert.equal(response.headers.location, undefined, `${pathname} review response must not redirect`);
 }
 for (const pathname of focusCollectionPaths) {
-  const expectedPublished = sitemap.includes(`https://${host}${pathname}`);
+  const expectedPublished = sitemapHasLoc(`https://${host}${pathname}`);
   for (const candidate of [pathname, `/site/mydreamshoots${pathname}`]) {
     const getResponse = await fetchStatusNoRedirect(candidate, "text/html", "GET");
     const headResponse = await fetchStatusNoRedirect(candidate, "text/html", "HEAD");
@@ -248,24 +260,30 @@ for (const [canonicalPath, aliases] of [["/privacy", ["/privacy-policy", "/polic
     const response = await fetchStatusNoRedirect(alias);
     assert.equal(response.status, 308, `${alias} must be a policy redirect-only alias`);
     assert.ok(response.headers.location?.endsWith(canonicalPath), `${alias} must redirect to ${canonicalPath}`);
+    assert.doesNotMatch(response.headers.location ?? "", /(?:localhost|127\.0\.0\.1)/i, `${alias} redirect must not expose a local origin`);
   }
 }
-const talkingPhotoGeneration = await fetchHtml("/ai-video-generation/talking-photo");
-const storyVideoGeneration = await fetchHtml("/ai-video-generation/story-video");
-const memeVideoGeneration = await fetchHtml("/ai-video-generation/meme-video");
-const productVideoGeneration = await fetchHtml("/ai-video-generation/product-video");
+const talkingPhotoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/talking-photo");
+const storyVideoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/story-video");
+const memeVideoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/meme-video");
+const productVideoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/product-video");
 const productAdVideoPath = "/ai-video-generation/product-ad-video";
-const productAdIsPublished = sitemap.includes(`https://${host}${productAdVideoPath}`);
+const productAdIsPublished = sitemapHasLoc(`https://${host}${productAdVideoPath}`);
 const productAdResponse = await fetchText(productAdVideoPath, "text/html");
 assert.equal(productAdResponse.status, productAdIsPublished ? 200 : 404, `${productAdVideoPath} status must match its current published snapshot`);
 const productAdVideoGeneration = productAdIsPublished ? productAdResponse.body : "";
+const ugcAdVideoPath = "/ai-video-generation/ugc-ad-video";
+const ugcAdIsPublished = sitemapHasLoc(`https://${host}${ugcAdVideoPath}`);
+const ugcAdResponse = await fetchText(ugcAdVideoPath, "text/html");
+assert.equal(ugcAdResponse.status, ugcAdIsPublished ? 200 : 404, `${ugcAdVideoPath} status must match its current published snapshot`);
+const ugcAdVideoGeneration = ugcAdIsPublished ? ugcAdResponse.body : "";
 const videoTopicGenerationByPath = {
   "/ai-video-generation/talking-photo": talkingPhotoGeneration,
-  "/ai-video-generation/cinematic-video": await fetchHtml("/ai-video-generation/cinematic-video"),
-  "/ai-video-generation/tiktok-video": await fetchHtml("/ai-video-generation/tiktok-video"),
-  "/ai-video-generation/instagram-reels": await fetchHtml("/ai-video-generation/instagram-reels"),
-  "/ai-video-generation/social-media-video": await fetchHtml("/ai-video-generation/social-media-video"),
-  "/ai-video-generation/youtube-video": await fetchHtml("/ai-video-generation/youtube-video"),
+  "/ai-video-generation/cinematic-video": await fetchPublishedOrReviewHtml("/ai-video-generation/cinematic-video"),
+  "/ai-video-generation/tiktok-video": await fetchPublishedOrReviewHtml("/ai-video-generation/tiktok-video"),
+  "/ai-video-generation/instagram-reels": await fetchPublishedOrReviewHtml("/ai-video-generation/instagram-reels"),
+  "/ai-video-generation/social-media-video": await fetchPublishedOrReviewHtml("/ai-video-generation/social-media-video"),
+  "/ai-video-generation/youtube-video": await fetchPublishedOrReviewHtml("/ai-video-generation/youtube-video"),
   "/ai-video-generation/story-video": storyVideoGeneration,
   "/ai-video-generation/meme-video": memeVideoGeneration,
   "/ai-video-generation/product-video": productVideoGeneration,
@@ -302,6 +320,7 @@ const storyVideoGenerationGraph = graphNodes(storyVideoGeneration);
 const memeVideoGenerationGraph = graphNodes(memeVideoGeneration);
 const productVideoGenerationGraph = graphNodes(productVideoGeneration);
 const productAdVideoGenerationGraph = graphNodes(productAdVideoGeneration);
+const ugcAdVideoGenerationGraph = graphNodes(ugcAdVideoGeneration);
 const homepageVideos = homepageGraph.filter((node) => node?.["@type"] === "VideoObject");
 const collectionProducts = collectionGraph.filter((node) => node?.["@type"] === "Product");
 const talkingPhotoGenerationProducts = talkingPhotoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
@@ -309,6 +328,7 @@ const storyVideoGenerationProducts = storyVideoGenerationGraph.filter((node) => 
 const memeVideoGenerationProducts = memeVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const productVideoGenerationProducts = productVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const productAdVideoGenerationProducts = productAdVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
+const ugcAdVideoGenerationProducts = ugcAdVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const collectionProduct = collectionProducts[0];
 const collectionOffer = collectionProduct?.offers;
 const forbiddenLoadingCopy = [
@@ -344,6 +364,7 @@ const publicHtmlPages = {
   memeVideoGeneration,
   productVideoGeneration,
   ...(productAdIsPublished ? { productAdVideoGeneration } : {}),
+  ...(ugcAdIsPublished ? { ugcAdVideoGeneration } : {}),
   workflow,
   faq
 };
@@ -368,7 +389,7 @@ for (const [pathname, html] of Object.entries(focusCollections)) {
   const mediaReviewRequired = localTaxonomy.items?.find((item) => item.slug === slug)?.mediaReviewStatus === "review_required";
   if (mediaReviewRequired) {
     assert.match(robotsContent(html), /noindex/i, `${pathname} must be noindex while its page media owner is under review`);
-    assert.equal(sitemap.includes(`https://www.mydreamshoots.com${pathname}`), false, `${pathname} must not enter the sitemap while its page media owner is under review`);
+    assert.equal(sitemapHasLoc(`https://www.mydreamshoots.com${pathname}`), false, `${pathname} must not enter the sitemap while its page media owner is under review`);
   } else {
     assert.doesNotMatch(robotsContent(html), /noindex/i, `${pathname} should remain indexable after its page media contract passes`);
   }
@@ -396,7 +417,8 @@ for (const [pathname, html] of Object.entries(focusCollections)) {
     assert.equal(schemaQuestions[index]?.acceptedAnswer?.text, faqItem.answer, `${pathname} FAQPage answer must match visible FAQ: ${faqItem.id}`);
   });
 }
-assert.ok(pricing.includes("Credits") && pricing.includes("checkout") && !pricing.includes(["$", "24.50"].join("")), "pricing HTML must contain plan content without a hardcoded legacy price");
+assert.match(visibleText(pricing), /credits/i, "pricing HTML must contain credit information");
+assert.equal(pricing.includes(["$", "24.50"].join("")), false, "pricing HTML must not contain a hardcoded legacy price");
 const homepageForbiddenCopy = [
   "Upload selfies and create your own AI model",
   "100% money-back guarantee",
@@ -422,10 +444,9 @@ assert.ok(
   "homepage embedded pricing must render the section without a legacy hardcoded price"
 );
 assert.equal(homepageVideos.length, 0, "homepage SSR must not expose legacy video theme VideoObject nodes after the AI Video Generation route migration");
-assert.match(talkingPhotoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/talking-photo/, "Talking Photo detail SSR must expose the canonical AI Video Generation URL");
-assert.match(storyVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/story-video/, "Story Video detail SSR must expose the canonical AI Video Generation URL");
-assert.match(memeVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/meme-video/, "Meme Video detail SSR must expose the canonical AI Video Generation URL");
-assert.match(productVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/product-video/, "Product Video detail SSR must expose the canonical AI Video Generation URL");
+for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
+  if (html) assert.match(html, new RegExp(`https://www\\.mydreamshoots\\.com${pathname.replaceAll("/", "\\/")}`), `${pathname} detail SSR must expose its canonical AI Video Generation URL`);
+}
 if (productAdIsPublished) {
   assert.match(productAdVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/product-ad-video/, "Product Ad Video detail SSR must expose the canonical AI Video Generation URL");
   assert.equal(pageTitle(productAdVideoGeneration), "AI Product Ad Video Generator – Create Product Ads With Clear Proof &amp; CTA | myDreamshoots", "Product Ad Video title must match the approved SEO title");
@@ -469,11 +490,80 @@ if (productAdIsPublished) {
     assert.ok(normalizedProductAdVideoGeneration.includes(label), `Product Ad Video SSR must expose the scenario label ${label}`);
   }
 }
+if (ugcAdIsPublished) {
+  assert.match(ugcAdVideoGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/ugc-ad-video/, "UGC Ad Video detail SSR must expose the canonical AI Video Generation URL");
+  assert.equal(pageTitle(ugcAdVideoGeneration), "AI UGC Video Generator for Creator-Style Product Ads | myDreamshoots", "UGC Ad Video title must match the approved SEO title");
+  assert.equal(
+    metaDescription(ugcAdVideoGeneration),
+    "Create creator-style product ads with an AI UGC video generator. Plan hooks, speaker roles, product-in-use scenes, visible proof, voiceover, and clear CTAs—then validate every claim against your real product assets and generated output.",
+    "UGC Ad Video description must match the approved SEO description"
+  );
+  assert.match(
+    ugcAdVideoGeneration,
+    /<meta name="keywords" content="AI UGC video generator, UGC ad video generator, AI UGC ad creator, UGC product video maker, creator-style product video, AI creator ad video, UGC style video ad, short-form creator ad generator"/,
+    "UGC Ad Video must expose the approved SEO keywords"
+  );
+  const ugcAssetPaths = [
+    "ai-ugc-video-creator-lip-product-hook.jpg",
+    "ugc-ad-video-unboxing-first-impression.jpg",
+    "ugc-ad-video-product-review-direct-to-camera.jpg",
+    "ugc-ad-video-kitchen-product-demo.jpg",
+    "ugc-ad-video-fashion-try-on-creator.jpg",
+    "ugc-ad-video-scripted-talking-points.jpg",
+    "ugc-ad-video-broll-phone-recording-food.jpg",
+    "ugc-ad-video-creator-conversation-recording.jpg"
+  ];
+  const renderedUgcAssetPaths = Array.from(ugcAdVideoGeneration.matchAll(/\/assets\/dreamshoot\/ugc-ad-video\/([^"'?\\]+)/g)).map((match) => match[1]);
+  assert.equal(new Set(renderedUgcAssetPaths).size, 8, "UGC Ad Video SSR must render eight unique topic assets");
+  for (const assetPath of ugcAssetPaths) {
+    assert.ok(renderedUgcAssetPaths.includes(assetPath), `UGC Ad Video SSR must render ${assetPath}`);
+  }
+  const normalizedUgcAdVideoGeneration = ugcAdVideoGeneration.toLowerCase();
+  for (const label of [
+    "ai ugc video generator",
+    "search intent match",
+    "v2 - first-party product evidence",
+    "v2 - real examples",
+    "brief model",
+    "natural script model",
+    "creator-native framing",
+    "how it works",
+    "message testing",
+    "page differentiation / internal linking",
+    "responsible / e-e-a-t",
+    "questions that belong on a ugc generator page"
+  ]) {
+    assert.ok(normalizedUgcAdVideoGeneration.includes(label), `UGC Ad Video SSR must expose the section label ${label}`);
+  }
+  const ugcSectionOrder = [
+    "SEARCH INTENT MATCH",
+    "UGC JOBS",
+    "V2 - FIRST-PARTY PRODUCT EVIDENCE",
+    "V2 - REAL EXAMPLES",
+    "BRIEF MODEL",
+    "NATURAL SCRIPT MODEL",
+    "CREATOR-NATIVE FRAMING",
+    "HOW IT WORKS",
+    "MESSAGE TESTING",
+    "PAGE DIFFERENTIATION / INTERNAL LINKING",
+    "RESPONSIBLE / E-E-A-T",
+    "FAQ",
+    "CREATE WITH VERIFIED PRODUCT INPUTS"
+  ].map((needle) => ugcAdVideoGeneration.indexOf(needle));
+  assert(ugcSectionOrder.every((index) => index >= 0) && ugcSectionOrder.every((index, position, values) => position === 0 || index > values[position - 1]), "UGC Ad Video SSR sections must follow the documented UGC order");
+  assert.equal((ugcAdVideoGeneration.match(/data-video-topic-use-case-card/g) ?? []).length, 6, "UGC Ad Video must render exactly six use-case cards");
+  const ugcFaq = ugcAdVideoGenerationGraph.find((node) => node?.["@type"] === "FAQPage");
+  assert.equal(ugcFaq?.mainEntity?.length, 7, "UGC Ad Video JSON-LD must expose seven FAQ entries");
+}
 for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
+  if (!sitemapHasLoc(`https://${host}${pathname}`) || !html) continue;
   const slug = pathname.split("/").at(-1);
   assert.equal((html.match(/data-video-topic-page=/g) ?? []).length, 1, `${pathname} must render the shared video topic page marker`);
   assert.equal((html.match(/<article[^>]+data-video-topic-use-case-card/g) ?? []).length, 6, `${pathname} must render exactly six use-case cards`);
-  for (const section of ["hero", "use-cases", "foundation", "guidance", "steps", "value", "trust", "faq", "final-cta"]) {
+  const sectionNames = slug === "ugc-ad-video"
+    ? ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"]
+    : ["hero", "use-cases", "foundation", "guidance", "steps", "value", "trust", "faq", "final-cta"];
+  for (const section of sectionNames) {
     assert.ok(html.includes(`data-video-topic-section="${section}"`), `${pathname} must render the shared ${section} section`);
   }
   const useCaseSection = html.match(/data-video-topic-section="use-cases"[\s\S]*?data-video-topic-section="foundation"/)?.[0] ?? "";
@@ -487,9 +577,13 @@ assert.equal(memeVideoGeneration.includes("Meme Video Examples"), false, "Meme V
 assert.equal(memeVideoGeneration.includes("See More Meme Examples"), false, "Meme Video must not render the duplicate gallery CTA");
 const sharedSectionOrder = ["hero", "use-cases", "foundation", "guidance", "steps", "value", "trust", "faq", "final-cta"];
 for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
-  const sectionOrder = html.includes('data-video-topic-section="supporting"')
-    ? ["hero", "use-cases", "foundation", "guidance", "supporting", "steps", "value", "trust", "faq", "final-cta"]
-    : sharedSectionOrder;
+  if (!sitemapHasLoc(`https://${host}${pathname}`) || !html) continue;
+  const slug = pathname.split("/").at(-1);
+  const sectionOrder = slug === "ugc-ad-video"
+    ? ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"]
+    : html.includes('data-video-topic-section="supporting"')
+      ? ["hero", "use-cases", "foundation", "guidance", "supporting", "steps", "value", "trust", "faq", "final-cta"]
+      : sharedSectionOrder;
   const indexes = sectionOrder.map((section) => html.indexOf(`data-video-topic-section="${section}"`));
   assert(indexes.every((index) => index >= 0) && indexes.every((index, position, values) => position === 0 || index > values[position - 1]), `${pathname} must keep the shared section order`);
 }
@@ -503,23 +597,27 @@ if (productAdIsPublished) {
   ].map((needle) => productAdVideoGeneration.indexOf(needle));
   assert(productAdSectionOrder.every((index) => index >= 0) && productAdSectionOrder.every((index, position, values) => position === 0 || index > values[position - 1]), "Product Ad Video SSR sections must follow guidance, supporting content, how it works, and responsible storytelling order");
 }
-assert.ok(talkingPhotoGeneration.includes("/app/create#step-video") || talkingPhotoGeneration.includes("/app/create"), "Talking Photo CTA must point into the video workspace");
-assert.ok(storyVideoGeneration.includes("/app/create#step-video") || storyVideoGeneration.includes("/app/create"), "Story Video CTA must point into the video workspace");
-assert.ok(memeVideoGeneration.includes("/app/create") && memeVideoGeneration.includes("videoMode=meme-video"), "Meme Video CTA must point into the video workspace with its topic mode");
-assert.ok(productVideoGeneration.includes("/app/create") && productVideoGeneration.includes("videoMode=product-video"), "Product Video CTA must point into the video workspace with its topic mode");
+if (talkingPhotoGeneration) assert.ok(talkingPhotoGeneration.includes("/app/create#step-video") || talkingPhotoGeneration.includes("/app/create"), "Talking Photo CTA must point into the video workspace");
+if (storyVideoGeneration) assert.ok(storyVideoGeneration.includes("/app/create#step-video") || storyVideoGeneration.includes("/app/create"), "Story Video CTA must point into the video workspace");
+if (memeVideoGeneration) assert.ok(memeVideoGeneration.includes("/app/create") && memeVideoGeneration.includes("videoMode=meme-video"), "Meme Video CTA must point into the video workspace with its topic mode");
+if (productVideoGeneration) assert.ok(productVideoGeneration.includes("/app/create") && productVideoGeneration.includes("videoMode=product-video"), "Product Video CTA must point into the video workspace with its topic mode");
 if (productAdIsPublished) assert.ok(productAdVideoGeneration.includes("/app/create") && productAdVideoGeneration.includes("videoMode=product-ad-video"), "Product Ad Video CTA must point into the video workspace with its topic mode");
-for (const [pageName, html] of Object.entries({ storyVideoGeneration, memeVideoGeneration, productVideoGeneration, ...(productAdIsPublished ? { productAdVideoGeneration } : {}) })) {
+if (ugcAdIsPublished) assert.ok(ugcAdVideoGeneration.includes("/app/create") && ugcAdVideoGeneration.includes("videoMode=ugc-ad-video"), "UGC Ad Video CTA must point into the video workspace with its topic mode");
+for (const [pageName, html] of Object.entries({ storyVideoGeneration, memeVideoGeneration, productVideoGeneration, ...(productAdIsPublished ? { productAdVideoGeneration } : {}), ...(ugcAdIsPublished ? { ugcAdVideoGeneration } : {}) })) {
   for (const copy of ["what to prepare", "Credits held before creation", "Upload source images"]) {
     assert.equal(html.includes(copy), false, `${pageName} must not render the generic ai_tool_entry hero copy: ${copy}`);
   }
 }
-assert.ok(talkingPhotoGenerationProducts.length >= 1, "Talking Photo detail SSR must expose product or service JSON-LD");
-assert.ok(storyVideoGenerationProducts.length >= 1, "Story Video detail SSR must expose product or service JSON-LD");
-assert.ok(memeVideoGenerationProducts.length >= 1, "Meme Video detail SSR must expose product or service JSON-LD");
-assert.ok(productVideoGenerationProducts.length >= 1, "Product Video detail SSR must expose product or service JSON-LD");
+if (talkingPhotoGeneration) assert.ok(talkingPhotoGenerationProducts.length >= 1, "Talking Photo detail SSR must expose product or service JSON-LD");
+if (storyVideoGeneration) assert.ok(storyVideoGenerationProducts.length >= 1, "Story Video detail SSR must expose product or service JSON-LD");
+if (memeVideoGeneration) assert.ok(memeVideoGenerationProducts.length >= 1, "Meme Video detail SSR must expose product or service JSON-LD");
+if (productVideoGeneration) assert.ok(productVideoGenerationProducts.length >= 1, "Product Video detail SSR must expose product or service JSON-LD");
 if (productAdIsPublished) assert.ok(productAdVideoGenerationProducts.length >= 1, "Product Ad Video detail SSR must expose product or service JSON-LD");
+if (ugcAdIsPublished) assert.ok(ugcAdVideoGenerationProducts.length >= 1, "UGC Ad Video detail SSR must expose product or service JSON-LD");
 const productAdFaq = productAdVideoGenerationGraph.find((node) => node?.["@type"] === "FAQPage");
 if (productAdIsPublished) assert.equal(productAdFaq?.mainEntity?.length, 8, "Product Ad Video JSON-LD must expose eight FAQ entries");
+const ugcFaq = ugcAdVideoGenerationGraph.find((node) => node?.["@type"] === "FAQPage");
+if (ugcAdIsPublished) assert.equal(ugcFaq?.mainEntity?.length, 7, "UGC Ad Video JSON-LD must expose seven FAQ entries");
 if (headshotIsPublished) {
   assert.equal(collectionProducts.length, 1, "collection SSR must contain one Product node");
   assert.ok(Array.isArray(collectionProduct?.image) && collectionProduct.image.length >= 2, "collection Product must contain page-owned image URLs");
@@ -541,15 +639,15 @@ if (headshotIsPublished) {
   assert.ok((collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Credit cost"), "collection Product must expose credit cost");
   assert.ok((collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Output count"), "collection Product must expose output count");
 }
-assert.ok(sitemap.includes("https://www.mydreamshoots.com/pricing"), "sitemap must contain the canonical pricing URL");
-assert.equal(sitemap.includes("https://www.mydreamshoots.com/ai-image-generation/headshot"), headshotIsPublished, "headshot sitemap membership must match the active immutable snapshot");
-assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/talking-photo"), "sitemap must contain the canonical Talking Photo URL");
-assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/story-video"), "sitemap must contain the canonical Story Video URL");
-assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/meme-video"), "sitemap must contain the canonical Meme Video URL");
-assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/product-video"), "sitemap must contain the canonical Product Video URL");
-assert.equal(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/product-ad-video"), productAdIsPublished, "Product Ad Video sitemap membership must match the published snapshot");
+assert.ok(sitemapHasLoc("https://www.mydreamshoots.com/pricing"), "sitemap must contain the canonical pricing URL");
+assert.equal(sitemapHasLoc("https://www.mydreamshoots.com/ai-image-generation/headshot"), headshotIsPublished, "headshot sitemap membership must match the active immutable snapshot");
+for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
+  assert.equal(sitemapHasLoc(`https://www.mydreamshoots.com${pathname}`), false, `${pathname} must remain outside the sitemap while AI Video is deferred`);
+}
+assert.equal(sitemapHasLoc("https://www.mydreamshoots.com/ai-video-generation/product-ad-video"), productAdIsPublished, "Product Ad Video sitemap membership must match the published snapshot");
+assert.equal(sitemapHasLoc("https://www.mydreamshoots.com/ai-video-generation/ugc-ad-video"), ugcAdIsPublished, "UGC Ad Video sitemap membership must match the published snapshot");
 for (const forbidden of ["/collections/headshots", "/ai-photoshoot", "/tools/image-to-video", "/ai-video-generation/text-to-video", "/ai-video-generation/image-to-video"]) {
-  assert.equal(sitemap.includes(`https://www.mydreamshoots.com${forbidden}`), false, `sitemap must not contain ${forbidden}`);
+    assert.equal(sitemapHasLoc(`https://www.mydreamshoots.com${forbidden}`), false, `sitemap must not contain ${forbidden}`);
 }
 for (const legacyStatus of legacyCollectionStatuses) {
   assert.equal(legacyStatus.status, 404, `${legacyStatus.pathname} should return HTTP 404 after the collection slug migration`);
@@ -564,7 +662,7 @@ for (const hiddenStatus of hiddenVideoStatuses) {
 stopManagedServer();
 console.log(JSON.stringify({
   ok: true,
-  pages: ["/", "/site/mydreamshoots/", "/pricing", ...(headshotIsPublished ? [headshotPath] : []), "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/meme-video", "/ai-video-generation/product-video", ...(productAdIsPublished ? [productAdVideoPath] : []), "/workflow", "/faq"],
+  pages: ["/", "/site/mydreamshoots/", "/pricing", ...(headshotIsPublished ? [headshotPath] : []), ...Object.entries(videoTopicGenerationByPath).filter(([, html]) => Boolean(html)).map(([pathname]) => pathname), "/workflow", "/faq"],
   legacy404s: legacyCollectionStatuses.map(({ pathname, status }) => ({ pathname, status })),
   retiredTool404s: legacyToolRedirectStatuses.map(({ pathname, status }) => ({ pathname, status })),
   hiddenVideo404s: hiddenVideoStatuses.map(({ pathname, status }) => ({ pathname, status })),

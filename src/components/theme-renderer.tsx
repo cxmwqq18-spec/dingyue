@@ -5309,7 +5309,7 @@ function isMyDreamShootsProfileSite(site: Site): boolean {
 
 function publicVideoThemesForShowcase(site: Site, videoThemes: VideoTheme[]): VideoTheme[] {
   if (isSpanishXbySite(site)) return videoThemes;
-  if (!isAidreamcapesSite(site) && !isMyDreamShootsProfileSite(site)) return videoThemes;
+  if (!isAidreamcapesSite(site)) return videoThemes;
   return videoThemes.filter((theme) => !blockedPublicVideoThemeSlugs.has(theme.slug));
 }
 
@@ -12353,7 +12353,10 @@ function SectionView({
     const videoAllHref = canonicalGeneratorCopy ? "/best-ai-video" : setting(section, "videoAllHref", "/best-ai-video");
     const primaryHref = canonicalGeneratorCopy ? "/app/create" : setting(section, "primaryHref", "/app/create");
     const useMydreamShowcaseGrid = mydreamProfileSite && renderContext.pagePath === "/";
-    const videoItemLimit = Math.max(1, Math.min(8, numberSetting(section, "videoItemLimit", numberSetting(section, "itemLimit", 8))));
+    const configuredVideoItemLimit = numberSetting(section, "videoItemLimit", numberSetting(section, "itemLimit", 8));
+    const videoItemLimit = useMydreamShowcaseGrid
+      ? Number.POSITIVE_INFINITY
+      : Math.max(1, Math.min(8, configuredVideoItemLimit));
     const selectedImageSlugs = listLines(setting(section, "imageSlugs"));
     const selectedVideoSlugs = listLines(setting(section, "videoSlugs"));
     const accent = aidreamcapes ? `linear-gradient(90deg,${aidreamcapesAccent},${aidreamcapesCopper})` : dreamshootBrandGradient;
@@ -12364,8 +12367,8 @@ function SectionView({
 
     const videoCards = generationShowcaseVideoCardsForSite(publicVideoThemesForShowcase(site, videoThemes), selectedVideoSlugs, videoItemLimit);
     const imageProductCards = imageCards.map((card, productIndex) => ({ ...card, productIndex }));
-    const homepageImageProductCards = imageProductCards.slice(0, 16);
-    const homepageVideoCards = videoCards.slice(0, 8);
+    const homepageImageProductCards = imageProductCards;
+    const homepageVideoCards = videoCards;
     const homepageImageProductAlt = (card: (typeof imageProductCards)[number]) => {
       const fallback = cardImageAltForSite(site, {
         category: card.meta,

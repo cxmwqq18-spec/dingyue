@@ -21,7 +21,8 @@ const expectedHomeOrders = {
     "package_catalog_1",
     "proof_1",
     "faq_1",
-    "conversion_1"
+    "conversion_1",
+    "brand_strip_1"
   ],
   aidreamcapes: [
     "hero_1",
@@ -38,7 +39,7 @@ const expectedHomeOrders = {
   ]
 };
 const removedHomeSectionsByStore = {
-  mydreamshoots: ["mobile_video_1", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "brand_strip_1"],
+  mydreamshoots: ["mobile_video_1", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
   aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
 };
 const expectedMydreamshootsTutorialVideos = {
@@ -260,11 +261,7 @@ function assertPage(pageJson, label, storeKey) {
   assert(pageJson?.sections?.package_catalog_1?.type === "dreamshoot_package_catalog", `${label}: wrong package catalog section type`);
   assert(pageJson?.sections?.proof_1?.type === "testimonial_wall", `${label}: wrong review section type`);
   assert(pageJson?.sections?.conversion_1?.type === "conversion_panel", `${label}: missing conversion CTA before customer types`);
-  if (storeKey === "aidreamcapes") {
-    assert(pageJson?.sections?.brand_strip_1?.type === "brand_logo_strip", `${label}: missing customer type strip before footer`);
-  } else {
-    assert(!pageJson?.sections?.brand_strip_1, `${label}: MyDreamShoots footer logo strip should be removed`);
-  }
+  assert(pageJson?.sections?.brand_strip_1?.type === "brand_logo_strip", `${label}: missing customer type strip before footer`);
   for (const sectionId of removedHomeSectionsByStore[storeKey] ?? []) {
     assert(!pageJson?.sections?.[sectionId], `${label}: obsolete homepage section still present: ${sectionId}`);
   }

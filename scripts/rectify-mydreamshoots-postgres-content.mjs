@@ -208,9 +208,8 @@ async function main() {
     const settings = await prisma.themeSettings.findUnique({ where: { siteId } });
     if (settings) {
       const draftJson = rewriteJson(structuredClone(settings.draftJson));
-      const publishedJson = rewriteJson(structuredClone(settings.publishedJson));
-      if (changed(settings.draftJson, draftJson) || changed(settings.publishedJson, publishedJson)) {
-        if (!dryRun) await prisma.themeSettings.update({ where: { siteId }, data: { draftJson, publishedJson } });
+      if (changed(settings.draftJson, draftJson)) {
+        if (!dryRun) await prisma.themeSettings.update({ where: { siteId }, data: { draftJson } });
         result.themeSettings += 1;
       }
     }
@@ -218,9 +217,8 @@ async function main() {
     const pages = await prisma.themePage.findMany({ where: { siteId } });
     for (const page of pages) {
       const draftJson = rewriteJson(structuredClone(page.draftJson));
-      const publishedJson = rewriteJson(structuredClone(page.publishedJson));
-      if (changed(page.draftJson, draftJson) || changed(page.publishedJson, publishedJson)) {
-        if (!dryRun) await prisma.themePage.update({ where: { id: page.id }, data: { draftJson, publishedJson } });
+      if (changed(page.draftJson, draftJson)) {
+        if (!dryRun) await prisma.themePage.update({ where: { id: page.id }, data: { draftJson } });
         result.themePages += 1;
       }
     }

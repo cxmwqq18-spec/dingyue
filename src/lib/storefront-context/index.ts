@@ -157,6 +157,7 @@ export {
   resolveEffectiveIndexability,
   resolveEffectivePublishedPage,
   resolvePublishedRouteDisposition,
+  resolvePublishedSeoEntity,
   resolvePublishedRedirectDisposition,
   resolvePublicCollectionItems,
   resolvePublicPageMedia,

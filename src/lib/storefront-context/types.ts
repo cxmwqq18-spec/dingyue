@@ -10,6 +10,7 @@ import type {
   PublishedOfferProjection,
   PublishedPageEntityProjection,
   PublishedPageMediaProjection,
+  PublishedStandardPageMediaProjection,
   PublishedRouteProjection,
   Site,
   StorefrontProfileJson,
@@ -136,6 +137,7 @@ export type StorefrontContext = {
     pageEntityId?: string;
     copyRevision?: string;
     pageMediaRevision?: string;
+    standardPageMediaRevision?: string;
     canonicalSlug?: string;
     snapshotRevision?: string;
     routeRevision?: string;
@@ -150,6 +152,7 @@ export type StorefrontContext = {
   missingFacts: string[];
   publishedFacts?: PublishedFactsProjection;
   publishedPageMedia?: PublishedPageMediaProjection;
+  publishedStandardPageMedia?: PublishedStandardPageMediaProjection;
   publishedPageEntity?: PublishedPageEntityProjection;
   snapshotIntegrity: "valid" | "invalid" | "legacy";
   pageCopy?: MyDreamshootsPageCopy;
@@ -167,6 +170,7 @@ export type StorefrontContextBundle = {
   publishedPageEntities?: Record<string, PublishedPageEntityProjection>;
   publishedFacts?: PublishedFactsProjection;
   publishedPageMedia?: Record<string, PublishedPageMediaProjection>;
+  publishedStandardPageMedia?: Record<string, PublishedStandardPageMediaProjection>;
   publishedLinkRefs?: PublishedLinkRef[];
   snapshotIntegrity?: "valid" | "invalid" | "legacy";
 };
@@ -196,6 +200,7 @@ export type PublishedSiteSnapshot = {
   publishedPageEntities: PublishedPageEntityProjection[];
   publishedPageCopy: Array<{ pageEntityId: string; copyRevision: string; canonicalSlug: string; sourceHash: string }>;
   publishedPageMedia: PublishedPageMediaProjection[];
+  publishedStandardPageMedia: PublishedStandardPageMediaProjection[];
   publishedPackFacts: Array<{ packId: string; creditCost: number; outputCount: number; revision: string }>;
   publishedOffers: PublishedOfferProjection[];
   publishedFacts?: PublishedFactsProjection;

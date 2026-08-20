@@ -83,6 +83,12 @@ const videoCategories = [
     label: "Product Ad Video",
     description: "Build product ads around one audience, product promise, visual proof, offer, and clear next action.",
     sortOrder: 120
+  },
+  {
+    slug: "ugc-ad-video",
+    label: "UGC Ad Video",
+    description: "Plan creator-style product ads around speaker status, hooks, product context, visible proof, and clear CTAs.",
+    sortOrder: 130
   }
 ];
 
@@ -176,6 +182,16 @@ const pages = [
     keywords:
       "AI product ad video generator, product ad video maker, AI product advertising video, product video ad generator, ecommerce video ad maker, social media product ad video, product launch ad video, product marketing video generator",
     imageUrl: "/assets/dreamshoot/product-ad-video/ai-product-ad-video-new-product-unboxing-creative.jpg"
+  },
+  {
+    slug: "ugc-ad-video",
+    title: "UGC Ad Video",
+    seoTitle: "AI UGC Video Generator for Creator-Style Product Ads | myDreamshoots",
+    description:
+      "Create creator-style product ads with an AI UGC video generator. Plan hooks, speaker roles, product-in-use scenes, visible proof, voiceover, and clear CTAs—then validate every claim against your real product assets and generated output.",
+    keywords:
+      "AI UGC video generator, UGC ad video generator, AI UGC ad creator, UGC product video maker, creator-style product video, AI creator ad video, UGC style video ad, short-form creator ad generator",
+    imageUrl: "/assets/dreamshoot/ugc-ad-video/ai-ugc-video-creator-lip-product-hook.jpg"
   }
 ];
 
@@ -320,6 +336,7 @@ function syncPages(state, changes) {
   return pages.map((pageDefinition) => {
     const slug = pagePath(pageDefinition.slug);
     let page = site.pages.find((item) => item.slug === slug);
+    const pageWasCreated = !page;
     if (!page) {
       page = {
         id: pageId(pageDefinition.slug),
@@ -340,12 +357,14 @@ function syncPages(state, changes) {
         slug,
         title: pageDefinition.title,
         draftJson: clone(json),
-        publishedJson: clone(json),
         updatedAt: UPDATE_TIMESTAMP
       },
       changes,
       "ThemePage"
     );
+    if (pageWasCreated || !page.publishedJson) {
+      updateRecord(page, { publishedJson: clone(json) }, changes, "ThemePage");
+    }
 
     return page;
   });
@@ -474,17 +493,21 @@ async function updateDatabase(state, categories, syncedPages) {
             slug: page.slug,
             title: page.title,
             draftJson: toPrismaJson(page.draftJson),
-            publishedJson: toPrismaJson(page.publishedJson),
             draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
           };
-          await tx.themePage.upsert({
-            where: { id: page.id },
-            create: {
-              id: page.id,
-              ...pageData
-            },
-            update: pageData
-          });
+          const existingPage = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
+          if (existingPage) {
+            await tx.themePage.update({ where: { id: page.id }, data: pageData });
+          } else {
+            await tx.themePage.create({
+              data: {
+                id: page.id,
+                ...pageData,
+                publishedJson: toPrismaJson(page.publishedJson ?? page.draftJson),
+                createdAt: new Date(page.createdAt ?? UPDATE_TIMESTAMP)
+              }
+            });
+          }
         }
         await tx.platformStateDocument.upsert({
           where: { id: "platform" },

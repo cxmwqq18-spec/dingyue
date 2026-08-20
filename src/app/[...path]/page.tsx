@@ -608,7 +608,7 @@ export default async function HostStorefrontCatchAllPage({
   const legacyTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForHost(host));
   if (legacyTarget) {
     const disposition = resolvePublishedRedirectDisposition(snapshot, slug, legacyTarget);
-    if (disposition.kind === "redirect" && disposition.targetPath) permanentRedirect(publicSiteUrl(site, disposition.targetPath));
+    if (disposition.kind === "redirect" && disposition.targetPath) permanentRedirect(disposition.targetPath);
     notFound();
   }
   if (slug === "/login" && (await hasValidCustomerSessionForSite(site))) {

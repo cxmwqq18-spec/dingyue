@@ -520,6 +520,26 @@ function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string,
   };
 }
 
+function publishedStandardPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode | undefined {
+  const media = input.context.publishedStandardPageMedia;
+  if (!media || media.status !== "ready") return undefined;
+  const url = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.context.seo.canonicalPath));
+  return {
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    name: title,
+    description,
+    url,
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      "@id": `${url}#primaryimage`,
+      url: absoluteUrl(input.site, input.routeMode, media.jsonLdImage),
+      contentUrl: absoluteUrl(input.site, input.routeMode, media.jsonLdImage),
+      caption: media.primaryImageAlt
+    }
+  };
+}
+
 function serviceOrProductSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
   const path = input.pagePath;
   if (path.startsWith("/tools/") || path.startsWith("/ai-video-generation/")) {
@@ -946,6 +966,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     websiteSchema(resolvedInput.site, resolvedInput.routeMode),
     storefrontApplicationSchema(resolvedInput, title, description),
     breadcrumbs(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title),
+    publishedStandardPageSchema(resolvedInput, title, description),
     faqSchema(resolvedInput.site, resolvedInput.pageJson, resolvedInput),
     articleSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, description, resolvedInput.pageJson),
     ...collectionPageSchema(resolvedInput, title, description),

@@ -195,14 +195,12 @@ function walk(value) {
 }
 
 function setSeo(page, title, description, keywords) {
-  for (const jsonKey of ["draftJson", "publishedJson"]) {
-    page[jsonKey] ??= {};
-    page[jsonKey].seo ??= {};
-    page[jsonKey].seo.title = title;
-    page[jsonKey].seo.description = description;
-    if (keywords) page[jsonKey].seo.keywords = keywords;
-    else delete page[jsonKey].seo.keywords;
-  }
+  page.draftJson ??= {};
+  page.draftJson.seo ??= {};
+  page.draftJson.seo.title = title;
+  page.draftJson.seo.description = description;
+  if (keywords) page.draftJson.seo.keywords = keywords;
+  else delete page.draftJson.seo.keywords;
 }
 
 function updateThemeSeoPolicyPage(themeJson, pageId, canonicalPath) {
@@ -261,7 +259,6 @@ function updatePolicyPage(page) {
   const before = JSON.stringify(page);
   page.title = policyCopyByCanonicalPath[canonicalPath].pageTitle;
   page.draftJson = updatePolicyJson(page.draftJson ?? {}, canonicalPath);
-  page.publishedJson = updatePolicyJson(page.publishedJson ?? {}, canonicalPath);
   return JSON.stringify(page) !== before;
 }
 
@@ -269,13 +266,16 @@ let changedSites = 0;
 for (const site of state.sites ?? []) {
   if (!isMydreamshootsSite(site)) continue;
   const before = JSON.stringify(site);
-  walk(site);
+  site.branding = walk(site.branding);
+  if (site.themeSettings?.draftJson) site.themeSettings.draftJson = walk(site.themeSettings.draftJson);
+  for (const page of site.pages ?? []) {
+    if (page.draftJson) page.draftJson = walk(page.draftJson);
+  }
   const blogPageIds = new Set((site.pages ?? []).filter((page) => isBlogPageSlug(page.slug)).map((page) => page.id));
 
   site.themeSettings ??= {};
   site.themeSettings.draftJson ??= {};
-  site.themeSettings.publishedJson ??= {};
-  for (const themeSettingsJson of [site.themeSettings.draftJson, site.themeSettings.publishedJson]) {
+  for (const themeSettingsJson of [site.themeSettings.draftJson]) {
     const themeSeo = themeSettingsJson.seo;
     if (!themeSeo) continue;
     themeSeo.siteTitle = "MyDreamShoots";
@@ -296,11 +296,10 @@ for (const site of state.sites ?? []) {
   for (const page of site.pages ?? []) {
     if (!isBlogPageSlug(page.slug)) {
       delete page.draftJson?.seo?.keywords;
-      delete page.publishedJson?.seo?.keywords;
     }
     if (page.slug === "/") {
       setSeo(page, "Professional AI Photo Generator Online - MyDreamShoots", "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.", "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot");
-      for (const pageJson of [page.draftJson, page.publishedJson]) {
+      for (const pageJson of [page.draftJson]) {
         const hero = pageJson?.sections?.hero_1;
         if (hero?.blocks) {
           const primary = hero.blocks.find((block) => block.id === "hero_cta_primary");
@@ -338,26 +337,6 @@ for (const theme of state.siteThemes ?? []) {
   updatePolicyTemplate(theme.templates?.terms, "/terms");
   updatePolicyTemplate(theme.templates?.content, "/content");
   updatePolicyTemplate(theme.templates?.refunds, "/refunds");
-}
-
-for (const publication of state.themePublications ?? []) {
-  if (publication.siteId !== "site_dreamshoot") continue;
-  walk(publication);
-  for (const page of publication.snapshot?.pages ?? []) {
-    const canonicalPath = policyCanonicalPathBySlug[page.slug];
-    if (!canonicalPath) continue;
-    page.title = policyCopyByCanonicalPath[canonicalPath].pageTitle;
-    page.draftJson = updatePolicyJson(page.draftJson ?? page.publishedJson ?? {}, canonicalPath);
-    page.publishedJson = updatePolicyJson(page.publishedJson ?? page.draftJson ?? {}, canonicalPath);
-  }
-  for (const themeSettingsJson of [publication.snapshot?.themeSettings?.draftJson, publication.snapshot?.themeSettings?.publishedJson, publication.snapshot?.themeSettings]) {
-    if (!themeSettingsJson) continue;
-    for (const page of publication.snapshot?.pages ?? []) updateThemeSeoPolicyPage(themeSettingsJson, page.id, policyCanonicalPathBySlug[page.slug]);
-  }
-  updatePolicyTemplate(publication.snapshot?.saasTheme?.templates?.privacy, "/privacy");
-  updatePolicyTemplate(publication.snapshot?.saasTheme?.templates?.terms, "/terms");
-  updatePolicyTemplate(publication.snapshot?.saasTheme?.templates?.content, "/content");
-  updatePolicyTemplate(publication.snapshot?.saasTheme?.templates?.refunds, "/refunds");
 }
 
 for (const pack of state.creativePacks ?? []) {

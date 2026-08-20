@@ -141,7 +141,7 @@ function countMatchingStrings(value, pattern) {
 
 function updatePage(page) {
   const before = JSON.stringify(page);
-  for (const jsonKey of ["draftJson", "publishedJson"]) {
+  for (const jsonKey of ["draftJson"]) {
     const json = page[jsonKey];
     if (!json) continue;
     page[jsonKey] = removeUnsupportedPublicNavigation(mapTree(json, replaceText));
@@ -221,7 +221,7 @@ function updateMydreamshootsValue(value) {
 function ensureCookiePolicyLink(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return value;
   const next = clone(value);
-  for (const settingsKey of ["draftJson", "publishedJson"]) {
+  for (const settingsKey of ["draftJson"]) {
     const navigation = next[settingsKey]?.navigation;
     if (!navigation || !Array.isArray(navigation.footerLinks)) continue;
     if (!navigation.footerLinks.some((link) => link?.href === "/cookies")) {
@@ -231,7 +231,10 @@ function ensureCookiePolicyLink(value) {
   return next;
 }
 
-site.themeSettings = ensureCookiePolicyLink(updateMydreamshootsValue(site.themeSettings));
+site.themeSettings = {
+  ...site.themeSettings,
+  draftJson: ensureCookiePolicyLink({ draftJson: updateMydreamshootsValue(site.themeSettings?.draftJson) }).draftJson
+};
 let changedEmbeddedSiteThemes = 0;
 site.siteThemes = (site.siteThemes ?? []).map((theme) => {
   const next = {
@@ -247,27 +250,7 @@ const requiredVideoTopicPages = site.pages.filter((page) =>
   !["/ai-video-generation/text-to-video", "/ai-video-generation/image-to-video"].includes(page.slug)
 );
 
-function normalizePublicationSnapshot(value) {
-  const next = updateMydreamshootsValue(value);
-  if (next?.snapshot && typeof next.snapshot === "object" && next.snapshot.themeSettings) {
-    next.snapshot.themeSettings = clone(site.themeSettings?.publishedJson ?? next.snapshot.themeSettings);
-  }
-  if (Array.isArray(next?.snapshot?.pages)) {
-    const requiredBySlug = new Map(requiredVideoTopicPages.map((page) => [page.slug, page]));
-    next.snapshot.pages = next.snapshot.pages.map((page) => clone(requiredBySlug.get(page.slug) ?? page));
-    const publishedSlugs = new Set(next.snapshot.pages.map((page) => page.slug));
-    for (const page of requiredVideoTopicPages) {
-      if (!publishedSlugs.has(page.slug)) next.snapshot.pages.push(clone(page));
-    }
-    next.pageCount = next.snapshot.pages.length;
-  }
-  return next;
-}
-
-const embeddedPublicationsBefore = JSON.stringify(site.themePublications ?? []);
-site.themePublications = (site.themePublications ?? []).map(normalizePublicationSnapshot);
-const changedEmbeddedPublications = embeddedPublicationsBefore === JSON.stringify(site.themePublications) ? 0 : site.themePublications.length;
-site.latestPublication = normalizePublicationSnapshot(site.latestPublication);
+const changedEmbeddedPublications = 0;
 let changedSiteThemes = 0;
 for (const siteTheme of state.siteThemes ?? []) {
   if (siteTheme.siteId !== site.id) continue;
@@ -276,14 +259,9 @@ for (const siteTheme of state.siteThemes ?? []) {
   siteTheme.settings = updateMydreamshootsValue(siteTheme.settings);
   if (before !== JSON.stringify(siteTheme)) changedSiteThemes += 1;
 }
-for (const publication of state.themePublications ?? []) {
-  if (publication.siteId !== site.id) continue;
-  publication.snapshot = normalizePublicationSnapshot({ snapshot: publication.snapshot }).snapshot;
-}
 const unresolvedUnverifiedClaimStrings = countMatchingStrings([
   site,
-  ...(state.siteThemes ?? []).filter((theme) => theme.siteId === site.id),
-  ...(state.themePublications ?? []).filter((publication) => publication.siteId === site.id)
+  ...(state.siteThemes ?? []).filter((theme) => theme.siteId === site.id)
 ], unverifiedClaimPattern);
 if (unresolvedUnverifiedClaimStrings > 0) {
   throw new Error(`MyDreamShoots still contains ${unresolvedUnverifiedClaimStrings} unverified absolute claim strings.`);
@@ -314,27 +292,12 @@ async function syncDatabase() {
     const sourcePages = new Map(site.pages.filter((page) => changedPageSlugs.has(page.slug)).map((page) => [page.slug, page]));
     for (const page of requiredVideoTopicPages) sourcePages.set(page.slug, page);
     const sourceSiteThemes = new Map((state.siteThemes ?? []).filter((theme) => theme.siteId === site.id).map((theme) => [theme.id, theme]));
-    const updatePublicationSnapshot = (value) => {
-      const snapshot = updateMydreamshootsValue(cloneJson(value ?? {}));
-      if (!Array.isArray(snapshot.pages)) return snapshot;
-      snapshot.pages = snapshot.pages.map((page) => {
-        const source = sourcePages.get(page.slug);
-        return source ? cloneJson(source) : page;
-      });
-      const publishedSlugs = new Set(snapshot.pages.map((page) => page.slug));
-      for (const page of requiredVideoTopicPages) {
-        if (!publishedSlugs.has(page.slug)) snapshot.pages.push(cloneJson(page));
-      }
-      if (snapshot.themeSettings) snapshot.themeSettings = cloneJson(site.themeSettings?.publishedJson ?? snapshot.themeSettings);
-      return snapshot;
-    };
     await prisma.$transaction(async (tx) => {
       const settings = await tx.themeSettings.findUnique({ where: { siteId: site.id } });
       if (settings) {
         const draftJson = cloneJson(site.themeSettings?.draftJson ?? settings.draftJson);
-        const publishedJson = cloneJson(site.themeSettings?.publishedJson ?? settings.publishedJson);
-        if (JSON.stringify(draftJson) !== JSON.stringify(settings.draftJson) || JSON.stringify(publishedJson) !== JSON.stringify(settings.publishedJson)) {
-          await tx.themeSettings.update({ where: { siteId: site.id }, data: { draftJson, publishedJson } });
+        if (JSON.stringify(draftJson) !== JSON.stringify(settings.draftJson)) {
+          await tx.themeSettings.update({ where: { siteId: site.id }, data: { draftJson } });
           result.themeSettings += 1;
         }
       }
@@ -343,9 +306,8 @@ async function syncDatabase() {
         const source = sourcePages.get(page.slug);
         if (!source) continue;
         const draftJson = cloneJson(source.draftJson ?? page.draftJson);
-        const publishedJson = cloneJson(source.publishedJson ?? page.publishedJson);
-        if (JSON.stringify(draftJson) === JSON.stringify(page.draftJson) && JSON.stringify(publishedJson) === JSON.stringify(page.publishedJson)) continue;
-        await tx.themePage.update({ where: { id: page.id }, data: { draftJson, publishedJson, title: source.title ?? page.title } });
+        if (JSON.stringify(draftJson) === JSON.stringify(page.draftJson)) continue;
+        await tx.themePage.update({ where: { id: page.id }, data: { draftJson, title: source.title ?? page.title } });
         result.themePages += 1;
       }
 
@@ -371,17 +333,18 @@ async function syncDatabase() {
       const documentState = cloneJson(current?.state ?? {});
       const documentSite = documentState.sites?.find((item) => item.id === site.id);
       if (documentSite) {
-        documentSite.pages = (documentSite.pages ?? []).map((page) => sourcePages.get(page.slug) ?? page);
-        documentSite.themeSettings = cloneJson(site.themeSettings ?? documentSite.themeSettings);
+        documentSite.pages = (documentSite.pages ?? []).map((page) => {
+          const source = sourcePages.get(page.slug);
+          return source ? { ...page, title: source.title ?? page.title, draftJson: cloneJson(source.draftJson) } : page;
+        });
+        documentSite.themeSettings = {
+          ...documentSite.themeSettings,
+          draftJson: cloneJson(site.themeSettings?.draftJson ?? documentSite.themeSettings?.draftJson)
+        };
         documentSite.siteThemes = cloneJson(site.siteThemes ?? documentSite.siteThemes);
-        documentSite.themePublications = cloneJson(site.themePublications ?? documentSite.themePublications);
-        documentSite.latestPublication = cloneJson(site.latestPublication ?? documentSite.latestPublication);
         documentState.siteThemes = (documentState.siteThemes ?? []).map((theme) => (
           theme.siteId === site.id ? cloneJson(sourceSiteThemes.get(theme.id) ?? theme) : theme
         ));
-        documentState.themePublications = (documentState.themePublications ?? []).map((publication) => publication.siteId === site.id
-          ? { ...publication, snapshot: updatePublicationSnapshot(publication.snapshot) }
-          : publication);
         documentState.videoThemes = (documentState.videoThemes ?? []).map((theme) => (
           theme.siteId === site.id && legacyVideoThemeSlugs.has(theme.slug)
             ? { ...theme, status: "inactive" }

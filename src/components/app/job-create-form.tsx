@@ -1170,7 +1170,8 @@ export function JobCreateForm({
       const key = comparablePreviewImageUrl(src);
       if (!src || !key || excluded.has(key) || seen.has(key)) return;
       seen.add(key);
-      const explicitAlt = selectedPack.galleryImageAlts?.[imageIndex]?.trim();
+      const altOffset = selectedPack.galleryImageAlts?.length === (selectedPack.galleryImages?.length ?? 0) + 1 ? 1 : 0;
+      const explicitAlt = selectedPack.galleryImageAlts?.[imageIndex + altOffset]?.trim();
       examples.push({
         src,
         alt: explicitAlt || `${selectionTitle} gallery example ${examples.length + 1}`

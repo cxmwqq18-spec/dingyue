@@ -46,7 +46,7 @@ const requireDatabase = process.argv.includes("--require-db");
     assert.deepEqual(first.snapshot, second.snapshot, "publication snapshot must be byte-stable on readback");
     assert.equal(publicationSnapshotIntegrity(first.snapshot), "valid", "readback snapshot must satisfy the immutable contract");
     assert.equal(publicationSnapshotHash(first.snapshot), first.snapshot.snapshotHash, "snapshot hash must verify after readback");
-    for (const field of ["publishedRoutes", "publishedPageEntities", "publishedPageCopy", "publishedPageMedia", "publishedPackFacts", "publishedOffers", "publishedFacts", "publishedCollectionRefs", "publishedLinkRefs", "revisions", "snapshotHash", "buildId"]) {
+    for (const field of ["publishedRoutes", "publishedPageEntities", "publishedPageCopy", "publishedPageMedia", "publishedStandardPageMedia", "publishedPackFacts", "publishedOffers", "publishedFacts", "publishedCollectionRefs", "publishedLinkRefs", "revisions", "snapshotHash", "buildId"]) {
       assert.ok(field in first.snapshot, `readback snapshot missing ${field}`);
     }
     console.log(JSON.stringify({ ok: true, skipped: false, siteId, publicationId: first.id, version: first.version, snapshotHash: first.snapshot.snapshotHash }, null, 2));

@@ -57,6 +57,7 @@ import type {
   ThemePage,
   ThemePublication,
   PublishedRouteProjection,
+  PublishedStandardPageMediaProjection,
   PublishedSeoSnapshot,
   ThemeSectionSchema,
   ThemeSettings,
@@ -78,6 +79,70 @@ function asPublishedMediaPack(pack: PublishPreflightCreativePack | undefined): {
     galleryImages: pack.galleryImages ?? undefined,
     galleryImageAlts: pack.galleryImageAlts ?? undefined
   };
+}
+
+const STANDARD_MYDREAMSHOOTS_MEDIA_PATHS = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"] as const;
+const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_MEDIA_PATHS)[number], string> = {
+  "/about-us": "MyDreamShoots company overview with the private AI photo workflow",
+  "/best-packages": "Published MyDreamShoots photo packages arranged for visual theme comparison",
+  "/best-ai-image": "Published AI image examples selected from the current MyDreamShoots collection",
+  "/pricing": "MyDreamShoots subscription credits and billing options comparison visual",
+  "/faq": "MyDreamShoots support questions for uploads credits generation and delivery",
+  "/workflow": "MyDreamShoots approved upload generation review and private delivery workflow"
+};
+function collectPublishedImageUrls(value: unknown, output: string[] = []): string[] {
+  if (typeof value === "string" && /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(value.trim())) {
+    if (value.trim() && !output.includes(value.trim())) output.push(value.trim());
+    return output;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectPublishedImageUrls(item, output));
+    return output;
+  }
+  if (value && typeof value === "object") {
+    Object.values(value).forEach((item) => collectPublishedImageUrls(item, output));
+  }
+  return output;
+}
+
+function buildPublishedStandardPageMedia(
+  site: Site,
+  leafRoutes: ReturnType<typeof mydreamshootsPublishedRouteManifest>,
+  leafMedia: ReturnType<typeof buildPublishedPageMediaProjection>[]
+): PublishedStandardPageMediaProjection[] {
+  if (site.id !== "site_dreamshoot") return [];
+  return STANDARD_MYDREAMSHOOTS_MEDIA_PATHS.map((canonicalPath) => {
+    const page = site.pages.find((candidate) => candidate.slug === canonicalPath || candidate.publishedJson.seo?.canonicalPath === canonicalPath);
+    const discovered = page ? collectPublishedImageUrls(page.publishedJson) : [];
+    const firstReadyLeafMedia = canonicalPath === "/best-ai-image"
+      ? leafRoutes.flatMap((route) => {
+          const media = leafMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId);
+          return route.status === "published" && media?.status === "ready" ? [media] : [];
+        })[0]
+      : undefined;
+    const primaryImage = firstReadyLeafMedia?.primaryImage ?? page?.publishedJson.seo?.ogImage ?? discovered[0] ?? "";
+    const pageEntityId = `mydreamshoots:standard:${canonicalPath.slice(1).replace(/[^a-z0-9]+/gi, "-")}`;
+    const mediaEntityId = `${pageEntityId}:media`;
+    const primaryImageAlt = page ? STANDARD_MYDREAMSHOOTS_MEDIA_ALTS[canonicalPath] : "";
+    const sitemapImages = primaryImage ? [primaryImage, ...discovered.filter((image) => image !== primaryImage)].slice(0, 6) : [];
+    const status = page && primaryImage && primaryImageAlt ? "ready" as const : "review_required" as const;
+    const revision = projectionRevision({ pageEntityId, pageId: page?.id, canonicalPath, primaryImage, primaryImageAlt, sitemapImages, status });
+    return {
+      pageEntityId,
+      pageId: page?.id ?? "",
+      canonicalPath,
+      mediaEntityId,
+      primaryImage,
+      primaryImageAlt,
+      ogImage: primaryImage,
+      twitterImage: primaryImage,
+      jsonLdImage: primaryImage,
+      sitemapImages,
+      status,
+      revision,
+      ...(status === "ready" ? {} : { reviewReason: "STANDARD_PAGE_MEDIA_REQUIRED" })
+    };
+  });
 }
 
 function stableProjection(value: unknown): unknown {
@@ -240,6 +305,7 @@ export function buildPublicationSnapshot(
       reviewReason: route.reviewReason || media?.reviewReason || "PAGE_MEDIA_REQUIRED"
     };
   });
+  const publishedStandardPageMedia = buildPublishedStandardPageMedia(site, leafRoutes, publishedPageMedia);
   const policyRouteSpecs = [
     { canonicalPath: "/privacy" as const, aliases: ["/privacy-policy", "/policies/privacy", "/policies/privacy-policy"] },
     { canonicalPath: "/terms" as const, aliases: ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"] }
@@ -311,7 +377,7 @@ export function buildPublicationSnapshot(
   const routeRevision = projectionRevision(publishedRoutes);
   const pageRevision = projectionRevision(publishedPageEntities);
   const copyRevision = projectionRevision(publishedPageCopy);
-  const mediaRevision = projectionRevision(publishedPageMedia);
+  const mediaRevision = projectionRevision({ leaf: publishedPageMedia, standard: publishedStandardPageMedia });
   const packRevision = projectionRevision(publishedPackFacts);
   const publishedOffers = products.flatMap((product) => product.prices
     .filter((price) => product.status === "active" && price.status === "active" && price.amountCents > 0)
@@ -340,20 +406,22 @@ export function buildPublicationSnapshot(
     })));
   const offerRevision = projectionRevision(publishedOffers);
   const publishedFacts = {
-    identity: site.storefrontProfile?.publishedJson?.identity,
+    identity: site.storefrontProfile?.draftJson?.identity ?? site.storefrontProfile?.publishedJson?.identity,
     privacy: {
-      customerMediaTraining: site.storefrontProfile?.publishedJson?.policyFacts?.usesCustomerMediaForTraining,
-      sourceMediaRetentionDays: site.storefrontProfile?.publishedJson?.policyFacts?.sourceMediaRetentionDays
+      customerMediaTraining: site.storefrontProfile?.draftJson?.policyFacts?.usesCustomerMediaForTraining ?? site.storefrontProfile?.publishedJson?.policyFacts?.usesCustomerMediaForTraining,
+      sourceMediaRetentionDays: site.storefrontProfile?.draftJson?.policyFacts?.sourceMediaRetentionDays ?? site.storefrontProfile?.publishedJson?.policyFacts?.sourceMediaRetentionDays
     },
     refund: {
-      reviewRequired: site.storefrontProfile?.publishedJson?.policyFacts?.refundReviewRequired,
-      windowDays: site.storefrontProfile?.publishedJson?.policyFacts?.refundWindowDays,
-      effectiveDate: site.storefrontProfile?.publishedJson?.policyFacts?.effectiveDate
+      reviewRequired: site.storefrontProfile?.draftJson?.policyFacts?.refundReviewRequired ?? site.storefrontProfile?.publishedJson?.policyFacts?.refundReviewRequired,
+      windowDays: site.storefrontProfile?.draftJson?.policyFacts?.refundWindowDays ?? site.storefrontProfile?.publishedJson?.policyFacts?.refundWindowDays,
+      effectiveDate: site.storefrontProfile?.draftJson?.policyFacts?.effectiveDate ?? site.storefrontProfile?.publishedJson?.policyFacts?.effectiveDate
     },
-    claimRevision: crypto.createHash("sha256").update(JSON.stringify(site.storefrontProfile?.publishedJson ?? {})).digest("hex").slice(0, 20)
+    creditLifecycle: site.storefrontProfile?.draftJson?.policyFacts?.creditLifecycle ?? site.storefrontProfile?.publishedJson?.policyFacts?.creditLifecycle,
+    security: site.storefrontProfile?.draftJson?.policyFacts?.security ?? site.storefrontProfile?.publishedJson?.policyFacts?.security,
+    claimRevision: crypto.createHash("sha256").update(JSON.stringify(site.storefrontProfile?.draftJson ?? site.storefrontProfile?.publishedJson ?? {})).digest("hex").slice(0, 20)
   };
   const factsRevision = projectionRevision(publishedFacts);
-  const policyRevision = projectionRevision({ privacy: publishedFacts.privacy, refund: publishedFacts.refund });
+  const policyRevision = projectionRevision({ privacy: publishedFacts.privacy, refund: publishedFacts.refund, creditLifecycle: publishedFacts.creditLifecycle, security: publishedFacts.security });
   const publishedCollectionRefs = leafRoutes.map((route) => {
     const entity = publishedPageEntities.find((candidate) => candidate.pageEntityId === route.pageEntityId);
     const media = publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId);
@@ -444,12 +512,14 @@ export function buildPublicationSnapshot(
       templateKey: page.templateKey,
       slug: page.slug,
       title: page.title,
-      publishedJson: cloneJson(page.publishedJson),
+      publishedJson: cloneJson(page.draftJson ?? page.publishedJson),
       createdAt: page.createdAt,
       updatedAt: page.updatedAt
       })),
-    themeSettings: cloneJson(site.themeSettings.publishedJson),
-    storefrontProfile: site.storefrontProfile?.publishedJson ? cloneJson(site.storefrontProfile.publishedJson) : undefined,
+    themeSettings: cloneJson(site.themeSettings.draftJson ?? site.themeSettings.publishedJson),
+    storefrontProfile: (site.storefrontProfile?.draftJson ?? site.storefrontProfile?.publishedJson)
+      ? cloneJson(site.storefrontProfile.draftJson ?? site.storefrontProfile.publishedJson)
+      : undefined,
     saasTheme: siteTheme
       ? {
           name: siteTheme.name,
@@ -465,6 +535,7 @@ export function buildPublicationSnapshot(
     publishedPageEntities,
     publishedPageCopy,
     publishedPageMedia,
+    publishedStandardPageMedia,
     publishedPackFacts,
     publishedOffers,
     publishedFacts,
@@ -574,7 +645,7 @@ export async function publishSeoSnapshotRelational(params: {
       metadata: { version: publishedVersion, snapshotHash: params.snapshot.snapshotHash }
     });
     return { publication: toThemePublication(publicationRecord), publishedVersion };
-  });
+  }, { timeout: 120_000, maxWait: 20_000 });
   await finalizePublishedTheme(params.siteId, result.publication.id);
   return result;
 }
@@ -1961,7 +2032,7 @@ export async function activateThemePublicationRelational(
       metadata: { version: publicationRecord.version }
     });
     return toThemePublication(publicationRecord);
-  });
+  }, { timeout: 120_000, maxWait: 20_000 });
   clearSiteThemeReadCache(siteId);
   clearStorefrontContextCache(siteId);
   return { publication };

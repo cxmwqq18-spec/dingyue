@@ -14,7 +14,8 @@ const topics = [
   "story-video",
   "meme-video",
   "product-video",
-  "product-ad-video"
+  "product-ad-video",
+  "ugc-ad-video"
 ];
 const viewports = [
   { name: "mobile", width: 390, height: 844, columns: 1 },
@@ -24,8 +25,16 @@ const viewports = [
 ];
 const sectionOrder = ["hero", "use-cases", "foundation", "guidance", "steps", "value", "trust", "faq", "final-cta"];
 
+function sectionOrderForTopic(topic) {
+  if (topic === "ugc-ad-video") {
+    return ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"];
+  }
+  return sectionOrder;
+}
+
 function assertOrderedSections(topic, sections) {
-  const indexes = sectionOrder.map((section) => sections.indexOf(section));
+  const orderedSections = sectionOrderForTopic(topic);
+  const indexes = orderedSections.map((section) => sections.indexOf(section));
   assert(indexes.every((index) => index >= 0), `${topic} is missing a shared section`);
   assert(indexes.every((index, position, values) => position === 0 || index > values[position - 1]), `${topic} section order changed`);
 }

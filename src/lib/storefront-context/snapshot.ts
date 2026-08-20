@@ -49,7 +49,9 @@ function profileFromPublishedFacts(facts: PublishedSiteSnapshot["publishedFacts"
       sourceMediaRetentionDays: facts.privacy?.sourceMediaRetentionDays,
       refundReviewRequired: facts.refund?.reviewRequired,
       refundWindowDays: facts.refund?.windowDays,
-      effectiveDate: facts.refund?.effectiveDate
+      effectiveDate: facts.refund?.effectiveDate,
+      creditLifecycle: facts.creditLifecycle,
+      security: facts.security
     }
   };
 }
@@ -124,6 +126,7 @@ const DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS = new Set([
   "/ai-video-generation/text-to-video",
   "/ai-video-generation/image-to-video"
 ]);
+const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"]);
 
 function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): StorefrontContextBundle {
   return {
@@ -136,9 +139,48 @@ function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): Storefront
     buildId: snapshot.buildId,
     publishedFacts: snapshot.publishedFacts,
     publishedPageMedia: Object.fromEntries(snapshot.publishedPageMedia.map((projection) => [projection.pageEntityId, projection])),
+    publishedStandardPageMedia: Object.fromEntries(snapshot.publishedStandardPageMedia.map((projection) => [projection.canonicalPath, projection])),
     snapshotIntegrity: snapshot.snapshotIntegrity,
     publishedPageEntities: Object.fromEntries(snapshot.publishedPageEntities.map((projection) => [projection.canonicalPath, projection])),
     publishedLinkRefs: snapshot.publishedLinkRefs
+  };
+}
+
+export function resolvePublishedSeoEntity(snapshot: PublishedSiteSnapshot, canonicalPath: string) {
+  const path = normalizePath(canonicalPath);
+  const route = snapshot.publishedRoutes.find((candidate) => candidate.disposition === "render" && candidate.canonicalPath === path);
+  const pageEntity = route?.routeKind === "ai-image-theme-leaf"
+    ? snapshot.publishedPageEntities.find((candidate) => candidate.pageEntityId === route.pageEntityId)
+    : undefined;
+  const pageCopy = pageEntity
+    ? snapshot.publishedPageCopy.find((candidate) => candidate.pageEntityId === pageEntity.pageEntityId)
+    : undefined;
+  const pageMedia = pageEntity
+    ? snapshot.publishedPageMedia.find((candidate) => candidate.pageEntityId === pageEntity.pageEntityId)
+    : undefined;
+  const standardPageMedia = snapshot.publishedStandardPageMedia.find((candidate) => candidate.canonicalPath === path);
+  const ownerPageEntityId = pageEntity?.pageEntityId ?? standardPageMedia?.pageEntityId;
+  return {
+    route,
+    pageEntity,
+    pageCopy,
+    pageMedia,
+    standardPageMedia,
+    facts: snapshot.publishedFacts,
+    offers: snapshot.publishedOffers,
+    collectionRefs: ownerPageEntityId
+      ? snapshot.publishedCollectionRefs.filter((candidate) => candidate.ownerPageEntityId === ownerPageEntityId)
+      : [],
+    linkRefs: ownerPageEntityId
+      ? snapshot.publishedLinkRefs.filter((candidate) => candidate.ownerPageEntityId === ownerPageEntityId)
+      : [],
+    revisions: snapshot.snapshotRevisions,
+    publicationIdentity: {
+      publicationId: snapshot.publicationId,
+      publicationVersion: snapshot.publicationVersion,
+      snapshotHash: snapshot.publication?.snapshot.snapshotHash,
+      buildId: snapshot.buildId
+    }
   };
 }
 
@@ -230,6 +272,9 @@ export function createPublishedSiteSnapshot(
   const publishedPageMedia = hasImmutableSeoProjection
     ? (Array.isArray(publication?.snapshot?.publishedPageMedia) ? publication!.snapshot.publishedPageMedia as PublishedSiteSnapshot["publishedPageMedia"] : [])
     : [];
+  const publishedStandardPageMedia = hasImmutableSeoProjection
+    ? (Array.isArray(publication?.snapshot?.publishedStandardPageMedia) ? publication!.snapshot.publishedStandardPageMedia as PublishedSiteSnapshot["publishedStandardPageMedia"] : [])
+    : [];
   const publishedPackFacts = hasImmutableSeoProjection
     ? (Array.isArray(publication?.snapshot?.publishedPackFacts) ? publication!.snapshot.publishedPackFacts as PublishedSiteSnapshot["publishedPackFacts"] : [])
     : [];
@@ -248,7 +293,8 @@ export function createPublishedSiteSnapshot(
   const entityReferences: EntityReference[] = [
     ...baseEntityReferences,
     ...publishedPageCopy.map((copy) => ({ entityType: "page_copy" as const, entityId: copy.pageEntityId, ownerId: site.id, revision: copy.copyRevision })),
-    ...publishedPageMedia.map((media) => ({ entityType: "page_media" as const, entityId: media.mediaEntityId, ownerId: media.ownerPageEntityId, revision: media.entityRevision }))
+    ...publishedPageMedia.map((media) => ({ entityType: "page_media" as const, entityId: media.mediaEntityId, ownerId: media.ownerPageEntityId, revision: media.entityRevision })),
+    ...publishedStandardPageMedia.map((media) => ({ entityType: "page_media" as const, entityId: media.mediaEntityId, ownerId: media.pageEntityId, revision: media.revision }))
   ];
   const factsRevision = hasImmutableSeoProjection
     ? snapshotRevisions.factsRevision ?? publishedFacts?.claimRevision ?? "published-facts-missing"
@@ -278,6 +324,7 @@ export function createPublishedSiteSnapshot(
     publishedPageCopy,
     publishedPageEntities,
     publishedPageMedia,
+    publishedStandardPageMedia,
     publishedPackFacts,
     publishedOffers,
     publishedFacts,
@@ -313,25 +360,34 @@ export async function loadPublishedSiteSnapshotBySiteId(siteId: string): Promise
 
 export function resolvePublishedStorefrontContext(snapshot: PublishedSiteSnapshot, page: ThemePage) {
   const context = resolveStorefrontContext(bundleFor(snapshot, page), "published");
-  const route = snapshot.publishedRoutes.find((candidate): candidate is PublishedLeafRouteProjection => isLeafRenderRoute(candidate) && candidate.canonicalPath === normalizePath(context.seo.canonicalPath));
-  const media = route
-    ? snapshot.publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId)
-    : undefined;
+  const resolved = resolvePublishedSeoEntity(snapshot, context.seo.canonicalPath);
+  const media = resolved.pageMedia;
+  const standardMedia = resolved.standardPageMedia;
   return {
     ...context,
     revisions: {
       ...context.revisions,
-      pageMediaRevision: media?.entityRevision
+      pageMediaRevision: media?.entityRevision,
+      ...(standardMedia ? { standardPageMediaRevision: standardMedia.revision } : {})
     },
     publishedPaths: snapshot.publishedPaths
   };
 }
 
 export function resolveEffectiveIndexability(snapshot: PublishedSiteSnapshot, page: ThemePage, context = resolveStorefrontContext(bundleFor(snapshot, page), "published")): EffectiveIndexability {
-  const blocked = page.pageType === "not_found" || page.slug === "/404" || isPrivateStorefrontPath(page.slug) || isPrivateStorefrontPath(context.seo.canonicalPath);
-  const publishedRoute = snapshot.publishedRoutes.find((route): route is PublishedLeafRouteProjection => isLeafRenderRoute(route) && route.canonicalPath === normalizePath(context.seo.canonicalPath));
-  const publishedMedia = publishedRoute ? snapshot.publishedPageMedia.find((media) => media.pageEntityId === publishedRoute.pageEntityId) : undefined;
-  const index = !blocked && context.seo.index && (publishedRoute ? publishedRoute.indexable && publishedMedia?.status === "ready" : true);
+  const canonicalPath = normalizePath(context.seo.canonicalPath);
+  const deferred = snapshot.site.id === "site_dreamshoot" && (canonicalPath === "/best-ai-video" || canonicalPath === "/ai-video-generation" || canonicalPath.startsWith("/ai-video-generation/"));
+  const blocked = deferred || page.pageType === "not_found" || page.slug === "/404" || isPrivateStorefrontPath(page.slug) || isPrivateStorefrontPath(canonicalPath);
+  const resolved = resolvePublishedSeoEntity(snapshot, context.seo.canonicalPath);
+  const publishedRoute = resolved.route?.routeKind === "ai-image-theme-leaf" ? resolved.route : undefined;
+  const publishedMedia = resolved.pageMedia;
+  const standardMedia = resolved.standardPageMedia;
+  const mediaReady = publishedRoute
+    ? publishedRoute.indexable && publishedMedia?.status === "ready"
+      : MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(canonicalPath)
+      ? standardMedia?.status === "ready"
+      : true;
+  const index = !blocked && context.seo.index && mediaReady;
   return {
     index,
     follow: blocked ? false : context.seo.follow,
@@ -385,7 +441,7 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
 export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot, path: string): RouteDisposition {
   const requestedPath = normalizePath(path);
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
-  if (snapshot.site.id === "site_dreamshoot" && DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS.has(requestedPath)) {
+  if (snapshot.site.id === "site_dreamshoot" && (DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS.has(requestedPath) || requestedPath === "/best-ai-video" || requestedPath === "/ai-video-generation" || requestedPath.startsWith("/ai-video-generation/"))) {
     return { kind: "not_found", status: 404, path: requestedPath };
   }
   const exactPublishedRoute = snapshot.publishedRoutes.find((route) =>
@@ -428,7 +484,7 @@ export function resolvePublishedRedirectDisposition(
     status,
     path: source,
     targetPath: target,
-    targetUrl: canonicalUrlForSite(snapshot.site, target),
+    targetUrl: target,
     targetPageId: targetPage.id
   };
 }

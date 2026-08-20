@@ -8,6 +8,7 @@ import type { CreativePack, PublishedLinkRef, PublishedPageEntityProjection } fr
 
 const SITE_ID = "site_dreamshoot";
 const ROUTE_KIND = "ai-image-theme-leaf";
+const DEFERRED_LEAF_SLUGS = new Set(["motion-generator"]);
 
 type TaxonomyItem = {
   slug: string;
@@ -33,6 +34,7 @@ export type MyDreamshootsPublishedRouteManifestRow = {
   copyRevision: string;
   copySource: "page-copy" | "missing";
   fallbackUsed: false;
+  deferred: boolean;
   status: MyDreamshootsPublishedRouteStatus;
   indexable: boolean;
   sitemapEligible: boolean;
@@ -108,7 +110,8 @@ export function mydreamshootsPublishedRouteManifest(): MyDreamshootsPublishedRou
     const independence = copy ? assessMydreamshootsPageIndependence(copy, canonicalSlug) : undefined;
     const copyIndependent = Boolean(independence?.independent);
     const mediaReady = item.mediaReviewStatus !== "review_required";
-    const indexable = copyReady && copyIndependent && mediaReady;
+    const deferred = DEFERRED_LEAF_SLUGS.has(canonicalSlug);
+    const indexable = copyReady && copyIndependent && mediaReady && !deferred;
     return {
       disposition: "render",
       siteId: SITE_ID,
@@ -120,6 +123,7 @@ export function mydreamshootsPublishedRouteManifest(): MyDreamshootsPublishedRou
       copyRevision: copy?.copyRevision ?? "",
       copySource: copyReady ? "page-copy" : "missing",
       fallbackUsed: false,
+      deferred,
       status: indexable ? "published" : "review_required",
       indexable,
       sitemapEligible: indexable,
@@ -127,6 +131,8 @@ export function mydreamshootsPublishedRouteManifest(): MyDreamshootsPublishedRou
       mediaEntityId: `${pageEntityId}:media`,
       ...(!copyReady
         ? { reviewReason: "PAGE_COPY_REVIEW_REQUIRED" }
+        : deferred
+          ? { reviewReason: "DEFERRED_AI_VIDEO_PAGE" }
         : !copyIndependent
           ? { reviewReason: `PAGE_COPY_NOT_INDEPENDENT:${independence?.reasons.join("|") || "UNKNOWN"}` }
         : !mediaReady
@@ -285,7 +291,8 @@ export function buildPublishedPageMediaProjection(
   const ownerMatches = pack.id === route.expectedPackId;
   const imageAlts = (pack.galleryImageAlts ?? []).map((value) => String(value ?? "").trim());
   const altsReady = imageAlts.length === images.length && imageAlts.every(Boolean);
-  const ready = route.status === "published" && ownerMatches && images.length >= 2 && altsReady;
+  const imageContractReady = images.length === 13 && imageAlts.length === 13;
+  const ready = route.status === "published" && ownerMatches && imageContractReady && altsReady;
   return {
     siteId: route.siteId,
     routeKind: route.routeKind,
@@ -303,7 +310,7 @@ export function buildPublishedPageMediaProjection(
     imageAlts,
     status: ready ? "ready" : "review_required",
     ...(!ready
-      ? { reviewReason: route.reviewReason || (!ownerMatches ? "PAGE_COPY_MEDIA_ENTITY_MISMATCH" : !altsReady ? "PAGE_MEDIA_ALT_REQUIRED" : "PAGE_MEDIA_REQUIRED") }
+      ? { reviewReason: route.reviewReason || (!ownerMatches ? "PAGE_COPY_MEDIA_ENTITY_MISMATCH" : !imageContractReady ? "PAGE_MEDIA_IMAGE_CONTRACT_REQUIRED" : !altsReady ? "PAGE_MEDIA_ALT_REQUIRED" : "PAGE_MEDIA_REQUIRED") }
       : {})
   };
 }

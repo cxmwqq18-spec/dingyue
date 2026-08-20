@@ -738,7 +738,6 @@ function applyPolicyPagesToLocalState(state, site) {
       slug: page.slug,
       title: page.title,
       draftJson: page.json,
-      publishedJson: page.json
     };
     const existingIndex = site.pages.findIndex((item) => item.slug === page.slug);
     if (existingIndex >= 0) site.pages[existingIndex] = { ...site.pages[existingIndex], ...nextPage };

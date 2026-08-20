@@ -10,6 +10,8 @@ function clean(value: unknown): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
 }
 
+const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"]);
+
 function revisionHash(value: string): string {
   let first = 0x811c9dc5;
   let second = 0x9e3779b9;
@@ -32,6 +34,9 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
   const rawTitle = clean(pageSeo?.title) || clean(bundle.page.title) || brand;
   const description = clean(pageSeo?.description);
   const path = normalizeCanonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
+  const standardMedia = bundle.site.id === "site_dreamshoot"
+    ? bundle.publishedStandardPageMedia?.[path]
+    : undefined;
   const defaultIndex = bundle.page.pageType !== "not_found" && bundle.page.slug !== "/404";
   const pageScopedSocial = bundle.site.id === "site_dreamshoot" && (
     path === "/about-us" || path === "/faq" || path === "/pricing" || path === "/workflow" ||
@@ -43,7 +48,9 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
     keywords: clean(pageSeo?.keywords) || clean(settings.seo?.siteKeywords) || undefined,
     canonicalPath: path,
     canonicalUrl: canonicalUrlForSite(bundle.site, path),
-    ogImage: clean(pageSeo?.ogImage) || (pageScopedSocial ? undefined : clean(settings.seo?.defaultOgImage) || undefined),
+    ogImage: standardMedia?.status === "ready"
+      ? standardMedia.ogImage
+      : clean(pageSeo?.ogImage) || (pageScopedSocial ? undefined : clean(settings.seo?.defaultOgImage) || undefined),
     index: defaultIndex && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true),
     follow: pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true,
     sitemapEligible: defaultIndex && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true)
@@ -212,7 +219,9 @@ export function resolveStorefrontContext(
       })
     : undefined;
   if (!seo.description && seo.index) missingFacts.push(`page.${bundle.page.id}.seo.description`);
-  const snapshotFailClosed = mode === "published" && bundle.site.id === "site_dreamshoot" && Boolean(pageCopySlug) && bundle.snapshotIntegrity !== "valid";
+  const snapshotFailClosed = mode === "published" && bundle.site.id === "site_dreamshoot" &&
+    (Boolean(pageCopySlug) || MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(seo.canonicalPath)) &&
+    bundle.snapshotIntegrity !== "valid";
   const resolvedSeo = pageEntity
     ? {
         ...seo,
@@ -228,6 +237,9 @@ export function resolveStorefrontContext(
       ? { ...seo, index: false, follow: true, sitemapEligible: false }
       : seo;
   if (snapshotFailClosed) missingFacts.push("published.seo.snapshot");
+  if (mode === "published" && bundle.site.id === "site_dreamshoot" && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(resolvedSeo.canonicalPath) && !bundle.publishedStandardPageMedia?.[resolvedSeo.canonicalPath]) {
+    missingFacts.push("published.standard_page_media");
+  }
   return {
     mode,
     site: bundle.site,
@@ -269,6 +281,7 @@ export function resolveStorefrontContext(
     missingFacts,
     publishedFacts: bundle.publishedFacts,
     publishedPageMedia: pageEntity ? bundle.publishedPageMedia?.[pageEntity.pageEntityId] : undefined,
+    publishedStandardPageMedia: bundle.publishedStandardPageMedia?.[resolvedSeo.canonicalPath],
     publishedPageEntity: pageEntity,
     snapshotIntegrity: bundle.snapshotIntegrity ?? "legacy",
     pageCopy
@@ -349,6 +362,12 @@ export function resolveStorefrontBindings(text: string, context: StorefrontConte
       : context.profile.policyFacts.refundReviewRequired
         ? "Refund requests require review under the published refund policy."
         : "Eligible refunds follow the published refund policy."
+    ,
+    LIVE_CREDIT_RESERVE_STATEMENT: context.publishedFacts?.creditLifecycle?.reserve,
+    LIVE_CREDIT_CONSUME_STATEMENT: context.publishedFacts?.creditLifecycle?.consume,
+    LIVE_CREDIT_RELEASE_STATEMENT: context.publishedFacts?.creditLifecycle?.release,
+    LIVE_SECURITY_TRANSPORT_STATEMENT: context.publishedFacts?.security?.transportClaimKey,
+    LIVE_SECURITY_STORAGE_STATEMENT: context.publishedFacts?.security?.storageClaimKey
   };
   const missingBindings = Array.from(text.matchAll(bindingPattern))
     .map((match) => match[1])

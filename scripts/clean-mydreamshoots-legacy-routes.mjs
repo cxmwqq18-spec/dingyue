@@ -17,7 +17,8 @@ const MYDREAMSHOOTS_VIDEO_TOOL_SLUGS = [
   "story-video",
   "meme-video",
   "product-video",
-  "product-ad-video"
+  "product-ad-video",
+  "ugc-ad-video"
 ];
 const transactionTimeoutMs = Number(process.env.ROUTE_CLEANUP_TRANSACTION_TIMEOUT_MS ?? 600000);
 const RELATIVE_COLLECTIONS_RE = /(^|[\s"'=([{>:])\/collections(?=\/|[?#"'`<>)\]|&\s.,;:!]|$)/g;

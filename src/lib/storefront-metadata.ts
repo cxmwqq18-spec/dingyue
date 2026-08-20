@@ -1,9 +1,9 @@
 import "server-only";
 
 import { withSeoDirectorySeo, type SeoDirectoryKind } from "@/lib/dreamshoot-seo-content";
-import { createPublishedSiteSnapshot, resolvePublishedStorefrontContext, type PublishedSiteSnapshot } from "@/lib/storefront-context";
+import { createPublishedSiteSnapshot, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, type PublishedSiteSnapshot } from "@/lib/storefront-context";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
-import type { CreativePack, PlatformState, Product, PublishedLeafRouteProjection, Site, ThemePage } from "@/lib/types";
+import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/lib/types";
 
 export async function metadataForPublishedStorefrontPage({
   site,
@@ -69,15 +69,12 @@ export async function metadataForPublishedStorefrontDirectoryPage({
 }) {
   const publishedBasePage = snapshot?.pages.find((candidate) => candidate.id === page.id) ?? page;
   const publishedSite = snapshot?.site ?? site;
-  const route = publishedSite.id === "site_dreamshoot" && kind === "collection"
-    ? snapshot?.publishedRoutes.find((candidate): candidate is PublishedLeafRouteProjection => candidate.disposition === "render" && candidate.routeKind === "ai-image-theme-leaf" && candidate.canonicalSlug === directorySlug)
+  const resolved = publishedSite.id === "site_dreamshoot" && kind === "collection" && snapshot
+    ? resolvePublishedSeoEntity(snapshot, path ?? `/ai-image-generation/${directorySlug}`)
     : undefined;
-  const pageEntity = route
-    ? snapshot?.publishedPageEntities.find((candidate) => candidate.pageEntityId === route.pageEntityId)
-    : undefined;
-  const pageMedia = route
-    ? snapshot?.publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId)
-    : undefined;
+  const route = resolved?.route?.routeKind === "ai-image-theme-leaf" ? resolved.route : undefined;
+  const pageEntity = resolved?.pageEntity;
+  const pageMedia = resolved?.pageMedia;
   const directoryPageJson = pageEntity
     ? {
         ...publishedBasePage.publishedJson,

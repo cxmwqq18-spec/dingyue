@@ -179,7 +179,10 @@ function galleryImageAltForPack(pack, slug, index) {
 }
 
 function galleryImageAltsForPack(pack, slug, count) {
-  return Array.from({ length: count }, (_, index) => galleryImageAltForPack(pack, slug, index));
+  return [
+    `${pack.name} representative cover image with polished ${slug.replace(/-/g, " ")} styling.`,
+    ...Array.from({ length: count }, (_, index) => galleryImageAltForPack(pack, slug, index))
+  ];
 }
 
 async function fileExists(filePath) {

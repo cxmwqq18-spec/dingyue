@@ -88,9 +88,8 @@ async function main() {
     const settings = await prisma.themeSettings.findUnique({ where: { siteId: site.id } });
     if (settings) {
       const draftJson = syncThemeJson(cloneJson(settings.draftJson));
-      const publishedJson = syncThemeJson(cloneJson(settings.publishedJson));
-      if (changed(settings.draftJson, draftJson) || changed(settings.publishedJson, publishedJson)) {
-        await prisma.themeSettings.update({ where: { siteId: site.id }, data: { draftJson, publishedJson } });
+      if (changed(settings.draftJson, draftJson)) {
+        await prisma.themeSettings.update({ where: { siteId: site.id }, data: { draftJson } });
         result.themeSettings += 1;
       }
     }

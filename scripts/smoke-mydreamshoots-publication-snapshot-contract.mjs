@@ -13,7 +13,7 @@ const snapshot = read("src/lib/storefront-context/snapshot.ts");
 const metadata = read("src/lib/storefront-metadata.ts");
 const templates = read("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 
-for (const field of ["publishedRoutes", "publishedPageEntities", "publishedPageCopy", "publishedPageMedia", "publishedPackFacts", "publishedOffers", "publishedFacts", "publishedCollectionRefs", "publishedLinkRefs", "revisions", "snapshotHash", "buildId"]) {
+for (const field of ["publishedRoutes", "publishedPageEntities", "publishedPageCopy", "publishedPageMedia", "publishedStandardPageMedia", "publishedPackFacts", "publishedOffers", "publishedFacts", "publishedCollectionRefs", "publishedLinkRefs", "revisions", "snapshotHash", "buildId"]) {
   assert.match(types, new RegExp(`${field}[^?;]*:`), `ThemePublication snapshot must require ${field}`);
   assert.match(themeStore, new RegExp(field), `publication builder must write ${field}`);
 }
@@ -21,7 +21,7 @@ for (const field of ["publishedRoutes", "publishedPageEntities", "publishedPageC
 assert.match(snapshot, /publication\?\.snapshot\?\.publishedRoutes/, "runtime route manifest must prefer the immutable publication snapshot");
 assert.match(snapshot, /hasImmutableSeoProjection/, "current-format snapshots must have an explicit immutable projection boundary");
 assert.match(snapshot, /publication\?\.snapshot\?\.publishedPageMedia/, "runtime media must prefer the immutable publication snapshot");
-assert.match(metadata, /snapshot\?\.publishedPageMedia\.find/, "metadata must consume published media projection");
+assert.match(metadata, /resolvePublishedSeoEntity/, "metadata must consume the unified published SEO resolver");
 assert.match(snapshot, /route\.status !== "published"/, "review-required leaf routes must fail closed");
 assert.match(snapshot, /publicationSnapshotIntegrity/, "published resolver must verify snapshot integrity before using SEO projections");
 assert.doesNotMatch(snapshot, /mydreamshootsPublishedRouteManifest\(/, "published resolver must not rebuild routes from current taxonomy");
@@ -53,6 +53,22 @@ const stable = (value) => Array.isArray(value)
     ? Object.fromEntries(Object.entries(value).filter(([, item]) => item !== undefined).sort(([left], [right]) => left.localeCompare(right)).map(([key, item]) => [key, stable(item)]))
     : value;
 const projectionRevision = (value) => crypto.createHash("sha256").update(JSON.stringify(stable(value))).digest("hex").slice(0, 20);
+const standardPaths = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"];
+const sourcePageIdForPath = (sourceSite, canonicalPath) => sourceSite.pages.find((page) => page.slug === canonicalPath)?.id ?? "";
+const standardMedia = standardPaths.map((canonicalPath) => ({
+  pageEntityId: `mydreamshoots:standard:${canonicalPath.slice(1)}`,
+  pageId: sourcePageIdForPath(JSON.parse(read("data/platform-state.json")).sites.find((site) => site.id === "site_dreamshoot"), canonicalPath),
+  canonicalPath,
+  mediaEntityId: `mydreamshoots:standard:${canonicalPath.slice(1)}:media`,
+  primaryImage: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
+  primaryImageAlt: `${canonicalPath.slice(1)} page image for MyDreamShoots`,
+  ogImage: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
+  twitterImage: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
+  jsonLdImage: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
+  sitemapImages: ["/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png"],
+  status: "ready",
+  revision: `standard-${canonicalPath.slice(1)}`
+}));
 const state = JSON.parse(read("data/platform-state.json"));
 const sourceSite = state.sites.find((site) => site.id === "site_dreamshoot");
 assert.ok(sourceSite, "MyDreamShoots fixture site is required");
@@ -112,6 +128,7 @@ const publicationSnapshot = {
   publishedPageEntities: [],
   publishedPageCopy: [],
   publishedPageMedia: [],
+  publishedStandardPageMedia: standardMedia,
   publishedPackFacts: [],
   publishedOffers: [],
   publishedFacts: {
@@ -124,6 +141,8 @@ const publicationSnapshot = {
     },
     privacy: { customerMediaTraining: false, sourceMediaRetentionDays: 30 },
     refund: { reviewRequired: true, windowDays: 7, effectiveDate: "2026-08-19" },
+    creditLifecycle: { reserve: "test reserve", consume: "test consume", release: "test release" },
+    security: { transportClaimKey: "test transport", storageClaimKey: "test storage" },
     claimRevision: "facts-complete"
   },
   publishedCollectionRefs: [],
@@ -136,11 +155,11 @@ publicationSnapshot.revisions = {
   routeRevision: projectionRevision(publicationSnapshot.publishedRoutes),
   pageRevision: projectionRevision(publicationSnapshot.publishedPageEntities),
   copyRevision: projectionRevision(publicationSnapshot.publishedPageCopy),
-  mediaRevision: projectionRevision(publicationSnapshot.publishedPageMedia),
+  mediaRevision: projectionRevision({ leaf: publicationSnapshot.publishedPageMedia, standard: publicationSnapshot.publishedStandardPageMedia }),
   packRevision: projectionRevision(publicationSnapshot.publishedPackFacts),
   offerRevision: projectionRevision(publicationSnapshot.publishedOffers),
   collectionRevision: projectionRevision(publicationSnapshot.publishedCollectionRefs),
-  policyRevision: projectionRevision({ privacy: publicationSnapshot.publishedFacts.privacy, refund: publicationSnapshot.publishedFacts.refund }),
+  policyRevision: projectionRevision({ privacy: publicationSnapshot.publishedFacts.privacy, refund: publicationSnapshot.publishedFacts.refund, creditLifecycle: publicationSnapshot.publishedFacts.creditLifecycle, security: publicationSnapshot.publishedFacts.security }),
   linkRevision: projectionRevision(publicationSnapshot.publishedLinkRefs)
 };
 publicationSnapshot.snapshotHash = publicationSnapshotHash(publicationSnapshot);
@@ -180,6 +199,7 @@ const publishedRoute = {
   copyRevision: "copy-wedding-v1",
   copySource: "page-copy",
   fallbackUsed: false,
+  deferred: false,
   status: "published",
   indexable: true,
   sitemapEligible: true,
@@ -195,8 +215,8 @@ const publishedMedia = {
   entityRevision: "media-wedding-v1",
   packId: "pack_published_wedding",
   primaryImage: "/assets/snapshot/wedding-cover.jpg",
-  galleryImages: ["/assets/snapshot/wedding-gallery.jpg"],
-  imageAlts: ["Published wedding portrait cover", "Published wedding portrait gallery"],
+  galleryImages: Array.from({ length: 12 }, (_, index) => `/assets/snapshot/wedding-gallery-${index + 1}.jpg`),
+  imageAlts: ["Published wedding portrait cover", ...Array.from({ length: 12 }, (_, index) => `Published wedding portrait gallery ${index + 1}`)],
   status: "ready"
 };
 const publishedContent = {
@@ -262,6 +282,7 @@ const immutableSnapshot = {
     sourceHash: "published-copy-source-hash"
   }],
   publishedPageMedia: [publishedMedia],
+  publishedStandardPageMedia: standardMedia,
   publishedLinkRefs: [
     { linkEntityId: `${pageEntityId}:link:cta`, ownerPageEntityId: pageEntityId, targetType: "published_render", targetPageEntityId: pageEntityId, kind: "cta", label: "Open image generation", href: "/ai-image-generation/wedding-photo", revision: "link-cta-v1" },
     { linkEntityId: `${pageEntityId}:link:related:0`, ownerPageEntityId: pageEntityId, targetType: "published_render", targetPageEntityId: pageEntityId, kind: "related", label: "Review the portrait direction", href: "/ai-image-generation/wedding-photo", revision: "link-related-0-v1" },
@@ -295,11 +316,11 @@ immutableSnapshot.revisions = {
   routeRevision: projectionRevision(immutableSnapshot.publishedRoutes),
   pageRevision: projectionRevision(immutableSnapshot.publishedPageEntities),
   copyRevision: projectionRevision(immutableSnapshot.publishedPageCopy),
-  mediaRevision: projectionRevision(immutableSnapshot.publishedPageMedia),
+  mediaRevision: projectionRevision({ leaf: immutableSnapshot.publishedPageMedia, standard: immutableSnapshot.publishedStandardPageMedia }),
   packRevision: projectionRevision(immutableSnapshot.publishedPackFacts),
   offerRevision: projectionRevision(immutableSnapshot.publishedOffers),
   collectionRevision: projectionRevision(immutableSnapshot.publishedCollectionRefs),
-  policyRevision: projectionRevision({ privacy: immutableSnapshot.publishedFacts.privacy, refund: immutableSnapshot.publishedFacts.refund }),
+  policyRevision: projectionRevision({ privacy: immutableSnapshot.publishedFacts.privacy, refund: immutableSnapshot.publishedFacts.refund, creditLifecycle: immutableSnapshot.publishedFacts.creditLifecycle, security: immutableSnapshot.publishedFacts.security }),
   linkRevision: projectionRevision(immutableSnapshot.publishedLinkRefs)
 };
 immutableSnapshot.snapshotHash = publicationSnapshotHash(immutableSnapshot);

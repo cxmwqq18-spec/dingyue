@@ -77,9 +77,9 @@ const ownershipAssertions = [
   [!/mydreamshootsPublishedPageMediaProjections\(/.test(snapshotSource), "published resolver rebuilds media from current packs"],
   [/publishedPageEntities/.test(themeStoreSource) && /publishedOffers/.test(themeStoreSource) && /publishedFacts/.test(themeStoreSource) && /publishedLinkRefs/.test(themeStoreSource), "publication builder does not persist the complete SEO snapshot"],
   [/publicationSnapshotHash\(snapshot\)/.test(themeStoreSource), "publication builder does not seal snapshots with a hash"],
-  [/snapshot\?\.publishedPageEntities\.find/.test(metadataSource) && /snapshot\?\.publishedPageMedia\.find/.test(metadataSource), "metadata does not consume published page/media projections"],
+  [/resolvePublishedSeoEntity/.test(metadataSource), "metadata does not consume the unified published SEO resolver"],
   [/context\.publishedPageMedia/.test(jsonLdSource), "JSON-LD does not consume the published media projection"],
-  [/snapshot\.publishedRoutes/.test(indexingSource) && /snapshot\.publishedPageMedia/.test(indexingSource), "sitemap does not consume published route/media projections"],
+  [/resolvePublishedSeoEntity/.test(indexingSource) && /resolved\.pageMedia/.test(indexingSource), "sitemap does not consume the unified published route/media resolver"],
   [/publishedLeafCopy\(publishedSnapshot/.test(renderSource) && /creativePacks: publishedSnapshot\.creativePacks/.test(renderSource), "visible leaf rendering does not consume the published page entity adapter/collections"]
 ];
 for (const [ok, message] of ownershipAssertions) {

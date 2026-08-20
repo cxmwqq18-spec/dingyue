@@ -5,6 +5,9 @@ const statePath = path.resolve(process.cwd(), "data/platform-state.json");
 const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
 
 const replacements = new Map([
+  ["Our plans starts from $24.50 and are designed to be more affordable and flexible.", "Review current plan and credit details before generation."],
+  ["Plans start at $24.50/month", "Review current plan and credit details before generation."],
+  ["Plans start at $24.50/month, and every package shows the credit cost before generation.", "Every package shows the credit cost before generation."],
   ["4.9/5 from creators using private photo packs", "Private uploads and clear credit costs"],
   ["5-star reviews", "Use cases"],
   ["Show finished outcomes first: sports posters, clean headshots, cinematic portraits, style previews, and seasonal albums.", "See examples of what your selfies can become: headshots, fan posters, creator portraits, style previews, and seasonal albums."],
@@ -158,12 +161,16 @@ const beforeState = JSON.stringify(state);
 
 for (const site of state.sites ?? []) {
   if (!isMydreamshootsSite(site)) continue;
-  walk(site);
   const before = JSON.stringify(site);
-  if (site.themeSettings?.publishedJson?.globalSections?.footer?.settings) {
-    site.themeSettings.publishedJson.globalSections.footer.settings.title = "myᕲreamshoots";
-    site.themeSettings.publishedJson.globalSections.footer.settings.tagline = "Private AI photo sets with visible credit costs and gallery delivery";
-    site.themeSettings.publishedJson.globalSections.footer.settings.body = "Upload your selfies, choose a style, review the credit cost, and download a private photo set.";
+  site.branding = walk(site.branding);
+  if (site.themeSettings?.draftJson) site.themeSettings.draftJson = walk(site.themeSettings.draftJson);
+  for (const page of site.pages ?? []) {
+    if (page.draftJson) page.draftJson = walk(page.draftJson);
+  }
+  if (site.themeSettings?.draftJson?.globalSections?.footer?.settings) {
+    site.themeSettings.draftJson.globalSections.footer.settings.title = "myᕲreamshoots";
+    site.themeSettings.draftJson.globalSections.footer.settings.tagline = "Private AI photo sets with visible credit costs and gallery delivery";
+    site.themeSettings.draftJson.globalSections.footer.settings.body = "Upload your selfies, choose a style, review the credit cost, and download a private photo set.";
   }
   if (JSON.stringify(site) !== before) changedSites += 1;
 }
@@ -173,11 +180,6 @@ for (const theme of state.siteThemes ?? []) {
   walk(theme);
 }
 
-for (const publication of state.themePublications ?? []) {
-  if (publication.siteId !== "site_dreamshoot") continue;
-  walk(publication);
-}
-
 for (const pack of state.creativePacks ?? []) {
   if (pack.siteId !== "site_dreamshoot") continue;
   walk(pack);
@@ -185,4 +187,4 @@ for (const pack of state.creativePacks ?? []) {
 
 fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
 console.log(`Rectified MyDreamShoots SEO/content fields for ${changedSites} site record(s).`);
-console.log(beforeState === JSON.stringify(state) ? "No additional snapshot replacements were needed." : "Updated published and snapshot content records.");
+console.log(beforeState === JSON.stringify(state) ? "No draft/source replacements were needed." : "Updated draft/source content records.");

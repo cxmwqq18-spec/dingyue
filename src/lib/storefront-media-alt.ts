@@ -270,6 +270,7 @@ export function storefrontGalleryMediaPairs(
 ): { galleryImageAlts: string[]; galleryImages: string[] } {
   const altItems = Array.isArray(galleryImageAlts) ? galleryImageAlts : [];
   if (!Array.isArray(galleryImages)) return { galleryImageAlts: [], galleryImages: [] };
+  const altOffset = altItems.length === galleryImages.length + 1 ? 1 : 0;
 
   const images: string[] = [];
   const alts: string[] = [];
@@ -277,7 +278,7 @@ export function storefrontGalleryMediaPairs(
     const image = typeof galleryImages[index] === "string" ? galleryImages[index].trim() : "";
     if (!image) continue;
     images.push(image);
-    alts.push(storefrontStoredMediaAlt(altItems[index]));
+    alts.push(storefrontStoredMediaAlt(altItems[index + altOffset]));
   }
   return { galleryImageAlts: alts, galleryImages: images };
 }
@@ -566,11 +567,14 @@ export function storefrontCreativePackImageAlt({
   pack: CreativePack;
   role?: StorefrontMediaAltRole;
 }): string {
+  const storedAlt = role === "gallery" && typeof index === "number"
+    ? pack.galleryImageAlts?.[index + (pack.galleryImageAlts?.length === (pack.galleryImages?.length ?? 0) + 1 ? 1 : 0)]
+    : undefined;
   return storefrontPackMediaAlt({
     brand,
     category: pack.categoryRecord?.label || pack.category,
     description: pack.description || pack.headline,
-    explicitAlt,
+    explicitAlt: explicitAlt || storedAlt,
     galleryImageAlts: pack.galleryImageAlts,
     imageUrl,
     index,

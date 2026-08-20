@@ -83,6 +83,12 @@ const categoriesBySiteId = {
       label: "Product Ad Video",
       description: "Build product ads around one audience, product promise, visual proof, offer, and clear next action.",
       sortOrder: 120
+    },
+    {
+      slug: "ugc-ad-video",
+      label: "UGC Ad Video",
+      description: "Plan creator-style product ads around speaker status, hooks, product context, visible proof, and clear CTAs.",
+      sortOrder: 130
     }
   ],
   site_grownstride_test: baseCategories

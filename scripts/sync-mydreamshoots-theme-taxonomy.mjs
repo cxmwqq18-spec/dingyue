@@ -452,11 +452,13 @@ function sourceSlugForGalleryImage(imageUrl) {
 }
 
 function galleryImageAltsForItem(item, sourcePack) {
-  const images = Array.isArray(sourcePack?.galleryImages) ? sourcePack.galleryImages : [];
+  const images = [sourcePack?.imageUrl, ...(Array.isArray(sourcePack?.galleryImages) ? sourcePack.galleryImages : [])]
+    .filter((imageUrl) => typeof imageUrl === "string" && imageUrl.trim());
   return images.map((imageUrl, index) => {
     const sourceSlug = sourceSlugForGalleryImage(imageUrl);
     const subject = taxonomyGalleryAltSubjects[sourceSlug]
       || `${item.label} portrait with polished editorial styling`;
+    if (index === 0) return `${subject}, representative cover image for ${item.label}.`;
     const scene = taxonomyGalleryAltScenes[index % taxonomyGalleryAltScenes.length];
     return `${subject}, ${scene}.`;
   });
@@ -504,7 +506,7 @@ function packFieldsForItem(item, categoryId, sourcePack) {
     conversionRate: sourcePack?.conversionRate ?? 0,
     imageUrl: generatedMedia?.imageUrl || sourcePack?.imageUrl || "/assets/dreamshoot/generated/pack-covers/professional-headshots/professional-headshots-cover.webp?v=20260731themeuniqueness1",
     galleryImages,
-    galleryImageAlts: galleryImageAltsForItem(item, generatedMedia ? { ...sourcePack, galleryImages } : sourcePack),
+    galleryImageAlts: galleryImageAltsForItem(item, generatedMedia ? { ...sourcePack, ...generatedMedia, galleryImages } : sourcePack),
     updatedAt: UPDATE_TIMESTAMP
   };
 }
@@ -653,15 +655,8 @@ function normalizeDreamshootHomeFeaturedSections(record) {
   for (const page of record?.pages || []) {
     if (!isHomePageRecord(page)) continue;
     stripHomeFeaturedSectionsFromPageJson(page.draftJson);
-    stripHomeFeaturedSectionsFromPageJson(page.publishedJson);
   }
   stripHomeFeaturedSectionsFromPageJson(record?.templates?.index);
-  for (const page of record?.snapshot?.pages || []) {
-    if (!isHomePageRecord(page)) continue;
-    stripHomeFeaturedSectionsFromPageJson(page.draftJson);
-    stripHomeFeaturedSectionsFromPageJson(page.publishedJson);
-  }
-  stripHomeFeaturedSectionsFromPageJson(record?.snapshot?.saasTheme?.templates?.index);
 }
 
 function normalizeFeaturedSectionCollectionSlugs(value) {
@@ -724,7 +719,7 @@ function setDreamshootNavigationLinks(site) {
     { label: "Terms of Service", href: "/terms", group: "support" },
     { label: "Cookie Policy", href: "/cookies", group: "support" }
   ];
-  for (const settings of [site.themeSettings?.draftJson, site.themeSettings?.publishedJson]) {
+  for (const settings of [site.themeSettings?.draftJson]) {
     if (!settings?.navigation) continue;
     settings.navigation.headerLinks = fixedHeaderLinks;
     settings.navigation.footerLinks = fixedFooterLinks;
@@ -733,14 +728,30 @@ function setDreamshootNavigationLinks(site) {
 
 function applyScopedHrefReplacements(state, changes) {
   for (const key of Object.keys(state)) {
+    if (key === "themePublications") continue;
     const value = state[key];
     if (!Array.isArray(value)) continue;
     if (key === "creativePackCategories" || key === "creativePacks") continue;
     for (const record of value) {
       if (!isDreamshootOwnedRecord(record)) continue;
       const before = JSON.stringify(record);
-      deepReplaceStrings(record);
-      normalizeFeaturedSectionCollectionSlugs(record);
+      if (key === "sites") {
+        deepReplaceStrings(record.branding);
+        deepReplaceStrings(record.themeSettings?.draftJson);
+        for (const page of record.pages ?? []) {
+          deepReplaceStrings(page.draftJson);
+          deepReplaceStrings(page.draftMeta);
+        }
+        normalizeFeaturedSectionCollectionSlugs(record.themeSettings?.draftJson);
+        for (const page of record.pages ?? []) normalizeFeaturedSectionCollectionSlugs(page.draftJson);
+      } else if (key === "themePages") {
+        deepReplaceStrings(record.draftJson);
+        deepReplaceStrings(record.draftMeta);
+        normalizeFeaturedSectionCollectionSlugs(record.draftJson);
+      } else {
+        deepReplaceStrings(record);
+        normalizeFeaturedSectionCollectionSlugs(record);
+      }
       normalizeDreamshootHomeFeaturedSections(record);
       if (key === "sites" && record.id === SITE_ID) setDreamshootNavigationLinks(record);
       recordJsonChange(changes, `PlatformState.${key}`, record, before);

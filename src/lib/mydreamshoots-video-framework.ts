@@ -74,6 +74,12 @@ export const mydreamshootsVideoGenerationCategories = [
     label: "Product Ad Video",
     description: "Build product ads around one audience, product promise, visual proof, offer, and clear next action.",
     sortOrder: 120
+  },
+  {
+    slug: "ugc-ad-video",
+    label: "UGC Ad Video",
+    description: "Plan creator-style product ads around speaker status, hooks, product context, visible proof, and clear CTAs.",
+    sortOrder: 130
   }
 ] as const;
 
@@ -233,6 +239,19 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     durationSeconds: 6,
     maxFrames: 10,
     sortOrder: 120
+  },
+  {
+    slug: "ugc-ad-video",
+    categorySlug: "ugc-ad-video",
+    name: "UGC Ad Video",
+    headline: "Create creator-style product ads with clear speaker roles, hooks, product moments, proof, and CTAs.",
+    description: "Plan UGC-style product ad directions without inventing customer experiences, product claims, or unsupported creator controls.",
+    prompt: "Create a creator-style product advertising video draft from approved product inputs and a defined UGC brief. Clarify the speaker status, hook, product context, visible proof, qualified reaction, and CTA. Do not present actors, AI-generated people, stock people, or scripted experiences as verified customers, and do not invent product claims or unsupported controls.",
+    imageUrl: "/assets/dreamshoot/ugc-ad-video/ai-ugc-video-creator-lip-product-hook.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 130
   }
 ] as const;
 
@@ -258,7 +277,8 @@ export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "story-video",
   "meme-video",
   "product-video",
-  "product-ad-video"
+  "product-ad-video",
+  "ugc-ad-video"
 ] as const;
 
 const publicVideoGenerationPageSlugs = new Set<string>(mydreamshootsPublicVideoGenerationTopicSlugs);

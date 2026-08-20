@@ -145,7 +145,6 @@ function syncPage(state, changes) {
       slug: PAGE_SLUG,
       title: "Talking Photo",
       draftJson: clone(pageJson),
-      publishedJson: clone(pageJson),
       updatedAt: UPDATE_TIMESTAMP
     },
     changes,
@@ -239,17 +238,11 @@ async function updateDatabase(state, category, page) {
           slug: page.slug,
           title: page.title,
           draftJson: toPrismaJson(page.draftJson),
-          publishedJson: toPrismaJson(page.publishedJson),
           draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
         };
-        await tx.themePage.upsert({
-          where: { id: page.id },
-          create: {
-            id: page.id,
-            ...pageData
-          },
-          update: pageData
-        });
+        const existingPage = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
+        if (!existingPage) throw new Error(`ThemePage ${page.id} must exist before deferred video draft sync.`);
+        await tx.themePage.update({ where: { id: page.id }, data: pageData });
         await tx.platformStateDocument.upsert({
           where: { id: "platform" },
           create: { id: "platform", state: toPrismaJson(state) },

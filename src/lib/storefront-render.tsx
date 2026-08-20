@@ -157,8 +157,8 @@ const creativePackSectionTypes = new Set(["aidreamcapes_package_catalog", "aidre
 const toolMenuItemSectionTypes = new Set(["aidreamcapes_tool_collection", "dreamshoot_tool_collection", "search_results"]);
 const videoThemeSectionTypes = new Set(["dreamshoot_generation_showcase", "dreamshoot_media_gallery"]);
 const customerRuntimeSectionTypes = new Set(["album_gallery", "cart_summary", "generation_form", "job_detail", "job_progress", "login_method_panel", "upload_panel"]);
-const publicHomePackLimit = 16;
 const publicDirectoryPackLimit = 128;
+const publicHomePackLimit = publicDirectoryPackLimit;
 const publicToolLimit = 96;
 
 function pageSectionTypes(pageJson: ThemePageJson): Set<string> {
@@ -530,16 +530,22 @@ function pageUsesFullMediaGallery(pageJson: ThemePageJson): boolean {
 const blockedPublicVideoThemeSlugs = new Set(["creator-scene-motion"]);
 
 function isBlockedPublicVideoTheme(theme: VideoTheme): boolean {
-  return blockedPublicVideoThemeSlugs.has(theme.slug) && (theme.siteId === "site_dreamshoot" || theme.siteId === "site_aidreamcapes");
+  return blockedPublicVideoThemeSlugs.has(theme.slug) && theme.siteId === "site_aidreamcapes";
 }
 
 function trimVideoThemesForStorefront(renderData: SiteRenderData, limit?: number, section?: SectionInstance): VideoTheme[] {
   const activeThemes = renderData.videoThemes.filter((theme) => theme.status === "active" && !isBlockedPublicVideoTheme(theme));
   const selectedSlugs = storefrontSettingList(section?.settings?.videoSlugs).map(normalizePublicSlug);
+  const selectedSlugSet = new Set(selectedSlugs);
   const selectedThemes = selectedSlugs.length
-    ? selectedSlugs
+    ? [
+        ...selectedSlugs
         .map((slug) => activeThemes.find((theme) => normalizePublicSlug(theme.slug) === slug))
-        .filter((theme): theme is VideoTheme => Boolean(theme))
+          .filter((theme): theme is VideoTheme => Boolean(theme)),
+        ...(section?.type === "dreamshoot_generation_showcase"
+          ? activeThemes.filter((theme) => !selectedSlugSet.has(normalizePublicSlug(theme.slug)))
+          : [])
+      ]
     : activeThemes;
   const limitedThemes = typeof limit === "number" ? selectedThemes.slice(0, limit) : selectedThemes;
   return limitedThemes.map(lightweightVideoTheme);
@@ -602,7 +608,7 @@ function trimRenderDataForPage(
   const videoThemeLimit = sectionTypes.has("dreamshoot_media_gallery")
     ? usesFullMediaGallery ? undefined : publicDirectoryPackLimit
     : sectionTypes.has("dreamshoot_generation_showcase")
-    ? 8
+    ? undefined
     : 32;
   const siteAiAppLimit = slug === "/tools" ? publicToolLimit : 48;
   return {
@@ -635,7 +641,7 @@ function trimRenderDataForSection(renderData: SiteRenderData, pageJson: ThemePag
     : slug === "/collections" || sectionType === "dreamshoot_generation_showcase" || sectionType === "dreamshoot_media_gallery" || sectionType === "dreamshoot_featured_pack"
     ? publicDirectoryPackLimit
     : publicHomePackLimit;
-  const videoThemeLimit = sectionType === "dreamshoot_generation_showcase" ? 8 : usesFullMediaGallery ? undefined : publicDirectoryPackLimit;
+  const videoThemeLimit = sectionType === "dreamshoot_generation_showcase" ? undefined : usesFullMediaGallery ? undefined : publicDirectoryPackLimit;
   const siteAiAppLimit = sectionType.includes("tool_collection") ? publicToolLimit : 48;
   return {
     creativePackCategories: needsCreativePacks ? trimCreativePackCategoriesForStorefront(renderData) : [],

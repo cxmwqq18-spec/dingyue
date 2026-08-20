@@ -519,18 +519,18 @@ function normalizeTheme(theme, changes) {
 }
 
 function normalizeSite(site, changes) {
-  const publishedSections = site.themeSettings?.publishedJson?.sections;
-  for (const [sectionId, section] of Object.entries(publishedSections ?? {})) {
-    normalizeSection(section, changes, ["sites", site.id, "themeSettings", "publishedJson", "sections", sectionId], sectionId);
+  const draftSections = site.themeSettings?.draftJson?.sections;
+  for (const [sectionId, section] of Object.entries(draftSections ?? {})) {
+    normalizeSection(section, changes, ["sites", site.id, "themeSettings", "draftJson", "sections", sectionId], sectionId);
   }
 
-  const globalSections = site.themeSettings?.publishedJson?.globalSections;
+  const globalSections = site.themeSettings?.draftJson?.globalSections;
   for (const [sectionId, section] of Object.entries(globalSections ?? {})) {
-    normalizeSection(section, changes, ["sites", site.id, "themeSettings", "publishedJson", "globalSections", sectionId], sectionId);
+    normalizeSection(section, changes, ["sites", site.id, "themeSettings", "draftJson", "globalSections", sectionId], sectionId);
   }
 
   for (const page of site.pages ?? []) {
-    for (const snapshotName of ["draftJson", "publishedJson"]) {
+    for (const snapshotName of ["draftJson"]) {
       const sections = page[snapshotName]?.sections;
       for (const [sectionId, section] of Object.entries(sections ?? {})) {
         normalizeSection(section, changes, ["sites", site.id, "pages", page.id, snapshotName, "sections", sectionId], sectionId);
@@ -545,25 +545,6 @@ function normalizePack(pack, changes) {
   setField(pack, "description", copy, changes, `creativePacks.${pack.id}.description`);
 }
 
-function normalizePublication(publication, changes) {
-  const snapshotPages = publication.snapshot?.pages;
-  for (const page of snapshotPages ?? []) {
-    for (const snapshotName of ["draftJson", "publishedJson"]) {
-      const sections = page[snapshotName]?.sections;
-      for (const [sectionId, section] of Object.entries(sections ?? {})) {
-        normalizeSection(section, changes, ["themePublications", publication.id, "snapshot", "pages", page.id, snapshotName, "sections", sectionId], sectionId);
-      }
-    }
-  }
-
-  const saasTemplates = publication.snapshot?.saasTheme?.templates;
-  for (const [templateName, template] of Object.entries(saasTemplates ?? {})) {
-    for (const [sectionId, section] of Object.entries(template.sections ?? {})) {
-      normalizeSection(section, changes, ["themePublications", publication.id, "snapshot", "saasTheme", "templates", templateName, "sections", sectionId], sectionId);
-    }
-  }
-}
-
 const changes = [];
 
 for (const site of state.sites ?? []) {
@@ -574,18 +555,11 @@ for (const theme of state.siteThemes ?? []) {
   if (theme.siteId === SITE_ID) normalizeTheme(theme, changes);
 }
 
-for (const publication of state.themePublications ?? []) {
-  if (publication.siteId === SITE_ID || publication.targetId === SITE_ID) {
-    normalizeTheme(publication, changes);
-    normalizePublication(publication, changes);
-  }
-}
-
 for (const pack of state.creativePacks ?? []) {
   if (pack.siteId === SITE_ID) normalizePack(pack, changes);
 }
 
-for (const collectionName of ["siteThemes", "themePublications", "creativePacks"]) {
+for (const collectionName of ["siteThemes", "creativePacks"]) {
   for (const record of state[collectionName] ?? []) {
     if (!isDreamshootScoped(record)) continue;
     if (collectionName === "creativePacks") normalizePack(record, changes);

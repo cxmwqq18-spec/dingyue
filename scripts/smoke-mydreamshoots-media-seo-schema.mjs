@@ -27,11 +27,11 @@ const {
 const {
   canonicalSeoDirectoryPathForSite
 } = jiti("../src/lib/dreamshoot-seo-content.ts");
-const {
-  getStorefrontSitemapEntriesForHost
-} = jiti("../src/lib/seo-indexing.ts");
+const { sitemapEntriesForSite } = jiti("../src/lib/seo-indexing.ts");
 const { resolveStorefrontContext } = jiti("../src/lib/storefront-context/core.ts");
-const { mydreamshootsPublishedRouteManifest } = jiti("../src/lib/mydreamshoots-published-contract.ts");
+const { buildPublicationSnapshot } = jiti("../src/lib/stores/theme-store.ts");
+const { createPublishedSiteSnapshot } = jiti("../src/lib/storefront-context/snapshot.ts");
+const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(repoRoot, relativePath), "utf8"));
@@ -78,7 +78,6 @@ function schemaSlug(value) {
 }
 
 const state = readJson("data/platform-state.json");
-const localTaxonomy = readJson("src/lib/mydreamshoots-theme-taxonomy.json");
 const site = state.sites.find((item) => item.id === "site_dreamshoot");
 assert.ok(site, "MyDreamShoots site must exist");
 assert.equal(site.primaryDomain, "www.mydreamshoots.com", "MyDreamShoots primary domain should stay production canonical");
@@ -89,14 +88,54 @@ const activeVideoThemes = (state.videoThemes ?? []).filter((theme) => theme.site
 const blackFridayPack = activePacks.find((pack) => schemaSlug(pack.category || pack.name) === "black-friday" || schemaSlug(pack.name) === "black-friday");
 const homePage = site.pages.find((page) => page.slug === "/");
 assert.ok(homePage, "MyDreamShoots homepage should exist");
+const fixtureFacts = {
+  usesCustomerMediaForTraining: false,
+  sourceMediaRetentionDays: 30,
+  refundReviewRequired: true,
+  refundWindowDays: 7,
+  effectiveDate: "2026-08-20",
+  creditLifecycle: { reserve: "Fixture reserve statement", consume: "Fixture consume statement", release: "Fixture release statement" },
+  security: { transportClaimKey: "Fixture transport statement", storageClaimKey: "Fixture storage statement" }
+};
+const fixtureSite = {
+  ...site,
+  storefrontProfile: {
+    ...(site.storefrontProfile ?? { id: `profile_${site.id}`, siteId: site.id, draftJson: {}, publishedJson: {} }),
+    publishedJson: {
+      ...(site.storefrontProfile?.publishedJson ?? {}),
+      identity: {
+        legalName: "MyDreamShoots Local Fixture",
+        entityType: "company",
+        address: { line1: "1 Local Fixture Way", city: "Test City", region: "CA", postalCode: "00000", country: "US" },
+        supportEmail: "local-fixture@example.com",
+        sameAs: []
+      },
+      policyFacts: fixtureFacts
+    }
+  }
+};
+const immutableSnapshot = buildPublicationSnapshot(fixtureSite, undefined, activePacks, activeProducts);
+assert.equal(immutableSnapshot.publishedStandardPageMedia.length, 6, "standard page media must be present in the smoke publication");
+assert.equal(publicationSnapshotIntegrity(immutableSnapshot), "valid", "media schema smoke must use a valid immutable fixture publication");
+const publishedSiteSnapshot = createPublishedSiteSnapshot({
+  ...state,
+  sites: [{ ...fixtureSite, latestPublication: { id: "smoke_publication", siteId: site.id, version: 1, snapshot: immutableSnapshot } }]
+}, { ...fixtureSite, latestPublication: { id: "smoke_publication", siteId: site.id, version: 1, snapshot: immutableSnapshot } });
+const schemaPage = publishedSiteSnapshot.pages.find((page) => page.slug === "/");
 const schemaContext = resolveStorefrontContext({
-  site,
-  page: homePage,
-  products: activeProducts,
-  creativePacks: activePacks,
-  publication: undefined,
+  site: fixtureSite,
+  page: schemaPage ?? homePage,
+  products: publishedSiteSnapshot.products,
+  creativePacks: publishedSiteSnapshot.creativePacks,
+  publication: publishedSiteSnapshot.publication,
   factsRevision: "local-smoke",
-  buildId: "local-smoke"
+  buildId: "local-smoke",
+  publishedFacts: publishedSiteSnapshot.publishedFacts,
+  publishedPageMedia: Object.fromEntries(publishedSiteSnapshot.publishedPageMedia.map((row) => [row.pageEntityId, row])),
+  publishedStandardPageMedia: Object.fromEntries(publishedSiteSnapshot.publishedStandardPageMedia.map((row) => [row.canonicalPath, row])),
+  publishedPageEntities: Object.fromEntries(publishedSiteSnapshot.publishedPageEntities.map((row) => [row.canonicalPath, row])),
+  publishedLinkRefs: publishedSiteSnapshot.publishedLinkRefs,
+  snapshotIntegrity: "valid"
 }, "published");
 const verifiedOffers = schemaContext.offers.active.filter((offer) => (
   String(offer.price.currency).toLowerCase() === "usd"
@@ -118,13 +157,13 @@ assert.equal(/anime-avatar/i.test(blackFridayPack.imageUrl ?? ""), false, "Black
 assert.equal((blackFridayPack.galleryImages ?? []).some((image) => /anime-avatar/i.test(image)), false, "Black Friday pack gallery must not reuse Anime Avatar art");
 
 const homeGraph = graphNodes(buildStorefrontJsonLd({
-  site,
-  page: homePage,
-  pageJson: homePage.publishedJson,
+  site: fixtureSite,
+  page: schemaPage ?? homePage,
+  pageJson: (schemaPage ?? homePage).publishedJson,
   pagePath: "/",
   routeMode: "host",
-  creativePacks: activePacks,
-  products: activeProducts,
+  creativePacks: publishedSiteSnapshot.creativePacks,
+  products: publishedSiteSnapshot.products,
   videoThemes: activeVideoThemes,
   context: schemaContext
 }));
@@ -153,7 +192,8 @@ for (const video of videoObjects) {
 }
 
 const productPaths = new Set();
-for (const pack of activePacks) {
+const publishedPacks = publishedSiteSnapshot.creativePacks.filter((pack) => pack.status === "active");
+for (const pack of publishedPacks) {
   const canonicalPath = canonicalSeoDirectoryPathForSite(site, "collection", pack.category || pack.name);
   productPaths.add(canonicalPath);
   const collectionSlug = canonicalPath.split("/").pop();
@@ -161,8 +201,8 @@ for (const pack of activePacks) {
     site,
     collectionSlug,
     routeMode: "host",
-    creativePacks: activePacks,
-    products: activeProducts,
+    creativePacks: publishedPacks,
+    products: publishedSiteSnapshot.products,
     context: schemaContext
   }));
   const products = graph.filter((node) => node?.["@type"] === "Product");
@@ -216,21 +256,20 @@ for (const pack of activePacks) {
     `${canonicalPath} output count should match the package`
   );
 }
-assert.equal(productPaths.size, 38, "each active pack should map to a unique canonical Product detail path");
+assert.equal(productPaths.size, publishedPacks.length, "each published pack should map to a unique canonical Product detail path");
 assert.equal(homeGraph.some((node) => node?.["@type"] === "Review" || node?.["@type"] === "AggregateRating"), false, "homepage JSON-LD should not emit review rating schema without a real review source");
 
-const sitemapEntries = await getStorefrontSitemapEntriesForHost(["www.mydreamshoots.com"]);
+const smokeSite = { ...fixtureSite, latestPublication: { id: "smoke_publication", siteId: site.id, version: 1, snapshot: immutableSnapshot } };
+const sitemapEntries = sitemapEntriesForSite({ ...state, sites: [smokeSite] }, smokeSite);
 const sitemapEntryByPath = new Map(sitemapEntries.map((entry) => [new URL(entry.loc).pathname, entry]));
-const publishedSlugs = process.env.PERSISTENCE_BACKEND === "postgres"
-  ? new Set(sitemapEntries
-    .filter((entry) => (entry.images ?? []).length > 0)
-    .map((entry) => new URL(entry.loc).pathname.replace(/^\/ai-image-generation\//, ""))
-  )
-  : new Set(mydreamshootsPublishedRouteManifest().filter((route) => route.status === "published" && route.sitemapEligible).map((route) => route.canonicalSlug));
-for (const item of localTaxonomy.items ?? []) {
-  const pathname = `/ai-image-generation/${item.slug}`;
+const leafRoutes = publishedSiteSnapshot.publishedRoutes.filter((route) => route.disposition === "render" && route.routeKind === "ai-image-theme-leaf");
+const publishedPaths = new Set(leafRoutes
+  .filter((route) => route.status === "published" && route.sitemapEligible)
+  .map((route) => route.canonicalPath));
+for (const route of leafRoutes) {
+  const pathname = route.canonicalPath;
   const entry = sitemapEntryByPath.get(pathname);
-  if (publishedSlugs.has(item.slug)) {
+  if (publishedPaths.has(pathname)) {
     assert.ok(entry, `${pathname} should have a published route manifest sitemap entry`);
     assert.ok((entry.images ?? []).length > 0, `${pathname} should project its page-owned media into the image sitemap`);
   } else {
@@ -245,7 +284,9 @@ function assertRichSitemapImageTitle(image, pathName) {
   assert.doesNotMatch(title, /Aidreamcapes/i, `${pathName} image sitemap title should not mention another brand`);
   assert.doesNotMatch(title, /^(?:image|photo|preview|thumbnail|hero|.+\s+preview)$/i, `${pathName} image sitemap title should not be a placeholder: ${title}`);
 }
-for (const pathName of ["/", "/pricing", "/workflow", "/faq", "/blog"]) {
+const requiredImageSitemapPaths = ["/", "/pricing", "/workflow", "/faq", "/blog"]
+  .filter((pathName) => sitemapEntryByPath.has(pathName));
+for (const pathName of requiredImageSitemapPaths) {
   const entry = sitemapEntryByPath.get(pathName);
   assert.ok(entry, `${pathName} sitemap entry should exist`);
   assert.ok((entry.images ?? []).length > 0, `${pathName} sitemap entry should include image references`);

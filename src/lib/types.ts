@@ -126,6 +126,8 @@ export interface StorefrontProfileJson {
     refundReviewRequired?: boolean;
     refundWindowDays?: number;
     effectiveDate?: string;
+    creditLifecycle?: { reserve?: string; consume?: string; release?: string };
+    security?: { checkoutProvider?: string; transportClaimKey?: string; storageClaimKey?: string };
   };
 }
 
@@ -903,6 +905,22 @@ export interface PublishedPageMediaProjection {
   reviewReason?: string;
 }
 
+export interface PublishedStandardPageMediaProjection {
+  pageEntityId: string;
+  pageId: string;
+  canonicalPath: string;
+  mediaEntityId: string;
+  primaryImage: string;
+  primaryImageAlt: string;
+  ogImage: string;
+  twitterImage: string;
+  jsonLdImage: string;
+  sitemapImages: string[];
+  status: "ready" | "review_required";
+  revision: string;
+  reviewReason?: string;
+}
+
 export interface PublishedLeafRouteProjection {
   disposition: "render";
   siteId: "site_dreamshoot";
@@ -914,6 +932,7 @@ export interface PublishedLeafRouteProjection {
   copyRevision: string;
   copySource: "page-copy" | "missing";
   fallbackUsed: false;
+  deferred: boolean;
   status: "published" | "review_required";
   indexable: boolean;
   sitemapEligible: boolean;
@@ -1028,6 +1047,7 @@ export interface PublishedSeoSnapshot {
   publishedPageEntities: PublishedPageEntityProjection[];
   publishedPageCopy: PublishedPageCopyProjection[];
   publishedPageMedia: PublishedPageMediaProjection[];
+  publishedStandardPageMedia: PublishedStandardPageMediaProjection[];
   publishedPackFacts: PublishedPackFactProjection[];
   publishedOffers: PublishedOfferProjection[];
   publishedFacts: PublishedFactsProjection;
@@ -1048,6 +1068,7 @@ export interface LegacyThemePublicationSnapshot {
   publishedPageEntities?: PublishedPageEntityProjection[];
   publishedPageCopy?: PublishedPageCopyProjection[];
   publishedPageMedia?: PublishedPageMediaProjection[];
+  publishedStandardPageMedia?: PublishedStandardPageMediaProjection[];
   publishedPackFacts?: PublishedPackFactProjection[];
   publishedOffers?: PublishedOfferProjection[];
   publishedFacts?: PublishedFactsProjection;

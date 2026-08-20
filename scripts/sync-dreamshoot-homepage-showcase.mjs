@@ -338,7 +338,6 @@ function applyShowcaseToState(state, stores) {
     const homePage = site?.pages?.find((page) => page.slug === "/" || page.pageType === "home");
     if (homePage) {
       if (applyHomeShowcase(homePage.draftJson, store)) pageUpdates += 1;
-      if (applyHomeShowcase(homePage.publishedJson, store)) pageUpdates += 1;
     }
 
     for (const theme of state.siteThemes ?? []) {
@@ -356,13 +355,6 @@ function applyShowcaseToState(state, stores) {
       themeTemplateUpdates += 1;
     }
 
-    for (const publication of state.themePublications ?? []) {
-      if (publication.siteId !== store.siteId) continue;
-      const homeSnapshot = publication.snapshot?.pages?.find((page) => page.slug === "/");
-      if (homeSnapshot?.publishedJson && applyHomeShowcase(homeSnapshot.publishedJson, store)) {
-        publicationUpdates += 1;
-      }
-    }
   }
 
   return { pageUpdates, themeTemplateUpdates, publicationUpdates };

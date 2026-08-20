@@ -2205,8 +2205,7 @@ function syncSite(state, config) {
 
   site.themeSettings ??= {};
   site.themeSettings.draftJson ??= {};
-  site.themeSettings.publishedJson ??= {};
-    ensureHeader(site.themeSettings.draftJson);
+  ensureHeader(site.themeSettings.draftJson);
     ensureFooter(site.themeSettings.draftJson, config.footerLabel);
 
   const existingBlogHome = site.pages.find((page) => page.slug === "/blog");
@@ -2219,7 +2218,7 @@ function syncSite(state, config) {
     slug: "/blog",
     title: config.blogTitle,
     draftJson: clone(blogHomeJson),
-    publishedJson: clone(existingBlogHome?.publishedJson ?? blogHomeJson)
+    ...(existingBlogHome?.publishedJson ? { publishedJson: existingBlogHome.publishedJson } : {})
   });
 
   const sourceArticlePage = site.pages.find((page) => page.slug.startsWith("/blog/"));
@@ -2234,7 +2233,7 @@ function syncSite(state, config) {
       slug: article.slug,
       title: article.pageTitle,
       draftJson: clone(articleJson),
-      publishedJson: clone(existingPage?.publishedJson ?? sourceArticlePage?.publishedJson ?? articleJson)
+      ...(existingPage?.publishedJson ? { publishedJson: existingPage.publishedJson } : {})
     });
   }
 
@@ -2279,7 +2278,7 @@ function syncScopedSite(state, config, slugs) {
       slug: article.slug,
       title: article.pageTitle,
       draftJson: clone(articleJson),
-      publishedJson: clone(existingPage?.publishedJson ?? sourceArticlePage?.publishedJson ?? articleJson)
+      ...(existingPage?.publishedJson ? { publishedJson: existingPage.publishedJson } : {})
     };
     upsertPage(site, page);
     return page;

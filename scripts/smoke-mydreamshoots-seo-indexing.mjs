@@ -490,7 +490,8 @@ for (const slug of [
   "story-video",
   "meme-video",
   "product-video",
-  "product-ad-video"
+  "product-ad-video",
+  "ugc-ad-video"
 ]) {
   assert(photoPackageTaxonomy.includes(`"${slug}"`), "MyDreamShoots internal video slug list must include the required video slug", { slug });
 }
@@ -508,7 +509,8 @@ for (const slug of [
   "story-video",
   "meme-video",
   "product-video",
-  "product-ad-video"
+  "product-ad-video",
+  "ugc-ad-video"
 ]) {
   assert(publicVideoSlugSource.includes(`"${slug}"`), "public video generation slug list must include the published topic slug", { slug });
 }
@@ -585,6 +587,7 @@ assert(
     dreamshootSeoContent.includes('"meme-video"') &&
     dreamshootSeoContent.includes('"product-video"') &&
     dreamshootSeoContent.includes('"product-ad-video"') &&
+    dreamshootSeoContent.includes('"ugc-ad-video"') &&
     dreamshootSeoContent.includes("indexableDreamshootDefaultTool") &&
     dreamshootSeoContent.includes("item.explicit || indexableDreamshootDefaultTool"),
   "default public MyDreamShoots video detail pages must be indexable when they are included in sitemap coverage"

@@ -26,7 +26,8 @@ const expectedVideoTopicSlugs = [
   "story-video",
   "meme-video",
   "product-video",
-  "product-ad-video"
+  "product-ad-video",
+  "ugc-ad-video"
 ];
 const expectedVideoTopicLabels = [
   "Talking Photo",
@@ -38,7 +39,8 @@ const expectedVideoTopicLabels = [
   "Story Video",
   "Meme Video",
   "Product Video",
-  "Product Ad Video"
+  "Product Ad Video",
+  "UGC Ad Video"
 ];
 const anonymousEntries = [
   { label: "MyDreamShoots home", path: `/site/${siteSlug}` },
@@ -163,9 +165,9 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
         viewAllThemesLinks,
         hasLegacyVideoToolLabels: /Profile Clip|Fan Poster Motion|Creator Intro Video|Product Teaser Clip|Animated Avatar|Fashion Reel|Album Story Video/.test(panelText),
         hasHiddenVideoWorkflowLabels: /Text to video|Image to Video/.test(panelText),
-        hasVideoTopicDescriptions: /Explore a talking-photo workflow|Plan story-driven cinematic clips|Create TikTok-first vertical video briefs|Shape Reels around cover-aware framing|Adapt one master story|Plan long-form YouTube drafts|Shape story-led videos around setup|Turn reactions, POV setups|Turn product photos into clear video directions|Build product ads around one audience/.test(panelText),
+        hasVideoTopicDescriptions: /Explore a talking-photo workflow|Plan story-driven cinematic clips|Create TikTok-first vertical video briefs|Shape Reels around cover-aware framing|Adapt one master story|Plan long-form YouTube drafts|Shape story-led videos around setup|Turn reactions, POV setups|Turn product photos into clear video directions|Build product ads around one audience|Plan creator-style product ads around speaker status/.test(panelText),
         hasVideoCategoriesLabel: /\bCATEGOR(?:Y|IES)\b/i.test(panelText),
-        hasTenVideoThemesLabel: /10\s+THEMES/i.test(panelText)
+        hasElevenVideoThemesLabel: /11\s+THEMES/i.test(panelText)
       };
     });
 
@@ -202,7 +204,7 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
       assert(!metrics.hasVideoTopicDescriptions, `${entry.label} ${entry.path}: AI Video Generation menu should show topic names only, without description copy`);
       assert(metrics.viewAllThemesLinks.length >= 1, `${entry.label} ${entry.path}: AI Video Generation menu must include a View all themes link`, { viewAllThemesLinks: metrics.viewAllThemesLinks });
       assert(!metrics.hasVideoCategoriesLabel, `${entry.label} ${entry.path}: AI Video Generation menu should not report category counts`);
-      assert(metrics.hasTenVideoThemesLabel, `${entry.label} ${entry.path}: AI Video Generation menu should report 10 themes`);
+      assert(metrics.hasElevenVideoThemesLabel, `${entry.label} ${entry.path}: AI Video Generation menu should report 11 themes`);
       assert(!metrics.hasLegacyVideoToolLabels, `${entry.label} ${entry.path}: AI Video Generation menu still exposes legacy video tool labels`);
     } else {
       assert(metrics.toolLinkCount >= 6, `${entry.label} ${entry.path}: tools menu shrank to ${metrics.toolLinkCount} tool links`);

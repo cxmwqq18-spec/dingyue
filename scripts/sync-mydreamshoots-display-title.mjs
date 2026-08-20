@@ -24,7 +24,7 @@ if (!site) throw new Error("MyDreamShoots site not found");
 site.branding ??= {};
 setString(site.branding, "logoText", DISPLAY_TITLE);
 
-for (const settings of [site.themeSettings?.draftJson, site.themeSettings?.publishedJson].filter(Boolean)) {
+for (const settings of [site.themeSettings?.draftJson].filter(Boolean)) {
   setString(settings.globalSections?.header?.settings, "title", DISPLAY_TITLE);
   setString(settings.globalSections?.footer?.settings, "title", DISPLAY_TITLE);
   if (settings.seo) {
@@ -35,7 +35,7 @@ for (const settings of [site.themeSettings?.draftJson, site.themeSettings?.publi
 
 for (const page of state.themePages ?? []) {
   if (page.siteId !== site.id) continue;
-  for (const pageJson of [page.draftJson, page.publishedJson].filter(Boolean)) {
+  for (const pageJson of [page.draftJson].filter(Boolean)) {
     if (pageJson.seo?.title) {
       const nextTitle = pageJson.seo.title.replace(/myᕲreamshoots/g, SEO_TITLE);
       setString(pageJson.seo, "title", nextTitle);

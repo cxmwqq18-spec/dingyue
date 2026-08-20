@@ -297,8 +297,7 @@ async function main() {
   const settings = await prisma.themeSettings.findUnique({ where: { siteId: site.id } });
   if (settings) {
     const draftJson = rewriteJson(structuredClone(settings.draftJson));
-    const publishedJson = rewriteJson(structuredClone(settings.publishedJson));
-    for (const themeSettingsJson of [draftJson, publishedJson]) {
+    for (const themeSettingsJson of [draftJson]) {
       const seo = themeSettingsJson.seo;
       if (!seo) continue;
       seo.siteTitle = "MyDreamShoots";
@@ -315,47 +314,39 @@ async function main() {
       }
       for (const page of themePages) updateThemeSeoPolicyPage(themeSettingsJson, page.id, policyCanonicalPathBySlug[page.slug]);
     }
-    if (changed(settings.draftJson, draftJson) || changed(settings.publishedJson, publishedJson)) {
-      if (!dryRun) await prisma.themeSettings.update({ where: { siteId: site.id }, data: { draftJson, publishedJson } });
+    if (changed(settings.draftJson, draftJson)) {
+      if (!dryRun) await prisma.themeSettings.update({ where: { siteId: site.id }, data: { draftJson } });
       result.themeSettings += 1;
     }
   }
 
   for (const page of themePages) {
     let draftJson = rewriteJson(structuredClone(page.draftJson));
-    let publishedJson = rewriteJson(structuredClone(page.publishedJson));
     let title = page.title;
     if (page.slug === "/") {
       draftJson = setPageSeo(draftJson, "Professional AI Photo Generator Online - MyDreamShoots", "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.", "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot");
-      publishedJson = setPageSeo(publishedJson, "Professional AI Photo Generator Online - MyDreamShoots", "Turn your selfies into stunning couple photos in seconds with MyDreamShoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.", "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot");
       draftJson = updateHomeHeroCtas(draftJson);
-      publishedJson = updateHomeHeroCtas(publishedJson);
     }
     if (page.slug === "/pricing") {
       draftJson = setPageSeo(draftJson, "MyDreamShoots Pricing | Credits for Private AI Headshot Generator", "Compare MyDreamShoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery.");
-      publishedJson = setPageSeo(publishedJson, "MyDreamShoots Pricing | Credits for Private AI Headshot Generator", "Compare MyDreamShoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery.");
     }
     if (page.slug === "/tools") {
       draftJson = setPageSeo(draftJson, "AI Photo Tools with Free Previews | Background, Headshots & Try-ons | MyDreamShoots", "Explore MyDreamShoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.");
-      publishedJson = setPageSeo(publishedJson, "AI Photo Tools with Free Previews | Background, Headshots & Try-ons | MyDreamShoots", "Explore MyDreamShoots tools for headshots, background edits, video clips, try-on previews, private uploads, visible credits, and private albums.");
     }
     if (page.slug === "/collections") {
       draftJson = setPageSeo(draftJson, "Browse private AI photo packages | MyDreamShoots", "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs.");
-      publishedJson = setPageSeo(publishedJson, "Browse private AI photo packages | MyDreamShoots", "Browse MyDreamShoots packages for headshots, fan photos, creator portraits, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs.");
     }
     if (page.slug === "/tools/headshot" || page.slug === "/collections/headshot") {
       draftJson = setPageSeo(draftJson, "AI Headshot Generator for LinkedIn, Resumes & Team Photos | MyDreamShoots", "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs.");
-      publishedJson = setPageSeo(publishedJson, "AI Headshot Generator for LinkedIn, Resumes & Team Photos | MyDreamShoots", "Create work-ready AI headshots for LinkedIn, resumes, founder bios, speaker pages, and team profiles with private uploads and visible credit costs.");
     }
     const canonicalPath = policyCanonicalPathBySlug[page.slug];
     if (canonicalPath) {
       const copy = policyCopyByCanonicalPath[canonicalPath];
       title = copy.pageTitle;
       draftJson = updatePolicyJson(draftJson, canonicalPath);
-      publishedJson = updatePolicyJson(publishedJson, canonicalPath);
     }
-    if (changed(page.draftJson, draftJson) || changed(page.publishedJson, publishedJson) || title !== page.title) {
-      if (!dryRun) await prisma.themePage.update({ where: { id: page.id }, data: { title, draftJson, publishedJson } });
+    if (changed(page.draftJson, draftJson) || title !== page.title) {
+      if (!dryRun) await prisma.themePage.update({ where: { id: page.id }, data: { title, draftJson } });
       result.themePages += 1;
     }
   }

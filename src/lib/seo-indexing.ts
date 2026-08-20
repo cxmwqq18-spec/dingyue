@@ -13,7 +13,7 @@ import {
 import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
-import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
+import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
 import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import type { CreativePack, PlatformState, PublishedLeafRouteProjection, PublishedSeoSnapshot, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
@@ -461,7 +461,7 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
     : "";
 }
 
-function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[] {
+export function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[] {
   const snapshot = createPublishedSiteSnapshot(state, site);
   const collectionItems = resolvePublicCollectionItems(snapshot);
   const entries = new Map<string, SitemapEntry>();
@@ -472,9 +472,17 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
     if (effective.routeDisposition.kind !== "render" || !effective.indexability.sitemapEligible) continue;
     const loc = effective.context.seo.canonicalUrl;
     const path = effective.context.seo.canonicalPath;
+    const standardMedia = site.id === "site_dreamshoot"
+      ? resolvePublishedSeoEntity(snapshot, path).standardPageMedia
+      : undefined;
     entries.set(loc, {
       loc,
-      images: collectPageSitemapImages(site, page),
+      images: standardMedia?.status === "ready"
+        ? standardMedia.sitemapImages.map((image, index) => ({
+            loc: absoluteMediaUrl(site, image),
+            title: index === 0 ? standardMedia.primaryImageAlt : sitemapImageTitleForPage(page)
+          })).filter((image) => image.loc)
+        : collectPageSitemapImages(site, page),
       lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
       changefreq: sitemapChangeFrequencyForPath(path),
       priority: sitemapPriorityForPath(path)
@@ -494,9 +502,10 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
     for (const route of snapshot.publishedRoutes.filter((candidate): candidate is PublishedLeafRouteProjection =>
       candidate.disposition === "render" && candidate.routeKind === "ai-image-theme-leaf" && candidate.indexable && candidate.sitemapEligible
     )) {
-      const media = snapshot.publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId);
+      const resolved = resolvePublishedSeoEntity(snapshot, route.canonicalPath);
+      const media = resolved.pageMedia;
       if (!media || media.status !== "ready") continue;
-      const pageEntity = snapshot.publishedPageEntities.find((candidate) => candidate.pageEntityId === route.pageEntityId);
+      const pageEntity = resolved.pageEntity;
       const publishedCopy = pageEntity ? pageCopyFromPublishedPageEntity(pageEntity, snapshot.publishedLinkRefs) : undefined;
       if (!publishedCopy) continue;
       const page = {
@@ -649,9 +658,8 @@ function isBlockedPublicPathForSite(site: Site, path: string): boolean {
 }
 
 function isPublicVideoGenerationSitemapPath(site: Site, path: string): boolean {
-  if (!isDreamshootSite(site)) return Boolean(parsePublicVideoGenerationRouteForSite(site, path));
-  if (path === "/ai-video-generation") return true;
-  return DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS.includes(path);
+  if (isDreamshootSite(site)) return false;
+  return Boolean(parsePublicVideoGenerationRouteForSite(site, path));
 }
 
 function isIndexableSeoDirectoryPath(site: Site, path: string): boolean {

@@ -13733,38 +13733,38 @@
                 },
                 "blocks": [
                   {
-                    "id": "use_case_sports_fan",
+                    "id": "review_ava",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Plan a sports fan photo set, compare the theme examples, review credits, and keep the delivered images in a private gallery.",
-                      "name": "",
-                      "role": "Sports fan photo workflow",
-                      "location": "Fan photos",
+                      "quote": "Compare sports fan photo directions, credit cost, and private gallery delivery before creating a match-day album from approved personal photos.",
+                      "name": "Sports fan workflow",
+                      "role": "Sports fan photos",
+                      "location": "Fan Photos",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
                       "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
                     }
                   },
                   {
-                    "id": "use_case_vip_portrait",
+                    "id": "review_lucas",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Use approved source photos to test a polished formal portrait direction before spending credits on additional profile images.",
-                      "name": "",
-                      "role": "Formal portrait workflow",
-                      "location": "Portrait photo",
+                      "quote": "Plan VIP-style portraits and formal profile images from approved source photos, then review the finished options inside the signed-in workspace.",
+                      "name": "VIP portrait workflow",
+                      "role": "Formal portrait set",
+                      "location": "VIP-style set",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
                       "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp"
                     }
                   },
                   {
-                    "id": "use_case_holiday_cards",
+                    "id": "review_mia",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Create private holiday-card examples from approved photos, then review the finished images before downloading or sharing.",
-                      "name": "",
-                      "role": "Holiday card workflow",
+                      "quote": "Compare Christmas couple, friend-card, and seasonal portrait directions before creating private card-ready images.",
+                      "name": "Seasonal card workflow",
+                      "role": "Holiday cards",
                       "location": "Christmas album",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
@@ -13772,42 +13772,42 @@
                     }
                   },
                   {
-                    "id": "use_case_private_gallery",
+                    "id": "review_noah",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Keep upload, credit review, generation status, delivered images, and downloads in the same signed-in account workspace.",
-                      "name": "",
-                      "role": "Private gallery workflow",
-                      "location": "Credit review",
+                      "quote": "Upload approved source photos, choose a package, review the visible credit cost, and keep finished results organized in one private gallery.",
+                      "name": "Gallery workflow",
+                      "role": "Private gallery delivery",
+                      "location": "Credit planning",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
                       "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png"
                     }
                   },
                   {
-                    "id": "use_case_creator_scene",
+                    "id": "review_chloe",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Compare creator-scene examples for recording, profile, and social content, then generate only after checking the current credit cost.",
-                      "name": "",
-                      "role": "Creator scene workflow",
-                      "location": "Content photos",
+                      "quote": "Test creator portraits, holiday images, and supported motion ideas from the same approved source photos before choosing the next workflow.",
+                      "name": "Creator workflow",
+                      "role": "Creator scene planning",
+                      "location": "Creator workflow",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png",
                       "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp"
                     }
                   },
                   {
-                    "id": "use_case_motion_preview",
+                    "id": "review_eli",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Turn an approved image or image set into a supported short video workflow and review the finished clip before publishing.",
-                      "name": "",
-                      "role": "Supported video workflow",
-                      "location": "Motion preview",
+                      "quote": "Use credit-aware headshot and card workflows when a small team needs private images without a studio appointment.",
+                      "name": "Team workflow",
+                      "role": "Headshots and cards",
+                      "location": "Clear credits",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/frames/faq-intro-portrait.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/creator-scene-motion.mp4?v=20260807i2v"
+                      "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
                     }
                   }
                 ]
@@ -13875,7 +13875,7 @@
                 "settings": {
                   "anchor": "how-it-works",
                   "eyebrow": "How it works",
-                  "title": "Watch the private photo package workflow.",
+                  "title": "How it works",
                   "subtitle": "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.",
                   "supportingCopy": "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.",
                   "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
@@ -13988,7 +13988,7 @@
                   "title": "AI Photo Packages by Style and Use Case",
                   "anchor": "packages",
                   "source": "creative_packs",
-                  "subtitle": "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
+                  "subtitle": "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
                   "featuredCount": 12,
                   "directoryLabel": "AI PHOTO THEMED",
                   "directorySubtitle": "Compare every active theme by category, title, cover, and route before starting a private photo package."
@@ -14212,6 +14212,88 @@
                     }
                   }
                 ]
+              },
+              "brand_strip_1": {
+                "type": "brand_logo_strip",
+                "settings": {
+                  "anchor": "trusted",
+                  "title": "For creators, photographers, social sellers, studios, fan communities, and small teams.",
+                  "style": "dark"
+                },
+                "blocks": [
+                  {
+                    "id": "partner_creator_teams",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Creator teams",
+                      "imageUrl": "",
+                      "badge": "Content"
+                    }
+                  },
+                  {
+                    "id": "partner_photo_studios",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Photo studios",
+                      "imageUrl": "",
+                      "badge": "Studio"
+                    }
+                  },
+                  {
+                    "id": "partner_social_sellers",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Social sellers",
+                      "imageUrl": "",
+                      "badge": "Commerce"
+                    }
+                  },
+                  {
+                    "id": "partner_fan_pages",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Fan pages",
+                      "imageUrl": "",
+                      "badge": "Community"
+                    }
+                  },
+                  {
+                    "id": "partner_event_marketers",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Event marketers",
+                      "imageUrl": "",
+                      "badge": "Campaigns"
+                    }
+                  },
+                  {
+                    "id": "partner_holiday_shops",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Holiday shops",
+                      "imageUrl": "",
+                      "badge": "Seasonal"
+                    }
+                  },
+                  {
+                    "id": "partner_creator_coaches",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Creator coaches",
+                      "imageUrl": "",
+                      "badge": "Guides"
+                    }
+                  },
+                  {
+                    "id": "partner_small_teams",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Small teams",
+                      "imageUrl": "",
+                      "badge": "Profiles"
+                    }
+                  }
+                ]
               }
             },
             "sectionsOrder": [
@@ -14221,7 +14303,8 @@
               "package_catalog_1",
               "proof_1",
               "faq_1",
-              "conversion_1"
+              "conversion_1",
+              "brand_strip_1"
             ]
           },
           "publishedJson": {
@@ -14322,38 +14405,38 @@
                 },
                 "blocks": [
                   {
-                    "id": "use_case_sports_fan",
+                    "id": "review_ava",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Plan a sports fan photo set, compare the theme examples, review credits, and keep the delivered images in a private gallery.",
-                      "name": "",
-                      "role": "Sports fan photo workflow",
-                      "location": "Fan photos",
+                      "quote": "Compare sports fan photo directions, credit cost, and private gallery delivery before creating a match-day album from approved personal photos.",
+                      "name": "Sports fan workflow",
+                      "role": "Sports fan photos",
+                      "location": "Fan Photos",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
                       "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
                     }
                   },
                   {
-                    "id": "use_case_vip_portrait",
+                    "id": "review_lucas",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Use approved source photos to test a polished formal portrait direction before spending credits on additional profile images.",
-                      "name": "",
-                      "role": "Formal portrait workflow",
-                      "location": "Portrait photo",
+                      "quote": "Plan VIP-style portraits and formal profile images from approved source photos, then review the finished options inside the signed-in workspace.",
+                      "name": "VIP portrait workflow",
+                      "role": "Formal portrait set",
+                      "location": "VIP-style set",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
                       "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp"
                     }
                   },
                   {
-                    "id": "use_case_holiday_cards",
+                    "id": "review_mia",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Create private holiday-card examples from approved photos, then review the finished images before downloading or sharing.",
-                      "name": "",
-                      "role": "Holiday card workflow",
+                      "quote": "Compare Christmas couple, friend-card, and seasonal portrait directions before creating private card-ready images.",
+                      "name": "Seasonal card workflow",
+                      "role": "Holiday cards",
                       "location": "Christmas album",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
@@ -14361,42 +14444,42 @@
                     }
                   },
                   {
-                    "id": "use_case_private_gallery",
+                    "id": "review_noah",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Keep upload, credit review, generation status, delivered images, and downloads in the same signed-in account workspace.",
-                      "name": "",
-                      "role": "Private gallery workflow",
-                      "location": "Credit review",
+                      "quote": "Upload approved source photos, choose a package, review the visible credit cost, and keep finished results organized in one private gallery.",
+                      "name": "Gallery workflow",
+                      "role": "Private gallery delivery",
+                      "location": "Credit planning",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
                       "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png"
                     }
                   },
                   {
-                    "id": "use_case_creator_scene",
+                    "id": "review_chloe",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Compare creator-scene examples for recording, profile, and social content, then generate only after checking the current credit cost.",
-                      "name": "",
-                      "role": "Creator scene workflow",
-                      "location": "Content photos",
+                      "quote": "Test creator portraits, holiday images, and supported motion ideas from the same approved source photos before choosing the next workflow.",
+                      "name": "Creator workflow",
+                      "role": "Creator scene planning",
+                      "location": "Creator workflow",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png",
                       "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp"
                     }
                   },
                   {
-                    "id": "use_case_motion_preview",
+                    "id": "review_eli",
                     "type": "testimonial",
                     "settings": {
-                      "quote": "Turn an approved image or image set into a supported short video workflow and review the finished clip before publishing.",
-                      "name": "",
-                      "role": "Supported video workflow",
-                      "location": "Motion preview",
+                      "quote": "Use credit-aware headshot and card workflows when a small team needs private images without a studio appointment.",
+                      "name": "Team workflow",
+                      "role": "Headshots and cards",
+                      "location": "Clear credits",
                       "rating": "",
                       "avatarUrl": "/assets/dreamshoot/frames/faq-intro-portrait.png",
-                      "resultImageUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/creator-scene-motion.mp4?v=20260807i2v"
+                      "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
                     }
                   }
                 ]
@@ -14464,7 +14547,7 @@
                 "settings": {
                   "anchor": "how-it-works",
                   "eyebrow": "How it works",
-                  "title": "Watch the private photo package workflow.",
+                  "title": "How it works",
                   "subtitle": "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.",
                   "supportingCopy": "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.",
                   "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
@@ -14577,7 +14660,7 @@
                   "title": "AI Photo Packages by Style and Use Case",
                   "anchor": "packages",
                   "source": "creative_packs",
-                  "subtitle": "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
+                  "subtitle": "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
                   "featuredCount": 12,
                   "directoryLabel": "AI PHOTO THEMED",
                   "directorySubtitle": "Compare every active theme by category, title, cover, and route before starting a private photo package."
@@ -14801,6 +14884,88 @@
                     }
                   }
                 ]
+              },
+              "brand_strip_1": {
+                "type": "brand_logo_strip",
+                "settings": {
+                  "anchor": "trusted",
+                  "title": "For creators, photographers, social sellers, studios, fan communities, and small teams.",
+                  "style": "dark"
+                },
+                "blocks": [
+                  {
+                    "id": "partner_creator_teams",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Creator teams",
+                      "imageUrl": "",
+                      "badge": "Content"
+                    }
+                  },
+                  {
+                    "id": "partner_photo_studios",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Photo studios",
+                      "imageUrl": "",
+                      "badge": "Studio"
+                    }
+                  },
+                  {
+                    "id": "partner_social_sellers",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Social sellers",
+                      "imageUrl": "",
+                      "badge": "Commerce"
+                    }
+                  },
+                  {
+                    "id": "partner_fan_pages",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Fan pages",
+                      "imageUrl": "",
+                      "badge": "Community"
+                    }
+                  },
+                  {
+                    "id": "partner_event_marketers",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Event marketers",
+                      "imageUrl": "",
+                      "badge": "Campaigns"
+                    }
+                  },
+                  {
+                    "id": "partner_holiday_shops",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Holiday shops",
+                      "imageUrl": "",
+                      "badge": "Seasonal"
+                    }
+                  },
+                  {
+                    "id": "partner_creator_coaches",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Creator coaches",
+                      "imageUrl": "",
+                      "badge": "Guides"
+                    }
+                  },
+                  {
+                    "id": "partner_small_teams",
+                    "type": "logo",
+                    "settings": {
+                      "name": "Small teams",
+                      "imageUrl": "",
+                      "badge": "Profiles"
+                    }
+                  }
+                ]
               }
             },
             "sectionsOrder": [
@@ -14810,7 +14975,8 @@
               "package_catalog_1",
               "proof_1",
               "faq_1",
-              "conversion_1"
+              "conversion_1",
+              "brand_strip_1"
             ]
           },
           "draftMeta": null,
@@ -16826,16 +16992,6 @@
                   }
                 ]
               }
-            },
-            "seo": {
-              "title": "Best AI image gallery | myDreamshoots",
-              "description": "Browse the full myDreamshoots AI image gallery with photo generator themes, private album ideas, and package examples.",
-              "canonicalPath": "/best-ai-image",
-              "robots": {
-                "index": true,
-                "follow": true
-              },
-              "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
             }
           },
           "publishedJson": {
@@ -16923,16 +17079,6 @@
                   }
                 ]
               }
-            },
-            "seo": {
-              "title": "Best AI image gallery | myDreamshoots",
-              "description": "Browse the full myDreamshoots AI image gallery with photo generator themes, private album ideas, and package examples.",
-              "canonicalPath": "/best-ai-image",
-              "robots": {
-                "index": true,
-                "follow": true
-              },
-              "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
             }
           },
           "draftMeta": null,
@@ -17031,16 +17177,6 @@
                   }
                 ]
               }
-            },
-            "seo": {
-              "title": "Best AI video gallery | myDreamshoots",
-              "description": "Browse the full myDreamshoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
-              "canonicalPath": "/best-ai-video",
-              "robots": {
-                "index": true,
-                "follow": true
-              },
-              "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
             }
           },
           "publishedJson": {
@@ -17128,16 +17264,6 @@
                   }
                 ]
               }
-            },
-            "seo": {
-              "title": "Best AI video gallery | myDreamshoots",
-              "description": "Browse the full myDreamshoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
-              "canonicalPath": "/best-ai-video",
-              "robots": {
-                "index": true,
-                "follow": true
-              },
-              "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
             }
           },
           "draftMeta": null,
@@ -17187,7 +17313,7 @@
                   "secondaryCta": "View Sports Packs",
                   "secondaryHref": "/ai-image-generation",
                   "photos": "Private gallery",
-                  "credits": "26 credits",
+                  "credits": "",
                   "privacy": "Private album",
                   "includedTitle": "Included outputs",
                   "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
@@ -17218,7 +17344,7 @@
                       "label": "Fan Meetup Photos",
                       "meta": "Group-friendly shots",
                       "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
-                      "collectionSlug": "gala-photo",
+                      "collectionSlug": "soccer",
                       "shape": "wide"
                     }
                   },
@@ -17229,7 +17355,7 @@
                       "label": "Match-day Avatar",
                       "meta": "Profile-ready crop",
                       "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
-                      "collectionSlug": "avatar",
+                      "collectionSlug": "soccer",
                       "shape": "square"
                     }
                   },
@@ -17251,7 +17377,7 @@
                       "label": "Social Story",
                       "meta": "Mobile-first layout",
                       "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
-                      "collectionSlug": "thanksgiving-photo",
+                      "collectionSlug": "soccer",
                       "shape": "tall"
                     }
                   },
@@ -17262,7 +17388,7 @@
                       "label": "Banner / Cover",
                       "meta": "Wide campaign image",
                       "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
-                      "collectionSlug": "holiday",
+                      "collectionSlug": "soccer",
                       "shape": "wide"
                     }
                   }
@@ -17281,7 +17407,7 @@
                   "secondaryCta": "View Christmas Photos",
                   "secondaryHref": "/ai-image-generation/christmas-photo",
                   "photos": "Holiday cards",
-                  "credits": "20 credits",
+                  "credits": "",
                   "privacy": "Private album",
                   "includedTitle": "Included outputs",
                   "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
@@ -17375,7 +17501,7 @@
                   "secondaryCta": "View Thanksgiving Photos",
                   "secondaryHref": "/ai-image-generation/thanksgiving-photo",
                   "photos": "Group portraits",
-                  "credits": "20 credits",
+                  "credits": "",
                   "privacy": "Private gallery",
                   "includedTitle": "Included outputs",
                   "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
@@ -17519,16 +17645,6 @@
                   }
                 ]
               }
-            },
-            "seo": {
-              "title": "Best Packages | myDreamshoots",
-              "description": "Compare myDreamshoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
-              "canonicalPath": "/best-packages",
-              "robots": {
-                "index": true,
-                "follow": true
-              },
-              "ogImage": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
             }
           },
           "publishedJson": {
@@ -17567,7 +17683,7 @@
                   "secondaryCta": "View Sports Packs",
                   "secondaryHref": "/ai-image-generation",
                   "photos": "Private gallery",
-                  "credits": "26 credits",
+                  "credits": "",
                   "privacy": "Private album",
                   "includedTitle": "Included outputs",
                   "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
@@ -17598,7 +17714,7 @@
                       "label": "Fan Meetup Photos",
                       "meta": "Group-friendly shots",
                       "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
-                      "collectionSlug": "gala-photo",
+                      "collectionSlug": "soccer",
                       "shape": "wide"
                     }
                   },
@@ -17609,7 +17725,7 @@
                       "label": "Match-day Avatar",
                       "meta": "Profile-ready crop",
                       "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
-                      "collectionSlug": "avatar",
+                      "collectionSlug": "soccer",
                       "shape": "square"
                     }
                   },
@@ -17631,7 +17747,7 @@
                       "label": "Social Story",
                       "meta": "Mobile-first layout",
                       "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
-                      "collectionSlug": "thanksgiving-photo",
+                      "collectionSlug": "soccer",
                       "shape": "tall"
                     }
                   },
@@ -17642,7 +17758,7 @@
                       "label": "Banner / Cover",
                       "meta": "Wide campaign image",
                       "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
-                      "collectionSlug": "holiday",
+                      "collectionSlug": "soccer",
                       "shape": "wide"
                     }
                   }
@@ -17661,7 +17777,7 @@
                   "secondaryCta": "View Christmas Photos",
                   "secondaryHref": "/ai-image-generation/christmas-photo",
                   "photos": "Holiday cards",
-                  "credits": "20 credits",
+                  "credits": "",
                   "privacy": "Private album",
                   "includedTitle": "Included outputs",
                   "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
@@ -17755,7 +17871,7 @@
                   "secondaryCta": "View Thanksgiving Photos",
                   "secondaryHref": "/ai-image-generation/thanksgiving-photo",
                   "photos": "Group portraits",
-                  "credits": "20 credits",
+                  "credits": "",
                   "privacy": "Private gallery",
                   "includedTitle": "Included outputs",
                   "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
@@ -17899,16 +18015,6 @@
                   }
                 ]
               }
-            },
-            "seo": {
-              "title": "Best Packages | myDreamshoots",
-              "description": "Compare myDreamshoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
-              "canonicalPath": "/best-packages",
-              "robots": {
-                "index": true,
-                "follow": true
-              },
-              "ogImage": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
             }
           },
           "draftMeta": null,
@@ -24962,7 +25068,7 @@
                   "anchor": "package-taxonomy",
                   "layout": "editorial",
                   "eyebrow": "Photo package library",
-                  "subtitle": "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
+                  "subtitle": "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
                 }
               },
               "conversion_1": {
@@ -25427,7 +25533,7 @@
                   "anchor": "package-taxonomy",
                   "layout": "editorial",
                   "eyebrow": "Photo package library",
-                  "subtitle": "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
+                  "subtitle": "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
                 }
               },
               "conversion_1": {
@@ -31828,6 +31934,74 @@
             }
           },
           "updatedAt": "2026-08-16T00:00:00.000Z"
+        },
+        {
+          "id": "site_dreamshoot_ugc_ad_video",
+          "siteId": "site_dreamshoot",
+          "createdAt": "2026-08-16T00:00:00.000Z",
+          "pageType": "ai_tool",
+          "templateKey": "ai-video-topic-ugc-ad-video",
+          "slug": "/ai-video-generation/ugc-ad-video",
+          "title": "UGC Ad Video",
+          "draftJson": {
+            "pageType": "ai_tool",
+            "version": 1,
+            "sectionsOrder": [
+              "ai_video_topic_landing_1"
+            ],
+            "sections": {
+              "ai_video_topic_landing_1": {
+                "type": "ai_video_topic_landing",
+                "settings": {
+                  "anchor": "ugc-ad-video",
+                  "contentKey": "ugc-ad-video"
+                },
+                "blocks": []
+              }
+            },
+            "seo": {
+              "title": "AI UGC Video Generator for Creator-Style Product Ads | myDreamshoots",
+              "description": "Create creator-style product ads with an AI UGC video generator. Plan hooks, speaker roles, product-in-use scenes, visible proof, voiceover, and clear CTAs—then validate every claim against your real product assets and generated output.",
+              "keywords": "AI UGC video generator, UGC ad video generator, AI UGC ad creator, UGC product video maker, creator-style product video, AI creator ad video, UGC style video ad, short-form creator ad generator",
+              "canonicalPath": "/ai-video-generation/ugc-ad-video",
+              "robots": {
+                "index": true,
+                "follow": true
+              },
+              "index": true,
+              "follow": true
+            }
+          },
+          "updatedAt": "2026-08-16T00:00:00.000Z",
+          "publishedJson": {
+            "pageType": "ai_tool",
+            "version": 1,
+            "sectionsOrder": [
+              "ai_video_topic_landing_1"
+            ],
+            "sections": {
+              "ai_video_topic_landing_1": {
+                "type": "ai_video_topic_landing",
+                "settings": {
+                  "anchor": "ugc-ad-video",
+                  "contentKey": "ugc-ad-video"
+                },
+                "blocks": []
+              }
+            },
+            "seo": {
+              "title": "AI UGC Video Generator for Creator-Style Product Ads | myDreamshoots",
+              "description": "Create creator-style product ads with an AI UGC video generator. Plan hooks, speaker roles, product-in-use scenes, visible proof, voiceover, and clear CTAs—then validate every claim against your real product assets and generated output.",
+              "keywords": "AI UGC video generator, UGC ad video generator, AI UGC ad creator, UGC product video maker, creator-style product video, AI creator ad video, UGC style video ad, short-form creator ad generator",
+              "canonicalPath": "/ai-video-generation/ugc-ad-video",
+              "robots": {
+                "index": true,
+                "follow": true
+              },
+              "index": true,
+              "follow": true
+            }
+          }
         }
       ],
       "connect": {
@@ -50156,7 +50330,7 @@
             "footer": {
               "type": "footer",
               "settings": {
-                "title": "myDreamshoots",
+                "title": "myᕲreamshoots",
                 "tagline": "Private AI photo sets with visible credit costs and gallery delivery",
                 "body": "Upload your selfies, choose a style, review the credit cost, and download a private photo set.",
                 "productHeading": "Explore",
@@ -205307,6 +205481,7 @@
         "/assets/dreamshoot/generated/pack-galleries/professional-headshots/professional-headshots-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Professional studio headshot used as the representative package cover.",
         "Professional studio headshot, close portrait framing with clear facial detail.",
         "Professional studio headshot, half-body editorial pose with balanced crop.",
         "Professional studio headshot, group-friendly composition with space around the subjects.",
@@ -205355,6 +205530,7 @@
         "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Football fan portrait in a stadium used as the representative package cover.",
         "Football fan portrait in a stadium, close portrait framing with clear facial detail.",
         "Football fan portrait in a stadium, half-body editorial pose with balanced crop.",
         "Football fan portrait in a stadium, group-friendly composition with space around the subjects.",
@@ -205403,6 +205579,7 @@
         "/assets/dreamshoot/generated/pack-galleries/hairstyle/hairstyle-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Hairstyle preview portrait with polished styling used as the representative package cover.",
         "Hairstyle preview portrait with polished styling, close portrait framing with clear facial detail.",
         "Hairstyle preview portrait with polished styling, half-body editorial pose with balanced crop.",
         "Hairstyle preview portrait with polished styling, group-friendly composition with space around the subjects.",
@@ -205451,6 +205628,7 @@
         "/assets/dreamshoot/generated/pack-galleries/cyberpunk/cyberpunk-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Neon cyberpunk portrait in a city scene used as the representative package cover.",
         "Neon cyberpunk portrait in a city scene, close portrait framing with clear facial detail.",
         "Neon cyberpunk portrait in a city scene, half-body editorial pose with balanced crop.",
         "Neon cyberpunk portrait in a city scene, group-friendly composition with space around the subjects.",
@@ -205499,6 +205677,7 @@
         "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Formal gala portrait with editorial lighting used as the representative package cover.",
         "Formal gala portrait with editorial lighting, close portrait framing with clear facial detail.",
         "Formal gala portrait with editorial lighting, half-body editorial pose with balanced crop.",
         "Formal gala portrait with editorial lighting, group-friendly composition with space around the subjects.",
@@ -205547,6 +205726,7 @@
         "/assets/dreamshoot/generated/pack-galleries/mafia/mafia-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Noir character portrait with dramatic contrast used as the representative package cover.",
         "Noir character portrait with dramatic contrast, close portrait framing with clear facial detail.",
         "Noir character portrait with dramatic contrast, half-body editorial pose with balanced crop.",
         "Noir character portrait with dramatic contrast, group-friendly composition with space around the subjects.",
@@ -205595,6 +205775,7 @@
         "/assets/dreamshoot/generated/pack-galleries/nature/nature-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Outdoor adventure portrait in a natural landscape used as the representative package cover.",
         "Outdoor adventure portrait in a natural landscape, close portrait framing with clear facial detail.",
         "Outdoor adventure portrait in a natural landscape, half-body editorial pose with balanced crop.",
         "Outdoor adventure portrait in a natural landscape, group-friendly composition with space around the subjects.",
@@ -205643,6 +205824,7 @@
         "/assets/dreamshoot/generated/pack-galleries/outdoor-creator-scenes/outdoor-creator-scenes-12.webp?v=20260731assetfix1"
       ],
       "galleryImageAlts": [
+        "Urban lifestyle portrait in a city setting used as the representative package cover.",
         "Urban lifestyle portrait in a city setting, close portrait framing with clear facial detail.",
         "Urban lifestyle portrait in a city setting, half-body editorial pose with balanced crop.",
         "Urban lifestyle portrait in a city setting, group-friendly composition with space around the subjects.",
@@ -205691,7 +205873,8 @@
         "/assets/dreamshoot/generated/pack-galleries/virtual-try-on/virtual-try-on-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
-        "Beauty portrait with editorial lighting, close portrait framing with clear facial detail.",
+        "Beauty portrait with editorial lighting used as the representative package cover.",
+        "Beauty portrait with editorial lighting.",
         "Beauty portrait with editorial lighting, half-body editorial pose with balanced crop.",
         "Beauty portrait with editorial lighting, group-friendly composition with space around the subjects.",
         "Beauty portrait with editorial lighting, wide environmental scene with contextual background.",
@@ -205739,6 +205922,7 @@
         "/assets/dreamshoot/generated/pack-galleries/profile-cards/profile-cards-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Social profile card portrait with clean avatar framing used as the representative package cover.",
         "Social profile card portrait with clean avatar framing, close portrait framing with clear facial detail.",
         "Social profile card portrait with clean avatar framing, half-body editorial pose with balanced crop.",
         "Social profile card portrait with clean avatar framing, group-friendly composition with space around the subjects.",
@@ -205787,6 +205971,7 @@
         "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Creator portrait with polished studio styling used as the representative package cover.",
         "Creator portrait with polished studio styling, close portrait framing with clear facial detail.",
         "Creator portrait with polished studio styling, half-body editorial pose with balanced crop.",
         "Creator portrait with polished studio styling, group-friendly composition with space around the subjects.",
@@ -205835,6 +206020,7 @@
         "/assets/dreamshoot/generated/pack-galleries/fashion-editorial/fashion-editorial-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Editorial fashion portrait with refined wardrobe styling used as the representative package cover.",
         "Editorial fashion portrait with refined wardrobe styling, close portrait framing with clear facial detail.",
         "Editorial fashion portrait with refined wardrobe styling, half-body editorial pose with balanced crop.",
         "Editorial fashion portrait with refined wardrobe styling, group-friendly composition with space around the subjects.",
@@ -205883,6 +206069,7 @@
         "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Creator portrait with polished studio styling used as the representative package cover.",
         "Creator portrait with polished studio styling, close portrait framing with clear facial detail.",
         "Creator portrait with polished studio styling, half-body editorial pose with balanced crop.",
         "Creator portrait with polished studio styling, group-friendly composition with space around the subjects.",
@@ -205931,6 +206118,7 @@
         "/assets/dreamshoot/generated/pack-galleries/product-style/product-style-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Product-style lifestyle scene with clean studio lighting used as the representative package cover.",
         "Product-style lifestyle scene with clean studio lighting, close portrait framing with clear facial detail.",
         "Product-style lifestyle scene with clean studio lighting, half-body editorial pose with balanced crop.",
         "Product-style lifestyle scene with clean studio lighting, group-friendly composition with space around the subjects.",
@@ -205979,6 +206167,7 @@
         "/assets/dreamshoot/generated/pack-galleries/social-cards/social-cards-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Social card portrait with polished graphic framing used as the representative package cover.",
         "Social card portrait with polished graphic framing, close portrait framing with clear facial detail.",
         "Social card portrait with polished graphic framing, half-body editorial pose with balanced crop.",
         "Social card portrait with polished graphic framing, group-friendly composition with space around the subjects.",
@@ -206027,6 +206216,7 @@
         "/assets/dreamshoot/generated/pack-galleries/wedding-portraits/wedding-portraits-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Wedding-style couple portrait in soft ceremony light used as the representative package cover.",
         "Wedding-style couple portrait in soft ceremony light, close portrait framing with clear facial detail.",
         "Wedding-style couple portrait in soft ceremony light, half-body editorial pose with balanced crop.",
         "Wedding-style couple portrait in soft ceremony light, group-friendly composition with space around the subjects.",
@@ -206075,6 +206265,7 @@
         "/assets/dreamshoot/generated/pack-galleries/indian-wedding/indian-wedding-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Indian wedding-style portrait with rich celebration styling used as the representative package cover.",
         "Indian wedding-style portrait with rich celebration styling, close portrait framing with clear facial detail.",
         "Indian wedding-style portrait with rich celebration styling, half-body editorial pose with balanced crop.",
         "Indian wedding-style portrait with rich celebration styling, group-friendly composition with space around the subjects.",
@@ -206123,6 +206314,7 @@
         "/assets/dreamshoot/generated/pack-galleries/desi-wedding/desi-wedding-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Desi wedding-style portrait with traditional celebration styling used as the representative package cover.",
         "Desi wedding-style portrait with traditional celebration styling, close portrait framing with clear facial detail.",
         "Desi wedding-style portrait with traditional celebration styling, half-body editorial pose with balanced crop.",
         "Desi wedding-style portrait with traditional celebration styling, group-friendly composition with space around the subjects.",
@@ -206171,6 +206363,7 @@
         "/assets/dreamshoot/generated/pack-galleries/valentine-photos/valentine-photos-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Romantic couple portrait with warm date-night light used as the representative package cover.",
         "Romantic couple portrait with warm date-night light, close portrait framing with clear facial detail.",
         "Romantic couple portrait with warm date-night light, half-body editorial pose with balanced crop.",
         "Romantic couple portrait with warm date-night light, group-friendly composition with space around the subjects.",
@@ -206219,6 +206412,7 @@
         "/assets/dreamshoot/generated/pack-galleries/engagement/engagement-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Engagement-style couple portrait for an announcement used as the representative package cover.",
         "Engagement-style couple portrait for an announcement, close portrait framing with clear facial detail.",
         "Engagement-style couple portrait for an announcement, half-body editorial pose with balanced crop.",
         "Engagement-style couple portrait for an announcement, group-friendly composition with space around the subjects.",
@@ -206267,6 +206461,7 @@
         "/assets/dreamshoot/generated/pack-galleries/boudoir/boudoir-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Tasteful style portrait with soft studio lighting used as the representative package cover.",
         "Tasteful style portrait with soft studio lighting, close portrait framing with clear facial detail.",
         "Tasteful style portrait with soft studio lighting, half-body editorial pose with balanced crop.",
         "Tasteful style portrait with soft studio lighting, group-friendly composition with space around the subjects.",
@@ -206315,6 +206510,7 @@
         "/assets/dreamshoot/generated/pack-galleries/holiday/holiday-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Seasonal holiday portrait with warm festive styling used as the representative package cover.",
         "Seasonal holiday portrait with warm festive styling, close portrait framing with clear facial detail.",
         "Seasonal holiday portrait with warm festive styling, half-body editorial pose with balanced crop.",
         "Seasonal holiday portrait with warm festive styling, group-friendly composition with space around the subjects.",
@@ -206363,6 +206559,7 @@
         "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Christmas couple portrait with cozy festive light used as the representative package cover.",
         "Christmas couple portrait with cozy festive light, close portrait framing with clear facial detail.",
         "Christmas couple portrait with cozy festive light, half-body editorial pose with balanced crop.",
         "Christmas couple portrait with cozy festive light, group-friendly composition with space around the subjects.",
@@ -206411,6 +206608,7 @@
         "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Solo Christmas portrait with warm greeting-card styling used as the representative package cover.",
         "Solo Christmas portrait with warm greeting-card styling, close portrait framing with clear facial detail.",
         "Solo Christmas portrait with warm greeting-card styling, half-body editorial pose with balanced crop.",
         "Solo Christmas portrait with warm greeting-card styling, group-friendly composition with space around the subjects.",
@@ -206459,6 +206657,7 @@
         "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Motion-ready portrait frame with cinematic lighting used as the representative package cover.",
         "Motion-ready portrait frame with cinematic lighting, close portrait framing with clear facial detail.",
         "Motion-ready portrait frame with cinematic lighting, half-body editorial pose with balanced crop.",
         "Motion-ready portrait frame with cinematic lighting, group-friendly composition with space around the subjects.",
@@ -206507,6 +206706,7 @@
         "/assets/dreamshoot/generated/pack-galleries/magic-upscaler/magic-upscaler-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Enhanced portrait preview with crisp detail used as the representative package cover.",
         "Enhanced portrait preview with crisp detail, close portrait framing with clear facial detail.",
         "Enhanced portrait preview with crisp detail, half-body editorial pose with balanced crop.",
         "Enhanced portrait preview with crisp detail, group-friendly composition with space around the subjects.",
@@ -206555,6 +206755,7 @@
         "/assets/dreamshoot/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Thanksgiving group portrait at a warm dinner setting used as the representative package cover.",
         "Thanksgiving group portrait at a warm dinner setting, close portrait framing with clear facial detail.",
         "Thanksgiving group portrait at a warm dinner setting, half-body editorial pose with balanced crop.",
         "Thanksgiving group portrait at a warm dinner setting, group-friendly composition with space around the subjects.",
@@ -206603,6 +206804,7 @@
         "/assets/dreamshoot/generated/pack-galleries/halloween-party-photos/halloween-party-photos-12.webp?v=20260715b"
       ],
       "galleryImageAlts": [
+        "Halloween party portrait with dramatic colored lighting used as the representative package cover.",
         "Halloween party portrait with dramatic colored lighting, close portrait framing with clear facial detail.",
         "Halloween party portrait with dramatic colored lighting, half-body editorial pose with balanced crop.",
         "Halloween party portrait with dramatic colored lighting, group-friendly composition with space around the subjects.",
@@ -207996,18 +208198,19 @@
         "/assets/dreamshoot/generated/pack-galleries/only-fans/only-fans-12.webp?v=20260815unique1"
       ],
       "galleryImageAlts": [
-        "Adult creator lifestyle portrait with tasteful editorial styling, close portrait framing with clear facial detail.",
-        "Adult creator lifestyle portrait with tasteful editorial styling, half-body editorial pose with balanced crop.",
-        "Adult creator lifestyle portrait with tasteful editorial styling, group-friendly composition with space around the subjects.",
-        "Adult creator lifestyle portrait with tasteful editorial styling, wide environmental scene with contextual background.",
-        "Adult creator lifestyle portrait with tasteful editorial styling, candid social-style expression with natural posture.",
-        "Adult creator lifestyle portrait with tasteful editorial styling, detail portrait crop with polished styling.",
-        "Adult creator lifestyle portrait with tasteful editorial styling, vertical profile crop with clean framing.",
-        "Adult creator lifestyle portrait with tasteful editorial styling, cinematic color contrast with directional light.",
-        "Adult creator lifestyle portrait with tasteful editorial styling, album-cover style crop with strong subject focus.",
-        "Adult creator lifestyle portrait with tasteful editorial styling, lifestyle portrait framing with natural setting cues.",
-        "Adult creator lifestyle portrait with tasteful editorial styling, event-style portrait under polished light.",
-        "Adult creator lifestyle portrait with tasteful editorial styling, distinct themed pose with refined styling."
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers used as the representative package cover.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, close portrait framing with clear facial detail.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, half-body editorial pose with balanced crop.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, group-friendly composition with space around the subjects.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, wide environmental scene with contextual background.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, candid social-style expression with natural posture.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, detail portrait crop with polished styling.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, vertical profile crop with clean framing.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, cinematic color contrast with directional light.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, album-cover style crop with strong subject focus.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, lifestyle portrait framing with natural setting cues.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, event-style portrait under polished light.",
+        "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers, distinct themed pose with refined styling."
       ],
       "updatedAt": "2026-08-14T00:00:00.000Z"
     },
@@ -208044,18 +208247,19 @@
         "/assets/dreamshoot/generated/pack-galleries/singles-awareness-day/singles-awareness-day-12.webp?v=20260815unique1"
       ],
       "galleryImageAlts": [
-        "Solo celebration portrait with warm date-night styling, close portrait framing with clear facial detail.",
-        "Solo celebration portrait with warm date-night styling, half-body editorial pose with balanced crop.",
-        "Solo celebration portrait with warm date-night styling, group-friendly composition with space around the subjects.",
-        "Solo celebration portrait with warm date-night styling, wide environmental scene with contextual background.",
-        "Solo celebration portrait with warm date-night styling, candid social-style expression with natural posture.",
-        "Solo celebration portrait with warm date-night styling, detail portrait crop with polished styling.",
-        "Solo celebration portrait with warm date-night styling, vertical profile crop with clean framing.",
-        "Solo celebration portrait with warm date-night styling, cinematic color contrast with directional light.",
-        "Solo celebration portrait with warm date-night styling, album-cover style crop with strong subject focus.",
-        "Solo celebration portrait with warm date-night styling, lifestyle portrait framing with natural setting cues.",
-        "Solo celebration portrait with warm date-night styling, event-style portrait under polished light.",
-        "Solo celebration portrait with warm date-night styling, distinct themed pose with refined styling."
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes used as the representative package cover.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, close portrait framing with clear facial detail.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, half-body editorial pose with balanced crop.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, group-friendly composition with space around the subjects.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, wide environmental scene with contextual background.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, candid social-style expression with natural posture.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, detail portrait crop with polished styling.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, vertical profile crop with clean framing.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, cinematic color contrast with directional light.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, album-cover style crop with strong subject focus.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, lifestyle portrait framing with natural setting cues.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, event-style portrait under polished light.",
+        "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes, distinct themed pose with refined styling."
       ],
       "updatedAt": "2026-08-14T00:00:00.000Z"
     },
@@ -208092,18 +208296,19 @@
         "/assets/dreamshoot/generated/pack-galleries/bikini/bikini-12.webp?v=20260815unique1"
       ],
       "galleryImageAlts": [
-        "Adult resort swimwear fashion portrait with bright coastal light, close portrait framing with clear facial detail.",
-        "Adult resort swimwear fashion portrait with bright coastal light, half-body editorial pose with balanced crop.",
-        "Adult resort swimwear fashion portrait with bright coastal light, group-friendly composition with space around the subjects.",
-        "Adult resort swimwear fashion portrait with bright coastal light, wide environmental scene with contextual background.",
-        "Adult resort swimwear fashion portrait with bright coastal light, candid social-style expression with natural posture.",
-        "Adult resort swimwear fashion portrait with bright coastal light, detail portrait crop with polished styling.",
-        "Adult resort swimwear fashion portrait with bright coastal light, vertical profile crop with clean framing.",
-        "Adult resort swimwear fashion portrait with bright coastal light, cinematic color contrast with directional light.",
-        "Adult resort swimwear fashion portrait with bright coastal light, album-cover style crop with strong subject focus.",
-        "Adult resort swimwear fashion portrait with bright coastal light, lifestyle portrait framing with natural setting cues.",
-        "Adult resort swimwear fashion portrait with bright coastal light, event-style portrait under polished light.",
-        "Adult resort swimwear fashion portrait with bright coastal light, distinct themed pose with refined styling."
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets used as the representative package cover.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, close portrait framing with clear facial detail.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, half-body editorial pose with balanced crop.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, group-friendly composition with space around the subjects.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, wide environmental scene with contextual background.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, candid social-style expression with natural posture.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, detail portrait crop with polished styling.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, vertical profile crop with clean framing.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, cinematic color contrast with directional light.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, album-cover style crop with strong subject focus.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, lifestyle portrait framing with natural setting cues.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, event-style portrait under polished light.",
+        "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets, distinct themed pose with refined styling."
       ],
       "updatedAt": "2026-08-14T00:00:00.000Z"
     },
@@ -208140,18 +208345,19 @@
         "/assets/dreamshoot/generated/pack-galleries/swimsuit/swimsuit-12.webp?v=20260815unique1"
       ],
       "galleryImageAlts": [
-        "Adult resort swimwear fashion preview with lookbook styling, close portrait framing with clear facial detail.",
-        "Adult resort swimwear fashion preview with lookbook styling, half-body editorial pose with balanced crop.",
-        "Adult resort swimwear fashion preview with lookbook styling, group-friendly composition with space around the subjects.",
-        "Adult resort swimwear fashion preview with lookbook styling, wide environmental scene with contextual background.",
-        "Adult resort swimwear fashion preview with lookbook styling, candid social-style expression with natural posture.",
-        "Adult resort swimwear fashion preview with lookbook styling, detail portrait crop with polished styling.",
-        "Adult resort swimwear fashion preview with lookbook styling, vertical profile crop with clean framing.",
-        "Adult resort swimwear fashion preview with lookbook styling, cinematic color contrast with directional light.",
-        "Adult resort swimwear fashion preview with lookbook styling, album-cover style crop with strong subject focus.",
-        "Adult resort swimwear fashion preview with lookbook styling, lifestyle portrait framing with natural setting cues.",
-        "Adult resort swimwear fashion preview with lookbook styling, event-style portrait under polished light.",
-        "Adult resort swimwear fashion preview with lookbook styling, distinct themed pose with refined styling."
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews used as the representative package cover.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, close portrait framing with clear facial detail.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, half-body editorial pose with balanced crop.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, group-friendly composition with space around the subjects.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, wide environmental scene with contextual background.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, candid social-style expression with natural posture.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, detail portrait crop with polished styling.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, vertical profile crop with clean framing.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, cinematic color contrast with directional light.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, album-cover style crop with strong subject focus.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, lifestyle portrait framing with natural setting cues.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, event-style portrait under polished light.",
+        "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews, distinct themed pose with refined styling."
       ],
       "updatedAt": "2026-08-14T00:00:00.000Z"
     },
@@ -208188,18 +208394,19 @@
         "/assets/dreamshoot/generated/pack-galleries/background-remover/background-remover-12.webp?v=20260815unique1"
       ],
       "galleryImageAlts": [
-        "Clean isolated portrait or product scene with crisp edges, close portrait framing with clear facial detail.",
-        "Clean isolated portrait or product scene with crisp edges, half-body editorial pose with balanced crop.",
-        "Clean isolated portrait or product scene with crisp edges, group-friendly composition with space around the subjects.",
-        "Clean isolated portrait or product scene with crisp edges, wide environmental scene with contextual background.",
-        "Clean isolated portrait or product scene with crisp edges, candid social-style expression with natural posture.",
-        "Clean isolated portrait or product scene with crisp edges, detail portrait crop with polished styling.",
-        "Clean isolated portrait or product scene with crisp edges, vertical profile crop with clean framing.",
-        "Clean isolated portrait or product scene with crisp edges, cinematic color contrast with directional light.",
-        "Clean isolated portrait or product scene with crisp edges, album-cover style crop with strong subject focus.",
-        "Clean isolated portrait or product scene with crisp edges, lifestyle portrait framing with natural setting cues.",
-        "Clean isolated portrait or product scene with crisp edges, event-style portrait under polished light.",
-        "Clean isolated portrait or product scene with crisp edges, distinct themed pose with refined styling."
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets used as the representative package cover.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, close portrait framing with clear facial detail.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, half-body editorial pose with balanced crop.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, group-friendly composition with space around the subjects.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, wide environmental scene with contextual background.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, candid social-style expression with natural posture.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, detail portrait crop with polished styling.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, vertical profile crop with clean framing.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, cinematic color contrast with directional light.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, album-cover style crop with strong subject focus.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, lifestyle portrait framing with natural setting cues.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, event-style portrait under polished light.",
+        "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets, distinct themed pose with refined styling."
       ],
       "updatedAt": "2026-08-14T00:00:00.000Z"
     },
@@ -208236,18 +208443,19 @@
         "/assets/dreamshoot/generated/pack-galleries/magic-eraser/magic-eraser-12.webp?v=20260815unique1"
       ],
       "galleryImageAlts": [
-        "Natural photo cleanup preview with a tidy background, close portrait framing with clear facial detail.",
-        "Natural photo cleanup preview with a tidy background, half-body editorial pose with balanced crop.",
-        "Natural photo cleanup preview with a tidy background, group-friendly composition with space around the subjects.",
-        "Natural photo cleanup preview with a tidy background, wide environmental scene with contextual background.",
-        "Natural photo cleanup preview with a tidy background, candid social-style expression with natural posture.",
-        "Natural photo cleanup preview with a tidy background, detail portrait crop with polished styling.",
-        "Natural photo cleanup preview with a tidy background, vertical profile crop with clean framing.",
-        "Natural photo cleanup preview with a tidy background, cinematic color contrast with directional light.",
-        "Natural photo cleanup preview with a tidy background, album-cover style crop with strong subject focus.",
-        "Natural photo cleanup preview with a tidy background, lifestyle portrait framing with natural setting cues.",
-        "Natural photo cleanup preview with a tidy background, event-style portrait under polished light.",
-        "Natural photo cleanup preview with a tidy background, distinct themed pose with refined styling."
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images used as the representative package cover.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, close portrait framing with clear facial detail.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, half-body editorial pose with balanced crop.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, group-friendly composition with space around the subjects.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, wide environmental scene with contextual background.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, candid social-style expression with natural posture.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, detail portrait crop with polished styling.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, vertical profile crop with clean framing.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, cinematic color contrast with directional light.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, album-cover style crop with strong subject focus.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, lifestyle portrait framing with natural setting cues.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, event-style portrait under polished light.",
+        "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images, distinct themed pose with refined styling."
       ],
       "updatedAt": "2026-08-14T00:00:00.000Z"
     },
@@ -208284,18 +208492,19 @@
         "/assets/dreamshoot/generated/pack-galleries/portrait-retouch/portrait-retouch-12.webp?v=20260815unique1"
       ],
       "galleryImageAlts": [
-        "Natural professional portrait retouching preview, close portrait framing with clear facial detail.",
-        "Natural professional portrait retouching preview, half-body editorial pose with balanced crop.",
-        "Natural professional portrait retouching preview, group-friendly composition with space around the subjects.",
-        "Natural professional portrait retouching preview, wide environmental scene with contextual background.",
-        "Natural professional portrait retouching preview, candid social-style expression with natural posture.",
-        "Natural professional portrait retouching preview, detail portrait crop with polished styling.",
-        "Natural professional portrait retouching preview, vertical profile crop with clean framing.",
-        "Natural professional portrait retouching preview, cinematic color contrast with directional light.",
-        "Natural professional portrait retouching preview, album-cover style crop with strong subject focus.",
-        "Natural professional portrait retouching preview, lifestyle portrait framing with natural setting cues.",
-        "Natural professional portrait retouching preview, event-style portrait under polished light.",
-        "Natural professional portrait retouching preview, distinct themed pose with refined styling."
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos used as the representative package cover.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, close portrait framing with clear facial detail.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, half-body editorial pose with balanced crop.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, group-friendly composition with space around the subjects.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, wide environmental scene with contextual background.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, candid social-style expression with natural posture.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, detail portrait crop with polished styling.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, vertical profile crop with clean framing.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, cinematic color contrast with directional light.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, album-cover style crop with strong subject focus.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, lifestyle portrait framing with natural setting cues.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, event-style portrait under polished light.",
+        "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos, distinct themed pose with refined styling."
       ],
       "updatedAt": "2026-08-14T00:00:00.000Z"
     },
@@ -208332,18 +208541,19 @@
         "/assets/dreamshoot/generated/pack-galleries/unblur-image/unblur-image-12.webp?v=20260815unique1"
       ],
       "galleryImageAlts": [
-        "Recovered-focus portrait with natural clarity, close portrait framing with clear facial detail.",
-        "Recovered-focus portrait with natural clarity, half-body editorial pose with balanced crop.",
-        "Recovered-focus portrait with natural clarity, group-friendly composition with space around the subjects.",
-        "Recovered-focus portrait with natural clarity, wide environmental scene with contextual background.",
-        "Recovered-focus portrait with natural clarity, candid social-style expression with natural posture.",
-        "Recovered-focus portrait with natural clarity, detail portrait crop with polished styling.",
-        "Recovered-focus portrait with natural clarity, vertical profile crop with clean framing.",
-        "Recovered-focus portrait with natural clarity, cinematic color contrast with directional light.",
-        "Recovered-focus portrait with natural clarity, album-cover style crop with strong subject focus.",
-        "Recovered-focus portrait with natural clarity, lifestyle portrait framing with natural setting cues.",
-        "Recovered-focus portrait with natural clarity, event-style portrait under polished light.",
-        "Recovered-focus portrait with natural clarity, distinct themed pose with refined styling."
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail used as the representative package cover.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, close portrait framing with clear facial detail.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, half-body editorial pose with balanced crop.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, group-friendly composition with space around the subjects.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, wide environmental scene with contextual background.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, candid social-style expression with natural posture.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, detail portrait crop with polished styling.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, vertical profile crop with clean framing.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, cinematic color contrast with directional light.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, album-cover style crop with strong subject focus.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, lifestyle portrait framing with natural setting cues.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, event-style portrait under polished light.",
+        "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail, distinct themed pose with refined styling."
       ],
       "updatedAt": "2026-08-14T00:00:00.000Z"
     },
@@ -208380,18 +208590,19 @@
         "/assets/dreamshoot/generated/pack-galleries/color-correction/color-correction-12.webp?v=20260815unique1"
       ],
       "galleryImageAlts": [
-        "Balanced portrait color correction with accurate skin tones, close portrait framing with clear facial detail.",
-        "Balanced portrait color correction with accurate skin tones, half-body editorial pose with balanced crop.",
-        "Balanced portrait color correction with accurate skin tones, group-friendly composition with space around the subjects.",
-        "Balanced portrait color correction with accurate skin tones, wide environmental scene with contextual background.",
-        "Balanced portrait color correction with accurate skin tones, candid social-style expression with natural posture.",
-        "Balanced portrait color correction with accurate skin tones, detail portrait crop with polished styling.",
-        "Balanced portrait color correction with accurate skin tones, vertical profile crop with clean framing.",
-        "Balanced portrait color correction with accurate skin tones, cinematic color contrast with directional light.",
-        "Balanced portrait color correction with accurate skin tones, album-cover style crop with strong subject focus.",
-        "Balanced portrait color correction with accurate skin tones, lifestyle portrait framing with natural setting cues.",
-        "Balanced portrait color correction with accurate skin tones, event-style portrait under polished light.",
-        "Balanced portrait color correction with accurate skin tones, distinct themed pose with refined styling."
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood used as the representative package cover.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, close portrait framing with clear facial detail.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, half-body editorial pose with balanced crop.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, group-friendly composition with space around the subjects.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, wide environmental scene with contextual background.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, candid social-style expression with natural posture.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, detail portrait crop with polished styling.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, vertical profile crop with clean framing.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, cinematic color contrast with directional light.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, album-cover style crop with strong subject focus.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, lifestyle portrait framing with natural setting cues.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, event-style portrait under polished light.",
+        "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood, distinct themed pose with refined styling."
       ],
       "updatedAt": "2026-08-14T00:00:00.000Z"
     },
@@ -208428,18 +208639,19 @@
         "/assets/dreamshoot/generated/pack-galleries/old-photo-restoration/old-photo-restoration-12.webp?v=20260815unique1"
       ],
       "galleryImageAlts": [
-        "Restored vintage family portrait with archival warmth, close portrait framing with clear facial detail.",
-        "Restored vintage family portrait with archival warmth, half-body editorial pose with balanced crop.",
-        "Restored vintage family portrait with archival warmth, group-friendly composition with space around the subjects.",
-        "Restored vintage family portrait with archival warmth, wide environmental scene with contextual background.",
-        "Restored vintage family portrait with archival warmth, candid social-style expression with natural posture.",
-        "Restored vintage family portrait with archival warmth, detail portrait crop with polished styling.",
-        "Restored vintage family portrait with archival warmth, vertical profile crop with clean framing.",
-        "Restored vintage family portrait with archival warmth, cinematic color contrast with directional light.",
-        "Restored vintage family portrait with archival warmth, album-cover style crop with strong subject focus.",
-        "Restored vintage family portrait with archival warmth, lifestyle portrait framing with natural setting cues.",
-        "Restored vintage family portrait with archival warmth, event-style portrait under polished light.",
-        "Restored vintage family portrait with archival warmth, distinct themed pose with refined styling."
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits used as the representative package cover.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, close portrait framing with clear facial detail.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, half-body editorial pose with balanced crop.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, group-friendly composition with space around the subjects.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, wide environmental scene with contextual background.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, candid social-style expression with natural posture.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, detail portrait crop with polished styling.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, vertical profile crop with clean framing.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, cinematic color contrast with directional light.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, album-cover style crop with strong subject focus.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, lifestyle portrait framing with natural setting cues.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, event-style portrait under polished light.",
+        "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits, distinct themed pose with refined styling."
       ],
       "updatedAt": "2026-08-14T00:00:00.000Z"
     }
@@ -258617,7 +258829,8 @@
             "package_catalog_1",
             "proof_1",
             "faq_1",
-            "conversion_1"
+            "conversion_1",
+            "brand_strip_1"
           ],
           "sections": {
             "hero_1": {
@@ -258704,38 +258917,38 @@
               },
               "blocks": [
                 {
-                  "id": "use_case_sports_fan",
+                  "id": "review_ava",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Plan a sports fan photo set, compare the theme examples, review credits, and keep the delivered images in a private gallery.",
-                    "name": "",
-                    "role": "Sports fan photo workflow",
-                    "location": "Fan photos",
+                    "quote": "Compare sports fan photo directions, credit cost, and private gallery delivery before creating a match-day album from approved personal photos.",
+                    "name": "Sports fan workflow",
+                    "role": "Sports fan photos",
+                    "location": "Fan Photos",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
                   }
                 },
                 {
-                  "id": "use_case_vip_portrait",
+                  "id": "review_lucas",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Use approved source photos to test a polished formal portrait direction before spending credits on additional profile images.",
-                    "name": "",
-                    "role": "Formal portrait workflow",
-                    "location": "Portrait photo",
+                    "quote": "Plan VIP-style portraits and formal profile images from approved source photos, then review the finished options inside the signed-in workspace.",
+                    "name": "VIP portrait workflow",
+                    "role": "Formal portrait set",
+                    "location": "VIP-style set",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp"
                   }
                 },
                 {
-                  "id": "use_case_holiday_cards",
+                  "id": "review_mia",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Create private holiday-card examples from approved photos, then review the finished images before downloading or sharing.",
-                    "name": "",
-                    "role": "Holiday card workflow",
+                    "quote": "Compare Christmas couple, friend-card, and seasonal portrait directions before creating private card-ready images.",
+                    "name": "Seasonal card workflow",
+                    "role": "Holiday cards",
                     "location": "Christmas album",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
@@ -258743,42 +258956,42 @@
                   }
                 },
                 {
-                  "id": "use_case_private_gallery",
+                  "id": "review_noah",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Keep upload, credit review, generation status, delivered images, and downloads in the same signed-in account workspace.",
-                    "name": "",
-                    "role": "Private gallery workflow",
-                    "location": "Credit review",
+                    "quote": "Upload approved source photos, choose a package, review the visible credit cost, and keep finished results organized in one private gallery.",
+                    "name": "Gallery workflow",
+                    "role": "Private gallery delivery",
+                    "location": "Credit planning",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png"
                   }
                 },
                 {
-                  "id": "use_case_creator_scene",
+                  "id": "review_chloe",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Compare creator-scene examples for recording, profile, and social content, then generate only after checking the current credit cost.",
-                    "name": "",
-                    "role": "Creator scene workflow",
-                    "location": "Content photos",
+                    "quote": "Test creator portraits, holiday images, and supported motion ideas from the same approved source photos before choosing the next workflow.",
+                    "name": "Creator workflow",
+                    "role": "Creator scene planning",
+                    "location": "Creator workflow",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp"
                   }
                 },
                 {
-                  "id": "use_case_motion_preview",
+                  "id": "review_eli",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Turn an approved image or image set into a supported short video workflow and review the finished clip before publishing.",
-                    "name": "",
-                    "role": "Supported video workflow",
-                    "location": "Motion preview",
+                    "quote": "Use credit-aware headshot and card workflows when a small team needs private images without a studio appointment.",
+                    "name": "Team workflow",
+                    "role": "Headshots and cards",
+                    "location": "Clear credits",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/frames/faq-intro-portrait.png",
-                    "resultImageUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/creator-scene-motion.mp4?v=20260807i2v"
+                    "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
                   }
                 }
               ]
@@ -258848,7 +259061,7 @@
               "settings": {
                 "anchor": "how-it-works",
                 "eyebrow": "How it works",
-                "title": "Watch the private photo package workflow.",
+                "title": "How it works",
                 "subtitle": "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.",
                 "supportingCopy": "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.",
                 "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
@@ -258870,7 +259083,7 @@
                 "title": "AI Photo Packages by Style and Use Case",
                 "anchor": "packages",
                 "source": "creative_packs",
-                "subtitle": "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
+                "subtitle": "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
                 "featuredCount": 12,
                 "directoryLabel": "AI PHOTO THEMED",
                 "directorySubtitle": "Compare every active theme by category, title, cover, and route before starting a private photo package."
@@ -259189,6 +259402,88 @@
                   }
                 }
               ]
+            },
+            "brand_strip_1": {
+              "type": "brand_logo_strip",
+              "settings": {
+                "anchor": "trusted",
+                "title": "For creators, photographers, social sellers, studios, fan communities, and small teams.",
+                "style": "dark"
+              },
+              "blocks": [
+                {
+                  "id": "partner_creator_teams",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Creator teams",
+                    "imageUrl": "",
+                    "badge": "Content"
+                  }
+                },
+                {
+                  "id": "partner_photo_studios",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Photo studios",
+                    "imageUrl": "",
+                    "badge": "Studio"
+                  }
+                },
+                {
+                  "id": "partner_social_sellers",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Social sellers",
+                    "imageUrl": "",
+                    "badge": "Commerce"
+                  }
+                },
+                {
+                  "id": "partner_fan_pages",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Fan pages",
+                    "imageUrl": "",
+                    "badge": "Community"
+                  }
+                },
+                {
+                  "id": "partner_event_marketers",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Event marketers",
+                    "imageUrl": "",
+                    "badge": "Campaigns"
+                  }
+                },
+                {
+                  "id": "partner_holiday_shops",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Holiday shops",
+                    "imageUrl": "",
+                    "badge": "Seasonal"
+                  }
+                },
+                {
+                  "id": "partner_creator_coaches",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Creator coaches",
+                    "imageUrl": "",
+                    "badge": "Guides"
+                  }
+                },
+                {
+                  "id": "partner_small_teams",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Small teams",
+                    "imageUrl": "",
+                    "badge": "Profiles"
+                  }
+                }
+              ]
             }
           },
           "sectionsOrder": [
@@ -259198,7 +259493,8 @@
             "package_catalog_1",
             "proof_1",
             "faq_1",
-            "conversion_1"
+            "conversion_1",
+            "brand_strip_1"
           ],
           "seo": {
             "title": "Professional AI Photo Generator Online - myDreamshoots",
@@ -260055,15 +260351,6 @@
                 }
               ]
             }
-          },
-          "seo": {
-            "title": "Best AI image gallery | myDreamshoots",
-            "description": "Browse the full myDreamshoots AI image gallery with photo generator themes, private album ideas, and package examples.",
-            "canonicalPath": "/best-ai-image",
-            "robots": {
-              "index": true,
-              "follow": true
-            }
           }
         },
         "best-ai-video": {
@@ -260151,15 +260438,6 @@
                 }
               ]
             }
-          },
-          "seo": {
-            "title": "Best AI video gallery | myDreamshoots",
-            "description": "Browse the full myDreamshoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
-            "canonicalPath": "/best-ai-video",
-            "robots": {
-              "index": true,
-              "follow": true
-            }
           }
         },
         "best-packages": {
@@ -260198,7 +260476,7 @@
                 "secondaryCta": "View Sports Packs",
                 "secondaryHref": "/ai-image-generation",
                 "photos": "Private gallery",
-                "credits": "26 credits",
+                "credits": "",
                 "privacy": "Private album",
                 "includedTitle": "Included outputs",
                 "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
@@ -260229,7 +260507,7 @@
                     "label": "Fan Meetup Photos",
                     "meta": "Group-friendly shots",
                     "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
-                    "collectionSlug": "gala-photo",
+                    "collectionSlug": "soccer",
                     "shape": "wide"
                   }
                 },
@@ -260240,7 +260518,7 @@
                     "label": "Match-day Avatar",
                     "meta": "Profile-ready crop",
                     "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
-                    "collectionSlug": "avatar",
+                    "collectionSlug": "soccer",
                     "shape": "square"
                   }
                 },
@@ -260262,7 +260540,7 @@
                     "label": "Social Story",
                     "meta": "Mobile-first layout",
                     "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
-                    "collectionSlug": "thanksgiving-photo",
+                    "collectionSlug": "soccer",
                     "shape": "tall"
                   }
                 },
@@ -260273,7 +260551,7 @@
                     "label": "Banner / Cover",
                     "meta": "Wide campaign image",
                     "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
-                    "collectionSlug": "holiday",
+                    "collectionSlug": "soccer",
                     "shape": "wide"
                   }
                 }
@@ -260292,7 +260570,7 @@
                 "secondaryCta": "View Christmas Photos",
                 "secondaryHref": "/ai-image-generation/christmas-photo",
                 "photos": "Holiday cards",
-                "credits": "20 credits",
+                "credits": "",
                 "privacy": "Private album",
                 "includedTitle": "Included outputs",
                 "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
@@ -260386,7 +260664,7 @@
                 "secondaryCta": "View Thanksgiving Photos",
                 "secondaryHref": "/ai-image-generation/thanksgiving-photo",
                 "photos": "Group portraits",
-                "credits": "20 credits",
+                "credits": "",
                 "privacy": "Private gallery",
                 "includedTitle": "Included outputs",
                 "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
@@ -260529,15 +260807,6 @@
                   }
                 }
               ]
-            }
-          },
-          "seo": {
-            "title": "Best Packages | myDreamshoots",
-            "description": "Compare myDreamshoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
-            "canonicalPath": "/best-packages",
-            "robots": {
-              "index": true,
-              "follow": true
             }
           }
         },
@@ -265059,38 +265328,38 @@
               },
               "blocks": [
                 {
-                  "id": "use_case_sports_fan",
+                  "id": "review_ava",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Plan a sports fan photo set, compare the theme examples, review credits, and keep the delivered images in a private gallery.",
-                    "name": "",
-                    "role": "Sports fan photo workflow",
-                    "location": "Fan photos",
+                    "quote": "Compare sports fan photo directions, credit cost, and private gallery delivery before creating a match-day album from approved personal photos.",
+                    "name": "Sports fan workflow",
+                    "role": "Sports fan photos",
+                    "location": "Fan Photos",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
                   }
                 },
                 {
-                  "id": "use_case_vip_portrait",
+                  "id": "review_lucas",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Use approved source photos to test a polished formal portrait direction before spending credits on additional profile images.",
-                    "name": "",
-                    "role": "Formal portrait workflow",
-                    "location": "Portrait photo",
+                    "quote": "Plan VIP-style portraits and formal profile images from approved source photos, then review the finished options inside the signed-in workspace.",
+                    "name": "VIP portrait workflow",
+                    "role": "Formal portrait set",
+                    "location": "VIP-style set",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp"
                   }
                 },
                 {
-                  "id": "use_case_holiday_cards",
+                  "id": "review_mia",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Create private holiday-card examples from approved photos, then review the finished images before downloading or sharing.",
-                    "name": "",
-                    "role": "Holiday card workflow",
+                    "quote": "Compare Christmas couple, friend-card, and seasonal portrait directions before creating private card-ready images.",
+                    "name": "Seasonal card workflow",
+                    "role": "Holiday cards",
                     "location": "Christmas album",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
@@ -265098,42 +265367,42 @@
                   }
                 },
                 {
-                  "id": "use_case_private_gallery",
+                  "id": "review_noah",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Keep upload, credit review, generation status, delivered images, and downloads in the same signed-in account workspace.",
-                    "name": "",
-                    "role": "Private gallery workflow",
-                    "location": "Credit review",
+                    "quote": "Upload approved source photos, choose a package, review the visible credit cost, and keep finished results organized in one private gallery.",
+                    "name": "Gallery workflow",
+                    "role": "Private gallery delivery",
+                    "location": "Credit planning",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png"
                   }
                 },
                 {
-                  "id": "use_case_creator_scene",
+                  "id": "review_chloe",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Compare creator-scene examples for recording, profile, and social content, then generate only after checking the current credit cost.",
-                    "name": "",
-                    "role": "Creator scene workflow",
-                    "location": "Content photos",
+                    "quote": "Test creator portraits, holiday images, and supported motion ideas from the same approved source photos before choosing the next workflow.",
+                    "name": "Creator workflow",
+                    "role": "Creator scene planning",
+                    "location": "Creator workflow",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png",
                     "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp"
                   }
                 },
                 {
-                  "id": "use_case_motion_preview",
+                  "id": "review_eli",
                   "type": "testimonial",
                   "settings": {
-                    "quote": "Turn an approved image or image set into a supported short video workflow and review the finished clip before publishing.",
-                    "name": "",
-                    "role": "Supported video workflow",
-                    "location": "Motion preview",
+                    "quote": "Use credit-aware headshot and card workflows when a small team needs private images without a studio appointment.",
+                    "name": "Team workflow",
+                    "role": "Headshots and cards",
+                    "location": "Clear credits",
                     "rating": "",
                     "avatarUrl": "/assets/dreamshoot/frames/faq-intro-portrait.png",
-                    "resultImageUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/creator-scene-motion.mp4?v=20260807i2v"
+                    "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
                   }
                 }
               ]
@@ -265201,7 +265470,7 @@
               "settings": {
                 "anchor": "how-it-works",
                 "eyebrow": "How it works",
-                "title": "Watch the private photo package workflow.",
+                "title": "How it works",
                 "subtitle": "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.",
                 "supportingCopy": "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.",
                 "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
@@ -265314,7 +265583,7 @@
                 "title": "AI Photo Packages by Style and Use Case",
                 "anchor": "packages",
                 "source": "creative_packs",
-                "subtitle": "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
+                "subtitle": "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
                 "featuredCount": 12,
                 "directoryLabel": "AI PHOTO THEMED",
                 "directorySubtitle": "Compare every active theme by category, title, cover, and route before starting a private photo package."
@@ -265538,6 +265807,88 @@
                   }
                 }
               ]
+            },
+            "brand_strip_1": {
+              "type": "brand_logo_strip",
+              "settings": {
+                "anchor": "trusted",
+                "title": "For creators, photographers, social sellers, studios, fan communities, and small teams.",
+                "style": "dark"
+              },
+              "blocks": [
+                {
+                  "id": "partner_creator_teams",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Creator teams",
+                    "imageUrl": "",
+                    "badge": "Content"
+                  }
+                },
+                {
+                  "id": "partner_photo_studios",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Photo studios",
+                    "imageUrl": "",
+                    "badge": "Studio"
+                  }
+                },
+                {
+                  "id": "partner_social_sellers",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Social sellers",
+                    "imageUrl": "",
+                    "badge": "Commerce"
+                  }
+                },
+                {
+                  "id": "partner_fan_pages",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Fan pages",
+                    "imageUrl": "",
+                    "badge": "Community"
+                  }
+                },
+                {
+                  "id": "partner_event_marketers",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Event marketers",
+                    "imageUrl": "",
+                    "badge": "Campaigns"
+                  }
+                },
+                {
+                  "id": "partner_holiday_shops",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Holiday shops",
+                    "imageUrl": "",
+                    "badge": "Seasonal"
+                  }
+                },
+                {
+                  "id": "partner_creator_coaches",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Creator coaches",
+                    "imageUrl": "",
+                    "badge": "Guides"
+                  }
+                },
+                {
+                  "id": "partner_small_teams",
+                  "type": "logo",
+                  "settings": {
+                    "name": "Small teams",
+                    "imageUrl": "",
+                    "badge": "Profiles"
+                  }
+                }
+              ]
             }
           },
           "sectionsOrder": [
@@ -265547,7 +265898,8 @@
             "package_catalog_1",
             "proof_1",
             "faq_1",
-            "conversion_1"
+            "conversion_1",
+            "brand_strip_1"
           ],
           "content_for_page": [
             "hero_1",
@@ -265556,7 +265908,8 @@
             "package_catalog_1",
             "proof_1",
             "faq_1",
-            "conversion_1"
+            "conversion_1",
+            "brand_strip_1"
           ]
         },
         "about-us": {
@@ -266415,15 +266768,6 @@
                 }
               ]
             }
-          },
-          "seo": {
-            "title": "Best AI image gallery | myDreamshoots",
-            "description": "Browse the full myDreamshoots AI image gallery with photo generator themes, private album ideas, and package examples.",
-            "canonicalPath": "/best-ai-image",
-            "robots": {
-              "index": true,
-              "follow": true
-            }
           }
         },
         "best-ai-video": {
@@ -266511,15 +266855,6 @@
                 }
               ]
             }
-          },
-          "seo": {
-            "title": "Best AI video gallery | myDreamshoots",
-            "description": "Browse the full myDreamshoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
-            "canonicalPath": "/best-ai-video",
-            "robots": {
-              "index": true,
-              "follow": true
-            }
           }
         },
         "best-packages": {
@@ -266558,7 +266893,7 @@
                 "secondaryCta": "View Sports Packs",
                 "secondaryHref": "/ai-image-generation",
                 "photos": "Private gallery",
-                "credits": "26 credits",
+                "credits": "",
                 "privacy": "Private album",
                 "includedTitle": "Included outputs",
                 "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
@@ -266589,7 +266924,7 @@
                     "label": "Fan Meetup Photos",
                     "meta": "Group-friendly shots",
                     "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
-                    "collectionSlug": "gala-photo",
+                    "collectionSlug": "soccer",
                     "shape": "wide"
                   }
                 },
@@ -266600,7 +266935,7 @@
                     "label": "Match-day Avatar",
                     "meta": "Profile-ready crop",
                     "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
-                    "collectionSlug": "avatar",
+                    "collectionSlug": "soccer",
                     "shape": "square"
                   }
                 },
@@ -266622,7 +266957,7 @@
                     "label": "Social Story",
                     "meta": "Mobile-first layout",
                     "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
-                    "collectionSlug": "thanksgiving-photo",
+                    "collectionSlug": "soccer",
                     "shape": "tall"
                   }
                 },
@@ -266633,7 +266968,7 @@
                     "label": "Banner / Cover",
                     "meta": "Wide campaign image",
                     "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
-                    "collectionSlug": "holiday",
+                    "collectionSlug": "soccer",
                     "shape": "wide"
                   }
                 }
@@ -266652,7 +266987,7 @@
                 "secondaryCta": "View Christmas Photos",
                 "secondaryHref": "/ai-image-generation/christmas-photo",
                 "photos": "Holiday cards",
-                "credits": "20 credits",
+                "credits": "",
                 "privacy": "Private album",
                 "includedTitle": "Included outputs",
                 "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
@@ -266746,7 +267081,7 @@
                 "secondaryCta": "View Thanksgiving Photos",
                 "secondaryHref": "/ai-image-generation/thanksgiving-photo",
                 "photos": "Group portraits",
-                "credits": "20 credits",
+                "credits": "",
                 "privacy": "Private gallery",
                 "includedTitle": "Included outputs",
                 "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
@@ -266889,15 +267224,6 @@
                   }
                 }
               ]
-            }
-          },
-          "seo": {
-            "title": "Best Packages | myDreamshoots",
-            "description": "Compare myDreamshoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
-            "canonicalPath": "/best-packages",
-            "robots": {
-              "index": true,
-              "follow": true
             }
           }
         },
@@ -357765,38 +358091,38 @@
                   },
                   "blocks": [
                     {
-                      "id": "use_case_sports_fan",
+                      "id": "review_ava",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Plan a sports fan photo set, compare the theme examples, review credits, and keep the delivered images in a private gallery.",
-                        "name": "",
-                        "role": "Sports fan photo workflow",
-                        "location": "Fan photos",
+                        "quote": "Compare sports fan photo directions, credit cost, and private gallery delivery before creating a match-day album from approved personal photos.",
+                        "name": "Sports fan workflow",
+                        "role": "Sports fan photos",
+                        "location": "Fan Photos",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
                         "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
                       }
                     },
                     {
-                      "id": "use_case_vip_portrait",
+                      "id": "review_lucas",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Use approved source photos to test a polished formal portrait direction before spending credits on additional profile images.",
-                        "name": "",
-                        "role": "Formal portrait workflow",
-                        "location": "Portrait photo",
+                        "quote": "Plan VIP-style portraits and formal profile images from approved source photos, then review the finished options inside the signed-in workspace.",
+                        "name": "VIP portrait workflow",
+                        "role": "Formal portrait set",
+                        "location": "VIP-style set",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
                         "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp"
                       }
                     },
                     {
-                      "id": "use_case_holiday_cards",
+                      "id": "review_mia",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Create private holiday-card examples from approved photos, then review the finished images before downloading or sharing.",
-                        "name": "",
-                        "role": "Holiday card workflow",
+                        "quote": "Compare Christmas couple, friend-card, and seasonal portrait directions before creating private card-ready images.",
+                        "name": "Seasonal card workflow",
+                        "role": "Holiday cards",
                         "location": "Christmas album",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
@@ -357804,42 +358130,42 @@
                       }
                     },
                     {
-                      "id": "use_case_private_gallery",
+                      "id": "review_noah",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Keep upload, credit review, generation status, delivered images, and downloads in the same signed-in account workspace.",
-                        "name": "",
-                        "role": "Private gallery workflow",
-                        "location": "Credit review",
+                        "quote": "Upload approved source photos, choose a package, review the visible credit cost, and keep finished results organized in one private gallery.",
+                        "name": "Gallery workflow",
+                        "role": "Private gallery delivery",
+                        "location": "Credit planning",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
                         "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png"
                       }
                     },
                     {
-                      "id": "use_case_creator_scene",
+                      "id": "review_chloe",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Compare creator-scene examples for recording, profile, and social content, then generate only after checking the current credit cost.",
-                        "name": "",
-                        "role": "Creator scene workflow",
-                        "location": "Content photos",
+                        "quote": "Test creator portraits, holiday images, and supported motion ideas from the same approved source photos before choosing the next workflow.",
+                        "name": "Creator workflow",
+                        "role": "Creator scene planning",
+                        "location": "Creator workflow",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png",
                         "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp"
                       }
                     },
                     {
-                      "id": "use_case_motion_preview",
+                      "id": "review_eli",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Turn an approved image or image set into a supported short video workflow and review the finished clip before publishing.",
-                        "name": "",
-                        "role": "Supported video workflow",
-                        "location": "Motion preview",
+                        "quote": "Use credit-aware headshot and card workflows when a small team needs private images without a studio appointment.",
+                        "name": "Team workflow",
+                        "role": "Headshots and cards",
+                        "location": "Clear credits",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/frames/faq-intro-portrait.png",
-                        "resultImageUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/creator-scene-motion.mp4?v=20260807i2v"
+                        "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
                       }
                     }
                   ]
@@ -357907,7 +358233,7 @@
                   "settings": {
                     "anchor": "how-it-works",
                     "eyebrow": "How it works",
-                    "title": "Watch the private photo package workflow.",
+                    "title": "How it works",
                     "subtitle": "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.",
                     "supportingCopy": "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.",
                     "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
@@ -358020,7 +358346,7 @@
                     "title": "AI Photo Packages by Style and Use Case",
                     "anchor": "packages",
                     "source": "creative_packs",
-                    "subtitle": "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
+                    "subtitle": "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
                     "featuredCount": 12,
                     "directoryLabel": "AI PHOTO THEMED",
                     "directorySubtitle": "Compare every active theme by category, title, cover, and route before starting a private photo package."
@@ -358244,6 +358570,88 @@
                       }
                     }
                   ]
+                },
+                "brand_strip_1": {
+                  "type": "brand_logo_strip",
+                  "settings": {
+                    "anchor": "trusted",
+                    "title": "For creators, photographers, social sellers, studios, fan communities, and small teams.",
+                    "style": "dark"
+                  },
+                  "blocks": [
+                    {
+                      "id": "partner_creator_teams",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Creator teams",
+                        "imageUrl": "",
+                        "badge": "Content"
+                      }
+                    },
+                    {
+                      "id": "partner_photo_studios",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Photo studios",
+                        "imageUrl": "",
+                        "badge": "Studio"
+                      }
+                    },
+                    {
+                      "id": "partner_social_sellers",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Social sellers",
+                        "imageUrl": "",
+                        "badge": "Commerce"
+                      }
+                    },
+                    {
+                      "id": "partner_fan_pages",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Fan pages",
+                        "imageUrl": "",
+                        "badge": "Community"
+                      }
+                    },
+                    {
+                      "id": "partner_event_marketers",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Event marketers",
+                        "imageUrl": "",
+                        "badge": "Campaigns"
+                      }
+                    },
+                    {
+                      "id": "partner_holiday_shops",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Holiday shops",
+                        "imageUrl": "",
+                        "badge": "Seasonal"
+                      }
+                    },
+                    {
+                      "id": "partner_creator_coaches",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Creator coaches",
+                        "imageUrl": "",
+                        "badge": "Guides"
+                      }
+                    },
+                    {
+                      "id": "partner_small_teams",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Small teams",
+                        "imageUrl": "",
+                        "badge": "Profiles"
+                      }
+                    }
+                  ]
                 }
               },
               "sectionsOrder": [
@@ -358253,7 +358661,8 @@
                 "package_catalog_1",
                 "proof_1",
                 "faq_1",
-                "conversion_1"
+                "conversion_1",
+                "brand_strip_1"
               ]
             },
             "updatedAt": "2026-08-12T03:39:44.968Z"
@@ -360253,16 +360662,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best AI image gallery | myDreamshoots",
-                "description": "Browse the full myDreamshoots AI image gallery with photo generator themes, private album ideas, and package examples.",
-                "canonicalPath": "/best-ai-image",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
               }
             },
             "publishedJson": {
@@ -360350,16 +360749,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best AI image gallery | myDreamshoots",
-                "description": "Browse the full myDreamshoots AI image gallery with photo generator themes, private album ideas, and package examples.",
-                "canonicalPath": "/best-ai-image",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
               }
             },
             "updatedAt": "2026-08-12T03:39:44.667Z"
@@ -360456,16 +360845,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best AI video gallery | myDreamshoots",
-                "description": "Browse the full myDreamshoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
-                "canonicalPath": "/best-ai-video",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
               }
             },
             "publishedJson": {
@@ -360553,16 +360932,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best AI video gallery | myDreamshoots",
-                "description": "Browse the full myDreamshoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
-                "canonicalPath": "/best-ai-video",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
               }
             },
             "updatedAt": "2026-08-12T03:39:42.106Z"
@@ -360610,7 +360979,7 @@
                     "secondaryCta": "View Sports Packs",
                     "secondaryHref": "/ai-image-generation",
                     "photos": "Private gallery",
-                    "credits": "26 credits",
+                    "credits": "",
                     "privacy": "Private album",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
@@ -360641,7 +361010,7 @@
                         "label": "Fan Meetup Photos",
                         "meta": "Group-friendly shots",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
-                        "collectionSlug": "gala-photo",
+                        "collectionSlug": "soccer",
                         "shape": "wide"
                       }
                     },
@@ -360652,7 +361021,7 @@
                         "label": "Match-day Avatar",
                         "meta": "Profile-ready crop",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
-                        "collectionSlug": "avatar",
+                        "collectionSlug": "soccer",
                         "shape": "square"
                       }
                     },
@@ -360674,7 +361043,7 @@
                         "label": "Social Story",
                         "meta": "Mobile-first layout",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
-                        "collectionSlug": "thanksgiving-photo",
+                        "collectionSlug": "soccer",
                         "shape": "tall"
                       }
                     },
@@ -360685,7 +361054,7 @@
                         "label": "Banner / Cover",
                         "meta": "Wide campaign image",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
-                        "collectionSlug": "holiday",
+                        "collectionSlug": "soccer",
                         "shape": "wide"
                       }
                     }
@@ -360704,7 +361073,7 @@
                     "secondaryCta": "View Christmas Photos",
                     "secondaryHref": "/ai-image-generation/christmas-photo",
                     "photos": "Holiday cards",
-                    "credits": "20 credits",
+                    "credits": "",
                     "privacy": "Private album",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
@@ -360798,7 +361167,7 @@
                     "secondaryCta": "View Thanksgiving Photos",
                     "secondaryHref": "/ai-image-generation/thanksgiving-photo",
                     "photos": "Group portraits",
-                    "credits": "20 credits",
+                    "credits": "",
                     "privacy": "Private gallery",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
@@ -360942,16 +361311,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best Packages | myDreamshoots",
-                "description": "Compare myDreamshoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
-                "canonicalPath": "/best-packages",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
               }
             },
             "publishedJson": {
@@ -360990,7 +361349,7 @@
                     "secondaryCta": "View Sports Packs",
                     "secondaryHref": "/ai-image-generation",
                     "photos": "Private gallery",
-                    "credits": "26 credits",
+                    "credits": "",
                     "privacy": "Private album",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
@@ -361021,7 +361380,7 @@
                         "label": "Fan Meetup Photos",
                         "meta": "Group-friendly shots",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
-                        "collectionSlug": "gala-photo",
+                        "collectionSlug": "soccer",
                         "shape": "wide"
                       }
                     },
@@ -361032,7 +361391,7 @@
                         "label": "Match-day Avatar",
                         "meta": "Profile-ready crop",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
-                        "collectionSlug": "avatar",
+                        "collectionSlug": "soccer",
                         "shape": "square"
                       }
                     },
@@ -361054,7 +361413,7 @@
                         "label": "Social Story",
                         "meta": "Mobile-first layout",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
-                        "collectionSlug": "thanksgiving-photo",
+                        "collectionSlug": "soccer",
                         "shape": "tall"
                       }
                     },
@@ -361065,7 +361424,7 @@
                         "label": "Banner / Cover",
                         "meta": "Wide campaign image",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
-                        "collectionSlug": "holiday",
+                        "collectionSlug": "soccer",
                         "shape": "wide"
                       }
                     }
@@ -361084,7 +361443,7 @@
                     "secondaryCta": "View Christmas Photos",
                     "secondaryHref": "/ai-image-generation/christmas-photo",
                     "photos": "Holiday cards",
-                    "credits": "20 credits",
+                    "credits": "",
                     "privacy": "Private album",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
@@ -361178,7 +361537,7 @@
                     "secondaryCta": "View Thanksgiving Photos",
                     "secondaryHref": "/ai-image-generation/thanksgiving-photo",
                     "photos": "Group portraits",
-                    "credits": "20 credits",
+                    "credits": "",
                     "privacy": "Private gallery",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
@@ -361322,16 +361681,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best Packages | myDreamshoots",
-                "description": "Compare myDreamshoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
-                "canonicalPath": "/best-packages",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
               }
             },
             "updatedAt": "2026-08-12T03:39:43.403Z"
@@ -365706,7 +366055,7 @@
                     "anchor": "package-taxonomy",
                     "layout": "editorial",
                     "eyebrow": "Photo package library",
-                    "subtitle": "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
+                    "subtitle": "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
                   }
                 },
                 "conversion_1": {
@@ -379858,9 +380207,9 @@
           }
         }
       },
-      "pageCount": 62,
-      "sectionCount": 158,
-      "snapshotBytes": 1221905,
+      "pageCount": 72,
+      "sectionCount": 169,
+      "snapshotBytes": 989056,
       "publishedBy": "admin_dreamshoot_owner",
       "publishedAt": "2026-06-18T00:00:00.000Z"
     },
@@ -380607,38 +380956,38 @@
                   },
                   "blocks": [
                     {
-                      "id": "use_case_sports_fan",
+                      "id": "review_ava",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Plan a sports fan photo set, compare the theme examples, review credits, and keep the delivered images in a private gallery.",
-                        "name": "",
-                        "role": "Sports fan photo workflow",
-                        "location": "Fan photos",
+                        "quote": "Compare sports fan photo directions, credit cost, and private gallery delivery before creating a match-day album from approved personal photos.",
+                        "name": "Sports fan workflow",
+                        "role": "Sports fan photos",
+                        "location": "Fan Photos",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
                         "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
                       }
                     },
                     {
-                      "id": "use_case_vip_portrait",
+                      "id": "review_lucas",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Use approved source photos to test a polished formal portrait direction before spending credits on additional profile images.",
-                        "name": "",
-                        "role": "Formal portrait workflow",
-                        "location": "Portrait photo",
+                        "quote": "Plan VIP-style portraits and formal profile images from approved source photos, then review the finished options inside the signed-in workspace.",
+                        "name": "VIP portrait workflow",
+                        "role": "Formal portrait set",
+                        "location": "VIP-style set",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
                         "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp"
                       }
                     },
                     {
-                      "id": "use_case_holiday_cards",
+                      "id": "review_mia",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Create private holiday-card examples from approved photos, then review the finished images before downloading or sharing.",
-                        "name": "",
-                        "role": "Holiday card workflow",
+                        "quote": "Compare Christmas couple, friend-card, and seasonal portrait directions before creating private card-ready images.",
+                        "name": "Seasonal card workflow",
+                        "role": "Holiday cards",
                         "location": "Christmas album",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
@@ -380646,42 +380995,42 @@
                       }
                     },
                     {
-                      "id": "use_case_private_gallery",
+                      "id": "review_noah",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Keep upload, credit review, generation status, delivered images, and downloads in the same signed-in account workspace.",
-                        "name": "",
-                        "role": "Private gallery workflow",
-                        "location": "Credit review",
+                        "quote": "Upload approved source photos, choose a package, review the visible credit cost, and keep finished results organized in one private gallery.",
+                        "name": "Gallery workflow",
+                        "role": "Private gallery delivery",
+                        "location": "Credit planning",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
                         "resultImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png"
                       }
                     },
                     {
-                      "id": "use_case_creator_scene",
+                      "id": "review_chloe",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Compare creator-scene examples for recording, profile, and social content, then generate only after checking the current credit cost.",
-                        "name": "",
-                        "role": "Creator scene workflow",
-                        "location": "Content photos",
+                        "quote": "Test creator portraits, holiday images, and supported motion ideas from the same approved source photos before choosing the next workflow.",
+                        "name": "Creator workflow",
+                        "role": "Creator scene planning",
+                        "location": "Creator workflow",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/beauty-portrait-gpt2.png",
                         "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp"
                       }
                     },
                     {
-                      "id": "use_case_motion_preview",
+                      "id": "review_eli",
                       "type": "testimonial",
                       "settings": {
-                        "quote": "Turn an approved image or image set into a supported short video workflow and review the finished clip before publishing.",
-                        "name": "",
-                        "role": "Supported video workflow",
-                        "location": "Motion preview",
+                        "quote": "Use credit-aware headshot and card workflows when a small team needs private images without a studio appointment.",
+                        "name": "Team workflow",
+                        "role": "Headshots and cards",
+                        "location": "Clear credits",
                         "rating": "",
                         "avatarUrl": "/assets/dreamshoot/frames/faq-intro-portrait.png",
-                        "resultImageUrl": "/assets/dreamshoot/generated/homepage-showcase/videos/creator-scene-motion.mp4?v=20260807i2v"
+                        "resultImageUrl": "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
                       }
                     }
                   ]
@@ -380749,7 +381098,7 @@
                   "settings": {
                     "anchor": "how-it-works",
                     "eyebrow": "How it works",
-                    "title": "Watch the private photo package workflow.",
+                    "title": "How it works",
                     "subtitle": "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.",
                     "supportingCopy": "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.",
                     "imageUrl": "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
@@ -380862,7 +381211,7 @@
                     "title": "AI Photo Packages by Style and Use Case",
                     "anchor": "packages",
                     "source": "creative_packs",
-                    "subtitle": "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
+                    "subtitle": "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
                     "featuredCount": 12,
                     "directoryLabel": "AI PHOTO THEMED",
                     "directorySubtitle": "Compare every active theme by category, title, cover, and route before starting a private photo package."
@@ -381086,6 +381435,88 @@
                       }
                     }
                   ]
+                },
+                "brand_strip_1": {
+                  "type": "brand_logo_strip",
+                  "settings": {
+                    "anchor": "trusted",
+                    "title": "For creators, photographers, social sellers, studios, fan communities, and small teams.",
+                    "style": "dark"
+                  },
+                  "blocks": [
+                    {
+                      "id": "partner_creator_teams",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Creator teams",
+                        "imageUrl": "",
+                        "badge": "Content"
+                      }
+                    },
+                    {
+                      "id": "partner_photo_studios",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Photo studios",
+                        "imageUrl": "",
+                        "badge": "Studio"
+                      }
+                    },
+                    {
+                      "id": "partner_social_sellers",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Social sellers",
+                        "imageUrl": "",
+                        "badge": "Commerce"
+                      }
+                    },
+                    {
+                      "id": "partner_fan_pages",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Fan pages",
+                        "imageUrl": "",
+                        "badge": "Community"
+                      }
+                    },
+                    {
+                      "id": "partner_event_marketers",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Event marketers",
+                        "imageUrl": "",
+                        "badge": "Campaigns"
+                      }
+                    },
+                    {
+                      "id": "partner_holiday_shops",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Holiday shops",
+                        "imageUrl": "",
+                        "badge": "Seasonal"
+                      }
+                    },
+                    {
+                      "id": "partner_creator_coaches",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Creator coaches",
+                        "imageUrl": "",
+                        "badge": "Guides"
+                      }
+                    },
+                    {
+                      "id": "partner_small_teams",
+                      "type": "logo",
+                      "settings": {
+                        "name": "Small teams",
+                        "imageUrl": "",
+                        "badge": "Profiles"
+                      }
+                    }
+                  ]
                 }
               },
               "sectionsOrder": [
@@ -381095,7 +381526,8 @@
                 "package_catalog_1",
                 "proof_1",
                 "faq_1",
-                "conversion_1"
+                "conversion_1",
+                "brand_strip_1"
               ]
             },
             "updatedAt": "2026-08-12T03:39:44.968Z"
@@ -383095,16 +383527,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best AI image gallery | myDreamshoots",
-                "description": "Browse the full myDreamshoots AI image gallery with photo generator themes, private album ideas, and package examples.",
-                "canonicalPath": "/best-ai-image",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
               }
             },
             "publishedJson": {
@@ -383192,16 +383614,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best AI image gallery | myDreamshoots",
-                "description": "Browse the full myDreamshoots AI image gallery with photo generator themes, private album ideas, and package examples.",
-                "canonicalPath": "/best-ai-image",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
               }
             },
             "updatedAt": "2026-08-12T03:39:44.667Z"
@@ -383298,16 +383710,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best AI video gallery | myDreamshoots",
-                "description": "Browse the full myDreamshoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
-                "canonicalPath": "/best-ai-video",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
               }
             },
             "publishedJson": {
@@ -383395,16 +383797,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best AI video gallery | myDreamshoots",
-                "description": "Browse the full myDreamshoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
-                "canonicalPath": "/best-ai-video",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png"
               }
             },
             "updatedAt": "2026-08-12T03:39:42.106Z"
@@ -383452,7 +383844,7 @@
                     "secondaryCta": "View Sports Packs",
                     "secondaryHref": "/ai-image-generation",
                     "photos": "Private gallery",
-                    "credits": "26 credits",
+                    "credits": "",
                     "privacy": "Private album",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
@@ -383483,7 +383875,7 @@
                         "label": "Fan Meetup Photos",
                         "meta": "Group-friendly shots",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
-                        "collectionSlug": "gala-photo",
+                        "collectionSlug": "soccer",
                         "shape": "wide"
                       }
                     },
@@ -383494,7 +383886,7 @@
                         "label": "Match-day Avatar",
                         "meta": "Profile-ready crop",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
-                        "collectionSlug": "avatar",
+                        "collectionSlug": "soccer",
                         "shape": "square"
                       }
                     },
@@ -383516,7 +383908,7 @@
                         "label": "Social Story",
                         "meta": "Mobile-first layout",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
-                        "collectionSlug": "thanksgiving-photo",
+                        "collectionSlug": "soccer",
                         "shape": "tall"
                       }
                     },
@@ -383527,7 +383919,7 @@
                         "label": "Banner / Cover",
                         "meta": "Wide campaign image",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
-                        "collectionSlug": "holiday",
+                        "collectionSlug": "soccer",
                         "shape": "wide"
                       }
                     }
@@ -383546,7 +383938,7 @@
                     "secondaryCta": "View Christmas Photos",
                     "secondaryHref": "/ai-image-generation/christmas-photo",
                     "photos": "Holiday cards",
-                    "credits": "20 credits",
+                    "credits": "",
                     "privacy": "Private album",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
@@ -383640,7 +384032,7 @@
                     "secondaryCta": "View Thanksgiving Photos",
                     "secondaryHref": "/ai-image-generation/thanksgiving-photo",
                     "photos": "Group portraits",
-                    "credits": "20 credits",
+                    "credits": "",
                     "privacy": "Private gallery",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
@@ -383784,16 +384176,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best Packages | myDreamshoots",
-                "description": "Compare myDreamshoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
-                "canonicalPath": "/best-packages",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
               }
             },
             "publishedJson": {
@@ -383832,7 +384214,7 @@
                     "secondaryCta": "View Sports Packs",
                     "secondaryHref": "/ai-image-generation",
                     "photos": "Private gallery",
-                    "credits": "26 credits",
+                    "credits": "",
                     "privacy": "Private album",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Fan meetup photos|Group-friendly shots for match day|Stadium portraits|Cinematic scenes with floodlights|Match-day avatars|Profile-ready square crops|Social banners|Wide cover images for sharing",
@@ -383863,7 +384245,7 @@
                         "label": "Fan Meetup Photos",
                         "meta": "Group-friendly shots",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png",
-                        "collectionSlug": "gala-photo",
+                        "collectionSlug": "soccer",
                         "shape": "wide"
                       }
                     },
@@ -383874,7 +384256,7 @@
                         "label": "Match-day Avatar",
                         "meta": "Profile-ready crop",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png",
-                        "collectionSlug": "avatar",
+                        "collectionSlug": "soccer",
                         "shape": "square"
                       }
                     },
@@ -383896,7 +384278,7 @@
                         "label": "Social Story",
                         "meta": "Mobile-first layout",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png",
-                        "collectionSlug": "thanksgiving-photo",
+                        "collectionSlug": "soccer",
                         "shape": "tall"
                       }
                     },
@@ -383907,7 +384289,7 @@
                         "label": "Banner / Cover",
                         "meta": "Wide campaign image",
                         "imageUrl": "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png",
-                        "collectionSlug": "holiday",
+                        "collectionSlug": "soccer",
                         "shape": "wide"
                       }
                     }
@@ -383926,7 +384308,7 @@
                     "secondaryCta": "View Christmas Photos",
                     "secondaryHref": "/ai-image-generation/christmas-photo",
                     "photos": "Holiday cards",
-                    "credits": "20 credits",
+                    "credits": "",
                     "privacy": "Private album",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Christmas portraits|Festive group scenes|Greeting-card covers|Cozy card-ready crops|Private album images|Warm holiday downloads|Social posts|Square profile crops",
@@ -384020,7 +384402,7 @@
                     "secondaryCta": "View Thanksgiving Photos",
                     "secondaryHref": "/ai-image-generation/thanksgiving-photo",
                     "photos": "Group portraits",
-                    "credits": "20 credits",
+                    "credits": "",
                     "privacy": "Private gallery",
                     "includedTitle": "Included outputs",
                     "includedOutputs": "Dinner-table portraits|Warm gathering scenes|Friendsgiving memories|Group-friendly crops|Gratitude cards|Seasonal notes|Private album covers|Download-ready images",
@@ -384164,16 +384546,6 @@
                     }
                   ]
                 }
-              },
-              "seo": {
-                "title": "Best Packages | myDreamshoots",
-                "description": "Compare myDreamshoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
-                "canonicalPath": "/best-packages",
-                "robots": {
-                  "index": true,
-                  "follow": true
-                },
-                "ogImage": "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
               }
             },
             "updatedAt": "2026-08-12T03:39:43.403Z"
@@ -388548,7 +388920,7 @@
                     "anchor": "package-taxonomy",
                     "layout": "editorial",
                     "eyebrow": "Photo package library",
-                    "subtitle": "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
+                    "subtitle": "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits."
                   }
                 },
                 "conversion_1": {
@@ -402700,9 +403072,9 @@
           }
         }
       },
-      "pageCount": 62,
-      "sectionCount": 158,
-      "snapshotBytes": 1221905,
+      "pageCount": 72,
+      "sectionCount": 169,
+      "snapshotBytes": 989056,
       "publishedBy": "codex_seo_sync_test",
       "publishedAt": "2026-07-05T05:32:28.146Z"
     },
@@ -465626,6 +465998,17 @@
       "label": "Product Ad Video",
       "description": "Build product ads around one audience, product promise, visual proof, offer, and clear next action.",
       "sortOrder": 120,
+      "status": "active",
+      "updatedAt": "2026-08-16T00:00:00.000Z"
+    },
+    {
+      "id": "video_cat_dreamshoot_ugc_ad_video",
+      "siteId": "site_dreamshoot",
+      "createdAt": "2026-08-16T00:00:00.000Z",
+      "slug": "ugc-ad-video",
+      "label": "UGC Ad Video",
+      "description": "Plan creator-style product ads around speaker status, hooks, product context, visible proof, and clear CTAs.",
+      "sortOrder": 130,
       "status": "active",
       "updatedAt": "2026-08-16T00:00:00.000Z"
     }

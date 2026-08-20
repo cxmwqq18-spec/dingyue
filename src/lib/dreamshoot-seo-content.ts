@@ -1180,6 +1180,34 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     ctaLabel: "Create My Product Ad",
     ctaHref: "/app/create#step-video"
   },
+  "ugc-ad-video": {
+    label: "UGC Ad Video",
+    title: "AI UGC Video Generator for Creator-Style Product Ads | myDreamshoots",
+    description:
+      "Create creator-style product ads with an AI UGC video generator. Plan hooks, speaker roles, product-in-use scenes, visible proof, voiceover, and clear CTAs—then validate every claim against your real product assets and generated output.",
+    keywords:
+      "AI UGC video generator, UGC ad video generator, AI UGC ad creator, UGC product video maker, creator-style product video, AI creator ad video, UGC style video ad, short-form creator ad generator",
+    h2: "create creator-style product ads around a real product moment",
+    h3: ["Six UGC jobs", "Speaker, hook, product context, proof, and CTA", "Responsible creator-ad review"],
+    intro:
+      "UGC Ad Video helps customers plan creator-style product ads around speaker status, a natural hook, product-in-context proof, and a clear next action without fabricating customer experiences.",
+    details: [
+      "Use it for unboxing, problem-in-routine, demo-in-use, try-on, direct-to-camera, and B-roll with voiceover directions.",
+      "Define who is speaking, what the audience is deciding, where the product enters, which detail proves the claim, and what the CTA should do.",
+      "Keep AI people, actors, paid creators, stock people, and real customers accurately distinguished. Do not invent testimonials, product facts, offers, or unsupported controls.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["First-impression unboxing", "Problem-in-routine ads", "Demo-in-use", "Try-on and lifestyle", "Direct-to-camera talking points", "B-roll with voiceover"],
+    workflow: ["Choose the UGC job and speaker status.", "Define the audience moment, hook, product action, visible proof, and CTA.", "Add only verified product inputs and supported controls.", "Review the real output for identity, claims, rights, disclosure, crop, captions, and destination."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore Product Ad Video", href: "/ai-video-generation/product-ad-video" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create a UGC-Style Video",
+    ctaHref: "/app/create#step-video"
+  },
   "world-cup-fan-photos": {
     label: "World Cup Fan Photos",
     title: "AI World Cup Fan Photo Maker - stadium portraits and match-day posters",
@@ -1303,6 +1331,7 @@ const dreamshootDefaultPublicToolSlugs = new Set([
   "meme-video",
   "product-video",
   "product-ad-video",
+  "ugc-ad-video",
   "background-changer",
   "background-remover",
   "magic-eraser",
