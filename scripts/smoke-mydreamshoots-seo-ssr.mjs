@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
 import fs from "node:fs";
+import "./load-runtime-env.mjs";
 
-const baseUrl = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/+$/, "");
+const managedServer = !process.env.SMOKE_BASE_URL;
+const port = process.env.MYDREAMSHOOTS_SEO_SSR_PORT || "3002";
+const baseUrl = (process.env.SMOKE_BASE_URL || `http://127.0.0.1:${port}`).replace(/\/+$/, "");
 const host = process.env.MYDREAMSHOOTS_HOST || "www.mydreamshoots.com";
 const localState = JSON.parse(fs.readFileSync(new URL("../data/platform-state.json", import.meta.url), "utf8"));
 const localTaxonomy = JSON.parse(fs.readFileSync(new URL("../src/lib/mydreamshoots-theme-taxonomy.json", import.meta.url), "utf8"));
@@ -14,6 +18,48 @@ const hasProviderBackedPrice = (localState.products ?? [])
   .some((price) => /^price_[A-Za-z0-9]+$/.test(String(price.stripePriceId ?? "")) && Boolean(price.providerVerifiedAt));
 const requestTimeoutMs = Number(process.env.MYDREAMSHOOTS_SEO_SSR_TIMEOUT_MS || 30_000);
 const requestAttempts = Number(process.env.MYDREAMSHOOTS_SEO_SSR_ATTEMPTS || 3);
+const databaseReads = process.env.MYDREAMSHOOTS_SEO_SSR_DATABASE === "1" || process.env.STOREFRONT_PATH_MODE_READS === "database";
+let serverProcess;
+
+function stopManagedServer() {
+  if (!serverProcess || serverProcess.killed) return;
+  serverProcess.kill("SIGTERM");
+  setTimeout(() => {
+    if (serverProcess && !serverProcess.killed) serverProcess.kill("SIGKILL");
+  }, 2_000).unref();
+}
+
+process.on("exit", stopManagedServer);
+process.on("SIGINT", () => {
+  stopManagedServer();
+  process.exit(130);
+});
+
+async function waitForManagedServer() {
+  if (!managedServer) return;
+  if (!fs.existsSync(".next-build")) {
+    throw new Error(".next-build is missing; run npm run build before the self-contained SSR smoke");
+  }
+  serverProcess = spawn(process.execPath, ["server.mjs"], {
+    cwd: process.cwd(),
+    env: { ...process.env, NODE_ENV: "production", NEXT_DIST_DIR: ".next-build", PORT: port, STOREFRONT_PATH_MODE_READS: databaseReads ? "database" : "local-preview" },
+    stdio: ["ignore", "ignore", "pipe"]
+  });
+  let serverError = "";
+  serverProcess.stderr?.on("data", (chunk) => { serverError = `${serverError}${chunk}`.slice(-2_000); });
+  for (let attempt = 0; attempt < 60; attempt += 1) {
+    if (serverProcess.exitCode !== null) throw new Error(`SSR server exited before readiness: ${serverError}`);
+    try {
+      const response = await fetch(`${baseUrl}/robots.txt`, { headers: { "x-forwarded-host": host }, redirect: "manual" });
+      await response.arrayBuffer();
+      if (response.status >= 200 && response.status < 500) return;
+    } catch {}
+    await wait(500);
+  }
+  throw new Error(`SSR server did not become ready: ${serverError}`);
+}
+
+await waitForManagedServer();
 
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -63,12 +109,13 @@ async function fetchText(pathname, accept) {
   return withRetry(`fetch ${pathname}`, () => fetchTextOnce(pathname, accept));
 }
 
-async function fetchStatusNoRedirectOnce(pathname, accept = "text/html") {
+async function fetchStatusNoRedirectOnce(pathname, accept = "text/html", method = "GET") {
   const url = new URL(pathname, `${baseUrl}/`);
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(new Error(`${pathname} timed out after ${requestTimeoutMs}ms`)), requestTimeoutMs);
   try {
     const response = await fetch(url, {
+      method,
       headers: { accept, "x-forwarded-host": host },
       redirect: "manual",
       signal: controller.signal
@@ -83,8 +130,8 @@ async function fetchStatusNoRedirectOnce(pathname, accept = "text/html") {
   }
 }
 
-async function fetchStatusNoRedirect(pathname, accept = "text/html") {
-  return withRetry(`fetch status ${pathname}`, () => fetchStatusNoRedirectOnce(pathname, accept));
+async function fetchStatusNoRedirect(pathname, accept = "text/html", method = "GET") {
+  return withRetry(`fetch status ${pathname}`, () => fetchStatusNoRedirectOnce(pathname, accept, method));
 }
 
 async function fetchHtml(pathname) {
@@ -148,14 +195,60 @@ function visibleText(html) {
 }
 
 const homepage = await fetchHtml("/");
+const sitePathHomepage = await fetchHtml("/site/mydreamshoots/");
 const pricing = await fetchHtml("/pricing");
-const collection = await fetchHtml("/ai-image-generation/headshot");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
+const robotsResponse = await fetchStatusNoRedirect("/robots.txt", "text/plain");
+assert.equal(robotsResponse.status, 200, "robots.txt must return HTTP 200");
+for (const header of ["x-storefront-publication", "x-storefront-publication-version", "x-storefront-snapshot-hash", "x-storefront-build", "x-storefront-route-revision", "x-storefront-page-revision", "x-storefront-copy-revision", "x-storefront-media-revision", "x-storefront-facts-revision", "x-storefront-offer-revision", "x-storefront-collection-revision", "x-storefront-link-revision", "x-storefront-policy-revision"]) {
+  assert.ok(robotsResponse.headers[header], `robots.txt must expose ${header}`);
+}
+const headshotPath = "/ai-image-generation/headshot";
+const headshotIsPublished = sitemap.includes(`https://${host}${headshotPath}`);
+const collectionResponse = await fetchText(headshotPath, "text/html");
+assert.equal(collectionResponse.status, headshotIsPublished ? 200 : 404, `${headshotPath} status must match the active immutable snapshot`);
+const collection = headshotIsPublished ? collectionResponse.body : "";
 const focusCollectionSlugs = (localTaxonomy.items ?? []).map((item) => item.slug).filter(Boolean);
 const focusCollectionPaths = focusCollectionSlugs.map((slug) => `/ai-image-generation/${slug}`);
 const focusCollections = {};
 for (const pathname of focusCollectionPaths) {
-  focusCollections[pathname] = await fetchHtml(pathname);
+  const expectedPublished = sitemap.includes(`https://${host}${pathname}`);
+  const response = await fetchText(pathname, "text/html");
+  assert.equal(response.status, expectedPublished ? 200 : 404, `${pathname} status must match the active immutable snapshot`);
+  if (expectedPublished) focusCollections[pathname] = response.body;
+}
+for (const pathname of focusCollectionPaths.filter((pathname) => !sitemap.includes(`https://${host}${pathname}`))) {
+  const response = await fetchStatusNoRedirect(pathname);
+  assert.equal(response.status, 404, `${pathname} must return 404 while its page entity is review_required`);
+  assert.equal(response.headers.location, undefined, `${pathname} review response must not redirect`);
+}
+for (const pathname of focusCollectionPaths) {
+  const expectedPublished = sitemap.includes(`https://${host}${pathname}`);
+  for (const candidate of [pathname, `/site/mydreamshoots${pathname}`]) {
+    const getResponse = await fetchStatusNoRedirect(candidate, "text/html", "GET");
+    const headResponse = await fetchStatusNoRedirect(candidate, "text/html", "HEAD");
+    const expectedStatus = expectedPublished ? 200 : 404;
+    const isSitePathAlias = candidate.startsWith("/site/");
+    if (isSitePathAlias) {
+      assert.ok([expectedStatus, 308].includes(getResponse.status), `${candidate} GET must render or use the canonical host alias`);
+      assert.ok([expectedStatus, 308].includes(headResponse.status), `${candidate} HEAD must render or use the canonical host alias`);
+      if (getResponse.status === 308) assert.ok(getResponse.headers.location?.endsWith(pathname), `${candidate} GET alias must target ${pathname}`);
+      if (headResponse.status === 308) assert.ok(headResponse.headers.location?.endsWith(pathname), `${candidate} HEAD alias must target ${pathname}`);
+    } else {
+      assert.equal(getResponse.status, expectedStatus, `${candidate} GET status must match the active immutable snapshot`);
+      assert.equal(headResponse.status, expectedStatus, `${candidate} HEAD status must match the active immutable snapshot`);
+      assert.equal(getResponse.headers.location, undefined, `${candidate} GET must not emit an unexpected redirect`);
+      assert.equal(headResponse.headers.location, undefined, `${candidate} HEAD must not emit an unexpected redirect`);
+    }
+  }
+}
+for (const [canonicalPath, aliases] of [["/privacy", ["/privacy-policy", "/policies/privacy", "/policies/privacy-policy"]], ["/terms", ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"]]]) {
+  assert.equal((await fetchStatusNoRedirect(canonicalPath)).status, 200, `${canonicalPath} must be the sole policy render route`);
+  for (const alias of aliases) {
+    const response = await fetchStatusNoRedirect(alias);
+    assert.equal(response.status, 308, `${alias} must be a policy redirect-only alias`);
+    assert.ok(response.headers.location?.endsWith(canonicalPath), `${alias} must redirect to ${canonicalPath}`);
+  }
 }
 const talkingPhotoGeneration = await fetchHtml("/ai-video-generation/talking-photo");
 const storyVideoGeneration = await fetchHtml("/ai-video-generation/story-video");
@@ -317,6 +410,7 @@ for (const copy of homepageForbiddenCopy) {
   assert.equal(homepage.includes(copy), false, `homepage must not contain deprecated SEO copy: ${copy}`);
 }
 assert.equal((homepage.match(/<h1\b/gi) ?? []).length, 1, "homepage must render exactly one H1");
+assert.equal((sitePathHomepage.match(/<h1\b/gi) ?? []).length, 1, "site path homepage must render exactly one H1");
 assert.equal(metaDescription(homepage), "Create AI headshots, portraits, themed photo sets, editing workflows, and supported short video results from your own approved photos. Compare examples and credit costs before you generate.", "homepage meta description must match the V4 SEO copy");
 assert.equal(canonicalHref(homepage), "https://www.mydreamshoots.com", "homepage canonical must point to the root URL");
 assert.equal(homepage.includes('href="/pricing"'), true, "homepage header must link Pricing to /pricing");
@@ -426,33 +520,29 @@ assert.ok(productVideoGenerationProducts.length >= 1, "Product Video detail SSR 
 if (productAdIsPublished) assert.ok(productAdVideoGenerationProducts.length >= 1, "Product Ad Video detail SSR must expose product or service JSON-LD");
 const productAdFaq = productAdVideoGenerationGraph.find((node) => node?.["@type"] === "FAQPage");
 if (productAdIsPublished) assert.equal(productAdFaq?.mainEntity?.length, 8, "Product Ad Video JSON-LD must expose eight FAQ entries");
-assert.equal(collectionProducts.length, 1, "collection SSR must contain one Product node");
-assert.ok(Array.isArray(collectionProduct?.image) && collectionProduct.image.length === 8, "collection Product must contain cover plus gallery image URLs");
-assert.equal(new Set(collectionProduct.image).size, collectionProduct.image.length, "collection Product image URLs must be unique");
-assert.equal(collectionProduct?.mainEntityOfPage, collectionProduct?.url, "collection Product must link to its visible page");
-assert.equal(collectionProduct?.subjectOf?.["@type"], "ImageObject", "collection Product must contain an ImageObject subject");
-assert.equal(collectionProduct?.subjectOf?.url, collectionProduct?.subjectOf?.contentUrl, "collection ImageObject url should match contentUrl");
-assert.equal(collectionProduct?.subjectOf?.thumbnailUrl, collectionProduct?.image?.[0], "collection ImageObject thumbnail should use the Product cover");
-assert.match(collectionProduct?.subjectOf?.encodingFormat ?? "", /^image\//, "collection ImageObject must expose image encodingFormat");
-if (!hasProviderBackedPrice) {
-  assert.equal(collectionOffer, undefined, "collection Product must not expose a manual or draft price as an Offer");
-} else {
-  assert.equal(collectionOffer?.["@type"], "Offer", "collection Product must contain a provider-backed Offer");
-  assert.equal(collectionOffer?.priceCurrency, "USD", "collection Offer must use USD");
-  assert.match(collectionOffer?.price ?? "", /^\d+\.\d{2}$/, "collection Offer must contain a decimal price");
-  assert.ok(["https://schema.org/InStock", "https://schema.org/OutOfStock"].includes(collectionOffer?.availability), "collection Offer availability must use a schema.org URL");
-  assert.equal(collectionOffer?.itemCondition, "https://schema.org/NewCondition", "collection Offer must use the schema.org NewCondition URL");
+if (headshotIsPublished) {
+  assert.equal(collectionProducts.length, 1, "collection SSR must contain one Product node");
+  assert.ok(Array.isArray(collectionProduct?.image) && collectionProduct.image.length >= 2, "collection Product must contain page-owned image URLs");
+  assert.equal(new Set(collectionProduct.image).size, collectionProduct.image.length, "collection Product image URLs must be unique");
+  assert.equal(collectionProduct?.mainEntityOfPage, collectionProduct?.url, "collection Product must link to its visible page");
+  assert.equal(collectionProduct?.subjectOf?.["@type"], "ImageObject", "collection Product must contain an ImageObject subject");
+  assert.equal(collectionProduct?.subjectOf?.url, collectionProduct?.subjectOf?.contentUrl, "collection ImageObject url should match contentUrl");
+  assert.equal(collectionProduct?.subjectOf?.thumbnailUrl, collectionProduct?.image?.[0], "collection ImageObject thumbnail should use the Product cover");
+  assert.match(collectionProduct?.subjectOf?.encodingFormat ?? "", /^image\//, "collection ImageObject must expose image encodingFormat");
+  if (!hasProviderBackedPrice) {
+    assert.equal(collectionOffer, undefined, "collection Product must not expose a manual or draft price as an Offer");
+  } else {
+    assert.equal(collectionOffer?.["@type"], "Offer", "collection Product must contain a provider-backed Offer");
+    assert.equal(collectionOffer?.priceCurrency, "USD", "collection Offer must use USD");
+    assert.match(collectionOffer?.price ?? "", /^\d+\.\d{2}$/, "collection Offer must contain a decimal price");
+    assert.ok(["https://schema.org/InStock", "https://schema.org/OutOfStock"].includes(collectionOffer?.availability), "collection Offer availability must use a schema.org URL");
+    assert.equal(collectionOffer?.itemCondition, "https://schema.org/NewCondition", "collection Offer must use the schema.org NewCondition URL");
+  }
+  assert.ok((collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Credit cost"), "collection Product must expose credit cost");
+  assert.ok((collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Output count"), "collection Product must expose output count");
 }
-assert.ok(
-  (collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Credit cost"),
-  "collection Product must expose credit cost"
-);
-assert.ok(
-  (collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Output count"),
-  "collection Product must expose output count"
-);
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/pricing"), "sitemap must contain the canonical pricing URL");
-assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-image-generation/headshot"), "sitemap must contain the canonical headshot collection URL");
+assert.equal(sitemap.includes("https://www.mydreamshoots.com/ai-image-generation/headshot"), headshotIsPublished, "headshot sitemap membership must match the active immutable snapshot");
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/talking-photo"), "sitemap must contain the canonical Talking Photo URL");
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/story-video"), "sitemap must contain the canonical Story Video URL");
 assert.ok(sitemap.includes("https://www.mydreamshoots.com/ai-video-generation/meme-video"), "sitemap must contain the canonical Meme Video URL");
@@ -471,9 +561,10 @@ for (const hiddenStatus of hiddenVideoStatuses) {
   assert.equal(hiddenStatus.status, 404, `${hiddenStatus.pathname} should return HTTP 404 while hidden from public video topics`);
 }
 
+stopManagedServer();
 console.log(JSON.stringify({
   ok: true,
-  pages: ["/", "/pricing", "/ai-image-generation/headshot", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/meme-video", "/ai-video-generation/product-video", ...(productAdIsPublished ? [productAdVideoPath] : []), "/workflow", "/faq"],
+  pages: ["/", "/site/mydreamshoots/", "/pricing", ...(headshotIsPublished ? [headshotPath] : []), "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/meme-video", "/ai-video-generation/product-video", ...(productAdIsPublished ? [productAdVideoPath] : []), "/workflow", "/faq"],
   legacy404s: legacyCollectionStatuses.map(({ pathname, status }) => ({ pathname, status })),
   retiredTool404s: legacyToolRedirectStatuses.map(({ pathname, status }) => ({ pathname, status })),
   hiddenVideo404s: hiddenVideoStatuses.map(({ pathname, status }) => ({ pathname, status })),

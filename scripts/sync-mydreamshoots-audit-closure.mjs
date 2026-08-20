@@ -359,19 +359,7 @@ async function syncDatabase() {
         result.siteThemes += 1;
       }
 
-      for (const publication of await tx.themePublication.findMany({ where: { siteId: site.id } })) {
-        const snapshot = updatePublicationSnapshot(publication.snapshot);
-        if (JSON.stringify(snapshot) === JSON.stringify(publication.snapshot)) continue;
-        await tx.themePublication.update({
-          where: { id: publication.id },
-          data: {
-            snapshot,
-            pageCount: snapshot?.pages?.length ?? publication.pageCount,
-            snapshotBytes: jsonSize(snapshot)
-          }
-        });
-        result.themePublications += 1;
-      }
+      // Historical publications are immutable. Audit-closure changes require a new publication.
 
       const legacyVideoThemeUpdate = await tx.videoTheme.updateMany({
         where: { siteId: site.id, slug: { in: [...legacyVideoThemeSlugs] } },

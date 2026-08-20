@@ -1,6 +1,5 @@
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
-import type { DreamshootPackProfile } from "@/lib/dreamshoot-pack-profiles";
-import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
+import { mydreamshootsPageCopyForRoute, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import {
   aidreamcapesCategoryUseCaseProfileForSlug,
@@ -2695,7 +2694,7 @@ function enrichCollectionGuide(seed: SeoDirectorySeed, brandName: string): SeoDi
   };
 }
 
-type SeoUseCaseProfile = DreamshootPackProfile | PhotoPackageUseCaseProfile;
+type SeoUseCaseProfile = PhotoPackageUseCaseProfile;
 
 function truncateSeoDescription(value: string, maxLength = 220): string {
   if (value.length <= maxLength) return value;
@@ -2806,6 +2805,27 @@ export function getSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: string):
   return getSeoDirectoryContentForSite(undefined, kind, rawSlug);
 }
 
+function seoDirectoryContentFromPublishedCopy(copy: MyDreamshootsPageCopy, slug: string, site?: Site): SeoDirectoryContent {
+  return {
+    slug,
+    explicit: true,
+    label: copy.headline,
+    title: copy.seoTitle,
+    description: copy.cardDescription,
+    keywords: Array.from(new Set([copy.metaLabel, ...copy.tags, ...copy.detailTags])).join(", "),
+    canonicalPath: canonicalSeoDirectoryPathForSite(site, "collection", slug),
+    h2: copy.galleryTitle,
+    h3: ["What this creates", "Best use cases", "Workflow and review"],
+    intro: copy.detailIntro,
+    details: [copy.whatCreates, copy.coverNote, copy.safetyNote ?? "", ...(copy.reviewPoints ?? copy.styleNotes)].filter(Boolean),
+    useCases: [...copy.bestFor],
+    workflow: [...copy.workflow],
+    internalLinks: (copy.relatedLinks ?? []).map((link) => ({ ...link })),
+    ctaLabel: copy.ctaLabel,
+    ctaHref: copy.ctaHref ?? ""
+  };
+}
+
 function normalizeSeoDirectoryInternalLinks(links: SeoDirectorySeed["internalLinks"] = []): SeoDirectoryContent["internalLinks"] {
   return links
     .map((link) => ({
@@ -2858,8 +2878,11 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
   };
 }
 
-export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, site?: Site): ThemePageJson {
-  const item = getSeoDirectoryContentForSite(site, kind, rawSlug);
+export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, site?: Site, publishedCopy?: MyDreamshootsPageCopy): ThemePageJson {
+  const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, normalizeDirectorySlug(rawSlug));
+  const item = publishedCopy && kind === "collection"
+    ? seoDirectoryContentFromPublishedCopy(publishedCopy, canonicalSlug, site)
+    : getSeoDirectoryContentForSite(site, kind, rawSlug);
   const canonicalPath = item.canonicalPath;
   const publishedRoute = site?.id === "site_dreamshoot" && kind === "collection"
     ? mydreamshootsPublishedRouteForSlug(item.slug)
@@ -2888,8 +2911,11 @@ export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryK
   };
 }
 
-export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, options: { focused?: boolean; site?: Site } = {}): ThemePageJson {
-  const item = getSeoDirectoryContentForSite(options.site, kind, rawSlug);
+export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, options: { focused?: boolean; site?: Site; publishedCopy?: MyDreamshootsPageCopy } = {}): ThemePageJson {
+  const canonicalSlug = canonicalSeoDirectorySlugForSite(options.site, kind, normalizeDirectorySlug(rawSlug));
+  const item = options.publishedCopy && kind === "collection"
+    ? seoDirectoryContentFromPublishedCopy(options.publishedCopy, canonicalSlug, options.site)
+    : getSeoDirectoryContentForSite(options.site, kind, rawSlug);
   const sectionId = `seo_${kind}_${item.slug}`;
   const themeCtaSectionId = `theme_cta_${kind}_${item.slug}`;
   const themeFaqSectionId = `theme_faq_${kind}_${item.slug}`;
@@ -2974,7 +3000,7 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
     ? { [firstSection]: focusedFirstSection ?? pageJson.sections[firstSection] }
     : pageJson.sections;
   return {
-    ...withSeoDirectorySeo(pageJson, kind, rawSlug, options.site),
+    ...withSeoDirectorySeo(pageJson, kind, rawSlug, options.site, options.publishedCopy),
     sectionsOrder,
     sections: {
       ...existingSections,

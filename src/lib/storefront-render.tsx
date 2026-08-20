@@ -36,12 +36,13 @@ import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/custome
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
-import { createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
+import { createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } from "@/lib/dreamshoot-tool-faq";
+import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
 import { isMydreamshootsPublicVideoGenerationSlug, isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
@@ -61,6 +62,11 @@ const dreamshootPartnerTemplateSlugs = new Set([
   "/best-ai-image",
   "/best-ai-video"
 ]);
+
+function publishedLeafCopy(snapshot: ReturnType<typeof createPublishedSiteSnapshot>, canonicalSlug: string) {
+  const entity = snapshot.publishedPageEntities.find((candidate) => candidate.canonicalPath === `/ai-image-generation/${canonicalSlug}`);
+  return entity ? pageCopyFromPublishedPageEntity(entity, snapshot.publishedLinkRefs) : undefined;
+}
 
 type SiteRenderData = {
   creativePackCategories: CreativePackCategory[];
@@ -2569,12 +2575,23 @@ export async function renderStorefrontPage({
   const collectionRootPath = publicCollectionRootPathForSite(currentSite);
   const isCollectionDirectoryPage = slug === "/collections" || slug === collectionRootPath;
   const isFocusedCollectionPage = isCollectionDirectoryPage && Boolean(collectionCategory);
+  const usesPublishedLeafProjection = isFocusedCollectionPage && isPrimaryMydreamshootsStorefront(currentSite);
   const renderPagePath = publicPath ?? (
     isCollectionDirectoryPage
       ? publicCollectionPathForSite(currentSite, collectionCategory)
       : slug
   );
-  const renderData = getSiteRenderData(state, currentSite.id);
+  if (usesPublishedLeafProjection && resolvePublishedRouteDisposition(publishedSnapshot, renderPagePath).kind !== "render") notFound();
+  const currentRenderData = getSiteRenderData(state, currentSite.id);
+  const renderData = usesPublishedLeafProjection
+    ? {
+        ...currentRenderData,
+        creativePackCategories: [],
+        creativePacks: publishedSnapshot.creativePacks,
+        mediaAssets: [],
+        products: publishedSnapshot.products
+      }
+    : currentRenderData;
   const focusedCollectionRenderData = isFocusedCollectionPage ? trimFocusedCollectionRenderData(renderData, collectionCategory) : renderData;
   const useSharedNavigation = usesSharedDreamShootNavigation(currentSite);
   const navigationCreativePackCategories = useSharedNavigation
@@ -2612,7 +2629,11 @@ export async function renderStorefrontPage({
     : usesDreamShootToolsDirectory
     ? withDreamShootToolsDirectoryPage(page.publishedJson, currentSite)
     : isFocusedCollectionPage
-    ? withSeoDirectorySection(page.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
+    ? withSeoDirectorySection(page.publishedJson, "collection", collectionCategory, {
+        focused: true,
+        site: currentSite,
+        publishedCopy: publishedLeafCopy(publishedSnapshot, collectionCategory)
+      })
     : isCollectionDirectoryPage
     ? withDreamShootCollectionsDirectoryPage(page.publishedJson, currentSite)
     : page.publishedJson;
@@ -2634,13 +2655,13 @@ export async function renderStorefrontPage({
     isDirectoryPage: isCollectionDirectoryPage && !isFocusedCollectionPage,
     hasDirectorySections: pageUsesDirectoryPackLimit
   });
-  if (shouldCompletePublicPacks && pageNeedsPublicCreativePacks && pageRenderData.creativePacks.length > 0) {
+  if (!usesPublishedLeafProjection && shouldCompletePublicPacks && pageNeedsPublicCreativePacks && pageRenderData.creativePacks.length > 0) {
     pageRenderData = {
       ...pageRenderData,
       creativePacks: await completePublicCreativePacksForSite(currentSite, pageRenderData.creativePacks, directoryPackLimit)
     };
   }
-  if (shouldCompletePublicPacks && pageNeedsPublicCreativePacks && !pageRenderData.creativePacks.length) {
+  if (!usesPublishedLeafProjection && shouldCompletePublicPacks && pageNeedsPublicCreativePacks && !pageRenderData.creativePacks.length) {
     pageRenderData = {
       ...pageRenderData,
       creativePacks: (await getStorefrontPublicCreativePacksForSite(currentSite.id, directoryPackLimit)).map((pack) => ({
@@ -2709,7 +2730,7 @@ export async function renderStorefrontPage({
           pagePath: renderPagePath,
           routeMode,
           creativePacks: pageRenderData.creativePacks,
-          products: state.products,
+          products: usesPublishedLeafProjection ? publishedSnapshot.products : state.products,
           context: storefrontContext,
           videoThemes: pageRenderData.videoThemes
         }),
@@ -2784,6 +2805,7 @@ export async function renderStorefrontSectionPayloads({
     canonicalSiteSlug(item.slug) === canonicalSiteSlug(siteSlug)
   );
   if (!currentSite) return [];
+  const publishedSnapshot = createPublishedSiteSnapshot(state, currentSite);
   const sectionState = state;
   const sectionSite = currentSite;
 
@@ -2792,7 +2814,10 @@ export async function renderStorefrontSectionPayloads({
   const collectionCategory = collectionRoute?.collectionSlug ?? (typeof requestQuery.category === "string" ? requestQuery.category : "");
   const renderPagePath = collectionRoute?.canonicalPath ?? requestSlug;
   const isFocusedCollectionPage = internalSlug === "/collections" && Boolean(collectionCategory);
-  const renderData = getSiteRenderData(state, currentSite.id);
+  const currentRenderData = getSiteRenderData(state, currentSite.id);
+  const renderData = isFocusedCollectionPage && isPrimaryMydreamshootsStorefront(currentSite)
+    ? { ...currentRenderData, creativePackCategories: [], creativePacks: publishedSnapshot.creativePacks, mediaAssets: [], products: publishedSnapshot.products }
+    : currentRenderData;
   currentSite.mediaAssets = renderData.mediaAssets;
   const toolDetailSlug = internalSlug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
   const resolvedToolDetail = toolDetailSlug
@@ -2802,6 +2827,7 @@ export async function renderStorefrontSectionPayloads({
     ? resolvedToolDetail.page
     : findPage(currentSite, internalSlug) ?? syntheticDreamShootPartnerPage(currentSite, internalSlug);
   if (!directPage) return [];
+  if (isFocusedCollectionPage && isPrimaryMydreamshootsStorefront(currentSite) && resolvePublishedRouteDisposition(publishedSnapshot, renderPagePath).kind !== "render") return [];
   if (isFocusedCollectionPage) {
     currentSite.pages = currentSite.pages.filter((item) => item.slug === internalSlug || item.slug === "/404");
   }
@@ -2819,7 +2845,11 @@ export async function renderStorefrontSectionPayloads({
     : usesDreamShootToolsDirectory
     ? withDreamShootToolsDirectoryPage(directPage.publishedJson, currentSite)
     : isFocusedCollectionPage
-    ? withSeoDirectorySection(directPage.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
+    ? withSeoDirectorySection(directPage.publishedJson, "collection", collectionCategory, {
+        focused: true,
+        site: currentSite,
+        publishedCopy: publishedLeafCopy(publishedSnapshot, collectionCategory)
+      })
     : internalSlug === "/collections"
     ? withDreamShootCollectionsDirectoryPage(directPage.publishedJson, currentSite)
     : directPage.publishedJson;
@@ -2970,13 +3000,17 @@ export async function renderStorefrontSectionPayload({
     canonicalSiteSlug(item.slug) === canonicalSiteSlug(siteSlug)
   );
   if (!currentSite) return undefined;
+  const publishedSnapshot = createPublishedSiteSnapshot(state, currentSite);
 
   const collectionRoute = isCollectionPublicPath(requestSlug) ? parsePublicCollectionRouteForSite(currentSite, requestSlug) : undefined;
   if (isCollectionPublicPath(requestSlug) && !collectionRoute) return undefined;
   const collectionCategory = collectionRoute?.collectionSlug ?? (typeof requestQuery.category === "string" ? requestQuery.category : "");
   const renderPagePath = collectionRoute?.canonicalPath ?? requestSlug;
   const isFocusedCollectionPage = internalSlug === "/collections" && Boolean(collectionCategory);
-  const renderData = getSiteRenderData(state, currentSite.id);
+  const currentRenderData = getSiteRenderData(state, currentSite.id);
+  const renderData = isFocusedCollectionPage && isPrimaryMydreamshootsStorefront(currentSite)
+    ? { ...currentRenderData, creativePackCategories: [], creativePacks: publishedSnapshot.creativePacks, mediaAssets: [], products: publishedSnapshot.products }
+    : currentRenderData;
   currentSite.mediaAssets = renderData.mediaAssets;
   const toolDetailSlug = internalSlug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
   const resolvedToolDetail = toolDetailSlug
@@ -2986,6 +3020,7 @@ export async function renderStorefrontSectionPayload({
     ? resolvedToolDetail.page
     : findPage(currentSite, internalSlug) ?? syntheticDreamShootPartnerPage(currentSite, internalSlug);
   if (!directPage) return undefined;
+  if (isFocusedCollectionPage && isPrimaryMydreamshootsStorefront(currentSite) && resolvePublishedRouteDisposition(publishedSnapshot, renderPagePath).kind !== "render") return undefined;
   if (isFocusedCollectionPage) {
     currentSite.pages = currentSite.pages.filter((item) => item.slug === internalSlug || item.slug === "/404");
   }
@@ -3000,7 +3035,11 @@ export async function renderStorefrontSectionPayload({
     : usesDreamShootToolsDirectory
     ? withDreamShootToolsDirectoryPage(directPage.publishedJson, currentSite)
     : isFocusedCollectionPage
-    ? withSeoDirectorySection(directPage.publishedJson, "collection", collectionCategory, { focused: true, site: currentSite })
+    ? withSeoDirectorySection(directPage.publishedJson, "collection", collectionCategory, {
+        focused: true,
+        site: currentSite,
+        publishedCopy: publishedLeafCopy(publishedSnapshot, collectionCategory)
+      })
     : internalSlug === "/collections"
     ? withDreamShootCollectionsDirectoryPage(directPage.publishedJson, currentSite)
     : directPage.publishedJson;

@@ -22,9 +22,63 @@ export type MyDreamshootsPageCopy = PhotoPackageUseCaseProfile & {
   relatedTitle: string;
   relatedSubtitle: string;
   relatedCtaLabel: string;
+  ctaHref?: string;
+  relatedLinks?: Array<{ label: string; href: string }>;
 };
 
-const requiredPageCopyFields: Array<keyof MyDreamshootsPageCopy> = [
+export type MyDreamshootsPageIndependenceResult = {
+  independent: boolean;
+  reasons: string[];
+  pageRevision: string;
+};
+
+const genericPublishedCopyPatterns: Array<{ field: keyof MyDreamshootsPageCopy; pattern: RegExp }> = [
+  { field: "galleryIntro", pattern: /^Review .+ examples before opening the .+ workflow\.$/i },
+  { field: "ctaTitle", pattern: /^Create .+ images in your private studio\.$/i },
+  { field: "ctaSubtitle", pattern: /^Turn approved source photos into .+ with visible credit cost and private gallery review\.$/i },
+  { field: "relatedTitle", pattern: /^More .+ and nearby themes$/i },
+  { field: "relatedSubtitle", pattern: /^Compare .+ and adjacent themes before opening (?:a|an) .+ set\.$/i }
+];
+
+function stableRevision(value: unknown): string {
+  const serialized = JSON.stringify(value);
+  let hash = 2166136261;
+  for (let index = 0; index < serialized.length; index += 1) {
+    hash ^= serialized.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(16).padStart(8, "0");
+}
+
+export function assessMydreamshootsPageIndependence(
+  copy: MyDreamshootsPageCopy,
+  canonicalSlug: string
+): MyDreamshootsPageIndependenceResult {
+  const reasons: string[] = [];
+  if (copy.pageEntityId !== `mydreamshoots:ai-image-theme:${canonicalSlug}`) reasons.push("PAGE_ENTITY_MISMATCH");
+  if (!copy.copyRevision) reasons.push("COPY_REVISION_MISSING");
+
+  for (const { field, pattern } of genericPublishedCopyPatterns) {
+    const value = copy[field];
+    if (typeof value === "string" && pattern.test(value.trim())) reasons.push(`GENERIC_${String(field).toUpperCase()}`);
+  }
+
+  const faqSignatures = new Set(copy.faqItems.map((item) => `${item.question.trim().toLowerCase()}\n${item.answer.trim().toLowerCase()}`));
+  if (faqSignatures.size !== copy.faqItems.length) reasons.push("DUPLICATE_FAQ_WITHIN_PAGE");
+  if (copy.bestFor.length < 3) reasons.push("USE_CASES_INCOMPLETE");
+  if (copy.workflow.length < 3) reasons.push("WORKFLOW_INCOMPLETE");
+  if ((copy.reviewPoints ?? copy.styleNotes).length < 3) reasons.push("REVIEW_CRITERIA_INCOMPLETE");
+  if (!copy.ctaHref?.startsWith("/")) reasons.push("CTA_HREF_MISSING");
+  if (!Array.isArray(copy.relatedLinks) || copy.relatedLinks.length < 2) reasons.push("RELATED_LINKS_INCOMPLETE");
+
+  return {
+    independent: reasons.length === 0,
+    reasons,
+    pageRevision: stableRevision({ canonicalSlug, copy })
+  };
+}
+
+const requiredPageCopyFields: Array<keyof PhotoPackageUseCaseProfile> = [
   "pageEntityId",
   "copyRevision",
   "seoTitle",

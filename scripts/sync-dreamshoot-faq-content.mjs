@@ -487,7 +487,7 @@ async function updateDatabase(generatedTemplatesByStore) {
         if (!result.changed) continue;
         await prisma.themePage.update({
           where: { id: page.id },
-          data: { draftJson: result.draftJson, publishedJson: result.publishedJson }
+          data: { draftJson: result.draftJson }
         });
         report.pages += 1;
         report.faqSections += result.updates;
@@ -502,24 +502,7 @@ async function updateDatabase(generatedTemplatesByStore) {
         report.faqSections += updates;
       }
 
-      for (const publication of await prisma.themePublication.findMany({ where: { siteId: store.siteId } })) {
-        const snapshot = clone(publication.snapshot);
-        const updates = syncFaqInSnapshot(snapshot, generatedTemplates, dbContext);
-        if (!updates || !changed(publication.snapshot, snapshot)) continue;
-        await prisma.themePublication.update({
-          where: { id: publication.id },
-          data: {
-            snapshot,
-            pageCount: Array.isArray(snapshot.pages) ? snapshot.pages.length : publication.pageCount,
-            sectionCount: Array.isArray(snapshot.pages)
-              ? snapshot.pages.reduce((count, page) => count + Object.keys(page?.publishedJson?.sections ?? {}).length, 0)
-              : publication.sectionCount,
-            snapshotBytes: Buffer.byteLength(JSON.stringify(snapshot), "utf8")
-          }
-        });
-        report.themePublications += 1;
-        report.faqSections += updates;
-      }
+      // Historical publications are immutable. FAQ changes require a new publication.
     }
     return report;
   } finally {

@@ -9,7 +9,6 @@ const dryRun = args.has("--dry-run");
 const updateDb = args.has("--db");
 const statePath = path.join(repoRoot, "data", "platform-state.json");
 const taxonomyPath = path.join(repoRoot, "src", "lib", "mydreamshoots-theme-taxonomy.json");
-const packProfilesPath = path.join(repoRoot, "src", "lib", "dreamshoot-pack-profiles.json");
 const useCaseProfilesPath = path.join(repoRoot, "src", "lib", "photo-package-use-case-profiles.json");
 const SITE_ID = "site_dreamshoot";
 const UPDATE_TIMESTAMP = "2026-08-14T00:00:00.000Z";
@@ -935,6 +934,8 @@ async function updateDatabase({ state, categories, packs }) {
       await tx.toolMenuItem.deleteMany({ where: { siteId: SITE_ID } });
       await tx.toolCategory.deleteMany({ where: { siteId: SITE_ID } });
       for (const page of siteRecord?.pages ?? []) {
+        const existingPage = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
+        if (!existingPage) throw new Error(`ThemePage ${page.id} must exist before taxonomy draft sync.`);
         const pageData = {
           siteId: SITE_ID,
           pageType: page.pageType || "page",
@@ -942,21 +943,12 @@ async function updateDatabase({ state, categories, packs }) {
           slug: page.slug,
           title: page.title || page.slug,
           draftJson: toPrismaJson(page.draftJson),
-          publishedJson: toPrismaJson(page.publishedJson),
           draftMeta: page.draftMeta === undefined ? null : toPrismaJson(page.draftMeta)
         };
-        await tx.themePage.upsert({
-          where: { id: page.id },
-          create: {
-            id: page.id,
-            ...pageData
-          },
-          update: pageData
-        });
+        await tx.themePage.update({ where: { id: page.id }, data: pageData });
       }
-      await rewriteThemeJsonRows(tx, "themePage", ["draftJson", "publishedJson", "draftMeta"]);
-      await rewriteThemeJsonRows(tx, "themeSettings", ["draftJson", "publishedJson"]);
-      await rewriteThemeJsonRows(tx, "themePublication", ["snapshot"]);
+      await rewriteThemeJsonRows(tx, "themePage", ["draftJson", "draftMeta"]);
+      await rewriteThemeJsonRows(tx, "themeSettings", ["draftJson"]);
       await rewriteThemeJsonRows(tx, "siteTheme", ["templates", "settings"]);
       await tx.platformStateDocument.upsert({
         where: { id: "platform" },
@@ -974,7 +966,6 @@ const state = readJson(statePath);
 const taxonomy = readJson(taxonomyPath);
 requiredPageCopySlugs = new Set((taxonomy.items ?? []).map((item) => normalizeSlug(item.slug)).filter(Boolean));
 collectionPathBySlug = buildCollectionPathMap(taxonomy);
-const packProfiles = readJson(packProfilesPath);
 const useCaseProfiles = readJson(useCaseProfilesPath);
 mydreamshootsDirectProfiles = useCaseProfiles.mydreamshootsCategories || {};
 const categories = state.creativePackCategories ?? [];
@@ -1041,7 +1032,6 @@ for (const [index, item] of taxonomy.items.entries()) {
   updatePack(pack, packFieldsForItem(item, category.id, sourcePack), changes);
   targetPackIds.add(pack.id);
   syncedPacks.push(structuredClone(pack));
-  packProfiles[targetSlug] = profileForItem(item);
 }
 
 for (const category of categories) {
@@ -1089,7 +1079,6 @@ applyScopedHrefReplacements(state, changes);
 
 if (!dryRun) {
   writeJson(statePath, state);
-  writeJson(packProfilesPath, packProfiles);
   writeJson(useCaseProfilesPath, useCaseProfiles);
 }
 

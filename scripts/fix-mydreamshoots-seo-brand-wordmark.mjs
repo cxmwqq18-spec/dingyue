@@ -143,14 +143,7 @@ async function fixPrismaJson() {
       }
     }
 
-    for (const publication of await prisma.themePublication.findMany({ where: { siteId: site.id } })) {
-      const snapshot = cloneJson(publication.snapshot);
-      normalizeSeoObjectsDeep(snapshot);
-      if (changed(publication.snapshot, snapshot)) {
-        await prisma.themePublication.update({ where: { id: publication.id }, data: { snapshot } });
-        result.themePublications += 1;
-      }
-    }
+    // Historical publications are immutable. SEO changes require a new publication.
   }
 
   console.log(`Fixed MyDreamShoots SEO brand wordmark fields in Prisma: ${JSON.stringify(result)}`);

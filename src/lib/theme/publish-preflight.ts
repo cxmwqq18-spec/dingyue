@@ -317,16 +317,20 @@ export function runThemePublishPreflight({
   const pageCopyRevisionFailures: string[] = [];
   const pageCopyFaqFailures: string[] = [];
   const pageCopyMediaFailures: string[] = [];
+  const mydreamshootsReviewSlugs = new Set<string>();
+  const mydreamshootsPublishedSlugs = new Set<string>();
   if (site.id === "site_dreamshoot") {
     for (const route of mydreamshootsPublishedRouteManifest()) {
-      if (route.copySource !== "page-copy") pageCopyRouteFailures.push(`${route.canonicalSlug}:PAGE_COPY_REVIEW_REQUIRED`);
-      if (route.pageEntityId !== `mydreamshoots:ai-image-theme:${route.canonicalSlug}`) pageCopyRouteFailures.push(`${route.canonicalSlug}:PAGE_COPY_ENTITY_MISMATCH`);
-      if (!route.copyRevision.trim()) pageCopyRevisionFailures.push(`${route.canonicalSlug}:PAGE_COPY_REVISION_MISSING`);
+      if (route.status === "published") mydreamshootsPublishedSlugs.add(route.canonicalSlug);
+      else mydreamshootsReviewSlugs.add(route.canonicalSlug);
+      if (route.status === "published" && route.copySource !== "page-copy") pageCopyRouteFailures.push(`${route.canonicalSlug}:PAGE_COPY_REVIEW_REQUIRED`);
+      if (route.status === "published" && route.pageEntityId !== `mydreamshoots:ai-image-theme:${route.canonicalSlug}`) pageCopyRouteFailures.push(`${route.canonicalSlug}:PAGE_COPY_ENTITY_MISMATCH`);
+      if (route.status === "published" && !route.copyRevision.trim()) pageCopyRevisionFailures.push(`${route.canonicalSlug}:PAGE_COPY_REVISION_MISSING`);
       try {
         const copy = mydreamshootsPageCopyForRoute({ siteId: site.id, routeKind: "ai-image-theme-leaf", canonicalSlug: route.canonicalSlug, canonicalPath: route.canonicalPath });
-        if (!copy || !Array.isArray(copy.faqItems) || copy.faqItems.length < 4) pageCopyFaqFailures.push(`${route.canonicalSlug}:PAGE_COPY_FAQ_REQUIRED`);
+        if (route.status === "published" && (!copy || !Array.isArray(copy.faqItems) || copy.faqItems.length < 4)) pageCopyFaqFailures.push(`${route.canonicalSlug}:PAGE_COPY_FAQ_REQUIRED`);
       } catch (error) {
-        pageCopyRouteFailures.push(`${route.canonicalSlug}:${error instanceof Error ? error.message : "PAGE_COPY_REVIEW_REQUIRED"}`);
+        if (route.status === "published") pageCopyRouteFailures.push(`${route.canonicalSlug}:${error instanceof Error ? error.message : "PAGE_COPY_REVIEW_REQUIRED"}`);
       }
       const matchingPack = creativePacks.find((pack) => pack.status === "active" && pack.id === route.expectedPackId && normalizePublishedSlug(pack.categoryRecord?.slug || pack.category) === route.canonicalSlug);
       if (!matchingPack || !matchingPack.imageUrl || (matchingPack.galleryImages ?? []).length === 0 || route.status !== "published") {
@@ -360,6 +364,11 @@ export function runThemePublishPreflight({
       }
     }
   }
+  const publishedOnlyPageFailure = (failure: string) => {
+    const routeSlug = failure.match(/(?:^|\/)ai-image-generation\/([^:/]+)/)?.[1] ?? failure.split(":")[0];
+    return mydreamshootsPublishedSlugs.has(routeSlug);
+  };
+  const indexablePageCopyFailures = pageCopyFailures.filter(publishedOnlyPageFailure);
   const pagesMissingSeoTitle = site.pages.filter((page) => !page.draftJson.seo?.title?.trim());
   const pagesMissingSeoDescription = site.pages.filter((page) => !page.draftJson.seo?.description?.trim());
   const pagesWithShortSeoDescription = site.pages.filter((page) => {
@@ -424,6 +433,9 @@ export function runThemePublishPreflight({
   );
 
   if (site.id === "site_dreamshoot") {
+    checks.push(mydreamshootsReviewSlugs.size
+      ? warn("PAGE_COPY_REVIEW_ISOLATED", "pages", "MyDreamShoots review pages are isolated", `${mydreamshootsReviewSlugs.size} 个页面保持 review_required、noindex 且不进入 sitemap；这不阻塞其他页面发布。`)
+      : pass("PAGE_COPY_REVIEW_ISOLATED", "pages", "没有待审核页面", "所有 MyDreamShoots page entity 都已通过独立性合同。"));
     checks.push(pageCopyRouteFailures.length
       ? block("PAGE_COPY_REVIEW_REQUIRED", "pages", "MyDreamShoots page copy requires review", pageCopyRouteFailures.slice(0, 8).join("; "))
       : pass("PAGE_COPY_REVIEW_REQUIRED", "pages", "MyDreamShoots page copy is exact", "Every published route manifest row resolves to its direct page-copy owner."));
@@ -436,8 +448,8 @@ export function runThemePublishPreflight({
     checks.push(pageCopyFaqFailures.length
       ? block("PAGE_COPY_FAQ_REQUIRED", "pages", "Page copy FAQ incomplete", pageCopyFaqFailures.slice(0, 8).join("; "))
       : pass("PAGE_COPY_FAQ_REQUIRED", "pages", "Page copy FAQ complete", "Every route copy contains at least four valid FAQ items."));
-    checks.push(pageCopyMediaFailures.length
-      ? block("PAGE_COPY_MEDIA_ENTITY_MISMATCH", "media", "Page media entity mismatch", pageCopyMediaFailures.slice(0, 8).join("; "))
+    checks.push(pageCopyMediaFailures.filter(publishedOnlyPageFailure).length
+      ? block("PAGE_COPY_MEDIA_ENTITY_MISMATCH", "media", "Page media entity mismatch", pageCopyMediaFailures.filter(publishedOnlyPageFailure).slice(0, 8).join("; "))
       : pass("PAGE_COPY_MEDIA_ENTITY_MISMATCH", "media", "Page media entities match routes", "Every indexable route has an exact active pack owner with cover and gallery media."));
   }
 
@@ -529,8 +541,8 @@ export function runThemePublishPreflight({
   );
 
   checks.push(
-    pageCopyFailures.length
-      ? block("page_copy_contract", "pages", "MyDreamShoots 页级 copy 契约失败", pageCopyFailures.slice(0, 6).join("; "))
+    indexablePageCopyFailures.length
+      ? block("page_copy_contract", "pages", "MyDreamShoots 页级 copy 契约失败", indexablePageCopyFailures.slice(0, 6).join("; "))
       : pass("page_copy_contract", "pages", "MyDreamShoots 页级 copy 契约通过", "已发布的 AI Image Generation leaf 页面都能解析到 exact page copy。")
   );
 

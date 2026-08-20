@@ -99,6 +99,7 @@ const siteRuntimeInclude = {
   pages: { orderBy: { slug: "asc" } },
   settings: true,
   storefrontProfile: true,
+  activePublication: { include: { publication: true } },
   publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 },
   connect: true
 } satisfies Prisma.SiteInclude;
@@ -420,6 +421,7 @@ const collectionDetailSiteSelect = {
     }
   },
   storefrontProfile: true,
+  activePublication: { include: { publication: true } },
   publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
 type CollectionDetailSiteRecord = Prisma.SiteGetPayload<{ select: typeof collectionDetailSiteSelect }>;
@@ -469,6 +471,7 @@ const publicRuntimeSiteSelect = {
     }
   },
   storefrontProfile: true,
+  activePublication: { include: { publication: true } },
   publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
 type PublicRuntimeSiteRecord = Prisma.SiteGetPayload<{ select: typeof publicRuntimeSiteSelect }>;
@@ -521,6 +524,7 @@ const customerRuntimeSiteSelect = {
     }
   },
   storefrontProfile: true,
+  activePublication: { include: { publication: true } },
   publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
 type CustomerRuntimeSiteRecord = Prisma.SiteGetPayload<{ select: typeof customerRuntimeSiteSelect }>;
@@ -603,6 +607,7 @@ const publicMetadataSiteSelect = {
     }
   },
   storefrontProfile: true,
+  activePublication: { include: { publication: true } },
   publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
 type PublicMetadataSiteRecord = Prisma.SiteGetPayload<{ select: typeof publicMetadataSiteSelect }>;
@@ -936,7 +941,13 @@ function toPublicSiteShell(
     },
     themeSettings: toAdminShellThemeSettings(settingsRecord),
     storefrontProfile: toStorefrontProfile(profileRecord),
-    latestPublication: record.publications[0] ? toThemePublication(record.publications[0]) : undefined,
+    latestPublication: record.activePublication?.publication
+      ? toThemePublication(record.activePublication.publication)
+      : isMydreamshootsContentSourceSiteId(record.id)
+        ? undefined
+        : record.publications[0]
+          ? toThemePublication(record.publications[0])
+          : undefined,
     pages: record.pages.map((page) => toThemePage({
       ...page,
       draftJson: page.publishedJson
@@ -1019,7 +1030,12 @@ function publicRuntimePageSlugs(slug?: string): string[] | undefined {
   if (!slug) return undefined;
   const normalized = slug === "/" ? "/" : slug.startsWith("/") ? slug : `/${slug}`;
   const legacySlugs = normalized === "/faq" ? ["/help"] : [];
-  return Array.from(new Set([normalized, ...legacySlugs, "/404"]));
+  const policySourceSlugs = normalized === "/privacy"
+    ? ["/privacy", "/privacy-policy", "/policies/privacy", "/policies/privacy-policy"]
+    : normalized === "/terms"
+      ? ["/terms", "/terms-of-service", "/policies/terms", "/policies/terms-of-service"]
+      : [];
+  return Array.from(new Set([normalized, ...legacySlugs, ...policySourceSlugs, "/404"]));
 }
 
 function publicRuntimePageWhere(pageSlugs?: string[]): Prisma.ThemePageWhereInput | undefined {

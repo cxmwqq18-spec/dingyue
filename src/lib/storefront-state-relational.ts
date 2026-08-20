@@ -104,6 +104,8 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
           domains: { orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }] },
           pages: { orderBy: { slug: "asc" } },
           settings: true,
+          storefrontProfile: true,
+          activePublication: { include: { publication: true } },
           connect: true
         }
       }),

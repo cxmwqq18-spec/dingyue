@@ -966,8 +966,7 @@ async function updateDatabase(state, selectedStores) {
         await prisma.themePage.updateMany({
           where: { siteId: store.siteId, slug: "/" },
           data: {
-            draftJson: homePage.draftJson,
-            publishedJson: homePage.publishedJson
+            draftJson: homePage.draftJson
           }
         });
         report.pages += 1;
@@ -984,15 +983,13 @@ async function updateDatabase(state, selectedStores) {
             templateKey: page.templateKey,
             slug: page.slug,
             title: page.title,
-            draftJson: page.draftJson,
-            publishedJson: page.publishedJson
+            draftJson: page.draftJson
           },
           update: {
             pageType: page.pageType,
             templateKey: page.templateKey,
             title: page.title,
-            draftJson: page.draftJson,
-            publishedJson: page.publishedJson
+            draftJson: page.draftJson
           }
         });
         report.pages += 1;
@@ -1006,13 +1003,7 @@ async function updateDatabase(state, selectedStores) {
         report.siteThemes += 1;
       }
 
-      for (const publication of (state.themePublications ?? []).filter((item) => item.siteId === store.siteId)) {
-        await prisma.themePublication.updateMany({
-          where: { siteId: store.siteId, version: publication.version },
-          data: { snapshot: publication.snapshot }
-        });
-        report.publications += 1;
-      }
+      // Historical publications are immutable. Layout changes require a new publication.
     }
     return report;
   } finally {

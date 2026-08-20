@@ -1,10 +1,9 @@
 import "server-only";
 
 import { withSeoDirectorySeo, type SeoDirectoryKind } from "@/lib/dreamshoot-seo-content";
-import { mydreamshootsPublishedRouteForSlug, resolveMydreamshootsPublishedPageMedia } from "@/lib/mydreamshoots-published-contract";
 import { createPublishedSiteSnapshot, resolvePublishedStorefrontContext, type PublishedSiteSnapshot } from "@/lib/storefront-context";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
-import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/lib/types";
+import type { CreativePack, PlatformState, Product, PublishedLeafRouteProjection, Site, ThemePage } from "@/lib/types";
 
 export async function metadataForPublishedStorefrontPage({
   site,
@@ -41,7 +40,9 @@ export async function metadataForPublishedStorefrontPage({
     other: {
       ...existingOther,
       "storefront-publication": context.revisions.publicationId ?? "unpublished",
+      "storefront-publication-version": context.revisions.publicationVersion ?? "unpublished",
       "storefront-facts-revision": context.revisions.factsRevision,
+      "storefront-snapshot-hash": context.revisions.snapshotRevision ?? "unpublished",
       "storefront-build": context.revisions.buildId
     }
   };
@@ -69,24 +70,46 @@ export async function metadataForPublishedStorefrontDirectoryPage({
   const publishedBasePage = snapshot?.pages.find((candidate) => candidate.id === page.id) ?? page;
   const publishedSite = snapshot?.site ?? site;
   const route = publishedSite.id === "site_dreamshoot" && kind === "collection"
-    ? snapshot?.publishedRoutes.find((candidate) => candidate.canonicalSlug === directorySlug)
-      ?? (!snapshot ? mydreamshootsPublishedRouteForSlug(directorySlug) : undefined)
+    ? snapshot?.publishedRoutes.find((candidate): candidate is PublishedLeafRouteProjection => candidate.disposition === "render" && candidate.routeKind === "ai-image-theme-leaf" && candidate.canonicalSlug === directorySlug)
+    : undefined;
+  const pageEntity = route
+    ? snapshot?.publishedPageEntities.find((candidate) => candidate.pageEntityId === route.pageEntityId)
     : undefined;
   const pageMedia = route
     ? snapshot?.publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId)
-      ?? resolveMydreamshootsPublishedPageMedia(route, snapshot?.creativePacks ?? creativePacks)
     : undefined;
+  const directoryPageJson = pageEntity
+    ? {
+        ...publishedBasePage.publishedJson,
+        seo: {
+          ...publishedBasePage.publishedJson.seo,
+          title: pageEntity.metadata.title,
+          description: pageEntity.metadata.description,
+          canonicalPath: pageEntity.canonicalPath,
+          canonical: pageEntity.canonicalPath,
+          index: pageEntity.indexable,
+          follow: pageEntity.metadata.robots.follow,
+          robots: pageEntity.metadata.robots,
+          ogImage: pageMedia?.status === "ready" ? pageMedia.primaryImage : undefined
+        }
+      }
+    : publishedSite.id === "site_dreamshoot" && kind === "collection"
+      ? {
+          ...publishedBasePage.publishedJson,
+          seo: {
+            ...publishedBasePage.publishedJson.seo,
+            canonicalPath: path ?? `/ai-image-generation/${directorySlug}`,
+            canonical: path ?? `/ai-image-generation/${directorySlug}`,
+            index: false,
+            follow: true,
+            robots: { index: false, follow: true },
+            ogImage: undefined
+          }
+        }
+      : withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite);
   const resolvedPage = {
     ...publishedBasePage,
-    publishedJson: {
-      ...withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite),
-      seo: {
-        ...withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite).seo,
-        ...(route
-          ? { ogImage: pageMedia?.status === "ready" && pageMedia.primaryImage ? pageMedia.primaryImage : undefined }
-          : {})
-      }
-    }
+    publishedJson: directoryPageJson
   };
   return metadataForPublishedStorefrontPage({
     site,

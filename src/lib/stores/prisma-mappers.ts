@@ -687,6 +687,7 @@ export function toSite(record: {
   settings?: { draftJson: unknown; publishedJson: unknown } | null;
   storefrontProfile?: Parameters<typeof toStorefrontProfile>[0];
   publications?: Array<Parameters<typeof toThemePublication>[0]>;
+  activePublication?: { publication: Parameters<typeof toThemePublication>[0] } | null;
   connect?: { stripeAccountId: string; onboardingStatus: string; chargesEnabled: boolean; payoutsEnabled: boolean } | null;
 }): import("@/lib/types").Site {
   const primaryDomain = record.domains?.find((domain) => domain.isPrimary)?.domain ?? record.domains?.[0]?.domain ?? "";
@@ -708,7 +709,9 @@ export function toSite(record: {
     },
     themeSettings: toThemeSettings(record.settings),
     storefrontProfile: toStorefrontProfile(record.storefrontProfile),
-    latestPublication: record.publications?.[0] ? toThemePublication(record.publications[0]) : undefined,
+    latestPublication: record.activePublication?.publication
+      ? toThemePublication(record.activePublication.publication)
+      : undefined,
     pages: (record.pages ?? []).map(toThemePage)
   };
 }

@@ -17,10 +17,6 @@ function jsonSize(value) {
   return Buffer.byteLength(JSON.stringify(value ?? {}), "utf8");
 }
 
-function sectionCountForSite(site) {
-  return site.pages.reduce((sum, page) => sum + Object.keys(page.publishedJson?.sections ?? {}).length, 0);
-}
-
 async function upsertSiteTheme(tx, theme) {
   await tx.siteTheme.upsert({
     where: { id: theme.id },
@@ -50,85 +46,26 @@ async function upsertSiteTheme(tx, theme) {
   });
 }
 
-async function upsertPublication(tx, site, publication) {
-  await tx.themePublication.upsert({
-    where: { id: publication.id },
-    create: {
-      id: publication.id,
-      siteId: publication.siteId,
-      version: publication.version,
-      snapshot: clone(publication.snapshot),
-      pageCount: publication.snapshot?.pages?.length ?? site.pages.length,
-      sectionCount: sectionCountForSite(site),
-      snapshotBytes: jsonSize(publication.snapshot),
-      publishedBy: publication.publishedBy ?? "site_admin_demo",
-      publishedAt: publication.publishedAt ? new Date(publication.publishedAt) : undefined
-    },
-    update: {
-      snapshot: clone(publication.snapshot),
-      pageCount: publication.snapshot?.pages?.length ?? site.pages.length,
-      sectionCount: sectionCountForSite(site),
-      snapshotBytes: jsonSize(publication.snapshot)
-    }
-  });
-}
-
 async function syncSite(state, site) {
   const blogPages = site.pages.filter((page) => page.slug === "/blog" || page.slug.startsWith("/blog/"));
   const retainedBlogSlugs = blogPages.map((page) => page.slug);
   const retainedBlogPageIds = blogPages.map((page) => page.id);
   const transactionResult = await prisma.$transaction(async (tx) => {
-    await tx.themeSettings.upsert({
-      where: { siteId: site.id },
-      create: {
-        id: `settings_${site.id}`,
-        siteId: site.id,
-        draftJson: clone(site.themeSettings.draftJson),
-        publishedJson: clone(site.themeSettings.publishedJson)
-      },
-      update: {
-        draftJson: clone(site.themeSettings.draftJson),
-        publishedJson: clone(site.themeSettings.publishedJson)
-      }
-    });
-
-    const conflictingBlogPages = await tx.themePage.deleteMany({
-      where: {
-        siteId: site.id,
-        slug: { in: retainedBlogSlugs },
-        id: { notIn: retainedBlogPageIds }
-      }
-    });
-
-    const staleBlogPages = await tx.themePage.deleteMany({
-      where: {
-        siteId: site.id,
-        slug: { startsWith: "/blog/" },
-        NOT: { slug: { in: retainedBlogSlugs } }
-      }
-    });
+    const existingSettings = await tx.themeSettings.findUnique({ where: { siteId: site.id }, select: { siteId: true } });
+    if (!existingSettings) throw new Error(`ThemeSettings ${site.id} must exist before draft content can be imported.`);
+    await tx.themeSettings.update({ where: { siteId: site.id }, data: { draftJson: clone(site.themeSettings.draftJson) } });
 
     for (const page of blogPages) {
-      await tx.themePage.upsert({
+      const existing = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
+      if (!existing) throw new Error(`ThemePage ${site.id}:${page.slug} must exist before draft content can be imported.`);
+      await tx.themePage.update({
         where: { id: page.id },
-        create: {
-          id: page.id,
-          siteId: site.id,
+        data: {
           pageType: page.pageType,
           templateKey: page.templateKey ?? null,
           slug: page.slug,
           title: page.title,
           draftJson: clone(page.draftJson),
-          publishedJson: clone(page.publishedJson),
-          draftMeta: page.draftMeta ? clone(page.draftMeta) : undefined
-        },
-        update: {
-          pageType: page.pageType,
-          templateKey: page.templateKey ?? null,
-          slug: page.slug,
-          title: page.title,
-          draftJson: clone(page.draftJson),
-          publishedJson: clone(page.publishedJson),
           draftMeta: page.draftMeta ? clone(page.draftMeta) : undefined
         }
       });
@@ -138,13 +75,8 @@ async function syncSite(state, site) {
       await upsertSiteTheme(tx, theme);
     }
 
-    for (const publication of (state.themePublications ?? []).filter((item) => item.siteId === site.id)) {
-      await upsertPublication(tx, site, publication);
-    }
-
     return {
-      conflictingBlogPagesDeleted: conflictingBlogPages.count,
-      staleBlogPagesDeleted: staleBlogPages.count
+      publicationWrites: 0
     };
   }, { timeout: syncTransactionTimeoutMs });
 
@@ -169,8 +101,8 @@ async function syncPlatformStateDocument(state, targetSites) {
     ...state.siteThemes.filter((theme) => targetIds.has(theme.siteId)).map(clone)
   ];
   documentState.themePublications = [
-    ...documentState.themePublications.filter((publication) => !targetIds.has(publication.siteId)),
-    ...state.themePublications.filter((publication) => targetIds.has(publication.siteId)).map(clone)
+    ...documentState.themePublications.filter((publication) => !targetIds.has(publication.siteId) || publication.siteId === "site_dreamshoot"),
+    ...state.themePublications.filter((publication) => targetIds.has(publication.siteId) && publication.siteId !== "site_dreamshoot").map(clone)
   ];
 
   await prisma.platformStateDocument.upsert({

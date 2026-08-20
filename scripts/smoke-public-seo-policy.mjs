@@ -6,7 +6,7 @@ const seoContent = readFileSync(new URL("../src/lib/dreamshoot-seo-content.ts", 
 const siteRouteCanonical = readFileSync(new URL("../src/lib/site-route-canonical.ts", import.meta.url), "utf8");
 const hostCatchAll = readFileSync(new URL("../src/app/[...path]/page.tsx", import.meta.url), "utf8");
 const siteCatchAll = readFileSync(new URL("../src/app/site/[siteSlug]/[...path]/page.tsx", import.meta.url), "utf8");
-const robotsRoute = readFileSync(new URL("../src/app/robots.ts", import.meta.url), "utf8");
+const robotsRoute = readFileSync(new URL("../src/app/robots.txt/route.ts", import.meta.url), "utf8");
 const sitemapRoute = readFileSync(new URL("../src/app/sitemap.xml/route.ts", import.meta.url), "utf8");
 const middleware = readFileSync(new URL("../src/middleware.ts", import.meta.url), "utf8");
 const packageJson = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
@@ -158,7 +158,7 @@ assert.match(
 );
 assert.match(
   robotsRoute,
-  /disallow:\s*"\/"/,
+  /Disallow:\s*\//,
   "grownstride robots.txt should disallow crawling"
 );
 assert.match(

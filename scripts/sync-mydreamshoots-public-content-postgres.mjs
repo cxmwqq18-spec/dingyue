@@ -23,7 +23,7 @@ function contentOverwriteGuardPayload() {
     writeEnabled: !dryRun,
     requiredFlags: ["--db", "--force-content-overwrite"],
     dbRequested,
-    scope: ["ThemeSettings", "ThemePage", "SiteTheme", "ThemePublication"],
+    scope: ["ThemeSettings.draftJson", "ThemePage.draftJson", "SiteTheme.draft/templates"],
     note: dryRun
       ? "No database rows were overwritten. Re-run with --db --force-content-overwrite to import the scoped content records."
       : "Scoped content overwrite was explicitly enabled for this run."
@@ -62,12 +62,10 @@ function scopedRecords(state) {
     settings: {
       id: `settings_${siteId}`,
       siteId,
-      draftJson: json(site.themeSettings.draftJson),
-      publishedJson: json(site.themeSettings.publishedJson)
+      draftJson: json(site.themeSettings.draftJson)
     },
     pages: asArray(site.pages),
-    siteThemes: asArray(state.siteThemes).filter((item) => item.siteId === siteId),
-    themePublications: asArray(state.themePublications).filter((item) => item.siteId === siteId)
+    siteThemes: asArray(state.siteThemes).filter((item) => item.siteId === siteId && item.status === "draft")
   };
 }
 
@@ -80,7 +78,6 @@ function pageData(page) {
     slug: page.slug,
     title: page.title,
     draftJson: json(page.draftJson),
-    publishedJson: json(page.publishedJson),
     draftMeta: page.draftMeta ? clone(page.draftMeta) : undefined,
     updatedAt: toDate(page.updatedAt)
   });
@@ -103,101 +100,42 @@ function siteThemeData(theme) {
   });
 }
 
-function publicationData(publication, site, siteThemes = []) {
-  const activeTheme = siteThemes.find((theme) => theme.status === "active") ?? siteThemes[0];
-  const sourceSnapshot = json(publication.snapshot);
-  const snapshot = {
-    ...clone(sourceSnapshot),
-    pages: asArray(site.pages).map((page) => ({
-      id: page.id,
-      siteId,
-      pageType: page.pageType,
-      templateKey: page.templateKey ?? null,
-      slug: page.slug,
-      title: page.title,
-      draftJson: json(page.draftJson),
-      publishedJson: json(page.publishedJson),
-      draftMeta: page.draftMeta ? clone(page.draftMeta) : undefined,
-      updatedAt: page.updatedAt
-    })),
-    themeSettings: json(site.themeSettings.publishedJson)
-  };
-
-  if (activeTheme) {
-    snapshot.saasTheme = {
-      ...(sourceSnapshot.saasTheme ?? {}),
-      name: activeTheme.name,
-      themeId: activeTheme.themeId,
-      themeKey: activeTheme.themeKey,
-      status: activeTheme.status,
-      templates: json(activeTheme.templates),
-      settings: json(activeTheme.settings),
-      updatedAt: activeTheme.updatedAt
-    };
-  }
-
-  return stripUndefined({
-    id: publication.id,
-    siteId: publication.siteId,
-    version: publication.version,
-    snapshot,
-    pageCount: snapshot.pages.length,
-    sectionCount: site.pages.reduce((sum, page) => sum + Object.keys(page.publishedJson?.sections ?? {}).length, 0),
-    snapshotBytes: Buffer.byteLength(JSON.stringify(snapshot), "utf8"),
-    publishedBy: publication.publishedBy,
-    publishedAt: toDate(publication.publishedAt)
-  });
-}
-
 async function backupScopedContent(tx) {
-  const [pages, settings, siteThemes, publications] = await Promise.all([
+  const [pages, settings, siteThemes] = await Promise.all([
     tx.themePage.findMany({ where: { siteId } }),
     tx.themeSettings.findUnique({ where: { siteId } }),
-    tx.siteTheme.findMany({ where: { siteId } }),
-    tx.themePublication.findMany({ where: { siteId } })
+    tx.siteTheme.findMany({ where: { siteId } })
   ]);
   return {
     createdAt: new Date().toISOString(),
     siteId,
-    scope: ["ThemeSettings", "ThemePage", "SiteTheme", "ThemePublication"],
+    scope: ["ThemeSettings.draftJson", "ThemePage.draftJson", "SiteTheme.draft/templates"],
     pages,
     settings,
-    siteThemes,
-    publications
+    siteThemes
   };
 }
 
 async function writeScopedContent(tx, records) {
-  await tx.themeSettings.upsert({
+  const existingSettings = await tx.themeSettings.findUnique({ where: { siteId }, select: { siteId: true } });
+  if (!existingSettings) throw new Error(`ThemeSettings ${siteId} must exist before draft content can be imported.`);
+  await tx.themeSettings.update({
     where: { siteId },
-    create: records.settings,
-    update: {
-      draftJson: records.settings.draftJson,
-      publishedJson: records.settings.publishedJson
-    }
+    data: { draftJson: records.settings.draftJson }
   });
 
-  const pageIds = new Set(records.pages.map((page) => page.id));
-  const pageSlugs = records.pages.map((page) => page.slug);
-  await tx.themePage.deleteMany({
-    where: {
-      siteId,
-      slug: { in: pageSlugs },
-      id: { notIn: [...pageIds] }
-    }
-  });
   for (const page of records.pages) {
+    const existing = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
+    if (!existing) throw new Error(`ThemePage ${page.id} must exist before draft content can be imported.`);
     const data = pageData(page);
-    await tx.themePage.upsert({
+    await tx.themePage.update({
       where: { id: data.id },
-      create: data,
-      update: {
+      data: {
         pageType: data.pageType,
         templateKey: data.templateKey,
         slug: data.slug,
         title: data.title,
         draftJson: data.draftJson,
-        publishedJson: data.publishedJson,
         draftMeta: data.draftMeta,
         updatedAt: data.updatedAt
       }
@@ -209,41 +147,7 @@ async function writeScopedContent(tx, records) {
     await tx.siteTheme.upsert({ where: { id: data.id }, create: data, update: data });
   }
 
-  for (const publication of records.themePublications) {
-    const data = publicationData(publication, records.site, records.siteThemes);
-    const existing = await tx.themePublication.findUnique({
-      where: {
-        siteId_version: {
-          siteId: data.siteId,
-          version: data.version
-        }
-      }
-    });
-    if (existing) {
-      await tx.themePublication.update({ where: { id: existing.id }, data: { ...data, id: existing.id } });
-    } else {
-      await tx.themePublication.create({ data });
-    }
-  }
-
-  const sourcePublication = [...records.themePublications]
-    .sort((left, right) => Number(right.version ?? 0) - Number(left.version ?? 0))[0];
-  const latestDatabasePublication = await tx.themePublication.findFirst({
-    where: { siteId },
-    orderBy: [{ version: "desc" }]
-  });
-  if (sourcePublication && latestDatabasePublication) {
-    const sourceData = publicationData(sourcePublication, records.site, records.siteThemes);
-    await tx.themePublication.update({
-      where: { id: latestDatabasePublication.id },
-      data: {
-        snapshot: sourceData.snapshot,
-        pageCount: sourceData.pageCount,
-        sectionCount: sourceData.sectionCount,
-        snapshotBytes: sourceData.snapshotBytes
-      }
-    });
-  }
+  // ThemePublication rows are deliberately excluded. A changed source state requires an explicit publish service.
 }
 
 function removeStateCaches() {
@@ -260,7 +164,7 @@ async function main() {
     settings: 1,
     pages: records.pages.length,
     siteThemes: records.siteThemes.length,
-    themePublications: records.themePublications.length
+    themePublications: 0
   };
 
   if (dryRun) {
@@ -288,7 +192,7 @@ async function main() {
         settings: before.settings ? 1 : 0,
         pages: before.pages.length,
         siteThemes: before.siteThemes.length,
-        themePublications: before.publications.length
+        themePublications: 0
       }
     };
   }, { timeout });

@@ -44,7 +44,7 @@ const seoIndexing = readText("src/lib/seo-indexing.ts");
 const publishedContract = readText("src/lib/mydreamshoots-published-contract.ts");
 const jsonLd = readText("src/lib/theme/json-ld.ts");
 const dreamshootSeoContent = readText("src/lib/dreamshoot-seo-content.ts");
-const robots = readText("src/app/robots.ts");
+const robots = readText("src/app/robots.txt/route.ts");
 const nextConfig = readText("next.config.mjs");
 const sitemapRoute = readText("src/app/sitemap.xml/route.ts");
 const hostCatchAllPage = readText("src/app/[...path]/page.tsx");
@@ -127,7 +127,7 @@ const packProfileInvalidRows = [];
 const profileTemplateRows = [];
 const profileTopicRows = [];
 const pageCopyInvalidRows = [];
-const pageCopyProjectionDriftRows = [];
+const packProfileOwnerRows = [];
 for (const item of mydreamshootsTaxonomy.items ?? []) {
   const profile = mydreamshootsUseCaseProfiles[item.slug];
   if (!profile) {
@@ -146,10 +146,9 @@ for (const item of mydreamshootsTaxonomy.items ?? []) {
   if (!packProfile) {
     packProfileInvalidRows.push({ slug: item.slug, reason: "missing" });
   } else {
-    const packTemplateHits = bannedTemplateProfilePhrases.filter((phrase) => JSON.stringify(packProfile).toLowerCase().includes(phrase.toLowerCase()));
-    if (packTemplateHits.length) {
-      packProfileInvalidRows.push({ slug: item.slug, reason: "generic template copy", packTemplateHits });
-    }
+    const operationalFields = ["packId", "creditCost", "outputCount", "toolRef", "promptRef", "mediaRef", "operationalDescription"];
+    const missingOperationalFields = operationalFields.filter((field) => !Object.hasOwn(packProfile, field));
+    if (missingOperationalFields.length) packProfileInvalidRows.push({ slug: item.slug, reason: "operational fields missing", missingOperationalFields });
   }
   const templateHits = bannedTemplateProfilePhrases.filter((phrase) => profileText.toLowerCase().includes(phrase.toLowerCase()));
   if (templateHits.length) {
@@ -191,12 +190,9 @@ for (const slug of requiredPageCopySlugs) {
     pageCopyInvalidRows.push({ slug, invalidFields });
   }
   const projection = dreamshootPackProfiles[slug];
-  const driftFields = projection?.pageEntityId
-    ? [...requiredPageCopyFields, "faqItems"].filter((field) => JSON.stringify(profile[field]) !== JSON.stringify(projection?.[field]))
-    : [];
-  if (driftFields.length) {
-    pageCopyProjectionDriftRows.push({ slug, driftFields });
-  }
+  const forbiddenFields = [...requiredPageCopyFields, "faqItems", "headline", "cardDescription", "detailIntro", "whatCreates", "bestFor", "workflow", "styleNotes"];
+  const ownerFields = forbiddenFields.filter((field) => Object.hasOwn(projection ?? {}, field));
+  if (ownerFields.length) packProfileOwnerRows.push({ slug, ownerFields });
 }
 
 assert(mydreamshootsSite, "MyDreamShoots site must exist in platform state");
@@ -213,7 +209,7 @@ assert(
 );
 assert(
   !packProfileInvalidRows.length,
-  "MyDreamShoots direct pack profiles must stay theme-specific because they feed the visible detail-page hero and workflow copy",
+  "MyDreamShoots pack profiles must keep the complete operational contract",
   { packProfileInvalidRows }
 );
 assert(
@@ -232,9 +228,9 @@ assert(
   { pageCopyInvalidRows }
 );
 assert(
-  !pageCopyProjectionDriftRows.length,
-  "dreamshoot-pack-profiles.json must remain a generated projection of the page copy fields",
-  { pageCopyProjectionDriftRows }
+  !packProfileOwnerRows.length,
+  "dreamshoot-pack-profiles.json must not duplicate page SEO or visible copy fields",
+  { packProfileOwnerRows }
 );
 assert(
   dreamshootSeoContent.includes("mydreamshootsPageCopyForRoute(") &&
@@ -437,7 +433,8 @@ assert(
 assert(
   templates.includes('href: "/creators-circle"') &&
     hostCatchAllPage.includes("canUseStorefrontPartnerTemplate(site, publicPageSlug)") &&
-    hostCatchAllPage.includes("!findPage(site, pageSlug) && !canUseStorefrontPartnerTemplate(site, pageSlug)") &&
+    hostCatchAllPage.includes("!findPage(site, pageSlug)") &&
+    hostCatchAllPage.includes("canUseStorefrontPartnerTemplate(site, pageSlug)") &&
     siteCatchAllPage.includes("dreamshootPartnerTemplateSlugs.has(pageSlug)") &&
     siteCatchAllPage.includes("isDreamshootPartnerTemplateSite(publicSite)") &&
     storefrontRender.includes("function syntheticDreamShootPartnerPage") &&
@@ -518,8 +515,8 @@ for (const slug of [
 
 assert(
   /grownstride\.com/.test(robots) &&
-    /disallow:\s*["']\/["']/.test(robots) &&
-    /allow:\s*["']\/["']/.test(robots) &&
+    /["']Disallow: \/["']/.test(robots) &&
+    /["']Allow: \/["']/.test(robots) &&
     nextConfig.includes('source: "/robots.txt"') &&
     nextConfig.includes('value: "Host, X-Forwarded-Host"') &&
     nextConfig.includes('source: "/search"') &&

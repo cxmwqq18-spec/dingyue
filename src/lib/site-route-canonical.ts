@@ -66,7 +66,7 @@ export function publicContentPageSlug(pathname: string): string {
   const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
   if (requestedPath === "/faq" || requestedPath === "/help") return "/faq";
   if (requestedPath === "/how-it-works") return "/workflow";
-  return policyPageSlug(requestedPath);
+  return internalPolicyPathToPublicPath(requestedPath);
 }
 
 const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {

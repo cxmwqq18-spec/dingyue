@@ -7,7 +7,6 @@ import { storefrontBaseUrl, storefrontOrigin } from "@/lib/storefront-context/se
 import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
-import { mydreamshootsPublishedRouteForSlug, resolveMydreamshootsPublishedPageMedia } from "@/lib/mydreamshoots-published-contract";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
@@ -1069,7 +1068,17 @@ export function buildCollectionDirectoryJsonLd({
   const pagePath = pageSlug ? canonicalSeoDirectoryPathForSite(site, "collection", pageSlug) : canonicalSeoDirectoryPathForSite(site, "collection", "");
   const collectionLabel = cleanText(collectionSlug, pageSlug).replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()) || "Photo Packages";
   const fallbackCollectionLabel = isSpanishXbySite(site) ? "Paquetes de fotos" : collectionLabel;
-  const item = (() => {
+  const item = context.pageCopy && isPrimaryMyDreamShootsSite(site)
+    ? {
+        slug: pageSlug,
+        canonicalPath: context.seo.canonicalPath,
+        label: context.pageCopy.headline,
+        title: context.seo.title,
+        description: context.seo.description,
+        intro: context.pageCopy.detailIntro,
+        useCases: context.pageCopy.bestFor
+      }
+    : (() => {
     try {
       return getSeoDirectoryContentForSite(site, "collection", collectionSlug);
     } catch {
@@ -1087,14 +1096,13 @@ export function buildCollectionDirectoryJsonLd({
         useCases: [isSpanishXbySite(site) ? `${fallbackCollectionLabel} opciones` : `${fallbackCollectionLabel} photo options`]
       };
     }
-  })();
+      })();
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
   const siteName = siteBrandName(site);
   const title = context.seo.title;
   const description = context.seo.description;
-  const publishedRoute = isPrimaryMyDreamShootsSite(site) ? mydreamshootsPublishedRouteForSlug(item.slug) : undefined;
-  const pageMedia = publishedRoute ? resolveMydreamshootsPublishedPageMedia(publishedRoute, creativePacks) : undefined;
+  const pageMedia = isPrimaryMyDreamShootsSite(site) ? context.publishedPageMedia : undefined;
   const matchingPacks = projectPublicCreativePacks(context, creativePacks)
     .filter((pack) => packMatchesCollectionSlug(site, pack, item.slug))
     .filter((pack) => !pageMedia || pack.id === pageMedia.packId);

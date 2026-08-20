@@ -230,6 +230,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const collectionRoute = isCollectionRequest ? parsePublicCollectionRouteForSite(site, path) : undefined;
   if (isCollectionRequest) {
     if (!collectionRoute) return {};
+    if (collectionRoute.collectionSlug && resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath).kind !== "render") return {};
     if (collectionRoute.collectionSlug && !canResolveCollectionSlugForSite(state, site, collectionRoute.collectionSlug)) return {};
     if (resolvePublishedRouteDisposition(snapshot, collectionRootPageSlug).kind !== "render") return {};
     const page = findPage(site, collectionRootPageSlug) ?? findPage(site, "/collections");
@@ -353,6 +354,7 @@ export default async function SiteCatchAllPage({
   };
   if (collectionRoute) {
     if (resolvePublishedRouteDisposition(snapshot, collectionRootPageSlug).kind !== "render") notFound();
+    if (collectionRoute.collectionSlug && resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath).kind !== "render") notFound();
     const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(publicSite, "collection", collectionRoute.collectionSlug);
     if (canonicalCollectionPath !== collectionRoute.canonicalPath) redirect(routePath(canonicalCollectionPath));
   }
@@ -361,7 +363,7 @@ export default async function SiteCatchAllPage({
     dreamshootPartnerTemplateSlugs.has(pageSlug) &&
     (isSpanishXbyStorefrontSite(publicSite) || isDreamshootPartnerTemplateSite(publicSite));
   if (!isCollectionRequest && !canRenderPublishedPublicPath(snapshot, pageSlug, slug)) notFound();
-  if (!isCollectionRequest && !findPage(publicSite, pageSlug) && !canUseDreamShootPartnerTemplate) notFound();
+  if (!isCollectionRequest && !findPage(publicSite, pageSlug) && resolvePublishedRouteDisposition(snapshot, pageSlug).kind !== "render" && !canUseDreamShootPartnerTemplate) notFound();
   const publicPath = collectionRoute?.canonicalPath ?? publicContentPageSlug(slug);
   return renderStorefrontPage({ site: publicSite, slug: pageSlug, publicPath, query: storefrontQuery, routeMode, state, deferCustomerRuntime: pageSlug !== "/cart" });
 }

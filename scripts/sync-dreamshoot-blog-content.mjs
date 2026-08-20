@@ -2168,37 +2168,18 @@ function upsertPage(site, page) {
   site.pages.splice(lastBlogIndex >= 0 ? lastBlogIndex + 1 : site.pages.length, 0, page);
 }
 
-function syncPublicationSnapshots(state, site) {
-  for (const publication of state.themePublications ?? []) {
-    if (publication.siteId !== site.id) continue;
-    publication.snapshot ??= {};
-    publication.snapshot.pages = site.pages.map((page) => ({
-      id: page.id,
-      slug: page.slug,
-      publishedJson: clone(page.publishedJson)
-    }));
-    publication.snapshot.themeSettings = clone(site.themeSettings.publishedJson);
-    if (publication.snapshot.saasTheme?.templates) {
-      const blogHome = site.pages.find((page) => page.slug === "/blog");
-      const firstArticle = site.pages.find((page) => page.slug.startsWith("/blog/"));
-      if (blogHome) publication.snapshot.saasTheme.templates.blog = toTemplate(blogHome.publishedJson);
-      if (firstArticle) publication.snapshot.saasTheme.templates["blog-detail"] = toTemplate(firstArticle.publishedJson);
-    }
-  }
-}
-
 function syncSiteThemes(state, site) {
-  const blogHome = site.pages.find((page) => page.slug === "/blog");
   const firstArticle = site.pages.find((page) => page.slug.startsWith("/blog/"));
   for (const theme of state.siteThemes ?? []) {
     if (theme.siteId !== site.id) continue;
-    const usePublished = theme.status === "active";
+    if (theme.status === "active") continue;
     theme.settings ??= {};
     theme.settings.settings_data ??= {};
-    theme.settings.settings_data.current = clone(usePublished ? site.themeSettings.publishedJson : site.themeSettings.draftJson);
+    theme.settings.settings_data.current = clone(site.themeSettings.draftJson);
     if (!theme.templates) continue;
-    if (blogHome) theme.templates.blog = toTemplate(usePublished ? blogHome.publishedJson : blogHome.draftJson);
-    if (firstArticle) theme.templates["blog-detail"] = toTemplate(usePublished ? firstArticle.publishedJson : firstArticle.draftJson);
+    const blogHome = site.pages.find((page) => page.slug === "/blog");
+    if (blogHome) theme.templates.blog = toTemplate(blogHome.draftJson);
+    if (firstArticle) theme.templates["blog-detail"] = toTemplate(firstArticle.draftJson);
   }
 }
 
@@ -2226,9 +2207,7 @@ function syncSite(state, config) {
   site.themeSettings.draftJson ??= {};
   site.themeSettings.publishedJson ??= {};
     ensureHeader(site.themeSettings.draftJson);
-    ensureHeader(site.themeSettings.publishedJson);
     ensureFooter(site.themeSettings.draftJson, config.footerLabel);
-    ensureFooter(site.themeSettings.publishedJson, config.footerLabel);
 
   const existingBlogHome = site.pages.find((page) => page.slug === "/blog");
   const blogHomeJson = makeBlogHomeJson(config, existingBlogHome);
@@ -2240,7 +2219,7 @@ function syncSite(state, config) {
     slug: "/blog",
     title: config.blogTitle,
     draftJson: clone(blogHomeJson),
-    publishedJson: clone(blogHomeJson)
+    publishedJson: clone(existingBlogHome?.publishedJson ?? blogHomeJson)
   });
 
   const sourceArticlePage = site.pages.find((page) => page.slug.startsWith("/blog/"));
@@ -2255,13 +2234,12 @@ function syncSite(state, config) {
       slug: article.slug,
       title: article.pageTitle,
       draftJson: clone(articleJson),
-      publishedJson: clone(articleJson)
+      publishedJson: clone(existingPage?.publishedJson ?? sourceArticlePage?.publishedJson ?? articleJson)
     });
   }
 
   removeStaleBlogArticles(site, new Set(config.articles.map((article) => article.slug)));
   syncSiteThemes(state, site);
-  syncPublicationSnapshots(state, site);
 }
 
 function seoSettingsForPage(page) {
@@ -2280,22 +2258,6 @@ function seoSettingsForPage(page) {
 function mergeScopedSeoPages(settings) {
   // Page SEO belongs to ThemePage JSON; the legacy settings map is compatibility-only.
   return clone(settings ?? {});
-}
-
-function syncScopedPublicationSnapshots(state, site, pages) {
-  for (const publication of state.themePublications ?? []) {
-    if (publication.siteId !== site.id) continue;
-    publication.snapshot ??= {};
-    const snapshotPages = Array.isArray(publication.snapshot.pages) ? publication.snapshot.pages : [];
-    for (const page of pages) {
-      const entry = { id: page.id, slug: page.slug, publishedJson: clone(page.publishedJson) };
-      const index = snapshotPages.findIndex((item) => item?.slug === page.slug || item?.id === page.id);
-      if (index >= 0) snapshotPages[index] = entry;
-      else snapshotPages.push(entry);
-    }
-    publication.snapshot.pages = snapshotPages;
-    publication.snapshot.themeSettings = mergeScopedSeoPages(publication.snapshot.themeSettings, pages);
-  }
 }
 
 function syncScopedSite(state, config, slugs) {
@@ -2317,15 +2279,13 @@ function syncScopedSite(state, config, slugs) {
       slug: article.slug,
       title: article.pageTitle,
       draftJson: clone(articleJson),
-      publishedJson: clone(articleJson)
+      publishedJson: clone(existingPage?.publishedJson ?? sourceArticlePage?.publishedJson ?? articleJson)
     };
     upsertPage(site, page);
     return page;
   });
 
   site.themeSettings.draftJson = mergeScopedSeoPages(site.themeSettings.draftJson, pages);
-  site.themeSettings.publishedJson = mergeScopedSeoPages(site.themeSettings.publishedJson, pages);
-  syncScopedPublicationSnapshots(state, site, pages);
   return pages;
 }
 
@@ -2360,21 +2320,17 @@ async function updateScopedDatabase(state, pages) {
           where: { siteId_slug: { siteId: MYDREAMSHOOTS_SITE_ID, slug: page.slug } },
           select: { id: true }
         });
-        const id = existing?.id ?? page.id;
+        if (!existing) throw new Error(`ThemePage ${MYDREAMSHOOTS_SITE_ID}:${page.slug} must exist before draft content can be imported.`);
+        const id = existing.id;
         const data = {
           siteId: MYDREAMSHOOTS_SITE_ID,
           pageType: page.pageType,
           templateKey: page.templateKey,
           slug: page.slug,
           title: page.title,
-          draftJson: toPrismaJson(page.draftJson),
-          publishedJson: toPrismaJson(page.publishedJson)
+          draftJson: toPrismaJson(page.draftJson)
         };
-        await tx.themePage.upsert({
-          where: { id },
-          create: { id, ...data },
-          update: data
-        });
+        await tx.themePage.update({ where: { id }, data });
         databasePages.push({ ...page, id });
       }
 
@@ -2383,28 +2339,9 @@ async function updateScopedDatabase(state, pages) {
       await tx.themeSettings.update({
         where: { siteId: MYDREAMSHOOTS_SITE_ID },
         data: {
-          draftJson: toPrismaJson(mergeScopedSeoPages(themeSettings.draftJson, databasePages)),
-          publishedJson: toPrismaJson(mergeScopedSeoPages(themeSettings.publishedJson, databasePages))
+          draftJson: toPrismaJson(mergeScopedSeoPages(themeSettings.draftJson, databasePages))
         }
       });
-
-      const publications = await tx.themePublication.findMany({ where: { siteId: MYDREAMSHOOTS_SITE_ID } });
-      for (const publication of publications) {
-        const snapshot = clone(publication.snapshot ?? {});
-        const snapshotPages = Array.isArray(snapshot.pages) ? snapshot.pages : [];
-        for (const page of databasePages) {
-          const entry = { id: page.id, slug: page.slug, publishedJson: clone(page.publishedJson) };
-          const index = snapshotPages.findIndex((item) => item?.slug === page.slug || item?.id === page.id);
-          if (index >= 0) snapshotPages[index] = entry;
-          else snapshotPages.push(entry);
-        }
-        snapshot.pages = snapshotPages;
-        snapshot.themeSettings = mergeScopedSeoPages(snapshot.themeSettings, databasePages);
-        await tx.themePublication.update({
-          where: { id: publication.id },
-          data: { snapshot: toPrismaJson(snapshot) }
-        });
-      }
 
       const stateDocument = await tx.platformStateDocument.findUnique({ where: { id: "platform" } });
       if (stateDocument?.state && Array.isArray(stateDocument.state.sites)) {
@@ -2414,6 +2351,7 @@ async function updateScopedDatabase(state, pages) {
           stateSite.pages ??= [];
           for (const page of databasePages) {
             const index = stateSite.pages.findIndex((item) => item?.slug === page.slug || item?.id === page.id);
+            if (index < 0) throw new Error(`Platform state ThemePage ${page.slug} must exist before draft content can be imported.`);
             const entry = {
               id: page.id,
               siteId: MYDREAMSHOOTS_SITE_ID,
@@ -2421,16 +2359,13 @@ async function updateScopedDatabase(state, pages) {
               templateKey: page.templateKey,
               slug: page.slug,
               title: page.title,
-              draftJson: clone(page.draftJson),
-              publishedJson: clone(page.publishedJson)
+              draftJson: clone(page.draftJson)
             };
-            if (index >= 0) stateSite.pages[index] = { ...stateSite.pages[index], ...entry };
-            else stateSite.pages.push(entry);
+            stateSite.pages[index] = { ...stateSite.pages[index], ...entry };
           }
           stateSite.themeSettings = {
             ...stateSite.themeSettings,
-            draftJson: mergeScopedSeoPages(stateSite.themeSettings?.draftJson, databasePages),
-            publishedJson: mergeScopedSeoPages(stateSite.themeSettings?.publishedJson, databasePages)
+            draftJson: mergeScopedSeoPages(stateSite.themeSettings?.draftJson, databasePages)
           };
           await tx.platformStateDocument.update({ where: { id: "platform" }, data: { state: toPrismaJson(nextState) } });
         }

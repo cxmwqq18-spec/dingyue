@@ -20,7 +20,7 @@ const files = [
   "src/lib/storefront-context/capabilities.ts",
   "src/lib/seo-indexing.ts",
   "src/lib/theme/publish-preflight.ts",
-  "src/app/robots.ts",
+  "src/app/robots.txt/route.ts",
   "src/middleware.ts",
   "src/app/[...path]/page.tsx",
   "src/app/site/[siteSlug]/[...path]/page.tsx",
@@ -61,6 +61,29 @@ for (const relative of files) {
   for (const pattern of forbidden) {
     if (pattern.test(content)) failures.push({ file: relative, pattern: pattern.source });
   }
+}
+const read = (relative) => fs.readFileSync(path.join(repoRoot, relative), "utf8");
+const packProfileSource = read("src/lib/dreamshoot-pack-profiles.ts");
+const snapshotSource = read("src/lib/storefront-context/snapshot.ts");
+const themeStoreSource = read("src/lib/stores/theme-store.ts");
+const metadataSource = read("src/lib/storefront-metadata.ts");
+const jsonLdSource = read("src/lib/theme/json-ld.ts");
+const indexingSource = read("src/lib/seo-indexing.ts");
+const renderSource = read("src/lib/storefront-render.tsx");
+const ownershipAssertions = [
+  [!/\b(?:seoTitle|galleryTitle|galleryIntro|ctaTitle|ctaSubtitle|faqItems|relatedTitle|relatedSubtitle)\??:/.test(packProfileSource), "Pack Profile still declares page SEO/copy fields"],
+  [/publicationSnapshotIntegrity\(publication\?\.snapshot\)/.test(snapshotSource), "published resolver does not validate snapshot integrity"],
+  [!/mydreamshootsPublishedRouteManifest\(/.test(snapshotSource), "published resolver rebuilds routes from current taxonomy"],
+  [!/mydreamshootsPublishedPageMediaProjections\(/.test(snapshotSource), "published resolver rebuilds media from current packs"],
+  [/publishedPageEntities/.test(themeStoreSource) && /publishedOffers/.test(themeStoreSource) && /publishedFacts/.test(themeStoreSource) && /publishedLinkRefs/.test(themeStoreSource), "publication builder does not persist the complete SEO snapshot"],
+  [/publicationSnapshotHash\(snapshot\)/.test(themeStoreSource), "publication builder does not seal snapshots with a hash"],
+  [/snapshot\?\.publishedPageEntities\.find/.test(metadataSource) && /snapshot\?\.publishedPageMedia\.find/.test(metadataSource), "metadata does not consume published page/media projections"],
+  [/context\.publishedPageMedia/.test(jsonLdSource), "JSON-LD does not consume the published media projection"],
+  [/snapshot\.publishedRoutes/.test(indexingSource) && /snapshot\.publishedPageMedia/.test(indexingSource), "sitemap does not consume published route/media projections"],
+  [/publishedLeafCopy\(publishedSnapshot/.test(renderSource) && /creativePacks: publishedSnapshot\.creativePacks/.test(renderSource), "visible leaf rendering does not consume the published page entity adapter/collections"]
+];
+for (const [ok, message] of ownershipAssertions) {
+  if (!ok) failures.push({ file: "single-owner-contract", pattern: message });
 }
 const result = { ok: failures.length === 0, checked: files, failures, allowlist: ["data/platform-state.json", "prisma/migrations", "scripts/migrate-storefront-single-source.mjs"] };
 console.log(JSON.stringify(result, null, 2));

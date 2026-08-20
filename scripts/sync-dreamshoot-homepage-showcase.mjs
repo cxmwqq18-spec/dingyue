@@ -456,8 +456,7 @@ async function updateDatabase(state, stores) {
         await prisma.themePage.updateMany({
           where: { siteId: store.siteId, slug: "/" },
           data: {
-            draftJson: homePage.draftJson,
-            publishedJson: homePage.publishedJson
+            draftJson: homePage.draftJson
           }
         });
         report.pages += 1;
@@ -472,16 +471,7 @@ async function updateDatabase(state, stores) {
         report.siteThemes += 1;
       }
 
-      const latestPublication = (state.themePublications ?? [])
-        .filter((publication) => publication.siteId === store.siteId)
-        .sort((a, b) => Number(b.version ?? 0) - Number(a.version ?? 0))[0];
-      if (latestPublication) {
-        await prisma.themePublication.updateMany({
-          where: { siteId: store.siteId, version: latestPublication.version },
-          data: { snapshot: latestPublication.snapshot }
-        });
-        report.publications += 1;
-      }
+      // Historical publications are immutable. Homepage changes require a new publication.
     }
     return report;
   } finally {

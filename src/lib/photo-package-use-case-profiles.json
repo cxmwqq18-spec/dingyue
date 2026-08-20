@@ -845,7 +845,18 @@
       "relatedEyebrow": "Related wedding ideas",
       "relatedTitle": "More wedding and invitation photo ideas",
       "relatedSubtitle": "Compare engagement, romantic, and formal couple themes before you choose a wedding direction.",
-      "relatedCtaLabel": "View all packages"
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create?pack_id=pack_dreamshoot_wedding",
+      "relatedLinks": [
+        {
+          "label": "Valentine photo ideas",
+          "href": "/ai-image-generation/valentines-photo"
+        },
+        {
+          "label": "AI holiday portraits",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "valentines-photo": {
       "headline": "AI Valentines Photos for Date Night Cards, Gifts, and Romantic Posts",
@@ -921,7 +932,18 @@
       "relatedEyebrow": "Related romantic ideas",
       "relatedTitle": "More romantic card and gift ideas",
       "relatedSubtitle": "Compare couple, engagement, holiday, and solo-confidence themes before spending credits.",
-      "relatedCtaLabel": "View all packages"
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create?pack_id=pack_dreamshoot_valentine",
+      "relatedLinks": [
+        {
+          "label": "Wedding portrait planning",
+          "href": "/ai-image-generation/wedding-photo"
+        },
+        {
+          "label": "AI holiday portraits",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "christmas-photo": {
       "headline": "AI Christmas Photos for Greeting Cards, Winter Portraits, and Holiday Albums",
@@ -1073,7 +1095,18 @@
       "relatedEyebrow": "Related spooky ideas",
       "relatedTitle": "More costume and spooky photo ideas",
       "relatedSubtitle": "Compare Halloween, nightlife, creator, and seasonal themes before choosing a private gallery direction.",
-      "relatedCtaLabel": "View all packages"
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create?pack_id=pack_dreamshoot_halloween_party_photos",
+      "relatedLinks": [
+        {
+          "label": "Thanksgiving group photos",
+          "href": "/ai-image-generation/thanksgiving-photo"
+        },
+        {
+          "label": "AI holiday portraits",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "thanksgiving-photo": {
       "headline": "AI Thanksgiving Photos for Gratitude Cards, Dinner Portraits, and Family Keepsakes",
@@ -1149,7 +1182,18 @@
       "relatedEyebrow": "Related gathering ideas",
       "relatedTitle": "More gratitude and dinner photo ideas",
       "relatedSubtitle": "Compare Thanksgiving, Holiday, Christmas, and group-friendly themes before choosing a set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create?pack_id=pack_dreamshoot_thanksgiving_group_photos",
+      "relatedLinks": [
+        {
+          "label": "Halloween party photos",
+          "href": "/ai-image-generation/halloween-photo"
+        },
+        {
+          "label": "AI holiday portraits",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "headshot": {
       "headline": "AI Headshots for LinkedIn, Resumes, Founder Bios, and Team Pages",
@@ -1605,7 +1649,18 @@
       "relatedEyebrow": "Related solo ideas",
       "relatedTitle": "More solo confidence photo ideas",
       "relatedSubtitle": "Compare solo, creator, portrait, and romantic seasonal themes before choosing a private photo direction.",
-      "relatedCtaLabel": "View all packages"
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create?pack_id=pack_dreamshoot_singles_awareness_day",
+      "relatedLinks": [
+        {
+          "label": "Valentine photo ideas",
+          "href": "/ai-image-generation/valentines-photo"
+        },
+        {
+          "label": "AI holiday portraits",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "cyberpunk": {
       "headline": "AI Cyberpunk Photos for Neon City Portraits and Futuristic Profile Art",
@@ -1833,7 +1888,18 @@
       "relatedEyebrow": "Related seasonal ideas",
       "relatedTitle": "More seasonal and year-end photo ideas",
       "relatedSubtitle": "Compare broad Holiday, Christmas, Thanksgiving, and romantic seasonal pages before opening a theme.",
-      "relatedCtaLabel": "View all packages"
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create?pack_id=pack_dreamshoot_holiday",
+      "relatedLinks": [
+        {
+          "label": "Thanksgiving group photos",
+          "href": "/ai-image-generation/thanksgiving-photo"
+        },
+        {
+          "label": "Valentine photo ideas",
+          "href": "/ai-image-generation/valentines-photo"
+        }
+      ]
     },
     "cannes": {
       "headline": "AI Cannes Photos for Festival Glamour, Premiere Looks, and Flash Portraits",

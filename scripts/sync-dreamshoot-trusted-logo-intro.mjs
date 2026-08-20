@@ -222,18 +222,8 @@ async function updateDatabase() {
         }
       }
 
-      const publicationResults = [];
-      for (const publication of publications) {
-        const result = applyToPublicationSnapshot(publication.snapshot, sourceSection);
-        publicationResults.push({ id: publication.id, found: result.found, changed: result.changed, logoCounts: result.logoCounts });
-        if (apply && result.changed) {
-          writeOperations.push((tx) => tx.themePublication.update({
-            where: { id: publication.id },
-            data: { snapshot: result.snapshot, ...publicationMetrics(result.snapshot) }
-          }));
-        }
-      }
-      report.push({ siteId: store.siteId, pageResults, themeResults, publicationResults });
+      // Historical publications are immutable. Logo changes require a new publication.
+      report.push({ siteId: store.siteId, pageResults, themeResults, publicationResults: [] });
     }
 
     if (apply && writeOperations.length) {

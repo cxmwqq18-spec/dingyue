@@ -1,5 +1,6 @@
 import type { Price, StorefrontProfileJson, ThemePageJson, ThemeSettings } from "@/lib/types";
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
+import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import type { ResolvedOffer, ResolvedPageSeo, StorefrontContext, StorefrontContextBundle, StorefrontContextMode, StorefrontPublishScope } from "./types";
 import { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
 import { resolveSiteCapability } from "./capabilities";
@@ -195,8 +196,13 @@ export function resolveStorefrontContext(
   const seo = resolveSeo(bundle, pageJson, settings);
   const missingFacts = missingStorefrontProfileFacts(profile);
   const pageCopySlug = seo.canonicalPath.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1];
-  const pageCopy = pageCopySlug && mode === "published" && bundle.publishedPageCopies
-    ? bundle.publishedPageCopies[pageCopySlug]
+  const pageEntity = pageCopySlug && mode === "published" && bundle.publishedPageEntities
+    ? bundle.publishedPageEntities[seo.canonicalPath]
+    : undefined;
+  const pageCopy = pageCopySlug && mode === "published" && bundle.site.id === "site_dreamshoot"
+    ? pageEntity
+      ? pageCopyFromPublishedPageEntity(pageEntity, bundle.publishedLinkRefs ?? [])
+      : undefined
     : pageCopySlug
     ? mydreamshootsPageCopyForRoute({
         siteId: bundle.site.id,
@@ -206,13 +212,29 @@ export function resolveStorefrontContext(
       })
     : undefined;
   if (!seo.description && seo.index) missingFacts.push(`page.${bundle.page.id}.seo.description`);
+  const snapshotFailClosed = mode === "published" && bundle.site.id === "site_dreamshoot" && Boolean(pageCopySlug) && bundle.snapshotIntegrity !== "valid";
+  const resolvedSeo = pageEntity
+    ? {
+        ...seo,
+        title: pageEntity.metadata.title,
+        description: pageEntity.metadata.description,
+        canonicalPath: pageEntity.metadata.canonicalPath,
+        canonicalUrl: canonicalUrlForSite(bundle.site, pageEntity.metadata.canonicalPath),
+        index: pageEntity.metadata.robots.index,
+        follow: pageEntity.metadata.robots.follow,
+        sitemapEligible: pageEntity.sitemapEligible
+      }
+    : snapshotFailClosed
+      ? { ...seo, index: false, follow: true, sitemapEligible: false }
+      : seo;
+  if (snapshotFailClosed) missingFacts.push("published.seo.snapshot");
   return {
     mode,
     site: bundle.site,
     page: bundle.page,
     pageJson,
     settings,
-    seo,
+    seo: resolvedSeo,
     profile,
     offers: resolvedOffers(bundle, pageJson, options.now ?? new Date()),
     catalog: {
@@ -222,21 +244,33 @@ export function resolveStorefrontContext(
     },
     revisions: {
       publicationId: bundle.publication?.id,
+      publicationVersion: bundle.publication?.version,
       factsRevision: mode === "published" && bundle.factsRevision
         ? bundle.factsRevision
         : revision(bundle, mode, pageJson, settings, profile),
       buildId: bundle.buildId || process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local",
       pageEntityId: pageCopy?.pageEntityId,
       copyRevision: pageCopy?.copyRevision,
-      canonicalSlug: pageCopy ? pageCopySlug : undefined
+      canonicalSlug: pageCopy ? pageCopySlug : undefined,
+      snapshotRevision: bundle.publication?.snapshot.revisions?.snapshotHash,
+      routeRevision: bundle.publication?.snapshot.revisions?.routeRevision,
+      pageRevision: pageEntity?.pageRevision,
+      offerRevision: bundle.publication?.snapshot.revisions?.offerRevision,
+      collectionRevision: bundle.publication?.snapshot.revisions?.collectionRevision,
+      linkRevision: bundle.publication?.snapshot.revisions?.linkRevision,
+      policyRevision: bundle.publication?.snapshot.revisions?.policyRevision
     },
     capability: resolveSiteCapability(bundle.site),
     indexability: {
-      index: seo.index,
-      follow: seo.follow,
-      sitemapEligible: seo.sitemapEligible
+      index: resolvedSeo.index,
+      follow: resolvedSeo.follow,
+      sitemapEligible: resolvedSeo.sitemapEligible
     },
     missingFacts,
+    publishedFacts: bundle.publishedFacts,
+    publishedPageMedia: pageEntity ? bundle.publishedPageMedia?.[pageEntity.pageEntityId] : undefined,
+    publishedPageEntity: pageEntity,
+    snapshotIntegrity: bundle.snapshotIntegrity ?? "legacy",
     pageCopy
   };
 }

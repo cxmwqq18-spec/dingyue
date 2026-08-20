@@ -235,14 +235,7 @@ async function main() {
       }
     }
 
-    const publications = await prisma.themePublication.findMany({ where: { siteId } });
-    for (const publication of publications) {
-      const snapshot = rewriteJson(structuredClone(publication.snapshot));
-      if (changed(publication.snapshot, snapshot)) {
-        if (!dryRun) await prisma.themePublication.update({ where: { id: publication.id }, data: { snapshot } });
-        result.themePublications += 1;
-      }
-    }
+    // Historical publications are immutable. Publish a new snapshot through the publication service.
   }
 
   if (!dryRun) clearStateCaches();

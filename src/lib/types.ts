@@ -804,28 +804,267 @@ export interface MediaAsset {
   createdAt: string;
 }
 
+export interface PublishedOfferProjection {
+  productId: string;
+  priceId: string;
+  siteId: string;
+  productName: string;
+  productType: "subscription" | "credit_pack";
+  productMetadata?: ProductMetadata;
+  priceLabel: string;
+  interval: PriceInterval;
+  amountCents: number;
+  currency: string;
+  creditsGranted: number;
+  stripePriceId: string;
+  priceMetadata?: Price["metadata"];
+  checkoutEnabled: boolean;
+  revision: string;
+}
+
+export interface PublishedFactsProjection {
+  identity?: StorefrontProfileJson["identity"];
+  creditLifecycle?: { reserve?: string; consume?: string; release?: string };
+  privacy?: { customerMediaTraining?: boolean; sourceMediaRetentionDays?: number };
+  refund?: { reviewRequired?: boolean; windowDays?: number; effectiveDate?: string };
+  security?: { checkoutProvider?: string; transportClaimKey?: string; storageClaimKey?: string };
+  claimRevision: string;
+}
+
+export interface PublishedPageEntityContent {
+  h1: string;
+  heroIntro: string;
+  metaLabel: string;
+  tags: string[];
+  detailTags: string[];
+  detailIntro: string;
+  whatCreates: string;
+  bestFor: string[];
+  workflow: string[];
+  styleNotes: string[];
+  reviewCriteria: string[];
+  coverNote: string;
+  safetyNote?: string;
+  galleryTitle: string;
+  galleryIntro: string;
+  ctaEyebrow: string;
+  ctaTitle: string;
+  ctaSubtitle: string;
+  ctaLinkEntityId: string;
+  faqEyebrow: string;
+  faqTitle: string;
+  faqItems: Array<{ id: string; question: string; answer: string }>;
+  relatedEyebrow: string;
+  relatedTitle: string;
+  relatedSubtitle: string;
+  relatedCtaLabel: string;
+  relatedLinkEntityIds: string[];
+}
+
+export interface PublishedPageEntityProjection {
+  pageEntityId: string;
+  canonicalPath: string;
+  pageType: string;
+  status: "published" | "review_required";
+  indexable: boolean;
+  sitemapEligible: boolean;
+  metadata: {
+    title: string;
+    description: string;
+    canonicalPath: string;
+    robots: { index: boolean; follow: boolean };
+  };
+  content: PublishedPageEntityContent;
+  mediaEntityId: string;
+  pageRevision: string;
+  copyRevision: string;
+  reviewReasons: string[];
+}
+
+export interface PublishedPageCopyProjection {
+  pageEntityId: string;
+  copyRevision: string;
+  canonicalSlug: string;
+  sourceHash: string;
+}
+
+export interface PublishedPageMediaProjection {
+  mediaEntityId: string;
+  ownerPageEntityId: string;
+  sourcePackId: string;
+  role: "hero";
+  pageEntityId: string;
+  entityRevision: string;
+  packId: string;
+  primaryImage: string;
+  galleryImages: string[];
+  imageAlts: string[];
+  status: "ready" | "review_required";
+  reviewReason?: string;
+}
+
+export interface PublishedLeafRouteProjection {
+  disposition: "render";
+  siteId: "site_dreamshoot";
+  routeKind: "ai-image-theme-leaf";
+  canonicalSlug: string;
+  canonicalPath: string;
+  pageEntityId: string;
+  pageRevision: string;
+  copyRevision: string;
+  copySource: "page-copy" | "missing";
+  fallbackUsed: false;
+  status: "published" | "review_required";
+  indexable: boolean;
+  sitemapEligible: boolean;
+  expectedPackId: string;
+  mediaEntityId: string;
+  reviewReason?: string;
+}
+
+export interface PublishedPolicyRouteProjection {
+  disposition: "render";
+  siteId: "site_dreamshoot";
+  routeKind: "policy";
+  canonicalPath: "/privacy" | "/terms";
+  pageEntityId: string;
+  pageId: string;
+  pageRevision: string;
+  status: "published";
+  indexable: true;
+  sitemapEligible: true;
+}
+
+export interface PublishedRedirectRouteProjection {
+  disposition: "redirect";
+  siteId: "site_dreamshoot";
+  routeKind: "policy-alias";
+  aliasPath: string;
+  targetPath: "/privacy" | "/terms";
+  statusCode: 308;
+  indexable: false;
+  sitemapEligible: false;
+  routeRevision: string;
+}
+
+export type PublishedRouteProjection =
+  | PublishedLeafRouteProjection
+  | PublishedPolicyRouteProjection
+  | PublishedRedirectRouteProjection;
+
+export interface PublishedCollectionRef {
+  ownerPageEntityId: string;
+  collectionEntityId: string;
+  collectionSlug: string;
+  sourcePackId: string;
+  pageEntityId: string;
+  canonicalPath: string;
+  label: string;
+  summary: string;
+  image: string;
+  imageAlt: string;
+  imageMediaEntityId: string;
+  mediaEntityId: string;
+  categorySlug?: string;
+  creditCost: number;
+  outputCount: number;
+  revision: string;
+  entityRevision: string;
+  status: "published" | "review_required";
+}
+
+export type PublishedLinkRef = {
+  linkEntityId: string;
+  ownerPageEntityId: string;
+  kind: "cta" | "related";
+  label: string;
+  href: string;
+  revision: string;
+} & (
+  | { targetType: "published_render"; targetPageEntityId: string }
+  | { targetType: "private_action"; targetPageEntityId?: never }
+);
+
+export interface PublishedSeoSnapshotRevisions {
+  factsRevision: string;
+  routeRevision: string;
+  pageRevision: string;
+  copyRevision: string;
+  mediaRevision: string;
+  packRevision: string;
+  offerRevision: string;
+  collectionRevision: string;
+  policyRevision: string;
+  linkRevision: string;
+  snapshotHash: string;
+}
+
+export type PublishedPackFactProjection = {
+  packId: string;
+  creditCost: number;
+  outputCount: number;
+  revision: string;
+};
+
+export type PublishedSeoSnapshotPage = {
+  id: string;
+  siteId?: string;
+  pageType?: string;
+  templateKey?: string;
+  slug: string;
+  title?: string;
+  publishedJson: ThemePageJson;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export interface PublishedSeoSnapshot {
+  pages: PublishedSeoSnapshotPage[];
+  themeSettings: ThemeSettings;
+  storefrontProfile?: StorefrontProfileJson;
+  saasTheme?: unknown;
+  seoProjectionVersion: 1;
+  publishedRoutes: PublishedRouteProjection[];
+  publishedPageEntities: PublishedPageEntityProjection[];
+  publishedPageCopy: PublishedPageCopyProjection[];
+  publishedPageMedia: PublishedPageMediaProjection[];
+  publishedPackFacts: PublishedPackFactProjection[];
+  publishedOffers: PublishedOfferProjection[];
+  publishedFacts: PublishedFactsProjection;
+  publishedCollectionRefs: PublishedCollectionRef[];
+  publishedLinkRefs: PublishedLinkRef[];
+  revisions: PublishedSeoSnapshotRevisions;
+  snapshotHash: string;
+  buildId: string;
+}
+
+export interface LegacyThemePublicationSnapshot {
+  pages: PublishedSeoSnapshotPage[];
+  themeSettings: ThemeSettings;
+  storefrontProfile?: StorefrontProfileJson;
+  saasTheme?: unknown;
+  seoProjectionVersion?: undefined;
+  publishedRoutes?: PublishedRouteProjection[];
+  publishedPageEntities?: PublishedPageEntityProjection[];
+  publishedPageCopy?: PublishedPageCopyProjection[];
+  publishedPageMedia?: PublishedPageMediaProjection[];
+  publishedPackFacts?: PublishedPackFactProjection[];
+  publishedOffers?: PublishedOfferProjection[];
+  publishedFacts?: PublishedFactsProjection;
+  publishedCollectionRefs?: PublishedCollectionRef[];
+  publishedLinkRefs?: PublishedLinkRef[];
+  revisions?: Partial<PublishedSeoSnapshotRevisions>;
+  snapshotHash?: string;
+  buildId?: string;
+}
+
+export type ThemePublicationSnapshot = PublishedSeoSnapshot | LegacyThemePublicationSnapshot;
+
 export interface ThemePublication {
   id: string;
   siteId: string;
   version: number;
-  snapshot: {
-    pages: Array<{ id: string; slug: string; publishedJson: ThemePageJson }>;
-    themeSettings: ThemeSettings;
-    storefrontProfile?: StorefrontProfileJson;
-    saasTheme?: unknown;
-    seoProjectionVersion?: 1;
-    publishedRoutes?: unknown[];
-    publishedPageCopy?: unknown[];
-    publishedPageMedia?: unknown[];
-    publishedPackFacts?: unknown[];
-    publishedCollectionRefs?: unknown[];
-    revisions?: {
-      factsRevision?: string;
-      routeRevision?: string;
-      copyRevision?: string;
-      mediaRevision?: string;
-    };
-  };
+  snapshot: ThemePublicationSnapshot;
   pageCount?: number;
   sectionCount?: number;
   snapshotBytes?: number;

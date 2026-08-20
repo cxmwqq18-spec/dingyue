@@ -35,10 +35,18 @@ import {
 } from "@/lib/theme/packages";
 import { runThemePublishPreflight, summarizeThemeGlobalVisuals, type PublishPreflightCreativePack } from "@/lib/theme/publish-preflight";
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
-import { mydreamshootsPublishedRouteManifest } from "@/lib/mydreamshoots-published-contract";
+import {
+  buildPublishedPageMediaProjection,
+  mydreamshootsPublishedPageEntities,
+  mydreamshootsPublishedRouteManifest,
+  publishedLinkEntityId,
+  publishedPageCopySourceHash
+} from "@/lib/mydreamshoots-published-contract";
 import { normalizeGlobalSection } from "@/lib/theme/section-normalize";
+import { publicationSnapshotHash, publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import type {
   MediaAsset,
+  Product,
   SectionBlockInstance,
   SectionInstance,
   Site,
@@ -48,11 +56,42 @@ import type {
   ThemeDraftMeta,
   ThemePage,
   ThemePublication,
+  PublishedRouteProjection,
+  PublishedSeoSnapshot,
   ThemeSectionSchema,
   ThemeSettings,
-  ThemeSettingValue,
-  StorefrontProfileJson
+  ThemeSettingValue
 } from "@/lib/types";
+
+function asPublishedMediaPack(pack: PublishPreflightCreativePack | undefined): {
+  id: string;
+  status: "active" | "draft" | "paused";
+  imageUrl?: string;
+  galleryImages?: string[];
+  galleryImageAlts?: string[];
+} | undefined {
+  if (!pack) return undefined;
+  return {
+    id: pack.id,
+    status: (pack.status === "active" || pack.status === "draft" || pack.status === "paused" ? pack.status : "draft") as "active" | "draft" | "paused",
+    imageUrl: pack.imageUrl ?? undefined,
+    galleryImages: pack.galleryImages ?? undefined,
+    galleryImageAlts: pack.galleryImageAlts ?? undefined
+  };
+}
+
+function stableProjection(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(stableProjection);
+  if (!value || typeof value !== "object") return value;
+  return Object.fromEntries(Object.entries(value as Record<string, unknown>)
+    .filter(([, item]) => item !== undefined)
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, item]) => [key, stableProjection(item)]));
+}
+
+function projectionRevision(value: unknown): string {
+  return crypto.createHash("sha256").update(JSON.stringify(stableProjection(value))).digest("hex").slice(0, 20);
+}
 
 import {
   addAuditLogRelational,
@@ -62,6 +101,7 @@ import {
   makeThemeDraftMeta,
   RelationalStoreError,
   themeSettingsDraftJsonWithMeta,
+  mapProduct,
   toMediaAsset,
   toSite,
   toSiteTheme,
@@ -96,8 +136,20 @@ function clearSiteThemeReadCache(siteId: string) {
 async function finalizePublishedTheme(siteId: string, publicationId: string): Promise<void> {
   clearSiteThemeReadCache(siteId);
   clearStorefrontContextCache(siteId);
-  const readback = await prisma.themePublication.findFirst({ where: { siteId, id: publicationId }, select: { id: true, siteId: true, version: true, factsRevision: true } });
-  if (!readback) throw new RelationalStoreError("theme_publish_readback_failed", 500);
+  const readback = await prisma.themePublication.findFirst({
+    where: { siteId, id: publicationId },
+    select: { id: true, siteId: true, version: true, factsRevision: true, snapshot: true }
+  });
+  const snapshot = readback?.snapshot && typeof readback.snapshot === "object" && !Array.isArray(readback.snapshot)
+    ? readback.snapshot as unknown as ThemePublication["snapshot"]
+    : undefined;
+  if (!readback || publicationSnapshotIntegrity(snapshot) !== "valid") {
+    throw new RelationalStoreError("theme_publish_readback_failed", 500);
+  }
+  const activation = await prisma.activeThemePublication.findUnique({ where: { siteId } });
+  if (activation?.publicationId !== publicationId) {
+    throw new RelationalStoreError("theme_publish_activation_readback_failed", 500);
+  }
 }
 
 export type SaasThemeAction =
@@ -140,6 +192,7 @@ async function getSiteWithThemeRecords(db: PrismaLike, siteId: string) {
       pages: { orderBy: { slug: "asc" } },
       settings: true,
       storefrontProfile: true,
+      activePublication: { include: { publication: true } },
       publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 },
       connect: true
     }
@@ -148,9 +201,15 @@ async function getSiteWithThemeRecords(db: PrismaLike, siteId: string) {
   return site;
 }
 
-function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePacks: PublishPreflightCreativePack[] = [], factsRevision?: string): ThemePublication["snapshot"] {
-  const publishedRoutes = site.id === "site_dreamshoot" ? mydreamshootsPublishedRouteManifest() : [];
-  const publishedPageCopy = publishedRoutes.map((route) => {
+export function buildPublicationSnapshot(
+  site: Site,
+  siteTheme?: SiteTheme,
+  creativePacks: PublishPreflightCreativePack[] = [],
+  products: Product[] = []
+): PublishedSeoSnapshot {
+  const publishedAt = Date.now();
+  const sourceRoutes = site.id === "site_dreamshoot" ? mydreamshootsPublishedRouteManifest() : [];
+  const publishedPageCopy = sourceRoutes.map((route) => {
     const copy = mydreamshootsPageCopyForRoute({
       siteId: site.id,
       routeKind: "ai-image-theme-leaf",
@@ -162,48 +221,233 @@ function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePac
       canonicalSlug: route.canonicalSlug,
       copyRevision: copy?.copyRevision ?? route.copyRevision,
       copySource: copy ? "page-copy" : "missing",
-      copy
+      sourceHash: copy
+        ? publishedPageCopySourceHash(copy)
+        : crypto.createHash("sha256").update(JSON.stringify([route.pageEntityId, route.canonicalPath, "missing-copy"])).digest("hex")
     };
   });
-  const publishedPageMedia = site.id === "site_dreamshoot"
-    ? publishedRoutes.map((route) => {
-        const pack = creativePacks.find((candidate) => candidate.id === route.expectedPackId);
-        if (!pack) return undefined;
-        const images = Array.from(new Set([pack.imageUrl, ...(pack.galleryImages ?? [])].filter((value): value is string => Boolean(value && value.trim()))));
-        const legacyMediaRevision = crypto.createHash("sha256").update(JSON.stringify([pack.id, images])).digest("hex").slice(0, 20);
-        const suppliedAlts = pack.galleryImageAlts ?? [];
-        return {
-          mediaEntityId: `legacy-pack-media:${pack.id}:${legacyMediaRevision}`,
-          ownerPageEntityId: route.pageEntityId,
-          sourcePackId: pack.id,
-          role: "hero" as const,
-          pageEntityId: route.pageEntityId,
-          entityRevision: legacyMediaRevision,
-          packId: pack.id,
-          primaryImage: images[0] ?? "",
-          galleryImages: images.slice(1),
-          imageAlts: images.map((_, index) => suppliedAlts[index] || `${route.canonicalSlug.replace(/-/g, " ")} ${index === 0 ? "cover" : `example ${index}`}`),
-          status: route.status === "published" && images.length >= 2 ? "ready" as const : "review_required" as const,
-          ...(route.status !== "published" ? { reviewReason: route.reviewReason } : {})
-        };
-      }).filter(Boolean)
+  const publishedPageMedia = sourceRoutes.map((route) =>
+    buildPublishedPageMediaProjection(route, asPublishedMediaPack(creativePacks.find((candidate) => candidate.id === route.expectedPackId)))
+  );
+  const leafRoutes = sourceRoutes.map((route) => {
+    const media = publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId);
+    if (route.status === "published" && media?.status === "ready") return route;
+    return {
+      ...route,
+      status: "review_required" as const,
+      indexable: false,
+      sitemapEligible: false,
+      reviewReason: route.reviewReason || media?.reviewReason || "PAGE_MEDIA_REQUIRED"
+    };
+  });
+  const policyRouteSpecs = [
+    { canonicalPath: "/privacy" as const, aliases: ["/privacy-policy", "/policies/privacy", "/policies/privacy-policy"] },
+    { canonicalPath: "/terms" as const, aliases: ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"] }
+  ];
+  const publishedPolicyPages = site.id === "site_dreamshoot"
+    ? policyRouteSpecs.flatMap(({ canonicalPath, aliases }) => {
+        const sourcePage = [canonicalPath, ...aliases]
+          .map((slug) => site.pages.find((candidate) => candidate.slug === slug))
+          .find(Boolean);
+        return sourcePage ? [{ ...sourcePage, slug: canonicalPath }] : [];
+      })
     : [];
+  const policyRoutes: PublishedRouteProjection[] = site.id === "site_dreamshoot"
+    ? policyRouteSpecs.flatMap(({ canonicalPath, aliases }) => {
+        const page = publishedPolicyPages.find((candidate) => candidate.slug === canonicalPath);
+        if (!page) return [];
+        const pageRevision = crypto.createHash("sha256").update(JSON.stringify(page.publishedJson)).digest("hex").slice(0, 20);
+        const renderRoute: PublishedRouteProjection = {
+          disposition: "render",
+          siteId: "site_dreamshoot",
+          routeKind: "policy",
+          canonicalPath,
+          pageEntityId: `mydreamshoots:policy:${canonicalPath.slice(1)}`,
+          pageId: page.id,
+          pageRevision,
+          status: "published",
+          indexable: true,
+          sitemapEligible: true
+        };
+        const redirects: PublishedRouteProjection[] = aliases.map((aliasPath) => ({
+          disposition: "redirect",
+          siteId: "site_dreamshoot",
+          routeKind: "policy-alias",
+          aliasPath,
+          targetPath: canonicalPath,
+          statusCode: 308,
+          indexable: false,
+          sitemapEligible: false,
+          routeRevision: crypto.createHash("sha256").update(JSON.stringify([aliasPath, canonicalPath, 308])).digest("hex").slice(0, 20)
+        }));
+        return [renderRoute, ...redirects];
+      })
+    : [];
+  const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...policyRoutes];
+  const sourcePageEntities = site.id === "site_dreamshoot" ? mydreamshootsPublishedPageEntities() : [];
+  const publishedPageEntities = sourcePageEntities.map((entity) => {
+    const route = leafRoutes.find((candidate) => candidate.pageEntityId === entity.pageEntityId);
+    if (!route) return { ...entity, status: "review_required" as const, indexable: false, sitemapEligible: false };
+    return {
+      ...entity,
+      status: route.status,
+      indexable: route.indexable,
+      sitemapEligible: route.sitemapEligible,
+      metadata: {
+        ...entity.metadata,
+        robots: { index: route.indexable, follow: true }
+      },
+      reviewReasons: route.reviewReason
+        ? Array.from(new Set([...entity.reviewReasons, route.reviewReason]))
+        : entity.reviewReasons
+    };
+  });
   const publishedPackFacts = creativePacks.map((pack) => ({
     packId: pack.id,
     creditCost: pack.creditCost,
     outputCount: pack.outputCount,
     revision: crypto.createHash("sha256").update(JSON.stringify([pack.id, pack.creditCost, pack.outputCount])).digest("hex").slice(0, 20)
   }));
-  const routeRevision = crypto.createHash("sha256").update(JSON.stringify(publishedRoutes)).digest("hex").slice(0, 20);
-  const copyRevision = crypto.createHash("sha256").update(JSON.stringify(publishedPageCopy)).digest("hex").slice(0, 20);
-  const mediaRevision = crypto.createHash("sha256").update(JSON.stringify(publishedPageMedia)).digest("hex").slice(0, 20);
-  return {
+  const routeRevision = projectionRevision(publishedRoutes);
+  const pageRevision = projectionRevision(publishedPageEntities);
+  const copyRevision = projectionRevision(publishedPageCopy);
+  const mediaRevision = projectionRevision(publishedPageMedia);
+  const packRevision = projectionRevision(publishedPackFacts);
+  const publishedOffers = products.flatMap((product) => product.prices
+    .filter((price) => product.status === "active" && price.status === "active" && price.amountCents > 0)
+    .filter((price) => Boolean(
+      price.stripePriceId && /^price_[a-zA-Z0-9_]+$/.test(price.stripePriceId) &&
+      price.currency.toLowerCase() === site.currency.toLowerCase() && price.providerVerifiedAt && price.providerFingerprint &&
+      (!price.effectiveFrom || new Date(price.effectiveFrom).getTime() <= publishedAt) &&
+      (!price.effectiveTo || new Date(price.effectiveTo).getTime() > publishedAt)
+    ))
+    .map((price) => ({
+      productId: product.id,
+      priceId: price.id,
+      siteId: product.siteId,
+      productName: product.name,
+      productType: product.type,
+      productMetadata: product.metadata,
+      priceLabel: price.label,
+      interval: price.interval,
+      amountCents: price.amountCents,
+      currency: price.currency,
+      creditsGranted: price.creditsGranted,
+      stripePriceId: price.stripePriceId!,
+      priceMetadata: price.metadata,
+      checkoutEnabled: Boolean(site.connect?.chargesEnabled && site.connect?.payoutsEnabled),
+      revision: crypto.createHash("sha256").update(JSON.stringify([product.id, product.metadata, price])).digest("hex").slice(0, 20)
+    })));
+  const offerRevision = projectionRevision(publishedOffers);
+  const publishedFacts = {
+    identity: site.storefrontProfile?.publishedJson?.identity,
+    privacy: {
+      customerMediaTraining: site.storefrontProfile?.publishedJson?.policyFacts?.usesCustomerMediaForTraining,
+      sourceMediaRetentionDays: site.storefrontProfile?.publishedJson?.policyFacts?.sourceMediaRetentionDays
+    },
+    refund: {
+      reviewRequired: site.storefrontProfile?.publishedJson?.policyFacts?.refundReviewRequired,
+      windowDays: site.storefrontProfile?.publishedJson?.policyFacts?.refundWindowDays,
+      effectiveDate: site.storefrontProfile?.publishedJson?.policyFacts?.effectiveDate
+    },
+    claimRevision: crypto.createHash("sha256").update(JSON.stringify(site.storefrontProfile?.publishedJson ?? {})).digest("hex").slice(0, 20)
+  };
+  const factsRevision = projectionRevision(publishedFacts);
+  const policyRevision = projectionRevision({ privacy: publishedFacts.privacy, refund: publishedFacts.refund });
+  const publishedCollectionRefs = leafRoutes.map((route) => {
+    const entity = publishedPageEntities.find((candidate) => candidate.pageEntityId === route.pageEntityId);
+    const media = publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId);
+    const pack = creativePacks.find((candidate) => candidate.id === route.expectedPackId);
+    const entityRevision = crypto.createHash("sha256").update(JSON.stringify([route, entity, media, pack])).digest("hex").slice(0, 20);
+    return {
+      ownerPageEntityId: route.pageEntityId,
+      collectionEntityId: `mydreamshoots:collection:${route.canonicalSlug}`,
+      collectionSlug: route.canonicalSlug,
+      sourcePackId: route.expectedPackId,
+      pageEntityId: route.pageEntityId,
+      canonicalPath: route.canonicalPath,
+      label: entity?.content.h1 ?? route.canonicalSlug,
+      summary: entity?.metadata.description ?? "",
+      image: media?.primaryImage ?? "",
+      imageAlt: media?.imageAlts[0] ?? "",
+      imageMediaEntityId: route.mediaEntityId,
+      mediaEntityId: route.mediaEntityId,
+      categorySlug: pack?.categoryRecord?.slug ?? pack?.category,
+      creditCost: pack?.creditCost ?? 0,
+      outputCount: pack?.outputCount ?? 0,
+      revision: entityRevision,
+      entityRevision,
+      status: route.status === "published" && media?.status === "ready" ? "published" as const : "review_required" as const
+    };
+  });
+  const collectionRevision = projectionRevision(publishedCollectionRefs);
+  const publishedLinkRefs: NonNullable<ThemePublication["snapshot"]["publishedLinkRefs"]> = publishedPageEntities.flatMap((entity) => {
+    if (entity.status !== "published") return [];
+    const slug = entity.canonicalPath.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1];
+    const copy = slug ? mydreamshootsPageCopyForRoute({ siteId: site.id, routeKind: "ai-image-theme-leaf", canonicalSlug: slug, canonicalPath: entity.canonicalPath }) : undefined;
+    if (!copy) return [];
+    const ctaLabel = copy.ctaLabel.trim();
+    const ctaHref = copy.ctaHref?.trim() ?? "";
+    const privateAction = /^\/app\/create(?:[/?]|$)/.test(ctaHref);
+    const ctaTarget = publishedPageEntities.find((page) => page.canonicalPath === ctaHref);
+    const cta = ctaLabel && ctaHref.startsWith("/") && (privateAction || ctaTarget)
+      ? [privateAction
+        ? {
+          linkEntityId: publishedLinkEntityId(entity.pageEntityId, "cta"),
+          ownerPageEntityId: entity.pageEntityId,
+          kind: "cta" as const,
+          targetType: "private_action" as const,
+          label: ctaLabel,
+          href: ctaHref,
+          revision: crypto.createHash("sha256").update(JSON.stringify([entity.pageEntityId, "cta", ctaLabel, ctaHref])).digest("hex").slice(0, 20)
+        }
+        : {
+          linkEntityId: publishedLinkEntityId(entity.pageEntityId, "cta"),
+          ownerPageEntityId: entity.pageEntityId,
+          kind: "cta" as const,
+          targetType: "published_render" as const,
+          targetPageEntityId: ctaTarget!.pageEntityId,
+          label: ctaLabel,
+          href: ctaHref,
+          revision: crypto.createHash("sha256").update(JSON.stringify([entity.pageEntityId, "cta", ctaLabel, ctaHref])).digest("hex").slice(0, 20)
+        }]
+      : [];
+    const related = (copy.relatedLinks ?? []).flatMap((candidate, index) => {
+      const label = candidate.label.trim();
+      const href = candidate.href.trim();
+      const target = publishedPageEntities.find((page) => page.canonicalPath === href);
+      if (!label || !target) return [];
+      return [{
+        linkEntityId: publishedLinkEntityId(entity.pageEntityId, "related", index),
+        ownerPageEntityId: entity.pageEntityId,
+        targetPageEntityId: target.pageEntityId,
+        targetType: "published_render" as const,
+        kind: "related" as const,
+        label,
+        href,
+        revision: crypto.createHash("sha256").update(JSON.stringify([entity.pageEntityId, target.pageEntityId, "related", label, href])).digest("hex").slice(0, 20)
+      }];
+    });
+    return [...cta, ...related];
+  });
+  const linkRevision = projectionRevision(publishedLinkRefs);
+  const buildId = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local";
+  const snapshot: PublishedSeoSnapshot = {
     seoProjectionVersion: 1,
-    pages: site.pages.map((page) => ({
+    pages: [...site.pages
+      .filter((page) => site.id !== "site_dreamshoot" || !new Set(policyRouteSpecs.flatMap((spec) => [spec.canonicalPath, ...spec.aliases])).has(page.slug)),
+      ...publishedPolicyPages]
+      .map((page) => ({
       id: page.id,
+      siteId: page.siteId,
+      pageType: page.pageType,
+      templateKey: page.templateKey,
       slug: page.slug,
-      publishedJson: cloneJson(page.publishedJson)
-    })),
+      title: page.title,
+      publishedJson: cloneJson(page.publishedJson),
+      createdAt: page.createdAt,
+      updatedAt: page.updatedAt
+      })),
     themeSettings: cloneJson(site.themeSettings.publishedJson),
     storefrontProfile: site.storefrontProfile?.publishedJson ? cloneJson(site.storefrontProfile.publishedJson) : undefined,
     saasTheme: siteTheme
@@ -218,11 +462,35 @@ function buildPublicationSnapshot(site: Site, siteTheme?: SiteTheme, creativePac
         }
       : undefined,
     publishedRoutes,
+    publishedPageEntities,
     publishedPageCopy,
     publishedPageMedia,
     publishedPackFacts,
-    publishedCollectionRefs: [],
-    revisions: { factsRevision, routeRevision, copyRevision, mediaRevision }
+    publishedOffers,
+    publishedFacts,
+    publishedCollectionRefs,
+    publishedLinkRefs,
+    revisions: {
+      factsRevision,
+      routeRevision,
+      pageRevision,
+      copyRevision,
+      mediaRevision,
+      packRevision,
+      offerRevision,
+      collectionRevision,
+      policyRevision,
+      linkRevision,
+      snapshotHash: ""
+    },
+    snapshotHash: "",
+    buildId
+  };
+  const snapshotHash = publicationSnapshotHash(snapshot);
+  return {
+    ...snapshot,
+    snapshotHash,
+    revisions: { ...snapshot.revisions, snapshotHash }
   };
 }
 
@@ -231,6 +499,84 @@ function buildPublicationSnapshotStats(snapshot: ThemePublication["snapshot"]) {
   const sectionCount = snapshot.pages.reduce((sum, page) => sum + (page.publishedJson.sectionsOrder?.length ?? 0), 0);
   const snapshotBytes = Buffer.byteLength(JSON.stringify(snapshot), "utf8");
   return { pageCount, sectionCount, snapshotBytes };
+}
+
+type ImmutablePublicationScope = {
+  type: "page" | "site";
+  pageIds: string[];
+  includeThemeSettings: boolean;
+  includeStorefrontProfile: boolean;
+};
+
+async function createAndActivateImmutablePublication(
+  tx: Prisma.TransactionClient,
+  params: {
+    siteId: string;
+    version: number;
+    snapshot: PublishedSeoSnapshot;
+    actor: string;
+    scope: ImmutablePublicationScope;
+    manifestHash?: string;
+  }
+) {
+  if (publicationSnapshotIntegrity(params.snapshot) !== "valid") {
+    throw new RelationalStoreError("theme_publish_snapshot_integrity_failed", 409);
+  }
+  const stats = buildPublicationSnapshotStats(params.snapshot);
+  const publicationRecord = await tx.themePublication.create({
+    data: {
+      id: `pub_${params.siteId}_${Date.now().toString(36)}_${crypto.randomBytes(4).toString("hex")}`,
+      siteId: params.siteId,
+      version: params.version,
+      snapshot: params.snapshot as unknown as Prisma.InputJsonValue,
+      pageCount: stats.pageCount,
+      sectionCount: stats.sectionCount,
+      snapshotBytes: stats.snapshotBytes,
+      publishedBy: params.actor,
+      scope: params.scope as unknown as Prisma.InputJsonValue,
+      manifestHash: params.manifestHash,
+      factsRevision: params.snapshot.revisions.factsRevision
+    } as unknown as Prisma.ThemePublicationUncheckedCreateInput
+  });
+  await tx.activeThemePublication.upsert({
+    where: { siteId: params.siteId },
+    create: { siteId: params.siteId, publicationId: publicationRecord.id, activatedBy: params.actor },
+    update: { publicationId: publicationRecord.id, activatedAt: new Date(), activatedBy: params.actor }
+  });
+  return publicationRecord;
+}
+
+export async function publishSeoSnapshotRelational(params: {
+  siteId: string;
+  snapshot: PublishedSeoSnapshot;
+  actor?: string;
+  scope?: ImmutablePublicationScope;
+}): Promise<{ publication: ThemePublication; publishedVersion: number }> {
+  const actor = params.actor ?? "site_admin_demo";
+  const scope = params.scope ?? { type: "site", pageIds: [], includeThemeSettings: true, includeStorefrontProfile: true };
+  const result = await prisma.$transaction(async (tx) => {
+    const latest = await tx.themePublication.findFirst({ where: { siteId: params.siteId }, orderBy: [{ version: "desc" }, { publishedAt: "desc" }], select: { version: true } });
+    const publishedVersion = (latest?.version ?? 0) + 1;
+    const publicationRecord = await createAndActivateImmutablePublication(tx, {
+      siteId: params.siteId,
+      version: publishedVersion,
+      snapshot: params.snapshot,
+      actor,
+      scope
+    });
+    await addAuditLogRelational(tx, {
+      siteId: params.siteId,
+      actorType: "site_admin",
+      actorId: actor,
+      action: "seo_snapshot_published",
+      targetType: "theme_publication",
+      targetId: publicationRecord.id,
+      metadata: { version: publishedVersion, snapshotHash: params.snapshot.snapshotHash }
+    });
+    return { publication: toThemePublication(publicationRecord), publishedVersion };
+  });
+  await finalizePublishedTheme(params.siteId, result.publication.id);
+  return result;
 }
 
 function normalizedPublishPack(pack: PublishPreflightCreativePack): PublishPreflightCreativePack {
@@ -1297,23 +1643,29 @@ export async function publishDraftPageRelational(
       }
     });
 
-    const factsRevision = crypto.createHash("sha256").update(JSON.stringify({ pageId, version: publishedVersion })).digest("hex").slice(0, 20);
-    const snapshot = buildPublicationSnapshot(site, undefined, targetContext.catalog.activePacks, factsRevision);
-    const snapshotStats = buildPublicationSnapshotStats(snapshot);
-    const publicationRecord = await tx.themePublication.create({
-      data: {
-        id: `pub_${siteId}_${Date.now().toString(36)}`,
-        siteId,
-        version: publishedVersion,
-        snapshot: snapshot as unknown as Prisma.InputJsonValue,
-        pageCount: snapshotStats.pageCount,
-        sectionCount: snapshotStats.sectionCount,
-        snapshotBytes: snapshotStats.snapshotBytes,
-        publishedBy: actor,
-        scope: { type: "page", pageIds: [pageId], includeThemeSettings: false, includeStorefrontProfile: false } as unknown as Prisma.InputJsonValue,
-        manifestHash: crypto.createHash("sha256").update(JSON.stringify({ type: "page", pageIds: [pageId], version: publishedVersion })).digest("hex"),
-        factsRevision
-      } as unknown as Prisma.ThemePublicationUncheckedCreateInput
+    const [publicationProductRows, publicationPackRows] = await Promise.all([
+      tx.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: { id: "asc" } }),
+      tx.creativePack.findMany({
+        where: { siteId },
+        select: { id: true, status: true, creditCost: true, outputCount: true, category: true, imageUrl: true, galleryImages: true, galleryImageAlts: true, categoryRecord: { select: { slug: true } } },
+        orderBy: { id: "asc" }
+      })
+    ]);
+    const snapshot = buildPublicationSnapshot(
+      site,
+      undefined,
+      publicationPackRows.map((pack) => normalizedPublishPack(pack as PublishPreflightCreativePack)),
+      publicationProductRows.map(mapProduct)
+    );
+    const publicationScope = { type: "page" as const, pageIds: [pageId], includeThemeSettings: false, includeStorefrontProfile: false };
+    const publicationManifestHash = crypto.createHash("sha256").update(JSON.stringify({ ...publicationScope, version: publishedVersion })).digest("hex");
+    const publicationRecord = await createAndActivateImmutablePublication(tx, {
+      siteId,
+      version: publishedVersion,
+      snapshot,
+      actor,
+      scope: publicationScope,
+      manifestHash: publicationManifestHash
     });
     const publication = toThemePublication(publicationRecord);
     await addAuditLogRelational(tx, {
@@ -1421,7 +1773,7 @@ export async function publishDraftSiteRelational(
     ) {
       throw new RelationalStoreError("storefront_profile_incomplete", 409);
     }
-    const [activePrices, invalidPackCount, otherSites, publicationPacks] = await Promise.all([
+    const [activePrices, invalidPackCount, otherSites, publicationPacks, publicationProductRows] = await Promise.all([
       tx.price.findMany({
         where: { siteId, status: "active", product: { status: "active" } },
         select: { id: true, stripePriceId: true, currency: true, interval: true, amountCents: true, providerVerifiedAt: true, providerFingerprint: true, effectiveFrom: true, effectiveTo: true }
@@ -1432,7 +1784,8 @@ export async function publishDraftSiteRelational(
         where: { siteId },
         select: { id: true, status: true, creditCost: true, outputCount: true, category: true, imageUrl: true, galleryImages: true, galleryImageAlts: true, categoryRecord: { select: { slug: true } } },
         orderBy: { id: "asc" }
-      })
+      }),
+      tx.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: { id: "asc" } })
     ]);
     const normalizedPreflightPacks = preflightBundle.creativePacks.map(normalizedPublishPack).sort((left, right) => left.id.localeCompare(right.id));
     const normalizedPublicationPacks = publicationPacks.map((pack) => normalizedPublishPack(pack as PublishPreflightCreativePack)).sort((left, right) => left.id.localeCompare(right.id));
@@ -1479,23 +1832,14 @@ export async function publishDraftSiteRelational(
       profile.publishedJson = cloneJson(normalizedPublishedProfile!);
       await tx.storefrontProfile.update({ where: { siteId }, data: { publishedJson: cloneJson(profile.publishedJson) as unknown as Prisma.InputJsonValue } });
     }
-    const factsRevision = crypto.createHash("sha256").update(JSON.stringify({ pages: manifest.pageIds, profile: normalizedPublishedProfile, version: publishedVersion })).digest("hex").slice(0, 20);
-    const snapshot = buildPublicationSnapshot(site, undefined, normalizedPublicationPacks, factsRevision);
-    const snapshotStats = buildPublicationSnapshotStats(snapshot);
-    const publicationRecord = await tx.themePublication.create({
-      data: {
-        id: `pub_${siteId}_${Date.now().toString(36)}`,
-        siteId,
-        version: publishedVersion,
-        snapshot: snapshot as unknown as Prisma.InputJsonValue,
-        pageCount: snapshotStats.pageCount,
-        sectionCount: snapshotStats.sectionCount,
-        snapshotBytes: snapshotStats.snapshotBytes,
-        publishedBy: actor,
-        scope: manifest as unknown as Prisma.InputJsonValue,
-        manifestHash: manifest.manifestHash,
-        factsRevision
-      } as unknown as Prisma.ThemePublicationUncheckedCreateInput
+    const snapshot = buildPublicationSnapshot(site, undefined, normalizedPublicationPacks, publicationProductRows.map(mapProduct));
+    const publicationRecord = await createAndActivateImmutablePublication(tx, {
+      siteId,
+      version: publishedVersion,
+      snapshot,
+      actor,
+      scope: { type: "site", ...manifest },
+      manifestHash: manifest.manifestHash
     });
     await addAuditLogRelational(tx, { siteId, actorType: "site_admin", actorId: actor, action: "theme_site_published", targetType: "theme", targetId: siteId, metadata: { version: publishedVersion, manifestHash: manifest.manifestHash, pageIds: manifest.pageIds.join(",") } });
     return { site, publication: toThemePublication(publicationRecord), publishedVersion };
@@ -1589,6 +1933,38 @@ export async function restoreDraftThemeFromPublicationRelational(
 
     return { site, publication };
   }, { timeout: 20000 });
+}
+
+export async function activateThemePublicationRelational(
+  siteId: string,
+  publicationId: string,
+  actor = "site_admin_demo"
+): Promise<{ publication: ThemePublication }> {
+  const publication = await prisma.$transaction(async (tx) => {
+    const publicationRecord = await tx.themePublication.findFirst({ where: { siteId, id: publicationId } });
+    if (!publicationRecord) throw new RelationalStoreError("theme_publication_not_found", 404);
+    if (publicationSnapshotIntegrity(publicationRecord.snapshot as unknown as ThemePublication["snapshot"]) !== "valid") {
+      throw new RelationalStoreError("theme_publication_snapshot_invalid", 409);
+    }
+    await tx.activeThemePublication.upsert({
+      where: { siteId },
+      create: { siteId, publicationId, activatedBy: actor },
+      update: { publicationId, activatedAt: new Date(), activatedBy: actor }
+    });
+    await addAuditLogRelational(tx, {
+      siteId,
+      actorType: "site_admin",
+      actorId: actor,
+      action: "theme_publication_activated",
+      targetType: "theme_publication",
+      targetId: publicationId,
+      metadata: { version: publicationRecord.version }
+    });
+    return toThemePublication(publicationRecord);
+  });
+  clearSiteThemeReadCache(siteId);
+  clearStorefrontContextCache(siteId);
+  return { publication };
 }
 
 export async function upsertThemeMediaAssetRelational(params: {

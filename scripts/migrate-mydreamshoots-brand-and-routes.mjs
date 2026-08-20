@@ -147,8 +147,7 @@ async function main() {
     await prisma.themeSettings.update({
       where: { siteId },
       data: {
-        draftJson: rewriteJson(settings.draftJson),
-        publishedJson: rewriteJson(settings.publishedJson)
+        draftJson: rewriteJson(settings.draftJson)
       }
     });
   }
@@ -161,8 +160,7 @@ async function main() {
       data: {
         slug: nextSlug,
         title: replaceBrandText(page.title),
-        draftJson: rewriteJson(page.draftJson),
-        publishedJson: rewriteJson(page.publishedJson)
+        draftJson: rewriteJson(page.draftJson)
       }
     });
   }
@@ -179,13 +177,7 @@ async function main() {
     });
   }
 
-  const publications = await prisma.themePublication.findMany({ where: { siteId } });
-  for (const publication of publications) {
-    await prisma.themePublication.update({
-      where: { id: publication.id },
-      data: { snapshot: rewriteJson(publication.snapshot) }
-    });
-  }
+  // Historical publications are immutable. Brand and route changes require a new publication.
 
   const mediaAssets = await prisma.mediaAsset.findMany({ where: { siteId } });
   for (const asset of mediaAssets) {

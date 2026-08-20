@@ -373,28 +373,7 @@ async function main() {
     }
   }
 
-  for (const publication of await prisma.themePublication.findMany({ where: { siteId: site.id } })) {
-    const snapshot = rewriteJson(structuredClone(publication.snapshot));
-    for (const page of snapshot?.pages ?? []) {
-      const canonicalPath = policyCanonicalPathBySlug[page.slug];
-      if (!canonicalPath) continue;
-      page.title = policyCopyByCanonicalPath[canonicalPath].pageTitle;
-      page.draftJson = updatePolicyJson(page.draftJson ?? page.publishedJson ?? {}, canonicalPath);
-      page.publishedJson = updatePolicyJson(page.publishedJson ?? page.draftJson ?? {}, canonicalPath);
-    }
-    for (const themeSettingsJson of [snapshot?.themeSettings?.draftJson, snapshot?.themeSettings?.publishedJson, snapshot?.themeSettings]) {
-      if (!themeSettingsJson) continue;
-      for (const page of snapshot?.pages ?? []) updateThemeSeoPolicyPage(themeSettingsJson, page.id, policyCanonicalPathBySlug[page.slug]);
-    }
-    updatePolicyTemplate(snapshot?.saasTheme?.templates?.privacy, "/privacy");
-    updatePolicyTemplate(snapshot?.saasTheme?.templates?.terms, "/terms");
-    updatePolicyTemplate(snapshot?.saasTheme?.templates?.content, "/content");
-    updatePolicyTemplate(snapshot?.saasTheme?.templates?.refunds, "/refunds");
-    if (changed(publication.snapshot, snapshot)) {
-      if (!dryRun) await prisma.themePublication.update({ where: { id: publication.id }, data: { snapshot } });
-      result.themePublications += 1;
-    }
-  }
+  // Historical publications are immutable. Policy changes require a new publication.
 
   for (const pack of await prisma.creativePack.findMany({ where: { siteId: site.id } })) {
     const next = {

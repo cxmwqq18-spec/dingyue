@@ -5,7 +5,6 @@ import path from "node:path";
 
 const repoRoot = process.cwd();
 const statePath = path.join(repoRoot, "data", "platform-state.json");
-const packProfilesPath = path.join(repoRoot, "src", "lib", "dreamshoot-pack-profiles.json");
 const useCaseProfilesPath = path.join(repoRoot, "src", "lib", "photo-package-use-case-profiles.json");
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
@@ -135,19 +134,16 @@ function applyFieldUpdate(record, fields, changes, targetType) {
   }
 }
 
-function profileForDreamshootCategory(category, packProfiles, categoryProfiles) {
-  if (!category.parentId) {
-    return lookup(categoryProfiles, category.slug);
-  }
-  return lookup(packProfiles, category.slug, dreamshootPackAliases);
+function profileForDreamshootCategory(category, categoryProfiles) {
+  return lookup(categoryProfiles, category.slug, dreamshootPackAliases);
 }
 
-function profileForDreamshootPack(pack, packProfiles, categoryById) {
+function profileForDreamshootPack(pack, categoryProfiles, categoryById) {
   const category = categoryById.get(pack.categoryId);
-  return lookup(packProfiles, category?.slug, dreamshootPackAliases)
-    ?? lookup(packProfiles, pack.category, dreamshootPackAliases)
-    ?? lookup(packProfiles, pack.name, dreamshootPackAliases)
-    ?? lookup(packProfiles, pack.id, dreamshootPackAliases);
+  return lookup(categoryProfiles, category?.slug, dreamshootPackAliases)
+    ?? lookup(categoryProfiles, pack.category, dreamshootPackAliases)
+    ?? lookup(categoryProfiles, pack.name, dreamshootPackAliases)
+    ?? lookup(categoryProfiles, pack.id, dreamshootPackAliases);
 }
 
 function profileForAidreamcapesCategory(category, categoryProfiles) {
@@ -184,7 +180,6 @@ async function updateDatabase(changes) {
 }
 
 const state = readJson(statePath);
-const dreamshootPackProfiles = readJson(packProfilesPath);
 const useCaseProfiles = readJson(useCaseProfilesPath);
 const dreamshootCategoryProfiles = useCaseProfiles.mydreamshootsCategories ?? {};
 const aidreamcapesCategoryProfiles = useCaseProfiles.aidreamcapesCategories ?? {};
@@ -196,7 +191,7 @@ const changes = [];
 for (const category of categories) {
   if (!targetSiteIds.has(category.siteId) || category.status !== "active") continue;
   const profile = category.siteId === "site_dreamshoot"
-    ? profileForDreamshootCategory(category, dreamshootPackProfiles, dreamshootCategoryProfiles)
+    ? profileForDreamshootCategory(category, dreamshootCategoryProfiles)
     : profileForAidreamcapesCategory(category, aidreamcapesCategoryProfiles);
   if (!profile) continue;
   applyFieldUpdate(category, {
@@ -209,7 +204,7 @@ for (const category of categories) {
 for (const pack of packs) {
   if (!targetSiteIds.has(pack.siteId) || pack.status !== "active") continue;
   if (pack.siteId === "site_dreamshoot") {
-    const profile = profileForDreamshootPack(pack, dreamshootPackProfiles, categoryById);
+    const profile = profileForDreamshootPack(pack, dreamshootCategoryProfiles, categoryById);
     if (!profile) continue;
     applyFieldUpdate(pack, {
       headline: profile.headline,

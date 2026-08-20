@@ -651,12 +651,11 @@ async function syncPolicyPagesIntoStateDocument(site, pages) {
       templateKey: page.templateKey,
       slug: page.slug,
       title: page.title,
-      draftJson: page.json,
-      publishedJson: page.json
+      draftJson: page.json
     };
     const existingIndex = stateSite.pages.findIndex((item) => item.slug === page.slug);
-    if (existingIndex >= 0) stateSite.pages[existingIndex] = { ...stateSite.pages[existingIndex], ...nextPage };
-    else stateSite.pages.push(nextPage);
+    if (existingIndex < 0) throw new Error(`Platform state policy page ${page.slug} must exist before draft content can be imported.`);
+    stateSite.pages[existingIndex] = { ...stateSite.pages[existingIndex], ...nextPage };
   }
   await prisma.platformStateDocument.update({ where: { id: "platform" }, data: { state } });
   return true;
@@ -672,24 +671,18 @@ async function syncSite(site, { policiesOnly = false, dryRun = false } = {}) {
     return true;
   }
   for (const page of pages) {
-    await prisma.themePage.upsert({
+    const existing = await prisma.themePage.findUnique({
       where: { siteId_slug: { siteId: site.id, slug: page.slug } },
-      create: {
-        id: `${site.id}_${page.idSuffix}`,
-        siteId: site.id,
-        pageType: page.json.pageType ?? "content",
-        templateKey: page.templateKey,
-        slug: page.slug,
-        title: page.title,
-        draftJson: page.json,
-        publishedJson: page.json
-      },
-      update: {
+      select: { id: true }
+    });
+    if (!existing) throw new Error(`ThemePage ${site.id}:${page.slug} must exist before draft content can be imported.`);
+    await prisma.themePage.update({
+      where: { id: existing.id },
+      data: {
         pageType: page.json.pageType ?? "content",
         templateKey: page.templateKey,
         title: page.title,
-        draftJson: page.json,
-        publishedJson: page.json
+        draftJson: page.json
       }
     });
   }
@@ -705,8 +698,7 @@ async function syncSite(site, { policiesOnly = false, dryRun = false } = {}) {
     await prisma.themeSettings.update({
       where: { siteId: site.id },
       data: {
-        draftJson: upsertFooterLinks(themeSettings.draftJson, profile),
-        publishedJson: upsertFooterLinks(themeSettings.publishedJson, profile)
+        draftJson: upsertFooterLinks(themeSettings.draftJson, profile)
       }
     });
   }

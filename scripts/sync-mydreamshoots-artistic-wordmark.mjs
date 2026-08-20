@@ -104,13 +104,7 @@ async function main() {
       }
     }
 
-    for (const publication of await prisma.themePublication.findMany({ where: { siteId: site.id } })) {
-      const snapshot = syncThemeJson(cloneJson(publication.snapshot));
-      if (changed(publication.snapshot, snapshot)) {
-        await prisma.themePublication.update({ where: { id: publication.id }, data: { snapshot } });
-        result.themePublications += 1;
-      }
-    }
+    // Historical publications are immutable. Wordmark changes require a new publication.
   }
 
   console.log(`Synced MyDreamShoots artistic wordmark: ${JSON.stringify(result)}`);

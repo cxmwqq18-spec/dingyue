@@ -28,6 +28,30 @@ const platformState = readJson("data/platform-state.json");
 const blackFridayPack = (platformState.creativePacks ?? []).find((pack) => pack.siteId === "site_dreamshoot" && normalizeSlug(pack.category || pack.name) === "black-friday");
 const blackFridayMediaMismatch = Boolean(blackFridayPack && [blackFridayPack.imageUrl, ...(blackFridayPack.galleryImages ?? [])].some((image) => /creator-portraits|anime-avatar/i.test(String(image ?? ""))));
 
+async function activeProjectionRowCount() {
+  const rawUrl = process.env.DATABASE_URL?.trim();
+  if (!rawUrl) return null;
+  try {
+    const url = new URL(rawUrl);
+    if (!["localhost", "127.0.0.1", "::1"].includes(url.hostname)) return null;
+    const { PrismaClient } = await import("@prisma/client");
+    const prisma = new PrismaClient();
+    try {
+      const active = await prisma.activeThemePublication.findUnique({
+        where: { siteId: "site_dreamshoot" },
+        include: { publication: true }
+      });
+      return Array.isArray(active?.publication?.snapshot?.publishedPageEntities)
+        ? active.publication.snapshot.publishedPageEntities.length
+        : 0;
+    } finally {
+      await prisma.$disconnect();
+    }
+  } catch {
+    return null;
+  }
+}
+
 const requiredSlugs = (taxonomy.items ?? [])
   .map((item) => normalizeSlug(item.slug))
   .filter(Boolean);
@@ -76,12 +100,19 @@ assert.deepEqual([...new Set(requiredSlugs)].sort(), requiredSlugs.slice().sort(
 
 const missingProfiles = [];
 const invalidProfiles = [];
-const projectionDriftRows = [];
+const packProfileOwnerRows = [];
 const routeRows = [];
 const fallbackRows = [];
 const missingRows = [];
 const reviewRows = [];
 const faqIds = new Set();
+const genericPatterns = [
+  ["galleryIntro", /^Review .+ examples before opening the .+ workflow\.$/i],
+  ["ctaTitle", /^Create .+ images in your private studio\.$/i],
+  ["ctaSubtitle", /^Turn approved source photos into .+ with visible credit cost and private gallery review\.$/i],
+  ["relatedTitle", /^More .+ and nearby themes$/i],
+  ["relatedSubtitle", /^Compare .+ and adjacent themes before opening (?:a|an) .+ set\.$/i]
+];
 
 for (const slug of requiredSlugs) {
   const profile = useCaseProfiles[slug];
@@ -117,14 +148,21 @@ for (const slug of requiredSlugs) {
   assert.equal(helperCopy.pageEntityId, `mydreamshoots:ai-image-theme:${slug}`, `${slug} exact page copy must keep the canonical entity id`);
 
   const packProjection = packProfiles[slug];
-  if (packProjection?.pageEntityId) {
-    const driftFields = requiredFields.filter((field) => JSON.stringify(packProjection[field]) !== JSON.stringify(profile[field]));
-    if (driftFields.length) projectionDriftRows.push({ slug, driftFields });
-  }
+  const forbiddenPackFields = [...requiredFields, "headline", "cardDescription", "detailIntro", "whatCreates", "bestFor", "workflow", "styleNotes"];
+  const ownerFields = forbiddenPackFields.filter((field) => Object.hasOwn(packProjection ?? {}, field));
+  const operationalFields = ["packId", "creditCost", "outputCount", "toolRef", "promptRef", "mediaRef", "operationalDescription"];
+  const missingOperationalFields = operationalFields.filter((field) => !Object.hasOwn(packProjection ?? {}, field));
+  if (ownerFields.length || missingOperationalFields.length) packProfileOwnerRows.push({ slug, ownerFields, missingOperationalFields });
   const taxonomyItem = (taxonomy.items ?? []).find((item) => normalizeSlug(item.slug) === slug);
   const expectedPackId = taxonomyItem?.reusePackId || `pack_dreamshoot_${slug.replace(/[^a-z0-9]+/g, "_")}`;
   const exactPack = (platformState.creativePacks ?? []).find((pack) => pack.siteId === "site_dreamshoot" && pack.status === "active" && pack.id === expectedPackId && normalizeSlug(pack.category || pack.name) === slug);
   const mediaReady = Boolean(exactPack?.imageUrl && (exactPack.galleryImages ?? []).length);
+  const independenceReasons = genericPatterns
+    .filter(([field, pattern]) => pattern.test(String(profile[field] ?? "").trim()))
+    .map(([field]) => `GENERIC_${field.toUpperCase()}`);
+  if (!String(profile.ctaHref ?? "").startsWith("/")) independenceReasons.push("CTA_HREF_MISSING");
+  if (!Array.isArray(profile.relatedLinks) || profile.relatedLinks.length < 2) independenceReasons.push("RELATED_LINKS_INCOMPLETE");
+  const indexable = independenceReasons.length === 0 && mediaReady && taxonomyItem?.mediaReviewStatus !== "review_required";
   const route = {
     canonicalPath: `/ai-image-generation/${slug}`,
     pageEntityId: profile.pageEntityId,
@@ -132,35 +170,46 @@ for (const slug of requiredSlugs) {
     copySource: "page-copy",
     fallbackUsed: false,
     expectedPackId,
-    mediaReady
+    mediaReady,
+    status: indexable ? "published" : "review_required",
+    indexable,
+    sitemapEligible: indexable,
+    reviewReasons: [...independenceReasons, ...(!mediaReady || taxonomyItem?.mediaReviewStatus === "review_required" ? [taxonomyItem?.mediaReviewReason || "PAGE_COPY_MEDIA_ENTITY_MISMATCH"] : [])]
   };
   routeRows.push(route);
   if (route.copySource !== "page-copy" || route.fallbackUsed) fallbackRows.push(slug);
-  if (!mediaReady || taxonomyItem?.mediaReviewStatus === "review_required") reviewRows.push({ slug, reason: taxonomyItem?.mediaReviewReason || "PAGE_COPY_MEDIA_ENTITY_MISMATCH" });
+  if (!indexable) reviewRows.push({ slug, reasons: route.reviewReasons });
 }
 
 assert.equal(missingProfiles.length, 0, "every MyDreamShoots taxonomy leaf should have a direct use-case profile", { missingProfiles });
 assert.equal(invalidProfiles.length, 0, "every MyDreamShoots direct page-copy profile should carry the full contract", { invalidProfiles });
-assert.equal(projectionDriftRows.length, 0, "page-copy-bearing pack profiles should remain a generated projection of the page copy source", { projectionDriftRows });
+assert.equal(packProfileOwnerRows.length, 0, "pack profiles must contain operational data only and cannot own page SEO/copy", { packProfileOwnerRows });
 
 assert.ok(blackFridayPack, "Black Friday pack must exist in platform-state");
 assert.equal(blackFridayPack.id, "pack_dreamshoot_black_friday", "Black Friday must own a dedicated pack id instead of Anime Avatar");
 assert.ok(blackFridayPack.imageUrl, "Black Friday pack must keep a cover image");
 
+const reviewIsolationFailures = routeRows.filter((route) => route.status === "review_required" && (route.indexable || route.sitemapEligible));
+const activeProjectionRows = await activeProjectionRowCount();
 const report = {
-  ok: !blackFridayMediaMismatch,
+  ok: reviewIsolationFailures.length === 0,
   contractOk: true,
-  releaseReady: reviewRows.length === 0 && !blackFridayMediaMismatch,
+  releaseReady: fallbackRows.length === 0 && reviewIsolationFailures.length === 0,
+  releaseReadyMeaning: "code_and_review_isolation_contract_only",
+  sourceRows: requiredSlugs.length,
+  independentRows: routeRows.length - reviewRows.length,
   requiredSlugs: requiredSlugs.length,
   pageCopyProfiles: requiredSlugs.length,
   checkedRows: routeRows.length,
   fallbackRows: fallbackRows.length,
   missingRows: missingRows.length,
-  driftRows: projectionDriftRows.length,
+  driftRows: packProfileOwnerRows.length,
   reviewRows: reviewRows.length,
-  projectionRows: projectionDriftRows.length,
+  prospectiveProjectionRows: routeRows.length,
+  activeProjectionRows,
   blackFridayPack: blackFridayPack?.id ?? null,
   blackFridayMediaMismatch,
+  reviewIsolationFailures,
   reviewSlugs: reviewRows.map((row) => row.slug)
 };
 console.log(JSON.stringify(report, null, 2));

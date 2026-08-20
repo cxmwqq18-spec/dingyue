@@ -1,12 +1,11 @@
 import "server-only";
 
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
-import type { MediaAsset, PlatformState, Site, ThemePage } from "@/lib/types";
+import type { CreativePack, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, Site, StorefrontProfileJson, ThemePage } from "@/lib/types";
 import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
-import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
-import { mydreamshootsPublishedRouteManifest, mydreamshootsPublishedRouteForPath, mydreamshootsPublishedPageMediaProjections, resolveMydreamshootsPublishedPageMedia } from "@/lib/mydreamshoots-published-contract";
 import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
+import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
 import { resolveSiteCapability } from "./capabilities";
 import { canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
@@ -37,14 +36,94 @@ function revision(value: unknown): string {
   return (hash >>> 0).toString(16).padStart(8, "0");
 }
 
-function publishedPages(site: Site): ThemePage[] {
-  return site.pages.filter((page) => Boolean(page.publishedJson && page.publishedJson.sectionsOrder));
+function isLeafRenderRoute(route: PublishedRouteProjection): route is PublishedLeafRouteProjection {
+  return route.disposition === "render" && route.routeKind === "ai-image-theme-leaf";
+}
+
+function profileFromPublishedFacts(facts: PublishedSiteSnapshot["publishedFacts"]): StorefrontProfileJson | undefined {
+  if (!facts) return undefined;
+  return {
+    identity: { ...(facts.identity ?? {}), sameAs: [...(facts.identity?.sameAs ?? [])] },
+    policyFacts: {
+      usesCustomerMediaForTraining: facts.privacy?.customerMediaTraining,
+      sourceMediaRetentionDays: facts.privacy?.sourceMediaRetentionDays,
+      refundReviewRequired: facts.refund?.reviewRequired,
+      refundWindowDays: facts.refund?.windowDays,
+      effectiveDate: facts.refund?.effectiveDate
+    }
+  };
+}
+
+function productsFromPublishedOffers(snapshot: NonNullable<Site["latestPublication"]>["snapshot"]): Product[] {
+  const offers = snapshot.publishedOffers ?? [];
+  const products = new Map<string, Product>();
+  for (const offer of offers) {
+    const product = products.get(offer.productId) ?? {
+      id: offer.productId,
+      siteId: offer.siteId,
+      name: offer.productName,
+      type: offer.productType,
+      status: "active" as const,
+      metadata: offer.productMetadata,
+      prices: []
+    };
+    product.prices.push({
+      id: offer.priceId,
+      siteId: offer.siteId,
+      productId: offer.productId,
+      label: offer.priceLabel,
+      amountCents: offer.amountCents,
+      currency: offer.currency,
+      interval: offer.interval,
+      creditsGranted: offer.creditsGranted,
+      stripePriceId: offer.stripePriceId,
+      metadata: offer.priceMetadata,
+      status: "active",
+      providerVerifiedAt: "published-snapshot",
+      providerFingerprint: offer.revision
+    });
+    products.set(product.id, product);
+  }
+  return [...products.values()];
+}
+
+function creativePacksFromPublishedCollections(
+  snapshot: NonNullable<Site["latestPublication"]>["snapshot"],
+  publishedAt: string | undefined
+): CreativePack[] {
+  return (snapshot.publishedCollectionRefs ?? []).map((ref) => {
+    const media = (snapshot.publishedPageMedia ?? []).find((candidate) => candidate.pageEntityId === ref.pageEntityId);
+    return {
+      id: ref.sourcePackId,
+      siteId: "site_dreamshoot",
+      name: ref.label,
+      headline: ref.label,
+      description: ref.summary,
+      category: ref.categorySlug ?? ref.collectionSlug,
+      aiAppSlug: ref.collectionSlug,
+      status: ref.status === "published" ? "active" : "draft",
+      creditCost: ref.creditCost,
+      outputCount: ref.outputCount,
+      trainingRequired: false,
+      generationCount: 0,
+      conversionRate: 0,
+      createdAt: publishedAt ?? "1970-01-01T00:00:00.000Z",
+      imageUrl: media?.primaryImage ?? ref.image,
+      galleryImages: media?.galleryImages ?? [],
+      galleryImageAlts: media?.imageAlts ?? (ref.imageAlt ? [ref.imageAlt] : [])
+    };
+  });
 }
 
 function isPrivateStorefrontPath(path: string): boolean {
   const value = normalizePath(path);
   return value === "/account" || value === "/app" || value.startsWith("/app/") || value === "/album" || value.startsWith("/album/") || value === "/cart" || value === "/checkout" || value === "/dashboard" || value === "/login" || value === "/logout";
 }
+
+const DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS = new Set([
+  "/ai-video-generation/text-to-video",
+  "/ai-video-generation/image-to-video"
+]);
 
 function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): StorefrontContextBundle {
   return {
@@ -55,7 +134,11 @@ function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): Storefront
     publication: snapshot.publication,
     factsRevision: snapshot.factsRevision,
     buildId: snapshot.buildId,
-    publishedPageCopies: Object.fromEntries(snapshot.publishedPageCopy.map((projection) => [projection.canonicalSlug, projection.copy]))
+    publishedFacts: snapshot.publishedFacts,
+    publishedPageMedia: Object.fromEntries(snapshot.publishedPageMedia.map((projection) => [projection.pageEntityId, projection])),
+    snapshotIntegrity: snapshot.snapshotIntegrity,
+    publishedPageEntities: Object.fromEntries(snapshot.publishedPageEntities.map((projection) => [projection.canonicalPath, projection])),
+    publishedLinkRefs: snapshot.publishedLinkRefs
   };
 }
 
@@ -64,23 +147,39 @@ export function createPublishedSiteSnapshot(
   site: Site,
   options: { source?: "postgres" | "platform-state" } = {}
 ): PublishedSiteSnapshot {
-  const publication = site.latestPublication ?? (state.themePublications ?? [])
-    .filter((candidate) => candidate.siteId === site.id)
-    .sort((left, right) => right.version - left.version)[0];
-  const publishedPageSnapshots = new Map((publication?.snapshot.pages ?? []).map((page) => [page.id, page]));
-  const pages = publishedPages(site)
-    .map((page) => {
-      const publishedPage = publishedPageSnapshots.get(page.id);
-      return publishedPage
-        ? { ...page, slug: publishedPage.slug, publishedJson: publishedPage.publishedJson }
-        : page;
-    })
-    .filter((page) => Boolean(publication && publishedPageSnapshots.has(page.id)));
+  const publication = site.id === "site_dreamshoot"
+    ? site.latestPublication
+    : site.latestPublication ?? (state.themePublications ?? [])
+      .filter((candidate) => candidate.siteId === site.id)
+      .sort((left, right) => right.version - left.version)[0];
+  const currentPages = new Map(site.pages.map((page) => [page.id, page]));
+  const pages = (publication?.snapshot.pages ?? []).map((publishedPage): ThemePage => {
+    const currentPage = currentPages.get(publishedPage.id);
+    return {
+      id: publishedPage.id,
+      siteId: publishedPage.siteId ?? site.id,
+      pageType: publishedPage.pageType ?? currentPage?.pageType ?? "page",
+      templateKey: publishedPage.templateKey ?? currentPage?.templateKey,
+      slug: publishedPage.slug,
+      title: publishedPage.title ?? currentPage?.title ?? publishedPage.slug,
+      draftJson: publishedPage.publishedJson,
+      publishedJson: publishedPage.publishedJson,
+      createdAt: publishedPage.createdAt ?? currentPage?.createdAt,
+      updatedAt: publishedPage.updatedAt ?? currentPage?.updatedAt
+    };
+  });
   const publicationThemeSettings = publication?.snapshot?.themeSettings;
   const publishedSettings = publicationThemeSettings
     ? { ...site.themeSettings, publishedJson: publicationThemeSettings }
     : site.themeSettings;
-  const publishedProfile = publication?.snapshot.storefrontProfile ?? site.storefrontProfile?.publishedJson;
+  const snapshotIntegrity = publicationSnapshotIntegrity(publication?.snapshot);
+  const hasImmutableSeoProjection = site.id === "site_dreamshoot" && snapshotIntegrity === "valid";
+  const publishedFacts = hasImmutableSeoProjection ? publication?.snapshot.publishedFacts : undefined;
+  const publishedProfile = hasImmutableSeoProjection
+    ? profileFromPublishedFacts(publishedFacts)
+    : site.id === "site_dreamshoot"
+      ? undefined
+      : publication?.snapshot.storefrontProfile ?? site.storefrontProfile?.publishedJson;
   const publishedSite = {
     ...site,
     pages,
@@ -89,30 +188,31 @@ export function createPublishedSiteSnapshot(
       ? { ...site.storefrontProfile, publishedJson: publishedProfile }
       : site.storefrontProfile
   };
-  const hasImmutableSeoProjection = publication?.snapshot?.seoProjectionVersion === 1;
   const snapshotRoutes = publication?.snapshot?.publishedRoutes;
-  const publishedRoutes = site.id === "site_dreamshoot" && hasImmutableSeoProjection
+  const publishedRoutes = hasImmutableSeoProjection
     ? (Array.isArray(snapshotRoutes) ? snapshotRoutes as PublishedSiteSnapshot["publishedRoutes"] : [])
-    : site.id === "site_dreamshoot" && Array.isArray(snapshotRoutes) && snapshotRoutes.length
-    ? snapshotRoutes as PublishedSiteSnapshot["publishedRoutes"]
-    : site.id === "site_dreamshoot" ? mydreamshootsPublishedRouteManifest() : [];
+    : [];
   const publishedPaths = Array.from(new Set([
     ...pages.flatMap((page) => [normalizePath(page.slug), canonicalPathForPage(page)]),
-    ...publishedRoutes.filter((route) => route.status === "published").map((route) => route.canonicalPath)
+    ...publishedRoutes.flatMap((route) => route.disposition === "render" && route.status === "published" ? [route.canonicalPath] : [])
   ]));
-  const products = state.products.filter((product) => product.siteId === site.id);
-  const creativePacks = state.creativePacks.filter((pack) => pack.siteId === site.id);
-  const creativePackCategories = (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
-  const videoThemes = (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id);
-  const mediaAssets = state.mediaAssets.filter((asset) => asset.siteId === site.id);
+  const products = hasImmutableSeoProjection
+    ? productsFromPublishedOffers(publication!.snapshot)
+    : site.id === "site_dreamshoot" ? [] : state.products.filter((product) => product.siteId === site.id);
+  const creativePacks = hasImmutableSeoProjection
+    ? creativePacksFromPublishedCollections(publication!.snapshot, publication?.publishedAt)
+    : site.id === "site_dreamshoot" ? [] : state.creativePacks.filter((pack) => pack.siteId === site.id);
+  const creativePackCategories = site.id === "site_dreamshoot" ? [] : (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
+  const videoThemes = site.id === "site_dreamshoot" ? [] : (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id);
+  const mediaAssets = site.id === "site_dreamshoot" ? [] : state.mediaAssets.filter((asset) => asset.siteId === site.id);
   const baseEntityReferences: EntityReference[] = [
     ...pages.map((page) => ({ entityType: "page" as const, entityId: page.id, ownerId: site.id, revision: page.draftMeta?.etag ?? revision([page.id, page.publishedJson.version, page.updatedAt]), updatedAt: page.updatedAt })),
     ...publishedRoutes.map((route) => ({
       entityType: "route_manifest" as const,
-      entityId: route.canonicalPath,
-      ownerId: route.pageEntityId,
-      revision: route.copyRevision || revision(route),
-      updatedAt: route.copyRevision
+      entityId: route.disposition === "redirect" ? route.aliasPath : route.canonicalPath,
+      ownerId: route.disposition === "redirect" ? route.targetPath : route.pageEntityId,
+      revision: route.disposition === "redirect" ? route.routeRevision : route.pageRevision,
+      updatedAt: route.disposition === "redirect" ? route.routeRevision : route.disposition === "render" && route.routeKind === "ai-image-theme-leaf" ? route.copyRevision : route.pageRevision
     })),
     { entityType: "theme_settings" as const, entityId: site.id, ownerId: site.id, revision: revision(publishedSettings.publishedJson) },
     ...products.flatMap((product) => [
@@ -124,38 +224,40 @@ export function createPublishedSiteSnapshot(
     ...mediaAssets.map((asset) => ({ entityType: "media" as const, entityId: asset.id, ownerId: site.id, revision: revision([asset.id, asset.createdAt, asset.storageKey, asset.previewUrl, asset.originUrl]) }))
   ];
   const snapshotRevisions = publication?.snapshot?.revisions ?? {};
-  const publishedPageCopy = hasImmutableSeoProjection
-    ? (Array.isArray(publication?.snapshot?.publishedPageCopy) ? publication!.snapshot.publishedPageCopy as PublishedSiteSnapshot["publishedPageCopy"] : [])
-    : Array.isArray(publication?.snapshot?.publishedPageCopy)
+  const publishedPageCopy = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedPageCopy)
     ? publication!.snapshot.publishedPageCopy as PublishedSiteSnapshot["publishedPageCopy"]
-    : publishedRoutes.flatMap((route) => {
-        const copy = mydreamshootsPageCopyForRoute({ siteId: site.id, routeKind: route.routeKind, canonicalSlug: route.canonicalSlug, canonicalPath: route.canonicalPath });
-        return copy ? [{ pageEntityId: route.pageEntityId, copyRevision: route.copyRevision, canonicalSlug: route.canonicalSlug, copy }] : [];
-      });
+    : [];
   const publishedPageMedia = hasImmutableSeoProjection
     ? (Array.isArray(publication?.snapshot?.publishedPageMedia) ? publication!.snapshot.publishedPageMedia as PublishedSiteSnapshot["publishedPageMedia"] : [])
-    : Array.isArray(publication?.snapshot?.publishedPageMedia) && publication!.snapshot.publishedPageMedia.length
-    ? publication!.snapshot.publishedPageMedia as PublishedSiteSnapshot["publishedPageMedia"]
-    : (site.id === "site_dreamshoot" ? mydreamshootsPublishedPageMediaProjections(creativePacks) : []);
+    : [];
   const publishedPackFacts = hasImmutableSeoProjection
     ? (Array.isArray(publication?.snapshot?.publishedPackFacts) ? publication!.snapshot.publishedPackFacts as PublishedSiteSnapshot["publishedPackFacts"] : [])
-    : Array.isArray(publication?.snapshot?.publishedPackFacts)
-    ? publication!.snapshot.publishedPackFacts as PublishedSiteSnapshot["publishedPackFacts"]
-    : creativePacks.map((pack) => ({ packId: pack.id, creditCost: pack.creditCost, outputCount: pack.outputCount, revision: revision([pack.id, pack.creditCost, pack.outputCount]) }));
-  const publishedCollectionRefs = Array.isArray(publication?.snapshot?.publishedCollectionRefs)
+    : [];
+  const publishedCollectionRefs = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedCollectionRefs)
     ? publication!.snapshot.publishedCollectionRefs as PublishedSiteSnapshot["publishedCollectionRefs"]
+    : [];
+  const publishedPageEntities = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedPageEntities)
+    ? publication!.snapshot.publishedPageEntities as PublishedSiteSnapshot["publishedPageEntities"]
+    : [];
+  const publishedOffers = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedOffers)
+    ? publication!.snapshot.publishedOffers as PublishedSiteSnapshot["publishedOffers"]
+    : [];
+  const publishedLinkRefs = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedLinkRefs)
+    ? publication!.snapshot.publishedLinkRefs as PublishedSiteSnapshot["publishedLinkRefs"]
     : [];
   const entityReferences: EntityReference[] = [
     ...baseEntityReferences,
     ...publishedPageCopy.map((copy) => ({ entityType: "page_copy" as const, entityId: copy.pageEntityId, ownerId: site.id, revision: copy.copyRevision })),
     ...publishedPageMedia.map((media) => ({ entityType: "page_media" as const, entityId: media.mediaEntityId, ownerId: media.ownerPageEntityId, revision: media.entityRevision }))
   ];
-  const factsRevision = snapshotRevisions.factsRevision ?? publication?.factsRevision ?? revision({
-    siteId: site.id,
-    publicationId: publication?.id ?? null,
-    publicationVersion: publication?.version ?? null,
-    profile: publishedProfile
-  });
+  const factsRevision = hasImmutableSeoProjection
+    ? snapshotRevisions.factsRevision ?? publishedFacts?.claimRevision ?? "published-facts-missing"
+    : site.id === "site_dreamshoot" ? "publication-snapshot-invalid" : publication?.factsRevision ?? revision({
+        siteId: site.id,
+        publicationId: publication?.id ?? null,
+        publicationVersion: publication?.version ?? null,
+        profile: publishedProfile
+      });
   return {
     boundary: {
       siteId: site.id,
@@ -169,15 +271,21 @@ export function createPublishedSiteSnapshot(
     publicationVersion: publication?.version,
     publicationId: publication?.id,
     factsRevision,
-    buildId: process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local",
+    buildId: hasImmutableSeoProjection ? publication?.snapshot.buildId ?? "published-build-missing" : process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local",
     pages,
     publishedPaths,
     publishedRoutes,
     publishedPageCopy,
+    publishedPageEntities,
     publishedPageMedia,
     publishedPackFacts,
+    publishedOffers,
+    publishedFacts,
     publishedCollectionRefs,
+    publishedLinkRefs,
     snapshotRevisions,
+    legacyProjectionRequired: site.id === "site_dreamshoot" && !hasImmutableSeoProjection,
+    snapshotIntegrity,
     products,
     creativePacks,
     creativePackCategories,
@@ -205,7 +313,7 @@ export async function loadPublishedSiteSnapshotBySiteId(siteId: string): Promise
 
 export function resolvePublishedStorefrontContext(snapshot: PublishedSiteSnapshot, page: ThemePage) {
   const context = resolveStorefrontContext(bundleFor(snapshot, page), "published");
-  const route = snapshot.publishedRoutes.find((candidate) => candidate.canonicalPath === normalizePath(context.seo.canonicalPath));
+  const route = snapshot.publishedRoutes.find((candidate): candidate is PublishedLeafRouteProjection => isLeafRenderRoute(candidate) && candidate.canonicalPath === normalizePath(context.seo.canonicalPath));
   const media = route
     ? snapshot.publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId)
     : undefined;
@@ -221,7 +329,7 @@ export function resolvePublishedStorefrontContext(snapshot: PublishedSiteSnapsho
 
 export function resolveEffectiveIndexability(snapshot: PublishedSiteSnapshot, page: ThemePage, context = resolveStorefrontContext(bundleFor(snapshot, page), "published")): EffectiveIndexability {
   const blocked = page.pageType === "not_found" || page.slug === "/404" || isPrivateStorefrontPath(page.slug) || isPrivateStorefrontPath(context.seo.canonicalPath);
-  const publishedRoute = snapshot.publishedRoutes.find((route) => route.canonicalPath === normalizePath(context.seo.canonicalPath));
+  const publishedRoute = snapshot.publishedRoutes.find((route): route is PublishedLeafRouteProjection => isLeafRenderRoute(route) && route.canonicalPath === normalizePath(context.seo.canonicalPath));
   const publishedMedia = publishedRoute ? snapshot.publishedPageMedia.find((media) => media.pageEntityId === publishedRoute.pageEntityId) : undefined;
   const index = !blocked && context.seo.index && (publishedRoute ? publishedRoute.indexable && publishedMedia?.status === "ready" : true);
   return {
@@ -277,10 +385,25 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
 export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot, path: string): RouteDisposition {
   const requestedPath = normalizePath(path);
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
+  if (snapshot.site.id === "site_dreamshoot" && DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS.has(requestedPath)) {
+    return { kind: "not_found", status: 404, path: requestedPath };
+  }
+  const exactPublishedRoute = snapshot.publishedRoutes.find((route) =>
+    route.disposition === "redirect" ? route.aliasPath === requestedPath : route.canonicalPath === requestedPath
+  );
+  if (exactPublishedRoute?.disposition === "redirect") {
+    return resolvePublishedRedirectDisposition(snapshot, requestedPath, exactPublishedRoute.targetPath, exactPublishedRoute.statusCode);
+  }
+  if (exactPublishedRoute?.disposition === "render" && exactPublishedRoute.routeKind === "policy") {
+    const page = snapshot.pages.find((candidate) => candidate.id === exactPublishedRoute.pageId);
+    return page
+      ? { kind: "render", status: 200, path: requestedPath, pageId: page.id }
+      : { kind: "not_found", status: 404, path: requestedPath };
+  }
   const legacyTarget = legacyPublicPathTarget(requestedPath, publicCollectionRootPathForSite(snapshot.site));
   if (legacyTarget) return resolvePublishedRedirectDisposition(snapshot, requestedPath, legacyTarget);
   if (snapshot.site.id === "site_dreamshoot" && requestedPath.startsWith("/ai-image-generation/")) {
-    const route = snapshot.publishedRoutes.find((candidate) => candidate.canonicalPath === requestedPath);
+    const route = snapshot.publishedRoutes.find((candidate): candidate is PublishedLeafRouteProjection => isLeafRenderRoute(candidate) && candidate.canonicalPath === requestedPath);
     if (!route) return { kind: "not_found", status: 404, path: requestedPath };
     if (route.status !== "published") return { kind: "not_found", status: 404, path: requestedPath };
     const rootPage = snapshot.pages.find((page) => canonicalPathForPage(page) === publicCollectionRootPathForSite(snapshot.site) || normalizePath(page.slug) === publicCollectionRootPathForSite(snapshot.site));

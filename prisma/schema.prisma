@@ -171,6 +171,7 @@ model Site {
   settings               ThemeSettings?
   storefrontProfile      StorefrontProfile?
   publications           ThemePublication[]
+  activePublication      ActiveThemePublication?
   siteThemes             SiteTheme[]
   themeCopies            ThemeCopy[]
   connect                StripeConnectAccount?
@@ -660,11 +661,23 @@ model ThemePublication {
   publishedBy   String
   publishedAt   DateTime @default(now())
   site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  activeFor     ActiveThemePublication?
 
   @@unique([siteId, version])
   @@index([siteId, publishedAt])
   @@index([siteId, version])
   @@index([siteId, factsRevision])
+}
+
+model ActiveThemePublication {
+  siteId        String   @id
+  publicationId String   @unique
+  activatedAt   DateTime @default(now())
+  activatedBy   String
+  site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  publication   ThemePublication @relation(fields: [publicationId], references: [id], onDelete: Restrict)
+
+  @@index([publicationId])
 }
 
 model SiteTheme {

@@ -14,7 +14,9 @@ import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
-import type { CreativePack, PlatformState, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
+import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
+import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
+import type { CreativePack, PlatformState, PublishedLeafRouteProjection, PublishedSeoSnapshot, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
 export const MYDREAMSHOOTS_SITEMAP_URL = `${MYDREAMSHOOTS_ORIGIN}/sitemap.xml`;
@@ -489,12 +491,17 @@ function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[]
     }
   }
   if (site.id === "site_dreamshoot" && collectionPage) {
-    for (const route of snapshot.publishedRoutes.filter((candidate) => candidate.indexable && candidate.sitemapEligible)) {
+    for (const route of snapshot.publishedRoutes.filter((candidate): candidate is PublishedLeafRouteProjection =>
+      candidate.disposition === "render" && candidate.routeKind === "ai-image-theme-leaf" && candidate.indexable && candidate.sitemapEligible
+    )) {
       const media = snapshot.publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId);
       if (!media || media.status !== "ready") continue;
+      const pageEntity = snapshot.publishedPageEntities.find((candidate) => candidate.pageEntityId === route.pageEntityId);
+      const publishedCopy = pageEntity ? pageCopyFromPublishedPageEntity(pageEntity, snapshot.publishedLinkRefs) : undefined;
+      if (!publishedCopy) continue;
       const page = {
         ...collectionPage,
-        publishedJson: withSeoDirectorySeo(collectionPage.publishedJson, "collection", route.canonicalSlug, site)
+        publishedJson: withSeoDirectorySeo(collectionPage.publishedJson, "collection", route.canonicalSlug, site, publishedCopy)
       };
       const context = resolvePublishedStorefrontContext(snapshot, page);
       const effective = {
@@ -1043,6 +1050,54 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
     runtime.sites.find((item) => siteHostCandidates.some((host) => isHostForSite(item, host)));
   if (site) return sitemapEntriesForSite(runtime.state, site);
   return [];
+}
+
+export async function getStorefrontPublicationIdentityForHost(
+  hosts: string | null | undefined | Array<string | null | undefined>
+): Promise<{
+  publicationId?: string;
+  publicationVersion?: number;
+  snapshotHash?: string;
+  buildId?: string;
+  routeRevision?: string;
+  pageRevision?: string;
+  copyRevision?: string;
+  mediaRevision?: string;
+  factsRevision?: string;
+  offerRevision?: string;
+  collectionRevision?: string;
+  linkRevision?: string;
+  policyRevision?: string;
+} | undefined> {
+  const normalizedHosts = normalizeHostCandidates(hosts);
+  const publicHostCandidates = normalizedHosts.filter((host) => !isLocalDevelopmentHost(host));
+  const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
+  const isLocalHostRequest = !publicHostCandidates.length && normalizedHosts.some(isLocalDevelopmentHost);
+  const runtime = (isLocalHostRequest || usesExplicitLegacySitemapPreview())
+    ? await readLegacyIndexableStateAndSites()
+    : await readIndexableStateAndSites();
+  if (!runtime) return undefined;
+  const site = isLocalHostRequest
+    ? runtime.sites[0]
+    : getSiteByHostCandidatesFromState(runtime.state, siteHostCandidates) ?? runtime.sites.find((item) => siteHostCandidates.some((host) => isHostForSite(item, host)));
+  const publication = site?.latestPublication;
+  if (!publication || publicationSnapshotIntegrity(publication.snapshot) !== "valid") return undefined;
+  const revisions = (publication.snapshot as PublishedSeoSnapshot).revisions;
+  return {
+    publicationId: publication.id,
+    publicationVersion: publication.version,
+    snapshotHash: publication.snapshot.snapshotHash,
+    buildId: publication.snapshot.buildId,
+    routeRevision: revisions.routeRevision,
+    pageRevision: revisions.pageRevision,
+    copyRevision: revisions.copyRevision,
+    mediaRevision: revisions.mediaRevision,
+    factsRevision: revisions.factsRevision,
+    offerRevision: revisions.offerRevision,
+    collectionRevision: revisions.collectionRevision,
+    linkRevision: revisions.linkRevision,
+    policyRevision: revisions.policyRevision
+  };
 }
 
 export function storefrontSitemapUrlForHost(hosts: string | null | undefined | Array<string | null | undefined>): string | undefined {

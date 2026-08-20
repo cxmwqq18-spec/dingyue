@@ -1,6 +1,10 @@
-import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
+import {
+  assessMydreamshootsPageIndependence,
+  mydreamshootsPageCopyForSlug,
+  type MyDreamshootsPageCopy
+} from "@/lib/mydreamshoots-page-copy";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
-import type { CreativePack } from "@/lib/types";
+import type { CreativePack, PublishedLinkRef, PublishedPageEntityProjection } from "@/lib/types";
 
 const SITE_ID = "site_dreamshoot";
 const ROUTE_KIND = "ai-image-theme-leaf";
@@ -19,11 +23,13 @@ const taxonomyItems = (mydreamshootsThemeTaxonomy.items ?? []) as TaxonomyItem[]
 export type MyDreamshootsPublishedRouteStatus = "published" | "review_required";
 
 export type MyDreamshootsPublishedRouteManifestRow = {
+  disposition: "render";
   siteId: typeof SITE_ID;
   routeKind: typeof ROUTE_KIND;
   canonicalSlug: string;
   canonicalPath: string;
   pageEntityId: string;
+  pageRevision: string;
   copyRevision: string;
   copySource: "page-copy" | "missing";
   fallbackUsed: false;
@@ -33,6 +39,10 @@ export type MyDreamshootsPublishedRouteManifestRow = {
   expectedPackId: string;
   mediaEntityId: string;
   reviewReason?: string;
+};
+
+export type MyDreamshootsPublishedPageEntity = PublishedPageEntityProjection & {
+  pageType: "ai-image-theme-leaf";
 };
 
 export type MyDreamshootsPublishedPageMediaProjection = {
@@ -54,6 +64,8 @@ export type MyDreamshootsPublishedPageMediaProjection = {
   reviewReason?: string;
 };
 
+type PublishedMediaPack = Pick<CreativePack, "id" | "status" | "imageUrl" | "galleryImages" | "galleryImageAlts">;
+
 export function normalizePublishedSlug(value: string | null | undefined): string {
   return String(value ?? "")
     .trim()
@@ -74,6 +86,14 @@ function revision(value: unknown): string {
   return (hash >>> 0).toString(16).padStart(8, "0");
 }
 
+export function publishedLinkEntityId(pageEntityId: string, kind: "cta" | "related", index = 0): string {
+  return `${pageEntityId}:link:${kind}${kind === "related" ? `:${index + 1}` : ""}`;
+}
+
+export function publishedPageCopySourceHash(copy: MyDreamshootsPageCopy): string {
+  return revision(copy);
+}
+
 function expectedPackId(item: TaxonomyItem): string {
   return item.reusePackId || `pack_dreamshoot_${item.slug.replace(/[^a-z0-9]+/g, "_")}`;
 }
@@ -85,14 +105,18 @@ export function mydreamshootsPublishedRouteManifest(): MyDreamshootsPublishedRou
     const pageEntityId = `mydreamshoots:ai-image-theme:${canonicalSlug}`;
     const copy = mydreamshootsPageCopyForSlug(canonicalSlug);
     const copyReady = Boolean(copy?.copyRevision && copy.pageEntityId === pageEntityId && copy.faqItems.length >= 4);
+    const independence = copy ? assessMydreamshootsPageIndependence(copy, canonicalSlug) : undefined;
+    const copyIndependent = Boolean(independence?.independent);
     const mediaReady = item.mediaReviewStatus !== "review_required";
-    const indexable = copyReady && mediaReady;
+    const indexable = copyReady && copyIndependent && mediaReady;
     return {
+      disposition: "render",
       siteId: SITE_ID,
       routeKind: ROUTE_KIND,
       canonicalSlug,
       canonicalPath,
       pageEntityId,
+      pageRevision: independence?.pageRevision ?? "",
       copyRevision: copy?.copyRevision ?? "",
       copySource: copyReady ? "page-copy" : "missing",
       fallbackUsed: false,
@@ -103,11 +127,113 @@ export function mydreamshootsPublishedRouteManifest(): MyDreamshootsPublishedRou
       mediaEntityId: `${pageEntityId}:media`,
       ...(!copyReady
         ? { reviewReason: "PAGE_COPY_REVIEW_REQUIRED" }
+        : !copyIndependent
+          ? { reviewReason: `PAGE_COPY_NOT_INDEPENDENT:${independence?.reasons.join("|") || "UNKNOWN"}` }
         : !mediaReady
           ? { reviewReason: item.mediaReviewReason || "PAGE_COPY_MEDIA_ENTITY_MISMATCH" }
           : {})
     };
   });
+}
+
+export function mydreamshootsPublishedPageEntities(): MyDreamshootsPublishedPageEntity[] {
+  return mydreamshootsPublishedRouteManifest().flatMap((route) => {
+    const copy = mydreamshootsPageCopyForSlug(route.canonicalSlug);
+    if (!copy) return [];
+    const independence = assessMydreamshootsPageIndependence(copy, route.canonicalSlug);
+    return [{
+      pageEntityId: route.pageEntityId,
+      canonicalPath: route.canonicalPath,
+      pageType: "ai-image-theme-leaf" as const,
+      status: route.status,
+      indexable: route.indexable,
+      sitemapEligible: route.sitemapEligible,
+      metadata: {
+        title: copy.seoTitle,
+        description: copy.cardDescription,
+        canonicalPath: route.canonicalPath,
+        robots: { index: route.indexable, follow: true }
+      },
+      content: {
+        h1: copy.headline,
+        heroIntro: copy.cardDescription,
+        metaLabel: copy.metaLabel,
+        tags: [...copy.tags],
+        detailTags: [...copy.detailTags],
+        detailIntro: copy.detailIntro,
+        whatCreates: copy.whatCreates,
+        bestFor: [...copy.bestFor],
+        workflow: [...copy.workflow],
+        styleNotes: [...copy.styleNotes],
+        reviewCriteria: [...(copy.reviewPoints ?? copy.styleNotes)],
+        coverNote: copy.coverNote,
+        safetyNote: copy.safetyNote,
+        galleryTitle: copy.galleryTitle,
+        galleryIntro: copy.galleryIntro,
+        ctaEyebrow: copy.ctaEyebrow,
+        ctaTitle: copy.ctaTitle,
+        ctaSubtitle: copy.ctaSubtitle,
+        ctaLinkEntityId: publishedLinkEntityId(route.pageEntityId, "cta"),
+        faqEyebrow: copy.faqEyebrow,
+        faqTitle: copy.faqTitle,
+        faqItems: copy.faqItems.map((item) => ({ ...item })),
+        relatedEyebrow: copy.relatedEyebrow,
+        relatedTitle: copy.relatedTitle,
+        relatedSubtitle: copy.relatedSubtitle,
+        relatedCtaLabel: copy.relatedCtaLabel,
+        relatedLinkEntityIds: (copy.relatedLinks ?? []).map((_, index) => publishedLinkEntityId(route.pageEntityId, "related", index))
+      },
+      mediaEntityId: route.mediaEntityId,
+      pageRevision: independence.pageRevision,
+      copyRevision: copy.copyRevision,
+      reviewReasons: independence.reasons
+    }];
+  });
+}
+
+export function pageCopyFromPublishedPageEntity(
+  entity: PublishedPageEntityProjection,
+  links: PublishedLinkRef[]
+): MyDreamshootsPageCopy | undefined {
+  if (entity.pageType !== "ai-image-theme-leaf") return undefined;
+  const cta = links.find((link) => link.linkEntityId === entity.content.ctaLinkEntityId && link.kind === "cta");
+  const related = entity.content.relatedLinkEntityIds
+    .map((linkId) => links.find((link) => link.linkEntityId === linkId && link.kind === "related"))
+    .filter((link): link is PublishedLinkRef => Boolean(link));
+  if (!cta || related.length !== entity.content.relatedLinkEntityIds.length) return undefined;
+  return {
+    pageEntityId: entity.pageEntityId,
+    copyRevision: entity.copyRevision,
+    seoTitle: entity.metadata.title,
+    headline: entity.content.h1,
+    cardDescription: entity.content.heroIntro,
+    metaLabel: entity.content.metaLabel,
+    tags: [...entity.content.tags],
+    detailTags: [...entity.content.detailTags],
+    detailIntro: entity.content.detailIntro,
+    whatCreates: entity.content.whatCreates,
+    bestFor: [...entity.content.bestFor],
+    workflow: [...entity.content.workflow],
+    styleNotes: [...entity.content.styleNotes],
+    reviewPoints: [...entity.content.reviewCriteria],
+    coverNote: entity.content.coverNote,
+    safetyNote: entity.content.safetyNote,
+    galleryTitle: entity.content.galleryTitle,
+    galleryIntro: entity.content.galleryIntro,
+    ctaEyebrow: entity.content.ctaEyebrow,
+    ctaTitle: entity.content.ctaTitle,
+    ctaSubtitle: entity.content.ctaSubtitle,
+    ctaLabel: cta.label,
+    ctaHref: cta.href,
+    faqEyebrow: entity.content.faqEyebrow,
+    faqTitle: entity.content.faqTitle,
+    faqItems: entity.content.faqItems.map((item) => ({ ...item })),
+    relatedEyebrow: entity.content.relatedEyebrow,
+    relatedTitle: entity.content.relatedTitle,
+    relatedSubtitle: entity.content.relatedSubtitle,
+    relatedCtaLabel: entity.content.relatedCtaLabel,
+    relatedLinks: related.map((link) => ({ label: link.label, href: link.href }))
+  };
 }
 
 export function mydreamshootsPublishedRouteForSlug(value: string | null | undefined): MyDreamshootsPublishedRouteManifestRow | undefined {
@@ -125,22 +251,41 @@ export function mydreamshootsPublishedRouteForPath(value: string | null | undefi
 export function resolveMydreamshootsPublishedPageMedia(
   route: MyDreamshootsPublishedRouteManifestRow,
   creativePacks: CreativePack[]
-): MyDreamshootsPublishedPageMediaProjection | undefined {
-  const pack = creativePacks.find((candidate) => (
-    candidate.siteId === route.siteId
-    && candidate.status === "active"
-    && normalizePublishedSlug(candidate.categoryRecord?.slug || candidate.category) === route.canonicalSlug
-  ));
-  if (!pack) return undefined;
+): MyDreamshootsPublishedPageMediaProjection {
+  const pack = creativePacks.find((candidate) => candidate.siteId === route.siteId && candidate.id === route.expectedPackId);
+  return buildPublishedPageMediaProjection(route, pack);
+}
+
+export function buildPublishedPageMediaProjection(
+  route: MyDreamshootsPublishedRouteManifestRow,
+  pack: PublishedMediaPack | null | undefined
+): MyDreamshootsPublishedPageMediaProjection {
+  if (!pack || pack.status !== "active") {
+    return {
+      siteId: route.siteId,
+      routeKind: route.routeKind,
+      canonicalSlug: route.canonicalSlug,
+      canonicalPath: route.canonicalPath,
+      pageEntityId: route.pageEntityId,
+      mediaEntityId: route.mediaEntityId,
+      ownerPageEntityId: route.pageEntityId,
+      sourcePackId: route.expectedPackId,
+      role: "hero",
+      entityRevision: revision([route.pageEntityId, route.expectedPackId, "missing"]),
+      packId: route.expectedPackId,
+      primaryImage: "",
+      galleryImages: [],
+      imageAlts: [""],
+      status: "review_required",
+      reviewReason: "PAGE_MEDIA_REQUIRED"
+    };
+  }
 
   const images = Array.from(new Set([pack.imageUrl, ...(pack.galleryImages ?? [])].map((value) => String(value ?? "").trim()).filter(Boolean)));
   const ownerMatches = pack.id === route.expectedPackId;
-  const ready = route.status === "published" && ownerMatches && images.length >= 2;
-  const imageAlts = images.map((_, index) => (
-    index === 0
-      ? `MyDreamShoots ${route.canonicalSlug.replace(/-/g, " ")} AI photo package cover for private gallery review`
-      : `MyDreamShoots ${route.canonicalSlug.replace(/-/g, " ")} AI photo example for private gallery review`
-  ));
+  const imageAlts = (pack.galleryImageAlts ?? []).map((value) => String(value ?? "").trim());
+  const altsReady = imageAlts.length === images.length && imageAlts.every(Boolean);
+  const ready = route.status === "published" && ownerMatches && images.length >= 2 && altsReady;
   return {
     siteId: route.siteId,
     routeKind: route.routeKind,
@@ -158,13 +303,12 @@ export function resolveMydreamshootsPublishedPageMedia(
     imageAlts,
     status: ready ? "ready" : "review_required",
     ...(!ready
-      ? { reviewReason: route.reviewReason || (!ownerMatches ? "PAGE_COPY_MEDIA_ENTITY_MISMATCH" : "PAGE_MEDIA_REQUIRED") }
+      ? { reviewReason: route.reviewReason || (!ownerMatches ? "PAGE_COPY_MEDIA_ENTITY_MISMATCH" : !altsReady ? "PAGE_MEDIA_ALT_REQUIRED" : "PAGE_MEDIA_REQUIRED") }
       : {})
   };
 }
 
 export function mydreamshootsPublishedPageMediaProjections(creativePacks: CreativePack[]): MyDreamshootsPublishedPageMediaProjection[] {
   return mydreamshootsPublishedRouteManifest()
-    .map((route) => resolveMydreamshootsPublishedPageMedia(route, creativePacks))
-    .filter((projection): projection is MyDreamshootsPublishedPageMediaProjection => Boolean(projection));
+    .map((route) => resolveMydreamshootsPublishedPageMedia(route, creativePacks));
 }

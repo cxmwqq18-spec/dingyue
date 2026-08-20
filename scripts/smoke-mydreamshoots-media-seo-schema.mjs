@@ -31,6 +31,7 @@ const {
   getStorefrontSitemapEntriesForHost
 } = jiti("../src/lib/seo-indexing.ts");
 const { resolveStorefrontContext } = jiti("../src/lib/storefront-context/core.ts");
+const { mydreamshootsPublishedRouteManifest } = jiti("../src/lib/mydreamshoots-published-contract.ts");
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(repoRoot, relativePath), "utf8"));
@@ -220,15 +221,20 @@ assert.equal(homeGraph.some((node) => node?.["@type"] === "Review" || node?.["@t
 
 const sitemapEntries = await getStorefrontSitemapEntriesForHost(["www.mydreamshoots.com"]);
 const sitemapEntryByPath = new Map(sitemapEntries.map((entry) => [new URL(entry.loc).pathname, entry]));
-const reviewSlugs = new Set((localTaxonomy.items ?? []).filter((item) => item.mediaReviewStatus === "review_required").map((item) => item.slug));
+const publishedSlugs = process.env.PERSISTENCE_BACKEND === "postgres"
+  ? new Set(sitemapEntries
+    .filter((entry) => (entry.images ?? []).length > 0)
+    .map((entry) => new URL(entry.loc).pathname.replace(/^\/ai-image-generation\//, ""))
+  )
+  : new Set(mydreamshootsPublishedRouteManifest().filter((route) => route.status === "published" && route.sitemapEligible).map((route) => route.canonicalSlug));
 for (const item of localTaxonomy.items ?? []) {
   const pathname = `/ai-image-generation/${item.slug}`;
   const entry = sitemapEntryByPath.get(pathname);
-  if (reviewSlugs.has(item.slug)) {
-    assert.equal(entry, undefined, `${pathname} must stay out of the sitemap while its page media owner is under review`);
-  } else {
+  if (publishedSlugs.has(item.slug)) {
     assert.ok(entry, `${pathname} should have a published route manifest sitemap entry`);
     assert.ok((entry.images ?? []).length > 0, `${pathname} should project its page-owned media into the image sitemap`);
+  } else {
+    assert.equal(entry, undefined, `${pathname} must stay out of the sitemap until the active immutable snapshot publishes the route`);
   }
 }
 function assertRichSitemapImageTitle(image, pathName) {
@@ -239,7 +245,6 @@ function assertRichSitemapImageTitle(image, pathName) {
   assert.doesNotMatch(title, /Aidreamcapes/i, `${pathName} image sitemap title should not mention another brand`);
   assert.doesNotMatch(title, /^(?:image|photo|preview|thumbnail|hero|.+\s+preview)$/i, `${pathName} image sitemap title should not be a placeholder: ${title}`);
 }
-assert.ok((sitemapEntryByPath.get("/ai-image-generation")?.images ?? []).length > 0, "ai-image-generation sitemap entry should include image references");
 for (const pathName of ["/", "/pricing", "/workflow", "/faq", "/blog"]) {
   const entry = sitemapEntryByPath.get(pathName);
   assert.ok(entry, `${pathName} sitemap entry should exist`);

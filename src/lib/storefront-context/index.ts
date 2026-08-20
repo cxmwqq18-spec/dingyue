@@ -73,6 +73,7 @@ async function loadPrismaBundle(siteId: string) {
       connect: true,
       products: { include: { prices: true } },
       creativePacks: true,
+      activePublication: { include: { publication: true } },
       publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }
     }
   });
@@ -86,8 +87,8 @@ async function loadPrismaBundle(siteId: string) {
     site,
     products: siteRecord.products.map(mapProduct),
     creativePacks: siteRecord.creativePacks.map(toCreativePack),
-    publication: siteRecord.publications[0] ? toThemePublication(siteRecord.publications[0]) : undefined,
-    factsRevision: siteRecord.publications[0]?.factsRevision ?? undefined,
+    publication: site.latestPublication,
+    factsRevision: site.latestPublication?.factsRevision,
     buildId: release?.codeCommit
   };
 }

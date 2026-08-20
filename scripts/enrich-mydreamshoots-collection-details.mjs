@@ -218,8 +218,8 @@ function normalizeSharedProfile(slug, profile) {
   };
 }
 
-const sharedProfilesPath = path.resolve(process.cwd(), "src/lib/dreamshoot-pack-profiles.json");
-const sharedProfileBySlug = JSON.parse(fs.readFileSync(sharedProfilesPath, "utf8"));
+const sharedProfilesPath = path.resolve(process.cwd(), "src/lib/photo-package-use-case-profiles.json");
+const sharedProfileBySlug = JSON.parse(fs.readFileSync(sharedProfilesPath, "utf8")).mydreamshootsCategories ?? {};
 for (const [slug, profile] of Object.entries(sharedProfileBySlug)) {
   profileBySlug[slug] = normalizeSharedProfile(slug, profile);
 }
@@ -822,19 +822,7 @@ async function applyPostgres(localResult) {
       }
     }
 
-    let postgresPublications = 0;
-    const publications = await prisma.themePublication.findMany({ where: { siteId: { in: Array.from(siteIds) } } });
-    for (const publication of publications) {
-      const snapshot = structuredClone(publication.snapshot);
-      updateCollectionsPagesInSnapshot(snapshot);
-      if (changed(publication.snapshot, snapshot)) {
-        await prisma.themePublication.update({
-          where: { id: publication.id },
-          data: { snapshot }
-        });
-        postgresPublications += 1;
-      }
-    }
+    const postgresPublications = 0;
 
     clearStateCaches();
     return {
