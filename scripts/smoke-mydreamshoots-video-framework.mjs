@@ -24,7 +24,8 @@ const expectedCategoriesBySite = {
     ["meme-video", "Meme Video", 100],
     ["product-video", "Product Video", 110],
     ["product-ad-video", "Product Ad Video", 120],
-    ["ugc-ad-video", "UGC Ad Video", 130]
+    ["promo-video", "Promo Video", 130],
+    ["ugc-ad-video", "UGC Ad Video", 140]
   ],
   site_grownstride_test: baseExpectedCategories
 };

@@ -73,7 +73,9 @@ function categoryWhere(category?: string): Prisma.VideoThemeWhereInput | undefin
   return {
     OR: [
       { category: { is: { slug: normalizedCategory } } },
-      { category: { is: { label: { equals: rawCategory, mode: "insensitive" } } } }
+      { category: { is: { label: { equals: rawCategory, mode: "insensitive" } } } },
+      { category: { is: { parent: { is: { slug: normalizedCategory } } } } },
+      { category: { is: { parent: { is: { label: { equals: rawCategory, mode: "insensitive" } } } } } }
     ]
   };
 }
@@ -283,7 +285,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     if (cached && cached.expiresAt > Date.now()) return NextResponse.json(cached.payload);
     let themes = await prisma.videoTheme.findMany({
       where,
-      include: { category: true },
+      include: { category: { include: { parent: true } } },
       orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
       take: pageSize
     });
@@ -295,7 +297,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       await ensureDefaultVideoThemesRelational(siteId);
       themes = await prisma.videoTheme.findMany({
         where,
-        include: { category: true },
+        include: { category: { include: { parent: true } } },
         orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
         take: pageSize
       });
@@ -303,7 +305,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     const categories = includeCategories
       ? await prisma.videoThemeCategory.findMany({
           where: publicVideoThemeCategoryWhere(siteId),
-          orderBy: [{ sortOrder: "asc" }, { label: "asc" }]
+          include: { parent: true },
+          orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
         })
       : [];
     const frameLimits = await videoThemeProviderFrameLimits();
@@ -342,7 +345,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   const [themes, total, activeCount, draftCount, pausedCount, backendAllCount, publicAllCount] = await prisma.$transaction([
     prisma.videoTheme.findMany({
       where,
-      include: { category: true },
+      include: { category: { include: { parent: true } } },
       orderBy: [{ status: "asc" }, { sortOrder: "asc" }, { createdAt: "desc" }],
       skip: admin ? (page - 1) * pageSize : undefined,
       take: pageSize
@@ -382,7 +385,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
             where: publicScope
               ? publicVideoThemeCategoryWhere(siteId)
               : { siteId, status: admin ? undefined : "active" },
-            orderBy: [{ sortOrder: "asc" }, { label: "asc" }]
+            include: { parent: true },
+            orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
           })).map(toVideoThemeCategory)
         }
       : {})

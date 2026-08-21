@@ -1180,6 +1180,35 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     ctaLabel: "Create My Product Ad",
     ctaHref: "/app/create#step-video"
   },
+  "promo-video": {
+    label: "Promo Video",
+    title: "AI Promo Video Maker for Launches, Offers & Announcements | myDreamshoots",
+    description:
+      "Create promotional videos for launches, limited-time offers, events, seasonal campaigns, and product updates with an AI promo video maker. Structure the message, proof, timing, terms, and CTA around verified product inputs and real generated outputs.",
+    keywords:
+      "AI promo video maker, AI promotional video maker, promo video generator, promotional video generator, AI marketing promo video, product launch video maker, sale promo video maker, event promo video generator, social media promo video maker",
+    h2: "make one promotional moment clear enough to act on",
+    h3: ["Six promotional jobs", "Promo goal, reason now, proof, terms, and CTA", "Responsible campaign fact review"],
+    intro:
+      "Promo Video helps customers turn one launch, offer, event, seasonal moment, feature release, or social promotion into a message people can understand quickly without invented urgency.",
+    details: [
+      "Use it for product launches, limited-time offers, event announcements, product or feature updates, seasonal campaigns, and social or short-form promotions.",
+      "Build around Promo Goal, Audience, Reason Now, Offer or Announcement, Proof, Timing or Terms, and CTA.",
+      "Keep dates, discounts, prices, availability, eligibility, event details, countdowns, and product claims tied to the real campaign and destination.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Product launches and reveals", "Limited-time offers and sales", "Event announcements", "Product and feature updates", "Seasonal campaigns", "Social and short-form promos"],
+    workflow: ["Choose the promotional job.", "Write the verified campaign facts.", "Add approved product, event, or offer evidence.", "Generate with available settings and review the draft before publishing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore Product Ad Video", href: "/ai-video-generation/product-ad-video" },
+      { label: "Explore Social Media Video", href: "/ai-video-generation/social-media-video" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create a Promo Video",
+    ctaHref: "/app/create#step-video"
+  },
   "ugc-ad-video": {
     label: "UGC Ad Video",
     title: "AI UGC Video Generator for Creator-Style Product Ads | myDreamshoots",
@@ -1331,6 +1360,7 @@ const dreamshootDefaultPublicToolSlugs = new Set([
   "meme-video",
   "product-video",
   "product-ad-video",
+  "promo-video",
   "ugc-ad-video",
   "background-changer",
   "background-remover",

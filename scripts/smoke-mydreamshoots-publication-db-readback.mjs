@@ -46,6 +46,12 @@ const requireDatabase = process.argv.includes("--require-db");
     assert.deepEqual(first.snapshot, second.snapshot, "publication snapshot must be byte-stable on readback");
     assert.equal(publicationSnapshotIntegrity(first.snapshot), "valid", "readback snapshot must satisfy the immutable contract");
     assert.equal(publicationSnapshotHash(first.snapshot), first.snapshot.snapshotHash, "snapshot hash must verify after readback");
+    const policyRoutes = first.snapshot.publishedRoutes.filter((route) => route.routeKind === "policy" || route.routeKind === "policy-alias");
+    assert.deepEqual(policyRoutes.filter((route) => route.disposition === "render").map((route) => route.canonicalPath).sort(), ["/privacy", "/terms"]);
+    assert.deepEqual(policyRoutes.filter((route) => route.disposition === "redirect").map((route) => route.aliasPath).sort(), [
+      "/policies/privacy", "/policies/privacy-policy", "/policies/terms", "/policies/terms-of-service", "/privacy-policy", "/terms-of-service"
+    ]);
+    assert.ok(policyRoutes.filter((route) => route.disposition === "redirect").every((route) => route.statusCode === 308 && route.indexable === false && route.sitemapEligible === false));
     for (const field of ["publishedRoutes", "publishedPageEntities", "publishedPageCopy", "publishedPageMedia", "publishedStandardPageMedia", "publishedPackFacts", "publishedOffers", "publishedFacts", "publishedCollectionRefs", "publishedLinkRefs", "revisions", "snapshotHash", "buildId"]) {
       assert.ok(field in first.snapshot, `readback snapshot missing ${field}`);
     }

@@ -9,11 +9,12 @@ import {
   upsertVideoThemeCategoryRelational
 } from "@/lib/stores/site-store";
 import type { VideoThemeCategory } from "@/lib/types";
-import { publicVideoThemeSlugListForSite } from "@/lib/video-theme-public-scope";
+import { publicVideoThemeCategorySlugListForSite } from "@/lib/video-theme-public-scope";
 
 function bodyFromRequest(body: Record<string, unknown>): Partial<VideoThemeCategory> {
   return {
     label: typeof body.label === "string" ? body.label : "",
+    parentId: typeof body.parentId === "string" && body.parentId ? body.parentId : undefined,
     slug: typeof body.slug === "string" ? body.slug : undefined,
     description: typeof body.description === "string" ? body.description : undefined,
     icon: typeof body.icon === "string" ? body.icon : undefined,
@@ -25,7 +26,7 @@ function bodyFromRequest(body: Record<string, unknown>): Partial<VideoThemeCateg
 }
 
 function publicVideoThemeCategoryWhere(siteId: string): Prisma.VideoThemeCategoryWhereInput {
-  const slugList = publicVideoThemeSlugListForSite(siteId);
+  const slugList = publicVideoThemeCategorySlugListForSite(siteId);
   return {
     siteId,
     status: "active",
@@ -46,7 +47,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     where: publicScope
       ? publicVideoThemeCategoryWhere(siteId)
       : { siteId, status: admin ? undefined : "active" },
-    orderBy: [{ sortOrder: "asc" }, { label: "asc" }]
+    include: { parent: true },
+    orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
   });
   return NextResponse.json({ ok: true, categories: categories.map(toVideoThemeCategory) });
 }
@@ -67,7 +69,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
       accentColor: body.accentColor,
       imageUrl: body.imageUrl,
       sortOrder: body.sortOrder,
-      status: body.status
+      status: body.status,
+      parentId: body.parentId
     });
     return NextResponse.json({ ok: true, category: result.category, created: result.created });
   } catch (error) {

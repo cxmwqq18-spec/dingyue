@@ -156,6 +156,7 @@ const youtubeImageRoot = "/assets/dreamshoot/youtube-video";
 const memeImageRoot = "/assets/dreamshoot/meme-video";
 const productImageRoot = "/assets/dreamshoot/product-video";
 const productAdImageRoot = "/assets/dreamshoot/product-ad-video";
+const promoImageRoot = "/assets/dreamshoot/promo-video";
 
 export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLandingContent> = {
   "cinematic-video": {
@@ -2309,6 +2310,297 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       body: "Choose the audience, the real reason to care, the promise you can support, the proof that makes it believable, and the one next action this ad should earn.",
       cta: "Create My Product Ad",
       microcopy: "Use product material and claims you are allowed to publish, and review the finished ad for accuracy before sharing."
+    }
+  },
+  "promo-video": {
+    seo: {
+      title: "AI Promo Video Maker for Launches, Offers & Announcements | myDreamshoots",
+      description:
+        "Create promotional videos for launches, limited-time offers, events, seasonal campaigns, and product updates with an AI promo video maker. Structure the message, proof, timing, terms, and CTA around verified product inputs and real generated outputs.",
+      keywords:
+        "AI promo video maker, AI promotional video maker, promo video generator, promotional video generator, AI marketing promo video, product launch video maker, sale promo video maker, event promo video generator, social media promo video maker",
+      canonicalPath: "/ai-video-generation/promo-video"
+    },
+    hero: {
+      eyebrow: "AI PROMO VIDEO MAKER",
+      title: "AI Promo Video Maker for Launches, Offers & Announcements",
+      body:
+        "Turn one promotional moment into a video people can understand quickly: what is happening, who it is for, why it matters now, what evidence supports the message, when the offer or event is valid, and what the viewer should do next. Build the draft around verified product, campaign, event, and offer inputs—not invented urgency.",
+      primaryCta: "Create a Promo Video",
+      secondaryCta: "See Promo Examples",
+      availabilityNote:
+        "The current video workspace is the verified creation path. This page does not claim a separate Promo-only generator or unverified campaign controls.",
+      rightsCopy:
+        "Dates, discounts, prices, availability, eligibility, launch timing, event details, countdowns, and product claims must match the real destination and current campaign terms.",
+      imageNote: "Goal -> Reason now -> Message -> Proof -> Timing / Terms -> CTA",
+      highlights: ["Goal", "Reason now", "Message", "Proof", "Timing / Terms", "CTA"],
+      image: image(
+        `${promoImageRoot}/promo-video-product-launch-presentation.jpg`,
+        "Presenter showcasing a product during a launch-style promotional event",
+        4254,
+        6381
+      )
+    },
+    quickAnswer: {
+      eyebrow: "SEARCH INTENT MATCH",
+      title: "What Should an AI Promo Video Maker Help You Make Clear?",
+      intro:
+        "A promo video is usually tied to a moment that can expire: a launch, a sale, an event, a seasonal push, a feature release, or another announcement. The video therefore needs more than attractive footage. It needs a clear promotional fact pattern.",
+      cards: [
+        { title: "What is happening?", body: "Name the launch, offer, event, update, activation, or seasonal promotion without burying it behind generic hype." },
+        { title: "Who is it for?", body: "Clarify the relevant audience or eligibility when the promotion does not apply to everyone." },
+        { title: "Why now?", body: "State the real reason the message matters now: a verified date, availability window, launch state, event timing, or campaign condition." },
+        { title: "What can the viewer verify?", body: "Show product, feature, venue, included items, price context, visible transformation, interface state, or another proof point that supports the promotional claim." },
+        { title: "What should they do next?", body: "Use one CTA that matches the destination: learn more, register, shop the offer, join the launch, watch the reveal, or another real next step." }
+      ]
+    },
+    useCases: {
+      eyebrow: "SIX PROMO VIDEO JOBS",
+      title: "Choose the Promotional Job Before You Choose the Look",
+      intro:
+        "A launch, sale, event, update, seasonal campaign, and social promo each need a different information sequence. Choose the job first so the creative keeps the facts visible.",
+      items: [
+        makeUseCaseCard({
+          scenarioLabel: "01 - PRODUCT LAUNCH / REVEAL",
+          title: "Build Anticipation Around a Real Reveal",
+          problem: "A launch teaser creates suspense but never tells people what is launching or when they can act.",
+          body: "Lead with the category, problem, or visible product cue, then reveal the actual product or release. Put the verified launch date or availability state close to the CTA.",
+          noteLabel: "Structure",
+          noteBody: "Teaser -> reveal -> key benefit -> visible proof -> launch timing -> CTA",
+          cta: "Create a Launch Promo",
+          image: image(`${promoImageRoot}/promo-video-product-launch-presentation.jpg`, "Presenter showcasing a product during a launch-style promotional event", 4254, 6381)
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "02 - LIMITED-TIME OFFER / SALE",
+          title: "Make the Offer Understandable Before You Make It Urgent",
+          problem: "Limited time becomes the whole message while the actual saving, eligible items, and conditions remain unclear.",
+          body: "Show what changes for the customer, who or what qualifies, the condition that matters, and the real end date. Do not create a countdown unless it is tied to a real deadline.",
+          noteLabel: "Structure",
+          noteBody: "Offer -> qualification -> proof -> conditions -> deadline -> CTA",
+          cta: "Create an Offer Promo",
+          image: image(`${promoImageRoot}/promo-video-limited-time-offer-sale.jpg`, "Shopping bags with sale signage representing a limited-time promotional offer", 3740, 5610)
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "03 - EVENT ANNOUNCEMENT",
+          title: "Put the Event Facts Where the Viewer Can Act on Them",
+          problem: "The video looks exciting but makes the viewer search for the date, location, registration path, or reason to attend.",
+          body: "Name the event, audience, date or time, location or format, and the strongest reason to attend. Use footage to support the experience, not replace logistical clarity.",
+          noteLabel: "Structure",
+          noteBody: "What -> who -> when / where -> reason to attend -> proof -> CTA",
+          cta: "Create an Event Promo",
+          image: image(`${promoImageRoot}/promo-video-event-announcement-conference.jpg`, "Speaker presenting on stage at an indoor event or conference", 4195, 6293)
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "04 - PRODUCT / FEATURE UPDATE",
+          title: "Show the Change Before You Sell the Excitement",
+          problem: "The video announces new without showing what actually changed.",
+          body: "Start with the previous friction or use case, show the updated feature or product state, and explain who benefits. Avoid claiming availability before the release state is verified.",
+          noteLabel: "Structure",
+          noteBody: "Change -> use case -> visible proof -> availability -> CTA",
+          cta: "Create an Update Promo",
+          image: image(`${promoImageRoot}/promo-video-feature-release-laptop.jpg`, "Laptop screen displaying software code for a product or feature update concept", 4928, 3280)
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "05 - SEASONAL CAMPAIGN",
+          title: "Use the Season as Context for a Specific Promotion",
+          problem: "The season dominates the creative while the product, promotion, and next step remain generic.",
+          body: "Tie the seasonal moment to one relevant need or behavior. Keep price, bundles, gift eligibility, shipping cutoffs, dates, and availability accurate.",
+          noteLabel: "Structure",
+          noteBody: "Seasonal moment -> relevant need -> product / offer -> terms -> timing -> CTA",
+          cta: "Create a Seasonal Promo",
+          image: image(`${promoImageRoot}/promo-video-seasonal-campaign-holiday-retail.jpg`, "Holiday retail display with gifts and seasonal products in a store", 4160, 6240)
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "06 - SOCIAL / SHORT-FORM PROMO",
+          title: "Compress the Promotion to One Reason to Act",
+          problem: "The edit contains too many messages for a short attention window.",
+          body: "Use one hook, one promotional value proposition, one proof point, one real urgency signal, and one destination. Let platform-specific versions change framing—not the underlying facts.",
+          noteLabel: "Structure",
+          noteBody: "Hook -> value -> proof -> urgency -> CTA",
+          cta: "Create a Social Promo",
+          image: image(`${promoImageRoot}/promo-video-social-promo-creator-setup.jpg`, "Creator setting up a smartphone and ring light for a short-form promotional video", 5722, 3815)
+        })
+      ]
+    },
+    evidence: {
+      eyebrow: "PROVE THE GENERATOR, NOT JUST THE PROMO CATEGORY",
+      title: "Show What myDreamshoots Actually Accepts, Controls, and Generates",
+      intro: "Stock campaign imagery explains promotional contexts, but it cannot prove the product itself. Replace these evidence-ready slots with verified myDreamshoots captures before publishing.",
+      cards: [
+        { title: "Real input", body: "Show an actual input state a user can provide today and caption the verified asset or input type supplied.", exampleLabel: "First-party evidence required", exampleBody: "No first-party input capture was included in the delivery package." },
+        { title: "Real direction / controls", body: "Show only controls, settings, or prompt instructions that exist now. Do not add invented duration, ratio, voice, template, platform, music, caption, or export controls.", exampleLabel: "First-party evidence required", exampleBody: "Product and development verification is required before publishing control claims." },
+        { title: "Real generated output", body: "Embed or show a verified output generated through the current product, with a matching thumbnail and concise Input -> Direction -> Output caption.", exampleLabel: "First-party evidence required", exampleBody: "A public generated Promo output was not supplied with this content package." },
+        { title: "Product fact strip", body: "Publish only verified facts such as supported inputs, outputs, duration, audio, credits, export behavior, or commercial-use terms. Omit unverified fields.", exampleLabel: "Fact check required", exampleBody: "Fact-strip fields remain intentionally empty until product verification is complete." }
+      ]
+    },
+    examples: {
+      eyebrow: "REAL PROMO EXAMPLES",
+      title: "Show What a Real Promotional Brief Becomes",
+      intro: "Use first-party examples when available. Stock scene references explain the promotional context but must not be presented as myDreamshoots outputs.",
+      cards: [
+        {
+          title: "Launch Promo",
+          body: "Reserve this slot for a real myDreamshoots launch case with one verified product or campaign fact pattern.",
+          details: [
+            { label: "Input", body: "Verified source asset - pending capture." },
+            { label: "Brief", body: "Product, launch state, proof, timing, and CTA - pending product record." },
+            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
+            { label: "Why", body: "Launch fact appears early, proof supports the message, and timing matches the destination - pending review." }
+          ],
+          exampleLabel: "First-party proof required",
+          exampleBody: "This card is an evidence-ready slot, not a fabricated customer result."
+        },
+        {
+          title: "Limited-Time Offer",
+          body: "Use a verified offer case where the discount, eligibility, conditions, and deadline all match the destination.",
+          details: [
+            { label: "Input", body: "Verified source asset - pending capture." },
+            { label: "Facts", body: "Offer, eligibility, and deadline - pending campaign record." },
+            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
+            { label: "Why", body: "The offer is legible, conditions are visible, and urgency is factual - pending review." }
+          ],
+          exampleLabel: "First-party proof required",
+          exampleBody: "Do not turn a stock sale image into a verified product outcome."
+        },
+        {
+          title: "Event or Seasonal Promo",
+          body: "Use a verified event or seasonal campaign case where the viewer can understand what, when, why, and where to act.",
+          details: [
+            { label: "Input", body: "Verified event, product, or campaign asset - pending capture." },
+            { label: "Facts", body: "Date, location or format, reason to attend, and terms - pending campaign record." },
+            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
+            { label: "Why", body: "The message preserves the campaign facts while keeping the visual experience clear - pending review." }
+          ],
+          exampleLabel: "First-party proof required",
+          exampleBody: "The package does not include a generated output, so no result is claimed here."
+        }
+      ]
+    },
+    foundation: {
+      eyebrow: "PROMO BRIEF MODEL",
+      title: "Write the Promotional Fact Pattern Before the Creative Brief",
+      intro: "A Promo Video brief should make the campaign facts easy to verify before the edit adds pace, energy, or atmosphere.",
+      leftTitle: "Decide first",
+      leftItems: [
+        "Goal: launch, offer, event, update, seasonal campaign, or social promotion.",
+        "Audience: who is the message for and who is eligible?",
+        "Reason now: what verified date, availability, release state, or campaign condition matters?",
+        "Offer or announcement: what exactly is changing or being announced?",
+        "Proof: what can the viewer see or verify?",
+        "Timing, terms, and CTA: what conditions and next action must remain visible?"
+      ],
+      rightTitle: "Avoid",
+      rightItems: [
+        "Do not invent countdowns, discounts, stock levels, dates, or launch availability.",
+        "Do not hide eligibility, exclusions, shipping cutoffs, or event logistics behind hype.",
+        "Do not use generic seasonal language without a specific product, offer, or next step.",
+        "Do not change the underlying campaign facts when adapting the crop or platform version.",
+        "Do not claim the stock reference image is a real customer, event, or product result."
+      ],
+      rightTone: "avoid",
+      expertLabel: "EXPERT TIP",
+      expertTip: "If the promotion cannot be summarized in one verified fact pattern, split the campaign into focused versions before you choose a visual style."
+    },
+    guidance: {
+      eyebrow: "MESSAGE HIERARCHY",
+      title: "Goal -> Audience -> Reason Now -> Message -> Proof -> Terms -> CTA",
+      intro: "Make the promotional logic easy to follow before making the edit fast.",
+      cards: [
+        guidanceCard({ title: "Goal", body: "Name the job: launch, offer, event, update, seasonal campaign, or social promotion." }),
+        guidanceCard({ title: "Audience", body: "Tell the relevant viewer why this message applies to them and state eligibility when it matters." }),
+        guidanceCard({ title: "Reason now", body: "Use a real date, release state, availability window, event timing, or campaign condition." }),
+        guidanceCard({ title: "Message", body: "State what is launching, changing, offered, happening, or worth attending." }),
+        guidanceCard({ title: "Proof", body: "Show product, feature, venue, included items, price context, interface state, or another supportable detail." }),
+        guidanceCard({ title: "Terms and CTA", body: "Keep conditions visible and end with one action that matches the destination." })
+      ]
+    },
+    platformExamples: {
+      eyebrow: "URGENCY WITHOUT INVENTING SCARCITY",
+      title: "Use Real Campaign Context as the Urgency Signal",
+      intro: "A promo can feel timely without fake pressure. Anchor urgency to verified dates, event timing, launch state, offer terms, seasonal behavior, or a real reason to decide now.",
+      items: [
+        {
+          title: "Retail sale context",
+          body: "Use a real sale period, eligible product set, condition, and end date. Keep the offer readable before adding visual speed or countdown language.",
+          image: image(`${promoImageRoot}/promo-video-retail-sale-shopping.jpg`, "Shoppers comparing clothing during a retail sale promotion", 5353, 3569)
+        },
+        {
+          title: "Brand activation context",
+          body: "Use a real event, location, audience, and registration or attendance path. Show the experience as context, not as proof of a result that did not happen.",
+          image: image(`${promoImageRoot}/promo-video-brand-activation-booth.jpg`, "Branded trade show booth with product display for a promotional activation", 2976, 5290)
+        },
+        { title: "Launch timing", body: "Use a verified release or availability state. If the date is not confirmed, say what is known and avoid a fabricated launch countdown." },
+        { title: "Seasonal timing", body: "Use the seasonal need, bundle, shipping cutoff, or eligibility condition that is actually true for the campaign." }
+      ]
+    },
+    comparison: {
+      eyebrow: "PAGE DIFFERENTIATION / INTERNAL LINKING",
+      title: "Promo Video Is About a Time-Bound Promotional Moment",
+      intro: "Keep adjacent pages distinct by the customer decision they support.",
+      items: [
+        { title: "Promo Video", body: "Use for launches, offers, events, seasonal campaigns, feature releases, and social promotions where timing, terms, and CTA are central." },
+        { title: "Product Ad Video", body: "Use when the campaign is primarily a paid ad around one audience, product promise, proof hierarchy, offer, and purchase CTA.", href: "/ai-video-generation/product-ad-video", linkLabel: "Explore Product Ad Video" },
+        { title: "Product Video", body: "Use when the viewer first needs product clarity: scale, materials, features, use context, packaging, and included items.", href: "/ai-video-generation/product-video", linkLabel: "Explore Product Video" },
+        { title: "Social Media Video", body: "Use when the main job is adapting a core idea across social placements, crops, captions, pacing, and platform-safe framing.", href: "/ai-video-generation/social-media-video", linkLabel: "Explore Social Media Video" },
+        { title: "AI Video Generation", body: "Return to the full video theme directory when the creative job is not yet clear.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" }
+      ]
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      title: "From Verified Campaign Facts to a Promo Video Draft",
+      items: [
+        { title: "Choose the promotional job", body: "Launch, offer, event, update, seasonal campaign, or social promotion." },
+        { title: "Write the fact pattern", body: "Define the goal, audience, reason now, announcement or offer, proof, timing, terms, and CTA." },
+        { title: "Add approved source material", body: "Use product, event, venue, feature, offer, or campaign assets you are allowed to publish." },
+        { title: "Generate with supported options", body: "Use only the current myDreamshoots workflow and verified controls. Do not assume Promo-specific settings." },
+        { title: "Review before publishing", body: "Check every date, discount, eligibility rule, product detail, event fact, crop, disclosure, destination, and CTA against the real campaign." }
+      ],
+      cta: "Create a Promo Video"
+    },
+    value: {
+      eyebrow: "CAMPAIGN FACT CHECK",
+      title: "A Clear Promo Keeps the Facts Close to the Visual Moment",
+      intro: "Keep the creative energetic while leaving the promotional decision easy to verify.",
+      items: [
+        { title: "Keep the announcement visible", body: "Do not make the viewer decode what is launching, changing, happening, or offered." },
+        { title: "Put proof beside the claim", body: "Show the product, feature, venue, offer context, or interface state near the line it supports." },
+        { title: "Treat timing as a fact", body: "Use dates, deadlines, launch states, and availability only when they match the live campaign." },
+        { title: "Keep the destination consistent", body: "The CTA, landing page, price or terms, registration path, and final video message should agree." }
+      ]
+    },
+    trust: {
+      eyebrow: "RESPONSIBLE / E-E-A-T",
+      title: "Urgency Should Come From the Campaign, Not the Copywriter",
+      intro: "Before publishing:",
+      items: [
+        { title: "Verify dates and terms", body: "Verify launch dates, offer periods, event logistics, prices, discounts, eligibility, availability, shipping cutoffs, and exclusions." },
+        { title: "Use supportable product claims", body: "Keep product, feature, performance, comparison, and before-and-after claims tied to approved evidence." },
+        { title: "Do not fabricate scarcity", body: "Do not invent countdowns, stock levels, customer counts, waitlists, registrations, or expiring access." },
+        { title: "Label stock context honestly", body: "Stock images can explain a campaign scenario. They cannot prove a real customer, event, product result, or endorsement." },
+        { title: "Keep campaign conditions visible", body: "Do not hide qualifying products, terms, location, format, timing, compatibility, shipping, or returns when they affect the decision." },
+        { title: "Review destination rules", body: "Review the destination platform's current rules for realistic AI-generated or altered promotional content." }
+      ]
+    },
+    faq: {
+      eyebrow: "QUESTIONS? WE'VE GOT ANSWERS",
+      title: "Frequently Asked Questions",
+      items: [
+        { question: "What is an AI promo video maker?", answer: "It helps turn a verified launch, offer, event, seasonal campaign, product update, or social promotion into a short promotional video draft with a clear message, proof, timing, terms, and CTA." },
+        { question: "How is Promo Video different from Product Ad Video?", answer: "Promo Video is organized around a time-bound promotional moment such as a launch, sale, event, or announcement. Product Ad Video is organized around one paid-campaign audience, product promise, proof hierarchy, offer, and purchase action." },
+        { question: "Should every promo video include a discount or countdown?", answer: "No. Use a discount or countdown only when a real campaign has verified terms and a real deadline. A launch date, event time, release state, or seasonal cutoff can be the relevant reason now without fabricated scarcity." },
+        { question: "What should I prepare before making a promo video?", answer: "Prepare the promotional goal, audience, verified reason now, announcement or offer, product or campaign proof, timing and conditions, destination, and one CTA. Confirm which input types and controls the current myDreamshoots workflow supports." },
+        { question: "Can I use stock images as my generated promo examples?", answer: "Stock images can explain the promotional scenario, but they should not be presented as myDreamshoots generated output, a real customer result, or proof that a real event or offer happened." },
+        { question: "Can one promo video run on every platform?", answer: "The campaign facts can stay consistent, but the finished creative may need different framing, crop, text placement, captions, pacing, and CTA presentation for each destination." },
+        { question: "Can I use a fictional campaign or event in a promo concept?", answer: "You can use a clearly labeled concept for creative planning, but do not present fictional dates, discounts, availability, attendance, or results as real campaign facts." },
+        { question: "Can I use the result commercially?", answer: "Only state commercial rights supported by the actual myDreamshoots plan and current terms. Review the finished creative and all campaign claims before publishing." }
+      ]
+    },
+    finalCta: {
+      eyebrow: "MAKE THE PROMOTIONAL MOMENT CLEAR",
+      title: "Create a Promo Video Around a Real Reason to Act",
+      body: "Choose the promotional job, write the verified facts, show the proof, keep timing and terms visible, and end with the one next action this campaign should earn.",
+      cta: "Create a Promo Video",
+      microcopy: "Verified campaign facts. Supportable proof. Clear timing and terms. One relevant CTA."
     }
   },
   "ugc-ad-video": {

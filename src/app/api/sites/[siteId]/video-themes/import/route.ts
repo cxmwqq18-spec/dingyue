@@ -7,8 +7,8 @@ import { parseVideoThemeImport, previewVideoThemeImport, type VideoThemeImportPr
 
 async function previewForSite(siteId: string, buffer: Buffer): Promise<VideoThemeImportPreview> {
   const [categories, themes] = await Promise.all([
-    prisma.videoThemeCategory.findMany({ where: { siteId }, orderBy: [{ sortOrder: "asc" }, { label: "asc" }] }),
-    prisma.videoTheme.findMany({ where: { siteId }, include: { category: true }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] })
+    prisma.videoThemeCategory.findMany({ where: { siteId }, include: { parent: true }, orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }] }),
+    prisma.videoTheme.findMany({ where: { siteId }, include: { category: { include: { parent: true } } }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] })
   ]);
   return previewVideoThemeImport(parseVideoThemeImport(buffer), categories.map(toVideoThemeCategory), themes.map(toVideoTheme));
 }
@@ -32,7 +32,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
     }
 
     const categoryIds = new Map<string, string>();
-    for (const category of preview.categories) {
+    const categoryRows = [...preview.categories].sort((left, right) => Number(Boolean(left.parentSlug)) - Number(Boolean(right.parentSlug)));
+    for (const category of categoryRows) {
       const existing = await prisma.videoThemeCategory.findUnique({
         where: { siteId_slug: { siteId, slug: category.slug } },
         select: { id: true }
@@ -40,7 +41,10 @@ export async function POST(request: Request, { params }: { params: Promise<{ sit
       const saved = await upsertVideoThemeCategoryRelational({
         siteId,
         categoryId: existing?.id,
-        ...category
+        ...category,
+        parentId: category.parentSlug
+          ? (await prisma.videoThemeCategory.findUnique({ where: { siteId_slug: { siteId, slug: category.parentSlug } }, select: { id: true } }))?.id
+          : undefined
       });
       categoryIds.set(saved.category.slug, saved.category.id);
     }

@@ -62,7 +62,7 @@ type CategorySaveResult = {
 type ImportPreviewResult = {
   ok?: boolean;
   error?: string;
-  categories?: Array<{ slug: string; label: string }>;
+  categories?: Array<{ slug: string; label: string; parentSlug?: string; parentLabel?: string }>;
   themes?: Array<{ slug: string; name: string }>;
   errors?: Array<{ row: number; field?: string; message: string }>;
   imported?: { categories: number; themes: number };
@@ -133,6 +133,11 @@ function galleryText(theme: Partial<VideoTheme>) {
   return (theme.galleryImages ?? []).join("\n");
 }
 
+function categoryDisplayLabel(category?: VideoThemeCategory | null) {
+  if (!category) return "未分类";
+  return category.parent ? `${category.parent.label} / ${category.label}` : category.label;
+}
+
 export function VideoThemeEditor({ siteId }: { siteId: string }) {
   const [themes, setThemes] = useState<VideoTheme[]>([]);
   const [categories, setCategories] = useState<VideoThemeCategory[]>([]);
@@ -151,11 +156,18 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
   const [importPreview, setImportPreview] = useState<ImportPreviewResult | null>(null);
   const [importing, setImporting] = useState(false);
   const [draftTheme, setDraftTheme] = useState(() => newThemeDraft());
-  const [categoryDraft, setCategoryDraft] = useState({ label: "", slug: "", description: "", icon: "", accentColor: "", imageUrl: "", sortOrder: 0, status: "active" as Status });
+  const [categoryDraft, setCategoryDraft] = useState({ label: "", slug: "", parentId: "", description: "", icon: "", accentColor: "", imageUrl: "", sortOrder: 0, status: "active" as Status });
   const [siteBasePath, setSiteBasePath] = useState("");
 
   const categoryById = useMemo(() => new Map(categories.map((category) => [category.id, category])), [categories]);
-  const categoryOptions = categories.length ? categories : [];
+  const rootCategories = useMemo(() => categories.filter((category) => !category.parentId).sort((left, right) => (left.sortOrder ?? 0) - (right.sortOrder ?? 0) || left.label.localeCompare(right.label)), [categories]);
+  const childCategories = useMemo(() => categories.filter((category) => Boolean(category.parentId)).sort((left, right) => (left.sortOrder ?? 0) - (right.sortOrder ?? 0) || left.label.localeCompare(right.label)), [categories]);
+  const themeCategoryOptions = childCategories;
+  const categoryPath = useCallback((category?: VideoThemeCategory | null) => {
+    if (!category) return "未分类";
+    const parent = category.parent ?? (category.parentId ? categoryById.get(category.parentId) : undefined);
+    return parent ? `${parent.label} / ${category.label}` : category.label;
+  }, [categoryById]);
   const adminPagesHref = siteBasePath ? `${siteBasePath}/admin/design/pages` : "/admin/design/pages";
   const mediaLibraryHref = siteBasePath ? `${siteBasePath}/admin/media` : "/admin/media";
   const themePreviewHref = useCallback((theme: Pick<VideoTheme, "slug">) => {
@@ -250,7 +262,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
       });
       if (!response.ok || !response.data.category) throw new Error(response.data.error ?? "分类创建失败。");
       setCategories((items) => updateListItem(items, response.data.category!));
-      setCategoryDraft({ label: "", slug: "", description: "", icon: "", accentColor: "", imageUrl: "", sortOrder: 0, status: "active" });
+      setCategoryDraft({ label: "", slug: "", parentId: "", description: "", icon: "", accentColor: "", imageUrl: "", sortOrder: 0, status: "active" });
       setMessage(`已创建视频分类：${response.data.category.label}`);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "分类创建失败。");
@@ -283,8 +295,9 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
   }
 
   async function deleteCategory(category: VideoThemeCategory) {
+    const childCount = categories.filter((item) => item.parentId === category.id).length;
     const themeCount = themes.filter((theme) => theme.categoryId === category.id).length;
-    if (!window.confirm(themeCount ? `分类「${category.label}」下有 ${themeCount} 个主题，删除后主题会变为未分类。确认继续吗？` : `确认删除分类「${category.label}」吗？`)) return;
+    if (!window.confirm(childCount || themeCount ? `分类「${category.label}」下有 ${childCount} 个子分类和 ${themeCount} 个主题，删除后会一并移除。确认继续吗？` : `确认删除分类「${category.label}」吗？`)) return;
     setSaving(true);
     try {
       const response = await fetchAdminJson<{ deletedCategory?: VideoThemeCategory; error?: string }>(`/api/sites/${siteId}/video-theme-categories/${category.id}`, {
@@ -493,9 +506,9 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
           </select>
           <select className="erp-select h-9 min-w-32" onChange={(event) => applyCategory(event.target.value)} value={categoryFilter}>
             <option value="">全部分类</option>
-            {categoryOptions.map((category) => (
+            {categories.map((category) => (
               <option key={category.id} value={category.slug}>
-                {category.label}
+                {categoryPath(category)}
               </option>
             ))}
           </select>
@@ -553,6 +566,12 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
           <ErpField hint="为空时按名称自动生成。" label="Slug">
             <ErpInput onChange={(event) => setCategoryDraft((current) => ({ ...current, slug: event.target.value }))} placeholder="travel-story" value={categoryDraft.slug} />
           </ErpField>
+          <ErpField label="目录层级">
+            <ErpSelect onChange={(event) => setCategoryDraft((current) => ({ ...current, parentId: event.target.value }))} value={categoryDraft.parentId}>
+              <option value="">作为一级目录</option>
+              {rootCategories.map((category) => <option key={category.id} value={category.id}>{category.label}</option>)}
+            </ErpSelect>
+          </ErpField>
           <ErpField label="封面 URL">
             <ErpInput onChange={(event) => setCategoryDraft((current) => ({ ...current, imageUrl: event.target.value }))} value={categoryDraft.imageUrl} />
           </ErpField>
@@ -584,27 +603,23 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
         </div>
         <div className="mt-5 grid gap-2 border-t border-slate-200 pt-4">
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">已有分类</p>
-          {categories.map((category) => (
-            <div className="flex flex-wrap items-center gap-3 rounded-[10px] border border-slate-200 bg-white px-3 py-2" key={category.id}>
-              <span className="h-3 w-3 rounded-full border border-slate-200" style={{ backgroundColor: category.accentColor || "#cbd5e1" }} />
-              <span className="min-w-0 flex-1">
-                <strong className="block truncate text-sm text-slate-900">{category.label}</strong>
-                <span className="text-xs text-slate-500">{category.slug} · {themes.filter((theme) => theme.categoryId === category.id).length} 个主题</span>
-              </span>
-              <StatusPill label={statusLabels[category.status]} tone={statusTone(category.status)} />
-              <button className="inline-flex h-8 items-center rounded-lg border border-slate-200 px-3 text-xs font-semibold text-slate-600 hover:bg-slate-50" onClick={() => setEditingCategory({ ...category })} type="button">
-                <Pencil className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />
-                编辑
-              </button>
-            </div>
-          ))}
+          {(rootCategories.length ? rootCategories : childCategories).map((category) => {
+            const children = childCategories.filter((child) => child.parentId === category.id);
+            const themeCount = themes.filter((theme) => theme.categoryId === category.id).length;
+            return (
+              <div className="grid gap-2" key={category.id}>
+                <CategoryRow category={category} childCount={children.length} themeCount={themeCount} onEdit={() => setEditingCategory({ ...category })} />
+                {children.map((child) => <CategoryRow category={child} nested key={child.id} themeCount={themes.filter((theme) => theme.categoryId === child.id).length} onEdit={() => setEditingCategory({ ...child })} />)}
+              </div>
+            );
+          })}
         </div>
       </details>
 
       <details className="rounded-[12px] border border-slate-200 bg-white p-4" open>
         <summary className="cursor-pointer text-sm font-semibold text-slate-900">新建视频主题</summary>
         <ThemeForm
-          categories={categoryOptions}
+          categories={themeCategoryOptions}
           onChange={updateDraft}
           onGalleryChange={(value) => updateDraft("galleryImages", parseGalleryImages(value))}
           theme={draftTheme}
@@ -638,7 +653,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="line-clamp-1 text-[15px] font-semibold text-slate-900">{theme.name}</p>
-                  <p className="mt-1 text-[12px] text-slate-500">{theme.category?.label ?? categoryById.get(theme.categoryId ?? "")?.label ?? "未分类"}</p>
+                  <p className="mt-1 text-[12px] text-slate-500">{categoryPath(theme.category ?? categoryById.get(theme.categoryId ?? ""))}</p>
                 </div>
                 <StatusPill label={statusLabels[theme.status]} tone={statusTone(theme.status)} />
               </div>
@@ -697,6 +712,12 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
                 </ErpField>
                 <ErpField label="Slug">
                   <ErpInput onChange={(event) => updateEditingCategory("slug", event.target.value)} value={editingCategory.slug} />
+                </ErpField>
+                <ErpField label="目录层级">
+                  <ErpSelect onChange={(event) => updateEditingCategory("parentId", event.target.value || undefined)} value={editingCategory.parentId ?? ""}>
+                    <option value="">作为一级目录</option>
+                    {rootCategories.filter((category) => category.id !== editingCategory.id).map((category) => <option key={category.id} value={category.id}>{category.label}</option>)}
+                  </ErpSelect>
                 </ErpField>
                 <ErpField label="图标名称">
                   <ErpInput onChange={(event) => updateEditingCategory("icon", event.target.value)} value={editingCategory.icon ?? ""} />
@@ -769,7 +790,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
             </div>
             <div className="grid gap-5 p-5">
               <ThemeForm
-                categories={categoryOptions}
+                categories={themeCategoryOptions}
                 onChange={updateEditing}
                 onGalleryChange={(value) => updateEditing("galleryImages", parseGalleryImages(value))}
                 theme={editingTheme}
@@ -834,7 +855,7 @@ function ThemeForm<T extends Partial<VideoTheme>>({
             <option value="">未分类</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
-                {category.label}
+                {categoryDisplayLabel(category)}
               </option>
             ))}
           </ErpSelect>
@@ -899,6 +920,35 @@ function ThemeForm<T extends Partial<VideoTheme>>({
           暂无封面
         </div>
       )}
+    </div>
+  );
+}
+
+function CategoryRow({
+  category,
+  childCount = 0,
+  nested = false,
+  onEdit,
+  themeCount
+}: {
+  category: VideoThemeCategory;
+  childCount?: number;
+  nested?: boolean;
+  onEdit: () => void;
+  themeCount: number;
+}) {
+  return (
+    <div className={`flex flex-wrap items-center gap-3 rounded-[10px] border px-3 py-2 ${nested ? "ml-6 border-slate-100 bg-slate-50" : "border-slate-200 bg-white"}`}>
+      <span className="h-3 w-3 rounded-full border border-slate-200" style={{ backgroundColor: category.accentColor || "#cbd5e1" }} />
+      <span className="min-w-0 flex-1">
+        <strong className="block truncate text-sm text-slate-900">{categoryDisplayLabel(category)}</strong>
+        <span className="text-xs text-slate-500">{category.slug} · {themeCount} 个主题{childCount ? ` · ${childCount} 个子分类` : ""}</span>
+      </span>
+      <StatusPill label={statusLabels[category.status]} tone={statusTone(category.status)} />
+      <button className="inline-flex h-8 items-center rounded-lg border border-slate-200 px-3 text-xs font-semibold text-slate-600 hover:bg-slate-50" onClick={onEdit} type="button">
+        <Pencil className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />
+        编辑
+      </button>
     </div>
   );
 }

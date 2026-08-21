@@ -376,7 +376,7 @@ export function resolvePublishedStorefrontContext(snapshot: PublishedSiteSnapsho
 
 export function resolveEffectiveIndexability(snapshot: PublishedSiteSnapshot, page: ThemePage, context = resolveStorefrontContext(bundleFor(snapshot, page), "published")): EffectiveIndexability {
   const canonicalPath = normalizePath(context.seo.canonicalPath);
-  const deferred = snapshot.site.id === "site_dreamshoot" && (canonicalPath === "/best-ai-video" || canonicalPath === "/ai-video-generation" || canonicalPath.startsWith("/ai-video-generation/"));
+  const deferred = snapshot.site.id === "site_dreamshoot" && DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS.has(canonicalPath);
   const blocked = deferred || page.pageType === "not_found" || page.slug === "/404" || isPrivateStorefrontPath(page.slug) || isPrivateStorefrontPath(canonicalPath);
   const resolved = resolvePublishedSeoEntity(snapshot, context.seo.canonicalPath);
   const publishedRoute = resolved.route?.routeKind === "ai-image-theme-leaf" ? resolved.route : undefined;
@@ -441,7 +441,7 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
 export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot, path: string): RouteDisposition {
   const requestedPath = normalizePath(path);
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
-  if (snapshot.site.id === "site_dreamshoot" && (DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS.has(requestedPath) || requestedPath === "/best-ai-video" || requestedPath === "/ai-video-generation" || requestedPath.startsWith("/ai-video-generation/"))) {
+  if (snapshot.site.id === "site_dreamshoot" && DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS.has(requestedPath)) {
     return { kind: "not_found", status: 404, path: requestedPath };
   }
   const exactPublishedRoute = snapshot.publishedRoutes.find((route) =>
@@ -458,6 +458,16 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
   }
   const legacyTarget = legacyPublicPathTarget(requestedPath, publicCollectionRootPathForSite(snapshot.site));
   if (legacyTarget) return resolvePublishedRedirectDisposition(snapshot, requestedPath, legacyTarget);
+  if (snapshot.site.id === "site_dreamshoot" && requestedPath.startsWith("/ai-video-generation/")) {
+    const page = snapshot.pages.find((candidate) => normalizePath(candidate.slug) === requestedPath);
+    const pageHasDedicatedVideoLanding = page?.publishedJson.sectionsOrder.some((sectionId) => {
+      const sectionType = page.publishedJson.sections[sectionId]?.type;
+      return sectionType === "ai_video_topic_landing" || sectionType === "talking_photo_landing";
+    });
+    if (page && pageHasDedicatedVideoLanding) {
+      return { kind: "render", status: 200, path: requestedPath, pageId: page.id };
+    }
+  }
   if (snapshot.site.id === "site_dreamshoot" && requestedPath.startsWith("/ai-image-generation/")) {
     const route = snapshot.publishedRoutes.find((candidate): candidate is PublishedLeafRouteProjection => isLeafRenderRoute(candidate) && candidate.canonicalPath === requestedPath);
     if (!route) return { kind: "not_found", status: 404, path: requestedPath };

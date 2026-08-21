@@ -16,6 +16,8 @@ import { withStorefrontPublicWatermarkUrl } from "@/lib/storefront-public-waterm
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import {
   isMydreamshootsVideoFrameworkSiteId,
+  mydreamshootsVideoGenerationParentCategoriesForSite,
+  parentVideoGenerationCategorySlugForChild,
   mydreamshootsVideoGenerationCategoriesForSite,
   mydreamshootsVideoGenerationThemeSeedsForSite
 } from "@/lib/mydreamshoots-video-framework";
@@ -352,13 +354,15 @@ export const getStorefrontPublicVideoThemeCategoriesForSite = cache(async (siteI
       try {
         let rows = await prisma.videoThemeCategory.findMany({
           where: { siteId, status: "active" },
-          orderBy: [{ sortOrder: "asc" }, { label: "asc" }]
+          include: { parent: true },
+          orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
         });
         if (!rows.length && isMydreamshootsVideoFrameworkSiteId(siteId)) {
           await ensureDefaultVideoThemesRelational(siteId);
           rows = await prisma.videoThemeCategory.findMany({
             where: { siteId, status: "active" },
-            orderBy: [{ sortOrder: "asc" }, { label: "asc" }]
+            include: { parent: true },
+            orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
           });
         }
         return rows.map(toVideoThemeCategory);
@@ -4810,7 +4814,17 @@ export async function ensureDefaultVideoThemesRelational(siteId: string): Promis
 async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: string): Promise<void> {
   await ensureVideoGeneratorAppForSiteRelational(siteId);
   const categoryIdBySlug = new Map<string, string>();
+  const parentIdBySlug = new Map<string, string>();
+  for (const parent of mydreamshootsVideoGenerationParentCategoriesForSite(siteId)) {
+    const row = await prisma.videoThemeCategory.upsert({
+      where: { siteId_slug: { siteId, slug: parent.slug } },
+      create: { id: uid("video_cat"), siteId, slug: parent.slug, label: parent.label, description: parent.description, sortOrder: parent.sortOrder, status: "active" },
+      update: { label: parent.label, description: parent.description, sortOrder: parent.sortOrder, status: "active", parentId: null }
+    });
+    parentIdBySlug.set(parent.slug, row.id);
+  }
   for (const category of mydreamshootsVideoGenerationCategoriesForSite(siteId)) {
+    const parentSlug = parentVideoGenerationCategorySlugForChild(category.slug);
     const row = await prisma.videoThemeCategory.upsert({
       where: { siteId_slug: { siteId, slug: category.slug } },
       create: {
@@ -4820,9 +4834,16 @@ async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: str
         label: category.label,
         description: category.description,
         sortOrder: category.sortOrder,
-        status: "active"
+        status: "active",
+        parentId: parentSlug ? parentIdBySlug.get(parentSlug) ?? null : null
       },
-      update: {}
+      update: {
+        label: category.label,
+        description: category.description,
+        sortOrder: category.sortOrder,
+        status: "active",
+        parentId: parentSlug ? parentIdBySlug.get(parentSlug) ?? null : null
+      }
     });
     categoryIdBySlug.set(category.slug, row.id);
   }
@@ -5125,6 +5146,7 @@ export async function upsertVideoThemeCategoryRelational(params: {
   imageUrl?: string;
   sortOrder?: number;
   status?: VideoThemeCategory["status"];
+  parentId?: string;
 }): Promise<{ category: VideoThemeCategory; created: boolean }> {
   const site = await prisma.site.findUnique({ where: { id: params.siteId }, select: { id: true } });
   if (!site) throw new RelationalStoreError("site_not_found", 404);
@@ -5135,6 +5157,13 @@ export async function upsertVideoThemeCategoryRelational(params: {
   const existing = params.categoryId
     ? await prisma.videoThemeCategory.findFirst({ where: { id: params.categoryId, siteId: params.siteId } })
     : null;
+  const parent = params.parentId
+    ? await prisma.videoThemeCategory.findFirst({ where: { id: params.parentId, siteId: params.siteId }, select: { id: true, parentId: true } })
+    : null;
+  if (params.parentId && !parent) throw new RelationalStoreError("video_theme_category_parent_not_found", 400);
+  if (existing && parent && (parent.id === existing.id || parent.parentId === existing.id)) {
+    throw new RelationalStoreError("video_theme_category_parent_invalid", 400);
+  }
   const data = {
     slug,
     label,
@@ -5143,7 +5172,8 @@ export async function upsertVideoThemeCategoryRelational(params: {
     accentColor: params.accentColor?.trim() || null,
     imageUrl: params.imageUrl?.trim() || null,
     sortOrder: clampInteger(Number(params.sortOrder ?? 0), 0, -10000, 10000),
-    status: videoThemeCategoryStatus(params.status)
+    status: videoThemeCategoryStatus(params.status),
+    parentId: parent?.id ?? null
   };
   const category = existing
     ? await prisma.videoThemeCategory.update({ where: { id: existing.id }, data })
@@ -5151,7 +5181,8 @@ export async function upsertVideoThemeCategoryRelational(params: {
         data: { id: params.categoryId ?? uid("video_cat"), siteId: params.siteId, ...data }
       });
   clearSiteReadCache();
-  return { category: toVideoThemeCategory(category), created: !existing };
+  const hydrated = await prisma.videoThemeCategory.findUnique({ where: { id: category.id }, include: { parent: true } });
+  return { category: toVideoThemeCategory(hydrated ?? category), created: !existing };
 }
 
 export async function deleteVideoThemeCategoryRelational(params: {

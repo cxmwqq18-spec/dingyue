@@ -28,7 +28,7 @@ const platformState = readJson("data/platform-state.json");
 const blackFridayPack = (platformState.creativePacks ?? []).find((pack) => pack.siteId === "site_dreamshoot" && normalizeSlug(pack.category || pack.name) === "black-friday");
 const blackFridayMediaMismatch = Boolean(blackFridayPack && [blackFridayPack.imageUrl, ...(blackFridayPack.galleryImages ?? [])].some((image) => /creator-portraits|anime-avatar/i.test(String(image ?? ""))));
 
-async function activeProjectionRowCount() {
+async function activePublicationStatus() {
   const rawUrl = process.env.DATABASE_URL?.trim();
   if (!rawUrl) return null;
   try {
@@ -41,9 +41,32 @@ async function activeProjectionRowCount() {
         where: { siteId: "site_dreamshoot" },
         include: { publication: true }
       });
-      return Array.isArray(active?.publication?.snapshot?.publishedPageEntities)
-        ? active.publication.snapshot.publishedPageEntities.filter((page) => page?.status === "published" && page?.indexable === true).length
-        : 0;
+      const snapshot = active?.publication?.snapshot;
+      const facts = snapshot?.publishedFacts;
+      const factText = [
+        facts?.creditLifecycle?.reserve,
+        facts?.creditLifecycle?.consume,
+        facts?.creditLifecycle?.release,
+        facts?.security?.transportClaimKey,
+        facts?.security?.storageClaimKey
+      ].map((value) => String(value ?? "").trim());
+      const productionFactsReady = Boolean(
+        facts?.identity?.legalName &&
+        facts?.identity?.entityType &&
+        facts?.identity?.supportEmail &&
+        facts?.privacy?.customerMediaTraining !== undefined &&
+        Number(facts?.privacy?.sourceMediaRetentionDays) > 0 &&
+        facts?.refund?.reviewRequired !== undefined &&
+        Number(facts?.refund?.windowDays) > 0 &&
+        facts?.refund?.effectiveDate &&
+        factText.every((value) => value && !/^(?:test|fixture)\b/i.test(value))
+      );
+      return {
+        activeProjectionRows: Array.isArray(snapshot?.publishedPageEntities)
+          ? snapshot.publishedPageEntities.filter((page) => page?.status === "published" && page?.indexable === true).length
+          : 0,
+        productionFactsReady
+      };
     } finally {
       await prisma.$disconnect();
     }
@@ -198,7 +221,9 @@ assert.equal(blackFridayPack.id, "pack_dreamshoot_black_friday", "Black Friday m
 assert.ok(blackFridayPack.imageUrl, "Black Friday pack must keep a cover image");
 
 const reviewIsolationFailures = routeRows.filter((route) => route.status === "review_required" && (route.indexable || route.sitemapEligible));
-const activeProjectionRows = await activeProjectionRowCount();
+const activePublication = await activePublicationStatus();
+const activeProjectionRows = activePublication?.activeProjectionRows ?? null;
+const productionFactsReady = activePublication?.productionFactsReady ?? false;
 const blockingReviewRows = reviewRows.filter((row) => !row.deferred);
 const deferredRows = reviewRows.filter((row) => row.deferred);
 const expectedIndexableRows = requiredSlugs.length - deferredRows.length;
@@ -206,7 +231,8 @@ const reviewIsolationReady = fallbackRows.length === 0 && reviewIsolationFailure
 const productionReleaseReady = reviewIsolationReady &&
   blockingReviewRows.length === 0 &&
   blackFridayMediaMismatch === false &&
-  activeProjectionRows === expectedIndexableRows;
+  activeProjectionRows === expectedIndexableRows &&
+  productionFactsReady;
 const report = {
   ok: reviewIsolationReady,
   contractOk: true,
@@ -226,6 +252,7 @@ const report = {
   deferredRows: deferredRows.length,
   prospectiveProjectionRows: routeRows.length,
   activeProjectionRows,
+  productionFactsReady,
   blackFridayPack: blackFridayPack?.id ?? null,
   blackFridayMediaMismatch,
   reviewIsolationFailures,

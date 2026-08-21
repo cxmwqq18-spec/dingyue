@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 import "./load-runtime-env.mjs";
 import fs from "node:fs";
+import Module from "node:module";
 import path from "node:path";
+import createJiti from "jiti";
 
 const repoRoot = process.cwd();
 const args = new Set(process.argv.slice(2));
@@ -85,10 +87,16 @@ const videoCategories = [
     sortOrder: 120
   },
   {
+    slug: "promo-video",
+    label: "Promo Video",
+    description: "Turn launches, offers, events, seasonal campaigns, and product updates into clear promotional video briefs.",
+    sortOrder: 130
+  },
+  {
     slug: "ugc-ad-video",
     label: "UGC Ad Video",
     description: "Plan creator-style product ads around speaker status, hooks, product context, visible proof, and clear CTAs.",
-    sortOrder: 130
+    sortOrder: 140
   }
 ];
 
@@ -182,6 +190,16 @@ const pages = [
     keywords:
       "AI product ad video generator, product ad video maker, AI product advertising video, product video ad generator, ecommerce video ad maker, social media product ad video, product launch ad video, product marketing video generator",
     imageUrl: "/assets/dreamshoot/product-ad-video/ai-product-ad-video-new-product-unboxing-creative.jpg"
+  },
+  {
+    slug: "promo-video",
+    title: "Promo Video",
+    seoTitle: "AI Promo Video Maker for Launches, Offers & Announcements | myDreamshoots",
+    description:
+      "Create promotional videos for launches, limited-time offers, events, seasonal campaigns, and product updates with an AI promo video maker. Structure the message, proof, timing, terms, and CTA around verified product inputs and real generated outputs.",
+    keywords:
+      "AI promo video maker, AI promotional video maker, promo video generator, promotional video generator, AI marketing promo video, product launch video maker, sale promo video maker, event promo video generator, social media promo video maker",
+    imageUrl: "/assets/dreamshoot/promo-video/promo-video-product-launch-presentation.jpg"
   },
   {
     slug: "ugc-ad-video",
@@ -424,6 +442,100 @@ function toPrismaJson(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function loadPublicationTools() {
+  const sourceRoot = path.resolve(repoRoot, "src");
+  const originalResolveFilename = Module._resolveFilename;
+  const originalLoad = Module._load;
+  Module._load = function load(request, ...args) {
+    if (request === "server-only") return {};
+    return originalLoad.call(this, request, ...args);
+  };
+  Module._resolveFilename = function resolveFilename(request, ...args) {
+    if (request === "server-only") return path.join(sourceRoot, "lib/storefront-context/types.ts");
+    let resolved = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request;
+    if (request.startsWith("@/") && fs.existsSync(`${resolved}.ts`)) resolved = `${resolved}.ts`;
+    return originalResolveFilename.call(this, resolved, ...args);
+  };
+  try {
+    const jiti = createJiti(import.meta.url);
+    return {
+      publishSeoSnapshotRelational: jiti("../src/lib/stores/theme-store.ts").publishSeoSnapshotRelational,
+      publicationSnapshotHash: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotHash,
+      publicationSnapshotIntegrity: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotIntegrity
+    };
+  } finally {
+    Module._resolveFilename = originalResolveFilename;
+    Module._load = originalLoad;
+  }
+}
+
+function refreshSnapshotHash(snapshot, publicationSnapshotHash) {
+  snapshot.snapshotHash = publicationSnapshotHash({
+    ...snapshot,
+    snapshotHash: "",
+    revisions: { ...snapshot.revisions, snapshotHash: "" }
+  });
+  snapshot.revisions.snapshotHash = snapshot.snapshotHash;
+  return snapshot;
+}
+
+function addPublicationToState(state, publication) {
+  const publications = state.themePublications ?? (state.themePublications = []);
+  const existingIndex = publications.findIndex((candidate) => candidate.id === publication.id);
+  if (existingIndex === -1) publications.push(toPrismaJson(publication));
+  else publications[existingIndex] = toPrismaJson(publication);
+}
+
+async function publishMissingVideoPages(state, syncedPages, prisma) {
+  const activePointer = await prisma.activeThemePublication.findUnique({
+    where: { siteId: SITE_ID },
+    include: { publication: true }
+  });
+  const currentPublication = activePointer?.publication ?? await prisma.themePublication.findFirst({
+    where: { siteId: SITE_ID },
+    orderBy: [{ version: "desc" }, { publishedAt: "desc" }]
+  });
+  if (!currentPublication) {
+    throw new Error(`missing_publication:${SITE_ID}; publish the site before syncing video topic pages`);
+  }
+
+  const {
+    publishSeoSnapshotRelational,
+    publicationSnapshotHash,
+    publicationSnapshotIntegrity
+  } = loadPublicationTools();
+  const snapshot = clone(currentPublication.snapshot);
+  const existingPageIds = new Set(snapshot.pages.map((page) => page.id));
+  const missingPages = syncedPages
+    .filter((page) => page.slug.startsWith("/ai-video-generation/") && !existingPageIds.has(page.id))
+    .map((page) => ({
+      id: page.id,
+      siteId: page.siteId ?? SITE_ID,
+      pageType: page.pageType,
+      templateKey: page.templateKey,
+      slug: page.slug,
+      title: page.title,
+      publishedJson: clone(page.publishedJson ?? page.draftJson),
+      createdAt: page.createdAt,
+      updatedAt: page.updatedAt
+    }));
+  if (!missingPages.length) return undefined;
+
+  snapshot.pages = [...snapshot.pages, ...missingPages];
+  refreshSnapshotHash(snapshot, publicationSnapshotHash);
+  if (publicationSnapshotIntegrity(snapshot) !== "valid") {
+    throw new Error("video_topic_publication_snapshot_integrity_failed");
+  }
+
+  const result = await publishSeoSnapshotRelational({
+    siteId: SITE_ID,
+    snapshot,
+    actor: "sync:mydreamshoots-video-topic-pages"
+  });
+  addPublicationToState(state, result.publication);
+  return result.publication;
+}
+
 async function updateDatabase(state, categories, syncedPages) {
   const { PrismaClient } = await import("@prisma/client");
   const prisma = new PrismaClient();
@@ -515,9 +627,18 @@ async function updateDatabase(state, categories, syncedPages) {
           update: { state: toPrismaJson(state) }
         });
       },
-      { timeout: 120_000 }
+        { timeout: 120_000 }
     );
+    const publication = await publishMissingVideoPages(state, syncedPages, prisma);
+    if (publication) {
+      await prisma.platformStateDocument.upsert({
+        where: { id: "platform" },
+        create: { id: "platform", state: toPrismaJson(state) },
+        update: { state: toPrismaJson(state) }
+      });
+    }
     clearPlatformStateCaches();
+    return publication;
   } finally {
     await prisma.$disconnect();
   }
@@ -532,8 +653,9 @@ const syncedPages = syncPages(state, changes);
 pruneNonPublicVideoTopicPages(state, changes);
 syncExistingVideoThemePreviews(state, changes);
 
+let databasePublication;
+if (updateDb && !dryRun) databasePublication = await updateDatabase(state, categories, syncedPages);
 if (!dryRun) writeJson(statePath, state);
-if (updateDb && !dryRun) await updateDatabase(state, categories, syncedPages);
 
 console.log(
   JSON.stringify(
@@ -545,6 +667,8 @@ console.log(
       categories: categories.map((category) => category.slug),
       changedFields: changes.length,
       changedRecords: new Set(changes.map((change) => `${change.targetType}:${change.id}`)).size,
+      publishedVersion: databasePublication?.version,
+      publicationId: databasePublication?.id,
       sampleChanges: changes.slice(0, 12)
     },
     null,

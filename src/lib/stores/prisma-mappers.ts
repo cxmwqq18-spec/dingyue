@@ -882,6 +882,9 @@ export function toCreativePackCategory(record: {
 export function toVideoThemeCategory(record: {
   id: string;
   siteId: string;
+  parentId?: string | null;
+  parent?: Parameters<typeof toVideoThemeCategory>[0] | null;
+  children?: Parameters<typeof toVideoThemeCategory>[0][];
   slug: string;
   label: string;
   description?: string | null;
@@ -891,10 +894,16 @@ export function toVideoThemeCategory(record: {
   sortOrder: number;
   status: string;
   createdAt?: Date | string;
+  updatedAt?: Date | string;
 }): VideoThemeCategory {
   return {
     id: record.id,
     siteId: record.siteId,
+    parentId: record.parentId ?? undefined,
+    parent: record.parent ? toVideoThemeCategory({ ...record.parent, parent: undefined, children: undefined }) : undefined,
+    children: Array.isArray(record.children)
+      ? record.children.map((child) => toVideoThemeCategory({ ...child, parent: undefined, children: undefined }))
+      : undefined,
     slug: record.slug,
     label: record.label,
     description: record.description ?? undefined,
@@ -903,7 +912,8 @@ export function toVideoThemeCategory(record: {
     imageUrl: record.imageUrl ?? undefined,
     sortOrder: record.sortOrder,
     status: record.status as VideoThemeCategory["status"],
-    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString()
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(record.updatedAt)
   };
 }
 

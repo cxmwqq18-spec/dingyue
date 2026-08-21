@@ -18,6 +18,7 @@ const MYDREAMSHOOTS_VIDEO_TOOL_SLUGS = [
   "meme-video",
   "product-video",
   "product-ad-video",
+  "promo-video",
   "ugc-ad-video"
 ];
 const transactionTimeoutMs = Number(process.env.ROUTE_CLEANUP_TRANSACTION_TIMEOUT_MS ?? 600000);

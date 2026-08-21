@@ -15,6 +15,7 @@ const topics = [
   "meme-video",
   "product-video",
   "product-ad-video",
+  "promo-video",
   "ugc-ad-video"
 ];
 const viewports = [
@@ -28,6 +29,9 @@ const sectionOrder = ["hero", "use-cases", "foundation", "guidance", "steps", "v
 function sectionOrderForTopic(topic) {
   if (topic === "ugc-ad-video") {
     return ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"];
+  }
+  if (topic === "promo-video") {
+    return ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "urgency", "how-it-works", "comparison", "trust", "faq", "final-cta"];
   }
   return sectionOrder;
 }

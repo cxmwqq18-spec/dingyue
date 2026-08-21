@@ -241,8 +241,7 @@
       "slug": "black-friday",
       "sourceCategorySlug": "creator-portraits",
       "reusePackId": "pack_dreamshoot_black_friday",
-      "mediaReviewStatus": "review_required",
-      "mediaReviewReason": "PAGE_COPY_MEDIA_ENTITY_MISMATCH",
+      "mediaReviewStatus": "ready",
       "groupSlug": "professional",
       "label": "Black Friday",
       "description": "Create bold Black Friday campaign portraits, sale-ready creator visuals, dark studio images, and seasonal promotional album concepts.",
@@ -345,7 +344,7 @@
     {
       "slug": "cannes",
       "sourceCategorySlug": "desi-wedding",
-      "reusePackId": "pack_dreamshoot_desi_wedding",
+      "reusePackId": "pack_dreamshoot_cannes",
       "groupSlug": "lifestyle-creative",
       "label": "Cannes",
       "description": "Create Cannes-inspired festival portraits with glamorous arrival energy, flash photography mood, and elegant editorial crops.",
@@ -358,13 +357,12 @@
         "Festival",
         "Glamour"
       ],
-      "mediaReviewStatus": "review_required",
-      "mediaReviewReason": "PAGE_COPY_MEDIA_ENTITY_MISMATCH:cannes"
+      "mediaReviewStatus": "ready"
     },
     {
       "slug": "nightlife",
       "sourceCategorySlug": "christmas-couple",
-      "reusePackId": "pack_dreamshoot_christmas_couple",
+      "reusePackId": "pack_dreamshoot_nightlife",
       "groupSlug": "lifestyle-creative",
       "label": "Nightlife",
       "description": "Create nightlife portraits with city lights, evening wardrobe, lounge mood, and private after-dark creator albums.",
@@ -377,13 +375,12 @@
         "City",
         "Evening"
       ],
-      "mediaReviewStatus": "review_required",
-      "mediaReviewReason": "PAGE_COPY_MEDIA_ENTITY_MISMATCH:nightlife"
+      "mediaReviewStatus": "ready"
     },
     {
       "slug": "rich-lifestyle",
       "sourceCategorySlug": "indian-wedding",
-      "reusePackId": "pack_dreamshoot_indian_wedding",
+      "reusePackId": "pack_dreamshoot_rich_lifestyle",
       "groupSlug": "lifestyle-creative",
       "label": "Rich Lifestyle",
       "description": "Build polished rich lifestyle portraits with luxury interiors, elevated wardrobe, travel mood, and premium creator crops.",
@@ -396,8 +393,7 @@
         "Lifestyle",
         "Premium"
       ],
-      "mediaReviewStatus": "review_required",
-      "mediaReviewReason": "PAGE_COPY_MEDIA_ENTITY_MISMATCH:rich-lifestyle"
+      "mediaReviewStatus": "ready"
     },
     {
       "slug": "bikini",
@@ -471,7 +467,7 @@
     {
       "slug": "urban",
       "sourceCategorySlug": "outdoor-creator-scenes",
-      "reusePackId": "pack_dreamshoot_travel",
+      "reusePackId": "pack_dreamshoot_urban",
       "groupSlug": "lifestyle-creative",
       "label": "Urban",
       "description": "Build urban portraits with street scenes, city textures, modern wardrobe, creator energy, and private gallery delivery.",
@@ -484,8 +480,7 @@
         "City",
         "Creator"
       ],
-      "mediaReviewStatus": "review_required",
-      "mediaReviewReason": "PAGE_COPY_MEDIA_ENTITY_MISMATCH:urban"
+      "mediaReviewStatus": "ready"
     },
     {
       "slug": "street-style",

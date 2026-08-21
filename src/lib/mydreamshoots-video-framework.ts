@@ -76,12 +76,43 @@ export const mydreamshootsVideoGenerationCategories = [
     sortOrder: 120
   },
   {
+    slug: "promo-video",
+    label: "Promo Video",
+    description: "Turn launches, offers, events, seasonal campaigns, and product updates into clear promotional video briefs.",
+    sortOrder: 130
+  },
+  {
     slug: "ugc-ad-video",
     label: "UGC Ad Video",
     description: "Plan creator-style product ads around speaker status, hooks, product context, visible proof, and clear CTAs.",
-    sortOrder: 130
+    sortOrder: 140
   }
 ] as const;
+
+export const mydreamshootsVideoGenerationParentCategories = [
+  { slug: "core-ai-creation", label: "Core AI Creation", description: "Core AI video creation modes.", sortOrder: 10 },
+  { slug: "social-creator", label: "Social & Creator", description: "Short-form social and creator video workflows.", sortOrder: 20 },
+  { slug: "marketing-commerce", label: "Marketing & Commerce", description: "Product, advertising, and commerce video workflows.", sortOrder: 30 },
+  { slug: "creative-lifestyle", label: "Creative & Lifestyle", description: "Creative, travel, fashion, food, fitness, and lifestyle video workflows.", sortOrder: 40 },
+  { slug: "professional-business", label: "Professional & Business", description: "Explainers, tutorials, property, enterprise, and professional video workflows.", sortOrder: 50 }
+] as const;
+
+export const mydreamshootsVideoGenerationCategoryParentSlugBySlug: Record<string, string> = {
+  "text-to-video": "core-ai-creation",
+  "image-to-video": "core-ai-creation",
+  "talking-photo": "core-ai-creation",
+  "cinematic-video": "core-ai-creation",
+  "tiktok-video": "social-creator",
+  "instagram-reels": "social-creator",
+  "social-media-video": "social-creator",
+  "youtube-video": "social-creator",
+  "story-video": "social-creator",
+  "meme-video": "social-creator",
+  "product-video": "marketing-commerce",
+  "product-ad-video": "marketing-commerce",
+  "promo-video": "marketing-commerce",
+  "ugc-ad-video": "marketing-commerce"
+};
 
 export const mydreamshootsVideoGenerationThemeSeeds = [
   {
@@ -241,6 +272,19 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     sortOrder: 120
   },
   {
+    slug: "promo-video",
+    categorySlug: "promo-video",
+    name: "Promo Video",
+    headline: "Turn launches, offers, events, and announcements into clear promotional videos.",
+    description: "Plan promotional videos around the real campaign goal, audience, reason now, proof, timing, terms, and CTA without inventing urgency.",
+    prompt: "Create a promotional video draft around one verified launch, offer, event, seasonal campaign, feature update, or social promotion. Make the promotional facts clear, show supportable proof, keep timing and terms accurate, and end with one relevant call to action without inventing discounts, deadlines, availability, or outcomes.",
+    imageUrl: "/assets/dreamshoot/promo-video/promo-video-product-launch-presentation.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 130
+  },
+  {
     slug: "ugc-ad-video",
     categorySlug: "ugc-ad-video",
     name: "UGC Ad Video",
@@ -251,7 +295,7 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     creditCost: 24,
     durationSeconds: 6,
     maxFrames: 10,
-    sortOrder: 130
+    sortOrder: 140
   }
 ] as const;
 
@@ -259,6 +303,14 @@ export function mydreamshootsVideoGenerationCategoriesForSite(siteId: string) {
   return siteId === "site_dreamshoot"
     ? mydreamshootsVideoGenerationCategories
     : mydreamshootsVideoGenerationCategories.slice(0, 2);
+}
+
+export function mydreamshootsVideoGenerationParentCategoriesForSite(siteId: string) {
+  return siteId === "site_dreamshoot" ? mydreamshootsVideoGenerationParentCategories : mydreamshootsVideoGenerationParentCategories.slice(0, 1);
+}
+
+export function parentVideoGenerationCategorySlugForChild(slug: string): string | undefined {
+  return mydreamshootsVideoGenerationCategoryParentSlugBySlug[slug];
 }
 
 export function mydreamshootsVideoGenerationThemeSeedsForSite(siteId: string) {
@@ -278,6 +330,7 @@ export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "meme-video",
   "product-video",
   "product-ad-video",
+  "promo-video",
   "ugc-ad-video"
 ] as const;
 

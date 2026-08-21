@@ -13,6 +13,7 @@ const DEFAULT_VIDEO_SLUGS = [
   "meme-video",
   "product-video",
   "product-ad-video",
+  "promo-video",
   "ugc-ad-video"
 ];
 const HIDDEN_VIDEO_SLUGS = [
@@ -31,6 +32,7 @@ const LEGACY_VIDEO_GONE_SLUGS = [
   "meme-video",
   "product-video",
   "product-ad-video",
+  "promo-video",
   "ugc-ad-video"
 ];
 

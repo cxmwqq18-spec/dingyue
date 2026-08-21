@@ -20,7 +20,6 @@ import {
   ErpToolbarField,
 } from "@/components/admin/erp-primitives";
 import { PricingEditor } from "@/components/admin/pricing-editor";
-import { ToolTaxonomyEditor } from "@/components/admin/tool-taxonomy-editor";
 import { VideoThemeEditor } from "@/components/admin/video-theme-editor";
 import { money } from "@/lib/ops";
 import type { CreativePack, Product, SiteAiApp } from "@/lib/types";
@@ -128,7 +127,7 @@ export function ProductsPageClient({
       href: "#creative-packs",
       icon: Palette,
       tone: "border-violet-200 bg-violet-50 text-violet-700",
-      detail: "维护前台 AI 工具入口、消耗积分、输出数量和上下架状态。",
+      detail: "维护前台图片主题入口、消耗积分、输出数量和上下架状态。",
     },
     {
       title: "视频主题",
@@ -279,7 +278,7 @@ export function ProductsPageClient({
               </h3>
               <p className="mt-2 text-sm leading-6 text-slate-600">
                 1. 先维护价格套餐，确认金额、周期和到账 Credits。 2.
-                再维护拍摄包入口和视频主题，确认工具绑定、提示词和每次消耗。 3.
+                再维护拍摄包入口和视频主题，确认图片/视频绑定、提示词和每次消耗。 3.
                 保存后打开前台核对生成入口即可。
               </p>
             </div>
@@ -352,7 +351,6 @@ export function ProductsPageClient({
             siteAiApps={payload.siteAiApps}
             siteId={siteId}
           />
-          <ToolTaxonomyEditor siteId={siteId} />
         </ErpSection>
       </div>
 

@@ -840,6 +840,7 @@ model VideoTheme {
 model VideoThemeCategory {
   id          String       @id
   siteId      String
+  parentId    String?
   slug        String
   label       String
   description String?
@@ -851,10 +852,13 @@ model VideoThemeCategory {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   site        Site         @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  parent      VideoThemeCategory? @relation("VideoThemeCategoryChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children    VideoThemeCategory[] @relation("VideoThemeCategoryChildren")
   themes      VideoTheme[]
 
   @@unique([siteId, slug])
   @@index([siteId, sortOrder])
+  @@index([siteId, parentId, sortOrder])
   @@index([siteId, status])
 }
 

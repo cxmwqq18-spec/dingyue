@@ -452,7 +452,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
         </section>
       ) : null}
 
-      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="steps">
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works">
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} />
           <div className="mt-12 grid items-stretch gap-4 lg:grid-cols-5">
@@ -471,6 +471,204 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
       </section>
 
       <ValueSection section={content.value} light />
+
+      {content.comparison ? (
+        <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="comparison" data-video-topic-section="comparison">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.comparison.eyebrow} title={content.comparison.title} body={content.comparison.intro} />
+            <SectionCards cards={content.comparison.items} site={site} />
+          </div>
+        </section>
+      ) : null}
+
+      <section className="border-b border-white/10 bg-[#191525] px-5 py-16 sm:px-8 sm:py-24" id="trust" data-video-topic-section="trust">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
+            <SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} />
+            <div className="grid items-stretch gap-4 sm:grid-cols-2">
+              {content.trust.items.map((item) => (
+                <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" key={item.title}>
+                  <ShieldCheck className="h-5 w-5 text-[#c4b5fd]" strokeWidth={1.8} />
+                  <h3 className="mt-5 text-lg font-semibold text-white">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light />
+          <div className="mt-10 grid gap-4 lg:grid-cols-2">
+            {content.faq.items.map((item) => (
+              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]">
+                  <span>{item.question}</span>
+                  <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
+                </summary>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" data-video-topic-section="final-cta">
+        <div className="mx-auto max-w-[var(--site-content-width)] rounded-[28px] border border-[#c4b5fd]/25 bg-[#191525] px-6 py-12 text-center sm:px-10 sm:py-16">
+          <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.finalCta.eyebrow}</p>
+          <h2 className="mx-auto mt-4 max-w-3xl text-balance text-3xl font-semibold leading-[1.03] tracking-normal text-white sm:text-5xl">{content.finalCta.title}</h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/68">{content.finalCta.body}</p>
+          <div className="mt-8 flex justify-center">
+            <ActionLink href={primaryHref} label={content.finalCta.cta} site={site} />
+          </div>
+          <p className="mt-5 text-xs leading-5 text-white/48">{content.finalCta.microcopy}</p>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopicContent; section: SectionInstance; site: Site }) {
+  const primaryHref = `/app/create?videoMode=${encodeURIComponent("promo-video")}#step-video`;
+  return (
+    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? "promo-video")} data-video-topic-page="promo-video">
+      <section className="relative border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
+        <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.hero.eyebrow}</p>
+            <h1 className="mt-5 max-w-[720px] text-balance text-4xl font-semibold leading-[0.96] tracking-normal text-white sm:text-6xl lg:text-7xl">{content.hero.title}</h1>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">{content.hero.body}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ActionLink href={primaryHref} label={content.hero.primaryCta} site={site} />
+              <ActionLink href="#examples" label={content.hero.secondaryCta} site={site} variant="secondary" />
+            </div>
+            <p className="mt-5 max-w-xl text-xs leading-5 text-white/50">{content.hero.availabilityNote}</p>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-white/58">{content.hero.rightsCopy}</p>
+            {content.hero.highlights?.length ? (
+              <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2 rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-3 text-xs font-semibold text-white/62">
+                {content.hero.highlights.map((highlight) => <span key={highlight}>{highlight}</span>)}
+              </div>
+            ) : null}
+          </div>
+          <figure className="relative lg:justify-self-end">
+            <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
+              <div className="relative aspect-[16/9] overflow-hidden rounded-[21px]" data-video-topic-hero-media>
+                <img
+                  src={content.hero.image.src}
+                  alt={content.hero.image.alt}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  style={imageStyle(content.hero.image)}
+                  width={content.hero.image.width}
+                  height={content.hero.image.height}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </div>
+            </div>
+            <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
+              <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />
+              <span>{content.hero.caption}</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {content.quickAnswer ? (
+        <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="quick-answer" data-video-topic-section="quick-answer">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.quickAnswer.eyebrow} title={content.quickAnswer.title} body={content.quickAnswer.intro} />
+            <SectionCards cards={content.quickAnswer.cards} site={site} />
+          </div>
+        </section>
+      ) : null}
+
+      <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="use-cases" data-video-topic-section="use-cases">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <SectionHeader eyebrow={content.useCases.eyebrow} title={content.useCases.title} body={content.useCases.intro} />
+          <div className="mt-12 grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} key={item.title} />)}
+          </div>
+        </div>
+      </section>
+
+      {content.evidence ? (
+        <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="evidence" data-video-topic-section="evidence">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.evidence.eyebrow} title={content.evidence.title} body={content.evidence.intro} light />
+            <SectionCards cards={content.evidence.cards} light site={site} />
+          </div>
+        </section>
+      ) : null}
+
+      {content.examples ? (
+        <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="examples" data-video-topic-section="examples">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.examples.eyebrow} title={content.examples.title} body={content.examples.intro} />
+            <SectionCards cards={content.examples.cards} site={site} />
+          </div>
+        </section>
+      ) : null}
+
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="foundation" data-video-topic-section="foundation">
+        <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start lg:gap-16">
+          <SectionHeader eyebrow={content.foundation.eyebrow} title={content.foundation.title} body={content.foundation.intro} />
+          {content.foundation.cards?.length ? (
+            <div>
+              <SectionCards cards={content.foundation.cards} site={site} />
+              <div className="mt-5 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
+                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+                <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="grid gap-5 sm:grid-cols-2">
+              <DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" />
+              <DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone="avoid" />
+              <div className="sm:col-span-2 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
+                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+                <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="guidance" data-video-topic-section="guidance">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} light />
+          <SectionCards cards={content.guidance.cards} light site={site} />
+        </div>
+      </section>
+
+      {content.platformExamples ? (
+        <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="urgency" data-video-topic-section="urgency">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.platformExamples.eyebrow} title={content.platformExamples.title} body={content.platformExamples.intro} />
+            <SectionCards cards={content.platformExamples.items} site={site} />
+          </div>
+        </section>
+      ) : null}
+
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} />
+          <div className="mt-12 grid items-stretch gap-4 lg:grid-cols-5">
+            {content.steps.items.map((item, index) => (
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" key={item.title}>
+                <span className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">0{index + 1}</span>
+                <h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-10">
+            <ActionLink href={primaryHref} label={content.steps.cta} site={site} />
+          </div>
+        </div>
+      </section>
 
       {content.comparison ? (
         <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="comparison" data-video-topic-section="comparison">
@@ -634,6 +832,9 @@ function normalizeTalkingContent(content: TalkingPhotoContent): VideoTopicConten
 function VideoTopicLanding({ content, contentKey, section, site }: { content: VideoTopicContent; contentKey: string; section: SectionInstance; site: Site }) {
   if (contentKey === "ugc-ad-video") {
     return <UgcVideoTopicLanding content={content} section={section} site={site} />;
+  }
+  if (contentKey === "promo-video") {
+    return <PromoVideoTopicLanding content={content} section={section} site={site} />;
   }
   const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
   return (

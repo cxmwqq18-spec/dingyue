@@ -4,6 +4,8 @@ import type { VideoTheme, VideoThemeCategory } from "@/lib/types";
 export type VideoThemeImportCategory = {
   slug: string;
   label: string;
+  parentSlug?: string;
+  parentLabel?: string;
   description?: string;
   icon?: string;
   accentColor?: string;
@@ -63,6 +65,22 @@ function validSlug(value: string): boolean {
   return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
 }
 
+function slugValue(value: unknown): string {
+  return text(value)
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function firstText(row: Record<string, unknown>, keys: string[]): string {
+  for (const key of keys) {
+    const value = text(row[key]);
+    if (value) return value;
+  }
+  return "";
+}
+
 function normalizedHeader(value: string): string {
   return value.replace(/^\uFEFF/, "").trim().toLowerCase().replace(/[\s_-]+/g, "");
 }
@@ -93,23 +111,42 @@ export function previewVideoThemeImport(
 
   rows.forEach((row, index) => {
     const rowNumber = index + 2;
-    const categorySlug = text(row.categoryslug || row.category);
-    const categoryLabel = text(row.categoryname || row.categorylabel);
+    const parentLabel = firstText(row, ["parentcategoryname", "parentcategorylabel", "parentcategory", "primarycategory", "level1", "a"]);
+    const parentSlug = firstText(row, ["parentcategoryslug", "primarycategoryslug", "level1slug"]) || slugValue(parentLabel);
+    const categoryLabel = firstText(row, ["categoryname", "categorylabel", "secondarycategory", "level2", "b"]);
+    const categorySlug = firstText(row, ["categoryslug", "category", "secondarycategoryslug", "level2slug"]) || slugValue(categoryLabel);
     const themeSlug = text(row.themeslug || row.slug);
     const themeName = text(row.themename || row.name);
+    const hasParentCategoryData = Boolean(parentSlug || parentLabel);
     const hasCategoryData = Boolean(categorySlug || categoryLabel);
     const hasThemeData = Boolean(themeSlug || themeName || row.description || row.prompt);
 
-    if (!hasCategoryData && !hasThemeData) return;
-    if (!categorySlug) errors.push({ row: rowNumber, field: "categorySlug", message: "缺少一级分类 slug。" });
-    if (!categoryLabel && !categoryBySlug.has(categorySlug)) errors.push({ row: rowNumber, field: "categoryName", message: "新分类必须填写分类名称。" });
+    if (!hasParentCategoryData && !hasCategoryData && !hasThemeData) return;
+    if (hasParentCategoryData && parentSlug && !incomingCategoryRows.has(parentSlug)) {
+      incomingCategoryRows.set(parentSlug, rowNumber);
+      const existing = categoryBySlug.get(parentSlug);
+      categories.push({
+        slug: parentSlug,
+        label: parentLabel || existing?.label || parentSlug,
+        description: text(row.parentcategorydescription) || existing?.description,
+        icon: text(row.parentcategoryicon) || existing?.icon,
+        accentColor: text(row.parentcategoryaccentcolor) || existing?.accentColor,
+        imageUrl: text(row.parentcategoryimageurl) || existing?.imageUrl,
+        sortOrder: numberValue(row.parentcategorysortorder, existing?.sortOrder ?? 0),
+        status: statusValue(row.parentcategorystatus, existing?.status ?? "active")
+      });
+    }
+    if (hasCategoryData && !categorySlug) errors.push({ row: rowNumber, field: "categorySlug", message: "缺少二级目录 slug。" });
+    if (hasCategoryData && !categoryLabel && !categoryBySlug.has(categorySlug)) errors.push({ row: rowNumber, field: "categoryName", message: "新二级目录必须填写名称。" });
     if (categorySlug && !validSlug(categorySlug)) errors.push({ row: rowNumber, field: "categorySlug", message: "分类 slug 只能使用小写字母、数字和连字符。" });
-    if (categorySlug && !incomingCategoryRows.has(categorySlug)) {
+    if (hasCategoryData && categorySlug && !incomingCategoryRows.has(categorySlug)) {
       incomingCategoryRows.set(categorySlug, rowNumber);
       const existing = categoryBySlug.get(categorySlug);
       categories.push({
         slug: categorySlug,
         label: categoryLabel || existing?.label || categorySlug,
+        parentSlug: parentSlug || existing?.parent?.slug,
+        parentLabel: parentLabel || existing?.parent?.label,
         description: text(row.categorydescription) || existing?.description,
         icon: text(row.categoryicon) || existing?.icon,
         accentColor: text(row.categoryaccentcolor || row.accentcolor) || existing?.accentColor,
@@ -120,6 +157,7 @@ export function previewVideoThemeImport(
     }
 
     if (!hasThemeData) return;
+    if (!categorySlug) errors.push({ row: rowNumber, field: "categorySlug", message: "主题必须填写二级目录 slug。" });
     if (!themeSlug) errors.push({ row: rowNumber, field: "slug", message: "缺少二级主题 slug。" });
     if (themeSlug && !validSlug(themeSlug)) errors.push({ row: rowNumber, field: "slug", message: "主题 slug 只能使用小写字母、数字和连字符。" });
     if (!themeName) errors.push({ row: rowNumber, field: "name", message: "缺少二级主题名称。" });

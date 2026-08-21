@@ -119,7 +119,8 @@ function videoGenerationTopicsForMenu(siteId: string, basePath: string, categori
         id: category?.id ?? theme?.id ?? `video_topic_${definition.slug}`,
         slug: definition.slug,
         label: category?.label ?? definition.label,
-        href: `${basePath}${videoGenerationCreatePath(definition.slug)}`
+        href: `${basePath}${videoGenerationCreatePath(definition.slug)}`,
+        sortOrder: category?.sortOrder ?? definition.sortOrder
       }];
     });
 }

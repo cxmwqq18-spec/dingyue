@@ -85,10 +85,16 @@ const categoriesBySiteId = {
       sortOrder: 120
     },
     {
+      slug: "promo-video",
+      label: "Promo Video",
+      description: "Turn launches, offers, events, seasonal campaigns, and product updates into clear promotional video briefs.",
+      sortOrder: 130
+    },
+    {
       slug: "ugc-ad-video",
       label: "UGC Ad Video",
       description: "Plan creator-style product ads around speaker status, hooks, product context, visible proof, and clear CTAs.",
-      sortOrder: 130
+      sortOrder: 140
     }
   ],
   site_grownstride_test: baseCategories

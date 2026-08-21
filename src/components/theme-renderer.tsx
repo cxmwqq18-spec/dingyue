@@ -999,9 +999,30 @@ function headerVideoGenerationTopicsForClient(site: Site, categories: VideoTheme
         id: category?.id ?? theme?.id ?? `video_topic_${definition.slug}`,
         slug: definition.slug,
         label: category?.label ?? definition.label,
-        href: hrefFor(site, videoGenerationCreatePath(definition.slug))
+        href: hrefFor(site, videoGenerationCreatePath(definition.slug)),
+        sortOrder: category?.sortOrder ?? definition.sortOrder
       }];
     });
+}
+
+function groupedVideoGenerationTopicsForServer(topics: HeaderVideoGenerationTopic[]) {
+  const groups = new Map<string, { slug: string; label: string; sortOrder: number; topics: HeaderVideoGenerationTopic[] }>();
+  topics.forEach((topic, index) => {
+    const slug = topic.parentSlug || "video-generation";
+    const label = topic.parentLabel || "AI Video Generation";
+    const existing = groups.get(slug) ?? { slug, label, sortOrder: topic.parentSortOrder ?? index, topics: [] };
+    existing.label = topic.parentLabel || existing.label;
+    existing.sortOrder = Math.min(existing.sortOrder, topic.parentSortOrder ?? existing.sortOrder);
+    existing.topics.push(topic);
+    groups.set(slug, existing);
+  });
+  return Array.from(groups.values())
+    .map((group) => ({
+      ...group,
+      topics: [...group.topics].sort((left, right) => (left.sortOrder ?? 0) - (right.sortOrder ?? 0) || left.label.localeCompare(right.label))
+    }))
+    .filter((group) => group.topics.length > 0)
+    .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label));
 }
 
 const defaultMydreamshootsVideoThemeCover = "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.png";
@@ -13143,6 +13164,7 @@ function SectionView({
       const topicDescriptions = new Map<string, string>(mydreamshootsVideoGenerationCategories.map((topic) => [topic.slug, topic.description]));
       const topics = headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes)
         .filter((topic) => isMydreamshootsPublicVideoGenerationTopicSlug(topic.slug));
+      const topicGroups = groupedVideoGenerationTopicsForServer(topics);
       const HeadingTag = setting(section, "headingLevel", "h1") === "h1" ? "h1" : "h2";
       return (
         <section className="relative isolate overflow-hidden bg-[#09080d] px-5 py-12 text-white sm:py-16 lg:py-20" id={sectionAnchor(section, "video-themes")}>
@@ -13162,44 +13184,54 @@ function SectionView({
                 </p>
               </div>
             </div>
-            <div className="mt-8 grid items-start gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {topics.map((topic, index) => {
-                const coverImage = mydreamshootsVideoThemeDirectoryCover(topic, fallbackCoverImageUrl);
-                return (
-                  <Link
-                    className="group/theme relative overflow-hidden rounded-[8px] border border-white/12 bg-[#121018] text-white shadow-[0_24px_70px_-56px_rgba(0,0,0,0.92)] transition duration-300 hover:-translate-y-1 hover:border-[#c4b5fd]/55 hover:bg-[#17131f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd]/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09080d]"
-                    data-video-theme-card={topic.slug}
-                    href={topic.href}
-                    key={topic.id}
-                    prefetch={false}
-                  >
-                    <div className="relative overflow-hidden bg-[#211c2c]">
-                      <img
-                        alt={manualImageAlt({ src: coverImage.src, fallback: coverImage.alt })}
-                        className="block h-auto w-full object-cover transition duration-500 group-hover/theme:scale-[1.035]"
-                        decoding="async"
-                        loading={index === 0 ? "eager" : "lazy"}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        src={coverImage.src}
-                      />
-                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,8,13,0)_34%,rgba(9,8,13,0.82)_100%)]" />
-                      <span className="absolute left-3 top-3 rounded-full border border-white/16 bg-black/44 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/82 backdrop-blur">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <div className="min-h-[178px] p-5">
-                      <h2 className="text-xl font-semibold leading-tight tracking-normal text-white">{topic.label}</h2>
-                      <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/66">
-                        {topicDescriptions.get(topic.slug) ?? "Open this AI video theme guide."}
-                      </p>
-                      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ddd7ff] transition group-hover/theme:text-white">
-                        Open theme
-                        <ChevronRight className="h-4 w-4 shrink-0 transition group-hover/theme:translate-x-0.5" strokeWidth={1.9} />
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
+            <div className="mt-8 grid items-start gap-10">
+              {topicGroups.map((group) => (
+                <section key={group.slug}>
+                  <div className="flex items-end justify-between gap-4 border-b border-white/10 pb-3">
+                    <h2 className="text-2xl font-semibold tracking-normal text-white">{group.label}</h2>
+                    <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white/42">{group.topics.length} themes</span>
+                  </div>
+                  <div className="mt-5 grid items-start gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                    {group.topics.map((topic, index) => {
+                      const coverImage = mydreamshootsVideoThemeDirectoryCover(topic, fallbackCoverImageUrl);
+                      return (
+                        <Link
+                          className="group/theme relative overflow-hidden rounded-[8px] border border-white/12 bg-[#121018] text-white shadow-[0_24px_70px_-56px_rgba(0,0,0,0.92)] transition duration-300 hover:-translate-y-1 hover:border-[#c4b5fd]/55 hover:bg-[#17131f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd]/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09080d]"
+                          data-video-theme-card={topic.slug}
+                          href={topic.href}
+                          key={topic.id}
+                          prefetch={false}
+                        >
+                          <div className="relative overflow-hidden bg-[#211c2c]">
+                            <img
+                              alt={manualImageAlt({ src: coverImage.src, fallback: coverImage.alt })}
+                              className="block h-auto w-full object-cover transition duration-500 group-hover/theme:scale-[1.035]"
+                              decoding="async"
+                              loading={index === 0 ? "eager" : "lazy"}
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                              src={coverImage.src}
+                            />
+                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,8,13,0)_34%,rgba(9,8,13,0.82)_100%)]" />
+                            <span className="absolute left-3 top-3 rounded-full border border-white/16 bg-black/44 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/82 backdrop-blur">
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                          </div>
+                          <div className="min-h-[178px] p-5">
+                            <h3 className="text-xl font-semibold leading-tight tracking-normal text-white">{topic.label}</h3>
+                            <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/66">
+                              {topicDescriptions.get(topic.slug) ?? "Open this AI video theme guide."}
+                            </p>
+                            <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ddd7ff] transition group-hover/theme:text-white">
+                              Open theme
+                              <ChevronRight className="h-4 w-4 shrink-0 transition group-hover/theme:translate-x-0.5" strokeWidth={1.9} />
+                            </span>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </section>
+              ))}
             </div>
           </div>
         </section>

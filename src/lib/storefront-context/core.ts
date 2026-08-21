@@ -37,6 +37,8 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
   const standardMedia = bundle.site.id === "site_dreamshoot"
     ? bundle.publishedStandardPageMedia?.[path]
     : undefined;
+  const standardMediaRequired = bundle.site.id === "site_dreamshoot" && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(path);
+  const standardMediaReady = !standardMediaRequired || standardMedia?.status === "ready";
   const defaultIndex = bundle.page.pageType !== "not_found" && bundle.page.slug !== "/404";
   const pageScopedSocial = bundle.site.id === "site_dreamshoot" && (
     path === "/about-us" || path === "/faq" || path === "/pricing" || path === "/workflow" ||
@@ -51,9 +53,9 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
     ogImage: standardMedia?.status === "ready"
       ? standardMedia.ogImage
       : clean(pageSeo?.ogImage) || (pageScopedSocial ? undefined : clean(settings.seo?.defaultOgImage) || undefined),
-    index: defaultIndex && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true),
+    index: defaultIndex && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true),
     follow: pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true,
-    sitemapEligible: defaultIndex && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true)
+    sitemapEligible: defaultIndex && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true)
   };
 }
 

@@ -753,6 +753,9 @@ export interface CreativePackCategory {
 export interface VideoThemeCategory {
   id: string;
   siteId: string;
+  parentId?: string;
+  parent?: VideoThemeCategory;
+  children?: VideoThemeCategory[];
   slug: string;
   label: string;
   description?: string;
@@ -762,6 +765,7 @@ export interface VideoThemeCategory {
   sortOrder: number;
   status: "active" | "draft" | "paused";
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface VideoTheme {

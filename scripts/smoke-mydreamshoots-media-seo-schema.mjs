@@ -101,6 +101,17 @@ const fixtureSite = {
   ...site,
   storefrontProfile: {
     ...(site.storefrontProfile ?? { id: `profile_${site.id}`, siteId: site.id, draftJson: {}, publishedJson: {} }),
+    draftJson: {
+      ...(site.storefrontProfile?.draftJson ?? {}),
+      identity: {
+        legalName: "MyDreamShoots Local Fixture",
+        entityType: "company",
+        address: { line1: "1 Local Fixture Way", city: "Test City", region: "CA", postalCode: "00000", country: "US" },
+        supportEmail: "local-fixture@example.com",
+        sameAs: []
+      },
+      policyFacts: fixtureFacts
+    },
     publishedJson: {
       ...(site.storefrontProfile?.publishedJson ?? {}),
       identity: {
@@ -284,7 +295,7 @@ function assertRichSitemapImageTitle(image, pathName) {
   assert.doesNotMatch(title, /Aidreamcapes/i, `${pathName} image sitemap title should not mention another brand`);
   assert.doesNotMatch(title, /^(?:image|photo|preview|thumbnail|hero|.+\s+preview)$/i, `${pathName} image sitemap title should not be a placeholder: ${title}`);
 }
-const requiredImageSitemapPaths = ["/", "/pricing", "/workflow", "/faq", "/blog"]
+const requiredImageSitemapPaths = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"]
   .filter((pathName) => sitemapEntryByPath.has(pathName));
 for (const pathName of requiredImageSitemapPaths) {
   const entry = sitemapEntryByPath.get(pathName);

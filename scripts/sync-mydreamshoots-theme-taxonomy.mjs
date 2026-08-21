@@ -157,7 +157,14 @@ function normalizeSlug(value) {
 }
 
 function packIdForItem(item) {
-  if (item.slug === "black-friday") return "pack_dreamshoot_black_friday";
+  const dedicatedPackIds = {
+    "black-friday": "pack_dreamshoot_black_friday",
+    cannes: "pack_dreamshoot_cannes",
+    nightlife: "pack_dreamshoot_nightlife",
+    "rich-lifestyle": "pack_dreamshoot_rich_lifestyle",
+    urban: "pack_dreamshoot_urban"
+  };
+  if (dedicatedPackIds[item.slug]) return dedicatedPackIds[item.slug];
   return item.reusePackId || `pack_dreamshoot_${slugUnderscore(item.slug)}`;
 }
 
@@ -456,12 +463,59 @@ function galleryImageAltsForItem(item, sourcePack) {
     .filter((imageUrl) => typeof imageUrl === "string" && imageUrl.trim());
   return images.map((imageUrl, index) => {
     const sourceSlug = sourceSlugForGalleryImage(imageUrl);
-    const subject = taxonomyGalleryAltSubjects[sourceSlug]
-      || `${item.label} portrait with polished editorial styling`;
+    const subject = `${item.label} ${taxonomyGalleryAltSubjects[sourceSlug] ? "portrait" : "photo set"} with polished ${item.label.toLowerCase()} styling`;
     if (index === 0) return `${subject}, representative cover image for ${item.label}.`;
     const scene = taxonomyGalleryAltScenes[index % taxonomyGalleryAltScenes.length];
     return `${subject}, ${scene}.`;
   });
+}
+
+const dedicatedMediaSourceBySlug = {
+  "black-friday": "pack_dreamshoot_gala",
+  cannes: "pack_dreamshoot_gala",
+  nightlife: "pack_dreamshoot_christmas_couple",
+  "rich-lifestyle": "pack_dreamshoot_indian_wedding",
+  urban: "pack_dreamshoot_travel"
+};
+
+function profileContractForItem(item, profile, taxonomyItems) {
+  const label = item.label.trim();
+  const slug = item.slug;
+  const lowerLabel = label.toLowerCase();
+  const next = structuredClone(profile);
+  const genericGalleryIntro = /^Review .+ examples before opening the .+ workflow\.$/i.test(String(next.galleryIntro ?? "").trim());
+  const genericCtaTitle = /^Create .+ images in your private studio\.$/i.test(String(next.ctaTitle ?? "").trim());
+  const genericCtaSubtitle = /^Turn approved source photos into .+ with visible credit cost and private gallery review\.$/i.test(String(next.ctaSubtitle ?? "").trim());
+  const genericRelatedTitle = /^More .+ and nearby themes$/i.test(String(next.relatedTitle ?? "").trim());
+  const genericRelatedSubtitle = /^Compare .+ and adjacent themes before opening (?:a|an) .+ set\.$/i.test(String(next.relatedSubtitle ?? "").trim());
+
+  if (genericGalleryIntro) next.galleryIntro = `Review ${lowerLabel} examples focused on ${next.bestFor?.[0] || `${lowerLabel} portraits`} before opening this ${label} workflow.`;
+  if (genericCtaTitle) next.ctaTitle = `Create ${lowerLabel} visuals for ${next.bestFor?.[0] || "your next project"} in a private studio.`;
+  if (genericCtaSubtitle) next.ctaSubtitle = `In a private studio, approved source photos become ${lowerLabel} results for ${next.bestFor?.[1] || "profile and campaign use"}; review the credit cost before opening the gallery.`;
+  if (genericRelatedTitle) next.relatedTitle = `Compare ${label}, ${next.tags?.slice(0, 2).join(" and ") || "nearby styles"}`;
+  if (genericRelatedSubtitle) next.relatedSubtitle = `Use the ${label} brief alongside ${next.bestFor?.[1] || "nearby visual directions"} before choosing a private gallery set.`;
+  next.ctaHref = String(next.ctaHref || "/app/create").startsWith("/") ? String(next.ctaHref || "/app/create") : "/app/create";
+  const related = Array.isArray(next.relatedLinks)
+    ? next.relatedLinks.filter((link) => link?.href && link?.label && /^\/ai-image-generation\/[a-z0-9-]+$/.test(String(link.href)) && !String(link.href).endsWith("/motion-generator"))
+    : [];
+  const candidates = taxonomyItems
+    .filter((candidate) => candidate.slug !== slug)
+    .filter((candidate) => candidate.slug !== "motion-generator")
+    .filter((candidate) => candidate.groupSlug === item.groupSlug || candidate.slug === item.sourceCategorySlug)
+    .slice(0, 3)
+    .map((candidate) => ({ label: candidate.label, href: `${AI_IMAGE_GENERATION_ROOT}/${candidate.slug}` }));
+  next.relatedLinks = [...related, ...candidates]
+    .filter((link, index, links) => links.findIndex((candidate) => candidate.href === link.href) === index)
+    .slice(0, 3);
+  if (next.relatedLinks.length < 2) {
+    const leafFallbacks = taxonomyItems
+      .filter((candidate) => candidate.slug !== slug && candidate.slug !== "motion-generator")
+      .filter((candidate) => !next.relatedLinks.some((link) => link.href === `${AI_IMAGE_GENERATION_ROOT}/${candidate.slug}`))
+      .slice(0, 3)
+      .map((candidate) => ({ label: candidate.label, href: `${AI_IMAGE_GENERATION_ROOT}/${candidate.slug}` }));
+    next.relatedLinks = [...next.relatedLinks, ...leafFallbacks].slice(0, 3);
+  }
+  return next;
 }
 
 function generatedThemeMediaForSlug(rawSlug) {
@@ -979,6 +1033,10 @@ requiredPageCopySlugs = new Set((taxonomy.items ?? []).map((item) => normalizeSl
 collectionPathBySlug = buildCollectionPathMap(taxonomy);
 const useCaseProfiles = readJson(useCaseProfilesPath);
 mydreamshootsDirectProfiles = useCaseProfiles.mydreamshootsCategories || {};
+for (const item of taxonomy.items ?? []) {
+  const profile = mydreamshootsDirectProfiles[item.slug];
+  if (profile) mydreamshootsDirectProfiles[item.slug] = profileContractForItem(item, profile, taxonomy.items);
+}
 const categories = state.creativePackCategories ?? [];
 const packs = state.creativePacks ?? [];
 const originalPackById = new Map(packs.filter((pack) => pack.siteId === SITE_ID).map((pack) => [pack.id, structuredClone(pack)]));
@@ -1024,7 +1082,8 @@ for (const [index, item] of taxonomy.items.entries()) {
     changes.push({ targetType: "CreativePackCategory", id: category.id, field: "create", after: targetSlug });
   }
   const packId = packIdForItem(item);
-  const sourcePack = originalPackById.get(item.reusePackId || item.sourcePackId || packId) || originalPackById.get(item.sourcePackId);
+  const sourcePackId = dedicatedMediaSourceBySlug[targetSlug] || item.sourcePackId || item.reusePackId || packId;
+  const sourcePack = originalPackById.get(sourcePackId) || originalPackById.get(item.reusePackId) || originalPackById.get(item.sourcePackId);
   const categoryFields = categoryFieldsForItem(item, parentId, (index + 1) * 10, sourcePack);
   updateCategory(category, categoryFields, changes);
   targetCategoryIds.add(category.id);

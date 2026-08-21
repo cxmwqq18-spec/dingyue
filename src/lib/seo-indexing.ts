@@ -482,7 +482,9 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
             loc: absoluteMediaUrl(site, image),
             title: index === 0 ? standardMedia.primaryImageAlt : sitemapImageTitleForPage(page)
           })).filter((image) => image.loc)
-        : collectPageSitemapImages(site, page),
+        : site.id === "site_dreamshoot"
+          ? []
+          : collectPageSitemapImages(site, page),
       lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
       changefreq: sitemapChangeFrequencyForPath(path),
       priority: sitemapPriorityForPath(path)
@@ -533,7 +535,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
         .filter((image) => image.loc);
       entries.set(loc, {
         loc,
-        images: mediaImages.length ? mediaImages : pack ? packSitemapImages(site, pack) : [],
+        images: mediaImages,
         lastmod: normalizeSitemapDate(snapshot.publication?.publishedAt),
         changefreq: sitemapChangeFrequencyForPath(route.canonicalPath),
         priority: sitemapPriorityForPath(route.canonicalPath)
@@ -658,7 +660,6 @@ function isBlockedPublicPathForSite(site: Site, path: string): boolean {
 }
 
 function isPublicVideoGenerationSitemapPath(site: Site, path: string): boolean {
-  if (isDreamshootSite(site)) return false;
   return Boolean(parsePublicVideoGenerationRouteForSite(site, path));
 }
 

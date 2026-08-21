@@ -80,10 +80,10 @@
       "copyRevision": "2026-08-18.avatar",
       "seoTitle": "AI Avatars for Profiles, Gaming Handles, and Community Identity | myDreamshoots",
       "galleryTitle": "12 AI Avatar Photo Examples for Avatar, Profile, Social",
-      "galleryIntro": "Review avatar, profile, social examples before opening the avatar workflow.",
+      "galleryIntro": "Review avatar examples focused on Gaming profiles, Discord servers, streamer pages, and community member cards before opening this Avatar workflow.",
       "ctaEyebrow": "Start the avatar set",
-      "ctaTitle": "Create avatar images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into avatar, profile, social with visible credit cost and private gallery review.",
+      "ctaTitle": "Create avatar visuals for Gaming profiles, Discord servers, streamer pages, and community member cards in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become avatar results for Social profile refreshes where a normal selfie feels too plain; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Avatar Photos",
       "faqEyebrow": "Avatar FAQ",
       "faqTitle": "Avatar photos before you create",
@@ -110,9 +110,24 @@
         }
       ],
       "relatedEyebrow": "Related avatar ideas",
-      "relatedTitle": "More avatar and nearby themes",
-      "relatedSubtitle": "Compare avatar, profile, social and adjacent themes before opening a avatar set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Avatar, Profile Icons and Gaming Handles",
+      "relatedSubtitle": "Use the Avatar brief alongside Social profile refreshes where a normal selfie feels too plain before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Headshot",
+          "href": "/ai-image-generation/headshot"
+        },
+        {
+          "label": "Gala Photo",
+          "href": "/ai-image-generation/gala-photo"
+        },
+        {
+          "label": "Portrait Photo",
+          "href": "/ai-image-generation/portrait-photo"
+        }
+      ]
     },
     "wedding": {
       "headline": "Wedding Photos for Save-the-Dates, Couple Albums, and Keepsakes",
@@ -737,7 +752,7 @@
       "copyRevision": "2026-08-18.engagement-photo",
       "seoTitle": "AI Engagement Photos for Proposals & Announcements | myDreamshoots",
       "galleryTitle": "12 AI Engagement Photo Examples for Proposals and Announcements",
-      "galleryIntro": "Review proposal, announcement, ring-forward, and couple story examples before opening the engagement workflow.",
+      "galleryIntro": "Review engagement photo examples focused on Engagement announcement posts, save-the-date drafts, and proposal keepsakes before opening this Engagement Photo workflow.",
       "ctaEyebrow": "Start the engagement set",
       "ctaTitle": "Create engagement photos in your private studio.",
       "ctaSubtitle": "Turn approved couple photos into proposal memories, ring reveal moments, announcements, and save-the-date drafts while keeping the flow private and credit-aware.",
@@ -769,7 +784,22 @@
       "relatedEyebrow": "Related engagement ideas",
       "relatedTitle": "More proposal and couple photo ideas",
       "relatedSubtitle": "Compare nearby couple, wedding, and romantic themes before you upload source photos or spend credits.",
-      "relatedCtaLabel": "View all packages"
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Wedding Photo",
+          "href": "/ai-image-generation/wedding-photo"
+        },
+        {
+          "label": "Valentines Photo",
+          "href": "/ai-image-generation/valentines-photo"
+        },
+        {
+          "label": "Christmas Photo",
+          "href": "/ai-image-generation/christmas-photo"
+        }
+      ]
     },
     "wedding-photo": {
       "headline": "AI Wedding Photos for Save-the-Dates, Ceremony Moodboards, and Keepsakes",
@@ -855,6 +885,10 @@
         {
           "label": "AI holiday portraits",
           "href": "/ai-image-generation/holiday"
+        },
+        {
+          "label": "Engagement Photo",
+          "href": "/ai-image-generation/engagement-photo"
         }
       ]
     },
@@ -942,6 +976,10 @@
         {
           "label": "AI holiday portraits",
           "href": "/ai-image-generation/holiday"
+        },
+        {
+          "label": "Engagement Photo",
+          "href": "/ai-image-generation/engagement-photo"
         }
       ]
     },
@@ -987,7 +1025,7 @@
       "copyRevision": "2026-08-18.christmas-photo",
       "seoTitle": "AI Christmas Photos for Greeting Cards & Winter Portraits | myDreamshoots",
       "galleryTitle": "12 AI Christmas Photo Examples for Greeting Cards and Winter Portraits",
-      "galleryIntro": "Review greeting-card, winter portrait, cozy family, and festive profile examples before opening the Christmas workflow.",
+      "galleryIntro": "Review christmas photo examples focused on Christmas cards, family greetings, and seasonal social posts before opening this Christmas Photo workflow.",
       "ctaEyebrow": "Start the Christmas set",
       "ctaTitle": "Create Christmas photos in your private studio.",
       "ctaSubtitle": "Turn approved portraits into festive cards, cozy winter scenes, family-style crops, seasonal profiles, and private holiday albums.",
@@ -1019,7 +1057,22 @@
       "relatedEyebrow": "Related festive ideas",
       "relatedTitle": "More festive and family photo ideas",
       "relatedSubtitle": "Compare Christmas, Holiday, Thanksgiving, and group-friendly themes before starting a private set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Engagement Photo",
+          "href": "/ai-image-generation/engagement-photo"
+        },
+        {
+          "label": "Wedding Photo",
+          "href": "/ai-image-generation/wedding-photo"
+        },
+        {
+          "label": "Valentines Photo",
+          "href": "/ai-image-generation/valentines-photo"
+        }
+      ]
     },
     "halloween-photo": {
       "headline": "AI Halloween Photos for Costume Portraits, Party Cards, and Spooky Albums",
@@ -1105,6 +1158,10 @@
         {
           "label": "AI holiday portraits",
           "href": "/ai-image-generation/holiday"
+        },
+        {
+          "label": "Engagement Photo",
+          "href": "/ai-image-generation/engagement-photo"
         }
       ]
     },
@@ -1192,6 +1249,10 @@
         {
           "label": "AI holiday portraits",
           "href": "/ai-image-generation/holiday"
+        },
+        {
+          "label": "Engagement Photo",
+          "href": "/ai-image-generation/engagement-photo"
         }
       ]
     },
@@ -1237,10 +1298,10 @@
       "copyRevision": "2026-08-18.headshot",
       "seoTitle": "AI Headshots for LinkedIn, Resumes, Founder Bios, and Team Pages | myDreamshoots",
       "galleryTitle": "12 AI Headshot Photo Examples for Headshot, LinkedIn, Professional",
-      "galleryIntro": "Review headshot, linkedin, professional examples before opening the headshot workflow.",
+      "galleryIntro": "Review headshot examples focused on LinkedIn, resumes, job search profiles, and consultant bios before opening this Headshot workflow.",
       "ctaEyebrow": "Start the headshot set",
-      "ctaTitle": "Create headshot images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into headshot, linkedin, professional with visible credit cost and private gallery review.",
+      "ctaTitle": "Create headshot visuals for LinkedIn, resumes, job search profiles, and consultant bios in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become headshot results for Founder pages, speaker profiles, podcast guest kits, and team directories; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Headshot Photos",
       "faqEyebrow": "Headshot FAQ",
       "faqTitle": "Headshot photos before you create",
@@ -1267,9 +1328,24 @@
         }
       ],
       "relatedEyebrow": "Related headshot ideas",
-      "relatedTitle": "More headshot and nearby themes",
-      "relatedSubtitle": "Compare headshot, linkedin, professional and adjacent themes before opening a headshot set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Headshot, LinkedIn and Resume",
+      "relatedSubtitle": "Use the Headshot brief alongside Founder pages, speaker profiles, podcast guest kits, and team directories before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Avatar",
+          "href": "/ai-image-generation/avatar"
+        },
+        {
+          "label": "Gala Photo",
+          "href": "/ai-image-generation/gala-photo"
+        },
+        {
+          "label": "Portrait Photo",
+          "href": "/ai-image-generation/portrait-photo"
+        }
+      ]
     },
     "gala-photo": {
       "headline": "AI Gala Photos for Formal Events, Red-Carpet Mood, and Elegant Portraits",
@@ -1313,10 +1389,10 @@
       "copyRevision": "2026-08-18.gala-photo",
       "seoTitle": "AI Gala Photos for Formal Events, Red-Carpet Mood, and Elegant Portraits | myDreamshoots",
       "galleryTitle": "12 AI Gala Photo Photo Examples for Gala, Formal, Event",
-      "galleryIntro": "Review gala, formal, event examples before opening the gala-photo workflow.",
+      "galleryIntro": "Review gala photo examples focused on Formal profile updates, event announcements, and creator campaign visuals before opening this Gala Photo workflow.",
       "ctaEyebrow": "Start the gala photo set",
-      "ctaTitle": "Create gala photo images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into gala, formal, event with visible credit cost and private gallery review.",
+      "ctaTitle": "Create gala photo visuals for Formal profile updates, event announcements, and creator campaign visuals in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become gala photo results for Gala, award-night, premiere, or charity-event inspired portraits; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Gala Photo Photos",
       "faqEyebrow": "Gala Photo FAQ",
       "faqTitle": "Gala Photo photos before you create",
@@ -1343,9 +1419,24 @@
         }
       ],
       "relatedEyebrow": "Related gala photo ideas",
-      "relatedTitle": "More gala photo and nearby themes",
-      "relatedSubtitle": "Compare gala, formal, event and adjacent themes before opening a gala photo set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Gala Photo, Formal Event and Red Carpet",
+      "relatedSubtitle": "Use the Gala Photo brief alongside Gala, award-night, premiere, or charity-event inspired portraits before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Avatar",
+          "href": "/ai-image-generation/avatar"
+        },
+        {
+          "label": "Headshot",
+          "href": "/ai-image-generation/headshot"
+        },
+        {
+          "label": "Portrait Photo",
+          "href": "/ai-image-generation/portrait-photo"
+        }
+      ]
     },
     "portrait-photo": {
       "headline": "AI Portrait Photos for Personal Brands, Media Kits, and Creator Profiles",
@@ -1389,10 +1480,10 @@
       "copyRevision": "2026-08-18.portrait-photo",
       "seoTitle": "AI Portrait Photos for Personal Brands, Media Kits, and Creator Profiles | myDreamshoots",
       "galleryTitle": "12 AI Portrait Photo Photo Examples for Portrait, Creator, Personal Brand",
-      "galleryIntro": "Review portrait, creator, personal brand examples before opening the portrait-photo workflow.",
+      "galleryIntro": "Review portrait photo examples focused on Creator profiles, founder bios, author pages, and consultant websites before opening this Portrait Photo workflow.",
       "ctaEyebrow": "Start the portrait photo set",
-      "ctaTitle": "Create portrait photo images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into portrait, creator, personal brand with visible credit cost and private gallery review.",
+      "ctaTitle": "Create portrait photo visuals for Creator profiles, founder bios, author pages, and consultant websites in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become portrait photo results for Media kits, sponsor decks, newsletters, and landing page visuals; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Portrait Photo Photos",
       "faqEyebrow": "Portrait Photo FAQ",
       "faqTitle": "Portrait Photo photos before you create",
@@ -1419,9 +1510,24 @@
         }
       ],
       "relatedEyebrow": "Related portrait photo ideas",
-      "relatedTitle": "More portrait photo and nearby themes",
-      "relatedSubtitle": "Compare portrait, creator, personal brand and adjacent themes before opening a portrait photo set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Portrait Photo, Personal Brand and Media Kit",
+      "relatedSubtitle": "Use the Portrait Photo brief alongside Media kits, sponsor decks, newsletters, and landing page visuals before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Avatar",
+          "href": "/ai-image-generation/avatar"
+        },
+        {
+          "label": "Headshot",
+          "href": "/ai-image-generation/headshot"
+        },
+        {
+          "label": "Gala Photo",
+          "href": "/ai-image-generation/gala-photo"
+        }
+      ]
     },
     "black-friday": {
       "headline": "AI Black Friday Photos for Sale Banners, Social Ads, and Promo Campaigns",
@@ -1467,7 +1573,7 @@
       "galleryTitle": "12 AI Black Friday Photo Examples for Sale Banners and Social Ads",
       "galleryIntro": "Review sale banner, social ad, shopping feed, product promo, creator campaign, and Cyber Week examples before starting.",
       "ctaEyebrow": "Start the campaign set",
-      "ctaTitle": "Create Black Friday campaign images in your private studio.",
+      "ctaTitle": "Create black friday visuals for Black Friday sale banners, Cyber Week countdowns, and social ad drafts in a private studio.",
       "ctaSubtitle": "Turn approved product or creator photos into sale banners, social ads, shopping-feed visuals, storefront promos, and Cyber Week campaign drafts.",
       "ctaLabel": "Create Black Friday Photos",
       "faqEyebrow": "Black Friday FAQ",
@@ -1497,7 +1603,22 @@
       "relatedEyebrow": "Related campaign ideas",
       "relatedTitle": "More sale and campaign photo ideas",
       "relatedSubtitle": "Compare product, creator, shopping, and campaign-oriented themes before opening a Black Friday set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Avatar",
+          "href": "/ai-image-generation/avatar"
+        },
+        {
+          "label": "Headshot",
+          "href": "/ai-image-generation/headshot"
+        },
+        {
+          "label": "Gala Photo",
+          "href": "/ai-image-generation/gala-photo"
+        }
+      ]
     },
     "only-fans": {
       "headline": "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers",
@@ -1541,10 +1662,10 @@
       "copyRevision": "2026-08-18.only-fans",
       "seoTitle": "AI Only Fans Creator Photos for Subscription Profiles and Promo Teasers | myDreamshoots",
       "galleryTitle": "12 AI Only Fans Photo Examples for Creator, Subscription, Profile",
-      "galleryIntro": "Review creator, subscription, profile examples before opening the only-fans workflow.",
+      "galleryIntro": "Review only fans examples focused on Creator subscription profile photos, banner refreshes, and bio images before opening this Only Fans workflow.",
       "ctaEyebrow": "Start the only fans set",
-      "ctaTitle": "Create only fans images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into creator, subscription, profile with visible credit cost and private gallery review.",
+      "ctaTitle": "Create only fans visuals for Creator subscription profile photos, banner refreshes, and bio images in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become only fans results for Tasteful feed teasers, promo cards, and private brand moodboards; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Only Fans Photos",
       "faqEyebrow": "Only Fans FAQ",
       "faqTitle": "Only Fans photos before you create",
@@ -1571,9 +1692,24 @@
         }
       ],
       "relatedEyebrow": "Related only fans ideas",
-      "relatedTitle": "More only fans and nearby themes",
-      "relatedSubtitle": "Compare creator, subscription, profile and adjacent themes before opening a only fans set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Only Fans, Subscription Profile and Feed Teasers",
+      "relatedSubtitle": "Use the Only Fans brief alongside Tasteful feed teasers, promo cards, and private brand moodboards before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Avatar",
+          "href": "/ai-image-generation/avatar"
+        },
+        {
+          "label": "Headshot",
+          "href": "/ai-image-generation/headshot"
+        },
+        {
+          "label": "Gala Photo",
+          "href": "/ai-image-generation/gala-photo"
+        }
+      ]
     },
     "singles-awareness-day": {
       "headline": "AI Singles Awareness Day Photos for Self-Love, Solo Confidence, and Profile Refreshes",
@@ -1659,6 +1795,10 @@
         {
           "label": "AI holiday portraits",
           "href": "/ai-image-generation/holiday"
+        },
+        {
+          "label": "Avatar",
+          "href": "/ai-image-generation/avatar"
         }
       ]
     },
@@ -1704,10 +1844,10 @@
       "copyRevision": "2026-08-18.cyberpunk",
       "seoTitle": "AI Cyberpunk Photos for Neon City Portraits and Futuristic Profile Art | myDreamshoots",
       "galleryTitle": "12 AI Cyberpunk Photo Examples for Cyberpunk, Neon, Cinematic",
-      "galleryIntro": "Review cyberpunk, neon, cinematic examples before opening the cyberpunk workflow.",
+      "galleryIntro": "Review cyberpunk examples focused on Gaming profiles, music visuals, creator launches, and bold social refreshes before opening this Cyberpunk workflow.",
       "ctaEyebrow": "Start the cyberpunk set",
-      "ctaTitle": "Create cyberpunk images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into cyberpunk, neon, cinematic with visible credit cost and private gallery review.",
+      "ctaTitle": "Create cyberpunk visuals for Gaming profiles, music visuals, creator launches, and bold social refreshes in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become cyberpunk results for Neon city portraits with futuristic clothing and high-contrast lighting; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Cyberpunk Photos",
       "faqEyebrow": "Cyberpunk FAQ",
       "faqTitle": "Cyberpunk photos before you create",
@@ -1734,9 +1874,24 @@
         }
       ],
       "relatedEyebrow": "Related cyberpunk ideas",
-      "relatedTitle": "More cyberpunk and nearby themes",
-      "relatedSubtitle": "Compare cyberpunk, neon, cinematic and adjacent themes before opening a cyberpunk set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Cyberpunk, Neon City and Futuristic",
+      "relatedSubtitle": "Use the Cyberpunk brief alongside Neon city portraits with futuristic clothing and high-contrast lighting before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Boudoir",
+          "href": "/ai-image-generation/boudoir"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        },
+        {
+          "label": "Cannes",
+          "href": "/ai-image-generation/cannes"
+        }
+      ]
     },
     "boudoir": {
       "headline": "Private AI Boudoir Photos for Tasteful Adult Portraits and Confidence Sets",
@@ -1780,10 +1935,10 @@
       "copyRevision": "2026-08-18.boudoir",
       "seoTitle": "Private AI Boudoir Photos for Tasteful Adult Portraits and Confidence Sets | myDreamshoots",
       "galleryTitle": "12 AI Boudoir Photo Examples for Boudoir, Private, Editorial",
-      "galleryIntro": "Review boudoir, private, editorial examples before opening the boudoir workflow.",
+      "galleryIntro": "Review boudoir examples focused on Private confidence portraits and tasteful adult keepsakes before opening this Boudoir workflow.",
       "ctaEyebrow": "Start the boudoir set",
-      "ctaTitle": "Create boudoir images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into boudoir, private, editorial with visible credit cost and private gallery review.",
+      "ctaTitle": "Create boudoir visuals for Private confidence portraits and tasteful adult keepsakes in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become boudoir results for Soft editorial moodboards with controlled lighting and wardrobe tone; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Boudoir Photos",
       "faqEyebrow": "Boudoir FAQ",
       "faqTitle": "Boudoir photos before you create",
@@ -1810,9 +1965,24 @@
         }
       ],
       "relatedEyebrow": "Related boudoir ideas",
-      "relatedTitle": "More boudoir and nearby themes",
-      "relatedSubtitle": "Compare boudoir, private, editorial and adjacent themes before opening a boudoir set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Boudoir, Tasteful Adult and Private Portrait",
+      "relatedSubtitle": "Use the Boudoir brief alongside Soft editorial moodboards with controlled lighting and wardrobe tone before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        },
+        {
+          "label": "Cannes",
+          "href": "/ai-image-generation/cannes"
+        }
+      ]
     },
     "holiday": {
       "headline": "AI Holiday Photos for Seasonal Cards, Festive Profiles, and Warm Albums",
@@ -1898,6 +2068,10 @@
         {
           "label": "Valentine photo ideas",
           "href": "/ai-image-generation/valentines-photo"
+        },
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
         }
       ]
     },
@@ -1943,10 +2117,10 @@
       "copyRevision": "2026-08-18.cannes",
       "seoTitle": "AI Cannes Photos for Festival Glamour, Premiere Looks, and Flash Portraits | myDreamshoots",
       "galleryTitle": "12 AI Cannes Photo Examples for Cannes, Festival, Glamour",
-      "galleryIntro": "Review cannes, festival, glamour examples before opening the cannes workflow.",
+      "galleryIntro": "Review cannes examples focused on Premiere-style profile updates and creator campaign visuals before opening this Cannes workflow.",
       "ctaEyebrow": "Start the cannes set",
-      "ctaTitle": "Create cannes images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into cannes, festival, glamour with visible credit cost and private gallery review.",
+      "ctaTitle": "Create cannes visuals for Premiere-style profile updates and creator campaign visuals in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become cannes results for Festival glamour concepts with eveningwear, flash, and luxury mood; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Cannes Photos",
       "faqEyebrow": "Cannes FAQ",
       "faqTitle": "Cannes photos before you create",
@@ -1973,9 +2147,24 @@
         }
       ],
       "relatedEyebrow": "Related cannes ideas",
-      "relatedTitle": "More cannes and nearby themes",
-      "relatedSubtitle": "Compare cannes, festival, glamour and adjacent themes before opening a cannes set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Cannes, Festival Glamour and Premiere Look",
+      "relatedSubtitle": "Use the Cannes brief alongside Festival glamour concepts with eveningwear, flash, and luxury mood before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
+        },
+        {
+          "label": "Boudoir",
+          "href": "/ai-image-generation/boudoir"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "nightlife": {
       "headline": "AI Nightlife Photos for City Lights, Lounge Portraits, and After-Dark Profiles",
@@ -2019,10 +2208,10 @@
       "copyRevision": "2026-08-18.nightlife",
       "seoTitle": "AI Nightlife Photos for City Lights, Lounge Portraits, and After-Dark Profiles | myDreamshoots",
       "galleryTitle": "12 AI Nightlife Photo Examples for Nightlife, City, Evening",
-      "galleryIntro": "Review nightlife, city, evening examples before opening the nightlife workflow.",
+      "galleryIntro": "Review nightlife examples focused on Night-out profile refreshes, event posts, and creator campaign images before opening this Nightlife workflow.",
       "ctaEyebrow": "Start the nightlife set",
-      "ctaTitle": "Create nightlife images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into nightlife, city, evening with visible credit cost and private gallery review.",
+      "ctaTitle": "Create nightlife visuals for Night-out profile refreshes, event posts, and creator campaign images in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become nightlife results for City light portraits with lounge, rooftop, bar, or neon street mood; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Nightlife Photos",
       "faqEyebrow": "Nightlife FAQ",
       "faqTitle": "Nightlife photos before you create",
@@ -2049,9 +2238,24 @@
         }
       ],
       "relatedEyebrow": "Related nightlife ideas",
-      "relatedTitle": "More nightlife and nearby themes",
-      "relatedSubtitle": "Compare nightlife, city, evening and adjacent themes before opening a nightlife set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Nightlife, City Lights and Lounge Portrait",
+      "relatedSubtitle": "Use the Nightlife brief alongside City light portraits with lounge, rooftop, bar, or neon street mood before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
+        },
+        {
+          "label": "Boudoir",
+          "href": "/ai-image-generation/boudoir"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "rich-lifestyle": {
       "headline": "AI Rich Lifestyle Photos for Luxury Portraits, Premium Profiles, and Travel Mood",
@@ -2095,10 +2299,10 @@
       "copyRevision": "2026-08-18.rich-lifestyle",
       "seoTitle": "AI Rich Lifestyle Photos for Luxury Portraits, Premium Profiles, and Travel Mood | myDreamshoots",
       "galleryTitle": "12 AI Rich Lifestyle Photo Examples for Luxury, Lifestyle, Premium",
-      "galleryIntro": "Review luxury, lifestyle, premium examples before opening the rich-lifestyle workflow.",
+      "galleryIntro": "Review rich lifestyle examples focused on Premium profile refreshes, lifestyle campaigns, and creator brand visuals before opening this Rich Lifestyle workflow.",
       "ctaEyebrow": "Start the rich lifestyle set",
-      "ctaTitle": "Create rich lifestyle images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into luxury, lifestyle, premium with visible credit cost and private gallery review.",
+      "ctaTitle": "Create rich lifestyle visuals for Premium profile refreshes, lifestyle campaigns, and creator brand visuals in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become rich lifestyle results for Luxury interior, rooftop, resort, car, or travel-inspired portrait concepts; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Rich Lifestyle Photos",
       "faqEyebrow": "Rich Lifestyle FAQ",
       "faqTitle": "Rich Lifestyle photos before you create",
@@ -2125,9 +2329,24 @@
         }
       ],
       "relatedEyebrow": "Related rich lifestyle ideas",
-      "relatedTitle": "More rich lifestyle and nearby themes",
-      "relatedSubtitle": "Compare luxury, lifestyle, premium and adjacent themes before opening a rich lifestyle set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Rich Lifestyle, Luxury Portrait and Premium Profile",
+      "relatedSubtitle": "Use the Rich Lifestyle brief alongside Luxury interior, rooftop, resort, car, or travel-inspired portrait concepts before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
+        },
+        {
+          "label": "Boudoir",
+          "href": "/ai-image-generation/boudoir"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "bikini": {
       "headline": "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets",
@@ -2171,10 +2390,10 @@
       "copyRevision": "2026-08-18.bikini",
       "seoTitle": "AI Bikini Photos for Resort Portraits, Beachwear Moodboards, and Private Confidence Sets | myDreamshoots",
       "galleryTitle": "12 AI Bikini Photo Examples for Beachwear, Resort, Portrait",
-      "galleryIntro": "Review beachwear, resort, portrait examples before opening the bikini workflow.",
+      "galleryIntro": "Review bikini examples focused on Beachwear profile concepts, vacation moodboards, and resort-style portraits before opening this Bikini workflow.",
       "ctaEyebrow": "Start the bikini set",
-      "ctaTitle": "Create bikini images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into beachwear, resort, portrait with visible credit cost and private gallery review.",
+      "ctaTitle": "Create bikini visuals for Beachwear profile concepts, vacation moodboards, and resort-style portraits in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become bikini results for Private confidence sets with controlled styling and download review; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Bikini Photos",
       "faqEyebrow": "Bikini FAQ",
       "faqTitle": "Bikini photos before you create",
@@ -2201,9 +2420,24 @@
         }
       ],
       "relatedEyebrow": "Related bikini ideas",
-      "relatedTitle": "More bikini and nearby themes",
-      "relatedSubtitle": "Compare beachwear, resort, portrait and adjacent themes before opening a bikini set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Bikini, Beachwear and Resort Portrait",
+      "relatedSubtitle": "Use the Bikini brief alongside Private confidence sets with controlled styling and download review before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
+        },
+        {
+          "label": "Boudoir",
+          "href": "/ai-image-generation/boudoir"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "swimsuit": {
       "headline": "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews",
@@ -2247,10 +2481,10 @@
       "copyRevision": "2026-08-18.swimsuit",
       "seoTitle": "AI Swimsuit Photos for Resort Styling, Beach Profiles, and Wardrobe Previews | myDreamshoots",
       "galleryTitle": "12 AI Swimsuit Photo Examples for Swimsuit, Resort, Style",
-      "galleryIntro": "Review swimsuit, resort, style examples before opening the swimsuit workflow.",
+      "galleryIntro": "Review swimsuit examples focused on Swimsuit styling previews, resort moodboards, and vacation profile photos before opening this Swimsuit workflow.",
       "ctaEyebrow": "Start the swimsuit set",
-      "ctaTitle": "Create swimsuit images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into swimsuit, resort, style with visible credit cost and private gallery review.",
+      "ctaTitle": "Create swimsuit visuals for Swimsuit styling previews, resort moodboards, and vacation profile photos in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become swimsuit results for Creators planning beach, poolside, or summer campaign visuals; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Swimsuit Photos",
       "faqEyebrow": "Swimsuit FAQ",
       "faqTitle": "Swimsuit photos before you create",
@@ -2277,9 +2511,24 @@
         }
       ],
       "relatedEyebrow": "Related swimsuit ideas",
-      "relatedTitle": "More swimsuit and nearby themes",
-      "relatedSubtitle": "Compare swimsuit, resort, style and adjacent themes before opening a swimsuit set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Swimsuit, Swimsuit Style and Resort Styling",
+      "relatedSubtitle": "Use the Swimsuit brief alongside Creators planning beach, poolside, or summer campaign visuals before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
+        },
+        {
+          "label": "Boudoir",
+          "href": "/ai-image-generation/boudoir"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "travel": {
       "headline": "AI Travel Photos for Destination Portraits, Route Stories, and Creator Albums",
@@ -2323,10 +2572,10 @@
       "copyRevision": "2026-08-18.travel",
       "seoTitle": "AI Travel Photos for Destination Portraits, Route Stories, and Creator Albums | myDreamshoots",
       "galleryTitle": "12 AI Travel Photo Examples for Travel, Destination, Lifestyle",
-      "galleryIntro": "Review travel, destination, lifestyle examples before opening the travel workflow.",
+      "galleryIntro": "Review travel examples focused on Travel profile refreshes, vacation-style social posts, and route albums before opening this Travel workflow.",
       "ctaEyebrow": "Start the travel set",
-      "ctaTitle": "Create travel images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into travel, destination, lifestyle with visible credit cost and private gallery review.",
+      "ctaTitle": "Create travel visuals for Travel profile refreshes, vacation-style social posts, and route albums in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become travel results for Creator trip concepts without coordinating a destination shoot; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Travel Photos",
       "faqEyebrow": "Travel FAQ",
       "faqTitle": "Travel photos before you create",
@@ -2353,9 +2602,24 @@
         }
       ],
       "relatedEyebrow": "Related travel ideas",
-      "relatedTitle": "More travel and nearby themes",
-      "relatedSubtitle": "Compare travel, destination, lifestyle and adjacent themes before opening a travel set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Travel, Destination Portraits and Route Stories",
+      "relatedSubtitle": "Use the Travel brief alongside Creator trip concepts without coordinating a destination shoot before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
+        },
+        {
+          "label": "Boudoir",
+          "href": "/ai-image-generation/boudoir"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "soccer": {
       "headline": "AI Soccer Fan Photos for Match-Day Posters, Stadium Portraits, and Profile Avatars",
@@ -2399,10 +2663,10 @@
       "copyRevision": "2026-08-18.soccer",
       "seoTitle": "AI Soccer Fan Photos for Match-Day Posters, Stadium Portraits, and Profile Avatars | myDreamshoots",
       "galleryTitle": "12 AI Soccer Photo Examples for Soccer, Fan Photos, Match Day",
-      "galleryIntro": "Review soccer, fan photos, match day examples before opening the soccer workflow.",
+      "galleryIntro": "Review soccer examples focused on Match-day profile images, tournament posts, and supporter group concepts before opening this Soccer workflow.",
       "ctaEyebrow": "Start the soccer set",
-      "ctaTitle": "Create soccer images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into soccer, fan photos, match day with visible credit cost and private gallery review.",
+      "ctaTitle": "Create soccer visuals for Match-day profile images, tournament posts, and supporter group concepts in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become soccer results for Fan posters, stadium portraits, and social-ready banners; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Soccer Photos",
       "faqEyebrow": "Soccer FAQ",
       "faqTitle": "Soccer photos before you create",
@@ -2429,9 +2693,24 @@
         }
       ],
       "relatedEyebrow": "Related soccer ideas",
-      "relatedTitle": "More soccer and nearby themes",
-      "relatedSubtitle": "Compare soccer, fan photos, match day and adjacent themes before opening a soccer set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Soccer, Match Day and Stadium Portraits",
+      "relatedSubtitle": "Use the Soccer brief alongside Fan posters, stadium portraits, and social-ready banners before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
+        },
+        {
+          "label": "Boudoir",
+          "href": "/ai-image-generation/boudoir"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "urban": {
       "headline": "AI Urban Photos for Street Portraits, City Profiles, and Creator Scenes",
@@ -2475,10 +2754,10 @@
       "copyRevision": "2026-08-18.urban",
       "seoTitle": "AI Urban Photos for Street Portraits, City Profiles, and Creator Scenes | myDreamshoots",
       "galleryTitle": "12 AI Urban Photo Examples for Urban, City, Creator",
-      "galleryIntro": "Review urban, city, creator examples before opening the urban workflow.",
+      "galleryIntro": "Review urban examples focused on City profile refreshes, social posts, and creator campaign visuals before opening this Urban workflow.",
       "ctaEyebrow": "Start the urban set",
-      "ctaTitle": "Create urban images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into urban, city, creator with visible credit cost and private gallery review.",
+      "ctaTitle": "Create urban visuals for City profile refreshes, social posts, and creator campaign visuals in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become urban results for Street-scene portraits with modern wardrobe and urban texture; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Urban Photos",
       "faqEyebrow": "Urban FAQ",
       "faqTitle": "Urban photos before you create",
@@ -2505,9 +2784,24 @@
         }
       ],
       "relatedEyebrow": "Related urban ideas",
-      "relatedTitle": "More urban and nearby themes",
-      "relatedSubtitle": "Compare urban, city, creator and adjacent themes before opening a urban set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Urban, Street Portraits and City Profiles",
+      "relatedSubtitle": "Use the Urban brief alongside Street-scene portraits with modern wardrobe and urban texture before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
+        },
+        {
+          "label": "Boudoir",
+          "href": "/ai-image-generation/boudoir"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "street-style": {
       "headline": "AI Street Style Photos for Fashion Profiles, Outfit Concepts, and Editorial City Looks",
@@ -2551,10 +2845,10 @@
       "copyRevision": "2026-08-18.street-style",
       "seoTitle": "AI Street Style Photos for Fashion Profiles, Outfit Concepts, and Editorial City Looks | myDreamshoots",
       "galleryTitle": "12 AI Street Style Photo Examples for Street Style, Fashion, Editorial",
-      "galleryIntro": "Review street style, fashion, editorial examples before opening the street-style workflow.",
+      "galleryIntro": "Review street style examples focused on Fashion profile refreshes, outfit concepts, and OOTD-style posts before opening this Street Style workflow.",
       "ctaEyebrow": "Start the street style set",
-      "ctaTitle": "Create street style images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into street style, fashion, editorial with visible credit cost and private gallery review.",
+      "ctaTitle": "Create street style visuals for Fashion profile refreshes, outfit concepts, and OOTD-style posts in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become street style results for Creator campaigns with streetwear, city textures, and editorial posing; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Street Style Photos",
       "faqEyebrow": "Street Style FAQ",
       "faqTitle": "Street Style photos before you create",
@@ -2581,9 +2875,24 @@
         }
       ],
       "relatedEyebrow": "Related street style ideas",
-      "relatedTitle": "More street style and nearby themes",
-      "relatedSubtitle": "Compare street style, fashion, editorial and adjacent themes before opening a street style set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Street Style, Fashion Profile and Outfit Concepts",
+      "relatedSubtitle": "Use the Street Style brief alongside Creator campaigns with streetwear, city textures, and editorial posing before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
+        },
+        {
+          "label": "Boudoir",
+          "href": "/ai-image-generation/boudoir"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "mafia": {
       "headline": "AI Mafia Photos for Noir Character Portraits and Cinematic Profile Art",
@@ -2627,10 +2936,10 @@
       "copyRevision": "2026-08-18.mafia",
       "seoTitle": "AI Mafia Photos for Noir Character Portraits and Cinematic Profile Art | myDreamshoots",
       "galleryTitle": "12 AI Mafia Photo Examples for Noir, Character, Cinematic",
-      "galleryIntro": "Review noir, character, cinematic examples before opening the mafia workflow.",
+      "galleryIntro": "Review mafia examples focused on Noir profile art, character concepts, creator campaigns, and poster-style images before opening this Mafia workflow.",
       "ctaEyebrow": "Start the mafia set",
-      "ctaTitle": "Create mafia images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into noir, character, cinematic with visible credit cost and private gallery review.",
+      "ctaTitle": "Create mafia visuals for Noir profile art, character concepts, creator campaigns, and poster-style images in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become mafia results for Cinematic portraits with tailored wardrobe, moody lighting, and vintage rooms; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Mafia Photos",
       "faqEyebrow": "Mafia FAQ",
       "faqTitle": "Mafia photos before you create",
@@ -2657,9 +2966,24 @@
         }
       ],
       "relatedEyebrow": "Related mafia ideas",
-      "relatedTitle": "More mafia and nearby themes",
-      "relatedSubtitle": "Compare noir, character, cinematic and adjacent themes before opening a mafia set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Mafia, Noir Character and Cinematic Portrait",
+      "relatedSubtitle": "Use the Mafia brief alongside Cinematic portraits with tailored wardrobe, moody lighting, and vintage rooms before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Cyberpunk",
+          "href": "/ai-image-generation/cyberpunk"
+        },
+        {
+          "label": "Boudoir",
+          "href": "/ai-image-generation/boudoir"
+        },
+        {
+          "label": "Holiday",
+          "href": "/ai-image-generation/holiday"
+        }
+      ]
     },
     "hairstyle-generator": {
       "headline": "AI Hairstyle Generator for Hair Color, Cut Ideas, and Salon Preview Portraits",
@@ -2703,10 +3027,10 @@
       "copyRevision": "2026-08-18.hairstyle-generator",
       "seoTitle": "AI Hairstyle Generator for Hair Color, Cut Ideas, and Salon Preview Portraits | myDreamshoots",
       "galleryTitle": "12 AI Hairstyle Generator Photo Examples for Hairstyle, Hair Color, Preview",
-      "galleryIntro": "Review hairstyle, hair color, preview examples before opening the hairstyle-generator workflow.",
+      "galleryIntro": "Review hairstyle generator examples focused on Hair color ideas, haircut previews, bangs, curls, and length changes before opening this Hairstyle Generator workflow.",
       "ctaEyebrow": "Start the hairstyle generator set",
-      "ctaTitle": "Create hairstyle generator images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into hairstyle, hair color, preview with visible credit cost and private gallery review.",
+      "ctaTitle": "Create hairstyle generator visuals for Hair color ideas, haircut previews, bangs, curls, and length changes in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become hairstyle generator results for Salon consultation moodboards and beauty profile refreshes; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Hairstyle Generator Photos",
       "faqEyebrow": "Hairstyle Generator FAQ",
       "faqTitle": "Hairstyle Generator photos before you create",
@@ -2733,9 +3057,24 @@
         }
       ],
       "relatedEyebrow": "Related hairstyle generator ideas",
-      "relatedTitle": "More hairstyle generator and nearby themes",
-      "relatedSubtitle": "Compare hairstyle, hair color, preview and adjacent themes before opening a hairstyle generator set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Hairstyle Generator, Hair Color and Cut Preview",
+      "relatedSubtitle": "Use the Hairstyle Generator brief alongside Salon consultation moodboards and beauty profile refreshes before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Virtual Try-On",
+          "href": "/ai-image-generation/virtual-try-on"
+        },
+        {
+          "label": "Engagement Photo",
+          "href": "/ai-image-generation/engagement-photo"
+        },
+        {
+          "label": "Wedding Photo",
+          "href": "/ai-image-generation/wedding-photo"
+        }
+      ]
     },
     "virtual-try-on": {
       "headline": "AI Virtual Try-On Photos for Outfit Ideas, Wardrobe Moodboards, and Fashion Planning",
@@ -2779,10 +3118,10 @@
       "copyRevision": "2026-08-18.virtual-try-on",
       "seoTitle": "AI Virtual Try-On Photos for Outfit Ideas, Wardrobe Moodboards, and Fashion Planning | myDreamshoots",
       "galleryTitle": "12 AI Virtual Try-On Photo Examples for Virtual Try-On, Outfit, Fashion",
-      "galleryIntro": "Review virtual try-on, outfit, fashion examples before opening the virtual-try-on workflow.",
+      "galleryIntro": "Review virtual try-on examples focused on Outfit ideas, wardrobe planning, fashion campaigns, and creator styling before opening this Virtual Try-On workflow.",
       "ctaEyebrow": "Start the virtual try-on set",
-      "ctaTitle": "Create virtual try-on images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into virtual try-on, outfit, fashion with visible credit cost and private gallery review.",
+      "ctaTitle": "Create virtual try-on visuals for Outfit ideas, wardrobe planning, fashion campaigns, and creator styling in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become virtual try-on results for Comparing colors, silhouettes, formal looks, casual looks, or event outfits; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Virtual Try-On Photos",
       "faqEyebrow": "Virtual Try-On FAQ",
       "faqTitle": "Virtual Try-On photos before you create",
@@ -2809,9 +3148,24 @@
         }
       ],
       "relatedEyebrow": "Related virtual try-on ideas",
-      "relatedTitle": "More virtual try-on and nearby themes",
-      "relatedSubtitle": "Compare virtual try-on, outfit, fashion and adjacent themes before opening a virtual try-on set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Virtual Try-On, Outfit Ideas and Wardrobe Moodboard",
+      "relatedSubtitle": "Use the Virtual Try-On brief alongside Comparing colors, silhouettes, formal looks, casual looks, or event outfits before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Hairstyle Generator",
+          "href": "/ai-image-generation/hairstyle-generator"
+        },
+        {
+          "label": "Engagement Photo",
+          "href": "/ai-image-generation/engagement-photo"
+        },
+        {
+          "label": "Wedding Photo",
+          "href": "/ai-image-generation/wedding-photo"
+        }
+      ]
     },
     "motion-generator": {
       "headline": "AI Motion Generator Photos for Image-to-Video, Camera Moves, and Storyboard Starters",
@@ -2855,10 +3209,10 @@
       "copyRevision": "2026-08-18.motion-generator",
       "seoTitle": "AI Motion Generator Photos for Image-to-Video, Camera Moves, and Storyboard Starters | myDreamshoots",
       "galleryTitle": "12 AI Motion Generator Photo Examples for Motion, GIF, Video Starter",
-      "galleryIntro": "Review motion, gif, video starter examples before opening the motion-generator workflow.",
+      "galleryIntro": "Review motion generator examples focused on Image-to-video preparation with clear pan, tilt, orbit, zoom, or push-in direction before opening this Motion Generator workflow.",
       "ctaEyebrow": "Start the motion generator set",
-      "ctaTitle": "Create motion generator images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into motion, gif, video starter with visible credit cost and private gallery review.",
+      "ctaTitle": "Create motion generator visuals for Image-to-video preparation with clear pan, tilt, orbit, zoom, or push-in direction in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become motion generator results for Social reels, story clips, profile motion, product teasers, and ad drafts; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Motion Generator Photos",
       "faqEyebrow": "Motion Generator FAQ",
       "faqTitle": "Motion Generator photos before you create",
@@ -2885,9 +3239,20 @@
         }
       ],
       "relatedEyebrow": "Related motion generator ideas",
-      "relatedTitle": "More motion generator and nearby themes",
-      "relatedSubtitle": "Compare motion, gif, video starter and adjacent themes before opening a motion generator set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Motion Generator, Image-to-video and Camera Motion",
+      "relatedSubtitle": "Use the Motion Generator brief alongside Social reels, story clips, profile motion, product teasers, and ad drafts before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Hairstyle Generator",
+          "href": "/ai-image-generation/hairstyle-generator"
+        },
+        {
+          "label": "Virtual Try-On",
+          "href": "/ai-image-generation/virtual-try-on"
+        }
+      ]
     },
     "background-changer": {
       "headline": "AI Background Changer Photos for Portrait Scenes, Product Context, and Profile Refreshes",
@@ -2931,10 +3296,10 @@
       "copyRevision": "2026-08-18.background-changer",
       "seoTitle": "AI Background Changer Photos for Portrait Scenes, Product Context, and Profile Refreshes | myDreamshoots",
       "galleryTitle": "12 AI Background Changer Photo Examples for Background, Edit, Scene",
-      "galleryIntro": "Review background, edit, scene examples before opening the background-changer workflow.",
+      "galleryIntro": "Review background changer examples focused on Profile photos that need cleaner studio, office, outdoor, or lifestyle backgrounds before opening this Background Changer workflow.",
       "ctaEyebrow": "Start the background changer set",
-      "ctaTitle": "Create background changer images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into background, edit, scene with visible credit cost and private gallery review.",
+      "ctaTitle": "Create background changer visuals for Profile photos that need cleaner studio, office, outdoor, or lifestyle backgrounds in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become background changer results for Product or creator images that need a stronger scene without reshooting; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Background Changer Photos",
       "faqEyebrow": "Background Changer FAQ",
       "faqTitle": "Background Changer photos before you create",
@@ -2961,9 +3326,24 @@
         }
       ],
       "relatedEyebrow": "Related background changer ideas",
-      "relatedTitle": "More background changer and nearby themes",
-      "relatedSubtitle": "Compare background, edit, scene and adjacent themes before opening a background changer set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Background Changer, Scene Change and Portrait Background",
+      "relatedSubtitle": "Use the Background Changer brief alongside Product or creator images that need a stronger scene without reshooting before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Background Remover",
+          "href": "/ai-image-generation/background-remover"
+        },
+        {
+          "label": "Magic Eraser",
+          "href": "/ai-image-generation/magic-eraser"
+        },
+        {
+          "label": "Photo Enhancer",
+          "href": "/ai-image-generation/photo-enhancer"
+        }
+      ]
     },
     "background-remover": {
       "headline": "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets",
@@ -3007,10 +3387,10 @@
       "copyRevision": "2026-08-18.background-remover",
       "seoTitle": "AI Background Remover Photos for Clean Cutouts, Profile Images, and Listing Assets | myDreamshoots",
       "galleryTitle": "12 AI Background Remover Photo Examples for Background, Cutout, Clean",
-      "galleryIntro": "Review background, cutout, clean examples before opening the background-remover workflow.",
+      "galleryIntro": "Review background remover examples focused on Profile images, thumbnails, listing assets, and creator graphics before opening this Background Remover workflow.",
       "ctaEyebrow": "Start the background remover set",
-      "ctaTitle": "Create background remover images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into background, cutout, clean with visible credit cost and private gallery review.",
+      "ctaTitle": "Create background remover visuals for Profile images, thumbnails, listing assets, and creator graphics in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become background remover results for Product photos that need a cleaner cutout before design or upload; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Background Remover Photos",
       "faqEyebrow": "Background Remover FAQ",
       "faqTitle": "Background Remover photos before you create",
@@ -3037,9 +3417,24 @@
         }
       ],
       "relatedEyebrow": "Related background remover ideas",
-      "relatedTitle": "More background remover and nearby themes",
-      "relatedSubtitle": "Compare background, cutout, clean and adjacent themes before opening a background remover set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Background Remover, Clean Cutout and Transparent Look",
+      "relatedSubtitle": "Use the Background Remover brief alongside Product photos that need a cleaner cutout before design or upload before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Background Changer",
+          "href": "/ai-image-generation/background-changer"
+        },
+        {
+          "label": "Magic Eraser",
+          "href": "/ai-image-generation/magic-eraser"
+        },
+        {
+          "label": "Photo Enhancer",
+          "href": "/ai-image-generation/photo-enhancer"
+        }
+      ]
     },
     "magic-eraser": {
       "headline": "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images",
@@ -3083,10 +3478,10 @@
       "copyRevision": "2026-08-18.magic-eraser",
       "seoTitle": "AI Magic Eraser Photos for Object Removal, Cleanup, and Distraction-Free Images | myDreamshoots",
       "galleryTitle": "12 AI Magic Eraser Photo Examples for Erase, Cleanup, Edit",
-      "galleryIntro": "Review erase, cleanup, edit examples before opening the magic-eraser workflow.",
+      "galleryIntro": "Review magic eraser examples focused on Removing small objects, clutter, photobomb details, marks, or background distractions before opening this Magic Eraser workflow.",
       "ctaEyebrow": "Start the magic eraser set",
-      "ctaTitle": "Create magic eraser images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into erase, cleanup, edit with visible credit cost and private gallery review.",
+      "ctaTitle": "Create magic eraser visuals for Removing small objects, clutter, photobomb details, marks, or background distractions in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become magic eraser results for Cleaning profile photos, product images, travel shots, and creator visuals; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Magic Eraser Photos",
       "faqEyebrow": "Magic Eraser FAQ",
       "faqTitle": "Magic Eraser photos before you create",
@@ -3113,9 +3508,24 @@
         }
       ],
       "relatedEyebrow": "Related magic eraser ideas",
-      "relatedTitle": "More magic eraser and nearby themes",
-      "relatedSubtitle": "Compare erase, cleanup, edit and adjacent themes before opening a magic eraser set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Magic Eraser, Object Removal and Cleanup",
+      "relatedSubtitle": "Use the Magic Eraser brief alongside Cleaning profile photos, product images, travel shots, and creator visuals before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Background Changer",
+          "href": "/ai-image-generation/background-changer"
+        },
+        {
+          "label": "Background Remover",
+          "href": "/ai-image-generation/background-remover"
+        },
+        {
+          "label": "Photo Enhancer",
+          "href": "/ai-image-generation/photo-enhancer"
+        }
+      ]
     },
     "photo-enhancer": {
       "headline": "AI Photo Enhancer for Sharper Portraits, Clearer Details, and Better Downloads",
@@ -3159,10 +3569,10 @@
       "copyRevision": "2026-08-18.photo-enhancer",
       "seoTitle": "AI Photo Enhancer for Sharper Portraits, Clearer Details, and Better Downloads | myDreamshoots",
       "galleryTitle": "12 AI Photo Enhancer Photo Examples for Enhance, Clarity, Sharpness",
-      "galleryIntro": "Review enhance, clarity, sharpness examples before opening the photo-enhancer workflow.",
+      "galleryIntro": "Review photo enhancer examples focused on Soft selfies, compressed uploads, low-light portraits, and old social images before opening this Photo Enhancer workflow.",
       "ctaEyebrow": "Start the photo enhancer set",
-      "ctaTitle": "Create photo enhancer images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into enhance, clarity, sharpness with visible credit cost and private gallery review.",
+      "ctaTitle": "Create photo enhancer visuals for Soft selfies, compressed uploads, low-light portraits, and old social images in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become photo enhancer results for Preparing cleaner source photos before generating a full AI photo package; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Photo Enhancer Photos",
       "faqEyebrow": "Photo Enhancer FAQ",
       "faqTitle": "Photo Enhancer photos before you create",
@@ -3189,9 +3599,24 @@
         }
       ],
       "relatedEyebrow": "Related photo enhancer ideas",
-      "relatedTitle": "More photo enhancer and nearby themes",
-      "relatedSubtitle": "Compare enhance, clarity, sharpness and adjacent themes before opening a photo enhancer set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Photo Enhancer, Sharpness and Clarity",
+      "relatedSubtitle": "Use the Photo Enhancer brief alongside Preparing cleaner source photos before generating a full AI photo package before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Background Changer",
+          "href": "/ai-image-generation/background-changer"
+        },
+        {
+          "label": "Background Remover",
+          "href": "/ai-image-generation/background-remover"
+        },
+        {
+          "label": "Magic Eraser",
+          "href": "/ai-image-generation/magic-eraser"
+        }
+      ]
     },
     "portrait-retouch": {
       "headline": "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos",
@@ -3235,10 +3660,10 @@
       "copyRevision": "2026-08-18.portrait-retouch",
       "seoTitle": "AI Portrait Retouch for Natural Skin, Balanced Light, and Polished Profile Photos | myDreamshoots",
       "galleryTitle": "12 AI Portrait Retouch Photo Examples for Retouch, Portrait, Natural",
-      "galleryIntro": "Review retouch, portrait, natural examples before opening the portrait-retouch workflow.",
+      "galleryIntro": "Review portrait retouch examples focused on Profile photos, creator portraits, dating images, and business-ready headshots before opening this Portrait Retouch workflow.",
       "ctaEyebrow": "Start the portrait retouch set",
-      "ctaTitle": "Create portrait retouch images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into retouch, portrait, natural with visible credit cost and private gallery review.",
+      "ctaTitle": "Create portrait retouch visuals for Profile photos, creator portraits, dating images, and business-ready headshots in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become portrait retouch results for Subtle skin cleanup, light balancing, crop refinement, and background tidying; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Portrait Retouch Photos",
       "faqEyebrow": "Portrait Retouch FAQ",
       "faqTitle": "Portrait Retouch photos before you create",
@@ -3265,9 +3690,24 @@
         }
       ],
       "relatedEyebrow": "Related portrait retouch ideas",
-      "relatedTitle": "More portrait retouch and nearby themes",
-      "relatedSubtitle": "Compare retouch, portrait, natural and adjacent themes before opening a portrait retouch set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Portrait Retouch, Natural Skin and Balanced Light",
+      "relatedSubtitle": "Use the Portrait Retouch brief alongside Subtle skin cleanup, light balancing, crop refinement, and background tidying before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Background Changer",
+          "href": "/ai-image-generation/background-changer"
+        },
+        {
+          "label": "Background Remover",
+          "href": "/ai-image-generation/background-remover"
+        },
+        {
+          "label": "Magic Eraser",
+          "href": "/ai-image-generation/magic-eraser"
+        }
+      ]
     },
     "unblur-image": {
       "headline": "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail",
@@ -3311,10 +3751,10 @@
       "copyRevision": "2026-08-18.unblur-image",
       "seoTitle": "AI Unblur Image for Clearer Faces, Sharper Edges, and Restored Photo Detail | myDreamshoots",
       "galleryTitle": "12 AI Unblur Image Photo Examples for Unblur, Sharpness, Restore",
-      "galleryIntro": "Review unblur, sharpness, restore examples before opening the unblur-image workflow.",
+      "galleryIntro": "Review unblur image examples focused on Soft portraits, shaky phone photos, low-detail profile images, and keepsakes before opening this Unblur Image workflow.",
       "ctaEyebrow": "Start the unblur image set",
-      "ctaTitle": "Create unblur image images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into unblur, sharpness, restore with visible credit cost and private gallery review.",
+      "ctaTitle": "Create unblur image visuals for Soft portraits, shaky phone photos, low-detail profile images, and keepsakes in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become unblur image results for Preparing usable source images before starting a full AI photo package; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Unblur Image Photos",
       "faqEyebrow": "Unblur Image FAQ",
       "faqTitle": "Unblur Image photos before you create",
@@ -3341,9 +3781,24 @@
         }
       ],
       "relatedEyebrow": "Related unblur image ideas",
-      "relatedTitle": "More unblur image and nearby themes",
-      "relatedSubtitle": "Compare unblur, sharpness, restore and adjacent themes before opening a unblur image set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Unblur Image, Deblur and Sharper Faces",
+      "relatedSubtitle": "Use the Unblur Image brief alongside Preparing usable source images before starting a full AI photo package before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Background Changer",
+          "href": "/ai-image-generation/background-changer"
+        },
+        {
+          "label": "Background Remover",
+          "href": "/ai-image-generation/background-remover"
+        },
+        {
+          "label": "Magic Eraser",
+          "href": "/ai-image-generation/magic-eraser"
+        }
+      ]
     },
     "color-correction": {
       "headline": "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood",
@@ -3387,10 +3842,10 @@
       "copyRevision": "2026-08-18.color-correction",
       "seoTitle": "AI Color Correction for Natural Skin Tone, Balanced Exposure, and Clean Photo Mood | myDreamshoots",
       "galleryTitle": "12 AI Color Correction Photo Examples for Color, Exposure, Tone",
-      "galleryIntro": "Review color, exposure, tone examples before opening the color-correction workflow.",
+      "galleryIntro": "Review color correction examples focused on Portraits with yellow, green, blue, or flat color casts before opening this Color Correction workflow.",
       "ctaEyebrow": "Start the color correction set",
-      "ctaTitle": "Create color correction images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into color, exposure, tone with visible credit cost and private gallery review.",
+      "ctaTitle": "Create color correction visuals for Portraits with yellow, green, blue, or flat color casts in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become color correction results for Product and creator photos that need cleaner tone before publishing; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Color Correction Photos",
       "faqEyebrow": "Color Correction FAQ",
       "faqTitle": "Color Correction photos before you create",
@@ -3417,9 +3872,24 @@
         }
       ],
       "relatedEyebrow": "Related color correction ideas",
-      "relatedTitle": "More color correction and nearby themes",
-      "relatedSubtitle": "Compare color, exposure, tone and adjacent themes before opening a color correction set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Color Correction, Skin Tone and Exposure",
+      "relatedSubtitle": "Use the Color Correction brief alongside Product and creator photos that need cleaner tone before publishing before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Background Changer",
+          "href": "/ai-image-generation/background-changer"
+        },
+        {
+          "label": "Background Remover",
+          "href": "/ai-image-generation/background-remover"
+        },
+        {
+          "label": "Magic Eraser",
+          "href": "/ai-image-generation/magic-eraser"
+        }
+      ]
     },
     "old-photo-restoration": {
       "headline": "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits",
@@ -3463,10 +3933,10 @@
       "copyRevision": "2026-08-18.old-photo-restoration",
       "seoTitle": "AI Old Photo Restoration for Family Keepsakes, Scratches, Fading, and Vintage Portraits | myDreamshoots",
       "galleryTitle": "12 AI OLD Photo Restoration Photo Examples for Restoration, Old Photos, Keepsake",
-      "galleryIntro": "Review restoration, old photos, keepsake examples before opening the old-photo-restoration workflow.",
+      "galleryIntro": "Review old photo restoration examples focused on Family keepsakes, vintage portraits, old albums, and memorial archives before opening this Old Photo Restoration workflow.",
       "ctaEyebrow": "Start the old photo restoration set",
-      "ctaTitle": "Create old photo restoration images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into restoration, old photos, keepsake with visible credit cost and private gallery review.",
+      "ctaTitle": "Create old photo restoration visuals for Family keepsakes, vintage portraits, old albums, and memorial archives in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become old photo restoration results for Reducing scratches, fading, dust, cracks, stains, and soft detail; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Old Photo Restoration Photos",
       "faqEyebrow": "Old Photo Restoration FAQ",
       "faqTitle": "Old Photo Restoration photos before you create",
@@ -3493,9 +3963,24 @@
         }
       ],
       "relatedEyebrow": "Related old photo restoration ideas",
-      "relatedTitle": "More old photo restoration and nearby themes",
-      "relatedSubtitle": "Compare restoration, old photos, keepsake and adjacent themes before opening a old photo restoration set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Old Photo Restoration, Family Keepsake and Scratch Repair",
+      "relatedSubtitle": "Use the Old Photo Restoration brief alongside Reducing scratches, fading, dust, cracks, stains, and soft detail before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Background Changer",
+          "href": "/ai-image-generation/background-changer"
+        },
+        {
+          "label": "Background Remover",
+          "href": "/ai-image-generation/background-remover"
+        },
+        {
+          "label": "Magic Eraser",
+          "href": "/ai-image-generation/magic-eraser"
+        }
+      ]
     },
     "edit-by-prompt": {
       "headline": "AI Edit By Prompt for Safe Scene Changes, Style Adjustments, and Custom Photo Edits",
@@ -3539,10 +4024,10 @@
       "copyRevision": "2026-08-18.edit-by-prompt",
       "seoTitle": "AI Edit By Prompt for Safe Scene Changes, Style Adjustments, and Custom Photo Edits | myDreamshoots",
       "galleryTitle": "12 AI Edit By Prompt Photo Examples for Prompt, Edit, Creative",
-      "galleryIntro": "Review prompt, edit, creative examples before opening the edit-by-prompt workflow.",
+      "galleryIntro": "Review edit by prompt examples focused on Custom photo edits that need a short written instruction before opening this Edit By Prompt workflow.",
       "ctaEyebrow": "Start the edit by prompt set",
-      "ctaTitle": "Create edit by prompt images in your private studio.",
-      "ctaSubtitle": "Turn approved source photos into prompt, edit, creative with visible credit cost and private gallery review.",
+      "ctaTitle": "Create edit by prompt visuals for Custom photo edits that need a short written instruction in a private studio.",
+      "ctaSubtitle": "In a private studio, approved source photos become edit by prompt results for Scene changes, styling adjustments, background tweaks, and small visual fixes; review the credit cost before opening the gallery.",
       "ctaLabel": "Create Edit By Prompt Photos",
       "faqEyebrow": "Edit By Prompt FAQ",
       "faqTitle": "Edit By Prompt photos before you create",
@@ -3569,9 +4054,24 @@
         }
       ],
       "relatedEyebrow": "Related edit by prompt ideas",
-      "relatedTitle": "More edit by prompt and nearby themes",
-      "relatedSubtitle": "Compare prompt, edit, creative and adjacent themes before opening a edit by prompt set.",
-      "relatedCtaLabel": "View all packages"
+      "relatedTitle": "Compare Edit By Prompt, Prompt Editing and Scene Changes",
+      "relatedSubtitle": "Use the Edit By Prompt brief alongside Scene changes, styling adjustments, background tweaks, and small visual fixes before choosing a private gallery set.",
+      "relatedCtaLabel": "View all packages",
+      "ctaHref": "/app/create",
+      "relatedLinks": [
+        {
+          "label": "Background Changer",
+          "href": "/ai-image-generation/background-changer"
+        },
+        {
+          "label": "Background Remover",
+          "href": "/ai-image-generation/background-remover"
+        },
+        {
+          "label": "Magic Eraser",
+          "href": "/ai-image-generation/magic-eraser"
+        }
+      ]
     }
   },
   "aidreamcapesCategories": {
