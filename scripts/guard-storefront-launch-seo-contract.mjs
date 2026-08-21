@@ -2,9 +2,11 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
+import { PrismaClient } from "@prisma/client";
+import "./load-runtime-env.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
+const prisma = new PrismaClient();
 const packagePath = path.join(repoRoot, "package.json");
 const siteRouteCanonicalPath = path.join(repoRoot, "src", "lib", "site-route-canonical.ts");
 const middlewarePath = path.join(repoRoot, "src", "middleware.ts");
@@ -16,7 +18,7 @@ const storefrontSiteIds = ["site_dreamshoot", "site_aidreamcapes"];
 const requiredDeployPrecheckCommands = [
   "npm run typecheck",
   "npm run guard:storefront-launch-seo-contract",
-  "npm run guard:mydreamshoots-page-copy-contract",
+  "npm run guard:mydreamshoots-production-release",
   "npm run smoke:mydreamshoots-seo-indexing",
   "npm run guard:mydreamshoots-content"
 ];
@@ -69,6 +71,12 @@ function readText(filePath) {
 
 function readJson(filePath) {
   return JSON.parse(readText(filePath));
+}
+
+async function readPlatformState() {
+  const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
+  if (!document?.state) throw new Error("missing_platform_state_document");
+  return document.state;
 }
 
 function normalizeText(value) {
@@ -146,7 +154,7 @@ function assertLegacyPolicyAliases() {
   assert.ok(!/legacyPublicPathRedirect|directoryCanonicalRedirect|aidreamcapesCollectionRedirect/.test(middlewareSource), "middleware must not bypass published snapshot redirect validation");
 }
 
-const state = readJson(statePath);
+const state = await readPlatformState();
 assertPublishedHomeSeo(state);
 assertPublicationHomeTdk(state);
 assertDeployPrecheck();
@@ -161,3 +169,4 @@ console.log(JSON.stringify({
     "legacy-policy-aliases"
   ]
 }, null, 2));
+process.on("exit", () => { void prisma.$disconnect(); });

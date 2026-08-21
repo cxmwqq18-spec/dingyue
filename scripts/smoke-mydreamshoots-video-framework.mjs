@@ -1,33 +1,58 @@
 import fs from "node:fs";
 import path from "node:path";
+import { PrismaClient } from "@prisma/client";
+import "./load-runtime-env.mjs";
 
 const repoRoot = process.cwd();
-const state = JSON.parse(fs.readFileSync(path.join(repoRoot, "data", "platform-state.json"), "utf8"));
+const statePath = path.join(repoRoot, "data", "platform-state.json");
+let stateSource = "local-json";
+
+async function readPlatformState() {
+  if (fs.existsSync(statePath)) {
+    return JSON.parse(fs.readFileSync(statePath, "utf8"));
+  }
+  stateSource = "postgres";
+  const prisma = new PrismaClient();
+  try {
+    const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
+    if (!document?.state) throw new Error("missing platform state document");
+    return document.state;
+  } finally {
+    await prisma.$disconnect().catch(() => {});
+  }
+}
+
+const state = await readPlatformState();
 const frameworkSource = fs.readFileSync(path.join(repoRoot, "src", "lib", "mydreamshoots-video-framework.ts"), "utf8");
 const siteStoreSource = fs.readFileSync(path.join(repoRoot, "src", "lib", "stores", "site-store.ts"), "utf8");
 const themeRendererSource = fs.readFileSync(path.join(repoRoot, "src", "components", "theme-renderer.tsx"), "utf8");
 const targetSiteIds = ["site_dreamshoot", "site_grownstride_test"];
 const baseExpectedCategories = [
-  ["text-to-video", "Text to video", 10],
+  ["text-to-video", "Text to Video", 10],
   ["image-to-video", "Image to Video", 20]
 ];
 const expectedCategoriesBySite = {
   site_dreamshoot: [
     ...baseExpectedCategories,
     ["talking-photo", "Talking Photo", 30],
-    ["cinematic-video", "Cinematic Video", 40],
-    ["tiktok-video", "TikTok Video", 50],
-    ["instagram-reels", "Instagram Reels", 60],
-    ["social-media-video", "Social Media Video", 70],
-    ["youtube-video", "YouTube Video", 80],
-    ["story-video", "Story Video", 90],
-    ["meme-video", "Meme Video", 100],
-    ["product-video", "Product Video", 110],
-    ["product-ad-video", "Product Ad Video", 120],
-    ["promo-video", "Promo Video", 130],
-    ["ugc-ad-video", "UGC Ad Video", 140]
+    ["cinematic-video", "Cinematic Video", 60],
+    ["tiktok-video", "TikTok Video", 70],
+    ["instagram-reels", "Instagram Reels", 80],
+    ["social-media-video", "Social Media Video", 110],
+    ["youtube-video", "YouTube Video", 100],
+    ["story-video", "Story Video", 120],
+    ["meme-video", "Meme Video", 130],
+    ["product-video", "Product Video", 140],
+    ["product-ad-video", "Product Ad Video", 160],
+    ["promo-video", "Promo Video", 180],
+    ["ugc-ad-video", "UGC Ad Video", 170],
+    ["video-ad", "Video Ad", 190],
+    ["brand-video", "Brand Video", 200]
   ],
-  site_grownstride_test: baseExpectedCategories
+  site_grownstride_test: [
+    ["text-to-video", "Text to video", 10],
+    ["image-to-video", "Image to Video", 20]
+  ]
 };
 
 function fail(message, details) {
@@ -86,6 +111,7 @@ console.log(JSON.stringify({
     categories.map(([slug, label]) => ({ slug, label }))
   ])),
   legacyTools: 0,
+  stateSource,
   videoThemeRowsBySite: Object.fromEntries(targetSiteIds.map((siteId) => [
     siteId,
     (state.videoThemes ?? []).filter((row) => row.siteId === siteId).length

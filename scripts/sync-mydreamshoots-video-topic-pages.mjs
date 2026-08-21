@@ -9,14 +9,20 @@ const repoRoot = process.cwd();
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const updateDb = args.has("--db");
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const SITE_ID = "site_dreamshoot";
 const UPDATE_TIMESTAMP = "2026-08-16T00:00:00.000Z";
+const RUN_TIMESTAMP = new Date().toISOString();
+const EMPTY_UNPUBLISHED_PAGE_JSON = {
+  pageType: "content",
+  version: 1,
+  sectionsOrder: [],
+  sections: {}
+};
 
 const videoCategories = [
   {
     slug: "text-to-video",
-    label: "Text to video",
+    label: "Text to Video",
     description: "Video themes created from written prompts.",
     sortOrder: 10
   },
@@ -36,67 +42,79 @@ const videoCategories = [
     slug: "cinematic-video",
     label: "Cinematic Video",
     description: "Plan story-driven cinematic clips with mood, shot design, lighting, pacing, and camera movement.",
-    sortOrder: 40
+    sortOrder: 60
   },
   {
     slug: "tiktok-video",
     label: "TikTok Video",
     description: "Create TikTok-first vertical video briefs with hooks, safe zones, captions, sound, and focused closes.",
-    sortOrder: 50
+    sortOrder: 70
   },
   {
     slug: "instagram-reels",
     label: "Instagram Reels",
     description: "Shape Reels around cover-aware framing, captions, visual story, audio, and profile consistency.",
-    sortOrder: 60
+    sortOrder: 80
   },
   {
     slug: "social-media-video",
     label: "Social Media Video",
     description: "Adapt one master story into platform-aware social cuts with safer text placement and CTAs.",
-    sortOrder: 70
+    sortOrder: 110
   },
   {
     slug: "youtube-video",
     label: "YouTube Video",
     description: "Plan long-form YouTube drafts around title promise, opening minute, chapters, depth, and next steps.",
-    sortOrder: 80
+    sortOrder: 100
   },
   {
     slug: "story-video",
     label: "Story Video",
     description: "Shape story-led videos around setup, tension, turning point, payoff, and meaning.",
-    sortOrder: 90
+    sortOrder: 120
   },
   {
     slug: "meme-video",
     label: "Meme Video",
     description: "Turn reactions, POV setups, everyday situations, and punchlines into clear meme video directions.",
-    sortOrder: 100
+    sortOrder: 130
   },
   {
     slug: "product-video",
     label: "Product Video",
     description: "Turn product photos into clear video directions that answer buyer questions about scale, detail, use, features, and packaging.",
-    sortOrder: 110
+    sortOrder: 140
   },
   {
     slug: "product-ad-video",
     label: "Product Ad Video",
     description: "Build product ads around one audience, product promise, visual proof, offer, and clear next action.",
-    sortOrder: 120
-  },
-  {
-    slug: "promo-video",
-    label: "Promo Video",
-    description: "Turn launches, offers, events, seasonal campaigns, and product updates into clear promotional video briefs.",
-    sortOrder: 130
+    sortOrder: 160
   },
   {
     slug: "ugc-ad-video",
     label: "UGC Ad Video",
     description: "Plan creator-style product ads around speaker status, hooks, product context, visible proof, and clear CTAs.",
-    sortOrder: 140
+    sortOrder: 170
+  },
+  {
+    slug: "promo-video",
+    label: "Promo Video",
+    description: "Turn launches, offers, events, seasonal campaigns, and product updates into clear promotional video briefs.",
+    sortOrder: 180
+  },
+  {
+    slug: "video-ad",
+    label: "Video Ad",
+    description: "Plan paid-social video ad concepts around objective, hook, proof, placement, CTA, and meaningful test variants.",
+    sortOrder: 190
+  },
+  {
+    slug: "brand-video",
+    label: "Brand Video",
+    description: "Present a company, brand story, or positioning through video.",
+    sortOrder: 200
   }
 ];
 
@@ -210,6 +228,26 @@ const pages = [
     keywords:
       "AI UGC video generator, UGC ad video generator, AI UGC ad creator, UGC product video maker, creator-style product video, AI creator ad video, UGC style video ad, short-form creator ad generator",
     imageUrl: "/assets/dreamshoot/ugc-ad-video/ai-ugc-video-creator-lip-product-hook.jpg"
+  },
+  {
+    slug: "video-ad",
+    title: "Video Ad",
+    seoTitle: "AI Video Ad Generator for Paid Social | myDreamshoots",
+    description:
+      "Create video ad concepts with AI for paid social, product campaigns, launches, retargeting, and creator-style placements. Start from text or an image, shape the hook, proof, and CTA, then review the output in your myDreamshoots workflow.",
+    keywords:
+      "ai video ad generator, paid social video ad generator, AI video ad maker, performance marketing video creator, paid social creative generator, campaign video variant creator",
+    imageUrl: "/assets/dreamshoot/video-ad/video-ad-creator-phone-tripod.jpg"
+  },
+  {
+    slug: "brand-video",
+    title: "Brand Video",
+    seoTitle: "AI Brand Video Generator for Brand Stories | myDreamshoots",
+    description:
+      "Create brand-video concepts with AI for founder stories, company values, product origin, culture, community, and campaign identity. Start from text or an approved image, shape the narrative, then review the result in your myDreamshoots workflow.",
+    keywords:
+      "ai brand video generator, AI brand video maker, brand storytelling video generator, founder story video, brand identity video, company values video, product origin video, brand culture video",
+    imageUrl: "/assets/dreamshoot/brand-video/brand-video-founder-story.jpg"
   }
 ];
 
@@ -217,14 +255,16 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
-function readJson(filePath) {
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
-}
-
-function writeJson(filePath, value) {
-  const tempFile = `${filePath}.tmp`;
-  fs.writeFileSync(tempFile, `${JSON.stringify(value, null, 2)}\n`);
-  fs.renameSync(tempFile, filePath);
+async function readPlatformState() {
+  const { PrismaClient } = await import("@prisma/client");
+  const prisma = new PrismaClient();
+  try {
+    const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
+    if (!document?.state) throw new Error("missing_platform_state_document:platform");
+    return clone(document.state);
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
 function updateRecord(record, fields, changes, targetType) {
@@ -315,11 +355,12 @@ function syncCategories(state, changes) {
   const categories = state.videoThemeCategories ?? (state.videoThemeCategories = []);
   return videoCategories.map((category) => {
     let record = categories.find((item) => item.siteId === SITE_ID && item.slug === category.slug);
+    const before = JSON.stringify(record ?? {});
     if (!record) {
       record = {
         id: categoryId(category.slug),
         siteId: SITE_ID,
-        createdAt: UPDATE_TIMESTAMP
+        createdAt: RUN_TIMESTAMP
       };
       categories.push(record);
       changes.push({
@@ -337,12 +378,12 @@ function syncCategories(state, changes) {
         label: category.label,
         description: category.description,
         sortOrder: category.sortOrder,
-        status: "active",
-        updatedAt: UPDATE_TIMESTAMP
+        status: "active"
       },
       changes,
       "VideoThemeCategory"
     );
+    if (JSON.stringify(record) !== before) record.updatedAt = RUN_TIMESTAMP;
     return record;
   });
 }
@@ -354,36 +395,29 @@ function syncPages(state, changes) {
   return pages.map((pageDefinition) => {
     const slug = pagePath(pageDefinition.slug);
     let page = site.pages.find((item) => item.slug === slug);
-    const pageWasCreated = !page;
     if (!page) {
       page = {
         id: pageId(pageDefinition.slug),
         siteId: SITE_ID,
-        createdAt: UPDATE_TIMESTAMP
+        createdAt: RUN_TIMESTAMP
       };
       site.pages.push(page);
       changes.push({ targetType: "ThemePage", id: page.id, field: "create", after: slug });
     }
+    const before = JSON.stringify(page);
     const json = pageJson(pageDefinition);
-    updateRecord(
-      page,
-      {
-        id: page.id || pageId(pageDefinition.slug),
-        siteId: SITE_ID,
-        pageType: "ai_tool",
-        templateKey: `ai-video-topic-${pageDefinition.slug}`,
-        slug,
-        title: pageDefinition.title,
-        draftJson: clone(json),
-        updatedAt: UPDATE_TIMESTAMP
-      },
-      changes,
-      "ThemePage"
-    );
-    if (pageWasCreated || !page.publishedJson) {
-      updateRecord(page, { publishedJson: clone(json) }, changes, "ThemePage");
-    }
-
+    const pageFields = {
+      id: page.id || pageId(pageDefinition.slug),
+      siteId: SITE_ID,
+      pageType: "ai_tool",
+      templateKey: `ai-video-topic-${pageDefinition.slug}`,
+      slug,
+      title: pageDefinition.title,
+      draftJson: clone(json)
+    };
+    if (pageDefinition.slug === "brand-video") pageFields.publishedJson = clone(json);
+    updateRecord(page, pageFields, changes, "ThemePage");
+    if (JSON.stringify(page) !== before) page.updatedAt = RUN_TIMESTAMP;
     return page;
   });
 }
@@ -413,16 +447,17 @@ function syncExistingVideoThemePreviews(state, changes) {
     if (!page.imageUrl) continue;
     const theme = themeRows.find((item) => item.siteId === SITE_ID && item.slug === page.slug);
     if (!theme) continue;
+    const before = JSON.stringify(theme);
     updateRecord(
       theme,
       {
         imageUrl: page.imageUrl,
-        galleryImages: [page.imageUrl],
-        updatedAt: UPDATE_TIMESTAMP
+        galleryImages: [page.imageUrl]
       },
       changes,
       "VideoTheme"
     );
+    if (JSON.stringify(theme) !== before) theme.updatedAt = RUN_TIMESTAMP;
   }
 }
 
@@ -607,15 +642,19 @@ async function updateDatabase(state, categories, syncedPages) {
             draftJson: toPrismaJson(page.draftJson),
             draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
           };
+          if (page.slug === pagePath("brand-video")) pageData.publishedJson = toPrismaJson(page.publishedJson ?? page.draftJson);
           const existingPage = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
           if (existingPage) {
-            await tx.themePage.update({ where: { id: page.id }, data: pageData });
+            await tx.themePage.update({
+              where: { id: page.id },
+              data: pageData
+            });
           } else {
             await tx.themePage.create({
               data: {
                 id: page.id,
                 ...pageData,
-                publishedJson: toPrismaJson(page.publishedJson ?? page.draftJson),
+                publishedJson: toPrismaJson(page.publishedJson ?? EMPTY_UNPUBLISHED_PAGE_JSON),
                 createdAt: new Date(page.createdAt ?? UPDATE_TIMESTAMP)
               }
             });
@@ -646,7 +685,8 @@ async function updateDatabase(state, categories, syncedPages) {
 
 assertPageImageAssets();
 
-const state = readJson(statePath);
+const state = await readPlatformState();
+if (!dryRun && !updateDb) throw new Error("PostgreSQL-only sync requires --dry-run or --db");
 const changes = [];
 const categories = syncCategories(state, changes);
 const syncedPages = syncPages(state, changes);
@@ -655,13 +695,12 @@ syncExistingVideoThemePreviews(state, changes);
 
 let databasePublication;
 if (updateDb && !dryRun) databasePublication = await updateDatabase(state, categories, syncedPages);
-if (!dryRun) writeJson(statePath, state);
-
 console.log(
   JSON.stringify(
     {
       dryRun,
       updateDb,
+      stateSource: "postgres",
       siteId: SITE_ID,
       pages: pages.map((page) => pagePath(page.slug)),
       categories: categories.map((category) => category.slug),

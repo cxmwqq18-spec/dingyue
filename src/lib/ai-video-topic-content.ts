@@ -157,6 +157,8 @@ const memeImageRoot = "/assets/dreamshoot/meme-video";
 const productImageRoot = "/assets/dreamshoot/product-video";
 const productAdImageRoot = "/assets/dreamshoot/product-ad-video";
 const promoImageRoot = "/assets/dreamshoot/promo-video";
+const videoAdImageRoot = "/assets/dreamshoot/video-ad";
+const brandVideoImageRoot = "/assets/dreamshoot/brand-video";
 
 export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLandingContent> = {
   "cinematic-video": {
@@ -2601,6 +2603,622 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       body: "Choose the promotional job, write the verified facts, show the proof, keep timing and terms visible, and end with the one next action this campaign should earn.",
       cta: "Create a Promo Video",
       microcopy: "Verified campaign facts. Supportable proof. Clear timing and terms. One relevant CTA."
+    }
+  },
+  "video-ad": {
+    seo: {
+      title: "AI Video Ad Generator for Paid Social | myDreamshoots",
+      description:
+        "Create video ad concepts with AI for paid social, product campaigns, launches, retargeting, and creator-style placements. Start from text or an image, shape the hook, proof, and CTA, then review the output in your myDreamshoots workflow.",
+      keywords:
+        "ai video ad generator, paid social video ad generator, AI video ad maker, performance marketing video creator, paid social creative generator, campaign video variant creator",
+      canonicalPath: "/ai-video-generation/video-ad"
+    },
+    hero: {
+      eyebrow: "AI VIDEO AD GENERATOR",
+      title: "AI Video Ad Generator for Paid Social Campaigns",
+      body:
+        "Create campaign-focused video ad concepts from a written brief or an approved image. Shape the hook, product moment, supportable proof, placement, and CTA before you review the output in the myDreamshoots workflow.",
+      primaryCta: "Create a Video Ad",
+      secondaryCta: "Explore AI Video Generation",
+      availabilityNote:
+        "Use the current myDreamshoots video workspace to confirm supported inputs, credit requirements, and available output controls before generation.",
+      rightsCopy:
+        "Use approved product assets and supportable campaign facts. Do not invent ratings, results, discounts, deadlines, prices, creator experiences, or platform performance.",
+      imageNote: "Scene references for campaign planning, not claims of one-click presets or generated output.",
+      highlights: ["Text or image input", "Paid social", "Placement-aware", "Campaign variants"],
+      image: image(
+        `${videoAdImageRoot}/video-ad-creator-phone-tripod.jpg`,
+        "Creator filming a vertical product video with a phone on a tripod.",
+        4000,
+        6000,
+        "50% 34%"
+      )
+    },
+    quickAnswer: {
+      eyebrow: "WHAT THIS CREATES",
+      title: "Short Campaign-Focused Motion for One Clear Advertising Job",
+      intro:
+        "A useful video ad brief makes one campaign decision easy to understand. The page should help teams choose the objective, audience stage, hook, proof, placement, and CTA without turning every ad into the same generic creative.",
+      cards: [
+        { title: "Paid social concept", body: "Plan a focused paid-social video direction around one offer, product moment, audience stage, and next action." },
+        { title: "Product campaign angle", body: "Turn approved product photos or a written brief into a clearer ad concept without adding unsupported claims." },
+        { title: "Retargeting direction", body: "Reframe the same product moment for viewers who already know the brand, product, or campaign context." },
+        { title: "Creator-style placement", body: "Use a creator-aware framing idea while keeping speaker status, product facts, and CTA boundaries clear." }
+      ]
+    },
+    useCases: {
+      eyebrow: "VIDEO AD JOBS",
+      title: "Choose the Ad Job Before You Choose the Look",
+      intro:
+        "Video Ad covers broader paid-video planning than a single product demo, UGC script, or promo announcement. Start with the customer decision and the placement, then choose the visual direction.",
+      items: [
+        makeUseCaseCard({
+          scenarioLabel: "01 - CREATOR HOOK",
+          title: "Open With a Specific Campaign Hook",
+          problem: "The ad starts with movement but does not quickly explain why the viewer should care.",
+          body: "Use one audience-specific hook and one product moment. Keep the first seconds tied to a real campaign job instead of generic attention language.",
+          noteLabel: "Direction",
+          noteBody: "Audience stage -> hook -> product moment -> supportable proof -> CTA.",
+          cta: "Create a Creator Hook",
+          image: image(
+            `${videoAdImageRoot}/video-ad-creator-phone-tripod.jpg`,
+            "Creator filming a vertical product video with a phone on a tripod.",
+            4000,
+            6000,
+            "50% 34%"
+          )
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "02 - SHOPPING INTENT",
+          title: "Match the Ad to a Buying Question",
+          problem: "The product appears, but the ad does not answer the question that made the viewer hesitate.",
+          body: "Use a buying question, visible product proof, and one relevant next action so the ad feels useful before it feels promotional.",
+          noteLabel: "Direction",
+          noteBody: "Question -> product context -> proof -> decision cue -> CTA.",
+          cta: "Create a Shopping-Intent Ad",
+          image: image(
+            `${videoAdImageRoot}/video-ad-ecommerce-shopping-intent.jpg`,
+            "Online shopping scene illustrating product-led video ad intent.",
+            4480,
+            6720,
+            "50% 35%"
+          )
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "03 - VARIANT WORKFLOW",
+          title: "Test the Angle Without Changing the Facts",
+          problem: "Every variant invents a different promise, discount, or performance claim.",
+          body: "Change the hook, proof order, crop, or CTA wording while keeping product facts, offer terms, and claim support stable.",
+          noteLabel: "Direction",
+          noteBody: "Stable facts -> hook test -> proof order -> placement fit -> review.",
+          cta: "Create Ad Variants",
+          image: image(
+            `${videoAdImageRoot}/video-ad-editing-variant-workflow.jpg`,
+            "Video editing workspace used to compare campaign creative variants.",
+            5184,
+            3456
+          )
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "04 - SPEAKER-LED AD",
+          title: "Use a Speaker Without Inventing a Testimonial",
+          problem: "The creative sounds personal even when no real customer experience has been verified.",
+          body: "Identify the speaker role and use lines that match that role. Keep claims connected to visible proof or approved product facts.",
+          noteLabel: "Direction",
+          noteBody: "Speaker role -> careful hook -> product context -> qualified proof -> CTA.",
+          cta: "Create a Speaker-Led Ad",
+          image: image(
+            `${videoAdImageRoot}/video-ad-influencer-recording.jpg`,
+            "Creator recording a speaker-led social video concept.",
+            5720,
+            3818
+          )
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "05 - ITERATION",
+          title: "Use Campaign Learning as Direction, Not a Result Claim",
+          problem: "The ad copy implies performance outcomes the product page cannot prove.",
+          body: "Use campaign learning to choose the next creative question. Avoid claiming conversion, ROAS, views, or lifts unless they are verified and allowed.",
+          noteLabel: "Direction",
+          noteBody: "Learning -> hypothesis -> next variant -> supportable claim -> review.",
+          cta: "Create an Iteration Brief",
+          image: image(
+            `${videoAdImageRoot}/video-ad-performance-analytics.jpg`,
+            "Campaign analytics screen used to inform the next video ad iteration.",
+            5202,
+            3468
+          )
+        }),
+        makeUseCaseCard({
+          scenarioLabel: "06 - PLACEMENT FIT",
+          title: "Design for the Placement Before the Export",
+          problem: "The same creative is reused everywhere and key product detail, captions, or CTA text become hard to read.",
+          body: "Plan the frame, safe area, product scale, caption load, and final CTA around the placement before generation and review.",
+          noteLabel: "Direction",
+          noteBody: "Placement -> safe area -> product visibility -> message density -> CTA.",
+          cta: "Create a Placement-Aware Ad",
+          image: image(
+            `${videoAdImageRoot}/video-ad-social-feed-placement.jpg`,
+            "Mobile social feed context for placement-aware video ad design.",
+            5484,
+            3656
+          )
+        })
+      ]
+    },
+    gallery: {
+      eyebrow: "SCENE GALLERY EXAMPLES",
+      title: "8 Video-Ad Scene Directions",
+      intro:
+        "Use the scene gallery as planning reference only. These images represent ad contexts and creative directions, not verified myDreamshoots outputs or proof of one-click presets.",
+      cta: "Create a Video Ad",
+      ctaHref: "/app/create?videoMode=video-ad#step-video",
+      items: [
+        {
+          title: "Creator + phone tripod",
+          body: "Use for a creator-style opening where the phone-first setup is part of the ad language.",
+          image: image(
+            `${videoAdImageRoot}/video-ad-creator-phone-tripod.jpg`,
+            "Creator filming a vertical product video with a phone on a tripod.",
+            4000,
+            6000,
+            "50% 34%"
+          )
+        },
+        {
+          title: "Ecommerce shopping intent",
+          body: "Use when the ad needs to answer a product research or buying-confidence question.",
+          image: image(
+            `${videoAdImageRoot}/video-ad-ecommerce-shopping-intent.jpg`,
+            "Online shopping scene illustrating product-led video ad intent.",
+            4480,
+            6720,
+            "50% 35%"
+          )
+        },
+        {
+          title: "Editing / variant workflow",
+          body: "Use when the campaign depends on comparing hooks, proof order, or placement variants.",
+          image: image(
+            `${videoAdImageRoot}/video-ad-editing-variant-workflow.jpg`,
+            "Video editing workspace used to compare campaign creative variants.",
+            5184,
+            3456
+          )
+        },
+        {
+          title: "Influencer recording",
+          body: "Use when the ad direction is speaker-led but must avoid fake testimonial language.",
+          image: image(
+            `${videoAdImageRoot}/video-ad-influencer-recording.jpg`,
+            "Creator recording a speaker-led social video concept.",
+            5720,
+            3818
+          )
+        },
+        {
+          title: "Performance analytics",
+          body: "Use when campaign learning informs the next creative question without becoming an unsupported result claim.",
+          image: image(
+            `${videoAdImageRoot}/video-ad-performance-analytics.jpg`,
+            "Campaign analytics screen used to inform the next video ad iteration.",
+            5202,
+            3468
+          )
+        },
+        {
+          title: "Product studio proof",
+          body: "Use when the ad needs close product detail, material context, scale, packaging, or visible proof.",
+          image: image(
+            `${videoAdImageRoot}/video-ad-product-studio-shoot.jpg`,
+            "Product arranged in a studio setting for detail-focused advertising visuals.",
+            2832,
+            4256,
+            "50% 43%"
+          )
+        },
+        {
+          title: "Social feed placement",
+          body: "Use when safe area, caption load, CTA placement, and feed context matter to the creative.",
+          image: image(
+            `${videoAdImageRoot}/video-ad-social-feed-placement.jpg`,
+            "Mobile social feed context for placement-aware video ad design.",
+            5484,
+            3656
+          )
+        },
+        {
+          title: "Mobile viewing context",
+          body: "Use when the ad must be legible from a real phone viewing distance and attention window.",
+          image: image(
+            `${videoAdImageRoot}/video-ad-social-platform-phone.jpg`,
+            "Person viewing short-form social content on a smartphone.",
+            4160,
+            6240,
+            "50% 35%"
+          )
+        }
+      ]
+    },
+    foundation: {
+      eyebrow: "STYLE CUES + BEST FOR",
+      title: "Make the First Seconds Carry One Clear Job",
+      intro:
+        "Video Ad should feel performance-aware without making performance claims. The strongest briefs separate the ad's style, audience stage, evidence, and next action before generation.",
+      leftTitle: "Style cues",
+      leftItems: [
+        "Fast, readable hook that names one buyer tension or campaign promise.",
+        "Product or offer appears early enough to anchor the ad.",
+        "Proof is visible, supportable, and close to the line it supports.",
+        "CTA matches the real destination page, campaign, or workspace action."
+      ],
+      rightTitle: "Best for",
+      rightItems: [
+        "Paid social campaign concepts.",
+        "Product campaign tests.",
+        "Launch and promo ad variants.",
+        "Retargeting or reminder ads.",
+        "Creator-style paid placements.",
+        "Placement-aware ad planning."
+      ],
+      rightTone: "neutral",
+      expertLabel: "EXPERT TIP",
+      expertTip:
+        "One ad should earn one next step. If the hook, proof, placement, and CTA each point to a different goal, split the concept before generating."
+    },
+    guidance: {
+      eyebrow: "VIDEO AD GUIDE",
+      title: "Design the Ad, Not Just the Motion",
+      intro:
+        "Use these planning cards before generation so the video concept stays tied to the campaign objective and supportable product information.",
+      cards: [
+        guidanceCard({
+          title: "Campaign Objective",
+          body: "Name the job first: prospecting, launch awareness, product education, retargeting, offer reminder, or another campaign stage."
+        }),
+        guidanceCard({
+          title: "Hook System",
+          body: "Choose one hook type, such as problem, contrast, question, product moment, offer, or proof-first opening. Do not stack every hook into one ad."
+        }),
+        guidanceCard({
+          title: "Proof Boundary",
+          body: "List what can actually be shown or claimed: product detail, approved image, visible workflow, factual offer, or verified campaign condition."
+        }),
+        guidanceCard({
+          title: "Placement Fit",
+          body: "Plan the frame, caption density, safe area, product scale, and CTA readability for the placement before reviewing the output."
+        }),
+        guidanceCard({
+          title: "Variant Plan",
+          body: "Decide what changes between variants and what must remain stable, such as claims, offer terms, price, product facts, speaker role, and destination."
+        })
+      ]
+    },
+    comparison: {
+      eyebrow: "RELATED PAGES",
+      title: "Keep Each Video Intent Distinct",
+      intro:
+        "Use Video Ad for broad paid-social creative planning. Use the adjacent pages when the job is specifically a product ad, UGC-style ad, promo announcement, or general video theme.",
+      items: [
+        { title: "AI Video Generation", body: "Browse all current video themes and choose the best-fit creative job before opening the workspace.", href: "/ai-video-generation", linkLabel: "View all video themes" },
+        { title: "Product Ad Video", body: "Use when the paid ad is centered on one product promise, proof hierarchy, offer, and purchase CTA.", href: "/ai-video-generation/product-ad-video", linkLabel: "Explore Product Ad Video" },
+        { title: "UGC Ad Video", body: "Use when the ad direction depends on creator role, speaker status, conversational script, and product-in-context proof.", href: "/ai-video-generation/ugc-ad-video", linkLabel: "Explore UGC Ad Video" },
+        { title: "Promo Video", body: "Use when the campaign is tied to a launch, sale, event, seasonal moment, product update, timing, terms, and CTA.", href: "/ai-video-generation/promo-video", linkLabel: "Explore Promo Video" },
+        { title: "Pricing", body: "Review current credit and plan information before starting paid campaign work.", href: "/pricing", linkLabel: "Review pricing" }
+      ]
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      title: "Build Around the Campaign Job",
+      items: [
+        { title: "Choose objective and audience stage", body: "Clarify whether the ad is for awareness, product education, launch, retargeting, offer reminder, or another stage." },
+        { title: "Start with text or an approved image", body: "Use the live workspace to choose the supported input path that fits the campaign source material." },
+        { title: "Define hook, proof, placement, and CTA", body: "Write the creative direction around one hook, one product moment, supportable proof, placement needs, and one next action." },
+        { title: "Generate and review before campaign use", body: "Check the finished output against product facts, offer terms, rights, speaker status, placement readability, and destination accuracy." }
+      ],
+      cta: "Create a Video Ad"
+    },
+    value: {
+      eyebrow: "START THIS VIDEO WORKFLOW",
+      title: "Move From Approved Input to Reviewed Output",
+      intro:
+        "The current workflow should stay transparent about what the user provides, what the campaign objective is, when credits are used, and where the finished output is reviewed.",
+      items: [
+        { title: "Source", body: "Text prompt or approved image. Keep the supplied product, offer, and campaign facts traceable." },
+        { title: "Objective", body: "One campaign job. Do not combine every funnel stage, product proof, and CTA into a single brief." },
+        { title: "Credits", body: "Review the credit requirement before generation in the signed-in workflow." },
+        { title: "Delivery", body: "Review the generated output in your signed-in myDreamshoots workflow before using it in a real campaign." }
+      ]
+    },
+    trust: {
+      eyebrow: "REVIEW BEFORE CAMPAIGN USE",
+      title: "Keep Ad Creative Clear, Supportable, and Placement-Aware",
+      intro:
+        "A polished ad concept still needs human review before publishing. Check the creative against the actual product, offer, claim support, and campaign destination.",
+      items: [
+        { title: "Claims", body: "Do not invent reviews, ratings, performance results, discounts, deadlines, price claims, or availability states." },
+        { title: "Speaker status", body: "Do not present a stock person, actor, fictional speaker, or AI-generated person as a real customer." },
+        { title: "Destination match", body: "Make sure the CTA and offer match the page, product, or campaign where the viewer lands." },
+        { title: "Placement readability", body: "Check safe areas, crop, product scale, caption load, and CTA text before campaign use." }
+      ]
+    },
+    faq: {
+      eyebrow: "FAQ",
+      title: "Video Ad Questions",
+      items: [
+        {
+          question: "What is an AI video ad generator?",
+          answer:
+            "An AI video ad generator helps turn a text brief or approved image into a video-ad concept. The useful part is not only motion; it is planning the hook, product moment, proof, placement, and CTA around one campaign objective."
+        },
+        {
+          question: "Can I create a video ad from an image?",
+          answer:
+            "Use the live myDreamshoots workspace to choose the supported input path. If you start with an image, make sure it is approved, accurate, and suitable for the product or campaign claim you want the ad to support."
+        },
+        {
+          question: "Can I create a video ad from text?",
+          answer:
+            "Use a clear text prompt that names the campaign objective, audience stage, hook, product moment, proof boundary, placement, and CTA. Review the available controls in the current workspace before generation."
+        },
+        {
+          question: "Is Video Ad the same as Product Ad Video?",
+          answer:
+            "No. Video Ad is a broader paid-social creative planning page. Product Ad Video is more specific to product promise, proof hierarchy, offer, and purchase CTA."
+        },
+        {
+          question: "Can I make multiple ad variants?",
+          answer:
+            "You can plan variants by changing hook, proof order, placement framing, or CTA wording. Keep product facts, offer terms, speaker status, and supportable claims stable across variants."
+        },
+        {
+          question: "Should I review the ad before publishing?",
+          answer:
+            "Yes. Review every output for claim support, product accuracy, rights, speaker status, offer terms, crop, caption readability, CTA, and destination match before using it in a campaign."
+        }
+      ]
+    },
+    finalCta: {
+      eyebrow: "CREATE A FOCUSED VIDEO-AD CONCEPT",
+      title: "Create a Focused Video-Ad Concept",
+      body: "Create a focused video-ad concept without turning every campaign page into the same template.",
+      cta: "Create a Video Ad",
+      microcopy:
+        "Use approved campaign material and review the finished output for accuracy, rights, and destination fit before publishing."
+    }
+  },
+  "brand-video": {
+    seo: {
+      title: "AI Brand Video Generator for Brand Stories | myDreamshoots",
+      description:
+        "Create brand-video concepts with AI for founder stories, company values, product origin, culture, community, and campaign identity. Start from text or an approved image, shape the narrative, then review the result in your myDreamshoots workflow.",
+      keywords:
+        "ai brand video generator, AI brand video maker, brand storytelling video generator, founder story video, brand identity video, company values video, product origin video, brand culture video",
+      canonicalPath: "/ai-video-generation/brand-video"
+    },
+    hero: {
+      eyebrow: "AI BRAND VIDEO GENERATOR",
+      title: "AI Brand Video Generator for Brand Stories & Identity",
+      body:
+        "Turn an approved brand brief, story angle, or image into a short brand-video concept built around recognition and meaning. Explore founder stories, product origin, values, culture, community, and campaign mood without turning the page into another product-ad or corporate-video template.",
+      primaryCta: "Create a Brand Video",
+      secondaryCta: "Explore AI Video Generation",
+      availabilityNote:
+        "Use the current myDreamshoots video workspace to confirm supported inputs, credit requirements, and available output controls before generation.",
+      rightsCopy:
+        "Use approved brand assets and verifiable facts. Review people, products, logos, packaging, text, dates, claims, and visual continuity before publishing.",
+      imageNote: "Scene references for brand-story planning, not claims of one-click presets or generated output.",
+      highlights: ["Founder story", "Brand values", "Product origin", "Culture & community", "Text to Video", "Image to Video"],
+      image: image(
+        `${brandVideoImageRoot}/brand-video-founder-story.jpg`,
+        "Speaker presenting a product story in an indoor brand or launch setting.",
+        4254,
+        6381,
+        "50% 38%"
+      )
+    },
+    quickAnswer: {
+      eyebrow: "WHAT THIS CREATES",
+      title: "Identity-Led Motion Around One Brand Memory",
+      intro:
+        "Brand Video is for founder introductions, origin stories, product-craft narratives, mission and values films, culture reels, customer-community moments, event identity pieces, and short cinematic brand stories.",
+      cards: [
+        { title: "Core idea", body: "Name what the brand wants people to remember after the film ends." },
+        { title: "Voice", body: "Set an approved tone: direct, warm, premium, playful, technical, restrained, or another specific voice." },
+        { title: "Visual anchors", body: "Use approved product, people, place, material, packaging, palette, or environment to make the story recognizable." },
+        { title: "Proof boundary", body: "Use only origins, milestones, customer statements, claims, awards, dates, or impact facts that can be verified." }
+      ]
+    },
+    useCases: {
+      eyebrow: "BRAND VIDEO USE CASES",
+      title: "Brand Stories With a Specific Point of View",
+      intro: "Choose the brand memory first, then let the narrative and visual anchors support it.",
+      items: []
+    },
+    platformExamples: {
+      eyebrow: "BRAND STORY MAP",
+      title: "Six Beats for a Stronger Brand Film",
+      intro: "Not every brand video needs all six beats. Use the smallest arc that makes the story specific and credible.",
+      items: [
+        { title: "01 - Origin", body: "Where the story begins." },
+        { title: "02 - Tension", body: "What problem, belief, or gap motivated the brand." },
+        { title: "03 - Point of view", body: "What the brand believes should be different." },
+        { title: "04 - Proof", body: "Product, process, people, place, or evidence that supports the point of view." },
+        { title: "05 - People", body: "Who participates in the story: makers, team, customers, or community." },
+        { title: "06 - Promise", body: "The memorable closing idea, not an unsupported guarantee." }
+      ]
+    },
+    foundation: {
+      eyebrow: "BRAND SIGNALS + BEST FOR",
+      title: "Keep the Story Specific Enough to Be Recognizable",
+      intro:
+        "A brand film should not fit any competitor with the brand name swapped. Build around concrete, approved details rather than generic claims about innovation, quality, or community.",
+      leftTitle: "Brand signals to preserve",
+      leftItems: [
+        "The one core idea the brand wants people to remember.",
+        "An approved voice and a clear point of view.",
+        "Concrete visual anchors: product, people, place, material, packaging, palette, or environment.",
+        "Only claims, milestones, customer statements, dates, awards, and impact facts that can be verified.",
+        "A recognizable narrative that belongs to this brand rather than any competitor."
+      ],
+      rightTitle: "Best for",
+      rightItems: [
+        "Founder or origin stories.",
+        "Brand mission and values films.",
+        "Product-craft and behind-the-scenes narratives.",
+        "Culture and team stories.",
+        "Customer or community storytelling.",
+        "Brand launch identity films and event openers."
+      ],
+      rightTone: "neutral",
+      expertLabel: "EXPERT TIP",
+      expertTip:
+        "Choose one lasting impression. Secondary details should support that memory instead of competing with it."
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      title: "Start With the Story, Then Review Every Detail",
+      items: [
+        { title: "Define the brand story", body: "Choose the one idea viewers should remember." },
+        { title: "Gather approved inputs", body: "Prepare the text brief, image references, product visuals, people, place, and verified facts." },
+        { title: "Choose a starting path", body: "Use Text to Video or Image to Video based on the starting asset, then specify mood, motion, and story beat." },
+        { title: "Generate and review", body: "Review brand consistency, factual accuracy, people, text, logos, and visual continuity before publishing." }
+      ],
+      cta: "Create a Brand Video"
+    },
+    gallery: {
+      eyebrow: "SCENE GALLERY",
+      title: "8 Brand-Video Scene Directions",
+      intro:
+        "Use these scene references to plan a brand story. They are editorial references only, not verified myDreamshoots outputs or proof of one-click presets.",
+      cta: "Create a Brand Video",
+      ctaHref: "/app/create?videoMode=brand-video#step-video",
+      items: [
+        {
+          title: "Founder story",
+          body: "Leadership or founder-led opening built around an approved origin narrative.",
+          image: image(`${brandVideoImageRoot}/brand-video-founder-story.jpg`, "Speaker presenting a product story in an indoor brand or launch setting.", 4254, 6381, "50% 38%")
+        },
+        {
+          title: "Craft & process",
+          body: "Hands-on making, preparation, detail, or behind-the-scenes process.",
+          image: image(`${brandVideoImageRoot}/brand-video-craft-process.jpg`, "Hands-on product or food demonstration recorded on a phone tripod.", 4160, 6240, "50% 40%")
+        },
+        {
+          title: "Team culture",
+          body: "Collaboration, creative energy, workplace culture, and the people behind the brand.",
+          image: image(`${brandVideoImageRoot}/brand-video-team-culture.jpg`, "Two creators recording a collaborative conversation in a studio-like setting.", 4000, 6000, "50% 42%")
+        },
+        {
+          title: "Customer community",
+          body: "Lifestyle or community moments that show who the brand belongs with.",
+          image: image(`${brandVideoImageRoot}/brand-video-customer-community.jpg`, "Shoppers browsing clothing together in a retail environment.", 5353, 3569, "50% 44%")
+        },
+        {
+          title: "Product identity",
+          body: "A recognizable product or brand object used as a visual anchor rather than a hard-sell ad.",
+          image: image(`${brandVideoImageRoot}/brand-video-product-identity.jpg`, "Creator holding a beauty product close to camera as a recognizable visual anchor.", 2160, 3840, "50% 40%")
+        },
+        {
+          title: "Values in action",
+          body: "Concrete behavior, process, sourcing, care, service, or ritual that makes a value visible.",
+          image: image(`${brandVideoImageRoot}/brand-video-values-in-action.jpg`, "Hands recording a food preparation scene for a process-focused brand story.", 3024, 4032, "50% 45%")
+        },
+        {
+          title: "Brand activation",
+          body: "Physical presence, installation, booth, pop-up, or branded environment.",
+          image: image(`${brandVideoImageRoot}/brand-video-brand-activation.jpg`, "Modern branded trade-show booth illustrating a physical brand activation.", 2976, 5290, "50% 42%")
+        },
+        {
+          title: "Cultural moment",
+          body: "Event, talk, launch-stage, or public moment where the brand participates in a larger story.",
+          image: image(`${brandVideoImageRoot}/brand-video-cultural-moment.jpg`, "Speaker on stage at an indoor conference or public brand event.", 4195, 6293, "50% 40%")
+        }
+      ]
+    },
+    guidance: {
+      eyebrow: "BRAND CONSISTENCY GUIDE",
+      title: "Make Every Scene Belong to the Same Brand",
+      intro: "Use a clear story and recurring visual signals without claiming controls the current product does not publicly confirm.",
+      cards: [
+        { title: "One memory, not five messages", body: "Write the film around one lasting impression. Let secondary details support that memory instead of competing with it." },
+        { title: "Use specific brand nouns", body: "Replace generic language with concrete products, materials, rituals, places, decisions, or behaviors that belong to the brand." },
+        { title: "Separate story from claim", body: "A cinematic mood can be expressive. A factual claim must still be true and supportable." },
+        { title: "Build a visual identity system", body: "Choose recurring anchors such as framing, lighting, palette, motion, product detail, people, texture, or environment." },
+        { title: "Review logo and text accuracy", body: "Generative video can distort words and graphic marks. Review logos, labels, slogans, UI, and other text carefully." },
+        { title: "End with a brand promise, not false urgency", body: "Close on a line, belief, invitation, or next step. Use scarcity only when it is a verified promotion." }
+      ]
+    },
+    evidence: {
+      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
+      title: "Product Evidence Is Required Before This Page Can Prove the Workflow",
+      intro:
+        "The eight editorial photos explain brand-story directions. They do not prove a generated result, customer outcome, or product capability.",
+      cards: [
+        { title: "Text to Video input", body: "Add a verified myDreamshoots Text to Video input state before treating it as product proof." },
+        { title: "Image to Video input", body: "Add a verified Image to Video input state that reflects the current workflow." },
+        { title: "Credit confirmation", body: "Use the real credit-confirmation state shown before generation, not a recreated UI." },
+        { title: "Generation state", body: "Show a real current generation state when first-party evidence is available." },
+        { title: "Reviewed brand-video output", body: "Use a real reviewed Brand Video-style output before presenting a result as myDreamshoots product evidence." }
+      ]
+    },
+    value: {
+      eyebrow: "START THIS VIDEO WORKFLOW",
+      title: "Turn a Verified Brand Story Into a Reviewable Video Draft",
+      intro:
+        "The live workspace is the source of truth for supported inputs, credits, and output controls. Keep the brief specific before creating a request.",
+      items: [
+        { title: "Choose the starting asset", body: "Use Text to Video for a written brand brief or Image to Video when an approved visual is the anchor." },
+        { title: "Define the story frame", body: "Set the core memory, story beat, subject, setting, visual mood, motion, and factual boundaries." },
+        { title: "Create in the signed-in workflow", body: "Review the live credit requirement shown by the product before starting the request." },
+        { title: "Review for brand integrity", body: "Check product appearance, people, logos, packaging, text, claims, locations, colors, and tone before publishing." }
+      ]
+    },
+    trust: {
+      eyebrow: "BRAND-INTEGRITY REVIEW",
+      title: "Keep the Brand Story Expressive and Verifiable",
+      intro: "Before publishing:",
+      items: [
+        { title: "Use approved assets", body: "Only use brand assets, people, locations, products, and third-party material you control or have permission to use." },
+        { title: "Verify factual details", body: "Confirm origins, milestones, customer statements, awards, dates, impact facts, and product claims before they appear in a story." },
+        { title: "Review people and consent", body: "Confirm that people are represented appropriately and that consent, likeness, and disclosure requirements are addressed." },
+        { title: "Check logos and text", body: "Review every logo, label, slogan, packaging detail, UI string, and third-party mark for accuracy." },
+        { title: "Keep the tone truthful", body: "A cinematic treatment should not imply a customer result, partnership, endorsement, or performance claim that cannot be supported." },
+        { title: "Match the final destination", body: "Make sure the closing invitation and linked destination match the story rather than making a new unsupported promise." }
+      ]
+    },
+    comparison: {
+      eyebrow: "RELATED PAGES",
+      title: "Choose the Video Job Before You Choose the Style",
+      intro: "Brand Video owns identity, meaning, origin, values, culture, and recognition. Use a neighboring page when the job is paid media, product selling, or promotion.",
+      items: [
+        { title: "AI Video Generation", body: "Browse all current MyDreamShoots video themes and choose the clearest starting direction.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" },
+        { title: "Video Ad", body: "Use for paid-media objectives, placement, hooks, proof, CTA, and campaign testing.", href: "/ai-video-generation/video-ad", linkLabel: "Explore Video Ad" },
+        { title: "Product Ad Video", body: "Use for product-selling narratives, feature and benefit communication, product proof, offer, and sales CTA.", href: "/ai-video-generation/product-ad-video", linkLabel: "Explore Product Ad Video" },
+        { title: "Promo Video", body: "Use for time-bound launches, announcements, offers, events, timing, and promotional CTA.", href: "/ai-video-generation/promo-video", linkLabel: "Explore Promo Video" }
+      ]
+    },
+    faq: {
+      eyebrow: "FAQ",
+      title: "Brand Video Questions",
+      items: [
+        { question: "What is an AI brand video generator?", answer: "It is a workflow for turning an approved brand brief, text prompt, or image into short motion designed around brand identity and story. A useful brand-video page helps define the narrative, visual anchors, factual boundaries, and review process instead of simply repeating generic AI-video features." },
+        { question: "What should I include in a brand video prompt?", answer: "Start with the one idea viewers should remember, then add the subject, setting, mood, motion, visual anchors, and only the brand facts you can verify. If a product or person must remain recognizable, start from an approved image when that workflow fits the use case." },
+        { question: "Can I make a brand video from an image?", answer: "myDreamshoots publicly lists an Image to Video workflow. Use an image you own or have permission to use and review the generated result for identity, product, logo, text, and background accuracy before publishing." },
+        { question: "Can I start from text instead?", answer: "myDreamshoots publicly lists Text to Video. A concise brand brief can define the story beat, subject, environment, mood, motion, and intended use." },
+        { question: "Is Brand Video the same as Video Ad?", answer: "No. Brand Video owns identity, meaning, origin, values, culture, and recognition. Video Ad owns the paid-media task: campaign objective, placement, hook, proof, CTA, and testing." },
+        { question: "Is Brand Video the same as Corporate Video?", answer: "No. Brand Video is story- and identity-led. Corporate Video belongs to formal company profiles, institutional communications, leadership updates, business presentations, employer or investor information, and related communication jobs." },
+        { question: "Can I show logos and packaging in AI-generated video?", answer: "Use only brand assets you control or have permission to use. Review generated logos, labels, slogans, and package text carefully because generative output may distort them. Do not assume a dedicated brand-kit feature unless the product team confirms one exists." },
+        { question: "What should I review before publishing a brand video?", answer: "Check people and consent, product details, logos, text, claims, dates, locations, third-party marks, brand tone, disclosure requirements, and whether every factual statement can be supported." }
+      ]
+    },
+    finalCta: {
+      eyebrow: "CREATE WITH A VERIFIED BRAND BRIEF",
+      title: "Turn a Verified Brand Story Into Motion",
+      body: "Choose the core memory, make the visual anchors specific, keep facts supportable, and review the finished draft for brand integrity before publishing.",
+      cta: "Create a Brand Video",
+      microcopy: "Approved assets. Verifiable facts. One recognizable brand story."
     }
   },
   "ugc-ad-video": {

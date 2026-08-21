@@ -1,11 +1,19 @@
 import fs from "node:fs";
 import path from "node:path";
+import { PrismaClient } from "@prisma/client";
+import "./load-runtime-env.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
+const prisma = new PrismaClient();
 const jsonLdPath = path.join(repoRoot, "src", "lib", "theme", "json-ld.ts");
 
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+async function readPlatformState() {
+  const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
+  if (!document?.state) throw new Error("missing_platform_state_document");
+  return document.state;
+}
+
+const state = await readPlatformState();
 const failures = [];
 
 const sites = [
@@ -463,3 +471,4 @@ if (failures.length > 0) {
 }
 
 console.log(`Storefront SEO fingerprint smoke passed: ${JSON.stringify(checkedCounts)}`);
+await prisma.$disconnect();

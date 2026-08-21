@@ -2,8 +2,6 @@ import { publicSiteSlug } from "@/lib/domain-routing";
 import { usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 
 const databasePreferences = new Set(["database", "db", "relational"]);
-const legacyLocalPreferences = new Set(["local", "json", "legacy", "file"]);
-const explicitLocalPreviewPreferences = new Set(["local-preview", "json-preview", "legacy-preview", "file-preview"]);
 const mydreamshootsSiteIds = new Set(["site_dreamshoot", "site_aidreamcapes", "site_grownstride_test"]);
 const mydreamshootsPublicSlugs = new Set(["mydreamshoots", "dreamshoot", "aidreamcapes", "grownstride"]);
 
@@ -16,11 +14,13 @@ export function isDatabaseStorefrontReadPreference(value: string | undefined): b
 }
 
 export function isLegacyLocalStorefrontReadPreference(value: string | undefined): boolean {
-  return legacyLocalPreferences.has(normalizeStorefrontReadPreference(value));
+  void value;
+  return false;
 }
 
 export function isExplicitLocalPreviewReadPreference(value: string | undefined): boolean {
-  return explicitLocalPreviewPreferences.has(normalizeStorefrontReadPreference(value));
+  void value;
+  return false;
 }
 
 export function isAnyLocalStorefrontReadPreference(value: string | undefined): boolean {
@@ -52,5 +52,6 @@ export function isMydreamshootsContentSourceSite(site: {
 }
 
 export function requiresMydreamshootsPublishedSource(siteSlug: string | undefined, preference: string | undefined): boolean {
-  return isMydreamshootsContentSourceSlug(siteSlug) && !isExplicitLocalPreviewReadPreference(preference);
+  void preference;
+  return isMydreamshootsContentSourceSlug(siteSlug);
 }

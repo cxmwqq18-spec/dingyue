@@ -67,6 +67,14 @@ type VideoTopicContent = {
     intro: string;
     items: VideoTopicUseCase[];
   };
+  gallery?: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    items: VideoTopicSupportingCard[];
+    cta?: string;
+    ctaHref?: string;
+  };
   foundation: {
     eyebrow: string;
     title: string;
@@ -336,6 +344,214 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
         </div>
       </div>
     </section>
+  );
+}
+
+function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicContent; section: SectionInstance; site: Site }) {
+  const primaryHref = `/app/create?videoMode=${encodeURIComponent("video-ad")}#step-video`;
+  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
+  const heroPreview = [galleryItems[0], galleryItems[5], galleryItems[6]].filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item));
+  return (
+    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? "video-ad")} data-video-topic-page="video-ad">
+      <section className="border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
+        <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
+          <div>
+            <nav className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-normal text-white/45" aria-label="Breadcrumb">
+              <InternalLink className="text-[#c4b5fd] transition hover:text-white" href="/ai-video-generation" site={site}>AI Video Generation</InternalLink>
+              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <span>Marketing & Commerce</span>
+              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <span className="text-white/68">Video Ad</span>
+            </nav>
+            <p className="mt-8 text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.hero.eyebrow}</p>
+            <h1 className="mt-5 max-w-[760px] text-balance text-4xl font-semibold leading-[0.96] tracking-normal text-white sm:text-6xl lg:text-7xl">{content.hero.title}</h1>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">{content.hero.body}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ActionLink href={primaryHref} label={content.hero.primaryCta} site={site} />
+              <ActionLink href="/ai-video-generation" label={content.hero.secondaryCta} site={site} variant="secondary" />
+            </div>
+            <p className="mt-5 max-w-xl text-xs leading-5 text-white/50">{content.hero.availabilityNote}</p>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-white/58">{content.hero.rightsCopy}</p>
+            {content.hero.highlights?.length ? (
+              <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2 rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-3 text-xs font-semibold text-white/62">
+                {content.hero.highlights.map((highlight) => <span key={highlight}>{highlight}</span>)}
+              </div>
+            ) : null}
+          </div>
+          <figure className="relative lg:justify-self-end" data-video-topic-hero-media>
+            <div className="relative aspect-[4/5] min-h-[420px] overflow-hidden rounded-[30px] border border-[#c4b5fd]/25 bg-[#17151f] p-3 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)] sm:min-h-[560px]">
+              {heroPreview.map((item, index) => (
+                <div
+                  className={`absolute overflow-hidden rounded-[24px] border border-white/10 bg-[#292438] ${index === 0 ? "inset-x-[8%] top-[5%] aspect-[4/5]" : index === 1 ? "bottom-[8%] left-[6%] w-[52%] aspect-[4/5]" : "bottom-[16%] right-[6%] w-[44%] aspect-[4/5]"}`}
+                  key={item.title}
+                >
+                  <img
+                    src={item.image.src}
+                    alt={item.image.alt}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    style={imageStyle(item.image)}
+                    width={item.image.width}
+                    height={item.image.height}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : undefined}
+                    decoding="async"
+                  />
+                </div>
+              ))}
+              <div className="absolute bottom-5 left-5 right-5 rounded-[22px] border border-white/12 bg-[#0d0b13]/78 p-5 backdrop-blur">
+                <p className="text-[11px] font-semibold uppercase tracking-normal text-[#c4b5fd]">Creative brief</p>
+                <p className="mt-3 text-xl font-semibold leading-tight text-white">{"Hook -> Product moment -> Proof -> Placement -> CTA"}</p>
+              </div>
+            </div>
+            <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
+              <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />
+              <span>{content.hero.caption}</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {content.quickAnswer ? (
+        <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="what-this-creates" data-video-topic-section="what-this-creates">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.quickAnswer.eyebrow} title={content.quickAnswer.title} body={content.quickAnswer.intro} />
+            <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
+              {content.quickAnswer.cards.map((card) => <SupportingCard card={card} key={card.title} site={site} />)}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="style-cues" data-video-topic-section="style-cues">
+        <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.74fr_1.26fr] lg:items-start lg:gap-16">
+          <SectionHeader eyebrow={content.foundation.eyebrow} title={content.foundation.title} body={content.foundation.intro} />
+          <div className="grid gap-5 sm:grid-cols-2">
+            <DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" />
+            <DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone="neutral" />
+            <div className="sm:col-span-2 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
+              <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} />
+          <div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {content.steps.items.map((item, index) => (
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-video-ad-step key={item.title}>
+                <span className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">0{index + 1}</span>
+                <h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-10">
+            <ActionLink href={primaryHref} label={content.steps.cta} site={site} />
+          </div>
+        </div>
+      </section>
+
+      {content.gallery ? (
+        <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.gallery.eyebrow} title={content.gallery.title} body={content.gallery.intro} light />
+            <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {galleryItems.map((item) => (
+                <article className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-video-ad-scene key={item.title}>
+                  <div className="relative aspect-[4/5] overflow-hidden bg-[#d9d1f6]">
+                    <img src={item.image.src} alt={item.image.alt} className="absolute inset-0 h-full w-full object-cover" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                  </div>
+                  <div className="flex flex-1 flex-col p-5">
+                    <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="guide" data-video-topic-section="guide">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} />
+          <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-5">
+            {content.guidance.cards.map((card) => (
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-video-ad-guide-card key={card.title}>
+                <Sparkles className="h-5 w-5 text-[#c4b5fd]" strokeWidth={1.8} />
+                <h3 className="mt-5 text-lg font-semibold leading-tight text-white">{card.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/65">{card.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="workflow" data-video-topic-section="workflow">
+        <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-16">
+          <div>
+            <SectionHeader eyebrow={content.value.eyebrow} title={content.value.title} body={content.value.intro} light />
+            <div className="mt-8">
+              <ActionLink href={primaryHref} label={content.finalCta.cta} site={site} variant="dark" />
+            </div>
+          </div>
+          <div className="rounded-[24px] border border-[#d2c9ef] bg-white/65 p-6 sm:p-7" data-video-ad-workspace>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#6652bd]">Workspace evidence model</p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              {content.value.items.map((item) => (
+                <article className="rounded-[18px] border border-[#d2c9ef] bg-[#f7f4ff] p-5" key={item.title}>
+                  <h3 className="text-base font-semibold text-[#191622]">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-[#625e6f]">{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} />
+          <div className="mt-10 grid gap-4 lg:grid-cols-2">
+            {content.faq.items.map((item) => (
+              <details className="group rounded-[20px] border border-white/10 bg-[#17151f] p-5 open:bg-[#211c2e]" key={item.question}>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-white">
+                  <span>{item.question}</span>
+                  <ChevronRight className="h-5 w-5 shrink-0 text-[#c4b5fd] transition group-open:rotate-90" strokeWidth={1.8} />
+                </summary>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-white/65">{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {content.comparison ? (
+        <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="related-pages" data-video-topic-section="related-pages">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.comparison.eyebrow} title={content.comparison.title} body={content.comparison.intro} light />
+            <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-5">
+              {content.comparison.items.map((card) => <SupportingCard card={card} key={card.title} light site={site} />)}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" data-video-topic-section="final-cta">
+        <div className="mx-auto max-w-[var(--site-content-width)] rounded-[28px] border border-[#c4b5fd]/25 bg-[#191525] px-6 py-12 text-center sm:px-10 sm:py-16">
+          <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.finalCta.eyebrow}</p>
+          <h2 className="mx-auto mt-4 max-w-3xl text-balance text-3xl font-semibold leading-[1.03] tracking-normal text-white sm:text-5xl">{content.finalCta.title}</h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/68">{content.finalCta.body}</p>
+          <div className="mt-8 flex justify-center">
+            <ActionLink href={primaryHref} label={content.finalCta.cta} site={site} />
+          </div>
+          <p className="mt-5 text-xs leading-5 text-white/48">{content.finalCta.microcopy}</p>
+        </div>
+      </section>
+    </main>
   );
 }
 
@@ -755,6 +971,7 @@ function normalizeAiContent(content: AiVideoTopicLandingContent): VideoTopicCont
       ...content.useCases,
       items: content.useCases.items.map((item) => ({ ...item }))
     },
+    gallery: content.gallery ? { ...content.gallery, items: content.gallery.items.map((item) => ({ ...item })) } : undefined,
     foundation: content.foundation,
     guidance: content.guidance,
     platformExamples: content.platformExamples ? { ...content.platformExamples, items: content.platformExamples.items.map((item) => ({ ...item })) } : undefined,
@@ -829,7 +1046,269 @@ function normalizeTalkingContent(content: TalkingPhotoContent): VideoTopicConten
   };
 }
 
+function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopicContent; section: SectionInstance; site: Site }) {
+  const primaryHref = `/app/create?videoMode=${encodeURIComponent("brand-video")}#step-video`;
+  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
+  const heroPreview = [galleryItems[0], galleryItems[4], galleryItems[7]].filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item));
+  const storyBeats = content.platformExamples?.items ?? [];
+
+  return (
+    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? "brand-video")} data-video-topic-page="brand-video">
+      <section className="border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
+        <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
+          <div>
+            <nav className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-normal text-white/45" aria-label="Breadcrumb">
+              <InternalLink className="text-[#c4b5fd] transition hover:text-white" href="/ai-video-generation" site={site}>AI Video Generation</InternalLink>
+              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <span>Marketing &amp; Commerce</span>
+              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <span className="text-white/68">Brand Video</span>
+            </nav>
+            <p className="mt-8 text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.hero.eyebrow}</p>
+            <h1 className="mt-5 max-w-[760px] text-balance text-4xl font-semibold leading-[0.96] tracking-normal text-white sm:text-6xl lg:text-7xl">{content.hero.title}</h1>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">{content.hero.body}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ActionLink href={primaryHref} label={content.hero.primaryCta} site={site} />
+              <ActionLink href="/ai-video-generation" label={content.hero.secondaryCta} site={site} variant="secondary" />
+            </div>
+            <p className="mt-5 max-w-xl text-xs leading-5 text-white/50">{content.hero.availabilityNote}</p>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-white/58">{content.hero.rightsCopy}</p>
+            {content.hero.highlights?.length ? (
+              <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2 rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-3 text-xs font-semibold text-white/62">
+                {content.hero.highlights.map((highlight) => <span key={highlight}>{highlight}</span>)}
+              </div>
+            ) : null}
+          </div>
+          <figure className="relative lg:justify-self-end" data-video-topic-hero-media>
+            <div className="relative aspect-[4/5] min-h-[420px] overflow-hidden rounded-[30px] border border-[#c4b5fd]/25 bg-[#17151f] p-3 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)] sm:min-h-[560px]">
+              {heroPreview.map((item, index) => (
+                <div
+                  className={`absolute overflow-hidden rounded-[24px] border border-white/10 bg-[#292438] ${index === 0 ? "inset-x-[10%] top-[5%] aspect-[4/5]" : index === 1 ? "bottom-[9%] left-[5%] w-[48%] aspect-[3/4]" : "bottom-[16%] right-[5%] w-[43%] aspect-[3/4]"}`}
+                  key={item.title}
+                >
+                  <img
+                    src={item.image.src}
+                    alt={item.image.alt}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    style={imageStyle(item.image)}
+                    width={item.image.width}
+                    height={item.image.height}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : undefined}
+                    decoding="async"
+                  />
+                </div>
+              ))}
+              <div className="absolute bottom-5 left-5 right-5 rounded-[22px] border border-white/12 bg-[#0d0b13]/78 p-5 backdrop-blur">
+                <p className="text-[11px] font-semibold uppercase tracking-normal text-[#c4b5fd]">Brand story frame</p>
+                <p className="mt-3 text-xl font-semibold leading-tight text-white">{"Origin -> Point of view -> Proof -> People -> Promise"}</p>
+              </div>
+            </div>
+            <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
+              <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />
+              <span>{content.hero.caption}</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {content.quickAnswer ? (
+        <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="what-this-creates" data-video-topic-section="what-this-creates">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.quickAnswer.eyebrow} title={content.quickAnswer.title} body={content.quickAnswer.intro} />
+            <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
+              {content.quickAnswer.cards.map((card) => <SupportingCard card={card} key={card.title} site={site} />)}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {storyBeats.length ? (
+        <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="brand-story-map" data-video-topic-section="brand-story-map">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.platformExamples?.eyebrow ?? "BRAND STORY MAP"} title={content.platformExamples?.title ?? "Six Story Beats"} body={content.platformExamples?.intro} />
+            <ol className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-6" data-brand-video-story-map>
+              {storyBeats.map((beat) => (
+                <li className="min-w-0 rounded-[22px] border border-white/10 bg-[#17151f] p-5" data-brand-video-beat key={beat.title}>
+                  <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{beat.title}</p>
+                  <p className="mt-4 text-sm leading-6 text-white/68">{beat.body}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="brand-signals" data-video-topic-section="brand-signals">
+        <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.74fr_1.26fr] lg:items-start lg:gap-16">
+          <SectionHeader eyebrow={content.foundation.eyebrow} title={content.foundation.title} body={content.foundation.intro} />
+          <div className="grid gap-5 sm:grid-cols-2">
+            <DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" />
+            <DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone="neutral" />
+            <div className="sm:col-span-2 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
+              <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} />
+          <div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {content.steps.items.map((item, index) => (
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-brand-video-step key={item.title}>
+                <span className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">0{index + 1}</span>
+                <h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-10">
+            <ActionLink href={primaryHref} label={content.steps.cta} site={site} />
+          </div>
+        </div>
+      </section>
+
+      {content.gallery ? (
+        <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.gallery.eyebrow} title={content.gallery.title} body={content.gallery.intro} light />
+            <div className="mt-12 grid auto-rows-[minmax(16rem,auto)] gap-5 sm:grid-cols-2 lg:grid-cols-4" data-brand-video-gallery>
+              {galleryItems.map((item, index) => (
+                <article className={`flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65 ${index === 0 ? "sm:col-span-2 lg:row-span-2" : index === 3 ? "lg:col-span-2" : ""}`} data-brand-video-scene key={item.title}>
+                  <div className={`relative overflow-hidden bg-[#d9d1f6] ${index === 0 ? "aspect-[16/10] lg:h-full lg:aspect-auto" : index === 3 ? "aspect-[16/9]" : "aspect-[4/5]"}`}>
+                    <img src={item.image.src} alt={item.image.alt} className="absolute inset-0 h-full w-full object-cover" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                  </div>
+                  <div className="flex flex-1 flex-col p-5">
+                    <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="brand-consistency-guide" data-video-topic-section="brand-consistency-guide">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} />
+          <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {content.guidance.cards.map((card) => (
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-brand-video-guide-card key={card.title}>
+                <Sparkles className="h-5 w-5 text-[#c4b5fd]" strokeWidth={1.8} />
+                <h3 className="mt-5 text-lg font-semibold leading-tight text-white">{card.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/65">{card.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {content.evidence ? (
+        <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="product-evidence" data-video-topic-section="product-evidence">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.evidence.eyebrow} title={content.evidence.title} body={content.evidence.intro} light />
+            <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-5" data-brand-video-evidence>
+              {content.evidence.cards.map((card) => (
+                <article className="h-full rounded-[22px] border border-[#d2c9ef] bg-white/55 p-6" key={card.title}>
+                  <ShieldCheck className="h-5 w-5 text-[#6652bd]" strokeWidth={1.8} />
+                  <h3 className="mt-5 text-lg font-semibold leading-tight text-[#191622]">{card.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-[#625e6f]">{card.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="workflow" data-video-topic-section="workflow">
+        <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-16">
+          <div>
+            <SectionHeader eyebrow={content.value.eyebrow} title={content.value.title} body={content.value.intro} />
+            <div className="mt-8">
+              <ActionLink href={primaryHref} label={content.finalCta.cta} site={site} />
+            </div>
+          </div>
+          <div className="rounded-[24px] border border-white/10 bg-[#17151f] p-6 sm:p-7" data-brand-video-workspace>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">Workspace review model</p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              {content.value.items.map((item) => (
+                <article className="rounded-[18px] border border-white/10 bg-white/[0.035] p-5" key={item.title}>
+                  <h3 className="text-base font-semibold text-white">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="brand-integrity-review" data-video-topic-section="brand-integrity-review">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} />
+          <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {content.trust.items.map((item) => (
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-brand-video-review-card key={item.title}>
+                <Check className="h-5 w-5 text-[#c4b5fd]" strokeWidth={1.8} />
+                <h3 className="mt-5 text-lg font-semibold leading-tight text-white">{item.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
+          <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light />
+          <div className="mt-10 grid gap-4 lg:grid-cols-2">
+            {content.faq.items.map((item) => (
+              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]">
+                  <span>{item.question}</span>
+                  <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
+                </summary>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {content.comparison ? (
+        <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="related-pages" data-video-topic-section="related-pages">
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <SectionHeader eyebrow={content.comparison.eyebrow} title={content.comparison.title} body={content.comparison.intro} />
+            <SectionCards cards={content.comparison.items} site={site} />
+          </div>
+        </section>
+      ) : null}
+
+      <section className="bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" data-video-topic-section="final-cta">
+        <div className="mx-auto max-w-[var(--site-content-width)] rounded-[28px] border border-[#c4b5fd]/25 bg-[#191525] px-6 py-12 text-center sm:px-10 sm:py-16">
+          <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.finalCta.eyebrow}</p>
+          <h2 className="mx-auto mt-4 max-w-3xl text-balance text-3xl font-semibold leading-[1.03] tracking-normal text-white sm:text-5xl">{content.finalCta.title}</h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/68">{content.finalCta.body}</p>
+          <div className="mt-8 flex justify-center">
+            <ActionLink href={primaryHref} label={content.finalCta.cta} site={site} />
+          </div>
+          <p className="mt-5 text-xs leading-5 text-white/48">{content.finalCta.microcopy}</p>
+        </div>
+      </section>
+    </main>
+  );
+}
+
 function VideoTopicLanding({ content, contentKey, section, site }: { content: VideoTopicContent; contentKey: string; section: SectionInstance; site: Site }) {
+  if (contentKey === "video-ad") {
+    return <VideoAdTopicLanding content={content} section={section} site={site} />;
+  }
+  if (contentKey === "brand-video") {
+    return <BrandVideoTopicLanding content={content} section={section} site={site} />;
+  }
   if (contentKey === "ugc-ad-video") {
     return <UgcVideoTopicLanding content={content} section={section} site={site} />;
   }

@@ -71,7 +71,9 @@ export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS = [
   "product-video",
   "product-ad-video",
   "promo-video",
-  "ugc-ad-video"
+  "ugc-ad-video",
+  "video-ad",
+  "brand-video"
 ] as const;
 
 export const MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
@@ -86,7 +88,9 @@ export const MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
   "product-video",
   "product-ad-video",
   "promo-video",
-  "ugc-ad-video"
+  "ugc-ad-video",
+  "video-ad",
+  "brand-video"
 ] as const;
 
 export type MyDreamShootsVideoGenerationSlug = typeof MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS[number];

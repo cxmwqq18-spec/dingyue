@@ -115,7 +115,7 @@ import {
   photoPackageLabel,
   photoPackageSlug
 } from "@/lib/photo-package-taxonomy";
-import { isMydreamshootsPublicVideoGenerationTopicSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationThemeSeeds, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
+import { isMydreamshootsPublicVideoGenerationTopicSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationParentCategories, mydreamshootsVideoGenerationThemeSeeds, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { talkingPhotoContent } from "@/lib/talking-photo-content";
 import { isPublicPrice, projectPublicCreativePacks, projectPublicPricingOffers, resolveStorefrontBindings, selectOfferPrice } from "@/lib/storefront-context/core";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
@@ -987,6 +987,10 @@ function headerToolMegaItemsForClient(site: Site, tools: SectionBlockInstance[],
 function headerVideoGenerationTopicsForClient(site: Site, categories: VideoThemeCategory[], themes: VideoTheme[]): HeaderVideoGenerationTopic[] {
   if (site.id !== "site_dreamshoot") return [];
   const categoriesBySlug = new Map(categories.map((category) => [category.slug, category]));
+  const categoriesById = new Map(categories.map((category) => [category.id, category]));
+  const parentDefinitionsBySlug = new Map<string, (typeof mydreamshootsVideoGenerationParentCategories)[number]>(
+    mydreamshootsVideoGenerationParentCategories.map((category) => [category.slug, category])
+  );
   const themesBySlug = new Map(themes.filter((theme) => theme.status === "active").map((theme) => [theme.slug, theme]));
   return mydreamshootsVideoGenerationCategories
     .filter((definition) => isMydreamshootsPublicVideoGenerationTopicSlug(definition.slug))
@@ -995,11 +999,17 @@ function headerVideoGenerationTopicsForClient(site: Site, categories: VideoTheme
       if (category && category.status !== "active") return [];
       const theme = themesBySlug.get(definition.slug);
       if (!category && !theme) return [];
+      const configuredParent = category?.parent ?? (category?.parentId ? categoriesById.get(category.parentId) : undefined);
+      const parentSlug = configuredParent?.slug ?? parentVideoGenerationCategorySlugForChild(definition.slug);
+      const parentDefinition = parentSlug ? parentDefinitionsBySlug.get(parentSlug) : undefined;
       return [{
         id: category?.id ?? theme?.id ?? `video_topic_${definition.slug}`,
         slug: definition.slug,
         label: category?.label ?? definition.label,
         href: hrefFor(site, videoGenerationCreatePath(definition.slug)),
+        parentSlug,
+        parentLabel: configuredParent?.label ?? parentDefinition?.label,
+        parentSortOrder: configuredParent?.sortOrder ?? parentDefinition?.sortOrder,
         sortOrder: category?.sortOrder ?? definition.sortOrder
       }];
     });
@@ -15812,7 +15822,8 @@ function SectionView({
             }
           ]
         : [];
-    const featuredVoices = [...items, ...fallbackReviewItems].slice(0, reviewMode ? 8 : 4);
+    const testimonialLimit = reviewMode || isPrimaryMydreamshootsCapabilitySite(site) ? 8 : 4;
+    const featuredVoices = [...items, ...fallbackReviewItems].slice(0, testimonialLimit);
     const stackedReviewLayout = reviewMode && isPrimaryMyDreamShootsSite(site);
     const summaryItems = stackedReviewLayout ? featuredVoices : items;
     const spanishXbyUseCaseWall = isSpanishXbySite(site);

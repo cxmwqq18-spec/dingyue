@@ -9,7 +9,7 @@ import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { getSectionSchema } from "@/lib/section-schema";
 import { clearSiteMediaSummaryCache, clearSiteReadCache, getThemePublishPreflightBundleRelational } from "@/lib/stores/site-store";
 import { normalizeStorefrontProfile } from "@/lib/stores/storefront-profile-store";
-import { clearStorefrontContextCache, loadDraftStorefrontContext } from "@/lib/storefront-context";
+import { clearStorefrontContextCache, hasCompleteStorefrontProfileFacts, loadDraftStorefrontContext } from "@/lib/storefront-context";
 import { resolveStorefrontBindings } from "@/lib/storefront-context/core";
 import {
   buildSaasThemeDraft,
@@ -1825,23 +1825,7 @@ export async function publishDraftSiteRelational(
     }
     const publishedProfile = manifest.includeStorefrontProfile ? profile?.draftJson : profile?.publishedJson;
     const normalizedPublishedProfile = publishedProfile ? normalizeStorefrontProfile(publishedProfile) : undefined;
-    const publishedAddress = normalizedPublishedProfile?.identity.address;
-    const publishedPolicy = normalizedPublishedProfile?.policyFacts;
-    if (
-      !normalizedPublishedProfile?.identity.legalName ||
-      !normalizedPublishedProfile.identity.entityType ||
-      !publishedAddress?.line1 ||
-      !publishedAddress.city ||
-      !publishedAddress.region ||
-      !publishedAddress.postalCode ||
-      !publishedAddress.country ||
-      !normalizedPublishedProfile.identity.supportEmail ||
-      publishedPolicy?.usesCustomerMediaForTraining === undefined ||
-      !publishedPolicy.sourceMediaRetentionDays ||
-      publishedPolicy.refundReviewRequired === undefined ||
-      !publishedPolicy.refundWindowDays ||
-      !publishedPolicy.effectiveDate
-    ) {
+    if (!hasCompleteStorefrontProfileFacts(normalizedPublishedProfile, { requireProductionClaims: siteId === "site_dreamshoot" })) {
       throw new RelationalStoreError("storefront_profile_incomplete", 409);
     }
     const [activePrices, invalidPackCount, otherSites, publicationPacks, publicationProductRows] = await Promise.all([
@@ -1878,6 +1862,7 @@ export async function publishDraftSiteRelational(
     );
     if (invalidPrice) throw new RelationalStoreError("theme_publish_price_facts_invalid", 409);
     if (invalidPackCount) throw new RelationalStoreError("theme_publish_creative_pack_facts_invalid", 409);
+    if (!normalizedPublishedProfile) throw new RelationalStoreError("storefront_profile_incomplete", 409);
     const otherDomains = new Set(otherSites.map((other) => other.primaryDomain.trim().replace(/^https?:\/\//i, "").replace(/^www\./i, "").split("/")[0]).filter(Boolean));
     const crossSiteSocial = normalizedPublishedProfile.identity.sameAs.some((value) => {
       try {

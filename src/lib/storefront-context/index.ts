@@ -147,7 +147,7 @@ export async function loadDraftStorefrontContext({
 }
 
 export { projectPublicCreativePacks, projectPublicPricingOffers, selectOfferPrice } from "./core";
-export { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
+export { hasCompleteStorefrontProfileFacts, isProductionStorefrontClaim, isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
 export { applyTitleTemplate, canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath, storefrontBaseUrl, storefrontOrigin } from "./seo-projection";
 export { isAidreamcapesSite, isPrimaryMydreamshootsSite, isPrimaryMydreamshootsSlug, resolveSiteCapability, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "./capabilities";
 export {

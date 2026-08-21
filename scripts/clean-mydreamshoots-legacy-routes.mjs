@@ -19,7 +19,9 @@ const MYDREAMSHOOTS_VIDEO_TOOL_SLUGS = [
   "product-video",
   "product-ad-video",
   "promo-video",
-  "ugc-ad-video"
+  "ugc-ad-video",
+  "video-ad",
+  "brand-video"
 ];
 const transactionTimeoutMs = Number(process.env.ROUTE_CLEANUP_TRANSACTION_TIMEOUT_MS ?? 600000);
 const RELATIVE_COLLECTIONS_RE = /(^|[\s"'=([{>:])\/collections(?=\/|[?#"'`<>)\]|&\s.,;:!]|$)/g;

@@ -21,9 +21,13 @@ const baseCategories = [
     sortOrder: 20
   }
 ];
+const dreamshootBaseCategories = [
+  { ...baseCategories[0], label: "Text to Video" },
+  baseCategories[1]
+];
 const categoriesBySiteId = {
   site_dreamshoot: [
-    ...baseCategories,
+    ...dreamshootBaseCategories,
     {
       slug: "talking-photo",
       label: "Talking Photo",
@@ -34,67 +38,79 @@ const categoriesBySiteId = {
       slug: "cinematic-video",
       label: "Cinematic Video",
       description: "Plan cinematic video scenes with stronger mood, shot design, lighting, pacing, and camera movement.",
-      sortOrder: 40
+      sortOrder: 60
     },
     {
       slug: "tiktok-video",
       label: "TikTok Video",
       description: "Shape TikTok-first vertical video ideas with clearer hooks, framing, captions, and closes.",
-      sortOrder: 50
+      sortOrder: 70
     },
     {
       slug: "instagram-reels",
       label: "Instagram Reels",
       description: "Plan Instagram Reels from photos and ideas with mobile-safe pacing, cover choices, and captions.",
-      sortOrder: 60
+      sortOrder: 80
     },
     {
       slug: "social-media-video",
       label: "Social Media Video",
       description: "Adapt one core video idea across social platforms with platform-aware hooks, crops, and CTAs.",
-      sortOrder: 70
+      sortOrder: 110
     },
     {
       slug: "youtube-video",
       label: "YouTube Video",
       description: "Structure YouTube video ideas with stronger openings, chapter-ready sequences, and clearer next steps.",
-      sortOrder: 80
+      sortOrder: 100
     },
     {
       slug: "story-video",
       label: "Story Video",
       description: "Shape story-led videos around setup, tension, turning point, payoff, and meaning.",
-      sortOrder: 90
+      sortOrder: 120
     },
     {
       slug: "meme-video",
       label: "Meme Video",
       description: "Turn reactions, POV setups, everyday situations, and punchlines into clear meme video directions.",
-      sortOrder: 100
+      sortOrder: 130
     },
     {
       slug: "product-video",
       label: "Product Video",
       description: "Turn product photos into clear video directions that answer buyer questions about scale, detail, use, features, and packaging.",
-      sortOrder: 110
+      sortOrder: 140
     },
     {
       slug: "product-ad-video",
       label: "Product Ad Video",
       description: "Build product ads around one audience, product promise, visual proof, offer, and clear next action.",
-      sortOrder: 120
-    },
-    {
-      slug: "promo-video",
-      label: "Promo Video",
-      description: "Turn launches, offers, events, seasonal campaigns, and product updates into clear promotional video briefs.",
-      sortOrder: 130
+      sortOrder: 160
     },
     {
       slug: "ugc-ad-video",
       label: "UGC Ad Video",
       description: "Plan creator-style product ads around speaker status, hooks, product context, visible proof, and clear CTAs.",
-      sortOrder: 140
+      sortOrder: 170
+    },
+    {
+      slug: "promo-video",
+      label: "Promo Video",
+      description: "Turn launches, offers, events, seasonal campaigns, and product updates into clear promotional video briefs.",
+      sortOrder: 180
+    },
+    {
+      slug: "video-ad",
+      label: "Video Ad",
+      description: "Plan paid-social video ad concepts around objective, hook, proof, placement, CTA, and meaningful test variants.",
+      sortOrder: 190
+    },
+    {
+      slug: "brand-video",
+      label: "Brand Video",
+      description: "Present a company, brand story, or positioning through video.",
+      sortOrder: 200
     }
   ],
   site_grownstride_test: baseCategories

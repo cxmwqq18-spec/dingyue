@@ -4,6 +4,18 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const runtimeRoots = ["src/app", "src/lib"];
+const runtimeFiles = [
+  "package.json",
+  "scripts/cleanup-mydreamshoots-legacy-video-themes.mjs",
+  "scripts/guard-mydreamshoots-page-copy-contract.mjs",
+  "scripts/guard-storefront-launch-seo-contract.mjs",
+  "scripts/smoke-mydreamshoots-media-seo-schema.mjs",
+  "scripts/smoke-mydreamshoots-seo-indexing.mjs",
+  "scripts/smoke-mydreamshoots-seo-ssr.mjs",
+  "scripts/smoke-storefront-seo-fingerprint.mjs",
+  "scripts/sync-mydreamshoots-video-category-hierarchy.mjs",
+  "scripts/sync-mydreamshoots-video-topic-pages.mjs"
+];
 const runtimeExtensions = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"]);
 const failures = [];
 
@@ -16,10 +28,15 @@ function walk(relativeDirectory) {
   });
 }
 
-for (const relativePath of runtimeRoots.flatMap(walk)) {
+const checkedRuntimeFiles = [...runtimeRoots.flatMap(walk), ...runtimeFiles];
+
+for (const relativePath of checkedRuntimeFiles) {
   const source = fs.readFileSync(path.join(repoRoot, relativePath), "utf8");
   if (/data[\\/]platform-state\.json/.test(source)) {
     failures.push({ file: relativePath, reason: "runtime references data/platform-state.json" });
+  }
+  if (/["'](?:local|json|legacy|file)-preview["']/.test(source)) {
+    failures.push({ file: relativePath, reason: "runtime can select a JSON/local preview read mode" });
   }
   if (/readStorefrontPlatformStateFromLegacyJson|readLocalJsonPlatformState/.test(source)) {
     failures.push({ file: relativePath, reason: "runtime exposes a legacy JSON state reader" });
@@ -43,7 +60,7 @@ if (!/^STOREFRONT_PATH_MODE_READS=database$/m.test(envExample)) {
 
 const result = {
   ok: failures.length === 0,
-  checkedFiles: runtimeRoots.flatMap(walk).length,
+  checkedFiles: checkedRuntimeFiles.length,
   failures
 };
 console.log(JSON.stringify(result, null, 2));

@@ -1,7 +1,10 @@
 import fs from "fs";
 import path from "path";
+import { PrismaClient } from "@prisma/client";
+import "./load-runtime-env.mjs";
 
 const repoRoot = process.cwd();
+const prisma = new PrismaClient();
 
 function readText(relativePath) {
   return fs.readFileSync(path.join(repoRoot, relativePath), "utf8");
@@ -9,6 +12,12 @@ function readText(relativePath) {
 
 function readJson(relativePath) {
   return JSON.parse(readText(relativePath));
+}
+
+async function readPlatformState() {
+  const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
+  if (!document?.state) fail("missing platform state document", { documentId: "platform" });
+  return document.state;
 }
 
 function fail(message, details = {}) {
@@ -59,7 +68,7 @@ const storefrontContextTypes = readText("src/lib/storefront-context/types.ts");
 const themeRenderer = readText("src/components/theme-renderer.tsx");
 const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const photoPackageTaxonomy = readText("src/lib/photo-package-taxonomy.ts");
-const platformState = readJson("data/platform-state.json");
+const platformState = await readPlatformState();
 const mydreamshootsTaxonomy = readJson("src/lib/mydreamshoots-theme-taxonomy.json");
 const photoPackageUseCaseProfiles = readJson("src/lib/photo-package-use-case-profiles.json");
 const dreamshootPackProfiles = readJson("src/lib/dreamshoot-pack-profiles.json");
@@ -492,7 +501,9 @@ for (const slug of [
   "product-video",
   "product-ad-video",
   "promo-video",
-  "ugc-ad-video"
+  "ugc-ad-video",
+  "video-ad",
+  "brand-video"
 ]) {
   assert(photoPackageTaxonomy.includes(`"${slug}"`), "MyDreamShoots internal video slug list must include the required video slug", { slug });
 }
@@ -512,7 +523,9 @@ for (const slug of [
   "product-video",
   "product-ad-video",
   "promo-video",
-  "ugc-ad-video"
+  "ugc-ad-video",
+  "video-ad",
+  "brand-video"
 ]) {
   assert(publicVideoSlugSource.includes(`"${slug}"`), "public video generation slug list must include the published topic slug", { slug });
 }
@@ -591,6 +604,8 @@ assert(
     dreamshootSeoContent.includes('"product-ad-video"') &&
     dreamshootSeoContent.includes('"promo-video"') &&
     dreamshootSeoContent.includes('"ugc-ad-video"') &&
+    dreamshootSeoContent.includes('"video-ad"') &&
+    dreamshootSeoContent.includes('"brand-video"') &&
     dreamshootSeoContent.includes("indexableDreamshootDefaultTool") &&
     dreamshootSeoContent.includes("item.explicit || indexableDreamshootDefaultTool"),
   "default public MyDreamShoots video detail pages must be indexable when they are included in sitemap coverage"
@@ -685,3 +700,4 @@ console.log(JSON.stringify({
     aidreamcapes: "www.aidreamcapes.com only"
   }
 }, null, 2));
+await prisma.$disconnect();

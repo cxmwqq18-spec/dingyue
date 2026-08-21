@@ -35,33 +35,6 @@ export type HeaderVideoGenerationTopic = {
   sortOrder?: number;
 };
 
-export type HeaderVideoGenerationGroup = {
-  slug: string;
-  label: string;
-  sortOrder: number;
-  topics: HeaderVideoGenerationTopic[];
-};
-
-export function groupedVideoGenerationTopics(topics: HeaderVideoGenerationTopic[]): HeaderVideoGenerationGroup[] {
-  const groups = new Map<string, HeaderVideoGenerationGroup>();
-  topics.forEach((topic, index) => {
-    const slug = topic.parentSlug || "video-generation";
-    const label = topic.parentLabel || "AI Video Generation";
-    const existing = groups.get(slug) ?? { slug, label, sortOrder: topic.parentSortOrder ?? index, topics: [] };
-    existing.label = topic.parentLabel || existing.label;
-    existing.sortOrder = Math.min(existing.sortOrder, topic.parentSortOrder ?? existing.sortOrder);
-    existing.topics.push(topic);
-    groups.set(slug, existing);
-  });
-  return Array.from(groups.values())
-    .map((group) => ({
-      ...group,
-      topics: [...group.topics].sort((left, right) => (left.sortOrder ?? 0) - (right.sortOrder ?? 0) || left.label.localeCompare(right.label))
-    }))
-    .filter((group) => group.topics.length > 0)
-    .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label));
-}
-
 function splitColumns<T>(items: T[], columnCount = 3): T[][] {
   const columns = Array.from({ length: columnCount }, () => [] as T[]);
   items.forEach((item, index) => {
@@ -250,8 +223,7 @@ export function HeaderVideoGenerationMegaPanel({
   variantTone?: "dark" | "warm";
 }) {
   const warm = variantTone === "warm";
-  const groups = groupedVideoGenerationTopics(topics);
-  const columns = splitColumns(groups, Math.min(3, Math.max(1, groups.length)));
+  const columns = splitColumns(topics, Math.min(3, Math.max(1, topics.length)));
   return (
     <div className={warm ? "overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)] ring-1 ring-[#d8b17e]/20 backdrop-blur-xl" : "overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl"}>
       <div className="mb-4 flex items-center justify-center gap-3 text-center">
@@ -265,25 +237,19 @@ export function HeaderVideoGenerationMegaPanel({
       <div className={warm ? "mt-4 grid gap-4 border-t border-[#eadfce] pt-5 md:grid-cols-2 xl:grid-cols-3" : "mt-4 grid gap-4 border-t border-[#263247] pt-5 md:grid-cols-2 xl:grid-cols-3"}>
         {columns.map((column, columnIndex) => (
           <div className="grid content-start gap-4" key={`video_topic_column_${columnIndex}`}>
-            {column.map((group) => (
-              <details className={warm ? "group/video-category rounded-[14px] border border-[#eadfce] bg-white p-3 open:border-[#d8b17e] open:bg-[#fff8ed]" : "group/video-category rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]"} key={group.slug} open>
-                <summary className={warm ? "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold text-[#b86e36] marker:hidden group-open/video-category:border-b group-open/video-category:border-[#eadfce] group-open/video-category:pb-2" : "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold text-[#38a8ff] marker:hidden group-open/video-category:border-b group-open/video-category:border-white/10 group-open/video-category:pb-2"}>
-                  <span className={warm ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f5eadf] text-[#b86e36]" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06] text-[#38a8ff]"}>
-                    <PlayCircle className="h-4 w-4" strokeWidth={1.9} />
-                  </span>
-                  <span className="min-w-0 truncate text-[0.94rem] font-semibold leading-none">{group.label}</span>
-                  <span className={warm ? "ml-auto text-[11px] font-medium text-[#9b8877]" : "ml-auto text-[11px] font-medium text-white/36"}>{group.topics.length}</span>
-                  <ChevronRight className={warm ? "h-3.5 w-3.5 shrink-0 rotate-90 text-[#9b8877] transition group-open/video-category:-rotate-90" : "h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/video-category:-rotate-90"} strokeWidth={2} />
-                </summary>
-                <div className="mt-3 grid gap-2">
-                  {group.topics.map((topic) => (
-                    <Link className={warm ? "group/video-topic flex min-h-10 items-center gap-2 rounded-[10px] px-2 py-2 text-[0.94rem] font-semibold leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/video-topic flex min-h-10 items-center gap-2 rounded-[10px] px-2 py-2 text-[0.94rem] font-semibold leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"} href={topic.href} key={topic.id} prefetch={false}>
-                      <span className="min-w-0 flex-1 truncate">{topic.label}</span>
-                      <ChevronRight className={warm ? "h-3.5 w-3.5 shrink-0 text-[#b99675] transition group-hover/video-topic:translate-x-0.5 group-hover/video-topic:text-[#8f5327]" : "h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/video-topic:translate-x-0.5 group-hover/video-topic:text-white/56"} strokeWidth={2} />
-                    </Link>
-                  ))}
-                </div>
-              </details>
+            {column.map((topic) => (
+              <Link
+                className={warm ? "group/video-topic flex min-h-12 items-center gap-2 rounded-[12px] border border-[#eadfce] bg-white px-3 py-2.5 text-[0.96rem] font-semibold leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/video-topic flex min-h-12 items-center gap-2 rounded-[12px] border border-[#2b374c] bg-[#090a0c] px-3 py-2.5 text-[0.96rem] font-semibold leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
+                href={topic.href}
+                key={topic.id}
+                prefetch={false}
+              >
+                <span className={warm ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f5eadf] text-[#b86e36]" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06] text-[#38a8ff]"}>
+                  <PlayCircle className="h-4 w-4" strokeWidth={1.9} />
+                </span>
+                <span className="min-w-0 flex-1 truncate">{topic.label}</span>
+                <ChevronRight className={warm ? "h-3.5 w-3.5 shrink-0 text-[#b99675] transition group-hover/video-topic:translate-x-0.5 group-hover/video-topic:text-[#8f5327]" : "h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/video-topic:translate-x-0.5 group-hover/video-topic:text-white/56"} strokeWidth={2} />
+              </Link>
             ))}
           </div>
         ))}
@@ -424,7 +390,7 @@ export function HeaderMobileVideoGenerationMenu({
   menuLabel?: string;
   dark: boolean;
 }) {
-  const groups = groupedVideoGenerationTopics(topics);
+  const columns = splitColumns(topics, 1);
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileSummaryClass(dark)}>
@@ -434,22 +400,16 @@ export function HeaderMobileVideoGenerationMenu({
       </summary>
       <div className={dark ? "max-h-[48vh] overflow-y-auto border-t border-white/10 px-2 pb-3 pt-2" : "max-h-[48vh] overflow-y-auto border-t border-[#eadfce] px-2 pb-3 pt-2"}>
         <div className="grid gap-2">
-          {groups.map((group) => (
-            <details className={dark ? "group/mobile-video-category rounded-[12px] bg-black/16 px-2 py-1 open:bg-black/22" : "group/mobile-video-category rounded-[12px] bg-[#f8f2eb] px-2 py-1 open:bg-[#f3eadf]"} key={group.slug}>
-              <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 text-sm font-semibold marker:hidden">
-                <PlayCircle className={dark ? "h-4 w-4 shrink-0 text-[#38a8ff]" : "h-4 w-4 shrink-0 text-[#b86e36]"} strokeWidth={1.9} />
-                <span className="min-w-0 flex-1 truncate text-sm font-semibold leading-none">{group.label}</span>
-                <span className={dark ? "text-[11px] text-white/36" : "text-[11px] text-[#8a7e72]"}>{group.topics.length}</span>
-                <ChevronRight className={dark ? "h-3.5 w-3.5 rotate-90 text-white/36 transition group-open/mobile-video-category:-rotate-90" : "h-3.5 w-3.5 rotate-90 text-[#8a7e72] transition group-open/mobile-video-category:-rotate-90"} strokeWidth={2} />
-              </summary>
-              <div className="grid gap-1 pb-1 pl-3 pt-1">
-                {group.topics.map((topic) => (
-                  <Link className={dark ? "rounded-[10px] px-2 py-2 text-sm font-semibold text-white/74 hover:bg-white/[0.06] hover:text-white" : "rounded-[10px] px-2 py-2 text-sm font-semibold text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={topic.href} key={topic.id} prefetch={false}>
-                    <span className="text-sm leading-5">{topic.label}</span>
-                  </Link>
-                ))}
-              </div>
-            </details>
+          {columns.flat().map((topic) => (
+            <Link
+              className={dark ? "flex min-h-10 items-center gap-2 rounded-[12px] bg-black/16 px-3 py-2 text-sm font-semibold text-white/82 hover:bg-black/24 hover:text-white" : "flex min-h-10 items-center gap-2 rounded-[12px] bg-[#f8f2eb] px-3 py-2 text-sm font-semibold text-[#4f4944] hover:bg-white hover:text-[#171514]"}
+              href={topic.href}
+              key={topic.id}
+              prefetch={false}
+            >
+              <PlayCircle className={dark ? "h-4 w-4 shrink-0 text-[#38a8ff]" : "h-4 w-4 shrink-0 text-[#b86e36]"} strokeWidth={1.9} />
+              <span className="min-w-0 flex-1 truncate text-sm font-semibold leading-5">{topic.label}</span>
+            </Link>
           ))}
         </div>
         {ctaHref ? (

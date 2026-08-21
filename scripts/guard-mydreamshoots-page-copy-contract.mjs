@@ -2,12 +2,20 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
+import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 
 const repoRoot = process.cwd();
+const prisma = new PrismaClient();
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(repoRoot, relativePath), "utf8"));
+}
+
+async function readPlatformState() {
+  const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
+  if (!document?.state) throw new Error("missing_platform_state_document");
+  return document.state;
 }
 
 function normalizeSlug(value) {
@@ -24,52 +32,67 @@ function normalizeSlug(value) {
 const taxonomy = readJson("src/lib/mydreamshoots-theme-taxonomy.json");
 const useCaseProfiles = readJson("src/lib/photo-package-use-case-profiles.json").mydreamshootsCategories ?? {};
 const packProfiles = readJson("src/lib/dreamshoot-pack-profiles.json");
-const platformState = readJson("data/platform-state.json");
+const platformState = await readPlatformState();
 const blackFridayPack = (platformState.creativePacks ?? []).find((pack) => pack.siteId === "site_dreamshoot" && normalizeSlug(pack.category || pack.name) === "black-friday");
 const blackFridayMediaMismatch = Boolean(blackFridayPack && [blackFridayPack.imageUrl, ...(blackFridayPack.galleryImages ?? [])].some((image) => /creator-portraits|anime-avatar/i.test(String(image ?? ""))));
 
 async function activePublicationStatus() {
-  const rawUrl = process.env.DATABASE_URL?.trim();
-  if (!rawUrl) return null;
   try {
-    const url = new URL(rawUrl);
-    if (!["localhost", "127.0.0.1", "::1"].includes(url.hostname)) return null;
-    const { PrismaClient } = await import("@prisma/client");
-    const prisma = new PrismaClient();
-    try {
-      const active = await prisma.activeThemePublication.findUnique({
-        where: { siteId: "site_dreamshoot" },
-        include: { publication: true }
-      });
-      const snapshot = active?.publication?.snapshot;
-      const facts = snapshot?.publishedFacts;
-      const factText = [
-        facts?.creditLifecycle?.reserve,
-        facts?.creditLifecycle?.consume,
-        facts?.creditLifecycle?.release,
-        facts?.security?.transportClaimKey,
-        facts?.security?.storageClaimKey
-      ].map((value) => String(value ?? "").trim());
-      const productionFactsReady = Boolean(
-        facts?.identity?.legalName &&
-        facts?.identity?.entityType &&
-        facts?.identity?.supportEmail &&
-        facts?.privacy?.customerMediaTraining !== undefined &&
-        Number(facts?.privacy?.sourceMediaRetentionDays) > 0 &&
-        facts?.refund?.reviewRequired !== undefined &&
-        Number(facts?.refund?.windowDays) > 0 &&
-        facts?.refund?.effectiveDate &&
-        factText.every((value) => value && !/^(?:test|fixture)\b/i.test(value))
-      );
-      return {
-        activeProjectionRows: Array.isArray(snapshot?.publishedPageEntities)
-          ? snapshot.publishedPageEntities.filter((page) => page?.status === "published" && page?.indexable === true).length
-          : 0,
-        productionFactsReady
-      };
-    } finally {
-      await prisma.$disconnect();
-    }
+    const active = await prisma.activeThemePublication.findUnique({
+      where: { siteId: "site_dreamshoot" },
+      include: { publication: true }
+    });
+    const snapshot = active?.publication?.snapshot;
+    const facts = snapshot?.publishedFacts;
+    const factText = [
+      facts?.creditLifecycle?.reserve,
+      facts?.creditLifecycle?.consume,
+      facts?.creditLifecycle?.release,
+      facts?.security?.transportClaimKey,
+      facts?.security?.storageClaimKey
+    ].map((value) => String(value ?? "").trim());
+    const missingFacts = [];
+    if (!facts?.identity?.legalName) missingFacts.push("identity.legalName");
+    if (!facts?.identity?.entityType) missingFacts.push("identity.entityType");
+    if (!facts?.identity?.supportEmail) missingFacts.push("identity.supportEmail");
+    if (facts?.privacy?.customerMediaTraining === undefined) missingFacts.push("privacy.customerMediaTraining");
+    if (!(Number(facts?.privacy?.sourceMediaRetentionDays) > 0)) missingFacts.push("privacy.sourceMediaRetentionDays");
+    if (facts?.refund?.reviewRequired === undefined) missingFacts.push("refund.reviewRequired");
+    if (!(Number(facts?.refund?.windowDays) > 0)) missingFacts.push("refund.windowDays");
+    if (!facts?.refund?.effectiveDate) missingFacts.push("refund.effectiveDate");
+    if (!facts?.creditLifecycle?.reserve) missingFacts.push("creditLifecycle.reserve");
+    if (!facts?.creditLifecycle?.consume) missingFacts.push("creditLifecycle.consume");
+    if (!facts?.creditLifecycle?.release) missingFacts.push("creditLifecycle.release");
+    if (!facts?.security?.transportClaimKey) missingFacts.push("security.transportClaimKey");
+    if (!facts?.security?.storageClaimKey) missingFacts.push("security.storageClaimKey");
+    const invalidFacts = [
+      ["creditLifecycle.reserve", facts?.creditLifecycle?.reserve],
+      ["creditLifecycle.consume", facts?.creditLifecycle?.consume],
+      ["creditLifecycle.release", facts?.creditLifecycle?.release],
+      ["security.transportClaimKey", facts?.security?.transportClaimKey],
+      ["security.storageClaimKey", facts?.security?.storageClaimKey]
+    ]
+      .filter(([, value]) => String(value ?? "").trim() && /^(?:test|fixture|local-test)\b/i.test(String(value ?? "").trim()))
+      .map(([field]) => field);
+    const productionFactsReady = Boolean(
+      facts?.identity?.legalName &&
+      facts?.identity?.entityType &&
+      facts?.identity?.supportEmail &&
+      facts?.privacy?.customerMediaTraining !== undefined &&
+      Number(facts?.privacy?.sourceMediaRetentionDays) > 0 &&
+      facts?.refund?.reviewRequired !== undefined &&
+      Number(facts?.refund?.windowDays) > 0 &&
+      facts?.refund?.effectiveDate &&
+      factText.every((value) => value && !/^(?:test|fixture)\b/i.test(value))
+    );
+    return {
+      activeProjectionRows: Array.isArray(snapshot?.publishedPageEntities)
+        ? snapshot.publishedPageEntities.filter((page) => page?.status === "published" && page?.indexable === true).length
+        : 0,
+      productionFactsReady,
+      missingFacts,
+      invalidFacts
+    };
   } catch {
     return null;
   }
@@ -224,6 +247,8 @@ const reviewIsolationFailures = routeRows.filter((route) => route.status === "re
 const activePublication = await activePublicationStatus();
 const activeProjectionRows = activePublication?.activeProjectionRows ?? null;
 const productionFactsReady = activePublication?.productionFactsReady ?? false;
+const missingFacts = activePublication?.missingFacts ?? [];
+const invalidFacts = activePublication?.invalidFacts ?? [];
 const blockingReviewRows = reviewRows.filter((row) => !row.deferred);
 const deferredRows = reviewRows.filter((row) => row.deferred);
 const expectedIndexableRows = requiredSlugs.length - deferredRows.length;
@@ -253,6 +278,8 @@ const report = {
   prospectiveProjectionRows: routeRows.length,
   activeProjectionRows,
   productionFactsReady,
+  missingFacts,
+  invalidFacts,
   blackFridayPack: blackFridayPack?.id ?? null,
   blackFridayMediaMismatch,
   reviewIsolationFailures,
@@ -260,3 +287,4 @@ const report = {
 };
 console.log(JSON.stringify(report, null, 2));
 if (!report.contractOk || (process.argv.includes("--release") && !report.reviewIsolationReady) || (process.argv.includes("--production") && !report.productionReleaseReady)) process.exitCode = 1;
+await prisma.$disconnect();

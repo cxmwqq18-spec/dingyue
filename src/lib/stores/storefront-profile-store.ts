@@ -34,6 +34,8 @@ export function normalizeStorefrontProfile(input: StorefrontProfileJson): Storef
   if (input.policyFacts?.refundReviewRequired !== undefined && typeof input.policyFacts.refundReviewRequired !== "boolean") {
     throw new RelationalStoreError("invalid_refund_review_policy", 400);
   }
+  const creditLifecycle = input.policyFacts?.creditLifecycle;
+  const security = input.policyFacts?.security;
   return {
     identity: {
       legalName: clean(input.identity?.legalName),
@@ -55,7 +57,17 @@ export function normalizeStorefrontProfile(input: StorefrontProfileJson): Storef
       sourceMediaRetentionDays: positive(input.policyFacts?.sourceMediaRetentionDays, "source_media_retention_days"),
       refundReviewRequired: input.policyFacts?.refundReviewRequired,
       refundWindowDays: positive(input.policyFacts?.refundWindowDays, "refund_window_days"),
-      effectiveDate
+      effectiveDate,
+      creditLifecycle: creditLifecycle ? {
+        reserve: clean(creditLifecycle.reserve),
+        consume: clean(creditLifecycle.consume),
+        release: clean(creditLifecycle.release)
+      } : undefined,
+      security: security ? {
+        checkoutProvider: clean(security.checkoutProvider),
+        transportClaimKey: clean(security.transportClaimKey),
+        storageClaimKey: clean(security.storageClaimKey)
+      } : undefined
     }
   };
 }

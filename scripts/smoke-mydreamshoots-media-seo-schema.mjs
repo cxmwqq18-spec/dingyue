@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import Module from "node:module";
 import path from "node:path";
+import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import createJiti from "jiti";
 
@@ -33,8 +34,15 @@ const { buildPublicationSnapshot } = jiti("../src/lib/stores/theme-store.ts");
 const { createPublishedSiteSnapshot } = jiti("../src/lib/storefront-context/snapshot.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
-function readJson(relativePath) {
-  return JSON.parse(fs.readFileSync(path.join(repoRoot, relativePath), "utf8"));
+async function readPlatformState() {
+  const prisma = new PrismaClient();
+  try {
+    const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
+    assert.ok(document?.state && typeof document.state === "object", "PostgreSQL platform state document must exist");
+    return document.state;
+  } finally {
+    await prisma.$disconnect().catch(() => {});
+  }
 }
 
 function graphNodes(nodes) {
@@ -77,14 +85,25 @@ function schemaSlug(value) {
     .replace(/^-|-$/g, "");
 }
 
-const state = readJson("data/platform-state.json");
+const state = await readPlatformState();
 const site = state.sites.find((item) => item.id === "site_dreamshoot");
 assert.ok(site, "MyDreamShoots site must exist");
 assert.equal(site.primaryDomain, "www.mydreamshoots.com", "MyDreamShoots primary domain should stay production canonical");
 
 const activePacks = (state.creativePacks ?? []).filter((pack) => pack.siteId === site.id && pack.status === "active");
 const activeProducts = (state.products ?? []).filter((product) => product.siteId === site.id && product.status === "active");
-const activeVideoThemes = (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id && theme.status === "active");
+const legacyVideoThemeSlugs = new Set([
+  "cinematic-portrait-motion",
+  "social-profile-clip",
+  "travel-route-story",
+  "wedding-memory-film",
+  "holiday-card-motion",
+  "product-showcase-motion",
+  "prompt-directed-motion",
+  "creator-intro-motion"
+]);
+const legacyVideoThemes = (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id && legacyVideoThemeSlugs.has(theme.slug));
+const activeVideoThemes = legacyVideoThemes.filter((theme) => theme.status === "active");
 const blackFridayPack = activePacks.find((pack) => schemaSlug(pack.category || pack.name) === "black-friday" || schemaSlug(pack.name) === "black-friday");
 const homePage = site.pages.find((page) => page.slug === "/");
 assert.ok(homePage, "MyDreamShoots homepage should exist");
@@ -161,7 +180,9 @@ const lowestVerifiedMonthlyUsdCents = Math.min(
 
 assert.equal(activePacks.length, 38, "MyDreamShoots should expose 38 active photo package themes");
 assert.equal(activeProducts.length, 7, "MyDreamShoots should expose 7 active pricing products");
+assert.equal(legacyVideoThemes.length, legacyVideoThemeSlugs.size, "MyDreamShoots legacy video theme inventory should remain auditable");
 assert.equal(activeVideoThemes.length, 0, "MyDreamShoots should not expose legacy video theme framework records after the AI Video Generation route migration");
+assert.ok(legacyVideoThemes.every((theme) => theme.status !== "active" && theme.legacyStatus === "legacy"), "legacy video themes must remain non-public and explicitly marked legacy");
 assert.ok(blackFridayPack, "Black Friday pack should exist");
 assert.equal(blackFridayPack.id, "pack_dreamshoot_black_friday", "Black Friday should have a dedicated page-owned pack id");
 assert.equal(/anime-avatar/i.test(blackFridayPack.imageUrl ?? ""), false, "Black Friday pack cover must not reuse Anime Avatar art");

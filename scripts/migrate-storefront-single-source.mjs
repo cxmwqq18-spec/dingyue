@@ -187,6 +187,12 @@ function migrateGraph(input) {
   for (const key of ["usesCustomerMediaForTraining", "sourceMediaRetentionDays", "refundReviewRequired", "refundWindowDays", "effectiveDate"]) {
     if (profile.policyFacts[key] === undefined || profile.policyFacts[key] === "") unresolved.push(`storefrontProfile.policyFacts.${key}`);
   }
+  for (const key of ["reserve", "consume", "release"]) {
+    if (!profile.policyFacts.creditLifecycle?.[key]) unresolved.push(`storefrontProfile.policyFacts.creditLifecycle.${key}`);
+  }
+  for (const key of ["transportClaimKey", "storageClaimKey"]) {
+    if (!profile.policyFacts.security?.[key]) unresolved.push(`storefrontProfile.policyFacts.security.${key}`);
+  }
   return { source, site, changes, conflicts, unresolved: Array.from(new Set(unresolved)) };
 }
 

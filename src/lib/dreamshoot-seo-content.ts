@@ -1237,6 +1237,66 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     ctaLabel: "Create a UGC-Style Video",
     ctaHref: "/app/create#step-video"
   },
+  "video-ad": {
+    label: "Video Ad",
+    title: "AI Video Ad Generator for Paid Social | myDreamshoots",
+    description:
+      "Create video ad concepts with AI for paid social, product campaigns, launches, retargeting, and creator-style placements. Start from text or an image, shape the hook, proof, and CTA, then review the output in your myDreamshoots workflow.",
+    keywords:
+      "ai video ad generator, paid social video ad generator, AI video ad maker, performance marketing video creator, paid social creative generator, campaign video variant creator",
+    h2: "create a paid-social video ad around one clear campaign job",
+    h3: ["Objective, hook, proof, placement, and CTA", "Eight video-ad scene directions", "Review creative claims before campaign use"],
+    intro:
+      "Video Ad helps customers shape a paid-social video concept around one campaign objective, supportable product proof, placement fit, and a clear next action.",
+    details: [
+      "Use it for paid social concepts, product campaign angles, launch and promo variants, retargeting reminders, and creator-style placements.",
+      "Build around objective, audience stage, hook, product moment, proof boundary, placement, and CTA.",
+      "Keep product claims, ratings, results, discounts, deadlines, prices, creator experiences, and platform performance claims tied to verified campaign facts.",
+      "The current CTA opens the existing video workspace so customers can review supported inputs, credit requirements, and output controls before generation."
+    ],
+    useCases: ["Paid social concepts", "Product campaign angles", "Retargeting reminders", "Creator-style placements", "Launch and promo variants", "Placement-aware tests"],
+    workflow: ["Choose the objective and audience stage.", "Start with a text prompt or approved image in the live workspace.", "Define the hook, product moment, proof boundary, placement, and CTA.", "Generate and review the output before campaign use."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore Product Ad Video", href: "/ai-video-generation/product-ad-video" },
+      { label: "Explore UGC Ad Video", href: "/ai-video-generation/ugc-ad-video" },
+      { label: "Explore Promo Video", href: "/ai-video-generation/promo-video" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create a Video Ad",
+    ctaHref: "/app/create#step-video"
+  },
+  "brand-video": {
+    label: "Brand Video",
+    title: "AI Brand Video Generator for Brand Stories | myDreamshoots",
+    description:
+      "Create brand-video concepts with AI for founder stories, company values, product origin, culture, community, and campaign identity. Start from text or an approved image, shape the narrative, then review the result in your myDreamshoots workflow.",
+    keywords:
+      "ai brand video generator, AI brand video maker, brand storytelling video generator, founder story video, brand identity video, company values video, product origin video, brand culture video",
+    h2: "turn an approved brand story into identity-led motion",
+    h3: ["Founder story, values, product origin, culture, and community", "Six-beat Brand Story Map", "Review every fact, logo, and visual anchor before publishing"],
+    intro:
+      "Brand Video helps customers shape a short brand-film concept around recognition, meaning, a specific point of view, approved visual anchors, and verifiable facts.",
+    details: [
+      "Use it for founder or origin stories, brand mission and values films, product-craft narratives, culture and team stories, customer or community storytelling, event openers, and brand-moment reels.",
+      "Build the story around one core idea, an approved voice, specific visual anchors, and only facts that can be verified.",
+      "Keep Brand Video distinct from Video Ad, Product Ad Video, and Promo Video: it owns identity, origin, values, culture, and recognition rather than paid-media, selling, or time-bound promotional jobs.",
+      "The current CTA opens the existing video workspace so customers can confirm supported inputs, credit requirements, and output controls before generation."
+    ],
+    useCases: ["Founder and origin stories", "Brand values films", "Product-craft narratives", "Culture and team stories", "Community storytelling", "Event and campaign identity moments"],
+    workflow: ["Define the one brand idea viewers should remember.", "Gather approved text, image references, product visuals, people, place, and verifiable facts.", "Choose Text to Video or Image to Video based on the starting asset and write the story frame.", "Generate and review identity, products, people, logos, text, claims, and visual continuity before publishing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore Video Ad", href: "/ai-video-generation/video-ad" },
+      { label: "Explore Product Ad Video", href: "/ai-video-generation/product-ad-video" },
+      { label: "Explore Promo Video", href: "/ai-video-generation/promo-video" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create a Brand Video",
+    ctaHref: "/app/create#step-video"
+  },
   "world-cup-fan-photos": {
     label: "World Cup Fan Photos",
     title: "AI World Cup Fan Photo Maker - stadium portraits and match-day posters",
@@ -1362,6 +1422,8 @@ const dreamshootDefaultPublicToolSlugs = new Set([
   "product-ad-video",
   "promo-video",
   "ugc-ad-video",
+  "video-ad",
+  "brand-video",
   "background-changer",
   "background-remover",
   "magic-eraser",

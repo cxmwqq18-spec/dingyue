@@ -5,7 +5,7 @@ export const mydreamshootsVideoFrameworkSiteIds = ["site_dreamshoot", "site_grow
 export const mydreamshootsVideoGenerationCategories = [
   {
     slug: "text-to-video",
-    label: "Text to video",
+    label: "Text to Video",
     description: "Video themes created from written prompts.",
     sortOrder: 10
   },
@@ -22,70 +22,178 @@ export const mydreamshootsVideoGenerationCategories = [
     sortOrder: 30
   },
   {
+    slug: "photo-animation",
+    label: "Photo Animation",
+    description: "Animate a still photo with controlled subject and camera motion.",
+    sortOrder: 40
+  },
+  {
+    slug: "photo-slideshow-video",
+    label: "Photo Slideshow Video",
+    description: "Arrange multiple photos into a paced slideshow video.",
+    sortOrder: 50
+  },
+  {
     slug: "cinematic-video",
     label: "Cinematic Video",
     description: "Plan story-driven cinematic clips with mood, shot design, lighting, pacing, and camera movement.",
-    sortOrder: 40
+    sortOrder: 60
   },
   {
     slug: "tiktok-video",
     label: "TikTok Video",
     description: "Create TikTok-first vertical video briefs with hooks, safe zones, captions, sound, and focused closes.",
-    sortOrder: 50
+    sortOrder: 70
   },
   {
     slug: "instagram-reels",
     label: "Instagram Reels",
     description: "Shape Reels around cover-aware framing, captions, visual story, audio, and profile consistency.",
-    sortOrder: 60
+    sortOrder: 80
+  },
+  {
+    slug: "youtube-shorts",
+    label: "YouTube Shorts",
+    description: "Create concise vertical videos designed for YouTube Shorts.",
+    sortOrder: 90
   },
   {
     slug: "social-media-video",
     label: "Social Media Video",
     description: "Adapt one master story into platform-aware social cuts with safer text placement and CTAs.",
-    sortOrder: 70
+    sortOrder: 110
   },
   {
     slug: "youtube-video",
     label: "YouTube Video",
     description: "Plan long-form YouTube drafts around title promise, opening minute, chapters, depth, and next steps.",
-    sortOrder: 80
+    sortOrder: 100
   },
   {
     slug: "story-video",
     label: "Story Video",
     description: "Shape story-led videos around setup, tension, turning point, payoff, and meaning.",
-    sortOrder: 90
+    sortOrder: 120
   },
   {
     slug: "meme-video",
     label: "Meme Video",
     description: "Turn reactions, POV setups, everyday situations, and punchlines into clear meme video directions.",
-    sortOrder: 100
+    sortOrder: 130
   },
   {
     slug: "product-video",
     label: "Product Video",
     description: "Turn product photos into clear video directions that answer buyer questions about scale, detail, use, features, and packaging.",
-    sortOrder: 110
+    sortOrder: 140
+  },
+  {
+    slug: "product-demo-video",
+    label: "Product Demo Video",
+    description: "Demonstrate product features, details, and normal use clearly.",
+    sortOrder: 150
   },
   {
     slug: "product-ad-video",
     label: "Product Ad Video",
     description: "Build product ads around one audience, product promise, visual proof, offer, and clear next action.",
-    sortOrder: 120
+    sortOrder: 160
   },
   {
     slug: "promo-video",
     label: "Promo Video",
     description: "Turn launches, offers, events, seasonal campaigns, and product updates into clear promotional video briefs.",
-    sortOrder: 130
+    sortOrder: 180
   },
   {
     slug: "ugc-ad-video",
     label: "UGC Ad Video",
     description: "Plan creator-style product ads around speaker status, hooks, product context, visible proof, and clear CTAs.",
-    sortOrder: 140
+    sortOrder: 170
+  },
+  {
+    slug: "video-ad",
+    label: "Video Ad",
+    description: "Plan paid-social video ad concepts around objective, hook, proof, placement, CTA, and meaningful test variants.",
+    sortOrder: 190
+  },
+  {
+    slug: "brand-video",
+    label: "Brand Video",
+    description: "Present a company, brand story, or positioning through video.",
+    sortOrder: 200
+  },
+  {
+    slug: "music-video",
+    label: "Music Video",
+    description: "Develop visual concepts and motion for music-led videos.",
+    sortOrder: 210
+  },
+  {
+    slug: "travel-video",
+    label: "Travel Video",
+    description: "Turn destination photos and route moments into travel video.",
+    sortOrder: 220
+  },
+  {
+    slug: "fashion-video",
+    label: "Fashion Video",
+    description: "Create fashion-focused motion for people, styling, and apparel.",
+    sortOrder: 230
+  },
+  {
+    slug: "food-video",
+    label: "Food Video",
+    description: "Create food-focused video with appetizing detail and pacing.",
+    sortOrder: 240
+  },
+  {
+    slug: "fitness-video",
+    label: "Fitness Video",
+    description: "Create fitness video with stable, readable movement.",
+    sortOrder: 250
+  },
+  {
+    slug: "pet-video",
+    label: "Pet Video",
+    description: "Create shareable pet and lifestyle video moments.",
+    sortOrder: 260
+  },
+  {
+    slug: "explainer-video",
+    label: "Explainer Video",
+    description: "Explain a product, service, or concept with clear visual structure.",
+    sortOrder: 270
+  },
+  {
+    slug: "how-to-video",
+    label: "How-to Video",
+    description: "Present a process as a clear step-by-step tutorial.",
+    sortOrder: 280
+  },
+  {
+    slug: "real-estate-video",
+    label: "Real Estate Video",
+    description: "Present property photos and spaces through a coherent tour.",
+    sortOrder: 290
+  },
+  {
+    slug: "corporate-video",
+    label: "Corporate Video",
+    description: "Create company introductions and internal business video.",
+    sortOrder: 300
+  },
+  {
+    slug: "ai-avatar-video",
+    label: "AI Avatar Video",
+    description: "Create presenter-led video with a consistent AI avatar.",
+    sortOrder: 310
+  },
+  {
+    slug: "talking-head-video",
+    label: "Talking Head Video",
+    description: "Create presenter video for education, explanation, and marketing.",
+    sortOrder: 320
   }
 ] as const;
 
@@ -101,17 +209,44 @@ export const mydreamshootsVideoGenerationCategoryParentSlugBySlug: Record<string
   "text-to-video": "core-ai-creation",
   "image-to-video": "core-ai-creation",
   "talking-photo": "core-ai-creation",
+  "photo-animation": "core-ai-creation",
+  "photo-slideshow-video": "core-ai-creation",
   "cinematic-video": "core-ai-creation",
   "tiktok-video": "social-creator",
   "instagram-reels": "social-creator",
+  "youtube-shorts": "social-creator",
   "social-media-video": "social-creator",
   "youtube-video": "social-creator",
   "story-video": "social-creator",
   "meme-video": "social-creator",
   "product-video": "marketing-commerce",
+  "product-demo-video": "marketing-commerce",
   "product-ad-video": "marketing-commerce",
   "promo-video": "marketing-commerce",
-  "ugc-ad-video": "marketing-commerce"
+  "ugc-ad-video": "marketing-commerce",
+  "video-ad": "marketing-commerce",
+  "brand-video": "marketing-commerce",
+  "music-video": "creative-lifestyle",
+  "travel-video": "creative-lifestyle",
+  "fashion-video": "creative-lifestyle",
+  "food-video": "creative-lifestyle",
+  "fitness-video": "creative-lifestyle",
+  "pet-video": "creative-lifestyle",
+  "explainer-video": "professional-business",
+  "how-to-video": "professional-business",
+  "real-estate-video": "professional-business",
+  "corporate-video": "professional-business",
+  "ai-avatar-video": "professional-business",
+  "talking-head-video": "professional-business",
+  "portrait-motion": "core-ai-creation",
+  "travel-story": "creative-lifestyle",
+  "social-cards": "social-creator",
+  "product-teaser": "marketing-commerce",
+  "edit-by-prompt": "core-ai-creation",
+  "wedding-memory": "creative-lifestyle",
+  "creator-motion": "social-creator",
+  "creator-intro-video": "social-creator",
+  "fan-poster-motion": "social-creator"
 };
 
 export const mydreamshootsVideoGenerationThemeSeeds = [
@@ -296,6 +431,32 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     durationSeconds: 6,
     maxFrames: 10,
     sortOrder: 140
+  },
+  {
+    slug: "video-ad",
+    categorySlug: "video-ad",
+    name: "Video Ad",
+    headline: "Create paid-social video ad concepts around objective, hook, proof, placement, CTA, and testing.",
+    description: "Create short paid-social video ad concepts from a written campaign brief or approved image, then review each output before campaign use.",
+    prompt: "Create a short paid-social video ad concept around one verified campaign objective. Start with a clear hook, show the approved product moment and supportable proof, fit the planned placement, and end with one relevant call to action. Do not invent product claims, ratings, results, discounts, deadlines, prices, creator experiences, or platform performance.",
+    imageUrl: "/assets/dreamshoot/video-ad/video-ad-creator-phone-tripod.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 150
+  },
+  {
+    slug: "brand-video",
+    categorySlug: "brand-video",
+    name: "Brand Video",
+    headline: "Turn an approved brand story into identity-led motion.",
+    description: "Create brand-video concepts around founder stories, product origin, values, culture, community, and campaign identity without turning every business video into a sales template.",
+    prompt: "Create a story-led brand video concept around one approved brand memory. Use the supplied brand brief or image reference, preserve approved visual anchors, build a clear origin or point of view, and use only verifiable facts. Do not invent awards, dates, testimonials, impact claims, logos, packaging text, brand-kit controls, or performance outcomes.",
+    imageUrl: "/assets/dreamshoot/brand-video/brand-video-founder-story.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 160
   }
 ] as const;
 
@@ -331,7 +492,9 @@ export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "product-video",
   "product-ad-video",
   "promo-video",
-  "ugc-ad-video"
+  "ugc-ad-video",
+  "video-ad",
+  "brand-video"
 ] as const;
 
 const publicVideoGenerationPageSlugs = new Set<string>(mydreamshootsPublicVideoGenerationTopicSlugs);

@@ -34,7 +34,12 @@ export function isPublicPriceFact(price: PriceFact, now = new Date(), expectedCu
   return (from === undefined || from <= current) && (to === undefined || to > current);
 }
 
-export function missingStorefrontProfileFacts(profile: StorefrontProfileJson | undefined): string[] {
+export function isProductionStorefrontClaim(value: string | undefined): boolean {
+  const claim = value?.replace(/\s+/g, " ").trim();
+  return Boolean(claim && !/^(?:test|fixture|local-test)\b/i.test(claim));
+}
+
+export function missingStorefrontProfileFacts(profile: StorefrontProfileJson | undefined, options: { requireProductionClaims?: boolean } = {}): string[] {
   const missing: string[] = [];
   if (!profile?.identity.legalName) missing.push("profile.identity.legalName");
   if (!profile?.identity.entityType) missing.push("profile.identity.entityType");
@@ -50,5 +55,16 @@ export function missingStorefrontProfileFacts(profile: StorefrontProfileJson | u
   if (profile?.policyFacts.refundReviewRequired === undefined) missing.push("profile.policyFacts.refundReviewRequired");
   if (!profile?.policyFacts.refundWindowDays || profile.policyFacts.refundWindowDays <= 0) missing.push("profile.policyFacts.refundWindowDays");
   if (!profile?.policyFacts.effectiveDate || !/^\d{4}-\d{2}-\d{2}$/.test(profile.policyFacts.effectiveDate)) missing.push("profile.policyFacts.effectiveDate");
+  const creditLifecycle = profile?.policyFacts.creditLifecycle;
+  if (!creditLifecycle?.reserve || (options.requireProductionClaims && !isProductionStorefrontClaim(creditLifecycle.reserve))) missing.push("profile.policyFacts.creditLifecycle.reserve");
+  if (!creditLifecycle?.consume || (options.requireProductionClaims && !isProductionStorefrontClaim(creditLifecycle.consume))) missing.push("profile.policyFacts.creditLifecycle.consume");
+  if (!creditLifecycle?.release || (options.requireProductionClaims && !isProductionStorefrontClaim(creditLifecycle.release))) missing.push("profile.policyFacts.creditLifecycle.release");
+  const security = profile?.policyFacts.security;
+  if (!security?.transportClaimKey || (options.requireProductionClaims && !isProductionStorefrontClaim(security.transportClaimKey))) missing.push("profile.policyFacts.security.transportClaimKey");
+  if (!security?.storageClaimKey || (options.requireProductionClaims && !isProductionStorefrontClaim(security.storageClaimKey))) missing.push("profile.policyFacts.security.storageClaimKey");
   return missing;
+}
+
+export function hasCompleteStorefrontProfileFacts(profile: StorefrontProfileJson | undefined, options: { requireProductionClaims?: boolean } = {}): boolean {
+  return missingStorefrontProfileFacts(profile, options).length === 0;
 }

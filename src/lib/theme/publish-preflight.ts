@@ -418,7 +418,8 @@ export function runThemePublishPreflight({
       : warn("page_count", "pages", "页面覆盖偏少", `当前只有 ${site.pages.length} 个页面，DreamShootAI 主题目标应覆盖首页、定价、工具、登录、工作台、相册、政策、帮助和博客。`)
   );
 
-  const profileMissing = missingStorefrontProfileFacts(storefrontProfile).map((fact) => fact.replace(/^profile\.(identity|policyFacts)\./, ""));
+  const profileMissing = missingStorefrontProfileFacts(storefrontProfile, { requireProductionClaims: site.id === "site_dreamshoot" })
+    .map((fact) => fact.replace(/^profile\.(identity|policyFacts)\./, ""));
   checks.push(profileMissing.length ? block("storefront_profile", "settings", "站点资料未确认", `Profile 缺少: ${profileMissing.join(", ")}。法人资料未确认时禁止整站发布。`) : pass("storefront_profile", "settings", "站点资料完整", "Footer、Contact、About 和 Organization Schema 共享同一份已发布 Profile。"));
   checks.push(invalidActivePrices.length ? block("price_provider_verification", "commerce", "报价未完成 provider 校验", `${invalidActivePrices.length} 个 active Price 缺少有效 Stripe read-only fingerprint。`) : pass("price_provider_verification", "commerce", "报价 provider 校验有效", "公开报价均有 active 状态、有效 Price ID 和 provider fingerprint。"));
   checks.push(invalidCreativePacks.length ? block("creative_pack_facts", "ai", "CreativePack 数值非法", `${invalidCreativePacks.map((pack) => pack.id).slice(0, 5).join(", ")} 的 credits/outputCount 必须大于 0。`) : pass("creative_pack_facts", "ai", "CreativePack 数值有效", "前台不会为缺失 credits 或 outputCount 伪造默认值。"));
