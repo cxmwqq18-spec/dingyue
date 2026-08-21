@@ -13,7 +13,7 @@ function argValue(name, fallback) {
 }
 
 function usage() {
-  console.log("Usage: node scripts/import-platform-state-to-prisma.mjs [--source data/platform-state.json] [--dry-run]");
+  console.log("Usage: node scripts/import-platform-state-to-prisma.mjs --source archive/legacy/platform-state.json [--dry-run]");
 }
 
 function summarize(state) {
@@ -51,7 +51,9 @@ async function main() {
     usage();
     return;
   }
-  const source = path.resolve(argValue("--source", path.join(process.cwd(), "data", "platform-state.json")));
+  const sourceArg = argValue("--source");
+  if (!sourceArg) throw new Error("--source is required for historical JSON import; runtime never reads archive files.");
+  const source = path.resolve(sourceArg);
   const dryRun = process.argv.includes("--dry-run");
   if (!fs.existsSync(source)) throw new Error(`state file not found: ${source}`);
   const state = JSON.parse(fs.readFileSync(source, "utf8"));

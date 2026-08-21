@@ -10,7 +10,7 @@ function toPrismaJson(state: PlatformState): Prisma.InputJsonValue {
 }
 
 export function usePostgresPlatformState(): boolean {
-  return process.env.PERSISTENCE_BACKEND === "postgres";
+  return true;
 }
 
 export async function readPlatformStateFromPostgres(): Promise<PlatformState | undefined> {

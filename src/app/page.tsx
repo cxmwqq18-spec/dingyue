@@ -5,7 +5,6 @@ import { notFound, redirect } from "next/navigation";
 import { ArrowRight, ArrowUpRight, Boxes, Brush, CreditCard, Database, Globe2, LayoutDashboard, ShieldCheck, Workflow } from "lucide-react";
 import {
   readStorefrontAccessSummaryFromDatabase,
-  readStorefrontPlatformStateFromLegacyJson,
   readStorefrontPublicPageMetadataStateByHostFromDatabase,
   readStorefrontPublicRuntimeStateByHostFromDatabase
 } from "@/lib/storefront-state";
@@ -60,12 +59,10 @@ async function getHostRuntimeStateWithFallback(hosts: Array<string | null>): Pro
       const state = await readStorefrontPublicRuntimeStateByHostFromDatabase(host, "/");
       if (state) return state;
     }
-  } catch {
-    // Fall through to the legacy state reader for local or migrating databases.
+  } catch (error) {
+    throw error;
   }
-  const platformState = await readStorefrontPlatformStateFromLegacyJson();
-  const site = getSiteByHostCandidatesFromState(platformState, hosts);
-  return site ? platformState : undefined;
+  return undefined;
 }
 
 async function getHostMetadataStateWithFallback(hosts: Array<string | null>): Promise<PlatformState | undefined> {
@@ -75,36 +72,14 @@ async function getHostMetadataStateWithFallback(hosts: Array<string | null>): Pr
       const state = await readStorefrontPublicPageMetadataStateByHostFromDatabase(host, "/");
       if (state) return state;
     }
-  } catch {
-    // Fall through to the legacy state reader for local or migrating databases.
+  } catch (error) {
+    throw error;
   }
-  const platformState = await readStorefrontPlatformStateFromLegacyJson();
-  const site = getSiteByHostCandidatesFromState(platformState, hosts);
-  return site ? platformState : undefined;
+  return undefined;
 }
 
 async function getAccessSummaryWithFallback() {
-  try {
-    return await readStorefrontAccessSummaryFromDatabase();
-  } catch {
-    const platformState = await readStorefrontPlatformStateFromLegacyJson();
-    return {
-      sites: platformState.sites.slice(0, 4).map((site) => ({
-        id: site.id,
-        name: site.name,
-        slug: site.slug,
-        status: site.status,
-        primaryDomain: site.primaryDomain,
-        branding: site.branding,
-        adminEmail: platformState.siteAdmins.find((admin) => admin.siteId === site.id)?.email,
-        customerEmail: platformState.customers.find((customer) => customer.siteId === site.id)?.email
-      })),
-      totalSites: platformState.sites.length,
-      activeSites: platformState.sites.filter((site) => site.status === "active").length,
-      runningJobs: platformState.jobs.filter((job) => job.status === "running").length,
-      platformAdmin: platformState.platformAdmins[0]
-    };
-  }
+  return readStorefrontAccessSummaryFromDatabase();
 }
 
 export default async function HomePage({

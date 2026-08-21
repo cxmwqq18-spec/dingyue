@@ -11,14 +11,14 @@ import {
   siteAdminNav,
   siteAdminWorkspace
 } from "../_lib/site-admin-context";
-import { getAvailableInternalThemePackageSummaries, getAvailableSaasThemeSummariesForInstall, getSiteSaasThemeRecords } from "@/lib/server-store";
+import { getAvailableInternalThemePackageSummaries, getAvailableSaasThemeSummariesForInstall } from "@/lib/server-store";
 import { getSiteSaasThemeRecordsSummaryRelational } from "@/lib/stores/theme-store";
 
 export default async function SiteThemesPage({ params }: { params: Promise<{ siteSlug: string }> }) {
   const { siteSlug } = await params;
   const data = await getSiteAdminData(siteSlug, { include: ["themeSettings"], summary: false, take: 0 });
   const [records, availableThemes, internalPackages] = await Promise.all([
-    getSiteSaasThemeRecordsSummaryRelational(data.site.id).catch(() => getSiteSaasThemeRecords(data.site.id)),
+    getSiteSaasThemeRecordsSummaryRelational(data.site.id),
     Promise.resolve(getAvailableSaasThemeSummariesForInstall()),
     Promise.resolve(getAvailableInternalThemePackageSummaries())
   ]);

@@ -2,6 +2,7 @@ import { adminPerfJson, createAdminPerfTracker } from "@/lib/admin-perf";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
+import { usePostgresPlatformState } from "@/lib/platform-state-store";
 import {
   getSiteAppsFromState,
   getSiteCreativePacksFromState,
@@ -180,7 +181,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
-  if (process.env.PERSISTENCE_BACKEND !== "postgres") {
+  if (!usePostgresPlatformState()) {
     const state = perf.measureSync("context", () => readPlatformState(), { source: "state" });
     const site = state.sites.find((item) => item.id === siteId);
     if (!site) {

@@ -11,8 +11,8 @@ const batchSize = 50;
 
 function usage() {
   console.log(
-    "Usage: node scripts/db-import-relational-state.mjs [--source data/platform-state.json] [--dry-run] [--verify] [--replace --allow-data-loss]\n" +
-      "       node scripts/verify-relational-state.mjs [--source data/platform-state.json]"
+    "Usage: node scripts/db-import-relational-state.mjs --source archive/legacy/platform-state.json [--dry-run] [--verify] [--replace --allow-data-loss]\n" +
+      "       node scripts/verify-relational-state.mjs --source archive/legacy/platform-state.json"
   );
 }
 

@@ -50,6 +50,7 @@ import {
   readPlatformState
 } from "@/lib/server-store";
 import { getCurrentSiteAdmin } from "@/lib/api-auth";
+import { usePostgresPlatformState } from "@/lib/platform-state-store";
 import { latestActivity, siteAvailableCredits, siteHealthScore, siteReservedCredits, siteRevenue } from "@/lib/ops";
 import { prisma } from "@/lib/prisma";
 import { listSiteCustomersRelational } from "@/lib/stores/customer-store";
@@ -333,7 +334,7 @@ async function getSiteCustomerAdminCollections(
   options: { includeAssets?: boolean } = {}
 ): Promise<SiteCustomerAdminCollections> {
   const fallback = () => getSiteCustomerAdminCollectionsFromState(state, siteId);
-  if (process.env.PERSISTENCE_BACKEND !== "postgres") {
+  if (!usePostgresPlatformState()) {
     return fallback();
   }
 
@@ -539,7 +540,7 @@ async function getSiteOrdersAdminCollections(
     jobs: includeJobs ? getSiteJobsFromState(state, siteId).slice(0, take) : [],
     paymentEvents: includePaymentEvents ? state.paymentEvents.filter((event) => event.siteId === siteId).slice(0, take) : []
   });
-  if (process.env.PERSISTENCE_BACKEND !== "postgres") {
+  if (!usePostgresPlatformState()) {
     return fallback();
   }
 
@@ -620,7 +621,7 @@ async function getSiteOrdersAdminCollections(
 
 async function getSiteCustomersForAdminShell(state: PlatformState, siteId: string): Promise<Customer[]> {
   const fallback = () => getSiteCustomersFromState(state, siteId);
-  if (process.env.PERSISTENCE_BACKEND !== "postgres") {
+  if (!usePostgresPlatformState()) {
     return fallback();
   }
 
@@ -647,7 +648,7 @@ async function getCustomerLookupsForAdmin(
       .filter((customer) => wanted.has(customer.id))
       .map((customer) => ({ id: customer.id, email: customer.email }));
   };
-  if (process.env.PERSISTENCE_BACKEND !== "postgres") {
+  if (!usePostgresPlatformState()) {
     return fallback();
   }
 
@@ -665,7 +666,7 @@ async function getCustomerLookupsForAdmin(
 
 async function getSiteCreativePacksForAdmin(state: PlatformState, siteId: string): Promise<CreativePack[]> {
   const fallback = () => getSiteCreativePacksFromState(state, siteId);
-  if (process.env.PERSISTENCE_BACKEND !== "postgres") {
+  if (!usePostgresPlatformState()) {
     return fallback();
   }
 
@@ -788,7 +789,7 @@ async function computeSiteAdminDataRaw(siteSlug: string, options: SiteAdminDataP
     "email"
   ]);
   const wants = (...keys: SiteAdminDataInclude[]) => keys.some((key) => include.has(key));
-  const usePostgres = process.env.PERSISTENCE_BACKEND === "postgres";
+  const usePostgres = usePostgresPlatformState();
   const configuredLiveAdminReads = process.env.SITE_ADMIN_LIVE_READS === "1" || usePostgres;
   const shouldLoadSummary = options.summary ?? true;
   const summaryMode = shouldLoadSummary === true ? (include.has("overview") ? "full" : "light") : shouldLoadSummary;
@@ -1123,7 +1124,7 @@ export async function getSiteAdminData(siteSlug: string, options: SiteAdminDataO
     take: options.take
   });
   const includeKey = [...(options.include ?? [])].sort().join(",");
-  const canUseShellCache = process.env.PERSISTENCE_BACKEND === "postgres"
+  const canUseShellCache = usePostgresPlatformState()
     && options.summary === false
     && options.take === 0
     && includeKey === "";

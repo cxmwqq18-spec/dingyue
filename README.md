@@ -26,7 +26,7 @@ Multi-site AI subscription SaaS MVP inspired by the store-management shape of Sh
 - Site customer workspace at `/site/lumen/app`
 - Job detail and worker callback test page at `/site/lumen/app/jobs/[jobId]`
 - Site-scoped customers, products, AI apps, credits, jobs, and published theme pages
-- JSON persistence in `data/platform-state.json`
+- PostgreSQL-backed relational persistence through Prisma
 - Prisma schema for the production data model
 - Persisted Stripe webhook idempotency and credit grants in dev mode
 - Persisted AI worker status/result callbacks with reserve, consume, and release credit settlement
@@ -116,7 +116,7 @@ grant.
 
 ## Production Notes
 
-The UI and API currently persist to `data/platform-state.json` so the app can run without local Postgres. The production schema lives in `prisma/schema.prisma` and should be wired to Prisma Client when `DATABASE_URL` and migrations are ready.
+The website runtime reads and writes PostgreSQL through Prisma. `data/platform-state.json` is retained only as an archived migration artifact and is never a runtime fallback. A missing or unavailable database is surfaced as an error instead of serving stale file content.
 
 Production implementation must still:
 
@@ -124,6 +124,6 @@ Production implementation must still:
 - create Checkout sessions in the connected account scope,
 - verify worker HMAC signatures,
 - run timeout compensation for accepted jobs with no result callback,
-- move JSON persistence to Postgres + Prisma migrations,
+- maintain PostgreSQL + Prisma migrations,
 - replace dev-mode signed asset links with real S3-compatible signed URLs,
 - harden RBAC, audit log coverage, rate limits, and deployment secrets before real customers.

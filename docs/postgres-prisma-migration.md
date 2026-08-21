@@ -1,13 +1,13 @@
 # Postgres + Prisma Migration
 
-This project can run with the legacy JSON state file or a Postgres-backed platform state document.
+The website runtime uses PostgreSQL through Prisma. The legacy JSON state file is not a runtime source.
 
 ## Modes
 
-- `PERSISTENCE_BACKEND=json`: default local/demo mode, reads `data/platform-state.json`.
-- `PERSISTENCE_BACKEND=postgres`: reads and writes the `PlatformStateDocument` row in Postgres through Prisma.
+- `PERSISTENCE_BACKEND=postgres`: required runtime mode. Public pages, admin, accounts, jobs, billing, theme editing and publishing read relational PostgreSQL tables.
+- `STOREFRONT_PATH_MODE_READS=database`: required storefront read mode. Local preview and JSON modes are disabled.
 
-The Postgres document mode is a migration bridge. It moves runtime state off the local JSON file without forcing every existing API/page call site to become asynchronous in one large rewrite. After this bridge is stable, high-traffic domains can be moved to normalized Prisma tables module by module.
+`PlatformStateDocument` is retained only as a compatibility snapshot for explicit migration tooling. It is not a website content source; relational tables and published theme snapshots are authoritative.
 
 ## Local / Server Env
 
@@ -42,7 +42,9 @@ DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public'
 DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run prisma:push
 ```
 
-## Import Current JSON State
+## Historical JSON Import
+
+These commands are one-time migration tooling only. They must never be part of a build, deploy, sync, or runtime command. The current database is the migration baseline and is not overwritten automatically.
 
 Dry run:
 

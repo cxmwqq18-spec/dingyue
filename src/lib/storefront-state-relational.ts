@@ -2,8 +2,6 @@ import "server-only";
 
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
-import { readPlatformState } from "@/lib/server-store";
-import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import {
   mapAiApp,
   mapCreditLedger,
@@ -40,10 +38,6 @@ import {
   toVideoThemeCategory
 } from "@/lib/stores/prisma-mappers";
 import type { PlatformState, Site } from "@/lib/types";
-
-export function readStorefrontPlatformStateJsonFallback(): PlatformState {
-  return readPlatformState();
-}
 
 function mergeSitesWithMedia(sites: Site[], mediaAssets: PlatformState["mediaAssets"]): Site[] {
   const bySiteId = new Map<string, PlatformState["mediaAssets"]>();
@@ -225,8 +219,6 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
       currentAiProviderId: preferredProvider?.id
     };
   } catch (error) {
-    if (!shouldFallbackRelationalRead(error)) throw error;
-    warnRelationalFallback("storefront state", error);
     throw error;
   }
 }

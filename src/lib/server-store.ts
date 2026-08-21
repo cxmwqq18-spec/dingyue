@@ -1,8 +1,6 @@
 import "server-only";
 import crypto from "crypto";
 import fs from "fs";
-import path from "path";
-import { execFileSync } from "child_process";
 import { platformState as seedState } from "./data";
 import {
   buildSaasThemeDraft,
@@ -89,18 +87,9 @@ import { resolveMediaAssetUrl } from "@/lib/media";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import type { SaasThemeRecord, SaasThemeSettingsRecord, SaasThemeTemplates } from "@/lib/theme/saas-theme-model";
 
-const dataDir = path.join(process.cwd(), "data");
-const dataFile = path.join(dataDir, "platform-state.json");
-const postgresBridgeScript = path.join(process.cwd(), "scripts", "platform-state-db-bridge.mjs");
-const postgresStateCacheMs = Math.max(0, Number(process.env.PLATFORM_STATE_CACHE_MS ?? "30000") || 0);
-const postgresStateCacheFile = path.join(process.cwd(), ".next", "cache", "platform-state-postgres.json");
-const postgresStateDiskCacheEnabled = process.env.PLATFORM_STATE_DISK_CACHE !== "0";
-const jsonStateCacheMs = Math.max(0, Number(process.env.PLATFORM_STATE_JSON_CACHE_MS ?? "5000") || 0);
 const sessionTtlMs = 1000 * 60 * 60 * 24 * 30;
 const themePackageListCacheMs = Math.max(0, Number(process.env.THEME_PACKAGE_LIST_CACHE_MS ?? "60000") || 0);
 
-let postgresStateCache: { expiresAt: number; state: PlatformState } | null = null;
-let jsonStateCache: { expiresAt: number; mtimeMs: number; state: PlatformState } | null = null;
 let availableSaasThemeSummaryCache: { expiresAt: number; themes: ReturnType<typeof getSaasThemePackageSummaryList> } | null = null;
 let availableInternalThemeSummaryCache: {
   expiresAt: number;
@@ -110,7 +99,6 @@ let availableInternalThemeSummaryCache: {
     }
   >;
 } | null = null;
-let postgresFallbackWarned = false;
 
 export class StoreError extends Error {
   status: number;
@@ -141,85 +129,12 @@ function comparePlatformAiProviderPriority(left: Pick<PlatformAiProvider, "prior
     left.label.localeCompare(right.label);
 }
 
-function readPostgresStateCache(): PlatformState | null {
-  if (postgresStateCacheMs <= 0) return null;
-  const now = Date.now();
-  if (postgresStateCache && postgresStateCache.expiresAt > now) {
-    return cloneState(postgresStateCache.state);
-  }
-  if (!postgresStateDiskCacheEnabled) return null;
-  try {
-    const cached = JSON.parse(fs.readFileSync(postgresStateCacheFile, "utf8")) as { expiresAt?: number; state?: PlatformState };
-    if (!cached.expiresAt || cached.expiresAt <= now || !cached.state) return null;
-    postgresStateCache = { expiresAt: cached.expiresAt, state: normalizeState(cached.state) };
-    return cloneState(postgresStateCache.state);
-  } catch {
-    return null;
-  }
-}
-
-function shouldFallbackToJsonState(): boolean {
-  return process.env.PERSISTENCE_BACKEND === "postgres" && process.env.NODE_ENV !== "production" && process.env.PLATFORM_STATE_POSTGRES_STRICT !== "1";
-}
-
-function warnPostgresFallback(error: unknown): void {
-  if (postgresFallbackWarned) return;
-  postgresFallbackWarned = true;
-  const message = error instanceof Error ? error.message.split("\n")[0] : String(error);
-  console.warn(`[platform-state] Postgres unavailable; using JSON fallback for local development. ${message}`);
-}
-
-function readJsonPlatformStateFallback(): PlatformState {
-  if (!fs.existsSync(dataFile)) {
-    return normalizeState(cloneState(seedState));
-  }
-  const stat = fs.statSync(dataFile);
-  const now = Date.now();
-  if (jsonStateCacheMs > 0 && jsonStateCache && jsonStateCache.expiresAt > now && jsonStateCache.mtimeMs === stat.mtimeMs) {
-    return cloneState(jsonStateCache.state);
-  }
-  const normalized = normalizeState(JSON.parse(fs.readFileSync(dataFile, "utf8")) as PlatformState);
-  if (jsonStateCacheMs > 0) {
-    jsonStateCache = { expiresAt: now + jsonStateCacheMs, mtimeMs: stat.mtimeMs, state: cloneState(normalized) };
-  }
-  return normalized;
-}
-
 export function readLocalPlatformStateFallback(): PlatformState | undefined {
-  if (process.env.NODE_ENV === "production" || process.env.PLATFORM_STATE_POSTGRES_STRICT === "1") return undefined;
-  return readJsonPlatformStateFallback();
+  return undefined;
 }
 
-export function mutateLocalPlatformStateFallback(mutator: (state: PlatformState) => void): PlatformState | undefined {
-  if (process.env.NODE_ENV === "production" || process.env.PLATFORM_STATE_POSTGRES_STRICT === "1") return undefined;
-  const state = readJsonPlatformStateFallback();
-  mutator(state);
-  return writeJsonPlatformStateFallback(state);
-}
-
-function writeJsonPlatformStateFallback(nextState: PlatformState): PlatformState {
-  fs.mkdirSync(dataDir, { recursive: true });
-  fs.writeFileSync(dataFile, `${JSON.stringify(nextState, null, 2)}\n`);
-  jsonStateCache = null;
-  return nextState;
-}
-
-function writePostgresStateCache(state: PlatformState): void {
-  if (postgresStateCacheMs <= 0) {
-    postgresStateCache = null;
-    return;
-  }
-  const nextCache = { expiresAt: Date.now() + postgresStateCacheMs, state: cloneState(state) };
-  postgresStateCache = nextCache;
-  if (!postgresStateDiskCacheEnabled) return;
-  try {
-    fs.mkdirSync(path.dirname(postgresStateCacheFile), { recursive: true });
-    const tempFile = `${postgresStateCacheFile}.${process.pid}.${Date.now()}.tmp`;
-    fs.writeFileSync(tempFile, JSON.stringify(nextCache));
-    fs.renameSync(tempFile, postgresStateCacheFile);
-  } catch {
-    // Cache writes should never block core persistence.
-  }
+export function mutateLocalPlatformStateFallback(_mutator: (state: PlatformState) => void): PlatformState | undefined {
+  return undefined;
 }
 
 function safeCustomerAssetRelativePath(storageKey: string): string {
@@ -1313,64 +1228,13 @@ function normalizeSiteThemes(state: PlatformState): SiteTheme[] {
 }
 
 export function readPlatformState(options: { fresh?: boolean } = {}): PlatformState {
-  if (process.env.PERSISTENCE_BACKEND === "postgres") {
-    const cachedState = options.fresh ? null : readPostgresStateCache();
-    if (cachedState) return cachedState;
-    let raw = "";
-    try {
-      raw = execFileSync(process.execPath, [postgresBridgeScript, "read"], {
-        cwd: process.cwd(),
-        encoding: "utf8",
-        env: process.env,
-        maxBuffer: 1024 * 1024 * 64
-      }).trim();
-    } catch (error) {
-      if (!shouldFallbackToJsonState()) throw error;
-      warnPostgresFallback(error);
-      const fallbackState = readJsonPlatformStateFallback();
-      writePostgresStateCache(fallbackState);
-      return fallbackState;
-    }
-    if (raw) {
-      const normalized = normalizeState(JSON.parse(raw) as PlatformState);
-      writePostgresStateCache(normalized);
-      return normalized;
-    }
-    if (process.env.NODE_ENV === "production") {
-      throw new Error("Postgres platform state is empty; import platform state before starting production.");
-    }
-    return writePlatformState(cloneState(seedState));
-  }
-  if (!fs.existsSync(dataFile)) {
-    return writePlatformState(cloneState(seedState));
-  }
-  return normalizeState(JSON.parse(fs.readFileSync(dataFile, "utf8")) as PlatformState);
+  void options;
+  throw new Error("Legacy PlatformStateDocument reads are disabled. Use a relational store adapter.");
 }
 
 export function writePlatformState(nextState: PlatformState): PlatformState {
-  fs.mkdirSync(dataDir, { recursive: true });
-  const normalized = normalizeState(nextState);
-  if (process.env.PERSISTENCE_BACKEND === "postgres") {
-    try {
-      execFileSync(process.execPath, [postgresBridgeScript, "write"], {
-        cwd: process.cwd(),
-        input: JSON.stringify(normalized),
-        encoding: "utf8",
-        env: process.env,
-        maxBuffer: 1024 * 1024 * 64
-      });
-    } catch (error) {
-      if (!shouldFallbackToJsonState()) throw error;
-      warnPostgresFallback(error);
-      writePostgresStateCache(normalized);
-      return writeJsonPlatformStateFallback(normalized);
-    }
-    writePostgresStateCache(normalized);
-    return normalized;
-  }
-  fs.writeFileSync(dataFile, `${JSON.stringify(normalized, null, 2)}\n`);
-  jsonStateCache = null;
-  return normalized;
+  void nextState;
+  throw new Error("Legacy PlatformStateDocument writes are disabled. Use a relational store adapter.");
 }
 
 export function mutatePlatformState(mutator: (state: PlatformState) => void): PlatformState {

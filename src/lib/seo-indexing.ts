@@ -1,4 +1,4 @@
-import { readStorefrontPlatformStateFromDatabase, readStorefrontPlatformStateFromLegacyJson } from "@/lib/storefront-state";
+import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
 import { getSiteByHostCandidatesFromState } from "@/lib/domain-routing";
 import { canonicalSeoDirectoryPathForSite, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
 import {
@@ -954,8 +954,6 @@ function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[
 }
 
 async function readIndexableStateAndSites(): Promise<{ state: PlatformState; sites: Site[] } | undefined> {
-  if (prefersLegacyStateForPersistenceBackend()) return readLegacyIndexableStateAndSites();
-
   try {
     const state = await readStorefrontPlatformStateFromDatabase();
     const sites = findIndexableSites(state);
@@ -966,16 +964,6 @@ async function readIndexableStateAndSites(): Promise<{ state: PlatformState; sit
   }
 
   return undefined;
-}
-
-async function readLegacyIndexableStateAndSites(): Promise<{ state: PlatformState; sites: Site[] } | undefined> {
-  try {
-    const state = await readStorefrontPlatformStateFromLegacyJson();
-    const sites = findIndexableSites(state);
-    return sites.length ? { state, sites } : undefined;
-  } catch {
-    return undefined;
-  }
 }
 
 export async function getMydreamshootsSitemapUrls(): Promise<string[]> {
@@ -1026,15 +1014,6 @@ function isLocalDevelopmentHost(host: string): boolean {
   return host === "localhost" || host === "127.0.0.1" || host === "::1";
 }
 
-function prefersLegacyStateForPersistenceBackend(): boolean {
-  const backend = (process.env.PERSISTENCE_BACKEND ?? "").trim().toLowerCase();
-  return Boolean(backend && backend !== "postgres");
-}
-
-function usesExplicitLegacySitemapPreview(): boolean {
-  return (process.env.STOREFRONT_PATH_MODE_READS ?? "").trim().toLowerCase() === "local-preview";
-}
-
 export async function getStorefrontSitemapUrlsForHost(hosts: string | null | undefined | Array<string | null | undefined>): Promise<string[]> {
   const entries = await getStorefrontSitemapEntriesForHost(hosts);
   return entries.map((entry) => entry.loc);
@@ -1050,8 +1029,7 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
   const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
   const isLocalHostRequest = !publicHostCandidates.length && normalizedHosts.some(isLocalDevelopmentHost);
   if (siteHostCandidates.some(isReservedGrownstrideHost)) return [];
-  const shouldUseLegacyStateFirst = isLocalHostRequest || usesExplicitLegacySitemapPreview();
-  const runtime = shouldUseLegacyStateFirst ? await readLegacyIndexableStateAndSites() : await readIndexableStateAndSites();
+  const runtime = await readIndexableStateAndSites();
   if (!runtime) return [];
   if (isLocalHostRequest) return runtime.sites.flatMap((site) => sitemapEntriesForSite(runtime.state, site));
   const site =
@@ -1082,9 +1060,7 @@ export async function getStorefrontPublicationIdentityForHost(
   const publicHostCandidates = normalizedHosts.filter((host) => !isLocalDevelopmentHost(host));
   const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
   const isLocalHostRequest = !publicHostCandidates.length && normalizedHosts.some(isLocalDevelopmentHost);
-  const runtime = (isLocalHostRequest || usesExplicitLegacySitemapPreview())
-    ? await readLegacyIndexableStateAndSites()
-    : await readIndexableStateAndSites();
+  const runtime = await readIndexableStateAndSites();
   if (!runtime) return undefined;
   const site = isLocalHostRequest
     ? runtime.sites[0]

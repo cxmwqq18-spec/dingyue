@@ -7,6 +7,7 @@ import {
   type AdminProcessFilter
 } from "@/lib/admin-processes";
 import { prisma } from "@/lib/prisma";
+import { usePostgresPlatformState } from "@/lib/platform-state-store";
 import {
   getSiteCustomersFromState,
   getSiteJobsFromState,
@@ -233,7 +234,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
-  if (process.env.PERSISTENCE_BACKEND !== "postgres") {
+  if (!usePostgresPlatformState()) {
     const payload = perf.measureSync("context", () => legacyPayload(readPlatformState(), siteId, filter, page, pageSize, search), { source: "state" });
     return adminPerfJson(perf, payload);
   }

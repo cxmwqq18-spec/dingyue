@@ -5,6 +5,7 @@ import fs from "node:fs";
 import Module from "node:module";
 import path from "node:path";
 import createJiti from "jiti";
+import "./load-runtime-env.mjs";
 
 const read = (file) => fs.readFileSync(file, "utf8");
 const types = read("src/lib/types.ts");
@@ -53,11 +54,35 @@ const stable = (value) => Array.isArray(value)
     ? Object.fromEntries(Object.entries(value).filter(([, item]) => item !== undefined).sort(([left], [right]) => left.localeCompare(right)).map(([key, item]) => [key, stable(item)]))
     : value;
 const projectionRevision = (value) => crypto.createHash("sha256").update(JSON.stringify(stable(value))).digest("hex").slice(0, 20);
+const rawUrl = process.env.DATABASE_URL?.trim();
+assert.ok(rawUrl, "DATABASE_URL is required for publication snapshot verification");
+const parsedDatabaseUrl = new URL(rawUrl);
+assert.ok(["localhost", "127.0.0.1", "::1"].includes(parsedDatabaseUrl.hostname), `refusing non-local database host: ${parsedDatabaseUrl.hostname}`);
+const { PrismaClient } = await import("@prisma/client");
+const prisma = new PrismaClient();
+const sourceSiteRecord = await prisma.site.findUnique({
+  where: { id: "site_dreamshoot" },
+  include: { pages: true, settings: true }
+});
+await prisma.$disconnect();
+assert.ok(sourceSiteRecord?.settings, "MyDreamShoots relational fixture site is required");
+const sourceSite = {
+  ...sourceSiteRecord,
+  pages: sourceSiteRecord.pages.map((page) => ({
+    ...page,
+    createdAt: page.createdAt.toISOString(),
+    updatedAt: page.updatedAt.toISOString()
+  })),
+  themeSettings: {
+    draftJson: sourceSiteRecord.settings.draftJson,
+    publishedJson: sourceSiteRecord.settings.publishedJson
+  }
+};
 const standardPaths = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"];
 const sourcePageIdForPath = (sourceSite, canonicalPath) => sourceSite.pages.find((page) => page.slug === canonicalPath)?.id ?? "";
 const standardMedia = standardPaths.map((canonicalPath) => ({
   pageEntityId: `mydreamshoots:standard:${canonicalPath.slice(1)}`,
-  pageId: sourcePageIdForPath(JSON.parse(read("data/platform-state.json")).sites.find((site) => site.id === "site_dreamshoot"), canonicalPath),
+  pageId: sourcePageIdForPath(sourceSite, canonicalPath),
   canonicalPath,
   mediaEntityId: `mydreamshoots:standard:${canonicalPath.slice(1)}:media`,
   primaryImage: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
@@ -69,9 +94,12 @@ const standardMedia = standardPaths.map((canonicalPath) => ({
   status: "ready",
   revision: `standard-${canonicalPath.slice(1)}`
 }));
-const state = JSON.parse(read("data/platform-state.json"));
-const sourceSite = state.sites.find((site) => site.id === "site_dreamshoot");
-assert.ok(sourceSite, "MyDreamShoots fixture site is required");
+const state = {
+  sites: [sourceSite],
+  products: [],
+  creativePacks: [],
+  themePublications: []
+};
 const policySpecs = [
   { canonicalPath: "/privacy", aliases: ["/privacy-policy", "/policies/privacy", "/policies/privacy-policy"] },
   { canonicalPath: "/terms", aliases: ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"] }
