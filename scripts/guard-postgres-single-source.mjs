@@ -27,6 +27,9 @@ for (const relativePath of runtimeRoots.flatMap(walk)) {
   if (/PERSISTENCE_BACKEND\s*!==\s*["']postgres["']|PERSISTENCE_BACKEND\s*!==\s*`postgres`/.test(source)) {
     failures.push({ file: relativePath, reason: "runtime can select a non-PostgreSQL persistence branch" });
   }
+  if (/data[\\/]async-jobs\.json|rate-limit-store\.json/.test(source)) {
+    failures.push({ file: relativePath, reason: "runtime persists operational state in a JSON file" });
+  }
 }
 
 const envExample = fs.readFileSync(path.join(repoRoot, ".env.example"), "utf8");
@@ -36,6 +39,7 @@ if (!/^PERSISTENCE_BACKEND=postgres$/m.test(envExample)) {
 if (!/^STOREFRONT_PATH_MODE_READS=database$/m.test(envExample)) {
   failures.push({ file: ".env.example", reason: "storefront reads must default to database" });
 }
+
 
 const result = {
   ok: failures.length === 0,

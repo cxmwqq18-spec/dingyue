@@ -2,7 +2,7 @@ import { adminPerfJson, createAdminPerfTracker } from "@/lib/admin-perf";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
-import { usePostgresPlatformState } from "@/lib/platform-state-store";
+import { isPostgresPlatformStateEnabled } from "@/lib/platform-state-store";
 import { readPlatformState, getSiteAppsFromState, getSiteCreativePacksFromState, getSiteMediaAssetsFromState, getSiteProductsFromState } from "@/lib/server-store";
 import { mapProduct, toCreativePack, toMediaAsset, toSiteAiApp } from "@/lib/stores/prisma-mappers";
 import type { CreativePack, MediaAsset, Product, SiteAiApp } from "@/lib/types";
@@ -37,7 +37,7 @@ function resourceKind(request: Request): DesignResourceKind | undefined {
 }
 
 async function loadResource(siteId: string, kind: DesignResourceKind): Promise<DesignResourcesPayload> {
-  if (!usePostgresPlatformState()) {
+  if (!isPostgresPlatformStateEnabled()) {
     const state = readPlatformState();
     if (!state.sites.some((site) => site.id === siteId)) throw new Error("site_not_found");
     if (kind === "products") return { ok: true, kind, products: getSiteProductsFromState(state, siteId).slice(0, adminProductListTake) };

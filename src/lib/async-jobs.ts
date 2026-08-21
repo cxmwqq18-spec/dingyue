@@ -1,8 +1,6 @@
 import "server-only";
 
 import crypto from "crypto";
-import fs from "fs";
-import path from "path";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
@@ -53,18 +51,10 @@ type AsyncJobStore = {
   controllers: Map<string, AbortController>;
 };
 
-type PersistedJobsFile = {
-  jobs?: AsyncJobRecord[];
-};
-
 const globalKey = "__dingyue_async_jobs__";
 const defaultTtlMs = 1000 * 60 * 60;
 const maxJobs = Math.max(20, Number(process.env.ASYNC_JOBS_MAX_RECORDS ?? "500") || 500);
-const persistenceMode = process.env.ASYNC_JOBS_PERSISTENCE ?? "memory";
 const dbTimeoutMs = Math.max(250, Number(process.env.ASYNC_JOBS_DB_TIMEOUT_MS ?? "1200") || 1200);
-const persistenceFile = process.env.ASYNC_JOBS_FILE
-  ? path.resolve(process.env.ASYNC_JOBS_FILE)
-  : path.join(process.cwd(), "data", "async-jobs.json");
 
 function store(): AsyncJobStore {
   const globalWithStore = globalThis as typeof globalThis & { [globalKey]?: AsyncJobStore };
@@ -72,7 +62,7 @@ function store(): AsyncJobStore {
     globalWithStore[globalKey] = { loaded: false, jobs: new Map(), controllers: new Map() };
   }
   const value = globalWithStore[globalKey];
-  if (!value.loaded) loadPersistedJobs(value);
+  value.loaded = true;
   return value;
 }
 
@@ -118,21 +108,18 @@ function rowToJob(row: Prisma.PlatformAsyncJobGetPayload<object>): AsyncJobSnaps
 function rememberJob(job: AsyncJobRecord, target = store()): AsyncJobSnapshot {
   target.jobs.set(job.id, job);
   pruneExpiredJobs(target);
-  persistJobs(target);
   return cloneJob(job);
 }
 
-async function withDbTimeout<T>(operation: Promise<T>, fallback: T): Promise<T> {
+async function withDbTimeout<T>(operation: Promise<T>): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
     return await Promise.race([
       operation,
-      new Promise<T>((resolve) => {
-        timer = setTimeout(() => resolve(fallback), dbTimeoutMs);
+      new Promise<T>((_, reject) => {
+        timer = setTimeout(() => reject(new Error("postgres_async_job_timeout")), dbTimeoutMs);
       })
     ]);
-  } catch {
-    return fallback;
   } finally {
     if (timer) clearTimeout(timer);
   }
@@ -158,7 +145,6 @@ async function createJobInDatabase(job: AsyncJobRecord): Promise<AsyncJobSnapsho
         }
       })
       .then(rowToJob),
-    undefined
   );
 }
 
@@ -187,7 +173,6 @@ async function patchJobInDatabase<Result>(
       });
       return rowToJob(updated) as AsyncJobSnapshot<Result>;
     })(),
-    undefined
   );
 }
 
@@ -198,45 +183,6 @@ function normalizeError(error: unknown): AsyncJobError {
     return { message: error.message || "async_job_failed", code: maybeCode, status: maybeStatus };
   }
   return { message: typeof error === "string" ? error : "async_job_failed" };
-}
-
-function shouldPersistToFile(): boolean {
-  return persistenceMode === "file";
-}
-
-function loadPersistedJobs(target: AsyncJobStore): void {
-  target.loaded = true;
-  if (!shouldPersistToFile()) return;
-  try {
-    const parsed = JSON.parse(fs.readFileSync(persistenceFile, "utf8")) as PersistedJobsFile;
-    for (const job of parsed.jobs ?? []) {
-      if (!job?.id || !job.kind || !job.status) continue;
-      target.jobs.set(job.id, {
-        ...job,
-        status: job.status === "queued" || job.status === "running" ? "failed" : job.status,
-        error:
-          job.status === "queued" || job.status === "running"
-            ? { message: "async_job_interrupted" }
-            : job.error
-      });
-    }
-    pruneExpiredJobs(target);
-  } catch {
-    // The async job file is an optional cache, not a source of truth for platform state.
-  }
-}
-
-function persistJobs(target = store()): void {
-  if (!shouldPersistToFile()) return;
-  try {
-    fs.mkdirSync(path.dirname(persistenceFile), { recursive: true });
-    const payload: PersistedJobsFile = { jobs: Array.from(target.jobs.values()).map(cloneJob) };
-    const tempFile = `${persistenceFile}.${process.pid}.${Date.now()}.tmp`;
-    fs.writeFileSync(tempFile, `${JSON.stringify(payload, null, 2)}\n`);
-    fs.renameSync(tempFile, persistenceFile);
-  } catch {
-    // Persistence is deliberately best-effort so third-party operations are not blocked by disk issues.
-  }
 }
 
 function pruneExpiredJobs(target = store()): void {
@@ -258,10 +204,6 @@ function pruneExpiredJobs(target = store()): void {
   }
 }
 
-function saveJob(job: AsyncJobRecord, target = store()): AsyncJobSnapshot {
-  return rememberJob(job, target);
-}
-
 function createJobId(kind: AsyncJobKind): string {
   const safeKind = kind.replace(/[^a-z0-9]+/gi, "_").replace(/^_+|_+$/g, "").toLowerCase() || "job";
   return `aj_${safeKind}_${Date.now().toString(36)}_${crypto.randomBytes(4).toString("hex")}`;
@@ -273,18 +215,7 @@ async function patchAsyncJob<Result>(jobId: string, patch: Partial<AsyncJobRecor
     rememberJob(dbJob as AsyncJobRecord);
     return dbJob;
   }
-  const current = store().jobs.get(jobId);
-  if (!current) throw new Error("async_job_not_found");
-  const next = {
-    ...current,
-    ...patch,
-    metadata: {
-      ...current.metadata,
-      ...(patch.metadata ?? {})
-    },
-    updatedAt: nowIso()
-  } as AsyncJobRecord<Result>;
-  return saveJob(next) as AsyncJobSnapshot<Result>;
+  throw new Error("postgres_async_job_not_found");
 }
 
 async function runAsyncJob<Result>(jobId: string, runner: AsyncJobRunner<Result>): Promise<void> {
@@ -324,27 +255,26 @@ export async function createAsyncJob<Result = unknown>(params: CreateAsyncJobPar
   const controller = new AbortController();
   currentStore.controllers.set(job.id, controller);
   const persistedJob = await createJobInDatabase(job);
-  rememberJob((persistedJob as AsyncJobRecord<Result> | undefined) ?? job, currentStore);
+  if (!persistedJob) throw new Error("postgres_async_job_not_created");
+  rememberJob(persistedJob as AsyncJobRecord<Result>, currentStore);
   queueMicrotask(() => {
     void runAsyncJob(job.id, params.run);
   });
-  return cloneJob(((persistedJob as AsyncJobRecord<Result> | undefined) ?? job));
+  return cloneJob(persistedJob as AsyncJobSnapshot<Result>);
 }
 
 export async function getAsyncJob(jobId: string): Promise<AsyncJobSnapshot | undefined> {
   pruneExpiredJobs();
-  const localJob = store().jobs.get(jobId);
   const dbJob = await withDbTimeout(
     prisma.platformAsyncJob
       .findFirst({ where: { id: jobId, expiresAt: { gt: new Date() } } })
       .then((row) => (row ? rowToJob(row) : undefined)),
-    undefined
   );
   if (dbJob) {
     rememberJob(dbJob as AsyncJobRecord);
     return dbJob;
   }
-  return localJob ? cloneJob(localJob) : undefined;
+  return undefined;
 }
 
 export async function listAsyncJobs(filters: { actorId?: string; kind?: AsyncJobKind; limit?: number } = {}): Promise<AsyncJobSnapshot[]> {
@@ -362,23 +292,17 @@ export async function listAsyncJobs(filters: { actorId?: string; kind?: AsyncJob
         take: limit
       })
       .then((rows) => rows.map(rowToJob)),
-    undefined
   );
   if (dbJobs) {
     for (const job of dbJobs) rememberJob(job as AsyncJobRecord);
     return dbJobs;
   }
-  return Array.from(store().jobs.values())
-    .filter((job) => !filters.actorId || job.actorId === filters.actorId)
-    .filter((job) => !filters.kind || job.kind === filters.kind)
-    .sort((left, right) => new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime())
-    .slice(0, limit)
-    .map(cloneJob);
+  return [];
 }
 
 export async function cancelAsyncJob(jobId: string): Promise<AsyncJobSnapshot | undefined> {
   const currentStore = store();
-  const job = (await getAsyncJob(jobId)) ?? currentStore.jobs.get(jobId);
+  const job = await getAsyncJob(jobId);
   if (!job) return undefined;
   if (job.status === "succeeded" || job.status === "failed") return cloneJob(job);
   currentStore.controllers.get(jobId)?.abort();

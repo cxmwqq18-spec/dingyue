@@ -3,7 +3,7 @@ import { customersPageCache } from "@/lib/admin-customers-page-cache";
 import { hasSiteAdminSession } from "@/lib/api-auth";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
-import { usePostgresPlatformState } from "@/lib/platform-state-store";
+import { isPostgresPlatformStateEnabled } from "@/lib/platform-state-store";
 import type { Prisma } from "@prisma/client";
 import {
   getSiteAlbumsFromState,
@@ -337,7 +337,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
-  if (!usePostgresPlatformState()) {
+  if (!isPostgresPlatformStateEnabled()) {
     const state = perf.measureSync("context", () => readPlatformState(), { source: "state" });
     const customerAssets = state.assetUploads.filter((asset) => asset.siteId === siteId && !asset.deletedAt).slice(0, adminCustomerAssetTake);
     const customers = getSiteCustomersFromState(state, siteId).map(toPublicCustomer);

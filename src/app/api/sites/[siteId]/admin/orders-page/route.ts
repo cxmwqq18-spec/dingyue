@@ -3,7 +3,7 @@ import { hasSiteAdminSession } from "@/lib/api-auth";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
-import { usePostgresPlatformState } from "@/lib/platform-state-store";
+import { isPostgresPlatformStateEnabled } from "@/lib/platform-state-store";
 import {
   getSiteCustomersFromState,
   getSiteJobsFromState,
@@ -196,7 +196,7 @@ function legacyCollections(state: PlatformState, siteId: string, tab: OrdersTab,
 async function customerLookups(siteId: string, customerIds: Iterable<string>, legacyState?: PlatformState): Promise<CustomerLookup[]> {
   const ids = Array.from(new Set([...customerIds].filter(Boolean)));
   if (!ids.length) return [];
-  if (!usePostgresPlatformState()) {
+  if (!isPostgresPlatformStateEnabled()) {
     const wanted = new Set(ids);
     return getSiteCustomersFromState(legacyState ?? readPlatformState(), siteId)
       .filter((customer) => wanted.has(customer.id))
@@ -219,7 +219,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
-  if (!usePostgresPlatformState()) {
+  if (!isPostgresPlatformStateEnabled()) {
     const legacyState = perf.measureSync("context", () => readPlatformState(), { source: "state" });
     const collections = legacyCollections(legacyState, siteId, tab, take, cursor);
     const customers = await perf.measure("db", () => customerLookups(

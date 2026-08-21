@@ -9,7 +9,7 @@ function toPrismaJson(state: PlatformState): Prisma.InputJsonValue {
   return JSON.parse(JSON.stringify(state)) as Prisma.InputJsonValue;
 }
 
-export function usePostgresPlatformState(): boolean {
+export function isPostgresPlatformStateEnabled(): boolean {
   return true;
 }
 

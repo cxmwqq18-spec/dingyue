@@ -4,7 +4,7 @@ import { hasSiteAdminSession } from "@/lib/api-auth";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
-import { usePostgresPlatformState } from "@/lib/platform-state-store";
+import { isPostgresPlatformStateEnabled } from "@/lib/platform-state-store";
 import {
   getSiteAppsFromState,
   getSiteCustomersFromState,
@@ -231,7 +231,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
-  if (!usePostgresPlatformState()) {
+  if (!isPostgresPlatformStateEnabled()) {
     const payload = perf.measureSync("context", () => legacyPayload(readPlatformState(), siteId), { source: "state" });
     return adminPerfJson(perf, payload);
   }

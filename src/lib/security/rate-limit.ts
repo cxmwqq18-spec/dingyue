@@ -3,8 +3,6 @@
  * 用于防止API滥用和DDoS攻击
  */
 
-import fs from "node:fs";
-import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 
 // 内存存储（生产环境应使用Redis）
@@ -12,84 +10,6 @@ const rateLimitStore =
   ((globalThis as typeof globalThis & {
     __dingyueRateLimitStore?: Map<string, { count: number; resetTime: number }>;
   }).__dingyueRateLimitStore ??= new Map<string, { count: number; resetTime: number }>());
-const rateLimitFile = path.join(process.cwd(), ".next", "cache", "rate-limit-store.json");
-const rateLimitLockDir = `${rateLimitFile}.lock`;
-const rateLimitLockTimeoutMs = Number(process.env.RATE_LIMIT_LOCK_TIMEOUT_MS ?? "2000");
-
-function sleepSync(ms: number): void {
-  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
-}
-
-function withRateLimitLock<T>(callback: () => T): T {
-  const startedAt = Date.now();
-  let lockAcquired = false;
-  while (!lockAcquired) {
-    try {
-      fs.mkdirSync(rateLimitLockDir, { recursive: false });
-      lockAcquired = true;
-    } catch (error) {
-      const code = (error as NodeJS.ErrnoException).code;
-      if (code !== "EEXIST") throw error;
-      try {
-        const stat = fs.statSync(rateLimitLockDir);
-        if (Date.now() - stat.mtimeMs > rateLimitLockTimeoutMs) {
-          fs.rmSync(rateLimitLockDir, { recursive: true, force: true });
-          continue;
-        }
-      } catch {
-        continue;
-      }
-      if (Date.now() - startedAt > rateLimitLockTimeoutMs) {
-        throw error;
-      }
-      sleepSync(10);
-    }
-  }
-
-  try {
-    return callback();
-  } finally {
-    fs.rmSync(rateLimitLockDir, { recursive: true, force: true });
-  }
-}
-
-function readRateLimitSnapshot(): Record<string, { count: number; resetTime: number }> {
-  try {
-    return JSON.parse(fs.readFileSync(rateLimitFile, "utf8")) as Record<string, { count: number; resetTime: number }>;
-  } catch {
-    return {};
-  }
-}
-
-function replaceRateLimitStore(snapshot: Record<string, { count: number; resetTime: number }>): void {
-  rateLimitStore.clear();
-  const now = Date.now();
-  for (const [key, value] of Object.entries(snapshot)) {
-    if (Number.isFinite(value.count) && Number.isFinite(value.resetTime) && value.resetTime > now) {
-      rateLimitStore.set(key, { count: value.count, resetTime: value.resetTime });
-    }
-  }
-}
-
-function loadRateLimitStore(): void {
-  try {
-    replaceRateLimitStore(readRateLimitSnapshot());
-  } catch {
-    // Missing or partially written cache files should not block requests.
-  }
-}
-
-function persistRateLimitStore(): void {
-  try {
-    fs.mkdirSync(path.dirname(rateLimitFile), { recursive: true });
-    const tempFile = `${rateLimitFile}.${process.pid}.${Date.now()}.tmp`;
-    fs.writeFileSync(tempFile, JSON.stringify(Object.fromEntries(rateLimitStore)));
-    fs.renameSync(tempFile, rateLimitFile);
-  } catch {
-    // Rate limiting should degrade to process memory if the cache is unavailable.
-  }
-}
-
 export interface RateLimitConfig {
   windowMs: number;      // 时间窗口（毫秒）
   maxRequests: number;  // 窗口内最大请求数
@@ -158,10 +78,7 @@ export function checkRateLimit(
 
   // 生成存储键
   const storageKey = `${config.keyPrefix}:${key}`;
-  try {
-    return withRateLimitLock(() => {
-      const now = Date.now();
-      loadRateLimitStore();
+  const now = Date.now();
 
       // 获取当前记录
       const record = rateLimitStore.get(storageKey);
@@ -173,8 +90,6 @@ export function checkRateLimit(
           count: 1,
           resetTime,
         });
-        persistRateLimitStore();
-
         return {
           allowed: true,
           remaining: config.maxRequests - 1,
@@ -184,7 +99,6 @@ export function checkRateLimit(
 
       // 检查是否超过限制
       if (record.count >= config.maxRequests) {
-        persistRateLimitStore();
         return {
           allowed: false,
           remaining: 0,
@@ -195,28 +109,11 @@ export function checkRateLimit(
 
       // 递增计数
       record.count++;
-      persistRateLimitStore();
-
       return {
         allowed: true,
         remaining: config.maxRequests - record.count,
         resetTime: record.resetTime,
       };
-    });
-  } catch {
-    const now = Date.now();
-    const record = rateLimitStore.get(storageKey);
-    if (!record || now > record.resetTime) {
-      const resetTime = now + config.windowMs;
-      rateLimitStore.set(storageKey, { count: 1, resetTime });
-      return { allowed: true, remaining: config.maxRequests - 1, resetTime };
-    }
-    if (record.count >= config.maxRequests) {
-      return { allowed: false, remaining: 0, resetTime: record.resetTime, retryAfterMs: record.resetTime - now };
-    }
-    record.count++;
-    return { allowed: true, remaining: config.maxRequests - record.count, resetTime: record.resetTime };
-  }
 }
 
 /**
@@ -266,21 +163,15 @@ export function checkRateLimitOrResponse(
  * 清除指定前缀的所有记录（用于测试）
  */
 export function clearRateLimitStore(prefix?: string): void {
-  withRateLimitLock(() => {
-    loadRateLimitStore();
-    if (!prefix) {
-      rateLimitStore.clear();
-      persistRateLimitStore();
-      return;
+  if (!prefix) {
+    rateLimitStore.clear();
+    return;
+  }
+  for (const key of rateLimitStore.keys()) {
+    if (key.startsWith(prefix)) {
+      rateLimitStore.delete(key);
     }
-
-    for (const key of rateLimitStore.keys()) {
-      if (key.startsWith(prefix)) {
-        rateLimitStore.delete(key);
-      }
-    }
-    persistRateLimitStore();
-  });
+  }
 }
 
 /**

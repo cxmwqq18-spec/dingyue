@@ -3,7 +3,7 @@ import { hasSiteAdminSession } from "@/lib/api-auth";
 import { settingsPageCache } from "@/lib/admin-settings-page-cache";
 import { runDbTasks } from "@/lib/db-concurrency";
 import { prisma } from "@/lib/prisma";
-import { usePostgresPlatformState } from "@/lib/platform-state-store";
+import { isPostgresPlatformStateEnabled } from "@/lib/platform-state-store";
 import {
   getSiteAuditLogsFromState,
   getSiteDomainsFromState,
@@ -35,7 +35,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     return adminPerfJson(perf, { error: "site_admin_login_required" }, { status: 401 });
   }
 
-  if (!usePostgresPlatformState()) {
+  if (!isPostgresPlatformStateEnabled()) {
     const state = perf.measureSync("context", () => readPlatformState(), { source: "state" });
     if (section === "audit") {
       const auditLogs = getSiteAuditLogsFromState(state, siteId);
