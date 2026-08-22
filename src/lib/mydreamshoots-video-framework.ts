@@ -217,7 +217,6 @@ export const mydreamshootsVideoGenerationParentCategories = [
  * but must not leak back into the navigation taxonomy.
  */
 export const mydreamshootsCurrentVideoMenuSlugs = [
-  "creator-scene-motion",
   "talking-photo",
   "cinematic-video",
   "tiktok-video",
@@ -228,6 +227,10 @@ export const mydreamshootsCurrentVideoMenuSlugs = [
   "meme-video",
   "product-video",
   "product-ad-video",
+  "promo-video",
+  "ugc-ad-video",
+  "video-ad",
+  "brand-video",
   "music-video",
   "fashion-video"
 ] as const;
