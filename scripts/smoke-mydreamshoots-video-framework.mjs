@@ -52,7 +52,7 @@ const expectedCategoriesBySite = {
     ["fashion-video", "Fashion Video", 230]
   ],
   site_grownstride_test: [
-    ["text-to-video", "Text to video", 10],
+    ["text-to-video", "Text to Video", 10],
     ["image-to-video", "Image to Video", 20]
   ]
 };
