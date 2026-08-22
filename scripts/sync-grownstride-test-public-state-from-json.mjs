@@ -117,9 +117,11 @@ function scopedRows(state) {
         publishedJson: json(site.themeSettings.publishedJson)
       }
     : null;
+  const activePublicationId = site.activePublication?.publication?.id ?? null;
 
   return {
     site,
+    activePublicationId,
     domains: asArray(state.siteDomains).filter((item) => item?.siteId === siteId),
     settings,
     pages: asArray(site.pages).filter((item) => item?.siteId === siteId || !item?.siteId),
@@ -429,6 +431,22 @@ function publicationData(row, records) {
   });
 }
 
+function selectActivePublicationId(records, retainedPublicationId) {
+  const sourceActiveId = records.activePublicationId;
+  if (sourceActiveId && records.publications.some((publication) => publication.id === sourceActiveId)) {
+    return sourceActiveId;
+  }
+  if (retainedPublicationId && records.publications.some((publication) => publication.id === retainedPublicationId)) {
+    return retainedPublicationId;
+  }
+  const latestPublication = [...records.publications].sort((left, right) => {
+    const versionDelta = (right.version ?? 0) - (left.version ?? 0);
+    if (versionDelta !== 0) return versionDelta;
+    return String(right.publishedAt ?? "").localeCompare(String(left.publishedAt ?? ""));
+  })[0];
+  return latestPublication?.id ?? null;
+}
+
 function summarize(records) {
   return {
     domains: records.domains.length,
@@ -643,6 +661,8 @@ async function trustedLogoSummary(records) {
 }
 
 async function writePublicState(tx, sourceState, records) {
+  const currentActivePublication = await tx.activeThemePublication.findUnique({ where: { siteId } });
+  const retainedPublicationId = currentActivePublication?.publicationId ?? null;
   await tx.site.upsert({
     where: { id: siteId },
     create: stripUndefined({
@@ -713,9 +733,31 @@ async function writePublicState(tx, sourceState, records) {
   await tx.themePage.deleteMany({ where: { siteId, id: { notIn: pageIds } } });
   for (const page of records.pages) await upsertById(tx.themePage, pageData(page));
 
+  await tx.activeThemePublication.deleteMany({ where: { siteId } });
   await tx.themePublication.deleteMany({ where: { siteId } });
   for (const publication of records.publications) {
     await tx.themePublication.create({ data: publicationData(publication, records) });
+  }
+  const nextActivePublicationId = selectActivePublicationId(records, retainedPublicationId);
+  if (nextActivePublicationId) {
+    const activeExists = records.publications.some((publication) => publication.id === nextActivePublicationId);
+    if (!activeExists) {
+      throw new Error(`active publication ${nextActivePublicationId} is not present in source records`);
+    }
+    await tx.activeThemePublication.upsert({
+      where: { siteId },
+      create: {
+        siteId,
+        publicationId: nextActivePublicationId,
+        activatedBy: "sync-grownstride-test-public-state",
+        activatedAt: new Date()
+      },
+      update: {
+        publicationId: nextActivePublicationId,
+        activatedBy: "sync-grownstride-test-public-state",
+        activatedAt: new Date()
+      }
+    });
   }
 
   const siteThemeIds = collectionIds(records.siteThemes);
