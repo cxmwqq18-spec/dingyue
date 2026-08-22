@@ -207,7 +207,7 @@ export const mydreamshootsVideoGenerationParentCategories = [
   { slug: "core-ai-creation", label: "Core AI Creation", description: "Core AI video creation modes.", sortOrder: 10 },
   { slug: "social-creator", label: "Social & Creator", description: "Short-form social and creator video workflows.", sortOrder: 20 },
   { slug: "marketing-commerce", label: "Marketing & Commerce", description: "Product, advertising, and commerce video workflows.", sortOrder: 30 },
-  { slug: "creative-lifestyle", label: "Creative & Lifestyle", description: "Creative, travel, fashion, food, fitness, and lifestyle video workflows.", sortOrder: 40 },
+  { slug: "creative-lifestyle", label: "Creative & Lifestyle", description: "Creative, travel, fashion, food, fitness, pet, and lifestyle video workflows.", sortOrder: 40 },
   { slug: "professional-business", label: "Professional & Business", description: "Explainers, tutorials, property, enterprise, and professional video workflows.", sortOrder: 50 }
 ] as const;
 
@@ -233,7 +233,8 @@ export const mydreamshootsCurrentVideoMenuSlugs = [
   "brand-video",
   "music-video",
   "fashion-video",
-  "food-video"
+  "food-video",
+  "pet-video"
 ] as const;
 
 const mydreamshootsCurrentVideoMenuSlugSet = new Set<string>(mydreamshootsCurrentVideoMenuSlugs);
@@ -534,6 +535,19 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     durationSeconds: 6,
     maxFrames: 10,
     sortOrder: 190
+  },
+  {
+    slug: "pet-video",
+    categorySlug: "pet-video",
+    name: "Pet Video",
+    headline: "Create pet-motion concepts around portraits, play, routine, and owner interaction.",
+    description: "Plan pet-, animal-, owner-, and lifestyle-led video directions with identity, anatomy, prop, and welfare-boundary review.",
+    prompt: "Create a pet-video visual concept around an approved pet portrait, owner-and-pet image, animal-content brief, shelter reference, or pet-lifestyle scene. Define the animal identity, visible behavior, human interaction, environment, props, framing, and continuity rules. Do not claim veterinary diagnosis, nutrition advice, behavior assessment, training efficacy, welfare compliance, product safety, or adoption outcomes without verified product support.",
+    imageUrl: "/assets/dreamshoot/pet-video/hero-pet-video-training-frame.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 200
   }
 ] as const;
 
@@ -574,7 +588,8 @@ export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "brand-video",
   "music-video",
   "fashion-video",
-  "food-video"
+  "food-video",
+  "pet-video"
 ] as const;
 
 const publicVideoGenerationPageSlugs = new Set<string>(mydreamshootsPublicVideoGenerationTopicSlugs);

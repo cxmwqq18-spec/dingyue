@@ -1308,16 +1308,17 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
 function SceneTopicLanding({ content, contentKey, section, site }: { content: VideoTopicContent; contentKey: string; section: SectionInstance; site: Site }) {
   const isMusic = contentKey === "music-video";
   const isFashion = contentKey === "fashion-video";
-  const topicLabel = isMusic ? "Music Video" : isFashion ? "Fashion Video" : "Food Video";
+  const isPet = contentKey === "pet-video";
+  const topicLabel = isMusic ? "Music Video" : isFashion ? "Fashion Video" : isPet ? "Pet Video" : "Food Video";
   const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
   const heroImages = content.hero.images?.length ? content.hero.images : [content.hero.image];
   const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
   const visualMap = content.platformExamples?.items ?? [];
-  const accentClass = isMusic ? "text-fuchsia-300" : isFashion ? "text-pink-300" : "text-orange-300";
-  const accentBorder = isMusic ? "border-fuchsia-300/25" : isFashion ? "border-pink-300/25" : "border-orange-300/25";
-  const panelTone = isMusic ? "bg-[#15101f]" : isFashion ? "bg-[#11161d]" : "bg-[#1b1512]";
-  const systemLabel = isMusic ? "Visual system" : isFashion ? "Fashion system" : "Food visual system";
-  const systemText = isMusic ? "Artist -> Motif -> Motion -> Sequence" : isFashion ? "Garment -> Styling -> Movement -> Continuity" : "Hero food -> Action -> Texture -> Camera -> Set -> Continuity";
+  const accentClass = isMusic ? "text-fuchsia-300" : isFashion ? "text-pink-300" : isPet ? "text-cyan-300" : "text-orange-300";
+  const accentBorder = isMusic ? "border-fuchsia-300/25" : isFashion ? "border-pink-300/25" : isPet ? "border-cyan-300/25" : "border-orange-300/25";
+  const panelTone = isMusic ? "bg-[#15101f]" : isFashion ? "bg-[#11161d]" : isPet ? "bg-[#101c1d]" : "bg-[#1b1512]";
+  const systemLabel = isMusic ? "Visual system" : isFashion ? "Fashion system" : isPet ? "Pet visual system" : "Food visual system";
+  const systemText = isMusic ? "Artist -> Motif -> Motion -> Sequence" : isFashion ? "Garment -> Styling -> Movement -> Continuity" : isPet ? "Identity -> Behavior -> Interaction -> Continuity" : "Hero food -> Action -> Texture -> Camera -> Set -> Continuity";
   return (
     <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-video-topic-page={contentKey}>
       <section className="border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
@@ -1388,7 +1389,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
   if (contentKey === "brand-video") {
     return <BrandVideoTopicLanding content={content} section={section} site={site} />;
   }
-  if (contentKey === "music-video" || contentKey === "fashion-video" || contentKey === "food-video") {
+  if (contentKey === "music-video" || contentKey === "fashion-video" || contentKey === "food-video" || contentKey === "pet-video") {
     return <SceneTopicLanding content={content} contentKey={contentKey} section={section} site={site} />;
   }
   if (contentKey === "ugc-ad-video") {

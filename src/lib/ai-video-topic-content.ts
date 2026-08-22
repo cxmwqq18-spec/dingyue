@@ -163,6 +163,7 @@ const brandVideoImageRoot = "/assets/dreamshoot/brand-video";
 const musicVideoImageRoot = "/assets/dreamshoot/music-video";
 const fashionVideoImageRoot = "/assets/dreamshoot/fashion-video";
 const foodVideoImageRoot = "/assets/dreamshoot/food-video";
+const petVideoImageRoot = "/assets/dreamshoot/pet-video";
 
 export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLandingContent> = {
   "cinematic-video": {
@@ -3707,6 +3708,169 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     finalCta: { eyebrow: "CREATE WITH A VERIFIED FOOD BRIEF", title: "Turn a Culinary Idea Into Motion", body: "Choose the hero food, make the action specific, protect ingredient continuity, and review the finished draft before publishing.", cta: "Create Food Video Visuals", microcopy: "Approved references. Clear food action. Reviewed final cut." }
+  },
+  "pet-video": {
+    seo: {
+      title: "AI Pet Video Generator for Pet Portraits & Animal Content | myDreamshoots",
+      description: "Create AI pet-video visuals from text or approved images for pet portraits, playful moments, owner interactions, walks, grooming, training, and animal lifestyle content.",
+      keywords: "ai pet video generator, AI pet video maker, pet portrait video generator, animal video generator, pet lifestyle video, dog video generator, cat video maker, pet social video creator",
+      canonicalPath: "/ai-video-generation/pet-video"
+    },
+    hero: {
+      eyebrow: "AI PET VIDEO GENERATOR",
+      title: "AI Pet Video Generator for Pet Portraits & Animal Content",
+      body: "Turn a pet portrait, approved owner-and-pet photo, playful moment, training idea, home routine, or animal-content brief into short motion concepts for pet-video development. Use myDreamshoots Text to Video or Image to Video to explore pet portraits, playful actions, walking scenes, owner interactions, grooming, training moments, feeding routines, and lifestyle cutaways—without presenting generated visuals as veterinary diagnosis, nutrition advice, behavior assessment, or proof of animal welfare.",
+      primaryCta: "Create Pet Video Visuals",
+      secondaryCta: "Explore AI Video Generation",
+      availabilityNote: "Use the current myDreamshoots video workspace to confirm supported inputs, credit requirements, and output controls before generation.",
+      rightsCopy: "Use approved pet, owner, shelter, brand, location, and third-party references. Review animal identity, anatomy, props, continuity, health boundaries, and rights before publishing.",
+      imageNote: "Identity -> Behavior -> Interaction -> Continuity",
+      highlights: ["Pet Portraits", "Owner & Pet", "Play & Lifestyle", "Training & Routine", "Text to Video", "Image to Video"],
+      image: image(`${petVideoImageRoot}/hero-pet-video-training-frame.jpg`, "Girl giving a hand signal to a Corgi on a pink studio backdrop, used as the dedicated Hero pet-training interaction frame.", 4480, 6720, "50% 36%"),
+      images: [
+        image(`${petVideoImageRoot}/hero-pet-video-training-frame.jpg`, "Girl giving a hand signal to a Corgi on a pink studio backdrop, used as the dedicated Hero pet-training interaction frame.", 4480, 6720, "50% 36%"),
+        image(`${petVideoImageRoot}/hero-pet-video-owner-frame.jpg`, "Pet owner kneeling beside a large dog in a warm studio portrait, used as the dedicated Hero owner-and-pet relationship frame.", 4081, 6121, "50% 44%"),
+        image(`${petVideoImageRoot}/hero-pet-video-portrait-frame.jpg`, "Close studio portrait of a white Jack Russell Terrier against a black background, used as the dedicated Hero pet portrait frame.", 6000, 4000, "50% 42%")
+      ]
+    },
+    quickAnswer: {
+      eyebrow: "WHAT THIS CREATES",
+      title: "Make Pet Identity, Behavior, and Relationship Read Clearly in Motion",
+      intro: "Pet Video is for animal-led visual development, not for unverified veterinary, nutrition, behavior, training, welfare, or product-safety claims.",
+      cards: [
+        { title: "Pet-led", body: "Portraits, playful actions, walks, grooming, training context, home routines, and personality-focused animal scenes." },
+        { title: "Relationship-led", body: "Owner-and-pet interactions, bonding moments, handler cues, shelter storytelling, and shared routines." },
+        { title: "Routine-led", body: "Feeding, grooming, urban walking, outdoor movement, indoor play, and other recognizable lifestyle beats." },
+        { title: "Best for", body: "Pet creator content, animal lifestyle clips, shelter or adoption storytelling, pre-shoot direction, and social-first visual concepts." }
+      ]
+    },
+    useCases: { eyebrow: "PET VIDEO JOBS", title: "Give Every Pet Scene One Clear Job", intro: "Use the Pet Visual Behavior System, scene board, and sequence guide below to shape a useful brief.", items: [] },
+    platformExamples: {
+      eyebrow: "PET VISUAL BEHAVIOR SYSTEM",
+      title: "Six Pet Decisions Before Generating Clips",
+      intro: "A pet sequence becomes useful when animal identity, visible behavior, interaction, and continuity are clear before generation.",
+      items: [
+        { title: "Animal identity", body: "Define species, breed or type, coat, markings, age impression, body scale, face shape, ears, tail, and other identity anchors." },
+        { title: "Scene job", body: "Choose whether the shot introduces personality, shows play, captures routine, supports a bond story, establishes place, or connects two edit beats." },
+        { title: "Visible behavior", body: "Describe one observable action such as running, sitting, looking, playing, being groomed, eating, walking, or responding to a cue." },
+        { title: "Human interaction", body: "Specify owner, handler, groomer, volunteer, or no human; define hand position, leash, touch, eyeline, distance, and consent context." },
+        { title: "Environment and props", body: "Set the home, studio, park, sidewalk, salon, clinic, training field, bed, bowl, toy, brush, leash, or other practical anchors." },
+        { title: "Continuity and boundaries", body: "Review paws, limbs, eyes, ears, mouths, tails, collars, leashes, hands, props, coat patterns, and separate visuals from health or welfare claims." }
+      ]
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      title: "Start With the Pet Brief, Then Review the Draft",
+      items: [
+        { title: "Define the pet brief", body: "Set the animal identity, visible behavior, human interaction, environment, props, scene job, and intended channel." },
+        { title: "Choose the starting asset", body: "Use Text to Video for a written pet concept or Image to Video when an approved portrait, owner-and-pet image, shelter reference, or location anchors motion." },
+        { title: "Generate short clips", body: "Review animal identity, anatomy, paws, limbs, eyes, ears, mouths, tails, collars, leashes, hands, props, lighting, and motion continuity." },
+        { title: "Select approved clips", body: "Choose clips only after visual-continuity and source-rights review. Keep veterinary, nutrition, behavior, training-efficacy, welfare, and product-safety claims separately verified." }
+      ],
+      cta: "Create Pet Video Visuals"
+    },
+    gallery: {
+      eyebrow: "8 PET VIDEO SCENE DIRECTIONS",
+      title: "Build the Next Shot Around the Animal",
+      intro: "These are photographic scene references, not claims that every image is a one-click preset or a real myDreamshoots output.",
+      items: [
+        { title: "Outdoor action frame", body: "Energetic movement where animal identity, gait, paws, background, and owner position need to remain coherent.", image: image(`${petVideoImageRoot}/pet-video-outdoor-run.jpg`, "Labrador Retriever running toward the camera in a sunny park with its owner behind, used as an energetic outdoor pet-action reference.", 7558, 5041) },
+        { title: "Grooming detail frame", body: "Close pet-care action where coat, brush, hands, body position, and salon context carry the scene.", image: image(`${petVideoImageRoot}/pet-video-grooming.jpg`, "Yorkshire Terrier being combed by a groomer at a pet salon, used as a grooming and close-detail pet-care scene reference.", 5760, 3840) },
+        { title: "Veterinary-context frame", body: "A clinic or volunteer setting that can establish context without turning a visual into a diagnosis or welfare claim.", image: image(`${petVideoImageRoot}/pet-video-vet-check.jpg`, "Veterinarian and volunteer examining a dog during a clinic check-up, used as a veterinary-context scene reference without diagnostic claims.", 4000, 6000) },
+        { title: "Indoor play frame", body: "Bright home play with toy, bed, floor, and animal personality visible in one simple action.", image: image(`${petVideoImageRoot}/pet-video-cat-play.jpg`, "Calico cat playing with a toy beside a pet bed in a bright home interior, used as an indoor pet-play reference.", 5644, 4000) },
+        { title: "Urban walking frame", body: "Leash-led movement where person, dog, sidewalk, direction, collar, and public setting need continuity.", image: image(`${petVideoImageRoot}/pet-video-urban-walk.jpg`, "Person walking a dog on a leash along a city sidewalk, used as an urban pet-walking and lifestyle reference.", 4096, 2730) },
+        { title: "Feeding routine frame", body: "A home routine with bowl, hand, animal position, and setting kept clear without making nutrition claims.", image: image(`${petVideoImageRoot}/pet-video-feeding.jpg`, "Woman holding a food bowl for a tabby cat in a home setting, used as a feeding-routine visual reference without nutrition claims.", 6048, 4024) },
+        { title: "Training interaction frame", body: "Handler-and-animal interaction where the cue, body language, space, and visible response should be described precisely.", image: image(`${petVideoImageRoot}/pet-video-training-command.jpg`, "Belgian Malinois interacting closely with a handler during outdoor training, used as a pet-training behavior reference.", 4000, 6016) },
+        { title: "Owner bonding frame", body: "A relationship-led portrait that establishes personality, trust, human presence, and the emotional role of the shot.", image: image(`${petVideoImageRoot}/pet-video-owner-bond.jpg`, "Woman posing with a dog in a studio setting, used as a pet-owner bonding and personality-content reference.", 4631, 3087) }
+      ]
+    },
+    guidance: {
+      eyebrow: "PET SEQUENCE GUIDE",
+      title: "Protect Animal Continuity From the First Frame to the Final Cut",
+      intro: "Use pet-specific checks instead of generic claims about animal health, behavior, or care automation.",
+      cards: [
+        { title: "Give every shot one pet job", body: "Decide whether the shot introduces the animal, reveals personality, shows a behavior, builds a relationship moment, establishes place, or connects two edit beats." },
+        { title: "Protect identity and anatomy", body: "Review coat pattern, face, eyes, ears, mouth, paws, limbs, tail, body scale, breed cues, collar, and apparent age across every cut." },
+        { title: "Make behavior visible", body: "Name one observable action and its direction. Avoid vague prompts that make the animal's movement, cue, reaction, or position impossible to review." },
+        { title: "Separate visuals from care claims", body: "A convincing pet shot does not prove a diagnosis, pain state, nutrition fact, behavior assessment, training result, welfare condition, or product safety outcome." },
+        { title: "Review people, props, and rights", body: "Check fingers, hands, leashes, bowls, toys, brushes, collars, labels, logos, clinic details, locations, people, and permission for every source reference." },
+        { title: "Design for the final format", body: "Pet portrait, owner story, shelter short, grooming reel, training context, walking clip, food routine, and longer animal sequence need different crops and pacing." }
+      ]
+    },
+    foundation: {
+      eyebrow: "PET HEALTH / WELFARE BOUNDARY",
+      title: "Keep Pet Direction Specific Without Turning It Into Care Advice",
+      intro: "The public video directory supports verified video creation paths. This page must stay precise about what is generated and what still requires qualified verification.",
+      leftTitle: "Keep in the brief",
+      leftItems: ["Animal identity, visible behavior, human interaction, environment, props, camera, and lighting", "Approved pet, owner, shelter, brand, location, or animal-content reference image", "Text to Video or Image to Video starting point", "Continuity, source-rights, animal-safety, and final-channel review before publishing"],
+      rightTitle: "Do not claim without proof",
+      rightItems: ["Veterinary diagnosis, pain, illness, treatment, or medication guidance", "Nutrition, feeding suitability, allergen, or ingredient claims", "Behavior assessment, training efficacy, temperament, or adoption outcomes", "Welfare compliance, product safety, or proof that an animal is healthy or cared for"],
+      rightTone: "avoid",
+      expertLabel: "Expert tip",
+      expertTip: "Choose one visible behavior per shot and review animal identity, anatomy, hands, props, and continuity. Treat generated pet visuals as creative material, not veterinary, nutrition, training, or welfare guidance."
+    },
+    evidence: {
+      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
+      title: "Evidence Is Required Before This Page Proves the Workflow",
+      intro: "The eleven pet photographs explain pet-video directions. They do not prove a generated result, customer outcome, veterinary fact, or product capability.",
+      cards: [
+        { title: "Text to Video input", body: "Add a verified current Text to Video input state before treating it as product proof." },
+        { title: "Image to Video input", body: "Add a verified Image to Video input state that reflects the current workflow." },
+        { title: "Credit confirmation", body: "Use the live workspace to confirm credit use and any output limits before promising a production workflow." },
+        { title: "Pet identity review", body: "Show a verified before-and-after review of animal identity, anatomy, props, and continuity when first-party evidence is available." },
+        { title: "Rights and welfare review", body: "Document source permission and a human review boundary for animal safety, health, nutrition, behavior, training, and welfare claims." }
+      ]
+    },
+    value: {
+      eyebrow: "WHY THIS STRUCTURE HELPS",
+      title: "Move From a Pet Idea to a Reviewable Motion Brief",
+      intro: "A useful pet-video page turns an open-ended animal idea into decisions a creator can inspect before publishing.",
+      items: [
+        { title: "Clear animal identity", body: "Keep the pet's visible identity and anatomy stable enough for a coherent sequence." },
+        { title: "Observable behavior", body: "Make the action, cue, interaction, and scene job specific enough to review." },
+        { title: "Practical scene direction", body: "Use references for place, props, framing, lighting, and pacing without claiming they are outputs." },
+        { title: "Responsible review", body: "Separate creative visuals from veterinary, nutrition, behavior, training, welfare, and safety claims." }
+      ]
+    },
+    trust: {
+      eyebrow: "INTEGRITY REVIEW",
+      title: "Review the Animal, the Relationship, and the Claim",
+      intro: "Pet content is more trustworthy when the visual brief and the public claim are reviewed separately.",
+      items: [
+        { title: "Animal identity", body: "Does the animal remain recognizable across coat, face, eyes, ears, limbs, paws, tail, scale, collar, and apparent age?" },
+        { title: "Visible behavior", body: "Can a viewer see the intended action without the page implying a diagnosis, temperament, training outcome, or welfare state?" },
+        { title: "Human interaction", body: "Are owner, handler, groomer, volunteer, hands, touch, leash, distance, and consent context represented accurately?" },
+        { title: "Scene continuity", body: "Do location, floor, bed, bowl, toy, brush, clinic, sidewalk, light, direction, and props stay coherent?" },
+        { title: "Source rights", body: "Are pet, person, shelter, brand, location, image, and third-party references approved for the intended use?" },
+        { title: "Claim boundary", body: "Are veterinary, nutrition, behavior, training, welfare, adoption, and product-safety claims separately verified or removed?" }
+      ]
+    },
+    comparison: {
+      eyebrow: "RELATED PAGES",
+      title: "Choose the Primary Video Job",
+      intro: "Pet Video owns animal-, pet-lifestyle-, relationship-, and routine-led motion. Use a neighboring page when the primary intent is instruction, food presentation, explanation, conversation, or brand communication.",
+      items: [
+        { title: "AI Video Generation", body: "Browse all current myDreamshoots video themes.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" },
+        { title: "How-to Video", body: "Use for instruction-first step-by-step demonstrations.", href: "/ai-video-generation/how-to-video", linkLabel: "Explore How-to Video" },
+        { title: "Food Video", body: "Use when food, preparation, plating, or culinary presentation is primary.", href: "/ai-video-generation/food-video", linkLabel: "Explore Food Video" },
+        { title: "Explainer Video", body: "Use when the primary job is explaining a process, product, or concept.", href: "/ai-video-generation/explainer-video", linkLabel: "Explore Explainer Video" },
+        { title: "Talking Head Video", body: "Use when a speaker, script, or direct-to-camera message is primary.", href: "/ai-video-generation/talking-head-video", linkLabel: "Explore Talking Head Video" },
+        { title: "Corporate Video", body: "Use for organization-led communication, culture, or company stories.", href: "/ai-video-generation/corporate-video", linkLabel: "Explore Corporate Video" }
+      ]
+    },
+    faq: {
+      eyebrow: "FAQ",
+      title: "Pet Video Questions",
+      items: [
+        { question: "What is an AI pet video generator?", answer: "An AI pet video generator helps create motion visuals around pet portraits, animal behavior, owner interactions, walks, grooming, training context, feeding routines, and pet lifestyle content. Here the useful job is visual planning and generation: define the animal, behavior, interaction, environment, and continuity rules, then generate and review clips from text or approved images." },
+        { question: "Can I create pet-video visuals from a photo?", answer: "myDreamshoots publicly lists Image to Video as an AI Video Generation path. Use an approved pet portrait, owner-and-pet image, shelter reference, or location image when it should anchor motion, then review identity, anatomy, props, and continuity before publishing." },
+        { question: "Can I create pet-video visuals from text?", answer: "myDreamshoots also publicly lists Text to Video. A strong prompt should describe the animal identity, visible action, human interaction, setting, props, lighting, camera angle, motion, and role of the shot instead of relying only on words such as cute or realistic." },
+        { question: "Does this diagnose a pet or evaluate its behavior?", answer: "No. Do not claim veterinary diagnosis, pain or illness assessment, nutrition or allergen analysis, behavior evaluation, training efficacy, welfare compliance, adoption outcomes, or product safety unless those capabilities are verified in the live product and supported by appropriate evidence. Generated visuals are creative content, not animal-care guidance." },
+        { question: "What should I review before using AI-generated pet clips?", answer: "Check animal identity, coat and anatomy, eyes, ears, mouth, paws, limbs, tail, collars, leashes, hands, props, location, lighting, action direction, continuity, source permission, and every health, nutrition, behavior, training, welfare, or safety claim." },
+        { question: "How is this different from Food Video?", answer: "Pet Video owns animal-led visual storytelling, pet routines, owner relationships, and animal lifestyle content. Food Video owns food-first visual storytelling, cooking action, plating, service, and culinary atmosphere." }
+      ]
+    },
+    finalCta: { eyebrow: "CREATE WITH A VERIFIED PET BRIEF", title: "Turn a Pet Idea Into Motion", body: "Choose the animal identity, make the behavior visible, protect continuity, and review the finished draft before publishing.", cta: "Create Pet Video Visuals", microcopy: "Approved references. Clear visible behavior. Reviewed final cut." }
   },
   "ugc-ad-video": {
     seo: {

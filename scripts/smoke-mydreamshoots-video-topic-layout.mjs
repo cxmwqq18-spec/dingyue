@@ -21,7 +21,8 @@ const topics = [
   "brand-video",
   "music-video",
   "fashion-video",
-  "food-video"
+  "food-video",
+  "pet-video"
 ];
 const viewports = [
   { name: "mobile", width: 390, height: 844, columns: 1, videoAdColumns: 1 },
@@ -44,7 +45,7 @@ function sectionOrderForTopic(topic) {
   if (topic === "brand-video") {
     return ["hero", "what-this-creates", "brand-story-map", "brand-signals", "how-it-works", "scene-gallery", "brand-consistency-guide", "product-evidence", "workflow", "brand-integrity-review", "faq", "related-pages", "final-cta"];
   }
-  if (topic === "music-video" || topic === "fashion-video" || topic === "food-video") {
+  if (topic === "music-video" || topic === "fashion-video" || topic === "food-video" || topic === "pet-video") {
     return ["hero", "what-this-creates", "visual-map", "how-it-works", "scene-gallery", "sequence-guide", "product-boundary", "product-evidence", "workflow", "integrity-review", "faq", "related-pages", "final-cta"];
   }
   return sectionOrder;
@@ -192,7 +193,7 @@ try {
             checked.push({ topic, viewport: viewport.name });
             continue;
           }
-          if (topic === "music-video" || topic === "fashion-video" || topic === "food-video") {
+          if (topic === "music-video" || topic === "fashion-video" || topic === "food-video" || topic === "pet-video") {
             await page.locator('[data-video-topic-section="scene-gallery"]').scrollIntoViewIfNeeded();
             await page.waitForFunction(
               () => [...document.querySelectorAll("[data-scene-topic-scene] img")].every((image) => image.complete && image.naturalWidth > 0),

@@ -129,6 +129,12 @@ const categoriesBySiteId = {
       label: "Food Video",
       description: "Create food-focused motion for cooking action, plating, ingredient prep, restaurant service, beverages, and culinary social content.",
       sortOrder: 240
+    },
+    {
+      slug: "pet-video",
+      label: "Pet Video",
+      description: "Create pet-focused motion for portraits, play, routines, owner interaction, and animal lifestyle content.",
+      sortOrder: 260
     }
   ],
   site_grownstride_test: baseCategories

@@ -1377,6 +1377,38 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     ctaLabel: "Create Food Video Visuals",
     ctaHref: "/app/create#step-video"
   },
+  "pet-video": {
+    label: "Pet Video",
+    title: "AI Pet Video Generator for Pet Portraits & Animal Content | myDreamshoots",
+    description: "Create AI pet-video visuals from text or approved images for pet portraits, playful moments, owner interactions, walks, grooming, training, and animal lifestyle content.",
+    keywords: "ai pet video generator, AI pet video maker, pet portrait video generator, animal video generator, pet lifestyle video, dog video generator, cat video maker, pet social video creator",
+    h2: "turn a pet idea into a clear animal-led visual brief",
+    h3: ["Pet-led, relationship-led, and routine-led concepts", "Six-decision Pet Visual Behavior System", "Review animal identity, anatomy, props, and welfare boundaries before publishing"],
+    intro: "Pet Video helps pet owners, creators, shelters, groomers, trainers, and animal-focused teams shape short visual concepts around pet portraits, play, walking, grooming, training context, feeding routines, and owner interactions through verified video creation paths.",
+    details: [
+      "Use it for pet portrait and personality clips, owner-and-pet moments, shelter or adoption storytelling, walking and outdoor sequences, grooming and pet-care lifestyle visuals, training-context clips, feeding routines, and pet-brand creative.",
+      "Build around the animal identity, scene job, visible behavior cue, human interaction, environment, props, and continuity rules that can be reviewed clip by clip.",
+      "Keep Pet Video distinct from How-to Video, Food Video, Explainer Video, Talking Head Video, and Corporate Video: it owns animal-led visual storytelling rather than diagnosis, care instruction, or organization communication.",
+      "The current CTA opens the existing video workspace so customers can confirm supported inputs, credits, and output controls before generation."
+    ],
+    useCases: ["Pet portrait and personality concepts", "Pet creator / owner social content", "Shelter / adoption storytelling", "Walking, grooming, training, and home-life visuals", "Feeding-routine and lifestyle cutaways", "Pet-brand creative concepts"],
+    workflow: [
+      "Define the animal identity, visible behavior, interaction, props, environment, and intended channel.",
+      "Start from Text to Video or Image to Video in the live workspace.",
+      "Generate short clips and review paws, limbs, eyes, ears, mouths, tails, collars, leashes, hands, props, and continuity.",
+      "Keep veterinary, nutrition, behavioral, training-efficacy, welfare, and product-safety claims separately verified."
+    ],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore How-to Video", href: "/ai-video-generation/how-to-video" },
+      { label: "Explore Food Video", href: "/ai-video-generation/food-video" },
+      { label: "Explore Explainer Video", href: "/ai-video-generation/explainer-video" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create Pet Video Visuals",
+    ctaHref: "/app/create#step-video"
+  },
   "world-cup-fan-photos": {
     label: "World Cup Fan Photos",
     title: "AI World Cup Fan Photo Maker - stadium portraits and match-day posters",
@@ -1507,6 +1539,7 @@ const dreamshootDefaultPublicToolSlugs = new Set([
   "music-video",
   "fashion-video",
   "food-video",
+  "pet-video",
   "background-changer",
   "background-remover",
   "magic-eraser",

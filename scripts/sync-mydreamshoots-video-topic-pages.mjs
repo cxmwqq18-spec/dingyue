@@ -133,6 +133,12 @@ const videoCategories = [
     label: "Food Video",
     description: "Create food-focused motion for cooking action, plating, ingredient prep, restaurant service, beverages, and culinary social content.",
     sortOrder: 240
+  },
+  {
+    slug: "pet-video",
+    label: "Pet Video",
+    description: "Create pet-focused motion for portraits, play, routines, owner interaction, and animal lifestyle content.",
+    sortOrder: 260
   }
 ];
 
@@ -300,6 +306,14 @@ const pages = [
     description: "Create AI food-video visuals from text or approved images for cooking, plating, ingredient prep, restaurant scenes, beverage pours, and culinary social clips.",
     keywords: "ai food video generator, AI food video maker, cooking video generator, plating video maker, culinary video generator, food styling video, restaurant video concept",
     imageUrl: "/assets/dreamshoot/food-video/hero-food-video-creator-frame.jpg"
+  },
+  {
+    slug: "pet-video",
+    title: "Pet Video",
+    seoTitle: "AI Pet Video Generator for Pet Portraits & Animal Content | myDreamshoots",
+    description: "Create AI pet-video visuals from text or approved images for pet portraits, playful moments, owner interactions, walks, grooming, training, and animal lifestyle content.",
+    keywords: "ai pet video generator, AI pet video maker, pet portrait video generator, animal video generator, pet lifestyle video, dog video generator, cat video maker, pet social video creator",
+    imageUrl: "/assets/dreamshoot/pet-video/hero-pet-video-training-frame.jpg"
   }
 ];
 
@@ -469,7 +483,7 @@ function syncPages(state, changes) {
       title: pageDefinition.title,
       draftJson: clone(json)
     };
-    if (["brand-video", "music-video", "fashion-video", "food-video"].includes(pageDefinition.slug)) pageFields.publishedJson = clone(json);
+    if (["brand-video", "music-video", "fashion-video", "food-video", "pet-video"].includes(pageDefinition.slug)) pageFields.publishedJson = clone(json);
     updateRecord(page, pageFields, changes, "ThemePage");
     if (JSON.stringify(page) !== before) page.updatedAt = RUN_TIMESTAMP;
     return page;
@@ -512,6 +526,25 @@ function syncExistingVideoThemePreviews(state, changes) {
       "VideoTheme"
     );
     if (JSON.stringify(theme) !== before) theme.updatedAt = RUN_TIMESTAMP;
+  }
+}
+
+function syncVideoThemeStateFromRelational(state, themes, changes) {
+  const themeRows = state.videoThemes ?? (state.videoThemes = []);
+  for (const theme of themes) {
+    const serializedTheme = toPrismaJson(theme);
+    const existingTheme = themeRows.find((item) => item.siteId === SITE_ID && item.slug === theme.slug);
+    if (!existingTheme) {
+      themeRows.push(serializedTheme);
+      changes.push({
+        targetType: "VideoTheme",
+        id: theme.id,
+        field: "create",
+        after: theme.slug
+      });
+      continue;
+    }
+    updateRecord(existingTheme, serializedTheme, changes, "VideoTheme");
   }
 }
 
@@ -576,23 +609,27 @@ function addPublicationToState(state, publication) {
 }
 
 async function publishMissingVideoPages(state, syncedPages, prisma) {
-  const activePointer = await prisma.activeThemePublication.findUnique({
-    where: { siteId: SITE_ID },
-    include: { publication: true }
-  });
-  const currentPublication = activePointer?.publication ?? await prisma.themePublication.findFirst({
-    where: { siteId: SITE_ID },
-    orderBy: [{ version: "desc" }, { publishedAt: "desc" }]
-  });
-  if (!currentPublication) {
-    throw new Error(`missing_publication:${SITE_ID}; publish the site before syncing video topic pages`);
-  }
-
   const {
     publishSeoSnapshotRelational,
     publicationSnapshotHash,
     publicationSnapshotIntegrity
   } = loadPublicationTools();
+  const activePointer = await prisma.activeThemePublication.findUnique({
+    where: { siteId: SITE_ID },
+    include: { publication: true }
+  });
+  const allPublications = await prisma.themePublication.findMany({
+    where: { siteId: SITE_ID },
+    orderBy: [{ version: "desc" }, { publishedAt: "desc" }]
+  });
+  const publicationCandidates = [
+    activePointer?.publication,
+    ...allPublications.filter((publication) => publication.id !== activePointer?.publication?.id)
+  ].filter(Boolean);
+  const currentPublication = publicationCandidates.find((publication) => publicationSnapshotIntegrity(publication.snapshot) === "valid");
+  if (!currentPublication) {
+    throw new Error(`missing_publication:${SITE_ID}; publish the site before syncing video topic pages`);
+  }
   const snapshot = clone(currentPublication.snapshot);
   const databaseVideoPages = await prisma.themePage.findMany({
     where: {
@@ -619,8 +656,8 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
       slug: page.slug,
       title: page.title,
       publishedJson: clone(page.draftJson ?? page.publishedJson),
-      createdAt: page.createdAt,
-      updatedAt: page.updatedAt
+      createdAt: page.createdAt instanceof Date ? page.createdAt.toISOString() : page.createdAt,
+      updatedAt: page.updatedAt instanceof Date ? page.updatedAt.toISOString() : page.updatedAt
     }));
   const syncedBySlug = new Map(syncedPublicPages.map((page) => [page.slug, page]));
   let replacedCount = 0;
@@ -721,7 +758,7 @@ async function updateDatabase(state, categories, syncedPages) {
           publishedJson: toPrismaJson(page.draftJson),
           draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
         };
-          if (["brand-video", "music-video", "fashion-video", "food-video"].some((slug) => page.slug === pagePath(slug))) pageData.publishedJson = toPrismaJson(page.publishedJson ?? page.draftJson);
+          if (["brand-video", "music-video", "fashion-video", "food-video", "pet-video"].some((slug) => page.slug === pagePath(slug))) pageData.publishedJson = toPrismaJson(page.publishedJson ?? page.draftJson);
           const existingPage = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
           if (existingPage) {
             await tx.themePage.update({
@@ -739,6 +776,14 @@ async function updateDatabase(state, categories, syncedPages) {
             });
           }
         }
+        const relationalVideoThemes = await tx.videoTheme.findMany({
+          where: {
+            siteId: SITE_ID,
+            slug: { in: pages.map((page) => page.slug) }
+          },
+          orderBy: [{ sortOrder: "asc" }, { slug: "asc" }]
+        });
+        syncVideoThemeStateFromRelational(state, relationalVideoThemes, changes);
         await tx.platformStateDocument.upsert({
           where: { id: "platform" },
           create: { id: "platform", state: toPrismaJson(state) },
