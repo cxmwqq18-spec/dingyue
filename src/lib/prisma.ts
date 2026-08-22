@@ -9,15 +9,71 @@ const defaultWriteRetryCount = Math.max(0, Math.floor(Number(process.env.PRISMA_
 const defaultWriteRetryDelayMs = Math.max(0, Math.floor(Number(process.env.PRISMA_WRITE_TRANSIENT_RETRY_DELAY_MS ?? 300)));
 const disconnectSharedClientOnTransient = process.env.PRISMA_DISCONNECT_ON_TRANSIENT === "1";
 
-export const prisma =
+const basePrisma =
   globalForPrisma.prisma ??
   new PrismaClient({
     log: process.env.PRISMA_QUERY_LOG === "1" ? ["query", "error", "warn"] : ["error", "warn"]
   });
 
 if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+  globalForPrisma.prisma = basePrisma;
 }
+
+const remoteReadonlyMode = String(process.env.DINGYUE_ENV || "").trim().toLowerCase() === "remote-readonly" ||
+  String(process.env.DATABASE_TARGET || "").trim().toLowerCase() === "remote-readonly";
+
+function isWriteMethodName(action: string): boolean {
+  return /^(create|update|upsert|delete|deleteMany|updateMany|createMany|executeRaw|executeRawUnsafe)$/i.test(action);
+}
+
+function readonlyDelegate<T extends object>(delegate: T, label: string): T {
+  return new Proxy(delegate, {
+    get(target, prop, receiver) {
+      const value = Reflect.get(target, prop, receiver);
+      if (typeof prop !== "string" || typeof value !== "function") return value;
+      if (!isWriteMethodName(prop)) return value.bind(target);
+      return (..._args: unknown[]) => {
+        throw new Error(`Database writes are disabled in remote-readonly mode (${label}.${prop}).`);
+      };
+    }
+  });
+}
+
+function readonlyPrismaClient(client: PrismaClient): PrismaClient {
+  return new Proxy(client, {
+    get(target, prop, receiver) {
+      const value = Reflect.get(target, prop, receiver);
+      if (typeof prop === "string") {
+        if (prop === "$transaction") {
+          return ((...args: unknown[]) => {
+            const [operation, options] = args;
+            if (typeof operation === "function") {
+              return target.$transaction(
+                async (tx) => operation(readonlyPrismaClient(tx as PrismaClient)),
+                options as never
+              );
+            }
+            return target.$transaction(operation as never, options as never);
+          }) as PrismaClient["$transaction"];
+        }
+        if (prop === "$executeRaw" || prop === "$executeRawUnsafe") {
+          return () => {
+            throw new Error(`Database writes are disabled in remote-readonly mode (${prop}).`);
+          };
+        }
+        if (typeof value === "function") {
+          return value.bind(target);
+        }
+        if (value && typeof value === "object" && !prop.startsWith("$")) {
+          return readonlyDelegate(value as object, prop);
+        }
+      }
+      return value;
+    }
+  }) as PrismaClient;
+}
+
+export const prisma = remoteReadonlyMode ? readonlyPrismaClient(basePrisma) : basePrisma;
 
 class PrismaReadTimeoutError extends Error {
   code = "PDB_READ_TIMEOUT";
@@ -111,6 +167,9 @@ export async function runPrismaWriteWithReconnect<T>(
   options: { label?: string; retries?: number; retryDelayMs?: number } = {}
 ): Promise<T> {
   const label = options.label ?? "prisma write";
+  if (remoteReadonlyMode) {
+    throw new Error(`Database writes are disabled in remote-readonly mode (${label}).`);
+  }
   const retries = Math.max(0, Math.floor(options.retries ?? defaultWriteRetryCount));
   const retryDelayMs = Math.max(0, Math.floor(options.retryDelayMs ?? defaultWriteRetryDelayMs));
 

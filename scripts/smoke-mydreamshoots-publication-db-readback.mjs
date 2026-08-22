@@ -4,18 +4,20 @@ import fs from "node:fs";
 import Module from "node:module";
 import path from "node:path";
 import createJiti from "jiti";
+import { assertDatabaseTarget } from "./lib/database-target.mjs";
 import "./load-runtime-env.mjs";
 
 const siteId = "site_dreamshoot";
 const requireDatabase = process.argv.includes("--require-db");
-  const rawUrl = process.env.DATABASE_URL?.trim();
-  if (!rawUrl) {
+const rawUrl = process.env.DATABASE_URL?.trim();
+if (!rawUrl) {
   const result = { ok: !requireDatabase, skipped: true, reason: "DATABASE_URL is not configured; no database was touched" };
   console.log(JSON.stringify(result, null, 2));
   if (requireDatabase) process.exitCode = 1;
 } else {
   const parsed = new URL(rawUrl);
-  assert.ok(["localhost", "127.0.0.1", "::1"].includes(parsed.hostname), `refusing non-local database host: ${parsed.hostname}`);
+  const expectedTarget = String(process.env.DATABASE_TARGET || "local").trim().toLowerCase() === "remote-readonly" ? "remote-readonly" : "local";
+  assertDatabaseTarget({ expectedTarget });
   const { PrismaClient } = await import("@prisma/client");
   const sourceRoot = path.resolve("src");
   const originalResolveFilename = Module._resolveFilename;

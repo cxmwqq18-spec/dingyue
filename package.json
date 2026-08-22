@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "NODE_OPTIONS=--max-old-space-size=8192 __NEXT_DISABLE_MEMORY_WATCHER=1 NEXT_DIST_DIR=.next-dev next dev",
     "dev:3002": "node scripts/dev-fixed-port.mjs",
+    "dev:remote-readonly": "node scripts/dev-remote-readonly.mjs",
     "dev:clean-caches": "node scripts/clean-next-caches.mjs",
     "dev:clean-caches:apply": "node scripts/clean-next-caches.mjs --apply",
     "build": "rm -rf .next-build && NEXT_DIST_DIR=.next-build NEXT_PRIVATE_BUILD_WORKER=1 next build; status=$?; node scripts/restore-next-env.mjs; exit $status",
@@ -66,6 +67,7 @@
     "sync:mydreamshoots-audit-closure:write": "node scripts/sync-mydreamshoots-audit-closure.mjs --write",
     "sync:mydreamshoots-audit-closure:db": "ALLOW_LOCAL_BLOG_DB_SYNC=1 LOCAL_BLOG_DB_CONTAINER_CONFIRMED=1 node scripts/sync-mydreamshoots-audit-closure.mjs --write --db",
     "sync:grownstride-test-public-state": "node scripts/sync-grownstride-test-public-state-from-json.mjs",
+    "sync:grownstride-test-public-state:db": "node scripts/sync-grownstride-test-public-state-from-json.mjs",
     "seed:grownstride-test-customer": "node scripts/seed-grownstride-test-customer.mjs",
     "generate:dreamshoot-homepage-images": "node scripts/generate-dreamshoot-homepage-images.mjs",
     "generate:dreamshoot-homepage-videos": "node scripts/generate-dreamshoot-homepage-videos.mjs",

@@ -8,6 +8,7 @@ This project keeps local, test, and production data separate. Local development 
 - Test releases must use `DINGYUE_ENV=test` and `DATABASE_TARGET=test` with a test-only database account.
 - Production releases must use `DINGYUE_ENV=production` and `DATABASE_TARGET=production` with the systemd production environment.
 - Remote production inspection must be explicit and read-only. Start the tunnel with `npm run db:tunnel -- --readonly` only after setting `REMOTE_DB_READONLY_DATABASE_URL`.
+- Remote-readonly development mode is available with `npm run dev:remote-readonly`. It reuses the readonly tunnel, sets `DINGYUE_ENV=remote-readonly`, `DATABASE_TARGET=remote-readonly`, and points `DATABASE_URL` at `127.0.0.1:15432`.
 
 ## Local Database
 

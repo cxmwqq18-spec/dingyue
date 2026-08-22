@@ -8,7 +8,6 @@ const DEFAULT_SITE_ID = "site_grownstride_test";
 const DEFAULT_DOMAIN = "test.grownstride.com";
 const CONFIRM_PHRASE = "sync-grownstride-test-public-state";
 const DOCUMENT_ID = "platform";
-const statePathDefault = path.join(process.cwd(), "data", "platform-state.json");
 const transactionTimeoutMs = Number(process.env.SYNC_TRANSACTION_TIMEOUT_MS ?? 600000);
 const cacheFiles = [
   path.join(process.cwd(), ".next", "cache", "platform-state-postgres.json"),
@@ -24,9 +23,11 @@ function usage() {
       "Usage:",
       `  node scripts/sync-grownstride-test-public-state-from-json.mjs --dry-run`,
       `  node scripts/sync-grownstride-test-public-state-from-json.mjs --apply --confirm ${CONFIRM_PHRASE}`,
+      `  node scripts/sync-grownstride-test-public-state-from-json.mjs --source <legacy-state.json> --dry-run`,
       "",
       "Purpose:",
-      "  Sync only site_grownstride_test public storefront state from data/platform-state.json into Postgres.",
+      "  Sync only site_grownstride_test public storefront state from the relational database into Postgres.",
+      "  Use --source only for a one-time legacy JSON backfill.",
       "",
       "Guards:",
       "  Defaults to --dry-run. --apply requires the exact confirm phrase.",
@@ -49,7 +50,8 @@ function argValue(name) {
 }
 
 const siteId = argValue("--site-id") ?? process.env.SYNC_SITE_ID ?? DEFAULT_SITE_ID;
-const statePath = path.resolve(argValue("--source") ?? process.env.SYNC_STATE_PATH ?? statePathDefault);
+const sourceArg = argValue("--source");
+const statePath = sourceArg ? path.resolve(sourceArg) : null;
 const applyRequested = hasFlag("--apply");
 const dryRunRequested = hasFlag("--dry-run");
 const dryRun = dryRunRequested || !applyRequested;
@@ -923,10 +925,63 @@ async function main() {
   if (siteId !== DEFAULT_SITE_ID) {
     throw new Error(`refusing to sync non-test site: ${siteId}`);
   }
-  if (!fs.existsSync(statePath)) throw new Error(`state file not found: ${statePath}`);
-
-  const sourceState = JSON.parse(fs.readFileSync(statePath, "utf8"));
-  const records = scopedRows(sourceState);
+  const sourceState = statePath ? JSON.parse(fs.readFileSync(statePath, "utf8")) : null;
+  let records;
+  let sourceLabel;
+  if (sourceState) {
+    records = scopedRows(sourceState);
+    sourceLabel = path.relative(process.cwd(), statePath);
+  } else {
+    const sourceRuntime = await prisma.site.findUnique({
+      where: { id: DEFAULT_SITE_ID },
+      include: {
+        domains: true,
+        settings: true,
+        pages: { orderBy: { slug: "asc" } },
+        publications: { orderBy: { version: "asc" } },
+        siteThemes: { orderBy: { updatedAt: "asc" } },
+        themeCopies: { orderBy: { updatedAt: "asc" } },
+        products: { include: { prices: true }, orderBy: { createdAt: "asc" } },
+        aiApps: { include: { aiApp: true }, orderBy: { routeKey: "asc" } },
+        gatewayGroups: { orderBy: { name: "asc" } },
+        creativePackCategories: { orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { slug: "asc" }] },
+        creativePacks: { orderBy: { createdAt: "asc" } },
+        mediaAssets: { orderBy: { createdAt: "asc" } },
+        toolCategories: { orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { slug: "asc" }] },
+        toolMenuItems: { orderBy: [{ sortOrder: "asc" }, { slug: "asc" }] },
+        videoThemeCategories: { orderBy: [{ sortOrder: "asc" }, { slug: "asc" }] },
+        videoThemes: { orderBy: [{ createdAt: "asc" }, { slug: "asc" }] }
+      }
+    });
+    if (!sourceRuntime) throw new Error(`source site not found in database: ${DEFAULT_SITE_ID}`);
+    const source = {
+      ...sourceRuntime,
+      themeSettings: sourceRuntime.settings ? { draftJson: sourceRuntime.settings.draftJson, publishedJson: sourceRuntime.settings.publishedJson } : undefined,
+      siteAiApps: sourceRuntime.aiApps,
+      aiGatewayGroups: sourceRuntime.gatewayGroups,
+      themePublications: sourceRuntime.publications
+    };
+    records = scopedRows({
+      sites: [source],
+      siteDomains: sourceRuntime.domains,
+      themeSettings: source.themeSettings,
+      prices: sourceRuntime.products.flatMap((product) => product.prices ?? []),
+      products: sourceRuntime.products,
+      siteAiApps: sourceRuntime.aiApps,
+      aiGatewayGroups: sourceRuntime.gatewayGroups,
+      creativePackCategories: sourceRuntime.creativePackCategories,
+      creativePacks: sourceRuntime.creativePacks,
+      mediaAssets: sourceRuntime.mediaAssets,
+      toolCategories: sourceRuntime.toolCategories,
+      toolMenuItems: sourceRuntime.toolMenuItems,
+      videoThemeCategories: sourceRuntime.videoThemeCategories,
+      videoThemes: sourceRuntime.videoThemes,
+      themePublications: sourceRuntime.publications,
+      siteThemes: sourceRuntime.siteThemes,
+      themeCopies: sourceRuntime.themeCopies
+    });
+    sourceLabel = "database";
+  }
   const sourceDomains = unique(records.domains.map((domain) => domain.domain));
   if (!sourceDomains.includes(DEFAULT_DOMAIN) && records.site.primaryDomain !== DEFAULT_DOMAIN) {
     throw new Error(`source state for ${siteId} does not include ${DEFAULT_DOMAIN}`);
@@ -950,7 +1005,7 @@ async function main() {
           ok: true,
           mode: "dry-run",
           guard,
-          source: path.relative(process.cwd(), statePath),
+          source: sourceLabel,
           summary,
           trustedLogos: beforeTrustedLogos
         },
@@ -1008,7 +1063,7 @@ async function main() {
         ok: true,
         mode: "apply",
         guard,
-        source: path.relative(process.cwd(), statePath),
+        source: sourceLabel,
         summary,
         backupPath,
         beforeSummary: result.beforeSummary,

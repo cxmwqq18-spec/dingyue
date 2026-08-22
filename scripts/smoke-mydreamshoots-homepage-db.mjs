@@ -5,14 +5,15 @@ import Module from "node:module";
 import path from "node:path";
 import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
+import { assertDatabaseTarget } from "./lib/database-target.mjs";
 import "./load-runtime-env.mjs";
 
 const siteId = "site_dreamshoot";
 const databaseUrl = process.env.DATABASE_URL?.trim();
 assert(databaseUrl, "DATABASE_URL is required");
 const parsed = new URL(databaseUrl);
-assert(["localhost", "127.0.0.1", "::1"].includes(parsed.hostname), `expected local database, received ${parsed.hostname}`);
-assert.equal(parsed.port, "15433", "MyDreamShoots smoke must use local port 15433");
+const expectedTarget = String(process.env.DATABASE_TARGET || "local").trim().toLowerCase() === "remote-readonly" ? "remote-readonly" : "local";
+assertDatabaseTarget({ expectedTarget });
 
 const sourceRoot = path.resolve("src");
 const originalResolveFilename = Module._resolveFilename;

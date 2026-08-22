@@ -41,6 +41,16 @@ export function parseDatabaseUrl(rawUrl = process.env.DATABASE_URL) {
   };
 }
 
+export function buildTunneledReadonlyDatabaseUrl(remoteReadonlyDatabaseUrl, { host = LOCAL_DATABASE.host, port = 15432 } = {}) {
+  if (!remoteReadonlyDatabaseUrl?.trim()) {
+    throw new Error("REMOTE_DB_READONLY_DATABASE_URL is required to build the remote-readonly DATABASE_URL.");
+  }
+  const url = new URL(remoteReadonlyDatabaseUrl);
+  url.hostname = host;
+  url.port = String(port);
+  return url.toString();
+}
+
 export function databaseTargetSummary(env = process.env) {
   const parsed = parseDatabaseUrl(env.DATABASE_URL);
   return {
@@ -76,8 +86,15 @@ export function assertDatabaseTarget({
 }) {
   assertEnvironmentLabel(expectedTarget, env);
   const parsed = parseDatabaseUrl(env.DATABASE_URL);
-  if (parsed.port === 15432) {
-    throw new Error("Refusing database operations through the legacy remote tunnel port 15432.");
+  if (parsed.port === 15432 && expectedTarget !== "remote-readonly") {
+    throw new Error("Refusing database operations through the legacy remote tunnel port 15432 unless DATABASE_TARGET=remote-readonly.");
+  }
+  if (expectedTarget === "remote-readonly") {
+    if (!new Set(["127.0.0.1", "localhost", "::1"]).has(parsed.host) || parsed.port !== 15432) {
+      throw new Error(
+        `Remote-readonly database target must use the local SSH tunnel on 127.0.0.1:15432; received ${parsed.host}:${parsed.port}/${parsed.database}.`
+      );
+    }
   }
   if (expectedTarget === "local") {
     if (
