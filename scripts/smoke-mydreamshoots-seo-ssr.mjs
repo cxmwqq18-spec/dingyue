@@ -768,6 +768,10 @@ for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
       ? ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "urgency", "how-it-works", "comparison", "trust", "faq", "final-cta"]
     : slug === "video-ad"
       ? ["hero", "what-this-creates", "style-cues", "how-it-works", "scene-gallery", "guide", "workflow", "faq", "related-pages", "final-cta"]
+      : slug === "brand-video"
+        ? ["hero", "what-this-creates", "brand-story-map", "brand-signals", "how-it-works", "scene-gallery", "brand-consistency-guide", "product-evidence", "workflow", "brand-integrity-review", "faq", "related-pages", "final-cta"]
+        : ["music-video", "fashion-video", "food-video", "pet-video"].includes(slug)
+          ? ["hero", "what-this-creates", "visual-map", "how-it-works", "scene-gallery", "sequence-guide", "product-boundary", "product-evidence", "workflow", "integrity-review", "faq", "related-pages", "final-cta"]
     : pageMarkup.includes('data-video-topic-section="supporting"')
       ? ["hero", "use-cases", "foundation", "guidance", "supporting", "steps", "value", "trust", "faq", "final-cta"]
       : sharedSectionOrder;
