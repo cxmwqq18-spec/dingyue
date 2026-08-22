@@ -10,7 +10,8 @@ const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const updateDb = args.has("--db");
 const refreshContent = args.has("--refresh-content");
-const SITE_ID = "site_dreamshoot";
+const siteIdArg = process.argv.find((arg) => arg.startsWith("--site-id="));
+const SITE_ID = siteIdArg ? siteIdArg.slice("--site-id=".length) : process.env.SITE_ID || "site_dreamshoot";
 const UPDATE_TIMESTAMP = "2026-08-16T00:00:00.000Z";
 const RUN_TIMESTAMP = new Date().toISOString();
 const EMPTY_UNPUBLISHED_PAGE_JSON = {
@@ -379,11 +380,11 @@ function updateRecord(record, fields, changes, targetType) {
 }
 
 function categoryId(slug) {
-  return `video_cat_dreamshoot_${slug.replaceAll("-", "_")}`;
+  return `video_cat_${SITE_ID}_${slug.replaceAll("-", "_")}`;
 }
 
 function pageId(slug) {
-  return `site_dreamshoot_${slug.replaceAll("-", "_")}`;
+  return `${SITE_ID}_${slug.replaceAll("-", "_")}`;
 }
 
 function pagePath(slug) {
