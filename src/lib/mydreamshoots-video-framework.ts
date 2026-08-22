@@ -132,7 +132,7 @@ export const mydreamshootsVideoGenerationCategories = [
   {
     slug: "music-video",
     label: "Music Video",
-    description: "Develop visual concepts and motion for music-led videos.",
+    description: "Develop artist-, performance-, and track-led visual concepts with a coherent visual language.",
     sortOrder: 210
   },
   {
@@ -227,7 +227,9 @@ export const mydreamshootsCurrentVideoMenuSlugs = [
   "story-video",
   "meme-video",
   "product-video",
-  "product-ad-video"
+  "product-ad-video",
+  "music-video",
+  "fashion-video"
 ] as const;
 
 const mydreamshootsCurrentVideoMenuSlugSet = new Set<string>(mydreamshootsCurrentVideoMenuSlugs);
@@ -489,6 +491,32 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     durationSeconds: 6,
     maxFrames: 10,
     sortOrder: 160
+  },
+  {
+    slug: "music-video",
+    categorySlug: "music-video",
+    name: "Music Video",
+    headline: "Create artist-, performance-, and track-led visual concepts with a coherent visual language.",
+    description: "Plan music-video visuals around artist identity, performance, narrative, motifs, motion, and reviewable continuity.",
+    prompt: "Create a music-video visual concept around an approved artist brief or image reference. Define the mood, visual motif, performance or narrative job, framing, motion grammar, and sequence logic. Do not claim automatic song upload, beat synchronization, lyric extraction, music licensing, voice cloning, lip sync, or audio mastering without verified product support.",
+    imageUrl: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 170
+  },
+  {
+    slug: "fashion-video",
+    categorySlug: "fashion-video",
+    name: "Fashion Video",
+    headline: "Create fashion motion concepts around garments, styling, silhouette, material, and movement.",
+    description: "Plan editorial, lookbook, runway, styling, garment-detail, and fashion-campaign visual directions with continuity review.",
+    prompt: "Create a fashion-video visual concept around an approved collection, garment, model, styling brief, or image reference. Define the hero garment, silhouette, styling stack, material cues, movement, framing, and continuity rules. Do not claim virtual try-on, automatic garment transfer, exact fabric physics, fit prediction, SKU ingestion, or catalog automation without verified product support.",
+    imageUrl: "/assets/dreamshoot/fashion-video/hero-fashion-video-editorial-frame.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 180
   }
 ] as const;
 
@@ -526,7 +554,9 @@ export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "promo-video",
   "ugc-ad-video",
   "video-ad",
-  "brand-video"
+  "brand-video",
+  "music-video",
+  "fashion-video"
 ] as const;
 
 const publicVideoGenerationPageSlugs = new Set<string>(mydreamshootsPublicVideoGenerationTopicSlugs);

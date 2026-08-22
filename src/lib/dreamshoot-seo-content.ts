@@ -1296,6 +1296,60 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     ctaLabel: "Create a Brand Video",
     ctaHref: "/app/create#step-video"
   },
+  "music-video": {
+    label: "Music Video",
+    title: "AI Music Video Generator for Artist Visuals | myDreamshoots",
+    description: "Create AI music-video visuals from text or images for performances, artist promos, dance, visualizers, and cinematic sequences. Plan the look, generate clips, review continuity, and pair approved visuals with properly licensed audio in your publishing workflow.",
+    keywords: "ai music video generator, AI music video maker, artist visual generator, performance video generator, AI visualizer maker, dance video concept generator, music promo video maker",
+    h2: "turn an artist idea into a coherent visual language",
+    h3: ["Performance, narrative, and visual-led concepts", "Six-decision Music Video Visual Map", "Review identity, continuity, and audio rights before publishing"],
+    intro: "Music Video helps artists and creators shape short visual concepts around performance, narrative, dance, visual motifs, and artist identity through verified video creation paths.",
+    details: [
+      "Use it for artist performance concepts, album or single-era directions, dance-led sequences, visualizers, social cutdowns, studio references, and cinematic inserts.",
+      "Build around artist identity, track mood, one recurring motif, intentional motion, and a sequence that can be reviewed clip by clip.",
+      "Keep Music Video distinct from Brand Video, Promo Video, Video Ad, and Fashion Video: it owns artist- and track-led visual storytelling.",
+      "The current CTA opens the existing video workspace so customers can confirm supported inputs, credits, and output controls before generation."
+    ],
+    useCases: ["Artist performance concepts", "Album and single-era directions", "Dance-led sequences", "Visualizers", "Social cutdowns", "Cinematic inserts"],
+    workflow: ["Define the artist, mood, motif, and scene job.", "Start from Text to Video or Image to Video in the live workspace.", "Generate short clips and review identity, motion, text-like marks, and continuity.", "Add audio only through a rights-cleared workflow where the capability is confirmed."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore Fashion Video", href: "/ai-video-generation/fashion-video" },
+      { label: "Explore Brand Video", href: "/ai-video-generation/brand-video" },
+      { label: "Explore Promo Video", href: "/ai-video-generation/promo-video" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create Music Video Visuals",
+    ctaHref: "/app/create#step-video"
+  },
+  "fashion-video": {
+    label: "Fashion Video",
+    title: "AI Fashion Video Generator for Editorial & Lookbook Visuals | myDreamshoots",
+    description: "Create AI fashion-video visuals from text or approved images for editorials, lookbooks, runway concepts, styling, garment details, and campaign sequences. Define the look, generate clips, review garment and model continuity, and publish only with cleared source rights.",
+    keywords: "ai fashion video generator, AI fashion video maker, fashion editorial video generator, lookbook video maker, runway video concept, styling video generator, garment detail video",
+    h2: "make clothing, styling, and silhouette read clearly in motion",
+    h3: ["Editorial, garment, and movement-led concepts", "Six-decision Fashion Visual System", "Review wardrobe continuity and source rights before publishing"],
+    intro: "Fashion Video helps brands, designers, stylists, creators, and editorial teams shape short visual concepts around garments, styling, silhouettes, materials, and movement.",
+    details: [
+      "Use it for fashion editorials, lookbook motion, runway concepts, collection stories, accessory close-ups, fabric details, street-style clips, and pre-shoot direction.",
+      "Build around one hero garment, a defined silhouette, styling stack, material cues, movement choice, and scene continuity.",
+      "Keep Fashion Video distinct from Music Video, Brand Video, Promo Video, Video Ad, and Product Video: it owns garment-, styling-, collection-, and editorial-led motion.",
+      "The current CTA opens the existing video workspace so customers can confirm supported inputs, credits, and output controls before generation."
+    ],
+    useCases: ["Fashion editorials", "Lookbook concepts", "Runway-inspired sequences", "Styling close-ups", "Fabric and construction details", "Street-style social clips"],
+    workflow: ["Define the garment priority, styling, movement, and intended channel.", "Start from Text to Video or Image to Video in the live workspace.", "Generate short clips and review model identity, garment edges, construction, and continuity.", "Publish only after source-rights and product-capability review."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore Music Video", href: "/ai-video-generation/music-video" },
+      { label: "Explore Brand Video", href: "/ai-video-generation/brand-video" },
+      { label: "Explore Promo Video", href: "/ai-video-generation/promo-video" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create Fashion Video Visuals",
+    ctaHref: "/app/create#step-video"
+  },
   "world-cup-fan-photos": {
     label: "World Cup Fan Photos",
     title: "AI World Cup Fan Photo Maker - stadium portraits and match-day posters",
@@ -1423,6 +1477,8 @@ const dreamshootDefaultPublicToolSlugs = new Set([
   "ugc-ad-video",
   "video-ad",
   "brand-video",
+  "music-video",
+  "fashion-video",
   "background-changer",
   "background-remover",
   "magic-eraser",

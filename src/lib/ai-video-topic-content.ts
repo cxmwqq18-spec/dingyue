@@ -78,6 +78,7 @@ export type AiVideoTopicLandingContent = {
     rightsCopy: string;
     imageNote: string;
     image: AiVideoTopicImage;
+    images?: AiVideoTopicImage[];
     highlights?: string[];
     mediaAspectRatio?: string;
     imageFit?: "cover" | "contain";
@@ -159,6 +160,8 @@ const productAdImageRoot = "/assets/dreamshoot/product-ad-video";
 const promoImageRoot = "/assets/dreamshoot/promo-video";
 const videoAdImageRoot = "/assets/dreamshoot/video-ad";
 const brandVideoImageRoot = "/assets/dreamshoot/brand-video";
+const musicVideoImageRoot = "/assets/dreamshoot/music-video";
+const fashionVideoImageRoot = "/assets/dreamshoot/fashion-video";
 
 export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLandingContent> = {
   "cinematic-video": {
@@ -3220,6 +3223,328 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       cta: "Create a Brand Video",
       microcopy: "Approved assets. Verifiable facts. One recognizable brand story."
     }
+  },
+  "music-video": {
+    seo: {
+      title: "AI Music Video Generator for Artist Visuals | myDreamshoots",
+      description: "Create AI music-video visuals from text or images for performances, artist promos, dance, visualizers, and cinematic sequences. Plan the look, generate clips, review continuity, and pair approved visuals with properly licensed audio in your publishing workflow.",
+      keywords: "ai music video generator, AI music video maker, artist visual generator, performance video generator, AI visualizer maker, dance video concept generator, music promo video maker",
+      canonicalPath: "/ai-video-generation/music-video"
+    },
+    hero: {
+      eyebrow: "AI MUSIC VIDEO GENERATOR",
+      title: "AI Music Video Generator for Artist Visuals & Performance Concepts",
+      body: "Turn a lyric idea, artist mood, visual reference, or approved image into short motion concepts for music-video development. Use myDreamshoots Text to Video or Image to Video to explore performance shots, visual motifs, dance-led scenes, atmospheric cutaways, and cinematic sequence ideas—without pretending the product automatically licenses, uploads, or beat-syncs music unless those capabilities are confirmed.",
+      primaryCta: "Create Music Video Visuals",
+      secondaryCta: "Explore AI Video Generation",
+      availabilityNote: "Use the current myDreamshoots video workspace to confirm supported inputs, credit requirements, and output controls before generation.",
+      rightsCopy: "Use approved artist references and properly licensed audio. Review identity, instruments, text, logos, motion continuity, and rights before publishing.",
+      imageNote: "Artist identity -> Visual motif -> Performance or narrative -> Motion -> Sequence",
+      highlights: ["Performance Visuals", "Artist Identity", "Narrative Scenes", "Dance & Motion", "Text to Video", "Image to Video"],
+      image: image(`${musicVideoImageRoot}/hero-music-video-performance.jpg`, "Female vocalist singing into a studio microphone under red and blue cinematic lighting, used as the dedicated hero performance frame.", 1800, 1200, "50% 42%"),
+      images: [
+        image(`${musicVideoImageRoot}/hero-music-video-performance.jpg`, "Female vocalist singing into a studio microphone under red and blue cinematic lighting, used as the dedicated hero performance frame.", 1800, 1200, "50% 42%"),
+        image(`${musicVideoImageRoot}/hero-music-video-artist-frame.jpg`, "Indie music artist in a colorful jacket photographed under moody purple studio lighting, used as the dedicated hero artist identity frame.", 1067, 1600, "50% 38%"),
+        image(`${musicVideoImageRoot}/hero-music-video-visual-motif.jpg`, "Empty microphone stage surrounded by haze, spotlights, and light beams, used as the dedicated hero visual motif frame.", 1800, 1200, "50% 48%")
+      ]
+    },
+    quickAnswer: {
+      eyebrow: "WHAT THIS CREATES",
+      title: "Turn Musical Identity Into a Coherent Visual Language",
+      intro: "Music Video is for visual development around a track or artist idea, not for claiming automatic audio production or music rights.",
+      cards: [
+        { title: "Performance-led", body: "Singer, rapper, band, instrumentalist, DJ, or creator performance framing." },
+        { title: "Narrative-led", body: "Character, place, atmosphere, symbolic actions, and cinematic story beats." },
+        { title: "Visual-led", body: "Lighting, projection, texture, color, motion, styling, and recurring motifs." },
+        { title: "Best for", body: "Artist promos, album-era directions, dance sequences, visualizers, social cutdowns, and pre-shoot mood exploration." }
+      ]
+    },
+    useCases: { eyebrow: "MUSIC VIDEO JOBS", title: "Choose the Visual Job Before the Style", intro: "Use the dedicated visual map, gallery, and workflow below to define a track-led concept.", items: [] },
+    platformExamples: {
+      eyebrow: "MUSIC VIDEO VISUAL MAP",
+      title: "Six Decisions Before Generating Clips",
+      intro: "A coherent music-video concept starts with a small set of repeatable visual decisions.",
+      items: [
+        { title: "Track mood", body: "Energy, tempo feel, emotional tone, contrast, and atmosphere." },
+        { title: "Artist identity", body: "Styling, presence, point of view, era, and what must remain recognizable." },
+        { title: "Visual motif", body: "One recurring color, prop, location, framing device, texture, or light behavior." },
+        { title: "Performance or narrative", body: "Decide whether the clip is driven by the performer, a story beat, or visual rhythm." },
+        { title: "Motion grammar", body: "Still, handheld, push-in, orbit, slow movement, fast cuts, or another intentional language." },
+        { title: "Sequence logic", body: "Define what changes from opening image to closing image so clips cut together coherently." }
+      ]
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      title: "Start With the Visual Brief, Then Review the Draft",
+      items: [
+        { title: "Define the visual brief", body: "Set the artist, mood, scene job, and one image viewers should remember." },
+        { title: "Choose the starting asset", body: "Use Text to Video for a written concept or Image to Video when an approved artist reference should anchor motion." },
+        { title: "Generate short clips", body: "Review subject identity, hands, text-like marks, locations, props, lighting, and motion continuity." },
+        { title: "Select approved clips", body: "Use audio only through a rights-cleared workflow where the product capability is confirmed." }
+      ],
+      cta: "Create Music Video Visuals"
+    },
+    gallery: {
+      eyebrow: "8 MUSIC VIDEO SCENE DIRECTIONS",
+      title: "Build the Next Shot Around a Clear Visual Job",
+      intro: "These are photographic scene references, not claims that every image is a one-click preset or a real myDreamshoots output.",
+      items: [
+        { title: "Live performance frame", body: "Performer on a lit stage with silhouette, eyeline, and audience-facing energy.", image: image(`${musicVideoImageRoot}/music-video-live-performance-stage.jpg`, "Female singer performing live into a handheld microphone on an indoor stage, framed as a music-video live performance reference.", 6000, 4000) },
+        { title: "Self-shot performance", body: "Phone and ring-light setup for intimate artist intros, rehearsal fragments, or vertical cutdowns.", image: image(`${musicVideoImageRoot}/music-video-self-shot-performance.jpg`, "Female guitarist recording a self-shot performance with a smartphone mounted inside a ring light in a home studio.", 6000, 4000) },
+        { title: "Camera and lighting setup", body: "Production-space reference for controlled framing, practical light, and visual consistency.", image: image(`${musicVideoImageRoot}/music-video-camera-lighting-setup.jpg`, "Camera operator filming a performer on a neon-lit studio set with a cinema camera, slider, and LED tube lights.", 2792, 1861) },
+        { title: "Practical set design", body: "A designed corner, prop environment, or color-led set that can become a recurring motif.", image: image(`${musicVideoImageRoot}/music-video-practical-set-design.jpg`, "Minimal studio set with a single chair, spotlight, softbox, camera, and overhead light arranged for a controlled music-video scene.", 4896, 3264) },
+        { title: "Artist styling", body: "Wardrobe, silhouette, accessories, grooming, and body language as part of the visual system.", image: image(`${musicVideoImageRoot}/music-video-artist-styling.jpg`, "Performer seated backstage while a stylist adjusts her hair, used as an artist styling and pre-performance preparation reference.", 4633, 3089) },
+        { title: "Duo or group frame", body: "Interaction, conversation, call-and-response, or group performance blocking.", image: image(`${musicVideoImageRoot}/music-video-duo-performance-frame.jpg`, "Two male vocalists performing together with handheld microphones on stage, used as a duo performance and blocking reference.", 6000, 4000) },
+        { title: "Close performance frame", body: "Direct-to-camera intensity, lyric delivery, facial expression, and tight crop.", image: image(`${musicVideoImageRoot}/music-video-close-performance-frame.jpg`, "Close-up of a male singer at a microphone under green stage lighting, used as a tight performance framing reference.", 2000, 3008) },
+        { title: "Artist intro stage", body: "A wider opening or reveal frame that establishes person, place, scale, or era.", image: image(`${musicVideoImageRoot}/music-video-artist-intro-stage.jpg`, "Back view of a singer at a microphone facing a bright spotlight on a dark stage, used as an artist entrance or reveal reference.", 6240, 4160) }
+      ]
+    },
+    guidance: {
+      eyebrow: "SEQUENCE GUIDE",
+      title: "Make the Music Video Feel Intentional Across Clips",
+      intro: "Use the same visual system from the first hook through the final cut.",
+      cards: [
+        { title: "Build a visual hook", body: "Choose one memorable opening rule: unusual crop, repeated movement, color contrast, silhouette, light cue, or prop." },
+        { title: "Keep the artist recognizable", body: "Review face, hair, wardrobe, body proportions, tattoos, jewelry, instruments, and recurring details across clips." },
+        { title: "Make one motif recur", body: "Repeat a color, reflection, doorway, spotlight, hand gesture, wardrobe accent, location texture, or camera move." },
+        { title: "Separate clip generation from audio rights", body: "Visual generation does not automatically grant music rights. Use a track only when rights and workflow support are confirmed." },
+        { title: "Review continuity before editing", body: "Check screen direction, wardrobe, props, time of day, location details, text, instrument shape, and motion direction." },
+        { title: "Design for the final channel", body: "A full video, vertical teaser, visualizer, album announcement, and social cutdown need different framing and pacing." }
+      ]
+    },
+    foundation: {
+      eyebrow: "AUDIO / PRODUCT BOUNDARY",
+      title: "Keep Visual Generation Separate From Unverified Audio Features",
+      intro: "The public video directory supports verified video creation paths. This page must stay precise about what happens in the product and what belongs in a separate rights-cleared edit.",
+      leftTitle: "Keep in the brief",
+      leftItems: ["Artist identity and approved references", "Mood, visual motif, setting, framing, and motion", "Text to Video or Image to Video starting point", "Rights-cleared people, images, marks, and audio"],
+      rightTitle: "Do not claim without proof",
+      rightItems: ["Automatic song upload or beat sync", "Lyric extraction, stem separation, or beat detection", "Voice cloning, lip sync, or audio mastering", "Automatic music licensing or publishing"],
+      rightTone: "avoid",
+      expertLabel: "Expert tip",
+      expertTip: "Write the visual system first. Treat audio synchronization as a separate production step unless the live workspace explicitly documents that control."
+    },
+    evidence: {
+      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
+      title: "Evidence Is Required Before This Page Proves the Workflow",
+      intro: "The eight editorial photos explain music-video directions. They do not prove a generated result, customer outcome, or product capability.",
+      cards: [
+        { title: "Text to Video input", body: "Add a verified current Text to Video input state before treating it as product proof." },
+        { title: "Image to Video input", body: "Add a verified Image to Video input state that reflects the current workflow." },
+        { title: "Credit confirmation", body: "Use the real credit-confirmation state shown before generation, not a recreated UI." },
+        { title: "Generation state", body: "Show a real current generation state when first-party evidence is available." },
+        { title: "Reviewed output", body: "Use a real reviewed music-video-style output before presenting a result as product evidence." }
+      ]
+    },
+    value: {
+      eyebrow: "START THIS VIDEO WORKFLOW",
+      title: "Turn an Approved Music Brief Into a Reviewable Visual Draft",
+      intro: "The live workspace is the source of truth for supported inputs, credits, and output controls.",
+      items: [
+        { title: "Choose the starting asset", body: "Use Text to Video for a written visual idea or Image to Video when an approved still should anchor motion." },
+        { title: "Define the visual system", body: "Write the artist identity, motif, scene job, mood, framing, motion, and non-negotiable details." },
+        { title: "Create in the signed-in workflow", body: "Review the live credit requirement shown by the product before starting the request." },
+        { title: "Review before editing", body: "Inspect identity, lighting, text-like marks, hands, props, instruments, background artifacts, motion, and continuity." }
+      ]
+    },
+    trust: {
+      eyebrow: "MUSIC VIDEO REVIEW",
+      title: "Keep the Visual Story Expressive and Rights-Cleared",
+      intro: "Before publishing:",
+      items: [
+        { title: "Use approved assets", body: "Only use artist images, people, locations, music, and third-party material you control or have permission to use." },
+        { title: "Keep identity accurate", body: "Review faces, hair, wardrobe, instruments, tattoos, jewelry, and other recognizable details." },
+        { title: "Check text and marks", body: "Review every logo, lyric-like mark, title card, cover-art detail, and third-party mark." },
+        { title: "Verify audio rights", body: "Do not upload, publish, or synchronize a track without the required rights and a supported workflow." },
+        { title: "Review continuity", body: "Check screen direction, props, lighting, location, motion direction, and sequence logic." },
+        { title: "Match the destination", body: "Make the crop, pacing, closing invitation, and disclosure fit the final channel." }
+      ]
+    },
+    comparison: {
+      eyebrow: "RELATED PAGES",
+      title: "Choose the Primary Video Job",
+      intro: "Music Video owns artist- and track-led visual storytelling. Use a neighboring page when identity, promotion, paid media, or fashion is the primary intent.",
+      items: [
+        { title: "AI Video Generation", body: "Browse all current MyDreamShoots video themes.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" },
+        { title: "Brand Video", body: "Use for company or artist-brand identity, origin, values, and recognition.", href: "/ai-video-generation/brand-video", linkLabel: "Explore Brand Video" },
+        { title: "Promo Video", body: "Use for a release announcement, event, launch date, offer, or verified promotion.", href: "/ai-video-generation/promo-video", linkLabel: "Explore Promo Video" },
+        { title: "Fashion Video", body: "Use when wardrobe, styling, collection, or garment motion is the primary search intent.", href: "/ai-video-generation/fashion-video", linkLabel: "Explore Fashion Video" }
+      ]
+    },
+    faq: {
+      eyebrow: "FAQ",
+      title: "Music Video Questions",
+      items: [
+        { question: "What is an AI music video generator?", answer: "An AI music video generator helps create motion visuals for an artist, song, performance, or music campaign. Here the useful job is visual generation and planning: define artist identity, mood, motif, scene type, and motion, then generate and review clips from text or approved images." },
+        { question: "Can I create music-video visuals from a photo?", answer: "myDreamshoots publicly lists Image to Video as an AI Video Generation path. Use an approved image when the performer, styling, cover-art mood, or location should anchor motion, then review identity and continuity." },
+        { question: "Can I create music-video visuals from text?", answer: "myDreamshoots also publicly lists Text to Video. Describe the subject, setting, motif, lighting, framing, motion, and role of the shot instead of relying only on words such as cinematic or music video." },
+        { question: "Does myDreamshoots automatically sync video to my song?", answer: "Do not promise automatic music upload or beat synchronization unless that feature is confirmed in the live product. Audio synchronization should be described only when the actual product path supports it." },
+        { question: "What should I review before using AI-generated clips?", answer: "Check artist identity, hands, instruments, clothing, text, logos, background details, motion continuity, and rights to every source image, person, brand element, and audio track used in the final edit." },
+        { question: "How is this different from Brand Video?", answer: "Music Video owns artist, performance, and track-led visual storytelling. Brand Video owns company or artist-brand identity, origin, values, culture, and recognition." }
+      ]
+    },
+    finalCta: { eyebrow: "CREATE WITH A VERIFIED MUSIC BRIEF", title: "Turn an Artist Idea Into Motion", body: "Choose the visual hook, make the motif specific, keep audio rights clear, and review the finished draft before editing or publishing.", cta: "Create Music Video Visuals", microcopy: "Approved references. Clear visual language. Rights-cleared final edit." }
+  },
+  "fashion-video": {
+    seo: {
+      title: "AI Fashion Video Generator for Editorial & Lookbook Visuals | myDreamshoots",
+      description: "Create AI fashion-video visuals from text or approved images for editorials, lookbooks, runway concepts, styling, garment details, and campaign sequences. Define the look, generate clips, review garment and model continuity, and publish only with cleared source rights.",
+      keywords: "ai fashion video generator, AI fashion video maker, fashion editorial video generator, lookbook video maker, runway video concept, styling video generator, garment detail video",
+      canonicalPath: "/ai-video-generation/fashion-video"
+    },
+    hero: {
+      eyebrow: "AI FASHION VIDEO GENERATOR",
+      title: "AI Fashion Video Generator for Editorial, Lookbook & Runway Concepts",
+      body: "Turn a collection idea, outfit reference, approved model image, styling direction, or visual mood into short fashion-motion concepts. Use myDreamshoots Text to Video or Image to Video to explore editorial movement, runway-style framing, lookbook shots, garment details, street-style moments, and campaign transitions—without claiming virtual try-on, exact garment transfer, or fabric-physics accuracy unless those capabilities are verified.",
+      primaryCta: "Create Fashion Video Visuals",
+      secondaryCta: "Explore AI Video Generation",
+      availabilityNote: "Use the current myDreamshoots video workspace to confirm supported inputs, credit requirements, and output controls before generation.",
+      rightsCopy: "Use approved model, garment, brand, and location references. Review wardrobe continuity, details, logos, body/garment boundaries, and rights before publishing.",
+      imageNote: "Hero garment -> Styling -> Material -> Movement -> Continuity",
+      highlights: ["Editorial Motion", "Lookbook Visuals", "Runway Concepts", "Styling & Detail", "Text to Video", "Image to Video"],
+      image: image(`${fashionVideoImageRoot}/hero-fashion-video-editorial-frame.jpg`, "Fashion model in a textured neutral outfit posing against vertical rolls of vivid color, used as the dedicated hero editorial frame.", 1067, 1600, "50% 38%"),
+      images: [
+        image(`${fashionVideoImageRoot}/hero-fashion-video-editorial-frame.jpg`, "Fashion model in a textured neutral outfit posing against vertical rolls of vivid color, used as the dedicated hero editorial frame.", 1067, 1600, "50% 38%"),
+        image(`${fashionVideoImageRoot}/hero-fashion-video-detail-frame.jpg`, "Close fashion detail of a model wearing a sheer white veil over black clothing with ornate gold jewelry, used as the dedicated hero styling-detail frame.", 1067, 1600, "50% 42%"),
+        image(`${fashionVideoImageRoot}/hero-fashion-video-runway-frame.jpg`, "Model in a sparkling black dress walking toward the camera on an indoor fashion runway, used as the dedicated hero runway-motion frame.", 1067, 1600, "50% 45%")
+      ]
+    },
+    quickAnswer: {
+      eyebrow: "WHAT THIS CREATES",
+      title: "Make Clothing, Styling, and Silhouette Read Clearly in Motion",
+      intro: "Fashion Video is for garment-, styling-, and collection-led visual development, not for unverified virtual try-on or fit simulation claims.",
+      cards: [
+        { title: "Editorial-led", body: "Art direction, pose, styling, composition, color, and visual attitude." },
+        { title: "Garment-led", body: "Silhouette, fit, fabric, layers, accessories, construction details, and angle changes." },
+        { title: "Movement-led", body: "Runway walk, turn, coat swing, fabric motion, street-style stride, or a garment-revealing camera move." },
+        { title: "Best for", body: "Editorials, lookbooks, runway concepts, collection stories, accessory close-ups, street-style clips, and pre-shoot direction." }
+      ]
+    },
+    useCases: { eyebrow: "FASHION VIDEO JOBS", title: "Choose the Garment Job Before the Style", intro: "Use the dedicated fashion map, gallery, and workflow below to define a look-led concept.", items: [] },
+    platformExamples: {
+      eyebrow: "FASHION VISUAL SYSTEM",
+      title: "Six Decisions Before Generating Clips",
+      intro: "A fashion sequence becomes useful when the wardrobe has a visual priority and continuity rule.",
+      items: [
+        { title: "Hero garment", body: "Decide what piece or full look must remain visually dominant." },
+        { title: "Silhouette and fit", body: "Define length, volume, proportion, layering, and what must not drift." },
+        { title: "Styling stack", body: "Set hair, makeup, shoes, jewelry, bag, eyewear, and supporting details." },
+        { title: "Material behavior", body: "Identify pleats, fringe, sheer layers, structured fabrics, seams, or textures needing review." },
+        { title: "Movement choice", body: "Select walk, turn, pause, pose change, fabric lift, seated motion, or camera move based on the garment." },
+        { title: "Scene continuity", body: "Keep model identity, outfit details, accessories, lighting, and location logic consistent." }
+      ]
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      title: "Start With the Fashion Brief, Then Review the Draft",
+      items: [
+        { title: "Define the fashion brief", body: "Set the collection or look, garment priority, styling, scene job, and intended channel." },
+        { title: "Choose the starting asset", body: "Use Text to Video for a written concept or Image to Video when an approved look, model, garment, or location image anchors motion." },
+        { title: "Generate short clips", body: "Review body/garment boundaries, hands, seams, fasteners, jewelry, logos, texture, lighting, and movement." },
+        { title: "Select approved clips", body: "Choose clips only after continuity and source-rights review; do not present unverified try-on behavior as capability." }
+      ],
+      cta: "Create Fashion Video Visuals"
+    },
+    gallery: {
+      eyebrow: "8 FASHION VIDEO SCENE DIRECTIONS",
+      title: "Build the Next Shot Around the Garment",
+      intro: "These are photographic scene references, not claims that every image is a one-click preset or a real myDreamshoots output.",
+      items: [
+        { title: "Runway walk frame", body: "Full-body motion with silhouette, stride, hemline, footwear, and audience-facing presentation.", image: image(`${fashionVideoImageRoot}/fashion-video-runway-walk.jpg`, "Fashion model in a white outfit and sunglasses walking on a dark indoor runway, used as a full-body runway movement reference.", 1067, 1600) },
+        { title: "Studio lookbook frame", body: "Controlled lighting and clean background for outfit shape, styling, and pose.", image: image(`${fashionVideoImageRoot}/fashion-video-studio-lookbook.jpg`, "Fashion model in a black corset and skirt posing between professional studio lights, used as a controlled lookbook and styling reference.", 1067, 1600) },
+        { title: "Garment fitting frame", body: "Pre-shoot adjustment and proportion review that makes construction part of the brief.", image: image(`${fashionVideoImageRoot}/fashion-video-garment-fitting.jpg`, "Fashion designer measuring a model's shoulder in a clothing studio, used as a garment fitting and proportion-review reference.", 1067, 1600) },
+        { title: "Fabric detail frame", body: "Tight texture, seam, pleat, weave, or drape reference where material behavior matters.", image: image(`${fashionVideoImageRoot}/fashion-video-fabric-detail.jpg`, "Close view of a white linen dress showing seam, weave, and fabric texture, used as a material-detail reference.", 1068, 1600) },
+        { title: "Accessory detail frame", body: "Jewelry, earrings, necklace, bag, eyewear, shoes, or another styling anchor in close framing.", image: image(`${fashionVideoImageRoot}/fashion-video-accessory-detail.jpg`, "Close-up fashion portrait of a model wearing layered necklaces, earrings, and a nose ring, used as an accessory styling reference.", 1200, 1600) },
+        { title: "Duo fashion frame", body: "Two models or looks designed for contrast, collection rhythm, or coordinated styling.", image: image(`${fashionVideoImageRoot}/fashion-video-duo-frame.jpg`, "Two fashion models posed together in a modern studio with contrasting black and metallic looks, used as a duo styling reference.", 1600, 1067) },
+        { title: "Street-style walk", body: "Wardrobe-led movement in a real urban environment with natural pace and location context.", image: image(`${fashionVideoImageRoot}/fashion-video-street-style.jpg`, "Fashionable woman in jeans and heels walking through a sunlit city street, used as an urban street-style movement reference.", 1201, 1600) },
+        { title: "Campaign production frame", body: "Model, camera, lighting, and set working together as a controlled fashion-shoot reference.", image: image(`${fashionVideoImageRoot}/fashion-video-campaign-production.jpg`, "Model in a white dress photographed by a camera operator between large studio lights, used as a fashion campaign production reference.", 1067, 1600) }
+      ]
+    },
+    guidance: {
+      eyebrow: "FASHION SEQUENCE GUIDE",
+      title: "Protect Wardrobe Continuity From the First Frame to the Final Cut",
+      intro: "Use garment-specific checks instead of generic claims about fashion automation.",
+      cards: [
+        { title: "Start with the garment job", body: "Decide whether viewers should notice silhouette, print, texture, accessory, tailoring, movement, or the full look first." },
+        { title: "Protect wardrobe continuity", body: "Review neckline, sleeves, hems, closures, pockets, straps, shoes, jewelry, bags, eyewear, prints, and layers." },
+        { title: "Match motion to material", body: "A structured jacket, pleated skirt, sheer layer, long coat, fringe, or fitted dress should not all move the same way." },
+        { title: "Do not overclaim virtual try-on", body: "Image-to-video motion is not verified virtual try-on, garment transfer, size prediction, or fit simulation." },
+        { title: "Review people, details, and marks", body: "Check hands, fingers, body/garment edges, tattoos, jewelry, text, logos, zippers, buttons, seams, and backgrounds." },
+        { title: "Design for the final format", body: "Runway recap, lookbook, campaign teaser, vertical social clip, PDP support, and editorial film need different crops and pacing." }
+      ]
+    },
+    foundation: {
+      eyebrow: "FASHION / PRODUCT BOUNDARY",
+      title: "Keep Fashion Direction Precise Without Claiming a Virtual Try-On Product",
+      intro: "The public video directory supports verified video creation paths. This page must stay precise about what is generated and what still requires product confirmation.",
+      leftTitle: "Keep in the brief",
+      leftItems: ["Hero garment, silhouette, styling, material, and movement", "Approved model, garment, moodboard, or location image", "Text to Video or Image to Video starting point", "Continuity and rights review before publishing"],
+      rightTitle: "Do not claim without proof",
+      rightItems: ["Virtual try-on or automatic garment swap", "Exact fabric physics, size, or fit prediction", "SKU ingestion or catalog publishing automation", "Perfect logo preservation or background removal"],
+      rightTone: "avoid",
+      expertLabel: "Expert tip",
+      expertTip: "Choose movement that reveals the garment. Review the result for construction and identity instead of treating a fashion reference image as proof of a dedicated apparel-control feature."
+    },
+    evidence: {
+      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
+      title: "Evidence Is Required Before This Page Proves the Workflow",
+      intro: "The eight editorial photos explain fashion-video directions. They do not prove a generated result, customer outcome, or product capability.",
+      cards: [
+        { title: "Text to Video input", body: "Add a verified current Text to Video input state before treating it as product proof." },
+        { title: "Image to Video input", body: "Add a verified Image to Video input state that reflects the current workflow." },
+        { title: "Credit confirmation", body: "Use the real credit-confirmation state shown before generation, not a recreated UI." },
+        { title: "Generation state", body: "Show a real current generation state when first-party evidence is available." },
+        { title: "Reviewed output", body: "Use a real reviewed fashion-video-style output before presenting a result as product evidence." }
+      ]
+    },
+    value: {
+      eyebrow: "START THIS VIDEO WORKFLOW",
+      title: "Turn an Approved Fashion Brief Into a Reviewable Visual Draft",
+      intro: "The live workspace is the source of truth for supported inputs, credits, and output controls.",
+      items: [
+        { title: "Choose the starting asset", body: "Use Text to Video for a written editorial idea or Image to Video when an approved model, garment, look, or location anchors motion." },
+        { title: "Define the fashion system", body: "Write the hero garment, silhouette, styling stack, material cues, movement, scene role, framing, and non-negotiable details." },
+        { title: "Create in the signed-in workflow", body: "Review the live credit requirement shown by the product before starting the request." },
+        { title: "Review and select clips", body: "Inspect model identity, garment shape, construction, accessories, text/logos, lighting, movement, and continuity." }
+      ]
+    },
+    trust: {
+      eyebrow: "FASHION INTEGRITY REVIEW",
+      title: "Keep the Fashion Story Expressive and Verifiable",
+      intro: "Before publishing:",
+      items: [
+        { title: "Use approved assets", body: "Only use model, garment, location, brand, and third-party material you control or have permission to use." },
+        { title: "Review model identity", body: "Check face, body/garment boundaries, hands, hair, tattoos, jewelry, shoes, and accessories." },
+        { title: "Check construction details", body: "Inspect neckline, sleeves, hems, closures, pockets, straps, seams, prints, labels, and logos." },
+        { title: "Do not imply fit proof", body: "A generated fashion clip should not imply verified sizing, fit, try-on, or fabric performance without evidence." },
+        { title: "Match the final destination", body: "Make crop, pacing, detail coverage, disclosure, and CTA fit the channel and intended use." },
+        { title: "Review source rights", body: "Confirm permission for every person, garment, brand element, location, image, and music track used." }
+      ]
+    },
+    comparison: {
+      eyebrow: "RELATED PAGES",
+      title: "Choose the Primary Video Job",
+      intro: "Fashion Video owns garment-, styling-, collection-, and editorial-led motion. Use a neighboring page when the primary intent is artist identity, brand story, promotion, or paid media.",
+      items: [
+        { title: "AI Video Generation", body: "Browse all current MyDreamShoots video themes.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" },
+        { title: "Music Video", body: "Use for artist, performance, track-led, and visualizer concepts.", href: "/ai-video-generation/music-video", linkLabel: "Explore Music Video" },
+        { title: "Brand Video", body: "Use for company or brand identity, founder story, values, and recognition.", href: "/ai-video-generation/brand-video", linkLabel: "Explore Brand Video" },
+        { title: "Promo Video", body: "Use for a launch, drop, event, release date, offer, or verified promotion.", href: "/ai-video-generation/promo-video", linkLabel: "Explore Promo Video" }
+      ]
+    },
+    faq: {
+      eyebrow: "FAQ",
+      title: "Fashion Video Questions",
+      items: [
+        { question: "What is an AI fashion video generator?", answer: "An AI fashion video generator helps create motion visuals around clothing, styling, models, collections, and fashion campaigns. Here the useful job is visual generation and planning: define garment priority, styling, movement, scene type, and continuity rules, then generate and review clips from text or approved images." },
+        { question: "Can I create fashion-video visuals from a photo?", answer: "myDreamshoots publicly lists Image to Video as an AI Video Generation path. Use an approved image when a model, garment, full look, styling direction, or location should anchor motion, then review garment and identity continuity." },
+        { question: "Can I create fashion-video visuals from text?", answer: "myDreamshoots also publicly lists Text to Video. Describe the garment or look, model, setting, styling, lighting, framing, movement, and role of the shot instead of relying only on words such as luxury or editorial." },
+        { question: "Is this the same as virtual try-on?", answer: "No claim should be made that this page provides virtual try-on, garment transfer, size prediction, or fit simulation unless those capabilities are verified in the live product. The safe public claim is fashion-oriented visual generation through verified Text to Video and Image to Video paths." },
+        { question: "What should I review before using AI-generated fashion clips?", answer: "Check model identity, body/garment edges, sleeves, hems, seams, fasteners, prints, logos, jewelry, shoes, bags, hands, texture, movement continuity, and rights to every source image, person, brand element, and garment design." },
+        { question: "How is this different from Music Video?", answer: "Fashion Video owns garment-, styling-, collection-, and editorial-led motion. Music Video owns artist- and track-led performance and visual storytelling." }
+      ]
+    },
+    finalCta: { eyebrow: "CREATE WITH A VERIFIED FASHION BRIEF", title: "Turn a Collection Idea Into Motion", body: "Choose the garment priority, make the styling specific, match motion to material, and review the finished draft before publishing.", cta: "Create Fashion Video Visuals", microcopy: "Approved references. Clear wardrobe priorities. Reviewed final cut." }
   },
   "ugc-ad-video": {
     seo: {

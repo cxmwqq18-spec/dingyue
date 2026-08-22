@@ -53,6 +53,7 @@ type VideoTopicContent = {
     rightsCopy: string;
     caption: string;
     image: VideoTopicImage;
+    images?: VideoTopicImage[];
     highlights?: string[];
   };
   quickAnswer?: {
@@ -217,7 +218,8 @@ function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }
           style={imageStyle(item.image)}
           width={item.image.width}
           height={item.image.height}
-          loading="lazy"
+          loading="eager"
+          fetchPriority={index < 2 ? "high" : "auto"}
           decoding="async"
         />
         <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-[#17151f]/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/80 backdrop-blur">
@@ -964,6 +966,7 @@ function normalizeAiContent(content: AiVideoTopicLandingContent): VideoTopicCont
       rightsCopy: content.hero.rightsCopy,
       caption: content.hero.imageNote,
       image: content.hero.image,
+      images: content.hero.images,
       highlights: content.hero.highlights
     },
     quickAnswer: content.quickAnswer ? { ...content.quickAnswer, cards: content.quickAnswer.cards.map((card) => ({ ...card })) } : undefined,
@@ -1302,12 +1305,88 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
   );
 }
 
+function SceneTopicLanding({ content, contentKey, section, site }: { content: VideoTopicContent; contentKey: string; section: SectionInstance; site: Site }) {
+  const isMusic = contentKey === "music-video";
+  const topicLabel = isMusic ? "Music Video" : "Fashion Video";
+  const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
+  const heroImages = content.hero.images?.length ? content.hero.images : [content.hero.image];
+  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
+  const visualMap = content.platformExamples?.items ?? [];
+  const accentClass = isMusic ? "text-fuchsia-300" : "text-pink-300";
+  const accentBorder = isMusic ? "border-fuchsia-300/25" : "border-pink-300/25";
+  const panelTone = isMusic ? "bg-[#15101f]" : "bg-[#11161d]";
+  return (
+    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-video-topic-page={contentKey}>
+      <section className="border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
+        <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.86fr_1.14fr] lg:items-center lg:gap-16 lg:py-24">
+          <div>
+            <nav className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-normal text-white/45" aria-label="Breadcrumb">
+              <InternalLink className="text-[#c4b5fd] transition hover:text-white" href="/ai-video-generation" site={site}>AI Video Generation</InternalLink>
+              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <span>Creative &amp; Lifestyle</span>
+              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+              <span className="text-white/68">{topicLabel}</span>
+            </nav>
+            <p className={`mt-8 text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.hero.eyebrow}</p>
+            <h1 className="mt-5 max-w-[760px] text-balance text-4xl font-semibold leading-[0.96] tracking-normal text-white sm:text-6xl lg:text-7xl">{content.hero.title}</h1>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">{content.hero.body}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ActionLink href={primaryHref} label={content.hero.primaryCta} site={site} />
+              <ActionLink href="/ai-video-generation" label={content.hero.secondaryCta} site={site} variant="secondary" />
+            </div>
+            <p className="mt-5 max-w-xl text-xs leading-5 text-white/50">{content.hero.availabilityNote}</p>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-white/58">{content.hero.rightsCopy}</p>
+            {content.hero.highlights?.length ? <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2 rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-3 text-xs font-semibold text-white/62">{content.hero.highlights.map((highlight) => <span key={highlight}>{highlight}</span>)}</div> : null}
+          </div>
+          <figure className="relative lg:justify-self-end" data-video-topic-hero-media>
+            <div className={`relative aspect-[4/3] min-h-[390px] overflow-hidden rounded-[30px] border ${accentBorder} bg-[#17151f] p-3 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)] sm:min-h-[550px]`}>
+              {heroImages.slice(0, 3).map((item, index) => <div className={`absolute overflow-hidden rounded-[24px] border border-white/15 bg-[#292438] ${index === 0 ? "inset-y-[7%] left-[5%] w-[48%]" : index === 1 ? "right-[5%] top-[7%] w-[42%] aspect-[4/5]" : "bottom-[7%] right-[13%] w-[42%] aspect-[4/5]"}`} key={item.src}>
+                <img src={item.src} alt={item.alt} className="absolute inset-0 h-full w-full object-cover" style={imageStyle(item)} width={item.width} height={item.height} loading="eager" fetchPriority={index === 0 ? "high" : undefined} decoding="async" />
+              </div>)}
+              <div className="absolute bottom-5 left-5 right-5 rounded-[22px] border border-white/15 bg-[#0d0b13]/80 p-5 backdrop-blur">
+                <p className={`text-[11px] font-semibold uppercase tracking-normal ${accentClass}`}>{isMusic ? "Visual system" : "Fashion system"}</p>
+                <p className="mt-3 text-xl font-semibold leading-tight text-white">{isMusic ? "Artist -> Motif -> Motion -> Sequence" : "Garment -> Styling -> Movement -> Continuity"}</p>
+              </div>
+            </div>
+            <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60"><Sparkles className={`mt-1 h-4 w-4 shrink-0 ${accentClass}`} strokeWidth={1.8} /><span>{content.hero.caption}</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {content.quickAnswer ? <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="what-this-creates" data-video-topic-section="what-this-creates"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.quickAnswer.eyebrow} title={content.quickAnswer.title} body={content.quickAnswer.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">{content.quickAnswer.cards.map((card) => <SupportingCard card={card} key={card.title} site={site} />)}</div></div></section> : null}
+
+      {visualMap.length ? <section className={`border-b border-white/10 ${panelTone} px-5 py-16 sm:px-8 sm:py-24`} id="visual-map" data-video-topic-section="visual-map"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.platformExamples?.eyebrow ?? "VISUAL MAP"} title={content.platformExamples?.title ?? "Six Decisions Before You Generate"} body={content.platformExamples?.intro} /><ol className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-6">{visualMap.map((item, index) => <li className="min-w-0 rounded-[22px] border border-white/10 bg-[#17151f] p-5" data-scene-topic-map-item key={item.title}><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</p><h3 className="mt-4 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></li>)}</ol></div></section> : null}
+
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} /><div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">{content.steps.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-step key={item.title}><span className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</span><h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div><div className="mt-10"><ActionLink href={primaryHref} label={content.steps.cta} site={site} /></div></div></section>
+
+      {galleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? "SCENE REFERENCES"} title={content.gallery?.title ?? "Eight Directions for the Next Shot"} body={content.gallery?.intro} light /><div className="mt-12 grid auto-rows-[minmax(16rem,auto)] gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{galleryItems.map((item, index) => <article className={`flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65 ${index === 0 ? "sm:col-span-2 lg:row-span-2" : index === 3 ? "lg:col-span-2" : ""}`} data-scene-topic-scene key={item.title}><div className={`relative overflow-hidden bg-[#d9d1f6] ${index === 0 ? "aspect-[16/10] lg:h-full lg:aspect-auto" : index === 3 ? "aspect-[16/9]" : "aspect-[4/5]"}`}><img src={item.image.src} alt={item.image.alt} className="absolute inset-0 h-full w-full object-cover" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
+
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="sequence-guide" data-video-topic-section="sequence-guide"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.guidance.cards.map((card) => <SupportingCard card={card} key={card.title} site={site} />)}</div></div></section>
+
+      <section className={`border-b border-white/10 ${panelTone} px-5 py-16 sm:px-8 sm:py-24`} id="product-boundary" data-video-topic-section="product-boundary"><div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.74fr_1.26fr] lg:items-start lg:gap-16"><SectionHeader eyebrow={content.foundation.eyebrow} title={content.foundation.title} body={content.foundation.intro} /><div className="grid gap-5 sm:grid-cols-2"><DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" /><DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone={content.foundation.rightTone === "neutral" ? "neutral" : "avoid"} /><div className="sm:col-span-2 rounded-[22px] border border-white/10 bg-[#191525] p-6 sm:p-7"><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.foundation.expertLabel ?? "Expert tip"}</p><p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p></div></div></div></section>
+
+      {content.evidence ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="product-evidence" data-video-topic-section="product-evidence"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.evidence.eyebrow} title={content.evidence.title} body={content.evidence.intro} light /><SectionCards cards={content.evidence.cards} light site={site} /></div></section> : null}
+
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="workflow" data-video-topic-section="workflow"><div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start lg:gap-16"><div><SectionHeader eyebrow={content.value.eyebrow} title={content.value.title} body={content.value.intro} /><div className="mt-8"><ActionLink href={primaryHref} label={content.finalCta.cta} site={site} /></div></div><div className="grid gap-4 sm:grid-cols-2">{content.value.items.map((item) => <article className="rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-workflow key={item.title}><Sparkles className={`h-5 w-5 ${accentClass}`} strokeWidth={1.8} /><h3 className="mt-5 text-lg font-semibold text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div></div></section>
+
+      <section className="border-b border-white/10 bg-[#191525] px-5 py-16 sm:px-8 sm:py-24" id="integrity-review" data-video-topic-section="integrity-review"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.trust.items.map((item) => <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" data-scene-topic-review-card key={item.title}><ShieldCheck className={`h-5 w-5 ${accentClass}`} strokeWidth={1.8} /><h3 className="mt-5 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div></div></section>
+
+      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light /><div className="mt-10 grid gap-4 lg:grid-cols-2">{content.faq.items.map((item) => <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]"><span>{item.question}</span><ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} /></summary><p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p></details>)}</div></div></section>
+      {content.comparison ? <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="related-pages" data-video-topic-section="related-pages"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.comparison.eyebrow} title={content.comparison.title} body={content.comparison.intro} /><SectionCards cards={content.comparison.items} site={site} /></div></section> : null}
+      <section className="bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" data-video-topic-section="final-cta"><div className="mx-auto max-w-[var(--site-content-width)] rounded-[28px] border border-[#c4b5fd]/25 bg-[#191525] px-6 py-12 text-center sm:px-10 sm:py-16"><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.finalCta.eyebrow}</p><h2 className="mx-auto mt-4 max-w-3xl text-balance text-3xl font-semibold leading-[1.03] tracking-normal text-white sm:text-5xl">{content.finalCta.title}</h2><p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/68">{content.finalCta.body}</p><div className="mt-8 flex justify-center"><ActionLink href={primaryHref} label={content.finalCta.cta} site={site} /></div><p className="mt-5 text-xs leading-5 text-white/48">{content.finalCta.microcopy}</p></div></section>
+    </main>
+  );
+}
+
 function VideoTopicLanding({ content, contentKey, section, site }: { content: VideoTopicContent; contentKey: string; section: SectionInstance; site: Site }) {
   if (contentKey === "video-ad") {
     return <VideoAdTopicLanding content={content} section={section} site={site} />;
   }
   if (contentKey === "brand-video") {
     return <BrandVideoTopicLanding content={content} section={section} site={site} />;
+  }
+  if (contentKey === "music-video" || contentKey === "fashion-video") {
+    return <SceneTopicLanding content={content} contentKey={contentKey} section={section} site={site} />;
   }
   if (contentKey === "ugc-ad-video") {
     return <UgcVideoTopicLanding content={content} section={section} site={site} />;

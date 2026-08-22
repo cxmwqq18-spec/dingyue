@@ -115,6 +115,18 @@ const videoCategories = [
     label: "Brand Video",
     description: "Present a company, brand story, or positioning through video.",
     sortOrder: 200
+  },
+  {
+    slug: "music-video",
+    label: "Music Video",
+    description: "Develop artist-, performance-, and track-led visual concepts with a coherent visual language.",
+    sortOrder: 210
+  },
+  {
+    slug: "fashion-video",
+    label: "Fashion Video",
+    description: "Create fashion-focused motion for editorial, lookbook, runway, styling, and garment detail concepts.",
+    sortOrder: 230
   }
 ];
 
@@ -258,6 +270,22 @@ const pages = [
     keywords:
       "ai brand video generator, AI brand video maker, brand storytelling video generator, founder story video, brand identity video, company values video, product origin video, brand culture video",
     imageUrl: "/assets/dreamshoot/brand-video/brand-video-founder-story.jpg"
+  },
+  {
+    slug: "music-video",
+    title: "Music Video",
+    seoTitle: "AI Music Video Generator for Artist Visuals | myDreamshoots",
+    description: "Create AI music-video visuals from text or images for performances, artist promos, dance, visualizers, and cinematic sequences. Plan the look, generate clips, review continuity, and pair approved visuals with properly licensed audio in your publishing workflow.",
+    keywords: "ai music video generator, AI music video maker, artist visual generator, performance video generator, AI visualizer maker, dance video concept generator, music promo video maker",
+    imageUrl: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg"
+  },
+  {
+    slug: "fashion-video",
+    title: "Fashion Video",
+    seoTitle: "AI Fashion Video Generator for Editorial & Lookbook Visuals | myDreamshoots",
+    description: "Create AI fashion-video visuals from text or approved images for editorials, lookbooks, runway concepts, styling, garment details, and campaign sequences. Define the look, generate clips, review garment and model continuity, and publish only with cleared source rights.",
+    keywords: "ai fashion video generator, AI fashion video maker, fashion editorial video generator, lookbook video maker, runway video concept, styling video generator, garment detail video",
+    imageUrl: "/assets/dreamshoot/fashion-video/hero-fashion-video-editorial-frame.jpg"
   }
 ];
 
@@ -427,7 +455,7 @@ function syncPages(state, changes) {
       title: pageDefinition.title,
       draftJson: clone(json)
     };
-    if (pageDefinition.slug === "brand-video") pageFields.publishedJson = clone(json);
+    if (["brand-video", "music-video", "fashion-video"].includes(pageDefinition.slug)) pageFields.publishedJson = clone(json);
     updateRecord(page, pageFields, changes, "ThemePage");
     if (JSON.stringify(page) !== before) page.updatedAt = RUN_TIMESTAMP;
     return page;
@@ -576,7 +604,7 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
       templateKey: page.templateKey,
       slug: page.slug,
       title: page.title,
-      publishedJson: clone(page.publishedJson ?? page.draftJson),
+      publishedJson: clone(page.draftJson ?? page.publishedJson),
       createdAt: page.createdAt,
       updatedAt: page.updatedAt
     }));
@@ -674,11 +702,12 @@ async function updateDatabase(state, categories, syncedPages) {
             pageType: page.pageType,
             templateKey: page.templateKey,
             slug: page.slug,
-            title: page.title,
-            draftJson: toPrismaJson(page.draftJson),
-            draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
-          };
-          if (page.slug === pagePath("brand-video")) pageData.publishedJson = toPrismaJson(page.publishedJson ?? page.draftJson);
+          title: page.title,
+          draftJson: toPrismaJson(page.draftJson),
+          publishedJson: toPrismaJson(page.draftJson),
+          draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
+        };
+          if (["brand-video", "music-video", "fashion-video"].some((slug) => page.slug === pagePath(slug))) pageData.publishedJson = toPrismaJson(page.publishedJson ?? page.draftJson);
           const existingPage = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
           if (existingPage) {
             await tx.themePage.update({

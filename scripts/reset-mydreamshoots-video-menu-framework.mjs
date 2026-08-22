@@ -111,6 +111,18 @@ const categoriesBySiteId = {
       label: "Brand Video",
       description: "Present a company, brand story, or positioning through video.",
       sortOrder: 200
+    },
+    {
+      slug: "music-video",
+      label: "Music Video",
+      description: "Develop artist-, performance-, and track-led visual concepts with a coherent visual language.",
+      sortOrder: 210
+    },
+    {
+      slug: "fashion-video",
+      label: "Fashion Video",
+      description: "Create fashion-focused motion for editorial, lookbook, runway, styling, and garment detail concepts.",
+      sortOrder: 230
     }
   ],
   site_grownstride_test: baseCategories

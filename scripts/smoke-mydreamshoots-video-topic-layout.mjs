@@ -18,7 +18,9 @@ const topics = [
   "promo-video",
   "ugc-ad-video",
   "video-ad",
-  "brand-video"
+  "brand-video",
+  "music-video",
+  "fashion-video"
 ];
 const viewports = [
   { name: "mobile", width: 390, height: 844, columns: 1, videoAdColumns: 1 },
@@ -40,6 +42,9 @@ function sectionOrderForTopic(topic) {
   }
   if (topic === "brand-video") {
     return ["hero", "what-this-creates", "brand-story-map", "brand-signals", "how-it-works", "scene-gallery", "brand-consistency-guide", "product-evidence", "workflow", "brand-integrity-review", "faq", "related-pages", "final-cta"];
+  }
+  if (topic === "music-video" || topic === "fashion-video") {
+    return ["hero", "what-this-creates", "visual-map", "how-it-works", "scene-gallery", "sequence-guide", "product-boundary", "product-evidence", "workflow", "integrity-review", "faq", "related-pages", "final-cta"];
   }
   return sectionOrder;
 }
@@ -180,6 +185,60 @@ try {
             assert.equal(result.sceneImagesLoaded, true, `${topic} ${viewport.name} scene images must load with alt text`);
             assert.equal(new Set(result.sceneSources).size, 8, `${topic} ${viewport.name} scene images must be unique`);
             assert.equal(result.workspaceCtaCount, 4, `${topic} ${viewport.name} should expose hero, steps, workflow, and final workspace CTAs`);
+            assert.equal(new Set(result.workspaceCtaHrefs).size, 1, `${topic} ${viewport.name} workspace CTAs must share one destination`);
+            assert.equal(result.scrollWidth, result.clientWidth, `${topic} ${viewport.name} must not overflow horizontally`);
+            assertOrderedSections(topic, result.sectionNames);
+            checked.push({ topic, viewport: viewport.name });
+            continue;
+          }
+          if (topic === "music-video" || topic === "fashion-video") {
+            await page.locator('[data-video-topic-section="scene-gallery"]').scrollIntoViewIfNeeded();
+            await page.waitForFunction(
+              () => [...document.querySelectorAll("[data-scene-topic-scene] img")].every((image) => image.complete && image.naturalWidth > 0),
+              undefined,
+              { timeout: 15_000 }
+            );
+            const result = await page.evaluate(() => {
+              const gallery = document.querySelector("[data-scene-topic-gallery]");
+              const scenes = [...document.querySelectorAll("[data-scene-topic-scene]")];
+              const workspaceCtas = [...document.querySelectorAll('a[href*="/app/create?videoMode="]')];
+              const sectionNames = [...document.querySelectorAll("[data-video-topic-section]")].map((section) => section.getAttribute("data-video-topic-section"));
+              return {
+                pageMarker: document.querySelectorAll("[data-video-topic-page]").length,
+                heroImages: document.querySelectorAll("[data-video-topic-hero-media] img").length,
+                scenes: scenes.length,
+                mapItems: document.querySelectorAll("[data-scene-topic-map-item]").length,
+                steps: document.querySelectorAll("[data-scene-topic-step]").length,
+                guideCards: document.querySelectorAll('[data-video-topic-section="sequence-guide"] article').length,
+                evidenceCards: document.querySelectorAll('[data-video-topic-section="product-evidence"] [data-video-topic-supporting-cards] > article').length,
+                workflowCards: document.querySelectorAll("[data-scene-topic-workflow]").length,
+                reviewCards: document.querySelectorAll("[data-scene-topic-review-card]").length,
+                sceneSources: scenes.map((card) => card.querySelector("img")?.getAttribute("src") || ""),
+                sceneImagesLoaded: scenes.every((card) => {
+                  const image = card.querySelector("img");
+                  return Boolean(image?.complete && image.naturalWidth > 0 && image.alt.trim());
+                }),
+                galleryColumns: gallery ? getComputedStyle(gallery).gridTemplateColumns.split(" ").length : 0,
+                workspaceCtaCount: workspaceCtas.length,
+                workspaceCtaHrefs: workspaceCtas.map((link) => link.getAttribute("href")),
+                sectionNames,
+                scrollWidth: document.documentElement.scrollWidth,
+                clientWidth: document.documentElement.clientWidth
+              };
+            });
+            assert.equal(result.pageMarker, 1, `${topic} ${viewport.name} should render one shared page marker`);
+            assert.equal(result.heroImages, 3, `${topic} ${viewport.name} hero should render three dedicated images`);
+            assert.equal(result.scenes, 8, `${topic} ${viewport.name} should render eight scene cards`);
+            assert.equal(result.mapItems, 6, `${topic} ${viewport.name} should render six visual-map items`);
+            assert.equal(result.steps, 4, `${topic} ${viewport.name} should render four workflow steps`);
+            assert.equal(result.guideCards, 6, `${topic} ${viewport.name} should render six sequence-guide cards`);
+            assert.equal(result.evidenceCards, 5, `${topic} ${viewport.name} should render five evidence cards`);
+            assert.equal(result.workflowCards, 4, `${topic} ${viewport.name} should render four workflow cards`);
+            assert.equal(result.reviewCards, 6, `${topic} ${viewport.name} should render six review cards`);
+            assert.equal(result.sceneImagesLoaded, true, `${topic} ${viewport.name} scene images must load with alt text`);
+            assert.equal(new Set(result.sceneSources).size, 8, `${topic} ${viewport.name} scene images must be unique`);
+            assert.equal(result.galleryColumns, viewport.name === "mobile" ? 1 : viewport.name === "tablet" ? 2 : 4, `${topic} ${viewport.name} gallery columns should match the responsive layout`);
+            assert.equal(result.workspaceCtaCount, 4, `${topic} ${viewport.name} should expose four workspace CTAs`);
             assert.equal(new Set(result.workspaceCtaHrefs).size, 1, `${topic} ${viewport.name} workspace CTAs must share one destination`);
             assert.equal(result.scrollWidth, result.clientWidth, `${topic} ${viewport.name} must not overflow horizontally`);
             assertOrderedSections(topic, result.sectionNames);
