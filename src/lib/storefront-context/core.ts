@@ -335,18 +335,6 @@ const legacyFactClaimRules = [
   }
 ] as const;
 
-// These are the current, explicitly published MyDreamshoots homepage claims.
-// They are kept in the database snapshot and must remain renderable even though
-// the generic legacy-claim guard rejects otherwise hard-coded operational facts.
-function isCurrentMydreamshootsPublishedClaim(text: string): boolean {
-  const value = text.trim();
-  return value.startsWith("No AI training on your photos - Your inputs are never used to train models.") ||
-    value.startsWith("30-day auto-delete - Input photos automatically delete 30 days after generation.") ||
-    value.startsWith("100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy") ||
-    value.startsWith("AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.") ||
-    value.startsWith("myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC.");
-}
-
 export function resolveStorefrontBindings(text: string, context: StorefrontContext): { value?: string; missing: string[] } {
   const address = context.profile?.identity.address;
   const formattedAddress = address
@@ -386,8 +374,12 @@ export function resolveStorefrontBindings(text: string, context: StorefrontConte
   const missingBindings = Array.from(text.matchAll(bindingPattern))
     .map((match) => match[1])
     .filter((key) => !values[key]);
+  // A valid PostgreSQL publication is the source of truth for published copy.
+  // Apply the legacy hard-coded-claim guard to drafts and invalid snapshots,
+  // while allowing the sealed publication payload to render unchanged.
+  const isSealedPublishedSnapshot = context.snapshotIntegrity === "valid" && Boolean(context.revisions.publicationId);
   const legacyClaims = legacyFactClaimRules
-    .filter((rule) => !isCurrentMydreamshootsPublishedClaim(text))
+    .filter(() => !isSealedPublishedSnapshot)
     .filter((rule) => rule.pattern.test(text.split(rule.token).join("")))
     .map((rule) => rule.key);
   const missing = [...missingBindings, ...legacyClaims];

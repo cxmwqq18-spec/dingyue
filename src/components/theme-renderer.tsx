@@ -7020,7 +7020,9 @@ function packCards(site: Site, creativePacks: CreativePack[], maxCount = 6) {
 function dreamshootCatalogCardFromPack(site: Site, pack: CreativePack): DreamShootCatalogCard {
   const profile = myDreamShootsProfileForPack(site, pack);
   const aidreamcapesTravelCard = isAidreamcapesSite(site) && !isSpanishXbySite(site);
-  const imageUrls = profile || aidreamcapesTravelCard ? dreamshootPackImageSet(site, pack, 2) : undefined;
+  const imageUrls = isMyDreamShootsProfileSite(site) || aidreamcapesTravelCard
+    ? dreamshootPackImageSet(site, pack, 2)
+    : undefined;
   const imageUrl = imageUrls?.[0] ?? packImage(site, pack);
   const aidreamcapesTags = aidreamcapesTravelCard ? aidreamcapesTravelTagsFor(pack.name, pack.category, pack.description) : undefined;
   const aidreamcapesMeta = aidreamcapesTravelCard ? aidreamcapesMetaLabel(pack.name, pack.category, pack.description) : undefined;
@@ -10725,7 +10727,9 @@ function SectionView({
       ? filteredPackItems.map((pack) => {
           const profile = myDreamShootsProfileForPack(site, pack);
           const aidreamcapesTravelCard = aidreamcapesPackageWall && !spanishXbyPackageWall;
-          const imageUrls = profile || aidreamcapesTravelCard ? dreamshootPackImageSet(site, pack, 2) : undefined;
+          const imageUrls = isMyDreamShootsProfileSite(site) || aidreamcapesTravelCard
+            ? dreamshootPackImageSet(site, pack, 2)
+            : undefined;
           const aidreamcapesTags = aidreamcapesTravelCard ? aidreamcapesTravelTagsFor(pack.name, pack.category, pack.description) : [];
           const aidreamcapesMeta = aidreamcapesTravelCard ? aidreamcapesMetaLabel(pack.name, pack.category, pack.description) : undefined;
           return {
@@ -11070,7 +11074,9 @@ function SectionView({
             pack.aiAppSlug ? dreamshootDefaultToolTitle(pack.aiAppSlug) : ""
           ].filter((value): value is string => Boolean(value)),
 	          imageUrl: packImage(site, pack),
-	          imageUrls: profile ? dreamshootPackImageSet(site, pack, 2) : undefined,
+          imageUrls: isMyDreamShootsProfileSite(site) || (aidreamcapes && !spanishXbyTaxonomy)
+            ? dreamshootPackImageSet(site, pack, 2)
+            : undefined,
 	          imageAlts: pack.galleryImageAlts,
 	          photoCountLabel: profile ? dreamshootPackPhotoCountLabel(pack) : undefined,
           tags: profile?.tags ?? [],
@@ -11152,7 +11158,9 @@ function SectionView({
 	        imageUrl: card.imageUrl,
 	        imageUrls: aidreamcapes && !spanishXbyTaxonomy
 	          ? aidreamcapesImageUrls?.length ? aidreamcapesImageUrls : uniqueImageUrlList([...(card.imageUrls ?? []), card.imageUrl]).slice(0, 1)
-	          : matchingPack && profile ? dreamshootPackImageSet(site, matchingPack, 2) : card.imageUrls,
+          : matchingPack && (isMyDreamShootsProfileSite(site) || profile)
+            ? dreamshootPackImageSet(site, matchingPack, 2)
+            : card.imageUrls,
 		        imageAlt: optionalStringField(card, "imageAlt"),
 		        imageAlts: matchingPack?.galleryImageAlts ?? optionalStringArrayField(card, "imageAlts"),
         href: hrefFor(site, card.href),

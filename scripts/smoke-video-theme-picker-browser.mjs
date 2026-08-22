@@ -35,6 +35,23 @@ for (const pathname of oldPaths) {
 }
 const topicResponse = await gotoWithRetry("/site/mydreamshoots/ai-video-generation/tiktok-video", { waitUntil: "networkidle" });
 if (!topicResponse || topicResponse.status() !== 200) throw new Error(`public topic returned ${topicResponse?.status() ?? "no response"}`);
+const catalogResponse = await gotoWithRetry("/site/mydreamshoots/ai-image-generation", { waitUntil: "networkidle" });
+if (!catalogResponse || catalogResponse.status() !== 200) throw new Error(`image catalog returned ${catalogResponse?.status() ?? "no response"}`);
+const catalogMedia = await page.evaluate(() => {
+  const cards = [...document.querySelectorAll('a[href*="/site/mydreamshoots/ai-image-generation/"]')]
+    .map((anchor) => ({
+      title: anchor.querySelector("h2")?.textContent?.trim() ?? "",
+      imageCount: anchor.querySelectorAll('[data-dreamshoot-preview-src]').length
+    }))
+    .filter((card) => card.title && card.imageCount > 0);
+  return {
+    cardCount: cards.length,
+    singleImageCards: cards.filter((card) => card.imageCount < 2).map((card) => card.title)
+  };
+});
+if (!catalogMedia.cardCount || catalogMedia.singleImageCards.length) {
+  throw new Error(`image catalog cards missing side covers: ${JSON.stringify(catalogMedia)}`);
+}
 const apiResponse = await page.request.get(`${base}/api/sites/site_dreamshoot/video-themes?includeCategories=1&pageSize=5000`);
 const payload = await apiResponse.json();
 if (apiResponse.status() !== 200 || payload.ok !== true) throw new Error("public video theme API failed");
@@ -44,5 +61,5 @@ if (slugs.has("text-to-video") || slugs.has("image-to-video")) throw new Error("
 const categorySlugs = new Set((payload.categories ?? []).map((category) => category.slug));
 if (categorySlugs.has("text-to-video") || categorySlugs.has("image-to-video")) throw new Error("legacy video category leaked into public API");
 if (themes.some((theme) => !theme.examples?.length)) throw new Error("public theme missing reference example");
-console.log(JSON.stringify({ ok: true, oldRoutes: oldPaths.length, themes: themes.length, categories: payload.categories?.length ?? 0 }, null, 2));
+console.log(JSON.stringify({ ok: true, oldRoutes: oldPaths.length, themes: themes.length, categories: payload.categories?.length ?? 0, imageCatalogCards: catalogMedia.cardCount }, null, 2));
 await browser.close();
