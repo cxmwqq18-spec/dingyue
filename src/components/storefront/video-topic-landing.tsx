@@ -4,8 +4,8 @@ import type { ReactNode } from "react";
 import type { SectionInstance, Site } from "@/lib/types";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
-import { aiVideoTopicLandingContentByKey, type AiVideoTopicLandingContent } from "@/lib/ai-video-topic-content";
-import { talkingPhotoContent, type TalkingPhotoContent } from "@/lib/talking-photo-content";
+import { aiVideoTopicLandingContentFromSection, type AiVideoTopicLandingContent } from "@/lib/ai-video-topic-content";
+import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
 
 type RoutedSite = Site & { __storefrontBasePath?: string };
 
@@ -1603,11 +1603,13 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
 
 export function AiVideoTopicLanding({ section, site }: { section: SectionInstance; site: Site }) {
   const contentKey = String(section.settings.contentKey ?? section.settings.anchor ?? "").trim();
-  const content = aiVideoTopicLandingContentByKey[contentKey];
+  const content = aiVideoTopicLandingContentFromSection(section);
   if (!content) notFound();
   return <VideoTopicLanding content={normalizeAiContent(content)} contentKey={contentKey} section={section} site={site} />;
 }
 
 export function TalkingPhotoLanding({ section, site }: { section: SectionInstance; site: Site }) {
-  return <VideoTopicLanding content={normalizeTalkingContent(talkingPhotoContent)} contentKey="talking-photo" section={section} site={site} />;
+  const content = talkingPhotoContentFromSection(section);
+  if (!content) notFound();
+  return <VideoTopicLanding content={normalizeTalkingContent(content)} contentKey="talking-photo" section={section} site={site} />;
 }

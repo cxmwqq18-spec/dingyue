@@ -9,6 +9,7 @@ const repoRoot = process.cwd();
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const updateDb = args.has("--db");
+const refreshContent = args.has("--refresh-content");
 const SITE_ID = "site_dreamshoot";
 const UPDATE_TIMESTAMP = "2026-08-16T00:00:00.000Z";
 const RUN_TIMESTAMP = new Date().toISOString();
@@ -327,7 +328,37 @@ async function readPlatformState() {
   try {
     const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
     if (!document?.state) throw new Error("missing_platform_state_document:platform");
-    return clone(document.state);
+    const state = clone(document.state);
+    const persistedPages = await prisma.themePage.findMany({
+      where: {
+        siteId: SITE_ID,
+        slug: { in: pages.map((page) => pagePath(page.slug)) }
+      }
+    });
+    const site = (state.sites ?? []).find((item) => item.id === SITE_ID);
+    if (!site) throw new Error(`missing_site:${SITE_ID}`);
+    site.pages ??= [];
+    for (const persistedPage of persistedPages) {
+      const slug = persistedPage.slug.replace("/ai-video-generation/", "");
+      if (!hasStoredVideoTopicContent(persistedPage.draftJson, slug) && !hasStoredVideoTopicContent(persistedPage.publishedJson, slug)) continue;
+      const statePage = site.pages.find((page) => page.id === persistedPage.id || page.slug === persistedPage.slug);
+      const relationalPage = {
+        id: persistedPage.id,
+        siteId: persistedPage.siteId,
+        pageType: persistedPage.pageType,
+        templateKey: persistedPage.templateKey ?? undefined,
+        slug: persistedPage.slug,
+        title: persistedPage.title,
+        draftJson: clone(persistedPage.draftJson),
+        publishedJson: clone(persistedPage.publishedJson),
+        draftMeta: persistedPage.draftMeta ? clone(persistedPage.draftMeta) : undefined,
+        createdAt: persistedPage.createdAt.toISOString(),
+        updatedAt: persistedPage.updatedAt.toISOString()
+      };
+      if (statePage) Object.assign(statePage, relationalPage);
+      else site.pages.push(relationalPage);
+    }
+    return state;
   } finally {
     await prisma.$disconnect();
   }
@@ -384,10 +415,46 @@ function assertPageImageAssets() {
     if (!page.imageUrl) continue;
     assertPublicAssetExists(page.imageUrl, page.slug);
   }
+  for (const page of pages) {
+    for (const assetUrl of assetUrlsIn(videoTopicContentSeedForSlug(page.slug))) {
+      assertPublicAssetExists(assetUrl, `${page.slug}:content`);
+    }
+  }
 }
 
-function pageJson(page) {
-  const canonicalPath = pagePath(page.slug);
+function assetUrlsIn(value) {
+  if (Array.isArray(value)) return value.flatMap(assetUrlsIn);
+  if (!value || typeof value !== "object") return [];
+  return Object.entries(value).flatMap(([key, nested]) => key === "src" && typeof nested === "string" ? [nested] : assetUrlsIn(nested));
+}
+
+function loadVideoTopicContentSeeds() {
+  const jiti = createJiti(import.meta.url);
+  return {
+    aiVideoTopicLandingContentByKey: jiti("./seed-mydreamshoots-ai-video-topic-content.ts").aiVideoTopicLandingContentByKey,
+    talkingPhotoContent: jiti("./seed-mydreamshoots-talking-photo-content.ts").talkingPhotoContent
+  };
+}
+
+const videoTopicContentSeeds = loadVideoTopicContentSeeds();
+
+function videoTopicContentSeedForSlug(slug) {
+  const content = slug === "talking-photo"
+    ? videoTopicContentSeeds.talkingPhotoContent
+    : videoTopicContentSeeds.aiVideoTopicLandingContentByKey[slug];
+  if (!content) throw new Error(`missing_video_topic_content_seed:${slug}`);
+  return content;
+}
+
+function hasStoredVideoTopicContent(pageJson, slug) {
+  if (!pageJson || typeof pageJson !== "object") return false;
+  const sectionId = slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
+  const content = pageJson.sections?.[sectionId]?.settings?.content;
+  return Boolean(content && typeof content === "object" && !Array.isArray(content));
+}
+
+function pageJson(page, content = videoTopicContentSeedForSlug(page.slug)) {
+  const canonicalPath = content.seo?.canonicalPath || pagePath(page.slug);
   const sectionId = page.slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
   const sectionType = page.slug === "talking-photo" ? "talking_photo_landing" : "ai_video_topic_landing";
   return {
@@ -399,16 +466,18 @@ function pageJson(page) {
         type: sectionType,
         settings: {
           anchor: page.slug,
-          contentKey: page.slug
+          contentKey: page.slug,
+          content: clone(content)
         },
         blocks: []
       }
     },
     seo: {
-      title: page.seoTitle,
-      description: page.description,
-      keywords: page.keywords,
+      title: content.seo?.title || page.seoTitle,
+      description: content.seo?.description || page.description,
+      keywords: content.seo?.keywords || page.keywords,
       canonicalPath,
+      canonical: canonicalPath,
       robots: {
         index: true,
         follow: true
@@ -473,17 +542,22 @@ function syncPages(state, changes) {
       changes.push({ targetType: "ThemePage", id: page.id, field: "create", after: slug });
     }
     const before = JSON.stringify(page);
-    const json = pageJson(pageDefinition);
+    const draftJson = !refreshContent && hasStoredVideoTopicContent(page.draftJson, pageDefinition.slug)
+      ? clone(page.draftJson)
+      : pageJson(pageDefinition);
+    const publishedJson = !refreshContent && hasStoredVideoTopicContent(page.publishedJson, pageDefinition.slug)
+      ? clone(page.publishedJson)
+      : pageJson(pageDefinition);
     const pageFields = {
       id: page.id || pageId(pageDefinition.slug),
       siteId: SITE_ID,
       pageType: "ai_tool",
       templateKey: `ai-video-topic-${pageDefinition.slug}`,
       slug,
-      title: pageDefinition.title,
-      draftJson: clone(json)
+      title: page.title || pageDefinition.title,
+      draftJson
     };
-    if (["brand-video", "music-video", "fashion-video", "food-video", "pet-video"].includes(pageDefinition.slug)) pageFields.publishedJson = clone(json);
+    pageFields.publishedJson = publishedJson;
     updateRecord(page, pageFields, changes, "ThemePage");
     if (JSON.stringify(page) !== before) page.updatedAt = RUN_TIMESTAMP;
     return page;
@@ -753,12 +827,11 @@ async function updateDatabase(state, categories, syncedPages) {
             pageType: page.pageType,
             templateKey: page.templateKey,
             slug: page.slug,
-          title: page.title,
-          draftJson: toPrismaJson(page.draftJson),
-          publishedJson: toPrismaJson(page.draftJson),
-          draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
-        };
-          if (["brand-video", "music-video", "fashion-video", "food-video", "pet-video"].some((slug) => page.slug === pagePath(slug))) pageData.publishedJson = toPrismaJson(page.publishedJson ?? page.draftJson);
+            title: page.title,
+            draftJson: toPrismaJson(page.draftJson),
+            publishedJson: toPrismaJson(page.publishedJson ?? page.draftJson),
+            draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
+          };
           const existingPage = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
           if (existingPage) {
             await tx.themePage.update({

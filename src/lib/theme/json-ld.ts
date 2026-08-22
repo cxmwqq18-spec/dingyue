@@ -4,7 +4,8 @@ import path from "node:path";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { projectPublicCreativePacks, projectPublicPricingOffers } from "@/lib/storefront-context/core";
 import { storefrontBaseUrl, storefrontOrigin } from "@/lib/storefront-context/seo-projection";
-import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
+import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-content";
+import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
@@ -461,8 +462,13 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: Json
         .filter(Boolean) as JsonLdNode[];
     }
     if (section?.type === "ai_video_topic_landing") {
-      const contentKey = cleanText(section.settings.contentKey, cleanText(section.settings.anchor));
-      const content = aiVideoTopicLandingContentByKey[contentKey];
+      const content = aiVideoTopicLandingContentFromSection(section);
+      return (content?.faq.items ?? [])
+        .map((item) => faqQuestionNode(site, item.question, item.answer))
+        .filter(Boolean) as JsonLdNode[];
+    }
+    if (section?.type === "talking_photo_landing") {
+      const content = talkingPhotoContentFromSection(section);
       return (content?.faq.items ?? [])
         .map((item) => faqQuestionNode(site, item.question, item.answer))
         .filter(Boolean) as JsonLdNode[];
@@ -1009,14 +1015,18 @@ export function buildToolDirectoryJsonLd({
   pageJson?: ThemePageJson;
   context: StorefrontContext;
 }): JsonLdNode[] {
-  const item = getSeoDirectoryContentForSite(site, "tool", toolSlug);
-  const pagePath = publicPath ?? item.canonicalPath;
+  const topicSection = sectionOfType(pageJson, "ai_video_topic_landing");
+  const talkingPhotoSection = sectionOfType(pageJson, "talking_photo_landing");
+  const topicContent = topicSection
+    ? aiVideoTopicLandingContentFromSection(topicSection)
+    : talkingPhotoSection
+      ? talkingPhotoContentFromSection(talkingPhotoSection)
+      : undefined;
+  const item = topicContent ? undefined : getSeoDirectoryContentForSite(site, "tool", toolSlug);
+  const pagePath = publicPath ?? topicContent?.seo.canonicalPath ?? item?.canonicalPath ?? `/tools/${toolSlug}`;
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
   const siteName = siteBrandName(site);
-  const topicSection = sectionOfType(pageJson, "ai_video_topic_landing");
-  const topicContentKey = cleanText(topicSection?.settings.contentKey, cleanText(topicSection?.settings.anchor));
-  const topicContent = aiVideoTopicLandingContentByKey[topicContentKey];
   const faq = topicContent
     ? {
         "@type": "FAQPage",
@@ -1024,13 +1034,14 @@ export function buildToolDirectoryJsonLd({
           .map((faqItem) => faqQuestionNode(site, faqItem.question, faqItem.answer))
           .filter(Boolean)
       }
-    : toolDirectoryFaqSchema(site, item);
+    : toolDirectoryFaqSchema(site, item!);
+  const label = topicContent?.hero.title ?? item!.label;
   const title = context.seo.title;
   const description = context.seo.description;
   const graph: JsonLdNode[] = [
     organizationSchema(site, routeMode, context),
     websiteSchema(site, routeMode),
-    breadcrumbs(site, routeMode, pagePath, item.label),
+    breadcrumbs(site, routeMode, pagePath, label),
     {
       "@type": "SoftwareApplication",
       name: title,
@@ -1056,7 +1067,7 @@ export function buildToolDirectoryJsonLd({
     },
     {
       "@type": "Service",
-      name: item.label,
+      name: label,
       description,
       serviceType: schemaServiceType(site, pagePath),
       provider: {

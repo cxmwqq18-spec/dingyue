@@ -1,4 +1,6 @@
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
+import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-content";
+import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
 import { mydreamshootsPageCopyForRoute, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import {
@@ -3118,6 +3120,32 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
 }
 
 export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, site?: Site, publishedCopy?: MyDreamshootsPageCopy): ThemePageJson {
+  const topicSection = kind === "tool" ? Object.values(pageJson.sections).find((section) => section.type === "ai_video_topic_landing") : undefined;
+  const talkingPhotoSection = kind === "tool" ? Object.values(pageJson.sections).find((section) => section.type === "talking_photo_landing") : undefined;
+  const topicContent = topicSection
+    ? aiVideoTopicLandingContentFromSection(topicSection)
+    : talkingPhotoSection
+      ? talkingPhotoContentFromSection(talkingPhotoSection)
+      : undefined;
+  if (topicContent) {
+    const canonicalPath = topicContent.seo.canonicalPath;
+    const index = pageJson.seo?.index ?? pageJson.seo?.robots?.index ?? true;
+    const follow = pageJson.seo?.follow ?? pageJson.seo?.robots?.follow ?? true;
+    return {
+      ...pageJson,
+      seo: {
+        ...pageJson.seo,
+        title: topicContent.seo.title,
+        description: topicContent.seo.description,
+        keywords: topicContent.seo.keywords,
+        canonicalPath,
+        canonical: canonicalPath,
+        index,
+        follow,
+        robots: { index, follow }
+      }
+    };
+  }
   const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, normalizeDirectorySlug(rawSlug));
   const item = publishedCopy && kind === "collection"
     ? seoDirectoryContentFromPublishedCopy(publishedCopy, canonicalSlug, site)

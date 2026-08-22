@@ -2406,7 +2406,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     description: "Customer-first AI video topic SEO landing page with theme-specific use cases, guidance, trust, and FAQ content.",
     settings: [
       text("anchor", "Anchor", "cinematic-video"),
-      text("contentKey", "Content key", "cinematic-video", "Uses the versioned AI video topic content model.")
+      text("contentKey", "Content key", "cinematic-video", "Selects the database-backed topic content stored on the published ThemePage.")
     ]
   },
   before_after_gallery: {

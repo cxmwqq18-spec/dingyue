@@ -27,7 +27,6 @@ import { StorefrontInstantLink, StorefrontLinkPrefetchProvider, type StorefrontI
 import { AiVideoTopicLanding } from "@/components/storefront/ai-video-topic-landing";
 import { TalkingPhotoLanding } from "@/components/storefront/talking-photo-landing";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
-import { aiVideoTopicLandingContentByKey } from "@/lib/ai-video-topic-content";
 import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
 import { mydreamshootsPageCopyForRoute, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 import {
@@ -115,8 +114,7 @@ import {
   photoPackageLabel,
   photoPackageSlug
 } from "@/lib/photo-package-taxonomy";
-import { isMydreamshootsCurrentVideoMenuSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationParentCategories, mydreamshootsVideoGenerationThemeSeeds, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
-import { talkingPhotoContent } from "@/lib/talking-photo-content";
+import { isMydreamshootsCurrentVideoMenuSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationParentCategories, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { isPublicPrice, projectPublicCreativePacks, projectPublicPricingOffers, resolveStorefrontBindings, selectOfferPrice } from "@/lib/storefront-context/core";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
 import type { ResolvedOffer, StorefrontContext } from "@/lib/storefront-context/types";
@@ -1007,6 +1005,7 @@ function headerVideoGenerationTopicsForClient(site: Site, categories: VideoTheme
         slug: definition.slug,
         label: category?.label ?? definition.label,
         href: hrefFor(site, videoGenerationCreatePath(definition.slug)),
+        imageUrl: theme?.imageUrl ?? undefined,
         parentSlug,
         parentLabel: configuredParent?.label ?? parentDefinition?.label,
         parentSortOrder: configuredParent?.sortOrder ?? parentDefinition?.sortOrder,
@@ -1037,20 +1036,10 @@ function groupedVideoGenerationTopicsForServer(topics: HeaderVideoGenerationTopi
 
 const defaultMydreamshootsVideoThemeCover = "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.png";
 
-const mydreamshootsVideoThemeSeedImageBySlug = new Map<string, string>(
-  mydreamshootsVideoGenerationThemeSeeds
-    .filter((theme) => theme.imageUrl)
-    .map((theme) => [theme.slug, theme.imageUrl])
-);
-
 function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic, fallbackImageUrl = defaultMydreamshootsVideoThemeCover) {
-  const detailHeroImage = topic.slug === "talking-photo"
-    ? talkingPhotoContent.hero.image
-    : aiVideoTopicLandingContentByKey[topic.slug]?.hero.image;
-  const seedImageUrl = mydreamshootsVideoThemeSeedImageBySlug.get(topic.slug);
   return {
-    alt: detailHeroImage?.alt || `${topic.label} AI video theme cover`,
-    src: detailHeroImage?.src || seedImageUrl || fallbackImageUrl
+    alt: `${topic.label} AI video theme cover`,
+    src: topic.imageUrl || fallbackImageUrl
   };
 }
 
