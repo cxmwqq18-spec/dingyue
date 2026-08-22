@@ -152,6 +152,30 @@ Required correction:
 
 These are `PARTIAL` improvements, not a complete SEO publication closure.
 
+## Repeat Content Readback
+
+The local origin was checked again on 2026-08-23 against publication v58 for
+all 18 video topic URLs. Every page passed the content-output checks below:
+
+- HTTP 200 and the expected video-topic page marker;
+- exactly one H1;
+- self-canonical and `og:url` equal to its final HTTPS public URL;
+- `index, follow` robots output;
+- FAQPage JSON-LD with FAQ items;
+- BreadcrumbList final item and SoftwareApplication URL equal to the same
+  canonical URL;
+- at least one non-empty rendered image alt attribute.
+
+The stored content contract also passed for all 18 pages: title, description,
+keywords, canonical path, hero image source/alt/dimensions, FAQ items, and the
+model-specific final CTA object are present in the active snapshot page data.
+
+This confirms that the current **page content output** is internally
+consistent. It does not change the overall `PUBLISH_BLOCKED` result, because
+the route/entity/media/link/navigation projections and single-publication
+runtime boundary described above are still missing. This evidence is local
+origin readback only; public-domain readback remains required for `PASS`.
+
 ## Closure Criteria
 
 Mark the module `PASS` only after a candidate active publication contains all
