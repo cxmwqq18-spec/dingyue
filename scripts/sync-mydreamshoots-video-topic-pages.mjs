@@ -636,6 +636,10 @@ function toPrismaJson(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function sameJson(left, right) {
+  return JSON.stringify(left ?? null) === JSON.stringify(right ?? null);
+}
+
 function loadPublicationTools() {
   const sourceRoot = path.resolve(repoRoot, "src");
   const originalResolveFilename = Module._resolveFilename;
@@ -708,7 +712,7 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
   const databaseVideoPages = await prisma.themePage.findMany({
     where: {
       siteId: SITE_ID,
-      slug: { startsWith: "/ai-video-generation/" }
+      slug: { in: pages.map((page) => pagePath(page.slug)) }
     },
     orderBy: [{ slug: "asc" }]
   });
@@ -753,8 +757,7 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
     ? snapshot.publishedVideoNavigation
     : [];
   const needsVideoProjection = publishedVideoRouteCount !== syncedPublicPages.length ||
-    publishedVideoNavigation.length !== syncedPublicPages.length ||
-    publishedVideoNavigation.some((item) => typeof item.description !== "string" || !item.description.trim());
+    publishedVideoNavigation.length !== syncedPublicPages.length;
   if (!replacedCount && !missingPages.length && !needsVideoProjection) return undefined;
   const compiledSnapshot = applyMydreamshootsVideoTopicPublication(snapshot);
   Object.assign(snapshot, compiledSnapshot);
@@ -822,16 +825,19 @@ async function updateDatabase(state, categories, syncedPages) {
         });
         for (const page of pages) {
           if (!page.imageUrl) continue;
-          await tx.videoTheme.updateMany({
-            where: {
-              siteId: SITE_ID,
-              slug: page.slug
-            },
-            data: {
-              imageUrl: page.imageUrl,
-              galleryImages: [page.imageUrl]
-            }
+          const existingTheme = await tx.videoTheme.findUnique({
+            where: { siteId_slug: { siteId: SITE_ID, slug: page.slug } },
+            select: { imageUrl: true, galleryImages: true }
           });
+          if (existingTheme && (existingTheme.imageUrl !== page.imageUrl || !sameJson(existingTheme.galleryImages, [page.imageUrl]))) {
+            await tx.videoTheme.update({
+              where: { siteId_slug: { siteId: SITE_ID, slug: page.slug } },
+              data: {
+                imageUrl: page.imageUrl,
+                galleryImages: [page.imageUrl]
+              }
+            });
+          }
         }
         for (const page of syncedPages) {
           const pageData = {
@@ -843,12 +849,23 @@ async function updateDatabase(state, categories, syncedPages) {
             draftJson: toPrismaJson(page.draftJson),
             draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
           };
-          const existingPage = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
+          const existingPage = await tx.themePage.findUnique({
+            where: { id: page.id },
+            select: { id: true, pageType: true, templateKey: true, slug: true, title: true, draftJson: true, draftMeta: true }
+          });
           if (existingPage) {
-            await tx.themePage.update({
-              where: { id: page.id },
-              data: pageData
-            });
+            const pageChanged = existingPage.pageType !== pageData.pageType ||
+              existingPage.templateKey !== pageData.templateKey ||
+              existingPage.slug !== pageData.slug ||
+              existingPage.title !== pageData.title ||
+              !sameJson(existingPage.draftJson, pageData.draftJson) ||
+              !sameJson(existingPage.draftMeta, pageData.draftMeta);
+            if (pageChanged) {
+              await tx.themePage.update({
+                where: { id: page.id },
+                data: pageData
+              });
+            }
           } else {
             await tx.themePage.create({
               data: {
