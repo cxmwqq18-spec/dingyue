@@ -120,12 +120,24 @@ function scopedRows(state) {
       }
     : null;
   const activePublicationId = site.activePublication?.publication?.id ?? null;
+  const legacyProfile = [...asArray(site.themePublications)]
+    .reverse()
+    .map((publication) => publication?.snapshot?.storefrontProfile)
+    .find((profile) => profile && typeof profile === "object");
+  const storefrontProfile = site.storefrontProfile ?? (legacyProfile ? {
+    id: `profile_${siteId}`,
+    siteId,
+    draftJson: clone(legacyProfile),
+    publishedJson: clone(legacyProfile),
+    draftMeta: { revision: 1, updatedAt: new Date().toISOString(), etag: "legacy-publication-migration" }
+  } : null);
 
   return {
     site,
     activePublicationId,
     domains: asArray(state.siteDomains).filter((item) => item?.siteId === siteId),
     settings,
+    storefrontProfile,
     pages: asArray(site.pages).filter((item) => item?.siteId === siteId || !item?.siteId),
     publications: asArray(state.themePublications).filter((item) => item?.siteId === siteId),
     siteThemes: asArray(state.siteThemes).filter((item) => item?.siteId === siteId),
@@ -521,6 +533,7 @@ async function backupScopedPublicState(tx) {
     include: {
       domains: true,
       settings: true,
+      storefrontProfile: true,
       pages: true,
       publications: true,
       siteThemes: true,
@@ -731,6 +744,24 @@ async function writePublicState(tx, sourceState, records) {
     });
   }
 
+  if (records.storefrontProfile) {
+    await tx.storefrontProfile.upsert({
+      where: { siteId },
+      create: {
+        id: records.storefrontProfile.id ?? `profile_${siteId}`,
+        siteId,
+        draftJson: json(records.storefrontProfile.draftJson),
+        publishedJson: json(records.storefrontProfile.publishedJson),
+        draftMeta: records.storefrontProfile.draftMeta ? json(records.storefrontProfile.draftMeta) : null
+      },
+      update: {
+        draftJson: json(records.storefrontProfile.draftJson),
+        publishedJson: json(records.storefrontProfile.publishedJson),
+        draftMeta: records.storefrontProfile.draftMeta ? json(records.storefrontProfile.draftMeta) : null
+      }
+    });
+  }
+
   const pageIds = collectionIds(records.pages);
   await tx.themePage.deleteMany({ where: { siteId, id: { notIn: pageIds } } });
   for (const page of records.pages) await upsertById(tx.themePage, pageData(page));
@@ -937,6 +968,7 @@ async function main() {
       include: {
         domains: true,
         settings: true,
+        storefrontProfile: true,
         pages: { orderBy: { slug: "asc" } },
         publications: { orderBy: { version: "asc" } },
         siteThemes: { orderBy: { updatedAt: "asc" } },
@@ -965,6 +997,7 @@ async function main() {
       sites: [source],
       siteDomains: sourceRuntime.domains,
       themeSettings: source.themeSettings,
+      storefrontProfile: sourceRuntime.storefrontProfile,
       prices: sourceRuntime.products.flatMap((product) => product.prices ?? []),
       products: sourceRuntime.products,
       siteAiApps: sourceRuntime.aiApps,

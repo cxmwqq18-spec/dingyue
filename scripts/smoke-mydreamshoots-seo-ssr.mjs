@@ -23,6 +23,20 @@ const hasProviderBackedPrice = await prisma.product
       .flatMap((product) => product.prices ?? [])
       .some((price) => /^price_[A-Za-z0-9]+$/.test(String(price.stripePriceId ?? "")) && Boolean(price.providerVerifiedAt))
   );
+const verifiedPublicPrices = await prisma.price
+  .findMany({
+    where: {
+      siteId: "site_dreamshoot",
+      status: "active",
+      providerVerifiedAt: { not: null },
+      product: { status: "active" }
+    },
+    select: { amountCents: true, currency: true }
+  })
+  .then((prices) => new Set(prices.map((price) => new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: price.currency.toUpperCase()
+  }).format(price.amountCents / 100))));
 const requestTimeoutMs = Number(process.env.MYDREAMSHOOTS_SEO_SSR_TIMEOUT_MS || 30_000);
 const requestAttempts = Number(process.env.MYDREAMSHOOTS_SEO_SSR_ATTEMPTS || 3);
 let serverProcess;
@@ -443,7 +457,10 @@ for (const [pathname, html] of Object.entries(focusCollections)) {
   });
 }
 assert.match(visibleText(pricing), /credits/i, "pricing HTML must contain credit information");
-assert.equal(pricing.includes(["$", "24.50"].join("")), false, "pricing HTML must not contain a hardcoded legacy price");
+assert.ok(
+  !pricing.includes(["$", "24.50"].join("")) || verifiedPublicPrices.has("$24.50"),
+  "pricing may only render $24.50 when an active provider-verified price owns that amount"
+);
 const homepageForbiddenCopy = [
   "Upload selfies and create your own AI model",
   "100% money-back guarantee",
@@ -465,8 +482,8 @@ assert.equal(homepage.includes('href="#plans"'), false, "homepage header must no
 assert.ok(homepage.includes('data-dreamshoot-embedded-pricing="true"'), "homepage HTML must contain the embedded pricing section");
 assert.ok(
   homepage.includes('data-dreamshoot-embedded-pricing="true"') &&
-    !homepage.includes(["$", "24.50"].join("")),
-  "homepage embedded pricing must render the section without a legacy hardcoded price"
+    (!homepage.includes(["$", "24.50"].join("")) || verifiedPublicPrices.has("$24.50")),
+  "homepage embedded pricing may only render $24.50 from an active provider-verified price"
 );
 assert.equal(homepageVideos.length, 0, "homepage SSR must not expose legacy video theme VideoObject nodes after the AI Video Generation route migration");
 for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {

@@ -211,6 +211,16 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
   assert(templateGeneration, "studio template must provide generation_showcase_1");
   next.sections ??= {};
   next.sectionsOrder ??= Object.keys(next.sections);
+  next.seo = {
+    ...(next.seo ?? {}),
+    title: "Professional AI Photo Generator Online - myDreamshoots",
+    description: "Create AI headshots, portraits, themed photo sets, editing workflows, and supported short video results from your own approved photos. Compare examples and credit costs before you generate.",
+    keywords: "AI headshot generator, AI portrait generator, AI photo packages, AI photo editor, AI video workflows",
+    canonicalPath: "/",
+    index: true,
+    follow: true,
+    robots: { index: true, follow: true }
+  };
   next.sections.generation_showcase_1 = {
     ...clone(next.sections.generation_showcase_1 ?? {}),
     ...clone(templateGeneration),
@@ -218,9 +228,9 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
       ...clone(next.sections.generation_showcase_1?.settings ?? {}),
       ...clone(templateGeneration.settings),
       showTrustedLogoIntro: true,
-      trustedLogoTitle: "Most Trusted Creators. | myDreamshoots",
+      trustedLogoTitle: "Explore AI photo and video workflows | myDreamshoots",
       aboutTitle: "What is myDreamshoots?",
-      aboutBody: "myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC. No studio, no outfits, no photographer, and nothing to book, just magic. Turn your selfies into stunning photo and video in seconds with myDreamshoots's: upload your photos, choose a theme, and create realistic headshots, portrait photos, fan photos, seasonal cards, private albums, and short video-ready images. Plans start at $24.50/month, and every package shows the credit cost before generation.",
+      aboutBody: "myDreamshoots is an AI photo and video studio. Upload photos you own or are permitted to use, choose a supported workflow, review the current credit cost before generation, and download finished results from your private gallery.",
       embeddedPricingSectionId: "pricing_1",
       trustedLogoSplitIndex: 15
     },
@@ -233,8 +243,8 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
       heroBadge: "AI Headshot Photo Packages",
       headline: "Create AI Headshots, Portraits, and Themed Photo Sets from Your Photos",
       subheadline: "Upload a few clear photos to create AI headshots, portraits, couple photos, seasonal sets, and other themed images. Choose a workflow, review the credit cost before generation, and review finished results in your signed-in gallery. AI video tools are also available when you want to turn images or prompts into short motion clips.",
-      bulletList: "No AI training on your photos - Your inputs are never used to train models.|30-day auto-delete - Input photos automatically delete 30 days after generation.|100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy|AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.",
-      imageBadge: "6 AI image workflows",
+      bulletList: "Use photos you own or have permission to use.|Choose the photo or video workflow that fits your goal.|Review credits before the request starts.|Download finished results from your private gallery.",
+      imageBadge: "AI image workflows",
       imageCaption: "Create a private AI photo set for professional profiles, portraits, couples, seasonal images, creative styles, or other supported workflows.",
       authRibbon: "Review credits before generation",
       socialProofLabel: "Private uploads · Credit cost shown upfront · Download your favorites"
@@ -247,10 +257,10 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
       ...(pricing.settings ?? {}),
       title: "Subscription Plans",
       subtitle: "Choose the plan that works for you",
-      marketComparison: "The average professional photoshoot can cost around $725. myDreamshoots keeps plan selection simple with monthly or quarterly and semiannually subscriptions.",
+      marketComparison: "Choose a monthly, quarterly, or semiannual plan based on the credits you expect to use. Compare the current price, included credits, renewal interval, and supported workflows before selecting a plan.",
       description: "Choose Starter, Pro, or Premium. Each package shows its credit cost before generation; failed requests can return reserved credits according to request status.",
       sidePanelEyebrow: "Why people subscribe",
-      sidePanelTitle: "Plans start at $24.50/month. Compare billing periods and included credits before subscribing.",
+      sidePanelTitle: "Plans start at {LIVE_LOWEST_ACTIVE_PLAN_PRICE}, with the current credit allowance and billing interval shown for each option.",
       sidePanelBody: "Review the credit cost before each generation, and use an available top-up when you need additional runs."
     };
     next.sections.pricing_1 = pricing;
