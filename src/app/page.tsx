@@ -6,7 +6,8 @@ import { ArrowRight, ArrowUpRight, Boxes, Brush, CreditCard, Database, Globe2, L
 import {
   readStorefrontAccessSummaryFromDatabase,
   readStorefrontPublicPageMetadataStateByHostFromDatabase,
-  readStorefrontPublicRuntimeStateByHostFromDatabase
+  readStorefrontPublicRuntimeStateByHostFromDatabase,
+  readStorefrontRuntimeStateByHostFromDatabase
 } from "@/lib/storefront-state";
 import { Metric, Panel, Shell, StatusPill, TopBar } from "@/components/ui";
 import { AccessRoutePrefetcher } from "@/components/platform/access-route-prefetcher";
@@ -57,6 +58,10 @@ async function getHostRuntimeStateWithFallback(hosts: Array<string | null>): Pro
   try {
     for (const host of hosts) {
       const state = await readStorefrontPublicRuntimeStateByHostFromDatabase(host, "/");
+      if (state) return state;
+    }
+    for (const host of hosts) {
+      const state = await readStorefrontRuntimeStateByHostFromDatabase(host);
       if (state) return state;
     }
   } catch (error) {

@@ -4,6 +4,8 @@ import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { findPage } from "@/lib/data";
 import {
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
+  readStorefrontPublicPageMetadataStateByHostFromDatabase,
+  readStorefrontPublicRuntimeStateByHostFromDatabase,
 } from "@/lib/storefront-state";
 import { canResolveCollectionSlugForSite, renderCustomerWorkspacePageBySlug, renderStorefrontPage, renderToolPage } from "@/lib/storefront-render";
 import { preferLocalPathModeState, readPathModePublicMetadataState, readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
@@ -13,7 +15,7 @@ import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSi
 import { legacyPublicPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
-import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
+import { STOREFRONT_PUBLIC_HOST_HEADER, storefrontPathForRouteMode, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
 import { getVideoThemeSlugRedirectRelational } from "@/lib/stores/site-store";
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
@@ -29,6 +31,49 @@ const dreamshootPartnerTemplateSlugs = new Set([
   "/best-ai-image",
   "/best-ai-video"
 ]);
+
+type HeaderReader = {
+  get(name: string): string | null;
+};
+
+function publicHostCandidates(headers: HeaderReader): Array<string | null> {
+  return [
+    headers.get(STOREFRONT_PUBLIC_HOST_HEADER),
+    headers.get("x-forwarded-host"),
+    headers.get("host")
+  ];
+}
+
+async function readRoutePublicRuntimeState(
+  headers: HeaderReader,
+  routeMode: StorefrontRouteMode,
+  publicSlug: string,
+  pageSlug: string,
+  contextSlug?: string
+) {
+  if (routeMode === "host") {
+    for (const host of publicHostCandidates(headers)) {
+      const state = await readStorefrontPublicRuntimeStateByHostFromDatabase(host, pageSlug, contextSlug);
+      if (state?.sites[0]) return state;
+    }
+  }
+  return readPathModePublicRuntimeState(publicSlug, pageSlug, contextSlug);
+}
+
+async function readRoutePublicMetadataState(
+  headers: HeaderReader,
+  routeMode: StorefrontRouteMode,
+  publicSlug: string,
+  pageSlug: string
+) {
+  if (routeMode === "host") {
+    for (const host of publicHostCandidates(headers)) {
+      const state = await readStorefrontPublicPageMetadataStateByHostFromDatabase(host, pageSlug);
+      if (state?.sites[0]) return state;
+    }
+  }
+  return readPathModePublicMetadataState(publicSlug, pageSlug);
+}
 const aidreamcapesLegacyBlogCategoryRedirects: Record<string, string> = {
   "fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",
   "private-fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",
@@ -191,13 +236,21 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   if (slug === "/account") {
     return { title: isSpanishStorefrontSite({ slug: siteSlug, name: siteSlug, branding: { logoText: siteSlug } }) ? "Cuenta" : "Account", robots: { index: false, follow: false } };
   }
+  const headerStore = await headers();
+  const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
   const state = isVideoGenerationRequest
-    ? await readVideoGenerationRouteState(siteSlug, videoLookupSlug)
+    ? routeMode === "host"
+      ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, `/ai-video-generation/${videoLookupSlug || ""}`.replace(/\/$/, ""), videoLookupSlug || undefined)
+      : await readVideoGenerationRouteState(siteSlug, videoLookupSlug)
     : isCollectionRequest && collectionLookupSlug
-    ? await readCollectionRouteState(siteSlug, collectionLookupSlug)
+    ? routeMode === "host"
+      ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, collectionRootPageSlug, collectionLookupSlug)
+      : await readCollectionRouteState(siteSlug, collectionLookupSlug)
     : slug === "/ai-image-generation"
-      ? await readPathModePublicRuntimeState(siteSlug, "/ai-image-generation")
-    : await readPathModePublicMetadataState(siteSlug, slug);
+      ? routeMode === "host"
+        ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, "/ai-image-generation")
+        : await readPathModePublicRuntimeState(siteSlug, "/ai-image-generation")
+    : await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, slug);
   const site = state?.sites[0];
   if (!site) return {};
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
@@ -205,11 +258,14 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   if (isVideoGenerationRequest) {
     if (!videoGenerationRoute) return {};
     if (videoGenerationRoute.itemSlug) {
-      if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") return {};
       const theme = state.videoThemes?.find((item) => item.siteId === site.id && item.status === "active" && item.slug === videoGenerationRoute.itemSlug);
       const redirectRecord = await getVideoThemeSlugRedirectRelational(site.id, videoGenerationRoute.itemSlug);
       const detailPage = findPage(site, `/ai-video-generation/${videoGenerationRoute.itemSlug}`);
       if (!theme && !redirectRecord?.theme && !detailPage) return {};
+      // Video topic pages are backed by the relational ThemePage/VideoTheme
+      // records. They may intentionally be newer than the immutable SEO route
+      // projection, so do not hide valid database-backed pages behind that
+      // older publication route list.
       const canonicalSlug = redirectRecord?.theme?.status === "active" ? redirectRecord.theme.slug : videoGenerationRoute.itemSlug;
       const page = detailPage ?? findPage(site, "/ai-video-generation");
       return page ? metadataForPublishedStorefrontDirectoryPage({
@@ -316,7 +372,10 @@ export default async function SiteCatchAllPage({
     ? await readCollectionRouteState(publicSlug, collectionLookupSlug)
     : await readPathModePublicRuntimeState(publicSlug, pageSlug);
   const publicSite = state?.sites[0];
-  if (!state || !publicSite) notFound();
+  if (!state || !publicSite) {
+    console.error("[mydreamshoots-video-debug] public state missing", { publicSlug, pageSlug, isVideoGenerationRequest, path, hasState: Boolean(state), hasSite: Boolean(publicSite) });
+    notFound();
+  }
   if (isPrimaryMydreamshootsSlug(publicSlug) && isVideoGenerationRequest && ["text-to-video", "image-to-video"].includes(path[1] ?? "")) {
     notFound();
   }
@@ -331,14 +390,21 @@ export default async function SiteCatchAllPage({
   if (isVideoGenerationRequest) {
     if (!videoGenerationRoute) notFound();
     if (videoGenerationRoute.itemSlug) {
-      if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") notFound();
       const redirectRecord = await getVideoThemeSlugRedirectRelational(publicSite.id, videoGenerationRoute.itemSlug);
       if (redirectRecord?.theme?.status === "active" && redirectRecord.theme.slug !== videoGenerationRoute.itemSlug) {
         permanentRedirect(routePath(`/ai-video-generation/${redirectRecord.theme.slug}`));
       }
       const theme = state.videoThemes?.find((item) => item.siteId === publicSite.id && item.status === "active" && item.slug === videoGenerationRoute.itemSlug);
       const detailPage = findPage(publicSite, `/ai-video-generation/${videoGenerationRoute.itemSlug}`);
-      if (!theme && !detailPage) notFound();
+      if (!theme && !detailPage) {
+        console.error("[mydreamshoots-video-debug] path unresolved", {
+          site: publicSite.id,
+          slug: videoGenerationRoute.itemSlug,
+          pages: publicSite.pages.filter((page) => page.slug.includes("video")).map((page) => page.slug),
+          themes: state.videoThemes?.filter((item) => item.slug === videoGenerationRoute.itemSlug).map((item) => item.slug)
+        });
+        notFound();
+      }
       return renderToolPage({
         site: publicSite,
         toolSlug: videoGenerationRoute.itemSlug,

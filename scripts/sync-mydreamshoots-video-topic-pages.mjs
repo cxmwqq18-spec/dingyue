@@ -120,6 +120,16 @@ const videoCategories = [
 
 const pages = [
   {
+    slug: "talking-photo",
+    title: "Talking Photo",
+    seoTitle: "AI Talking Photo Generator – Make a Photo Talk | myDreamshoots",
+    description:
+      "Make a photo talk from one clear portrait and a short script. Create talking-photo videos for birthday wishes, personal messages, explainers, social intros, product pitches, and holiday greetings.",
+    keywords:
+      "AI talking photo generator, make a photo talk, talking photo AI, photo talking video, talking picture generator, speaking photo generator, animate a photo to talk, talking portrait",
+    imageUrl: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.png"
+  },
+  {
     slug: "cinematic-video",
     title: "Cinematic Video",
     seoTitle: "AI Cinematic Video Generator – Create Story-Driven Cinematic Clips | myDreamshoots",
@@ -322,13 +332,15 @@ function assertPageImageAssets() {
 
 function pageJson(page) {
   const canonicalPath = pagePath(page.slug);
+  const sectionId = page.slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
+  const sectionType = page.slug === "talking-photo" ? "talking_photo_landing" : "ai_video_topic_landing";
   return {
     pageType: "ai_tool",
     version: 1,
-    sectionsOrder: ["ai_video_topic_landing_1"],
+    sectionsOrder: [sectionId],
     sections: {
-      ai_video_topic_landing_1: {
-        type: "ai_video_topic_landing",
+      [sectionId]: {
+        type: sectionType,
         settings: {
           anchor: page.slug,
           contentKey: page.slug
@@ -540,9 +552,23 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
     publicationSnapshotIntegrity
   } = loadPublicationTools();
   const snapshot = clone(currentPublication.snapshot);
-  const existingPageIds = new Set(snapshot.pages.map((page) => page.id));
-  const missingPages = syncedPages
-    .filter((page) => page.slug.startsWith("/ai-video-generation/") && !existingPageIds.has(page.id))
+  const databaseVideoPages = await prisma.themePage.findMany({
+    where: {
+      siteId: SITE_ID,
+      slug: { startsWith: "/ai-video-generation/" }
+    },
+    orderBy: [{ slug: "asc" }]
+  });
+  const publishCandidates = [
+    ...syncedPages,
+    ...databaseVideoPages
+  ];
+  const dedupedBySlug = new Map(
+    publishCandidates
+      .filter((page) => page.slug.startsWith("/ai-video-generation/"))
+      .map((page) => [page.slug, page])
+  );
+  const syncedPublicPages = [...dedupedBySlug.values()]
     .map((page) => ({
       id: page.id,
       siteId: page.siteId ?? SITE_ID,
@@ -554,9 +580,19 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
       createdAt: page.createdAt,
       updatedAt: page.updatedAt
     }));
-  if (!missingPages.length) return undefined;
-
+  const syncedBySlug = new Map(syncedPublicPages.map((page) => [page.slug, page]));
+  let replacedCount = 0;
+  const existingSlugs = new Set();
+  snapshot.pages = snapshot.pages.map((page) => {
+    existingSlugs.add(page.slug);
+    const replacement = syncedBySlug.get(page.slug);
+    if (!replacement) return page;
+    replacedCount += 1;
+    return replacement;
+  });
+  const missingPages = syncedPublicPages.filter((page) => !existingSlugs.has(page.slug));
   snapshot.pages = [...snapshot.pages, ...missingPages];
+  if (!replacedCount && !missingPages.length) return undefined;
   refreshSnapshotHash(snapshot, publicationSnapshotHash);
   if (publicationSnapshotIntegrity(snapshot) !== "valid") {
     throw new Error("video_topic_publication_snapshot_integrity_failed");

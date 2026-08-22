@@ -2381,7 +2381,16 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     return { siteAiApps, page, app: undefined, matched: true, resolvedSlug };
   }
   if (isPublicVideoTopic) {
-    return { siteAiApps, page: baseToolDetailPageForSite(site, page), app: undefined, matched: false, resolvedSlug };
+    return {
+      siteAiApps,
+      page: page ?? baseToolDetailPageForSite(site, page),
+      app: undefined,
+      // Public video topics may use the generic relational ThemePage while
+      // their dedicated landing is being iterated. A valid DB page/theme is
+      // still a routable public page and must not become a 404.
+      matched: Boolean(page || databaseVideoTheme),
+      resolvedSlug
+    };
   }
   const app = directApp ?? legacyImageApp ?? (page?.slug === "/tools/image-studio" ? siteAiApps.find((siteApp) => siteApp.aiApp.slug === "image_generator") : undefined);
   const menuTool = (state.toolMenuItems ?? []).find((item) => {

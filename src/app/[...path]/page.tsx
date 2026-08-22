@@ -480,7 +480,6 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
       const resolved = await resolveHostToolPageWithFallback(hostCandidates, videoGenerationRoute.itemSlug);
       if (!resolved) return {};
       const resolvedSnapshot = createPublishedSiteSnapshot(resolved.state, resolved.site, { source: "platform-state" });
-      if (resolvePublishedRouteDisposition(resolvedSnapshot, videoGenerationRoute.canonicalPath).kind !== "render") return {};
       return metadataForPublishedStorefrontDirectoryPage({
         site: resolved.site,
         page: resolved.page,
@@ -646,6 +645,9 @@ export default async function HostStorefrontCatchAllPage({
     : undefined;
   const collectionRoute = isCollectionRequest ? parsePublicCollectionRouteForSite(site, path) : undefined;
   const videoGenerationRoute = isVideoGenerationRequest ? parsePublicVideoGenerationRouteForSite(site, path) : undefined;
+  if (isVideoGenerationRequest && !videoGenerationRoute) {
+    console.error("[mydreamshoots-video-debug] route parse failed", { path, site: site && { id: site.id, slug: site.slug, name: site.name } });
+  }
   if (firstSegment === "tools" && path[1]) {
     const toolSite = resolvedToolPage?.site ?? site;
     redirectMydreamshootsLegacyTool(toolSite, path[1]);
@@ -682,12 +684,19 @@ export default async function HostStorefrontCatchAllPage({
   if (isVideoGenerationRequest) {
     if (!videoGenerationRoute) notFound();
     if (videoGenerationRoute.itemSlug) {
-      if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") notFound();
       const redirectRecord = await getVideoThemeSlugRedirectRelational(site.id, videoGenerationRoute.itemSlug);
       if (redirectRecord?.theme?.status === "active" && redirectRecord.theme.slug !== videoGenerationRoute.itemSlug) {
         permanentRedirect(publicSiteUrl(site, `/ai-video-generation/${redirectRecord.theme.slug}`));
       }
-      if (!resolvedVideoToolPage) notFound();
+      if (!resolvedVideoToolPage) {
+        console.error("[mydreamshoots-video-debug] unresolved", {
+          slug: videoGenerationRoute.itemSlug,
+          site: site.id,
+          pages: state.sites[0]?.pages?.filter((page) => page.slug.includes("video")).map((page) => page.slug),
+          themes: state.videoThemes?.filter((theme) => theme.slug === videoGenerationRoute.itemSlug).map((theme) => theme.slug)
+        });
+        notFound();
+      }
       const canonicalToolPath = resolvedVideoToolPage.site.id === site.id && state.videoThemes?.some((theme) => theme.siteId === site.id && theme.slug === videoGenerationRoute.itemSlug)
         ? videoGenerationRoute.canonicalPath
         : canonicalSeoDirectoryPathForSite(resolvedVideoToolPage.site, "tool", videoGenerationRoute.itemSlug);
