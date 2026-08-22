@@ -9329,9 +9329,9 @@ function SectionView({
     const supportingCopy = setting(section, "supportingCopy", "");
     const videoBadge = setting(section, "videoBadge", "");
     const videoPoster = videoUrl.includes("mydreamshoots-ai-image-tutorial-20260814.mp4")
-      ? mediaAssetUrl(site, "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814-cover-v2.jpg")
+      ? mediaAssetUrl(site, `/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814-cover-v2.jpg?v=${dreamshootHomepageShowcaseVersion}`)
       : videoUrl.includes("mydreamshoots-ai-video-tutorial-20260814.mp4")
-        ? mediaAssetUrl(site, "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814-cover-v2.jpg")
+        ? mediaAssetUrl(site, `/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814-cover-v2.jpg?v=${dreamshootHomepageShowcaseVersion}`)
         : image;
     return (
       <section className="bg-[#0a0a0b] px-5 py-14 text-white md:py-20" id={sectionAnchor(section, "how-it-works")}>
