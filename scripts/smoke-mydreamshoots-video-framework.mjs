@@ -49,7 +49,8 @@ const expectedCategoriesBySite = {
     ["video-ad", "Video Ad", 190],
     ["brand-video", "Brand Video", 200],
     ["music-video", "Music Video", 210],
-    ["fashion-video", "Fashion Video", 230]
+    ["fashion-video", "Fashion Video", 230],
+    ["food-video", "Food Video", 240]
   ],
   site_grownstride_test: [
     ["text-to-video", "Text to Video", 10],

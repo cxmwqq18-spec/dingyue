@@ -18,7 +18,8 @@ const DEFAULT_VIDEO_SLUGS = [
   "video-ad",
   "brand-video",
   "music-video",
-  "fashion-video"
+  "fashion-video",
+  "food-video"
 ];
 const HIDDEN_VIDEO_SLUGS = [
   "text-to-video",
@@ -41,7 +42,8 @@ const LEGACY_VIDEO_GONE_SLUGS = [
   "video-ad",
   "brand-video",
   "music-video",
-  "fashion-video"
+  "fashion-video",
+  "food-video"
 ];
 
 function parseArgs(argv) {

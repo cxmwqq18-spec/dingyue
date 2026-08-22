@@ -20,7 +20,8 @@ const topics = [
   "video-ad",
   "brand-video",
   "music-video",
-  "fashion-video"
+  "fashion-video",
+  "food-video"
 ];
 const viewports = [
   { name: "mobile", width: 390, height: 844, columns: 1, videoAdColumns: 1 },
@@ -43,7 +44,7 @@ function sectionOrderForTopic(topic) {
   if (topic === "brand-video") {
     return ["hero", "what-this-creates", "brand-story-map", "brand-signals", "how-it-works", "scene-gallery", "brand-consistency-guide", "product-evidence", "workflow", "brand-integrity-review", "faq", "related-pages", "final-cta"];
   }
-  if (topic === "music-video" || topic === "fashion-video") {
+  if (topic === "music-video" || topic === "fashion-video" || topic === "food-video") {
     return ["hero", "what-this-creates", "visual-map", "how-it-works", "scene-gallery", "sequence-guide", "product-boundary", "product-evidence", "workflow", "integrity-review", "faq", "related-pages", "final-cta"];
   }
   return sectionOrder;
@@ -191,7 +192,7 @@ try {
             checked.push({ topic, viewport: viewport.name });
             continue;
           }
-          if (topic === "music-video" || topic === "fashion-video") {
+          if (topic === "music-video" || topic === "fashion-video" || topic === "food-video") {
             await page.locator('[data-video-topic-section="scene-gallery"]').scrollIntoViewIfNeeded();
             await page.waitForFunction(
               () => [...document.querySelectorAll("[data-scene-topic-scene] img")].every((image) => image.complete && image.naturalWidth > 0),
@@ -201,11 +202,13 @@ try {
             const result = await page.evaluate(() => {
               const gallery = document.querySelector("[data-scene-topic-gallery]");
               const scenes = [...document.querySelectorAll("[data-scene-topic-scene]")];
+              const heroHeading = document.querySelector('[data-video-topic-section="hero"] h1');
               const workspaceCtas = [...document.querySelectorAll('a[href*="/app/create?videoMode="]')];
               const sectionNames = [...document.querySelectorAll("[data-video-topic-section]")].map((section) => section.getAttribute("data-video-topic-section"));
               return {
                 pageMarker: document.querySelectorAll("[data-video-topic-page]").length,
                 heroImages: document.querySelectorAll("[data-video-topic-hero-media] img").length,
+                heroHeadingWithinViewport: Boolean(heroHeading && heroHeading.getBoundingClientRect().left >= 0 && heroHeading.getBoundingClientRect().right <= document.documentElement.clientWidth + 1),
                 scenes: scenes.length,
                 mapItems: document.querySelectorAll("[data-scene-topic-map-item]").length,
                 steps: document.querySelectorAll("[data-scene-topic-step]").length,
@@ -227,6 +230,7 @@ try {
               };
             });
             assert.equal(result.pageMarker, 1, `${topic} ${viewport.name} should render one shared page marker`);
+            assert.equal(result.heroHeadingWithinViewport, true, `${topic} ${viewport.name} hero heading must fit within the viewport`);
             assert.equal(result.heroImages, 3, `${topic} ${viewport.name} hero should render three dedicated images`);
             assert.equal(result.scenes, 8, `${topic} ${viewport.name} should render eight scene cards`);
             assert.equal(result.mapItems, 6, `${topic} ${viewport.name} should render six visual-map items`);

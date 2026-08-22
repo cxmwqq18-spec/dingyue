@@ -127,6 +127,12 @@ const videoCategories = [
     label: "Fashion Video",
     description: "Create fashion-focused motion for editorial, lookbook, runway, styling, and garment detail concepts.",
     sortOrder: 230
+  },
+  {
+    slug: "food-video",
+    label: "Food Video",
+    description: "Create food-focused motion for cooking action, plating, ingredient prep, restaurant service, beverages, and culinary social content.",
+    sortOrder: 240
   }
 ];
 
@@ -286,6 +292,14 @@ const pages = [
     description: "Create AI fashion-video visuals from text or approved images for editorials, lookbooks, runway concepts, styling, garment details, and campaign sequences. Define the look, generate clips, review garment and model continuity, and publish only with cleared source rights.",
     keywords: "ai fashion video generator, AI fashion video maker, fashion editorial video generator, lookbook video maker, runway video concept, styling video generator, garment detail video",
     imageUrl: "/assets/dreamshoot/fashion-video/hero-fashion-video-editorial-frame.jpg"
+  },
+  {
+    slug: "food-video",
+    title: "Food Video",
+    seoTitle: "AI Food Video Generator for Cooking & Culinary Visuals | myDreamshoots",
+    description: "Create AI food-video visuals from text or approved images for cooking, plating, ingredient prep, restaurant scenes, beverage pours, and culinary social clips.",
+    keywords: "ai food video generator, AI food video maker, cooking video generator, plating video maker, culinary video generator, food styling video, restaurant video concept",
+    imageUrl: "/assets/dreamshoot/food-video/hero-food-video-creator-frame.jpg"
   }
 ];
 
@@ -455,7 +469,7 @@ function syncPages(state, changes) {
       title: pageDefinition.title,
       draftJson: clone(json)
     };
-    if (["brand-video", "music-video", "fashion-video"].includes(pageDefinition.slug)) pageFields.publishedJson = clone(json);
+    if (["brand-video", "music-video", "fashion-video", "food-video"].includes(pageDefinition.slug)) pageFields.publishedJson = clone(json);
     updateRecord(page, pageFields, changes, "ThemePage");
     if (JSON.stringify(page) !== before) page.updatedAt = RUN_TIMESTAMP;
     return page;
@@ -707,7 +721,7 @@ async function updateDatabase(state, categories, syncedPages) {
           publishedJson: toPrismaJson(page.draftJson),
           draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
         };
-          if (["brand-video", "music-video", "fashion-video"].some((slug) => page.slug === pagePath(slug))) pageData.publishedJson = toPrismaJson(page.publishedJson ?? page.draftJson);
+          if (["brand-video", "music-video", "fashion-video", "food-video"].some((slug) => page.slug === pagePath(slug))) pageData.publishedJson = toPrismaJson(page.publishedJson ?? page.draftJson);
           const existingPage = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
           if (existingPage) {
             await tx.themePage.update({

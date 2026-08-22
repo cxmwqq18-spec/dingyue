@@ -1350,6 +1350,33 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     ctaLabel: "Create Fashion Video Visuals",
     ctaHref: "/app/create#step-video"
   },
+  "food-video": {
+    label: "Food Video",
+    title: "AI Food Video Generator for Cooking & Culinary Visuals | myDreamshoots",
+    description: "Create AI food-video visuals from text or approved images for cooking, plating, ingredient prep, restaurant scenes, beverage pours, and culinary social clips.",
+    keywords: "ai food video generator, AI food video maker, cooking video generator, plating video maker, culinary video generator, food styling video, restaurant video concept",
+    h2: "turn a culinary idea into a clear food-motion brief",
+    h3: ["Cooking action, plating, and culinary atmosphere", "Six-decision Food Visual System", "Review ingredients, props, continuity, and food-claim boundaries before publishing"],
+    intro: "Food Video helps chefs, restaurants, food creators, culinary teams, and food brands shape short visual concepts around cooking actions, preparation, plating, service, beverages, and food-first social content through verified video creation paths.",
+    details: [
+      "Use it for cooking-action clips, ingredient-prep scenes, plating and food-styling concepts, recipe-supporting B-roll, restaurant service, beverage pours, tabletop sequences, and menu mood visuals.",
+      "Build around one hero food, one visible action, texture and state, a useful camera angle, a coherent culinary set, and continuity details that can be reviewed clip by clip.",
+      "Keep Food Video distinct from How-to Video, Explainer Video, Product Video, Promo Video, and Video Ad: it owns food-, cooking-, presentation-, and culinary-atmosphere-led motion.",
+      "The current CTA opens the existing video workspace so customers can confirm supported inputs, credits, and output controls before generation."
+    ],
+    useCases: ["Cooking-action clips", "Ingredient preparation", "Plating and food styling", "Restaurant and cafe scenes", "Beverage and pour sequences", "Culinary social content"],
+    workflow: ["Define the hero food, action, texture, camera, set, and channel.", "Start from Text to Video or Image to Video in the live workspace.", "Generate short clips and review food identity, hands, props, liquids, labels, and continuity.", "Keep recipe, allergen, nutrition, doneness, and food-safety claims separately verified."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore How-to Video", href: "/ai-video-generation/how-to-video" },
+      { label: "Explore Product Video", href: "/ai-video-generation/product-video" },
+      { label: "Explore Promo Video", href: "/ai-video-generation/promo-video" },
+      { label: "Review pricing and credits", href: "/pricing" },
+      { label: "Read the workflow", href: "/workflow" }
+    ],
+    ctaLabel: "Create Food Video Visuals",
+    ctaHref: "/app/create#step-video"
+  },
   "world-cup-fan-photos": {
     label: "World Cup Fan Photos",
     title: "AI World Cup Fan Photo Maker - stadium portraits and match-day posters",
@@ -1479,6 +1506,7 @@ const dreamshootDefaultPublicToolSlugs = new Set([
   "brand-video",
   "music-video",
   "fashion-video",
+  "food-video",
   "background-changer",
   "background-remover",
   "magic-eraser",

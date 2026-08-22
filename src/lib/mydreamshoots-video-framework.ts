@@ -232,7 +232,8 @@ export const mydreamshootsCurrentVideoMenuSlugs = [
   "video-ad",
   "brand-video",
   "music-video",
-  "fashion-video"
+  "fashion-video",
+  "food-video"
 ] as const;
 
 const mydreamshootsCurrentVideoMenuSlugSet = new Set<string>(mydreamshootsCurrentVideoMenuSlugs);
@@ -520,6 +521,19 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     durationSeconds: 6,
     maxFrames: 10,
     sortOrder: 180
+  },
+  {
+    slug: "food-video",
+    categorySlug: "food-video",
+    name: "Food Video",
+    headline: "Create food-motion concepts around cooking action, plating, texture, and culinary atmosphere.",
+    description: "Plan food, cooking, plating, ingredient-prep, restaurant-service, beverage, and culinary-social visual directions with continuity review.",
+    prompt: "Create a food-video visual concept around an approved dish, ingredient setup, restaurant scene, or culinary image reference. Define the hero food, one visible action, texture and state, camera angle, set and props, lighting, and continuity rules. Do not claim recipe accuracy, ingredient recognition, allergen detection, nutrition analysis, cooking-temperature verification, doneness detection, food-safety certification, menu ingestion, or perfect label preservation without verified product support.",
+    imageUrl: "/assets/dreamshoot/food-video/hero-food-video-creator-frame.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 190
   }
 ] as const;
 
@@ -559,7 +573,8 @@ export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "video-ad",
   "brand-video",
   "music-video",
-  "fashion-video"
+  "fashion-video",
+  "food-video"
 ] as const;
 
 const publicVideoGenerationPageSlugs = new Set<string>(mydreamshootsPublicVideoGenerationTopicSlugs);

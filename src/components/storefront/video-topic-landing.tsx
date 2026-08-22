@@ -1307,19 +1307,22 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
 
 function SceneTopicLanding({ content, contentKey, section, site }: { content: VideoTopicContent; contentKey: string; section: SectionInstance; site: Site }) {
   const isMusic = contentKey === "music-video";
-  const topicLabel = isMusic ? "Music Video" : "Fashion Video";
+  const isFashion = contentKey === "fashion-video";
+  const topicLabel = isMusic ? "Music Video" : isFashion ? "Fashion Video" : "Food Video";
   const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
   const heroImages = content.hero.images?.length ? content.hero.images : [content.hero.image];
   const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
   const visualMap = content.platformExamples?.items ?? [];
-  const accentClass = isMusic ? "text-fuchsia-300" : "text-pink-300";
-  const accentBorder = isMusic ? "border-fuchsia-300/25" : "border-pink-300/25";
-  const panelTone = isMusic ? "bg-[#15101f]" : "bg-[#11161d]";
+  const accentClass = isMusic ? "text-fuchsia-300" : isFashion ? "text-pink-300" : "text-orange-300";
+  const accentBorder = isMusic ? "border-fuchsia-300/25" : isFashion ? "border-pink-300/25" : "border-orange-300/25";
+  const panelTone = isMusic ? "bg-[#15101f]" : isFashion ? "bg-[#11161d]" : "bg-[#1b1512]";
+  const systemLabel = isMusic ? "Visual system" : isFashion ? "Fashion system" : "Food visual system";
+  const systemText = isMusic ? "Artist -> Motif -> Motion -> Sequence" : isFashion ? "Garment -> Styling -> Movement -> Continuity" : "Hero food -> Action -> Texture -> Camera -> Set -> Continuity";
   return (
     <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-video-topic-page={contentKey}>
       <section className="border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.86fr_1.14fr] lg:items-center lg:gap-16 lg:py-24">
-          <div>
+          <div className="min-w-0">
             <nav className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-normal text-white/45" aria-label="Breadcrumb">
               <InternalLink className="text-[#c4b5fd] transition hover:text-white" href="/ai-video-generation" site={site}>AI Video Generation</InternalLink>
               <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
@@ -1328,7 +1331,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
               <span className="text-white/68">{topicLabel}</span>
             </nav>
             <p className={`mt-8 text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.hero.eyebrow}</p>
-            <h1 className="mt-5 max-w-[760px] text-balance text-4xl font-semibold leading-[0.96] tracking-normal text-white sm:text-6xl lg:text-7xl">{content.hero.title}</h1>
+            <h1 className="mt-5 min-w-0 max-w-[760px] break-words text-balance text-4xl font-semibold leading-[0.96] tracking-normal text-white sm:text-6xl lg:text-7xl">{content.hero.title}</h1>
             <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">{content.hero.body}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ActionLink href={primaryHref} label={content.hero.primaryCta} site={site} />
@@ -1338,14 +1341,14 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
             <p className="mt-4 max-w-xl text-sm leading-6 text-white/58">{content.hero.rightsCopy}</p>
             {content.hero.highlights?.length ? <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2 rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-3 text-xs font-semibold text-white/62">{content.hero.highlights.map((highlight) => <span key={highlight}>{highlight}</span>)}</div> : null}
           </div>
-          <figure className="relative lg:justify-self-end" data-video-topic-hero-media>
+          <figure className="relative min-w-0 lg:justify-self-end" data-video-topic-hero-media>
             <div className={`relative aspect-[4/3] min-h-[390px] overflow-hidden rounded-[30px] border ${accentBorder} bg-[#17151f] p-3 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)] sm:min-h-[550px]`}>
               {heroImages.slice(0, 3).map((item, index) => <div className={`absolute overflow-hidden rounded-[24px] border border-white/15 bg-[#292438] ${index === 0 ? "inset-y-[7%] left-[5%] w-[48%]" : index === 1 ? "right-[5%] top-[7%] w-[42%] aspect-[4/5]" : "bottom-[7%] right-[13%] w-[42%] aspect-[4/5]"}`} key={item.src}>
                 <img src={item.src} alt={item.alt} className="absolute inset-0 h-full w-full object-cover" style={imageStyle(item)} width={item.width} height={item.height} loading="eager" fetchPriority={index === 0 ? "high" : undefined} decoding="async" />
               </div>)}
               <div className="absolute bottom-5 left-5 right-5 rounded-[22px] border border-white/15 bg-[#0d0b13]/80 p-5 backdrop-blur">
-                <p className={`text-[11px] font-semibold uppercase tracking-normal ${accentClass}`}>{isMusic ? "Visual system" : "Fashion system"}</p>
-                <p className="mt-3 text-xl font-semibold leading-tight text-white">{isMusic ? "Artist -> Motif -> Motion -> Sequence" : "Garment -> Styling -> Movement -> Continuity"}</p>
+                <p className={`text-[11px] font-semibold uppercase tracking-normal ${accentClass}`}>{systemLabel}</p>
+                <p className="mt-3 text-xl font-semibold leading-tight text-white">{systemText}</p>
               </div>
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60"><Sparkles className={`mt-1 h-4 w-4 shrink-0 ${accentClass}`} strokeWidth={1.8} /><span>{content.hero.caption}</span></figcaption>
@@ -1385,7 +1388,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
   if (contentKey === "brand-video") {
     return <BrandVideoTopicLanding content={content} section={section} site={site} />;
   }
-  if (contentKey === "music-video" || contentKey === "fashion-video") {
+  if (contentKey === "music-video" || contentKey === "fashion-video" || contentKey === "food-video") {
     return <SceneTopicLanding content={content} contentKey={contentKey} section={section} site={site} />;
   }
   if (contentKey === "ugc-ad-video") {

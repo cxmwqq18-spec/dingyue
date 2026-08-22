@@ -123,6 +123,12 @@ const categoriesBySiteId = {
       label: "Fashion Video",
       description: "Create fashion-focused motion for editorial, lookbook, runway, styling, and garment detail concepts.",
       sortOrder: 230
+    },
+    {
+      slug: "food-video",
+      label: "Food Video",
+      description: "Create food-focused motion for cooking action, plating, ingredient prep, restaurant service, beverages, and culinary social content.",
+      sortOrder: 240
     }
   ],
   site_grownstride_test: baseCategories

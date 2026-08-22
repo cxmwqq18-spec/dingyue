@@ -162,6 +162,7 @@ const videoAdImageRoot = "/assets/dreamshoot/video-ad";
 const brandVideoImageRoot = "/assets/dreamshoot/brand-video";
 const musicVideoImageRoot = "/assets/dreamshoot/music-video";
 const fashionVideoImageRoot = "/assets/dreamshoot/fashion-video";
+const foodVideoImageRoot = "/assets/dreamshoot/food-video";
 
 export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLandingContent> = {
   "cinematic-video": {
@@ -3545,6 +3546,167 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     finalCta: { eyebrow: "CREATE WITH A VERIFIED FASHION BRIEF", title: "Turn a Collection Idea Into Motion", body: "Choose the garment priority, make the styling specific, match motion to material, and review the finished draft before publishing.", cta: "Create Fashion Video Visuals", microcopy: "Approved references. Clear wardrobe priorities. Reviewed final cut." }
+  },
+  "food-video": {
+    seo: {
+      title: "AI Food Video Generator for Cooking & Culinary Visuals | myDreamshoots",
+      description: "Create AI food-video visuals from text or approved images for cooking, plating, ingredient prep, restaurant scenes, beverage pours, and culinary social clips.",
+      keywords: "ai food video generator, AI food video maker, cooking video generator, plating video maker, culinary video generator, food styling video, restaurant video concept",
+      canonicalPath: "/ai-video-generation/food-video"
+    },
+    hero: {
+      eyebrow: "AI FOOD VIDEO GENERATOR",
+      title: "AI Food Video Generator for Cooking, Plating & Culinary Content",
+      body: "Turn a dish idea, approved food image, recipe mood, restaurant concept, or culinary visual reference into short food-motion concepts. Use myDreamshoots Text to Video or Image to Video to explore ingredient preparation, cooking actions, plating details, food styling, restaurant service, beverage pours, and social-first culinary shots—without claiming recipe accuracy, food-safety verification, nutritional analysis, or exact ingredient recognition unless those capabilities are verified.",
+      primaryCta: "Create Food Video Visuals",
+      secondaryCta: "Explore AI Video Generation",
+      availabilityNote: "Use the current myDreamshoots video workspace to confirm supported inputs, credit requirements, and output controls before generation.",
+      rightsCopy: "Use approved food, packaging, restaurant, chef, location, and third-party references. Review ingredients, labels, hands, props, continuity, and rights before publishing.",
+      imageNote: "Hero food -> Action -> Texture -> Camera -> Set -> Continuity",
+      highlights: ["Cooking Action", "Plating & Styling", "Ingredient Prep", "Restaurant Scenes", "Text to Video", "Image to Video"],
+      image: image(`${foodVideoImageRoot}/hero-food-video-creator-frame.jpg`, "Food creator standing behind a smartphone on a gimbal while recording herself in a bright home kitchen, used as the dedicated hero creator frame.", 6521, 4347, "50% 42%"),
+      images: [
+        image(`${foodVideoImageRoot}/hero-food-video-creator-frame.jpg`, "Food creator standing behind a smartphone on a gimbal while recording herself in a bright home kitchen, used as the dedicated hero creator frame.", 6521, 4347, "50% 42%"),
+        image(`${foodVideoImageRoot}/hero-food-video-plating-frame.jpg`, "Chef's hand spooning a vivid red sauce onto a carefully plated gourmet dish in a professional kitchen, used as the dedicated hero plating-detail frame.", 4016, 6016, "50% 48%"),
+        image(`${foodVideoImageRoot}/hero-food-video-sizzle-frame.jpg`, "Close-up of seasoned chicken and vegetables cooking in a black pan over a visible gas flame, used as the dedicated hero cooking-action frame.", 3648, 5472, "50% 48%")
+      ]
+    },
+    quickAnswer: {
+      eyebrow: "WHAT THIS CREATES",
+      title: "Make Food, Preparation, and Presentation Read Clearly in Motion",
+      intro: "Food Video is for food-, cooking-, and presentation-led visual development, not for unverified recipe, nutrition, allergen, doneness, or food-safety claims.",
+      cards: [
+        { title: "Process-led", body: "Chopping, mixing, pouring, searing, stirring, garnishing, plating, and other visible food actions." },
+        { title: "Dish-led", body: "Hero dish, texture, color, layers, garnish, steam, sauce, table styling, and close detail." },
+        { title: "Service-led", body: "Restaurant pass, table service, cafe moments, beverage preparation, hospitality context, and final presentation." },
+        { title: "Best for", body: "Cooking-action clips, recipe-supporting B-roll, menu mood visuals, culinary social content, and pre-shoot direction." }
+      ]
+    },
+    useCases: { eyebrow: "FOOD VIDEO JOBS", title: "Give Every Culinary Shot One Clear Job", intro: "Use the food visual system, scene board, and sequence guide below to shape a useful brief.", items: [] },
+    platformExamples: {
+      eyebrow: "FOOD VISUAL SYSTEM",
+      title: "Six Decisions Before Generating Clips",
+      intro: "A food sequence becomes useful when the hero dish, visible action, and continuity rules are clear before generation.",
+      items: [
+        { title: "Hero food", body: "Decide which dish, ingredient, beverage, or preparation stage must remain visually dominant." },
+        { title: "Action beat", body: "Define one visible motion: chop, stir, sear, pour, garnish, plate, serve, or steam." },
+        { title: "Texture and state", body: "Describe crisp, glossy, creamy, layered, bubbling, chilled, fresh, roasted, or another appearance cue." },
+        { title: "Camera appetite", body: "Choose macro, overhead, three-quarter, table-level, hand-action, push-in, or another useful angle." },
+        { title: "Set and props", body: "Specify plate, pan, board, utensils, glassware, napkin, surface, background, and practical light." },
+        { title: "Continuity and claims", body: "Keep dish identity, ingredients, portions, props, hands, lighting, and action direction consistent; separate visuals from verified food claims." }
+      ]
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      title: "Start With the Food Brief, Then Review the Draft",
+      items: [
+        { title: "Define the food brief", body: "Set the hero dish or ingredient, visible action, texture/state, setting, scene job, and intended channel." },
+        { title: "Choose the starting asset", body: "Use Text to Video for a written culinary concept or Image to Video when an approved dish, ingredient setup, table, packaging, or location image anchors motion." },
+        { title: "Generate short clips", body: "Review food shape, ingredients, hands, utensils, steam/smoke, liquids, plates, labels, logos, text-like marks, and motion continuity." },
+        { title: "Select approved clips", body: "Choose clips only after visual-continuity and source-rights review. Keep recipe accuracy, allergens, nutrition, doneness, and food-safety claims separately verified." }
+      ],
+      cta: "Create Food Video Visuals"
+    },
+    gallery: {
+      eyebrow: "8 FOOD VIDEO SCENE DIRECTIONS",
+      title: "Build the Next Shot Around the Food",
+      intro: "These are photographic scene references, not claims that every image is a one-click preset or a real myDreamshoots output.",
+      items: [
+        { title: "Ingredient prep frame", body: "Chopping and mise en place with clear hands, knife, board, produce, and ingredient placement.", image: image(`${foodVideoImageRoot}/food-video-ingredient-prep.jpg`, "Chef chopping carrots on a wooden cutting board surrounded by fresh ingredients, used as an ingredient-preparation and hand-action reference.", 6048, 4024) },
+        { title: "Camera setup frame", body: "Camera, kitchen, cookware, presenter, and ingredients arranged for a repeatable food-video shoot.", image: image(`${foodVideoImageRoot}/food-video-camera-setup.jpg`, "Tripod-mounted camera filming cooks at a kitchen counter with ingredients and cookware in view, used as a food-video production setup reference.", 6240, 4160) },
+        { title: "Sauce pour frame", body: "A controlled liquid action where stream shape, plate position, garnish, and food texture matter.", image: image(`${foodVideoImageRoot}/food-video-sauce-pour.jpg`, "Hand pouring a dark sauce over a plated dish with greens and colorful garnish against a black background, used as a sauce-pour action reference.", 2666, 4000) },
+        { title: "Food styling frame", body: "A hero dish composed for appetite, color balance, layers, garnish, and close visual inspection.", image: image(`${foodVideoImageRoot}/food-video-food-styling.jpg`, "Close-up of a carefully styled plated dish with layered vegetables, grains, sauce, and fresh greens, used as a food-styling hero-dish reference.", 2240, 2887) },
+        { title: "Overhead ingredients frame", body: "Top-down layout that establishes ingredients, tools, color, and prep order without relying on text.", image: image(`${foodVideoImageRoot}/food-video-overhead-ingredients.jpg`, "Top view of tomatoes, cucumbers, chilies, spring onions, a knife, and a cutting board arranged for cooking, used as an overhead ingredient-layout reference.", 2268, 4032) },
+        { title: "Plating action frame", body: "Professional finishing touches where hand position, utensil, portion, garnish, and plate continuity matter.", image: image(`${foodVideoImageRoot}/food-video-plating-action.jpg`, "Chef working under pass lights while placing finishing touches on a plated dish, used as a professional plating-action reference.", 4000, 6000) },
+        { title: "Restaurant service frame", body: "The handoff from kitchen to table, with dish, glassware, table setting, and hospitality context.", image: image(`${foodVideoImageRoot}/food-video-restaurant-service.jpg`, "Waiter placing a plated fried-chicken dish on a restaurant table beside glassware and other courses, used as a restaurant-service reference.", 4672, 7008) },
+        { title: "Beverage pour frame", body: "Coffee or another drink entering a glass, with liquid behavior, glass shape, condensation, and pairing context.", image: image(`${foodVideoImageRoot}/food-video-beverage-pour.jpg`, "Hand pouring iced coffee into a tall glass beside plated food on a warm cafe table, used as a beverage-pour and food-pairing reference.", 3448, 5172) }
+      ]
+    },
+    guidance: {
+      eyebrow: "FOOD SEQUENCE GUIDE",
+      title: "Protect Food Continuity From the First Frame to the Final Cut",
+      intro: "Use food-specific checks instead of generic claims about recipe or culinary automation.",
+      cards: [
+        { title: "Give every shot one food job", body: "Decide whether the shot reveals an ingredient, shows a transformation, creates texture appetite, establishes the dish, demonstrates serving, or connects two edit beats." },
+        { title: "Protect ingredient and dish continuity", body: "Review ingredient count, cut size, garnish, sauce level, plate shape, utensil position, portion size, crumbs, table props, and apparent food stage." },
+        { title: "Make texture and motion believable", body: "Liquids, steam, bubbling, crumbs, melted surfaces, knife cuts, pan movement, and garnish should remain consistent enough for the intended visual." },
+        { title: "Separate visuals from recipe and safety claims", body: "A convincing food shot does not prove a recipe is correct, an ingredient is present or absent, a dish is safely cooked, or nutrition and allergen information is accurate." },
+        { title: "Review hands, utensils, labels, and brands", body: "Check fingers, knife edges, tongs, spoons, plates, glass rims, packaging, printed labels, restaurant marks, logos, and text-like artifacts." },
+        { title: "Design for the final format", body: "Restaurant reel, recipe B-roll, menu teaser, cafe social clip, food-brand mood film, vertical short, and longer culinary sequence need different crops and pacing." }
+      ]
+    },
+    foundation: {
+      eyebrow: "FOOD / PRODUCT BOUNDARY",
+      title: "Keep Food Direction Appetizing Without Claiming a Recipe or Safety Product",
+      intro: "The public video directory supports verified video creation paths. This page must stay precise about what is generated and what still requires qualified verification.",
+      leftTitle: "Keep in the brief",
+      leftItems: ["Hero food, visible action, texture/state, camera, set, props, and lighting", "Approved dish, ingredient, restaurant, packaging, table, or culinary reference image", "Text to Video or Image to Video starting point", "Continuity, source-rights, and final-channel review before publishing"],
+      rightTitle: "Do not claim without proof",
+      rightItems: ["Recipe generation or recipe correctness", "Ingredient recognition, allergen detection, or nutrition analysis", "Cooking-temperature, doneness, or food-safety verification", "Menu ingestion, restaurant publishing automation, or perfect label preservation"],
+      rightTone: "avoid",
+      expertLabel: "Expert tip",
+      expertTip: "Choose one food action per shot and review ingredients, portions, hands, liquids, steam, labels, and props. Treat generated food visuals as creative material, not food-safety guidance."
+    },
+    evidence: {
+      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
+      title: "Evidence Is Required Before This Page Proves the Workflow",
+      intro: "The eleven culinary photographs explain food-video directions. They do not prove a generated result, customer outcome, recipe, or product capability.",
+      cards: [
+        { title: "Text to Video input", body: "Add a verified current Text to Video input state before treating it as product proof." },
+        { title: "Image to Video input", body: "Add a verified Image to Video input state that reflects the current workflow." },
+        { title: "Credit confirmation", body: "Use the real credit-confirmation state shown before generation, not a recreated UI." },
+        { title: "Generation state", body: "Show a real current generation state when first-party evidence is available." },
+        { title: "Reviewed output", body: "Use a real reviewed food-video-style output before presenting a result as product evidence." }
+      ]
+    },
+    value: {
+      eyebrow: "START THIS VIDEO WORKFLOW",
+      title: "Turn an Approved Food Brief Into a Reviewable Visual Draft",
+      intro: "The live workspace is the source of truth for supported inputs, credits, and output controls.",
+      items: [
+        { title: "Choose the starting asset", body: "Use Text to Video for a written food scene or Image to Video when an approved dish, ingredient setup, restaurant table, packaging image, or culinary reference anchors motion." },
+        { title: "Define the food system", body: "Write the hero food, action beat, texture/state, camera angle, set/props, lighting, scene role, and continuity details that must not drift." },
+        { title: "Create in the signed-in workflow", body: "Review the live credit requirement shown by the product before starting the request." },
+        { title: "Review and select clips", body: "Inspect food identity, ingredients, hands, tools, plates, liquids, steam/smoke, packaging/text, lighting, movement, and continuity." }
+      ]
+    },
+    trust: {
+      eyebrow: "FOOD INTEGRITY REVIEW",
+      title: "Keep the Culinary Story Appetizing and Verifiable",
+      intro: "Before publishing:",
+      items: [
+        { title: "Use approved assets", body: "Only use food, packaging, restaurant, chef, location, and third-party material you control or have permission to use." },
+        { title: "Review food identity", body: "Check dish identity, ingredient count, cut size, portions, garnish, sauce, plate shape, and apparent preparation stage." },
+        { title: "Check hands and tools", body: "Inspect fingers, knives, tongs, spoons, pans, glassware, plates, labels, logos, and text-like artifacts." },
+        { title: "Do not imply safety proof", body: "A generated food clip should not imply verified recipe accuracy, nutrition, allergens, temperature, doneness, or food safety." },
+        { title: "Match the final destination", body: "Make crop, pacing, action coverage, disclosure, and CTA fit the channel and intended culinary use." },
+        { title: "Review source rights", body: "Confirm permission for every person, food image, brand element, restaurant, location, packaging, and protected design used." }
+      ]
+    },
+    comparison: {
+      eyebrow: "RELATED PAGES",
+      title: "Choose the Primary Video Job",
+      intro: "Food Video owns food-, cooking-, plating-, service-, and culinary-atmosphere-led motion. Use a neighboring page when the primary intent is instruction, product presentation, promotion, or paid media.",
+      items: [
+        { title: "AI Video Generation", body: "Browse all current MyDreamShoots video themes.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" },
+        { title: "How-to Video", body: "Use for instruction-first step-by-step demonstrations.", href: "/ai-video-generation/how-to-video", linkLabel: "Explore How-to Video" },
+        { title: "Product Video", body: "Use when the product, packaging, use, scale, or feature explanation is primary.", href: "/ai-video-generation/product-video", linkLabel: "Explore Product Video" },
+        { title: "Promo Video", body: "Use for a menu launch, event, release, offer, or verified promotion.", href: "/ai-video-generation/promo-video", linkLabel: "Explore Promo Video" }
+      ]
+    },
+    faq: {
+      eyebrow: "FAQ",
+      title: "Food Video Questions",
+      items: [
+        { question: "What is an AI food video generator?", answer: "An AI food video generator helps create motion visuals around dishes, ingredients, cooking actions, plating, serving, beverages, and culinary content. Here the useful job is visual planning and generation: define the food, action, texture, camera angle, set, and continuity rules, then generate and review clips from text or approved images." },
+        { question: "Can I create food-video visuals from a photo?", answer: "myDreamshoots publicly lists Image to Video as an AI Video Generation path. Use an approved image when a dish, ingredient arrangement, restaurant table, packaging item, or food-styling reference should anchor the motion, then review food and prop continuity before publishing." },
+        { question: "Can I create food-video visuals from text?", answer: "myDreamshoots also publicly lists Text to Video. A strong prompt should describe the food or beverage, visible action, texture/state, setting, lighting, camera angle, motion, and role of the shot instead of relying only on words such as delicious or cinematic." },
+        { question: "Does this generate a correct recipe or verify food safety?", answer: "Do not claim recipe accuracy, safe cooking temperature, doneness verification, allergen detection, ingredient recognition, or nutrition analysis unless those capabilities are verified in the live product and supported by appropriate evidence. Generated visuals are visual content, not food-safety guidance." },
+        { question: "What should I review before using AI-generated food clips?", answer: "Check food identity, ingredient continuity, hands, knives and utensils, plates, glassware, liquid behavior, steam or smoke, packaging, text, logos, portion changes, background details, and rights to every source image, person, brand element, and protected design used in the final edit." },
+        { question: "How is this different from How-to Video?", answer: "Food Video owns food-first visual storytelling, cooking action, plating, service, and culinary atmosphere. How-to Video should own instruction-first content where the primary search task is completing a procedure step by step, even when the topic happens to be cooking." }
+      ]
+    },
+    finalCta: { eyebrow: "CREATE WITH A VERIFIED FOOD BRIEF", title: "Turn a Culinary Idea Into Motion", body: "Choose the hero food, make the action specific, protect ingredient continuity, and review the finished draft before publishing.", cta: "Create Food Video Visuals", microcopy: "Approved references. Clear food action. Reviewed final cut." }
   },
   "ugc-ad-video": {
     seo: {
