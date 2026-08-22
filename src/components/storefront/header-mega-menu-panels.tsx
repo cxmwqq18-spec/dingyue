@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, ChevronRight, PlayCircle } from "lucide-react";
 import { creativePackIconByName, suggestedCreativePackIconName } from "@/lib/creative-pack-icons";
+import { mydreamshootsVideoGenerationParentCategories } from "@/lib/mydreamshoots-video-framework";
 
 export type HeaderPhotoPackageMegaGroup = {
   label: string;
@@ -223,35 +224,56 @@ export function HeaderVideoGenerationMegaPanel({
   variantTone?: "dark" | "warm";
 }) {
   const warm = variantTone === "warm";
-  const columns = splitColumns(topics, Math.min(3, Math.max(1, topics.length)));
+  const topicsByParent = new Map<string, HeaderVideoGenerationTopic[]>();
+  topics.forEach((topic) => {
+    const parentSlug = topic.parentSlug ?? "uncategorized";
+    const current = topicsByParent.get(parentSlug) ?? [];
+    current.push(topic);
+    topicsByParent.set(parentSlug, current);
+  });
+  const groups: Array<{ slug: string; label: string; description: string; sortOrder: number; topics: HeaderVideoGenerationTopic[] }> = mydreamshootsVideoGenerationParentCategories.map((parent) => ({
+    ...parent,
+    topics: (topicsByParent.get(parent.slug) ?? []).sort((left, right) => (left.sortOrder ?? 0) - (right.sortOrder ?? 0) || left.label.localeCompare(right.label))
+  }));
+  const uncategorized = topicsByParent.get("uncategorized") ?? [];
+  if (uncategorized.length) groups.push({ slug: "uncategorized", label: "Other", description: "Additional video workflows.", sortOrder: 999, topics: uncategorized });
   return (
     <div className={warm ? "overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)] ring-1 ring-[#d8b17e]/20 backdrop-blur-xl" : "overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl"}>
       <div className="mb-4 flex items-center justify-center gap-3 text-center">
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
         <div>
           <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>AI Video Generation</span>
-          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{topics.length} {themeCountLabel(topics.length, false)}</p>
+          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{groups.length} categories · {topics.length} themes</p>
         </div>
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
       </div>
-      <div className={warm ? "mt-4 grid gap-4 border-t border-[#eadfce] pt-5 md:grid-cols-2 xl:grid-cols-3" : "mt-4 grid gap-4 border-t border-[#263247] pt-5 md:grid-cols-2 xl:grid-cols-3"}>
-        {columns.map((column, columnIndex) => (
-          <div className="grid content-start gap-4" key={`video_topic_column_${columnIndex}`}>
-            {column.map((topic) => (
-              <Link
-                className={warm ? "group/video-topic flex min-h-12 items-center gap-2 rounded-[12px] border border-[#eadfce] bg-white px-3 py-2.5 text-[0.96rem] font-semibold leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/video-topic flex min-h-12 items-center gap-2 rounded-[12px] border border-[#2b374c] bg-[#090a0c] px-3 py-2.5 text-[0.96rem] font-semibold leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
-                href={topic.href}
-                key={topic.id}
-                prefetch={false}
-              >
-                <span className={warm ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f5eadf] text-[#b86e36]" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06] text-[#38a8ff]"}>
-                  <PlayCircle className="h-4 w-4" strokeWidth={1.9} />
-                </span>
-                <span className="min-w-0 flex-1 truncate">{topic.label}</span>
-                <ChevronRight className={warm ? "h-3.5 w-3.5 shrink-0 text-[#b99675] transition group-hover/video-topic:translate-x-0.5 group-hover/video-topic:text-[#8f5327]" : "h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/video-topic:translate-x-0.5 group-hover/video-topic:text-white/56"} strokeWidth={2} />
-              </Link>
-            ))}
-          </div>
+      <div className={warm ? "mt-4 grid min-h-0 items-start gap-3 overflow-y-auto border-t border-[#eadfce] pt-5 lg:grid-cols-3" : "mt-4 grid min-h-0 items-start gap-3 overflow-y-auto border-t border-[#263247] pt-5 lg:grid-cols-3"}>
+        {groups.map((group) => (
+          <details className={warm ? "group/video-category self-start rounded-[14px] border border-[#eadfce] bg-white p-3" : "group/video-category self-start rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3"} key={group.slug} open={group.topics.length > 0}>
+            <summary className={warm ? "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold text-[#b86e36] marker:hidden" : "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold text-[#38a8ff] marker:hidden"}>
+              <span className={warm ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f5eadf] text-[#b86e36]" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06] text-[#38a8ff]"}>
+                <PlayCircle className="h-4 w-4" strokeWidth={1.9} />
+              </span>
+              <span className="min-w-0 flex-1 truncate">{group.label}</span>
+              <span className={warm ? "text-[11px] text-[#9b8877]" : "text-[11px] text-white/42"}>{group.topics.length}</span>
+              <ChevronRight className={warm ? "h-3.5 w-3.5 shrink-0 rotate-90 text-[#b99675] transition group-open/video-category:-rotate-90" : "h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/video-category:-rotate-90"} strokeWidth={2} />
+            </summary>
+            {group.topics.length ? (
+              <div className="mt-3 grid gap-2 border-t border-white/10 pt-3">
+                {group.topics.map((topic) => (
+                  <Link
+                    className={warm ? "group/video-topic flex min-h-10 items-center gap-2 rounded-[10px] px-2 py-2 text-[0.94rem] font-semibold leading-5 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/video-topic flex min-h-10 items-center gap-2 rounded-[10px] px-2 py-2 text-[0.94rem] font-semibold leading-5 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
+                    href={topic.href}
+                    key={topic.id}
+                    prefetch={false}
+                  >
+                    <span className="min-w-0 flex-1 truncate">{topic.label}</span>
+                    <ChevronRight className={warm ? "h-3.5 w-3.5 shrink-0 text-[#b99675] transition group-hover/video-topic:translate-x-0.5" : "h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/video-topic:translate-x-0.5"} strokeWidth={2} />
+                  </Link>
+                ))}
+              </div>
+            ) : <p className={warm ? "mt-3 border-t border-[#eadfce] pt-3 text-xs text-[#9b8877]" : "mt-3 border-t border-white/10 pt-3 text-xs text-white/40"}>No themes published yet.</p>}
+          </details>
         ))}
       </div>
       {ctaHref ? (

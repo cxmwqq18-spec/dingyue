@@ -551,6 +551,17 @@ export default async function HostStorefrontCatchAllPage({
   const siteAdminPath = siteAdminPathForHost(host);
   if (siteAdminPath) redirect(siteAdminPath);
   if (isPlatformHost(host)) redirect(`/platform/${path.join("/")}`);
+  if (
+    (firstSegment === "ai-video-generation" && ["text-to-video", "image-to-video"].includes(path[1] ?? "")) ||
+    (firstSegment === "tools" && path[1] === "image-to-video")
+  ) {
+    notFound();
+  }
+  if (firstSegment === "app" && (path[1] === "create" || !path[1])) {
+    const query = searchParams ? await searchParams : {};
+    const videoMode = Array.isArray(query.videoMode) ? query.videoMode[0] : query.videoMode;
+    if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
+  }
   const slug = `/${path.join("/")}`;
   if (host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) {
     const defaultSiteSlug = process.env.DEFAULT_STOREFRONT_SITE_SLUG || "mydreamshoots";
@@ -565,6 +576,8 @@ export default async function HostStorefrontCatchAllPage({
   }
   if (slug === "/app" || slug === "/dashboard") {
     const query = searchParams ? await searchParams : {};
+    const videoMode = Array.isArray(query.videoMode) ? query.videoMode[0] : query.videoMode;
+    if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
     redirect(`/app/create${searchParamsSuffix(query)}`);
   }
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
@@ -576,6 +589,8 @@ export default async function HostStorefrontCatchAllPage({
   const canUseFastWorkspaceShell = firstSegment === "app" && !(path[1] === "jobs" && path[2] && path[2] !== "progress");
   if (canUseFastWorkspaceShell) {
     const query = searchParams ? await searchParams : {};
+    const videoMode = Array.isArray(query.videoMode) ? query.videoMode[0] : query.videoMode;
+    if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
     if (slug === "/app") redirect(`/app/create${searchParamsSuffix(query)}`);
     const siteSlug = await getHostSiteSlugShellWithFallback(hostCandidates);
     if (!siteSlug) notFound();
@@ -604,6 +619,9 @@ export default async function HostStorefrontCatchAllPage({
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) notFound();
+  if (isMydreamshootsSite(site) && isVideoGenerationRequest && ["text-to-video", "image-to-video"].includes(path[1] ?? "")) {
+    notFound();
+  }
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
   const legacyTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForHost(host));
   if (legacyTarget) {

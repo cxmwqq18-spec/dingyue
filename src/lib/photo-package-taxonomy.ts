@@ -51,8 +51,6 @@ export const MYDREAMSHOOTS_AI_PHOTOSHOOT_ROOT_PATH = MYDREAMSHOOTS_AI_IMAGE_GENE
 export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT = "ai-video-generation";
 export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH = `/${MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT}`;
 export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS = [
-  "text-to-video",
-  "image-to-video",
   "profile-clip",
   "fan-poster-motion",
   "creator-intro-video",

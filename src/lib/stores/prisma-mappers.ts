@@ -24,7 +24,8 @@ import type {
   ToolCategory,
   ToolMenuItem,
   VideoTheme,
-  VideoThemeCategory
+  VideoThemeCategory,
+  VideoThemeExample
 } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType } from "@/lib/ai-provider-type";
@@ -939,6 +940,7 @@ export function toVideoTheme(record: {
   generationCount: number;
   imageUrl?: string | null;
   galleryImages?: unknown;
+  examples?: Array<Parameters<typeof toVideoThemeExample>[0]>;
   createdAt?: Date | string;
 }): VideoTheme {
   return {
@@ -971,7 +973,40 @@ export function toVideoTheme(record: {
     imageUrl: record.imageUrl ?? undefined,
     galleryImages: Array.isArray(record.galleryImages)
       ? record.galleryImages.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
-      : undefined
+      : undefined,
+    examples: Array.isArray(record.examples) ? record.examples.map(toVideoThemeExample) : undefined
+  };
+}
+
+export function toVideoThemeExample(record: {
+  id: string;
+  siteId: string;
+  themeId: string;
+  name: string;
+  description?: string | null;
+  imageUrl?: string | null;
+  galleryImages?: unknown;
+  prompt: string;
+  status: string;
+  sortOrder: number;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+}): VideoThemeExample {
+  return {
+    id: record.id,
+    siteId: record.siteId,
+    themeId: record.themeId,
+    name: record.name,
+    description: record.description ?? undefined,
+    imageUrl: record.imageUrl ?? undefined,
+    galleryImages: Array.isArray(record.galleryImages)
+      ? record.galleryImages.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+      : undefined,
+    prompt: record.prompt,
+    status: record.status as VideoThemeExample["status"],
+    sortOrder: record.sortOrder,
+    createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(record.updatedAt)
   };
 }
 

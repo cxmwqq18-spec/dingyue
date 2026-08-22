@@ -7,7 +7,7 @@ import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/sto
 import { HeaderPhotoPackageMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
-import { isMydreamshootsPublicVideoGenerationTopicSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationParentCategories, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
+import { isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationParentCategories, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { getPhotoPackageMegaGroups } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
@@ -106,31 +106,28 @@ function headerPackageGroupsForClient(basePath: string, groups: MenuGroup): Head
 
 function videoGenerationTopicsForMenu(siteId: string, basePath: string, categories: VideoThemeCategory[], themes: VideoTheme[]): HeaderVideoGenerationTopic[] {
   if (siteId !== "site_dreamshoot") return [];
-  const categoriesBySlug = new Map(categories.map((category) => [category.slug, category]));
   const categoriesById = new Map(categories.map((category) => [category.id, category]));
   const parentDefinitionsBySlug = new Map<string, (typeof mydreamshootsVideoGenerationParentCategories)[number]>(
     mydreamshootsVideoGenerationParentCategories.map((category) => [category.slug, category])
   );
-  const themesBySlug = new Map(themes.filter((theme) => theme.status === "active").map((theme) => [theme.slug, theme]));
-  return mydreamshootsVideoGenerationCategories
-    .filter((definition) => isMydreamshootsPublicVideoGenerationTopicSlug(definition.slug))
-    .flatMap((definition) => {
-      const category = categoriesBySlug.get(definition.slug);
+  return themes
+    .filter((theme) => theme.status === "active" && theme.slug !== "text-to-video" && theme.slug !== "image-to-video")
+    .sort((a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name))
+    .flatMap((theme) => {
+      const category = theme.categoryId ? categoriesById.get(theme.categoryId) : undefined;
       if (category && category.status !== "active") return [];
-      const theme = themesBySlug.get(definition.slug);
-      if (!category && !theme) return [];
       const configuredParent = category?.parent ?? (category?.parentId ? categoriesById.get(category.parentId) : undefined);
-      const parentSlug = configuredParent?.slug ?? parentVideoGenerationCategorySlugForChild(definition.slug);
+      const parentSlug = configuredParent?.slug ?? parentVideoGenerationCategorySlugForChild(theme.slug);
       const parentDefinition = parentSlug ? parentDefinitionsBySlug.get(parentSlug) : undefined;
       return [{
-        id: category?.id ?? theme?.id ?? `video_topic_${definition.slug}`,
-        slug: definition.slug,
-        label: category?.label ?? definition.label,
-        href: `${basePath}${videoGenerationCreatePath(definition.slug)}`,
+        id: theme.id,
+        slug: theme.slug,
+        label: theme.name,
+        href: `${basePath}${videoGenerationCreatePath(theme.slug)}`,
         parentSlug,
         parentLabel: configuredParent?.label ?? parentDefinition?.label,
         parentSortOrder: configuredParent?.sortOrder ?? parentDefinition?.sortOrder,
-        sortOrder: category?.sortOrder ?? definition.sortOrder
+        sortOrder: theme.sortOrder
       }];
     });
 }

@@ -613,8 +613,11 @@ function isRenderablePromptField(key: string) {
     "trainingMode",
     "userDirection",
     "videoThemeId",
+    "videoThemeExampleId",
     "videoThemeSlug",
     "videoThemeName",
+    "videoThemeExampleName",
+    "videoThemeCategoryLabel",
     "videoThemePrompt",
     "videoModelFamily",
     "modelFamily",
@@ -1168,6 +1171,11 @@ async function createGenerationJobInTx(tx: Tx, params: {
     : typeof fields.videoThemeSlug === "string"
       ? fields.videoThemeSlug
       : undefined;
+  const rawVideoThemeExampleId = typeof params.requestJson?.videoThemeExampleId === "string"
+    ? params.requestJson.videoThemeExampleId
+    : typeof fields.videoThemeExampleId === "string"
+      ? fields.videoThemeExampleId
+      : undefined;
   const videoMode = isVideoModeRequest(params.requestJson) || params.aiAppSlug === "video_generator";
   const requestedAssetIds = requestedAssetIdsForRequest(params.requestJson, videoMode);
   const requestedModelPreference = videoMode ? requestedVideoModelPreference(params.requestJson) : undefined;
@@ -1202,6 +1210,13 @@ async function createGenerationJobInTx(tx: Tx, params: {
       })
     : null;
   if (videoMode && !videoTheme) throw new StoreError("video_theme_not_found_for_site", 404);
+  const videoThemeExample = videoTheme && rawVideoThemeExampleId
+    ? await tx.videoThemeExample.findFirst({
+        where: { id: rawVideoThemeExampleId, siteId: params.siteId, themeId: videoTheme.id, status: "active" },
+        select: { id: true, name: true, prompt: true }
+      })
+    : null;
+  if (rawVideoThemeExampleId && !videoThemeExample) throw new StoreError("video_theme_example_not_found_for_site", 404);
   let videoProviderMaxFrames: number | undefined;
   let effectiveVideoMaxFrames: number | undefined;
   let videoCandidateModelFamilies: ReturnType<typeof videoProviderModelFamilyForProvider>[] = [];
@@ -1317,8 +1332,11 @@ async function createGenerationJobInTx(tx: Tx, params: {
         mode: "video",
         outputType: "video",
         videoThemeId: videoTheme.id,
+        videoThemeExampleId: videoThemeExample?.id,
         videoThemeSlug: videoTheme.slug,
         videoThemeName: videoTheme.name,
+        videoThemeExampleName: videoThemeExample?.name,
+        videoThemeCategoryLabel: videoTheme.category?.label,
         videoThemePrompt: videoTheme.prompt,
         videoModelFamily: requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY,
         modelFamily: requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY,

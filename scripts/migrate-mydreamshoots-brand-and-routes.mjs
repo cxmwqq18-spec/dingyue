@@ -37,7 +37,7 @@ function toolPathForContext(context) {
   if (/world\\s*cup|fan|sports|stadium|match/.test(value)) return "/tools/world-cup-fan-photos";
   if (/headshot|linkedin|resume|professional|executive|founder|profile/.test(value)) return "/tools/headshot";
   if (/try-?on|outfit|wardrobe|style|hairstyle|beauty/.test(value)) return "/tools/virtual-try-on";
-  if (/video|motion|clip|reel/.test(value)) return "/tools/image-to-video";
+  if (/video|motion|clip|reel/.test(value)) return "/app/create#step-video";
   if (/gala|formal|night|red.?carpet/.test(value)) return "/tools/gala-photo";
   if (/cyberpunk|neon/.test(value)) return "/tools/cyberpunk-portrait";
   if (/wedding|couple|ceremony|engagement/.test(value)) return "/tools/wedding-portraits";

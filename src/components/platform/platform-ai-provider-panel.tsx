@@ -23,7 +23,7 @@ import {
   ErpToolbarField
 } from "@/components/admin/erp-primitives";
 import { StatusPill } from "@/components/ui";
-import { platformAiProviderTypeLabel, type PlatformAiProviderType } from "@/lib/ai-provider-type";
+import { platformAiProviderTypeLabel, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { platformJsonHeaders } from "@/lib/client-csrf";
 
 type AiProviderRow = {
@@ -195,7 +195,7 @@ function compareProviderRows(left: AiProviderRow, right: AiProviderRow) {
 }
 
 function providerSummary(providers: AiProviderRow[], currentProvider?: AiProviderRow): AiProviderPayload["summary"] {
-  const byType = Object.fromEntries((["image", "video"] as const).map((providerType) => {
+  const byType = Object.fromEntries(platformAiProviderTypes.map((providerType) => {
     const typed = providers.filter((provider) => provider.providerType === providerType);
     const enabled = typed.filter((provider) => provider.enabled);
     const current = [...enabled].sort(compareProviderRows)[0];
@@ -220,7 +220,7 @@ function providerSummary(providers: AiProviderRow[], currentProvider?: AiProvide
 
 function currentProviderIdsFromProviders(providers: AiProviderRow[]): Record<PlatformAiProviderType, string> {
   const ordered = [...providers].sort(compareProviderRows);
-  return Object.fromEntries((["image", "video"] as const).map((providerType) => {
+  return Object.fromEntries(platformAiProviderTypes.map((providerType) => {
     const current = ordered.find((provider) => provider.providerType === providerType && provider.enabled);
     return [providerType, current?.id ?? ""];
   })) as Record<PlatformAiProviderType, string>;
@@ -292,7 +292,9 @@ export function PlatformAiProviderPanel({
     setEditForm(null);
     setMessage(providerType === "image"
       ? "已切换到新增生图供应商。填写名称、URL 和 API Key；如果支持 /images/edits，请保持“支持图生图”勾选。"
-      : "已切换到新增视频供应商。填写名称、URL 和 API Key 后保存。");
+      : providerType === "video"
+        ? "已切换到新增视频供应商。填写名称、URL 和 API Key 后保存。"
+        : "已切换到新增文本供应商。填写 OpenAI-compatible Chat Completions URL、模型和 API Key 后保存。");
     window.setTimeout(() => {
       document.getElementById("platform-ai-provider-create-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
@@ -646,6 +648,7 @@ export function PlatformAiProviderPanel({
                 >
                   <option value="image">AI 生图</option>
                   <option value="video">AI 生成视频</option>
+                  <option value="text">AI 文本生成</option>
                 </ErpSelect>
               </ErpField>
               <ErpField label="模型类型">
@@ -809,6 +812,7 @@ export function PlatformAiProviderPanel({
                   <ErpSelect onChange={(event) => setEditForm((draft) => draft ? { ...draft, providerType: event.target.value as PlatformAiProviderType } : draft)} value={editForm.providerType}>
                     <option value="image">AI 生图</option>
                     <option value="video">AI 生成视频</option>
+                    <option value="text">AI 文本生成</option>
                   </ErpSelect>
                 </ErpField>
                 <ErpField label="模型类型">

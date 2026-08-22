@@ -264,7 +264,6 @@ const dreamshootMegaTools = [
   block("mega_edit_restore", "tool_card", { title: "Old photo restoration", description: "Input: an old photo you own or have permission to restore. Output: a private repaired image for album use. Best for: family-photo cleanup and private gallery delivery. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Restore", imageUrl: assets.socialCard, href: toolHref("old-photo-restoration") }),
   block("mega_edit_prompt", "tool_card", { title: "Edit by prompt", description: "Input: one image you own plus a focused edit prompt. Output: a private edited preview. Best for: testing a specific change before spending package credits. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "Prompt", imageUrl: assets.flowBeforeUpload, href: toolHref("edit-by-prompt") }),
   block("mega_edit_upscale", "tool_card", { title: "Magic upscaler", description: "Input: a generated or uploaded image you own. Output: a private higher-resolution download. Best for: profile images, larger displays, and final album favorites. Cost: credits are shown before paid edits.", category: "AI Photo Edit", badge: "HD", imageUrl: assets.magicUpscalerPack, href: toolHref("magic-upscaler") }),
-  block("mega_video_image", "tool_card", { title: "Image to video concept", description: "Input: one finished image you own or generated. Output: a private short motion concept. Best for: social posts, profile intros, and campaign previews. Cost: credits are shown before video generation.", category: "Video AI", badge: "Preview", imageUrl: assets.heroGridVideo, href: toolHref("image-to-video") }),
   block("mega_video_profile", "tool_card", { title: "Profile clip maker", description: "Input: headshots or creator portraits you own. Output: a private profile motion clip. Best for: social profiles and short intros. Cost: credits are shown before video generation.", category: "Video AI", badge: "Social", imageUrl: assets.reviewLucasResultHeadshot, href: toolHref("profile-clip") }),
   block("mega_video_fan", "tool_card", { title: "Fan poster motion", description: "Input: fan poster images from your own selfies. Output: a private match-day motion concept. Best for: personal fan posts without official marks, logos, or player likenesses. Cost: credits are shown before video generation.", category: "Video AI", badge: "Sports", imageUrl: assets.catalogWorldcupCard, href: toolHref("fan-poster-motion") }),
   block("mega_video_intro", "tool_card", { title: "Creator intro video", description: "Input: creator portraits you own or generated. Output: a private intro clip for profiles and reels. Best for: creator pages and media-kit motion. Cost: credits are shown before video generation.", category: "Video AI", badge: "Creator", imageUrl: assets.reviewNoahResultSocialCard, href: toolHref("creator-intro-video") }),
@@ -470,7 +469,11 @@ const homeSections: ThemePageJson["sections"] = {
     "dreamshoot_generation_showcase",
     {
       anchor: "generated-showcase",
-      showTrustedLogoIntro: false,
+      showTrustedLogoIntro: true,
+      trustedLogoTitle: "Most Trusted Creators. | myDreamshoots",
+      aboutTitle: "What is myDreamshoots?",
+      aboutBody: mydreamshootsAboutBody,
+      trustedLogoSplitIndex: 15,
       embeddedPricingSectionId: "pricing_1",
       eyebrow: "Customer-created examples",
       title: "Browse image and video themes customers have already created.",
@@ -487,7 +490,7 @@ const homeSections: ThemePageJson["sections"] = {
       primaryCta: "Start with your photos",
       primaryHref: "/app/create"
     },
-    []
+    mydreamshootsWorkflowExampleBlocks
   ),
   flow_bridge_1: section(
     "dreamshoot_flow_bridge",
@@ -592,7 +595,7 @@ const homeSections: ThemePageJson["sections"] = {
         title: "Turn package results into motion",
         description: "Convert favorite generated photos into short video ideas without leaving the same customer account.",
         imageUrl: assets.travelScene,
-        href: toolHref("image-to-video")
+        href: "/app/create#step-video"
       }),
       block("tab_tryon", "feature_tab", {
         label: "Try-on and style",
@@ -1189,21 +1192,23 @@ function mydreamshootsReviewSection(): SectionInstance {
     "testimonial_wall",
     {
       anchor: "reviews",
-      mode: "use_cases",
-      title: "Workflow examples from myDreamshoots use cases",
-      subtitle: "Use-case examples for private photo packages, clear credit review, gallery delivery, and supported motion workflows.",
-      summaryTitle: "Ways people use myDreamshoots",
-      summaryBody: "Plan sports fan photos, VIP-style portraits, Christmas cards, professional headshots, creator scenes, and short motion previews before spending credits.",
+      mode: "reviews",
+      title: "What Our Customers Say",
+      subtitle: "Our users love us and we love them!",
+      summaryTitle: "What Our Customers Say",
+      summaryBody: "myDreamshoots is an AI photo and video creator platform with creativity creators from all over the world. Creators are not simply content distributors. At their best, they are brokers of trust.",
       summaryRating: "",
-      summaryMeta: "Private examples"
+      summaryMeta: "Positive reviews"
     },
     [
-      block("review_ava", "testimonial", { quote: "Compare sports fan photo directions, credit cost, and private gallery delivery before creating a match-day album from approved personal photos.", name: "Sports fan workflow", role: "Sports fan photos", location: "Fan Photos", rating: "", avatarUrl: assets.reviewAvaAvatar, resultImageUrl: assets.galleryWorldCupFanThree }),
-      block("review_lucas", "testimonial", { quote: "Plan VIP-style portraits and formal profile images from approved source photos, then review the finished options inside the signed-in workspace.", name: "VIP portrait workflow", role: "Formal portrait set", location: "VIP-style set", rating: "", avatarUrl: assets.reviewLucasAvatar, resultImageUrl: assets.galleryGalaTwo }),
-      block("review_mia", "testimonial", { quote: "Compare Christmas couple, friend-card, and seasonal portrait directions before creating private card-ready images.", name: "Seasonal card workflow", role: "Holiday cards", location: "Christmas album", rating: "", avatarUrl: assets.reviewMiaAvatar, resultImageUrl: assets.galleryChristmasCoupleTwo }),
-      block("review_noah", "testimonial", { quote: "Upload approved source photos, choose a package, review the visible credit cost, and keep finished results organized in one private gallery.", name: "Gallery workflow", role: "Private gallery delivery", location: "Credit planning", rating: "", avatarUrl: assets.reviewNoahAvatar, resultImageUrl: assets.flowPrivateAlbumWorkspace }),
-      block("review_chloe", "testimonial", { quote: "Test creator portraits, holiday images, and supported motion ideas from the same approved source photos before choosing the next workflow.", name: "Creator workflow", role: "Creator scene planning", location: "Creator workflow", rating: "", avatarUrl: assets.womanPortrait, resultImageUrl: assets.galleryCreatorOne }),
-      block("review_eli", "testimonial", { quote: "Use credit-aware headshot and card workflows when a small team needs private images without a studio appointment.", name: "Team workflow", role: "Headshots and cards", location: "Clear credits", rating: "", avatarUrl: assets.selfie, resultImageUrl: assets.galleryCreatorTwo })
+      block("review_ava", "testimonial", { quote: "The package cards made it easy to pick a direction before I spent credits. My sports fan set looked polished and stayed organized in one private gallery.", name: "Ava M.", role: "Fan photos", location: "Sports fan set", rating: "5", avatarUrl: assets.reviewAvaAvatar, resultImageUrl: assets.galleryWorldCupFanThree }),
+      block("review_lucas", "testimonial", { quote: "I needed profile images for a launch week. The VIP-style portraits gave me several usable looks without arranging a shoot or chasing edits.", name: "Lucas R.", role: "VIP-style set", location: "Profile images", rating: "5", avatarUrl: assets.reviewLucasAvatar, resultImageUrl: assets.galleryGalaTwo }),
+      block("review_mia", "testimonial", { quote: "The Christmas couple pack saved a lot of time. We compared the theme first, checked credits, then downloaded card-ready images from the gallery.", name: "Mia C.", role: "Christmas album", location: "Holiday cards", rating: "5", avatarUrl: assets.reviewMiaAvatar, resultImageUrl: assets.galleryChristmasCoupleTwo }),
+      block("review_noah", "testimonial", { quote: "My favorite part is the workflow. Upload, choose a package, approve the cost, and the finished set is easy to review with the rest of my account history.", name: "Noah P.", role: "Credit planning", location: "Private gallery", rating: "5", avatarUrl: assets.reviewNoahAvatar, resultImageUrl: assets.flowPrivateAlbumWorkspace }),
+      block("review_chloe", "testimonial", { quote: "The creator examples helped me compare a few looks before I committed to a full set. Everything stayed clear and private while I reviewed the options.", name: "Chloe S.", role: "Creator workflow", location: "Creator scenes", rating: "5", avatarUrl: assets.womanPortrait, resultImageUrl: assets.galleryCreatorOne }),
+      block("review_eli", "testimonial", { quote: "I could see the credit cost before generating and keep the approved headshots, cards, and motion ideas in one workspace.", name: "Eli T.", role: "Clear credits", location: "Headshots and cards", rating: "5", avatarUrl: assets.selfie, resultImageUrl: assets.galleryCreatorTwo }),
+      block("review_jordan", "testimonial", { quote: "The themed previews made it easier to plan a consistent portrait set for a small team without booking a studio appointment.", name: "Jordan K.", role: "Team portraits", location: "Profile refresh", rating: "5", avatarUrl: assets.reviewAvaAvatar, resultImageUrl: assets.galleryGalaOne }),
+      block("review_riley", "testimonial", { quote: "The short motion references were useful for planning the next post. I reviewed the stills and the clip direction before spending credits.", name: "Riley W.", role: "Motion previews", location: "Social content", rating: "5", avatarUrl: assets.reviewLucasAvatar, resultImageUrl: assets.galleryCreatorTwo })
     ]
   );
 }

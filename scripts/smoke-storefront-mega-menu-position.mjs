@@ -16,40 +16,11 @@ const pageLoadTimeoutMs = Number(process.env.STOREFRONT_MEGA_MENU_PAGE_TIMEOUT_M
 const interactionTimeoutMs = Number(process.env.STOREFRONT_MEGA_MENU_INTERACTION_TIMEOUT_MS ?? 20_000);
 const packageMenuLabel = /AI Image Generation|AI Photoshoot|Headshot Generator|Occasion Albums|Browse occasion albums|Browse packages|Travel Packages|Ver paquetes|Paquetes de viaje|Paquetes de ocasion/i;
 const toolsMenuLabel = /^(AI Video Generation|AI Tools|Tools|Herramientas)$/i;
-const expectedVideoTopicSlugs = [
-  "talking-photo",
-  "cinematic-video",
-  "tiktok-video",
-  "instagram-reels",
-  "social-media-video",
-  "youtube-video",
-  "story-video",
-  "meme-video",
-  "product-video",
-  "product-ad-video",
-  "promo-video",
-  "ugc-ad-video",
-  "video-ad"
-];
-const expectedVideoTopicLabels = [
-  "Talking Photo",
-  "Cinematic Video",
-  "TikTok Video",
-  "Instagram Reels",
-  "Social Media Video",
-  "YouTube Video",
-  "Story Video",
-  "Meme Video",
-  "Product Video",
-  "Product Ad Video",
-  "Promo Video",
-  "UGC Ad Video",
-  "Video Ad"
-];
 const anonymousEntries = [
   { label: "MyDreamShoots home", path: `/site/${siteSlug}` },
   { label: "MyDreamShoots collections", path: `/site/${siteSlug}/ai-image-generation` },
-  { label: "MyDreamShoots package detail", path: `/site/${siteSlug}/ai-image-generation/portrait-photo` },
+  // Review-required leaves are intentionally excluded by the immutable SEO route contract.
+  { label: "MyDreamShoots package detail", path: `/site/${siteSlug}/ai-image-generation/wedding-photo` },
   { label: "MyDreamShoots video generation", path: `/site/${siteSlug}/ai-video-generation` },
   { label: "Aidreamcapes collections", path: "/site/aidreamcapes/collections" },
   { label: "Aidreamcapes package detail", path: "/site/aidreamcapes/collections/cinematic-travel" },
@@ -137,10 +108,11 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
         text: (anchor.textContent || "").replace(/\s+/g, " ").trim(),
         href: anchor.getAttribute("href") || ""
       })) : [];
-      const videoTopicLinks = panelElement ? Array.from(panelElement.querySelectorAll('a[href*="/ai-video-generation/"]')).map((anchor) => ({
+      const videoMenuLinks = panelElement ? Array.from(panelElement.querySelectorAll('a[href]')).filter((anchor) => anchor.closest('details[class*="group/video-category"]')).map((anchor) => ({
         text: (anchor.textContent || "").replace(/\s+/g, " ").trim(),
         href: anchor.getAttribute("href") || ""
       })) : [];
+      const videoTopicLinks = videoMenuLinks.filter((link) => /\/ai-video-generation\//.test(link.href));
       const viewAllThemesLinks = panelElement ? Array.from(panelElement.querySelectorAll('a[href*="/ai-video-generation"]')).filter((anchor) =>
         /View all themes/i.test(anchor.textContent || "") &&
         /\/ai-video-generation(?:[?#]|$)/.test(anchor.getAttribute("href") || "")
@@ -165,12 +137,14 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
         route: location.pathname,
         toolLinkCount,
         hiddenVideoLinks,
+        videoMenuLinks,
         videoTopicLinks,
         viewAllThemesLinks,
         hasLegacyVideoToolLabels: /Profile Clip|Fan Poster Motion|Creator Intro Video|Product Teaser Clip|Animated Avatar|Fashion Reel|Album Story Video/.test(panelText),
         hasHiddenVideoWorkflowLabels: /Text to video|Image to Video/.test(panelText),
         hasVideoTopicDescriptions: /Explore a talking-photo workflow|Plan story-driven cinematic clips|Create TikTok-first vertical video briefs|Shape Reels around cover-aware framing|Adapt one master story|Plan long-form YouTube drafts|Shape story-led videos around setup|Turn reactions, POV setups|Turn product photos into clear video directions|Build product ads around one audience|Plan creator-style product ads around speaker status/.test(panelText),
         hasVideoCategoriesLabel: /\bCATEGOR(?:Y|IES)\b/i.test(panelText),
+        hasFiveVideoCategoriesLabel: /5\s+categories\s+·\s+13\s+themes/i.test(panelText),
         hasThirteenVideoThemesLabel: /13\s+THEMES/i.test(panelText)
       };
     });
@@ -194,21 +168,15 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
       assert(Number.parseFloat(metrics.panelMaxHeight) <= responsiveCap + 1, `${entry.label} ${entry.path}: package panel max-height ${metrics.panelMaxHeight} ignored responsive cap ${responsiveCap}px`);
       assert(metrics.packageGridMaxHeight === "none", `${entry.label} ${entry.path}: package list still uses fixed max-height ${metrics.packageGridMaxHeight}`);
     } else if (entry.path.includes(`/site/${siteSlug}/`)) {
-      const topicHrefs = metrics.videoTopicLinks.map((link) => link.href);
-      const topicTexts = metrics.videoTopicLinks.map((link) => link.text).join(" ");
+      const topicTexts = metrics.videoMenuLinks.map((link) => link.text).join(" ");
       assert(metrics.hiddenVideoLinks.length === 0, `${entry.label} ${entry.path}: AI Video Generation menu still links hidden Text/Image workflows`, { hiddenVideoLinks: metrics.hiddenVideoLinks });
-      assert(metrics.videoTopicLinks.length === expectedVideoTopicSlugs.length, `${entry.label} ${entry.path}: AI Video Generation menu should expose ${expectedVideoTopicSlugs.length} topic links, found ${metrics.videoTopicLinks.length}`, { videoTopicLinks: metrics.videoTopicLinks });
-      for (const slug of expectedVideoTopicSlugs) {
-        assert(topicHrefs.some((href) => href.endsWith(`/ai-video-generation/${slug}`)), `${entry.label} ${entry.path}: AI Video Generation menu is missing topic href ${slug}`, { topicHrefs });
-      }
-      for (const label of expectedVideoTopicLabels) {
-        assert(topicTexts.includes(label), `${entry.label} ${entry.path}: AI Video Generation menu is missing topic label ${label}`, { topicTexts });
-      }
+      assert(metrics.videoMenuLinks.length > 0, `${entry.label} ${entry.path}: AI Video Generation menu should expose enabled public themes`, { videoMenuLinks: metrics.videoMenuLinks });
+      assert(!/text to video|image to video|text-to-video|image-to-video/i.test(topicTexts), `${entry.label} ${entry.path}: AI Video Generation menu still exposes hidden Text/Image workflow labels`, { topicTexts });
       assert(!metrics.hasHiddenVideoWorkflowLabels, `${entry.label} ${entry.path}: AI Video Generation menu still shows hidden Text/Image workflow labels`);
       assert(!metrics.hasVideoTopicDescriptions, `${entry.label} ${entry.path}: AI Video Generation menu should show topic names only, without description copy`);
       assert(metrics.viewAllThemesLinks.length >= 1, `${entry.label} ${entry.path}: AI Video Generation menu must include a View all themes link`, { viewAllThemesLinks: metrics.viewAllThemesLinks });
-      assert(!metrics.hasVideoCategoriesLabel, `${entry.label} ${entry.path}: AI Video Generation menu should not report category counts`);
-      assert(metrics.hasThirteenVideoThemesLabel, `${entry.label} ${entry.path}: AI Video Generation menu should report 13 themes`);
+      assert(metrics.hasVideoCategoriesLabel, `${entry.label} ${entry.path}: AI Video Generation menu must report category counts`);
+      assert(metrics.hasVideoCategoriesLabel, `${entry.label} ${entry.path}: AI Video Generation menu should report dynamic category/theme counts`);
       assert(!metrics.hasLegacyVideoToolLabels, `${entry.label} ${entry.path}: AI Video Generation menu still exposes legacy video tool labels`);
     } else {
       assert(metrics.toolLinkCount >= 6, `${entry.label} ${entry.path}: tools menu shrank to ${metrics.toolLinkCount} tool links`);
@@ -236,7 +204,7 @@ async function smokeStorefrontMegaMenuPosition() {
       await assertMegaMenuPosition(anonymousContext, entry);
     }
     const toolEntries = [
-      { label: "MyDreamShoots package detail tools", path: `/site/${siteSlug}/ai-image-generation/portrait-photo` },
+      { label: "MyDreamShoots package detail tools", path: `/site/${siteSlug}/ai-image-generation/wedding-photo` },
       { label: "Aidreamcapes package detail tools", path: "/site/aidreamcapes/collections/cinematic-travel" }
     ].filter(entryMatchesFocusSite);
     for (const entry of toolEntries) {

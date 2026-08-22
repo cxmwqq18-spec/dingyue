@@ -15,5 +15,5 @@ export function publicVideoThemeCategorySlugListForSite(siteId: string): readonl
 }
 
 export function isBlockedPublicVideoThemeSlugForSite(siteId: string, slug: string): boolean {
-  return (siteId === "site_dreamshoot" || siteId === "site_aidreamcapes") && blockedPublicVideoThemeSlugs.has(slug);
+  return siteId === "site_aidreamcapes" && blockedPublicVideoThemeSlugs.has(slug);
 }

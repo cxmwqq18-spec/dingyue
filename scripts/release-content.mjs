@@ -29,7 +29,9 @@ const supportedTables = [
   "themeSettings",
   "siteThemes",
   "themePublications",
-  "mediaAssets"
+  "mediaAssets",
+  "products",
+  "prices"
 ];
 const replaceTables = new Set(["toolCategories", "toolMenuItems", "videoThemeCategories", "videoThemes"]);
 const protectedSpecs = [
@@ -45,7 +47,7 @@ const protectedSpecs = [
   { key: "assetUploads", model: "assetUpload", fields: { id: true, createdAt: true, updatedAt: true } },
   { key: "albums", model: "album", fields: { id: true, createdAt: true, updatedAt: true } }
 ];
-const dateFields = new Set(["createdAt", "updatedAt", "publishedAt", "appliedAt", "expiresAt", "processedAt"]);
+const dateFields = new Set(["createdAt", "updatedAt", "publishedAt", "appliedAt", "expiresAt", "processedAt", "effectiveFrom", "effectiveTo", "providerVerifiedAt"]);
 const secretKeyPattern = /api.?key|secret|password|authorization|access.?token|private.?key/i;
 
 function fail(message) {
@@ -72,6 +74,7 @@ function hashValue(value) {
 
 function sanitize(value, key = "") {
   if (secretKeyPattern.test(key)) return undefined;
+  if (value instanceof Date) return value.toISOString();
   if (Array.isArray(value)) return value.map((item) => sanitize(item)).filter((item) => item !== undefined);
   if (value && typeof value === "object") {
     const next = {};
@@ -164,7 +167,9 @@ async function readContentSnapshot(prisma, siteId) {
     themeSettings,
     siteThemes,
     themePublications,
-    mediaAssets
+    mediaAssets,
+    products,
+    prices
   ] = await Promise.all([
     prisma.toolCategory.findMany({ where: { siteId } }),
     prisma.toolMenuItem.findMany({ where: { siteId } }),
@@ -176,7 +181,9 @@ async function readContentSnapshot(prisma, siteId) {
     prisma.themeSettings.findUnique({ where: { siteId } }),
     prisma.siteTheme.findMany({ where: { siteId } }),
     prisma.themePublication.findMany({ where: { siteId } }),
-    prisma.mediaAsset.findMany({ where: { siteId } })
+    prisma.mediaAsset.findMany({ where: { siteId } }),
+    prisma.product.findMany({ where: { siteId } }),
+    prisma.price.findMany({ where: { siteId } })
   ]);
   return normalizeSnapshot({
     toolCategories,
@@ -189,7 +196,9 @@ async function readContentSnapshot(prisma, siteId) {
     themeSettings: themeSettings ? [themeSettings] : [],
     siteThemes,
     themePublications,
-    mediaAssets
+    mediaAssets,
+    products,
+    prices
   });
 }
 
@@ -362,7 +371,9 @@ async function upsertRows(tx, table, rows, transform = (row) => row) {
     themeSettings: "themeSettings",
     siteThemes: "siteTheme",
     themePublications: "themePublication",
-    mediaAssets: "mediaAsset"
+    mediaAssets: "mediaAsset",
+    products: "product",
+    prices: "price"
   };
   const delegate = tx[modelByTable[table]];
   if (!delegate) fail(`Missing Prisma delegate for ${table}.`);
@@ -439,7 +450,8 @@ async function applySnapshot(tx, siteId, tables, replacements) {
   await upsertRows(tx, "creativePacks", tables.creativePacks, (row) => remapCategoryId(row, creativeCategories, creativeCategoryIds));
   await upsertRows(tx, "videoThemes", tables.videoThemes, (row) => remapCategoryId(row, videoCategories, videoCategoryIds));
 
-  for (const table of ["themeSettings", "themePages", "siteThemes", "themePublications", "mediaAssets"]) {
+  // Products must exist before prices because Price.productId is a required relation.
+  for (const table of ["products", "prices", "themeSettings", "themePages", "siteThemes", "themePublications", "mediaAssets"]) {
     await upsertRows(tx, table, tables[table]);
   }
 }

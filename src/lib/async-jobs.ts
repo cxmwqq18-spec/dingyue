@@ -18,6 +18,7 @@ export type AsyncJobRecord<Result = unknown, Metadata extends Record<string, unk
   kind: AsyncJobKind;
   status: AsyncJobStatus;
   actorId?: string;
+  idempotencyKey?: string;
   metadata: Metadata;
   result?: Result;
   error?: AsyncJobError;
@@ -40,6 +41,7 @@ type AsyncJobRunner<Result> = (context: {
 type CreateAsyncJobParams<Result> = {
   kind: AsyncJobKind;
   actorId?: string;
+  idempotencyKey?: string;
   metadata?: Record<string, unknown>;
   ttlMs?: number;
   run: AsyncJobRunner<Result>;
@@ -94,6 +96,7 @@ function rowToJob(row: Prisma.PlatformAsyncJobGetPayload<object>): AsyncJobSnaps
     kind: row.kind,
     status: row.status as AsyncJobStatus,
     actorId: row.actorId ?? undefined,
+    idempotencyKey: row.idempotencyKey ?? undefined,
     metadata: jsonRecord(row.metadata) ?? {},
     result: row.result === null ? undefined : row.result,
     error: jsonRecord(row.error) as AsyncJobError | undefined,
@@ -134,6 +137,7 @@ async function createJobInDatabase(job: AsyncJobRecord): Promise<AsyncJobSnapsho
           kind: job.kind,
           status: job.status,
           actorId: job.actorId,
+          idempotencyKey: job.idempotencyKey,
           metadata: toPrismaJson(job.metadata),
           result: job.result === undefined ? undefined : toPrismaJson(job.result),
           error: job.error === undefined ? undefined : toPrismaJson(job.error),
@@ -240,6 +244,17 @@ async function runAsyncJob<Result>(jobId: string, runner: AsyncJobRunner<Result>
 export async function createAsyncJob<Result = unknown>(params: CreateAsyncJobParams<Result>): Promise<AsyncJobSnapshot<Result>> {
   const currentStore = store();
   pruneExpiredJobs(currentStore);
+  if (params.idempotencyKey) {
+    const existing = await withDbTimeout(
+      prisma.platformAsyncJob.findFirst({
+        where: { kind: params.kind, actorId: params.actorId, idempotencyKey: params.idempotencyKey, expiresAt: { gt: new Date() } }
+      }).then((row) => row ? rowToJob(row) : undefined)
+    );
+    if (existing) {
+      rememberJob(existing as AsyncJobRecord);
+      return cloneJob(existing as AsyncJobSnapshot<Result>);
+    }
+  }
   const createdAt = nowIso();
   const ttlMs = Math.max(1000, params.ttlMs ?? defaultTtlMs);
   const job: AsyncJobRecord<Result> = {
@@ -247,6 +262,7 @@ export async function createAsyncJob<Result = unknown>(params: CreateAsyncJobPar
     kind: params.kind,
     status: "queued",
     actorId: params.actorId,
+    idempotencyKey: params.idempotencyKey,
     metadata: params.metadata ?? {},
     createdAt,
     updatedAt: createdAt,
@@ -254,7 +270,24 @@ export async function createAsyncJob<Result = unknown>(params: CreateAsyncJobPar
   };
   const controller = new AbortController();
   currentStore.controllers.set(job.id, controller);
-  const persistedJob = await createJobInDatabase(job);
+  let persistedJob: AsyncJobSnapshot | undefined;
+  try {
+    persistedJob = await createJobInDatabase(job);
+  } catch (error) {
+    // A concurrent request can win the unique idempotency index between the lookup and insert.
+    if (params.idempotencyKey && typeof error === "object" && error && "code" in error && error.code === "P2002") {
+      const existing = await withDbTimeout(
+        prisma.platformAsyncJob.findFirst({
+          where: { kind: params.kind, actorId: params.actorId, idempotencyKey: params.idempotencyKey, expiresAt: { gt: new Date() } }
+        }).then((row) => row ? rowToJob(row) : undefined)
+      );
+      if (existing) {
+        rememberJob(existing as AsyncJobRecord);
+        return cloneJob(existing as AsyncJobSnapshot<Result>);
+      }
+    }
+    throw error;
+  }
   if (!persistedJob) throw new Error("postgres_async_job_not_created");
   rememberJob(persistedJob as AsyncJobRecord<Result>, currentStore);
   queueMicrotask(() => {

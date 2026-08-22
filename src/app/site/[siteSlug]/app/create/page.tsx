@@ -4,6 +4,7 @@ import { renderCustomerWorkspacePageBySlug } from "@/lib/storefront-render";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
@@ -26,5 +27,7 @@ export default async function CustomerWorkspaceCreatePage({
     siteSlug
   });
   const query = searchParams ? await searchParams : {};
+  const videoMode = Array.isArray(query.videoMode) ? query.videoMode[0] : query.videoMode;
+  if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
   return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug: "/app/create", query, routeMode });
 }

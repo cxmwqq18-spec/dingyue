@@ -115,7 +115,7 @@ import {
   photoPackageLabel,
   photoPackageSlug
 } from "@/lib/photo-package-taxonomy";
-import { isMydreamshootsPublicVideoGenerationTopicSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationParentCategories, mydreamshootsVideoGenerationThemeSeeds, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
+import { isMydreamshootsCurrentVideoMenuSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationParentCategories, mydreamshootsVideoGenerationThemeSeeds, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { talkingPhotoContent } from "@/lib/talking-photo-content";
 import { isPublicPrice, projectPublicCreativePacks, projectPublicPricingOffers, resolveStorefrontBindings, selectOfferPrice } from "@/lib/storefront-context/core";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
@@ -993,7 +993,7 @@ function headerVideoGenerationTopicsForClient(site: Site, categories: VideoTheme
   );
   const themesBySlug = new Map(themes.filter((theme) => theme.status === "active").map((theme) => [theme.slug, theme]));
   return mydreamshootsVideoGenerationCategories
-    .filter((definition) => isMydreamshootsPublicVideoGenerationTopicSlug(definition.slug))
+    .filter((definition) => isMydreamshootsCurrentVideoMenuSlug(definition.slug))
     .flatMap((definition) => {
       const category = categoriesBySlug.get(definition.slug);
       if (category && category.status !== "active") return [];
@@ -1217,7 +1217,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
         ? dynamicToolBlocks
       : getDreamshootToolBlocks(header?.blocks);
   const aidreamcapesToolBlocks = isAidreamcapes
-    ? configuredToolBlocks.filter((tool) => !["headshot", "background-changer", "world-cup-fan-photos", "anime-avatar", "image-to-video"].includes(toolBlockSlug(tool)))
+    ? configuredToolBlocks.filter((tool) => !["headshot", "background-changer", "world-cup-fan-photos", "anime-avatar"].includes(toolBlockSlug(tool)))
     : configuredToolBlocks;
   const dreamshootMergedToolBlocks = useVideoGenerationToolsMenu
     ? []
@@ -3004,10 +3004,11 @@ function generationShowcaseImageCardsForSite(site: Site, creativePacks: Creative
   const cards = rawCards.length ? rawCards : selectedFallbackCards;
   const seen = new Set<string>();
   const seenImages = new Set<string>();
+  const preserveThemeCards = uniqueSelectedImageSlugs.length === 0;
   return cards.filter((card) => {
     const key = generationShowcaseImageDedupeKey(site, card.id || card.slug);
     const imageKey = comparableImageUrl(card.imageUrl);
-    if (!key || seen.has(key) || !imageKey || seenImages.has(imageKey)) return false;
+    if (!key || seen.has(key) || !imageKey || (!preserveThemeCards && seenImages.has(imageKey))) return false;
     seen.add(key);
     seenImages.add(imageKey);
     return Boolean(card.imageUrl);
@@ -3018,10 +3019,9 @@ function generationShowcaseVideoCardsForSite(videoThemes: VideoTheme[], selected
   const activeVideoThemes = videoThemes.filter((theme) => theme.status === "active");
   const videoBySlug = new Map<string, VideoTheme>();
   activeVideoThemes.forEach((theme) => videoBySlug.set(dreamshootCategorySlug(theme.slug), theme));
-  const orderedVideoThemes = [
-    ...selectedVideoSlugs.map((slug) => videoBySlug.get(dreamshootCategorySlug(slug))).filter((theme): theme is VideoTheme => Boolean(theme)),
-    ...activeVideoThemes
-  ];
+  const orderedVideoThemes = selectedVideoSlugs.length
+    ? selectedVideoSlugs.map((slug) => videoBySlug.get(dreamshootCategorySlug(slug))).filter((theme): theme is VideoTheme => Boolean(theme))
+    : activeVideoThemes;
   const seenVideoIds = new Set<string>();
   const videoCards = orderedVideoThemes
     .filter((theme) => {
@@ -4319,11 +4319,6 @@ const dreamshootStaticToolSlugByKey: Record<string, string> = {
   "edit-by-prompt": "edit-by-prompt",
   mega_edit_upscale: "magic-upscaler",
   "magic-upscaler": "magic-upscaler",
-  mega_video_image: "image-to-video",
-  tool_video: "image-to-video",
-  taxonomy_video: "image-to-video",
-  "image-to-video": "image-to-video",
-  "image-to-video-concept": "image-to-video",
   mega_video_profile: "profile-clip",
   "profile-clip-maker": "profile-clip",
   mega_video_fan: "fan-poster-motion",
@@ -4377,8 +4372,6 @@ const dreamshootStaticToolSlugByKey: Record<string, string> = {
   "pack-dreamshoot-engagement": "wedding-portraits",
   boudoir: "fashion-editorial",
   "pack-dreamshoot-boudoir": "fashion-editorial",
-  "ai-video-add-ons": "image-to-video",
-  "pack-dreamshoot-ai-video": "image-to-video",
   "pack-dreamshoot-upscaler": "magic-upscaler",
   dreamshoot_footer_tool: "",
   "image-studio": ""
@@ -4417,7 +4410,6 @@ function dreamshootDefaultToolTitle(slug: string): string {
     "anime-avatar": "Anime Avatar Builder",
     "gala-photo": "Gala Photo Maker",
     "cyberpunk-portrait": "Cyberpunk Portrait Maker",
-    "image-to-video": "Image to Video",
     "profile-clip": "Profile Clip Maker",
     "creator-intro-video": "Creator Intro Video"
   };
@@ -4541,11 +4533,6 @@ function dreamshootToolDirectoryCopy(block: SectionBlockInstance, aidreamcapes =
       tags: ["Higher detail", "Download ready"],
       action: "Upscale image"
     },
-    "image-to-video": {
-      description: "Turn a favorite generated photo into a short motion concept for social posts, creator campaigns, or album highlights.",
-      tags: ["Motion preview", "Social ready"],
-      action: "Make a video"
-    },
     "profile-clip": {
       description: "Use headshots or creator portraits to create a short profile motion idea for intros, bios, and social updates.",
       tags: ["Profile motion", "Short clip"],
@@ -4623,7 +4610,6 @@ function _dreamshootDefaultToolBlocks(): SectionBlockInstance[] {
     "color-correction",
     "old-photo-restoration",
     "edit-by-prompt",
-    "image-to-video",
     "profile-clip",
     "creator-intro-video"
   ].map((slug) => ({
@@ -5730,7 +5716,6 @@ function spanishToolTitle(slug: string, fallback: string, aidreamcapes: boolean)
     "old-photo-restoration": "Restauracion de fotos",
     "edit-by-prompt": "Edicion por instrucciones",
     "magic-upscaler": "Escalado magico",
-    "image-to-video": "Imagen a video",
     "profile-clip": "Clip de perfil",
     "fan-poster-motion": "Poster animado",
     "creator-intro-video": "Intro de creador",
@@ -5770,7 +5755,6 @@ function spanishToolDescription(slug: string, category: string, aidreamcapes: bo
     "old-photo-restoration": "Restaura fotos antiguas, escaneos o recuerdos familiares dentro de un album privado.",
     "edit-by-prompt": "Describe un cambio concreto, revisa el resultado y decide si la imagen esta lista.",
     "magic-upscaler": "Prepara versiones de mayor resolucion para descargar o compartir imagenes terminadas.",
-    "image-to-video": "Convierte una imagen favorita en un clip corto para redes, vistas previas o albumes.",
     "profile-clip": "Crea una idea de movimiento breve para intros, bios y perfiles desde retratos terminados.",
     "fan-poster-motion": "Anima posters de aficion y piezas de partido como clips cortos para compartir.",
     "creator-intro-video": "Transforma retratos de creador en una intro sencilla para canales, reels o lanzamientos.",
@@ -6189,7 +6173,7 @@ function dreamshootDefaultMegaToolBlocks(): SectionBlockInstance[] {
     dreamshootToolBlock("mega_edit_restore", "Old photo restoration", "Repair faded family photos and prepare them for private album delivery.", "AI Photo Edit", packImages.copy, "/tools/old-photo-restoration"),
     dreamshootToolBlock("mega_edit_prompt", "Edit by prompt", "Describe a focused edit and preview it before spending package credits.", "AI Photo Edit", dreamshootToolSceneDefaults.entry, "/tools/edit-by-prompt"),
     dreamshootToolBlock("mega_edit_upscale", "Magic upscaler", "Preview higher-resolution delivery for finished photos and profile images.", "AI Photo Edit", packImages.copy, "/tools/magic-upscaler"),
-    dreamshootToolBlock("mega_video_image", "Image to video concept", "Turn a finished AI shoot package image into a short motion concept.", "Video AI", dreamshootToolSceneDefaults.progress, "/tools/image-to-video", "Preview"),
+    dreamshootToolBlock("mega_video_image", "Video workspace", "Turn a finished AI shoot package image into a short motion concept.", "Video AI", dreamshootToolSceneDefaults.progress, "/app/create#step-video", "Preview"),
     dreamshootToolBlock("mega_video_profile", "Profile clip maker", "Create social profile motion from headshots or creator portraits.", "Video AI", packImages.headshots, "/tools/profile-clip", "Social"),
     dreamshootToolBlock("mega_video_fan", "Fan poster motion", "Animate World Cup fan posters and match-day profile scenes.", "Video AI", packImages.sports, "/tools/fan-poster-motion", "Sports"),
     dreamshootToolBlock("mega_video_intro", "Creator intro video", "Turn creator portraits into short intro clips for profiles and reels.", "Video AI", packImages.creator, "/tools/creator-intro-video", "Creator"),
@@ -7170,6 +7154,35 @@ function dreamshootFeaturedCatalogScore(card: DreamShootCatalogCard): number {
   if (title.includes("nature")) return 12;
   if (category.includes("wedding") || category.includes("couple") || category.includes("boudoir") || category.includes("cultural")) return 25;
   return 15;
+}
+
+// The public myDreamshoots homepage has a deliberate featured-card order. Keep
+// that order independent from the generic category score so newer catalog
+// entries cannot displace the twelve cards shown in the production snapshot.
+const MYDREAMSHOOTS_HOMEPAGE_CATALOG_ORDER = new Map([
+  ["soccer", 0],
+  ["portrait-photo", 1],
+  ["gala-photo", 2],
+  ["headshot", 3],
+  ["hairstyle-generator", 4],
+  ["cyberpunk", 5],
+  ["mafia", 6],
+  ["travel", 7],
+  ["urban", 8],
+  ["virtual-try-on", 9],
+  ["avatar", 10],
+  ["street-style", 11]
+]);
+
+function mydreamshootsCatalogCardKey(card: DreamShootCatalogCard): string {
+  const href = card.href.split(/[?#]/, 1)[0];
+  const lastPathSegment = href.split("/").filter(Boolean).at(-1);
+  return dreamshootCategorySlug(lastPathSegment || card.title);
+}
+
+function mydreamshootsCatalogSortRank(card: DreamShootCatalogCard): number {
+  const canonicalRank = MYDREAMSHOOTS_HOMEPAGE_CATALOG_ORDER.get(mydreamshootsCatalogCardKey(card));
+  return canonicalRank ?? 100 + dreamshootFeaturedCatalogScore(card);
 }
 
 function dreamshootCategorySlug(value: string): string {
@@ -10026,12 +10039,12 @@ function SectionView({
         ? [
             { id: "tab_packages", type: "feature_tab", settings: { label: "Paquetes", title: "Elige un resultado terminado", description: "Empieza con paquetes guiados como retratos, creador o celebraciones con creditos visibles.", imageUrl: dreamshootToolSceneDefaults.banner, href: "/collections" } },
             { id: "tab_headshot", type: "feature_tab", settings: { label: "Retratos", title: "Preparar fotos privadas", description: "Crea retratos profesionales o de perfil desde fotos fuente autorizadas.", imageUrl: "/assets/dreamshoot/editorial-headshot.svg", href: "/tools/headshot" } },
-            { id: "tab_video", type: "feature_tab", settings: { label: "Video", title: "Crear escenas cortas", description: "Convierte resultados generados en ideas de movimiento listas para revisar.", imageUrl: dreamshootToolSceneDefaults.progress, href: "/tools/image-to-video" } }
+            { id: "tab_video", type: "feature_tab", settings: { label: "Video", title: "Crear escenas cortas", description: "Convierte resultados generados en ideas de movimiento listas para revisar.", imageUrl: dreamshootToolSceneDefaults.progress, href: "/app/create#step-video" } }
           ]
         : [
             { id: "tab_packages", type: "feature_tab", settings: { label: "Photo packages", title: "Pick a finished outcome", description: "Start from a guided package like headshots, World Cup fan photos, creator portraits, gala, or cyberpunk with credits shown before generation.", imageUrl: dreamshootToolSceneDefaults.banner, href: "/ai-image-generation" } },
             { id: "tab_tryon", type: "feature_tab", settings: { label: "Try-on and style", title: "Preview themed looks", description: "Simulate wardrobe, hairstyle, beauty, or gala directions before full-package generation.", imageUrl: "/assets/dreamshoot/editorial-headshot.svg", href: "/tools/virtual-try-on" } },
-            { id: "tab_video", type: "feature_tab", settings: { label: "Video scenes", title: "Short-form delivery packs", description: "Turn generated package results into campaign-ready motion ideas.", imageUrl: dreamshootToolSceneDefaults.progress, href: "/tools/image-to-video" } }
+            { id: "tab_video", type: "feature_tab", settings: { label: "Video scenes", title: "Short-form delivery packs", description: "Turn generated package results into campaign-ready motion ideas.", imageUrl: dreamshootToolSceneDefaults.progress, href: "/app/create#step-video" } }
           ];
     const items = tabs.length ? tabs : fallbackItems;
     const lead = items[0];
@@ -12946,7 +12959,7 @@ function SectionView({
     const featuredCountMax = 12;
     const featuredCount = Math.max(3, Math.min(featuredCountMax, numberSetting(section, "featuredCount", featuredCountDefault)));
     const sortedDisplayCards = isMyDreamShootsProfileSite(site)
-      ? [...displayCards].sort((a, b) => dreamshootFeaturedCatalogScore(a) - dreamshootFeaturedCatalogScore(b))
+      ? [...displayCards].sort((a, b) => mydreamshootsCatalogSortRank(a) - mydreamshootsCatalogSortRank(b))
       : displayCards;
     const tabs = listLines(setting(section, "tabs", "All|Headshots|Beauty|Creative|Sports|Wedding|Cultural|Couple|Seasonal|Video"));
     const steps = listLines(setting(section, "steps", "Pick pack|See credit cost|Generate album"));
@@ -13173,7 +13186,7 @@ function SectionView({
       const fallbackCoverImageUrl = setting(section, "imageUrl", defaultMydreamshootsVideoThemeCover);
       const topicDescriptions = new Map<string, string>(mydreamshootsVideoGenerationCategories.map((topic) => [topic.slug, topic.description]));
       const topics = headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes)
-        .filter((topic) => isMydreamshootsPublicVideoGenerationTopicSlug(topic.slug));
+        .filter((topic) => isMydreamshootsCurrentVideoMenuSlug(topic.slug));
       const topicGroups = groupedVideoGenerationTopicsForServer(topics);
       const HeadingTag = setting(section, "headingLevel", "h1") === "h1" ? "h1" : "h2";
       return (
@@ -13306,7 +13319,7 @@ function SectionView({
           category: "Video AI",
           badge: "Preview",
           imageUrl: dreamshootToolSceneDefaults.progress,
-          href: "/tools/image-to-video"
+          href: "/app/create#step-video"
         }
       }
     ];

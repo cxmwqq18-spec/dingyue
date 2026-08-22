@@ -303,7 +303,7 @@ const _dreamShootHomeSections = {
     layout: "split"
   }, [
     { id: "tab_headshots", type: "feature_tab", settings: { label: "Headshots", title: "Professional headshot packs", description: "Create profile, founder, resume, and team portraits from everyday uploads.", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/headshot" } },
-    { id: "tab_video", type: "feature_tab", settings: { label: "AI video", title: "Short-form photo video packs", description: "Package generated portraits into social-ready motion concepts for campaigns and personal channels.", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", href: "/tools/image-to-video" } },
+    { id: "tab_video", type: "feature_tab", settings: { label: "AI video", title: "Short-form photo video packs", description: "Package generated portraits into social-ready motion concepts for campaigns and personal channels.", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", href: "/app/create#step-video" } },
     { id: "tab_tryon", type: "feature_tab", settings: { label: "Virtual try-on", title: "Preview outfits and themed looks", description: "Use style prompts and pack rules to simulate editorial looks before generation starts.", imageUrl: "/assets/dreamshoot/frames/tab-virtual-looks.png", href: "/tools/virtual-try-on" } }
   ]),
   sample_strip_1: section("sample_strip", {

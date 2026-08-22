@@ -29,6 +29,7 @@ import { videoProviderModelFamiliesForProviders } from "@/lib/video-provider-fam
 import { runnableVideoProviderModelFamiliesForRequest } from "@/lib/video-provider-availability";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit, isVideoProviderModel } from "@/lib/video-provider-limits";
 import { DEFAULT_VIDEO_FRAME_LIMIT, defaultVideoModelPricing, normalizeVideoFrameLimit, normalizeVideoModelPricing, type VideoModelPricing } from "@/lib/video-frame-config";
+import { defaultVideoThemeExamplePrompt, validateVideoPrompt } from "@/lib/video-prompt-format";
 import type {
   AiGatewayGroup,
   AiProviderConfig,
@@ -53,7 +54,8 @@ import type {
   ThemePublication,
   ToolMenuItem,
   VideoTheme,
-  VideoThemeCategory
+  VideoThemeCategory,
+  VideoThemeExample
 } from "@/lib/types";
 import type { PublishPreflightCreativePack, PublishPreflightMediaAsset, PublishPreflightProduct, PublishPreflightSiteAiApp } from "@/lib/theme/publish-preflight";
 
@@ -91,6 +93,7 @@ import {
   toToolCategory,
   toToolMenuItem,
   toVideoTheme,
+  toVideoThemeExample,
   toVideoThemeCategory,
   uid,
   verifyRelationalPassword,
@@ -352,15 +355,18 @@ export const getStorefrontPublicVideoThemeCategoriesForSite = cache(async (siteI
     `public-video-theme-categories:${siteId}`,
     async () => {
       try {
+        const publicSlugWhere = isMydreamshootsVideoFrameworkSiteId(siteId)
+          ? { slug: { notIn: ["text-to-video", "image-to-video"] } }
+          : {};
         let rows = await prisma.videoThemeCategory.findMany({
-          where: { siteId, status: "active" },
+          where: { siteId, status: "active", OR: [{ parentId: null }, { parent: { is: { status: "active" } } }], ...publicSlugWhere },
           include: { parent: true },
           orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
         });
         if (!rows.length && isMydreamshootsVideoFrameworkSiteId(siteId)) {
           await ensureDefaultVideoThemesRelational(siteId);
           rows = await prisma.videoThemeCategory.findMany({
-            where: { siteId, status: "active" },
+            where: { siteId, status: "active", OR: [{ parentId: null }, { parent: { is: { status: "active" } } }], ...publicSlugWhere },
             include: { parent: true },
             orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }]
           });
@@ -371,7 +377,7 @@ export const getStorefrontPublicVideoThemeCategoriesForSite = cache(async (siteI
         if (!shouldFallbackRelationalRead(error)) throw error;
         warnRelationalFallback("storefront public video theme categories", error);
         return (readPlatformState().videoThemeCategories ?? [])
-          .filter((category) => category.siteId === siteId && category.status === "active")
+          .filter((category) => category.siteId === siteId && category.status === "active" && (!category.parent || category.parent.status === "active") && !isBlockedPublicVideoTheme(siteId, category.slug))
           .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label));
       }
     },
@@ -1230,7 +1236,7 @@ function fallbackPublicVideoThemesForSite(siteId: string, take?: number): VideoT
 }
 
 function isBlockedPublicVideoTheme(siteId: string, slug: string): boolean {
-  return (siteId === "site_dreamshoot" || siteId === "site_aidreamcapes") && slug === "creator-scene-motion";
+  return isMydreamshootsVideoFrameworkSiteId(siteId) && ["text-to-video", "image-to-video", "creator-scene-motion"].includes(slug);
 }
 
 function storefrontPerfMark(label: string, startedAt: number, meta: Record<string, unknown> = {}) {
@@ -1300,6 +1306,9 @@ export const getStorefrontPublicCreativePackCategoriesForSite = cache(async (sit
 
 export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string, take?: number) => {
   const takeKey = typeof take === "number" ? String(take) : "all";
+  const publicSlugWhere = isMydreamshootsVideoFrameworkSiteId(siteId)
+    ? { slug: { notIn: ["text-to-video", "image-to-video"] } }
+    : {};
   return siteReadCache.get(
     `public-video-themes:${siteId}:${takeKey}`,
     async () => {
@@ -1308,13 +1317,19 @@ export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string
           where: {
             siteId,
             status: "active",
-            slug: { not: "creator-scene-motion" },
+            ...publicSlugWhere,
             OR: [
               { categoryId: null },
-              { category: { is: { status: "active" } } }
+              { category: { is: { status: "active", OR: [{ parentId: null }, { parent: { is: { status: "active" } } }] } } }
             ]
           },
-          include: { category: true },
+          include: {
+            category: true,
+            examples: {
+              where: { status: "active" },
+              orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }]
+            }
+          },
           orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
           ...(typeof take === "number" ? { take } : {})
         });
@@ -1324,13 +1339,19 @@ export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string
             where: {
               siteId,
               status: "active",
-              slug: { not: "creator-scene-motion" },
+              ...publicSlugWhere,
               OR: [
                 { categoryId: null },
-                { category: { is: { status: "active" } } }
+                { category: { is: { status: "active", OR: [{ parentId: null }, { parent: { is: { status: "active" } } }] } } }
               ]
             },
-            include: { category: true },
+            include: {
+              category: true,
+              examples: {
+                where: { status: "active" },
+                orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }]
+              }
+            },
             orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
             ...(typeof take === "number" ? { take } : {})
           });
@@ -2526,6 +2547,11 @@ function watermarkedVideoThemeForWorkspace(theme: VideoTheme): VideoTheme {
     ...theme,
     imageUrl: withStorefrontPublicWatermarkUrl(theme.imageUrl),
     galleryImages: theme.galleryImages?.map((image) => withStorefrontPublicWatermarkUrl(image)),
+    examples: theme.examples?.map((example) => ({
+      ...example,
+      imageUrl: withStorefrontPublicWatermarkUrl(example.imageUrl),
+      galleryImages: example.galleryImages?.map((image) => withStorefrontPublicWatermarkUrl(image))
+    })),
     category: watermarkedVideoThemeCategoryForWorkspace(theme.category)
   };
 }
@@ -2580,7 +2606,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
         return fallbackCustomerWorkspaceSiteAiApps(site.id);
       }),
       getStorefrontPublicNavigationDataForSite(site.id),
-      getStorefrontPublicVideoThemesForSite(site.id, 32)
+      getStorefrontPublicVideoThemesForSite(site.id)
     ]);
 
     return {
@@ -4858,7 +4884,7 @@ async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: str
         name: theme.name,
         headline: theme.headline,
         description: theme.description,
-        prompt: theme.prompt,
+        prompt: `${defaultVideoThemeExamplePrompt}\n\nExisting theme direction: ${theme.prompt}`,
         status: "active",
         creditCost: theme.creditCost,
         modelPricing: defaultVideoModelPricing(theme.creditCost) as Prisma.InputJsonValue,
@@ -5048,9 +5074,39 @@ async function ensureVideoThemePageRelational(params: {
   });
 }
 
+async function ensureVideoThemeExampleFallbacksRelational(siteId: string): Promise<void> {
+  const themes = await prisma.videoTheme.findMany({
+    where: { siteId },
+    select: { id: true, name: true, description: true, prompt: true, imageUrl: true, galleryImages: true, status: true }
+  });
+  for (const theme of themes) {
+    const existing = await prisma.videoThemeExample.findFirst({ where: { siteId, themeId: theme.id }, select: { id: true } });
+    if (existing) continue;
+    const promptValidation = validateVideoPrompt(theme.prompt);
+    const prompt = promptValidation.valid
+      ? theme.prompt
+      : `${defaultVideoThemeExamplePrompt}\n\nExisting theme direction: ${theme.prompt.slice(0, 1200)}`;
+    await prisma.videoThemeExample.create({
+      data: {
+        id: uid("video_example"),
+        siteId,
+        themeId: theme.id,
+        name: `${theme.name} reference`,
+        description: theme.description,
+        imageUrl: theme.imageUrl,
+        galleryImages: theme.galleryImages ?? undefined,
+        prompt,
+        status: theme.status === "active" ? "active" : "draft",
+        sortOrder: 0
+      }
+    });
+  }
+}
+
 async function ensureDefaultVideoThemesRelationalInner(siteId: string): Promise<void> {
   if (isMydreamshootsVideoFrameworkSiteId(siteId)) {
     await ensureMydreamshootsVideoGenerationFrameworkRelational(siteId);
+    await ensureVideoThemeExampleFallbacksRelational(siteId);
     return;
   }
   const existingTheme = await prisma.videoTheme.findFirst({ where: { siteId }, select: { id: true } });
@@ -5072,6 +5128,7 @@ async function ensureDefaultVideoThemesRelationalInner(siteId: string): Promise<
         });
       }
       await ensurePromptDirectedDefaultVideoThemeRelational(siteId);
+      await ensureVideoThemeExampleFallbacksRelational(siteId);
       clearSiteReadCache();
       return;
     }
@@ -5079,6 +5136,7 @@ async function ensureDefaultVideoThemesRelationalInner(siteId: string): Promise<
   await ensureVideoGeneratorAppForSiteRelational(siteId);
   if (existingTheme) {
     await ensurePromptDirectedDefaultVideoThemeRelational(siteId);
+    await ensureVideoThemeExampleFallbacksRelational(siteId);
     clearSiteReadCache();
     return;
   }
@@ -5132,6 +5190,7 @@ async function ensureDefaultVideoThemesRelationalInner(siteId: string): Promise<
       imageUrl: savedTheme.imageUrl
     });
   }
+  await ensureVideoThemeExampleFallbacksRelational(siteId);
   clearSiteReadCache();
 }
 
@@ -5304,6 +5363,7 @@ export async function upsertVideoThemeRelational(params: {
       update: { themeId: existing.id }
     });
   }
+  await ensureVideoThemeExampleFallbacksRelational(params.siteId);
   await ensureVideoThemePageRelational({
     siteId: params.siteId,
     previousSlug: existing?.slug,
@@ -5315,6 +5375,83 @@ export async function upsertVideoThemeRelational(params: {
   });
   clearSiteReadCache();
   return { theme: toVideoTheme(theme), created: !existing };
+}
+
+export async function listVideoThemeExamplesRelational(params: {
+  siteId: string;
+  themeId: string;
+  includeInactive?: boolean;
+}): Promise<VideoThemeExample[]> {
+  const theme = await prisma.videoTheme.findFirst({ where: { id: params.themeId, siteId: params.siteId }, select: { id: true, status: true } });
+  if (!theme) throw new RelationalStoreError("video_theme_not_found", 404);
+  if (!params.includeInactive && theme.status !== "active") throw new RelationalStoreError("video_theme_not_found", 404);
+  const rows = await prisma.videoThemeExample.findMany({
+    where: {
+      siteId: params.siteId,
+      themeId: params.themeId,
+      ...(params.includeInactive ? {} : { status: "active" })
+    },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }]
+  });
+  return rows.map(toVideoThemeExample);
+}
+
+export async function upsertVideoThemeExampleRelational(params: {
+  siteId: string;
+  themeId: string;
+  exampleId?: string;
+  name: string;
+  description?: string;
+  imageUrl?: string;
+  galleryImages?: string[];
+  prompt: string;
+  status?: VideoThemeExample["status"];
+  sortOrder?: number;
+}): Promise<{ example: VideoThemeExample; created: boolean }> {
+  const theme = await prisma.videoTheme.findFirst({ where: { id: params.themeId, siteId: params.siteId }, select: { id: true } });
+  if (!theme) throw new RelationalStoreError("video_theme_not_found", 404);
+  const name = params.name.trim();
+  if (name.length < 2) throw new RelationalStoreError("video_theme_example_name_required", 400);
+  const prompt = params.prompt.trim();
+  const validation = validateVideoPrompt(prompt);
+  if (!validation.valid) {
+    throw new RelationalStoreError(`video_theme_example_prompt_invalid: ${validation.errors.join(" ")}`, 400);
+  }
+  const galleryImages = Array.isArray(params.galleryImages)
+    ? params.galleryImages.map((item) => item.trim()).filter(Boolean).slice(0, 12)
+    : [];
+  const existing = params.exampleId
+    ? await prisma.videoThemeExample.findFirst({ where: { id: params.exampleId, siteId: params.siteId, themeId: params.themeId } })
+    : null;
+  if (params.exampleId && !existing) throw new RelationalStoreError("video_theme_example_not_found", 404);
+  const data = {
+    name,
+    description: params.description?.trim() || null,
+    imageUrl: params.imageUrl?.trim() || galleryImages[0] || null,
+    galleryImages: galleryImages as unknown as Prisma.InputJsonValue,
+    prompt,
+    status: videoThemeStatus(params.status),
+    sortOrder: clampInteger(Number(params.sortOrder ?? 0), 0, -10000, 10000)
+  };
+  const row = existing
+    ? await prisma.videoThemeExample.update({ where: { id: existing.id }, data })
+    : await prisma.videoThemeExample.create({
+        data: { id: params.exampleId ?? uid("video_example"), siteId: params.siteId, themeId: params.themeId, ...data }
+      });
+  clearSiteReadCache();
+  return { example: toVideoThemeExample(row), created: !existing };
+}
+
+export async function deleteVideoThemeExampleRelational(params: {
+  siteId: string;
+  themeId: string;
+  exampleId: string;
+}): Promise<{ deletedExample: VideoThemeExample }> {
+  const row = await prisma.videoThemeExample.findFirst({ where: { id: params.exampleId, siteId: params.siteId, themeId: params.themeId } });
+  if (!row) throw new RelationalStoreError("video_theme_example_not_found", 404);
+  await prisma.videoThemeExample.delete({ where: { id: row.id } });
+  clearSiteReadCache();
+  return { deletedExample: toVideoThemeExample(row) };
 }
 
 export async function getVideoThemeSlugRedirectRelational(siteId: string, oldSlug: string) {

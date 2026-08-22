@@ -4,6 +4,12 @@ export const mydreamshootsVideoFrameworkSiteIds = ["site_dreamshoot", "site_grow
 
 export const mydreamshootsVideoGenerationCategories = [
   {
+    slug: "creator-scene-motion",
+    label: "Creator Scene Motion",
+    description: "Animate a creator scene with controlled camera and subject motion.",
+    sortOrder: 5
+  },
+  {
     slug: "text-to-video",
     label: "Text to Video",
     description: "Video themes created from written prompts.",
@@ -205,7 +211,33 @@ export const mydreamshootsVideoGenerationParentCategories = [
   { slug: "professional-business", label: "Professional & Business", description: "Explainers, tutorials, property, enterprise, and professional video workflows.", sortOrder: 50 }
 ] as const;
 
+/**
+ * The public header menu exposes the current DB-backed topic slice.
+ * Legacy homepage showcase themes remain available for published showcase cards,
+ * but must not leak back into the navigation taxonomy.
+ */
+export const mydreamshootsCurrentVideoMenuSlugs = [
+  "creator-scene-motion",
+  "talking-photo",
+  "cinematic-video",
+  "tiktok-video",
+  "instagram-reels",
+  "social-media-video",
+  "youtube-video",
+  "story-video",
+  "meme-video",
+  "product-video",
+  "product-ad-video"
+] as const;
+
+const mydreamshootsCurrentVideoMenuSlugSet = new Set<string>(mydreamshootsCurrentVideoMenuSlugs);
+
+export function isMydreamshootsCurrentVideoMenuSlug(slug: string | undefined): boolean {
+  return mydreamshootsCurrentVideoMenuSlugSet.has(String(slug ?? ""));
+}
+
 export const mydreamshootsVideoGenerationCategoryParentSlugBySlug: Record<string, string> = {
+  "creator-scene-motion": "social-creator",
   "text-to-video": "core-ai-creation",
   "image-to-video": "core-ai-creation",
   "talking-photo": "core-ai-creation",

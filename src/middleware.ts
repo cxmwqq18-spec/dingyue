@@ -140,6 +140,13 @@ function localDefaultStorefrontRedirect(request: NextRequest): NextResponse | un
   const host = (request.headers.get("host") ?? "").toLowerCase();
   if (!host.startsWith("localhost") && !host.startsWith("127.0.0.1")) return undefined;
 
+  if (
+    normalizedPath === "/app/create" &&
+    ["text-to-video", "image-to-video"].includes(request.nextUrl.searchParams.get("videoMode") ?? "")
+  ) {
+    return new NextResponse(null, { status: 404 });
+  }
+
   const defaultSiteSlug = process.env.DEFAULT_STOREFRONT_SITE_SLUG || "mydreamshoots";
   const nextUrl = request.nextUrl.clone();
   nextUrl.pathname = `/site/${defaultSiteSlug}${pathname}`;

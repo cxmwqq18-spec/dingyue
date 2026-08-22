@@ -873,12 +873,11 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     useCases: ["Prompt-led creator clips", "Concept videos before source images exist", "Story scene drafts", "Campaign motion tests from written ideas"],
     workflow: ["Write a focused video prompt.", "Choose the video workflow and review the credit cost.", "Generate a private short clip.", "Review the result before publishing or iterating."],
     internalLinks: [
-      { label: "Compare Image to Video", href: "/ai-video-generation/image-to-video" },
       { label: "Browse AI Video Generation", href: "/ai-video-generation" },
       { label: "Review pricing and credits", href: "/pricing" }
     ],
     ctaLabel: "Create a Text to Video Clip",
-    ctaHref: "/app/create?videoMode=text-to-video#step-video"
+    ctaHref: "/app/create#step-video"
   },
   "image-to-video": {
     label: "Image to Video",
@@ -902,7 +901,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
       { label: "Review pricing and credits", href: "/pricing" }
     ],
     ctaLabel: "Create a Short Video",
-    ctaHref: "/app/create?videoMode=image-to-video#step-video"
+    ctaHref: "/app/create#step-video"
   },
   "talking-photo": {
     label: "Talking Photo",
@@ -2511,6 +2510,7 @@ export function isExplicitSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: s
 
 export function isExplicitSeoDirectoryContentForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): boolean {
   const slug = canonicalSeoDirectorySlugForSite(site, kind, rawSlug);
+  if (slug === "text-to-video" || slug === "image-to-video") return false;
   if (isAidreamcapesSite(site)) {
     return kind === "collection" ? Boolean(aidreamcapesCollectionDirectory[slug]) : Boolean(aidreamcapesToolDirectory[slug]);
   }
@@ -2527,7 +2527,8 @@ export function getExplicitSeoDirectorySlugsForSite(site: Site | undefined, kind
   if (isSpanishXbySite(site)) {
     return Object.keys(kind === "collection" ? collectionDirectory : toolDirectory);
   }
-  return Object.keys(kind === "collection" ? mydreamshootsCollectionDirectory : toolDirectory);
+  return Object.keys(kind === "collection" ? mydreamshootsCollectionDirectory : toolDirectory)
+    .filter((slug) => slug !== "text-to-video" && slug !== "image-to-video");
 }
 
 function titleCase(slug: string): string {

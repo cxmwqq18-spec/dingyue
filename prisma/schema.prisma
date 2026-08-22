@@ -123,77 +123,80 @@ model PlatformAiProvider {
 }
 
 model PlatformAsyncJob {
-  id         String    @id
-  kind       String
-  status     String
-  actorId    String?
-  metadata   Json
-  result     Json?
-  error      Json?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  startedAt  DateTime?
-  finishedAt DateTime?
-  expiresAt  DateTime
+  id             String    @id
+  kind           String
+  status         String
+  actorId        String?
+  idempotencyKey String?
+  metadata       Json
+  result         Json?
+  error          Json?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  startedAt      DateTime?
+  finishedAt     DateTime?
+  expiresAt      DateTime
 
+  @@unique([kind, actorId, idempotencyKey])
   @@index([actorId, createdAt])
   @@index([kind, status])
   @@index([expiresAt])
 }
 
 model Site {
-  id                     String                      @id
-  name                   String
-  slug                   String                      @unique
-  status                 String
-  primaryDomain          String
-  timezone               String                      @default("UTC")
-  currency               String                      @default("usd")
-  signupCreditGrant      Int                         @default(0)
-  branding               Json
-  createdAt              DateTime                    @default(now())
-  updatedAt              DateTime                    @updatedAt
-  domains                SiteDomain[]
-  admins                 SiteAdmin[]
-  adminSessions          SiteAdminSession[]
-  customers              Customer[]
-  customerProfiles       CustomerProfile[]
-  customerSessions       CustomerSession[]
-  emailVerifications     CustomerEmailVerification[]
-  products               Product[]
-  prices                 Price[]
-  subscriptions          Subscription[]
-  orders                 Order[]
-  paymentEvents          PaymentEvent[]
-  ledger                 CreditLedger[]
-  balances               CreditBalance[]
-  pages                  ThemePage[]
-  settings               ThemeSettings?
-  storefrontProfile      StorefrontProfile?
-  publications           ThemePublication[]
-  activePublication      ActiveThemePublication?
-  siteThemes             SiteTheme[]
-  themeCopies            ThemeCopy[]
-  connect                StripeConnectAccount?
-  aiApps                 SiteAiApp[]
-  apiKeys                SiteApiKey[]
-  gatewayGroups          AiGatewayGroup[]
-  toolCategories         ToolCategory[]
-  toolMenuItems          ToolMenuItem[]
-  creativePackCategories CreativePackCategory[]
-  creativePacks          CreativePack[]
-  videoThemeCategories   VideoThemeCategory[]
-  videoThemes            VideoTheme[]
+  id                      String                      @id
+  name                    String
+  slug                    String                      @unique
+  status                  String
+  primaryDomain           String
+  timezone                String                      @default("UTC")
+  currency                String                      @default("usd")
+  signupCreditGrant       Int                         @default(0)
+  branding                Json
+  createdAt               DateTime                    @default(now())
+  updatedAt               DateTime                    @updatedAt
+  domains                 SiteDomain[]
+  admins                  SiteAdmin[]
+  adminSessions           SiteAdminSession[]
+  customers               Customer[]
+  customerProfiles        CustomerProfile[]
+  customerSessions        CustomerSession[]
+  emailVerifications      CustomerEmailVerification[]
+  products                Product[]
+  prices                  Price[]
+  subscriptions           Subscription[]
+  orders                  Order[]
+  paymentEvents           PaymentEvent[]
+  ledger                  CreditLedger[]
+  balances                CreditBalance[]
+  pages                   ThemePage[]
+  settings                ThemeSettings?
+  storefrontProfile       StorefrontProfile?
+  publications            ThemePublication[]
+  activePublication       ActiveThemePublication?
+  siteThemes              SiteTheme[]
+  themeCopies             ThemeCopy[]
+  connect                 StripeConnectAccount?
+  aiApps                  SiteAiApp[]
+  apiKeys                 SiteApiKey[]
+  gatewayGroups           AiGatewayGroup[]
+  toolCategories          ToolCategory[]
+  toolMenuItems           ToolMenuItem[]
+  creativePackCategories  CreativePackCategory[]
+  creativePacks           CreativePack[]
+  videoThemeCategories    VideoThemeCategory[]
+  videoThemes             VideoTheme[]
+  videoThemeExamples      VideoThemeExample[]
   videoThemeSlugRedirects VideoThemeSlugRedirect[]
-  mediaAssets            MediaAsset[]
-  customerModels         CustomerModel[]
-  albums                 Album[]
-  jobs                   GenerationJob[]
-  uploads                AssetUpload[]
-  customerDownloads      CustomerAssetDownload[]
-  auditLogs              AuditLog[]
-  partnerApplications    PartnerApplication[]
-  emailConfigAssignment  SiteEmailConfigAssignment?
+  mediaAssets             MediaAsset[]
+  customerModels          CustomerModel[]
+  albums                  Album[]
+  jobs                    GenerationJob[]
+  uploads                 AssetUpload[]
+  customerDownloads       CustomerAssetDownload[]
+  auditLogs               AuditLog[]
+  partnerApplications     PartnerApplication[]
+  emailConfigAssignment   SiteEmailConfigAssignment?
 
   @@index([status])
   @@index([primaryDomain])
@@ -249,15 +252,15 @@ model SiteAdminSession {
 }
 
 model Customer {
-  id            String            @id
+  id            String                  @id
   siteId        String
   email         String
   passwordHash  String?
   name          String
   status        String
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
-  site          Site              @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  createdAt     DateTime                @default(now())
+  updatedAt     DateTime                @updatedAt
+  site          Site                    @relation(fields: [siteId], references: [id], onDelete: Cascade)
   sessions      CustomerSession[]
   profile       CustomerProfile?
   subscriptions Subscription[]
@@ -357,28 +360,28 @@ model Product {
 }
 
 model Price {
-  id             String         @id
-  siteId         String
-  productId      String
-  label          String
-  amountCents    Int
-  currency       String
-  interval       String
-  creditsGranted Int
-  stripePriceId  String?
-  metadata       Json?
-  status         String         @default("draft")
-  effectiveFrom  DateTime?
-  effectiveTo    DateTime?
-  replacesPriceId String?
-  providerVerifiedAt DateTime?
+  id                  String         @id
+  siteId              String
+  productId           String
+  label               String
+  amountCents         Int
+  currency            String
+  interval            String
+  creditsGranted      Int
+  stripePriceId       String?
+  metadata            Json?
+  status              String         @default("draft")
+  effectiveFrom       DateTime?
+  effectiveTo         DateTime?
+  replacesPriceId     String?
+  providerVerifiedAt  DateTime?
   providerFingerprint String?
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  site           Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  product        Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
-  subscriptions  Subscription[]
-  orders         Order[]
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  site                Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  product             Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  subscriptions       Subscription[]
+  orders              Order[]
 
   @@unique([siteId, stripePriceId])
   @@index([siteId, productId])
@@ -523,17 +526,17 @@ model SiteAiApp {
 }
 
 model SiteApiKey {
-  id         String   @id
+  id         String    @id
   siteId     String
   label      String
-  keyHash    String   @unique
+  keyHash    String    @unique
   keyPreview String
-  scopes     String[] @default([])
-  enabled    Boolean  @default(true)
+  scopes     String[]  @default([])
+  enabled    Boolean   @default(true)
   lastUsedAt DateTime?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  site       Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  site       Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@index([siteId, enabled])
   @@index([siteId, createdAt])
@@ -648,7 +651,7 @@ model StorefrontProfile {
 }
 
 model ThemePublication {
-  id            String   @id
+  id            String                  @id
   siteId        String
   version       Int
   snapshot      Json
@@ -659,8 +662,8 @@ model ThemePublication {
   manifestHash  String?
   factsRevision String?
   publishedBy   String
-  publishedAt   DateTime @default(now())
-  site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  publishedAt   DateTime                @default(now())
+  site          Site                    @relation(fields: [siteId], references: [id], onDelete: Cascade)
   activeFor     ActiveThemePublication?
 
   @@unique([siteId, version])
@@ -670,11 +673,11 @@ model ThemePublication {
 }
 
 model ActiveThemePublication {
-  siteId        String   @id
-  publicationId String   @unique
-  activatedAt   DateTime @default(now())
+  siteId        String           @id
+  publicationId String           @unique
+  activatedAt   DateTime         @default(now())
   activatedBy   String
-  site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  site          Site             @relation(fields: [siteId], references: [id], onDelete: Cascade)
   publication   ThemePublication @relation(fields: [publicationId], references: [id], onDelete: Restrict)
 
   @@index([publicationId])
@@ -808,7 +811,7 @@ model CreativePackCategory {
 }
 
 model VideoTheme {
-  id              String              @id
+  id              String                   @id
   siteId          String
   categoryId      String?
   slug            String
@@ -816,19 +819,20 @@ model VideoTheme {
   headline        String
   description     String
   prompt          String
-  status          String              @default("draft")
+  status          String                   @default("draft")
   creditCost      Int
   modelPricing    Json?
-  durationSeconds Int                 @default(6)
-  maxFrames       Int                 @default(30)
-  generationCount Int                 @default(0)
-  sortOrder       Int                 @default(0)
+  durationSeconds Int                      @default(6)
+  maxFrames       Int                      @default(30)
+  generationCount Int                      @default(0)
+  sortOrder       Int                      @default(0)
   imageUrl        String?
   galleryImages   Json?
-  createdAt       DateTime            @default(now())
-  updatedAt       DateTime            @updatedAt
-  site            Site                @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  category        VideoThemeCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+  site            Site                     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  category        VideoThemeCategory?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  examples        VideoThemeExample[]
   slugRedirects   VideoThemeSlugRedirect[]
 
   @@unique([siteId, slug])
@@ -837,8 +841,28 @@ model VideoTheme {
   @@index([siteId, status, createdAt])
 }
 
+model VideoThemeExample {
+  id            String     @id
+  siteId        String
+  themeId       String
+  name          String
+  description   String?
+  imageUrl      String?
+  galleryImages Json?
+  prompt        String
+  status        String     @default("draft")
+  sortOrder     Int        @default(0)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  site          Site       @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  theme         VideoTheme @relation(fields: [themeId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, themeId, status, sortOrder])
+  @@index([siteId, status, createdAt])
+}
+
 model VideoThemeCategory {
-  id          String       @id
+  id          String               @id
   siteId      String
   parentId    String?
   slug        String
@@ -847,12 +871,12 @@ model VideoThemeCategory {
   icon        String?
   accentColor String?
   imageUrl    String?
-  sortOrder   Int          @default(0)
-  status      String       @default("active")
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  site        Site         @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  parent      VideoThemeCategory? @relation("VideoThemeCategoryChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  sortOrder   Int                  @default(0)
+  status      String               @default("active")
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  site        Site                 @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  parent      VideoThemeCategory?  @relation("VideoThemeCategoryChildren", fields: [parentId], references: [id], onDelete: Cascade)
   children    VideoThemeCategory[] @relation("VideoThemeCategoryChildren")
   themes      VideoTheme[]
 
@@ -901,7 +925,7 @@ model CustomerModel {
 }
 
 model Album {
-  id             String         @id
+  id             String                  @id
   siteId         String
   customerId     String
   title          String
@@ -910,13 +934,13 @@ model Album {
   status         String
   outputCount    Int
   coverAssetId   String?
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  site           Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  customer       Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  sourceJob      GenerationJob? @relation(fields: [sourceJobId], references: [id])
-  creativePack   CreativePack?  @relation(fields: [creativePackId], references: [id])
-  coverAsset     AssetUpload?   @relation("AlbumCoverAsset", fields: [coverAssetId], references: [id])
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+  site           Site                    @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer       Customer                @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  sourceJob      GenerationJob?          @relation(fields: [sourceJobId], references: [id])
+  creativePack   CreativePack?           @relation(fields: [creativePackId], references: [id])
+  coverAsset     AssetUpload?            @relation("AlbumCoverAsset", fields: [coverAssetId], references: [id])
   downloads      CustomerAssetDownload[]
 
   @@index([siteId, customerId, status])
@@ -929,7 +953,7 @@ model Album {
 }
 
 model AssetUpload {
-  id               String         @id
+  id               String                  @id
   siteId           String
   customerId       String
   customerModelId  String?
@@ -943,16 +967,16 @@ model AssetUpload {
   reviewStatus     String
   validationStatus String?
   validationReport Json?
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+  createdAt        DateTime                @default(now())
+  updatedAt        DateTime                @updatedAt
   deletedAt        DateTime?
-  site             Site           @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  customer         Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerModel    CustomerModel? @relation(fields: [customerModelId], references: [id])
-  job              GenerationJob? @relation(fields: [jobId], references: [id])
-  albumCovers      Album[]        @relation("AlbumCoverAsset")
-  profileAvatars   CustomerProfile[] @relation("CustomerProfileAvatarAsset")
-  downloads         CustomerAssetDownload[]
+  site             Site                    @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer         Customer                @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerModel    CustomerModel?          @relation(fields: [customerModelId], references: [id])
+  job              GenerationJob?          @relation(fields: [jobId], references: [id])
+  albumCovers      Album[]                 @relation("AlbumCoverAsset")
+  profileAvatars   CustomerProfile[]       @relation("CustomerProfileAvatarAsset")
+  downloads        CustomerAssetDownload[]
 
   @@index([siteId, storageKey])
   @@index([siteId, customerId, role])
@@ -1016,26 +1040,27 @@ model PartnerApplication {
 }
 
 model GenerationJob {
-  id              String        @id
+  id              String                  @id
   siteId          String
   customerId      String
   aiAppId         String
   status          String
   creditsReserved Int
-  entryPoint      String        @default("customer_workspace")
+  entryPoint      String                  @default("customer_workspace")
   idempotencyKey  String?
   requestHash     String?
   requestJson     Json
   resultJson      Json?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  site            Site          @relation(fields: [siteId], references: [id], onDelete: Cascade)
-  customer        Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  aiApp           AiApp         @relation(fields: [aiAppId], references: [id])
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  site            Site                    @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer        Customer                @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  aiApp           AiApp                   @relation(fields: [aiAppId], references: [id])
   uploads         AssetUpload[]
   albums          Album[]
   downloads       CustomerAssetDownload[]
 
+  @@unique([siteId, customerId, idempotencyKey])
   @@index([siteId, customerId, createdAt])
   @@index([siteId, customerId, updatedAt])
   @@index([siteId, status])
@@ -1046,7 +1071,6 @@ model GenerationJob {
   @@index([siteId, status, updatedAt])
   @@index([siteId, updatedAt])
   @@index([status, updatedAt])
-  @@unique([siteId, customerId, idempotencyKey])
 }
 
 model AuditLog {

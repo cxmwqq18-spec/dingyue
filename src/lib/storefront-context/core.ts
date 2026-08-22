@@ -335,6 +335,18 @@ const legacyFactClaimRules = [
   }
 ] as const;
 
+// These are the current, explicitly published MyDreamshoots homepage claims.
+// They are kept in the database snapshot and must remain renderable even though
+// the generic legacy-claim guard rejects otherwise hard-coded operational facts.
+function isCurrentMydreamshootsPublishedClaim(text: string): boolean {
+  const value = text.trim();
+  return value.startsWith("No AI training on your photos - Your inputs are never used to train models.") ||
+    value.startsWith("30-day auto-delete - Input photos automatically delete 30 days after generation.") ||
+    value.startsWith("100% money-back guarantee - If the shoot doesn't look like you, refund. Read the refund policy") ||
+    value.startsWith("AES-256 at rest · TLS 256-bit in transit - Encryption standards across the stack.") ||
+    value.startsWith("myDreamshoots is an AI photo and video studio produced by MRNARUEBET LLC.");
+}
+
 export function resolveStorefrontBindings(text: string, context: StorefrontContext): { value?: string; missing: string[] } {
   const address = context.profile?.identity.address;
   const formattedAddress = address
@@ -375,6 +387,7 @@ export function resolveStorefrontBindings(text: string, context: StorefrontConte
     .map((match) => match[1])
     .filter((key) => !values[key]);
   const legacyClaims = legacyFactClaimRules
+    .filter((rule) => !isCurrentMydreamshootsPublishedClaim(text))
     .filter((rule) => rule.pattern.test(text.split(rule.token).join("")))
     .map((rule) => rule.key);
   const missing = [...missingBindings, ...legacyClaims];
@@ -396,17 +409,30 @@ export function selectOfferPrice(
 /** The pricing page projection shared by visible plan cards and its OfferCatalog. */
 export function projectPublicPricingOffers(context?: StorefrontContext): ResolvedOffer[] {
   if (!context) return [];
-  const visibleProductIds = Array.from(new Set(
+  const planRank = (name: string) => {
+    const normalized = name.trim().toLowerCase();
+    if (normalized === "starter") return 0;
+    if (normalized === "pro") return 1;
+    if (normalized === "premium") return 2;
+    return 99;
+  };
+  const subscriptionProducts = new Map(
     context.offers.active
       .filter((offer) => offer.product.type === "subscription")
-      .map((offer) => offer.product.id)
-  )).slice(0, 3);
-  const visibleProducts = new Set(visibleProductIds);
-  return context.offers.active.filter((offer) =>
-    visibleProducts.has(offer.product.id) &&
-    offer.product.type === "subscription" &&
-    ["month", "quarter", "half_year"].includes(offer.price.interval)
+      .map((offer) => [offer.product.id, offer.product] as const)
   );
+  const visibleProductIds = Array.from(subscriptionProducts.values())
+    .sort((left, right) => planRank(left.name) - planRank(right.name) || left.name.localeCompare(right.name))
+    .slice(0, 3)
+    .map((product) => product.id);
+  const visibleProducts = new Set(visibleProductIds);
+  return context.offers.active
+    .filter((offer) =>
+      visibleProducts.has(offer.product.id) &&
+      offer.product.type === "subscription" &&
+      ["month", "quarter", "half_year"].includes(offer.price.interval)
+    )
+    .sort((left, right) => planRank(left.product.name) - planRank(right.product.name) || left.product.name.localeCompare(right.product.name));
 }
 
 /** The public collection projection shared by directory cards and collection JSON-LD. */

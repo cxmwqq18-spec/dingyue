@@ -294,9 +294,12 @@ export default async function SiteCatchAllPage({
   if (path[0] === "app") {
     if (slug === "/app") redirect(routePath("/app/create"));
     const query = searchParams ? await searchParams : {};
+    const videoMode = Array.isArray(query.videoMode) ? query.videoMode[0] : query.videoMode;
+    if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
     return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode });
   }
   if (path[0] === "job" && path[1]) redirect(routePath(`/app/jobs/${path[1]}`));
+  if (path[0] === "tools" && isPrimaryMydreamshootsSlug(publicSlug)) notFound();
   const isCollectionRequest = isCollectionRouteRequest(path);
   const isVideoGenerationRequest = isVideoGenerationRouteRequest(path);
   const collectionRootPageSlug = fallbackCollectionRootPathForPublicSlug(publicSlug);
@@ -314,6 +317,9 @@ export default async function SiteCatchAllPage({
     : await readPathModePublicRuntimeState(publicSlug, pageSlug);
   const publicSite = state?.sites[0];
   if (!state || !publicSite) notFound();
+  if (isPrimaryMydreamshootsSlug(publicSlug) && isVideoGenerationRequest && ["text-to-video", "image-to-video"].includes(path[1] ?? "")) {
+    notFound();
+  }
   const snapshot = createPublishedSiteSnapshot(state, publicSite, { source: "platform-state" });
   const legacyTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForPublicSlug(publicSlug));
   if (legacyTarget) {

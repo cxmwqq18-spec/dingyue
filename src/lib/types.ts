@@ -6,7 +6,7 @@ export type JobStatus = "queued" | "running" | "succeeded" | "failed" | "refunde
 export type LedgerType = "grant" | "reserve" | "consume" | "release" | "adjustment";
 export type GenerationEntryPoint = "customer_workspace" | "site_admin" | "platform_admin" | "external_api" | "rerun";
 
-export type PlatformAiProviderType = "image" | "video";
+export type PlatformAiProviderType = "image" | "video" | "text";
 
 export type SectionType =
   | "hero"
@@ -793,6 +793,22 @@ export interface VideoTheme {
   createdAt: string;
   imageUrl?: string;
   galleryImages?: string[];
+  examples?: VideoThemeExample[];
+}
+
+export interface VideoThemeExample {
+  id: string;
+  siteId: string;
+  themeId: string;
+  name: string;
+  description?: string;
+  imageUrl?: string;
+  galleryImages?: string[];
+  prompt: string;
+  status: "active" | "draft" | "paused";
+  sortOrder: number;
+  createdAt: string;
+  updatedAt?: string;
 }
 
 export interface MediaAsset {

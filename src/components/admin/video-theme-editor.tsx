@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ExternalLink, FileSpreadsheet, Film, ImageIcon, Pencil, Plus, Save, Search, Trash2, UploadCloud, X } from "lucide-react";
+import { ExternalLink, FileSpreadsheet, Film, ImageIcon, Pencil, Plus, Save, Search, Sparkles, Trash2, UploadCloud, X } from "lucide-react";
 import { fetchAdminJson } from "@/components/admin/admin-api-client";
 import {
   ErpField,
@@ -14,7 +14,8 @@ import {
   ErpToolbarField
 } from "@/components/admin/erp-primitives";
 import { StatusPill } from "@/components/ui";
-import type { VideoTheme, VideoThemeCategory } from "@/lib/types";
+import type { VideoTheme, VideoThemeCategory, VideoThemeExample } from "@/lib/types";
+import { defaultVideoThemeExamplePrompt, validateVideoPrompt } from "@/lib/video-prompt-format";
 import {
   DEFAULT_VIDEO_FRAME_LIMIT,
   MAX_VIDEO_FRAME_LIMIT,
@@ -401,7 +402,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
     try {
       const saved = await saveTheme(editingTheme, editingTheme.id);
       setThemes((items) => updateListItem(items, saved));
-      setEditingTheme(saved);
+      setEditingTheme({ ...saved, examples: editingTheme.examples });
       await loadThemes();
       setMessage(`已保存视频主题：${saved.name}`);
     } catch (error) {
@@ -795,6 +796,14 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
                 onGalleryChange={(value) => updateEditing("galleryImages", parseGalleryImages(value))}
                 theme={editingTheme}
               />
+              <ThemeExamplesEditor
+                onChange={(examples) => {
+                  setEditingTheme((current) => current ? { ...current, examples } : current);
+                  setThemes((items) => items.map((theme) => theme.id === editingTheme.id ? { ...theme, examples } : theme));
+                }}
+                siteId={siteId}
+                theme={editingTheme}
+              />
               <div className="flex flex-wrap justify-between gap-3 border-t border-slate-100 pt-4">
                 <button className="inline-flex h-9 items-center rounded-lg border border-red-100 bg-white px-4 text-sm text-red-600 disabled:opacity-40" disabled={saving} onClick={() => deleteTheme(editingTheme)} type="button">
                   <Trash2 className="mr-2 h-4 w-4" strokeWidth={1.8} />
@@ -921,6 +930,134 @@ function ThemeForm<T extends Partial<VideoTheme>>({
         </div>
       )}
     </div>
+  );
+}
+
+function ThemeExamplesEditor({
+  siteId,
+  theme,
+  onChange
+}: {
+  siteId: string;
+  theme: VideoTheme;
+  onChange: (examples: VideoThemeExample[]) => void;
+}) {
+  const [draft, setDraft] = useState<VideoThemeExample | null>(null);
+  const [savingExample, setSavingExample] = useState(false);
+  const [message, setMessage] = useState("");
+  const examples = theme.examples ?? [];
+
+  function startNew() {
+    setDraft({
+      id: "",
+      siteId,
+      themeId: theme.id,
+      name: "新参考案例",
+      description: "",
+      imageUrl: theme.imageUrl,
+      galleryImages: [],
+      prompt: defaultVideoThemeExamplePrompt,
+      status: "draft",
+      sortOrder: examples.length,
+      createdAt: new Date().toISOString()
+    });
+    setMessage("");
+  }
+
+  async function saveDraft() {
+    if (!draft) return;
+    const validation = validateVideoPrompt(draft.prompt);
+    if (!validation.valid) {
+      setMessage(`提示词校验未通过：${validation.errors.join(" ")}`);
+      return;
+    }
+    setSavingExample(true);
+    try {
+      const response = await fetchAdminJson<{ example?: VideoThemeExample; error?: string }>(
+        draft.id ? `/api/sites/${siteId}/video-themes/${theme.id}/examples/${draft.id}` : `/api/sites/${siteId}/video-themes/${theme.id}/examples`,
+        {
+          init: {
+            method: draft.id ? "PUT" : "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(draft)
+          },
+          ttlMs: 0
+        }
+      );
+      if (!response.ok || !response.data.example) throw new Error(response.data.error ?? "案例保存失败。");
+      onChange(updateListItem(examples, response.data.example));
+      setDraft(response.data.example);
+      setMessage("案例已保存，提示词格式校验通过。");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "案例保存失败。");
+    } finally {
+      setSavingExample(false);
+    }
+  }
+
+  async function deleteExample(example: VideoThemeExample) {
+    if (!window.confirm(`确认删除参考案例「${example.name}」吗？`)) return;
+    setSavingExample(true);
+    try {
+      const response = await fetchAdminJson<{ error?: string }>(`/api/sites/${siteId}/video-themes/${theme.id}/examples/${example.id}`, { init: { method: "DELETE" }, ttlMs: 0 });
+      if (!response.ok) throw new Error(response.data.error ?? "案例删除失败。");
+      onChange(examples.filter((item) => item.id !== example.id));
+      if (draft?.id === example.id) setDraft(null);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "案例删除失败。");
+    } finally {
+      setSavingExample(false);
+    }
+  }
+
+  async function generateCandidate() {
+    if (!draft) return;
+    setSavingExample(true);
+    setMessage("正在生成候选提示词，不会自动保存。");
+    try {
+      const response = await fetchAdminJson<{ candidate?: { prompt: string; validation?: { valid: boolean; errors: string[] } }; error?: string }>(
+        `/api/sites/${siteId}/video-themes/${theme.id}/examples/generate-prompt`,
+        {
+          init: {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
+            body: JSON.stringify({ themeName: theme.name, themeDescription: theme.description, exampleName: draft.name, referencePrompt: draft.prompt })
+          },
+          ttlMs: 0
+        }
+      );
+      if (!response.ok) throw new Error(response.data.error ?? "AI 候选生成失败。");
+      let candidate = response.data.candidate;
+      if (!candidate && (response.data as { jobId?: string }).jobId) {
+        const jobId = (response.data as { jobId: string }).jobId;
+        for (let attempt = 0; attempt < 60; attempt += 1) {
+          await new Promise((resolve) => window.setTimeout(resolve, 500));
+          const poll = await fetch(`/api/sites/${siteId}/video-theme-prompt-jobs/${jobId}`, { credentials: "same-origin", cache: "no-store" });
+          const payload = await poll.json().catch(() => ({})) as { job?: { status?: string; result?: { prompt?: string; validation?: { valid: boolean; errors: string[] } }; error?: { message?: string } } };
+          if (payload.job?.status === "succeeded" && payload.job.result?.prompt) { candidate = { prompt: payload.job.result.prompt, validation: payload.job.result.validation }; break; }
+          if (payload.job?.status === "failed") throw new Error(payload.job.error?.message ?? "AI 候选生成失败。");
+        }
+      }
+      if (!candidate) throw new Error("AI 候选生成超时，请稍后查看任务状态。");
+      setDraft((current) => current ? { ...current, prompt: candidate!.prompt } : current);
+      setMessage("候选提示词已生成，请人工检查并点击保存。");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "AI 候选生成失败。");
+    } finally {
+      setSavingExample(false);
+    }
+  }
+
+  const validation = draft ? validateVideoPrompt(draft.prompt) : undefined;
+  return (
+    <section className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div><p className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-400">Reference cases</p><h4 className="mt-1 text-base font-semibold text-slate-900">主题参考案例（{examples.length}）</h4><p className="mt-1 text-xs leading-5 text-slate-500">案例提示词必须包含完整视频 skill 结构，保存前会执行格式和安全校验。</p></div>
+        <button className="input_btn inline-flex h-9 items-center px-3" onClick={startNew} type="button"><Plus className="mr-1.5 h-4 w-4" strokeWidth={1.8} />新增案例</button>
+      </div>
+      <div className="mt-3 grid gap-2">{examples.map((example) => <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white px-3 py-3" key={example.id}><div><p className="text-sm font-semibold text-slate-900">{example.name}</p><p className="mt-1 text-xs text-slate-500">{example.status} · 排序 {example.sortOrder}</p></div><div className="flex gap-2"><button className="inline-flex h-8 items-center rounded-lg border border-slate-200 px-3 text-xs text-slate-600 hover:border-blue-200 hover:text-blue-600" onClick={() => setDraft(example)} type="button"><Pencil className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />编辑</button><button className="inline-flex h-8 items-center rounded-lg border border-red-100 px-3 text-xs text-red-600 hover:bg-red-50" disabled={savingExample} onClick={() => void deleteExample(example)} type="button"><Trash2 className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />删除</button></div></div>)}</div>
+      {draft ? <div className="mt-4 grid gap-3 rounded-lg border border-blue-100 bg-white p-4"><ErpFormGrid columns={2}><ErpField label="案例名称"><ErpInput onChange={(event) => setDraft((current) => current ? { ...current, name: event.target.value } : current)} value={draft.name} /></ErpField><ErpField label="状态"><ErpSelect onChange={(event) => setDraft((current) => current ? { ...current, status: event.target.value as VideoThemeExample["status"] } : current)} value={draft.status}><option value="active">已启用</option><option value="draft">草稿</option><option value="paused">已暂停</option></ErpSelect></ErpField><ErpField label="排序"><ErpInput onChange={(event) => setDraft((current) => current ? { ...current, sortOrder: Number(event.target.value) } : current)} type="number" value={draft.sortOrder} /></ErpField><ErpField label="封面 URL"><ErpInput onChange={(event) => setDraft((current) => current ? { ...current, imageUrl: event.target.value } : current)} value={draft.imageUrl ?? ""} /></ErpField><ErpField label="案例描述" span="full"><ErpTextarea onChange={(event) => setDraft((current) => current ? { ...current, description: event.target.value } : current)} rows={2} value={draft.description ?? ""} /></ErpField><ErpField hint="一行一个 URL；第一张图也会作为封面候选。" label="展示图集 URL" span="full"><ErpTextarea onChange={(event) => setDraft((current) => current ? { ...current, galleryImages: parseGalleryImages(event.target.value) } : current)} rows={3} value={(draft.galleryImages ?? []).join("\n")} /></ErpField><ErpField label="格式化提示词" span="full"><ErpTextarea onChange={(event) => setDraft((current) => current ? { ...current, prompt: event.target.value } : current)} rows={14} value={draft.prompt} /></ErpField></ErpFormGrid><div className={`rounded-lg border px-3 py-2 text-xs leading-5 ${validation?.valid ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-amber-200 bg-amber-50 text-amber-700"}`}>{validation?.valid ? "格式校验通过：已包含全部结构和细节约束。" : `格式校验未通过：${validation?.errors.join(" ")}`}</div>{message ? <p className="text-xs font-semibold text-slate-600">{message}</p> : null}<div className="flex flex-wrap justify-end gap-2"><button className="inline-flex h-9 items-center rounded-lg border border-violet-200 px-3 text-xs font-semibold text-violet-700 hover:bg-violet-50 disabled:opacity-50" disabled={savingExample} onClick={() => void generateCandidate()} type="button"><Sparkles className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />AI 生成候选</button><ErpToolbarAction label="取消" onClick={() => setDraft(null)} /><button className="input_btn inline-flex h-9 items-center px-3" disabled={savingExample || !validation?.valid} onClick={() => void saveDraft()} type="button"><Save className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.8} />保存案例</button></div></div> : null}
+    </section>
   );
 }
 

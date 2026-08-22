@@ -3740,6 +3740,7 @@ export function CustomerWorkspaceShell({
                     onOpenFrameManager={focusVideoFrameManager}
                     onRetryDraftApplied={() => setRetryVideoDraft(null)}
                     initialThemes={videoThemes}
+                    videoThemeCategories={videoThemeCategories}
                     readyFrameIds={readySelectedVideoFrameIds}
                     retryDraft={retryVideoDraft}
                     selectedFrames={selectedVideoFrames.map((asset) => ({ id: asset.id, label: asset.label, mimeType: asset.mimeType }))}

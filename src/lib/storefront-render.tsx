@@ -502,7 +502,11 @@ function lightweightVideoTheme(theme: VideoTheme): VideoTheme {
     generationCount: theme.generationCount,
     createdAt: theme.createdAt,
     imageUrl: theme.imageUrl,
-    galleryImages: (theme.galleryImages ?? []).filter(Boolean).slice(0, 12)
+    galleryImages: (theme.galleryImages ?? []).filter(Boolean).slice(0, 12),
+    examples: theme.examples?.map((example) => ({
+      ...example,
+      galleryImages: (example.galleryImages ?? []).filter(Boolean).slice(0, 12)
+    }))
   };
 }
 
@@ -1581,8 +1585,7 @@ function titleFromToolSlug(toolSlug: string): string {
     "old-photo-restoration": "Old Photo Restoration",
     "edit-by-prompt": "Photo Edit by Prompt",
     "headshot-generator": "Headshot Photo Generator",
-    "wedding-portraits": "Wedding Portraits",
-    "image-to-video": "Image to Video Concept"
+    "wedding-portraits": "Wedding Portraits"
   };
   return explicit[toolSlug] ?? toolSlug.split("-").filter(Boolean).map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`).join(" ");
 }
@@ -1786,23 +1789,6 @@ function customerToolCopy(toolSlug: string, title: string, category: string): Cu
       useCaseTwoDescription: "Fix the background first when the subject is good but the setting is not.",
       detailBody: "Background changer is for photos where the subject works but the scene gets in the way. Upload the image, replace the setting, then continue with a cleaner asset for profiles, listings, posts, or photo packages."
     },
-    "image-to-video": {
-      intro: "Turn a strong still image into a short video concept for creator intros, product teasers, social clips, and campaign previews.",
-      primaryCta: "Create a video concept",
-      guideTitle: "Plan motion from a still image",
-      guideBody: "Upload one finished image, choose the motion idea, then review a private short clip before downloading or planning the next video package.",
-      inputTitle: "Upload one strong image",
-      inputDescription: "Start with a sharp portrait, product shot, or scene that already has the look you want to animate.",
-      styleTitle: "Choose the motion idea",
-      styleDescription: "Think about camera movement, mood, pacing, and where the short video clip will be used before creating.",
-      outputTitle: "Review a private video draft",
-      outputDescription: "Use the video output as a social clip, intro concept, product teaser, or creative direction for a larger motion set.",
-      useCaseOneTitle: "Social and creator clips",
-      useCaseOneDescription: "Give a finished image enough movement for short-form posts and profile intros.",
-      useCaseTwoTitle: "Campaign previews",
-      useCaseTwoDescription: "Test motion, pacing, and mood before investing in a larger video package.",
-      detailBody: "Image to video starts with a still image and returns a private short clip with motion. Use it when the next step is video output for a post, profile intro, teaser, or campaign preview."
-    },
     "background-remover": {
       primaryCta: "Remove my background",
       intro: "Cut out a subject from a busy image and prepare a cleaner asset for profile photos, product visuals, and creative edits."
@@ -1892,7 +1878,6 @@ const dreamshootToolDirectorySlugs = [
   "anime-avatar",
   "gala-photo",
   "cyberpunk-portrait",
-  "image-to-video",
   "profile-clip",
   "creator-intro-video"
 ];
@@ -2273,8 +2258,6 @@ const dreamshootImageStudioToolAliases = new Set([
   "old-photo-restoration",
   "edit-by-prompt",
   "magic-upscaler",
-  "image-to-video-concept",
-  "image-to-video",
   "profile-clip-maker",
   "profile-clip",
   "fan-poster-motion",
@@ -2516,10 +2499,15 @@ function renderThemePage({
   const activeProductIds = storefrontContext
     ? new Set(storefrontContext.offers.active.map((offer) => offer.product.id))
     : undefined;
-  const resolvedCreativePacks = activePackIds
+  // Best Photo is a public catalog view. Keep all database-backed themes visible
+  // there, including review_required snapshot entries; generation flows still
+  // enforce the published storefront context and credit/output checks.
+  const preserveBestPhotoCatalog = currentSite.id === "site_dreamshoot" && pagePath === "/best-ai-image";
+  const resolvedCreativePacks = activePackIds && !preserveBestPhotoCatalog
     ? renderData.creativePacks.filter((pack) => activePackIds.has(pack.id))
     : renderData.creativePacks;
-  const resolvedNavigationCreativePacks = activePackIds && navigationCreativePacks
+  const preserveMydreamshootsPhotoMenu = currentSite.id === "site_dreamshoot";
+  const resolvedNavigationCreativePacks = activePackIds && navigationCreativePacks && !preserveMydreamshootsPhotoMenu
     ? navigationCreativePacks.filter((pack) => activePackIds.has(pack.id))
     : navigationCreativePacks;
 
@@ -2762,10 +2750,11 @@ export async function renderStorefrontSectionNode({
   const activePackIds = payload.storefrontContext
     ? new Set(payload.storefrontContext.catalog.activePacks.map((pack) => pack.id))
     : undefined;
+  const preserveBestPhotoCatalog = payload.clientSite.id === "site_dreamshoot" && payload.renderContext.pagePath === "/best-ai-image";
   return (
     <ThemeSectionFrame
       creativePackCategories={payload.renderData.creativePackCategories}
-      creativePacks={activePackIds ? payload.renderData.creativePacks.filter((pack) => activePackIds.has(pack.id)) : payload.renderData.creativePacks}
+      creativePacks={activePackIds && !preserveBestPhotoCatalog ? payload.renderData.creativePacks.filter((pack) => activePackIds.has(pack.id)) : payload.renderData.creativePacks}
       id={payload.id}
       lazyRender={false}
       mode={payload.mode}

@@ -82,7 +82,7 @@ import type {
   ThemeSettingValue
 } from "./types";
 import { aiProviderStatus } from "@/lib/ai-provider-config";
-import { inferPlatformAiProviderType, normalizePlatformAiProviderType, type PlatformAiProviderType } from "@/lib/ai-provider-type";
+import { inferPlatformAiProviderType, normalizePlatformAiProviderType, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { resolveMediaAssetUrl } from "@/lib/media";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import type { SaasThemeRecord, SaasThemeSettingsRecord, SaasThemeTemplates } from "@/lib/theme/saas-theme-model";
@@ -780,7 +780,7 @@ function normalizeState(state: PlatformState): PlatformState {
     providerType: normalizePlatformAiProviderType(provider.providerType, inferPlatformAiProviderType(provider)),
     enabled: provider.enabled ?? true
   }));
-  for (const providerType of ["image", "video"] as const) {
+  for (const providerType of platformAiProviderTypes) {
     const typedProviders = next.platformAiProviders
       .filter((provider) => provider.providerType === providerType)
       .sort((left, right) => Number(right.enabled) - Number(left.enabled) || comparePlatformAiProviderPriority(left, right));

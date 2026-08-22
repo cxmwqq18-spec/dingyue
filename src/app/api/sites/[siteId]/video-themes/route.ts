@@ -79,27 +79,46 @@ function categoryWhere(category?: string): Prisma.VideoThemeWhereInput | undefin
 }
 
 function publicVideoThemeWhere(siteId: string): Prisma.VideoThemeWhereInput {
-  const slugList = publicVideoThemeSlugListForSite(siteId);
+  const isMydreamshoots = siteId === "site_dreamshoot" || siteId === "site_grownstride_test";
+  const slugList = isMydreamshoots ? undefined : publicVideoThemeSlugListForSite(siteId);
   return {
     siteId,
     status: "active",
-    ...(slugList?.length
-      ? { slug: { in: [...slugList] } }
-      : isBlockedPublicVideoThemeSlugForSite(siteId, "creator-scene-motion")
-        ? { slug: { not: "creator-scene-motion" } }
-        : {}),
+    ...(isMydreamshoots
+      ? { slug: { notIn: ["text-to-video", "image-to-video"] } }
+      : slugList?.length
+        ? { slug: { in: [...slugList] } }
+        : isBlockedPublicVideoThemeSlugForSite(siteId, "creator-scene-motion")
+          ? { slug: { not: "creator-scene-motion" } }
+          : {}),
     OR: [
       { categoryId: null },
-      { category: { is: { status: "active" } } }
+      {
+        category: {
+          is: {
+            status: "active",
+            OR: [{ parentId: null }, { parent: { is: { status: "active" } } }]
+          }
+        }
+      }
     ]
   };
 }
 
 function publicVideoThemeCategoryWhere(siteId: string): Prisma.VideoThemeCategoryWhereInput {
+  if (siteId === "site_dreamshoot" || siteId === "site_grownstride_test") {
+    return {
+      siteId,
+      status: "active",
+      slug: { notIn: ["text-to-video", "image-to-video"] },
+      OR: [{ parentId: null }, { parent: { is: { status: "active" } } }]
+    };
+  }
   const slugList = publicVideoThemeSlugListForSite(siteId);
   return {
     siteId,
     status: "active",
+    OR: [{ parentId: null }, { parent: { is: { status: "active" } } }],
     ...(slugList?.length ? { slug: { in: [...slugList] } } : {})
   };
 }
@@ -155,12 +174,14 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   const includeCategories = url.searchParams.get("includeCategories") === "1";
   const withCounts = admin || url.searchParams.get("withCounts") === "1";
   const publicScope = admin && url.searchParams.get("scope") === "public";
+  const publicRequested = !admin || publicScope;
   const page = numberParam(url.searchParams.get("page"), 1, 1, 10000);
-  const pageSize = numberParam(url.searchParams.get("pageSize"), admin ? 20 : 100, 1, 100);
+  // Public selectors need the complete enabled catalog; admin tables retain a small page size cap.
+  const pageSize = numberParam(url.searchParams.get("pageSize"), admin ? 20 : 500, 1, admin ? 100 : 5000);
   const query = url.searchParams.get("q")?.trim();
   const status = url.searchParams.get("status")?.trim();
   const category = url.searchParams.get("category")?.trim();
-  const baseWhere: Prisma.VideoThemeWhereInput = publicScope
+  const baseWhere: Prisma.VideoThemeWhereInput = publicRequested
     ? publicVideoThemeWhere(siteId)
     : {
         siteId,
@@ -185,7 +206,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     if (cached && cached.expiresAt > Date.now()) return NextResponse.json(cached.payload);
     let themes = await prisma.videoTheme.findMany({
       where,
-      include: { category: { include: { parent: true } } },
+      include: {
+        category: { include: { parent: true } },
+        examples: { where: { status: "active" }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] }
+      },
       orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
       take: pageSize
     });
@@ -197,7 +221,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       await ensureDefaultVideoThemesRelational(siteId);
       themes = await prisma.videoTheme.findMany({
         where,
-        include: { category: { include: { parent: true } } },
+        include: {
+          category: { include: { parent: true } },
+          examples: { where: { status: "active" }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] }
+        },
         orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
         take: pageSize
       });
@@ -241,11 +268,14 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   const site = await prisma.site.findUnique({ where: { id: siteId }, select: { id: true } });
   if (!site) return NextResponse.json({ error: "site_not_found" }, { status: 404 });
   await ensureDefaultVideoThemesRelational(siteId);
-  const countScopeWhere: Prisma.VideoThemeWhereInput = publicScope ? publicVideoThemeWhere(siteId) : { siteId };
+  const countScopeWhere: Prisma.VideoThemeWhereInput = publicRequested ? publicVideoThemeWhere(siteId) : { siteId };
   const [themes, total, activeCount, draftCount, pausedCount, backendAllCount, publicAllCount] = await prisma.$transaction([
     prisma.videoTheme.findMany({
       where,
-      include: { category: { include: { parent: true } } },
+      include: {
+        category: { include: { parent: true } },
+        examples: admin && !publicRequested ? true : { where: { status: "active" }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] }
+      },
       orderBy: [{ status: "asc" }, { sortOrder: "asc" }, { createdAt: "desc" }],
       skip: admin ? (page - 1) * pageSize : undefined,
       take: pageSize
@@ -282,7 +312,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
     ...(includeCategories
       ? {
           categories: (await prisma.videoThemeCategory.findMany({
-            where: publicScope
+            where: publicRequested
               ? publicVideoThemeCategoryWhere(siteId)
               : { siteId, status: admin ? undefined : "active" },
             include: { parent: true },
