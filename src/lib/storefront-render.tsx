@@ -3292,6 +3292,7 @@ export async function renderCustomerWorkspacePage({
         initialSite={currentSite}
         initialToolMenuItems={bootstrap?.toolMenuItems ?? []}
         initialVideoThemeCategories={bootstrap?.videoThemeCategories ?? []}
+        initialPublishedVideoGenerationTopics={bootstrap?.publishedVideoGenerationTopics ?? []}
         siteSlug={publicSiteSlug(currentSite.slug)}
       />
     );
@@ -3372,6 +3373,7 @@ export async function renderCustomerWorkspacePageBySlug({
         initialSite={site}
         initialToolMenuItems={bootstrap?.toolMenuItems ?? []}
         initialVideoThemeCategories={bootstrap?.videoThemeCategories ?? []}
+        initialPublishedVideoGenerationTopics={bootstrap?.publishedVideoGenerationTopics ?? []}
         siteSlug={routeSlug}
       />
     );

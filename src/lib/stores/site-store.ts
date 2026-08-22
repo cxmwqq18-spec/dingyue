@@ -30,6 +30,7 @@ import { runnableVideoProviderModelFamiliesForRequest } from "@/lib/video-provid
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit, isVideoProviderModel } from "@/lib/video-provider-limits";
 import { DEFAULT_VIDEO_FRAME_LIMIT, defaultVideoModelPricing, normalizeVideoFrameLimit, normalizeVideoModelPricing, type VideoModelPricing } from "@/lib/video-frame-config";
 import { defaultVideoThemeExamplePrompt, validateVideoPrompt } from "@/lib/video-prompt-format";
+import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import type {
   AiGatewayGroup,
   AiProviderConfig,
@@ -52,6 +53,8 @@ import type {
   ThemePageJson,
   ThemePage,
   ThemePublication,
+  PublishedVideoNavigationProjection,
+  ThemePublicationSnapshot,
   ToolMenuItem,
   VideoTheme,
   VideoThemeCategory,
@@ -2507,7 +2510,19 @@ export type CustomerWorkspaceBootstrapRelational = {
   toolMenuItems: ToolMenuItem[];
   videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
+  publishedVideoGenerationTopics: PublishedVideoNavigationProjection[];
 };
+
+async function getPublishedVideoGenerationNavigationForSite(siteId: string): Promise<PublishedVideoNavigationProjection[]> {
+  if (!isMydreamshootsVideoFrameworkSiteId(siteId)) return [];
+  const site = await prisma.site.findUnique({
+    where: { id: siteId },
+    select: { activePublication: { select: { publication: { select: { snapshot: true } } } } }
+  });
+  const snapshot = site?.activePublication?.publication?.snapshot as ThemePublicationSnapshot | undefined;
+  if (publicationSnapshotIntegrity(snapshot) !== "valid") return [];
+  return Array.isArray(snapshot?.publishedVideoNavigation) ? snapshot.publishedVideoNavigation : [];
+}
 
 function watermarkedCreativePackCategoryForWorkspace(category: CreativePackCategory | undefined): CreativePackCategory | undefined {
   if (!category) return undefined;
@@ -2594,7 +2609,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
     const site = await getCustomerWorkspaceSiteShellRelational(slug);
     if (!site) return undefined;
 
-    const [siteAiApps, navigationData, videoThemes] = await Promise.all([
+    const [siteAiApps, navigationData, videoThemes, publishedVideoGenerationTopics] = await Promise.all([
       prisma.siteAiApp.findMany({
         where: { siteId: site.id, enabled: true },
         include: { aiApp: true },
@@ -2606,7 +2621,8 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
         return fallbackCustomerWorkspaceSiteAiApps(site.id);
       }),
       getStorefrontPublicNavigationDataForSite(site.id),
-      getStorefrontPublicVideoThemesForSite(site.id)
+      getStorefrontPublicVideoThemesForSite(site.id),
+      getPublishedVideoGenerationNavigationForSite(site.id)
     ]);
 
     return {
@@ -2622,7 +2638,8 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
       creativePacks: navigationData.creativePacks.map(watermarkedCreativePackForWorkspace),
       toolMenuItems: navigationData.toolMenuItems.map(watermarkedToolMenuItemForWorkspace),
       videoThemeCategories: navigationData.videoThemeCategories.map((category) => watermarkedVideoThemeCategoryForWorkspace(category) ?? category),
-      videoThemes: videoThemes.map(watermarkedVideoThemeForWorkspace)
+      videoThemes: videoThemes.map(watermarkedVideoThemeForWorkspace),
+      publishedVideoGenerationTopics
     };
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
 }

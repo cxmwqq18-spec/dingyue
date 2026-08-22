@@ -11,7 +11,7 @@ import { isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationParentCa
 import { getPhotoPackageMegaGroups } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
-import type { CreativePack, CreativePackCategory, PublicCustomer, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 
@@ -132,6 +132,21 @@ function videoGenerationTopicsForMenu(siteId: string, basePath: string, categori
     });
 }
 
+function publishedVideoGenerationTopicsForMenu(basePath: string, topics: PublishedVideoNavigationProjection[]): HeaderVideoGenerationTopic[] {
+  return topics.map((topic) => ({
+    id: topic.id,
+    slug: topic.slug,
+    label: topic.label,
+    description: topic.description,
+    href: `${basePath}${topic.canonicalPath}`,
+    imageUrl: topic.imageUrl,
+    parentSlug: topic.parentSlug,
+    parentLabel: topic.parentLabel,
+    parentSortOrder: topic.parentSortOrder,
+    sortOrder: topic.sortOrder
+  }));
+}
+
 export function CustomerShellHeader({
   site,
   customer,
@@ -140,7 +155,8 @@ export function CustomerShellHeader({
   creativePacks = [],
   toolMenuItems = [],
   videoThemeCategories = [],
-  videoThemes = []
+  videoThemes = [],
+  publishedVideoGenerationTopics
 }: {
   site: CustomerShellHeaderSite;
   customer: PublicCustomer;
@@ -150,6 +166,7 @@ export function CustomerShellHeader({
   toolMenuItems?: ToolMenuItem[];
   videoThemeCategories?: VideoThemeCategory[];
   videoThemes?: VideoTheme[];
+  publishedVideoGenerationTopics?: PublishedVideoNavigationProjection[];
 }) {
   const pathname = usePathname();
   const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
@@ -178,7 +195,11 @@ export function CustomerShellHeader({
   const menuSite = { ...site, __storefrontBasePath: basePath };
   const primaryMyDreamShoots = isMyDreamShoots && !isSpanishXby;
   const useVideoGenerationToolsMenu = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXby;
-  const videoGenerationMenuTopics = useVideoGenerationToolsMenu ? videoGenerationTopicsForMenu(site.id, basePath, videoThemeCategories, videoThemes) : [];
+  const videoGenerationMenuTopics = useVideoGenerationToolsMenu
+    ? publishedVideoGenerationTopics !== undefined
+      ? publishedVideoGenerationTopicsForMenu(basePath, publishedVideoGenerationTopics)
+      : videoGenerationTopicsForMenu(site.id, basePath, videoThemeCategories, videoThemes)
+    : [];
   const videoGenerationMenuHref = `${basePath}${videoGenerationCreatePath()}`;
   const activeToolBlocks = useVideoGenerationToolsMenu ? [] : getToolBlocksForMenu(menuSite, toolMenuItems);
   const packageRootHref = isMyDreamShoots && !isSpanishXby ? "/ai-image-generation" : "/collections";

@@ -64,7 +64,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           creativePacks: [],
           toolMenuItems: [],
           videoThemeCategories: [],
-          videoThemes: []
+          videoThemes: [],
+          publishedVideoGenerationTopics: []
         },
         { headers: { "Cache-Control": PUBLIC_EMPTY_SHELL_CACHE_CONTROL, Vary: "Cookie" } }
       );
@@ -92,7 +93,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           creativePacks: [],
           toolMenuItems: [],
           videoThemeCategories: [],
-          videoThemes: []
+          videoThemes: [],
+          publishedVideoGenerationTopics: []
         },
         { headers: { "Cache-Control": "private, max-age=8" } }
       );
@@ -122,7 +124,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         creativePacks: bootstrap?.creativePacks ?? [],
         toolMenuItems: bootstrap?.toolMenuItems ?? [],
         videoThemeCategories: bootstrap?.videoThemeCategories ?? [],
-        videoThemes: bootstrap?.videoThemes ?? []
+        videoThemes: bootstrap?.videoThemes ?? [],
+        publishedVideoGenerationTopics: bootstrap?.publishedVideoGenerationTopics ?? []
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
     ), request, siteId, current);
@@ -149,6 +152,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         toolMenuItems: bootstrap?.toolMenuItems ?? [],
         videoThemeCategories: bootstrap?.videoThemeCategories ?? [],
         videoThemes: bootstrap?.videoThemes ?? [],
+        publishedVideoGenerationTopics: bootstrap?.publishedVideoGenerationTopics ?? [],
         accountRuntime
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
@@ -192,6 +196,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       toolMenuItems: bootstrap.toolMenuItems,
       videoThemeCategories: bootstrap.videoThemeCategories,
       videoThemes: bootstrap.videoThemes,
+      publishedVideoGenerationTopics: bootstrap.publishedVideoGenerationTopics,
       ...(workspaceRuntime ? { workspaceRuntime: {
         ...workspaceRuntime,
         customer: current.customer,

@@ -23,7 +23,7 @@ import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-pr
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
-import type { CreativePack, CreativePackCategory, PublicCustomer, Site, ThemeRuntimeData, ToolMenuItem, VideoThemeCategory } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, Site, ThemeRuntimeData, ToolMenuItem, VideoThemeCategory } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 
 type CustomerAccountSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
@@ -154,7 +154,8 @@ export function CustomerAccountShell({
   creativePackCategories = [],
   creativePacks = [],
   toolMenuItems = [],
-  videoThemeCategories = []
+  videoThemeCategories = [],
+  publishedVideoGenerationTopics
 }: {
   site: CustomerAccountSite;
   customer: PublicCustomer;
@@ -163,6 +164,7 @@ export function CustomerAccountShell({
   creativePacks?: CreativePack[];
   toolMenuItems?: ToolMenuItem[];
   videoThemeCategories?: VideoThemeCategory[];
+  publishedVideoGenerationTopics?: PublishedVideoNavigationProjection[];
 }) {
   const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
   const prefetchPaths = useMemo(() => [basePath || "/", `${basePath}/account`, `${basePath}/app/create`, `${basePath}/pricing`, `${basePath}/tools`], [basePath]);
@@ -200,7 +202,7 @@ export function CustomerAccountShell({
     <div className="min-h-screen overflow-x-hidden bg-[var(--account-page-bg)] text-[var(--account-text)]" data-account-theme={accountTheme} style={accountThemeVars[accountTheme]}>
       <CustomerRoutePrefetch paths={prefetchPaths} />
       <StorefrontNavigationFeedback />
-      <CustomerShellHeader creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={runtimeCustomer} site={site} tone="dark" toolMenuItems={toolMenuItems} videoThemeCategories={videoThemeCategories} />
+      <CustomerShellHeader creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={runtimeCustomer} publishedVideoGenerationTopics={publishedVideoGenerationTopics} site={site} tone="dark" toolMenuItems={toolMenuItems} videoThemeCategories={videoThemeCategories} />
 
       <main className="mx-auto grid w-full max-w-[1760px] gap-5 px-4 py-5 sm:px-6 xl:grid-cols-[320px_minmax(0,1fr)] xl:px-8">
         <aside className="min-w-0 max-w-full overflow-hidden xl:sticky xl:top-[112px] xl:self-start xl:overflow-visible">
