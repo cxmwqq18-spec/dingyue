@@ -372,10 +372,7 @@ export default async function SiteCatchAllPage({
     ? await readCollectionRouteState(publicSlug, collectionLookupSlug)
     : await readPathModePublicRuntimeState(publicSlug, pageSlug);
   const publicSite = state?.sites[0];
-  if (!state || !publicSite) {
-    console.error("[mydreamshoots-video-debug] public state missing", { publicSlug, pageSlug, isVideoGenerationRequest, path, hasState: Boolean(state), hasSite: Boolean(publicSite) });
-    notFound();
-  }
+  if (!state || !publicSite) notFound();
   if (isPrimaryMydreamshootsSlug(publicSlug) && isVideoGenerationRequest && ["text-to-video", "image-to-video"].includes(path[1] ?? "")) {
     notFound();
   }
@@ -396,15 +393,7 @@ export default async function SiteCatchAllPage({
       }
       const theme = state.videoThemes?.find((item) => item.siteId === publicSite.id && item.status === "active" && item.slug === videoGenerationRoute.itemSlug);
       const detailPage = findPage(publicSite, `/ai-video-generation/${videoGenerationRoute.itemSlug}`);
-      if (!theme && !detailPage) {
-        console.error("[mydreamshoots-video-debug] path unresolved", {
-          site: publicSite.id,
-          slug: videoGenerationRoute.itemSlug,
-          pages: publicSite.pages.filter((page) => page.slug.includes("video")).map((page) => page.slug),
-          themes: state.videoThemes?.filter((item) => item.slug === videoGenerationRoute.itemSlug).map((item) => item.slug)
-        });
-        notFound();
-      }
+      if (!theme && !detailPage) notFound();
       return renderToolPage({
         site: publicSite,
         toolSlug: videoGenerationRoute.itemSlug,
