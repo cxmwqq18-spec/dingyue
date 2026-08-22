@@ -226,6 +226,10 @@ function visibleText(html) {
     .trim();
 }
 
+function renderedMarkup(html) {
+  return html.replace(/<script[\s\S]*?<\/script>/gi, "");
+}
+
 const homepage = await fetchHtml("/");
 const sitePathHomepage = await fetchHtml("/site/mydreamshoots/");
 const pricing = await fetchHtml("/pricing");
@@ -577,6 +581,7 @@ if (ugcAdIsPublished) {
   ]) {
     assert.ok(normalizedUgcAdVideoGeneration.includes(label), `UGC Ad Video SSR must expose the section label ${label}`);
   }
+  const ugcRenderedMarkup = renderedMarkup(ugcAdVideoGeneration);
   const ugcSectionOrder = [
     "SEARCH INTENT MATCH",
     "UGC JOBS",
@@ -591,9 +596,9 @@ if (ugcAdIsPublished) {
     "RESPONSIBLE / E-E-A-T",
     "FAQ",
     "CREATE WITH VERIFIED PRODUCT INPUTS"
-  ].map((needle) => ugcAdVideoGeneration.indexOf(needle));
+  ].map((needle) => ugcRenderedMarkup.indexOf(needle));
   assert(ugcSectionOrder.every((index) => index >= 0) && ugcSectionOrder.every((index, position, values) => position === 0 || index > values[position - 1]), "UGC Ad Video SSR sections must follow the documented UGC order");
-  assert.equal((ugcAdVideoGeneration.match(/data-video-topic-use-case-card/g) ?? []).length, 6, "UGC Ad Video must render exactly six use-case cards");
+  assert.equal((ugcRenderedMarkup.match(/data-video-topic-use-case-card/g) ?? []).length, 6, "UGC Ad Video must render exactly six use-case cards");
   const ugcFaq = ugcAdVideoGenerationGraph.find((node) => node?.["@type"] === "FAQPage");
   assert.equal(ugcFaq?.mainEntity?.length, 7, "UGC Ad Video JSON-LD must expose seven FAQ entries");
 }
@@ -644,6 +649,7 @@ if (promoIsPublished) {
   assert.equal(promoFaq?.mainEntity?.length, 8, "Promo Video JSON-LD must expose eight FAQ entries");
 }
 if (videoAdIsPublished) {
+  const videoAdRenderedMarkup = renderedMarkup(videoAdGeneration);
   assert.match(videoAdGeneration, /https:\/\/www\.mydreamshoots\.com\/ai-video-generation\/video-ad/, "Video Ad detail SSR must expose the canonical AI Video Generation URL");
   assert.equal(pageTitle(videoAdGeneration), "AI Video Ad Generator for Paid Social | myDreamshoots", "Video Ad title must match the approved SEO title");
   assert.equal(
@@ -666,7 +672,7 @@ if (videoAdIsPublished) {
     "video-ad-social-feed-placement.jpg",
     "video-ad-social-platform-phone.jpg"
   ];
-  const renderedVideoAdAssetPaths = Array.from(videoAdGeneration.matchAll(/\/assets\/dreamshoot\/video-ad\/([^"'?\\]+)/g)).map((match) => match[1]);
+  const renderedVideoAdAssetPaths = Array.from(videoAdRenderedMarkup.matchAll(/\/assets\/dreamshoot\/video-ad\/([^"'?\\]+)/g)).map((match) => match[1]);
   assert.equal(new Set(renderedVideoAdAssetPaths).size, 8, "Video Ad SSR must render eight unique topic assets");
   for (const assetPath of videoAdAssetPaths) {
     assert.ok(renderedVideoAdAssetPaths.includes(assetPath), `Video Ad SSR must render ${assetPath}`);
@@ -684,43 +690,44 @@ if (videoAdIsPublished) {
   ]) {
     assert.ok(normalizedVideoAdGeneration.includes(label), `Video Ad SSR must expose the section label ${label}`);
   }
-  assert.equal((videoAdGeneration.match(/data-video-ad-scene/g) ?? []).length, 8, "Video Ad must render exactly eight scene cards");
-  assert.equal((videoAdGeneration.match(/data-video-ad-guide-card/g) ?? []).length, 5, "Video Ad must render exactly five guide cards");
-  assert.equal((videoAdGeneration.match(/data-video-ad-step/g) ?? []).length, 4, "Video Ad must render exactly four workflow steps");
-  assert.ok(videoAdGeneration.includes("data-video-ad-workspace"), "Video Ad must render the workspace evidence panel");
+  assert.equal((videoAdRenderedMarkup.match(/data-video-ad-scene/g) ?? []).length, 8, "Video Ad must render exactly eight scene cards");
+  assert.equal((videoAdRenderedMarkup.match(/data-video-ad-guide-card/g) ?? []).length, 5, "Video Ad must render exactly five guide cards");
+  assert.equal((videoAdRenderedMarkup.match(/data-video-ad-step/g) ?? []).length, 4, "Video Ad must render exactly four workflow steps");
+  assert.ok(videoAdRenderedMarkup.includes("data-video-ad-workspace"), "Video Ad must render the workspace evidence panel");
   const videoAdFaq = videoAdGenerationGraph.find((node) => node?.["@type"] === "FAQPage");
   assert.equal(videoAdFaq?.mainEntity?.length, 6, "Video Ad JSON-LD must expose six FAQ entries");
 }
 for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
   if (!sitemapHasLoc(`https://${host}${pathname}`) || !html) continue;
   const slug = pathname.split("/").at(-1);
-  assert.equal((html.match(/data-video-topic-page=/g) ?? []).length, 1, `${pathname} must render the shared video topic page marker`);
+  const pageMarkup = renderedMarkup(html);
+  assert.equal((pageMarkup.match(/data-video-topic-page=/g) ?? []).length, 1, `${pathname} must render the shared video topic page marker`);
   if (slug === "video-ad") {
     const sectionNames = ["hero", "what-this-creates", "style-cues", "how-it-works", "scene-gallery", "guide", "workflow", "faq", "related-pages", "final-cta"];
     for (const section of sectionNames) {
-      assert.ok(html.includes(`data-video-topic-section="${section}"`), `${pathname} must render the Video Ad ${section} section`);
+      assert.ok(pageMarkup.includes(`data-video-topic-section="${section}"`), `${pathname} must render the Video Ad ${section} section`);
     }
-    assert.equal((html.match(/data-video-ad-scene/g) ?? []).length, 8, `${pathname} must render exactly eight scene gallery cards`);
-    assert.equal((html.match(/data-video-ad-guide-card/g) ?? []).length, 5, `${pathname} must render exactly five guide cards`);
-    assert.equal((html.match(/data-video-ad-step/g) ?? []).length, 4, `${pathname} must render exactly four workflow steps`);
-    assert.ok(html.includes(`/app/create?videoMode=${slug}`), `${pathname} must expose a topic-specific workspace CTA`);
+    assert.equal((pageMarkup.match(/data-video-ad-scene/g) ?? []).length, 8, `${pathname} must render exactly eight scene gallery cards`);
+    assert.equal((pageMarkup.match(/data-video-ad-guide-card/g) ?? []).length, 5, `${pathname} must render exactly five guide cards`);
+    assert.equal((pageMarkup.match(/data-video-ad-step/g) ?? []).length, 4, `${pathname} must render exactly four workflow steps`);
+    assert.ok(pageMarkup.includes(`/app/create?videoMode=${slug}`), `${pathname} must expose a topic-specific workspace CTA`);
     continue;
   }
-  assert.equal((html.match(/<article[^>]+data-video-topic-use-case-card/g) ?? []).length, 6, `${pathname} must render exactly six use-case cards`);
+  assert.equal((pageMarkup.match(/<article[^>]+data-video-topic-use-case-card/g) ?? []).length, 6, `${pathname} must render exactly six use-case cards`);
   const sectionNames = slug === "ugc-ad-video"
     ? ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"]
     : slug === "promo-video"
       ? ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "urgency", "how-it-works", "comparison", "trust", "faq", "final-cta"]
     : ["hero", "use-cases", "foundation", "guidance", "steps", "value", "trust", "faq", "final-cta"];
   for (const section of sectionNames) {
-    assert.ok(html.includes(`data-video-topic-section="${section}"`), `${pathname} must render the shared ${section} section`);
+    assert.ok(pageMarkup.includes(`data-video-topic-section="${section}"`), `${pathname} must render the shared ${section} section`);
   }
-  const useCaseSection = html.match(/data-video-topic-section="use-cases"[\s\S]*?data-video-topic-section="foundation"/)?.[0] ?? "";
+  const useCaseSection = pageMarkup.match(/data-video-topic-section="use-cases"[\s\S]*?data-video-topic-section="foundation"/)?.[0] ?? "";
   const imageUrls = Array.from(useCaseSection.matchAll(/<img[^>]+src=["']([^"']+)/g)).map((match) => match[1]);
   assert.equal(imageUrls.length, 6, `${pathname} use-case cards must each expose one image`);
   assert.equal(new Set(imageUrls).size, imageUrls.length, `${pathname} use-case images must be unique`);
   assert.equal(useCaseSection.includes('href="#how-it-works"'), false, `${pathname} use-case cards must not expose repeated anchor CTAs`);
-  assert.ok(html.includes(`/app/create?videoMode=${slug}`), `${pathname} must expose a topic-specific workspace CTA`);
+  assert.ok(pageMarkup.includes(`/app/create?videoMode=${slug}`), `${pathname} must expose a topic-specific workspace CTA`);
 }
 assert.equal(memeVideoGeneration.includes("Meme Video Examples"), false, "Meme Video must not render the duplicate gallery heading");
 assert.equal(memeVideoGeneration.includes("See More Meme Examples"), false, "Meme Video must not render the duplicate gallery CTA");
@@ -728,26 +735,28 @@ const sharedSectionOrder = ["hero", "use-cases", "foundation", "guidance", "step
 for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
   if (!sitemapHasLoc(`https://${host}${pathname}`) || !html) continue;
   const slug = pathname.split("/").at(-1);
+  const pageMarkup = renderedMarkup(html);
   const sectionOrder = slug === "ugc-ad-video"
     ? ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"]
     : slug === "promo-video"
       ? ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "urgency", "how-it-works", "comparison", "trust", "faq", "final-cta"]
     : slug === "video-ad"
       ? ["hero", "what-this-creates", "style-cues", "how-it-works", "scene-gallery", "guide", "workflow", "faq", "related-pages", "final-cta"]
-    : html.includes('data-video-topic-section="supporting"')
+    : pageMarkup.includes('data-video-topic-section="supporting"')
       ? ["hero", "use-cases", "foundation", "guidance", "supporting", "steps", "value", "trust", "faq", "final-cta"]
       : sharedSectionOrder;
-  const indexes = sectionOrder.map((section) => html.indexOf(`data-video-topic-section="${section}"`));
+  const indexes = sectionOrder.map((section) => pageMarkup.indexOf(`data-video-topic-section="${section}"`));
   assert(indexes.every((index) => index >= 0) && indexes.every((index, position, values) => position === 0 || index > values[position - 1]), `${pathname} must keep the shared section order`);
 }
 if (productAdIsPublished) {
+  const productAdRenderedMarkup = renderedMarkup(productAdVideoGeneration);
   const productAdSectionOrder = [
     "PLACEMENT ADAPTATION",
     "CHOOSE THE RIGHT VIDEO JOB",
     "FROM PRODUCT GOAL TO AD DRAFT",
     "MESSAGE TESTING WITHOUT CHANGING THE FACTS",
     "CREATE RESPONSIBLY"
-  ].map((needle) => productAdVideoGeneration.indexOf(needle));
+  ].map((needle) => productAdRenderedMarkup.indexOf(needle));
   assert(productAdSectionOrder.every((index) => index >= 0) && productAdSectionOrder.every((index, position, values) => position === 0 || index > values[position - 1]), "Product Ad Video SSR sections must follow guidance, supporting content, how it works, and responsible storytelling order");
 }
 if (talkingPhotoGeneration) assert.ok(talkingPhotoGeneration.includes("/app/create#step-video") || talkingPhotoGeneration.includes("/app/create"), "Talking Photo CTA must point into the video workspace");

@@ -8,14 +8,23 @@ import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { showcaseStores } from "./dreamshoot-homepage-showcase-data.mjs";
+import { assertDatabaseTarget, assertNonProductionWriteTarget } from "./lib/database-target.mjs";
 
-const siteId = "site_dreamshoot";
+const siteId = process.env.SYNC_SITE_ID?.trim() || "site_dreamshoot";
 const apply = process.argv.includes("--apply") && !process.argv.includes("--dry-run");
 const databaseUrl = process.env.DATABASE_URL?.trim();
 if (!databaseUrl) throw new Error("DATABASE_URL is required");
 const parsed = new URL(databaseUrl);
-assert(["localhost", "127.0.0.1", "::1"].includes(parsed.hostname), `refusing non-local database host: ${parsed.hostname}`);
-assert(parsed.port === "15433", `homepage DB sync must use local port 15433 (received ${parsed.port})`);
+if (siteId === "site_dreamshoot") {
+  assertDatabaseTarget({ expectedTarget: "local" });
+  assert(["localhost", "127.0.0.1", "::1"].includes(parsed.hostname), `refusing non-local database host: ${parsed.hostname}`);
+  assert(parsed.port === "15433", `homepage DB sync must use local port 15433 (received ${parsed.port})`);
+} else if (siteId === "site_grownstride_test") {
+  assertDatabaseTarget({ expectedTarget: "test" });
+  assertNonProductionWriteTarget();
+} else {
+  throw new Error(`homepage DB sync refuses unsupported site ${siteId}`);
+}
 
 const repoRoot = process.cwd();
 const backupDir = path.join(repoRoot, "releases", "backups");
@@ -381,7 +390,8 @@ try {
     .split("|").map((slug) => slug.trim()).filter(Boolean);
   const mergedBestImageJson = mergeBestGallery(currentBestImageJson, "image");
   const mergedBestVideoJson = mergeBestGallery(currentBestVideoJson, "video", productionVideoSlugs);
-  const showcase = showcaseStores.find((store) => store.siteId === siteId);
+  const showcase = showcaseStores.find((store) => store.siteId === siteId)
+    ?? (siteId === "site_grownstride_test" ? showcaseStores.find((store) => store.siteId === "site_dreamshoot") : null);
   assert(showcase, `showcase source missing for ${siteId}`);
   const showcaseCategories = Array.from(new Map([
     ...showcase.videoCategories,
