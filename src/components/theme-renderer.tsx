@@ -6370,9 +6370,11 @@ function PhotoPackageMegaPanel({ groups, site, variant = "dark" }: { groups: Pho
       : "Estudios de paquetes de fotos"
     : aidreamcapes
       ? "Occasion album studios"
-      : warm
-        ? "Photo package studios"
-        : "AI photo package studios";
+      : isMyDreamShootsProfileSite(site)
+        ? "AI Image Generation"
+        : warm
+          ? "Photo package studios"
+          : "AI photo package studios";
   return (
     <div className={warm ? "flex max-h-[var(--storefront-mega-panel-max-height,calc(100dvh-6.5rem))] flex-col overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)] ring-1 ring-[#d8b17e]/20 backdrop-blur-xl" : "flex max-h-[var(--storefront-mega-panel-max-height,calc(100dvh-6.5rem))] flex-col overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl"}>
       <div className="mb-4 flex items-center justify-center gap-3 text-center">

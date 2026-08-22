@@ -143,6 +143,7 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
         hasLegacyVideoToolLabels: /Profile Clip|Fan Poster Motion|Creator Intro Video|Product Teaser Clip|Animated Avatar|Fashion Reel|Album Story Video/.test(panelText),
         hasHiddenVideoWorkflowLabels: /Text to video|Image to Video/.test(panelText),
         hasVideoTopicDescriptions: /Explore a talking-photo workflow|Plan story-driven cinematic clips|Create TikTok-first vertical video briefs|Shape Reels around cover-aware framing|Adapt one master story|Plan long-form YouTube drafts|Shape story-led videos around setup|Turn reactions, POV setups|Turn product photos into clear video directions|Build product ads around one audience|Plan creator-style product ads around speaker status/.test(panelText),
+        hasMyDreamShootsImageGenerationTitle: /AI Image Generation/.test(panelText),
         hasVideoCategoriesLabel: /\bCATEGOR(?:Y|IES)\b/i.test(panelText),
         hasFiveVideoCategoriesLabel: /5\s+categories\s+·\s+13\s+themes/i.test(panelText),
         hasThirteenVideoThemesLabel: /13\s+THEMES/i.test(panelText)
@@ -167,6 +168,9 @@ async function assertMegaMenuPosition(context, entry, menu = "packages") {
       const responsiveCap = Math.min(760, Math.max(260, Math.floor(metrics.viewportHeight * 0.72)));
       assert(Number.parseFloat(metrics.panelMaxHeight) <= responsiveCap + 1, `${entry.label} ${entry.path}: package panel max-height ${metrics.panelMaxHeight} ignored responsive cap ${responsiveCap}px`);
       assert(metrics.packageGridMaxHeight === "none", `${entry.label} ${entry.path}: package list still uses fixed max-height ${metrics.packageGridMaxHeight}`);
+      if (entry.path.startsWith(`/site/${siteSlug}`)) {
+        assert(metrics.hasMyDreamShootsImageGenerationTitle, `${entry.label} ${entry.path}: MyDreamShoots image menu title must be AI Image Generation`);
+      }
     } else if (entry.path.includes(`/site/${siteSlug}/`)) {
       const topicTexts = metrics.videoMenuLinks.map((link) => link.text).join(" ");
       assert(metrics.hiddenVideoLinks.length === 0, `${entry.label} ${entry.path}: AI Video Generation menu still links hidden Text/Image workflows`, { hiddenVideoLinks: metrics.hiddenVideoLinks });
