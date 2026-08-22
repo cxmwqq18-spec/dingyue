@@ -636,8 +636,18 @@ function toPrismaJson(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function stableJson(value) {
+  if (Array.isArray(value)) return value.map(stableJson);
+  if (!value || typeof value !== "object") return value ?? null;
+  return Object.fromEntries(
+    Object.entries(value)
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([key, item]) => [key, stableJson(item)])
+  );
+}
+
 function sameJson(left, right) {
-  return JSON.stringify(left ?? null) === JSON.stringify(right ?? null);
+  return JSON.stringify(stableJson(left)) === JSON.stringify(stableJson(right));
 }
 
 function loadPublicationTools() {
@@ -744,7 +754,7 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
     existingSlugs.add(page.slug);
     const replacement = syncedBySlug.get(page.slug);
     if (!replacement) return page;
-    if (JSON.stringify(page) === JSON.stringify(replacement)) return page;
+    if (sameJson(page, replacement)) return page;
     replacedCount += 1;
     return replacement;
   });
