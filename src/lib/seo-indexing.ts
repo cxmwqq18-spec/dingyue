@@ -13,6 +13,7 @@ import {
 import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
 import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
@@ -28,7 +29,7 @@ export const AIDREAMCAPES_EU_ORIGIN = "https://aidreamcapes.eu";
 export const AIDREAMCAPES_EU_SITEMAP_URL = `${AIDREAMCAPES_EU_ORIGIN}/sitemap.xml`;
 
 const DREAMSHOOT_SITE_ID = "site_dreamshoot";
-const DREAMSHOOT_SITE_SLUGS = new Set(["mydreamshoots", "dreamshoot"]);
+const DREAMSHOOT_SITE_SLUGS = new Set(["mydreamshoots", "dreamshoot", "grownstride"]);
 const AIDREAMCAPES_SITE_ID = "site_aidreamcapes";
 const AIDREAMCAPES_SITE_SLUGS = new Set(["aidreamcapes"]);
 const GROWNSTRIDE_HOSTS = new Set(["grownstride.com", "www.grownstride.com", "test.grownstride.com"]);
@@ -470,10 +471,10 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     if (effective.routeDisposition.kind !== "render" || !effective.indexability.sitemapEligible) continue;
     const loc = effective.context.seo.canonicalUrl;
     const path = effective.context.seo.canonicalPath;
-    const standardMedia = site.id === "site_dreamshoot"
+    const standardMedia = isPrimaryMydreamshootsSite(site)
       ? resolvePublishedSeoEntity(snapshot, path).standardPageMedia
       : undefined;
-    const pageMedia = site.id === "site_dreamshoot"
+    const pageMedia = isPrimaryMydreamshootsSite(site)
       ? resolvePublishedSeoEntity(snapshot, path).pageMedia
       : undefined;
     entries.set(loc, {
@@ -488,7 +489,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
               loc: absoluteMediaUrl(site, image),
               title: pageMedia.imageAlts[index] || sitemapImageTitleForPage(page)
             })).filter((image) => image.loc)
-        : site.id === "site_dreamshoot"
+        : isPrimaryMydreamshootsSite(site)
           ? []
           : collectPageSitemapImages(site, page),
       lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
@@ -506,7 +507,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       if (entry) entry.images = collectionItems.flatMap((item) => packSitemapImages(site, item.source, 1));
     }
   }
-  if (site.id === "site_dreamshoot" && collectionPage) {
+  if (isPrimaryMydreamshootsSite(site) && collectionPage) {
     for (const route of snapshot.publishedRoutes.filter((candidate): candidate is PublishedLeafRouteProjection =>
       candidate.disposition === "render" && candidate.routeKind === "ai-image-theme-leaf" && candidate.indexable && candidate.sitemapEligible
     )) {
@@ -763,7 +764,7 @@ function pagesForSite(site: Site): ThemePage[] {
 }
 
 function isDreamshootSite(site: Site): boolean {
-  return site.id === DREAMSHOOT_SITE_ID || DREAMSHOOT_SITE_SLUGS.has(site.slug) || site.primaryDomain === "www.mydreamshoots.com";
+  return site.id === DREAMSHOOT_SITE_ID || site.id === "site_grownstride_test" || DREAMSHOOT_SITE_SLUGS.has(site.slug) || site.primaryDomain === "www.mydreamshoots.com";
 }
 
 function isAidreamcapesSite(site: Site): boolean {

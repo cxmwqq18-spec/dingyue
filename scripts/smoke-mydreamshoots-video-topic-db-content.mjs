@@ -5,10 +5,12 @@ import fs from "node:fs";
 import Module from "node:module";
 import path from "node:path";
 import createJiti from "jiti";
+import { assertDatabaseTarget } from "./lib/database-target.mjs";
 
 import { PrismaClient } from "@prisma/client";
 
-const SITE_ID = "site_dreamshoot";
+const SITE_ID = process.env.SITE_ID?.trim() || "site_dreamshoot";
+assertDatabaseTarget({ expectedTarget: String(process.env.DATABASE_TARGET || "local").trim().toLowerCase() });
 const topicSlugs = [
   "talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "social-media-video", "youtube-video",
   "story-video", "meme-video", "product-video", "product-ad-video", "promo-video", "ugc-ad-video",

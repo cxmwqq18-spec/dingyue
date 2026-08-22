@@ -70,7 +70,7 @@ function publishedLeafCopy(snapshot: ReturnType<typeof createPublishedSiteSnapsh
 }
 
 function publishedVideoGenerationTopics(snapshot: ReturnType<typeof createPublishedSiteSnapshot>): HeaderVideoGenerationTopic[] | undefined {
-  if (snapshot.site.id !== "site_dreamshoot" || snapshot.snapshotIntegrity !== "valid") return undefined;
+  if (!isPrimaryMydreamshootsCapabilitySite(snapshot.site) || snapshot.snapshotIntegrity !== "valid") return undefined;
   return snapshot.publishedVideoNavigation.map((item) => ({
     id: item.id,
     slug: item.slug,
@@ -2530,11 +2530,11 @@ function renderThemePage({
   // Best Photo is a public catalog view. Keep all database-backed themes visible
   // there, including review_required snapshot entries; generation flows still
   // enforce the published storefront context and credit/output checks.
-  const preserveBestPhotoCatalog = currentSite.id === "site_dreamshoot" && pagePath === "/best-ai-image";
+  const preserveBestPhotoCatalog = isPrimaryMydreamshootsCapabilitySite(currentSite) && pagePath === "/best-ai-image";
   const resolvedCreativePacks = activePackIds && !preserveBestPhotoCatalog
     ? renderData.creativePacks.filter((pack) => activePackIds.has(pack.id))
     : renderData.creativePacks;
-  const preserveMydreamshootsPhotoMenu = currentSite.id === "site_dreamshoot";
+  const preserveMydreamshootsPhotoMenu = isPrimaryMydreamshootsCapabilitySite(currentSite);
   const resolvedNavigationCreativePacks = activePackIds && navigationCreativePacks && !preserveMydreamshootsPhotoMenu
     ? navigationCreativePacks.filter((pack) => activePackIds.has(pack.id))
     : navigationCreativePacks;
@@ -2781,7 +2781,7 @@ export async function renderStorefrontSectionNode({
   const activePackIds = payload.storefrontContext
     ? new Set(payload.storefrontContext.catalog.activePacks.map((pack) => pack.id))
     : undefined;
-  const preserveBestPhotoCatalog = payload.clientSite.id === "site_dreamshoot" && payload.renderContext.pagePath === "/best-ai-image";
+  const preserveBestPhotoCatalog = isPrimaryMydreamshootsCapabilitySite(payload.clientSite) && payload.renderContext.pagePath === "/best-ai-image";
   return (
     <ThemeSectionFrame
       creativePackCategories={payload.renderData.creativePackCategories}

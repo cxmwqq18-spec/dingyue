@@ -2,6 +2,7 @@ import "server-only";
 
 import { withSeoDirectorySeo, type SeoDirectoryKind } from "@/lib/dreamshoot-seo-content";
 import { createPublishedSiteSnapshot, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, type PublishedSiteSnapshot } from "@/lib/storefront-context";
+import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/lib/types";
 
@@ -70,7 +71,7 @@ export async function metadataForPublishedStorefrontDirectoryPage({
   const publishedBasePage = snapshot?.pages.find((candidate) => candidate.id === page.id) ?? page;
   const publishedSite = snapshot?.site ?? site;
   const projectionPath = path ?? (kind === "collection" ? `/ai-image-generation/${directorySlug}` : `/ai-video-generation/${directorySlug}`);
-  const resolved = publishedSite.id === "site_dreamshoot" && snapshot
+  const resolved = isPrimaryMydreamshootsSite(publishedSite) && snapshot
     ? resolvePublishedSeoEntity(snapshot, projectionPath)
     : undefined;
   const route = resolved?.route && (resolved.route.routeKind === "ai-image-theme-leaf" || resolved.route.routeKind === "ai-video-topic-leaf")
@@ -93,7 +94,7 @@ export async function metadataForPublishedStorefrontDirectoryPage({
           ogImage: pageMedia?.status === "ready" ? pageMedia.primaryImage : undefined
         }
       }
-    : publishedSite.id === "site_dreamshoot" && (kind === "collection" || kind === "tool")
+    : isPrimaryMydreamshootsSite(publishedSite) && (kind === "collection" || kind === "tool")
       ? {
           ...publishedBasePage.publishedJson,
           seo: {

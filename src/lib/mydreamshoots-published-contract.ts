@@ -6,7 +6,8 @@ import {
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import type { CreativePack, PublishedLinkRef, PublishedPageEntityProjection } from "@/lib/types";
 
-const SITE_ID = "site_dreamshoot";
+export type MyDreamshootsSiteId = "site_dreamshoot" | "site_grownstride_test";
+const SITE_ID: MyDreamshootsSiteId = "site_dreamshoot";
 const ROUTE_KIND = "ai-image-theme-leaf";
 const DEFERRED_LEAF_SLUGS = new Set(["motion-generator"]);
 
@@ -25,7 +26,7 @@ export type MyDreamshootsPublishedRouteStatus = "published" | "review_required";
 
 export type MyDreamshootsPublishedRouteManifestRow = {
   disposition: "render";
-  siteId: typeof SITE_ID;
+  siteId: MyDreamshootsSiteId;
   routeKind: typeof ROUTE_KIND;
   canonicalSlug: string;
   canonicalPath: string;
@@ -48,7 +49,7 @@ export type MyDreamshootsPublishedPageEntity = PublishedPageEntityProjection & {
 };
 
 export type MyDreamshootsPublishedPageMediaProjection = {
-  siteId: typeof SITE_ID;
+  siteId: MyDreamshootsSiteId;
   routeKind: typeof ROUTE_KIND;
   canonicalSlug: string;
   canonicalPath: string;
@@ -100,7 +101,7 @@ function expectedPackId(item: TaxonomyItem): string {
   return item.reusePackId || `pack_dreamshoot_${item.slug.replace(/[^a-z0-9]+/g, "_")}`;
 }
 
-export function mydreamshootsPublishedRouteManifest(): MyDreamshootsPublishedRouteManifestRow[] {
+export function mydreamshootsPublishedRouteManifest(siteId: MyDreamshootsSiteId = SITE_ID): MyDreamshootsPublishedRouteManifestRow[] {
   return taxonomyItems.map((item) => {
     const canonicalSlug = normalizePublishedSlug(item.slug);
     const canonicalPath = `/ai-image-generation/${canonicalSlug}`;
@@ -114,7 +115,7 @@ export function mydreamshootsPublishedRouteManifest(): MyDreamshootsPublishedRou
     const indexable = copyReady && copyIndependent && mediaReady && !deferred;
     return {
       disposition: "render",
-      siteId: SITE_ID,
+      siteId,
       routeKind: ROUTE_KIND,
       canonicalSlug,
       canonicalPath,
@@ -142,8 +143,8 @@ export function mydreamshootsPublishedRouteManifest(): MyDreamshootsPublishedRou
   });
 }
 
-export function mydreamshootsPublishedPageEntities(): MyDreamshootsPublishedPageEntity[] {
-  return mydreamshootsPublishedRouteManifest().flatMap((route) => {
+export function mydreamshootsPublishedPageEntities(siteId: MyDreamshootsSiteId = SITE_ID): MyDreamshootsPublishedPageEntity[] {
+  return mydreamshootsPublishedRouteManifest(siteId).flatMap((route) => {
     const copy = mydreamshootsPageCopyForSlug(route.canonicalSlug);
     if (!copy) return [];
     const independence = assessMydreamshootsPageIndependence(copy, route.canonicalSlug);
@@ -289,7 +290,10 @@ export function buildPublishedPageMediaProjection(
 
   const images = Array.from(new Set([pack.imageUrl, ...(pack.galleryImages ?? [])].map((value) => String(value ?? "").trim()).filter(Boolean)));
   const ownerMatches = pack.id === route.expectedPackId;
-  const imageAlts = (pack.galleryImageAlts ?? []).map((value) => String(value ?? "").trim());
+  const suppliedImageAlts = (pack.galleryImageAlts ?? []).map((value) => String(value ?? "").trim());
+  // Keep the immutable media projection structurally aligned even when a legacy pack
+  // is missing alt text. Empty values leave the route review_required and non-indexable.
+  const imageAlts = images.map((_, index) => suppliedImageAlts[index] ?? "");
   const altsReady = imageAlts.length === images.length && imageAlts.every(Boolean);
   const imageContractReady = images.length === 13 && imageAlts.length === 13;
   const ready = route.status === "published" && ownerMatches && imageContractReady && altsReady;

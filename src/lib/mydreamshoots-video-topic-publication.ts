@@ -233,7 +233,8 @@ function topicReady(entity: PublishedPageEntityProjection, media: PublishedPageM
  * output as part of an immutable ThemePublication snapshot.
  */
 export function compileMydreamshootsVideoTopicPublication(
-  pages: Array<Pick<ThemePage, "id" | "pageType" | "slug" | "title" | "draftJson" | "publishedJson">>
+  pages: Array<Pick<ThemePage, "id" | "pageType" | "slug" | "title" | "draftJson" | "publishedJson">>,
+  siteId: "site_dreamshoot" | "site_grownstride_test" = "site_dreamshoot"
 ): MyDreamshootsVideoTopicPublication {
   const sources = sourcesFromPages(pages)
     .sort((left, right) => topicSortOrder(left.slug) - topicSortOrder(right.slug) || left.slug.localeCompare(right.slug));
@@ -306,7 +307,7 @@ export function compileMydreamshootsVideoTopicPublication(
     pageMedia.push(finalizedMedia);
     routes.push({
       disposition: "render",
-      siteId: "site_dreamshoot",
+      siteId,
       routeKind: "ai-video-topic-leaf",
       canonicalSlug: source.slug,
       canonicalPath,
@@ -388,7 +389,8 @@ export function compileMydreamshootsVideoTopicPublication(
  * projections already present in the immutable snapshot.
  */
 export function applyMydreamshootsVideoTopicPublication(
-  snapshot: PublishedSeoSnapshot
+  snapshot: PublishedSeoSnapshot,
+  siteId: "site_dreamshoot" | "site_grownstride_test" = "site_dreamshoot"
 ): PublishedSeoSnapshot {
   const pages = snapshot.pages.map((page) => ({
     id: page.id,
@@ -398,7 +400,7 @@ export function applyMydreamshootsVideoTopicPublication(
     draftJson: page.publishedJson,
     publishedJson: page.publishedJson
   }));
-  const video = compileMydreamshootsVideoTopicPublication(pages);
+  const video = compileMydreamshootsVideoTopicPublication(pages, siteId);
   const isVideoEntity = (pageEntityId: string) => pageEntityId.startsWith("mydreamshoots:video-topic:");
   const publishedRoutes = [
     ...snapshot.publishedRoutes.filter((route) => route.routeKind !== "ai-video-topic-leaf"),

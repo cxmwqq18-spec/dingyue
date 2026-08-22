@@ -4,6 +4,7 @@ import fs from "node:fs";
 import Module from "node:module";
 import path from "node:path";
 import createJiti from "jiti";
+import { assertNonProductionWriteTarget } from "./lib/database-target.mjs";
 
 const repoRoot = process.cwd();
 const args = new Set(process.argv.slice(2));
@@ -20,6 +21,7 @@ const EMPTY_UNPUBLISHED_PAGE_JSON = {
   sectionsOrder: [],
   sections: {}
 };
+const nonPublicVideoTopicSlugs = new Set(["text-to-video", "image-to-video"]);
 
 const videoCategories = [
   {
@@ -491,7 +493,9 @@ function pageJson(page, content = videoTopicContentSeedForSlug(page.slug)) {
 
 function syncCategories(state, changes) {
   const categories = state.videoThemeCategories ?? (state.videoThemeCategories = []);
-  return videoCategories.map((category) => {
+  return videoCategories
+    .filter((category) => !nonPublicVideoTopicSlugs.has(category.slug))
+    .map((category) => {
     let record = categories.find((item) => item.siteId === SITE_ID && item.slug === category.slug);
     const before = JSON.stringify(record ?? {});
     if (!record) {
@@ -522,8 +526,8 @@ function syncCategories(state, changes) {
       "VideoThemeCategory"
     );
     if (JSON.stringify(record) !== before) record.updatedAt = RUN_TIMESTAMP;
-    return record;
-  });
+      return record;
+    });
 }
 
 function syncPages(state, changes) {
@@ -667,6 +671,8 @@ function loadPublicationTools() {
   try {
     const jiti = createJiti(import.meta.url);
     return {
+      buildPublicationSnapshot: jiti("../src/lib/stores/theme-store.ts").buildPublicationSnapshot,
+      missingStorefrontProfileFacts: jiti("../src/lib/storefront-context/facts.ts").missingStorefrontProfileFacts,
       publishSeoSnapshotRelational: jiti("../src/lib/stores/theme-store.ts").publishSeoSnapshotRelational,
       applyMydreamshootsVideoTopicPublication: jiti("../src/lib/mydreamshoots-video-topic-publication.ts").applyMydreamshootsVideoTopicPublication,
       publicationSnapshotHash: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotHash,
@@ -697,6 +703,8 @@ function addPublicationToState(state, publication) {
 
 async function publishMissingVideoPages(state, syncedPages, prisma) {
   const {
+    buildPublicationSnapshot,
+    missingStorefrontProfileFacts,
     publishSeoSnapshotRelational,
     applyMydreamshootsVideoTopicPublication,
     publicationSnapshotHash,
@@ -715,10 +723,26 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
     ...allPublications.filter((publication) => publication.id !== activePointer?.publication?.id)
   ].filter(Boolean);
   const currentPublication = publicationCandidates.find((publication) => publicationSnapshotIntegrity(publication.snapshot) === "valid");
+  const sourceSite = (state.sites ?? []).find((site) => site.id === SITE_ID);
+  if (!sourceSite) throw new Error(`missing_site:${SITE_ID}`);
   if (!currentPublication) {
-    throw new Error(`missing_publication:${SITE_ID}; publish the site before syncing video topic pages`);
+    const profile = sourceSite.storefrontProfile?.draftJson ?? sourceSite.storefrontProfile?.publishedJson;
+    const missingProfileFacts = missingStorefrontProfileFacts(profile, { requireProductionClaims: SITE_ID === "site_dreamshoot" });
+    if (missingProfileFacts.length) {
+      throw new Error(`missing_storefront_profile_facts:${SITE_ID}:${missingProfileFacts.join(",")}`);
+    }
   }
-  const snapshot = clone(currentPublication.snapshot);
+
+  // Legacy publications cannot be patched. Recompile a complete immutable snapshot from
+  // the current relational draft state, then let the normal publication transaction activate it.
+  const snapshot = currentPublication
+    ? clone(currentPublication.snapshot)
+    : buildPublicationSnapshot(
+      sourceSite,
+      undefined,
+      (state.creativePacks ?? []).filter((pack) => pack.siteId === SITE_ID),
+      (state.products ?? []).filter((product) => product.siteId === SITE_ID)
+    );
   const databaseVideoPages = await prisma.themePage.findMany({
     where: {
       siteId: SITE_ID,
@@ -767,9 +791,10 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
     ? snapshot.publishedVideoNavigation
     : [];
   const needsVideoProjection = publishedVideoRouteCount !== syncedPublicPages.length ||
-    publishedVideoNavigation.length !== syncedPublicPages.length;
-  if (!replacedCount && !missingPages.length && !needsVideoProjection) return undefined;
-  const compiledSnapshot = applyMydreamshootsVideoTopicPublication(snapshot);
+    publishedVideoNavigation.length !== syncedPublicPages.length ||
+    publishedVideoNavigation.some((item) => typeof item.description !== "string" || !item.description.trim());
+  if (currentPublication && !replacedCount && !missingPages.length && !needsVideoProjection) return undefined;
+  const compiledSnapshot = applyMydreamshootsVideoTopicPublication(snapshot, SITE_ID);
   Object.assign(snapshot, compiledSnapshot);
   refreshSnapshotHash(snapshot, publicationSnapshotHash);
   if (publicationSnapshotIntegrity(snapshot) !== "valid") {
@@ -859,11 +884,17 @@ async function updateDatabase(state, categories, syncedPages) {
             draftJson: toPrismaJson(page.draftJson),
             draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
           };
-          const existingPage = await tx.themePage.findUnique({
-            where: { id: page.id },
+          const existingPage = await tx.themePage.findFirst({
+            where: {
+              siteId: SITE_ID,
+              OR: [{ id: page.id }, { slug: page.slug }]
+            },
             select: { id: true, pageType: true, templateKey: true, slug: true, title: true, draftJson: true, draftMeta: true }
           });
           if (existingPage) {
+            // Existing remote pages can predate deterministic import IDs. The stable slug is
+            // the publication identity, so retain that relational ID in the draft and snapshot.
+            page.id = existingPage.id;
             const pageChanged = existingPage.pageType !== pageData.pageType ||
               existingPage.templateKey !== pageData.templateKey ||
               existingPage.slug !== pageData.slug ||
@@ -872,7 +903,7 @@ async function updateDatabase(state, categories, syncedPages) {
               !sameJson(existingPage.draftMeta, pageData.draftMeta);
             if (pageChanged) {
               await tx.themePage.update({
-                where: { id: page.id },
+                where: { id: existingPage.id },
                 data: pageData
               });
             }
@@ -929,7 +960,10 @@ pruneNonPublicVideoTopicPages(state, changes);
 syncExistingVideoThemePreviews(state, changes);
 
 let databasePublication;
-if (updateDb && !dryRun) databasePublication = await updateDatabase(state, categories, syncedPages);
+if (updateDb && !dryRun) {
+  assertNonProductionWriteTarget();
+  databasePublication = await updateDatabase(state, categories, syncedPages);
+}
 console.log(
   JSON.stringify(
     {

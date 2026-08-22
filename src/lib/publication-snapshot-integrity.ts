@@ -30,7 +30,7 @@ function publicMediaUrl(value: unknown): value is string {
 }
 
 function route(value: unknown): value is PublishedRouteProjection {
-  if (!record(value) || value.siteId !== "site_dreamshoot") return false;
+  if (!record(value) || (value.siteId !== "site_dreamshoot" && value.siteId !== "site_grownstride_test")) return false;
   if (value.disposition === "redirect") {
     return value.routeKind === "policy-alias" && text(value.aliasPath) && text(value.targetPath) &&
       value.statusCode === 308 && value.indexable === false && value.sitemapEligible === false && text(value.routeRevision);
@@ -194,9 +194,32 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     Array.isArray(v1.publishedLinkRefs) && v1.publishedLinkRefs.every(link) &&
     (v1.publishedVideoNavigation === undefined || Array.isArray(v1.publishedVideoNavigation) && v1.publishedVideoNavigation.every(videoNavigation)) &&
     text(v1.snapshotHash) && text(v1.buildId) && text(v1.revisions?.snapshotHash) &&
-    ["factsRevision", "routeRevision", "pageRevision", "copyRevision", "mediaRevision", "packRevision", "offerRevision", "collectionRevision", "policyRevision", "linkRevision"]
+    ["factsRevision", "routeRevision", "pageRevision", "copyRevision", "mediaRevision", "packRevision", "offerRevision", "collectionRevision", "policyRevision", "linkRevision", "navigationRevision"]
       .every((key) => text(v1.revisions?.[key as keyof typeof v1.revisions]));
-  if (!valid) return "invalid";
+  if (!valid) {
+    if (process.env.MYDREAMSHOOTS_SNAPSHOT_DEBUG === "1") {
+      console.error(JSON.stringify({
+        pages: Array.isArray(v1.pages),
+        themeSettings: record(v1.themeSettings),
+        routes: Array.isArray(v1.publishedRoutes) && v1.publishedRoutes.every(route),
+        pageEntities: Array.isArray(v1.publishedPageEntities) && v1.publishedPageEntities.every(pageEntity),
+        pageCopy: Array.isArray(v1.publishedPageCopy) && v1.publishedPageCopy.every(pageCopy),
+        pageMedia: Array.isArray(v1.publishedPageMedia) && v1.publishedPageMedia.every(media),
+        standardPageMedia: Array.isArray(v1.publishedStandardPageMedia) && v1.publishedStandardPageMedia.every(standardMedia),
+        packFacts: Array.isArray(v1.publishedPackFacts),
+        offers: Array.isArray(v1.publishedOffers) && v1.publishedOffers.every(offer),
+        facts: facts(v1.publishedFacts),
+        collections: Array.isArray(v1.publishedCollectionRefs) && v1.publishedCollectionRefs.every(collection),
+        links: Array.isArray(v1.publishedLinkRefs) && v1.publishedLinkRefs.every(link),
+        videoNavigation: v1.publishedVideoNavigation === undefined || Array.isArray(v1.publishedVideoNavigation) && v1.publishedVideoNavigation.every(videoNavigation),
+        snapshotHash: text(v1.snapshotHash),
+        buildId: text(v1.buildId),
+        revisions: Object.fromEntries(["factsRevision", "routeRevision", "pageRevision", "copyRevision", "mediaRevision", "packRevision", "offerRevision", "collectionRevision", "policyRevision", "linkRevision", "navigationRevision"]
+          .map((key) => [key, text(v1.revisions?.[key as keyof typeof v1.revisions])]))
+      }, null, 2));
+    }
+    return "invalid";
+  }
 
   const publishedPageEntities = v1.publishedPageEntities;
   const publishedPageMedia = v1.publishedPageMedia;

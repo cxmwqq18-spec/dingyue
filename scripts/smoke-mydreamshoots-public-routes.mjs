@@ -152,16 +152,43 @@ async function main() {
   const keyRoutes = ["/", "/login", "/pricing", "/workflow", "/faq", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog"];
   const htmlScanRoutes = ["/", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog", "/sitemap.xml"];
   const failures = [];
+  const publicHost = process.env.MYDREAMSHOOTS_HOST || "www.mydreamshoots.com";
+  const sitemapResult = await fetchRoute(baseUrl, "/sitemap.xml", { publicHost, accept: "application/xml" });
+  if (sitemapResult.status !== 200) {
+    failures.push({ kind: "sitemap_status", route: "/sitemap.xml", expected: 200, actual: sitemapResult.status });
+  }
+  const sitemapLocations = new Set([...sitemapResult.text.matchAll(/<loc>([^<]+)<\/loc>/gi)].map((match) => match[1]));
+  const isPublishedImageRoute = (route) => route === "/ai-image-generation" || sitemapLocations.has(`https://${publicHost}${route}`);
 
-  for (const route of Array.from(new Set([...keyRoutes, ...canonicalImageRoutes, ...videoRoutes]))) {
+  for (const route of Array.from(new Set([...keyRoutes, ...videoRoutes]))) {
     const result = await fetchRoute(baseUrl, route, { readBody: false });
     if (result.status !== 200) {
       failures.push({ kind: "canonical_status", route, expected: 200, actual: result.status, finalUrl: result.finalUrl });
     }
   }
 
+  for (const route of canonicalImageRoutes) {
+    const result = await fetchRoute(baseUrl, route, { readBody: false });
+    const expectedStatus = isPublishedImageRoute(route) ? 200 : 404;
+    if (result.status !== expectedStatus) {
+      failures.push({ kind: "image_route_disposition", route, expected: expectedStatus, actual: result.status, finalUrl: result.finalUrl });
+    }
+  }
+
   for (const route of legacyImageRoutes) {
+    const canonicalRoute = route === "/collections"
+      ? "/ai-image-generation"
+      : `/ai-image-generation/${route.slice("/collections/".length)}`;
     const first = await fetchRoute(baseUrl, route, { redirect: "manual", readBody: false });
+    if (!isPublishedImageRoute(canonicalRoute)) {
+      if (first.status !== 404) {
+        failures.push({ kind: "legacy_review_required_status", route, expected: 404, actual: first.status, location: first.location });
+      }
+      continue;
+    }
+    // Legacy aliases that are not included in the immutable redirect inventory
+    // must fail closed rather than creating an inferred public redirect.
+    if (first.status === 404) continue;
     if (![301, 302, 307, 308].includes(first.status)) {
       failures.push({ kind: "legacy_redirect_status", route, expected: "301/302/307/308", actual: first.status });
       continue;
@@ -191,7 +218,9 @@ async function main() {
   }
 
   for (const route of htmlScanRoutes) {
-    const result = await fetchRoute(baseUrl, route, route === "/sitemap.xml" ? { publicHost: "www.mydreamshoots.com" } : {});
+    const result = route === "/sitemap.xml"
+      ? sitemapResult
+      : await fetchRoute(baseUrl, route);
     if (result.status !== 200) {
       failures.push({ kind: "html_scan_status", route, expected: 200, actual: result.status });
       continue;

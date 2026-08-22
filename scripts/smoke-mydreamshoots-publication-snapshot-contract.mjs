@@ -14,7 +14,7 @@ const snapshot = read("src/lib/storefront-context/snapshot.ts");
 const metadata = read("src/lib/storefront-metadata.ts");
 const templates = read("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 
-for (const field of ["publishedRoutes", "publishedPageEntities", "publishedPageCopy", "publishedPageMedia", "publishedStandardPageMedia", "publishedPackFacts", "publishedOffers", "publishedFacts", "publishedCollectionRefs", "publishedLinkRefs", "revisions", "snapshotHash", "buildId"]) {
+for (const field of ["publishedRoutes", "publishedPageEntities", "publishedPageCopy", "publishedPageMedia", "publishedStandardPageMedia", "publishedPackFacts", "publishedOffers", "publishedFacts", "publishedCollectionRefs", "publishedLinkRefs", "publishedVideoNavigation", "revisions", "snapshotHash", "buildId"]) {
   assert.match(types, new RegExp(`${field}[^?;]*:`), `ThemePublication snapshot must require ${field}`);
   assert.match(themeStore, new RegExp(field), `publication builder must write ${field}`);
 }
@@ -188,7 +188,8 @@ publicationSnapshot.revisions = {
   offerRevision: projectionRevision(publicationSnapshot.publishedOffers),
   collectionRevision: projectionRevision(publicationSnapshot.publishedCollectionRefs),
   policyRevision: projectionRevision({ privacy: publicationSnapshot.publishedFacts.privacy, refund: publicationSnapshot.publishedFacts.refund, creditLifecycle: publicationSnapshot.publishedFacts.creditLifecycle, security: publicationSnapshot.publishedFacts.security }),
-  linkRevision: projectionRevision(publicationSnapshot.publishedLinkRefs)
+  linkRevision: projectionRevision(publicationSnapshot.publishedLinkRefs),
+  navigationRevision: projectionRevision(publicationSnapshot.publishedVideoNavigation ?? [])
 };
 publicationSnapshot.snapshotHash = publicationSnapshotHash(publicationSnapshot);
 publicationSnapshot.revisions.snapshotHash = publicationSnapshot.snapshotHash;
@@ -349,7 +350,8 @@ immutableSnapshot.revisions = {
   offerRevision: projectionRevision(immutableSnapshot.publishedOffers),
   collectionRevision: projectionRevision(immutableSnapshot.publishedCollectionRefs),
   policyRevision: projectionRevision({ privacy: immutableSnapshot.publishedFacts.privacy, refund: immutableSnapshot.publishedFacts.refund, creditLifecycle: immutableSnapshot.publishedFacts.creditLifecycle, security: immutableSnapshot.publishedFacts.security }),
-  linkRevision: projectionRevision(immutableSnapshot.publishedLinkRefs)
+  linkRevision: projectionRevision(immutableSnapshot.publishedLinkRefs),
+  navigationRevision: projectionRevision(immutableSnapshot.publishedVideoNavigation ?? [])
 };
 immutableSnapshot.snapshotHash = publicationSnapshotHash(immutableSnapshot);
 immutableSnapshot.revisions.snapshotHash = immutableSnapshot.snapshotHash;

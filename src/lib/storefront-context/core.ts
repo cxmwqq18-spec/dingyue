@@ -3,7 +3,7 @@ import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import type { ResolvedOffer, ResolvedPageSeo, StorefrontContext, StorefrontContextBundle, StorefrontContextMode, StorefrontPublishScope } from "./types";
 import { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
-import { resolveSiteCapability } from "./capabilities";
+import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
 import { applyTitleTemplate, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 
 function clean(value: unknown): string {
@@ -34,13 +34,14 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
   const rawTitle = clean(pageSeo?.title) || clean(bundle.page.title) || brand;
   const description = clean(pageSeo?.description);
   const path = normalizeCanonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
-  const standardMedia = bundle.site.id === "site_dreamshoot"
+  const primaryMydreamshoots = isPrimaryMydreamshootsSite(bundle.site);
+  const standardMedia = primaryMydreamshoots
     ? bundle.publishedStandardPageMedia?.[path]
     : undefined;
-  const standardMediaRequired = bundle.site.id === "site_dreamshoot" && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(path);
+  const standardMediaRequired = primaryMydreamshoots && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(path);
   const standardMediaReady = !standardMediaRequired || standardMedia?.status === "ready";
   const defaultIndex = bundle.page.pageType !== "not_found" && bundle.page.slug !== "/404";
-  const pageScopedSocial = bundle.site.id === "site_dreamshoot" && (
+  const pageScopedSocial = primaryMydreamshoots && (
     path === "/about-us" || path === "/faq" || path === "/pricing" || path === "/workflow" ||
     path === "/best-ai-image" || path === "/ai-image-generation" || /^\/ai-image-generation\//.test(path)
   );
@@ -193,6 +194,7 @@ export function resolveStorefrontContext(
   options: { now?: Date; scope?: StorefrontPublishScope } = {}
 ): StorefrontContext {
   const scope = options.scope;
+  const primaryMydreamshoots = isPrimaryMydreamshootsSite(bundle.site);
   const pageJson = mode === "draft" ? bundle.page.draftJson : bundle.page.publishedJson;
   const settings = mode === "draft" && scope?.includeThemeSettings
     ? bundle.site.themeSettings.draftJson
@@ -209,7 +211,7 @@ export function resolveStorefrontContext(
   const pageEntity = (pageCopySlug || videoTopicSlug) && mode === "published" && bundle.publishedPageEntities
     ? bundle.publishedPageEntities[seo.canonicalPath]
     : undefined;
-  const pageCopy = pageCopySlug && mode === "published" && bundle.site.id === "site_dreamshoot"
+  const pageCopy = pageCopySlug && mode === "published" && primaryMydreamshoots
     ? pageEntity
       ? pageCopyFromPublishedPageEntity(pageEntity, bundle.publishedLinkRefs ?? [])
       : undefined
@@ -222,7 +224,7 @@ export function resolveStorefrontContext(
       })
     : undefined;
   if (!seo.description && seo.index) missingFacts.push(`page.${bundle.page.id}.seo.description`);
-  const snapshotFailClosed = mode === "published" && bundle.site.id === "site_dreamshoot" &&
+  const snapshotFailClosed = mode === "published" && primaryMydreamshoots &&
     (Boolean(pageCopySlug || videoTopicSlug) || MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(seo.canonicalPath)) &&
     bundle.snapshotIntegrity !== "valid";
   const resolvedSeo = pageEntity
@@ -240,7 +242,7 @@ export function resolveStorefrontContext(
       ? { ...seo, index: false, follow: true, sitemapEligible: false }
       : seo;
   if (snapshotFailClosed) missingFacts.push("published.seo.snapshot");
-  if (mode === "published" && bundle.site.id === "site_dreamshoot" && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(resolvedSeo.canonicalPath) && !bundle.publishedStandardPageMedia?.[resolvedSeo.canonicalPath]) {
+  if (mode === "published" && primaryMydreamshoots && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(resolvedSeo.canonicalPath) && !bundle.publishedStandardPageMedia?.[resolvedSeo.canonicalPath]) {
     missingFacts.push("published.standard_page_media");
   }
   return {

@@ -949,7 +949,7 @@ export interface PublishedStandardPageMediaProjection {
 
 export interface PublishedLeafRouteProjection {
   disposition: "render";
-  siteId: "site_dreamshoot";
+  siteId: "site_dreamshoot" | "site_grownstride_test";
   routeKind: "ai-image-theme-leaf";
   canonicalSlug: string;
   canonicalPath: string;
@@ -969,7 +969,7 @@ export interface PublishedLeafRouteProjection {
 
 export interface PublishedVideoTopicRouteProjection {
   disposition: "render";
-  siteId: "site_dreamshoot";
+  siteId: "site_dreamshoot" | "site_grownstride_test";
   routeKind: "ai-video-topic-leaf";
   canonicalSlug: string;
   canonicalPath: string;
@@ -989,7 +989,7 @@ export interface PublishedVideoTopicRouteProjection {
 
 export interface PublishedPolicyRouteProjection {
   disposition: "render";
-  siteId: "site_dreamshoot";
+  siteId: "site_dreamshoot" | "site_grownstride_test";
   routeKind: "policy";
   canonicalPath: "/privacy" | "/terms";
   pageEntityId: string;
@@ -1002,7 +1002,7 @@ export interface PublishedPolicyRouteProjection {
 
 export interface PublishedRedirectRouteProjection {
   disposition: "redirect";
-  siteId: "site_dreamshoot";
+  siteId: "site_dreamshoot" | "site_grownstride_test";
   routeKind: "policy-alias";
   aliasPath: string;
   targetPath: "/privacy" | "/terms";

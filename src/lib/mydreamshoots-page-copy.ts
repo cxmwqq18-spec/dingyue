@@ -142,7 +142,7 @@ export function mydreamshootsPageCopyForRoute(input: {
   canonicalSlug?: string | null;
   canonicalPath?: string | null;
 }): MyDreamshootsPageCopy | undefined {
-  if (input.siteId && input.siteId !== "site_dreamshoot") return undefined;
+  if (input.siteId && !["site_dreamshoot", "site_grownstride_test"].includes(input.siteId)) return undefined;
   if (input.routeKind && input.routeKind !== "ai-image-theme-leaf") return undefined;
 
   const canonicalSlug = normalizeSlug(input.canonicalSlug);

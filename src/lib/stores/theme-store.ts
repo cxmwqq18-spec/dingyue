@@ -10,6 +10,7 @@ import { getSectionSchema } from "@/lib/section-schema";
 import { clearSiteMediaSummaryCache, clearSiteReadCache, getThemePublishPreflightBundleRelational } from "@/lib/stores/site-store";
 import { normalizeStorefrontProfile } from "@/lib/stores/storefront-profile-store";
 import { clearStorefrontContextCache, hasCompleteStorefrontProfileFacts, loadDraftStorefrontContext } from "@/lib/storefront-context";
+import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { resolveStorefrontBindings } from "@/lib/storefront-context/core";
 import {
   buildSaasThemeDraft,
@@ -111,7 +112,7 @@ function buildPublishedStandardPageMedia(
   leafRoutes: ReturnType<typeof mydreamshootsPublishedRouteManifest>,
   leafMedia: ReturnType<typeof buildPublishedPageMediaProjection>[]
 ): PublishedStandardPageMediaProjection[] {
-  if (site.id !== "site_dreamshoot") return [];
+  if (!isPrimaryMydreamshootsSite(site)) return [];
   return STANDARD_MYDREAMSHOOTS_MEDIA_PATHS.map((canonicalPath) => {
     const page = site.pages.find((candidate) => candidate.slug === canonicalPath || candidate.publishedJson.seo?.canonicalPath === canonicalPath);
     const discovered = page ? collectPublishedImageUrls(page.publishedJson) : [];
@@ -274,7 +275,8 @@ export function buildPublicationSnapshot(
   products: Product[] = []
 ): PublishedSeoSnapshot {
   const publishedAt = Date.now();
-  const sourceRoutes = site.id === "site_dreamshoot" ? mydreamshootsPublishedRouteManifest() : [];
+  const isMydreamshootsPublicationSite = isPrimaryMydreamshootsSite(site);
+  const sourceRoutes = isMydreamshootsPublicationSite ? mydreamshootsPublishedRouteManifest(site.id as "site_dreamshoot" | "site_grownstride_test") : [];
   const imagePublishedPageCopy = sourceRoutes.map((route) => {
     const copy = mydreamshootsPageCopyForRoute({
       siteId: site.id,
@@ -311,7 +313,7 @@ export function buildPublicationSnapshot(
     { canonicalPath: "/privacy" as const, aliases: ["/privacy-policy", "/policies/privacy", "/policies/privacy-policy"] },
     { canonicalPath: "/terms" as const, aliases: ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"] }
   ];
-  const publishedPolicyPages = site.id === "site_dreamshoot"
+  const publishedPolicyPages = isMydreamshootsPublicationSite
     ? policyRouteSpecs.flatMap(({ canonicalPath, aliases }) => {
         const sourcePage = [canonicalPath, ...aliases]
           .map((slug) => site.pages.find((candidate) => candidate.slug === slug))
@@ -319,14 +321,14 @@ export function buildPublicationSnapshot(
         return sourcePage ? [{ ...sourcePage, slug: canonicalPath }] : [];
       })
     : [];
-  const policyRoutes: PublishedRouteProjection[] = site.id === "site_dreamshoot"
+  const policyRoutes: PublishedRouteProjection[] = isMydreamshootsPublicationSite
     ? policyRouteSpecs.flatMap(({ canonicalPath, aliases }) => {
         const page = publishedPolicyPages.find((candidate) => candidate.slug === canonicalPath);
         if (!page) return [];
         const pageRevision = crypto.createHash("sha256").update(JSON.stringify(page.publishedJson)).digest("hex").slice(0, 20);
         const renderRoute: PublishedRouteProjection = {
           disposition: "render",
-          siteId: "site_dreamshoot",
+          siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
           routeKind: "policy",
           canonicalPath,
           pageEntityId: `mydreamshoots:policy:${canonicalPath.slice(1)}`,
@@ -338,7 +340,7 @@ export function buildPublicationSnapshot(
         };
         const redirects: PublishedRouteProjection[] = aliases.map((aliasPath) => ({
           disposition: "redirect",
-          siteId: "site_dreamshoot",
+          siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
           routeKind: "policy-alias",
           aliasPath,
           targetPath: canonicalPath,
@@ -350,11 +352,13 @@ export function buildPublicationSnapshot(
         return [renderRoute, ...redirects];
       })
     : [];
-  const videoTopicPublication = site.id === "site_dreamshoot"
-    ? compileMydreamshootsVideoTopicPublication(site.pages)
+  const videoTopicPublication = isMydreamshootsPublicationSite
+    ? compileMydreamshootsVideoTopicPublication(site.pages, site.id as "site_dreamshoot" | "site_grownstride_test")
     : { routes: [], pageEntities: [], pageCopy: [], pageMedia: [], linkRefs: [], navigation: [] };
   const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...policyRoutes, ...videoTopicPublication.routes];
-  const sourcePageEntities = site.id === "site_dreamshoot" ? mydreamshootsPublishedPageEntities() : [];
+  const sourcePageEntities = isMydreamshootsPublicationSite
+    ? mydreamshootsPublishedPageEntities(site.id as "site_dreamshoot" | "site_grownstride_test")
+    : [];
   const imagePublishedPageEntities = sourcePageEntities.map((entity) => {
     const route = leafRoutes.find((candidate) => candidate.pageEntityId === entity.pageEntityId);
     if (!route) return { ...entity, status: "review_required" as const, indexable: false, sitemapEligible: false };
@@ -383,10 +387,6 @@ export function buildPublicationSnapshot(
     revision: crypto.createHash("sha256").update(JSON.stringify([pack.id, pack.creditCost, pack.outputCount])).digest("hex").slice(0, 20)
   }));
   const routeRevision = projectionRevision(publishedRoutes);
-  const pageRevision = projectionRevision(publishedPageEntities);
-  const copyRevision = projectionRevision(publishedPageCopy);
-  const mediaRevision = projectionRevision({ leaf: publishedPageMedia, standard: publishedStandardPageMedia });
-  const packRevision = projectionRevision(publishedPackFacts);
   const publishedOffers = products.flatMap((product) => product.prices
     .filter((price) => product.status === "active" && price.status === "active" && price.amountCents > 0)
     .filter((price) => Boolean(
@@ -492,7 +492,7 @@ export function buildPublicationSnapshot(
       const label = candidate.label.trim();
       const href = candidate.href.trim();
       const target = publishedPageEntities.find((page) => page.canonicalPath === href);
-      if (!label || !target) return [];
+      if (!label || !target || target.status !== "published" || !target.indexable || !target.sitemapEligible) return [];
       return [{
         linkEntityId: publishedLinkEntityId(entity.pageEntityId, "related", index),
         ownerPageEntityId: entity.pageEntityId,
@@ -504,16 +504,21 @@ export function buildPublicationSnapshot(
         revision: crypto.createHash("sha256").update(JSON.stringify([entity.pageEntityId, target.pageEntityId, "related", label, href])).digest("hex").slice(0, 20)
       }];
     });
+    entity.content.relatedLinkEntityIds = related.map((item) => item.linkEntityId);
     return [...cta, ...related];
   });
   const publishedLinkRefs = [...imagePublishedLinkRefs, ...videoTopicPublication.linkRefs];
+  const pageRevision = projectionRevision(publishedPageEntities);
+  const copyRevision = projectionRevision(publishedPageCopy);
+  const mediaRevision = projectionRevision({ leaf: publishedPageMedia, standard: publishedStandardPageMedia });
+  const packRevision = projectionRevision(publishedPackFacts);
   const linkRevision = projectionRevision(publishedLinkRefs);
   const navigationRevision = projectionRevision(publishedVideoNavigation);
   const buildId = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local";
   const snapshot: PublishedSeoSnapshot = {
     seoProjectionVersion: 1,
     pages: [...site.pages
-      .filter((page) => site.id !== "site_dreamshoot" || !new Set(policyRouteSpecs.flatMap((spec) => [spec.canonicalPath, ...spec.aliases])).has(page.slug)),
+      .filter((page) => !isMydreamshootsPublicationSite || !new Set(policyRouteSpecs.flatMap((spec) => [spec.canonicalPath, ...spec.aliases])).has(page.slug)),
       ...publishedPolicyPages]
       .map((page) => ({
       id: page.id,

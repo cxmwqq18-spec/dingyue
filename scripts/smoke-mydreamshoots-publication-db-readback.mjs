@@ -7,7 +7,7 @@ import createJiti from "jiti";
 import { assertDatabaseTarget } from "./lib/database-target.mjs";
 import "./load-runtime-env.mjs";
 
-const siteId = "site_dreamshoot";
+const siteId = process.env.SITE_ID?.trim() || "site_dreamshoot";
 const requireDatabase = process.argv.includes("--require-db");
 const rawUrl = process.env.DATABASE_URL?.trim();
 if (!rawUrl) {
@@ -16,7 +16,7 @@ if (!rawUrl) {
   if (requireDatabase) process.exitCode = 1;
 } else {
   const parsed = new URL(rawUrl);
-  const expectedTarget = String(process.env.DATABASE_TARGET || "local").trim().toLowerCase() === "remote-readonly" ? "remote-readonly" : "local";
+  const expectedTarget = String(process.env.DATABASE_TARGET || "local").trim().toLowerCase();
   assertDatabaseTarget({ expectedTarget });
   const { PrismaClient } = await import("@prisma/client");
   const sourceRoot = path.resolve("src");

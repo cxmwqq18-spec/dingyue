@@ -874,7 +874,7 @@ function showcaseVideoSlugs(pageJson: ThemePageJson | undefined): string[] {
 const blockedPublicVideoThemeSlugs = new Set(["creator-scene-motion"]);
 
 function isBlockedPublicVideoTheme(site: Site, theme: VideoTheme): boolean {
-  if (site.id !== "site_dreamshoot" && site.id !== "site_aidreamcapes") return false;
+  if (!isPrimaryMydreamshootsCapabilitySite(site) && site.id !== "site_aidreamcapes") return false;
   return blockedPublicVideoThemeSlugs.has(slugifySchemaPart(theme.slug));
 }
 
