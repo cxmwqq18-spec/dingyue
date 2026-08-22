@@ -1,7 +1,7 @@
 import "server-only";
 
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
-import type { CreativePack, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, Site, StorefrontProfileJson, ThemePage } from "@/lib/types";
+import type { CreativePack, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage } from "@/lib/types";
 import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
 import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
@@ -38,6 +38,10 @@ function revision(value: unknown): string {
 
 function isLeafRenderRoute(route: PublishedRouteProjection): route is PublishedLeafRouteProjection {
   return route.disposition === "render" && route.routeKind === "ai-image-theme-leaf";
+}
+
+function isPublishedPageEntityRoute(route: PublishedRouteProjection): route is PublishedLeafRouteProjection | PublishedVideoTopicRouteProjection {
+  return route.disposition === "render" && (route.routeKind === "ai-image-theme-leaf" || route.routeKind === "ai-video-topic-leaf");
 }
 
 function profileFromPublishedFacts(facts: PublishedSiteSnapshot["publishedFacts"]): StorefrontProfileJson | undefined {
@@ -149,7 +153,7 @@ function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): Storefront
 export function resolvePublishedSeoEntity(snapshot: PublishedSiteSnapshot, canonicalPath: string) {
   const path = normalizePath(canonicalPath);
   const route = snapshot.publishedRoutes.find((candidate) => candidate.disposition === "render" && candidate.canonicalPath === path);
-  const pageEntity = route?.routeKind === "ai-image-theme-leaf"
+  const pageEntity = route && isPublishedPageEntityRoute(route)
     ? snapshot.publishedPageEntities.find((candidate) => candidate.pageEntityId === route.pageEntityId)
     : undefined;
   const pageCopy = pageEntity
@@ -195,7 +199,26 @@ export function createPublishedSiteSnapshot(
       .filter((candidate) => candidate.siteId === site.id)
       .sort((left, right) => right.version - left.version)[0];
   const currentPages = new Map(site.pages.map((page) => [page.id, page]));
-  const pages = (publication?.snapshot.pages ?? []).map((publishedPage): ThemePage => {
+  const snapshotPages = Array.isArray(publication?.snapshot?.pages) ? publication.snapshot.pages : [];
+  const useRemoteLegacyProjection =
+    site.id === "site_dreamshoot" &&
+    ["remote", "remote-readonly"].includes(process.env.DINGYUE_ENV || "") &&
+    snapshotPages.length === 0;
+  const pages = (useRemoteLegacyProjection ? site.pages : snapshotPages).map((publishedPage): ThemePage => {
+    if (useRemoteLegacyProjection) {
+      return {
+        id: publishedPage.id,
+        siteId: publishedPage.siteId ?? site.id,
+        pageType: publishedPage.pageType ?? "page",
+        templateKey: publishedPage.templateKey,
+        slug: publishedPage.slug,
+        title: publishedPage.title ?? publishedPage.slug,
+        draftJson: publishedPage.publishedJson,
+        publishedJson: publishedPage.publishedJson,
+        createdAt: publishedPage.createdAt,
+        updatedAt: publishedPage.updatedAt
+      };
+    }
     const currentPage = currentPages.get(publishedPage.id);
     return {
       id: publishedPage.id,
@@ -240,13 +263,23 @@ export function createPublishedSiteSnapshot(
   ]));
   const products = hasImmutableSeoProjection
     ? productsFromPublishedOffers(publication!.snapshot)
-    : site.id === "site_dreamshoot" ? [] : state.products.filter((product) => product.siteId === site.id);
+    : useRemoteLegacyProjection
+      ? state.products.filter((product) => product.siteId === site.id)
+      : site.id === "site_dreamshoot" ? [] : state.products.filter((product) => product.siteId === site.id);
   const creativePacks = hasImmutableSeoProjection
     ? creativePacksFromPublishedCollections(publication!.snapshot, publication?.publishedAt)
-    : site.id === "site_dreamshoot" ? [] : state.creativePacks.filter((pack) => pack.siteId === site.id);
-  const creativePackCategories = site.id === "site_dreamshoot" ? [] : (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
-  const videoThemes = site.id === "site_dreamshoot" ? [] : (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id);
-  const mediaAssets = site.id === "site_dreamshoot" ? [] : state.mediaAssets.filter((asset) => asset.siteId === site.id);
+    : useRemoteLegacyProjection
+      ? state.creativePacks.filter((pack) => pack.siteId === site.id)
+      : site.id === "site_dreamshoot" ? [] : state.creativePacks.filter((pack) => pack.siteId === site.id);
+  const creativePackCategories = useRemoteLegacyProjection
+    ? (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id)
+    : site.id === "site_dreamshoot" ? [] : (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
+  const videoThemes = useRemoteLegacyProjection
+    ? (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id)
+    : site.id === "site_dreamshoot" ? [] : (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id);
+  const mediaAssets = useRemoteLegacyProjection
+    ? state.mediaAssets.filter((asset) => asset.siteId === site.id)
+    : site.id === "site_dreamshoot" ? [] : state.mediaAssets.filter((asset) => asset.siteId === site.id);
   const baseEntityReferences: EntityReference[] = [
     ...pages.map((page) => ({ entityType: "page" as const, entityId: page.id, ownerId: site.id, revision: page.draftMeta?.etag ?? revision([page.id, page.publishedJson.version, page.updatedAt]), updatedAt: page.updatedAt })),
     ...publishedRoutes.map((route) => ({
@@ -290,6 +323,9 @@ export function createPublishedSiteSnapshot(
   const publishedLinkRefs = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedLinkRefs)
     ? publication!.snapshot.publishedLinkRefs as PublishedSiteSnapshot["publishedLinkRefs"]
     : [];
+  const publishedVideoNavigation = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedVideoNavigation)
+    ? publication!.snapshot.publishedVideoNavigation as PublishedSiteSnapshot["publishedVideoNavigation"]
+    : [];
   const entityReferences: EntityReference[] = [
     ...baseEntityReferences,
     ...publishedPageCopy.map((copy) => ({ entityType: "page_copy" as const, entityId: copy.pageEntityId, ownerId: site.id, revision: copy.copyRevision })),
@@ -330,6 +366,7 @@ export function createPublishedSiteSnapshot(
     publishedFacts,
     publishedCollectionRefs,
     publishedLinkRefs,
+    publishedVideoNavigation,
     snapshotRevisions,
     legacyProjectionRequired: site.id === "site_dreamshoot" && !hasImmutableSeoProjection,
     snapshotIntegrity,
@@ -379,7 +416,7 @@ export function resolveEffectiveIndexability(snapshot: PublishedSiteSnapshot, pa
   const deferred = snapshot.site.id === "site_dreamshoot" && DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS.has(canonicalPath);
   const blocked = deferred || page.pageType === "not_found" || page.slug === "/404" || isPrivateStorefrontPath(page.slug) || isPrivateStorefrontPath(canonicalPath);
   const resolved = resolvePublishedSeoEntity(snapshot, context.seo.canonicalPath);
-  const publishedRoute = resolved.route?.routeKind === "ai-image-theme-leaf" ? resolved.route : undefined;
+  const publishedRoute = resolved.route && isPublishedPageEntityRoute(resolved.route) ? resolved.route : undefined;
   const publishedMedia = resolved.pageMedia;
   const standardMedia = resolved.standardPageMedia;
   const mediaReady = publishedRoute
@@ -456,18 +493,15 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
       ? { kind: "render", status: 200, path: requestedPath, pageId: page.id }
       : { kind: "not_found", status: 404, path: requestedPath };
   }
+  if (exactPublishedRoute?.disposition === "render" && exactPublishedRoute.routeKind === "ai-video-topic-leaf") {
+    if (exactPublishedRoute.status !== "published") return { kind: "not_found", status: 404, path: requestedPath };
+    const page = snapshot.pages.find((candidate) => candidate.id === exactPublishedRoute.pageId && normalizePath(candidate.slug) === requestedPath);
+    return page
+      ? { kind: "render", status: 200, path: requestedPath, pageId: page.id }
+      : { kind: "not_found", status: 404, path: requestedPath };
+  }
   const legacyTarget = legacyPublicPathTarget(requestedPath, publicCollectionRootPathForSite(snapshot.site));
   if (legacyTarget) return resolvePublishedRedirectDisposition(snapshot, requestedPath, legacyTarget);
-  if (snapshot.site.id === "site_dreamshoot" && requestedPath.startsWith("/ai-video-generation/")) {
-    const page = snapshot.pages.find((candidate) => normalizePath(candidate.slug) === requestedPath);
-    const pageHasDedicatedVideoLanding = page?.publishedJson.sectionsOrder.some((sectionId) => {
-      const sectionType = page.publishedJson.sections[sectionId]?.type;
-      return sectionType === "ai_video_topic_landing" || sectionType === "talking_photo_landing";
-    });
-    if (page && pageHasDedicatedVideoLanding) {
-      return { kind: "render", status: 200, path: requestedPath, pageId: page.id };
-    }
-  }
   if (snapshot.site.id === "site_dreamshoot" && requestedPath.startsWith("/ai-image-generation/")) {
     const route = snapshot.publishedRoutes.find((candidate): candidate is PublishedLeafRouteProjection => isLeafRenderRoute(candidate) && candidate.canonicalPath === requestedPath);
     if (!route) return { kind: "not_found", status: 404, path: requestedPath };

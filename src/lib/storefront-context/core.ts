@@ -205,7 +205,8 @@ export function resolveStorefrontContext(
   const seo = resolveSeo(bundle, pageJson, settings);
   const missingFacts = missingStorefrontProfileFacts(profile);
   const pageCopySlug = seo.canonicalPath.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1];
-  const pageEntity = pageCopySlug && mode === "published" && bundle.publishedPageEntities
+  const videoTopicSlug = seo.canonicalPath.match(/^\/ai-video-generation\/([^/?#]+)$/)?.[1];
+  const pageEntity = (pageCopySlug || videoTopicSlug) && mode === "published" && bundle.publishedPageEntities
     ? bundle.publishedPageEntities[seo.canonicalPath]
     : undefined;
   const pageCopy = pageCopySlug && mode === "published" && bundle.site.id === "site_dreamshoot"
@@ -222,7 +223,7 @@ export function resolveStorefrontContext(
     : undefined;
   if (!seo.description && seo.index) missingFacts.push(`page.${bundle.page.id}.seo.description`);
   const snapshotFailClosed = mode === "published" && bundle.site.id === "site_dreamshoot" &&
-    (Boolean(pageCopySlug) || MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(seo.canonicalPath)) &&
+    (Boolean(pageCopySlug || videoTopicSlug) || MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(seo.canonicalPath)) &&
     bundle.snapshotIntegrity !== "valid";
   const resolvedSeo = pageEntity
     ? {

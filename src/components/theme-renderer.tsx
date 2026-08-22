@@ -186,6 +186,7 @@ export function ThemeRenderer({
   navigationToolMenuItems,
   navigationVideoThemeCategories,
   navigationVideoThemes,
+  navigationVideoGenerationTopics,
   toolMenuItems = [],
   runtime,
   mode = "published",
@@ -211,6 +212,7 @@ export function ThemeRenderer({
   navigationToolMenuItems?: ToolMenuItem[];
   navigationVideoThemeCategories?: VideoThemeCategory[];
   navigationVideoThemes?: VideoTheme[];
+  navigationVideoGenerationTopics?: HeaderVideoGenerationTopic[];
   toolMenuItems?: ToolMenuItem[];
   runtime?: ThemeRuntimeData;
   mode?: "published" | "preview";
@@ -284,6 +286,7 @@ export function ThemeRenderer({
             toolMenuItems={navigationToolMenuItems ?? toolMenuItems}
             videoThemeCategories={navigationVideoThemeCategories ?? videoThemeCategories}
             videoThemes={navigationVideoThemes ?? videoThemes}
+            videoGenerationTopics={navigationVideoGenerationTopics}
           />
         </div>
         <main className={previewHasEmptyBody ? "flex min-h-0 flex-1 flex-col" : undefined} data-theme-sections-root="">
@@ -327,6 +330,7 @@ export function ThemeRenderer({
                 toolMenuItems={toolMenuItems}
                 videoThemeCategories={videoThemeCategories}
                 videoThemes={videoThemes}
+                videoGenerationTopics={navigationVideoGenerationTopics}
               />
             );
           }) : previewHasEmptyBody ? (
@@ -376,6 +380,7 @@ type ThemeSectionFrameProps = {
   creativePacks: CreativePack[];
   videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
+  videoGenerationTopics?: HeaderVideoGenerationTopic[];
   runtime?: ThemeRuntimeData;
   lazyRender?: boolean;
   mode: "published" | "preview";
@@ -727,7 +732,7 @@ function runtimeWithOnlyShellState(runtime: ThemeRuntimeData): ThemeRuntimeData 
   };
 }
 
-export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
+export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, videoGenerationTopics, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
   const sectionType = canonicalSectionType(section.type);
   const lazyStyle: CSSProperties | undefined = lazyRender
     ? {
@@ -761,6 +766,7 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
           toolMenuItems={sectionTypesUsingToolMenuItems.has(sectionType) ? toolMenuItems : []}
           videoThemeCategories={videoThemeCategories}
           videoThemes={sectionTypesUsingVideoThemes.has(sectionType) ? videoThemes : []}
+          videoGenerationTopics={videoGenerationTopics}
         />
       </DreamshootShowcasePreview>
     </div>
@@ -1043,7 +1049,7 @@ function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic
   };
 }
 
-export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [] }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[] }) {
+export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [], videoGenerationTopics }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[]; videoGenerationTopics?: HeaderVideoGenerationTopic[] }) {
   const HeaderLink = StorefrontInstantLink;
   const header = settings.globalSections?.header;
   const saasHeader = saasGlobalSection(settings, "header_plus");
@@ -1198,7 +1204,10 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const darkHeaderControls = dark || isDreamShoot || isAidreamcapes;
   const airyCommerceHeader = lightCommerce && !isAidreamcapes;
   const useVideoGenerationToolsMenu = isMydreamshootsVideoFrameworkSite(site) && !spanishXby && !isAidreamcapes;
-  const videoGenerationMenuTopics = useVideoGenerationToolsMenu ? headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes) : [];
+  const videoGenerationMenuTopics = useVideoGenerationToolsMenu
+    ? (videoGenerationTopics ?? headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes))
+      .map((topic) => ({ ...topic, href: hrefFor(site, topic.href) }))
+    : [];
   const dynamicToolBlocks = getSharedToolBlocksFromMenuItems(toolMenuItems);
   const configuredToolBlocks = useVideoGenerationToolsMenu
     ? []
@@ -8460,6 +8469,7 @@ function SectionView({
   creativePacks,
   videoThemeCategories,
   videoThemes,
+  videoGenerationTopics,
   runtime,
   mode,
   renderContext,
@@ -8475,6 +8485,7 @@ function SectionView({
   creativePacks: CreativePack[];
   videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
+  videoGenerationTopics?: HeaderVideoGenerationTopic[];
   runtime?: ThemeRuntimeData;
   mode: "published" | "preview";
   renderContext: RenderContext;
@@ -8498,6 +8509,7 @@ function SectionView({
         toolMenuItems={toolMenuItems}
         videoThemeCategories={videoThemeCategories}
         videoThemes={videoThemes}
+        videoGenerationTopics={videoGenerationTopics}
       />
     );
   }
@@ -13183,8 +13195,7 @@ function SectionView({
     const mydreamshootsVideoFramework = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXbySite(site) && !aidreamcapes && !primaryMyDreamShoots;
     if (primaryMyDreamShoots && renderContext.pagePath === "/ai-video-generation" && layout === "video_theme_grid") {
       const fallbackCoverImageUrl = setting(section, "imageUrl", defaultMydreamshootsVideoThemeCover);
-      const topicDescriptions = new Map<string, string>(mydreamshootsVideoGenerationCategories.map((topic) => [topic.slug, topic.description]));
-      const topics = headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes)
+      const topics = (videoGenerationTopics ?? headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes))
         .filter((topic) => isMydreamshootsCurrentVideoMenuSlug(topic.slug));
       const topicGroups = groupedVideoGenerationTopicsForServer(topics);
       const HeadingTag = setting(section, "headingLevel", "h1") === "h1" ? "h1" : "h2";
@@ -13240,9 +13251,7 @@ function SectionView({
                           </div>
                           <div className="min-h-[178px] p-5">
                             <h3 className="text-xl font-semibold leading-tight tracking-normal text-white">{topic.label}</h3>
-                            <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/66">
-                              {topicDescriptions.get(topic.slug) ?? "Open this AI video theme guide."}
-                            </p>
+                            {topic.description ? <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/66">{topic.description}</p> : null}
                             <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ddd7ff] transition group-hover/theme:text-white">
                               Open theme
                               <ChevronRight className="h-4 w-4 shrink-0 transition group-hover/theme:translate-x-0.5" strokeWidth={1.9} />
@@ -13260,7 +13269,7 @@ function SectionView({
       );
     }
     if (mydreamshootsVideoFramework) {
-      const topics = headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes);
+      const topics = videoGenerationTopics ?? headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes);
       return (
         <section className="relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14" id={sectionAnchor(section, "video-generation")}>
           <div className="mx-auto max-w-[1180px]">

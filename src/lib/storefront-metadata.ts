@@ -69,10 +69,13 @@ export async function metadataForPublishedStorefrontDirectoryPage({
 }) {
   const publishedBasePage = snapshot?.pages.find((candidate) => candidate.id === page.id) ?? page;
   const publishedSite = snapshot?.site ?? site;
-  const resolved = publishedSite.id === "site_dreamshoot" && kind === "collection" && snapshot
-    ? resolvePublishedSeoEntity(snapshot, path ?? `/ai-image-generation/${directorySlug}`)
+  const projectionPath = path ?? (kind === "collection" ? `/ai-image-generation/${directorySlug}` : `/ai-video-generation/${directorySlug}`);
+  const resolved = publishedSite.id === "site_dreamshoot" && snapshot
+    ? resolvePublishedSeoEntity(snapshot, projectionPath)
     : undefined;
-  const route = resolved?.route?.routeKind === "ai-image-theme-leaf" ? resolved.route : undefined;
+  const route = resolved?.route && (resolved.route.routeKind === "ai-image-theme-leaf" || resolved.route.routeKind === "ai-video-topic-leaf")
+    ? resolved.route
+    : undefined;
   const pageEntity = resolved?.pageEntity;
   const pageMedia = resolved?.pageMedia;
   const directoryPageJson = pageEntity
@@ -90,7 +93,7 @@ export async function metadataForPublishedStorefrontDirectoryPage({
           ogImage: pageMedia?.status === "ready" ? pageMedia.primaryImage : undefined
         }
       }
-    : publishedSite.id === "site_dreamshoot" && kind === "collection"
+    : publishedSite.id === "site_dreamshoot" && (kind === "collection" || kind === "tool")
       ? {
           ...publishedBasePage.publishedJson,
           seo: {

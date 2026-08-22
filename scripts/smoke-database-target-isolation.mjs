@@ -2,12 +2,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import "./load-runtime-env.mjs";
-import { assertDatabaseTarget, assertNonProductionWriteTarget, databaseTargetSummary } from "./lib/database-target.mjs";
+import { assertDatabaseTarget, assertNonProductionWriteTarget, buildTunneledDatabaseUrl, databaseTargetSummary } from "./lib/database-target.mjs";
 
 const repoRoot = process.cwd();
 const envLocalPath = path.join(repoRoot, ".env.local");
 const composePath = path.join(repoRoot, "ops", "local-postgres.compose.yml");
 const tunnelScriptPath = path.join(repoRoot, "scripts", "start-remote-db-tunnel.mjs");
+const packagePath = path.join(repoRoot, "package.json");
 
 function fail(message) {
   throw new Error(message);
@@ -29,6 +30,7 @@ function expectFailure(name, action) {
 const envLocal = readIfExists(envLocalPath);
 const compose = readIfExists(composePath);
 const tunnelScript = readIfExists(tunnelScriptPath);
+const packageJson = JSON.parse(readIfExists(packagePath));
 
 assertDatabaseTarget({ expectedTarget: "local" });
 expectFailure("legacy remote tunnel port 15432", () => {
@@ -59,6 +61,14 @@ expectFailure("production-looking database in local target", () => {
   });
 });
 
+const remoteEnv = {
+  DINGYUE_ENV: "remote",
+  DATABASE_TARGET: "remote",
+  DATABASE_URL: buildTunneledDatabaseUrl("postgresql://dingyue:secret@127.0.0.1:5432/dingyue?schema=public")
+};
+assertDatabaseTarget({ expectedTarget: "remote", env: remoteEnv });
+assertNonProductionWriteTarget(remoteEnv);
+
 if (envLocal.includes("15432")) {
   fail(".env.local still references legacy remote tunnel port 15432.");
 }
@@ -67,6 +77,12 @@ if (!compose.includes("127.0.0.1:15433:5432")) {
 }
 if (!tunnelScript.includes("--readonly")) {
   fail("Remote database tunnel must require an explicit --readonly flag.");
+}
+if (!tunnelScript.includes("--readwrite")) {
+  fail("Remote database tunnel must support an explicit --readwrite flag.");
+}
+if (packageJson.scripts?.dev !== "node scripts/dev-remote-readonly.mjs" || packageJson.scripts?.["dev:3002"] !== "node scripts/dev-remote-readonly.mjs") {
+  fail("Default dev scripts must use the remote read-only database launcher.");
 }
 if (process.env.PLATFORM_STATE_POSTGRES_STRICT !== "1") {
   fail("PLATFORM_STATE_POSTGRES_STRICT=1 is required for local MyDreamShoots development.");
@@ -81,7 +97,9 @@ console.log(JSON.stringify({
   checks: [
     "local database target is 127.0.0.1:15433/dingyue_local",
     ".env.local does not reference 15432",
-    "remote tunnel requires --readonly",
+    "remote target allows CRUD through 127.0.0.1:15432",
+    "remote tunnel supports explicit --readonly and --readwrite modes",
+    "default dev scripts use the remote read-only launcher",
     "strict postgres storefront reads are enabled"
   ]
 }, null, 2));

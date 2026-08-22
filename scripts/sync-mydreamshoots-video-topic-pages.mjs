@@ -341,7 +341,7 @@ async function readPlatformState() {
     site.pages ??= [];
     for (const persistedPage of persistedPages) {
       const slug = persistedPage.slug.replace("/ai-video-generation/", "");
-      if (!hasStoredVideoTopicContent(persistedPage.draftJson, slug) && !hasStoredVideoTopicContent(persistedPage.publishedJson, slug)) continue;
+      if (!hasStoredVideoTopicContent(persistedPage.draftJson, slug)) continue;
       const statePage = site.pages.find((page) => page.id === persistedPage.id || page.slug === persistedPage.slug);
       const relationalPage = {
         id: persistedPage.id,
@@ -546,9 +546,6 @@ function syncPages(state, changes) {
     const draftJson = !refreshContent && hasStoredVideoTopicContent(page.draftJson, pageDefinition.slug)
       ? clone(page.draftJson)
       : pageJson(pageDefinition);
-    const publishedJson = !refreshContent && hasStoredVideoTopicContent(page.publishedJson, pageDefinition.slug)
-      ? clone(page.publishedJson)
-      : pageJson(pageDefinition);
     const pageFields = {
       id: page.id || pageId(pageDefinition.slug),
       siteId: SITE_ID,
@@ -558,7 +555,7 @@ function syncPages(state, changes) {
       title: page.title || pageDefinition.title,
       draftJson
     };
-    pageFields.publishedJson = publishedJson;
+    if (!page.publishedJson) pageFields.publishedJson = clone(EMPTY_UNPUBLISHED_PAGE_JSON);
     updateRecord(page, pageFields, changes, "ThemePage");
     if (JSON.stringify(page) !== before) page.updatedAt = RUN_TIMESTAMP;
     return page;
@@ -657,6 +654,7 @@ function loadPublicationTools() {
     const jiti = createJiti(import.meta.url);
     return {
       publishSeoSnapshotRelational: jiti("../src/lib/stores/theme-store.ts").publishSeoSnapshotRelational,
+      applyMydreamshootsVideoTopicPublication: jiti("../src/lib/mydreamshoots-video-topic-publication.ts").applyMydreamshootsVideoTopicPublication,
       publicationSnapshotHash: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotHash,
       publicationSnapshotIntegrity: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotIntegrity
     };
@@ -686,6 +684,7 @@ function addPublicationToState(state, publication) {
 async function publishMissingVideoPages(state, syncedPages, prisma) {
   const {
     publishSeoSnapshotRelational,
+    applyMydreamshootsVideoTopicPublication,
     publicationSnapshotHash,
     publicationSnapshotIntegrity
   } = loadPublicationTools();
@@ -741,12 +740,24 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
     existingSlugs.add(page.slug);
     const replacement = syncedBySlug.get(page.slug);
     if (!replacement) return page;
+    if (JSON.stringify(page) === JSON.stringify(replacement)) return page;
     replacedCount += 1;
     return replacement;
   });
   const missingPages = syncedPublicPages.filter((page) => !existingSlugs.has(page.slug));
   snapshot.pages = [...snapshot.pages, ...missingPages];
-  if (!replacedCount && !missingPages.length) return undefined;
+  const publishedVideoRouteCount = Array.isArray(snapshot.publishedRoutes)
+    ? snapshot.publishedRoutes.filter((route) => route.routeKind === "ai-video-topic-leaf").length
+    : 0;
+  const publishedVideoNavigation = Array.isArray(snapshot.publishedVideoNavigation)
+    ? snapshot.publishedVideoNavigation
+    : [];
+  const needsVideoProjection = publishedVideoRouteCount !== syncedPublicPages.length ||
+    publishedVideoNavigation.length !== syncedPublicPages.length ||
+    publishedVideoNavigation.some((item) => typeof item.description !== "string" || !item.description.trim());
+  if (!replacedCount && !missingPages.length && !needsVideoProjection) return undefined;
+  const compiledSnapshot = applyMydreamshootsVideoTopicPublication(snapshot);
+  Object.assign(snapshot, compiledSnapshot);
   refreshSnapshotHash(snapshot, publicationSnapshotHash);
   if (publicationSnapshotIntegrity(snapshot) !== "valid") {
     throw new Error("video_topic_publication_snapshot_integrity_failed");
@@ -830,7 +841,6 @@ async function updateDatabase(state, categories, syncedPages) {
             slug: page.slug,
             title: page.title,
             draftJson: toPrismaJson(page.draftJson),
-            publishedJson: toPrismaJson(page.publishedJson ?? page.draftJson),
             draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
           };
           const existingPage = await tx.themePage.findUnique({ where: { id: page.id }, select: { id: true } });
@@ -844,7 +854,7 @@ async function updateDatabase(state, categories, syncedPages) {
               data: {
                 id: page.id,
                 ...pageData,
-                publishedJson: toPrismaJson(page.publishedJson ?? EMPTY_UNPUBLISHED_PAGE_JSON),
+                publishedJson: toPrismaJson(EMPTY_UNPUBLISHED_PAGE_JSON),
                 createdAt: new Date(page.createdAt ?? UPDATE_TIMESTAMP)
               }
             });

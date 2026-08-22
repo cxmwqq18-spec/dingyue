@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { ArrowRight, ChevronRight, PlayCircle } from "lucide-react";
 import { creativePackIconByName, suggestedCreativePackIconName } from "@/lib/creative-pack-icons";
-import { mydreamshootsVideoGenerationParentCategories } from "@/lib/mydreamshoots-video-framework";
 
 export type HeaderPhotoPackageMegaGroup = {
   label: string;
@@ -29,6 +28,7 @@ export type HeaderVideoGenerationTopic = {
   id: string;
   slug: string;
   label: string;
+  description?: string;
   href: string;
   imageUrl?: string;
   parentSlug?: string;
@@ -225,19 +225,26 @@ export function HeaderVideoGenerationMegaPanel({
   variantTone?: "dark" | "warm";
 }) {
   const warm = variantTone === "warm";
-  const topicsByParent = new Map<string, HeaderVideoGenerationTopic[]>();
+  const topicsByParent = new Map<string, { slug: string; label: string; sortOrder: number; topics: HeaderVideoGenerationTopic[] }>();
   topics.forEach((topic) => {
-    const parentSlug = topic.parentSlug ?? "uncategorized";
-    const current = topicsByParent.get(parentSlug) ?? [];
-    current.push(topic);
+    const parentSlug = topic.parentSlug ?? "ai-video-generation";
+    const current = topicsByParent.get(parentSlug) ?? {
+      slug: parentSlug,
+      label: topic.parentLabel ?? "AI Video Generation",
+      sortOrder: topic.parentSortOrder ?? 999,
+      topics: []
+    };
+    current.label = topic.parentLabel ?? current.label;
+    current.sortOrder = Math.min(current.sortOrder, topic.parentSortOrder ?? current.sortOrder);
+    current.topics.push(topic);
     topicsByParent.set(parentSlug, current);
   });
-  const groups: Array<{ slug: string; label: string; description: string; sortOrder: number; topics: HeaderVideoGenerationTopic[] }> = mydreamshootsVideoGenerationParentCategories.map((parent) => ({
-    ...parent,
-    topics: (topicsByParent.get(parent.slug) ?? []).sort((left, right) => (left.sortOrder ?? 0) - (right.sortOrder ?? 0) || left.label.localeCompare(right.label))
-  }));
-  const uncategorized = topicsByParent.get("uncategorized") ?? [];
-  if (uncategorized.length) groups.push({ slug: "uncategorized", label: "Other", description: "Additional video workflows.", sortOrder: 999, topics: uncategorized });
+  const groups = Array.from(topicsByParent.values())
+    .map((group) => ({
+      ...group,
+      topics: [...group.topics].sort((left, right) => (left.sortOrder ?? 0) - (right.sortOrder ?? 0) || left.label.localeCompare(right.label))
+    }))
+    .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label));
   const columns = splitColumns(groups, 3);
   return (
     <div className={warm ? "overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)] ring-1 ring-[#d8b17e]/20 backdrop-blur-xl" : "overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl"}>

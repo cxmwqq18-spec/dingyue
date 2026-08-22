@@ -1,14 +1,17 @@
 # Data Isolation And Release Workflow
 
-This project keeps local, test, and production data separate. Local development must never use the legacy remote tunnel port `15432` as its default database.
+This project keeps local, test, and production data separate. The default local development server uses the production database through an SSH read-write tunnel; local database development is explicit.
 
 ## Environment Targets
 
-- Local app and scripts use `DINGYUE_ENV=local`, `DATABASE_TARGET=local`, and `127.0.0.1:15433/dingyue_local`.
+- `npm run dev`, `npm run dev:3002`, and `npm run dev:remote-readonly` use `DINGYUE_ENV=remote-readonly`, `DATABASE_TARGET=remote-readonly`, and the production database through `127.0.0.1:15432`. These default development paths are read-only.
+- `npm run dev:remote` is an explicit remote read-write mode and must only be used for approved operational work.
+- `npm run dev:local` uses `DINGYUE_ENV=local`, `DATABASE_TARGET=local`, and `127.0.0.1:15433/dingyue_local`.
 - Test releases must use `DINGYUE_ENV=test` and `DATABASE_TARGET=test` with a test-only database account.
 - Production releases must use `DINGYUE_ENV=production` and `DATABASE_TARGET=production` with the systemd production environment.
-- Remote production inspection must be explicit and read-only. Start the tunnel with `npm run db:tunnel -- --readonly` only after setting `REMOTE_DB_READONLY_DATABASE_URL`.
-- Remote-readonly development mode is available with `npm run dev:remote-readonly`. It reuses the readonly tunnel, sets `DINGYUE_ENV=remote-readonly`, `DATABASE_TARGET=remote-readonly`, and points `DATABASE_URL` at `127.0.0.1:15432`.
+- Remote production inspection remains explicit and read-only. Start the tunnel with `npm run db:tunnel -- --readonly` only after setting `REMOTE_DB_READONLY_DATABASE_URL`.
+- Remote read-write development is explicit at the tunnel layer: `npm run db:tunnel -- --readwrite` uses `REMOTE_DB_DATABASE_URL`.
+- Remote-readonly development mode remains available with `npm run dev:remote-readonly`. It sets `DINGYUE_ENV=remote-readonly`, `DATABASE_TARGET=remote-readonly`, and keeps all Prisma writes blocked.
 
 ## Local Database
 

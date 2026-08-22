@@ -1,6 +1,6 @@
 import { URL } from "node:url";
 
-export const DATABASE_TARGETS = new Set(["local", "test", "production", "remote-readonly"]);
+export const DATABASE_TARGETS = new Set(["local", "test", "production", "remote", "remote-readonly"]);
 export const LOCAL_DATABASE = {
   host: "127.0.0.1",
   port: 15433,
@@ -51,6 +51,13 @@ export function buildTunneledReadonlyDatabaseUrl(remoteReadonlyDatabaseUrl, { ho
   return url.toString();
 }
 
+export function buildTunneledDatabaseUrl(remoteDatabaseUrl, options = {}) {
+  if (!remoteDatabaseUrl?.trim()) {
+    throw new Error("REMOTE_DB_DATABASE_URL is required to build the remote DATABASE_URL.");
+  }
+  return buildTunneledReadonlyDatabaseUrl(remoteDatabaseUrl, options);
+}
+
 export function databaseTargetSummary(env = process.env) {
   const parsed = parseDatabaseUrl(env.DATABASE_URL);
   return {
@@ -67,9 +74,11 @@ function assertEnvironmentLabel(expectedTarget, env) {
   if (target !== expectedTarget) {
     throw new Error(`DATABASE_TARGET=${target || "(unset)"} does not match required target ${expectedTarget}.`);
   }
-  if (expectedTarget === "remote-readonly") {
+  if (expectedTarget === "remote-readonly" || expectedTarget === "remote") {
     if (environment !== "remote-readonly") {
-      throw new Error("Remote database access requires DINGYUE_ENV=remote-readonly.");
+      if (expectedTarget !== "remote" || environment !== "remote") {
+        throw new Error(`Remote database access requires DINGYUE_ENV=${expectedTarget}.`);
+      }
     }
     return;
   }
@@ -86,13 +95,13 @@ export function assertDatabaseTarget({
 }) {
   assertEnvironmentLabel(expectedTarget, env);
   const parsed = parseDatabaseUrl(env.DATABASE_URL);
-  if (parsed.port === 15432 && expectedTarget !== "remote-readonly") {
-    throw new Error("Refusing database operations through the legacy remote tunnel port 15432 unless DATABASE_TARGET=remote-readonly.");
+  if (parsed.port === 15432 && !["remote", "remote-readonly"].includes(expectedTarget)) {
+    throw new Error("Refusing database operations through the remote tunnel port 15432 unless DATABASE_TARGET=remote or remote-readonly.");
   }
-  if (expectedTarget === "remote-readonly") {
+  if (expectedTarget === "remote-readonly" || expectedTarget === "remote") {
     if (!new Set(["127.0.0.1", "localhost", "::1"]).has(parsed.host) || parsed.port !== 15432) {
       throw new Error(
-        `Remote-readonly database target must use the local SSH tunnel on 127.0.0.1:15432; received ${parsed.host}:${parsed.port}/${parsed.database}.`
+        `Remote database targets must use the local SSH tunnel on 127.0.0.1:15432; received ${parsed.host}:${parsed.port}/${parsed.database}.`
       );
     }
   }

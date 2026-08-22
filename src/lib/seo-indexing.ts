@@ -473,6 +473,9 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     const standardMedia = site.id === "site_dreamshoot"
       ? resolvePublishedSeoEntity(snapshot, path).standardPageMedia
       : undefined;
+    const pageMedia = site.id === "site_dreamshoot"
+      ? resolvePublishedSeoEntity(snapshot, path).pageMedia
+      : undefined;
     entries.set(loc, {
       loc,
       images: standardMedia?.status === "ready"
@@ -480,6 +483,11 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
             loc: absoluteMediaUrl(site, image),
             title: index === 0 ? standardMedia.primaryImageAlt : sitemapImageTitleForPage(page)
           })).filter((image) => image.loc)
+        : pageMedia?.status === "ready"
+          ? [pageMedia.primaryImage, ...pageMedia.galleryImages].map((image, index) => ({
+              loc: absoluteMediaUrl(site, image),
+              title: pageMedia.imageAlts[index] || sitemapImageTitleForPage(page)
+            })).filter((image) => image.loc)
         : site.id === "site_dreamshoot"
           ? []
           : collectPageSitemapImages(site, page),

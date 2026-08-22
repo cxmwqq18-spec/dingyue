@@ -3,13 +3,20 @@ import fs from "node:fs";
 import net from "node:net";
 import "./load-runtime-env.mjs";
 
-if (!process.argv.includes("--readonly")) {
-  console.error("Remote database tunnels are disabled by default. Use `npm run db:tunnel -- --readonly` with a read-only database URL.");
+const readonlyMode = process.argv.includes("--readonly");
+const readwriteMode = process.argv.includes("--readwrite");
+if (readonlyMode === readwriteMode) {
+  console.error("Choose exactly one remote database tunnel mode: --readonly or --readwrite.");
   process.exit(1);
 }
 
-if (!process.env.REMOTE_DB_READONLY_DATABASE_URL?.trim()) {
-  console.error("REMOTE_DB_READONLY_DATABASE_URL is required for remote audit tunnels.");
+const remoteDatabaseUrl = readonlyMode
+  ? process.env.REMOTE_DB_READONLY_DATABASE_URL?.trim()
+  : process.env.REMOTE_DB_DATABASE_URL?.trim();
+if (!remoteDatabaseUrl) {
+  console.error(readonlyMode
+    ? "REMOTE_DB_READONLY_DATABASE_URL is required for remote audit tunnels."
+    : "REMOTE_DB_DATABASE_URL is required for remote read-write development tunnels.");
   process.exit(1);
 }
 

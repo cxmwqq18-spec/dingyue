@@ -42,6 +42,7 @@ import {
   publishedLinkEntityId,
   publishedPageCopySourceHash
 } from "@/lib/mydreamshoots-published-contract";
+import { compileMydreamshootsVideoTopicPublication } from "@/lib/mydreamshoots-video-topic-publication";
 import { normalizeGlobalSection } from "@/lib/theme/section-normalize";
 import { publicationSnapshotHash, publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import type {
@@ -274,7 +275,7 @@ export function buildPublicationSnapshot(
 ): PublishedSeoSnapshot {
   const publishedAt = Date.now();
   const sourceRoutes = site.id === "site_dreamshoot" ? mydreamshootsPublishedRouteManifest() : [];
-  const publishedPageCopy = sourceRoutes.map((route) => {
+  const imagePublishedPageCopy = sourceRoutes.map((route) => {
     const copy = mydreamshootsPageCopyForRoute({
       siteId: site.id,
       routeKind: "ai-image-theme-leaf",
@@ -291,11 +292,11 @@ export function buildPublicationSnapshot(
         : crypto.createHash("sha256").update(JSON.stringify([route.pageEntityId, route.canonicalPath, "missing-copy"])).digest("hex")
     };
   });
-  const publishedPageMedia = sourceRoutes.map((route) =>
+  const imagePublishedPageMedia = sourceRoutes.map((route) =>
     buildPublishedPageMediaProjection(route, asPublishedMediaPack(creativePacks.find((candidate) => candidate.id === route.expectedPackId)))
   );
   const leafRoutes = sourceRoutes.map((route) => {
-    const media = publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId);
+    const media = imagePublishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId);
     if (route.status === "published" && media?.status === "ready") return route;
     return {
       ...route,
@@ -305,7 +306,7 @@ export function buildPublicationSnapshot(
       reviewReason: route.reviewReason || media?.reviewReason || "PAGE_MEDIA_REQUIRED"
     };
   });
-  const publishedStandardPageMedia = buildPublishedStandardPageMedia(site, leafRoutes, publishedPageMedia);
+  const publishedStandardPageMedia = buildPublishedStandardPageMedia(site, leafRoutes, imagePublishedPageMedia);
   const policyRouteSpecs = [
     { canonicalPath: "/privacy" as const, aliases: ["/privacy-policy", "/policies/privacy", "/policies/privacy-policy"] },
     { canonicalPath: "/terms" as const, aliases: ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"] }
@@ -349,9 +350,12 @@ export function buildPublicationSnapshot(
         return [renderRoute, ...redirects];
       })
     : [];
-  const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...policyRoutes];
+  const videoTopicPublication = site.id === "site_dreamshoot"
+    ? compileMydreamshootsVideoTopicPublication(site.pages)
+    : { routes: [], pageEntities: [], pageCopy: [], pageMedia: [], linkRefs: [], navigation: [] };
+  const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...policyRoutes, ...videoTopicPublication.routes];
   const sourcePageEntities = site.id === "site_dreamshoot" ? mydreamshootsPublishedPageEntities() : [];
-  const publishedPageEntities = sourcePageEntities.map((entity) => {
+  const imagePublishedPageEntities = sourcePageEntities.map((entity) => {
     const route = leafRoutes.find((candidate) => candidate.pageEntityId === entity.pageEntityId);
     if (!route) return { ...entity, status: "review_required" as const, indexable: false, sitemapEligible: false };
     return {
@@ -368,6 +372,10 @@ export function buildPublicationSnapshot(
         : entity.reviewReasons
     };
   });
+  const publishedPageEntities = [...imagePublishedPageEntities, ...videoTopicPublication.pageEntities];
+  const publishedPageCopy = [...imagePublishedPageCopy, ...videoTopicPublication.pageCopy];
+  const publishedPageMedia = [...imagePublishedPageMedia, ...videoTopicPublication.pageMedia];
+  const publishedVideoNavigation = videoTopicPublication.navigation;
   const publishedPackFacts = creativePacks.map((pack) => ({
     packId: pack.id,
     creditCost: pack.creditCost,
@@ -449,7 +457,7 @@ export function buildPublicationSnapshot(
     };
   });
   const collectionRevision = projectionRevision(publishedCollectionRefs);
-  const publishedLinkRefs: NonNullable<ThemePublication["snapshot"]["publishedLinkRefs"]> = publishedPageEntities.flatMap((entity) => {
+  const imagePublishedLinkRefs: NonNullable<ThemePublication["snapshot"]["publishedLinkRefs"]> = imagePublishedPageEntities.flatMap((entity) => {
     if (entity.status !== "published") return [];
     const slug = entity.canonicalPath.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1];
     const copy = slug ? mydreamshootsPageCopyForRoute({ siteId: site.id, routeKind: "ai-image-theme-leaf", canonicalSlug: slug, canonicalPath: entity.canonicalPath }) : undefined;
@@ -498,7 +506,9 @@ export function buildPublicationSnapshot(
     });
     return [...cta, ...related];
   });
+  const publishedLinkRefs = [...imagePublishedLinkRefs, ...videoTopicPublication.linkRefs];
   const linkRevision = projectionRevision(publishedLinkRefs);
+  const navigationRevision = projectionRevision(publishedVideoNavigation);
   const buildId = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local";
   const snapshot: PublishedSeoSnapshot = {
     seoProjectionVersion: 1,
@@ -541,6 +551,7 @@ export function buildPublicationSnapshot(
     publishedFacts,
     publishedCollectionRefs,
     publishedLinkRefs,
+    publishedVideoNavigation,
     revisions: {
       factsRevision,
       routeRevision,
@@ -552,6 +563,7 @@ export function buildPublicationSnapshot(
       collectionRevision,
       policyRevision,
       linkRevision,
+      navigationRevision,
       snapshotHash: ""
     },
     snapshotHash: "",

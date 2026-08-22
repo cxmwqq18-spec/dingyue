@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { cache, type ReactElement } from "react";
 import { CustomerAccountClientPage, CustomerWorkspaceClientPage } from "@/components/storefront/customer-bootstrap-client";
+import type { HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { StorefrontJsonLd } from "@/components/storefront/storefront-json-ld";
 import { ThemeRenderer, ThemeSectionFrame, searchPageEntriesForSite, type StorefrontSectionPayload, type RoutedSite } from "@/components/theme-renderer";
 import { findPage, getPage } from "@/lib/data";
@@ -66,6 +67,22 @@ const dreamshootPartnerTemplateSlugs = new Set([
 function publishedLeafCopy(snapshot: ReturnType<typeof createPublishedSiteSnapshot>, canonicalSlug: string) {
   const entity = snapshot.publishedPageEntities.find((candidate) => candidate.canonicalPath === `/ai-image-generation/${canonicalSlug}`);
   return entity ? pageCopyFromPublishedPageEntity(entity, snapshot.publishedLinkRefs) : undefined;
+}
+
+function publishedVideoGenerationTopics(snapshot: ReturnType<typeof createPublishedSiteSnapshot>): HeaderVideoGenerationTopic[] | undefined {
+  if (snapshot.site.id !== "site_dreamshoot" || snapshot.snapshotIntegrity !== "valid") return undefined;
+  return snapshot.publishedVideoNavigation.map((item) => ({
+    id: item.id,
+    slug: item.slug,
+    label: item.label,
+    description: item.description,
+    href: item.canonicalPath,
+    imageUrl: item.imageUrl,
+    parentSlug: item.parentSlug,
+    parentLabel: item.parentLabel,
+    parentSortOrder: item.parentSortOrder,
+    sortOrder: item.sortOrder
+  }));
 }
 
 type SiteRenderData = {
@@ -2310,13 +2327,13 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
   const normalizedToolSlug = normalizeToolLookup(toolSlug);
   const isAidreamcapes = isAidreamcapesStorefront(site);
   const isPrimaryMydreamshoots = isPrimaryMydreamshootsStorefront(site);
-  const databaseVideoTheme = (state.videoThemes ?? []).find((theme) =>
+  const isPublicVideoTopic = isPrimaryMydreamshoots && isMydreamshootsPublicVideoGenerationSlug(normalizedToolSlug);
+  const databaseVideoTheme = isPublicVideoTopic ? undefined : (state.videoThemes ?? []).find((theme) =>
     theme.siteId === site.id &&
     theme.status === "active" &&
     normalizeToolLookup(theme.slug) === normalizedToolSlug
   );
   const isVideoTool = isPrimaryMydreamshoots && (isMydreamshootsVideoGenerationSlug(normalizedToolSlug) || Boolean(databaseVideoTheme));
-  const isPublicVideoTopic = isPrimaryMydreamshoots && isMydreamshootsPublicVideoGenerationSlug(normalizedToolSlug);
   const aidreamcapesAliasTarget = isAidreamcapes ? aidreamcapesToolAliases.get(normalizedToolSlug) : undefined;
   const canonicalToolSlug = aidreamcapesAliasTarget ?? normalizedToolSlug;
   const directPageSlug = isVideoTool ? `/ai-video-generation/${normalizedToolSlug}` : `/tools/${toolSlug}`;
@@ -2385,10 +2402,10 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
       siteAiApps,
       page: page ?? baseToolDetailPageForSite(site, page),
       app: undefined,
-      // Public video topics may use the generic relational ThemePage while
-      // their dedicated landing is being iterated. A valid DB page/theme is
-      // still a routable public page and must not become a 404.
-      matched: Boolean(page || databaseVideoTheme),
+      // The public topic route is valid only when its immutable publication
+      // contains a dedicated landing page. Generic tool pages never stand in
+      // for a published video topic.
+      matched: Boolean(page && hasDedicatedVideoLanding),
       resolvedSlug
     };
   }
@@ -2447,6 +2464,7 @@ function renderThemePage({
   navigationToolMenuItems,
   navigationVideoThemeCategories,
   navigationVideoThemes,
+  navigationVideoGenerationTopics,
   routeMode,
   runtime,
   settings,
@@ -2465,6 +2483,7 @@ function renderThemePage({
   navigationToolMenuItems?: SiteRenderData["toolMenuItems"];
   navigationVideoThemeCategories?: SiteRenderData["videoThemeCategories"];
   navigationVideoThemes?: SiteRenderData["videoThemes"];
+  navigationVideoGenerationTopics?: HeaderVideoGenerationTopic[];
   routeMode: "host" | "path";
   runtime: ThemeRuntimeData;
   settings: Site["themeSettings"]["publishedJson"];
@@ -2539,6 +2558,7 @@ function renderThemePage({
         navigationToolMenuItems={navigationToolMenuItems}
         navigationVideoThemeCategories={navigationVideoThemeCategories}
         navigationVideoThemes={navigationVideoThemes}
+        navigationVideoGenerationTopics={navigationVideoGenerationTopics}
         toolMenuItems={renderData.toolMenuItems}
         videoThemeCategories={renderData.videoThemeCategories}
         videoThemes={renderData.videoThemes}
@@ -2612,6 +2632,7 @@ export async function renderStorefrontPage({
   const navigationVideoThemes = useSharedNavigation
     ? renderData.videoThemes
     : undefined;
+  const navigationVideoGenerationTopics = publishedVideoGenerationTopics(publishedSnapshot);
   currentSite.mediaAssets = renderData.mediaAssets;
   const directPage = findPage(currentSite, slug);
   if (!directPage) notFound();
@@ -2712,6 +2733,7 @@ export async function renderStorefrontPage({
     navigationToolMenuItems,
     navigationVideoThemeCategories,
     navigationVideoThemes,
+    navigationVideoGenerationTopics,
     renderData: pageRenderData,
     routeMode,
     runtime: runtimeWithAuth,
@@ -3575,6 +3597,7 @@ export async function renderToolPage({
     navigationToolMenuItems: renderData.toolMenuItems.map(lightweightToolMenuItem),
     navigationVideoThemeCategories: renderData.videoThemeCategories,
     navigationVideoThemes: renderData.videoThemes,
+    navigationVideoGenerationTopics: publishedVideoGenerationTopics(publishedSnapshot),
     renderData: pageRenderData,
     routeMode,
     runtime: runtimeWithEmptyCollections(),

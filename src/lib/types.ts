@@ -915,6 +915,12 @@ export interface PublishedPageMediaProjection {
   ownerPageEntityId: string;
   sourcePackId: string;
   role: "hero";
+  /**
+   * Older image-theme publications predate this field. New video-topic
+   * publications set it explicitly so media ownership is independently
+   * verifiable from the route projection.
+   */
+  routeKind?: "ai-image-theme-leaf" | "ai-video-topic-leaf";
   pageEntityId: string;
   entityRevision: string;
   packId: string;
@@ -961,6 +967,26 @@ export interface PublishedLeafRouteProjection {
   reviewReason?: string;
 }
 
+export interface PublishedVideoTopicRouteProjection {
+  disposition: "render";
+  siteId: "site_dreamshoot";
+  routeKind: "ai-video-topic-leaf";
+  canonicalSlug: string;
+  canonicalPath: string;
+  pageId: string;
+  pageEntityId: string;
+  pageRevision: string;
+  copyRevision: string;
+  copySource: "theme-page";
+  fallbackUsed: false;
+  deferred: false;
+  status: "published" | "review_required";
+  indexable: boolean;
+  sitemapEligible: boolean;
+  mediaEntityId: string;
+  reviewReason?: string;
+}
+
 export interface PublishedPolicyRouteProjection {
   disposition: "render";
   siteId: "site_dreamshoot";
@@ -988,8 +1014,24 @@ export interface PublishedRedirectRouteProjection {
 
 export type PublishedRouteProjection =
   | PublishedLeafRouteProjection
+  | PublishedVideoTopicRouteProjection
   | PublishedPolicyRouteProjection
   | PublishedRedirectRouteProjection;
+
+export interface PublishedVideoNavigationProjection {
+  id: string;
+  pageEntityId: string;
+  canonicalPath: string;
+  slug: string;
+  label: string;
+  description: string;
+  imageUrl?: string;
+  parentSlug: string;
+  parentLabel: string;
+  parentSortOrder: number;
+  sortOrder: number;
+  revision: string;
+}
 
 export interface PublishedCollectionRef {
   ownerPageEntityId: string;
@@ -1035,6 +1077,7 @@ export interface PublishedSeoSnapshotRevisions {
   collectionRevision: string;
   policyRevision: string;
   linkRevision: string;
+  navigationRevision: string;
   snapshotHash: string;
 }
 
@@ -1073,6 +1116,7 @@ export interface PublishedSeoSnapshot {
   publishedFacts: PublishedFactsProjection;
   publishedCollectionRefs: PublishedCollectionRef[];
   publishedLinkRefs: PublishedLinkRef[];
+  publishedVideoNavigation: PublishedVideoNavigationProjection[];
   revisions: PublishedSeoSnapshotRevisions;
   snapshotHash: string;
   buildId: string;
@@ -1094,6 +1138,7 @@ export interface LegacyThemePublicationSnapshot {
   publishedFacts?: PublishedFactsProjection;
   publishedCollectionRefs?: PublishedCollectionRef[];
   publishedLinkRefs?: PublishedLinkRef[];
+  publishedVideoNavigation?: PublishedVideoNavigationProjection[];
   revisions?: Partial<PublishedSeoSnapshotRevisions>;
   snapshotHash?: string;
   buildId?: string;

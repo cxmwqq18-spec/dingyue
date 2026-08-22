@@ -28,7 +28,7 @@ import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
-import { getSiteByHostForPublicAuth, getVideoThemeSlugRedirectRelational } from "@/lib/stores/site-store";
+import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -460,35 +460,19 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     const videoGenerationRoute = parsePublicVideoGenerationRouteForSite(site, path);
     if (!videoGenerationRoute) return {};
     if (videoGenerationRoute.itemSlug) {
-      const redirectRecord = await getVideoThemeSlugRedirectRelational(site.id, videoGenerationRoute.itemSlug);
-      if (redirectRecord?.theme?.status === "active") {
-        const redirected = await resolveHostToolPageWithFallback(hostCandidates, redirectRecord.theme.slug);
-        if (!redirected) return {};
-        const redirectedSnapshot = createPublishedSiteSnapshot(redirected.state, redirected.site, { source: "platform-state" });
-        if (resolvePublishedRouteDisposition(redirectedSnapshot, `/ai-video-generation/${redirectRecord.theme.slug}`).kind !== "render") return {};
-        return metadataForPublishedStorefrontDirectoryPage({
-          site: redirected.site,
-          page: redirected.page,
-          kind: "tool",
-          directorySlug: redirectRecord.theme.slug,
-          path: redirectRecord.theme.slug,
-          products: redirected.state.products,
-          creativePacks: redirected.state.creativePacks,
-          snapshot: redirectedSnapshot
-        });
-      }
-      const resolved = await resolveHostToolPageWithFallback(hostCandidates, videoGenerationRoute.itemSlug);
-      if (!resolved) return {};
-      const resolvedSnapshot = createPublishedSiteSnapshot(resolved.state, resolved.site, { source: "platform-state" });
+      const disposition = resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath);
+      if (disposition.kind !== "render") return {};
+      const page = snapshot.pages.find((candidate) => candidate.id === disposition.pageId);
+      if (!page) return {};
       return metadataForPublishedStorefrontDirectoryPage({
-        site: resolved.site,
-        page: resolved.page,
+        site,
+        page,
         kind: "tool",
         directorySlug: videoGenerationRoute.itemSlug,
         path: videoGenerationRoute.canonicalPath,
-        products: resolved.state.products,
-        creativePacks: resolved.state.creativePacks,
-        snapshot: resolvedSnapshot
+        products: state.products,
+        creativePacks: state.creativePacks,
+        snapshot
       });
     }
     if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") return {};
@@ -640,9 +624,6 @@ export default async function HostStorefrontCatchAllPage({
   const resolvedToolPage = firstSegment === "tools" && path[1]
     ? await resolveHostToolPageWithFallback(hostCandidates, path[1])
     : undefined;
-  const resolvedVideoToolPage = isVideoGenerationRequest && path[1]
-    ? await resolveHostToolPageWithFallback(hostCandidates, path[1])
-    : undefined;
   const collectionRoute = isCollectionRequest ? parsePublicCollectionRouteForSite(site, path) : undefined;
   const videoGenerationRoute = isVideoGenerationRequest ? parsePublicVideoGenerationRouteForSite(site, path) : undefined;
   if (firstSegment === "tools" && path[1]) {
@@ -656,7 +637,6 @@ export default async function HostStorefrontCatchAllPage({
     PUBLIC_DIRECTORY_PAGE_SLUGS.has(publicPageSlug) ||
     Boolean(resolvedToolPage) ||
     Boolean(videoGenerationRoute) ||
-    Boolean(resolvedVideoToolPage) ||
     Boolean(collectionRoute) ||
     Boolean(findPage(site, publicPageSlug)) ||
     resolvePublishedRouteDisposition(snapshot, publicPageSlug).kind === "render" ||
@@ -681,23 +661,18 @@ export default async function HostStorefrontCatchAllPage({
   if (isVideoGenerationRequest) {
     if (!videoGenerationRoute) notFound();
     if (videoGenerationRoute.itemSlug) {
-      const redirectRecord = await getVideoThemeSlugRedirectRelational(site.id, videoGenerationRoute.itemSlug);
-      if (redirectRecord?.theme?.status === "active" && redirectRecord.theme.slug !== videoGenerationRoute.itemSlug) {
-        permanentRedirect(publicSiteUrl(site, `/ai-video-generation/${redirectRecord.theme.slug}`));
-      }
-      if (!resolvedVideoToolPage) notFound();
-      const canonicalToolPath = resolvedVideoToolPage.site.id === site.id && state.videoThemes?.some((theme) => theme.siteId === site.id && theme.slug === videoGenerationRoute.itemSlug)
-        ? videoGenerationRoute.canonicalPath
-        : canonicalSeoDirectoryPathForSite(resolvedVideoToolPage.site, "tool", videoGenerationRoute.itemSlug);
-      if (canonicalToolPath !== videoGenerationRoute.canonicalPath) permanentRedirect(publicSiteUrl(resolvedVideoToolPage.site, canonicalToolPath));
+      const disposition = resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath);
+      if (disposition.kind !== "render") notFound();
+      const page = snapshot.pages.find((candidate) => candidate.id === disposition.pageId);
+      if (!page) notFound();
       return renderToolPage({
-        site: resolvedVideoToolPage.site,
+        site,
         toolSlug: videoGenerationRoute.itemSlug,
         publicPath: videoGenerationRoute.canonicalPath,
         query,
         routeMode: "host",
-        state: resolvedVideoToolPage.state,
-        resolvedPage: resolvedVideoToolPage.page
+        state,
+        resolvedPage: page
       });
     }
     if (resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath).kind !== "render") notFound();
