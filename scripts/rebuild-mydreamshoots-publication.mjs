@@ -6,10 +6,18 @@ import path from "node:path";
 import Module from "node:module";
 import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
-import { assertDatabaseTarget } from "./lib/database-target.mjs";
+import { argumentValue, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
 
-assertDatabaseTarget({ expectedTarget: "local" });
+const target = argumentValue("--target") || process.env.DATABASE_TARGET || "local";
+assertDatabaseTarget({
+  expectedTarget: target,
+  requireProductionConfirmation: target === "production",
+  productionConfirmed: hasArgument("--confirm-production")
+});
 const apply = process.argv.includes("--apply") && !process.argv.includes("--dry-run");
+if (target === "production" && apply && argumentValue("--confirm") !== "rebuild-mydreamshoots-publication") {
+  throw new Error("Production rebuild requires --confirm=rebuild-mydreamshoots-publication.");
+}
 const siteId = "site_dreamshoot";
 const repoRoot = process.cwd();
 const sourceRoot = path.join(repoRoot, "src");
@@ -95,6 +103,7 @@ try {
     ok: true,
     mode: apply ? "applied" : "dry-run",
     siteId,
+    target,
     before: counts(site),
     routes: snapshot.publishedRoutes.length,
     publishedRoutes: snapshot.publishedRoutes.filter((route) => route.disposition === "render" && route.status === "published").length,
