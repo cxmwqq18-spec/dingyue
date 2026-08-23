@@ -193,6 +193,9 @@ function mergeFooter(settings) {
     supportHeading: "Support",
     socialHeading: "Why it works",
     socialBody: "myDreamshoots helps you turn your own photos into private AI headshots, portraits, and themed albums.",
+    instagramUrl: "https://www.instagram.com/blydey_inc",
+    facebookUrl: "https://www.facebook.com/blydeyinc",
+    youtubeUrl: "https://www.youtube.com/@blydey-inc",
     showPaymentIcons: true
   };
   next.globalSections.footer.blocks = [

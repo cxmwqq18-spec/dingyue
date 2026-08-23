@@ -147,7 +147,6 @@ const referenceCardClass =
   "group relative block overflow-hidden rounded-[14px] border border-white/[0.11] bg-[#111827]/[0.82] text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.92)] transition duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[linear-gradient(90deg,rgba(255,166,68,0.74),rgba(236,75,221,0.52),rgba(22,220,240,0.68))] before:opacity-70 before:content-[''] hover:-translate-y-1 hover:border-cyan-200/24 hover:shadow-[0_24px_74px_-50px_rgba(22,220,240,0.42)]";
 const referenceImageShellClass = "bg-[#0B1020]/[0.70]";
 const referenceImageFrameClass = "relative aspect-[4/3] overflow-hidden rounded-[9px] bg-[#070B14]";
-const referenceSingleImageFrameClass = "relative aspect-[8/3] overflow-hidden rounded-[9px] bg-[#070B14]";
 const referenceContentClass = "flex min-h-[184px] flex-col bg-[#111827]/[0.46] p-4";
 const referenceTitleClass = "line-clamp-1 text-base font-semibold leading-5 text-white [font-family:var(--site-title-font)]";
 const referenceDescriptionClass = "mt-3 line-clamp-2 min-h-[2.45rem] text-xs leading-[1.625] text-slate-300/70";
@@ -180,7 +179,10 @@ function ReferencePackageCard({
   prioritizeFirstImage?: boolean;
   siteBasePath: string;
 }) {
-  const images = cardImageUrls(card);
+  const cardImages = cardImageUrls(card);
+  // Homepage recommendation cards always reserve two equal cover slots. A pack
+  // with a single published asset reuses it so the grid does not collapse.
+  const images = cardImages.length === 1 ? [cardImages[0], cardImages[0]] : cardImages.slice(0, 2);
   const tags = (card.tags?.length ? card.tags : [card.metaLabel || card.meta, card.category]).filter(Boolean).slice(0, 3);
   const photoCountLabel = card.photoCountLabel || card.credits || (locale === "es" ? "20 fotos" : "20 Photos");
   const usesLabel = meaningfulUsesLabel(card.usesLabel) || card.trainingLabel || card.metaLabel || card.meta;
@@ -191,9 +193,9 @@ function ReferencePackageCard({
       href={resolvedCardHref(siteBasePath, card, categoryHrefOverrides)}
     >
       <div className={referenceImageShellClass}>
-        <div className={images.length > 1 ? "grid grid-cols-2 items-stretch gap-0.5 p-3" : "grid items-stretch p-3"}>
-          {images.slice(0, 2).map((image, imageIndex) => (
-            <div className={images.length > 1 ? referenceImageFrameClass : referenceSingleImageFrameClass} key={`${card.id}_split_${imageIndex}`}>
+        <div className="grid grid-cols-2 items-stretch gap-0.5 p-3" data-dreamshoot-catalog-cover="split">
+          {images.map((image, imageIndex) => (
+            <div className={referenceImageFrameClass} key={`${card.id}_split_${imageIndex}`}>
 	              <SafeCatalogImage
                 alt={imageAlt(card, image, imageIndex, locale, brandName)}
                 className="h-full object-cover transition duration-500"

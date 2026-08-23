@@ -2016,6 +2016,13 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
     : semanticSupportLinks.length
       ? semanticSupportLinks
       : publishedLinks.slice(Math.min(4, publishedLinks.length));
+  const dreamshootDefaultSocials = isDreamShootFooter && !spanishXbyFooter
+    ? [
+        "https://www.instagram.com/blydey_inc",
+        "https://www.facebook.com/blydeyinc",
+        "https://www.youtube.com/@blydey-inc"
+      ]
+    : [];
   const profileSocials = [
     ...(identity?.sameAs ?? []),
     ...[
@@ -2024,7 +2031,8 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
       footer ? setting(footer, "threadsUrl", "") : "",
       footer ? setting(footer, "pinterestUrl", "") : "",
       footer ? setting(footer, "youtubeUrl", "") : "",
-      footer ? setting(footer, "xUrl", "") : ""
+      footer ? setting(footer, "xUrl", "") : "",
+      ...dreamshootDefaultSocials
     ]
   ].filter((url): url is string => typeof url === "string" && /^https?:\/\//i.test(url));
   const socialHref = (pattern: RegExp) => profileSocials.find((url) => pattern.test(url)) ?? "";
@@ -3027,8 +3035,13 @@ function generationShowcaseVideoCardsForSite(videoThemes: VideoTheme[], selected
   const activeVideoThemes = videoThemes.filter((theme) => theme.status === "active");
   const videoBySlug = new Map<string, VideoTheme>();
   activeVideoThemes.forEach((theme) => videoBySlug.set(dreamshootCategorySlug(theme.slug), theme));
-  const orderedVideoThemes = selectedVideoSlugs.length
-    ? selectedVideoSlugs.map((slug) => videoBySlug.get(dreamshootCategorySlug(slug))).filter((theme): theme is VideoTheme => Boolean(theme))
+  const selectedVideoThemes = selectedVideoSlugs
+    .map((slug) => videoBySlug.get(dreamshootCategorySlug(slug)))
+    .filter((theme): theme is VideoTheme => Boolean(theme));
+  // Published theme snapshots can lag behind homepage settings. Keep the section
+  // populated with active themes when configured slugs do not resolve at runtime.
+  const orderedVideoThemes = selectedVideoSlugs.length && selectedVideoThemes.length
+    ? selectedVideoThemes
     : activeVideoThemes;
   const seenVideoIds = new Set<string>();
   const videoCards = orderedVideoThemes
@@ -12435,8 +12448,8 @@ function SectionView({
 
     const videoCards = generationShowcaseVideoCardsForSite(publicVideoThemesForShowcase(site, videoThemes), selectedVideoSlugs, videoItemLimit);
     const imageProductCards = imageCards.map((card, productIndex) => ({ ...card, productIndex }));
-    const homepageImageProductCards = imageProductCards;
-    const homepageVideoCards = videoCards;
+    const homepageImageProductCards = imageProductCards.slice(0, 16);
+    const homepageVideoCards = videoCards.slice(0, 8);
     const homepageImageProductAlt = (card: (typeof imageProductCards)[number]) => {
       const fallback = cardImageAltForSite(site, {
         category: card.meta,
@@ -12981,7 +12994,9 @@ function SectionView({
     const displayCards = normalizeStorefrontCatalogCards(site, cards, categoryHrefOverrides);
     const featuredCountDefault = Math.min(12, displayCards.length || 12);
     const featuredCountMax = 12;
-    const featuredCount = Math.max(3, Math.min(featuredCountMax, numberSetting(section, "featuredCount", featuredCountDefault)));
+    const featuredCount = isMyDreamShootsProfileSite(site) && renderContext.pagePath === "/"
+      ? 12
+      : Math.max(3, Math.min(featuredCountMax, numberSetting(section, "featuredCount", featuredCountDefault)));
     const sortedDisplayCards = isMyDreamShootsProfileSite(site)
       ? [...displayCards].sort((a, b) => mydreamshootsCatalogSortRank(a) - mydreamshootsCatalogSortRank(b))
       : displayCards;
