@@ -606,6 +606,10 @@ export default async function HostStorefrontCatchAllPage({
     notFound();
   }
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
+  const publishedDisposition = resolvePublishedRouteDisposition(snapshot, slug);
+  if (publishedDisposition.kind === "redirect" && publishedDisposition.targetPath) {
+    permanentRedirect(publishedDisposition.targetPath);
+  }
   const legacyTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForHost(host));
   if (legacyTarget) {
     const disposition = resolvePublishedRedirectDisposition(snapshot, slug, legacyTarget);
