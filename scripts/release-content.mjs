@@ -519,7 +519,7 @@ async function applyManifest() {
         }
       });
       return { recordId: record.id, afterProtected };
-    });
+    }, { timeout: 180_000, maxWait: 20_000 });
 
     console.log(JSON.stringify({
       ok: true,
