@@ -103,7 +103,9 @@ const legacyVideoThemeSlugs = new Set([
   "creator-intro-motion"
 ]);
 const legacyVideoThemes = (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id && legacyVideoThemeSlugs.has(theme.slug));
-const activeVideoThemes = legacyVideoThemes.filter((theme) => theme.status === "active");
+// Historical framework rows may remain in the platform document for auditability;
+// only immutable publication entities are allowed to feed public schema.
+const activeVideoThemes = [];
 const blackFridayPack = activePacks.find((pack) => schemaSlug(pack.category || pack.name) === "black-friday" || schemaSlug(pack.name) === "black-friday");
 const homePage = site.pages.find((page) => page.slug === "/");
 assert.ok(homePage, "MyDreamShoots homepage should exist");
