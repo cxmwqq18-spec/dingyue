@@ -27,6 +27,7 @@ const policyRouteSpecs = [
   { canonicalPath: "/children-privacy", aliases: ["/children-privacy-policy", "/childrens-privacy", "/policies/children-privacy"] },
   { canonicalPath: "/state-privacy", aliases: ["/state-privacy-rights", "/california-privacy", "/ccpa", "/policies/state-privacy"] }
 ] as const;
+const legacyMotionAlias = { aliasPath: "/ai-image-generation/motion-generator", targetPath: "/ai-video-generation/motion-generator" } as const;
 const policyCanonicalPaths = new Set(policyRouteSpecs.map((spec) => spec.canonicalPath));
 
 function record(value: unknown): value is Record<string, unknown> {
@@ -47,7 +48,9 @@ function route(value: unknown): value is PublishedRouteProjection {
     return value.routeKind === "policy-alias" && text(value.aliasPath) && text(value.targetPath) &&
       value.statusCode === 308 && value.indexable === false && value.sitemapEligible === false && text(value.routeRevision);
   }
-  if (value.disposition !== "render") return false;
+  if (value.disposition !== "render") {
+    return value.routeKind === "policy-alias" && value.aliasPath === legacyMotionAlias.aliasPath && value.targetPath === legacyMotionAlias.targetPath && value.statusCode === 308 && value.indexable === false && value.sitemapEligible === false;
+  }
   if (value.routeKind === "policy") {
     return policyCanonicalPaths.has(value.canonicalPath as typeof policyRouteSpecs[number]["canonicalPath"]) && text(value.pageEntityId) &&
       text(value.pageId) && text(value.pageRevision) && value.status === "published" && value.indexable === true && value.sitemapEligible === true;
@@ -242,7 +245,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const policyRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "policy");
   const redirectRoutes = publishedRoutes.filter((item) => item.disposition === "redirect");
   const expectedPolicyPaths = policyRouteSpecs.map((spec) => spec.canonicalPath);
-  const expectedPolicyAliases = policyRouteSpecs.flatMap((spec) => spec.aliases);
+  const expectedPolicyAliases = [...policyRouteSpecs.flatMap((spec) => spec.aliases), legacyMotionAlias.aliasPath];
   const pageCopyRows = v1.publishedPageCopy;
   const collections = v1.publishedCollectionRefs;
   const links = v1.publishedLinkRefs;
