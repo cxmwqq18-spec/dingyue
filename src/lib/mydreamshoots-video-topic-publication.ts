@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 
 import { aiVideoTopicLandingContentFromSection, type AiVideoTopicLandingContent } from "@/lib/ai-video-topic-content";
 import {
-  isMydreamshootsCurrentVideoMenuSlug,
+  isMydreamshootsPublicVideoGenerationTopicSlug,
   mydreamshootsVideoGenerationCategories,
   mydreamshootsVideoGenerationParentCategories,
   parentVideoGenerationCategorySlugForChild
@@ -43,7 +43,7 @@ type TopicImage = {
   alt: string;
 };
 
-const videoTopicReviewRequiredSlugs = new Set(["explainer-video"]);
+const videoTopicReviewRequiredSlugs = new Set(["explainer-video", "how-to-video"]);
 
 function stable(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(stable);
@@ -90,7 +90,7 @@ function linkEntityId(slug: string, kind: "cta" | "related", index?: number): st
 
 function isPublicVideoTopicPath(path: string): boolean {
   const match = path.match(/^\/ai-video-generation\/([^/?#]+)$/);
-  return Boolean(match && isMydreamshootsCurrentVideoMenuSlug(match[1]));
+  return Boolean(match && isMydreamshootsPublicVideoGenerationTopicSlug(match[1]));
 }
 
 export function dedicatedVideoTopicContentFromPageJson(pageJson: ThemePageJson): VideoTopicContent | undefined {

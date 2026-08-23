@@ -564,6 +564,19 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     durationSeconds: 6,
     maxFrames: 10,
     sortOrder: 270
+  },
+  {
+    slug: "how-to-video",
+    categorySlug: "how-to-video",
+    name: "How-to Video",
+    headline: "Create step-by-step tutorial visuals with clear actions and checkpoints.",
+    description: "Create tutorial-video directions for setup, assembly, software walkthroughs, demonstrations, checkpoints, training, and final verification.",
+    prompt: "Create an action-led tutorial video direction for one defined task. Show the starting state, prerequisites, one ordered action, the expected state change, and an observable checkpoint. Treat generated labels, measurements, settings, warnings, commands, safety statements, and product instructions as placeholders until verified against authoritative sources. Do not invent manufacturer-approved procedures, medical, chemical, electrical, mechanical, or other high-risk guidance.",
+    imageUrl: "/assets/dreamshoot/how-to-video/hero-how-to-video-hands-on-step.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 280
   }
 ] as const;
 
@@ -607,7 +620,8 @@ export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "fashion-video",
   "food-video",
   "pet-video",
-  "explainer-video"
+  "explainer-video",
+  "how-to-video"
 ] as const;
 
 const publicVideoGenerationPageSlugs = new Set<string>(mydreamshootsPublicVideoGenerationTopicSlugs);

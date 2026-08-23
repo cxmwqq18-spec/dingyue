@@ -155,6 +155,12 @@ const videoCategories = [
     label: "Explainer Video",
     description: "Explain products, processes, data, technology, education, business frameworks, and user journeys with clear visual structure.",
     sortOrder: 270
+  },
+  {
+    slug: "how-to-video",
+    label: "How-to Video",
+    description: "Create step-by-step tutorial visuals for setup, assembly, software walkthroughs, demonstrations, checkpoints, training, and final verification.",
+    sortOrder: 280
   }
 ];
 
@@ -348,6 +354,14 @@ const pages = [
     description: "Create AI explainer-video visuals for products, processes, data, technology, education, business frameworks, and user journeys from text or approved images.",
     keywords: "ai explainer video generator, explainer video maker, AI product explainer video, process visualization video, data storytelling video, educational video generator, technology explainer video, business framework video",
     imageUrl: "/assets/dreamshoot/explainer-video/hero-explainer-video-product-concept.jpg"
+  },
+  {
+    slug: "how-to-video",
+    title: "How-to Video",
+    seoTitle: "AI Tutorial Video Generator for Step-by-Step How-to Videos | myDreamshoots",
+    description: "Create AI tutorial-video visuals from text or approved images for step-by-step instructions, software walkthroughs, assembly, demonstrations, checkpoints, and training content.",
+    keywords: "ai tutorial video generator, how-to video maker, AI instructional video generator, step-by-step video maker, software tutorial video generator, assembly tutorial video, training video generator, product instruction video",
+    imageUrl: "/assets/dreamshoot/how-to-video/hero-how-to-video-hands-on-step.jpg"
   }
 ];
 
@@ -490,8 +504,8 @@ function pageJson(page, content = videoTopicContentSeedForSlug(page.slug)) {
   const canonicalPath = content.seo?.canonicalPath || pagePath(page.slug);
   const sectionId = page.slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
   const sectionType = page.slug === "talking-photo" ? "talking_photo_landing" : "ai_video_topic_landing";
-  // The explainer package includes editorial references only; first-party product evidence gates indexation.
-  const indexable = page.slug !== "explainer-video";
+  // Editorial topic packages remain noindex until first-party product evidence is reviewed.
+  const indexable = !new Set(["explainer-video", "how-to-video"]).has(page.slug);
   return {
     pageType: "ai_tool",
     version: 1,
