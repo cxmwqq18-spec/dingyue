@@ -15,6 +15,7 @@ const siteIdArg = process.argv.find((arg) => arg.startsWith("--site-id="));
 const SITE_ID = siteIdArg ? siteIdArg.slice("--site-id=".length) : process.env.SITE_ID || "site_dreamshoot";
 const UPDATE_TIMESTAMP = "2026-08-16T00:00:00.000Z";
 const RUN_TIMESTAMP = new Date().toISOString();
+const DB_TRANSACTION_TIMEOUT_MS = Math.max(120_000, Number(process.env.VIDEO_TOPIC_DB_TRANSACTION_TIMEOUT_MS || 300_000));
 const EMPTY_UNPUBLISHED_PAGE_JSON = {
   pageType: "content",
   version: 1,
@@ -995,7 +996,7 @@ async function updateDatabase(state, categories, syncedPages) {
           update: { state: toPrismaJson(state) }
         });
       },
-        { timeout: 120_000 }
+        { timeout: DB_TRANSACTION_TIMEOUT_MS }
     );
     const publication = await publishMissingVideoPages(state, syncedPages, prisma);
     if (publication) {
