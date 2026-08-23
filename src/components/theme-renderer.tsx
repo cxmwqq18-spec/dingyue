@@ -2694,7 +2694,12 @@ function shouldRenderStorefrontTrustedLogoImage(site: Site, src: string): boolea
 function mediaAssetUrl(site: Site, value: string): string {
   const resolved = cleanStorefrontImageSrc(resolveMediaAssetUrl(site, value));
   const preferred = isAidreamcapesSite(site) ? preferAidreamcapesPhotoAsset(resolved) : preferDreamshootOptimizedImage(resolved);
-  return withStorefrontPublicWatermarkCacheVersion(spanishXbyPublicAssetUrl(site, preferred));
+  const publicUrl = withStorefrontPublicWatermarkCacheVersion(spanishXbyPublicAssetUrl(site, preferred));
+  if (isMyDreamShootsProfileSite(site) && /\/assets\/dreamshoot\/generated\/pack-galleries\//i.test(publicUrl)) {
+    const separator = publicUrl.includes("?") ? "&" : "?";
+    return `${publicUrl}${separator}pair=20260823packpair1`;
+  }
+  return publicUrl;
 }
 
 function spanishXbyPublicAssetUrl(site: Site, value: string): string {
