@@ -546,6 +546,9 @@ export default async function HostStorefrontCatchAllPage({
     if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
   }
   const slug = `/${path.join("/")}`;
+  if (slug === "/ai-image-generation/motion-generator") {
+    permanentRedirect("/ai-video-generation/motion-generator");
+  }
   if (host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) {
     const defaultSiteSlug = process.env.DEFAULT_STOREFRONT_SITE_SLUG || "mydreamshoots";
     if (firstSegment === "tools" || firstSegment === "account" || firstSegment === "app" || firstSegment === "ai-image-generation" || firstSegment === "ai-video-generation" || firstSegment === "pricing" || firstSegment === "help" || firstSegment === "faq" || firstSegment === "workflow" || firstSegment === "best-packages" || firstSegment === "best-ai-image" || firstSegment === "best-ai-video") {
