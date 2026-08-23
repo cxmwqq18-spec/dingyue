@@ -289,7 +289,9 @@ async function loadStorefrontPublicVideoThemesForSection(site: Pick<Site, "id" |
   if (preferLocalPathModeState(site.slug)) return localThemes;
 
   try {
-    const themes = (await getCachedPublicVideoThemesForSite(site.id, limit)).map(lightweightVideoTheme);
+    // Fetch the full public set for a bounded section before theme filtering.
+    // A legacy blocked theme can otherwise consume one of the eight SQL rows.
+    const themes = (await getCachedPublicVideoThemesForSite(site.id)).map(lightweightVideoTheme);
     return themes.length ? themes : localThemes;
   } catch (error) {
     if (isMydreamshootsContentSourceSite(site)) throw error;
