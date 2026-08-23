@@ -264,8 +264,14 @@ function publicPackLimitForPage({
 
 async function completePublicCreativePacksForSite(site: Site, existing: SiteRenderData["creativePacks"], limit?: number): Promise<SiteRenderData["creativePacks"]> {
   const sanitizedExisting = existing.map(lightweightCreativePack);
-  if (typeof limit === "number" && sanitizedExisting.length >= limit) return sanitizedExisting.slice(0, limit);
-  const fullPacks = (await getStorefrontPublicCreativePacksForSite(site.id, limit)).map(lightweightCreativePack);
+  // The homepage runtime can already contain the requested number of lightweight
+  // packs while omitting their gallery arrays. MyDreamShoots recommendation cards
+  // need two published gallery images, so complete those rows before rendering.
+  const needsGalleryCompletion = isPrimaryMydreamshootsCapabilitySite(site) && sanitizedExisting.some((pack) =>
+    pack.status === "active" && (pack.galleryImages ?? []).filter(Boolean).length < 2
+  );
+  if (typeof limit === "number" && sanitizedExisting.length >= limit && !needsGalleryCompletion) return sanitizedExisting.slice(0, limit);
+  const fullPacks = (await getStorefrontPublicCreativePacksForSite(site.id, needsGalleryCompletion ? undefined : limit)).map(lightweightCreativePack);
   if (!fullPacks.length) return limitedCreativePacks(sanitizedExisting, limit);
 
   const fullPackIds = new Set(fullPacks.map((pack) => pack.id));

@@ -7169,6 +7169,31 @@ function dreamshootCatalogCardFromBlock(site: Site, block: SectionBlockInstance)
   };
 }
 
+function dreamshootCatalogCardWithPackMedia(
+  site: Site,
+  card: DreamShootCatalogCard,
+  creativePacks: CreativePack[]
+): DreamShootCatalogCard {
+  if (!isMyDreamShootsProfileSite(site)) return card;
+  const cardSlug = collectionSlugFromHrefForCanonical(site, card.href);
+  const matchingPack = creativePacks.find((pack) => {
+    if (pack.status !== "active") return false;
+    const packSlugs = [
+      pack.aiAppSlug,
+      creativePackCollectionSlug(pack),
+      pack.categoryRecord?.slug,
+      pack.category,
+      pack.name
+    ].filter(Boolean).map((value) => dreamshootCategorySlug(String(value)));
+    return packSlugs.includes(cardSlug) || creativePackMatchesShowcaseSlug(pack, cardSlug);
+  });
+  if (!matchingPack) return card;
+  const imageUrls = dreamshootPackImageSet(site, matchingPack, 2);
+  return imageUrls.length
+    ? { ...card, imageUrl: imageUrls[0], imageUrls }
+    : card;
+}
+
 function dreamshootFeaturedCatalogScore(card: DreamShootCatalogCard): number {
   const title = card.title.toLowerCase();
   const category = card.category.toLowerCase();
@@ -12960,7 +12985,9 @@ function SectionView({
     const aidreamcapes = isAidreamcapesSite(site);
     const spanishXbyCatalog = isSpanishXbySite(site);
     const usePacks = setting(section, "source", "creative_packs") === "creative_packs";
-    const manualCards = sectionBlocks(section, "catalog_pack").map((item) => dreamshootCatalogCardFromBlock(site, item));
+    const manualCards = sectionBlocks(section, "catalog_pack")
+      .map((item) => dreamshootCatalogCardFromBlock(site, item))
+      .map((card) => dreamshootCatalogCardWithPackMedia(site, card, creativePacks));
     const rawSelectedCategory = selectedCollectionSlugFromRenderContext(renderContext);
     const selectedCategory = rawSelectedCategory === "all" ? "" : rawSelectedCategory;
     const packItems = creativePacks
