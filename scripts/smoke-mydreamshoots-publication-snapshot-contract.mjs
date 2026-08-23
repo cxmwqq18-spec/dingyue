@@ -102,7 +102,13 @@ const state = {
 };
 const policySpecs = [
   { canonicalPath: "/privacy", aliases: ["/privacy-policy", "/policies/privacy", "/policies/privacy-policy"] },
-  { canonicalPath: "/terms", aliases: ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"] }
+  { canonicalPath: "/terms", aliases: ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"] },
+  { canonicalPath: "/cookies", aliases: ["/cookie-policy", "/policies/cookies"] },
+  { canonicalPath: "/refunds", aliases: ["/refund-policy", "/policies/refund", "/policies/refunds"] },
+  { canonicalPath: "/content", aliases: ["/content-policy", "/policies/content"] },
+  { canonicalPath: "/shipping", aliases: ["/shipping-policy", "/delivery-policy", "/policies/shipping"] },
+  { canonicalPath: "/children-privacy", aliases: ["/children-privacy-policy", "/childrens-privacy", "/policies/children-privacy"] },
+  { canonicalPath: "/state-privacy", aliases: ["/state-privacy-rights", "/california-privacy", "/ccpa", "/policies/state-privacy"] }
 ];
 const policyAliasPaths = new Set(policySpecs.flatMap((spec) => [spec.canonicalPath, ...spec.aliases]));
 const policyPages = policySpecs.flatMap(({ canonicalPath, aliases }) => {
@@ -111,7 +117,7 @@ const policyPages = policySpecs.flatMap(({ canonicalPath, aliases }) => {
     .find(Boolean);
   return sourcePage ? [{ ...sourcePage, slug: canonicalPath }] : [];
 });
-assert.equal(policyPages.length, 2, "fixture must include canonical privacy and terms source pages");
+assert.equal(policyPages.length, policySpecs.length, "fixture must include every canonical policy source page");
 const policyRoutes = policySpecs.flatMap(({ canonicalPath, aliases }) => {
   const page = policyPages.find((candidate) => candidate.slug === canonicalPath);
   const pageRevision = crypto.createHash("sha256").update(JSON.stringify(page.publishedJson)).digest("hex").slice(0, 20);
