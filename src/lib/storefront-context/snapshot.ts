@@ -499,7 +499,12 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
       : { kind: "not_found", status: 404, path: requestedPath };
   }
   if (exactPublishedRoute?.disposition === "render" && exactPublishedRoute.routeKind === "ai-video-topic-leaf") {
-    if (exactPublishedRoute.status !== "published") return { kind: "not_found", status: 404, path: requestedPath };
+    // Editorial video guides can be intentionally noindex while product proof is
+    // collected. They are still public destinations when navigation points to
+    // them; all other incomplete video routes remain unavailable.
+    const evidenceOnlyReview = exactPublishedRoute.status === "review_required" &&
+      exactPublishedRoute.reviewReason === "FIRST_PARTY_PRODUCT_EVIDENCE_REQUIRED";
+    if (exactPublishedRoute.status !== "published" && !evidenceOnlyReview) return { kind: "not_found", status: 404, path: requestedPath };
     const page = snapshot.pages.find((candidate) => candidate.id === exactPublishedRoute.pageId && normalizePath(candidate.slug) === requestedPath);
     return page
       ? { kind: "render", status: 200, path: requestedPath, pageId: page.id }

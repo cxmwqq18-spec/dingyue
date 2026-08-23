@@ -38,7 +38,7 @@ function topicContent(pageJson, slug) {
   return content;
 }
 
-function publicationIntegrity() {
+function publicationContracts() {
   const sourceRoot = path.resolve("src");
   const originalResolveFilename = Module._resolveFilename;
   const originalLoad = Module._load;
@@ -53,7 +53,12 @@ function publicationIntegrity() {
     return originalResolveFilename.call(this, resolved, ...args);
   };
   try {
-    return createJiti(import.meta.url)("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotIntegrity;
+    const jiti = createJiti(import.meta.url);
+    return {
+      publicationSnapshotIntegrity: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotIntegrity,
+      resolvePublishedRouteDisposition: jiti("../src/lib/storefront-context/snapshot.ts").resolvePublishedRouteDisposition,
+      parsePublicVideoGenerationRouteForSite: jiti("../src/lib/photo-package-taxonomy.ts").parsePublicVideoGenerationRouteForSite
+    };
   } finally {
     Module._resolveFilename = originalResolveFilename;
     Module._load = originalLoad;
@@ -133,7 +138,17 @@ try {
   });
   assert(active?.publication, "MyDreamShoots must have an active publication");
   const snapshot = active.publication.snapshot;
-  assert.equal(publicationIntegrity()(snapshot), "valid", "active publication must satisfy the immutable snapshot contract");
+  const {
+    publicationSnapshotIntegrity,
+    resolvePublishedRouteDisposition,
+    parsePublicVideoGenerationRouteForSite
+  } = publicationContracts();
+  assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "active publication must satisfy the immutable snapshot contract");
+  const routeSnapshot = {
+    site: { id: SITE_ID, slug: "mydreamshoots" },
+    pages: snapshot.pages,
+    publishedRoutes: snapshot.publishedRoutes
+  };
 
   const pages = await prisma.themePage.findMany({
     where: { siteId: SITE_ID, slug: { in: topicSlugs.map((slug) => `/ai-video-generation/${slug}`) } },
@@ -146,6 +161,12 @@ try {
     const page = pageBySlug.get(`/ai-video-generation/${slug}`);
     assert(page, `missing ThemePage draft for ${slug}`);
     assertPublishedTopicProjection(snapshot, page, slug);
+    const canonicalPath = `/ai-video-generation/${slug}`;
+    const parsedRoute = parsePublicVideoGenerationRouteForSite(routeSnapshot.site, canonicalPath);
+    assert.equal(parsedRoute?.canonicalPath, canonicalPath, `${slug} must be accepted by the public video route parser`);
+    const disposition = resolvePublishedRouteDisposition(routeSnapshot, canonicalPath);
+    assert.equal(disposition.kind, "render", `${slug} must render when linked from published video navigation`);
+    assert.equal(disposition.status, 200, `${slug} must resolve with HTTP 200 when linked from published video navigation`);
   }
   console.log(JSON.stringify({
     ok: true,
