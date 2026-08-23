@@ -565,8 +565,7 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/ai-image-generation/motion-generator") {
-    const target = request.nextUrl.clone();
-    target.pathname = "/ai-video-generation/motion-generator";
+    const target = publicRedirectUrlForRequest(request, "/ai-video-generation/motion-generator");
     return NextResponse.redirect(target, 308);
   }
   const iconResponse = await storefrontIconResponse(request);
