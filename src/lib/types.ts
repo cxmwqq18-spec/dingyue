@@ -1004,7 +1004,7 @@ export interface PublishedPolicyRouteProjection {
 export interface PublishedRedirectRouteProjection {
   disposition: "redirect";
   siteId: "site_dreamshoot" | "site_grownstride_test";
-  routeKind: "policy-alias";
+  routeKind: "policy-alias" | "legacy-topic-alias";
   aliasPath: string;
   targetPath: string;
   statusCode: 308;

@@ -365,7 +365,7 @@ export function buildPublicationSnapshot(
     ? [{
         disposition: "redirect",
         siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
-        routeKind: "policy-alias",
+        routeKind: "legacy-topic-alias",
         aliasPath: "/ai-image-generation/motion-generator",
         targetPath: "/ai-video-generation/motion-generator",
         statusCode: 308,

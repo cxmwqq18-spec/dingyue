@@ -10,6 +10,7 @@ import type {
   PublishedPageMediaProjection,
   PublishedStandardPageMediaProjection,
   PublishedRouteProjection,
+  PublishedRedirectRouteProjection,
   PublishedVideoNavigationProjection,
   ThemePublicationSnapshot,
   PublishedSeoSnapshot
@@ -45,12 +46,15 @@ function publicMediaUrl(value: unknown): value is string {
 function route(value: unknown): value is PublishedRouteProjection {
   if (!record(value) || (value.siteId !== "site_dreamshoot" && value.siteId !== "site_grownstride_test")) return false;
   if (value.disposition === "redirect") {
-    return value.routeKind === "policy-alias" && text(value.aliasPath) && text(value.targetPath) &&
-      value.statusCode === 308 && value.indexable === false && value.sitemapEligible === false && text(value.routeRevision);
+    if (value.routeKind === "policy-alias") {
+      return text(value.aliasPath) && text(value.targetPath) && value.statusCode === 308 &&
+        value.indexable === false && value.sitemapEligible === false && text(value.routeRevision);
+    }
+    return value.routeKind === "legacy-topic-alias" && value.aliasPath === legacyMotionAlias.aliasPath &&
+      value.targetPath === legacyMotionAlias.targetPath && value.statusCode === 308 &&
+      value.indexable === false && value.sitemapEligible === false && text(value.routeRevision);
   }
-  if (value.disposition !== "render") {
-    return value.routeKind === "policy-alias" && value.aliasPath === legacyMotionAlias.aliasPath && value.targetPath === legacyMotionAlias.targetPath && value.statusCode === 308 && value.indexable === false && value.sitemapEligible === false;
-  }
+  if (value.disposition !== "render") return false;
   if (value.routeKind === "policy") {
     return policyCanonicalPaths.has(value.canonicalPath as typeof policyRouteSpecs[number]["canonicalPath"]) && text(value.pageEntityId) &&
       text(value.pageId) && text(value.pageRevision) && value.status === "published" && value.indexable === true && value.sitemapEligible === true;
@@ -243,9 +247,10 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const leafRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "ai-image-theme-leaf");
   const videoTopicRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "ai-video-topic-leaf");
   const policyRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "policy");
-  const redirectRoutes = publishedRoutes.filter((item) => item.disposition === "redirect");
+  const redirectRoutes = publishedRoutes.filter((item): item is PublishedRedirectRouteProjection => item.disposition === "redirect" && item.routeKind === "policy-alias");
+  const legacyRedirectRoutes = publishedRoutes.filter((item): item is PublishedRedirectRouteProjection => item.disposition === "redirect" && item.routeKind === "legacy-topic-alias");
   const expectedPolicyPaths = policyRouteSpecs.map((spec) => spec.canonicalPath);
-  const expectedPolicyAliases = [...policyRouteSpecs.flatMap((spec) => spec.aliases), legacyMotionAlias.aliasPath];
+  const expectedPolicyAliases = policyRouteSpecs.flatMap((spec) => spec.aliases);
   const pageCopyRows = v1.publishedPageCopy;
   const collections = v1.publishedCollectionRefs;
   const links = v1.publishedLinkRefs;
@@ -283,6 +288,8 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     expectedPolicyPaths.every((path) => policyRoutes.some((item) => item.canonicalPath === path)) &&
     redirectRoutes.length === expectedPolicyAliases.length &&
     expectedPolicyAliases.every((path) => redirectRoutes.some((item) => item.aliasPath === path)) &&
+    legacyRedirectRoutes.length === 1 && legacyRedirectRoutes[0]?.aliasPath === legacyMotionAlias.aliasPath &&
+    legacyRedirectRoutes[0]?.targetPath === legacyMotionAlias.targetPath &&
     [...pages.keys()].every((id) => [...leafRoutes, ...videoTopicRoutes].some((routeItem) => routeItem.pageEntityId === id)) &&
     collections.every((item) => pages.has(item.pageEntityId) && mediaByPage.get(item.pageEntityId)?.mediaEntityId === item.mediaEntityId) &&
     policyRoutes.every((item) => snapshot.pages.some((page) => page.id === item.pageId && page.slug === item.canonicalPath)) &&
@@ -364,6 +371,24 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
         uniqueLinkIds: unique(linkIds),
         snapshotRevisionHashMatches: snapshot.snapshotHash === revisions.snapshotHash,
         calculatedHashMatches: publicationSnapshotHash(v1) === v1.snapshotHash
+        ,coverage: {
+          leafRoutes: leafRoutes.length,
+          imagePageEntities: imagePageEntities.length,
+          imagePageMedia: imagePageMedia.length,
+          imagePageCopy: imagePageCopy.length,
+          collections: collections.length,
+          videoTopicRoutes: videoTopicRoutes.length,
+          videoPageEntities: videoPageEntities.length,
+          videoPageMedia: videoPageMedia.length,
+          videoPageCopy: videoPageCopy.length,
+          policyRoutes: policyRoutes.length,
+          expectedPolicyPaths: expectedPolicyPaths.length,
+          missingPolicyPaths: expectedPolicyPaths.filter((path) => !policyRoutes.some((item) => item.canonicalPath === path)),
+          redirectRoutes: redirectRoutes.length,
+          expectedPolicyAliases: expectedPolicyAliases.length,
+          missingAliases: expectedPolicyAliases.filter((path) => !redirectRoutes.some((item) => item.aliasPath === path)),
+          invalidRedirectTargets: redirectRoutes.filter((item) => !policyRoutes.some((routeItem) => routeItem.canonicalPath === item.targetPath)).map((item) => item.aliasPath)
+        }
       }, null, 2));
     }
     return "invalid";
