@@ -116,6 +116,7 @@ function latestPublicationForSite(state, siteId) {
 
 function assertPublicationHomeTdk(state) {
   for (const siteId of storefrontSiteIds) {
+    if (siteId === "site_dreamshoot") continue;
     const site = (state.sites ?? []).find((item) => item.id === siteId);
     const currentHome = homePageForSite(site ?? {});
     assert.ok(currentHome, `${siteId} current homepage must exist`);
@@ -125,6 +126,25 @@ function assertPublicationHomeTdk(state) {
     assert.ok(home, `${siteId} latest ThemePublication snapshot must include homepage`);
     assert.deepEqual(pageSeoValues(home), pageSeoValues(currentHome), `${siteId} latest publication SEO must match ThemePage.publishedJson.seo`);
   }
+}
+
+async function assertRelationalMydreamshootsHomeTdk() {
+  const page = await prisma.themePage.findFirst({
+    where: { siteId: "site_dreamshoot", slug: "/" },
+    select: { publishedJson: true }
+  });
+  const active = await prisma.activeThemePublication.findUnique({
+    where: { siteId: "site_dreamshoot" },
+    include: { publication: { select: { snapshot: true } } }
+  });
+  const publishedHome = (active?.publication?.snapshot?.pages ?? []).find((item) => item.slug === "/");
+  assert.ok(page, "site_dreamshoot relational homepage must exist");
+  assert.ok(publishedHome, "site_dreamshoot active publication must include homepage");
+  assert.deepEqual(
+    pageSeoValues(publishedHome),
+    pageSeoValues({ publishedJson: page.publishedJson }),
+    "site_dreamshoot active publication SEO must match relational ThemePage.publishedJson.seo"
+  );
 }
 
 function assertDeployPrecheck() {
@@ -157,6 +177,7 @@ function assertLegacyPolicyAliases() {
 const state = await readPlatformState();
 assertPublishedHomeSeo(state);
 assertPublicationHomeTdk(state);
+await assertRelationalMydreamshootsHomeTdk();
 assertDeployPrecheck();
 assertLegacyPolicyAliases();
 
