@@ -1,6 +1,6 @@
 import { ArrowRight, Check, ChevronRight, ShieldCheck, Sparkles, X } from "lucide-react";
 import { notFound } from "next/navigation";
-import type { ReactNode } from "react";
+import type { ReactNode, SyntheticEvent } from "react";
 import type { SectionInstance, Site } from "@/lib/types";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
@@ -204,6 +204,22 @@ function imageStyle(image: VideoTopicImage): { objectPosition: string } {
   return { objectPosition: image.height / image.width > 1.3 ? "50% 32%" : defaultObjectPosition };
 }
 
+function optimizedTopicImageSrc(src: string): string {
+  if (!src.startsWith("/assets/dreamshoot/")) return src;
+  return src.replace(/\.png(?=[?#]|$)/i, ".webp");
+}
+
+function topicImageError(event: SyntheticEvent<HTMLImageElement>): void {
+  const image = event.currentTarget;
+  const fallback = image.dataset.originalSrc;
+  if (fallback) {
+    delete image.dataset.originalSrc;
+    image.src = fallback;
+    return;
+  }
+  image.style.visibility = "hidden";
+}
+
 function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }) {
   const label = item.scenarioLabel ?? "Customer problem";
   const noteLabel = item.noteLabel ?? (item.script ? "Example script" : undefined);
@@ -212,7 +228,7 @@ function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }
     <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f] shadow-[0_28px_70px_-54px_rgba(0,0,0,0.92)]" data-video-topic-use-case-card>
       <div className="relative aspect-[16/9] overflow-hidden bg-[#292438]" data-video-topic-media>
         <img
-          src={item.image.src}
+          src={optimizedTopicImageSrc(item.image.src)}
           alt={item.image.alt}
           className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
           style={imageStyle(item.image)}
@@ -221,6 +237,8 @@ function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }
           loading="eager"
           fetchPriority={index < 2 ? "high" : "auto"}
           decoding="async"
+          data-original-src={optimizedTopicImageSrc(item.image.src) !== item.image.src ? item.image.src : undefined}
+          onError={topicImageError}
         />
         <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-[#17151f]/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/80 backdrop-blur">
           {String(index + 1).padStart(2, "0")}
@@ -248,7 +266,7 @@ function SupportingCard({ card, light = false, site }: { card: VideoTopicSupport
       {card.image ? (
         <div className="relative mb-6 aspect-[16/9] overflow-hidden rounded-[16px] bg-[#292438]">
           <img
-            src={card.image.src}
+            src={optimizedTopicImageSrc(card.image.src)}
             alt={card.image.alt}
             className="h-full w-full object-cover"
             style={imageStyle(card.image)}
@@ -256,6 +274,8 @@ function SupportingCard({ card, light = false, site }: { card: VideoTopicSupport
             height={card.image.height}
             loading="lazy"
             decoding="async"
+            data-original-src={optimizedTopicImageSrc(card.image.src) !== card.image.src ? card.image.src : undefined}
+            onError={topicImageError}
           />
         </div>
       ) : null}
@@ -324,7 +344,7 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
         {section.image ? (
           <figure className="relative mt-12 aspect-[16/9] overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f]">
             <img
-              src={section.image.src}
+              src={optimizedTopicImageSrc(section.image.src)}
               alt={section.image.alt}
               className="absolute inset-0 h-full w-full object-cover"
               style={imageStyle(section.image)}
@@ -332,6 +352,8 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
               height={section.image.height}
               loading="lazy"
               decoding="async"
+              data-original-src={optimizedTopicImageSrc(section.image.src) !== section.image.src ? section.image.src : undefined}
+              onError={topicImageError}
             />
           </figure>
         ) : null}

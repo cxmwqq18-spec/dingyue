@@ -3,7 +3,7 @@ import "server-only";
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
 import type { CreativePack, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage } from "@/lib/types";
 import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
-import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
+import { isMydreamshootsCollectionItemSlug, photoPackageSlug, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
 import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
@@ -506,8 +506,16 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
   if (legacyTarget) return resolvePublishedRedirectDisposition(snapshot, requestedPath, legacyTarget);
   if (isPrimaryMydreamshootsSite(snapshot.site) && requestedPath.startsWith("/ai-image-generation/")) {
     const route = snapshot.publishedRoutes.find((candidate): candidate is PublishedLeafRouteProjection => isLeafRenderRoute(candidate) && candidate.canonicalPath === requestedPath);
-    if (!route) return { kind: "not_found", status: 404, path: requestedPath };
-    if (route.status !== "published") return { kind: "not_found", status: 404, path: requestedPath };
+    if (!route || route.status !== "published") {
+      // Keep registered taxonomy links usable when publication data lags behind
+      // the storefront navigation that already exposes them.
+      const itemSlug = requestedPath.slice("/ai-image-generation/".length).split("/")[0] ?? "";
+      const rootPage = snapshot.pages.find((page) => canonicalPathForPage(page) === publicCollectionRootPathForSite(snapshot.site) || normalizePath(page.slug) === publicCollectionRootPathForSite(snapshot.site));
+      if (rootPage && isMydreamshootsCollectionItemSlug(photoPackageSlug(itemSlug))) {
+        return { kind: "render", status: 200, path: requestedPath, pageId: rootPage.id };
+      }
+      return { kind: "not_found", status: 404, path: requestedPath };
+    }
     const rootPage = snapshot.pages.find((page) => canonicalPathForPage(page) === publicCollectionRootPathForSite(snapshot.site) || normalizePath(page.slug) === publicCollectionRootPathForSite(snapshot.site));
     if (rootPage) return { kind: "render", status: 200, path: requestedPath, pageId: rootPage.id };
   }

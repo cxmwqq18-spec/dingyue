@@ -12,7 +12,7 @@ const SITE_ID = "site_dreamshoot";
 const PAGE_SLUG = "/ai-video-generation/talking-photo";
 const PAGE_ID = "site_dreamshoot_talking_photo";
 const UPDATE_TIMESTAMP = "2026-08-16T00:00:00.000Z";
-const TALKING_PHOTO_IMAGE_URL = "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.png";
+const TALKING_PHOTO_IMAGE_URL = "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp";
 
 const talkingPhotoCategory = {
   slug: "talking-photo",

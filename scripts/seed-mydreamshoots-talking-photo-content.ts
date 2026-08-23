@@ -125,7 +125,7 @@ export const talkingPhotoContent: TalkingPhotoContent = {
     availabilityNote:
       "Talking Photo is currently presented as a customer-first workflow guide. The button opens the existing video workspace; available generation options may vary.",
     image: {
-      src: `${imageRoot}/ai-talking-photo-older-woman-portrait.png`,
+      src: `${imageRoot}/ai-talking-photo-older-woman-portrait.webp`,
       alt: "Older woman smiling at the camera in a clear portrait for a talking-photo video"
     }
   },
@@ -143,7 +143,7 @@ export const talkingPhotoContent: TalkingPhotoContent = {
         script: "Happy birthday, Mia. I hope today feels easy, joyful, and full of the people you love.",
         cta: "Create a Birthday Greeting",
         image: {
-          src: `${imageRoot}/talking-photo-birthday-greeting-woman-cake.png`,
+          src: `${imageRoot}/talking-photo-birthday-greeting-woman-cake.webp`,
           alt: "Woman holding a birthday cake for a personalized talking-photo greeting"
         }
       },
@@ -155,7 +155,7 @@ export const talkingPhotoContent: TalkingPhotoContent = {
         script: "Thank you for being there when I needed it. I will not forget what you did for me.",
         cta: "Create a Personal Message",
         image: {
-          src: `${imageRoot}/talking-photo-personal-message-older-man.png`,
+          src: `${imageRoot}/talking-photo-personal-message-older-man.webp`,
           alt: "Older man looking at the camera for a personal talking-photo message"
         }
       },
@@ -167,7 +167,7 @@ export const talkingPhotoContent: TalkingPhotoContent = {
         script: "In the next minute, I will show you why compound interest rewards time more than timing.",
         cta: "Create an Explainer Intro",
         image: {
-          src: `${imageRoot}/talking-photo-education-explainer-teacher.png`,
+          src: `${imageRoot}/talking-photo-education-explainer-teacher.webp`,
           alt: "Teacher presenting in front of a chalkboard for a talking-photo explainer"
         }
       },
@@ -179,7 +179,7 @@ export const talkingPhotoContent: TalkingPhotoContent = {
         script: "If viewers keep leaving in the first three seconds, change the opening, not the whole video.",
         cta: "Create a Social Intro",
         image: {
-          src: `${imageRoot}/talking-photo-social-video-creator.png`,
+          src: `${imageRoot}/talking-photo-social-video-creator.webp`,
           alt: "Content creator speaking toward the camera in a studio for a social video intro"
         }
       },
@@ -191,7 +191,7 @@ export const talkingPhotoContent: TalkingPhotoContent = {
         script: "This serum is designed for lightweight hydration that layers cleanly under makeup.",
         cta: "Create a Product Intro",
         image: {
-          src: `${imageRoot}/talking-photo-product-intro-spokesperson.png`,
+          src: `${imageRoot}/talking-photo-product-intro-spokesperson.webp`,
           alt: "Spokesperson holding a skincare bottle for a talking-photo product introduction"
         }
       },
@@ -203,7 +203,7 @@ export const talkingPhotoContent: TalkingPhotoContent = {
         script: "Wishing you a warm Christmas, a quiet break, and a fresh start for the year ahead.",
         cta: "Create a Holiday Greeting",
         image: {
-          src: `${imageRoot}/talking-photo-holiday-greeting-woman-gift.png`,
+          src: `${imageRoot}/talking-photo-holiday-greeting-woman-gift.webp`,
           alt: "Woman holding a wrapped Christmas gift for a holiday talking-photo greeting"
         }
       }

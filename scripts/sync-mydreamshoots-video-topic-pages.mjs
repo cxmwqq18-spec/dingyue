@@ -161,7 +161,7 @@ const pages = [
       "Make a photo talk from one clear portrait and a short script. Create talking-photo videos for birthday wishes, personal messages, explainers, social intros, product pitches, and holiday greetings.",
     keywords:
       "AI talking photo generator, make a photo talk, talking photo AI, photo talking video, talking picture generator, speaking photo generator, animate a photo to talk, talking portrait",
-    imageUrl: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.png"
+    imageUrl: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp"
   },
   {
     slug: "cinematic-video",

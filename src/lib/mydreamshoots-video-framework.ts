@@ -323,7 +323,7 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     headline: "Turn one portrait into a focused talking-photo video.",
     description: "Create a talking-photo direction from one clear portrait and a focused message, with stable facial identity and restrained natural delivery.",
     prompt: "Animate the provided portrait into a natural talking-photo video. Preserve identity, facial proportions, age, and expression while creating believable mouth movement and subtle head motion for the supplied message.",
-    imageUrl: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.png",
+    imageUrl: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp",
     creditCost: 24,
     durationSeconds: 6,
     maxFrames: 1,

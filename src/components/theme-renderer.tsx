@@ -1040,7 +1040,7 @@ function groupedVideoGenerationTopicsForServer(topics: HeaderVideoGenerationTopi
     .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label));
 }
 
-const defaultMydreamshootsVideoThemeCover = "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.png";
+const defaultMydreamshootsVideoThemeCover = "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp";
 
 function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic, fallbackImageUrl = defaultMydreamshootsVideoThemeCover) {
   return {

@@ -46,7 +46,7 @@ import { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings }
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
-import { isMydreamshootsPublicVideoGenerationSlug, isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
+import { isMydreamshootsCollectionItemSlug, isMydreamshootsPublicVideoGenerationSlug, isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
@@ -1700,6 +1700,7 @@ function creativePackCollectionSlugs(site: Site, pack: PlatformState["creativePa
 export function canResolveCollectionSlugForSite(state: PlatformState, site: Site, collectionSlug: string): boolean {
   const normalized = normalizePublicSlug(collectionSlug);
   if (!normalized) return false;
+  if (isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsCollectionItemSlug(normalized)) return true;
   if (isExplicitSeoDirectoryContentForSite(site, "collection", normalized)) return true;
   const canonicalSlug = canonicalSeoDirectorySlugForSite(site, "collection", normalized);
   if ((state.creativePackCategories ?? []).some((category) => {
