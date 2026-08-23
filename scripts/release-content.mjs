@@ -420,7 +420,9 @@ async function applySnapshot(tx, siteId, tables, replacements) {
     ["videoThemeCategories", "videoThemeCategories"]
   ]) {
     const supportsParents = table !== "videoThemeCategories";
-    const rows = asArray(tables[table]).map((row) => supportsParents ? { ...row, parentId: null } : row);
+    // Video theme categories are a flat public taxonomy. Clear historical parent
+    // references before upserting so old relational rows cannot violate the FK.
+    const rows = asArray(tables[table]).map((row) => ({ ...row, ...(supportsParents ? { parentId: null } : { parentId: null }) }));
     await upsertRows(tx, table, rows);
     const targetIds = await targetCategoryMap(tx, categoryTable, siteId);
     if (supportsParents) {
