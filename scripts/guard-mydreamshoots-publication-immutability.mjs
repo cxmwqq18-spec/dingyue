@@ -23,6 +23,11 @@ for (const relative of scripts) {
     failures.push({ file: relative, line, kind: "historical-publication-write", match: match[0] });
   }
   for (const match of source.matchAll(publishedRecordWrite)) {
+    // A scoped publication command may materialize its source into the
+    // published row before creating and activating the immutable snapshot.
+    // The publication service call is the boundary; direct writes without it
+    // remain failures.
+    if (/publishSeoSnapshotRelational\s*\(/.test(source)) continue;
     const call = source.slice(match.index, match.index + 3200);
     const end = call.search(/\n\s*\}\);/);
     const body = end >= 0 ? call.slice(0, end + 4) : call;

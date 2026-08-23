@@ -179,6 +179,8 @@
     "db:tunnel:watch": "node scripts/watch-remote-db-tunnel.mjs",
     "snapshot:mydreamshoots-production": "node scripts/export-mydreamshoots-production-snapshot.mjs",
     "sync:mydreamshoots-homepage:db": "node scripts/sync-mydreamshoots-homepage-db.mjs --apply",
+    "publish:mydreamshoots-homepage-tdk": "node scripts/publish-mydreamshoots-homepage-tdk.mjs",
+    "publish:mydreamshoots-video-page": "node scripts/sync-mydreamshoots-video-page-to-publication.mjs",
     "db:import-state": "node scripts/import-platform-state-to-prisma.mjs",
     "db:fix-platform-state-source": "node scripts/fix-platform-postgres-state-source.mjs",
     "db:import-relational-state": "node scripts/db-import-relational-state.mjs",

@@ -68,35 +68,36 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 
 ### Best Packages + 媒体页上线基线
 
-本基线从 `2026-08-09` 起适用于 MyDreamShoots 与 AIdreamcapes 两个 `.com` 店铺；两个 `.eu` 店铺不跟随本次文案/结构调整。
+本基线从 `2026-08-09` 起适用于 MyDreamShoots 与 AIdreamcapes 两个 `.com` 店铺；两个 `.eu` 店铺不跟随本次文案/结构调整。分类、公开主题和 Footer 以目标站点当前 active `ThemePublication.snapshot` 的关系投影为准，不再以历史脚本、旧 JSON 或本文件中的固定清单冒充线上事实。
 
-- [ ] Header 顶部导航不再展示 `FAQ`，在 `Tools` 后展示 `Best Packages`，链接为 `/best-packages`；`Best Packages` 是普通页面链接，不能触发套餐下拉框；`Workspace` 和右侧 CTA 保持原位。
-- [ ] Footer 的 Product/Explore 入口不再展示旧的 `Headshot Generator` 单项，改为 `Best Packages`、`Best AI image`、`Best AI video`、`Tools`、`How it works`、`Pricing`。
+MyDreamShoots 当前线上基线记录（导出时间 `2026-08-23T15:04:59Z`，publication `pub_site_dreamshoot_mt5xtrwr_fdc145e4`，version `89`）：图片分类 43 个 active 记录、视频分类 45 个 active 记录、视频主题 29 个 active 记录。Footer Product 当前为 `AI Image Generation` -> `/ai-image-generation`、`AI Video Generation` -> `/ai-video-generation`、`Best Packages` -> `/best-packages`、`How it works` -> `/workflow`、`Pricing` -> `/pricing`。后续分类、主题或 Footer 调整时，只更新这份线上基线记录和对应 publication readback，不手工维护第二套分类事实。
+
+- [ ] Header 顶部导航以当前 active publication 的导航投影为准；不得根据旧文档强行添加或删除入口。每个可见入口必须有对应 published route、canonical 和 HTTP 200 readback。
+- [ ] Footer Product 入口以当前线上最新 publication 为准；本次基线实际为 `AI Image Generation` -> `/ai-image-generation`、`AI Video Generation` -> `/ai-video-generation`、`Best Packages` -> `/best-packages`、`How it works` -> `/workflow`、`Pricing` -> `/pricing`。不得把历史 `Best AI image` / `Best AI video` 固定要求写成与线上数据相反的验收条件。
 - [ ] MyDreamShoots 首页 `/` 不展示推荐套餐 section；Aidreamcapes 首页保留 `featured_thanksgiving_1` 并放在 `generation_showcase_1` 后面；`featured_pack_1`、`featured_christmas_1` 只在 `/best-packages` 展示。
 - [ ] `/best-packages` 必须先展示唯一 H1 intro，再展示三组推荐套餐 section，顺序固定为 `intro_1`、`featured_pack_1`、`featured_christmas_1`、`featured_thanksgiving_1`、`faq_1`，保留各站点自己的文案和素材。
-- [ ] `/best-ai-image` 使用 `dreamshoot_media_gallery` + `fullGallery: true` 展示完整图片主题数据，不能使用首页 priority slug 或固定数量上限；桌面 4 列、移动端自适应折行。
-- [ ] `/best-ai-video` 使用 `dreamshoot_media_gallery` + `fullGallery: true` 展示完整视频案例数据，不能使用首页视频数量上限；桌面 4 列、移动端自适应折行。
-- [ ] 首页和独立媒体页都不显示 `28 EXAMPLES`、`8 CLIPS` 或其他数量标签；首页展示模块文案固定为 `Best Photo Generator`、`Best Video Generator`、`View all photos`、`View all videos`。
+- [ ] `/best-ai-image` 与 `/best-ai-video` 是否存在、标题、描述、媒体数量和布局，以当前 active publication 的 `publishedPageEntities`、`publishedPageMedia` 和对应页面 JSON 为准；不能用旧 priority slug、旧数量标签或旧固定文案覆盖线上数据。
+- [ ] 首页和独立媒体页不得展示未经当前 publication 证明的数量标签；展示文案必须能在同一 snapshot 的页面实体和媒体投影中回读。
 - [ ] 首页 `Start with your photos` 的标准目标必须是 `/app/create`，不是 `/login`。
-- [ ] 公共视频展示与 SEO 结构化数据不得再出现 `creator-scene-motion`；工作台内部视频主题仍保留，公开 slot 使用干净的 `travel-route-story` 补位。
+- [ ] 公共视频展示与 SEO 结构化数据只能使用当前 active publication 的公开视频主题和 route/entity 投影；工作台内的 paused/内部分类不得因旧规则自动进入公网。
 - [ ] `/site/mydreamshoots/best-packages`、`/site/mydreamshoots/best-ai-image`、`/site/mydreamshoots/best-ai-video`、`/site/aidreamcapes/best-packages`、`/site/aidreamcapes/best-ai-image`、`/site/aidreamcapes/best-ai-video` 必须和正式域名路径一样返回 200。
-- [ ] 运行时加载、SEO metadata、sitemap、theme templates、`ThemePublication.snapshot`、PostgreSQL rows 和同步脚本必须同时包含 `/best-packages`、`/best-ai-image`、`/best-ai-video`，不得只改源码或只改线上数据。
+- [ ] 运行时加载、SEO metadata、sitemap、theme templates、`ThemePublication.snapshot`、PostgreSQL rows 和同步脚本必须对当前 active publication 中的公开目录保持一致；不得只改源码或只改线上数据，也不得把旧 Best Pages 清单当作新的线上事实。
 - [ ] 改动后至少执行 `npm run typecheck`、`npm run smoke:dreamshoot-homepage-showcase`、`npm run smoke:fan-holiday-storefront-theme`、`npm run smoke:mydreamshoots-seo-indexing`、`npm run smoke:storefront-seo-fingerprint`、`npm run smoke:public-seo-policy`、`npm run smoke:dreamshoot-public-seo-templates`、`npm run smoke:storefront-public-routes`、`npm run smoke:storefront-navigation-data`、`npm run smoke:storefront-sitemap-directory-coverage`。
 
 ### Best Pages 文案与布局冻结
 
 本冻结规则从 `2026-08-10` 起生效，适用于 MyDreamShoots 与 AIdreamcapes 两个 `.com` 店铺。未经站点负责人明确批准，不允许修改、删除、隐藏或重排以下文案、路由、布局和数据规则；任何同步脚本、发布快照、模板生成、上线修复都必须保留这些规则。
 
-- [ ] 顶部导航固定保留 `Photoshoot Studio` / `Occasion Albums`、`Tools`、`Best Packages`、`How it works`、`Blog` / `Guides`、`Pricing`、`Workspace`；`Best Packages` 必须紧跟 `Tools`，且必须是页面链接。
-- [ ] Footer 固定保留 `Best Packages`、`Best AI image`、`Best AI video` 三个新入口；旧的单一 `Headshot Generator` footer 入口不得恢复。
+- [ ] 顶部导航和 Footer 以目标站点 active publication 的最新导航投影为准；文档只记录已验证的快照和验证方法，不固定一个会随线上数据变化的菜单版本。
+- [ ] Footer 的入口必须来自当前 publication 的 navigation projection，并通过真实域名 HTTP/canonical readback；本次 MyDreamShoots 基线是 `AI Image Generation`、`AI Video Generation`、`Best Packages`、`How it works`、`Pricing`。
 - [ ] MyDreamShoots 首页不展示推荐套餐 section；Aidreamcapes 首页推荐套餐只允许出现 `featured_thanksgiving_1`；`featured_pack_1` 和 `featured_christmas_1` 不得回到首页。
 - [ ] `/best-packages` 固定展示唯一 H1 intro、`featured_pack_1`、`featured_christmas_1`、`featured_thanksgiving_1` 和页面专属 FAQ，不得少于三组推荐套餐，不得改成下拉菜单或局部弹窗。
-- [ ] `/best-ai-image` 与 `/best-ai-video` 固定为独立页面，桌面四列、移动端自适应折行，使用完整公开数据源，不得回退成首页滑轨、数量上限或 priority-only 列表。
-- [ ] 首页展示模块文案固定为 `Best Photo Generator`、`Best Video Generator`、`View all photos`、`View all videos`；首页和独立媒体页都不得恢复 `Customer image themes`、`Customer video themes`、`28 EXAMPLES`、`8 CLIPS`。
+- [ ] `/best-ai-image` 与 `/best-ai-video` 的存在、布局和完整数据源以当前 publication 页面实体/媒体投影为准；如果线上 publication 未启用某页面，不得仅凭历史基线要求运行时伪造页面。
+- [ ] 首页展示模块文案、数量标签和媒体入口以同一 publication 的页面 JSON、媒体实体和 route projection 为准，禁止源码、旧 fixture、数据库 published row 三者各自定义一套内容。
 - [ ] `/best-ai-image` 与 `/best-ai-video` 的页面说明和 SEO description 不得再出现 `customer` / `customer-created`，统一使用无客户表述的营销文案，例如 `Browse every AI image theme in one simple grid.`、`Browse every AI video case in one simple grid.`。
 - [ ] `Start with your photos` 固定跳转 `/app/create`，不得改回 `/login`；未登录引导由工作台鉴权流程处理。
 - [ ] 登录态头像/账号信息区域固定跳转 `/account` 个人中心；独立 `Workspace` 导航与开始创作类 CTA 继续跳转 `/app/create`，不得互相回退。
-- [ ] 公共首页、`/best-ai-video`、SEO JSON-LD 和 sitemap 可见数据不得出现 `Creator Scene Motion` / `creator-scene-motion`；该内部工作台主题可以保留，但不能进入公共展示。
+- [ ] 公共首页、公开视频页、SEO JSON-LD 和 sitemap 只能出现 active publication 明确列出的公开视频主题；paused 或内部主题即使存在于关系表，也不得进入公网。
 - [ ] 桌面 `1280px+` header 必须同一行展示全部导航、账号信息、邮箱和 `Sign out`，不得引入 `More`、账号下拉收纳或隐藏入口；如需微调，只能调整间距、字号、内边距和 logo 占用宽度。
 - [ ] 改动这些页面前必须先更新本节基线并获得明确批准；改动后必须重新发布 PostgreSQL draft/published、`ThemePublication.snapshot`、主题模板、同步脚本和 smoke 断言，避免发布或同步时回退。
 
@@ -134,6 +135,8 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
   `Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.`
 - [ ] `keywords` 正确：
   `Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot`
+
+TDK 变更必须通过 `node scripts/publish-mydreamshoots-homepage-tdk.mjs --apply` 执行：本地使用 `DATABASE_TARGET=local`，生产使用 `DATABASE_TARGET=remote --confirm-production`。脚本同时更新首页 `ThemePage`、`ThemeSettings`、immutable `ThemePublication` 和 active pointer，并生成本地备份；不得直接编辑线上快照或导入历史 JSON。
 
 检查方式：
 

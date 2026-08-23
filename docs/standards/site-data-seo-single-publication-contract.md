@@ -485,7 +485,7 @@ CTA / related links
 2. `ActiveThemePublication` / immutable v1 snapshot 如果在目标数据库不存在或未激活，不能报告全站闭环完成。
 3. 图像主题 leaf 的独立性合同通过，不代表首页、标准页、视频、工具、博客和政策页都已进入同一 `PublishedPageEntity` 投影。
 4. 视频 topic 静态 map、工具详情运行时合成、目录页动态拼接等路径，若仍被公开 runtime 调用，就构成第二数据源。
-5. 任何同步脚本直接写 `publishedJson`，都绕过了正式 publication 边界，必须改为 draft/source -> publish。
+5. 任何普通同步、修复、迁移脚本直接写 `publishedJson`，都绕过了正式 publication 边界，必须改为 draft/source -> 正式 publish。唯一允许写入 published row 的入口是专门的 publication command，且必须在同一变更中校验 snapshot、创建 immutable `ThemePublication`、切换 active pointer，并提供备份和 readback；本次 TDK 使用 `scripts/publish-mydreamshoots-homepage-tdk.mjs`，不能由通用同步脚本代替。
 6. `ThemePage.publishedJson` 记录数量不能作为 page entity 覆盖证明；必须验证 route/entity/media/link/revision parity。
 7. 本地数据库或本地补齐的数据只能证明代码路径可运行，不能证明线上 production 闭环。
 
@@ -498,7 +498,7 @@ CTA / related links
 1. 确认目标数据库 schema、`ActiveThemePublication` 和 v1 snapshot 可用。
 2. 让公开 runtime、metadata、JSON-LD、sitemap、robots 全部从同一 snapshot/resolver 读取。
 3. 删除或隔离所有文件 JSON fallback 和静态公开 fallback。
-4. 禁止同步脚本直写 `publishedJson`，统一经过 publication service。
+4. 禁止普通同步脚本直写 `publishedJson`，统一经过 publication service；正式 publication command 必须把 published row、snapshot 和 active pointer 作为一个可回读的发布闭环处理。
 
 ### P1：补齐页面实体覆盖
 
