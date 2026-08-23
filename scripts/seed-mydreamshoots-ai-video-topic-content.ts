@@ -4110,6 +4110,173 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       microcopy: "Generated visuals are drafts. Product facts, numbers, claims, and citations still need independent verification."
     }
   },
+  "how-to-video": {
+    seo: {
+      title: "AI Tutorial Video Generator for Step-by-Step How-to Videos | myDreamshoots",
+      description: "Create AI tutorial-video visuals from text or approved images for step-by-step instructions, software walkthroughs, assembly, demonstrations, checkpoints, and training content.",
+      keywords: "ai tutorial video generator, how-to video maker, AI instructional video generator, step-by-step video maker, software tutorial video generator, assembly tutorial video, training video generator, product instruction video",
+      canonicalPath: "/ai-video-generation/how-to-video"
+    },
+    hero: {
+      eyebrow: "AI TUTORIAL VIDEO GENERATOR",
+      title: "AI Tutorial Video Generator for Step-by-Step How-to Videos",
+      body: "Create clear tutorial-video directions for setup, assembly, software walkthroughs, demonstrations, checkpoints, training, and final verification. Start from text or an approved image, show one ordered action at a time, and review every instruction against authoritative source material before publishing.",
+      primaryCta: "Create How-to Video Visuals",
+      secondaryCta: "Explore AI Video Generation",
+      availabilityNote: "Use the live myDreamshoots workflow to confirm available inputs, credit requirements, generation state, and supported controls before creating tutorial visuals.",
+      rightsCopy: "Use only manuals, interfaces, product references, and images you own or are authorized to use. Generated labels, measurements, warnings, and procedures are illustrative until reviewed.",
+      imageNote: "These AI-generated editorial references illustrate tutorial direction and are not presented as verified product output or safety instructions.",
+      image: image("/assets/dreamshoot/how-to-video/hero-how-to-video-hands-on-step.jpg", "Generated hands-on tutorial showing a screwdriver, desk-lamp joint, alignment, and verification cues", 1600, 1000),
+      images: [
+        image("/assets/dreamshoot/how-to-video/hero-how-to-video-hands-on-step.jpg", "Generated hands-on tutorial showing a screwdriver, desk-lamp joint, alignment, and verification cues", 1600, 1000),
+        image("/assets/dreamshoot/how-to-video/hero-how-to-video-screen-tutorial.jpg", "Generated software tutorial screen showing numbered UI actions, highlighted control, cursor focus, and confirmation", 1600, 1000),
+        image("/assets/dreamshoot/how-to-video/hero-how-to-video-overhead-demo.jpg", "Generated overhead tutorial workbench showing tools, parts, hands, preparation, action, and verification stages", 1600, 1000)
+      ],
+      highlights: ["Ordered actions", "Prerequisites", "Visual proof", "Checkpoints", "Text to Video", "Image to Video"]
+    },
+    quickAnswer: {
+      eyebrow: "WHAT THIS CREATES",
+      title: "Make the next action easy to see",
+      intro: "How-to Video is for actionable ordered instruction. It answers what the viewer should do next, what should change, and how to check the result. It is distinct from concept-led Explainer Video and presenter-led Talking Head Video.",
+      cards: [
+        { title: "Hands-on", body: "Show tools, materials, hands, object orientation, one action, the expected state change, and a visible check." },
+        { title: "Screen-led", body: "Show a software or device workflow with numbered actions, focused controls, state changes, and confirmation points." },
+        { title: "Demonstration-led", body: "Show a task, product use, setup, or training routine with prerequisites, sequence, result, and verification boundary." }
+      ]
+    },
+    useCases: {
+      eyebrow: "TUTORIAL DIRECTIONS",
+      title: "Choose the task before choosing the visual style",
+      intro: "A useful tutorial starts with a defined job, not a generic cinematic treatment. Pick the task, the viewer's starting state, and the proof that shows the step worked.",
+      items: [
+        { title: "Tools and materials", problem: "The viewer cannot tell what must be ready before the first action.", body: "Open with a clean inventory of tools, parts, files, or permissions and label only details verified from the source procedure.", cta: "Show Prerequisites", image: image("/assets/dreamshoot/how-to-video/how-to-video-tools-materials.jpg", "Generated tutorial workbench with labeled tools parts and prepared materials before assembly", 1600, 1000) },
+        { title: "Safety and prerequisites", problem: "A step begins without showing conditions that make it appropriate or safe.", body: "Show the required starting condition, protective equipment, access, power state, or other prerequisite without inventing official safety guidance.", cta: "Frame the Starting State", image: image("/assets/dreamshoot/how-to-video/how-to-video-prerequisite-safety.jpg", "Generated tutorial preparation scene showing gloves workspace clearance and prerequisite safety checks", 1600, 1000) },
+        { title: "Ordered steps", problem: "The viewer sees an outcome but not the sequence that produces it.", body: "Use numbered shots and stable framing so one action leads visibly to the next instead of collapsing multiple instructions into a montage.", cta: "Build Ordered Steps", image: image("/assets/dreamshoot/how-to-video/how-to-video-ordered-steps.jpg", "Generated instructional sequence showing numbered setup actions progressing across a work surface", 1600, 1000) },
+        { title: "Close action", problem: "The important manipulation is too small or obscured to inspect.", body: "Move closer to the hand, tool, control, connector, texture, or object orientation that carries the instruction.", cta: "Show the Key Action", image: image("/assets/dreamshoot/how-to-video/how-to-video-close-action.jpg", "Generated close-up tutorial view showing hands turning a tool at a small mechanical joint", 1600, 1000) },
+        { title: "Software walkthrough", problem: "A screen recording lists clicks without showing the state change the user should expect.", body: "Frame the starting screen, focused control, action, resulting state, and confirmation while treating generated interface text as a placeholder.", cta: "Create a Screen Tutorial", image: image("/assets/dreamshoot/how-to-video/how-to-video-software-walkthrough.jpg", "Generated software walkthrough with numbered interface actions highlighted control and confirmation state", 1600, 1000) },
+        { title: "Demonstration", problem: "A product or task appears in a lifestyle scene but the procedure is hard to follow.", body: "Keep the camera and object orientation stable enough for the viewer to compare each step and result.", cta: "Create a Demonstration", image: image("/assets/dreamshoot/how-to-video/hero-how-to-video-overhead-demo.jpg", "Generated overhead demonstration showing hands using prepared parts through an ordered tutorial task", 1600, 1000) },
+        { title: "Measure and verify", problem: "The tutorial ends with an attractive result but no observable completion check.", body: "Show the measurement, alignment, screen status, fit, count, or other visible checkpoint that indicates the task is complete.", cta: "Add a Checkpoint", image: image("/assets/dreamshoot/how-to-video/how-to-video-measure-verify.jpg", "Generated tutorial checkpoint showing measurement tool alignment and a visible verification result", 1600, 1000) },
+        { title: "Before and after", problem: "The viewer cannot compare the starting condition with the intended result.", body: "Use matched framing and clear labels to show what changed, while avoiding unsupported claims about performance or safety.", cta: "Show the Result", image: image("/assets/dreamshoot/how-to-video/how-to-video-before-after.jpg", "Generated before and after tutorial comparison showing a completed organized workspace result", 1600, 1000) }
+      ]
+    },
+    gallery: {
+      eyebrow: "AI-GENERATED SCENE REFERENCES",
+      title: "Eight step-by-step tutorial scene directions",
+      intro: "These page-specific generated references are editorial visual directions, not verified myDreamshoots outputs, official manuals, or safety procedures.",
+      items: [
+        { title: "Tools and materials", body: "Prepared tools, parts, and materials before the first action.", image: image("/assets/dreamshoot/how-to-video/how-to-video-tools-materials.jpg", "Generated tutorial workbench with tools parts and materials prepared before a step-by-step task", 1600, 1000) },
+        { title: "Prerequisite and safety", body: "Starting conditions and contextual checks before action.", image: image("/assets/dreamshoot/how-to-video/how-to-video-prerequisite-safety.jpg", "Generated tutorial preparation showing workspace clearance gloves and prerequisite safety checks", 1600, 1000) },
+        { title: "Ordered steps", body: "Numbered actions that preserve sequence and orientation.", image: image("/assets/dreamshoot/how-to-video/how-to-video-ordered-steps.jpg", "Generated instructional sequence showing numbered actions across a stable tutorial work surface", 1600, 1000) },
+        { title: "Close action", body: "The manipulation that carries the key instruction.", image: image("/assets/dreamshoot/how-to-video/how-to-video-close-action.jpg", "Generated close-up tutorial action showing hands turning a tool at a small joint", 1600, 1000) },
+        { title: "Software walkthrough", body: "Focused control, action, state change, and confirmation.", image: image("/assets/dreamshoot/how-to-video/how-to-video-software-walkthrough.jpg", "Generated software walkthrough showing numbered UI actions highlighted control and confirmation state", 1600, 1000) },
+        { title: "Overhead demonstration", body: "A stable view of the full task and object orientation.", image: image("/assets/dreamshoot/how-to-video/hero-how-to-video-overhead-demo.jpg", "Generated overhead tutorial demonstration showing hands tools parts and ordered task stages", 1600, 1000) },
+        { title: "Measure and verify", body: "An observable checkpoint that confirms the intended state.", image: image("/assets/dreamshoot/how-to-video/how-to-video-measure-verify.jpg", "Generated tutorial verification showing measurement alignment and a visible completion checkpoint", 1600, 1000) },
+        { title: "Before and after", body: "Matched framing that makes the changed state legible.", image: image("/assets/dreamshoot/how-to-video/how-to-video-before-after.jpg", "Generated before and after tutorial comparison showing a completed organized workspace result", 1600, 1000) }
+      ]
+    },
+    foundation: {
+      eyebrow: "INSTRUCTION INTEGRITY SYSTEM",
+      title: "Six decisions before generating tutorial clips",
+      intro: "Define the instruction and its evidence boundary before choosing camera movement, pacing, or visual polish.",
+      leftTitle: "Define",
+      leftItems: ["Task goal", "Prerequisites", "Ordered action"],
+      rightTitle: "Check",
+      rightItems: ["Visual proof", "Failure path", "Verification boundary"],
+      rightTone: "avoid",
+      expertLabel: "Expert tip",
+      expertTip: "A polished generated action is not an authoritative procedure. Anchor every high-risk, technical, product-specific, or safety-critical instruction to a real source before publication."
+    },
+    guidance: {
+      eyebrow: "SEQUENCE GUIDE",
+      title: "Make each instruction visible, ordered, and checkable",
+      intro: "Tutorial visuals can look plausible while skipping a prerequisite, changing object orientation, or inventing a result.",
+      cards: [
+        { title: "Start from the real state", body: "Show what the viewer has before acting, including tools, materials, files, permissions, or device state." },
+        { title: "One action per shot", body: "Keep each shot focused on one operation so the viewer knows what to do next." },
+        { title: "Show the state change", body: "Make the expected result visible instead of relying on narration that says the step worked." },
+        { title: "Preserve orientation", body: "Keep camera angle, object position, hand placement, and screen context stable across sequential steps." },
+        { title: "Show what can go wrong", body: "Name or depict a failure path only when it is supported by the authoritative source; never invent warnings." },
+        { title: "End with verification", body: "Close with a fit, alignment, measurement, status, count, or other observable checkpoint." }
+      ]
+    },
+    evidence: {
+      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
+      title: "Verify the live workflow before indexation",
+      intro: "The page must be backed by real myDreamshoots evidence before it is promoted as an indexable product page.",
+      cards: [
+        { title: "Text to Video input", body: "Add a real, internally reviewed capture of the supported text input path and current controls for tutorial direction." },
+        { title: "Image to Video input", body: "Add a real capture showing how an approved product, interface, diagram, or reference image enters the workflow." },
+        { title: "Credits and job state", body: "Document the real credit requirement, generation request, job state, and at least one reviewed tutorial-style output." }
+      ]
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      title: "From one task to a reviewed tutorial sequence",
+      items: [
+        { title: "Define the task", body: "Name the audience, starting state, desired result, and one action the viewer should complete." },
+        { title: "Choose the source path", body: "Use Text to Video for written instructions or Image to Video when an approved reference should anchor the visual." },
+        { title: "Generate short scenes", body: "Review tools, hands, object orientation, UI states, labels, warnings, timing, and continuity." },
+        { title: "Replace and verify", body: "Check every instruction against the manual, interface, source image, or other authoritative reference before publishing." }
+      ],
+      cta: "Create How-to Video Visuals"
+    },
+    value: {
+      eyebrow: "INSTRUCTION / SAFETY BOUNDARY",
+      title: "Generated visuals can demonstrate; they cannot authorize procedures",
+      intro: "Use the output as a visual draft and keep the procedure owner responsible for the final instruction.",
+      items: [
+        { title: "Keep procedures sourced", body: "Manufacturer instructions, technical procedures, medical guidance, chemical handling, electrical work, and safety claims require authoritative sources." },
+        { title: "Replace generated text", body: "Check every label, measurement, setting, command, warning, date, and product detail against approved material." },
+        { title: "Separate reference from proof", body: "A generated hand, tool, interface, result, or checkpoint is not proof that the real task is safe or complete." },
+        { title: "Match the learner", body: "Adjust shot density, pacing, captions, crop, and terminology for onboarding, training, support, classroom, or social use." }
+      ]
+    },
+    trust: {
+      eyebrow: "RESPONSIBLE / E-E-A-T",
+      title: "Keep tutorial content useful, distinct, and verifiable",
+      intro: "Before publishing a how-to sequence:",
+      items: [
+        { title: "Verify product instructions", body: "Do not imply that generated visuals are official manufacturer instructions or verified product behavior." },
+        { title: "Source high-risk guidance", body: "Use qualified and authoritative sources for medical, chemical, electrical, mechanical, legal, financial, or safety-critical steps." },
+        { title: "Label generated references accurately", body: "Do not present generated screens, tools, people, measurements, warnings, or results as real product evidence." },
+        { title: "Keep neighboring intents separate", body: "How-to Video teaches ordered actions; Explainer Video explains concepts; Talking Head Video is presenter-led; Fitness and Food own their domain workflows." },
+        { title: "Review rights and context", body: "Use approved references, preserve source rights, and remove unsupported details before publishing or training." },
+        { title: "Keep CTA and destination consistent", body: "The next action should match the tutorial promise and the live workflow the visitor can actually use." }
+      ]
+    },
+    comparison: {
+      eyebrow: "RELATED VIDEO TOPICS",
+      title: "Choose the page that matches the viewer's job",
+      intro: "Avoid intent overlap by sending visitors to the format that best answers the question or task.",
+      items: [
+        { title: "Explainer Video", body: "Explain what something is, why it matters, or how a system works.", href: "/ai-video-generation/explainer-video", linkLabel: "Explore Explainer Video" },
+        { title: "Talking Head Video", body: "Use a presenter-led format for direct explanation, commentary, or delivery.", href: "/ai-video-generation/talking-head-video", linkLabel: "Explore Talking Head Video" },
+        { title: "AI Avatar Video", body: "Use a digital presenter when the avatar itself is part of the communication format.", href: "/ai-video-generation/ai-avatar-video", linkLabel: "Explore AI Avatar Video" },
+        { title: "Fitness Video", body: "Own movement-led workouts, exercise sequences, and training context.", href: "/ai-video-generation/fitness-video", linkLabel: "Explore Fitness Video" },
+        { title: "Food Video", body: "Own cooking action, preparation, plating, service, and culinary visuals.", href: "/ai-video-generation/food-video", linkLabel: "Explore Food Video" },
+        { title: "AI Video Generation", body: "Browse the full directory when the creative job is not yet clear.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" }
+      ]
+    },
+    faq: {
+      eyebrow: "FAQ",
+      title: "Questions about AI tutorial video generation",
+      items: [
+        { question: "What is an AI tutorial video generator?", answer: "It helps turn a defined task into visual instructions with a starting state, ordered actions, expected state changes, and observable checkpoints. Generate short scenes, then verify every instruction against authoritative source material." },
+        { question: "Can I make a how-to video from an existing product image or screen?", answer: "Use Image to Video when an approved product, interface, diagram, or reference image should anchor the motion. Review object identity, UI states, labels, measurements, and continuity before publishing." },
+        { question: "Can I create a how-to video from text?", answer: "Use Text to Video to describe the task goal, prerequisites, ordered actions, object or screen state, expected result, and verification checkpoint instead of relying on a vague generic prompt." },
+        { question: "Are generated instructions and safety warnings accurate?", answer: "Do not assume so. Generated labels, measurements, settings, commands, warnings, procedures, and results should be treated as illustrative until checked against a manual, interface, or other trusted source." },
+        { question: "How is this different from Explainer Video?", answer: "How-to Video teaches the viewer to complete a task through ordered, actionable steps. Explainer Video answers what something is, why it matters, or how a system works." },
+        { question: "How is this different from Talking Head Video?", answer: "Talking Head Video is presenter-led. How-to Video is action-led: the hands, screen, object, sequence, and checkpoint carry the instruction even when a presenter appears." }
+      ]
+    },
+    finalCta: {
+      eyebrow: "CREATE WITH VERIFIED SOURCE MATERIAL",
+      title: "Turn one task into a clearer visual tutorial",
+      body: "Define the starting state, show ordered actions, add visible checkpoints, and review every instruction against trusted source material before publishing.",
+      cta: "Create How-to Video Visuals",
+      microcopy: "Generated visuals are drafts. Product procedures, safety claims, settings, and measurements still need independent verification."
+    }
+  },
   "ugc-ad-video": {
     seo: {
       title: "AI UGC Video Generator for Creator-Style Product Ads | myDreamshoots",

@@ -14,7 +14,7 @@ assertDatabaseTarget({ expectedTarget: String(process.env.DATABASE_TARGET || "lo
 const topicSlugs = [
   "talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "social-media-video", "youtube-video",
   "story-video", "meme-video", "product-video", "product-ad-video", "promo-video", "ugc-ad-video",
-  "video-ad", "brand-video", "music-video", "fashion-video", "food-video", "pet-video", "explainer-video"
+  "video-ad", "brand-video", "music-video", "fashion-video", "food-video", "pet-video", "explainer-video", "how-to-video"
 ];
 
 function record(value) {
@@ -86,7 +86,7 @@ function assertPublishedTopicProjection(snapshot, sourcePage, slug) {
   assert.equal(navigation.canonicalPath, canonicalPath, `${slug} navigation must use the canonical published route`);
   assert.equal(navigation.description, content.seo.description, `${slug} directory summary must come from published content`);
 
-  if (slug === "explainer-video") {
+  if (["explainer-video", "how-to-video"].includes(slug)) {
     assert.equal(route.status, "review_required", `${slug} must remain review-gated until first-party evidence exists`);
     assert.equal(route.indexable, false);
     assert.equal(route.sitemapEligible, false);
