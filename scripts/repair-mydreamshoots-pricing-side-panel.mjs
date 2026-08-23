@@ -9,14 +9,16 @@ import { PrismaClient } from "@prisma/client";
 import { argumentValue, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
 
 const target = argumentValue("--target") || process.env.DATABASE_TARGET || "";
-const siteId = target === "production" ? "site_dreamshoot" : target === "test" ? "site_grownstride_test" : "";
+const siteId = target === "test" ? "site_grownstride_test" : target === "local" || target === "production" ? "site_dreamshoot" : "";
 const apply = hasArgument("--apply");
-if (!["test", "production"].includes(target)) throw new Error("--target=test|production is required");
+const mode = argumentValue("--mode") || "restore";
+if (!["local", "test", "production"].includes(target)) throw new Error("--target=local|test|production is required");
+if (!["restore", "clear"].includes(mode)) throw new Error("--mode=restore|clear is required");
 if (target === "production" && !hasArgument("--confirm-production")) throw new Error("Production repair requires --confirm-production");
 if (apply && !hasArgument("--confirm=repair-mydreamshoots-pricing-side-panel")) throw new Error("--apply requires an explicit confirmation phrase");
 assertDatabaseTarget({ expectedTarget: target, requireProductionConfirmation: target === "production", productionConfirmed: hasArgument("--confirm-production") });
 
-const sidePanelItems = [
+const restoredSidePanelItems = [
   ["Private photo albums", "Create and keep finished photo sets in your private account gallery."],
   ["AI photo editor with prompts", "Refine approved images with guided prompt-based edits before delivery."],
   ["Special AI photo filters", "Apply supported styles and filters to build a consistent photo set."],
@@ -26,6 +28,7 @@ const sidePanelItems = [
   ["No watermark", "Download finished results without a platform watermark."],
   ["4K Ultra-High quality outputs", "Premium exports support higher-resolution delivery where available."]
 ];
+const sidePanelItems = mode === "clear" ? [] : restoredSidePanelItems;
 
 const databaseUrl = process.env.DATABASE_URL?.trim();
 if (!databaseUrl) throw new Error("DATABASE_URL is required");
@@ -74,13 +77,13 @@ try {
   assert(before, `site ${siteId} not found`);
   const subscriptions = before.products.filter((product) => product.type === "subscription");
   assert.equal(subscriptions.length, 3, "expected exactly three subscription products");
-  const missing = subscriptions.filter((product) => !Array.isArray(product.metadata?.sidePanelItems) || product.metadata.sidePanelItems.length === 0).map((product) => product.name);
-  console.log(JSON.stringify({ target, siteId, mode: apply ? "apply" : "dry-run", missing, sidePanelItemCount: sidePanelItems.length }, null, 2));
-  if (!apply || !missing.length) {
+  const needsUpdate = subscriptions.filter((product) => JSON.stringify(product.metadata?.sidePanelItems ?? null) !== JSON.stringify(sidePanelItems));
+  console.log(JSON.stringify({ target, siteId, operation: mode, mode: apply ? "apply" : "dry-run", affectedProducts: needsUpdate.map((product) => product.name), sidePanelItemCount: sidePanelItems.length }, null, 2));
+  if (!apply || !needsUpdate.length) {
     // Dry-run and already-repaired environments need no write or publication.
   } else {
     await prisma.$transaction(async (tx) => {
-    for (const product of subscriptions) {
+    for (const product of needsUpdate) {
       await tx.product.update({
         where: { id: product.id },
         data: { metadata: { ...(product.metadata ?? {}), sidePanelItems: clone(sidePanelItems) } }
@@ -100,7 +103,7 @@ try {
     galleryImageAlts: Array.isArray(pack.galleryImageAlts) ? pack.galleryImageAlts.filter((value) => typeof value === "string") : []
     }));
     const snapshot = buildPublicationSnapshot(targetSite, undefined, normalizedPacks, fresh.products.map(mapProduct));
-    const published = await publishSeoSnapshotRelational({ siteId, snapshot, actor: "repair:mydreamshoots-pricing-side-panel" });
+    const published = await publishSeoSnapshotRelational({ siteId, snapshot, actor: `repair:mydreamshoots-pricing-side-panel:${mode}` });
     console.log(JSON.stringify({ ok: true, publicationId: published.publication.id, publishedVersion: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash }, null, 2));
   }
 } finally {

@@ -2708,11 +2708,15 @@ export async function renderStorefrontPage({
       : currentPageSectionTypes.has("dreamshoot_generation_showcase")
       ? 8
       : 32;
+    const configuredVideoSection = Object.values(pageJson.sections).find((section) =>
+      section.type === "dreamshoot_generation_showcase" || section.type === "dreamshoot_media_gallery"
+    );
     pageRenderData = {
       ...pageRenderData,
       videoThemes: trimVideoThemesForStorefront(
         { ...emptySiteRenderData(), videoThemes: await loadStorefrontPublicVideoThemesForSection(currentSite, renderData.videoThemes, videoThemeLimit) },
-        videoThemeLimit
+        videoThemeLimit,
+        configuredVideoSection
       )
     };
   }

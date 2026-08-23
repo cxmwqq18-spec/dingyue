@@ -16,17 +16,18 @@ const detailsByFeature = new Map(
 );
 
 export function pricingSidePanelItemsFromMetadata(metadata: { sidePanelItems?: unknown; features?: unknown } | undefined): PricingSidePanelItem[] {
-  const configured = Array.isArray(metadata?.sidePanelItems)
-    ? metadata.sidePanelItems.flatMap((item) => {
+  // An explicit empty array means the page copy intentionally has no feature list.
+  // Do not repopulate it from the broader plan features.
+  if (Array.isArray(metadata?.sidePanelItems)) {
+    return metadata.sidePanelItems.flatMap((item) => {
         if (Array.isArray(item) && item.length >= 2 && typeof item[0] === "string" && typeof item[1] === "string") return [[item[0].trim(), item[1].trim()] as const];
         if (typeof item === "string") {
           const [label, ...detailParts] = item.split("|").map((part) => part.trim());
           if (label && detailParts.join(" | ").trim()) return [[label, detailParts.join(" | ").trim()] as const];
         }
         return [];
-      })
-    : [];
-  if (configured.length) return configured;
+      });
+  }
 
   return Array.isArray(metadata?.features)
     ? metadata.features.flatMap((feature) => {
