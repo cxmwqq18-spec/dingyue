@@ -23,6 +23,7 @@ import { StorefrontNavigationFeedback } from "@/components/storefront/navigation
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
 import { PricingBillingTable } from "@/components/storefront/pricing-billing-table";
+import { pricingSidePanelItemsFromMetadata } from "@/lib/mydreamshoots-pricing-facts";
 import { StorefrontInstantLink, StorefrontLinkPrefetchProvider, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
 import { AiVideoTopicLanding } from "@/components/storefront/ai-video-topic-landing";
 import { TalkingPhotoLanding } from "@/components/storefront/talking-photo-landing";
@@ -8402,12 +8403,7 @@ function PricingTableSectionView({
     items: Array<readonly [string, string]>;
   }>>((acc, cycle) => {
     const featuredProduct = displayProducts.find((product) => product.id === featuredProductIdsByCycle[cycle]);
-    const configuredSideItems = (featuredProduct?.metadata?.features ?? [])
-      .map((feature) => {
-        const [label, ...detailParts] = feature.split("|").map((part) => part.trim());
-        return label && detailParts.join(" ").trim() ? [label, detailParts.join(" | ")] as const : undefined;
-      })
-      .filter((item): item is readonly [string, string] => Boolean(item));
+    const configuredSideItems = pricingSidePanelItemsFromMetadata(featuredProduct?.metadata);
     acc[cycle] = {
       eyebrow: spanishXbyPricing
         ? aidreamcapes ? "Por que elegir creditos de ruta" : "Por que elegir creditos"

@@ -25,6 +25,7 @@ function normalizedProductMetadata(metadata: Product["metadata"] | undefined): P
   return {
     ...(metadata.summary?.trim() ? { summary: metadata.summary.trim() } : {}),
     ...(metadata.features?.map((value) => value.trim()).filter(Boolean).length ? { features: metadata.features.map((value) => value.trim()).filter(Boolean) } : {}),
+    ...(metadata.sidePanelItems?.length ? { sidePanelItems: metadata.sidePanelItems } : {}),
     ...(capabilities && Object.keys(capabilities).length ? { capabilities } : {}),
     ...(metadata.badgeLabel?.trim() ? { badgeLabel: metadata.badgeLabel.trim() } : {}),
     ...(metadata.buttonLabel?.trim() ? { buttonLabel: metadata.buttonLabel.trim() } : {}),

@@ -126,6 +126,15 @@ const subscriptionMetadata = {
       "Create AI videos",
       "Magic Upscaler for high-res images",
       "No watermark"
+    ],
+    sidePanelItems: [
+      ["Private photo albums", "Create and keep finished photo sets in your private account gallery."],
+      ["AI photo editor with prompts", "Refine approved images with guided prompt-based edits before delivery."],
+      ["Special AI photo filters", "Apply supported styles and filters to build a consistent photo set."],
+      ["Prompt-based photo creation", "Start a new image direction from a short prompt in seconds."],
+      ["AI video generation", "Turn supported photos and prompts into short motion results."],
+      ["Magic Upscaler", "Upscale approved images when you need a larger, sharper export."],
+      ["No watermark", "Download finished results without a platform watermark."]
     ]
   },
   Pro: {
@@ -139,6 +148,15 @@ const subscriptionMetadata = {
       "Create AI videos",
       "Magic Upscaler for high-res images",
       "No watermark"
+    ],
+    sidePanelItems: [
+      ["Private photo albums", "Create and keep finished photo sets in your private account gallery."],
+      ["AI photo editor with prompts", "Refine approved images with guided prompt-based edits before delivery."],
+      ["Special AI photo filters", "Apply supported styles and filters to build a consistent photo set."],
+      ["Prompt-based photo creation", "Start a new image direction from a short prompt in seconds."],
+      ["AI video generation", "Turn supported photos and prompts into short motion results."],
+      ["Magic Upscaler", "Upscale approved images when you need a larger, sharper export."],
+      ["No watermark", "Download finished results without a platform watermark."]
     ]
   },
   Premium: {
@@ -153,6 +171,16 @@ const subscriptionMetadata = {
       "Magic Upscaler for high-res images",
       "No watermark",
       "4K Ultra-High quality outputs"
+    ],
+    sidePanelItems: [
+      ["Private photo albums", "Create and keep finished photo sets in your private account gallery."],
+      ["AI photo editor with prompts", "Refine approved images with guided prompt-based edits before delivery."],
+      ["Special AI photo filters", "Apply supported styles and filters to build a consistent photo set."],
+      ["Prompt-based photo creation", "Start a new image direction from a short prompt in seconds."],
+      ["AI video generation", "Turn supported photos and prompts into short motion results."],
+      ["Magic Upscaler", "Upscale approved images when you need a larger, sharper export."],
+      ["No watermark", "Download finished results without a platform watermark."],
+      ["4K Ultra-High quality outputs", "Premium exports support higher-resolution delivery where available."]
     ]
   }
 };

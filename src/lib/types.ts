@@ -502,6 +502,7 @@ export interface Price {
 export interface ProductMetadata {
   summary?: string;
   features?: string[];
+  sidePanelItems?: Array<string | [string, string]>;
   capabilities?: Record<string, boolean | string | number>;
   badgeLabel?: string;
   buttonLabel?: string;
