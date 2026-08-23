@@ -2697,7 +2697,10 @@ export async function renderStorefrontPage({
       }))
     };
   }
-  if (pageNeedsPublicVideoThemes && !pageRenderData.videoThemes.length) {
+  // The homepage showcase must prefer the relational public video-theme source.
+  // A legacy publication can contain one unrelated tutorial video, which would
+  // otherwise prevent the empty-data fallback from loading the eight themes.
+  if (pageNeedsPublicVideoThemes && (currentPageSectionTypes.has("dreamshoot_generation_showcase") || !pageRenderData.videoThemes.length)) {
     const videoThemeLimit = currentPageSectionTypes.has("dreamshoot_media_gallery")
       ? currentPageUsesFullMediaGallery ? undefined : publicDirectoryPackLimit
       : currentPageSectionTypes.has("dreamshoot_generation_showcase")
