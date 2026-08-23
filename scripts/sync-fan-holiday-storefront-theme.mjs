@@ -4,6 +4,7 @@ import fs from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 import {
   localShowcasePosterPath,
   localShowcaseVideoPath,
@@ -15,7 +16,6 @@ import Module from "node:module";
 import createJiti from "jiti";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const sourceRoot = path.join(repoRoot, "src");
 const originalResolveFilename = Module._resolveFilename;
 Module._resolveFilename = function resolveFilename(request, ...args) {
@@ -2427,11 +2427,11 @@ function applyFanHolidayThemeToState(state) {
 }
 
 async function readState() {
-  return JSON.parse(await fs.readFile(statePath, "utf8"));
+  return readPlatformStateFromSql();
 }
 
 async function writeState(state) {
-  await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
+  await writePlatformStateToSql(state);
 }
 
 async function updateDatabase(state) {

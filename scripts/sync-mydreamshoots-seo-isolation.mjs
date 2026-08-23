@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-import fs from "node:fs";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = new URL("../data/platform-state.json", import.meta.url);
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 
 const replacements = new Map([
   ["Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, travel, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows.", "Upload selfies and create your own private AI model.|Themed photo packages from headshots to football fan photos.|Gala, cyberpunk, lifestyle, beauty, and profile packs.|Magic upscaler, AI video concepts, and style preview flows."],
@@ -74,5 +73,5 @@ function walk(node, path = []) {
 
 walk(state);
 
-fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+await writePlatformStateToSql(state);
 console.log(`Synced MyDreamShoots SEO isolation strings: ${changeCount} string fields updated.`);

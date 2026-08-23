@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-import fs from "node:fs";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = "data/platform-state.json";
 const write = process.argv.includes("--write");
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 const site = state.sites?.find((candidate) => candidate.id === "site_dreamshoot");
 if (!site) throw new Error("site_dreamshoot not found");
 const page = site.pages?.find((candidate) => candidate.slug === "/best-packages");
@@ -18,5 +17,5 @@ for (const block of section.blocks) {
     block.settings.collectionSlug = "soccer";
   }
 }
-if (write && changed.length) fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
-console.log(JSON.stringify({ ok: true, write, changed, note: write ? "draftJson only; publish through the formal publication service" : "dry-run; no source state changed" }, null, 2));
+if (write && changed.length) await writePlatformStateToSql(state);
+console.log(JSON.stringify({ ok: true, write, changed, writeTarget: write && changed.length ? "postgres:platformStateDocument" : null, note: write ? "draftJson only; publish through the formal publication service" : "dry-run; no database state changed" }, null, 2));

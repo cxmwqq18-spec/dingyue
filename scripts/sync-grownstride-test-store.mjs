@@ -5,6 +5,7 @@ import Module from "node:module";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
 import createJiti from "jiti";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 const sourceRoot = path.join(repoRoot, "src");
@@ -26,7 +27,6 @@ const targetApexDomain = process.env.GROWNSTRIDE_APEX_DOMAIN || "grownstride.com
 const targetAdminEmail = process.env.GROWNSTRIDE_ADMIN_EMAIL || "owner@grownstride.localhost";
 const targetAdminPassword = process.env.GROWNSTRIDE_ADMIN_PASSWORD || "grownstride123";
 const shouldNoIndex = !["0", "false", "off", "no"].includes(String(process.env.GROWNSTRIDE_TEST_NOINDEX ?? "1").toLowerCase());
-const statePath = path.join(process.cwd(), "data", "platform-state.json");
 const resetFlag = "--reset-test-from-production";
 const resetConfirmPhrase = "reset-grownstride-test";
 const blydeySocialLinks = {
@@ -707,14 +707,14 @@ function syncJsonState(state) {
 }
 
 async function syncJsonFile({ sourceFromDatabase = false } = {}) {
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   const source = sourceFromDatabase ? await sourceCollectionsFromDatabase() : sourceCollectionsFromState(state);
   if (sourceFromDatabase) writeSourceToJsonState(state, source);
   const result = syncJsonStateFromSource(state, source);
-  fs.writeFileSync(statePath, `${JSON.stringify(result.state, null, 2)}\n`);
+  await writePlatformStateToSql(result.state);
   return {
     ...result.summary,
-    source: sourceFromDatabase ? "database" : "json"
+    source: sourceFromDatabase ? "database" : "postgres:platformStateDocument"
   };
 }
 

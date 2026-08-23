@@ -3,6 +3,7 @@ import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const prisma = new PrismaClient();
 const args = new Map();
@@ -372,8 +373,7 @@ async function activeThemePacksForSite() {
   });
   if (databasePacks.length) return { source: "database", packs: databasePacks };
 
-  const statePath = path.join(process.cwd(), "data", "platform-state.json");
-  const state = JSON.parse(await fs.readFile(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   const categories = (state.creativePackCategories ?? []).filter((category) => category.siteId === siteId && category.status === "active");
   const categoryById = new Map(categories.map((category) => [category.id, category]));
   const parentById = new Map(categories.filter((category) => category.parentId).map((category) => [category.id, categoryById.get(category.parentId)]));
@@ -392,7 +392,7 @@ async function activeThemePacksForSite() {
           : undefined
       };
     });
-  return { source: "platform-state", packs };
+  return { source: "postgres:platformStateDocument", packs };
 }
 
 async function main() {

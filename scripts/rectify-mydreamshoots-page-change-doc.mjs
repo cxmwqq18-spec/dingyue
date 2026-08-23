@@ -1,18 +1,15 @@
-import fs from "node:fs";
-import path from "node:path";
-
-const statePath = path.resolve(process.cwd(), "data/platform-state.json");
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 const flags = new Set(process.argv.slice(2).filter((arg) => arg.startsWith("--")).map((arg) => arg.slice(2).split("=")[0]));
 const forceContentOverwrite = flags.has("force-content-overwrite");
 const dryRun = flags.has("dry-run") || !forceContentOverwrite;
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 
 function contentOverwriteGuardPayload() {
   return {
     writeEnabled: !dryRun,
     requiredFlag: "--force-content-overwrite",
     note: dryRun
-      ? "No files were overwritten. Re-run with --force-content-overwrite to update data/platform-state.json."
+      ? "No records were overwritten. Re-run with --force-content-overwrite to update the PostgreSQL platform state."
       : "Content overwrite was explicitly enabled for this run."
   };
 }
@@ -365,7 +362,7 @@ for (const pack of state.creativePacks ?? []) {
   }
 }
 
-if (!dryRun) fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+if (!dryRun) await writePlatformStateToSql(state);
 console.log(JSON.stringify({
   ok: true,
   dryRun,

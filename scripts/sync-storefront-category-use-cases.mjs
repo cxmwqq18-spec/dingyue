@@ -2,9 +2,9 @@
 import "./load-runtime-env.mjs";
 import fs from "node:fs";
 import path from "node:path";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const useCaseProfilesPath = path.join(repoRoot, "src", "lib", "photo-package-use-case-profiles.json");
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
@@ -179,7 +179,7 @@ async function updateDatabase(changes) {
   }
 }
 
-const state = readJson(statePath);
+const state = await readPlatformStateFromSql();
 const useCaseProfiles = readJson(useCaseProfilesPath);
 const dreamshootCategoryProfiles = useCaseProfiles.mydreamshootsCategories ?? {};
 const aidreamcapesCategoryProfiles = useCaseProfiles.aidreamcapesCategories ?? {};
@@ -222,7 +222,7 @@ for (const pack of packs) {
 }
 
 if (!dryRun) {
-  writeJson(statePath, state);
+  await writePlatformStateToSql(state);
 }
 
 if (updateDb && changes.length && !dryRun) {

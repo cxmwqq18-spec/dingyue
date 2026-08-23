@@ -1,11 +1,11 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const customerAssetRoot = path.resolve(process.env.CUSTOMER_ASSET_STORAGE_ROOT || path.join(repoRoot, "data", "customer-assets"));
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 
 const failures = [];
 const warnings = [];

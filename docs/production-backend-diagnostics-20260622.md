@@ -14,7 +14,7 @@ The application only switches to the Prisma/Postgres bridge when the runtime pro
 PERSISTENCE_BACKEND=postgres
 ```
 
-Otherwise it falls back to `data/platform-state.json`. The relevant code paths are:
+Otherwise it fails closed. The retired `data/platform-state.json` path is no longer a fallback. The relevant code paths are:
 
 - `src/lib/platform-state-store.ts`: `usePostgresPlatformState()`
 - `src/lib/server-store.ts`: `readPlatformState()` and `writePlatformState()`
@@ -36,8 +36,8 @@ cd /www/wwwroot/mydreamshoots.com/app
 npm run ops:prod-diagnose > /tmp/mydreamshoots-prod-diagnose-before.json
 
 DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run prisma:push
-DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-state -- --source data/platform-state.json --dry-run
-DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-state -- --source data/platform-state.json
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-state -- --source archive/legacy/platform-state.json --dry-run
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-state -- --source archive/legacy/platform-state.json
 DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run smoke:postgres-state
 ```
 

@@ -2016,7 +2016,17 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
     : semanticSupportLinks.length
       ? semanticSupportLinks
       : publishedLinks.slice(Math.min(4, publishedLinks.length));
-  const profileSocials = identity?.sameAs ?? [];
+  const profileSocials = [
+    ...(identity?.sameAs ?? []),
+    ...[
+      footer ? setting(footer, "instagramUrl", "") : "",
+      footer ? setting(footer, "facebookUrl", "") : "",
+      footer ? setting(footer, "threadsUrl", "") : "",
+      footer ? setting(footer, "pinterestUrl", "") : "",
+      footer ? setting(footer, "youtubeUrl", "") : "",
+      footer ? setting(footer, "xUrl", "") : ""
+    ]
+  ].filter((url): url is string => typeof url === "string" && /^https?:\/\//i.test(url));
   const socialHref = (pattern: RegExp) => profileSocials.find((url) => pattern.test(url)) ?? "";
   const socialLinks = [
     { label: "Instagram", href: socialHref(/instagram\.com/i), icon: Instagram },
@@ -12285,7 +12295,10 @@ function SectionView({
     const fullGallery = settingBool(section, "fullGallery", false);
     const selectedImageSlugs = fullGallery ? [] : listLines(setting(section, "imageSlugs"));
     const selectedVideoSlugs = fullGallery ? [] : listLines(setting(section, "videoSlugs"));
-    const imageCards = generationShowcaseImageCardsForSite(site, creativePacks, selectedImageSlugs).map((card, index) => ({ ...card, index }));
+    const configuredImageItemLimit = numberSetting(section, "imageItemLimit", Number.POSITIVE_INFINITY);
+    const imageCards = generationShowcaseImageCardsForSite(site, creativePacks, selectedImageSlugs)
+      .slice(0, Number.isFinite(configuredImageItemLimit) ? Math.max(1, Math.floor(configuredImageItemLimit)) : undefined)
+      .map((card, index) => ({ ...card, index }));
     const videoCards = generationShowcaseVideoCardsForSite(publicVideoThemesForShowcase(site, videoThemes), selectedVideoSlugs);
     const headingLevel = normalizedHeadingLevel(setting(section, "headingLevel"), pageHasMainHeadingBefore(id, renderContext) ? "h2" : "h1");
     const HeadingTag = headingLevel;

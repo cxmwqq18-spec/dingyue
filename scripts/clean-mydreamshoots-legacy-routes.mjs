@@ -115,7 +115,7 @@ function usage() {
     "Usage:",
     "  node scripts/clean-mydreamshoots-legacy-routes.mjs --site-id=site_dreamshoot --db --dry-run",
     "  node scripts/clean-mydreamshoots-legacy-routes.mjs --site-id=site_dreamshoot --db --apply --confirm clean-mydreamshoots-legacy-routes",
-    "  node scripts/clean-mydreamshoots-legacy-routes.mjs --site-id=site_dreamshoot --file=data/platform-state.json --dry-run"
+    "  node scripts/clean-mydreamshoots-legacy-routes.mjs --site-id=site_dreamshoot --file=archive/legacy/platform-state.json --dry-run"
   ].join("\n");
 }
 
@@ -128,6 +128,9 @@ function assertOptions(args) {
   const dbMode = Boolean(args.db);
   const fileMode = typeof args.file === "string";
   if (dbMode === fileMode) throw new Error(`Choose exactly one of --db or --file=<path>.\n${usage()}`);
+  if (fileMode && path.resolve(String(args.file)) === path.resolve("data", "platform-state.json")) {
+    throw new Error("data/platform-state.json has been retired; use --db or the explicit archive/legacy fixture instead.");
+  }
 
   const apply = Boolean(args.apply);
   const dryRun = Boolean(args["dry-run"]) || !apply;

@@ -29,7 +29,7 @@ MyDreamShoots 本地代码已经包含新的 AI Video Generation 主题目录和
 | Video themes | 8 |
 | Media assets | 23 |
 
-数据来源：`data/platform-state.json`。
+数据来源：PostgreSQL 关系表与 `PlatformStateDocument`；历史 JSON 仅保留在 `archive/legacy/`，不参与运行时。
 
 ## 主要源码入口
 

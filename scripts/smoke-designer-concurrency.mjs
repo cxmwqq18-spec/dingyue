@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const base = process.env.SMOKE_BASE_URL || "http://localhost:3000";
 
@@ -36,16 +37,15 @@ async function request(pathname, { method = "GET", body, cookie, csrf, allowFail
   return { response, json };
 }
 
-function readSite() {
-  const statePath = path.join(process.cwd(), "data", "platform-state.json");
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+async function readSite() {
+  const state = await readPlatformStateFromSql();
   const site = state.sites.find((item) => item.id === "site_lumen");
   if (!site) throw new Error("missing_seed_site_lumen");
   return site;
 }
 
-function readPage() {
-  const site = readSite();
+async function readPage() {
+  const site = await readSite();
   const page = site?.pages?.[0];
   if (!page) throw new Error("missing_seed_theme_page");
   return page;
@@ -111,7 +111,7 @@ const login = await request("/api/sites/site_lumen/admin/auth/login", {
 const cookie = cookiesFrom(login.response);
 const csrf = cookieValue(cookie, "site_admin_csrf_site_lumen");
 
-const site = readSite();
+const site = await readSite();
 const settingsWithoutCsrf = await request(`/api/sites/site_lumen/theme/settings/draft`, {
   method: "PUT",
   cookie,
@@ -174,7 +174,7 @@ if (settingsStale.response.status !== 409 || settingsStale.json.error !== "theme
   throw new Error(`stale settings expected 409 theme_draft_conflict, got ${settingsStale.response.status} ${JSON.stringify(settingsStale.json)}`);
 }
 
-const page = readPage();
+const page = await readPage();
 const firstSave = await request(`/api/sites/site_lumen/theme/pages/${page.id}/draft`, {
   method: "PUT",
   cookie,
@@ -184,7 +184,7 @@ const firstSave = await request(`/api/sites/site_lumen/theme/pages/${page.id}/dr
 const v1 = firstSave.json.draftVersion;
 if (!v1?.revision || !v1?.etag) throw new Error("first draft save did not return draftVersion");
 
-const latest = readPage();
+const latest = await readPage();
 const winner = await request(`/api/sites/site_lumen/theme/pages/${page.id}/draft`, {
   method: "PUT",
   cookie,
@@ -213,7 +213,7 @@ if (stale.response.status !== 409 || stale.json.error !== "theme_draft_conflict"
   throw new Error(`stale draft expected 409 theme_draft_conflict, got ${stale.response.status} ${JSON.stringify(stale.json)}`);
 }
 
-const reviewedSite = readSite();
+const reviewedSite = await readSite();
 const reviewedPublishedVersion = publishedVersionFromSite(reviewedSite);
 const publishPayload = publishSnapshotPayload(reviewedSite, "smoke_designer");
 publishPayload.expectedPageVersions[page.id] = { revision: v2.revision, etag: v2.etag };

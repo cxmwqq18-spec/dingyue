@@ -6,6 +6,7 @@ import path from "node:path";
 import { isDeepStrictEqual } from "node:util";
 import { PrismaClient } from "@prisma/client";
 import createJiti from "jiti";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 const sourceRoot = path.join(repoRoot, "src");
@@ -20,8 +21,6 @@ const { dreamshootAiStudioTemplatesForSite } = jiti("../src/lib/theme/packages/d
 const rawArgs = process.argv.slice(2);
 const flags = new Set(rawArgs.filter((arg) => arg.startsWith("--")).map((arg) => arg.slice(2).split("=")[0]));
 const siteArg = rawArgs.find((arg) => arg.startsWith("--site="))?.split("=").slice(1).join("=") ?? "all";
-const statePathArg = rawArgs.find((arg) => arg.startsWith("--state-path="))?.split("=").slice(1).join("=");
-const statePath = path.resolve(repoRoot, statePathArg ?? path.join("data", "platform-state.json"));
 const apply = flags.has("apply");
 const updateDb = flags.has("db");
 const stores = [
@@ -227,9 +226,9 @@ async function updateDatabase() {
 
 async function main() {
   if (!stores.length) throw new Error(`unknown_site:${siteArg}`);
-  const state = JSON.parse(await fs.readFile(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   const stateReport = applyToState(state);
-  if (apply) await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
+  if (apply) await writePlatformStateToSql(state);
   const database = updateDb ? await updateDatabase() : undefined;
   console.log(JSON.stringify({ ok: true, apply, updateDb, stores: stores.map((store) => store.siteId), stateReport, database }, null, 2));
 }

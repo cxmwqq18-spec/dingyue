@@ -30,7 +30,7 @@ AIdreamcapes 本地与线上在本次采样的公开核心页面上，HTTP 状�
 | Video themes | 8 |
 | Media assets | 7 |
 
-数据来源：`data/platform-state.json`。
+数据来源：PostgreSQL 关系表与 `PlatformStateDocument`；历史 JSON 仅保留在 `archive/legacy/`，不参与运行时。
 
 ## 主要源码入口
 

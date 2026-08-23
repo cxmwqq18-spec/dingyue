@@ -5,9 +5,10 @@ import {
   MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS,
   mydreamshootsBlogSeoRemediationArticles
 } from "./mydreamshoots-blog-seo-remediation-articles.mjs";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const state = JSON.parse(fs.readFileSync(path.join(repoRoot, "data/platform-state.json"), "utf8"));
+const state = await readPlatformStateFromSql();
 const routeSource = fs.readFileSync(path.join(repoRoot, "src", "app", "[...path]", "page.tsx"), "utf8");
 const rendererSource = fs.readFileSync(path.join(repoRoot, "src", "components", "theme-renderer.tsx"), "utf8");
 const seoSource = fs.readFileSync(path.join(repoRoot, "src", "lib", "theme", "seo.ts"), "utf8");

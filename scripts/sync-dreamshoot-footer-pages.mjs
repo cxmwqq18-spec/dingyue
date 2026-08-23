@@ -751,22 +751,11 @@ const requestedSiteId = parseOption("--site-id");
 const policiesOnly = args.has("--policies-only");
 const dryRun = args.has("--dry-run");
 const localJson = args.has("--local-json");
-const useDb = args.has("--db") || !localJson;
+const useDb = true;
 
 try {
   if (localJson) {
-    const statePath = new URL("../data/platform-state.json", import.meta.url);
-    const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
-    const sites = state.sites.filter((site) => !requestedSiteId || site.id === requestedSiteId);
-    if (!sites.length) throw new Error(`site_not_found:${requestedSiteId ?? "all"}`);
-    let pageCount = 0;
-    for (const site of sites) {
-      if (policiesOnly) pageCount += applyPolicyPagesToLocalState(state, site);
-      else throw new Error("--local-json requires --policies-only to protect unrelated content");
-    }
-    if (dryRun) console.log(`dry-run: local JSON would update ${pageCount} policy page(s)`);
-    else fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
-    if (!dryRun) console.log(`updated local JSON: ${pageCount} policy page(s)`);
+    throw new Error("--local-json is retired; PostgreSQL is the only content source. Use the default database mode.");
   }
 
   if (useDb) {

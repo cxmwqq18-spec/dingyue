@@ -2,11 +2,13 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
+import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data/platform-state.json");
 const publicRoot = path.join(repoRoot, "public");
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const prisma = new PrismaClient();
+const state = await readPlatformStateFromSql(prisma);
 
 const siteIds = ["site_dreamshoot", "site_aidreamcapes"];
 const failures = [];
@@ -529,3 +531,4 @@ for (const siteId of siteIds) {
   console.log(`${siteId}: ${recordsBySite[siteId].length} checked references, ${urlCount} unique image URLs`);
 }
 console.log("Storefront image isolation smoke passed.");
+await prisma.$disconnect();

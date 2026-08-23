@@ -22,7 +22,7 @@ Track:
 
 Back up both:
 
-- `data/platform-state.json`
+- PostgreSQL `PlatformStateDocument` and relational tables; the retired local JSON state file is not used.
 - `STORAGE_ROOT`
 
 They must be restored together to avoid missing/orphan drift.

@@ -338,7 +338,9 @@ function mergeBestGallery(pageJson, kind, videoSlugs = []) {
       ...section.settings,
       kind,
       title: kind === "video" ? "Best Video Generator" : "Best Photo Generator",
-      ...(kind === "video" ? { fullGallery: false, videoSlugs: videoSlugs.join("|") } : { fullGallery: true, imageSlugs: "" })
+      ...(kind === "video"
+        ? { fullGallery: false, videoSlugs: videoSlugs.join("|") }
+        : { fullGallery: false, imageItemLimit: 16, imageSlugs: catalogOrder.join("|") })
     }
   };
   return next;

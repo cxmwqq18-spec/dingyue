@@ -2,9 +2,9 @@ import fs from "node:fs";
 import path from "node:path";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const prisma = new PrismaClient();
-const statePath = path.resolve(process.cwd(), "data/platform-state.json");
 const dryRun = process.argv.includes("--dry-run");
 const stateOnly = process.argv.includes("--state-only");
 const now = new Date();
@@ -3856,9 +3856,7 @@ function removeSiteScopedRows(state, siteIds) {
   for (const key of scopedKeys) state[key] = (state[key] ?? []).filter((item) => !siteIds.has(item.siteId));
 }
 
-function mergeState(datasets) {
-  if (!fs.existsSync(statePath)) throw new Error(`Missing local state file: ${statePath}`);
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+function mergeStateFromSql(state, datasets) {
   const targetIds = new Set(datasets.map((dataset) => dataset.site.id));
   removeSiteScopedRows(state, targetIds);
   for (const dataset of datasets) {
@@ -3934,11 +3932,12 @@ async function main() {
       for (const dataset of datasets) await clearConfigRowsForSite(dataset.site.id);
       for (const dataset of datasets) await upsertDataset(dataset);
     }
-    const nextState = mergeState(datasets);
-    fs.writeFileSync(statePath, `${JSON.stringify(nextState, null, 2)}\n`);
+    const currentState = await readPlatformStateFromSql();
+    const nextState = mergeStateFromSql(currentState, datasets);
+    await writePlatformStateToSql(nextState);
     for (const spec of specs) assetCopies.push({ siteId: spec.targetSiteId, copied: syncStaticAssets(spec) });
   }
-  console.log(JSON.stringify({ ok: true, dryRun, stateOnly, statePath, sites: datasets.map(summarize), assetCopies }, null, 2));
+  console.log(JSON.stringify({ ok: true, dryRun, stateOnly, stateSource: "postgres:platformStateDocument", sites: datasets.map(summarize), assetCopies }, null, 2));
 }
 
 main()

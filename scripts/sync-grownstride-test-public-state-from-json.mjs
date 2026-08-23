@@ -23,11 +23,9 @@ function usage() {
       "Usage:",
       `  node scripts/sync-grownstride-test-public-state-from-json.mjs --dry-run`,
       `  node scripts/sync-grownstride-test-public-state-from-json.mjs --apply --confirm ${CONFIRM_PHRASE}`,
-      `  node scripts/sync-grownstride-test-public-state-from-json.mjs --source <legacy-state.json> --dry-run`,
       "",
       "Purpose:",
       "  Sync only site_grownstride_test public storefront state from the relational database into Postgres.",
-      "  Use --source only for a one-time legacy JSON backfill.",
       "",
       "Guards:",
       "  Defaults to --dry-run. --apply requires the exact confirm phrase.",
@@ -51,7 +49,6 @@ function argValue(name) {
 
 const siteId = argValue("--site-id") ?? process.env.SYNC_SITE_ID ?? DEFAULT_SITE_ID;
 const sourceArg = argValue("--source");
-const statePath = sourceArg ? path.resolve(sourceArg) : null;
 const applyRequested = hasFlag("--apply");
 const dryRunRequested = hasFlag("--dry-run");
 const dryRun = dryRunRequested || !applyRequested;
@@ -91,7 +88,7 @@ function unique(values) {
 
 function scopedRows(state) {
   const site = asArray(state.sites).find((item) => item?.id === siteId);
-  if (!site) throw new Error(`site ${siteId} not found in ${statePath}`);
+  if (!site) throw new Error(`site ${siteId} not found in PostgreSQL state`);
   if (siteId !== DEFAULT_SITE_ID) throw new Error(`refusing to sync non-test site: ${siteId}`);
   if (site.primaryDomain && site.primaryDomain !== DEFAULT_DOMAIN) {
     throw new Error(`refusing to sync ${siteId}; expected primaryDomain ${DEFAULT_DOMAIN}, got ${site.primaryDomain}`);
@@ -956,12 +953,12 @@ async function main() {
   if (siteId !== DEFAULT_SITE_ID) {
     throw new Error(`refusing to sync non-test site: ${siteId}`);
   }
-  const sourceState = statePath ? JSON.parse(fs.readFileSync(statePath, "utf8")) : null;
+  if (sourceArg) throw new Error("--source JSON backfill is retired; PostgreSQL is the only source.");
+  const sourceState = null;
   let records;
   let sourceLabel;
   if (sourceState) {
     records = scopedRows(sourceState);
-    sourceLabel = path.relative(process.cwd(), statePath);
   } else {
     const sourceRuntime = await prisma.site.findUnique({
       where: { id: DEFAULT_SITE_ID },

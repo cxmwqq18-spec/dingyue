@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const targetTitlePattern = /Preview the route mood before committing credits|Revisa el ambiente de ruta antes de confirmar/i;
 const checkDatabase = process.argv.includes("--db");
@@ -59,10 +60,9 @@ function walk(value, pathParts, report) {
   }
 }
 
-function inspectStateFile() {
-  const statePath = path.join(process.cwd(), "data/platform-state.json");
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
-  const report = { scope: "state file", failures: [], targets: [] };
+async function inspectStateDatabase() {
+  const state = await readPlatformStateFromSql();
+  const report = { scope: "PostgreSQL PlatformStateDocument", failures: [], targets: [] };
   walk(state, [], report);
   return report;
 }
@@ -105,7 +105,7 @@ async function inspectDatabase() {
   return report;
 }
 
-const reports = [inspectStateFile()];
+const reports = [await inspectStateDatabase()];
 if (checkDatabase) reports.push(await inspectDatabase());
 
 let failed = false;

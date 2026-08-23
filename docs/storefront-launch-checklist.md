@@ -14,7 +14,7 @@
 上线前必须先比对当前线上 release / 站点负责人已确认的最新批准基线与本次待上线代码。没有站点负责人明确允许，不得随意改动网站文案、SEO 文案、TDK、Hero 文案、CTA、导航、Footer、Policy、FAQ、目录页、套餐页、工具页或结构化数据里的对外描述。
 
 - [ ] 上线前对比当前线上 release / 已批准基线与本次待上线代码中的客户可见文案。
-- [ ] 上线前对比 `data/platform-state.json`、主题模板、同步脚本、迁移脚本、Postgres 同步脚本和发布快照中的文案差异。
+- [ ] 上线前对比 PostgreSQL draft/published rows、主题模板、同步脚本、迁移脚本、Postgres 同步脚本和发布快照中的文案差异。
 - [ ] 如果 SEO `title`、`description`、`keywords`、canonical、OG/Twitter、JSON-LD、H1/H2/H3 或页面正文有变化，必须列出旧值、新值、文件位置、页面路径和变更原因。
 - [ ] 如果原来正常的文案被改动，必须把改动点列出来并等待站点负责人确认；未确认前不得上线。
 - [ ] 如果只是技术修复但引入了文案差异，也按文案变更处理，不能合并进“性能优化”“SEO SSR 更新”“同步脚本修复”等笼统上线说明里。
@@ -64,7 +64,7 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 - [ ] 常规上线、构建、同步、修复、迁移不得传 `--skip-homepage-lock`。
 - [ ] 如果 guard 报 `homepage-lock-*` 失败，默认判定为未批准首页文案漂移，必须停止上线。
 - [ ] 只有站点负责人明确要求修改首页文案时，才能先更新线上 draft、发布生成新的 published，再重新生成并提交本锁定备份。
-- [ ] 任何从 `data/platform-state.json`、主题模板、旧发布快照或同步脚本导入首页内容的动作都视为覆盖操作，不能作为普通 deploy/build 步骤运行。
+- [ ] 任何从历史 JSON fixture、主题模板、旧发布快照或同步脚本导入首页内容的动作都视为覆盖操作，不能作为普通 deploy/build 步骤运行；当前发布必须从 PostgreSQL 开始。
 
 ### Best Packages + 媒体页上线基线
 
@@ -80,7 +80,7 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 - [ ] 首页 `Start with your photos` 的标准目标必须是 `/app/create`，不是 `/login`。
 - [ ] 公共视频展示与 SEO 结构化数据不得再出现 `creator-scene-motion`；工作台内部视频主题仍保留，公开 slot 使用干净的 `travel-route-story` 补位。
 - [ ] `/site/mydreamshoots/best-packages`、`/site/mydreamshoots/best-ai-image`、`/site/mydreamshoots/best-ai-video`、`/site/aidreamcapes/best-packages`、`/site/aidreamcapes/best-ai-image`、`/site/aidreamcapes/best-ai-video` 必须和正式域名路径一样返回 200。
-- [ ] 运行时加载、SEO metadata、sitemap、theme templates、`ThemePublication.snapshot`、`data/platform-state.json` 和同步脚本必须同时包含 `/best-packages`、`/best-ai-image`、`/best-ai-video`，不得只改源码或只改线上数据。
+- [ ] 运行时加载、SEO metadata、sitemap、theme templates、`ThemePublication.snapshot`、PostgreSQL rows 和同步脚本必须同时包含 `/best-packages`、`/best-ai-image`、`/best-ai-video`，不得只改源码或只改线上数据。
 - [ ] 改动后至少执行 `npm run typecheck`、`npm run smoke:dreamshoot-homepage-showcase`、`npm run smoke:fan-holiday-storefront-theme`、`npm run smoke:mydreamshoots-seo-indexing`、`npm run smoke:storefront-seo-fingerprint`、`npm run smoke:public-seo-policy`、`npm run smoke:dreamshoot-public-seo-templates`、`npm run smoke:storefront-public-routes`、`npm run smoke:storefront-navigation-data`、`npm run smoke:storefront-sitemap-directory-coverage`。
 
 ### Best Pages 文案与布局冻结
@@ -98,7 +98,7 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 - [ ] 登录态头像/账号信息区域固定跳转 `/account` 个人中心；独立 `Workspace` 导航与开始创作类 CTA 继续跳转 `/app/create`，不得互相回退。
 - [ ] 公共首页、`/best-ai-video`、SEO JSON-LD 和 sitemap 可见数据不得出现 `Creator Scene Motion` / `creator-scene-motion`；该内部工作台主题可以保留，但不能进入公共展示。
 - [ ] 桌面 `1280px+` header 必须同一行展示全部导航、账号信息、邮箱和 `Sign out`，不得引入 `More`、账号下拉收纳或隐藏入口；如需微调，只能调整间距、字号、内边距和 logo 占用宽度。
-- [ ] 改动这些页面前必须先更新本节基线并获得明确批准；改动后必须重新刷新 `data/platform-state.json`、`ThemePublication.snapshot`、主题模板、同步脚本和 smoke 断言，避免发布或同步时回退。
+- [ ] 改动这些页面前必须先更新本节基线并获得明确批准；改动后必须重新发布 PostgreSQL draft/published、`ThemePublication.snapshot`、主题模板、同步脚本和 smoke 断言，避免发布或同步时回退。
 
 ### Header Full-Visibility 基线
 
@@ -278,7 +278,7 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 - [ ] 博客目录完整覆盖：`/blog`、全部可索引 `article` 页面对应的 `/blog/*` 路径。
 - [ ] Header 桌面 / 移动端 `Browse packages` / `Occasion Albums` / `Tools` 内链全部可以跳转，最终 canonical URL 为 200；可索引路径必须存在于对应网站 sitemap，`noindex` 路径必须不在 sitemap。
 - [ ] 旧路径、重定向路径、重复 policy 路径不得出现在 sitemap，例如旧工具、旧 travel blog、`/cookie-policy`、`/privacy-policy`、`/terms-of-service`。
-- [ ] 修改 `data/platform-state.json`、关系表、分类/工具菜单或 SEO 目录后，必须同步 platform-state 文档和关系表，再清理 `.next/cache/platform-state-postgres.json`。
+- [ ] 修改 PostgreSQL `PlatformStateDocument`、关系表、分类/工具菜单或 SEO 目录后，必须同步关系表与 active publication，再清理 `.next/cache/platform-state-postgres.json`。
 
 必跑命令：
 
@@ -290,7 +290,7 @@ npm run smoke:storefront-sitemap-directory-coverage
 自动化脚本说明：
 
 - `smoke:storefront-navigation-data`：确认不同页面上的套餐/工具弹层数据一致，避免局部页面读到旧分类或旧工具。
-- `smoke:storefront-sitemap-directory-coverage`：从 `data/platform-state.json` 与 SEO directory 元数据推导对应站点全部可索引目录，使用 Host header 拉取各站 `sitemap.xml`，检查缺失目录、跨站域名、旧路径残留，以及 sitemap 中是否误收录 `noindex` 页面。
+- `smoke:storefront-sitemap-directory-coverage`：从 PostgreSQL published snapshot 与 SEO directory 元数据推导对应站点全部可索引目录，使用 Host header 拉取各站 `sitemap.xml`，检查缺失目录、跨站域名、旧路径残留，以及 sitemap 中是否误收录 `noindex` 页面。
 - `smoke:storefront-public-routes`：本次 Best 页面回归默认覆盖两个 `.com` 店铺；`.eu` 店铺保持原有西语结构，由公开 SEO/语言 smoke 独立覆盖。
 
 当前 `.com` 店铺目录口径：

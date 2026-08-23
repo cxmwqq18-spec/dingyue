@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
+import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const state = JSON.parse(fs.readFileSync(path.join(repoRoot, "data", "platform-state.json"), "utf8"));
+const prisma = new PrismaClient();
+const state = await readPlatformStateFromSql(prisma);
 const failures = [];
 
 const insertedOrderBySite = {
@@ -133,3 +136,4 @@ if (failures.length) {
 }
 
 console.log("PASS workflow video sections smoke");
+await prisma.$disconnect();

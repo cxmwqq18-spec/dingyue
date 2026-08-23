@@ -5,9 +5,9 @@ import Module from "node:module";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import createJiti from "jiti";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const sourceRoot = path.join(repoRoot, "src");
 const originalResolveFilename = Module._resolveFilename;
 Module._resolveFilename = function resolveFilename(request, ...args) {
@@ -555,7 +555,7 @@ function aidreamcapesFaqSection() {
 }
 
 async function readState() {
-  return JSON.parse(await fs.readFile(statePath, "utf8"));
+  return readPlatformStateFromSql();
 }
 
 function findSite(state, store) {
@@ -994,7 +994,7 @@ async function main() {
     : stores.filter((store) => store.key === requestedStoreKey || store.siteSlug === requestedStoreKey || store.siteId === requestedStoreKey);
   if (!selectedStores.length) throw new Error(`unknown_store:${requestedStoreKey}`);
   for (const store of selectedStores) report[store.key] = applyStoreToState(state, store);
-  if (!dryRun) await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
+  if (!dryRun) await writePlatformStateToSql(state);
   const dbReport = updateDb && !dryRun ? await updateDatabase(state, selectedStores) : undefined;
   console.log(JSON.stringify({ dryRun, selectedStores: selectedStores.map((store) => store.key), report, dbReport }, null, 2));
 }

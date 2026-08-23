@@ -1,18 +1,13 @@
-import fs from "node:fs";
-import path from "node:path";
-
 const argv = process.argv.slice(2);
 const args = new Set(argv);
 const target = argv.find((value) => value.startsWith("--target="))?.slice("--target=".length) ?? "local";
-const storage = argv.find((value) => value.startsWith("--storage="))?.slice("--storage=".length) ?? "both";
+const storage = argv.find((value) => value.startsWith("--storage="))?.slice("--storage=".length) ?? "prisma";
 const apply = args.has("--apply");
 
 if (!["local", "test"].includes(target)) throw new Error("This migration only permits --target=local|test; production is intentionally blocked.");
-if (!["json", "prisma", "both"].includes(storage)) throw new Error("--storage must be json, prisma, or both");
+if (storage !== "prisma") throw new Error("JSON storefront migration is retired; use --storage=prisma so PostgreSQL remains the only data source.");
 if (apply && !args.has("--confirm=storefront-single-source")) throw new Error("--apply requires --confirm=storefront-single-source");
 
-const repoRoot = path.resolve(new URL("..", import.meta.url).pathname);
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const clean = (value) => typeof value === "string" && value.trim() ? value.trim() : undefined;
 const jsonValue = (value) => JSON.parse(JSON.stringify(value));
 
@@ -262,10 +257,10 @@ async function migratePrisma(databaseUrl, shouldApply) {
   }
 }
 
-const wantsJson = storage === "json" || storage === "both";
-const wantsPrisma = storage === "prisma" || storage === "both";
+const wantsJson = false;
+const wantsPrisma = true;
 const databaseUrl = wantsPrisma && apply ? assertNonProductionDatabaseUrl(databaseUrlForTarget()) : databaseUrlForTarget();
-const jsonMigration = wantsJson ? migrateGraph(JSON.parse(fs.readFileSync(statePath, "utf8"))) : undefined;
+const jsonMigration = undefined;
 let prismaMigration;
 if (wantsPrisma && databaseUrl) {
   try {
@@ -279,8 +274,6 @@ if (wantsPrisma && databaseUrl) {
   prismaMigration = { status: "not_configured", requiredEnvironment: target === "test" ? "STOREFRONT_TEST_DATABASE_URL" : "STOREFRONT_LOCAL_DATABASE_URL" };
 }
 
-if (apply && jsonMigration) fs.writeFileSync(statePath, `${JSON.stringify(jsonMigration.source, null, 2)}\n`);
-
 const report = {
   ok: true,
   mode: apply ? "apply" : "dry-run",
@@ -290,7 +283,6 @@ const report = {
   prisma: prismaMigration,
   writes: apply
     ? [
-        ...(jsonMigration ? [statePath] : []),
         ...(prismaMigration?.status === "applied" ? [`prisma:${target}`] : [])
       ]
     : []

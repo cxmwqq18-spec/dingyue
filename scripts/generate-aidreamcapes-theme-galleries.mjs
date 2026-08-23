@@ -3,6 +3,7 @@ import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const prisma = new PrismaClient();
 const args = new Map();
@@ -24,7 +25,6 @@ for (let index = 0; index < rawArgs.length; index += 1) {
 }
 
 const workspaceRoot = process.cwd();
-const statePath = path.join(workspaceRoot, "data", "platform-state.json");
 const siteId = args.get("site-id") ?? process.env.AIDREAMCAPES_GALLERY_SITE_ID ?? "site_aidreamcapes";
 const model = args.get("model") ?? process.env.AIDREAMCAPES_GALLERY_MODEL ?? "gpt-image-2";
 const imageSize = args.get("size") ?? process.env.AIDREAMCAPES_GALLERY_SIZE ?? "1024x1024";
@@ -319,7 +319,7 @@ async function mapLimit(items, workerCount, mapper) {
 }
 
 async function updateState(results) {
-  const state = JSON.parse(await fs.readFile(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   const resultById = new Map(results.map((result) => [result.id, result]));
   const resultBySlug = new Map(results.map((result) => [result.slug, result]));
   let updated = 0;
@@ -329,7 +329,7 @@ async function updateState(results) {
     updated += 1;
     return { ...pack, galleryImages: result.galleryImages, galleryImageAlts: result.galleryImageAlts };
   });
-  await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
+  await writePlatformStateToSql(state);
   return updated;
 }
 

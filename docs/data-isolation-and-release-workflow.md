@@ -38,6 +38,17 @@ Release manifests may include only public storefront content:
 
 Do not publish customer, order, payment, credit, generation job, customer model, album, upload, private asset, session, secret, or audit data from local.
 
+## SQL Public Content Promotion
+
+`data/platform-state.json` is retired and must not be used as a runtime or deployment source. Public storefront promotion reads PostgreSQL rows only and publishes a new immutable `ThemePublication` after the scoped update:
+
+```sh
+npm run sync:mydreamshoots-public-sql -- --target=test --dry-run
+npm run sync:mydreamshoots-public-sql -- --target=test --apply --confirm=sync-mydreamshoots-public-sql
+```
+
+The default source is `site_dreamshoot`. The command never deletes or imports customers, orders, subscriptions, credits, generation jobs, uploads, albums, sessions, or payment rows. Test publication SEO is forced to `noindex`; production requires `--confirm-production` and remains opt-in.
+
 ## Release Manifest Flow
 
 Export from local:

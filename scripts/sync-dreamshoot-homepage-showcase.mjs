@@ -5,6 +5,7 @@ import path from "node:path";
 import { spawn } from "node:child_process";
 import ffmpegPath from "ffmpeg-static";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 import {
   homepageShowcaseSection,
   localShowcaseImagePath,
@@ -19,7 +20,6 @@ import {
 } from "./dreamshoot-homepage-showcase-data.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const showcaseSectionId = "generation_showcase_1";
 const workflowSectionId = "flow_bridge_1";
 const CUSTOMER_VIDEO_FRAME_LIMIT = 7;
@@ -91,10 +91,6 @@ function stripVersion(value) {
 function publicPathToLocalFile(publicPath) {
   const cleanPath = stripVersion(publicPath).replace(/^\/+/, "");
   return path.join(repoRoot, "public", cleanPath);
-}
-
-async function readState() {
-  return JSON.parse(await fs.readFile(statePath, "utf8"));
 }
 
 async function fileExists(filePath) {
@@ -475,7 +471,7 @@ async function main() {
   const stores = selectedShowcaseStores();
   if (!stores.length) throw new Error("no_showcase_store_selected");
 
-  const state = await readState();
+  const state = await readPlatformStateFromSql();
   const assetReport = [];
   if (!skipAssets) {
     for (const store of stores) {
@@ -494,7 +490,7 @@ async function main() {
 
   const sectionReport = applyShowcaseToState(state, stores);
   if (!dryRun) {
-    await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
+    await writePlatformStateToSql(state);
   }
 
   const dbReport = updateDb && !dryRun ? await updateDatabase(state, stores) : undefined;
@@ -507,7 +503,7 @@ async function main() {
       dbRequested: updateDb,
       dbWriteEnabled: updateDb && !dryRun,
       note: dryRun
-        ? "No files or database rows were overwritten. Re-run with --force-content-overwrite to write data/platform-state.json, and add --db to write Postgres."
+        ? "No files or database rows were overwritten. Re-run with --force-content-overwrite to write the PostgreSQL source, and add --db to publish the compiled snapshot."
         : "Content overwrite was explicitly enabled for this run."
     },
     stores: stores.map((store) => store.key),

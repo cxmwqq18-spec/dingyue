@@ -1,9 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright";
+import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const state = JSON.parse(fs.readFileSync(path.join(repoRoot, "data/platform-state.json"), "utf8"));
+const prisma = new PrismaClient();
+const state = await readPlatformStateFromSql(prisma);
 const baseUrl = process.env.STOREFRONT_BASE_URL || "http://127.0.0.1:3002";
 const siteIds = ["site_dreamshoot", "site_aidreamcapes"];
 const failures = [];
@@ -329,3 +332,4 @@ if (failures.length) {
 }
 
 console.log(`Storefront DOM image isolation smoke passed: ${auditedRoutes.length} routes checked.`);
+await prisma.$disconnect();

@@ -5,9 +5,9 @@ import Module from "node:module";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import createJiti from "jiti";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const sourceRoot = path.join(repoRoot, "src");
 const originalResolveFilename = Module._resolveFilename;
 Module._resolveFilename = function resolveFilename(request, ...args) {
@@ -472,13 +472,13 @@ async function updateDatabase(generatedTemplatesByStore) {
 }
 
 async function main() {
-  const state = JSON.parse(await fs.readFile(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   const generatedTemplatesByStore = new Map(stores.map((store) => [store.siteId, generatedTemplatesForStore(store)]));
   const report = {};
   for (const store of stores) report[store.key] = updateSiteState(state, store, generatedTemplatesByStore.get(store.siteId));
 
   if (!dryRun) {
-    await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
+    await writePlatformStateToSql(state);
     await removeStateCaches();
   }
   const dbReport = updateDb && !dryRun ? await updateDatabase(generatedTemplatesByStore) : undefined;

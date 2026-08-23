@@ -2715,7 +2715,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           cta: "Create a Speaker-Led Ad",
           image: image(
             `${videoAdImageRoot}/video-ad-influencer-recording.jpg`,
-            "Creator recording a speaker-led social video concept.",
+            "Creator recording a speaker-led social video ad concept beside a product setup.",
             5720,
             3818
           )
@@ -2797,7 +2797,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           body: "Use when the ad direction is speaker-led but must avoid fake testimonial language.",
           image: image(
             `${videoAdImageRoot}/video-ad-influencer-recording.jpg`,
-            "Creator recording a speaker-led social video concept.",
+            "Creator recording a speaker-led social video ad concept beside a product setup.",
             5720,
             3818
           )
@@ -3871,6 +3871,171 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     finalCta: { eyebrow: "CREATE WITH A VERIFIED PET BRIEF", title: "Turn a Pet Idea Into Motion", body: "Choose the animal identity, make the behavior visible, protect continuity, and review the finished draft before publishing.", cta: "Create Pet Video Visuals", microcopy: "Approved references. Clear visible behavior. Reviewed final cut." }
+  },
+  "explainer-video": {
+    seo: {
+      title: "AI Explainer Video Generator for Concepts & Product Explanations | myDreamshoots",
+      description: "Create AI explainer-video visuals for products, processes, data, technology, education, business frameworks, and user journeys from text or approved images.",
+      keywords: "ai explainer video generator, explainer video maker, AI product explainer video, process visualization video, data storytelling video, educational video generator, technology explainer video, business framework video",
+      canonicalPath: "/ai-video-generation/explainer-video"
+    },
+    hero: {
+      eyebrow: "AI EXPLAINER VIDEO GENERATOR",
+      title: "AI Explainer Video Generator for Concepts, Products & Processes",
+      body: "Turn a complex product idea, workflow, dataset, technical concept, educational topic, or business framework into short visual explanation concepts. Use Text to Video or Image to Video while keeping factual claims, numbers, product capabilities, and source material independently verified.",
+      primaryCta: "Create Explainer Video Visuals",
+      secondaryCta: "Explore AI Video Generation",
+      availabilityNote: "Use the live myDreamshoots workflow to confirm available inputs, credit requirements, generation state, and supported controls before creating.",
+      rightsCopy: "Use only source material you own or are authorized to use. Generated charts, labels, screens, and presenter imagery are illustrative until reviewed.",
+      imageNote: "These AI-generated editorial references are dedicated to this Explainer Video page and are not presented as verified product output.",
+      image: image("/assets/dreamshoot/explainer-video/hero-explainer-video-product-concept.jpg", "Generated visual of an explainer video workspace connecting a product idea, data, and visual outputs", 1600, 1000),
+      images: [
+        image("/assets/dreamshoot/explainer-video/hero-explainer-video-product-concept.jpg", "Generated product and concept explanation workspace", 1600, 1000),
+        image("/assets/dreamshoot/explainer-video/hero-explainer-video-data-charts.jpg", "Generated analytics dashboard used as an illustrative data explanation frame", 1600, 1000),
+        image("/assets/dreamshoot/explainer-video/hero-explainer-video-expert-presentation.jpg", "Generated presenter-supported explanation with a simple visual flow", 1600, 1000)
+      ],
+      highlights: ["Product explanation", "Data and charts", "Process visualization", "Education and technology", "Text to Video", "Image to Video"]
+    },
+    quickAnswer: {
+      eyebrow: "WHAT THIS CREATES",
+      title: "Make an idea easier to understand visually",
+      intro: "Explainer Video is for showing what something is, why it matters, or how a system works. It is distinct from procedural how-to content, presenter-only talking heads, and company culture video.",
+      cards: [
+        { title: "System-led", body: "Products, interfaces, workflows, architecture, feature relationships, and mechanisms." },
+        { title: "Evidence-led", body: "Charts, metrics, comparisons, trends, and visual proof that must be verified before publication." },
+        { title: "Narration-led", body: "Expert or presenter framing supported by diagrams, screens, illustrations, or visual structure." }
+      ]
+    },
+    useCases: {
+      eyebrow: "EXPLAINER DIRECTIONS",
+      title: "Eight ways to explain a complex idea",
+      intro: "Choose one explanatory job per sequence and keep the visual hierarchy aligned with the question the viewer needs answered.",
+      items: [
+        { title: "SaaS product explanation", problem: "Show features, workflows, states, and value without inventing UI behavior.", body: "Use interface-led scenes to explain one product relationship at a time.", cta: "Explain a Product", image: image("/assets/dreamshoot/explainer-video/explainer-video-saas-product.jpg", "Generated SaaS product interface showing workflow modules and feature relationships", 1600, 1000) },
+        { title: "Process flow concept", problem: "Make inputs, transformation, decision points, and results readable.", body: "Connect stages with consistent nodes, labels, and causal order.", cta: "Map a Process", image: image("/assets/dreamshoot/explainer-video/explainer-video-process-flow.jpg", "Generated process flow connecting input analysis creation review and delivery stages", 1600, 1000) },
+        { title: "Data insight showcase", problem: "Organize a chart or metric around one interpretable takeaway.", body: "Treat numbers, labels, and chart shapes as placeholders until checked against source data.", cta: "Explain Data", image: image("/assets/dreamshoot/explainer-video/explainer-video-data-insights.jpg", "Generated analytics dashboard with charts and insight cards for data storytelling", 1600, 1000) },
+        { title: "Educational knowledge explanation", problem: "Break a topic into understandable components and relationships.", body: "Use diagrams and motion to support learning without presenting generated facts as verified.", cta: "Explain a Topic", image: image("/assets/dreamshoot/explainer-video/explainer-video-education-knowledge.jpg", "Generated educational knowledge diagram showing connected learning relationships", 1600, 1000) },
+        { title: "Technology concept visualization", problem: "Simplify architecture, AI, cloud, software, or system relationships.", body: "Show the mechanism and boundaries clearly instead of adding decorative complexity.", cta: "Visualize Technology", image: image("/assets/dreamshoot/explainer-video/explainer-video-technology-concept.jpg", "Generated technology system diagram linking AI services and application endpoints", 1600, 1000) },
+        { title: "Business strategy explanation", problem: "Make a framework, roadmap, matrix, funnel, or decision model scannable.", body: "Keep each layer tied to a defined strategic question and approved terminology.", cta: "Explain Strategy", image: image("/assets/dreamshoot/explainer-video/explainer-video-business-strategy.jpg", "Generated business strategy framework with layered priorities and decisions", 1600, 1000) },
+        { title: "User journey explanation", problem: "Show sequential touchpoints from discovery through action and retention.", body: "Preserve touchpoint order and distinguish an illustrative journey from measured customer evidence.", cta: "Map a Journey", image: image("/assets/dreamshoot/explainer-video/explainer-video-user-journey.jpg", "Generated user journey map showing discovery signup creation sharing and return", 1600, 1000) },
+        { title: "Whiteboard or presentation explanation", problem: "Let diagrams carry the message while a presenter provides context.", body: "Use presenter imagery as framing, never as proof of credentials or expertise.", cta: "Frame a Presentation", image: image("/assets/dreamshoot/explainer-video/explainer-video-whiteboard-presentation.jpg", "Generated whiteboard presentation explaining a problem model and value relationship", 1600, 1000) }
+      ]
+    },
+    gallery: {
+      eyebrow: "AI-GENERATED SCENE REFERENCES",
+      title: "Eight explainer-video scene directions",
+      intro: "These page-specific generated references are editorial visual directions, not claims that every scene is a one-click preset or a verified myDreamshoots output.",
+      items: [
+        { title: "SaaS product explanation", body: "Interface-led visual for features, workflows, states, and value.", image: image("/assets/dreamshoot/explainer-video/explainer-video-saas-product.jpg", "Generated SaaS product explanation interface with workflow feature callouts", 1600, 1000) },
+        { title: "Process flow concept", body: "Connected stages showing input, transformation, review, and result.", image: image("/assets/dreamshoot/explainer-video/explainer-video-process-flow.jpg", "Generated process flow explanation with connected input and delivery stages", 1600, 1000) },
+        { title: "Data insight showcase", body: "Charts and metrics organized around one interpretable takeaway.", image: image("/assets/dreamshoot/explainer-video/explainer-video-data-insights.jpg", "Generated data insight dashboard with charts and explanatory metric cards", 1600, 1000) },
+        { title: "Educational knowledge explanation", body: "A concept broken into understandable components and relationships.", image: image("/assets/dreamshoot/explainer-video/explainer-video-education-knowledge.jpg", "Generated educational knowledge diagram showing related learning components", 1600, 1000) },
+        { title: "Technology concept visualization", body: "Architecture and system relationships simplified visually.", image: image("/assets/dreamshoot/explainer-video/explainer-video-technology-concept.jpg", "Generated technology architecture diagram linking cloud and software endpoints", 1600, 1000) },
+        { title: "Business strategy explanation", body: "Layered framework, funnel, matrix, roadmap, or decision model.", image: image("/assets/dreamshoot/explainer-video/explainer-video-business-strategy.jpg", "Generated business strategy framework with layered priorities and decisions", 1600, 1000) },
+        { title: "User journey explanation", body: "Sequential touchpoints from awareness or discovery through action.", image: image("/assets/dreamshoot/explainer-video/explainer-video-user-journey.jpg", "Generated user journey map showing discovery creation sharing and return", 1600, 1000) },
+        { title: "Whiteboard or presentation explanation", body: "Presenter-supported explanation where diagrams carry the information.", image: image("/assets/dreamshoot/explainer-video/explainer-video-whiteboard-presentation.jpg", "Generated whiteboard presentation explaining a problem model and value relationship", 1600, 1000) }
+      ]
+    },
+    foundation: {
+      eyebrow: "EXPLAINER CLARITY SYSTEM",
+      title: "Six decisions before generating clips",
+      intro: "Define the explanatory job before choosing a visual style or motion treatment.",
+      leftTitle: "Clarify",
+      leftItems: ["Question to answer", "Concept unit", "Visual grammar"],
+      rightTitle: "Verify",
+      rightItems: ["Evidence status", "Sequence logic", "Verification boundary"],
+      rightTone: "avoid",
+      expertLabel: "Expert tip",
+      expertTip: "One clip should answer one question or explain one relationship. A professional-looking chart, diagram, or presenter does not prove the claim it appears to communicate."
+    },
+    guidance: {
+      eyebrow: "SEQUENCE GUIDE",
+      title: "Use visual hierarchy, consistency, and evidence boundaries",
+      intro: "Generated text, numbers, labels, and UI-like marks can look plausible while being wrong.",
+      cards: [
+        { title: "One idea per shot", body: "Each clip should answer one question or explain one relationship; do not put a whole presentation into one frame." },
+        { title: "Make the important thing dominant", body: "Prioritize the concept, node, chart, metric, or comparison that carries the explanation." },
+        { title: "Treat generated text as a placeholder", body: "Replace generated labels, statistics, dates, equations, citations, and product UI with verified source material." },
+        { title: "Preserve relationships between shots", body: "Keep node order, terminology, icons, colors, and causal relationships consistent when the content has not changed." },
+        { title: "Do not manufacture authority", body: "Generated experts, charts, dashboards, and technical visuals do not establish credentials, evidence, or product truth." },
+        { title: "Design for the destination", body: "A landing page, onboarding flow, classroom visual, investor concept, sales clip, and social explainer need different density and pacing." }
+      ]
+    },
+    evidence: {
+      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
+      title: "Verify the live workflow before indexation",
+      intro: "The page must be backed by real myDreamshoots evidence before it is promoted as an indexable product page.",
+      cards: [
+        { title: "Text to Video input", body: "Add a real, internally reviewed capture of the supported text input path and its current controls." },
+        { title: "Image to Video input", body: "Add a real capture showing how an approved diagram, interface, chart, or product image enters the workflow." },
+        { title: "Credits and job state", body: "Document the real credit requirement, generation request, job state, and at least one reviewed explainer-style output." }
+      ]
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      title: "From one explainer question to a reviewed visual sequence",
+      items: [
+        { title: "Define the question", body: "Choose the audience and the one thing the viewer should understand after the shot." },
+        { title: "Choose the source path", body: "Use Text to Video for a written concept or Image to Video when an approved visual should anchor the motion." },
+        { title: "Generate short scenes", body: "Review diagrams, chart shapes, labels, text-like marks, UI relationships, arrows, and visual continuity." },
+        { title: "Replace and verify", body: "Replace illustrative numbers or generated text with trusted source material before publication and check every factual claim." }
+      ],
+      cta: "Create Explainer Video Visuals"
+    },
+    value: {
+      eyebrow: "ACCURACY BOUNDARY",
+      title: "Generated visuals can explain; they cannot verify facts",
+      intro: "Use the output as a visual draft and keep the evidence owner responsible for the final claim.",
+      items: [
+        { title: "Keep facts stable", body: "Product capabilities, technical behavior, scientific claims, legal or financial statements, statistics, and customer outcomes require real sources." },
+        { title: "Replace illustrative marks", body: "Check every number, label, citation, equation, date, chart, and interface detail against approved source material." },
+        { title: "Separate concept from proof", body: "An AI-generated dashboard or expert-looking presenter is not a product screenshot, credential, customer case, or research citation." },
+        { title: "Match the destination", body: "Adjust density, text volume, crop, and pacing for landing pages, onboarding, education, sales enablement, and social formats." }
+      ]
+    },
+    trust: {
+      eyebrow: "RESPONSIBLE / E-E-A-T",
+      title: "Keep explanation useful, distinct, and verifiable",
+      intro: "Before publishing an explainer sequence:",
+      items: [
+        { title: "Verify product claims", body: "Do not imply automatic product verification, research, citation checking, or guaranteed explanation correctness without documented support." },
+        { title: "Source every factual claim", body: "Use trusted source material for statistics, scientific information, financial or legal facts, product behavior, and customer outcomes." },
+        { title: "Label generated references accurately", body: "Do not present generated artwork, dashboards, people, or charts as actual customers, experts, partners, product UI, or measured evidence." },
+        { title: "Keep neighboring intents separate", body: "Explainer Video explains a concept or system; How-to Video teaches ordered actions; Talking Head Video is presenter-led; Corporate Video is organization-led." },
+        { title: "Review rights and context", body: "Use approved images and diagrams, preserve source rights, and remove unsupported details before publishing." },
+        { title: "Keep CTA and destination consistent", body: "The next action should match the explanatory promise and the live workflow the visitor can actually use." }
+      ]
+    },
+    comparison: {
+      eyebrow: "RELATED VIDEO TOPICS",
+      title: "Choose the page that matches the viewer's job",
+      intro: "Avoid intent overlap by sending visitors to the format that best answers their question.",
+      items: [
+        { title: "How-to Video", body: "Step-by-step procedural instruction for completing a task.", href: "/ai-video-generation/how-to-video", linkLabel: "Explore How-to Video" },
+        { title: "Talking Head Video", body: "Direct-to-camera presenter content where the speaker leads the delivery.", href: "/ai-video-generation/talking-head-video", linkLabel: "Explore Talking Head Video" },
+        { title: "Corporate Video", body: "Company identity, leadership, teams, workplace, culture, or organization communication.", href: "/ai-video-generation/corporate-video", linkLabel: "Explore Corporate Video" },
+        { title: "AI Video Generation", body: "Browse the full directory when the creative job is not yet clear.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" }
+      ]
+    },
+    faq: {
+      eyebrow: "FAQ",
+      title: "Questions about AI explainer video generation",
+      items: [
+        { question: "What is an AI explainer video generator?", answer: "It helps turn a product, concept, process, dataset, technology topic, or educational idea into motion-based visual explanation concepts. Define the question, visual structure, sequence, and verified source material, then generate and review short clips." },
+        { question: "Can I make an explainer from an existing diagram or product image?", answer: "Use Image to Video when an approved diagram, interface, chart, product screen, or other still should anchor the generated motion. Verify that relationships, labels, text, and visual details remain accurate." },
+        { question: "Can I create an explainer from text?", answer: "Use Text to Video to describe the question, concept, objects or UI, visual hierarchy, sequence role, and motion. Do not rely on a vague generic explainer prompt." },
+        { question: "Are generated charts and statistics accurate?", answer: "Do not assume so. Generated charts, numbers, labels, percentages, equations, citations, and UI text should be treated as illustrative until replaced or checked against trusted source material." },
+        { question: "How is this different from How-to Video?", answer: "Explainer Video answers what something is, why it matters, or how a system works. How-to Video teaches the viewer to complete a task through ordered, actionable steps." },
+        { question: "How is this different from Talking Head Video?", answer: "Talking Head Video is presenter-led. Explainer Video is information-led: the diagram, interface, chart, object relationship, or visual model carries the core explanation even when a presenter appears." }
+      ]
+    },
+    finalCta: {
+      eyebrow: "CREATE WITH VERIFIED SOURCE MATERIAL",
+      title: "Turn one complex idea into a clearer visual explanation",
+      body: "Define the question, choose the right visual grammar, generate short scenes, and review every factual detail against trusted source material before publishing.",
+      cta: "Create Explainer Video Visuals",
+      microcopy: "Generated visuals are drafts. Product facts, numbers, claims, and citations still need independent verification."
+    }
   },
   "ugc-ad-video": {
     seo: {

@@ -2,9 +2,9 @@ import fs from "node:fs";
 import path from "node:path";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const prisma = new PrismaClient();
-const statePath = path.join(process.cwd(), "data/platform-state.json");
 const cacheFile = path.join(process.cwd(), ".next", "cache", "platform-state-postgres.json");
 const targetSiteIds = new Set(["site_dreamshoot", "site_aidreamcapes"]);
 const syncTransactionTimeoutMs = Number.parseInt(process.env.BLOG_CONTENT_SYNC_TX_TIMEOUT_MS ?? "180000", 10);
@@ -113,7 +113,7 @@ async function syncPlatformStateDocument(state, targetSites) {
 }
 
 async function main() {
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   const targetSites = state.sites.filter((site) => targetSiteIds.has(site.id));
   if (targetSites.length !== targetSiteIds.size) throw new Error(`Expected ${targetSiteIds.size} target sites, found ${targetSites.length}`);
   const results = [];

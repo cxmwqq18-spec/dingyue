@@ -6,7 +6,6 @@ import { createHash } from "node:crypto";
 import { PrismaClient } from "@prisma/client";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const homepageLockPath = path.join(repoRoot, "docs", "content-locks", "mydreamshoots-homepage-approved.json");
 const prisma = new PrismaClient();
 const rawArgs = process.argv.slice(2);
@@ -35,8 +34,8 @@ const liveOrigin = cleanOrigin(args.get("origin") ?? process.env.MYDREAMSHOOTS_C
 const localOrigin = cleanOrigin(args.get("local-origin") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_LOCAL_ORIGIN ?? "");
 const guardPaths = parsePaths(args.get("paths") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_PATHS, ["/", "/pricing", "/ai-video-generation", "/ai-image-generation", "/workflow", "/faq"]);
 const skipLive = flags.has("skip-live") || process.env.MYDREAMSHOOTS_CONTENT_GUARD_LIVE === "0";
-const includeLocalJson = flags.has("include-local-json") || process.env.MYDREAMSHOOTS_CONTENT_GUARD_LOCAL_JSON === "1";
-const skipLocalJson = flags.has("skip-local-json") || !includeLocalJson;
+const localJsonRequested = flags.has("include-local-json") || process.env.MYDREAMSHOOTS_CONTENT_GUARD_LOCAL_JSON === "1";
+if (localJsonRequested) throw new Error("Local JSON content guards are retired; compare PostgreSQL and the active publication snapshot instead.");
 const skipHomepageLock = flags.has("skip-homepage-lock");
 const writeHomepageLock = flags.has("write-homepage-lock");
 const timeoutMs = positiveInt(args.get("timeout-ms") ?? process.env.MYDREAMSHOOTS_CONTENT_GUARD_TIMEOUT_MS, 45_000);
@@ -397,20 +396,6 @@ function addFailure(type, message, details = {}) {
   failures.push({ type, message, ...details });
 }
 
-function loadLocalState() {
-  if (!fs.existsSync(statePath)) return undefined;
-  return JSON.parse(fs.readFileSync(statePath, "utf8"));
-}
-
-function findLocalSite(state) {
-  return (state?.sites ?? []).find((site) =>
-    site.id === siteId ||
-    site.slug === "mydreamshoots" ||
-    site.slug === "dreamshoot" ||
-    site.primaryDomain === "www.mydreamshoots.com"
-  );
-}
-
 function loadHomepageLock() {
   if (!fs.existsSync(homepageLockPath)) {
     addFailure("homepage-lock-missing", "MyDreamShoots approved homepage lock file is missing", {
@@ -730,16 +715,9 @@ async function main() {
   if (!site) throw new Error("MyDreamShoots site was not found in Postgres.");
   const settings = site.settings?.publishedJson ?? {};
   const latestPublication = site.publications?.[0];
-  const localState = skipLocalJson ? undefined : loadLocalState();
-  const localSite = skipLocalJson ? undefined : findLocalSite(localState);
-  const localSettings = localSite?.themeSettings?.publishedJson;
   const perPage = [];
   const originReports = [];
   let homepageLockReport = skipHomepageLock ? { status: "skipped", path: homepageLockPath } : null;
-
-  if (!skipLocalJson && !localSite) {
-    addFailure("local-json-site-missing", "data/platform-state.json does not contain the MyDreamShoots site", { statePath });
-  }
 
   if (latestPublication?.snapshot?.themeSettings) {
     const snapshotSettings = latestPublication.snapshot.themeSettings.publishedJson ?? latestPublication.snapshot.themeSettings;
@@ -754,16 +732,6 @@ async function main() {
     addFailure("publication-settings-missing", "latest ThemePublication does not contain a themeSettings snapshot", {
       publicationId: latestPublication?.id,
       version: latestPublication?.version
-    });
-  }
-
-  if (!skipLocalJson && localSettings) {
-    compareStructuredFingerprints({
-      leftLabel: "database ThemeSettings.publishedJson",
-      rightLabel: "local data/platform-state.json themeSettings.publishedJson",
-      slug: "themeSettings",
-      leftRecords: collectSettingsRecords(settings, "db:themeSettings.publishedJson"),
-      rightRecords: collectSettingsRecords(localSettings, "local-json:themeSettings.publishedJson")
     });
   }
 
@@ -794,13 +762,11 @@ async function main() {
 
     const dbRecords = collectPageRecords(dbPage, settings, `db:themePage:${dbPage.slug}`);
     const snapshotPage = findPageBySlug(latestPublication?.snapshot?.pages ?? [], slug);
-    const localPage = findPageBySlug(localSite?.pages ?? [], slug);
     const pageSummary = {
       slug,
       dbSlug: dbPage.slug,
       db: fingerprintSummary(dbRecords),
-      publication: undefined,
-      localJson: undefined
+      publication: undefined
     };
 
     if (normalizePath(slug) === "/") {
@@ -827,22 +793,6 @@ async function main() {
       });
     }
 
-    if (!skipLocalJson) {
-      if (localPage?.publishedJson) {
-        const localRecords = collectPageRecords(localPage, localSettings ?? settings, `local-json:${localPage.slug ?? slug}`);
-        pageSummary.localJson = fingerprintSummary(localRecords);
-        compareStructuredFingerprints({
-          leftLabel: "database ThemePage.publishedJson",
-          rightLabel: "local data/platform-state.json publishedJson",
-          slug,
-          leftRecords: dbRecords,
-          rightRecords: localRecords
-        });
-      } else {
-        addFailure("local-json-page-missing", `${slug} is missing from local data/platform-state.json`, { slug, candidates: slugCandidates(slug) });
-      }
-    }
-
     if (!skipLive) {
       originReports.push(await compareOriginToDatabase({ origin: liveOrigin, originLabel: "production", slug, records: dbRecords }));
     }
@@ -864,7 +814,7 @@ async function main() {
     live: skipLive ? "skipped" : { origin: liveOrigin, minLiveCoverage },
     localRender: localOrigin ? { origin: localOrigin, minLiveCoverage } : "skipped",
     pathMinLiveCoverage: Object.fromEntries(pathMinLiveCoverage),
-    localJson: skipLocalJson ? "reference-only; skipped unless --include-local-json is passed" : statePath,
+    localJson: "disabled; PostgreSQL and active publication are the only content sources",
     approvedHomepageLock: homepageLockReport ?? "not checked; / was not included in guarded paths",
     pages: perPage,
     originReports,

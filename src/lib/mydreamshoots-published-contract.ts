@@ -291,9 +291,15 @@ export function buildPublishedPageMediaProjection(
   const images = Array.from(new Set([pack.imageUrl, ...(pack.galleryImages ?? [])].map((value) => String(value ?? "").trim()).filter(Boolean)));
   const ownerMatches = pack.id === route.expectedPackId;
   const suppliedImageAlts = (pack.galleryImageAlts ?? []).map((value) => String(value ?? "").trim());
+  // CreativePack stores gallery alts without the cover alt. The immutable
+  // page-media contract includes the cover, so normalize both shapes here.
+  const coverAlt = `MyDreamShoots ${route.canonicalSlug.replace(/-/g, " ")} hero cover for image generation planning`;
+  const suppliedContractAlts = suppliedImageAlts.length === images.length - 1
+    ? [coverAlt, ...suppliedImageAlts]
+    : suppliedImageAlts;
   // Keep the immutable media projection structurally aligned even when a legacy pack
   // is missing alt text. Empty values leave the route review_required and non-indexable.
-  const imageAlts = images.map((_, index) => suppliedImageAlts[index] ?? "");
+  const imageAlts = images.map((_, index) => suppliedContractAlts[index] ?? "");
   const altsReady = imageAlts.length === images.length && imageAlts.every(Boolean);
   const imageContractReady = images.length === 13 && imageAlts.length === 13;
   const ready = route.status === "published" && ownerMatches && imageContractReady && altsReady;

@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
+import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const publicRoot = path.join(repoRoot, "public");
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const prisma = new PrismaClient();
+const state = await readPlatformStateFromSql(prisma);
 const failures = [];
 
 const aidreamcapesSiteId = "site_aidreamcapes";
@@ -508,3 +510,4 @@ console.log(JSON.stringify({
     assetRefs: collectAssetUrls(mydreamshootsData).size
   }
 }, null, 2));
+await prisma.$disconnect();

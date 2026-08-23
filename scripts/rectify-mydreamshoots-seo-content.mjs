@@ -1,8 +1,6 @@
-import fs from "node:fs";
-import path from "node:path";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = path.resolve(process.cwd(), "data/platform-state.json");
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 
 const replacements = new Map([
   ["Our plans starts from $24.50 and are designed to be more affordable and flexible.", "Review current plan and credit details before generation."],
@@ -185,6 +183,6 @@ for (const pack of state.creativePacks ?? []) {
   walk(pack);
 }
 
-fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+await writePlatformStateToSql(state);
 console.log(`Rectified MyDreamShoots SEO/content fields for ${changedSites} site record(s).`);
 console.log(beforeState === JSON.stringify(state) ? "No draft/source replacements were needed." : "Updated draft/source content records.");

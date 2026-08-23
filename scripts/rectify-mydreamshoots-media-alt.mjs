@@ -4,9 +4,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { assertNonProductionWriteTarget } from "./lib/database-target.mjs";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const SITE_ID = "site_dreamshoot";
-const statePath = path.resolve(process.cwd(), "data/platform-state.json");
 const args = new Set(process.argv.slice(2));
 const dryRun = !args.has("--apply") && !args.has("--db");
 const applyJson = args.has("--apply");
@@ -100,12 +100,12 @@ const mediaAssetAltByFile = {
   "hero-package-wall.png": "Homepage wall showing multiple portrait outcomes."
 };
 
-function readState() {
-  return JSON.parse(fs.readFileSync(statePath, "utf8"));
+async function readState() {
+  return readPlatformStateFromSql();
 }
 
-function writeState(state) {
-  fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+async function writeState(state) {
+  await writePlatformStateToSql(state);
 }
 
 function cleanAltText(value) {
@@ -358,7 +358,7 @@ async function updateDatabase(state, packs, assets) {
 }
 
 async function main() {
-  const state = readState();
+  const state = await readState();
   const packs = (state.creativePacks ?? []).filter((pack) => pack.siteId === SITE_ID);
   const assets = (state.mediaAssets ?? []).filter((asset) => asset.siteId === SITE_ID);
   if (packs.length !== 38) throw new Error(`Expected 38 MyDreamShoots creative packs, found ${packs.length}`);
@@ -378,7 +378,7 @@ async function main() {
   if (after.galleryCount !== 494) throw new Error(`Expected 494 cover/gallery alts, found ${after.galleryCount}`);
   if (after.mediaAssets !== 23) throw new Error(`Expected 23 media asset alts, found ${after.mediaAssets}`);
 
-  if (applyJson) writeState(state);
+  if (applyJson) await writeState(state);
   if (applyDb) {
     await updateDatabase(state, packs, assets);
   }

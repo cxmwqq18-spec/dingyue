@@ -14,7 +14,7 @@ assertDatabaseTarget({ expectedTarget: String(process.env.DATABASE_TARGET || "lo
 const topicSlugs = [
   "talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "social-media-video", "youtube-video",
   "story-video", "meme-video", "product-video", "product-ad-video", "promo-video", "ugc-ad-video",
-  "video-ad", "brand-video", "music-video", "fashion-video", "food-video", "pet-video"
+  "video-ad", "brand-video", "music-video", "fashion-video", "food-video", "pet-video", "explainer-video"
 ];
 
 function record(value) {
@@ -68,15 +68,15 @@ function assertPublishedTopicProjection(snapshot, sourcePage, slug) {
   assert.deepEqual(snapshotPage.publishedJson, sourcePage.draftJson, `${slug} active publication must be compiled from its database draft content`);
 
   const route = snapshot.publishedRoutes.find((item) => item.routeKind === "ai-video-topic-leaf" && item.canonicalPath === canonicalPath);
-  assert(route && route.status === "published" && route.indexable && route.sitemapEligible, `${slug} must have an indexable published route`);
+  assert(route, `${slug} must have a published route projection`);
   const entity = snapshot.publishedPageEntities.find((item) => item.pageEntityId === route.pageEntityId);
-  assert(entity && entity.status === "published", `${slug} route must own a published page entity`);
+  assert(entity, `${slug} route must own a page entity`);
   assert.equal(entity.metadata.title, content.seo.title, `${slug} entity title must come from the published page content`);
   assert.equal(entity.metadata.description, content.seo.description, `${slug} entity description must come from the published page content`);
   assert.equal(entity.metadata.canonicalPath, content.seo.canonicalPath, `${slug} entity canonical must come from the published page content`);
 
   const media = snapshot.publishedPageMedia.find((item) => item.pageEntityId === route.pageEntityId);
-  assert(media && media.status === "ready", `${slug} must own ready published media`);
+  assert(media, `${slug} must own published media`);
   assert.equal(media.primaryImage, content.hero.image.src, `${slug} hero media must come from the published page content`);
   assert.equal(media.imageAlts[0], content.hero.image.alt, `${slug} hero alt must come from the published page content`);
   assert(snapshot.publishedPageCopy.some((item) => item.pageEntityId === route.pageEntityId), `${slug} must own a page-copy projection`);
@@ -86,6 +86,20 @@ function assertPublishedTopicProjection(snapshot, sourcePage, slug) {
   assert.equal(navigation.canonicalPath, canonicalPath, `${slug} navigation must use the canonical published route`);
   assert.equal(navigation.description, content.seo.description, `${slug} directory summary must come from published content`);
 
+  if (slug === "explainer-video") {
+    assert.equal(route.status, "review_required", `${slug} must remain review-gated until first-party evidence exists`);
+    assert.equal(route.indexable, false);
+    assert.equal(route.sitemapEligible, false);
+    assert.equal(entity.status, "review_required");
+    assert.equal(entity.indexable, false);
+    assert.equal(entity.sitemapEligible, false);
+    assert.equal(entity.reviewReasons.includes("FIRST_PARTY_PRODUCT_EVIDENCE_REQUIRED"), true);
+    assert.equal(media.status, "review_required");
+    return;
+  }
+  assert(route.status === "published" && route.indexable && route.sitemapEligible, `${slug} must have an indexable published route`);
+  assert.equal(entity.status, "published");
+  assert.equal(media.status, "ready");
   const links = snapshot.publishedLinkRefs.filter((item) => item.ownerPageEntityId === route.pageEntityId);
   assert(links.some((item) => item.kind === "cta" && item.targetType === "private_action"), `${slug} must own a validated CTA link`);
   assert.equal(links.filter((item) => item.kind === "related" && item.targetType === "published_render").length, 2, `${slug} must own two validated related links`);

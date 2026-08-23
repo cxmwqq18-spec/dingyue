@@ -18,6 +18,11 @@ const runtimeFiles = [
 ];
 const runtimeExtensions = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"]);
 const failures = [];
+const legacyStatePath = path.join(repoRoot, "data", "platform-state" + ".json");
+
+if (fs.existsSync(legacyStatePath)) {
+  failures.push({ file: "data/platform-state.json", reason: "legacy JSON platform state must not exist; PostgreSQL is the only state source" });
+}
 
 function walk(relativeDirectory) {
   const absoluteDirectory = path.join(repoRoot, relativeDirectory);

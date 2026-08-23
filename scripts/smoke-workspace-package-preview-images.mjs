@@ -2,9 +2,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
+import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 const failures = [];
+const prisma = new PrismaClient();
+const state = await readPlatformStateFromSql(prisma);
 
 function assert(condition, message) {
   if (!condition) failures.push(message);
@@ -53,7 +57,6 @@ async function resizedRawRgb(filePath, size) {
 }
 
 async function assertEngagementCoverUsesFullGalleryFrame() {
-  const state = JSON.parse(read("data/platform-state.json"));
   const engagementPack = state.creativePacks?.find((pack) => pack.id === "pack_dreamshoot_engagement");
   const engagementCategory = state.creativePackCategories?.find((category) => category.id === "pack_cat_h1wmjb4n_1782444143728");
   const coverPath = publicAssetPath(engagementPack?.imageUrl);
@@ -84,7 +87,6 @@ async function assertEngagementCoverUsesFullGalleryFrame() {
 }
 
 async function assertMydreamshootsThemeAssetContract() {
-  const state = JSON.parse(read("data/platform-state.json"));
   const activePacks = (state.creativePacks ?? []).filter((pack) => pack.siteId === "site_dreamshoot" && pack.status === "active");
   const activeCategories = (state.creativePackCategories ?? []).filter((category) => category.siteId === "site_dreamshoot" && category.status === "active");
   const categoryById = new Map(activeCategories.map((category) => [category.id, category]));
@@ -178,3 +180,4 @@ if (failures.length) {
 }
 
 console.log("✓ workspace package preview images preserve uncropped gallery art");
+await prisma.$disconnect();

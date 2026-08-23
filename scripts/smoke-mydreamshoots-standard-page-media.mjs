@@ -4,6 +4,8 @@ import fs from "node:fs";
 import Module from "node:module";
 import path from "node:path";
 import createJiti from "jiti";
+import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const sourceRoot = path.resolve("src");
 const originalResolveFilename = Module._resolveFilename;
@@ -20,7 +22,8 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 try {
-  const state = JSON.parse(fs.readFileSync("data/platform-state.json", "utf8"));
+  const prisma = new PrismaClient();
+  const state = await readPlatformStateFromSql(prisma);
   const site = state.sites.find((candidate) => candidate.id === "site_dreamshoot");
   assert.ok(site, "MyDreamShoots source site is required");
   const packs = state.creativePacks.filter((candidate) => candidate.siteId === site.id);
@@ -42,12 +45,14 @@ try {
   const bestImage = snapshot.publishedStandardPageMedia.find((row) => row.canonicalPath === "/best-ai-image");
   assert.ok(bestImage);
   assert.doesNotMatch(bestImage.primaryImage, /cyberpunk/i, "/best-ai-image must not inherit the Cyberpunk default image");
+  assert.equal(bestImage.sitemapImages.some((image) => /cyberpunk/i.test(image)), false, "/best-ai-image sitemap images must not retain the Cyberpunk fallback");
   const firstReadyLeaf = snapshot.publishedRoutes
     .filter((route) => route.disposition === "render" && route.routeKind === "ai-image-theme-leaf" && route.status === "published")
     .map((route) => snapshot.publishedPageMedia.find((media) => media.pageEntityId === route.pageEntityId && media.status === "ready"))
     .find(Boolean);
   assert.equal(bestImage.primaryImage, firstReadyLeaf?.primaryImage, "/best-ai-image must use the first visible published collection image");
   console.log(JSON.stringify({ ok: true, standardPageMediaRows: expectedPaths.length, bestAiImage: bestImage.primaryImage }, null, 2));
+  await prisma.$disconnect();
 } finally {
   Module._resolveFilename = originalResolveFilename;
   Module._load = originalLoad;

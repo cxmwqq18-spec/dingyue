@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { PrismaClient } from "@prisma/client";
 
 const root = process.cwd();
 
@@ -12,7 +13,6 @@ function assert(condition, message) {
 }
 
 const packageJson = read("package.json");
-const platformState = JSON.parse(read("data/platform-state.json"));
 const fixedPortDevScript = read("scripts/dev-fixed-port.mjs");
 const dbTunnelScript = read("scripts/start-remote-db-tunnel.mjs");
 const dbTunnelWatchScript = read("scripts/watch-remote-db-tunnel.mjs");
@@ -32,7 +32,10 @@ assert(videoLatencyReport.includes("scannedJobCount") && videoLatencyReport.incl
 assert(videoLatencyReport.includes("progressWindow="), "video latency text output should expose provider progress window timing");
 assert(fetchTimeout.includes("shouldRetryWithoutLocalProxy") && fetchTimeout.includes("AI_WORKER_PROXY_DIRECT_FALLBACK"), "provider fetches should fall back to direct connections when the configured local proxy is down");
 assert(fetchTimeout.includes('code === "ECONNREFUSED"') && fetchTimeout.includes("return fetch(input, requestInit)"), "local proxy connection failures should not block provider polling or result download");
-const dreamshootVideoSiteApp = platformState.siteAiApps.find((siteApp) => siteApp.siteId === "site_dreamshoot" && siteApp.aiAppId === "ai_video_generator");
+const prisma = new PrismaClient();
+const dreamshootVideoSiteApp = await prisma.siteAiApp.findFirst({
+  where: { siteId: "site_dreamshoot", aiAppId: "ai_video_generator" }
+});
 assert(dreamshootVideoSiteApp?.enabled === true, "MyDreamShoots video app should stay enabled so customer video jobs can be created");
 const videoRecovery = read("src/lib/video-provider-result-recovery.ts");
 const videoRecoveryRoute = read("src/app/api/internal/ai-worker/recover-video-output/route.ts");
@@ -965,3 +968,4 @@ assert(migration.includes('ALTER TABLE "VideoTheme" ALTER COLUMN "maxFrames" SET
 assert(migration.includes('WHERE "maxFrames" < 30'), "migration should lift existing legacy limits");
 
 console.log("video workspace regression smoke passed");
+await prisma.$disconnect();

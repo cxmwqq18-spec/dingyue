@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 
 function fail(message) {
   console.error(`DreamShoot parity audit failed: ${message}`);

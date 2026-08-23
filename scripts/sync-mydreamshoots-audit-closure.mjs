@@ -2,14 +2,14 @@ import fs from "node:fs";
 import path from "node:path";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data/platform-state.json");
 const dryRun = process.argv.includes("--dry-run") || !process.argv.includes("--write");
 const updateDb = process.argv.includes("--db");
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 const site = state.sites?.find((item) => item.id === "site_dreamshoot");
-if (!site) throw new Error("Missing site_dreamshoot in platform-state.json");
+if (!site) throw new Error("Missing site_dreamshoot in PostgreSQL platform state");
 
 function assertLocalDbWriteAllowed() {
   if (dryRun) throw new Error("--db requires --write; refusing to mutate the database during a dry run.");
@@ -267,7 +267,7 @@ if (unresolvedUnverifiedClaimStrings > 0) {
   throw new Error(`MyDreamShoots still contains ${unresolvedUnverifiedClaimStrings} unverified absolute claim strings.`);
 }
 
-if (!dryRun) fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+if (!dryRun) await writePlatformStateToSql(state);
 
 function cloneJson(value) {
   return value === undefined ? undefined : JSON.parse(JSON.stringify(value));
@@ -366,7 +366,7 @@ console.log(JSON.stringify({
   ok: true,
   dryRun,
   database,
-  writeTarget: statePath,
+  writeTarget: !dryRun ? "postgres:platformStateDocument" : null,
   changedPages,
   changedPageSlugs: [...changedPageSlugs],
   changedSiteThemes,

@@ -1,14 +1,14 @@
-import fs from "node:fs";
 import http from "node:http";
 import https from "node:https";
-import path from "node:path";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 const baseUrl = new URL((process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/$/, ""));
 const stateArgument = process.argv.find((value) => value.startsWith("--state="))?.slice("--state=".length);
-const configuredStatePath = stateArgument || process.env.SEO_REVIEW_STATE_PATH;
-const statePath = configuredStatePath ? path.resolve(repoRoot, configuredStatePath) : undefined;
-const state = statePath ? JSON.parse(fs.readFileSync(statePath, "utf8")) : undefined;
+if (stateArgument || process.env.SEO_REVIEW_STATE_PATH) {
+  throw new Error("Sitemap state fixtures are disabled; read the PostgreSQL publication source instead.");
+}
+const state = await readPlatformStateFromSql();
 const timeoutMs = Number(process.env.SITEMAP_SMOKE_SITEMAP_TIMEOUT_MS ?? 120_000);
 const pageTimeoutMs = Number(process.env.SITEMAP_SMOKE_PAGE_TIMEOUT_MS ?? 45_000);
 const pageConcurrency = Math.max(1, Number(process.env.SITEMAP_SMOKE_PAGE_CONCURRENCY ?? 2));
@@ -213,5 +213,5 @@ const failures = results.filter((result) =>
   result.liveFailures.length ||
   (result.mode === "live-publication" && (result.publications.length !== 1 || result.factsRevisions.length !== 1))
 );
-console.log(JSON.stringify({ ok: failures.length === 0, statePath: statePath ?? null, results }, null, 2));
+console.log(JSON.stringify({ ok: failures.length === 0, stateSource: "postgres:platformStateDocument", results }, null, 2));
 if (failures.length) process.exitCode = 1;

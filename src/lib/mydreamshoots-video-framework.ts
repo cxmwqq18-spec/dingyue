@@ -234,7 +234,8 @@ export const mydreamshootsCurrentVideoMenuSlugs = [
   "music-video",
   "fashion-video",
   "food-video",
-  "pet-video"
+  "pet-video",
+  "explainer-video"
 ] as const;
 
 const mydreamshootsCurrentVideoMenuSlugSet = new Set<string>(mydreamshootsCurrentVideoMenuSlugs);
@@ -548,6 +549,19 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     durationSeconds: 6,
     maxFrames: 10,
     sortOrder: 200
+  },
+  {
+    slug: "explainer-video",
+    categorySlug: "explainer-video",
+    name: "Explainer Video",
+    headline: "Explain products, processes, data, and concepts with clear visual structure.",
+    description: "Create explainer-video directions for product walkthroughs, process maps, data stories, education, technology concepts, business frameworks, and user journeys.",
+    prompt: "Create a clear explainer video direction for one defined question. Use system-led, evidence-led, or narration-led visuals with an intentional hierarchy and sequence. Treat generated labels, numbers, charts, citations, UI text, and claims as illustrative until replaced or verified; do not invent product capabilities, statistics, scientific facts, legal, medical, or financial claims.",
+    imageUrl: "/assets/dreamshoot/explainer-video/hero-explainer-video-product-concept.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 270
   }
 ] as const;
 
@@ -589,7 +603,8 @@ export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "music-video",
   "fashion-video",
   "food-video",
-  "pet-video"
+  "pet-video",
+  "explainer-video"
 ] as const;
 
 const publicVideoGenerationPageSlugs = new Set<string>(mydreamshootsPublicVideoGenerationTopicSlugs);

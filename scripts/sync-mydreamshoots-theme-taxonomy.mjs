@@ -2,12 +2,12 @@
 import "./load-runtime-env.mjs";
 import fs from "node:fs";
 import path from "node:path";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const updateDb = args.has("--db");
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const taxonomyPath = path.join(repoRoot, "src", "lib", "mydreamshoots-theme-taxonomy.json");
 const useCaseProfilesPath = path.join(repoRoot, "src", "lib", "photo-package-use-case-profiles.json");
 const SITE_ID = "site_dreamshoot";
@@ -929,11 +929,15 @@ async function updateDatabase({ state, categories, packs }) {
       });
 
       for (const pack of packs) {
+        // Platform-state rows may include the Prisma relation used when they
+        // were read. Keep relation metadata out of unchecked upsert payloads;
+        // categoryId is the only persisted relationship needed here.
+        const { categoryRecord: _categoryRecord, ...packData } = pack;
         const categoryId = pack.categoryId ? categoryDbIdByLocalId.get(pack.categoryId) || pack.categoryId : null;
         await tx.creativePack.upsert({
           where: { id: pack.id },
           create: {
-            ...pack,
+            ...packData,
             categoryId
           },
           update: {
@@ -1027,7 +1031,7 @@ async function updateDatabase({ state, categories, packs }) {
   }
 }
 
-const state = readJson(statePath);
+const state = await readPlatformStateFromSql();
 const taxonomy = readJson(taxonomyPath);
 requiredPageCopySlugs = new Set((taxonomy.items ?? []).map((item) => normalizeSlug(item.slug)).filter(Boolean));
 collectionPathBySlug = buildCollectionPathMap(taxonomy);
@@ -1148,8 +1152,8 @@ syncToolMenuItems(state, changes);
 applyScopedHrefReplacements(state, changes);
 
 if (!dryRun) {
-  writeJson(statePath, state);
   writeJson(useCaseProfilesPath, useCaseProfiles);
+  await writePlatformStateToSql(state);
 }
 
 if (updateDb && !dryRun) {

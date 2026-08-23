@@ -4,9 +4,9 @@ import crypto from "node:crypto";
 import { spawnSync } from "node:child_process";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const prisma = new PrismaClient();
-const statePath = path.join(process.cwd(), "data", "platform-state.json");
 const sourceSiteId = "site_grownstride_test";
 const targetSiteId = "site_dreamshoot";
 const sourceSlug = "grownstride";
@@ -665,13 +665,12 @@ function applyRowsToState(state, plan) {
   return state;
 }
 
-function readState() {
-  if (!fs.existsSync(statePath)) fail(`state file not found: ${statePath}`);
-  return JSON.parse(fs.readFileSync(statePath, "utf8"));
+async function readState() {
+  return readPlatformStateFromSql();
 }
 
-function writeState(state) {
-  fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+async function writeState(state) {
+  await writePlatformStateToSql(state);
 }
 
 async function syncDatabaseFromState() {
@@ -709,7 +708,7 @@ async function main() {
     if (!expectedPlanHash) {
       fail("missing --expected-plan-hash");
     }
-    const state = readState();
+    const state = await readState();
     const liveStripeIds = await readLiveStripeIds(state);
     const plan = buildPlan(state, liveStripeIds);
     if (plan.planHash !== expectedPlanHash) {
@@ -720,7 +719,7 @@ async function main() {
     const backupPath = path.join(backupDir, `grownstride-to-mydreamshoots-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
     fs.writeFileSync(backupPath, `${JSON.stringify(state, null, 2)}\n`, { mode: 0o600 });
     const nextState = applyRowsToState(clone(state), plan);
-    writeState(nextState);
+    await writeState(nextState);
     const dbSync = await syncDatabaseFromState();
     console.log(
       JSON.stringify(
@@ -740,7 +739,7 @@ async function main() {
     return;
   }
 
-  const state = readState();
+  const state = await readState();
   const liveStripeIds = await readLiveStripeIds(state);
   const plan = buildPlan(state, liveStripeIds);
   const sourceProtectedCounts = Object.fromEntries(Object.entries(plan.protectedSource).map(([key, rows]) => [key, rows.length]));

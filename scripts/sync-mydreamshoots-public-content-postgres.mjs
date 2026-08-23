@@ -3,9 +3,9 @@ import fs from "node:fs";
 import path from "node:path";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const prisma = new PrismaClient();
-const statePath = path.join(process.cwd(), "data", "platform-state.json");
 const siteId = process.env.SYNC_SITE_ID ?? "site_dreamshoot";
 const rawArgs = process.argv.slice(2);
 const flags = new Set(rawArgs.filter((arg) => arg.startsWith("--")).map((arg) => arg.slice(2).split("=")[0]));
@@ -54,8 +54,8 @@ function stripUndefined(record) {
 
 function scopedRecords(state) {
   const site = asArray(state.sites).find((item) => item.id === siteId);
-  if (!site) throw new Error(`site ${siteId} not found in ${statePath}`);
-  if (!site.themeSettings) throw new Error(`site ${siteId} is missing themeSettings in ${statePath}`);
+  if (!site) throw new Error(`site ${siteId} not found in PostgreSQL platform state`);
+  if (!site.themeSettings) throw new Error(`site ${siteId} is missing themeSettings in PostgreSQL platform state`);
 
   return {
     site,
@@ -157,8 +157,7 @@ function removeStateCaches() {
 }
 
 async function main() {
-  if (!fs.existsSync(statePath)) throw new Error(`state file not found: ${statePath}`);
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   const records = scopedRecords(state);
   const summary = {
     settings: 1,

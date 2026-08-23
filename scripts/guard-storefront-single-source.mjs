@@ -85,6 +85,6 @@ const ownershipAssertions = [
 for (const [ok, message] of ownershipAssertions) {
   if (!ok) failures.push({ file: "single-owner-contract", pattern: message });
 }
-const result = { ok: failures.length === 0, checked: files, failures, allowlist: ["data/platform-state.json", "prisma/migrations", "scripts/migrate-storefront-single-source.mjs"] };
+const result = { ok: failures.length === 0, checked: files, failures, allowlist: ["prisma/migrations", "archive/legacy/platform-state.json", "scripts/migrate-storefront-single-source.mjs"] };
 console.log(JSON.stringify(result, null, 2));
 if (failures.length) process.exitCode = 1;

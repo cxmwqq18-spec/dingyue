@@ -1,5 +1,7 @@
 import fs from "fs";
 import path from "path";
+import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 
@@ -68,7 +70,8 @@ const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/template
 const renderer = readText("src/components/theme-renderer.tsx");
 const schema = readText("src/lib/section-schema.ts");
 const storefrontRender = readText("src/lib/storefront-render.tsx");
-const platformState = JSON.parse(readText("data/platform-state.json"));
+const prisma = new PrismaClient();
+const platformState = await readPlatformStateFromSql(prisma);
 
 const missingTemplateLinks = [];
 const missingSchemaLinks = [];
@@ -148,3 +151,4 @@ console.log(JSON.stringify({
   legacySlugs: ["image-studio", "image_generator"],
   dataFilesRequired: false
 }, null, 2));
+await prisma.$disconnect();

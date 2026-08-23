@@ -6,9 +6,10 @@ import {
   MYDREAMSHOOTS_SEASONAL_OCCASION_BLOG_SEO_SLUGS,
   mydreamshootsSeasonalOccasionBlogSeoArticles
 } from "./mydreamshoots-seasonal-occasion-blog-seo-articles.mjs";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const state = JSON.parse(fs.readFileSync(path.join(repoRoot, "data/platform-state.json"), "utf8"));
+const state = await readPlatformStateFromSql();
 const routeSource = fs.readFileSync(path.join(repoRoot, "src", "app", "[...path]", "page.tsx"), "utf8");
 const failures = [];
 const warnings = [];

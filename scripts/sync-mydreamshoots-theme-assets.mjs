@@ -4,12 +4,12 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 const args = new Set(process.argv.slice(2));
 const apply = args.has("--apply");
 const updateDb = args.has("--db");
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const manifestPath = path.resolve(process.cwd(), process.env.MYDS_THEME_ASSET_MANIFEST ?? ".tmp/mydreamshoots-theme-assets/manifest.json");
 const publicGalleryRoot = path.join(repoRoot, "public/assets/dreamshoot/generated/pack-galleries");
 const publicCoverRoot = path.join(repoRoot, "public/assets/dreamshoot/generated/pack-covers");
@@ -139,7 +139,7 @@ async function updateDatabase(packs, categories) {
 
 async function main() {
   assert(fs.existsSync(manifestPath), `theme asset manifest is missing: ${manifestPath}`);
-  const state = readJson(statePath);
+  const state = await readPlatformStateFromSql();
   const manifest = readJson(manifestPath);
   const { packBySlug, categoryById, resultsBySlug } = await validateManifest(manifest, state);
   const changedPacks = [];
@@ -197,7 +197,7 @@ async function main() {
     category.imageUrl = change.imageUrl;
   }
 
-  fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+  await writePlatformStateToSql(state);
   if (updateDb) await updateDatabase(changedPacks, changedCategories);
 
   console.log(JSON.stringify({

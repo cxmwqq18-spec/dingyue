@@ -5,9 +5,9 @@ import path from "node:path";
 import sharp from "sharp";
 import { Agent } from "undici";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const siteId = "site_aidreamcapes";
 const publicAssetBase = "/assets/sites/site_aidreamcapes/fan-holiday-theme";
 const localAssetRoot = path.join(repoRoot, "public", "assets", "sites", "site_aidreamcapes", "fan-holiday-theme");
@@ -179,7 +179,7 @@ async function fileExists(filePath) {
 }
 
 async function readState() {
-  return JSON.parse(await fs.readFile(statePath, "utf8"));
+  return readPlatformStateFromSql();
 }
 
 function normalizeBaseUrl(value) {

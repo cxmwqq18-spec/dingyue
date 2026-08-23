@@ -1,8 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const workspaceRoot = process.cwd();
-const statePath = path.join(workspaceRoot, "data", "platform-state.json");
 const themeRendererPath = path.join(workspaceRoot, "src", "components", "theme-renderer.tsx");
 const dreamshootTemplatePath = path.join(workspaceRoot, "src", "lib", "theme", "packages", "dreamshoot-ai-studio", "templates.ts");
 const themeSeoPath = path.join(workspaceRoot, "src", "lib", "theme", "seo.ts");
@@ -10,7 +10,7 @@ const aidreamcapesMigrationPath = path.join(workspaceRoot, "scripts", "migrate-a
 const aidreamcapesGalleryGeneratorPath = path.join(workspaceRoot, "scripts", "generate-aidreamcapes-theme-galleries.mjs");
 const aidreamcapesAssetRoot = path.join(workspaceRoot, "public", "assets", "sites", "site_aidreamcapes");
 const mydreamshootsAssetRoot = path.join(workspaceRoot, "public", "assets", "dreamshoot");
-const state = JSON.parse(await fs.readFile(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 const themeRendererSource = await fs.readFile(themeRendererPath, "utf8");
 const dreamshootTemplateSource = await fs.readFile(dreamshootTemplatePath, "utf8");
 const themeSeoSource = await fs.readFile(themeSeoPath, "utf8");

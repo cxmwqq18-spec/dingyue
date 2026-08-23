@@ -116,7 +116,7 @@ grant.
 
 ## Production Notes
 
-The website runtime reads and writes PostgreSQL through Prisma. `data/platform-state.json` is retained only as an archived migration artifact and is never a runtime fallback. A missing or unavailable database is surfaced as an error instead of serving stale file content.
+The website runtime reads and writes PostgreSQL through Prisma. The retired JSON state file has been removed; only `archive/legacy/platform-state.json` remains as an explicit historical migration fixture and is never a runtime or deployment fallback. A missing or unavailable database is surfaced as an error instead of serving stale file content.
 
 Production implementation must still:
 

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = path.join(process.cwd(), "data", "platform-state.json");
 const sourceSiteId = argValue("--source") || "site_grownstride_test";
 const targetSiteId = argValue("--target") || "site_dreamshoot";
 
@@ -70,12 +70,8 @@ function flattenPrices(state, siteId) {
     );
 }
 
-function main() {
-  if (!fs.existsSync(statePath)) {
-    console.error(JSON.stringify({ ok: false, error: `missing state file: ${statePath}` }, null, 2));
-    process.exit(1);
-  }
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+async function main() {
+  const state = await readPlatformStateFromSql();
   const sourceSite = siteById(state, sourceSiteId);
   const targetSite = siteById(state, targetSiteId);
   const errors = [];
@@ -187,4 +183,7 @@ function main() {
   console.log(JSON.stringify(result, null, 2));
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

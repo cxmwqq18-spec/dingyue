@@ -1,11 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import { loadRuntimeEnv } from "./load-runtime-env.mjs";
+import { PrismaClient } from "@prisma/client";
 
 loadRuntimeEnv();
 
 const dataDir = path.join(process.cwd(), "data");
-const statePath = path.join(dataDir, "platform-state.json");
 const legacyStorageRoot = path.resolve(process.env.STORAGE_ROOT || dataDir);
 const publicDir = path.resolve(process.cwd(), "public");
 
@@ -39,10 +39,12 @@ if (storageRoot === publicDir || storageRoot.startsWith(`${publicDir}${path.sep}
   throw new Error("storage_root_must_not_be_under_public");
 }
 
-const state = fs.existsSync(statePath) ? JSON.parse(fs.readFileSync(statePath, "utf8")) : { assetUploads: [] };
-const activeAssets = (state.assetUploads || []).filter((asset) => !asset.deletedAt);
 const files = walk(storageRoot);
 const totalBytes = files.reduce((sum, file) => sum + fs.statSync(file).size, 0);
+
+const prisma = new PrismaClient();
+const activeAssetRecords = await prisma.assetUpload.count({ where: { deletedAt: null } });
+await prisma.$disconnect();
 
 console.log(JSON.stringify({
   ok: true,
@@ -50,7 +52,7 @@ console.log(JSON.stringify({
   legacyStorageRoot,
   customerAssetStorageRootConfigured: Boolean(process.env.CUSTOMER_ASSET_STORAGE_ROOT?.trim()),
   customerAssetAppRootConfigured: Boolean(process.env.CUSTOMER_ASSET_APP_ROOT?.trim()),
-  activeAssetRecords: activeAssets.length,
+  activeAssetRecords,
   customerAssetFiles: files.length,
   totalBytes,
   backupRecommended: true,

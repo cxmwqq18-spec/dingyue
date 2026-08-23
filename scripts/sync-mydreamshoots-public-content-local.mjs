@@ -2,6 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 const homepageLockPath = path.join(repoRoot, "docs", "content-locks", "mydreamshoots-homepage-approved.json");
@@ -27,7 +28,9 @@ for (let index = 0; index < rawArgs.length; index += 1) {
 }
 
 const siteId = String(args.get("site-id") ?? process.env.MYDREAMSHOOTS_SITE_ID ?? "site_dreamshoot");
-const statePath = path.resolve(repoRoot, String(args.get("state-path") ?? path.join("data", "platform-state.json")));
+if (args.has("state-path")) {
+  throw new Error("--state-path is retired; PostgreSQL is the only content source.");
+}
 const writeJson = flags.has("write-json");
 const writeLock = flags.has("write-lock");
 const refreshHomepageLockOnly = flags.has("refresh-homepage-lock-only");
@@ -844,7 +847,7 @@ function siteThemeNeedsTemplateRebuild(theme) {
 function syncTargetState(state) {
   const stats = { stringsChanged: 0, sectionFieldsChanged: 0, siteThemeTemplatesChanged: 0, examples: [], issueGroups: createIssueGroups() };
   const site = asArray(state.sites).find((item) => item.id === siteId);
-  if (!site) throw new Error(`site ${siteId} not found in ${statePath}`);
+  if (!site) throw new Error(`site ${siteId} not found in PostgreSQL platform state`);
 
   syncCopy(site.branding, stats, `site:${site.id}.branding`);
   syncKnownMydreamSectionsDeep(site.themeSettings?.draftJson, stats, `site:${site.id}.themeSettings.draftJson`);
@@ -899,7 +902,7 @@ function formatLocalIso(date) {
 
 function buildHomepageLock(state, site, previousLock) {
   const page = asArray(site.pages).find((entry) => normalizePath(entry.slug) === "/");
-  if (!page) throw new Error(`homepage for ${siteId} not found in ${statePath}`);
+  if (!page) throw new Error(`homepage for ${siteId} not found in PostgreSQL platform state`);
   const settings = site.themeSettings?.publishedJson ?? {};
   const records = collectPageRecords(page, settings, "approved-lock:themePage:/");
   const publication = latestPublicationForSite(state);
@@ -956,15 +959,11 @@ function buildHomepageLock(state, site, previousLock) {
   };
 }
 
-function writeJsonFile(filePath, value) {
-  fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`, "utf8");
-}
-
-function main() {
-  if (!fs.existsSync(statePath)) throw new Error(`${statePath} does not exist`);
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+async function main() {
+  const state = await readPlatformStateFromSql();
+  const existingStateRaw = `${JSON.stringify(state, null, 2)}\n`;
   const site = asArray(state.sites).find((item) => item.id === siteId);
-  if (!site) throw new Error(`site ${siteId} not found in ${statePath}`);
+  if (!site) throw new Error(`site ${siteId} not found in PostgreSQL platform state`);
   const stats = refreshHomepageLockOnly
     ? { stringsChanged: 0, sectionFieldsChanged: 0, siteThemeTemplatesChanged: 0, examples: [], issueGroups: createIssueGroups() }
     : syncTargetState(state).stats;
@@ -972,7 +971,6 @@ function main() {
     ? JSON.parse(fs.readFileSync(homepageLockPath, "utf8"))
     : undefined;
   const homepageLock = buildHomepageLock(state, site, previousLock);
-  const existingStateRaw = fs.readFileSync(statePath, "utf8");
   const nextStateRaw = `${JSON.stringify(state, null, 2)}\n`;
   const existingLockRaw = previousLock ? `${JSON.stringify(previousLock, null, 2)}\n` : "";
   const nextLockRaw = `${JSON.stringify(homepageLock, null, 2)}\n`;
@@ -980,14 +978,14 @@ function main() {
   const lockChanged = nextLockRaw !== existingLockRaw;
 
   if (!refreshHomepageLockOnly && writeLock && !writeJson && jsonChanged) {
-    throw new Error("--write-lock cannot be used by itself when data/platform-state.json would change. Re-run with --write-json --write-lock so the approved lock matches persisted local content.");
+    throw new Error("--write-lock cannot be used by itself when PostgreSQL content would change. Re-run with --write-json --write-lock so the approved lock matches persisted content.");
   }
 
   if (writeJson && !dryRun && jsonChanged) {
-    writeJsonFile(statePath, state);
+    await writePlatformStateToSql(state);
   }
   if (writeLock && !dryRun && lockChanged) {
-    writeJsonFile(homepageLockPath, homepageLock);
+    fs.writeFileSync(homepageLockPath, `${JSON.stringify(homepageLock, null, 2)}\n`, "utf8");
   }
 
   console.log(JSON.stringify({
@@ -996,7 +994,7 @@ function main() {
     refreshHomepageLockOnly,
     siteId,
     writes: {
-      json: writeJson && !dryRun,
+      postgres: writeJson && !dryRun,
       homepageLock: writeLock && !dryRun
     },
     changed: {
@@ -1014,4 +1012,7 @@ function main() {
   }, null, 2));
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

@@ -2,6 +2,7 @@
 import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 const siteId = "site_dreamshoot";
@@ -117,7 +118,7 @@ async function writeCover(sourcePath, outputPath, look) {
     .toFile(outputPath);
 }
 
-const state = JSON.parse(await fs.readFile(path.join(repoRoot, "data/platform-state.json"), "utf8"));
+const state = await readPlatformStateFromSql();
 const activePacks = (state.creativePacks ?? [])
   .filter((pack) => pack.siteId === siteId && pack.status === "active")
   .map((pack) => ({

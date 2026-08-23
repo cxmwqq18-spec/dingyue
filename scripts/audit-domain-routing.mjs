@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = path.join(process.cwd(), "data", "platform-state.json");
 const domainRoutingPath = path.join(process.cwd(), "src", "lib", "domain-routing.ts");
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 const domainRoutingSource = fs.readFileSync(domainRoutingPath, "utf8");
 
 function fail(message) {

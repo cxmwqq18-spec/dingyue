@@ -2,9 +2,9 @@ import "./load-runtime-env.mjs";
 import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const prisma = new PrismaClient();
-const statePath = path.resolve(process.cwd(), "data", "platform-state.json");
 const siteId = "site_dreamshoot";
 const rawArgs = process.argv.slice(2);
 const flags = new Set(rawArgs.filter((arg) => arg.startsWith("--")).map((arg) => arg.slice(2).split("=")[0]));
@@ -147,14 +147,13 @@ function assertNoYearlySubscriptionsInState(state) {
   }
 }
 
-function updateJsonState(products, { write }) {
-  if (!fs.existsSync(statePath)) return { available: false, changed: false, wrote: false };
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+async function updateSqlState(products, { write }) {
+  const state = await readPlatformStateFromSql();
   assertNoYearlySubscriptionsInState(state);
   const before = JSON.stringify(state.products ?? []);
   state.products = replaceWhere(state.products ?? [], (item) => item.siteId === siteId, products);
   const changed = before !== JSON.stringify(state.products ?? []);
-  if (changed && write) fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+  if (changed && write) await writePlatformStateToSql(state);
   return { available: true, changed, wrote: Boolean(changed && write) };
 }
 
@@ -233,7 +232,7 @@ function removeStateCaches() {
 
 async function main() {
   const products = buildProducts();
-  const jsonState = updateJsonState(products, { write: writeJsonRequested });
+  const jsonState = await updateSqlState(products, { write: writeJsonRequested });
   const postgres = writePostgresRequested ? await updatePostgres(products) : null;
   if (writeJsonRequested || writePostgresRequested) removeStateCaches();
   console.log(JSON.stringify({

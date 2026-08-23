@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 import "./load-runtime-env.mjs";
-import fs from "node:fs";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = new URL("../data/platform-state.json", import.meta.url);
 const SEO_BRAND = "MyDreamShoots";
 const SEO_BRAND_RE = /(?:myᕲreamshoots|ʍʏƉʀɛǟʍֆhoots|MyÐreãm\$hoots)/g;
 const prisma = new PrismaClient();
@@ -60,7 +59,7 @@ function normalizeSeoObjectsDeep(value) {
   return changes;
 }
 
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 let changeCount = 0;
 
 for (const site of state.sites ?? []) {
@@ -83,8 +82,8 @@ for (const page of state.themePages ?? []) {
   changeCount += normalizeSeoObjectsDeep(page);
 }
 
-fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
-console.log(`Fixed MyDreamShoots SEO brand wordmark fields in platform-state: ${changeCount} object(s) updated.`);
+await writePlatformStateToSql(state);
+console.log(`Fixed MyDreamShoots SEO brand wordmark fields in PostgreSQL platform state: ${changeCount} object(s) updated.`);
 
 function cloneJson(value) {
   return value == null ? value : JSON.parse(JSON.stringify(value));

@@ -3,9 +3,9 @@ import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const workspaceRoot = process.cwd();
-const statePath = path.join(workspaceRoot, "data", "platform-state.json");
 const siteId = "site_aidreamcapes";
 const assetRoot = path.join(workspaceRoot, "public", "assets", "sites", siteId, "creative-packs");
 const galleryRoot = path.join(assetRoot, "pack-galleries");
@@ -186,7 +186,7 @@ async function generateGalleryForPack(pack) {
 	}
 
 async function updateStateFile(resultsById) {
-  const state = JSON.parse(await fs.readFile(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   let updated = 0;
   state.creativePacks = (state.creativePacks ?? []).map((pack) => {
     const result = resultsById.get(pack.id);
@@ -198,7 +198,7 @@ async function updateStateFile(resultsById) {
 	      galleryImageAlts: result.galleryImageAlts
 	    };
   });
-  await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
+  await writePlatformStateToSql(state);
   return updated;
 }
 
@@ -220,7 +220,7 @@ async function updatePrisma(resultsById) {
 }
 
 async function main() {
-  const state = JSON.parse(await fs.readFile(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   const packs = (state.creativePacks ?? [])
     .filter((pack) => pack.siteId === siteId && pack.status === "active")
     .sort((a, b) => String(a.id).localeCompare(String(b.id)));

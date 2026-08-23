@@ -1,9 +1,7 @@
-import fs from "node:fs";
-import path from "node:path";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = path.join(process.cwd(), "data", "platform-state.json");
 const siteId = "site_grownstride_test";
 const primaryDomain = "test.grownstride.com";
 const aliasDomains = ["www.grownstride.com", "grownstride.com"];
@@ -110,7 +108,7 @@ async function main() {
     console.log("Usage: node scripts/migrate-grownstride-test-domain.mjs [--apply] [--database]");
     return;
   }
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   const nextState = buildStatePlan(state);
   const currentSite = state.sites.find((row) => row.id === siteId);
   const currentDomains = state.siteDomains.filter((row) => row.siteId === siteId).map((row) => row.domain);
@@ -127,7 +125,7 @@ async function main() {
     return;
   }
 
-  fs.writeFileSync(statePath, `${JSON.stringify(nextState, null, 2)}\n`);
+  await writePlatformStateToSql(nextState);
   if (wants("--database")) report.databaseResult = await applyDatabase();
   console.log(JSON.stringify(report, null, 2));
 }

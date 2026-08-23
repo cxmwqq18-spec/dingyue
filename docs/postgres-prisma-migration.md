@@ -49,13 +49,13 @@ These commands are one-time migration tooling only. They must never be part of a
 Dry run:
 
 ```bash
-DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-state -- --source data/platform-state.json --dry-run
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-state -- --source archive/legacy/platform-state.json --dry-run
 ```
 
 Apply:
 
 ```bash
-DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-state -- --source data/platform-state.json
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-state -- --source archive/legacy/platform-state.json
 ```
 
 Smoke:
@@ -71,13 +71,13 @@ After the normalized Prisma schema has been pushed and `@prisma/client` has been
 Dry run from a JSON file:
 
 ```bash
-DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-relational-state -- --source data/platform-state.json --dry-run
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-relational-state -- --source archive/legacy/platform-state.json --dry-run
 ```
 
 Apply from a JSON file and verify counts:
 
 ```bash
-DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-relational-state -- --source data/platform-state.json --verify
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-relational-state -- --source archive/legacy/platform-state.json --verify
 ```
 
 Apply from the default `PlatformStateDocument(id=platform)` bridge row:
@@ -89,7 +89,7 @@ DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public'
 Run verification only:
 
 ```bash
-DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:verify-relational-state -- --source data/platform-state.json
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:verify-relational-state -- --source archive/legacy/platform-state.json
 ```
 
 The relational importer flattens `products[].prices`, creates `CreditBalance` rows from `customers[].balance`, imports nested `site.pages` and `site.themeSettings`, converts `site.connect` to `StripeConnectAccount`, and maps `siteAiApps[].aiApp.id` to `aiAppId`. It uses id-based upserts in small transactions so repeated imports update rows instead of failing on duplicates. Duplicate or missing legacy IDs are reported in the JSON summary and skipped.
@@ -97,7 +97,7 @@ The relational importer flattens `products[].prices`, creates `CreditBalance` ro
 `--replace` deletes all imported relational rows before rebuilding them, including customer accounts, sessions, credits, generation jobs, and asset metadata. Run `--dry-run` first and create a verified database backup. A destructive replacement is rejected unless both `--replace` and `--allow-data-loss` are passed explicitly:
 
 ```bash
-DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-relational-state -- --source data/platform-state.json --replace --allow-data-loss --verify
+DATABASE_URL='postgresql://dingyue:<password>@<host>:5432/dingyue?schema=public' npm run db:import-relational-state -- --source archive/legacy/platform-state.json --replace --allow-data-loss --verify
 ```
 
 If a normalized model has not been merged into `prisma/schema.prisma` yet, that section reports `missing_prisma_model`; regenerate Prisma Client after the schema worker lands the remaining models and rerun the same command.

@@ -10,8 +10,8 @@ import {
   MYDREAMSHOOTS_SEASONAL_OCCASION_BLOG_SEO_SLUGS,
   mydreamshootsSeasonalOccasionBlogSeoArticles
 } from "./mydreamshoots-seasonal-occasion-blog-seo-articles.mjs";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = path.join(process.cwd(), "data/platform-state.json");
 const mydreamshootsTaxonomyPath = path.join(process.cwd(), "src", "lib", "mydreamshoots-theme-taxonomy.json");
 const MYDREAMSHOOTS_SITE_ID = "site_dreamshoot";
 const MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS = [
@@ -63,7 +63,7 @@ if (scopedRun) {
   }
 }
 
-const sourceState = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const sourceState = await readPlatformStateFromSql();
 const mydreamshootsTaxonomy = JSON.parse(fs.readFileSync(mydreamshootsTaxonomyPath, "utf8"));
 
 function slugifySegment(value) {
@@ -2394,7 +2394,7 @@ if (scopedRun) {
 if (updateDb && !dryRun) {
   await updateScopedDatabase(state, updatedPages);
 } else if (!dryRun) {
-  fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+  await writePlatformStateToSql(state);
 }
 
 console.log(JSON.stringify({

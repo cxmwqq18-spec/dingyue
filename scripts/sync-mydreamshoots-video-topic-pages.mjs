@@ -143,6 +143,12 @@ const videoCategories = [
     label: "Pet Video",
     description: "Create pet-focused motion for portraits, play, routines, owner interaction, and animal lifestyle content.",
     sortOrder: 260
+  },
+  {
+    slug: "explainer-video",
+    label: "Explainer Video",
+    description: "Explain products, processes, data, technology, education, business frameworks, and user journeys with clear visual structure.",
+    sortOrder: 270
   }
 ];
 
@@ -318,6 +324,14 @@ const pages = [
     description: "Create AI pet-video visuals from text or approved images for pet portraits, playful moments, owner interactions, walks, grooming, training, and animal lifestyle content.",
     keywords: "ai pet video generator, AI pet video maker, pet portrait video generator, animal video generator, pet lifestyle video, dog video generator, cat video maker, pet social video creator",
     imageUrl: "/assets/dreamshoot/pet-video/hero-pet-video-training-frame.jpg"
+  },
+  {
+    slug: "explainer-video",
+    title: "Explainer Video",
+    seoTitle: "AI Explainer Video Generator for Concepts & Product Explanations | myDreamshoots",
+    description: "Create AI explainer-video visuals for products, processes, data, technology, education, business frameworks, and user journeys from text or approved images.",
+    keywords: "ai explainer video generator, explainer video maker, AI product explainer video, process visualization video, data storytelling video, educational video generator, technology explainer video, business framework video",
+    imageUrl: "/assets/dreamshoot/explainer-video/hero-explainer-video-product-concept.jpg"
   }
 ];
 
@@ -460,6 +474,8 @@ function pageJson(page, content = videoTopicContentSeedForSlug(page.slug)) {
   const canonicalPath = content.seo?.canonicalPath || pagePath(page.slug);
   const sectionId = page.slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
   const sectionType = page.slug === "talking-photo" ? "talking_photo_landing" : "ai_video_topic_landing";
+  // The explainer package includes editorial references only; first-party product evidence gates indexation.
+  const indexable = page.slug !== "explainer-video";
   return {
     pageType: "ai_tool",
     version: 1,
@@ -482,10 +498,10 @@ function pageJson(page, content = videoTopicContentSeedForSlug(page.slug)) {
       canonicalPath,
       canonical: canonicalPath,
       robots: {
-        index: true,
+        index: indexable,
         follow: true
       },
-      index: true,
+      index: indexable,
       follow: true
     }
   };

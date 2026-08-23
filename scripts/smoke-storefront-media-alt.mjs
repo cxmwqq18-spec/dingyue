@@ -2,6 +2,8 @@ import { createRequire } from "node:module";
 import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
+import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const require = createRequire(import.meta.url);
 const ts = require("typescript");
@@ -180,7 +182,8 @@ assert(
   "visual-reference and image-index suffixes should be rejected"
 );
 
-const state = JSON.parse(fs.readFileSync(path.join(repoRoot, "data/platform-state.json"), "utf8"));
+const prisma = new PrismaClient();
+const state = await readPlatformStateFromSql(prisma);
 const myDreamShootsPacks = (state.creativePacks ?? []).filter((pack) => pack.siteId === "site_dreamshoot");
 const myDreamShootsAssets = (state.mediaAssets ?? []).filter((asset) => asset.siteId === "site_dreamshoot");
 const altByImage = new Map();
@@ -227,3 +230,4 @@ console.log(JSON.stringify({
     mediaAssets: myDreamShootsAssets.length
   }
 }, null, 2));
+await prisma.$disconnect();

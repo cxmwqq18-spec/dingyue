@@ -4,7 +4,6 @@ import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-const statePath = path.resolve(process.cwd(), "data", "platform-state.json");
 const siteId = "site_aidreamcapes";
 
 const replacements = new Map([
@@ -52,39 +51,6 @@ function removeStateCaches() {
     const cacheFile = path.join(process.cwd(), dir, "cache/platform-state-postgres.json");
     if (fs.existsSync(cacheFile)) fs.rmSync(cacheFile, { force: true });
   }
-}
-
-function updateJsonState() {
-  if (!fs.existsSync(statePath)) return 0;
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
-  let updates = 0;
-
-  for (const site of state.sites ?? []) {
-    if (site.id !== siteId && site.slug !== "aidreamcapes") continue;
-    const next = rewriteJson(site);
-    if (!changed(site, next)) continue;
-    Object.assign(site, next);
-    updates += 1;
-  }
-
-  for (const theme of state.siteThemes ?? []) {
-    if (theme.siteId !== siteId) continue;
-    const next = rewriteJson(theme);
-    if (!changed(theme, next)) continue;
-    Object.assign(theme, next);
-    updates += 1;
-  }
-
-  for (const publication of state.themePublications ?? []) {
-    if (publication.siteId !== siteId) continue;
-    const next = rewriteJson(publication);
-    if (!changed(publication, next)) continue;
-    Object.assign(publication, next);
-    updates += 1;
-  }
-
-  if (updates) fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
-  return updates;
 }
 
 async function updatePostgresState() {
@@ -139,10 +105,9 @@ async function updatePostgresState() {
 }
 
 async function main() {
-  const jsonStateUpdates = updateJsonState();
   const postgres = await updatePostgresState();
   removeStateCaches();
-  console.log(JSON.stringify({ ok: true, jsonStateUpdates, postgres }, null, 2));
+  console.log(JSON.stringify({ ok: true, postgres }, null, 2));
 }
 
 main()

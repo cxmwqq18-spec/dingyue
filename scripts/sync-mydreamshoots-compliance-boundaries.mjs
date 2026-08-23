@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-import fs from "node:fs";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = new URL("../data/platform-state.json", import.meta.url);
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 
 const SITE_ID = "site_dreamshoot";
 const SITE_SLUG = "mydreamshoots";
@@ -566,7 +565,7 @@ for (const collectionName of ["siteThemes", "creativePacks"]) {
   }
 }
 
-fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+await writePlatformStateToSql(state);
 
 console.log(`Synced MyDreamShoots compliance boundaries: ${changes.length} field(s) updated.`);
 if (changes.length) {

@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = path.join(process.cwd(), "data/platform-state.json");
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 const seoIndexing = fs.readFileSync(path.join(process.cwd(), "src/lib/seo-indexing.ts"), "utf8");
 const sitemapBuilder = seoIndexing.slice(seoIndexing.indexOf("function sitemapEntriesForSite"), seoIndexing.indexOf("function canonicalPathForSitemapPage"));
 const storefrontRender = fs.readFileSync(path.join(process.cwd(), "src/lib/storefront-render.tsx"), "utf8");

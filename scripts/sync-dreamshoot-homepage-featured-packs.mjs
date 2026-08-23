@@ -3,9 +3,9 @@ import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const orderedFeaturedIds = ["featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"];
 const homepageFeaturedId = "featured_thanksgiving_1";
 const homepageRemovedFeaturedIds = ["featured_pack_1", "featured_christmas_1"];
@@ -450,10 +450,10 @@ async function updateDatabase(state) {
 
 async function main() {
   if (!stores.length) throw new Error("no_store_selected");
-  const state = JSON.parse(await fs.readFile(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   const stateReport = applyToState(state);
   if (!dryRun) {
-    await fs.writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`);
+    await writePlatformStateToSql(state);
   }
   const dbReport = updateDb && !dryRun ? await updateDatabase(state) : undefined;
   console.log(JSON.stringify({
@@ -465,7 +465,7 @@ async function main() {
       dbRequested: updateDb,
       dbWriteEnabled: updateDb && !dryRun,
       note: dryRun
-        ? "No files or database rows were overwritten. Re-run with --force-content-overwrite to write data/platform-state.json, and add --db to write Postgres."
+        ? "No files or database rows were overwritten. Re-run with --force-content-overwrite to write the PostgreSQL source, and add --db to publish the compiled snapshot."
         : "Content overwrite was explicitly enabled for this run."
     },
     stores: stores.map((store) => store.key),

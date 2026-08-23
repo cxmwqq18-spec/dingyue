@@ -5,7 +5,6 @@ import { PrismaClient } from "@prisma/client";
 import { LOCAL_DATABASE, assertDatabaseTarget, assertNonProductionWriteTarget } from "./lib/database-target.mjs";
 
 const envFile = path.join(process.cwd(), ".env.local");
-const stateFile = path.join(process.cwd(), "data", "platform-state.json");
 const cacheFile = path.join(process.cwd(), ".next", "cache", "platform-state-postgres.json");
 const shouldRestart = process.argv.includes("--restart");
 
@@ -69,21 +68,12 @@ function assertExpectedState(summary) {
 
 async function main() {
   const envStatus = writeEnvPort();
-  if (!fs.existsSync(stateFile)) throw new Error(`state file not found: ${stateFile}`);
-  const state = JSON.parse(fs.readFileSync(stateFile, "utf8"));
-  const sourceSummary = summarize(state);
-  assertExpectedState(sourceSummary);
-
   const prisma = new PrismaClient();
   try {
     await prisma.$queryRaw`select 1`;
-    await prisma.platformStateDocument.upsert({
-      where: { id: "platform" },
-      create: { id: "platform", state },
-      update: { state }
-    });
     const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
-    const dbSummary = summarize(document?.state ?? {});
+    if (!document?.state) throw new Error("PlatformStateDocument(platform) is missing");
+    const dbSummary = summarize(document.state);
     assertExpectedState(dbSummary);
     if (fs.existsSync(cacheFile)) fs.unlinkSync(cacheFile);
     console.log(
@@ -93,7 +83,6 @@ async function main() {
           env: { changed: envStatus.changed, databaseHost: envStatus.host, databasePort: envStatus.port },
           cacheCleared: true,
           restarted: false,
-          sourceSummary,
           dbSummary
         },
         null,

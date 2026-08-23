@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-import fs from "node:fs";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = new URL("../data/platform-state.json", import.meta.url);
-const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 let changeCount = 0;
 
 function normalizeBrandText(value) {
@@ -23,5 +22,5 @@ function walk(node) {
 }
 
 walk(state);
-fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+await writePlatformStateToSql(state);
 console.log(`Synced MyDreamShoots brand text: ${changeCount} string fields updated.`);

@@ -2,8 +2,8 @@
 import "./load-runtime-env.mjs";
 import fs from "node:fs";
 import path from "node:path";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
-const statePath = path.resolve(process.cwd(), "data/platform-state.json");
 const siteIds = new Set(["site_dreamshoot"]);
 const args = new Set(process.argv.slice(2));
 const uniqueGalleryRoot = path.resolve(process.cwd(), "public/assets/dreamshoot/generated/pack-galleries");
@@ -673,7 +673,7 @@ function updateCollectionsPagesInSnapshot(value) {
 }
 
 async function applyLocalState() {
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+  const state = await readPlatformStateFromSql();
   const allAssets = listAssets();
   const pools = imagePools(allAssets);
   const categories = new Map((state.creativePackCategories ?? []).map((category) => [category.id, category]));
@@ -730,7 +730,7 @@ async function applyLocalState() {
     pages += 1;
   }
 
-  fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`);
+  await writePlatformStateToSql(state);
   clearStateCaches();
   return { packs, categories: categoryCount, pages, categoryRecords: leafCategoryBySlug.size };
 }
@@ -750,7 +750,7 @@ async function applyPostgres(localResult) {
   const { PrismaClient } = await import("@prisma/client");
   const prisma = new PrismaClient();
   try {
-    const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+    const state = await readPlatformStateFromSql();
     const packUpdates = (state.creativePacks ?? []).filter((pack) => siteIds.has(pack.siteId) && profileBySlug[pack.category]);
     const categoryUpdates = (state.creativePackCategories ?? []).filter((category) => siteIds.has(category.siteId) && (profileBySlug[category.slug] || parentProfiles[category.slug]));
     for (const pack of packUpdates) {

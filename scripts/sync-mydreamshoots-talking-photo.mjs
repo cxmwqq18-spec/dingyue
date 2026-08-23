@@ -2,12 +2,12 @@
 import "./load-runtime-env.mjs";
 import fs from "node:fs";
 import path from "node:path";
+import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const updateDb = args.has("--db");
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const SITE_ID = "site_dreamshoot";
 const PAGE_SLUG = "/ai-video-generation/talking-photo";
 const PAGE_ID = "site_dreamshoot_talking_photo";
@@ -53,14 +53,6 @@ const pageJson = {
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
-}
-
-function readJson(filePath) {
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
-}
-
-function writeJson(filePath, value) {
-  fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`);
 }
 
 function updateRecord(record, fields, changes, targetType) {
@@ -259,14 +251,14 @@ async function updateDatabase(state, category, page) {
 
 assertPublicAssetExists(TALKING_PHOTO_IMAGE_URL, talkingPhotoCategory.slug);
 
-const state = readJson(statePath);
+const state = await readPlatformStateFromSql();
 const changes = [];
 const category = syncCategory(state, changes);
 const { page } = syncPage(state, changes);
 syncExistingVideoThemePreview(state, changes);
 
 if (!dryRun) {
-  writeJson(statePath, state);
+  await writePlatformStateToSql(state);
 }
 
 if (updateDb && !dryRun) {

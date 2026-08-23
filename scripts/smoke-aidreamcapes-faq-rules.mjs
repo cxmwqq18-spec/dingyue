@@ -3,9 +3,9 @@ import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
-const statePath = path.join(repoRoot, "data", "platform-state.json");
 const args = new Set(process.argv.slice(2));
 const skipDb = args.has("--skip-db");
 const siteId = "site_aidreamcapes";
@@ -104,7 +104,7 @@ function publicationPages(publication) {
   return [];
 }
 
-const state = JSON.parse(await fs.readFile(statePath, "utf8"));
+const state = await readPlatformStateFromSql();
 const localSite = state.sites?.find((site) => site.id === siteId);
 if (!localSite) throw new Error("missing_local_site_aidreamcapes");
 assertPageRules("local_state", localSite.pages ?? []);

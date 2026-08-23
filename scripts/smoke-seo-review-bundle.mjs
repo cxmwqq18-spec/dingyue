@@ -1,13 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = path.resolve(new URL("..", import.meta.url).pathname);
 const source = (relative) => fs.readFileSync(path.join(repoRoot, relative), "utf8");
 const stateArgument = process.argv.find((argument) => argument.startsWith("--state="))?.slice("--state=".length);
-const configuredStatePath = stateArgument || process.env.SEO_REVIEW_STATE_PATH || "data/platform-state.json";
-const reviewStatePath = path.isAbsolute(configuredStatePath)
-  ? configuredStatePath
-  : path.join(repoRoot, configuredStatePath);
+if (stateArgument || process.env.SEO_REVIEW_STATE_PATH) {
+  throw new Error("SEO review state fixtures are disabled; read the PostgreSQL publication source instead.");
+}
 const checks = [];
 
 function check(id, ok, detail) {
@@ -28,7 +28,7 @@ const metadata = source("src/lib/storefront-metadata.ts");
 const renderer = source("src/lib/storefront-render.tsx");
 const dataLookup = source("src/lib/data.ts");
 const siteCatchAll = source("src/app/site/[siteSlug]/[...path]/page.tsx");
-const platformState = JSON.parse(fs.readFileSync(reviewStatePath, "utf8"));
+const platformState = await readPlatformStateFromSql();
 
 const myDreamshoots = platformState.sites?.find((site) => site.id === "site_dreamshoot");
 const aiStorefrontIds = new Set(["site_dreamshoot", "site_aidreamcapes", "site_mydreamshoots_xby", "site_aidreamcapes_xby"]);
@@ -94,7 +94,7 @@ const failures = checks.filter((check) => !check.ok);
 const report = {
   generatedAt: new Date().toISOString(),
   mode: "static-read-only",
-  statePath: reviewStatePath,
+  stateSource: "postgres:platformStateDocument",
   providerCalls: { stripe: 0, checkout: 0, ai: 0 },
   readiness: {
     siteId: myDreamshoots?.id,
