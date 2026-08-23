@@ -476,29 +476,6 @@ function videoTopicContentSeedForSlug(slug) {
     ? videoTopicContentSeeds.talkingPhotoContent
     : videoTopicContentSeeds.aiVideoTopicLandingContentByKey[slug];
   if (!content) throw new Error(`missing_video_topic_content_seed:${slug}`);
-  if (slug === "motion-generator") {
-    const base = videoTopicContentSeeds.aiVideoTopicLandingContentByKey["cinematic-video"];
-    return {
-      ...base,
-      seo: {
-        ...base.seo,
-        title: "AI Motion Generator – Animate Photos Into Short Videos | myDreamshoots",
-        description: "Animate an approved photo into a short, coherent video with controlled subject movement, camera motion, pacing, and visual continuity.",
-        keywords: "AI motion generator, photo motion generator, animate photo, image to video motion, AI photo animation, motion video maker",
-        canonicalPath: "/ai-video-generation/motion-generator"
-      },
-      hero: {
-        ...base.hero,
-        eyebrow: "AI MOTION GENERATOR",
-        title: "Animate a Still Image With Deliberate Motion",
-        body: "Start with one approved image, define the movement that matters, and review a short video that keeps the subject, framing, and visual details coherent.",
-        image: { ...base.hero.image, src: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp", alt: "Portrait scene prepared for controlled AI motion generation" },
-        caption: "One approved image, one motion direction, one reviewable clip.",
-        rightsCopy: "Use images you own or have permission to animate. Review the full result before publishing."
-      },
-      finalCta: { ...base.finalCta, eyebrow: "CREATE A REVIEWABLE MOTION DRAFT", title: "Turn One Still Into a Short Motion Concept", body: "Choose an approved source, describe one movement, and review the generated clip before using it publicly.", cta: "Open Motion Generator", microcopy: "Approved source. Focused motion. Full review." }
-    };
-  }
   return content;
 }
 

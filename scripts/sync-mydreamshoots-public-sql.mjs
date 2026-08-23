@@ -59,6 +59,10 @@ function clone(value) { return value === undefined ? undefined : JSON.parse(JSON
 function slugKey(value) { return String(value ?? "").trim().toLowerCase(); }
 function stableKey(parts) { return parts.map((part) => slugKey(part)).join("|"); }
 function generatedId(prefix, key) { return `${prefix}_${createHash("sha1").update(`${prefix}:${key}`).digest("hex").slice(0, 18)}`; }
+function publicStripePriceId(price) {
+  if (target !== "test") return price.stripePriceId;
+  return `price_test_${createHash("sha1").update(stableKey([price.productId, price.label, price.interval, price.amountCents])).digest("hex").slice(0, 20)}`;
+}
 function targetDomain() { return target === "production" ? "www.mydreamshoots.com" : "test.grownstride.com"; }
 function rewriteText(value, source) {
   if (typeof value !== "string") return value;
@@ -207,8 +211,8 @@ if (sourceSiteId === targetSiteId && !allowSameSite) throw new Error("Source and
       if (existingProduct) await tx.product.update({ where: { id: existingProduct.id }, data: { name: product.name, type: product.type, status: product.status, metadata: remapJson(product.metadata, maps, source) } });
       else await tx.product.create({ data: { id: productId, siteId: targetSiteId, name: product.name, type: product.type, status: product.status, metadata: remapJson(product.metadata, maps, source) } });
       for (const price of product.prices) {
-        const existingPrice = priceMatch(current, product, price); const data = { siteId: targetSiteId, productId: existingProduct?.id || productId, label: price.label, amountCents: price.amountCents, currency: price.currency, interval: price.interval, creditsGranted: price.creditsGranted, metadata: remapJson(price.metadata, maps, source), status: price.status, effectiveFrom: price.effectiveFrom, effectiveTo: price.effectiveTo, providerVerifiedAt: existingPrice?.providerVerifiedAt ?? price.providerVerifiedAt, providerFingerprint: existingPrice?.providerFingerprint ?? price.providerFingerprint, rateLimitPerMinute: existingPrice?.rateLimitPerMinute ?? price.rateLimitPerMinute, accountPoolMode: existingPrice?.accountPoolMode ?? price.accountPoolMode, unavailableReason: existingPrice?.unavailableReason ?? price.unavailableReason };
-        if (existingPrice) await tx.price.update({ where: { id: existingPrice.id }, data }); else await tx.price.create({ data: { id: maps.ids.get(price.id), stripePriceId: null, ...data } });
+        const existingPrice = priceMatch(current, product, price); const data = { siteId: targetSiteId, productId: existingProduct?.id || productId, stripePriceId: publicStripePriceId(price), label: price.label, amountCents: price.amountCents, currency: price.currency, interval: price.interval, creditsGranted: price.creditsGranted, metadata: remapJson(price.metadata, maps, source), status: price.status, effectiveFrom: price.effectiveFrom, effectiveTo: price.effectiveTo, providerVerifiedAt: existingPrice?.providerVerifiedAt ?? price.providerVerifiedAt, providerFingerprint: existingPrice?.providerFingerprint ?? price.providerFingerprint, rateLimitPerMinute: existingPrice?.rateLimitPerMinute ?? price.rateLimitPerMinute, accountPoolMode: existingPrice?.accountPoolMode ?? price.accountPoolMode, unavailableReason: existingPrice?.unavailableReason ?? price.unavailableReason };
+        if (existingPrice) await tx.price.update({ where: { id: existingPrice.id }, data }); else await tx.price.create({ data: { id: maps.ids.get(price.id), ...data } });
       }
     }
     for (const page of source.pages) await tx.themePage.upsert({ where: { siteId_slug: { siteId: targetSiteId, slug: page.slug } }, create: { id: maps.ids.get(page.id), siteId: targetSiteId, pageType: page.pageType, templateKey: page.templateKey, slug: page.slug, title: page.title, draftJson: publicJson(page.draftJson, maps, source), publishedJson: publicJson(page.publishedJson, maps, source), draftMeta: remapJson(page.draftMeta, maps, source) }, update: { pageType: page.pageType, templateKey: page.templateKey, title: page.title, draftJson: publicJson(page.draftJson, maps, source), publishedJson: publicJson(page.publishedJson, maps, source), draftMeta: remapJson(page.draftMeta, maps, source), updatedAt: new Date() } });

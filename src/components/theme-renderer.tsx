@@ -2867,7 +2867,9 @@ function homepageShowcaseImageCardFromSlug(site: Site, slug: string, creativePac
   const categoryLabel = parentMatches
     ? matchingPack?.categoryRecord?.parent?.label
     : matchingPack?.categoryRecord?.label || matchingPack?.categoryRecord?.parent?.label;
-  const imageUrl = dreamshootShowcaseImagePath(site, normalizedSlug);
+  const imageUrl = matchingPack
+    ? generationShowcaseImageForPack(site, matchingPack)
+    : dreamshootShowcaseImagePath(site, normalizedSlug);
   if (!imageUrl || looksLikeCompositeShowcaseImageUrl(imageUrl)) return null;
   return {
     id: `homepage-showcase-${normalizedSlug}`,

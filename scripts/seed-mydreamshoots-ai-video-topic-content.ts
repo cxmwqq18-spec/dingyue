@@ -177,13 +177,25 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       eyebrow: "AI MOTION GENERATOR",
       title: "Animate a Still Image With Deliberate Motion",
       body: "Start with one approved image, define the movement that matters, and review a short video that keeps the subject, framing, and visual details coherent.",
-      image: { src: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp", alt: "Portrait scene prepared for controlled AI motion generation" },
+      primaryCta: "Open Motion Generator",
+      secondaryCta: "Review Motion Examples",
+      availabilityNote: "Review the current video tools and credit cost inside your signed-in workspace.",
+      imageNote: "Controlled portrait motion with a clear subject anchor.",
+      image: { src: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp", alt: "Portrait scene prepared for controlled AI motion generation", width: 1200, height: 1200 },
       caption: "One approved image, one motion direction, one reviewable clip.",
       rightsCopy: "Use images you own or have permission to animate. Review the full result before publishing."
     },
     foundation: {
+      eyebrow: "START WITH A CLEAR MOTION FOUNDATION",
       title: "Define the Motion Before You Generate",
       intro: "A useful motion brief gives the subject, camera, environment, pace, and continuity rules a clear job.",
+      leftTitle: "What makes motion useful",
+      leftItems: ["One recognizable subject anchor", "One primary visible movement", "A camera move that supports the action"],
+      rightTitle: "What to avoid",
+      rightItems: ["Competing actions in one short clip", "Unclear camera direction", "Motion that changes identity or key details"],
+      rightTone: "avoid",
+      expertLabel: "Motion note",
+      expertTip: "The best first draft has one movement that can be reviewed from the opening frame to the final frame.",
       items: [
         { title: "Subject anchor", body: "Name the person, product, place, or detail that must remain recognizable." },
         { title: "Visible movement", body: "Choose one primary action such as a turn, glance, walk, reveal, or gentle environmental motion." },
@@ -191,36 +203,41 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     guidance: {
+      eyebrow: "WRITE A REVIEWABLE DIRECTION",
       title: "Keep Motion Controlled and Reviewable",
       intro: "Short clips work best when the visual change is specific enough to inspect from the first frame to the last.",
-      items: [
+      cards: [
         { title: "Start with a clean frame", body: "Use a clear source image with visible subject boundaries and readable details." },
         { title: "Limit the action", body: "One main movement is easier to keep believable than several competing actions." },
         { title: "Check continuity", body: "Inspect identity, hands, edges, lighting, props, and background geometry before publishing." }
       ]
     },
     steps: {
+      eyebrow: "A PRACTICAL WORKFLOW",
       title: "A Practical Motion Workflow",
       items: [
         { title: "Choose the source", body: "Use an approved image that gives the model enough detail to preserve the subject." },
         { title: "Write the movement", body: "Describe the action, camera move, pace, lighting, and what must stay still." },
         { title: "Generate short clips", body: "Create a focused draft, then compare the opening, middle, and final frame." },
         { title: "Review before use", body: "Reject artifacts and regenerate when identity, anatomy, text, or scene continuity breaks." }
-      ]
+      ],
+      cta: "Start a Motion Draft"
     },
     useCases: {
       title: "What Motion Generation Can Create",
       intro: "Use a single still as the anchor for short visual directions across personal, social, product, and editorial work.",
       items: [
-        { title: "Portrait movement", problem: "Bring a still portrait to life with a glance, expression, or subtle camera move.", body: "Keep identity and facial proportions stable while adding restrained motion." },
-        { title: "Product reveal", problem: "Show a product detail or angle change without building a full shoot.", body: "Use controlled movement to reveal shape, surface, scale, and context." },
-        { title: "Atmospheric scene", problem: "Add depth to a landscape, room, or editorial still.", body: "Use environmental motion, parallax, and pacing to support the original composition." }
+        { title: "Portrait movement", problem: "Bring a still portrait to life with a glance, expression, or subtle camera move.", body: "Keep identity and facial proportions stable while adding restrained motion.", cta: "Animate a portrait", image: { src: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp", alt: "Portrait prepared for controlled motion", width: 1200, height: 1200 } },
+        { title: "Product reveal", problem: "Show a product detail or angle change without building a full shoot.", body: "Use controlled movement to reveal shape, surface, scale, and context.", cta: "Create a product reveal", image: { src: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-02.webp", alt: "Product scene prepared for motion", width: 1200, height: 1200 } },
+        { title: "Atmospheric scene", problem: "Add depth to a landscape, room, or editorial still.", body: "Use environmental motion, parallax, and pacing to support the original composition.", cta: "Animate a scene", image: { src: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-03.webp", alt: "Atmospheric scene prepared for motion", width: 1200, height: 1200 } }
       ]
     },
-    value: { title: "Why a Focused Motion Brief Helps", intro: "Specific movement makes the result easier to review, compare, and reuse.", items: [{ title: "Clearer continuity", body: "The source frame remains the visual anchor." }, { title: "More useful drafts", body: "Every clip has a defined movement and review goal." }, { title: "Safer publishing", body: "Artifacts and unsupported claims are easier to catch before release." }] },
+    value: { eyebrow: "WHY IT HELPS", title: "Why a Focused Motion Brief Helps", intro: "Specific movement makes the result easier to review, compare, and reuse.", items: [{ title: "Clearer continuity", body: "The source frame remains the visual anchor." }, { title: "More useful drafts", body: "Every clip has a defined movement and review goal." }, { title: "Safer publishing", body: "Artifacts and unsupported claims are easier to catch before release." }] },
+    trust: { eyebrow: "USE MOTION RESPONSIBLY", title: "Review Every Frame Before You Publish", intro: "Use approved source media and inspect the complete clip for identity, rights, and continuity.", items: [{ title: "Use with permission", body: "Animate only images you own or have permission to use." }, { title: "Review the full clip", body: "Check motion, identity, anatomy, text, and edges from start to finish." }, { title: "Be clear about AI", body: "Add context when viewers could mistake generated motion for an authentic recording." }] },
     faq: { eyebrow: "MOTION GENERATOR FAQ", title: "Questions About Animating a Photo", items: [
       { question: "What is an AI motion generator?", answer: "It creates a short video from a still image and a defined movement direction. The image remains the starting visual reference while the system generates motion." },
       { question: "Can I animate any image?", answer: "Use an image you own or have permission to animate. Clear subject boundaries and readable details generally make review easier." },
+      { question: "How should I describe the motion?", answer: "Describe one primary action, the camera move, the pace, and the details that should remain still so the finished clip is easier to review." },
       { question: "What should I review before publishing?", answer: "Check identity, anatomy, hands, text, logos, lighting, props, edges, and motion continuity across the full clip." }
     ] },
     finalCta: { eyebrow: "CREATE A REVIEWABLE MOTION DRAFT", title: "Turn One Still Into a Short Motion Concept", body: "Choose an approved source, describe one movement, and review the generated clip before using it publicly.", cta: "Open Motion Generator", microcopy: "Approved source. Focused motion. Full review." }
