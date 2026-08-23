@@ -93,6 +93,7 @@
     "sync:mydreamshoots-video-category-hierarchy:dry-run": "node scripts/sync-mydreamshoots-video-category-hierarchy.mjs --dry-run",
     "smoke:mydreamshoots-video-framework": "node scripts/smoke-mydreamshoots-video-framework.mjs",
     "smoke:mydreamshoots-video-topic-layout": "node scripts/smoke-mydreamshoots-video-topic-layout.mjs",
+    "smoke:mydreamshoots-talking-head-video": "node scripts/smoke-mydreamshoots-talking-head-video.mjs",
     "generate:mydreamshoots-theme-galleries": "node scripts/generate-mydreamshoots-theme-galleries.mjs",
     "build:mydreamshoots-theme-asset-staging": "node scripts/build-mydreamshoots-theme-asset-staging.mjs",
     "sync:mydreamshoots-theme-assets": "node scripts/sync-mydreamshoots-theme-assets.mjs",

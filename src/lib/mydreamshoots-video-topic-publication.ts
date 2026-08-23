@@ -43,7 +43,7 @@ type TopicImage = {
   alt: string;
 };
 
-const videoTopicReviewRequiredSlugs = new Set(["explainer-video", "how-to-video"]);
+const videoTopicReviewRequiredSlugs = new Set(["explainer-video", "how-to-video", "talking-head-video"]);
 
 function stable(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(stable);

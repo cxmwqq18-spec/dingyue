@@ -161,6 +161,12 @@ const videoCategories = [
     label: "How-to Video",
     description: "Create step-by-step tutorial visuals for setup, assembly, software walkthroughs, demonstrations, checkpoints, training, and final verification.",
     sortOrder: 280
+  },
+  {
+    slug: "talking-head-video",
+    label: "Talking Head Video",
+    description: "Create presenter-led videos for business updates, training, product introductions, thought leadership, and social clips.",
+    sortOrder: 320
   }
 ];
 
@@ -362,6 +368,14 @@ const pages = [
     description: "Create AI tutorial-video visuals from text or approved images for step-by-step instructions, software walkthroughs, assembly, demonstrations, checkpoints, and training content.",
     keywords: "ai tutorial video generator, how-to video maker, AI instructional video generator, step-by-step video maker, software tutorial video generator, assembly tutorial video, training video generator, product instruction video",
     imageUrl: "/assets/dreamshoot/how-to-video/hero-how-to-video-hands-on-step.jpg"
+  },
+  {
+    slug: "talking-head-video",
+    title: "Talking Head Video",
+    seoTitle: "AI Talking Head Video Generator for Business & Social | myDreamshoots",
+    description: "Create AI talking head videos for business updates, training, product introductions, thought leadership, and social clips from a script or approved image.",
+    keywords: "ai talking head video generator, talking head video maker, direct-to-camera video generator, presenter video generator, business update video maker, training video generator, thought leadership video maker, social talking head video",
+    imageUrl: "/assets/dreamshoot/talking-head-video/hero-talking-head-video-professional-presenter.jpg"
   }
 ];
 
@@ -479,7 +493,8 @@ function loadVideoTopicContentSeeds() {
   const jiti = createJiti(import.meta.url);
   return {
     aiVideoTopicLandingContentByKey: jiti("./seed-mydreamshoots-ai-video-topic-content.ts").aiVideoTopicLandingContentByKey,
-    talkingPhotoContent: jiti("./seed-mydreamshoots-talking-photo-content.ts").talkingPhotoContent
+    talkingPhotoContent: jiti("./seed-mydreamshoots-talking-photo-content.ts").talkingPhotoContent,
+    talkingHeadVideoContent: jiti("./seed-mydreamshoots-talking-head-video-content.ts").talkingHeadVideoContent
   };
 }
 
@@ -488,7 +503,9 @@ const videoTopicContentSeeds = loadVideoTopicContentSeeds();
 function videoTopicContentSeedForSlug(slug) {
   const content = slug === "talking-photo"
     ? videoTopicContentSeeds.talkingPhotoContent
-    : videoTopicContentSeeds.aiVideoTopicLandingContentByKey[slug];
+    : slug === "talking-head-video"
+      ? videoTopicContentSeeds.talkingHeadVideoContent
+      : videoTopicContentSeeds.aiVideoTopicLandingContentByKey[slug];
   if (!content) throw new Error(`missing_video_topic_content_seed:${slug}`);
   return content;
 }
@@ -505,7 +522,7 @@ function pageJson(page, content = videoTopicContentSeedForSlug(page.slug)) {
   const sectionId = page.slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
   const sectionType = page.slug === "talking-photo" ? "talking_photo_landing" : "ai_video_topic_landing";
   // Editorial topic packages remain noindex until first-party product evidence is reviewed.
-  const indexable = !new Set(["explainer-video", "how-to-video"]).has(page.slug);
+  const indexable = !new Set(["explainer-video", "how-to-video", "talking-head-video"]).has(page.slug);
   return {
     pageType: "ai_tool",
     version: 1,

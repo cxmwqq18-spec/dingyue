@@ -1404,6 +1404,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
     return <PromoVideoTopicLanding content={content} section={section} site={site} />;
   }
   const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
+  const heroImages = content.hero.images?.length ? content.hero.images.slice(0, 3) : [content.hero.image];
   return (
     <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-video-topic-page={contentKey}>
       <section className="relative border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
@@ -1425,20 +1426,21 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
             ) : null}
           </div>
           <figure className="relative lg:justify-self-end">
-            <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <div className="relative aspect-[16/9] overflow-hidden rounded-[21px]" data-video-topic-hero-media>
+            <div className="relative aspect-[4/3] min-h-[390px] overflow-hidden rounded-[30px] border border-[#c4b5fd]/25 bg-[#221d30] p-3 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)] sm:min-h-[550px]" data-video-topic-hero-media>
+              {heroImages.map((item, index) => <div className={`absolute overflow-hidden rounded-[24px] border border-white/15 bg-[#292438] ${heroImages.length === 1 ? "inset-3" : index === 0 ? "inset-y-[7%] left-[5%] w-[48%]" : index === 1 ? "right-[5%] top-[7%] w-[42%] aspect-[4/5]" : "bottom-[7%] right-[13%] w-[42%] aspect-[4/5]"}`} key={item.src}>
                 <img
-                  src={optimizedTopicImageSrc(content.hero.image.src)}
-                  alt={content.hero.image.alt}
+                  src={optimizedTopicImageSrc(item.src)}
+                  alt={item.alt}
                   className="absolute inset-0 h-full w-full object-cover"
-                  style={imageStyle(content.hero.image)}
-                  width={content.hero.image.width}
-                  height={content.hero.image.height}
+                  style={imageStyle(item)}
+                  width={item.width}
+                  height={item.height}
                   loading="eager"
-                  fetchPriority="high"
+                  fetchPriority={index === 0 ? "high" : undefined}
                   decoding="async"
                 />
-              </div>
+              </div>)}
+              {heroImages.length > 1 ? <div className="absolute bottom-5 left-5 right-5 rounded-[22px] border border-white/15 bg-[#0d0b13]/80 p-5 backdrop-blur"><p className="text-[11px] font-semibold uppercase tracking-normal text-[#c4b5fd]">Visual system</p><p className="mt-3 text-xl font-semibold leading-tight text-white">Message - Presenter - Delivery - Review</p></div> : null}
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
               <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />

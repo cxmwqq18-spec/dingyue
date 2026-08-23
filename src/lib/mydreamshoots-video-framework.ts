@@ -236,7 +236,8 @@ export const mydreamshootsCurrentVideoMenuSlugs = [
   "fashion-video",
   "food-video",
   "pet-video",
-  "explainer-video"
+  "explainer-video",
+  "talking-head-video"
 ] as const;
 
 const mydreamshootsCurrentVideoMenuSlugSet = new Set<string>(mydreamshootsCurrentVideoMenuSlugs);
@@ -577,6 +578,19 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     durationSeconds: 6,
     maxFrames: 10,
     sortOrder: 280
+  },
+  {
+    slug: "talking-head-video",
+    categorySlug: "talking-head-video",
+    name: "Talking Head Video",
+    headline: "Create direct-to-camera presenter videos for clear spoken messages.",
+    description: "Plan presenter-led videos for business updates, training, product introductions, thought leadership, and social clips with a focused script and reviewable delivery.",
+    prompt: "Create a direct-to-camera talking-head video concept from the approved script or image reference. Keep one presenter as the main visual anchor, use a clear eye line and natural delivery, and do not invent identity, credentials, testimonials, product claims, or unsupported controls.",
+    imageUrl: "/assets/dreamshoot/talking-head-video/hero-talking-head-video-professional-presenter.jpg",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 10,
+    sortOrder: 320
   }
 ] as const;
 
@@ -621,7 +635,8 @@ export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "food-video",
   "pet-video",
   "explainer-video",
-  "how-to-video"
+  "how-to-video",
+  "talking-head-video"
 ] as const;
 
 const publicVideoGenerationPageSlugs = new Set<string>(mydreamshootsPublicVideoGenerationTopicSlugs);

@@ -1,3 +1,5 @@
+import { talkingHeadVideoContent } from "./seed-mydreamshoots-talking-head-video-content";
+
 export type AiVideoTopicImage = {
   src: string;
   alt: string;
@@ -4595,5 +4597,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     }
   }
 };
+
+aiVideoTopicLandingContentByKey["talking-head-video"] = talkingHeadVideoContent;
 
 export const aiVideoTopicLandingKeys = Object.keys(aiVideoTopicLandingContentByKey);
