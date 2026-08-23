@@ -3,7 +3,7 @@ import "server-only";
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
 import type { CreativePack, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage } from "@/lib/types";
 import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
-import { isMydreamshootsCollectionItemSlug, photoPackageSlug, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
+import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
 import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
@@ -480,6 +480,9 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
 export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot, path: string): RouteDisposition {
   const requestedPath = normalizePath(path);
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
+  if (isPrimaryMydreamshootsSite(snapshot.site) && requestedPath === "/ai-image-generation/motion-generator") {
+    return resolvePublishedRedirectDisposition(snapshot, requestedPath, "/ai-video-generation/motion-generator", 308);
+  }
   if (isPrimaryMydreamshootsSite(snapshot.site) && DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS.has(requestedPath)) {
     return { kind: "not_found", status: 404, path: requestedPath };
   }
@@ -507,13 +510,6 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
   if (isPrimaryMydreamshootsSite(snapshot.site) && requestedPath.startsWith("/ai-image-generation/")) {
     const route = snapshot.publishedRoutes.find((candidate): candidate is PublishedLeafRouteProjection => isLeafRenderRoute(candidate) && candidate.canonicalPath === requestedPath);
     if (!route || route.status !== "published") {
-      // Keep registered taxonomy links usable when publication data lags behind
-      // the storefront navigation that already exposes them.
-      const itemSlug = requestedPath.slice("/ai-image-generation/".length).split("/")[0] ?? "";
-      const rootPage = snapshot.pages.find((page) => canonicalPathForPage(page) === publicCollectionRootPathForSite(snapshot.site) || normalizePath(page.slug) === publicCollectionRootPathForSite(snapshot.site));
-      if (rootPage && isMydreamshootsCollectionItemSlug(photoPackageSlug(itemSlug))) {
-        return { kind: "render", status: 200, path: requestedPath, pageId: rootPage.id };
-      }
       return { kind: "not_found", status: 404, path: requestedPath };
     }
     const rootPage = snapshot.pages.find((page) => canonicalPathForPage(page) === publicCollectionRootPathForSite(snapshot.site) || normalizePath(page.slug) === publicCollectionRootPathForSite(snapshot.site));

@@ -87,7 +87,7 @@ async function activePublicationStatus() {
     );
     return {
       activeProjectionRows: Array.isArray(snapshot?.publishedPageEntities)
-        ? snapshot.publishedPageEntities.filter((page) => page?.status === "published" && page?.indexable === true).length
+        ? snapshot.publishedPageEntities.filter((page) => page?.pageType === "ai-image-theme-leaf" && page?.status === "published" && page?.indexable === true).length
         : 0,
       productionFactsReady,
       missingFacts,
@@ -101,7 +101,8 @@ async function activePublicationStatus() {
 const requiredSlugs = (taxonomy.items ?? [])
   .map((item) => normalizeSlug(item.slug))
   .filter(Boolean);
-const deferredSlugs = new Set(["motion-generator"]);
+const imageRequiredSlugs = requiredSlugs.filter((slug) => slug !== "motion-generator");
+const deferredSlugs = new Set();
 const requiredFields = [
   "pageEntityId",
   "copyRevision",
@@ -161,7 +162,7 @@ const genericPatterns = [
   ["relatedSubtitle", /^Compare .+ and adjacent themes before opening (?:a|an) .+ set\.$/i]
 ];
 
-for (const slug of requiredSlugs) {
+for (const slug of imageRequiredSlugs) {
   const profile = useCaseProfiles[slug];
   if (!profile) {
     missingProfiles.push(slug);
@@ -251,7 +252,7 @@ const missingFacts = activePublication?.missingFacts ?? [];
 const invalidFacts = activePublication?.invalidFacts ?? [];
 const blockingReviewRows = reviewRows.filter((row) => !row.deferred);
 const deferredRows = reviewRows.filter((row) => row.deferred);
-const expectedIndexableRows = requiredSlugs.length - deferredRows.length;
+const expectedIndexableRows = imageRequiredSlugs.length - deferredRows.length;
 const reviewIsolationReady = fallbackRows.length === 0 && reviewIsolationFailures.length === 0;
 const productionReleaseReady = reviewIsolationReady &&
   blockingReviewRows.length === 0 &&
@@ -264,10 +265,10 @@ const report = {
   reviewIsolationReady,
   productionReleaseReady,
   expectedIndexableRows,
-  sourceRows: requiredSlugs.length,
+  sourceRows: imageRequiredSlugs.length,
   independentRows: routeRows.filter((route) => route.status === "published").length,
-  requiredSlugs: requiredSlugs.length,
-  pageCopyProfiles: requiredSlugs.length,
+  requiredSlugs: imageRequiredSlugs.length,
+  pageCopyProfiles: imageRequiredSlugs.length,
   checkedRows: routeRows.length,
   fallbackRows: fallbackRows.length,
   missingRows: missingRows.length,

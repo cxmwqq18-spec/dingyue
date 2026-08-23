@@ -166,6 +166,65 @@ const foodVideoImageRoot = "/assets/dreamshoot/food-video";
 const petVideoImageRoot = "/assets/dreamshoot/pet-video";
 
 export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLandingContent> = {
+  "motion-generator": {
+    seo: {
+      title: "AI Motion Generator – Animate Photos Into Short Videos | myDreamshoots",
+      description: "Animate an approved photo into a short, coherent video with controlled subject movement, camera motion, pacing, and visual continuity.",
+      keywords: "AI motion generator, photo motion generator, animate photo, image to video motion, AI photo animation, motion video maker",
+      canonicalPath: "/ai-video-generation/motion-generator"
+    },
+    hero: {
+      eyebrow: "AI MOTION GENERATOR",
+      title: "Animate a Still Image With Deliberate Motion",
+      body: "Start with one approved image, define the movement that matters, and review a short video that keeps the subject, framing, and visual details coherent.",
+      image: { src: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp", alt: "Portrait scene prepared for controlled AI motion generation" },
+      caption: "One approved image, one motion direction, one reviewable clip.",
+      rightsCopy: "Use images you own or have permission to animate. Review the full result before publishing."
+    },
+    foundation: {
+      title: "Define the Motion Before You Generate",
+      intro: "A useful motion brief gives the subject, camera, environment, pace, and continuity rules a clear job.",
+      items: [
+        { title: "Subject anchor", body: "Name the person, product, place, or detail that must remain recognizable." },
+        { title: "Visible movement", body: "Choose one primary action such as a turn, glance, walk, reveal, or gentle environmental motion." },
+        { title: "Camera intent", body: "Specify a push-in, orbit, pan, tilt, or locked frame instead of asking for random movement." }
+      ]
+    },
+    guidance: {
+      title: "Keep Motion Controlled and Reviewable",
+      intro: "Short clips work best when the visual change is specific enough to inspect from the first frame to the last.",
+      items: [
+        { title: "Start with a clean frame", body: "Use a clear source image with visible subject boundaries and readable details." },
+        { title: "Limit the action", body: "One main movement is easier to keep believable than several competing actions." },
+        { title: "Check continuity", body: "Inspect identity, hands, edges, lighting, props, and background geometry before publishing." }
+      ]
+    },
+    steps: {
+      title: "A Practical Motion Workflow",
+      items: [
+        { title: "Choose the source", body: "Use an approved image that gives the model enough detail to preserve the subject." },
+        { title: "Write the movement", body: "Describe the action, camera move, pace, lighting, and what must stay still." },
+        { title: "Generate short clips", body: "Create a focused draft, then compare the opening, middle, and final frame." },
+        { title: "Review before use", body: "Reject artifacts and regenerate when identity, anatomy, text, or scene continuity breaks." }
+      ]
+    },
+    useCases: {
+      title: "What Motion Generation Can Create",
+      intro: "Use a single still as the anchor for short visual directions across personal, social, product, and editorial work.",
+      items: [
+        { title: "Portrait movement", problem: "Bring a still portrait to life with a glance, expression, or subtle camera move.", body: "Keep identity and facial proportions stable while adding restrained motion." },
+        { title: "Product reveal", problem: "Show a product detail or angle change without building a full shoot.", body: "Use controlled movement to reveal shape, surface, scale, and context." },
+        { title: "Atmospheric scene", problem: "Add depth to a landscape, room, or editorial still.", body: "Use environmental motion, parallax, and pacing to support the original composition." }
+      ]
+    },
+    value: { title: "Why a Focused Motion Brief Helps", intro: "Specific movement makes the result easier to review, compare, and reuse.", items: [{ title: "Clearer continuity", body: "The source frame remains the visual anchor." }, { title: "More useful drafts", body: "Every clip has a defined movement and review goal." }, { title: "Safer publishing", body: "Artifacts and unsupported claims are easier to catch before release." }] },
+    faq: { eyebrow: "MOTION GENERATOR FAQ", title: "Questions About Animating a Photo", items: [
+      { question: "What is an AI motion generator?", answer: "It creates a short video from a still image and a defined movement direction. The image remains the starting visual reference while the system generates motion." },
+      { question: "Can I animate any image?", answer: "Use an image you own or have permission to animate. Clear subject boundaries and readable details generally make review easier." },
+      { question: "What should I review before publishing?", answer: "Check identity, anatomy, hands, text, logos, lighting, props, edges, and motion continuity across the full clip." }
+    ] },
+    finalCta: { eyebrow: "CREATE A REVIEWABLE MOTION DRAFT", title: "Turn One Still Into a Short Motion Concept", body: "Choose an approved source, describe one movement, and review the generated clip before using it publicly.", cta: "Open Motion Generator", microcopy: "Approved source. Focused motion. Full review." }
+  },
   "cinematic-video": {
     seo: {
       title: "AI Cinematic Video Generator – Create Story-Driven Cinematic Clips | myDreamshoots",
@@ -3690,7 +3749,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       intro: "Food Video owns food-, cooking-, plating-, service-, and culinary-atmosphere-led motion. Use a neighboring page when the primary intent is instruction, product presentation, promotion, or paid media.",
       items: [
         { title: "AI Video Generation", body: "Browse all current MyDreamShoots video themes.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" },
-        { title: "How-to Video", body: "Use for instruction-first step-by-step demonstrations.", href: "/ai-video-generation/how-to-video", linkLabel: "Explore How-to Video" },
+        { title: "Product Video", body: "Use for instruction-first product demonstrations and clear buyer questions.", href: "/ai-video-generation/product-video", linkLabel: "Explore Product Video" },
         { title: "Product Video", body: "Use when the product, packaging, use, scale, or feature explanation is primary.", href: "/ai-video-generation/product-video", linkLabel: "Explore Product Video" },
         { title: "Promo Video", body: "Use for a menu launch, event, release, offer, or verified promotion.", href: "/ai-video-generation/promo-video", linkLabel: "Explore Promo Video" }
       ]
@@ -3851,11 +3910,9 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       intro: "Pet Video owns animal-, pet-lifestyle-, relationship-, and routine-led motion. Use a neighboring page when the primary intent is instruction, food presentation, explanation, conversation, or brand communication.",
       items: [
         { title: "AI Video Generation", body: "Browse all current myDreamshoots video themes.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" },
-        { title: "How-to Video", body: "Use for instruction-first step-by-step demonstrations.", href: "/ai-video-generation/how-to-video", linkLabel: "Explore How-to Video" },
+        { title: "Product Video", body: "Use for instruction-first product demonstrations and clear buyer questions.", href: "/ai-video-generation/product-video", linkLabel: "Explore Product Video" },
         { title: "Food Video", body: "Use when food, preparation, plating, or culinary presentation is primary.", href: "/ai-video-generation/food-video", linkLabel: "Explore Food Video" },
-        { title: "Explainer Video", body: "Use when the primary job is explaining a process, product, or concept.", href: "/ai-video-generation/explainer-video", linkLabel: "Explore Explainer Video" },
-        { title: "Talking Head Video", body: "Use when a speaker, script, or direct-to-camera message is primary.", href: "/ai-video-generation/talking-head-video", linkLabel: "Explore Talking Head Video" },
-        { title: "Corporate Video", body: "Use for organization-led communication, culture, or company stories.", href: "/ai-video-generation/corporate-video", linkLabel: "Explore Corporate Video" }
+        { title: "Motion Generator", body: "Use when one approved image should anchor a controlled short motion concept.", href: "/ai-video-generation/motion-generator", linkLabel: "Explore Motion Generator" }
       ]
     },
     faq: {
@@ -4011,9 +4068,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       title: "Choose the page that matches the viewer's job",
       intro: "Avoid intent overlap by sending visitors to the format that best answers their question.",
       items: [
-        { title: "How-to Video", body: "Step-by-step procedural instruction for completing a task.", href: "/ai-video-generation/how-to-video", linkLabel: "Explore How-to Video" },
-        { title: "Talking Head Video", body: "Direct-to-camera presenter content where the speaker leads the delivery.", href: "/ai-video-generation/talking-head-video", linkLabel: "Explore Talking Head Video" },
-        { title: "Corporate Video", body: "Company identity, leadership, teams, workplace, culture, or organization communication.", href: "/ai-video-generation/corporate-video", linkLabel: "Explore Corporate Video" },
+        { title: "Product Video", body: "Product-led demonstrations with clear visual proof and buyer context.", href: "/ai-video-generation/product-video", linkLabel: "Explore Product Video" },
+        { title: "Motion Generator", body: "Controlled movement from one approved source image.", href: "/ai-video-generation/motion-generator", linkLabel: "Explore Motion Generator" },
         { title: "AI Video Generation", body: "Browse the full directory when the creative job is not yet clear.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" }
       ]
     },

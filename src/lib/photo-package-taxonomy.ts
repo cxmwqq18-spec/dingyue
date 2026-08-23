@@ -59,6 +59,7 @@ export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS = [
   "fashion-reel",
   "album-story-video",
   "talking-photo",
+  "motion-generator",
   "cinematic-video",
   "tiktok-video",
   "instagram-reels",
@@ -80,6 +81,7 @@ export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS = [
 
 export const MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
   "talking-photo",
+  "motion-generator",
   "cinematic-video",
   "tiktok-video",
   "instagram-reels",
@@ -342,7 +344,11 @@ export function photoPackageCollectionHrefForSlug(
 
 export function creativePackCollectionHref(pack: CreativePack, aliases?: Record<string, string>): string {
   const scopedAliases = aliases ?? (shouldUseAidreamcapesCollectionAliases([pack.siteId, pack.categoryRecord?.siteId]) ? aidreamcapesCollectionHrefSlugAliases : dreamshootCollectionHrefSlugAliases);
-  return photoPackageCollectionHrefForSlug(pack.categoryRecord?.slug || pack.category || pack.name, scopedAliases, pack);
+  const slug = photoPackageSlug(pack.categoryRecord?.slug || pack.category || pack.name);
+  if (isMydreamshootsCollectionRouteSite(pack) && slug === "motion-generator") {
+    return publicVideoGenerationPathForSite(pack, slug);
+  }
+  return photoPackageCollectionHrefForSlug(slug, scopedAliases, pack);
 }
 
 export function creativePackCategoryOption(pack: CreativePack): PhotoPackageCategoryOption {

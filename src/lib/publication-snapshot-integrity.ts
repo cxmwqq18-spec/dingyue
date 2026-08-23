@@ -17,6 +17,18 @@ import type {
 
 export type SnapshotIntegrity = "valid" | "invalid" | "legacy";
 
+const policyRouteSpecs = [
+  { canonicalPath: "/privacy", aliases: ["/privacy-policy", "/policies/privacy", "/policies/privacy-policy"] },
+  { canonicalPath: "/terms", aliases: ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"] },
+  { canonicalPath: "/cookies", aliases: ["/cookie-policy", "/policies/cookies"] },
+  { canonicalPath: "/refunds", aliases: ["/refund-policy", "/policies/refund", "/policies/refunds"] },
+  { canonicalPath: "/content", aliases: ["/content-policy", "/policies/content"] },
+  { canonicalPath: "/shipping", aliases: ["/shipping-policy", "/delivery-policy", "/policies/shipping"] },
+  { canonicalPath: "/children-privacy", aliases: ["/children-privacy-policy", "/childrens-privacy", "/policies/children-privacy"] },
+  { canonicalPath: "/state-privacy", aliases: ["/state-privacy-rights", "/california-privacy", "/ccpa", "/policies/state-privacy"] }
+] as const;
+const policyCanonicalPaths = new Set(policyRouteSpecs.map((spec) => spec.canonicalPath));
+
 function record(value: unknown): value is Record<string, unknown> {
   return Boolean(value && typeof value === "object" && !Array.isArray(value));
 }
@@ -37,7 +49,7 @@ function route(value: unknown): value is PublishedRouteProjection {
   }
   if (value.disposition !== "render") return false;
   if (value.routeKind === "policy") {
-    return (value.canonicalPath === "/privacy" || value.canonicalPath === "/terms") && text(value.pageEntityId) &&
+    return policyCanonicalPaths.has(value.canonicalPath as typeof policyRouteSpecs[number]["canonicalPath"]) && text(value.pageEntityId) &&
       text(value.pageId) && text(value.pageRevision) && value.status === "published" && value.indexable === true && value.sitemapEligible === true;
   }
   if (value.routeKind === "ai-video-topic-leaf") {
@@ -229,11 +241,8 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const videoTopicRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "ai-video-topic-leaf");
   const policyRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "policy");
   const redirectRoutes = publishedRoutes.filter((item) => item.disposition === "redirect");
-  const expectedPolicyPaths = ["/privacy", "/terms"];
-  const expectedPolicyAliases = [
-    "/privacy-policy", "/policies/privacy", "/policies/privacy-policy",
-    "/terms-of-service", "/policies/terms", "/policies/terms-of-service"
-  ];
+  const expectedPolicyPaths = policyRouteSpecs.map((spec) => spec.canonicalPath);
+  const expectedPolicyAliases = policyRouteSpecs.flatMap((spec) => spec.aliases);
   const pageCopyRows = v1.publishedPageCopy;
   const collections = v1.publishedCollectionRefs;
   const links = v1.publishedLinkRefs;

@@ -1370,7 +1370,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     workflow: ["Define the hero food, action, texture, camera, set, and channel.", "Start from Text to Video or Image to Video in the live workspace.", "Generate short clips and review food identity, hands, props, liquids, labels, and continuity.", "Keep recipe, allergen, nutrition, doneness, and food-safety claims separately verified."],
     internalLinks: [
       { label: "Browse AI Video Generation", href: "/ai-video-generation" },
-      { label: "Explore How-to Video", href: "/ai-video-generation/how-to-video" },
+      { label: "Explore Product Video", href: "/ai-video-generation/product-video" },
       { label: "Explore Product Video", href: "/ai-video-generation/product-video" },
       { label: "Explore Promo Video", href: "/ai-video-generation/promo-video" },
       { label: "Review pricing and credits", href: "/pricing" },
@@ -1402,9 +1402,9 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     ],
     internalLinks: [
       { label: "Browse AI Video Generation", href: "/ai-video-generation" },
-      { label: "Explore How-to Video", href: "/ai-video-generation/how-to-video" },
+      { label: "Explore Product Video", href: "/ai-video-generation/product-video" },
       { label: "Explore Food Video", href: "/ai-video-generation/food-video" },
-      { label: "Explore Explainer Video", href: "/ai-video-generation/explainer-video" },
+      { label: "Explore Motion Generator", href: "/ai-video-generation/motion-generator" },
       { label: "Review pricing and credits", href: "/pricing" },
       { label: "Read the workflow", href: "/workflow" }
     ],

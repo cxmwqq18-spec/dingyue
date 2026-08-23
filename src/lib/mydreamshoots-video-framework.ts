@@ -218,6 +218,7 @@ export const mydreamshootsVideoGenerationParentCategories = [
  */
 export const mydreamshootsCurrentVideoMenuSlugs = [
   "talking-photo",
+  "motion-generator",
   "cinematic-video",
   "tiktok-video",
   "instagram-reels",
@@ -249,6 +250,7 @@ export const mydreamshootsVideoGenerationCategoryParentSlugBySlug: Record<string
   "text-to-video": "core-ai-creation",
   "image-to-video": "core-ai-creation",
   "talking-photo": "core-ai-creation",
+  "motion-generator": "core-ai-creation",
   "photo-animation": "core-ai-creation",
   "photo-slideshow-video": "core-ai-creation",
   "cinematic-video": "core-ai-creation",
@@ -587,6 +589,7 @@ export function mydreamshootsVideoGenerationThemeSeedsForSite(siteId: string) {
 
 export const mydreamshootsPublicVideoGenerationTopicSlugs = [
   "talking-photo",
+  "motion-generator",
   "cinematic-video",
   "tiktok-video",
   "instagram-reels",

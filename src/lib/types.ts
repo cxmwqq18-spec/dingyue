@@ -991,7 +991,7 @@ export interface PublishedPolicyRouteProjection {
   disposition: "render";
   siteId: "site_dreamshoot" | "site_grownstride_test";
   routeKind: "policy";
-  canonicalPath: "/privacy" | "/terms";
+  canonicalPath: string;
   pageEntityId: string;
   pageId: string;
   pageRevision: string;
@@ -1005,7 +1005,7 @@ export interface PublishedRedirectRouteProjection {
   siteId: "site_dreamshoot" | "site_grownstride_test";
   routeKind: "policy-alias";
   aliasPath: string;
-  targetPath: "/privacy" | "/terms";
+  targetPath: string;
   statusCode: 308;
   indexable: false;
   sitemapEligible: false;

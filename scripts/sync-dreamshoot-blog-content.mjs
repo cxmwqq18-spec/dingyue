@@ -91,8 +91,8 @@ const mydreamshootsCollectionHrefBySlug = new Map([
   ["beauty", "/ai-image-generation/hairstyle-generator"],
   ["sports", "/ai-image-generation/soccer"],
   ["world-cup-fan-photos", "/ai-image-generation/soccer"],
-  ["video", "/ai-image-generation/motion-generator"],
-  ["ai-video-add-ons", "/ai-image-generation/motion-generator"],
+  ["video", "/ai-video-generation/motion-generator"],
+  ["ai-video-add-ons", "/ai-video-generation/motion-generator"],
   ["utility", "/ai-image-generation/photo-enhancer"],
   ["headshots", "/ai-image-generation/headshot"],
   ["professional-headshots", "/ai-image-generation/headshot"],
@@ -288,29 +288,29 @@ function makeCategoryArticle(input) {
   const primaryHref = input.primaryHref ?? (isTool || isVideoTheme || isAidreamcapes ? directoryHref : packageDirectoryHrefForSite(input.sitePrefix, "headshot"));
   const openingLead = isAidreamcapes
     ? `The ${label} ${articleKind} gives ${brand} customers one clear private album direction to compare before credits are spent.`
-    : `The ${label} ${articleKind} helps ${brand} customers choose a clear package direction before they spend credits.`;
+    : `The ${label} ${articleKind} helps ${brand} customers choose a ${lowerLabel}-specific package direction before they spend credits.`;
   const fitLead = isAidreamcapes
     ? `Use ${label} when ${examplesText} are the clearest match for the next ${setTerm}.`
     : `Use ${label} when ${examplesText} are the nearest match for the next ${setTerm}.`;
   const secondLead = isAidreamcapes
     ? `The strongest ${lowerLabel} requests keep one occasion, one scene, and one review goal in the same lane. A customer who wants a private fan or holiday album should not judge the set by the standards of a work profile or a broader editorial brief.`
-    : `The strongest ${lowerLabel} requests keep the brief and the result aligned. A customer who needs a calm work portrait should not judge the same set by the standards of a dramatic scene package.`;
+    : `The strongest ${lowerLabel} requests keep the ${lowerLabel} brief and the result aligned. A customer who needs a calm work portrait should not judge the same set by the standards of a dramatic scene package.`;
   const sourceLead = isAidreamcapes
     ? `${input.sourceFocus} Start with approved source portraits and one album cue that matters most to the gallery. Treat the ${sourceTerm} as identity evidence first. Style references, outfit notes, fan details, holiday cues, or movement ideas should support the request after the person is already clear.`
-    : `${input.sourceFocus} Start with sharp source photos and one style cue that matters most to the package. Treat the ${sourceTerm} as identity evidence first. Style references, outfit notes, fan details, holiday cues, or movement ideas should support the request after the person is already clear.`;
+    : `${input.sourceFocus} For a ${lowerLabel} set, start with sharp source photos and one ${lowerLabel} style cue that matters most to the package. Treat the ${sourceTerm} as identity evidence first. Style references, outfit notes, fan details, holiday cues, or movement ideas should support the request after the person is already clear.`;
   const compareLead = isAidreamcapes
     ? `Compare ${lowerLabel} against neighboring ${pluralKind} by the private outcome it supports, not by the strongest cover image. The table below turns the category into a practical choice before credit cost is confirmed.`
-    : `Compare ${lowerLabel} against neighboring ${pluralKind} by the job it solves, not by which cover image looks strongest. The table below turns the category into a practical choice before credit cost is confirmed.`;
+    : `Compare ${lowerLabel} against neighboring ${pluralKind} by the ${lowerLabel} job it solves, not by which cover image looks strongest. The table below turns the category into a practical choice before credit cost is confirmed.`;
   const creditsLead = isAidreamcapes
     ? `Before the job starts, review the visible credit cost and the permission boundary. If you only need to test ${lowerLabel}, a smaller request can teach you what works. If the final use is already clear, a broader album may be easier to judge because it gives more crops and expressions to compare.`
-    : `Before the job starts, review the visible credit cost and ask whether the category is carrying the right amount of work. If you only need to test ${lowerLabel}, a smaller request can teach you what works. If the final use is already clear, a broader gallery may be easier to judge because it gives more crops and expressions to compare.`;
+    : `Before a ${lowerLabel} job starts, review the visible credit cost and ask whether this category is carrying the right amount of work. If you only need to test ${lowerLabel}, a smaller request can teach you what works. If the final use is already clear, a broader ${lowerLabel} gallery may be easier to judge because it gives more crops and expressions to compare.`;
   const reviewLead = isAidreamcapes
     ? `${input.reviewFocus} Also check whether the gallery still feels original, private, and easy to explain to someone who was not part of the request.`
     : `${input.reviewFocus} Also check small visual details that often decide whether a result is ready for a profile, card, post, or archive: face consistency, hand and hair edges, clothing lines, background distractions, and whether the image still reads well at the crop size where you will use it.`;
   const moodLead = `${input.elementStory} This is where ${label} becomes more than a menu label. The visible mood should explain why the category was chosen, while the private gallery keeps the customer in control of what stays personal and what becomes a downloaded favorite.`;
   const avoidLead = isAidreamcapes
     ? `${input.avoid} The fastest way to weaken ${lowerLabel} results is to overload the request with unrelated goals. Keep one occasion, one mood, and one review standard at a time, then run a second request when the next direction is different enough to need its own review.`
-    : `${input.avoid} The fastest way to weaken ${lowerLabel} results is to overload the request with unrelated goals. Do not ask one job to be a professional portrait, a themed album, a restoration pass, and a motion concept at the same time. Keep the category honest, then run a second request when the next direction is different enough to need its own review.`;
+    : `${input.avoid} The fastest way to weaken ${lowerLabel} results is to overload the ${lowerLabel} request with unrelated goals. Do not ask one job to be a professional portrait, a themed album, a restoration pass, and a motion concept at the same time. Keep the category honest, then run a second request when the next direction is different enough to need its own review.`;
   const planningHeading = isAidreamcapes ? "A planning pass before credits" : "A planning pass before you spend credits";
   const planningIntro = isAidreamcapes && targetHref && targetHref !== directoryHref
     ? `Open <a href="${targetHref}">${label}</a> for the focused theme page, or browse <a href="${directoryHref}">${directoryLabel}</a> to compare it with nearby choices. The best choice is the one that makes the review criteria obvious before the first image is generated.`
@@ -365,13 +365,13 @@ function makeCategoryArticle(input) {
       <p>${secondLead}</p>
       <h2 id="${anchorPrefix}-source">${isAidreamcapes ? "What to upload first" : "What to prepare before choosing it"}</h2>
       <p>${sourceLead}</p>
-      <p>For a first pass, keep the input set smaller and cleaner than a social camera roll. Use current images, avoid heavy filters, and separate unrelated goals into different private jobs. ${brand} can follow a focused brief more reliably than a folder that asks for several looks at once.</p>
+      <p>For a first ${lowerLabel} pass, keep the input set smaller and cleaner than a social camera roll. Use current ${lowerLabel} source images, avoid heavy filters, and separate unrelated goals into different private jobs. ${brand} can follow a focused ${lowerLabel} brief more reliably than a folder that asks for several looks at once.</p>
       <h2 id="${anchorPrefix}-compare">${isAidreamcapes ? `How ${label} compares` : `How to compare ${label} with nearby choices`}</h2>
       <p>${compareLead}</p>
       <table><thead><tr><th>Decision point</th><th>Use ${label} when</th><th>Review after generation</th></tr></thead><tbody><tr><td>Final use</td><td>${input.bestFor}</td><td>${input.reviewFocus}</td></tr><tr><td>${sourceTerm}</td><td>${input.sourceFocus}</td><td>Check whether the clearest input details carried through the best images.</td></tr><tr><td>Category examples</td><td>${examplesText}</td><td>Keep the outputs that match the chosen example instead of mixing several directions.</td></tr><tr><td>Credit plan</td><td>Use a focused first pass when the style is new.</td><td>Decide whether the next request should repeat, expand, or change direction.</td></tr></tbody></table>
       <h2 id="${anchorPrefix}-credits">${isAidreamcapes ? "Credit and permission planning" : "Credit and private gallery planning"}</h2>
       <p>${creditsLead}</p>
-      <p>Finished outputs belong in the signed-in private gallery first. Use that space to compare identity, crop, expression, background detail, and whether the ${articleKind} actually delivered the mood you selected. Download favorites only after separating public-use images from experiments.</p>
+      <p>Finished ${lowerLabel} outputs belong in the signed-in private gallery first. Use that space to compare identity, crop, expression, background detail, and whether the ${articleKind} actually delivered the ${lowerLabel} mood you selected. Download favorites only after separating public-use images from experiments.</p>
       <h2 id="${anchorPrefix}-review">${isAidreamcapes ? "What to review privately" : "Details to review before download"}</h2>
       <p>${reviewLead}</p>
       <p>${moodLead}</p>

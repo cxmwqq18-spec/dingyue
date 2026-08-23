@@ -43,6 +43,12 @@ const videoCategories = [
     sortOrder: 30
   },
   {
+    slug: "motion-generator",
+    label: "Motion Generator",
+    description: "Animate an approved still image into a short, controlled motion concept.",
+    sortOrder: 40
+  },
+  {
     slug: "cinematic-video",
     label: "Cinematic Video",
     description: "Plan story-driven cinematic clips with mood, shot design, lighting, pacing, and camera movement.",
@@ -162,6 +168,16 @@ const pages = [
     keywords:
       "AI talking photo generator, make a photo talk, talking photo AI, photo talking video, talking picture generator, speaking photo generator, animate a photo to talk, talking portrait",
     imageUrl: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp"
+  },
+  {
+    slug: "motion-generator",
+    title: "Motion Generator",
+    seoTitle: "AI Motion Generator – Animate Photos Into Short Videos | myDreamshoots",
+    description:
+      "Animate an approved photo into a short, coherent video with controlled subject movement, camera motion, pacing, and visual continuity.",
+    keywords:
+      "AI motion generator, photo motion generator, animate photo, image to video motion, AI photo animation, motion video maker",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp"
   },
   {
     slug: "cinematic-video",

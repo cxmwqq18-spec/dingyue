@@ -5,6 +5,7 @@ import type { ResolvedOffer, ResolvedPageSeo, StorefrontContext, StorefrontConte
 import { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
 import { applyTitleTemplate, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
+import { robotsForPage } from "@/lib/theme/seo";
 
 function clean(value: unknown): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
@@ -41,6 +42,7 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
   const standardMediaRequired = primaryMydreamshoots && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(path);
   const standardMediaReady = !standardMediaRequired || standardMedia?.status === "ready";
   const defaultIndex = bundle.page.pageType !== "not_found" && bundle.page.slug !== "/404";
+  const pageRobots = robotsForPage(bundle.page);
   const pageScopedSocial = primaryMydreamshoots && (
     path === "/about-us" || path === "/faq" || path === "/pricing" || path === "/workflow" ||
     path === "/best-ai-image" || path === "/ai-image-generation" || /^\/ai-image-generation\//.test(path)
@@ -54,9 +56,9 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
     ogImage: standardMedia?.status === "ready"
       ? standardMedia.ogImage
       : clean(pageSeo?.ogImage) || (pageScopedSocial ? undefined : clean(settings.seo?.defaultOgImage) || undefined),
-    index: defaultIndex && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true),
-    follow: pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true,
-    sitemapEligible: defaultIndex && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true)
+    index: defaultIndex && pageRobots.index && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true),
+    follow: pageRobots.follow && (pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true),
+    sitemapEligible: defaultIndex && pageRobots.index && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true)
   };
 }
 

@@ -311,7 +311,13 @@ export function buildPublicationSnapshot(
   const publishedStandardPageMedia = buildPublishedStandardPageMedia(site, leafRoutes, imagePublishedPageMedia);
   const policyRouteSpecs = [
     { canonicalPath: "/privacy" as const, aliases: ["/privacy-policy", "/policies/privacy", "/policies/privacy-policy"] },
-    { canonicalPath: "/terms" as const, aliases: ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"] }
+    { canonicalPath: "/terms" as const, aliases: ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"] },
+    { canonicalPath: "/cookies" as const, aliases: ["/cookie-policy", "/policies/cookies"] },
+    { canonicalPath: "/refunds" as const, aliases: ["/refund-policy", "/policies/refund", "/policies/refunds"] },
+    { canonicalPath: "/content" as const, aliases: ["/content-policy", "/policies/content"] },
+    { canonicalPath: "/shipping" as const, aliases: ["/shipping-policy", "/delivery-policy", "/policies/shipping"] },
+    { canonicalPath: "/children-privacy" as const, aliases: ["/children-privacy-policy", "/childrens-privacy", "/policies/children-privacy"] },
+    { canonicalPath: "/state-privacy" as const, aliases: ["/state-privacy-rights", "/california-privacy", "/ccpa", "/policies/state-privacy"] }
   ];
   const publishedPolicyPages = isMydreamshootsPublicationSite
     ? policyRouteSpecs.flatMap(({ canonicalPath, aliases }) => {
@@ -660,9 +666,9 @@ export async function publishSeoSnapshotRelational(params: {
       targetType: "theme_publication",
       targetId: publicationRecord.id,
       metadata: { version: publishedVersion, snapshotHash: params.snapshot.snapshotHash }
-    });
+    }, { syncPlatformState: false });
     return { publication: toThemePublication(publicationRecord), publishedVersion };
-  }, { timeout: 120_000, maxWait: 20_000 });
+  }, { timeout: 600_000, maxWait: 20_000 });
   await finalizePublishedTheme(params.siteId, result.publication.id);
   return result;
 }

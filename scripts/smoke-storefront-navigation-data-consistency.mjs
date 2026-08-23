@@ -109,7 +109,7 @@ const focusedVisualRoutes = [
       Halloween: "/site/mydreamshoots/ai-image-generation/halloween-photo",
       Seasonal: "/site/mydreamshoots/ai-image-generation/holiday",
       Creator: "/site/mydreamshoots/ai-image-generation/portrait-photo",
-      Video: "/site/mydreamshoots/ai-image-generation/motion-generator",
+      Video: "/site/mydreamshoots/ai-video-generation/motion-generator",
       Utility: "/site/mydreamshoots/ai-image-generation/photo-enhancer"
     }
   },

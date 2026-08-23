@@ -9,7 +9,7 @@ import type { CreativePack, PublishedLinkRef, PublishedPageEntityProjection } fr
 export type MyDreamshootsSiteId = "site_dreamshoot" | "site_grownstride_test";
 const SITE_ID: MyDreamshootsSiteId = "site_dreamshoot";
 const ROUTE_KIND = "ai-image-theme-leaf";
-const DEFERRED_LEAF_SLUGS = new Set(["motion-generator"]);
+const DEFERRED_LEAF_SLUGS = new Set<string>();
 
 type TaxonomyItem = {
   slug: string;
@@ -102,7 +102,7 @@ function expectedPackId(item: TaxonomyItem): string {
 }
 
 export function mydreamshootsPublishedRouteManifest(siteId: MyDreamshootsSiteId = SITE_ID): MyDreamshootsPublishedRouteManifestRow[] {
-  return taxonomyItems.map((item) => {
+  return taxonomyItems.filter((item) => normalizePublishedSlug(item.slug) !== "motion-generator").map((item) => {
     const canonicalSlug = normalizePublishedSlug(item.slug);
     const canonicalPath = `/ai-image-generation/${canonicalSlug}`;
     const pageEntityId = `mydreamshoots:ai-image-theme:${canonicalSlug}`;

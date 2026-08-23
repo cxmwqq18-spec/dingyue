@@ -5200,7 +5200,7 @@ const myDreamShootsCatalogCategoryHrefOverrides: DreamshootCategoryHrefOverrides
   halloween: "/ai-image-generation/halloween-photo",
   seasonal: "/ai-image-generation/holiday",
   creator: "/ai-image-generation/portrait-photo",
-  video: "/ai-image-generation/motion-generator",
+  video: "/ai-video-generation/motion-generator",
   utility: "/ai-image-generation/photo-enhancer"
 };
 
@@ -6321,7 +6321,7 @@ const dreamshootFallbackPhotoPackageGroups: PhotoPackageMegaGroup[] = ([
     items: [
       { label: "Hairstyle Generator", slug: "hairstyle-generator", href: "/ai-image-generation/hairstyle-generator" },
       { label: "Virtual Try-On", slug: "virtual-try-on", href: "/ai-image-generation/virtual-try-on" },
-      { label: "Motion Generator", slug: "motion-generator", href: "/ai-image-generation/motion-generator" }
+      { label: "Motion Generator", slug: "motion-generator", href: "/ai-video-generation/motion-generator" }
     ]
   },
   {

@@ -26,7 +26,7 @@ function pageTitle(site: Site, page: Pick<ThemePage, "title" | "pageType" | "slu
     .join(" ");
 }
 
-function robotsForPage(page: Pick<ThemePage, "slug" | "pageType">): { index: boolean; follow: boolean } {
+export function robotsForPage(page: Pick<ThemePage, "slug" | "pageType">): { index: boolean; follow: boolean } {
   const blockedTypes = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
   const blockedPrefixes = ["/account", "/admin", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/search"];
   const blocked = blockedTypes.has(page.pageType) || blockedPrefixes.some((prefix) => page.slug === prefix || page.slug.startsWith(`${prefix}/`));
