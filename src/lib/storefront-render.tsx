@@ -2023,23 +2023,9 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
 }
 
 function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson): ThemePageJson {
-  return {
-    ...pageJson,
-    sectionsOrder: ["video_theme_directory_1"],
-    sections: {
-      video_theme_directory_1: {
-        type: "dreamshoot_tool_collection",
-        settings: {
-          anchor: "video-themes",
-          title: "AI Video Generation",
-          subtitle: "Browse every public AI video theme and open the dedicated guide for the direction you want.",
-          layout: "video_theme_grid",
-          headingLevel: "h1"
-        },
-        blocks: []
-      }
-    }
-  };
+  // The active publication is the source of truth for this directory page.
+  // Do not replace its sections with a legacy static video-theme projection.
+  return pageJson;
 }
 
 function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Site["pages"][number] {
