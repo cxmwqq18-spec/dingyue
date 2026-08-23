@@ -410,7 +410,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
                   key={item.title}
                 >
                   <img
-                    src={item.image.src}
+                    src={optimizedTopicImageSrc(item.image.src)}
                     alt={item.image.alt}
                     className="absolute inset-0 h-full w-full object-cover"
                     style={imageStyle(item.image)}
@@ -486,7 +486,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
               {galleryItems.map((item) => (
                 <article className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-video-ad-scene key={item.title}>
                   <div className="relative aspect-[4/5] overflow-hidden bg-[#d9d1f6]">
-                    <img src={item.image.src} alt={item.image.alt} className="absolute inset-0 h-full w-full object-cover" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className="absolute inset-0 h-full w-full object-cover" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" data-original-src={optimizedTopicImageSrc(item.image.src) !== item.image.src ? item.image.src : undefined} onError={topicImageError} />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -605,7 +605,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
               <div className="relative aspect-[16/9] overflow-hidden rounded-[21px]" data-video-topic-hero-media>
                 <img
-                  src={content.hero.image.src}
+                  src={optimizedTopicImageSrc(content.hero.image.src)}
                   alt={content.hero.image.alt}
                   className="absolute inset-0 h-full w-full object-cover"
                   style={imageStyle(content.hero.image)}
@@ -614,6 +614,8 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
                   loading="eager"
                   fetchPriority="high"
                   decoding="async"
+                  data-original-src={optimizedTopicImageSrc(content.hero.image.src) !== content.hero.image.src ? content.hero.image.src : undefined}
+                  onError={topicImageError}
                 />
               </div>
             </div>
@@ -1112,7 +1114,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
                   key={item.title}
                 >
                   <img
-                    src={item.image.src}
+                    src={optimizedTopicImageSrc(item.image.src)}
                     alt={item.image.alt}
                     className="absolute inset-0 h-full w-full object-cover"
                     style={imageStyle(item.image)}
@@ -1121,6 +1123,8 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
                     loading={index === 0 ? "eager" : "lazy"}
                     fetchPriority={index === 0 ? "high" : undefined}
                     decoding="async"
+                    data-original-src={optimizedTopicImageSrc(item.image.src) !== item.image.src ? item.image.src : undefined}
+                    onError={topicImageError}
                   />
                 </div>
               ))}
@@ -1204,7 +1208,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
               {galleryItems.map((item, index) => (
                 <article className={`flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65 ${index === 0 ? "sm:col-span-2 lg:row-span-2" : index === 3 ? "lg:col-span-2" : ""}`} data-brand-video-scene key={item.title}>
                   <div className={`relative overflow-hidden bg-[#d9d1f6] ${index === 0 ? "aspect-[16/10] lg:h-full lg:aspect-auto" : index === 3 ? "aspect-[16/9]" : "aspect-[4/5]"}`}>
-                    <img src={item.image.src} alt={item.image.alt} className="absolute inset-0 h-full w-full object-cover" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className="absolute inset-0 h-full w-full object-cover" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" data-original-src={optimizedTopicImageSrc(item.image.src) !== item.image.src ? item.image.src : undefined} onError={topicImageError} />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -1367,7 +1371,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
           <figure className="relative min-w-0 lg:justify-self-end" data-video-topic-hero-media>
             <div className={`relative aspect-[4/3] min-h-[390px] overflow-hidden rounded-[30px] border ${accentBorder} bg-[#17151f] p-3 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)] sm:min-h-[550px]`}>
               {heroImages.slice(0, 3).map((item, index) => <div className={`absolute overflow-hidden rounded-[24px] border border-white/15 bg-[#292438] ${index === 0 ? "inset-y-[7%] left-[5%] w-[48%]" : index === 1 ? "right-[5%] top-[7%] w-[42%] aspect-[4/5]" : "bottom-[7%] right-[13%] w-[42%] aspect-[4/5]"}`} key={item.src}>
-                <img src={item.src} alt={item.alt} className="absolute inset-0 h-full w-full object-cover" style={imageStyle(item)} width={item.width} height={item.height} loading="eager" fetchPriority={index === 0 ? "high" : undefined} decoding="async" />
+                <img src={optimizedTopicImageSrc(item.src)} alt={item.alt} className="absolute inset-0 h-full w-full object-cover" style={imageStyle(item)} width={item.width} height={item.height} loading="eager" fetchPriority={index === 0 ? "high" : undefined} decoding="async" data-original-src={optimizedTopicImageSrc(item.src) !== item.src ? item.src : undefined} onError={topicImageError} />
               </div>)}
               <div className="absolute bottom-5 left-5 right-5 rounded-[22px] border border-white/15 bg-[#0d0b13]/80 p-5 backdrop-blur">
                 <p className={`text-[11px] font-semibold uppercase tracking-normal ${accentClass}`}>{systemLabel}</p>
@@ -1445,7 +1449,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
               <div className="relative aspect-[16/9] overflow-hidden rounded-[21px]" data-video-topic-hero-media>
                 <img
-                  src={content.hero.image.src}
+                  src={optimizedTopicImageSrc(content.hero.image.src)}
                   alt={content.hero.image.alt}
                   className="absolute inset-0 h-full w-full object-cover"
                   style={imageStyle(content.hero.image)}
@@ -1454,6 +1458,8 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
                   loading="eager"
                   fetchPriority="high"
                   decoding="async"
+                  data-original-src={optimizedTopicImageSrc(content.hero.image.src) !== content.hero.image.src ? content.hero.image.src : undefined}
+                  onError={topicImageError}
                 />
               </div>
             </div>
