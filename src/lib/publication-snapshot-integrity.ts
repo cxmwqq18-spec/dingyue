@@ -371,24 +371,6 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
         uniqueLinkIds: unique(linkIds),
         snapshotRevisionHashMatches: snapshot.snapshotHash === revisions.snapshotHash,
         calculatedHashMatches: publicationSnapshotHash(v1) === v1.snapshotHash
-        ,coverage: {
-          leafRoutes: leafRoutes.length,
-          imagePageEntities: imagePageEntities.length,
-          imagePageMedia: imagePageMedia.length,
-          imagePageCopy: imagePageCopy.length,
-          collections: collections.length,
-          videoTopicRoutes: videoTopicRoutes.length,
-          videoPageEntities: videoPageEntities.length,
-          videoPageMedia: videoPageMedia.length,
-          videoPageCopy: videoPageCopy.length,
-          policyRoutes: policyRoutes.length,
-          expectedPolicyPaths: expectedPolicyPaths.length,
-          missingPolicyPaths: expectedPolicyPaths.filter((path) => !policyRoutes.some((item) => item.canonicalPath === path)),
-          redirectRoutes: redirectRoutes.length,
-          expectedPolicyAliases: expectedPolicyAliases.length,
-          missingAliases: expectedPolicyAliases.filter((path) => !redirectRoutes.some((item) => item.aliasPath === path)),
-          invalidRedirectTargets: redirectRoutes.filter((item) => !policyRoutes.some((routeItem) => routeItem.canonicalPath === item.targetPath)).map((item) => item.aliasPath)
-        }
       }, null, 2));
     }
     return "invalid";
