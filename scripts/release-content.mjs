@@ -259,9 +259,10 @@ async function exportManifest() {
 }
 
 function rowIdentity(table, row) {
-  if (["toolCategories", "toolMenuItems", "creativePackCategories", "creativePacks", "videoThemeCategories", "videoThemes", "themePages"].includes(table)) {
+  if (["toolCategories", "toolMenuItems", "creativePackCategories", "videoThemeCategories", "videoThemes", "themePages"].includes(table)) {
     return `${row.siteId}:${row.slug}`;
   }
+  if (table === "creativePacks") return row.id;
   if (table === "themeSettings") return row.siteId;
   if (table === "siteThemes") return `${row.siteId}:${row.themeId}`;
   if (table === "themePublications") return `${row.siteId}:${row.version}`;
@@ -349,9 +350,10 @@ function preparedData(row, { update = false, omit = [] } = {}) {
 }
 
 function uniqueWhere(table, row) {
-  if (["toolCategories", "toolMenuItems", "creativePackCategories", "creativePacks", "videoThemeCategories", "videoThemes", "themePages"].includes(table)) {
+  if (["toolCategories", "toolMenuItems", "creativePackCategories", "videoThemeCategories", "videoThemes", "themePages"].includes(table)) {
     return { siteId_slug: { siteId: row.siteId, slug: row.slug } };
   }
+  if (table === "creativePacks") return { id: row.id };
   if (table === "themeSettings") return { siteId: row.siteId };
   if (table === "siteThemes") return { siteId_themeId: { siteId: row.siteId, themeId: row.themeId } };
   if (table === "themePublications") return { siteId_version: { siteId: row.siteId, version: row.version } };
