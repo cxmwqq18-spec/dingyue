@@ -361,7 +361,20 @@ export function buildPublicationSnapshot(
   const videoTopicPublication = isMydreamshootsPublicationSite
     ? compileMydreamshootsVideoTopicPublication(site.pages, site.id as "site_dreamshoot" | "site_grownstride_test")
     : { routes: [], pageEntities: [], pageCopy: [], pageMedia: [], linkRefs: [], navigation: [] };
-  const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...policyRoutes, ...videoTopicPublication.routes];
+  const motionLegacyRedirect: PublishedRouteProjection[] = isMydreamshootsPublicationSite && videoTopicPublication.routes.some((route) => route.disposition === "render" && route.canonicalPath === "/ai-video-generation/motion-generator" && route.status === "published")
+    ? [{
+        disposition: "redirect",
+        siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
+        routeKind: "policy-alias",
+        aliasPath: "/ai-image-generation/motion-generator",
+        targetPath: "/ai-video-generation/motion-generator",
+        statusCode: 308,
+        indexable: false,
+        sitemapEligible: false,
+        routeRevision: crypto.createHash("sha256").update(JSON.stringify(["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator", 308])).digest("hex").slice(0, 20)
+      }]
+    : [];
+  const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...policyRoutes, ...videoTopicPublication.routes, ...motionLegacyRedirect];
   const sourcePageEntities = isMydreamshootsPublicationSite
     ? mydreamshootsPublishedPageEntities(site.id as "site_dreamshoot" | "site_grownstride_test")
     : [];
