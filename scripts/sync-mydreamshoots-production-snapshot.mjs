@@ -11,8 +11,11 @@ import "./load-runtime-env.mjs";
 const siteId = "site_dreamshoot";
 const apply = process.argv.includes("--apply") && !process.argv.includes("--dry-run");
 const syncVideo = process.argv.includes("--sync-video");
+const replaceLocalPages = process.argv.includes("--replace-local-pages");
+const useSourcePublication = process.argv.includes("--use-source-publication");
 const snapshotPath = process.argv.find((value) => value.startsWith("--snapshot="))?.slice("--snapshot=".length)
   || "releases/remote-snapshots/mydreamshoots-production-2026-08-22.json";
+const expectedPublicationVersionArg = process.argv.find((value) => value.startsWith("--expected-publication-version="))?.slice("--expected-publication-version=".length);
 const resolvedSnapshotPath = path.resolve(snapshotPath);
 if (!fs.existsSync(resolvedSnapshotPath)) throw new Error(`production snapshot not found: ${resolvedSnapshotPath}`);
 
@@ -22,9 +25,35 @@ const parsed = new URL(databaseUrl);
 assert(["localhost", "127.0.0.1", "::1"].includes(parsed.hostname), `refusing non-local database host: ${parsed.hostname}`);
 assert(parsed.port === "15433", `production snapshot sync must use local port 15433 (received ${parsed.port})`);
 
-const snapshot = JSON.parse(fs.readFileSync(resolvedSnapshotPath, "utf8"));
+const rawSnapshot = JSON.parse(fs.readFileSync(resolvedSnapshotPath, "utf8"));
+const snapshot = rawSnapshot.source
+  ? rawSnapshot
+  : {
+      formatVersion: 1,
+      source: {
+        siteId: rawSnapshot.site?.id,
+        exportedAt: rawSnapshot.createdAt,
+        publicationId: rawSnapshot.site?.activePublication?.publication?.id,
+        publicationVersion: rawSnapshot.site?.activePublication?.publication?.version,
+        publicationPublishedAt: rawSnapshot.site?.activePublication?.publication?.publishedAt,
+        publicationSnapshotHash: rawSnapshot.site?.activePublication?.publication?.snapshot?.snapshotHash
+      },
+      site: rawSnapshot.site,
+      products: rawSnapshot.products,
+      creativePacks: rawSnapshot.creativePacks,
+      creativePackCategories: rawSnapshot.creativePackCategories,
+      videoThemes: rawSnapshot.videoThemes,
+      videoThemeCategories: rawSnapshot.videoThemeCategories,
+      mediaAssets: rawSnapshot.mediaAssets,
+      snapshotHash: rawSnapshot.sourceSnapshot?.hash
+    };
 assert.equal(snapshot.source?.siteId, siteId, "snapshot site does not match MyDreamShoots");
-assert.equal(snapshot.source?.publicationVersion, 6, "unexpected production publication version; export a fresh snapshot and pass it explicitly");
+assert(Number.isInteger(snapshot.source?.publicationVersion) && snapshot.source.publicationVersion > 0, "snapshot must include a valid production publication version");
+if (expectedPublicationVersionArg !== undefined) {
+  const expectedPublicationVersion = Number(expectedPublicationVersionArg);
+  assert(Number.isInteger(expectedPublicationVersion) && expectedPublicationVersion > 0, "expected publication version must be a positive integer");
+  assert.equal(snapshot.source.publicationVersion, expectedPublicationVersion, "production publication version does not match the requested restore target");
+}
 
 const repoRoot = process.cwd();
 const backupDir = path.join(repoRoot, "releases", "backups");
@@ -167,10 +196,10 @@ try {
         // showcase, copy, pricing and footer. The local video topic pages are
         // newer product work, so keep their relational page JSON intact while
         // still syncing the surrounding production content.
-        if (current && (page.slug === "/ai-video-generation" || page.slug.startsWith("/ai-video-generation/"))) {
+        if (!syncVideo && current && (page.slug === "/ai-video-generation" || page.slug.startsWith("/ai-video-generation/"))) {
           publishedJson = current.publishedJson;
         }
-        if (page.slug === "/best-ai-video" && publishedJson && typeof publishedJson === "object") {
+        if (!syncVideo && page.slug === "/best-ai-video" && publishedJson && typeof publishedJson === "object") {
           const localSection = current?.publishedJson?.sections?.best_ai_video_1;
           const sourceSection = publishedJson.sections?.best_ai_video_1;
           if (sourceSection && typeof sourceSection === "object") {
@@ -211,6 +240,9 @@ try {
         };
         if (current) await tx.themePage.update({ where: { id: current.id }, data });
         else await tx.themePage.create({ data: { id: page.id, ...data, createdAt: date(page.createdAt) ?? new Date() } });
+      }
+      if (replaceLocalPages) {
+        await tx.themePage.deleteMany({ where: { siteId, slug: { notIn: [...sourcePageSlugs] } } });
       }
 
       const settings = snapshot.site.settings;
@@ -317,7 +349,10 @@ try {
 
     const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, activePublication: { include: { publication: true } }, products: { include: { prices: true } } } });
     assert(fresh?.activePublication?.publication, "local active publication readback failed");
-    const currentSnapshot = clone(fresh.activePublication.publication.snapshot);
+    const currentSnapshot = useSourcePublication
+      ? clone(snapshot.site.activePublication?.publication?.snapshot)
+      : clone(fresh.activePublication.publication.snapshot);
+    assert(currentSnapshot, "source snapshot is required when --use-source-publication is set");
     assert.equal(publicationSnapshotIntegrity(currentSnapshot), "valid", "local active publication must be valid before import");
     const sourcePageBySlug = new Map(sourcePages.map((page) => [page.slug, page]));
     currentSnapshot.pages = currentSnapshot.pages.map((page) => {
@@ -340,7 +375,7 @@ try {
     assert.equal(publicationSnapshotIntegrity(currentSnapshot), "valid", "imported publication must be valid");
     const published = await publishSeoSnapshotRelational({ siteId, snapshot: currentSnapshot, actor: "sync:mydreamshoots-production-snapshot" });
     const readback = await prisma.themePublication.findUnique({ where: { id: published.publication.id }, select: { id: true, version: true, snapshot: true } });
-    console.log(JSON.stringify({ ok: true, mode: "applied", source: snapshot.source, sourceSnapshotHash: snapshot.snapshotHash, backupPath, publicationId: readback?.id, version: readback?.version, localSnapshotHash: readback?.snapshot?.snapshotHash, sourceCounts, localCounts, diff, syncVideo }, null, 2));
+    console.log(JSON.stringify({ ok: true, mode: "applied", source: snapshot.source, sourceSnapshotHash: snapshot.snapshotHash, backupPath, publicationId: readback?.id, version: readback?.version, localSnapshotHash: readback?.snapshot?.snapshotHash, sourceCounts, localCounts, diff, syncVideo, replaceLocalPages, useSourcePublication }, null, 2));
   }
 } finally {
   await prisma.$disconnect();

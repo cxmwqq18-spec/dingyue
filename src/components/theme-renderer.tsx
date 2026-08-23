@@ -2713,6 +2713,7 @@ function spanishXbyPublicAssetUrl(site: Site, value: string): string {
 const dreamshootHomepageShowcaseVersion = "20260801visualfix1";
 const dreamshootHomepageSafeShowcaseImagePathBySlug: Record<string, string> = {
   "ai-video-add-ons": "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-06.webp",
+  "motion-generator": "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-06.webp",
   "anime-avatar": "/assets/dreamshoot/generated/pack-galleries/anime-avatar/anime-avatar-12.webp",
   boudoir: "/assets/dreamshoot/generated/pack-galleries/boudoir/boudoir-10.webp",
   "christmas-couple": "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-03.webp",
@@ -5440,9 +5441,6 @@ function aidreamcapesProfileForPack(site: Site, pack: CreativePack | null | unde
 function dreamshootPackImageSet(site: Site, pack: CreativePack, limit = 2): string[] {
   const primaryImage = packImage(site, pack);
   const galleryPreviewImages = galleryImagesForPack(site, pack, limit + 3, [primaryImage]);
-  const packageCardGalleryImages = isMyDreamShootsProfileSite(site) && isGeneratedDreamshootPackCoverUrl(primaryImage)
-    ? galleryPreviewImages.slice(1)
-    : galleryPreviewImages;
   const aidreamcapesCategoryImages = isAidreamcapesSite(site) && !isSpanishXbySite(site)
     ? {
       leaf: pack.categoryRecord?.imageUrl ? mediaAssetUrl(site, pack.categoryRecord.imageUrl) : "",
@@ -5457,7 +5455,9 @@ function dreamshootPackImageSet(site: Site, pack: CreativePack, limit = 2): stri
     ]).slice(0, 1);
     return images.length ? images : [primaryImage];
   }
-  const orderedImages = [primaryImage, ...packageCardGalleryImages];
+  const orderedImages = isMyDreamShootsProfileSite(site)
+    ? [...galleryPreviewImages, primaryImage]
+    : [primaryImage, ...galleryPreviewImages];
   const images = uniqueImageUrlList(orderedImages).slice(0, limit);
   return images.length ? images : [primaryImage];
 }

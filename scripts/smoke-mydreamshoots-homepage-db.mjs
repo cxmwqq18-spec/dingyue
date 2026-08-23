@@ -45,7 +45,7 @@ try {
         activePublication: { include: { publication: true } }
       }
     }),
-    prisma.creativePack.findMany({ where: { siteId, status: "active" }, select: { id: true } }),
+    prisma.creativePack.findMany({ where: { siteId, status: "active" }, select: { id: true, category: true } }),
     prisma.videoThemeCategory.findMany({ where: { siteId }, include: { parent: true }, orderBy: { sortOrder: "asc" } }),
     prisma.videoTheme.findMany({ where: { siteId, status: "active" }, include: { category: { include: { parent: true } } }, orderBy: { sortOrder: "asc" } }),
     prisma.product.findMany({ where: { siteId, status: "active" }, select: { id: true } }),
@@ -54,10 +54,11 @@ try {
   assert(site?.activePublication?.publication, "active MyDreamShoots publication is required");
   const publication = site.activePublication.publication;
   const snapshot = publication.snapshot;
+  const photoPacks = packs.filter((pack) => pack.category !== "motion-generator");
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "active publication snapshot must be valid");
   assert.equal(publicationSnapshotHash(snapshot), snapshot.snapshotHash, "active publication snapshot hash must read back");
-  assert.equal(snapshot.publishedCollectionRefs.length, packs.length, "collection refs must cover all active photo packs");
-  assert.equal(snapshot.publishedCollectionRefs.length, 38, "production photo collection count must be 38");
+  assert.equal(snapshot.publishedCollectionRefs.length, photoPacks.length, "collection refs must cover all active photo packs");
+  assert.equal(snapshot.publishedCollectionRefs.length, 37, "production photo collection count must be 37 plus the separate motion-generator video pack");
   assert.equal(snapshot.publishedOffers.length, prices.length, "published offers must cover active prices");
   assert.equal(snapshot.publishedOffers.length, 13, "production offer count must be 13");
   assert.equal(snapshot.publishedPageMedia.length, snapshot.publishedCollectionRefs.length, "page media and collection refs must align");
@@ -98,7 +99,7 @@ try {
     ok: true,
     siteId,
     publication: { id: publication.id, version: publication.version, snapshotHash: snapshot.snapshotHash },
-    counts: { photoPacks: packs.length, collectionRefs: snapshot.publishedCollectionRefs.length, offers: snapshot.publishedOffers.length, logoBlocks: (homeSection.blocks ?? []).filter((block) => block?.type === "logo").length, reviews: (reviews?.blocks ?? []).length, currentVideoThemes: currentThemes.length, bestVideoThemes: productionVideoThemes.length, products: products.length, prices: prices.length }
+    counts: { photoPacks: photoPacks.length, activePacks: packs.length, collectionRefs: snapshot.publishedCollectionRefs.length, offers: snapshot.publishedOffers.length, logoBlocks: (homeSection.blocks ?? []).filter((block) => block?.type === "logo").length, reviews: (reviews?.blocks ?? []).length, currentVideoThemes: currentThemes.length, bestVideoThemes: productionVideoThemes.length, products: products.length, prices: prices.length }
   }, null, 2));
 } finally {
   await prisma.$disconnect();
