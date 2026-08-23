@@ -202,8 +202,23 @@ function fallbackCollectionRootPathForPublicSlug(publicSlug: string): string {
     : "/collections";
 }
 
-async function readCollectionRouteState(siteSlug: string, collectionCategory: string) {
+async function readCollectionRouteState(
+  siteSlug: string,
+  collectionCategory: string,
+  headers?: HeaderReader,
+  routeMode: StorefrontRouteMode = "path"
+) {
   const collectionRootPageSlug = fallbackCollectionRootPathForPublicSlug(siteSlug);
+  if (routeMode === "host" && headers) {
+    const hostState = await readRoutePublicRuntimeState(
+      headers,
+      routeMode,
+      siteSlug,
+      collectionRootPageSlug,
+      collectionCategory || undefined
+    );
+    if (hostState?.sites[0]) return hostState;
+  }
   if (preferLocalPathModeState(siteSlug)) return readPathModePublicRuntimeState(siteSlug, collectionRootPageSlug);
   try {
     const detailState = await readStorefrontPublicCollectionDetailStateBySlugFromDatabase(siteSlug, collectionCategory);
@@ -244,7 +259,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
     : isCollectionRequest && collectionLookupSlug
     ? routeMode === "host"
       ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, collectionRootPageSlug, collectionLookupSlug)
-      : await readCollectionRouteState(siteSlug, collectionLookupSlug)
+      : await readCollectionRouteState(siteSlug, collectionLookupSlug, headerStore, routeMode)
     : slug === "/ai-image-generation"
       ? routeMode === "host"
         ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, "/ai-image-generation")
@@ -361,7 +376,7 @@ export default async function SiteCatchAllPage({
   const state = isVideoGenerationRequest
     ? await readVideoGenerationRouteState(publicSlug, videoLookupSlug)
     : isCollectionRequest && collectionLookupSlug
-    ? await readCollectionRouteState(publicSlug, collectionLookupSlug)
+    ? await readCollectionRouteState(publicSlug, collectionLookupSlug, headerStore, routeMode)
     : await readPathModePublicRuntimeState(publicSlug, pageSlug);
   const publicSite = state?.sites[0];
   if (!state || !publicSite) notFound();
