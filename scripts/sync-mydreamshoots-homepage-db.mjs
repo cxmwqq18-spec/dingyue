@@ -239,6 +239,7 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
     settings: {
       ...clone(next.sections.generation_showcase_1?.settings ?? {}),
       ...clone(templateGeneration.settings),
+      imageSlugs: catalogOrder.join("|"),
       showTrustedLogoIntro: true,
       trustedLogoTitle: "Explore AI photo and video workflows | myDreamshoots",
       aboutTitle: "What is myDreamshoots?",
