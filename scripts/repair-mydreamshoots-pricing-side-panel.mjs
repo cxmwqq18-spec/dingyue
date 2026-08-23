@@ -3,6 +3,7 @@ import "./load-runtime-env.mjs";
 import assert from "node:assert/strict";
 import Module from "node:module";
 import path from "node:path";
+import { extname } from "node:path";
 import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
 import { argumentValue, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
@@ -39,7 +40,9 @@ Module._load = function load(request, ...args) {
 Module._resolveFilename = function resolveFilename(request, ...args) {
   if (request === "server-only") return path.join(sourceRoot, "lib/storefront-context/types.ts");
   const resolved = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request;
-  return originalResolveFilename.call(this, request.startsWith("@/") ? `${resolved}.ts` : resolved, ...args);
+  const aliasedRequest = request.startsWith("@/") ? resolved : request;
+  const resolvedRequest = request.startsWith("@/") && !extname(aliasedRequest) ? `${aliasedRequest}.ts` : aliasedRequest;
+  return originalResolveFilename.call(this, resolvedRequest, ...args);
 };
 
 const jiti = createJiti(import.meta.url);
