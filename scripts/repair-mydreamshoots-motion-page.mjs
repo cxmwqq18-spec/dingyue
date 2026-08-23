@@ -5,9 +5,10 @@ import path from "node:path";
 import Module from "node:module";
 import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
-import { assertDatabaseTarget } from "./lib/database-target.mjs";
+import { argumentValue, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
 
-assertDatabaseTarget({ expectedTarget: "local" });
+const target = argumentValue("--target") || process.env.DATABASE_TARGET || "local";
+assertDatabaseTarget({ expectedTarget: target, requireProductionConfirmation: target === "production", productionConfirmed: hasArgument("--confirm-production") });
 const apply = process.argv.includes("--apply") && !process.argv.includes("--dry-run");
 const siteId = "site_dreamshoot";
 const slug = "/ai-video-generation/motion-generator";
@@ -30,12 +31,19 @@ const jiti = createJiti(import.meta.url);
 const { aiVideoTopicLandingContentByKey } = jiti("./seed-mydreamshoots-ai-video-topic-content.ts");
 const content = aiVideoTopicLandingContentByKey["motion-generator"];
 if (!content) throw new Error("motion_generator_content_seed_missing");
+const baseContent = aiVideoTopicLandingContentByKey["cinematic-video"];
+const normalizedContent = {
+  ...baseContent,
+  seo: { ...baseContent.seo, title: "AI Motion Generator – Animate Photos Into Short Videos | myDreamshoots", description: "Animate an approved photo into a short, coherent video with controlled subject movement, camera motion, pacing, and visual continuity.", keywords: "AI motion generator, photo motion generator, animate photo, image to video motion, AI photo animation, motion video maker", canonicalPath: slug },
+  hero: { ...baseContent.hero, eyebrow: "AI MOTION GENERATOR", title: "Animate a Still Image With Deliberate Motion", body: "Start with one approved image, define the movement that matters, and review a short video that keeps the subject, framing, and visual details coherent.", image: { ...baseContent.hero.image, src: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp", alt: "Portrait scene prepared for controlled AI motion generation" }, caption: "One approved image, one motion direction, one reviewable clip.", rightsCopy: "Use images you own or have permission to animate. Review the full result before publishing." },
+  finalCta: { ...baseContent.finalCta, eyebrow: "CREATE A REVIEWABLE MOTION DRAFT", title: "Turn One Still Into a Short Motion Concept", body: "Choose an approved source, describe one movement, and review the generated clip before using it publicly.", cta: "Open Motion Generator", microcopy: "Approved source. Focused motion. Full review." }
+};
 const pageJson = {
   pageType: "ai_tool",
   version: 1,
   sectionsOrder: ["ai_video_topic_landing_1"],
-  sections: { ai_video_topic_landing_1: { type: "ai_video_topic_landing", settings: { anchor: "motion-generator", contentKey: "motion-generator", content }, blocks: [] } },
-  seo: { ...content.seo, canonical: slug, canonicalPath: slug, index: true, follow: true, robots: { index: true, follow: true } }
+  sections: { ai_video_topic_landing_1: { type: "ai_video_topic_landing", settings: { anchor: "motion-generator", contentKey: "motion-generator", content: normalizedContent }, blocks: [] } },
+  seo: { ...normalizedContent.seo, canonical: slug, canonicalPath: slug, index: true, follow: true, robots: { index: true, follow: true } }
 };
 const prisma = new PrismaClient();
 try {
