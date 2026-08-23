@@ -606,7 +606,7 @@ export default async function HostStorefrontCatchAllPage({
     notFound();
   }
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
-  if (isMydreamshootsSite(site) && slug === "/ai-image-generation/motion-generator") {
+  if (site.id === "site_dreamshoot" && slug === "/ai-image-generation/motion-generator") {
     permanentRedirect("/ai-video-generation/motion-generator");
   }
   const publishedDisposition = resolvePublishedRouteDisposition(snapshot, slug);
