@@ -618,6 +618,8 @@ export default async function HostStorefrontCatchAllPage({
     permanentRedirect(publishedDisposition.targetPath);
   }
   const legacyTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForHost(host));
+  // Prefer a published page at the requested canonical URL. Use the legacy
+  // seasonal redirect only while that page is absent from the publication.
   if (legacyTarget) {
     const disposition = resolvePublishedRedirectDisposition(snapshot, slug, legacyTarget);
     if (disposition.kind === "redirect" && disposition.targetPath) permanentRedirect(disposition.targetPath);

@@ -88,7 +88,7 @@ export function PricingBillingTable({
           <div className="h-[3px] w-full max-w-[calc(100vw-2.5rem)] rounded-full sm:w-[25.25rem]" style={{ background: mydreamshootsGradientUnderline }} />
         ) : null}
       </div>
-      <div className="mt-8 grid gap-5 2xl:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="mt-8 grid items-start gap-5 2xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="grid gap-4 lg:grid-cols-3">
           {visiblePlans.map(({ id, name, price }) => {
             if (!price) return null;
@@ -132,8 +132,8 @@ export function PricingBillingTable({
             );
           })}
         </div>
-        <div className={emphasizeBillingSwitch ? "relative min-h-[360px] min-w-0 xl:min-h-[430px]" : "relative hidden min-h-[430px] min-w-0 xl:block"}>
-          <div className={aidreamcapes ? "flex h-full min-w-0 flex-col gap-6 rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur" : "flex h-full min-w-0 flex-col gap-6 rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur"}>
+        <div className={emphasizeBillingSwitch ? "relative min-w-0" : "relative hidden min-w-0 xl:block"}>
+          <div className={aidreamcapes ? "flex h-auto min-w-0 self-start flex-col gap-6 rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur" : "flex h-auto min-w-0 self-start flex-col gap-6 rounded-[20px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0.03)_100%)] p-6 shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)] backdrop-blur"}>
             <div className="min-w-0">
               <p className={emphasizeBillingSwitch ? "text-[0.8rem] font-semibold tracking-normal text-[#B86E36]" : "text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#B86E36]"}>{activeSidePanel.eyebrow}</p>
               <h3 className="mt-3 max-w-full break-words text-[1.9rem] font-semibold leading-[1.02] tracking-[-0.03em] [font-family:var(--site-title-font)]">

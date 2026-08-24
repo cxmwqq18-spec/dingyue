@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import "./load-runtime-env.mjs";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import Module from "node:module";
@@ -24,6 +25,11 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const siteId = process.env.SEASONAL_SITE_ID || "site_dreamshoot";
+const removedLegacyPaths = new Set([
+  "/holidays-events/christmas",
+  "/holidays-events/thanksgiving",
+  "/holidays-events/new-year"
+]);
 const configs = [
   {
     key: "wedding-ceremony",
@@ -40,62 +46,6 @@ const configs = [
       ["scene-ideas", "editorial_scene_grid", "Wedding Ceremony Scene Ideas"],
       ["quality", "editorial_quality", "Review the Ceremony, Not Just One Pretty Frame"],
       ["boundaries", "editorial_boundaries", "Wedding Ceremony vs Nearby Wedding Pages"],
-      ["faq", "faq", "FAQ"],
-      ["final-cta", "editorial_cta", "Final CTA"]
-    ]
-  },
-  {
-    key: "thanksgiving",
-    sourceDir: process.env.SEASONAL_THANKSGIVING_SOURCE_DIR || path.join(sourcePackageRoot, "ai-thanksgiving-photo-and-video-final"),
-    pagePath: "/holidays-events/thanksgiving",
-    pageKey: "thanksgiving",
-    tone: "thanksgiving",
-    sections: [
-      ["hero", "editorial_hero", "Hero"],
-      ["definition", "editorial_rich_text", "What Is an AI Thanksgiving Photo and Video Generator"],
-      ["use-cases", "editorial_scene_grid", "Use Cases"],
-      ["quality", "editorial_quality", "Do / Avoid"],
-      ["workflow", "editorial_steps", "How It Works"],
-      ["scene-ideas", "editorial_scene_grid", "Scene Ideas"],
-      ["formats", "editorial_formats", "Photo and Video Direction"],
-      ["market", "editorial_rich_text", "North American Holiday Focus"],
-      ["faq", "faq", "FAQ"],
-      ["final-cta", "editorial_cta", "Final CTA"]
-    ]
-  },
-  {
-    key: "christmas",
-    sourceDir: process.env.SEASONAL_CHRISTMAS_SOURCE_DIR || path.join(sourcePackageRoot, "ai-christmas-photo-and-video-final"),
-    pagePath: "/holidays-events/christmas",
-    pageKey: "christmas",
-    tone: "christmas",
-    sections: [
-      ["hero", "editorial_hero", "Hero"],
-      ["definition", "editorial_rich_text", "What Is AI Christmas Photo and Video Creation"],
-      ["photo-ideas", "editorial_story_grid", "Christmas Photo Ideas"],
-      ["video-ideas", "editorial_story_grid", "Christmas Video Ideas"],
-      ["workflow", "editorial_steps", "How It Works"],
-      ["scene-ideas", "editorial_scene_grid", "Christmas Scene Ideas"],
-      ["quality", "editorial_quality", "What to Check Before Sharing AI Christmas Content"],
-      ["formats", "editorial_rich_text", "Christmas Photo vs Christmas Video"],
-      ["faq", "faq", "FAQ"],
-      ["final-cta", "editorial_cta", "Build the Holiday Scene Around a Real Christmas Use Case"]
-    ]
-  },
-  {
-    key: "new-year",
-    sourceDir: process.env.SEASONAL_NEW_YEAR_SOURCE_DIR || path.join(sourcePackageRoot, "ai-new-year-photo-and-video-final"),
-    pagePath: "/holidays-events/new-year",
-    pageKey: "new_year",
-    tone: "new-year",
-    sections: [
-      ["hero", "editorial_hero", "Hero"],
-      ["definition", "editorial_rich_text", "What is an AI New Year photo and video maker"],
-      ["scene-ideas", "editorial_scene_grid", "Scene ideas for New Year photos and videos"],
-      ["direction", "editorial_rich_text", "What makes New Year content work"],
-      ["workflow", "editorial_steps", "How it works"],
-      ["use-cases", "editorial_scene_grid", "Use cases"],
-      ["quality", "editorial_quality", "What makes a New Year image usable on a website"],
       ["faq", "faq", "FAQ"],
       ["final-cta", "editorial_cta", "Final CTA"]
     ]
@@ -180,6 +130,51 @@ const configs = [
       ["workflow", "editorial_steps", "How it works"],
       ["use-cases", "editorial_story_grid", "Use cases"],
       ["gallery", "editorial_scene_grid", "Gallery"],
+      ["faq", "faq", "FAQ"],
+      ["final-cta", "editorial_cta", "Final CTA"]
+    ]
+  },
+  {
+    key: "halloween",
+    displayName: "Halloween",
+    sourceDir: process.env.SEASONAL_HALLOWEEN_SOURCE_DIR || path.join(sourcePackageRoot, "ai-halloween-photo-and-video-final"),
+    pagePath: "/holidays-events/halloween",
+    pageKey: "halloween",
+    tone: "halloween",
+    indexable: false,
+    seoOverrides: {
+      title: "AI Halloween Photo and Video Maker | Spooky Visuals",
+      description: "Create Halloween photos and videos with AI-ready ideas for costumes, trick-or-treat moments, pets, pumpkins, haunted scenes, parties, and seasonal content."
+    },
+    heroImage: "hero-ai-halloween-costume-party.jpg",
+    explicitMapping: true,
+    imageMap: {
+      "Costume party portrait": "hero-ai-halloween-costume-party.jpg",
+      "Couple cosplay transformation": "hero-ai-halloween-couple-cosplay.jpg",
+      "Pet costume portrait": "hero-ai-halloween-ghost-dog.jpg",
+      "Trick-or-treat memory": "ai-halloween-trick-or-treat-vintage.jpg",
+      "Pumpkin-face portrait": "ai-halloween-pumpkin-portrait.jpg",
+      "Cute baby or family costume scene": "ai-halloween-baby-skeleton-costumes.jpg",
+      "Haunted-house background": "ai-halloween-haunted-house-night.jpg",
+      "Cinematic pumpkin night": "ai-halloween-pumpkin-wagon-night.jpg",
+      "Neon Halloween party": "ai-halloween-neon-party-costumes.jpg",
+      "Halloween profile photos and avatars": "ai-halloween-pumpkin-portrait.jpg",
+      "social posts and seasonal content campaigns": "ai-halloween-neon-party-costumes.jpg",
+      "couple and friend costume concepts": "hero-ai-halloween-couple-cosplay.jpg",
+      "family trick-or-treat memories": "ai-halloween-bat-costume-child.jpg",
+      "pet Halloween portraits": "ai-halloween-vampire-dog.jpg",
+      "party invitations and event promos": "hero-ai-halloween-costume-party.jpg",
+      "cinematic Halloween background concepts": "ai-halloween-haunted-house-night.jpg",
+      "short-form Halloween video ideas": "ai-halloween-pumpkin-wagon-night.jpg",
+      "Final CTA": "hero-ai-halloween-couple-cosplay.jpg"
+    },
+    sections: [
+      ["hero", "editorial_hero", "Hero"],
+      ["definition", "editorial_rich_text", "What is an AI Halloween photo and video maker"],
+      ["scene-ideas", "editorial_scene_grid", "Scene ideas for Halloween photos and videos"],
+      ["quality", "editorial_quality", "What makes Halloween creative convert"],
+      ["workflow", "editorial_steps", "How it works"],
+      ["use-cases", "editorial_scene_grid", "Use cases"],
       ["faq", "faq", "FAQ"],
       ["final-cta", "editorial_cta", "Final CTA"]
     ]
@@ -301,7 +296,14 @@ function parseManifest(config) {
     throw new Error(`${config.key}: image manifest must contain 11 complete 1600x1000 images`);
   }
   for (const image of images) {
-    if (!fs.existsSync(path.join(config.sourceDir, "images", image.filename))) throw new Error(`${config.key}: missing image ${image.filename}`);
+    const imagePath = path.join(config.sourceDir, "images", image.filename);
+    if (!fs.existsSync(imagePath)) throw new Error(`${config.key}: missing image ${image.filename}`);
+    const checksumFile = path.join(config.sourceDir, "SHA256SUMS.txt");
+    if (fs.existsSync(checksumFile)) {
+      const expected = read(checksumFile).split(/\r?\n/).map((line) => line.match(/^([a-f0-9]{64})\s+(.+)$/)).find((match) => match?.[2] === `images/${image.filename}`)?.[1];
+      const actual = crypto.createHash("sha256").update(fs.readFileSync(imagePath)).digest("hex");
+      if (!expected || expected !== actual) throw new Error(`${config.key}: checksum mismatch for ${image.filename}`);
+    }
   }
   return images;
 }
@@ -365,6 +367,90 @@ function mappedBlock(config, type, item, index, images, key = item.title || item
 
 function sectionId(config, id) {
   return `${config.pageKey}_${id.replace(/-/g, "_")}`;
+}
+
+function buildHalloweenPage(config, markdown, sections, seo, images) {
+  const heading = seo.h1 || markdown.match(/^#\s+(.+)$/m)?.[1] || "Create Halloween Photos and Videos with AI";
+  const base = (id, title, sectionVariant) => ({ anchor: id, title, themeTone: config.tone, ...(sectionVariant ? { sectionVariant } : {}) });
+  const data = {};
+  const add = (id, type, settings, blocks = []) => { data[sectionId(config, id)] = { type, settings, blocks }; };
+  const heroImage = mappedImage(config, images, "Costume party portrait");
+  const heroVisuals = [
+    heroImage,
+    mappedImage(config, images, "Couple cosplay transformation"),
+    mappedImage(config, images, "Pet costume portrait")
+  ];
+  const heroLines = sectionFor(sections, "Hero");
+  const heroIntro = heroLines.length
+    ? firstParagraph(heroLines, "Turn portraits, couple photos, family memories, and pet pictures into Halloween visual directions.")
+    : firstLeadParagraph(markdown, "Turn portraits, couple photos, family memories, and pet pictures into Halloween visual directions.");
+  add("hero", "editorial_hero", {
+    ...base("hero", heading, "hero_collage"),
+    eyebrow: seo.primary_keyword || "AI Halloween Photo and Video",
+    title: heading,
+    intro: heroIntro,
+    support: "Use source material you own or have permission to use, then review faces, pets, costumes, text, and backgrounds before sharing.",
+    primaryCta: "Create a Halloween look",
+    primaryHref: "/app/create",
+    secondaryCta: "Explore Scene Ideas",
+    secondaryHref: "#scene-ideas",
+    ...imageSettings(heroImage)
+  }, heroVisuals.map((image, index) => ({ id: `${config.key}-hero-${index + 1}`, type: "hero_visual", settings: imageSettings(image) })));
+
+  const definitionTitle = "What is an AI Halloween photo and video maker?";
+  const definitionLines = sectionFor(sections, definitionTitle);
+  const definitionParagraphs = paragraphs(definitionLines);
+  add("definition", "editorial_rich_text", {
+    ...base("definition", "What Is an AI Halloween Photo and Video Maker", "rich_text_list"),
+    intro: definitionParagraphs[0] || "",
+    ...imageSettings(mappedImage(config, images, "Costume party portrait"))
+  }, listItems(definitionLines).map((text, index) => ({ id: `${config.key}-definition-${index + 1}`, type: "list_item", settings: { text } })));
+
+  const sceneTitle = "Scene ideas for Halloween photos and videos";
+  const sceneItems = headingBlocks(sectionFor(sections, sceneTitle));
+  if (sceneItems.length !== 9) throw new Error(`${config.key}: expected nine scene ideas`);
+  add("scene-ideas", "editorial_scene_grid", { ...base("scene-ideas", "Scene Ideas for Halloween Photos and Videos", "scene_cards") }, sceneItems.map((item, index) => mappedBlock(config, "scene", item, index, images)));
+
+  const qualityTitle = "What makes Halloween creative convert?";
+  const qualityLines = sectionFor(sections, qualityTitle);
+  const qualityItems = listItems(qualityLines);
+  if (qualityItems.length !== 6) throw new Error(`${config.key}: creative quality must preserve six bullets`);
+  add("quality", "editorial_quality", { ...base("quality", "What Makes Halloween Creative Work", "principles_dark"), intro: paragraphs(qualityLines)[0] || "" }, qualityItems.map((text, index) => ({ id: `${config.key}-quality-${index + 1}`, type: "item", settings: { text } })));
+
+  const workflowItems = listItems(sectionFor(sections, "How it works"));
+  if (workflowItems.length !== 7) throw new Error(`${config.key}: expected seven workflow steps`);
+  add("workflow", "editorial_steps", { ...base("workflow", "How It Works", "ember_workflow") }, workflowItems.map((text, index) => ({ id: `${config.key}-step-${index + 1}`, type: "step", settings: { number: index + 1, title: `Step ${index + 1}`, text } })));
+
+  const useCaseItems = listItems(sectionFor(sections, "Use cases"));
+  if (useCaseItems.length !== 8) throw new Error(`${config.key}: expected eight use cases`);
+  add("use-cases", "editorial_scene_grid", { ...base("use-cases", "Use Cases", "use_case_cards") }, useCaseItems.map((title, index) => mappedBlock(config, "use_case", { title, text: title }, index, images, title)));
+
+  const faqItems = headingBlocks(sectionFor(sections, "FAQ"));
+  if (faqItems.length !== 6) throw new Error(`${config.key}: expected six FAQ items`);
+  add("faq", "faq", base("faq", "FAQ"), faqItems.map((item, index) => ({ id: `${config.key}-faq-${index + 1}`, type: "faq_item", settings: { question: item.title, answer: item.text } })));
+  add("final-cta", "editorial_cta", {
+    ...base("final-cta", "Create Halloween Photos and Videos with AI"),
+    intro: firstParagraph(sectionFor(sections, "Final CTA"), "Turn a portrait, couple photo, family memory, or pet picture into a Halloween visual people want to share."),
+    primaryCta: "Create a Halloween look",
+    primaryHref: "/app/create",
+    secondaryCta: "Explore Seasonal Themes",
+    secondaryHref: "/holidays-events/save-the-date",
+    ...imageSettings(mappedImage(config, images, "Final CTA"))
+  });
+
+  const sectionIds = config.sections.map(([id]) => id);
+  const sectionTypes = config.sections.map(([, type]) => type);
+  const pageSeoIndexable = config.indexable !== false;
+  return {
+    pageType: "standard-content",
+    version: 1,
+    sectionsOrder: sectionIds.map((id) => sectionId(config, id)),
+    contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: sectionIds, sectionTypes, faqCount: faqItems.length, mediaCount: images.length, sourceRevision: `${config.key}-package-20260824` },
+    relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/holidays-events/save-the-date" }],
+    mediaManifest: images,
+    seo: { title: config.seoOverrides?.title || seo.title, description: config.seoOverrides?.description || seo.meta_description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: seo.canonical || `https://www.mydreamshoots.com${config.pagePath}`, ogImage: images[0].src, index: pageSeoIndexable, follow: true, robots: { index: pageSeoIndexable, follow: true, maxImagePreview: "large" } },
+    sections: data
+  };
 }
 
 function buildMothersOrFathersPage(config, markdown, sections, seo, images) {
@@ -448,6 +534,7 @@ function buildPage(config) {
   const sections = markdownSections(markdown);
   const seo = parseSeo(path.join(config.sourceDir, "06_seo_config.csv"));
   const images = parseManifest(config);
+  if (config.key === "halloween") return buildHalloweenPage(config, markdown, sections, seo, images);
   if (config.explicitMapping) return buildMothersOrFathersPage(config, markdown, sections, seo, images);
   const heading = seo.h1 || markdown.match(/^#\s+(.+)$/m)?.[1] || seo.title || config.key;
   const imageFor = (index) => images[index % images.length];
@@ -575,11 +662,11 @@ try {
     }
     const existingSettings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
     const existingNavigation = existingSettings.saveTheDateNavigation || { menuLabel: "Save the Date", groups: [] };
-    const existingItems = existingNavigation.groups.flatMap((group) => group.items || []);
+    const existingItems = existingNavigation.groups.flatMap((group) => group.items || []).filter((item) => !removedLegacyPaths.has(item.href));
     const nextItems = pages.map((item, index) => ({ label: item.key === "wedding-ceremony" ? "Wedding Ceremony" : item.key.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()), slug: item.key, href: item.pagePath, status: "published", sortOrder: index + 1 }));
     const merged = [...existingItems, ...nextItems].filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index);
     const loveWedding = merged.filter((item) => ["/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date", "/ai-video-generation/wedding-ceremony"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
-    const seasonal = merged.filter((item) => ["/holidays-events/thanksgiving", "/holidays-events/christmas", "/holidays-events/new-year", "/holidays-events/mothers-day", "/holidays-events/fathers-day"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
+    const seasonal = merged.filter((item) => ["/holidays-events/mothers-day", "/holidays-events/fathers-day", "/holidays-events/halloween"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
     const nextSettings = { ...existingSettings, saveTheDateNavigation: { menuLabel: "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: loveWedding }, { label: "Seasonal Holidays", slug: "seasonal-holidays", sortOrder: 2, items: seasonal }] } };
     await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: nextSettings }, update: { draftJson: nextSettings, publishedJson: nextSettings } });
   });

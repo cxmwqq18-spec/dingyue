@@ -1,6 +1,7 @@
 import type { SectionBlockInstance, SectionInstance, SectionType, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite } from "@/lib/storefront-context/capabilities";
+import mydreamshootsHomepageCopy from "@/lib/mydreamshoots-homepage-copy.json";
 
 export type MydreamShootsAiStudioTemplateKey =
   | ThemePackageTemplateKey
@@ -166,7 +167,7 @@ const assets = {
 
 const mydreamshootsTrustedLogoAssetBase = "/assets/dreamshoot/brand/trusted-creators-dark-v2";
 const aidreamcapesTrustedLogoAssetBase = "/assets/sites/site_aidreamcapes/trusted-logos";
-const mydreamshootsAboutBody = "myDreamshoots is an AI photo and video studio. Upload photos you are authorized to use, choose a supported workflow, review the current credit cost, and generate results inside your signed-in workspace.";
+const mydreamshootsAboutBody = "myDreamshoots is an AI video and photo generation platform that turns your images into AI videos, personalized Save the Date videos, professional AI headshots, portraits, couple photos, and themed photo sets.";
 const aidreamcapesAboutBody = "Aidreamcapes is an AI photo and video studio: upload your photos, choose a theme, review the published price and credit cost, and download finished results from your private gallery.";
 const mydreamshootsTrustedLogoDefinitions = [
   { key: "ikraddy", name: "iKraddy", file: "01__ikraddy.webp" },
@@ -279,9 +280,9 @@ const homeSections: ThemePageJson["sections"] = {
     "hero",
     {
       anchor: "home",
-      eyebrow: "",
+      eyebrow: "AI Video & Photo Creation",
       headline: "Create AI Videos, Professional AI Headshots & Photo Sets from Your Images",
-      subheadline: "Upload your photos and choose what you want to create - from AI videos and professional AI headshots to portraits, couple photos, seasonal images, and creative photo sets. Review examples and credit costs before generation, then access your finished results in your workspace.",
+      subheadline: "Upload your photos and choose what you want to create—from AI videos and personalized Save the Date videos to professional AI headshots, portraits, couple photos, seasonal images, and creative photo sets. Review examples and credit costs before generation, then access your finished results in your workspace.",
       imageUrl: assets.heroPackageWall,
       secondaryImageUrl: assets.heroCreditStudioCard,
       tertiaryImageUrl: assets.gala,
@@ -296,8 +297,8 @@ const homeSections: ThemePageJson["sections"] = {
       authButtonLabel: "Start Creating with Email",
       authPrimaryHref: "/login?mode=login",
       authEmailHref: "/login?mode=register",
-      imageBadge: "{LIVE_AI_IMAGE_WORKFLOW_COUNT} AI image workflows",
-      imageCaption: "Create AI videos and photo sets for social content, professional profiles, portraits, couple photos, seasonal images, and creative projects.",
+      imageBadge: "AI video & photo workflows",
+      imageCaption: "Create AI videos and photo sets for social content, Save the Date moments, professional profiles, portraits, couple photos, seasonal images, and creative projects.",
       socialProofLabel: "Private uploads, requests, galleries",
       layout: "immersive_dark"
     },
@@ -305,7 +306,7 @@ const homeSections: ThemePageJson["sections"] = {
       block("hero_cta_primary", "cta", { label: "Create Now", href: "/login", style: "primary" }),
       block("hero_cta_secondary", "cta", { label: "Explore AI Video", href: "/ai-video-generation", style: "secondary" }),
       block("hero_stat_credits", "stat", { value: "Credits", label: "shown before generation" }),
-      block("hero_stat_packs", "stat", { value: "{LIVE_AI_IMAGE_WORKFLOW_COUNT}", label: "AI image workflows" }),
+      block("hero_stat_packs", "stat", { value: "Video + Photo", label: "AI video & photo workflows" }),
       block("hero_stat_private", "stat", { value: "Private", label: "uploads, requests, galleries" })
     ]
   ),
@@ -479,16 +480,16 @@ const homeSections: ThemePageJson["sections"] = {
       eyebrow: "Customer-created examples",
       title: "Browse image and video themes customers have already created.",
       subtitle: "Scan photo themes and supported video workflows before you upload approved photos, review credits, and generate inside your signed-in workspace.",
-      imageTitle: "Featured AI Photo Generators",
+      imageTitle: mydreamshootsHomepageCopy.photoTitle,
       imageAllLabel: "VIEW ALL PHOTO",
       imageAllHref: "/best-ai-image",
       photoIntro: "Create professional AI headshots, portraits, couple photos, travel images, seasonal photos, and creative photo sets from your uploaded photos.",
-      videoTitle: "Featured AI Video Generators",
-      videoIntro: "Turn your photos into AI videos for social media, storytelling, product marketing, and creative projects.",
+      videoTitle: mydreamshootsHomepageCopy.videoTitle,
+      videoIntro: mydreamshootsHomepageCopy.videoIntro,
       videoAllLabel: "VIEW ALL VIDEO",
       videoAllHref: "/ai-video-generation",
-      saveTheDateTitle: "AI Save the Date Videos",
-      saveTheDateIntro: "Create personalized Save the Date videos from your photos for engagements, proposals, wedding invitations, anniversaries, and special celebrations.",
+      saveTheDateTitle: mydreamshootsHomepageCopy.saveTheDateTitle,
+      saveTheDateIntro: mydreamshootsHomepageCopy.saveTheDateIntro,
       saveTheDateAllLabel: "VIEW ALL SAVE THE DATE",
       saveTheDateAllHref: "/holidays-events/save-the-date",
       videoItemLimit: 8,
@@ -802,7 +803,7 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "faq",
       eyebrow: "Questions before upload",
       title: "FAQ",
-      subtitle: "Answers to pricing, privacy, uploads, credits, refunds, and photo quality.",
+      subtitle: "Answers to AI video, Save the Date, photo creation, pricing, privacy, uploads, credits, and refunds.",
       journeyTitle: "Your photo flow",
       journeyTitles: "Upload|Choose Pack|Generate|Download",
       journeyDescriptions: "Add clean source photos.|Pick a scene or style.|AI builds your set.|Download from the private gallery."
@@ -835,6 +836,18 @@ const homeSections: ThemePageJson["sections"] = {
       block("faq_cancel", "faq_item", {
         question: "What happens if I cancel a plan?",
         answer: "Access to previous albums follows the account and gallery policy. New package requests may require an active plan or enough available credits."
+      }),
+      block("faq_photo_to_video", "faq_item", {
+        question: "Can I turn a photo into an AI video?",
+        answer: "Yes. Choose a supported image-to-video workflow, upload your photo, review the example and credit cost, and generate your AI video in your workspace."
+      }),
+      block("faq_video_types", "faq_item", {
+        question: "What types of AI videos can I create?",
+        answer: "You can create talking photos, cinematic videos, social media videos, product videos, promotional videos, and other supported AI video styles. Explore AI Video Generation to see the available workflows."
+      }),
+      block("faq_save_the_date", "faq_item", {
+        question: "Can I create a Save the Date video from my photos?",
+        answer: "Yes. Choose a Save the Date style, upload your photos and event details, review the example and credit cost, and generate a personalized Save the Date video to share."
       })
     ]
   ),
@@ -842,10 +855,10 @@ const homeSections: ThemePageJson["sections"] = {
     "conversion_panel",
     {
       anchor: "start",
-      eyebrow: "BEST AI MAKER",
-      title: "Ready to try the myDreamshoots's Best AI Maker?",
-      subtitle: "We've designed myDreamshoots to be as easy as possible to use, allowing you to focus on unleashing your creativity with complete peace of mind. Subscribe, upload, choose packages, generate results, and keep delivery in one workspace.",
-      primaryCta: "Create my first photo set",
+      eyebrow: mydreamshootsHomepageCopy.conversionEyebrow,
+      title: mydreamshootsHomepageCopy.conversionTitle,
+      subtitle: mydreamshootsHomepageCopy.conversionSubtitle,
+      primaryCta: "Create Now",
       primaryHref: "/login",
       secondaryCta: "Choose a plan",
       secondaryHref: "/pricing"
@@ -1104,9 +1117,9 @@ function mydreamshootsImageTutorialVideoSection(): SectionInstance {
   return section("video_feature", {
     anchor: "how-it-works",
     eyebrow: "How it works",
-    title: "Watch the private photo package workflow.",
-    subtitle: "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.",
-    supportingCopy: "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.",
+    title: mydreamshootsHomepageCopy.tutorialTitle,
+    subtitle: mydreamshootsHomepageCopy.tutorialSubtitle,
+    supportingCopy: mydreamshootsHomepageCopy.tutorialSupportingCopy,
     imageUrl: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814.jpg",
     imageAlt: "Homepage tutorial screenshot showing the AI headshot hero, navigation, and account signup panel.",
     videoUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-20260814.mp4",
@@ -1198,7 +1211,7 @@ function mydreamshootsReviewSection(): SectionInstance {
     {
       anchor: "reviews",
       mode: "reviews",
-      title: "What Our Customers Say",
+      title: mydreamshootsHomepageCopy.reviewTitle,
       subtitle: "Our users love us and we love them!",
       summaryTitle: "What Our Customers Say",
       summaryBody: "myDreamshoots is an AI photo and video creator platform with creativity creators from all over the world. Creators are not simply content distributors. At their best, they are brokers of trust.",
@@ -2870,8 +2883,8 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
 export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
   branding: {
     logoText: "myᕲreamshoots",
-    market: "AI photo packages, personal AI models, paid tools, credits, AI video, and private albums",
-    description: "myDreamshoots is a premium AI photo workspace for themed photo packages, personal AI models, paid studio tools, AI video-ready outputs, and private gallery delivery."
+    market: "AI video and photo generation, Save the Date videos, private uploads, credits, and customer galleries",
+    description: "myDreamshoots is an AI video and photo generation platform for AI videos, professional headshots, portraits, Save the Date videos, themed photo sets, private uploads, and customer galleries."
   },
   themeSettings: {
     colors: {
@@ -2890,9 +2903,9 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
     },
     navigation: {
       headerLinks: [
-        { label: "AI Image Generation", href: "/ai-image-generation" },
         { label: "AI Video Generation", href: "/ai-video-generation" },
-        { label: "Best Packages", href: "/best-packages" },
+        { label: "AI Save the Date", href: "/holidays-events/save-the-date" },
+        { label: "AI Image Generation", href: "/ai-image-generation" },
         { label: "How it works", href: "/workflow" },
         { label: "Blog", href: "/blog" },
         { label: "Pricing", href: "/pricing" },
@@ -2901,9 +2914,8 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       footerLinks: [
         { label: "AI Image Generation", href: "/ai-image-generation", group: "product" },
         { label: "AI Video Generation", href: "/ai-video-generation", group: "product" },
-        { label: "Best Packages", href: "/best-packages", group: "product" },
-        { label: "Best AI image", href: "/best-ai-image", group: "product" },
-        { label: "Best AI video", href: "/best-ai-video", group: "product" },
+        { label: "AI Save the Date", href: "/holidays-events/save-the-date", group: "product" },
+        { label: "AI Photo Packages", href: "/best-packages", group: "product" },
         { label: "Pricing", href: "/pricing", group: "product" },
         { label: "Privacy Policy", href: "/privacy", group: "support" },
         { label: "Terms of Service", href: "/terms", group: "support" },
@@ -2924,7 +2936,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         settings: {
           title: "myᕲreamshoots",
           sticky: true,
-          ctaLabel: "Create my first photo set",
+          ctaLabel: "Start Creating",
           ctaHref: "/login",
           style: "dark_pills",
           mobileLabel: "Menu",
@@ -2932,9 +2944,9 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           logoAlt: "myDreamshoots heart camera logo"
         },
         blocks: [
-          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "AI Image Generation", href: "/ai-image-generation" } },
           { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "AI Video Generation", href: "/ai-video-generation" } },
-          { id: "dreamshoot_header_best_packages", type: "menu_link", settings: { label: "Best Packages", href: "/best-packages" } },
+          { id: "dreamshoot_header_save_the_date", type: "menu_link", settings: { label: "AI Save the Date", href: "/holidays-events/save-the-date" } },
+          { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "AI Image Generation", href: "/ai-image-generation" } },
           { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
           { id: "dreamshoot_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } },
           { id: "dreamshoot_header_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing" } },
@@ -2947,13 +2959,13 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           title: "myᕲreamshoots",
           logoImageUrl: "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b",
           logoAlt: "myDreamshoots heart camera logo",
-          tagline: "Private AI photo sets with visible credit costs and gallery delivery",
-          body: "Upload your selfies, choose a style, review the credit cost, and download a private photo set.",
+          tagline: "AI videos, Save the Date moments, photo sets, and private album delivery with visible credit costs",
+          body: "Upload your photos, choose a video or photo workflow, review the credit cost, and download private results.",
           productHeading: "Explore",
           companyHeading: "Content",
           supportHeading: "Support",
           socialHeading: "Why it works",
-          socialBody: "myDreamshoots helps you turn your own photos into private AI headshots, portraits, and themed albums.",
+          socialBody: "myDreamshoots helps you turn your own photos into AI videos, Save the Date moments, private AI headshots, portraits, and themed albums.",
           instagramUrl: "https://www.instagram.com/blydey_inc",
           facebookUrl: "https://www.facebook.com/blydeyinc",
           threadsUrl: "https://www.threads.com/@blydey_inc",
@@ -2968,17 +2980,15 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           taxIdLabel: "",
           taxId: "",
           salesEmail: "",
-          bottomLine: "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
+          bottomLine: "Credits, AI video and photo projects, private albums, and checkout stay inside your account.",
           copyright: "© 2026 myDreamshoots.com. All rights reserved."
         },
         blocks: [
           { id: "dreamshoot_footer_ai_image_generation", type: "menu_link", settings: { label: "AI Image Generation", href: "/ai-image-generation", group: "product" } },
           { id: "dreamshoot_footer_ai_video_generation", type: "menu_link", settings: { label: "AI Video Generation", href: "/ai-video-generation", group: "product" } },
-          { id: "dreamshoot_footer_best_packages", type: "menu_link", settings: { label: "Best Packages", href: "/best-packages", group: "product" } },
-          { id: "dreamshoot_footer_best_ai_image", type: "menu_link", settings: { label: "Best AI image", href: "/best-ai-image", group: "product" } },
-          { id: "dreamshoot_footer_best_ai_video", type: "menu_link", settings: { label: "Best AI video", href: "/best-ai-video", group: "product" } },
+          { id: "dreamshoot_footer_save_the_date", type: "menu_link", settings: { label: "AI Save the Date", href: "/holidays-events/save-the-date", group: "product" } },
+          { id: "dreamshoot_footer_best_packages", type: "menu_link", settings: { label: "AI Photo Packages", href: "/best-packages", group: "product" } },
           { id: "dreamshoot_footer_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing", group: "product" } },
-          { id: "dreamshoot_footer_headshot", type: "menu_link", settings: { label: "Headshot", href: "/ai-image-generation/headshot", group: "product" } },
           { id: "dreamshoot_footer_help", type: "menu_link", settings: { label: "FAQ", href: "/faq", group: "company" } },
           { id: "dreamshoot_footer_privacy", type: "menu_link", settings: { label: "Privacy Policy", href: "/privacy", group: "support" } },
           { id: "dreamshoot_footer_terms", type: "menu_link", settings: { label: "Terms of Service", href: "/terms", group: "support" } },
@@ -3027,7 +3037,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           card_name: "myDreamshoots header",
           settings: {
             is_announce_show: true,
-            announce_title: "Create private AI photo sets from everyday selfies.",
+            announce_title: "Turn your photos into AI videos, personalized Save the Date videos, professional headshots, and themed photo sets.",
             announce_color: "#ffffff",
             announce_bg_color: "#05070E"
           },

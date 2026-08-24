@@ -105,7 +105,9 @@ const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/policies/state-privacy": "/state-privacy",
   "/policies/state-privacy-rights": "/state-privacy",
   "/policies/california-privacy": "/state-privacy",
-  "/policies/ccpa": "/state-privacy"
+  "/policies/ccpa": "/state-privacy",
+  "/collections/engagement-photo": "/ai-image-generation/engagement-photo",
+  "/collections/headshot": "/ai-image-generation/headshot"
 };
 
 export function legacyPublicPathTarget(pathname: string, fallbackCollectionPath = "/collections"): string | undefined {

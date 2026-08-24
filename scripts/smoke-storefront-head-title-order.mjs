@@ -1,14 +1,19 @@
 import assert from "node:assert/strict";
 
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(/\/$/, "");
-const base = new URL(baseUrl);
+const siteBaseUrls = {
+  mydreamshoots: (process.env.STOREFRONT_HEAD_MYDREAMSHOOTS_BASE_URL || baseUrl).replace(/\/$/, ""),
+  aidreamcapes: (process.env.STOREFRONT_HEAD_AIDREAMCAPES_BASE_URL || baseUrl).replace(/\/$/, "")
+};
 const storefronts = [
   {
+    key: "mydreamshoots",
     host: "www.mydreamshoots.com",
     path: "/",
-    title: "Professional AI Photo Generator Online - myDreamshoots"
+    title: "AI Video & Photo Generator | myDreamshoots"
   },
   {
+    key: "aidreamcapes",
     host: "www.aidreamcapes.com",
     path: "/",
     title: "AIdreamcapes – the most advanced AI photo generator maker"
@@ -30,7 +35,13 @@ function firstIndex(head, pattern) {
   return index < 0 ? Number.POSITIVE_INFINITY : index;
 }
 
-async function checkStorefront({ host, path, title }) {
+function decodeHtml(value) {
+  return value.replace(/&amp;/g, "&").replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"');
+}
+
+async function checkStorefront({ key, host, path, title }) {
+  const storefrontBaseUrl = siteBaseUrls[key];
+  const base = new URL(storefrontBaseUrl);
   const headers = {
     accept: "text/html,*/*",
     host,
@@ -39,7 +50,7 @@ async function checkStorefront({ host, path, title }) {
   };
   if (base.port) headers["x-forwarded-port"] = base.port;
 
-  const response = await fetch(`${baseUrl}${path}`, {
+  const response = await fetch(`${storefrontBaseUrl}${path}`, {
     headers,
     redirect: "manual"
   });
@@ -52,7 +63,7 @@ async function checkStorefront({ host, path, title }) {
 
   const titleMatch = head.match(/^\s*<title\b[^>]*>([\s\S]*?)<\/title>/i);
   assert.ok(titleMatch, `${host}${path} must emit <title> immediately after <head>`);
-  assert.equal(titleMatch[1].replace(/\s+/g, " ").trim(), title);
+  assert.equal(decodeHtml(titleMatch[1].replace(/\s+/g, " ").trim()), title);
 
   const titleIndex = firstIndex(head, /<title\b/i);
   const resourceIndex = Math.min(

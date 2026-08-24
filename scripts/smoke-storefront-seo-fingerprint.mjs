@@ -36,6 +36,7 @@ const approvedHomeOrders = {
     "hero_1",
     "generation_showcase_1",
     "tutorial_video_1",
+    "tutorial_video_2",
     "package_catalog_1",
     "proof_1",
     "faq_1",

@@ -193,11 +193,12 @@ function mergeFooter(settings) {
   const next = clone(settings);
   next.navigation ??= {};
   next.navigation.footerLinks = [
-    ["AI Image Generation", "/ai-image-generation", "product"],
     ["AI Video Generation", "/ai-video-generation", "product"],
-    ["Best Packages", "/best-packages", "product"],
-    ["How it works", "/workflow", "product"],
+    ["AI Save the Date", "/holidays-events/save-the-date", "product"],
+    ["AI Image Generation", "/ai-image-generation", "product"],
+    ["AI Photo Packages", "/best-packages", "product"],
     ["Pricing", "/pricing", "product"],
+    ["How it works", "/workflow", "product"],
     ["Blog", "/blog", "company"],
     ["About us", "/about-us", "company"],
     ["Contact us", "/contact-us", "company"],
@@ -213,25 +214,26 @@ function mergeFooter(settings) {
   next.globalSections.footer.settings = {
     ...(next.globalSections.footer.settings ?? {}),
     title: "myDreamshoots",
-    tagline: "Private AI photo sets with visible credit costs and gallery delivery",
-    body: "Upload your selfies, choose a style, review the credit cost, and download a private photo set.",
-    bottomLine: "Monthly credits, one-time top-ups, and private galleries in one photo workspace.",
+    tagline: "AI videos, Save the Date moments, photo sets, and private album delivery with visible credit costs",
+    body: "Upload your photos, choose a video or photo workflow, review the credit cost, and download private results.",
+    bottomLine: "Credits, AI video and photo projects, private albums, and checkout stay inside your account.",
     productHeading: "Explore",
     companyHeading: "Content",
     supportHeading: "Support",
     socialHeading: "Why it works",
-    socialBody: "myDreamshoots helps you turn your own photos into private AI headshots, portraits, and themed albums.",
+    socialBody: "myDreamshoots helps you turn your own photos into AI videos, Save the Date moments, private AI headshots, portraits, and themed albums.",
     instagramUrl: "https://www.instagram.com/blydey_inc",
     facebookUrl: "https://www.facebook.com/blydeyinc",
     youtubeUrl: "https://www.youtube.com/@blydey-inc",
     showPaymentIcons: true
   };
   next.globalSections.footer.blocks = [
-    ["AI Image Generation", "/ai-image-generation", "product"],
     ["AI Video Generation", "/ai-video-generation", "product"],
-    ["Best Packages", "/best-packages", "product"],
-    ["How it works", "/workflow", "product"],
+    ["AI Save the Date", "/holidays-events/save-the-date", "product"],
+    ["AI Image Generation", "/ai-image-generation", "product"],
+    ["AI Photo Packages", "/best-packages", "product"],
     ["Pricing", "/pricing", "product"],
+    ["How it works", "/workflow", "product"],
     ["Blog", "/blog", "company"],
     ["About us", "/about-us", "company"],
     ["Contact us", "/contact-us", "company"],
@@ -253,8 +255,8 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
   next.sectionsOrder ??= Object.keys(next.sections);
   next.seo = {
     ...(next.seo ?? {}),
-    title: "Professional AI Photo Generator Online - myDreamshoots",
-    description: "Create AI headshots, portraits, themed photo sets, editing workflows, and supported short video results from your own approved photos. Compare examples and credit costs before you generate.",
+    title: "AI Video & Photo Generator | myDreamshoots",
+    description: "Create AI videos from your photos, professional AI headshots, portraits, and themed photo sets. Make personalized Save the Date videos with myDreamshoots.",
     keywords: "AI headshot generator, AI portrait generator, AI photo packages, AI photo editor, AI video workflows",
     canonicalPath: "/",
     index: true,
@@ -271,7 +273,7 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
       showTrustedLogoIntro: true,
       trustedLogoTitle: "Creative workflow examples built with myDreamshoots",
       aboutTitle: "What is myDreamshoots?",
-      aboutBody: "myDreamshoots is an AI photo and video studio for approved uploads, visible credit review, supported image and video workflows, and private account delivery. The current legal identity and policy facts are maintained in the published site profile.",
+      aboutBody: "myDreamshoots is an AI video and photo generation platform that turns your images into AI videos, personalized Save the Date videos, professional AI headshots, portraits, couple photos, and themed photo sets.",
       embeddedPricingSectionId: "pricing_1",
       trustedLogoSplitIndex: 15
     },
@@ -281,15 +283,21 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
   if (hero) {
     hero.settings = {
       ...(hero.settings ?? {}),
-      heroBadge: "AI Headshot Generators",
-      headline: "Create Professional AI Headshots and Photo Sets Without a Studio",
-      subheadline: "Upload a few approved photos and choose the result you want - from professional headshots and portraits to wedding, engagement, seasonal, creative, and supported video workflows. Review the examples and credit cost before generation, then check the finished results in your signed-in workspace before downloading.",
+      eyebrow: "AI Video & Photo Creation",
+      heroBadge: "AI Video & Photo Creation",
+      headline: "Create AI Videos, Professional AI Headshots & Photo Sets from Your Images",
+      subheadline: "Upload your photos and choose what you want to create—from AI videos and personalized Save the Date videos to professional AI headshots, portraits, couple photos, seasonal images, and creative photo sets. Review examples and credit costs before generation, then access your finished results in your workspace.",
       bulletList: "Training policy - {LIVE_TRAINING_POLICY_STATEMENT}|Source-photo retention - Source photos follow the published {LIVE_SOURCE_MEDIA_RETENTION_DAYS}-day retention period.|Refund review - {LIVE_REFUND_REVIEW_POLICY_STATEMENT} Requests should be submitted within {LIVE_REFUND_WINDOW_DAYS} days.|Secure account workflow - Uploads, requests, credit review, and galleries stay inside your signed-in account.",
-      imageBadge: "{LIVE_AI_IMAGE_WORKFLOW_COUNT} AI image workflows",
-      imageCaption: "Create a private AI photo set for professional profiles, portraits, couples, seasonal images, creative styles, or other supported workflows.",
+      imageBadge: "AI video & photo workflows",
+      imageCaption: "Create AI videos and photo sets for social content, Save the Date moments, professional profiles, portraits, couple photos, seasonal images, and creative projects.",
       authRibbon: "Review credits before generation",
       socialProofLabel: "Private uploads, requests, galleries"
     };
+    hero.blocks = (hero.blocks ?? []).map((entry) => {
+      if (entry.id === "hero_cta_secondary") return { ...entry, settings: { ...(entry.settings ?? {}), label: "Explore AI Video", href: "/ai-video-generation" } };
+      if (entry.id === "hero_stat_packs") return { ...entry, settings: { ...(entry.settings ?? {}), value: "Video + Photo", label: "AI video & photo workflows" } };
+      return entry;
+    });
     next.sections.hero_1 = hero;
   }
   const pricing = clone(pricingPageJson?.sections?.pricing_1 ?? templateHome.sections?.pricing_1);
@@ -299,7 +307,7 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
       title: "Subscription Plans",
       subtitle: "Compare the current price, included credits, renewal interval, and supported workflows before selecting a plan.",
       marketComparison: "Choose a monthly, quarterly, or semiannual plan based on the credits you expect to use. Compare the current price, included credits, renewal interval, and supported workflows before selecting a plan.",
-      description: "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs.",
+      description: "Use credits across eligible AI photo and video workflows. The required credit cost is shown before generation.",
       sidePanelEyebrow: "Why people subscribe",
       sidePanelTitle: "Plans start at {LIVE_LOWEST_ACTIVE_PLAN_PRICE}, with the current credit allowance and billing interval shown for each option.",
       sidePanelBody: "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs."

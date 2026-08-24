@@ -8,6 +8,7 @@ import type {
   ThemeSectionSchema,
   ThemeSettingValue
 } from "@/lib/types";
+import mydreamshootsHomepageCopy from "@/lib/mydreamshoots-homepage-copy.json";
 
 function text(id: string, label: string, defaultValue = "", helpText?: string): ThemeFieldSchema {
   return { id, label, type: "text", default: defaultValue, helpText };
@@ -461,16 +462,16 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     description: "Asymmetric first-screen offer with imagery, CTAs, and proof metrics.",
     maxBlocks: 6,
     settings: [
-      text("eyebrow", "Eyebrow", "Private AI photo studio"),
-      text("headline", "Headline", "Create studio-quality photos from everyday selfies."),
-      textarea("subheadline", "Subheadline", "Upload photos, train a private model, and generate themed albums."),
+      text("eyebrow", "Eyebrow", "AI Video & Photo Creation"),
+      text("headline", "Headline", "Create AI Videos, Professional AI Headshots & Photo Sets from Your Images"),
+      textarea("subheadline", "Subheadline", "Upload your photos and choose a supported AI video or photo workflow."),
       media("mediaAssetId", "Hero media asset"),
       image("imageUrl", "Primary image URL"),
       image("secondaryImageUrl", "Secondary image URL"),
       image("tertiaryImageUrl", "Tertiary image URL"),
       textarea("bulletList", "Feature bullets", "Upload approved source photos|Choose a supported image or video workflow|Review the credit cost before generation|Keep results inside your signed-in workspace"),
       text("highlightWord", "Highlighted word", "real"),
-      text("heroBadge", "Hero badge", "AI photo package studio"),
+      text("heroBadge", "Hero badge", mydreamshootsHomepageCopy.heroEyebrow),
       text("authRibbon", "Auth ribbon", "World Cup fan pack live"),
       text("authPrimaryLabel", "Auth primary label", "Continue with email"),
       text("authEmailPlaceholder", "Auth email placeholder", "Email address"),
@@ -500,9 +501,9 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       {
         label: "myDreamshoots-style photo hero",
         settings: {
-          eyebrow: "Private AI photo studio",
-          headline: "Create studio-quality AI photo packs from everyday selfies.",
-          subheadline: "Upload clear photos, train a private model, and generate headshots, creator portraits, gala scenes, World Cup fan photos, and editorial looks.",
+          eyebrow: "AI Video & Photo Creation",
+          headline: "Create AI Videos, Professional AI Headshots & Photo Sets from Your Images",
+          subheadline: "Upload your photos and choose a supported AI video or photo workflow.",
           mediaAssetId: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
           imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
           secondaryImageUrl: "/assets/dreamshoot/editorial-headshot.svg",
@@ -510,7 +511,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           bulletList:
             "Upload approved source photos|Choose a supported image or video workflow|Review the credit cost before generation|Keep results inside your signed-in workspace",
           highlightWord: "real",
-          heroBadge: "AI photo package studio",
+          heroBadge: "AI Video & Photo Creation",
           authRibbon: "World Cup fan pack live",
           authPrimaryLabel: "Continue with email",
           authEmailPlaceholder: "Email address",
@@ -1501,7 +1502,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       checkbox("showTrustedLogoIntro", "Show trusted logo intro", false),
       text("trustedLogoTitle", "Trusted logo title", "Creative workflow examples built with myDreamshoots"),
       text("aboutTitle", "About heading", "What is myDreamshoots?"),
-      textarea("aboutBody", "About body", "myDreamshoots is an AI photo and video studio. Upload photos you are authorized to use, choose a supported workflow, review the current credit cost, and generate results inside your signed-in workspace."),
+      textarea("aboutBody", "About body", "myDreamshoots is an AI video and photo generation platform that turns your images into AI videos, personalized Save the Date videos, professional AI headshots, portraits, couple photos, and themed photo sets."),
       text("embeddedPricingSectionId", "Embedded pricing section ID", ""),
       range("trustedLogoSplitIndex", "Trusted logo row split", 15, 1, 30),
       text("eyebrow", "Eyebrow", "Customer-created examples"),
@@ -1510,11 +1511,11 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("imageTitle", "Image heading", "Featured AI Photo Generators"),
       text("imageAllLabel", "Image all link label", "VIEW ALL PHOTO"),
       url("imageAllHref", "Image all link", "/best-ai-image"),
-      text("videoTitle", "Video heading", "Featured AI Video Generators"),
-      textarea("videoIntro", "Video intro", "Turn your photos into AI videos for social media, storytelling, product marketing, and creative projects. Explore talking photo, cinematic video, social video, product video, and other supported workflows."),
+      text("videoTitle", "Video heading", mydreamshootsHomepageCopy.videoTitle),
+      textarea("videoIntro", "Video intro", mydreamshootsHomepageCopy.videoIntro),
       text("videoAllHref", "Video directory link", "/ai-video-generation"),
-      text("saveTheDateTitle", "Save the Date heading", "AI Save the Date Videos"),
-      textarea("saveTheDateIntro", "Save the Date intro", "Create personalized Save the Date videos from your photos for engagements, proposals, wedding invitations, anniversaries, and special celebrations."),
+      text("saveTheDateTitle", "Save the Date heading", mydreamshootsHomepageCopy.saveTheDateTitle),
+      textarea("saveTheDateIntro", "Save the Date intro", mydreamshootsHomepageCopy.saveTheDateIntro),
       text("saveTheDateAllLabel", "Save the Date all link label", "VIEW ALL SAVE THE DATE"),
       text("saveTheDateAllHref", "Save the Date directory link", "/holidays-events/save-the-date"),
       textarea("photoIntro", "Photo intro", "Create professional AI headshots, portraits, couple photos, travel images, seasonal photos, and creative photo sets from your uploaded photos."),
@@ -1534,7 +1535,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           showTrustedLogoIntro: false,
 	          trustedLogoTitle: "Creative workflow examples built with myDreamshoots",
           aboutTitle: "What is myDreamshoots?",
-	          aboutBody: "myDreamshoots is an AI photo and video studio. Upload photos you are authorized to use, choose a supported workflow, review the current credit cost, and generate results inside your signed-in workspace.",
+          aboutBody: "myDreamshoots is an AI video and photo generation platform that turns your images into AI videos, personalized Save the Date videos, professional AI headshots, portraits, couple photos, and themed photo sets.",
           embeddedPricingSectionId: "",
           trustedLogoSplitIndex: 15,
           eyebrow: "Customer-created examples",

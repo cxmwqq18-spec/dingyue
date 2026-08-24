@@ -185,10 +185,17 @@ function isVideoGenerationRouteRequest(path: string[]): boolean {
 function canRenderPublishedPublicPath(
   snapshot: ReturnType<typeof createPublishedSiteSnapshot>,
   internalPath: string,
-  requestedPath: string
+  requestedPath: string,
+  site?: Parameters<typeof findPage>[0]
 ): boolean {
   const disposition = resolvePublishedRouteDisposition(snapshot, internalPath);
-  return disposition.kind === "render" || (disposition.kind === "redirect" && disposition.targetPath === requestedPath);
+  if (disposition.kind === "render" || (disposition.kind === "redirect" && disposition.targetPath === requestedPath)) return true;
+  // Keep already-published standard-content pages reachable while an older
+  // immutable publication is being replaced. The page itself is still
+  // required to carry the requested canonical path; draft-only pages never
+  // pass this compatibility check.
+  const page = site ? findPage(site, internalPath) : undefined;
+  return (page?.pageType === "standard-content" || page?.pageType === "content") && page.publishedJson?.seo?.canonicalPath === internalPath;
 }
 
 function collectionRouteLookupSlug(path: string[]): string {
@@ -312,7 +319,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
     }
     return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
   }
-  if (!canRenderPublishedPublicPath(snapshot, slug, requestedSlug)) return {};
+  if (!canRenderPublishedPublicPath(snapshot, slug, requestedSlug, site)) return {};
   const page = findPage(site, slug);
   return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
 }
@@ -330,6 +337,10 @@ export default async function SiteCatchAllPage({
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
+  const legacyAliasTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForPublicSlug(publicSlug));
+  if (legacyAliasTarget && (slug === "/collections/engagement-photo" || slug === "/collections/headshot")) {
+    permanentRedirect(routePath(legacyAliasTarget));
+  }
   if (slug === "/help" && usesAiGenerationPublicSlug(publicSlug)) redirect(routePath("/faq"));
   if (slug === "/how-it-works" && usesAiGenerationPublicSlug(publicSlug)) redirect(routePath("/workflow"));
   const aidreamcapesBlogRedirect = aidreamcapesLegacyBlogRedirectPath(publicSlug, slug);
@@ -386,6 +397,9 @@ export default async function SiteCatchAllPage({
   }
   const snapshot = createPublishedSiteSnapshot(state, publicSite, { source: "platform-state" });
   const legacyTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForPublicSlug(publicSlug));
+  // Keep a published seasonal page canonical when it exists. The legacy
+  // redirect is only a recovery path for publications that are missing the
+  // old navigation URL, so a normal published route must still render 200.
   if (legacyTarget) {
     const disposition = resolvePublishedRedirectDisposition(snapshot, slug, legacyTarget);
     if (disposition.kind === "redirect" && disposition.targetPath) permanentRedirect(routePath(disposition.targetPath));
@@ -429,7 +443,7 @@ export default async function SiteCatchAllPage({
   const canUseDreamShootPartnerTemplate =
     dreamshootPartnerTemplateSlugs.has(pageSlug) &&
     (isSpanishXbyStorefrontSite(publicSite) || isDreamshootPartnerTemplateSite(publicSite));
-  if (!isCollectionRequest && !canRenderPublishedPublicPath(snapshot, pageSlug, slug)) notFound();
+  if (!isCollectionRequest && !canRenderPublishedPublicPath(snapshot, pageSlug, slug, publicSite)) notFound();
   if (!isCollectionRequest && !findPage(publicSite, pageSlug) && resolvePublishedRouteDisposition(snapshot, pageSlug).kind !== "render" && !canUseDreamShootPartnerTemplate) notFound();
   const publicPath = collectionRoute?.canonicalPath ?? publicContentPageSlug(slug);
   return renderStorefrontPage({ site: publicSite, slug: pageSlug, publicPath, query: storefrontQuery, routeMode, state, deferCustomerRuntime: pageSlug !== "/cart" });

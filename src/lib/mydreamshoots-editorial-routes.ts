@@ -4,12 +4,20 @@ export const MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES = [
   "/holidays-events/proposal",
   "/holidays-events/save-the-date",
   "/ai-video-generation/wedding-ceremony",
-  "/holidays-events/thanksgiving",
-  "/holidays-events/christmas",
-  "/holidays-events/new-year",
   "/holidays-events/mothers-day",
-  "/holidays-events/fathers-day"
+  "/holidays-events/fathers-day",
+  "/holidays-events/halloween"
 ] as const;
+
+export const MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES = [
+  "/holidays-events/christmas",
+  "/holidays-events/thanksgiving",
+  "/holidays-events/new-year"
+] as const;
+
+export function isMydreamshootsRemovedLegacyRoute(path: string): boolean {
+  return MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES.includes(path as (typeof MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES)[number]);
+}
 
 export const MYDREAMSHOOTS_STANDARD_SEO_ROUTES = [
   "/about-us",

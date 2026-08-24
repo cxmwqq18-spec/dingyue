@@ -7,13 +7,12 @@ import sharp from "sharp";
 
 const root = process.env.SEASONAL_SOURCE_ROOT || "/tmp/mydreamshoots-seasonal-packages.83JYeu";
 const mothersFathersRoot = process.env.SEASONAL_MOTHERS_FATHERS_SOURCE_ROOT || "/tmp/mothers-fathers-packages.eaALdG";
+const halloweenRoot = process.env.SEASONAL_SOURCE_ROOT || "/tmp/mydreamshoots-seasonal-packages.83JYeu";
 const packages = [
   ["wedding-ceremony", "ai-wedding-ceremony-photo-video", "/ai-video-generation/wedding-ceremony", root],
-  ["thanksgiving", "ai-thanksgiving-photo-and-video-final", "/holidays-events/thanksgiving", root],
-  ["christmas", "ai-christmas-photo-and-video-final", "/holidays-events/christmas", root],
-  ["new-year", "ai-new-year-photo-and-video-final", "/holidays-events/new-year", root],
   ["mothers-day", "ai-mothers-day-photo-and-video-final", "/holidays-events/mothers-day", mothersFathersRoot],
-  ["fathers-day", "ai-fathers-day-photo-and-video-final", "/holidays-events/fathers-day", mothersFathersRoot]
+  ["fathers-day", "ai-fathers-day-photo-and-video-final", "/holidays-events/fathers-day", mothersFathersRoot],
+  ["halloween", "ai-halloween-photo-and-video-final", "/holidays-events/halloween", halloweenRoot]
 ];
 
 function csvRows(file) {

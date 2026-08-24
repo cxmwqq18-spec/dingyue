@@ -13,7 +13,12 @@ const outPath = process.env.SEASONAL_RELEASE_MANIFEST || path.join(process.cwd()
 assertDatabaseTarget({ expectedTarget: "remote-readonly", env: { ...process.env, DATABASE_TARGET: "remote-readonly", DINGYUE_ENV: "remote-readonly", DATABASE_URL: buildTunneledReadonlyDatabaseUrl(process.env.REMOTE_DB_READONLY_DATABASE_URL) } });
 const prisma = new PrismaClient({ datasources: { db: { url: buildTunneledReadonlyDatabaseUrl(process.env.REMOTE_DB_READONLY_DATABASE_URL) } } });
 const build = JSON.parse(fs.readFileSync(buildPath, "utf8"));
-const targetPages = new Map(build.pages.filter((page) => ["mothers-day", "fathers-day"].includes(page.key)).map((page) => [page.pagePath, page]));
+const targetPages = new Map(build.pages.filter((page) => ["mothers-day", "fathers-day", "halloween"].includes(page.key)).map((page) => [page.pagePath, page]));
+const removedLegacyPaths = new Set([
+  "/holidays-events/christmas",
+  "/holidays-events/thanksgiving",
+  "/holidays-events/new-year"
+]);
 const git = (args) => { try { return execFileSync("git", args, { encoding: "utf8" }).trim(); } catch { return "unknown"; } };
 const clone = (value) => value === undefined ? undefined : JSON.parse(JSON.stringify(value));
 const stable = (value) => value === null || typeof value !== "object" ? JSON.stringify(value) : Array.isArray(value) ? `[${value.map(stable).join(",")}]` : `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stable(value[key])}`).join(",")}}`;
@@ -24,9 +29,22 @@ function pageIdFor(pathname) { return `page_${siteId}_${pathname.split("/").filt
 function mediaIdFor(pathname, filename) { return `media_${siteId}_${pathname.split("/").filter(Boolean).join("_")}_${filename.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}`; }
 
 try {
-  const [toolCategories, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, themePages, themeSettings, siteThemes, themePublications, mediaAssets, products, prices] = await Promise.all([
-    prisma.toolCategory.findMany({ where: { siteId } }), prisma.toolMenuItem.findMany({ where: { siteId } }), prisma.creativePackCategory.findMany({ where: { siteId } }), prisma.creativePack.findMany({ where: { siteId } }), prisma.videoThemeCategory.findMany({ where: { siteId } }), prisma.videoTheme.findMany({ where: { siteId } }), prisma.themePage.findMany({ where: { siteId } }), prisma.themeSettings.findMany({ where: { siteId } }), prisma.siteTheme.findMany({ where: { siteId } }), prisma.themePublication.findMany({ where: { siteId } }), prisma.mediaAsset.findMany({ where: { siteId } }), prisma.product.findMany({ where: { siteId } }), prisma.price.findMany({ where: { product: { siteId } } })
-  ]);
+  // The production read-only tunnel intentionally exposes a small connection
+  // pool. Read the release baseline sequentially so manifest generation does
+  // not exhaust that pool before the content diff is built.
+  const toolCategories = await prisma.toolCategory.findMany({ where: { siteId } });
+  const toolMenuItems = await prisma.toolMenuItem.findMany({ where: { siteId } });
+  const creativePackCategories = await prisma.creativePackCategory.findMany({ where: { siteId } });
+  const creativePacks = await prisma.creativePack.findMany({ where: { siteId } });
+  const videoThemeCategories = await prisma.videoThemeCategory.findMany({ where: { siteId } });
+  const videoThemes = await prisma.videoTheme.findMany({ where: { siteId } });
+  const themePages = await prisma.themePage.findMany({ where: { siteId } });
+  const themeSettings = await prisma.themeSettings.findMany({ where: { siteId } });
+  const siteThemes = await prisma.siteTheme.findMany({ where: { siteId } });
+  const themePublications = await prisma.themePublication.findMany({ where: { siteId } });
+  const mediaAssets = await prisma.mediaAsset.findMany({ where: { siteId } });
+  const products = await prisma.product.findMany({ where: { siteId } });
+  const prices = await prisma.price.findMany({ where: { product: { siteId } } });
   const pages = [...themePages];
   const assets = [...mediaAssets];
   const availablePaths = new Set(themePages.map((page) => page.slug));
@@ -48,8 +66,8 @@ try {
   const settings = themeSettings[0] || { id: `settings_${siteId}`, siteId, draftJson: {}, publishedJson: {} };
   const current = settings.publishedJson || settings.draftJson || {};
   const navigation = current.saveTheDateNavigation || { menuLabel: "Save the Date", groups: [] };
-  const existingItems = navigation.groups.flatMap((group) => group.items || []);
-  const additions = [...targetPages.values()].map((item) => ({ label: item.key === "mothers-day" ? "Mother's Day" : "Father's Day", slug: item.key, href: item.pagePath, status: "published", sortOrder: 20 }));
+  const existingItems = navigation.groups.flatMap((group) => group.items || []).filter((item) => !removedLegacyPaths.has(item.href));
+  const additions = [...targetPages.values()].map((item) => ({ label: item.key === "mothers-day" ? "Mother's Day" : item.key === "fathers-day" ? "Father's Day" : "Halloween", slug: item.key, href: item.pagePath, status: "published", sortOrder: 20 }));
   const merged = [...existingItems, ...additions].filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index);
   const love = merged.filter((item) => ["/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date", "/ai-video-generation/wedding-ceremony"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
   const seasonal = merged.filter((item) => item.href.startsWith("/holidays-events/") && !["/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));

@@ -1028,24 +1028,69 @@ export async function getStorefrontSitemapUrlsForHost(hosts: string | null | und
   return entries.map((entry) => entry.loc);
 }
 
-export async function getStorefrontSitemapEntriesForHost(hosts: string | null | undefined | Array<string | null | undefined>): Promise<SitemapEntry[]> {
+export type StorefrontSitemapPayload = {
+  entries: SitemapEntry[];
+  identity?: {
+    publicationId?: string;
+    publicationVersion?: number;
+    snapshotHash?: string;
+    buildId?: string;
+    routeRevision?: string;
+    pageRevision?: string;
+    copyRevision?: string;
+    mediaRevision?: string;
+    factsRevision?: string;
+    offerRevision?: string;
+    collectionRevision?: string;
+    linkRevision?: string;
+    policyRevision?: string;
+  };
+};
+
+export async function getStorefrontSitemapPayloadForHost(hosts: string | null | undefined | Array<string | null | undefined>): Promise<StorefrontSitemapPayload> {
   const normalizedHosts = normalizeHostCandidates(hosts);
   const normalizedHost = normalizedHosts[0] ?? "";
   if (!normalizedHost) {
-    return [];
+    return { entries: [] };
   }
   const publicHostCandidates = normalizedHosts.filter((host) => !isLocalDevelopmentHost(host));
   const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
   const isLocalHostRequest = !publicHostCandidates.length && normalizedHosts.some(isLocalDevelopmentHost);
-  if (siteHostCandidates.some(isReservedGrownstrideHost)) return [];
+  if (siteHostCandidates.some(isReservedGrownstrideHost)) return { entries: [] };
   const runtime = await readIndexableStateAndSites();
-  if (!runtime) return [];
-  if (isLocalHostRequest) return runtime.sites.flatMap((site) => sitemapEntriesForSite(runtime.state, site));
+  if (!runtime) return { entries: [] };
   const site =
-    getSiteByHostCandidatesFromState(runtime.state, siteHostCandidates) ??
-    runtime.sites.find((item) => siteHostCandidates.some((host) => isHostForSite(item, host)));
-  if (site) return sitemapEntriesForSite(runtime.state, site);
-  return [];
+    isLocalHostRequest
+      ? runtime.sites[0]
+      : getSiteByHostCandidatesFromState(runtime.state, siteHostCandidates) ?? runtime.sites.find((item) => siteHostCandidates.some((host) => isHostForSite(item, host)));
+  const entries = isLocalHostRequest
+    ? runtime.sites.flatMap((item) => sitemapEntriesForSite(runtime.state, item))
+    : site ? sitemapEntriesForSite(runtime.state, site) : [];
+  const publication = site?.latestPublication;
+  if (!publication || publicationSnapshotIntegrity(publication.snapshot) !== "valid") return { entries };
+  const revisions = (publication.snapshot as PublishedSeoSnapshot).revisions;
+  return {
+    entries,
+    identity: {
+      publicationId: publication.id,
+      publicationVersion: publication.version,
+      snapshotHash: publication.snapshot.snapshotHash,
+      buildId: publication.snapshot.buildId,
+      routeRevision: revisions.routeRevision,
+      pageRevision: revisions.pageRevision,
+      copyRevision: revisions.copyRevision,
+      mediaRevision: revisions.mediaRevision,
+      factsRevision: revisions.factsRevision,
+      offerRevision: revisions.offerRevision,
+      collectionRevision: revisions.collectionRevision,
+      linkRevision: revisions.linkRevision,
+      policyRevision: revisions.policyRevision
+    }
+  };
+}
+
+export async function getStorefrontSitemapEntriesForHost(hosts: string | null | undefined | Array<string | null | undefined>): Promise<SitemapEntry[]> {
+  return (await getStorefrontSitemapPayloadForHost(hosts)).entries;
 }
 
 export async function getStorefrontPublicationIdentityForHost(
@@ -1065,33 +1110,7 @@ export async function getStorefrontPublicationIdentityForHost(
   linkRevision?: string;
   policyRevision?: string;
 } | undefined> {
-  const normalizedHosts = normalizeHostCandidates(hosts);
-  const publicHostCandidates = normalizedHosts.filter((host) => !isLocalDevelopmentHost(host));
-  const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
-  const isLocalHostRequest = !publicHostCandidates.length && normalizedHosts.some(isLocalDevelopmentHost);
-  const runtime = await readIndexableStateAndSites();
-  if (!runtime) return undefined;
-  const site = isLocalHostRequest
-    ? runtime.sites[0]
-    : getSiteByHostCandidatesFromState(runtime.state, siteHostCandidates) ?? runtime.sites.find((item) => siteHostCandidates.some((host) => isHostForSite(item, host)));
-  const publication = site?.latestPublication;
-  if (!publication || publicationSnapshotIntegrity(publication.snapshot) !== "valid") return undefined;
-  const revisions = (publication.snapshot as PublishedSeoSnapshot).revisions;
-  return {
-    publicationId: publication.id,
-    publicationVersion: publication.version,
-    snapshotHash: publication.snapshot.snapshotHash,
-    buildId: publication.snapshot.buildId,
-    routeRevision: revisions.routeRevision,
-    pageRevision: revisions.pageRevision,
-    copyRevision: revisions.copyRevision,
-    mediaRevision: revisions.mediaRevision,
-    factsRevision: revisions.factsRevision,
-    offerRevision: revisions.offerRevision,
-    collectionRevision: revisions.collectionRevision,
-    linkRevision: revisions.linkRevision,
-    policyRevision: revisions.policyRevision
-  };
+  return (await getStorefrontSitemapPayloadForHost(hosts)).identity;
 }
 
 export function storefrontSitemapUrlForHost(hosts: string | null | undefined | Array<string | null | undefined>): string | undefined {

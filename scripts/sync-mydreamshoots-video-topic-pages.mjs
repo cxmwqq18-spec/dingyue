@@ -385,6 +385,40 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function imageSource(value) {
+  return value && typeof value === "object" && typeof value.src === "string" ? value.src : "";
+}
+
+// Keep the published topic payload aligned with the design-package roles.
+// Hero previews may repeat the hero image, but a use-case card is an explicit
+// content slot and must keep its manifest-backed image. Remove gallery entries
+// that merely repeat the hero or a card image so the same asset is not rendered twice.
+function isolateVideoTopicImages(content) {
+  const next = clone(content);
+  const heroSource = imageSource(next.hero?.image);
+  if (Array.isArray(next.hero?.images)) {
+    const seen = new Set([heroSource]);
+    next.hero.images = next.hero.images.filter((image) => {
+      const src = imageSource(image);
+      if (!src || seen.has(src)) return false;
+      seen.add(src);
+      return true;
+    });
+  }
+
+  const useCaseSources = new Set(
+    (next.useCases?.items ?? []).map((item) => imageSource(item?.image)).filter(Boolean)
+  );
+  const reservedSources = new Set([heroSource, ...useCaseSources].filter(Boolean));
+  if (Array.isArray(next.gallery?.items)) {
+    next.gallery.items = next.gallery.items.filter((item) => {
+      const src = imageSource(item?.image);
+      return !src || !reservedSources.has(src);
+    });
+  }
+  return next;
+}
+
 async function readPlatformState() {
   const { PrismaClient } = await import("@prisma/client");
   const prisma = new PrismaClient();
@@ -491,6 +525,13 @@ function assetUrlsIn(value) {
   return Object.entries(value).flatMap(([key, nested]) => key === "src" && typeof nested === "string" ? [nested] : assetUrlsIn(nested));
 }
 
+function videoThemeGalleryImages(page) {
+  const content = isolateVideoTopicImages(videoTopicContentSeedForSlug(page.slug));
+  return [...new Set(assetUrlsIn(content))]
+    .filter((url) => url && url !== page.imageUrl)
+    .slice(0, 12);
+}
+
 function loadVideoTopicContentSeeds() {
   const jiti = createJiti(import.meta.url);
   return {
@@ -535,7 +576,7 @@ function pageJson(page, content = videoTopicContentSeedForSlug(page.slug)) {
         settings: {
           anchor: page.slug,
           contentKey: page.slug,
-          content: clone(content)
+          content: isolateVideoTopicImages(content)
         },
         blocks: []
       }
@@ -661,7 +702,7 @@ function syncExistingVideoThemePreviews(state, changes) {
       theme,
       {
         imageUrl: page.imageUrl,
-        galleryImages: [page.imageUrl]
+        galleryImages: videoThemeGalleryImages(page)
       },
       changes,
       "VideoTheme"
@@ -929,12 +970,13 @@ async function updateDatabase(state, categories, syncedPages) {
             where: { siteId_slug: { siteId: SITE_ID, slug: page.slug } },
             select: { imageUrl: true, galleryImages: true }
           });
-          if (existingTheme && (existingTheme.imageUrl !== page.imageUrl || !sameJson(existingTheme.galleryImages, [page.imageUrl]))) {
+          const galleryImages = videoThemeGalleryImages(page);
+          if (existingTheme && (existingTheme.imageUrl !== page.imageUrl || !sameJson(existingTheme.galleryImages, galleryImages))) {
             await tx.videoTheme.update({
               where: { siteId_slug: { siteId: SITE_ID, slug: page.slug } },
               data: {
                 imageUrl: page.imageUrl,
-                galleryImages: [page.imageUrl]
+                galleryImages
               }
             });
           }

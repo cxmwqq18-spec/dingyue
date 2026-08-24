@@ -297,7 +297,13 @@ function publicVideoThemesFromRenderData(siteId: string, existing: VideoTheme[],
 
 async function loadStorefrontPublicVideoThemesForSection(site: Pick<Site, "id" | "slug">, existing: VideoTheme[], limit?: number): Promise<VideoTheme[]> {
   const localThemes = publicVideoThemesFromRenderData(site.id, existing, limit);
-  if (preferLocalPathModeState(site.slug)) return localThemes;
+  const localHasPlayableVideo = localThemes.some((theme) =>
+    (theme.galleryImages ?? []).some((item) => /\.(?:mp4|webm)(?:\?|#|$)/i.test(item))
+  );
+  // Local path-mode snapshots can contain the legacy image-only theme rows.
+  // Refresh that projection when it cannot satisfy a video showcase; this keeps
+  // the homepage from presenting a poster as if it were a playable video.
+  if (preferLocalPathModeState(site.slug) && localHasPlayableVideo) return localThemes;
 
   try {
     // Fetch the full public set for a bounded section before theme filtering.
@@ -581,7 +587,13 @@ function trimVideoThemesForStorefront(renderData: SiteRenderData, limit?: number
           : [])
       ]
     : activeThemes;
-  const limitedThemes = typeof limit === "number" ? selectedThemes.slice(0, limit) : selectedThemes;
+  const showcaseThemes = section?.type === "dreamshoot_generation_showcase"
+    ? [
+        ...selectedThemes.filter((theme) => (theme.galleryImages ?? []).some((item) => /\.(?:mp4|webm)(?:\?|#|$)/i.test(item))),
+        ...selectedThemes.filter((theme) => !(theme.galleryImages ?? []).some((item) => /\.(?:mp4|webm)(?:\?|#|$)/i.test(item)))
+      ]
+    : selectedThemes;
+  const limitedThemes = typeof limit === "number" ? showcaseThemes.slice(0, limit) : showcaseThemes;
   return limitedThemes.map(lightweightVideoTheme);
 }
 
@@ -2665,6 +2677,7 @@ export async function renderStorefrontPage({
   if (!stateSite) notFound();
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
   const currentSite = publishedSnapshot.site;
+  const liveSite = providedState?.sites.find((item) => item.id === site.id);
   const collectionCategory = typeof query.category === "string" ? query.category : "";
   const collectionRootPath = publicCollectionRootPathForSite(currentSite);
   const isCollectionDirectoryPage = slug === "/collections" || slug === collectionRootPath;
@@ -2708,8 +2721,13 @@ export async function renderStorefrontPage({
     : undefined;
   const navigationVideoGenerationTopics = publishedVideoGenerationTopics(publishedSnapshot);
   currentSite.mediaAssets = renderData.mediaAssets;
-  const directPage = findPage(currentSite, slug);
+  const directPage = findPage(currentSite, slug) ?? (
+    liveSite
+      ? findPage(liveSite, slug)
+      : undefined
+  );
   if (!directPage) notFound();
+  if (!findPage(currentSite, slug)) currentSite.pages = [...currentSite.pages, directPage];
   const page = directPage;
   if (isFocusedCollectionPage) {
     currentSite.pages = currentSite.pages.filter((item) => item.slug === slug || item.slug === "/404");

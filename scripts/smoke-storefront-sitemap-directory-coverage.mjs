@@ -36,6 +36,13 @@ const targets = [
   { siteId: "site_aidreamcapes", host: "www.aidreamcapes.com" }
 ];
 
+function originForHost(host) {
+  const configured = process.env[`SITEMAP_SMOKE_${host.toUpperCase().replace(/[^A-Z0-9]/g, "_")}_BASE_URL`];
+  if (configured) return new URL(configured.replace(/\/$/, ""));
+  if (baseUrl.hostname === host || baseUrl.hostname === `www.${host}`) return baseUrl;
+  return new URL(`https://${host}`);
+}
+
 function normalizePath(value, fallback = "/") {
   const raw = typeof value === "string" && value.trim() ? value.trim() : fallback;
   if (/^https?:\/\//i.test(raw)) return normalizePath(new URL(raw).pathname, fallback);
@@ -81,16 +88,18 @@ function familyCounts(paths) {
   }, {});
 }
 
-function requestSitemap(host) {
-  const client = baseUrl.protocol === "https:" ? https : http;
+function requestSitemap(host, method = "GET") {
+  const origin = originForHost(host);
+  const startedAt = Date.now();
+  const client = origin.protocol === "https:" ? https : http;
   return new Promise((resolve, reject) => {
     const request = client.request({
-      protocol: baseUrl.protocol,
-      hostname: baseUrl.hostname,
-      port: baseUrl.port,
+      protocol: origin.protocol,
+      hostname: origin.hostname,
+      port: origin.port,
       path: "/sitemap.xml",
-      method: "GET",
-      headers: { host, accept: "application/xml" },
+      method,
+      headers: { ...(origin.hostname === "localhost" || origin.hostname === "127.0.0.1" ? { host } : {}), accept: "application/xml" },
       timeout: timeoutMs
     }, (response) => {
       const chunks = [];
@@ -101,7 +110,7 @@ function requestSitemap(host) {
         callback();
       };
       response.on("data", (chunk) => chunks.push(chunk));
-      response.on("end", () => finish(() => resolve({ status: response.statusCode ?? 0, body: Buffer.concat(chunks).toString("utf8") })));
+      response.on("end", () => finish(() => resolve({ status: response.statusCode ?? 0, body: Buffer.concat(chunks).toString("utf8"), elapsedMs: Date.now() - startedAt })));
       response.on("aborted", () => finish(() => reject(new Error(`sitemap_aborted:${host}`))));
       response.on("error", (error) => finish(() => reject(error)));
       response.on("close", () => {
@@ -115,15 +124,16 @@ function requestSitemap(host) {
 }
 
 function requestPage(host, pathname) {
-  const client = baseUrl.protocol === "https:" ? https : http;
+  const origin = originForHost(host);
+  const client = origin.protocol === "https:" ? https : http;
   return new Promise((resolve, reject) => {
     const request = client.request({
-      protocol: baseUrl.protocol,
-      hostname: baseUrl.hostname,
-      port: baseUrl.port,
+      protocol: origin.protocol,
+      hostname: origin.hostname,
+      port: origin.port,
       path: pathname,
       method: "GET",
-      headers: { host, accept: "text/html" },
+      headers: { ...(origin.hostname === "localhost" || origin.hostname === "127.0.0.1" ? { host } : {}), accept: "text/html" },
       timeout: pageTimeoutMs
     }, (response) => {
       const chunks = [];
@@ -206,6 +216,11 @@ const results = [];
 for (const target of targets) {
   const response = await requestSitemap(target.host);
   if (response.status !== 200) throw new Error(`sitemap_status:${target.host}:${response.status}`);
+  if (response.elapsedMs > timeoutMs) throw new Error(`sitemap_response_too_slow:${target.host}:${response.elapsedMs}`);
+  const warmResponse = await requestSitemap(target.host);
+  if (warmResponse.status !== 200 || warmResponse.elapsedMs > timeoutMs) throw new Error(`sitemap_warm_response_invalid:${target.host}:${warmResponse.status}:${warmResponse.elapsedMs}`);
+  const head = await requestSitemap(target.host, "HEAD");
+  if (head.status !== 200 || head.body.length !== 0) throw new Error(`sitemap_head_invalid:${target.host}:${head.status}:${head.body.length}`);
   const actual = sitemapPaths(response.body, target.host);
   const site = state?.sites.find((candidate) => candidate.id === target.siteId);
   if (state && !site) throw new Error(`missing_site:${target.siteId}`);
@@ -218,6 +233,8 @@ for (const target of targets) {
     publication: site ? publicationIdentity(site) : null,
     expected: expected?.size ?? null,
     actual: actual.paths.size,
+    coldElapsedMs: response.elapsedMs,
+    warmElapsedMs: warmResponse.elapsedMs,
     expectedPathFamilies: expected ? familyCounts(expected) : {},
     actualPathFamilies: familyCounts(actual.paths),
     missing: expected ? [...expected].filter((value) => !actual.paths.has(value)) : [],

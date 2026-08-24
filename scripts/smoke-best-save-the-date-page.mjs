@@ -12,9 +12,9 @@ const expectedThemePaths = [
   "/holidays-events/proposal",
   "/holidays-events/save-the-date",
   "/ai-video-generation/wedding-ceremony",
-  "/holidays-events/thanksgiving",
-  "/holidays-events/christmas",
-  "/holidays-events/new-year"
+  "/ai-image-generation/thanksgiving-photo",
+  "/ai-image-generation/christmas-photo",
+  "/ai-image-generation/holiday"
 ];
 
 const state = await readPlatformStateFromSql();

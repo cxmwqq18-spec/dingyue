@@ -99,22 +99,6 @@ function cardImageUrls(card: DreamshootPackageCatalogCard): string[] {
       seen.add(key);
       return true;
     });
-  if (urls.length >= 2) return urls;
-
-  // A stale published card can leave only one numbered gallery URL. Recover
-  // adjacent published gallery variants so the split cover never renders the
-  // same image twice.
-  const source = urls[0] || card.imageUrl.trim();
-  const match = source.match(/^(.*\/[^/?#]+-)(\d{2})(\.webp(?:[?#].*)?)$/i);
-  if (!match) return urls;
-  for (let index = 1; index <= 12 && urls.length < 2; index += 1) {
-    const candidate = `${match[1]}${String(index).padStart(2, "0")}${match[3]}`;
-    const key = comparableImageUrl(candidate);
-    if (key && !seen.has(key)) {
-      seen.add(key);
-      urls.push(candidate);
-    }
-  }
   return urls;
 }
 
@@ -164,9 +148,9 @@ const referenceCardClass =
   "group relative block overflow-hidden rounded-[14px] border border-white/[0.11] bg-[#111827]/[0.82] text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.92)] transition duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[linear-gradient(90deg,rgba(255,166,68,0.74),rgba(236,75,221,0.52),rgba(22,220,240,0.68))] before:opacity-70 before:content-[''] hover:-translate-y-1 hover:border-cyan-200/24 hover:shadow-[0_24px_74px_-50px_rgba(22,220,240,0.42)]";
 const referenceImageShellClass = "bg-[#0B1020]/[0.70]";
 const referenceImageFrameClass = "relative aspect-[4/3] overflow-hidden rounded-[9px] bg-[#070B14]";
-const referenceContentClass = "flex min-h-[184px] flex-col bg-[#111827]/[0.46] p-4";
+const referenceContentClass = "flex flex-col bg-[#111827]/[0.46] p-4";
 const referenceTitleClass = "line-clamp-1 text-base font-semibold leading-5 text-white [font-family:var(--site-title-font)]";
-const referenceDescriptionClass = "mt-3 line-clamp-2 min-h-[2.45rem] text-xs leading-[1.625] text-slate-300/70";
+const referenceDescriptionClass = "mt-3 line-clamp-2 text-xs leading-[1.625] text-slate-300/70";
 const referenceArrowClass = "mt-1 h-5 w-5 shrink-0 text-slate-300/70 transition group-hover:translate-x-1 group-hover:text-cyan-100";
 const referenceTagClass =
   "rounded-[8px] border border-white/[0.13] bg-[#101827]/[0.76] px-2.5 py-1 text-[11px] font-semibold leading-5 text-white/[0.78] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]";
@@ -197,9 +181,8 @@ function ReferencePackageCard({
   siteBasePath: string;
 }) {
   const cardImages = cardImageUrls(card);
-  // Homepage recommendation cards always reserve two equal cover slots. A pack
-  // with a single published asset reuses it so the grid does not collapse.
-  const images = cardImages.length === 1 ? [cardImages[0], cardImages[0]] : cardImages.slice(0, 2);
+  const images = cardImages.slice(0, 2);
+  const hasDistinctImages = images.length >= 2;
   const tags = (card.tags?.length ? card.tags : [card.metaLabel || card.meta, card.category]).filter(Boolean).slice(0, 3);
   const photoCountLabel = card.photoCountLabel || card.credits || (locale === "es" ? "20 fotos" : "20 Photos");
   const usesLabel = meaningfulUsesLabel(card.usesLabel) || card.trainingLabel || card.metaLabel || card.meta;
@@ -209,10 +192,11 @@ function ReferencePackageCard({
       className={referenceCardClass}
       href={resolvedCardHref(siteBasePath, card, categoryHrefOverrides)}
     >
-      <div className={referenceImageShellClass}>
-        <div className="grid grid-cols-2 items-stretch gap-0.5 p-3" data-dreamshoot-catalog-cover="split">
-          {images.map((image, imageIndex) => (
-            <div className={referenceImageFrameClass} key={`${card.id}_split_${imageIndex}`}>
+      {hasDistinctImages ? (
+        <div className={referenceImageShellClass}>
+          <div className="grid grid-cols-2 items-stretch gap-0.5 p-3" data-dreamshoot-catalog-cover="split">
+            {images.map((image, imageIndex) => (
+              <div className={referenceImageFrameClass} key={`${card.id}_split_${imageIndex}`}>
 	              <SafeCatalogImage
                 alt={imageAlt(card, image, imageIndex, locale, brandName)}
                 className="h-full object-cover transition duration-500"
@@ -222,20 +206,21 @@ function ReferencePackageCard({
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12vw"
                 src={image}
               />
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
       <div className={referenceContentClass}>
         <div className="flex items-start gap-3">
           <div className="min-w-0 flex-1">
-            <h2 className={referenceTitleClass}>{card.title}</h2>
+            <h3 className={referenceTitleClass}>{card.title}</h3>
             <p className={referenceDescriptionClass} title={card.description}>{card.description}</p>
           </div>
           <ArrowRight className={referenceArrowClass} strokeWidth={1.8} />
         </div>
         {tags.length ? (
-          <div className="mt-4 flex min-h-[4.1rem] flex-wrap content-start items-start gap-2">
+          <div className="mt-4 flex flex-wrap content-start items-start gap-2">
             {tags.map((tag) => (
               <span className={referenceTagClass} key={tag}>
                 {tag}
@@ -390,12 +375,18 @@ export function DreamshootPackageCatalogClient({
         <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
           <span>{activePackageLabel}</span>
         </div>
-        <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:items-stretch">
+        <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:items-start">
           <div className="flex h-full flex-col">
             <h2 className="max-w-[46rem] text-[clamp(2.8rem,7vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-balance [font-family:var(--site-title-font)]">
               {title}
             </h2>
-            <div className="mt-10 flex flex-wrap gap-3 lg:mt-auto lg:pt-10">
+            {locale === "en" && !aidreamcapes ? (
+              <a className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan-200 transition hover:text-white" href={cardHref(siteBasePath, "/ai-video-generation")}>
+                Want to bring your photos to life? Explore AI Video Generation
+                <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+              </a>
+            ) : null}
+            <div className="mt-10 flex flex-wrap gap-3">
               {tabs.map((tab) => {
                 const active = selectedCategory === categorySlug(tab);
                 return (
@@ -471,7 +462,7 @@ export function DreamshootPackageCatalogClient({
                   <span className={compactTagClass}>{categoryLabelForLocale(card.category, locale)}</span>
                   <span className={compactTagClass}>{card.meta}</span>
                 </div>
-                <h2 className="text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-white">{card.title}</h2>
+                <h3 className="text-[1.42rem] font-semibold leading-tight tracking-[-0.035em] text-white">{card.title}</h3>
                 <p className="mt-3 line-clamp-2 min-h-[3rem] text-sm leading-6 text-white/62" title={card.description}>{card.description}</p>
                 <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
                   {card.credits ? <span className={compactTagClass}>{card.credits}</span> : null}
@@ -534,7 +525,7 @@ export function DreamshootPackageCatalogClient({
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="min-w-0">
-                        <h2 className="line-clamp-1 text-base font-semibold tracking-[-0.025em] text-white">{card.title}</h2>
+                        <h3 className="line-clamp-1 text-base font-semibold tracking-[-0.025em] text-white">{card.title}</h3>
                         <p className="mt-2 line-clamp-2 min-h-[2.6rem] text-sm leading-5 text-white/56" title={card.description}>{card.description}</p>
                       </div>
                       <ArrowRight className="mt-1 h-4.5 w-4.5 shrink-0 text-white/46 transition group-hover:translate-x-1 group-hover:text-white/82" strokeWidth={1.8} />

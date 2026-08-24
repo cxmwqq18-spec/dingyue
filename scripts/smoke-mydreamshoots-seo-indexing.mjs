@@ -392,7 +392,7 @@ for (const requiredPath of requiredCollectionPaths) {
   );
 }
 assert(
-  headerLabels.includes("Save the Date"),
+  headerLabels.includes("AI Save the Date"),
   "MyDreamShoots header must expose the published Save the Date menu",
   { headerLinks }
 );
@@ -407,7 +407,7 @@ assert(
   { headerLinks }
 );
 assert(
-  JSON.stringify(headerLabels) === JSON.stringify(["AI Image Generation", "AI Video Generation", "Save the Date", "How it works", "Blog", "Pricing", "Workspace"]),
+  JSON.stringify(headerLabels) === JSON.stringify(["AI Video Generation", "AI Save the Date", "AI Image Generation", "How it works", "Blog", "Pricing", "Workspace"]),
   "MyDreamShoots header labels must use the published navigation order",
   { headerLinks }
 );
@@ -416,15 +416,15 @@ assert(
   "MyDreamShoots header must not expose the removed Best Packages or Headshot Generator top label",
   { headerLinks }
 );
-for (const [label, href] of [["Best Packages", "/best-packages"], ["Best AI image", "/best-ai-image"], ["Best AI video", "/best-ai-video"]]) {
+for (const [label, href] of [["AI Video Generation", "/ai-video-generation"], ["AI Save the Date", "/holidays-events/save-the-date"], ["AI Image Generation", "/ai-image-generation"], ["AI Photo Packages", "/best-packages"], ["Pricing", "/pricing"]]) {
   assert(
     footerProductLinks.some((link) => link.label === label && link.href === href),
-    "MyDreamShoots footer product links must expose the new Best entry",
+    "MyDreamShoots footer product links must expose the Phase B product order",
     { label, href, footerProductLinks }
   );
   assert(
     visiblePackageLabelHits.some((hit) => hit.label === label),
-    "MyDreamShoots visible labels must include the new Best entry",
+    "MyDreamShoots visible labels must include the Phase B product entry",
     { label, visiblePackageLabelHits }
   );
 }
@@ -644,7 +644,9 @@ assert(
     sitemapRoute.includes("xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\"") &&
     sitemapRoute.includes('"cache-control"') &&
     sitemapRoute.includes('"x-sitemap-url-count"') &&
-    sitemapRoute.includes('"x-sitemap-image-count"'),
+    sitemapRoute.includes('"x-sitemap-image-count"') &&
+    sitemapRoute.includes("unstable_cache") &&
+    sitemapRoute.includes('"x-sitemap-generation-ms"'),
   "sitemap route must select URLs using the request host, emit per-entry sitemap metadata, and avoid request-time lastmod"
 );
 assert(

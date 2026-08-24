@@ -28,35 +28,35 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 
 锁定来源：Postgres `site_dreamshoot` 的首页 `ThemePage.publishedJson`，并包含 guard 用于页面 SEO 对比的 `ThemeSettings.publishedJson` 记录。
 
-锁定时间：`2026-08-14T20:33:58.925+08:00`
+锁定时间：`2026-08-24T17:24:36.467Z`
 
 锁定指纹：
 
 | 范围 | SHA-256 |
 | --- | --- |
-| 首页完整 `publishedJson` | `b26f628548ee6c7610b48e1656f663957a9063495bc7abfc7b9d32f2d44c3f6c` |
-| 首页可见文案记录 | `a018b5e96f13caf180790360d76d1c3f6a4d24cd8f12ba541b32d236bb77be00` |
+| 首页完整 `publishedJson` | `d2d9d8862069325d7b4ae4febab7828d746a249b03c048b51d1f56b7438d2756` |
+| 首页可见文案记录 | `a0a38114a3a2df8e3d76b669d46bc43a6c28a507d104f69f2c5291cc61d4405e` |
 
 当前批准的首页关键文案：
 
 | 字段 | 当前批准值 |
 | --- | --- |
-| SEO title | `Professional AI Photo Generator Online - myDreamshoots` |
-| SEO description | `Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.` |
-| SEO keywords | `Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot` |
-| Hero badge | `AI Headshot Generators` |
-| Hero headline | `Upload selfies and create your own AI model - Professional headshots without a studio.` |
-| Hero body | `upload a few selfies and it generates photo-realistic couple, wedding, engagement, and boudoir photos that keep your real facial features. It doesn't need any skills, Turn ideas into videos instantly,just an idea that can add life to your images and make them in a motion. saving all your time & money. So, don't wait, create now! Private by default: your uploads stay private in your signed-in account.` |
+| SEO title | `AI Video & Photo Generator | myDreamshoots` |
+| SEO description | `Create AI videos from your photos, professional AI headshots, portraits, and themed photo sets. Make personalized Save the Date videos with myDreamshoots.` |
+| SEO keywords | `AI video generator, AI photo generator, AI headshot generator, Save the Date video, AI photo packages` |
+| Hero badge | `AI Video & Photo Creation` |
+| Hero headline | `Create AI Videos, Professional AI Headshots & Photo Sets from Your Images` |
+| Hero body | `Upload your photos and choose what you want to create—from AI videos and personalized Save the Date videos to professional AI headshots, portraits, couple photos, seasonal images, and creative photo sets. Review examples and credit costs before generation, then access your finished results in your workspace.` |
 | Hero primary CTA | `Create Now` |
-| Hero secondary CTA | `Headshot Generator` |
-| Auth card headline | `Generate your custom AI album Transform your favorite moments into professional-grade couple photos and stunning holiday memories.` |
-| Auth ribbon | `Plans start at $24.50/month` |
+| Hero secondary CTA | `Explore AI Video` |
+| Auth card headline | `Create AI videos and photo sets for social content, Save the Date moments, professional profiles, portraits, couple photos, seasonal images, and creative projects.` |
+| Auth ribbon | `Review credits before generation` |
 | Auth primary action | `Continue with Google` |
-| Auth email submit | `Create my first photo set with Email` |
-| Showcase image heading | `Best Photo Generator` |
-| Showcase image all link | `View all photos` -> `/best-ai-image` |
-| Showcase video heading | `Best Video Generator` |
-| Showcase video all link | `View all videos` -> `/best-ai-video` |
+| Auth email submit | `Start Creating with Email` |
+| Showcase image heading | `Featured AI Photo Generators` |
+| Showcase image all link | `VIEW ALL PHOTO` -> `/best-ai-image` |
+| Showcase video heading | `Featured AI Video Generators` |
+| Showcase video all link | `VIEW ALL VIDEO` -> `/ai-video-generation` |
 
 上线硬规则：
 
@@ -70,10 +70,10 @@ MyDreamShoots 首页 `/` 的当前线上已批准文案已锁定。除非站点�
 
 本基线从 `2026-08-09` 起适用于 MyDreamShoots 与 AIdreamcapes 两个 `.com` 店铺；两个 `.eu` 店铺不跟随本次文案/结构调整。分类、公开主题和 Footer 以目标站点当前 active `ThemePublication.snapshot` 的关系投影为准，不再以历史脚本、旧 JSON 或本文件中的固定清单冒充线上事实。
 
-MyDreamShoots 当前线上基线记录（导出时间 `2026-08-23T15:04:59Z`，publication `pub_site_dreamshoot_mt5xtrwr_fdc145e4`，version `89`）：图片分类 43 个 active 记录、视频分类 45 个 active 记录、视频主题 29 个 active 记录。Footer Product 当前为 `AI Image Generation` -> `/ai-image-generation`、`AI Video Generation` -> `/ai-video-generation`、`Best Packages` -> `/best-packages`、`How it works` -> `/workflow`、`Pricing` -> `/pricing`。后续分类、主题或 Footer 调整时，只更新这份线上基线记录和对应 publication readback，不手工维护第二套分类事实。
+MyDreamShoots 当前线上基线记录（导出时间 `2026-08-24T18:52:52Z`，publication `pub_site_dreamshoot_mt7lfuex_e3a39455`，version `116`）：首页按 Phase B 展示 AI Video、AI Save the Date 和 AI Photo 精选内容；Footer Product 当前为 `AI Video Generation` -> `/ai-video-generation`、`AI Save the Date` -> `/holidays-events/save-the-date`、`AI Image Generation` -> `/ai-image-generation`、`AI Photo Packages` -> `/best-packages`、`Pricing` -> `/pricing`。后续分类、主题或 Footer 调整时，只更新这份线上基线记录和对应 publication readback，不手工维护第二套分类事实。
 
 - [ ] Header 顶部导航以当前 active publication 的导航投影为准；不得根据旧文档强行添加或删除入口。每个可见入口必须有对应 published route、canonical 和 HTTP 200 readback。
-- [ ] Footer Product 入口以当前线上最新 publication 为准；本次基线实际为 `AI Image Generation` -> `/ai-image-generation`、`AI Video Generation` -> `/ai-video-generation`、`Best Packages` -> `/best-packages`、`How it works` -> `/workflow`、`Pricing` -> `/pricing`。不得把历史 `Best AI image` / `Best AI video` 固定要求写成与线上数据相反的验收条件。
+- [ ] Footer Product 入口以当前线上最新 publication 为准；MyDreamShoots Phase B 基线为 `AI Video Generation`、`AI Save the Date`、`AI Image Generation`、`AI Photo Packages`、`Pricing`。`Best Packages` 仅作为独立兼容路径，不作为首页 Footer 文案。
 - [ ] MyDreamShoots 首页 `/` 不展示推荐套餐 section；Aidreamcapes 首页保留 `featured_thanksgiving_1` 并放在 `generation_showcase_1` 后面；`featured_pack_1`、`featured_christmas_1` 只在 `/best-packages` 展示。
 - [ ] `/best-packages` 必须先展示唯一 H1 intro，再展示三组推荐套餐 section，顺序固定为 `intro_1`、`featured_pack_1`、`featured_christmas_1`、`featured_thanksgiving_1`、`faq_1`，保留各站点自己的文案和素材。
 - [ ] `/best-ai-image` 与 `/best-ai-video` 是否存在、标题、描述、媒体数量和布局，以当前 active publication 的 `publishedPageEntities`、`publishedPageMedia` 和对应页面 JSON 为准；不能用旧 priority slug、旧数量标签或旧固定文案覆盖线上数据。
@@ -89,7 +89,7 @@ MyDreamShoots 当前线上基线记录（导出时间 `2026-08-23T15:04:59Z`，p
 本冻结规则从 `2026-08-10` 起生效，适用于 MyDreamShoots 与 AIdreamcapes 两个 `.com` 店铺。未经站点负责人明确批准，不允许修改、删除、隐藏或重排以下文案、路由、布局和数据规则；任何同步脚本、发布快照、模板生成、上线修复都必须保留这些规则。
 
 - [ ] 顶部导航和 Footer 以目标站点 active publication 的最新导航投影为准；文档只记录已验证的快照和验证方法，不固定一个会随线上数据变化的菜单版本。
-- [ ] Footer 的入口必须来自当前 publication 的 navigation projection，并通过真实域名 HTTP/canonical readback；本次 MyDreamShoots 基线是 `AI Image Generation`、`AI Video Generation`、`Best Packages`、`How it works`、`Pricing`。
+- [ ] Footer 的入口必须来自当前 publication 的 navigation projection，并通过真实域名 HTTP/canonical readback；本次 MyDreamShoots 基线是 `AI Video Generation`、`AI Save the Date`、`AI Image Generation`、`AI Photo Packages`、`Pricing`。
 - [ ] MyDreamShoots 首页不展示推荐套餐 section；Aidreamcapes 首页推荐套餐只允许出现 `featured_thanksgiving_1`；`featured_pack_1` 和 `featured_christmas_1` 不得回到首页。
 - [ ] `/best-packages` 固定展示唯一 H1 intro、`featured_pack_1`、`featured_christmas_1`、`featured_thanksgiving_1` 和页面专属 FAQ，不得少于三组推荐套餐，不得改成下拉菜单或局部弹窗。
 - [ ] `/best-ai-image` 与 `/best-ai-video` 的存在、布局和完整数据源以当前 publication 页面实体/媒体投影为准；如果线上 publication 未启用某页面，不得仅凭历史基线要求运行时伪造页面。
@@ -106,7 +106,7 @@ MyDreamShoots 当前线上基线记录（导出时间 `2026-08-23T15:04:59Z`，p
 本基线从 `2026-08-10` 起适用于 MyDreamShoots 与 AIdreamcapes 两个 `.com` 店铺，防止后续模板同步把顶部导航恢复成收纳式布局。
 
 - [ ] `1280px` 及以上保持完整桌面导航常驻可见且单行展示，不再使用 `More` 收纳，也不隐藏 `How it works` / `Blog` / 其他入口。
-- [ ] `Best Packages` 固定在 `Tools` 后面，`Workspace` 保持右侧常驻。
+- [ ] Aidreamcapes/Grownstride 的 `Best Packages` 固定在 `Tools` 后面；MyDreamShoots 使用 `AI Save the Date` 与 `AI Photo Packages` 命名，`Workspace` 保持右侧常驻。
 - [ ] 登录态顶部继续展示姓名、邮箱与 `Sign out`；账号信息区域保持可点击进入 `/account` 个人中心，独立 `Workspace` 入口继续进入 `/app/create`，不要改成头像下拉菜单。
 - [ ] 公开页 CTA 继续常驻可见，仅通过间距、字号和换行优化，不能把文案缩成隐藏入口。
 - [ ] `ThemeGlobalHeader` 与 `CustomerShellHeader` 必须同步保持全量展示和间距优化，不能只改单个入口。
@@ -130,11 +130,11 @@ MyDreamShoots 当前线上基线记录（导出时间 `2026-08-23T15:04:59Z`，p
 ### MyDreamShoots
 
 - [ ] `title` 正确：
-  `Professional AI Photo Generator Online - myDreamshoots`
+  `AI Video & Photo Generator | myDreamshoots`
 - [ ] `description` 正确：
-  `Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.`
+  `Create AI videos from your photos, professional AI headshots, portraits, and themed photo sets. Make personalized Save the Date videos with myDreamshoots.`
 - [ ] `keywords` 正确：
-  `Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot`
+  `AI video generator, AI photo generator, AI headshot generator, Save the Date video, AI photo packages`
 
 TDK 变更必须通过 `node scripts/publish-mydreamshoots-homepage-tdk.mjs --apply` 执行：本地使用 `DATABASE_TARGET=local`，生产使用 `DATABASE_TARGET=remote --confirm-production`。脚本同时更新首页 `ThemePage`、`ThemeSettings`、immutable `ThemePublication` 和 active pointer，并生成本地备份；不得直接编辑线上快照或导入历史 JSON。
 

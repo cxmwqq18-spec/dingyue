@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "lockedAt": "2026-08-23T15:05:41.870Z",
+  "lockedAt": "2026-08-24T17:24:36.467Z",
   "policy": {
     "owner": "myDreamshoots site owner",
     "rule": "This homepage copy baseline is locked. Do not modify, switch versions, import old JSON, or roll back production copy unless the site owner explicitly requests a homepage copy change.",
@@ -19,35 +19,35 @@
     "pageType": "home"
   },
   "latestPublication": {
-    "id": "pub_site_dreamshoot_mt5xtrwr_fdc145e4",
-    "version": 89,
-    "publishedAt": "2026-08-23T15:04:05.293Z"
+    "id": "pub_site_dreamshoot_mt7lfuex_e3a39455",
+    "version": 116,
+    "publishedAt": "2026-08-24T18:52:52.314Z"
   },
   "seo": {
-    "title": "Professional AI Photo Generator Online - myDreamshoots",
-    "description": "Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
-    "keywords": "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot"
+    "title": "AI Video & Photo Generator | myDreamshoots",
+    "description": "Create AI videos from your photos, professional AI headshots, portraits, and themed photo sets. Make personalized Save the Date videos with myDreamshoots.",
+    "keywords": "AI video generator, AI photo generator, AI headshot generator, Save the Date video, AI photo packages"
   },
   "hero": {
     "anchor": "home",
-    "authButtonLabel": "Create my first photo set with Email",
-    "authEmailPlaceholder": "Email address",
-    "authPrimaryLabel": "Continue with Google",
+    "layout": "immersive_dark",
+    "eyebrow": "AI Video & Photo Creation",
+    "headline": "Create AI Videos, Professional AI Headshots & Photo Sets from Your Images",
+    "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
+    "heroBadge": "AI Video & Photo Creation",
     "authRibbon": "Review credits before generation",
     "bulletList": "Photo-use terms - The current policy describes how inputs are handled for service delivery; confirm the live Privacy Policy and provider terms before relying on a retention or training assumption.|Input-photo retention - Input-photo deletion follows the current retention process described in the Privacy Policy; confirm the applicable window before relying on it.|Refund review - If the generated shoot does not look like you, request a refund review under our Refund Policy. Read the refund policy|Secure account workflow - Uploads, requests, credit review, and galleries stay inside your signed-in account.",
-    "eyebrow": "",
-    "headline": "Create Professional AI Headshots and Photo Sets Without a Studio",
-    "heroBadge": "AI Headshot Photo Packages",
-    "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
+    "imageBadge": "AI video & photo workflows",
+    "subheadline": "Upload your photos and choose what you want to create—from AI videos and personalized Save the Date videos to professional AI headshots, portraits, couple photos, seasonal images, and creative photo sets. Review examples and credit costs before generation, then access your finished results in your workspace.",
+    "imageCaption": "Create AI videos and photo sets for social content, Save the Date moments, professional profiles, portraits, couple photos, seasonal images, and creative projects.",
     "highlightWord": "AI Headshots",
-    "imageBadge": "{LIVE_AI_IMAGE_WORKFLOW_COUNT} AI image workflows",
-    "imageCaption": "Create a private AI photo set for professional profiles, portraits, couples, seasonal images, creative styles, or other supported workflows.",
-    "imageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
-    "layout": "immersive_dark",
-    "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
+    "heroGridImages": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-business.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-beauty.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-cyber.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-travel.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-sports.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-avatar.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-product.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-social.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-noir.png|/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-upscale.png",
+    "authButtonLabel": "Start Creating with Email",
+    "authPrimaryLabel": "Continue with Google",
     "socialProofLabel": "Private uploads, requests, galleries",
-    "subheadline": "Upload a few approved photos and choose the result you want - from headshot and portraits to wedding, engagement, seasonal, creative, and supported video workflows. Review the examples and credit cost before generation, then check the finished results in your signed-in workspace before downloading.",
-    "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"
+    "tertiaryImageUrl": "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
+    "secondaryImageUrl": "/assets/dreamshoot/generated/20260622-homepage-unique/hero-credit-studio-card.png",
+    "authEmailPlaceholder": "Email address"
   },
   "sectionsOrder": [
     "hero_1",
@@ -60,1324 +60,1585 @@
     "brand_strip_1"
   ],
   "fingerprints": {
-    "publishedJsonSha256": "256a1b2d509284445aca9fa735d612ccfb95d38f988b0aea054c9580a22fdfc0",
-    "visibleTextSha256": "a3d49bba42fb2b390c54898e513990ca065662ca402cc97b2773ec5592cfa265",
-    "visibleRecordCount": 219
+    "publishedJsonSha256": "d2d9d8862069325d7b4ae4febab7828d746a249b03c048b51d1f56b7438d2756",
+    "visibleTextSha256": "a0a38114a3a2df8e3d76b669d46bc43a6c28a507d104f69f2c5291cc61d4405e",
+    "visibleRecordCount": 225
   },
   "visibleRecords": [
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1",
       "key": "title",
       "text": "AI Photo Packages by Style and Use Case",
-      "normalized": "ai photo packages by style and use case"
+      "normalized": "ai photo packages by style and use case",
+      "priority": 0
+    },
+    {
+      "source": "approved-lock:themePage:/:seo",
+      "key": "seo.title",
+      "text": "AI Video & Photo Generator",
+      "normalized": "ai video photo generator",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[13]",
       "key": "question",
       "text": "Are my uploads and personal data private?",
-      "normalized": "are my uploads and personal data private"
+      "normalized": "are my uploads and personal data private",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[10]",
       "key": "title",
       "text": "Avatar",
-      "normalized": "avatar"
+      "normalized": "avatar",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1",
       "key": "title",
       "text": "Browse image and video themes customers have already created.",
-      "normalized": "browse image and video themes customers have already created"
+      "normalized": "browse image and video themes customers have already created",
+      "priority": 0
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[17]",
+      "key": "question",
+      "text": "Can I create a Save the Date video from my photos?",
+      "normalized": "can i create a save the date video from my photos",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[7]",
       "key": "question",
       "text": "Can I create couple or group photos?",
-      "normalized": "can i create couple or group photos"
+      "normalized": "can i create couple or group photos",
+      "priority": 0
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[15]",
+      "key": "question",
+      "text": "Can I turn a photo into an AI video?",
+      "normalized": "can i turn a photo into an ai video",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[12]",
       "key": "question",
       "text": "Can I use AI photos on social media, profiles, or business pages?",
-      "normalized": "can i use ai photos on social media profiles or business pages"
+      "normalized": "can i use ai photos on social media profiles or business pages",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[14]",
       "key": "title",
       "text": "Christmas Photo",
-      "normalized": "christmas photo"
+      "normalized": "christmas photo",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.hero_1",
       "key": "headline",
-      "text": "Create Professional AI Headshots and Photo Sets Without a Studio",
-      "normalized": "create professional ai headshots and photo sets without a studio"
+      "text": "Create AI Videos, Professional AI Headshots & Photo Sets from Your Images",
+      "normalized": "create ai videos professional ai headshots photo sets from your images",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[5]",
       "key": "title",
       "text": "Cyberpunk",
-      "normalized": "cyberpunk"
+      "normalized": "cyberpunk",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1",
       "key": "title",
       "text": "FAQ",
-      "normalized": "faq"
+      "normalized": "faq",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1",
       "key": "title",
       "text": "For creators, photographers, social sellers, studios, fan communities, and small teams.",
-      "normalized": "for creators photographers social sellers studios fan communities and small teams"
+      "normalized": "for creators photographers social sellers studios fan communities and small teams",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[2]",
       "key": "title",
       "text": "Gala Photo",
-      "normalized": "gala photo"
+      "normalized": "gala photo",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[4]",
       "key": "title",
       "text": "Hairstyle Generator",
-      "normalized": "hairstyle generator"
+      "normalized": "hairstyle generator",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[3]",
       "key": "title",
       "text": "Headshot",
-      "normalized": "headshot"
+      "normalized": "headshot",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[1]",
       "key": "question",
       "text": "How do I use myDreamshoots?",
-      "normalized": "how do i use mydreamshoots"
+      "normalized": "how do i use mydreamshoots",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[4]",
       "key": "question",
       "text": "How do plans, credits, and promotions work?",
-      "normalized": "how do plans credits and promotions work"
+      "normalized": "how do plans credits and promotions work",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[10]",
       "key": "question",
       "text": "How do virtual looks, hairstyle, and styling tools work?",
-      "normalized": "how do virtual looks hairstyle and styling tools work"
+      "normalized": "how do virtual looks hairstyle and styling tools work",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[8]",
       "key": "question",
       "text": "How does the AI photo generator work?",
-      "normalized": "how does the ai photo generator work"
+      "normalized": "how does the ai photo generator work",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[9]",
       "key": "question",
       "text": "How does the AI video workflow work?",
-      "normalized": "how does the ai video workflow work"
+      "normalized": "how does the ai video workflow work",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.tutorial_video_1",
       "key": "title",
-      "text": "How it works",
-      "normalized": "how it works"
+      "text": "How It Works",
+      "normalized": "how it works",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[3]",
       "key": "question",
       "text": "Is myDreamshoots free?",
-      "normalized": "is mydreamshoots free"
+      "normalized": "is mydreamshoots free",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[6]",
       "key": "title",
       "text": "Mafia",
-      "normalized": "mafia"
+      "normalized": "mafia",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[12]",
       "key": "title",
       "text": "Motion Generator",
-      "normalized": "motion generator"
+      "normalized": "motion generator",
+      "priority": 0
+    },
+    {
+      "source": "approved-lock:themePage:/:seo",
+      "key": "seo.title",
+      "text": "myDreamshoots",
+      "normalized": "mydreamshoots",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[13]",
       "key": "title",
       "text": "Photo Enhancer",
-      "normalized": "photo enhancer"
+      "normalized": "photo enhancer",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[1]",
       "key": "title",
       "text": "Portrait Photo",
-      "normalized": "portrait photo"
-    },
-    {
-      "source": "approved-lock:themePage:/:seo",
-      "key": "seo.title",
-      "text": "Professional AI Photo Generator Online - myDreamshoots",
-      "normalized": "professional ai photo generator online mydreamshoots"
+      "normalized": "portrait photo",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.conversion_1",
       "key": "title",
-      "text": "Ready to try the myDreamshoots's Best AI Maker?",
-      "normalized": "ready to try the mydreamshoots s best ai maker"
+      "text": "Ready to create with myDreamshoots?",
+      "normalized": "ready to create with mydreamshoots",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[0]",
       "key": "title",
       "text": "Soccer",
-      "normalized": "soccer"
+      "normalized": "soccer",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[11]",
       "key": "title",
       "text": "Street Style",
-      "normalized": "street style"
+      "normalized": "street style",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.pricing_1",
       "key": "title",
       "text": "Subscription Plans",
-      "normalized": "subscription plans"
+      "normalized": "subscription plans",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[15]",
       "key": "title",
       "text": "Thanksgiving Photo",
-      "normalized": "thanksgiving photo"
+      "normalized": "thanksgiving photo",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[7]",
       "key": "title",
       "text": "Travel",
-      "normalized": "travel"
+      "normalized": "travel",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[8]",
       "key": "title",
       "text": "Urban",
-      "normalized": "urban"
+      "normalized": "urban",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[9]",
       "key": "title",
       "text": "Virtual Try-On",
-      "normalized": "virtual try on"
+      "normalized": "virtual try on",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[2]",
       "key": "question",
       "text": "What can I create with myDreamshoots?",
-      "normalized": "what can i create with mydreamshoots"
+      "normalized": "what can i create with mydreamshoots",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[0]",
       "key": "question",
       "text": "What is myDreamshoots?",
-      "normalized": "what is mydreamshoots"
+      "normalized": "what is mydreamshoots",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[14]",
       "key": "question",
       "text": "What is the refund policy?",
-      "normalized": "what is the refund policy"
+      "normalized": "what is the refund policy",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1",
       "key": "title",
       "text": "What Our Customers Say",
-      "normalized": "what our customers say"
+      "normalized": "what our customers say",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[6]",
       "key": "question",
       "text": "What photos should I upload?",
-      "normalized": "what photos should i upload"
+      "normalized": "what photos should i upload",
+      "priority": 0
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[16]",
+      "key": "question",
+      "text": "What types of AI videos can I create?",
+      "normalized": "what types of ai videos can i create",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[5]",
       "key": "question",
       "text": "When are credits used?",
-      "normalized": "when are credits used"
+      "normalized": "when are credits used",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[11]",
       "key": "question",
       "text": "Who operates myDreamshoots?",
-      "normalized": "who operates mydreamshoots"
+      "normalized": "who operates mydreamshoots",
+      "priority": 0
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[5]",
       "key": "body",
       "text": "A request may take time because image and video generation use dedicated processing capacity. The workspace keeps the request status and account history together so you can tell whether a charge was completed or released.",
-      "normalized": "a request may take time because image and video generation use dedicated processing capacity the workspace keeps the request status and account history together so you can tell whether a charge was completed or released"
+      "normalized": "a request may take time because image and video generation use dedicated processing capacity the workspace keeps the request status and account history together so you can tell whether a charge was completed or released",
+      "priority": 1
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.faq_1",
+      "key": "subtitle",
+      "text": "Answers to AI video, Save the Date, photo creation, pricing, privacy, uploads, credits, and refunds.",
+      "normalized": "answers to ai video save the date photo creation pricing privacy uploads credits and refunds",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[3]",
       "key": "answer",
       "text": "Availability depends on the current tool and plan setup. Lightweight preview or utility tools may be offered without a subscription when enabled, while private model creation, premium packages, and video requests use credits.",
-      "normalized": "availability depends on the current tool and plan setup lightweight preview or utility tools may be offered without a subscription when enabled while private model creation premium packages and video requests use credits"
+      "normalized": "availability depends on the current tool and plan setup lightweight preview or utility tools may be offered without a subscription when enabled while private model creation premium packages and video requests use credits",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[12]",
       "key": "body",
       "text": "Before publishing, check that everyone shown has approved the use, that no protected logo or likeness is being misrepresented, and that any required AI disclosure is included.",
-      "normalized": "before publishing check that everyone shown has approved the use that no protected logo or likeness is being misrepresented and that any required ai disclosure is included"
+      "normalized": "before publishing check that everyone shown has approved the use that no protected logo or likeness is being misrepresented and that any required ai disclosure is included",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1",
       "key": "subtitle",
-      "text": "Browse all 38 myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
-      "normalized": "browse all 38 mydreamshoots themes across professional lifestyle creative magic and photo tools before spending credits"
+      "text": "Browse active AI photo themes and review the visible credit cost before starting a private photo package.",
+      "normalized": "browse active ai photo themes and review the visible credit cost before starting a private photo package",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[1]",
       "key": "description",
       "text": "Build polished creator portraits, media-kit images, founder visuals, newsletter photos, and personal-brand profile crops.",
-      "normalized": "build polished creator portraits media kit images founder visuals newsletter photos and personal brand profile crops"
+      "normalized": "build polished creator portraits media kit images founder visuals newsletter photos and personal brand profile crops",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[8]",
       "key": "description",
       "text": "Build urban portraits with city textures, street scenes, modern wardrobe, creator energy, and private gallery delivery.",
-      "normalized": "build urban portraits with city textures street scenes modern wardrobe creator energy and private gallery delivery"
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.pricing_1",
-      "key": "description",
-      "text": "Choose Starter, Pro, or Premium. Each package shows its credit cost before generation; failed requests can return reserved credits according to request status.",
-      "normalized": "choose starter pro or premium each package shows its credit cost before generation failed requests can return reserved credits according to request status"
+      "normalized": "build urban portraits with city textures street scenes modern wardrobe creator energy and private gallery delivery",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.pricing_1",
       "key": "subtitle",
       "text": "Choose the plan that works for you",
-      "normalized": "choose the plan that works for you"
+      "normalized": "choose the plan that works for you",
+      "priority": 1
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.faq_1",
+      "source": "approved-lock:themePage:/:publishedJson.sections.tutorial_video_1",
       "key": "subtitle",
-      "text": "Clear answers about source photos, packages, credits, AI images, short videos, styling tools, privacy, publishing, and delivery.",
-      "normalized": "clear answers about source photos packages credits ai images short videos styling tools privacy publishing and delivery"
+      "text": "Choose what you want to create, upload your photos, review examples and credit costs, then generate and download your AI video or photo.",
+      "normalized": "choose what you want to create upload your photos review examples and credit costs then generate and download your ai video or photo",
+      "priority": 1
+    },
+    {
+      "source": "approved-lock:themePage:/:seo",
+      "key": "seo.description",
+      "text": "Create AI videos from your photos, professional AI headshots, portraits, and themed photo sets. Make personalized Save the Date videos with myDreamshoots.",
+      "normalized": "create ai videos from your photos professional ai headshots portraits and themed photo sets make personalized save the date videos with mydreamshoots",
+      "priority": 1
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.conversion_1",
+      "key": "subtitle",
+      "text": "Create AI videos, personalized Save the Date videos, and professional photo sets from your images—all in one private workspace.",
+      "normalized": "create ai videos personalized save the date videos and professional photo sets from your images all in one private workspace",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[14]",
       "key": "description",
       "text": "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images.",
-      "normalized": "create festive group portraits greeting card visuals cozy couple scenes and warm seasonal images"
+      "normalized": "create festive group portraits greeting card visuals cozy couple scenes and warm seasonal images",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[2]",
       "key": "description",
       "text": "Create formal gala portraits with eveningwear mood, polished event lighting, red-carpet energy, and elegant editorial crops.",
-      "normalized": "create formal gala portraits with eveningwear mood polished event lighting red carpet energy and elegant editorial crops"
+      "normalized": "create formal gala portraits with eveningwear mood polished event lighting red carpet energy and elegant editorial crops",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[6]",
       "key": "description",
       "text": "Create mafia-inspired noir portraits with tailored wardrobe, moody interiors, dramatic light, and private character albums.",
-      "normalized": "create mafia inspired noir portraits with tailored wardrobe moody interiors dramatic light and private character albums"
+      "normalized": "create mafia inspired noir portraits with tailored wardrobe moody interiors dramatic light and private character albums",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[0]",
       "key": "description",
       "text": "Create personal soccer fan portraits, stadium-style posters, match-day social images, and supporter albums without official marks.",
-      "normalized": "create personal soccer fan portraits stadium style posters match day social images and supporter albums without official marks"
+      "normalized": "create personal soccer fan portraits stadium style posters match day social images and supporter albums without official marks",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[7]",
       "key": "description",
       "text": "Create travel portraits with scenic streets, coastal escapes, outdoor light, destination mood, and private creator albums.",
-      "normalized": "create travel portraits with scenic streets coastal escapes outdoor light destination mood and private creator albums"
+      "normalized": "create travel portraits with scenic streets coastal escapes outdoor light destination mood and private creator albums",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[15]",
       "key": "description",
       "text": "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums.",
-      "normalized": "create warm family style portraits dinner table keepsakes gratitude cards and private seasonal albums"
+      "normalized": "create warm family style portraits dinner table keepsakes gratitude cards and private seasonal albums",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[4]",
       "key": "body",
       "text": "Credit amounts, package scope, and any active promotion are shown in the current pricing or checkout experience. Promotions can change, so this FAQ intentionally does not promise a fixed bonus or duration.",
-      "normalized": "credit amounts package scope and any active promotion are shown in the current pricing or checkout experience promotions can change so this faq intentionally does not promise a fixed bonus or duration"
+      "normalized": "credit amounts package scope and any active promotion are shown in the current pricing or checkout experience promotions can change so this faq intentionally does not promise a fixed bonus or duration",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[4]",
       "key": "body",
       "text": "Credits are tied to the account that purchased or received them and should be reviewed before a request starts.",
-      "normalized": "credits are tied to the account that purchased or received them and should be reviewed before a request starts"
+      "normalized": "credits are tied to the account that purchased or received them and should be reviewed before a request starts",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[14]",
       "key": "body",
       "text": "Credits used for a successfully delivered result are generally not refundable. A failed or interrupted request may release its reservation according to the recorded status, while subscription or payment questions should be reviewed against the applicable purchase terms.",
-      "normalized": "credits used for a successfully delivered result are generally not refundable a failed or interrupted request may release its reservation according to the recorded status while subscription or payment questions should be reviewed against the applicable purchase terms"
+      "normalized": "credits used for a successfully delivered result are generally not refundable a failed or interrupted request may release its reservation according to the recorded status while subscription or payment questions should be reviewed against the applicable purchase terms",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[2]",
       "key": "body",
       "text": "Different packages are organized around a visual goal, so the examples help you compare composition, wardrobe, lighting, crop, and intended channel before spending credits.",
-      "normalized": "different packages are organized around a visual goal so the examples help you compare composition wardrobe lighting crop and intended channel before spending credits"
+      "normalized": "different packages are organized around a visual goal so the examples help you compare composition wardrobe lighting crop and intended channel before spending credits",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[7]",
       "key": "body",
       "text": "For a group set, keep the source images organized and make sure each person has given permission for the intended use. Results can vary when faces are small, hidden, or heavily overlapping.",
-      "normalized": "for a group set keep the source images organized and make sure each person has given permission for the intended use results can vary when faces are small hidden or heavily overlapping"
+      "normalized": "for a group set keep the source images organized and make sure each person has given permission for the intended use results can vary when faces are small hidden or heavily overlapping",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[11]",
       "key": "body",
       "text": "For a plan question, credit discrepancy, failed request, or delivery issue, include the account email, request details, and a short description so support can find the right record.",
-      "normalized": "for a plan question credit discrepancy failed request or delivery issue include the account email request details and a short description so support can find the right record"
+      "normalized": "for a plan question credit discrepancy failed request or delivery issue include the account email request details and a short description so support can find the right record",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[11]",
       "key": "description",
       "text": "Generate fashion-forward street style portraits with outfit direction, editorial poses, city backdrops, and creator crops.",
-      "normalized": "generate fashion forward street style portraits with outfit direction editorial poses city backdrops and creator crops"
+      "normalized": "generate fashion forward street style portraits with outfit direction editorial poses city backdrops and creator crops",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[3]",
       "key": "description",
       "text": "Generate realistic professional headshots for LinkedIn, resumes, speaker pages, founder bios, and team profile updates.",
-      "normalized": "generate realistic professional headshots for linkedin resumes speaker pages founder bios and team profile updates"
+      "normalized": "generate realistic professional headshots for linkedin resumes speaker pages founder bios and team profile updates",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[6]",
       "key": "body",
       "text": "Good source photos do not need to be professional studio images. Natural phone photos can work well when the subject is well lit, unobstructed, and captured from several useful angles.",
-      "normalized": "good source photos do not need to be professional studio images natural phone photos can work well when the subject is well lit unobstructed and captured from several useful angles"
+      "normalized": "good source photos do not need to be professional studio images natural phone photos can work well when the subject is well lit unobstructed and captured from several useful angles",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[13]",
       "key": "description",
       "text": "Improve approved photos with a focused enhancement pass before using them in a private gallery workflow.",
-      "normalized": "improve approved photos with a focused enhancement pass before using them in a private gallery workflow"
+      "normalized": "improve approved photos with a focused enhancement pass before using them in a private gallery workflow",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[0]",
       "key": "body",
       "text": "It is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits.",
-      "normalized": "it is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits"
+      "normalized": "it is designed for people who want to explore a visual direction before arranging a traditional shoot or commissioning repeated edits",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[0]",
       "key": "answer",
       "text": "myDreamshoots is a private AI photo and video studio for turning approved source photos into themed portraits, group images, profile assets, seasonal cards, and short motion-ready scenes.",
-      "normalized": "mydreamshoots is a private ai photo and video studio for turning approved source photos into themed portraits group images profile assets seasonal cards and short motion ready scenes"
+      "normalized": "mydreamshoots is a private ai photo and video studio for turning approved source photos into themed portraits group images profile assets seasonal cards and short motion ready scenes",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[11]",
       "key": "answer",
       "text": "myDreamshoots is operated as a customer-facing AI photo studio with account, billing, generation, and gallery support handled through the site workspace.",
-      "normalized": "mydreamshoots is operated as a customer facing ai photo studio with account billing generation and gallery support handled through the site workspace"
+      "normalized": "mydreamshoots is operated as a customer facing ai photo studio with account billing generation and gallery support handled through the site workspace",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1",
       "key": "subtitle",
       "text": "Our users love us and we love them!",
-      "normalized": "our users love us and we love them"
+      "normalized": "our users love us and we love them",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[4]",
       "key": "answer",
       "text": "Plans provide account access and recurring credits, while one-time top-ups or package options can cover additional generation needs when available.",
-      "normalized": "plans provide account access and recurring credits while one time top ups or package options can cover additional generation needs when available"
+      "normalized": "plans provide account access and recurring credits while one time top ups or package options can cover additional generation needs when available",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[4]",
       "key": "description",
       "text": "Preview hairstyle, hair color, texture, bangs, length, and salon inspiration portraits before choosing a real-world look.",
-      "normalized": "preview hairstyle hair color texture bangs length and salon inspiration portraits before choosing a real world look"
+      "normalized": "preview hairstyle hair color texture bangs length and salon inspiration portraits before choosing a real world look",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[9]",
       "key": "description",
       "text": "Preview outfit directions, wardrobe moodboards, fashion looks, creator styling ideas, and private try-on portraits.",
-      "normalized": "preview outfit directions wardrobe moodboards fashion looks creator styling ideas and private try on portraits"
+      "normalized": "preview outfit directions wardrobe moodboards fashion looks creator styling ideas and private try on portraits",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[13]",
       "key": "body",
       "text": "Privacy also depends on how you share or download a result. Use the private gallery for review, avoid uploading material you do not control, and remove content when you no longer need it where the account tools allow.",
-      "normalized": "privacy also depends on how you share or download a result use the private gallery for review avoid uploading material you do not control and remove content when you no longer need it where the account tools allow"
+      "normalized": "privacy also depends on how you share or download a result use the private gallery for review avoid uploading material you do not control and remove content when you no longer need it where the account tools allow",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[14]",
       "key": "answer",
       "text": "Refund eligibility follows the current refund policy, checkout terms, and the status of the specific order or generation request.",
-      "normalized": "refund eligibility follows the current refund policy checkout terms and the status of the specific order or generation request"
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1",
-      "key": "subtitle",
-      "text": "Scan photo themes and supported video workflows before you upload approved photos, review credits, and generate inside your signed-in workspace.",
-      "normalized": "scan photo themes and supported video workflows before you upload approved photos review credits and generate inside your signed in workspace"
+      "normalized": "refund eligibility follows the current refund policy checkout terms and the status of the specific order or generation request",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[9]",
       "key": "answer",
       "text": "Selected themes can turn approved images or a prepared visual direction into short AI motion outputs. The request screen explains the supported input, expected format, and credit requirement.",
-      "normalized": "selected themes can turn approved images or a prepared visual direction into short ai motion outputs the request screen explains the supported input expected format and credit requirement"
+      "normalized": "selected themes can turn approved images or a prepared visual direction into short ai motion outputs the request screen explains the supported input expected format and credit requirement",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[1]",
       "key": "answer",
       "text": "Start by choosing a package or tool that matches the result you want, then follow the upload and generation steps shown in your signed-in workspace.",
-      "normalized": "start by choosing a package or tool that matches the result you want then follow the upload and generation steps shown in your signed in workspace"
+      "normalized": "start by choosing a package or tool that matches the result you want then follow the upload and generation steps shown in your signed in workspace",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[10]",
       "key": "answer",
       "text": "Styling tools apply a focused visual change such as a hairstyle, virtual look, wardrobe direction, or presentation treatment while using your source photo as the starting point.",
-      "normalized": "styling tools apply a focused visual change such as a hairstyle virtual look wardrobe direction or presentation treatment while using your source photo as the starting point"
+      "normalized": "styling tools apply a focused visual change such as a hairstyle virtual look wardrobe direction or presentation treatment while using your source photo as the starting point",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[2]",
       "key": "answer",
       "text": "The catalog covers personal portraits, headshot, creator images, couple and group scenes, fan-inspired moments, editorial looks, seasonal cards, and selected Motion Generator.",
-      "normalized": "the catalog covers personal portraits headshot creator images couple and group scenes fan inspired moments editorial looks seasonal cards and selected motion generator"
+      "normalized": "the catalog covers personal portraits headshot creator images couple and group scenes fan inspired moments editorial looks seasonal cards and selected motion generator",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[5]",
       "key": "answer",
       "text": "The credit requirement is shown before a request starts. Credits are reserved when generation begins, settled after successful delivery, and released when a failed request returns its reservation.",
-      "normalized": "the credit requirement is shown before a request starts credits are reserved when generation begins settled after successful delivery and released when a failed request returns its reservation"
+      "normalized": "the credit requirement is shown before a request starts credits are reserved when generation begins settled after successful delivery and released when a failed request returns its reservation",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[8]",
       "key": "body",
       "text": "The examples show the intended visual language, but they are not a guarantee of an identical result. Source quality, pose, lighting, subject count, and model behavior all affect the finished images.",
-      "normalized": "the examples show the intended visual language but they are not a guarantee of an identical result source quality pose lighting subject count and model behavior all affect the finished images"
+      "normalized": "the examples show the intended visual language but they are not a guarantee of an identical result source quality pose lighting subject count and model behavior all affect the finished images",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[8]",
       "key": "answer",
       "text": "The generator combines your approved source photos with the selected package direction, then creates a new set of images that follows the package composition, styling, and scene cues.",
-      "normalized": "the generator combines your approved source photos with the selected package direction then creates a new set of images that follows the package composition styling and scene cues"
+      "normalized": "the generator combines your approved source photos with the selected package direction then creates a new set of images that follows the package composition styling and scene cues",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[1]",
       "key": "body",
       "text": "The request flow keeps the important decisions together: source photos, package direction, selected files, credit cost, and generation status.",
-      "normalized": "the request flow keeps the important decisions together source photos package direction selected files credit cost and generation status"
+      "normalized": "the request flow keeps the important decisions together source photos package direction selected files credit cost and generation status",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[3]",
       "key": "body",
       "text": "The request screen is the source of truth for what is available to your account and what a generation will cost.",
-      "normalized": "the request screen is the source of truth for what is available to your account and what a generation will cost"
+      "normalized": "the request screen is the source of truth for what is available to your account and what a generation will cost",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[11]",
       "key": "body",
       "text": "The site does not require customers to manage model providers or generation infrastructure themselves.",
-      "normalized": "the site does not require customers to manage model providers or generation infrastructure themselves"
+      "normalized": "the site does not require customers to manage model providers or generation infrastructure themselves",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[3]",
       "key": "body",
       "text": "There is no need to guess the charge: review the package, selected uploads, and credit requirement before starting.",
-      "normalized": "there is no need to guess the charge review the package selected uploads and credit requirement before starting"
+      "normalized": "there is no need to guess the charge review the package selected uploads and credit requirement before starting",
+      "priority": 1
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1",
+      "key": "subtitle",
+      "text": "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",
+      "normalized": "these examples use materials customers created in private accounts scan the theme labels to choose a direction for your own set",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[10]",
       "key": "body",
       "text": "These tools are useful when you want to compare a look before committing to a real appointment or shoot. They are visual explorations, so color, fit, texture, and facial details can vary in the generated result.",
-      "normalized": "these tools are useful when you want to compare a look before committing to a real appointment or shoot they are visual explorations so color fit texture and facial details can vary in the generated result"
+      "normalized": "these tools are useful when you want to compare a look before committing to a real appointment or shoot they are visual explorations so color fit texture and facial details can vary in the generated result",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[12]",
       "key": "description",
       "text": "Turn approved source photos into short motion-ready scenes for social posts, creator intros, and private visual tests.",
-      "normalized": "turn approved source photos into short motion ready scenes for social posts creator intros and private visual tests"
+      "normalized": "turn approved source photos into short motion ready scenes for social posts creator intros and private visual tests",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[5]",
       "key": "description",
       "text": "Turn portraits into neon cyberpunk city scenes with rain reflections, futuristic styling, cinematic light, and poster crops.",
-      "normalized": "turn portraits into neon cyberpunk city scenes with rain reflections futuristic styling cinematic light and poster crops"
+      "normalized": "turn portraits into neon cyberpunk city scenes with rain reflections futuristic styling cinematic light and poster crops",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[10]",
       "key": "description",
       "text": "Turn selfies into recognizable avatars for profile icons, gaming handles, Discord servers, creator pages, and social refreshes.",
-      "normalized": "turn selfies into recognizable avatars for profile icons gaming handles discord servers creator pages and social refreshes"
-    },
-    {
-      "source": "approved-lock:themePage:/:seo",
-      "key": "seo.description",
-      "text": "Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
-      "normalized": "turn your selfies into stunning couple photos in seconds with mydreamshoots the most advanced ai photo generator maker no studio no outfits just magic"
+      "normalized": "turn selfies into recognizable avatars for profile icons gaming handles discord servers creator pages and social refreshes",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.hero_1",
       "key": "subheadline",
-      "text": "Upload a few approved photos and choose the result you want - from headshot and portraits to wedding, engagement, seasonal, creative, and supported video workflows. Review the examples and credit cost before generation, then check the finished results in your signed-in workspace before downloading.",
-      "normalized": "upload a few approved photos and choose the result you want from headshot and portraits to wedding engagement seasonal creative and supported video workflows review the examples and credit cost before generation then check the finished results in your signed in workspace before downloading"
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.tutorial_video_1",
-      "key": "subtitle",
-      "text": "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.",
-      "normalized": "upload approved source photos choose a workflow review the credit cost and generate inside your signed in workspace"
+      "text": "Upload your photos and choose what you want to create—from AI videos and personalized Save the Date videos to professional AI headshots, portraits, couple photos, seasonal images, and creative photo sets. Review examples and credit costs before generation, then access your finished results in your workspace.",
+      "normalized": "upload your photos and choose what you want to create from ai videos and personalized save the date videos to professional ai headshots portraits couple photos seasonal images and creative photo sets review examples and credit costs before generation then access your finished results in your workspace",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[13]",
       "key": "answer",
       "text": "Uploads, generation requests, albums, orders, and credit activity are associated with your signed-in account and are not public by default.",
-      "normalized": "uploads generation requests albums orders and credit activity are associated with your signed in account and are not public by default"
+      "normalized": "uploads generation requests albums orders and credit activity are associated with your signed in account and are not public by default",
+      "priority": 1
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.pricing_1",
+      "key": "description",
+      "text": "Use credits across eligible AI photo and video workflows. The required credit cost is shown before generation.",
+      "normalized": "use credits across eligible ai photo and video workflows the required credit cost is shown before generation",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[6]",
       "key": "answer",
       "text": "Use recent, sharp photos where your face is visible and not heavily filtered. A small set of varied source images usually gives the workflow more useful information than many near-duplicates.",
-      "normalized": "use recent sharp photos where your face is visible and not heavily filtered a small set of varied source images usually gives the workflow more useful information than many near duplicates"
+      "normalized": "use recent sharp photos where your face is visible and not heavily filtered a small set of varied source images usually gives the workflow more useful information than many near duplicates",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[9]",
       "key": "body",
       "text": "Video generation is more sensitive to image composition and motion cues than a still image request. Start with a clear hero image, keep the brief focused, and review the preview or status in your account.",
-      "normalized": "video generation is more sensitive to image composition and motion cues than a still image request start with a clear hero image keep the brief focused and review the preview or status in your account"
+      "normalized": "video generation is more sensitive to image composition and motion cues than a still image request start with a clear hero image keep the brief focused and review the preview or status in your account",
+      "priority": 1
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.conversion_1",
-      "key": "subtitle",
-      "text": "We've designed myDreamshoots to be as easy as possible to use, allowing you to focus on unleashing your creativity with complete peace of mind. Subscribe, upload, choose packages, generate results, and keep delivery in one workspace.",
-      "normalized": "we ve designed mydreamshoots to be as easy as possible to use allowing you to focus on unleashing your creativity with complete peace of mind subscribe upload choose packages generate results and keep delivery in one workspace"
+      "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[17]",
+      "key": "answer",
+      "text": "Yes. Choose a Save the Date style, upload your photos and event details, review the example and credit cost, and generate a personalized Save the Date video to share.",
+      "normalized": "yes choose a save the date style upload your photos and event details review the example and credit cost and generate a personalized save the date video to share",
+      "priority": 1
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[15]",
+      "key": "answer",
+      "text": "Yes. Choose a supported image-to-video workflow, upload your photo, review the example and credit cost, and generate your AI video in your workspace.",
+      "normalized": "yes choose a supported image to video workflow upload your photo review the example and credit cost and generate your ai video in your workspace",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[7]",
       "key": "answer",
       "text": "Yes. Couple, friend, and group results work best when every person is clearly visible in approved source photos and the chosen package is designed for more than one subject.",
-      "normalized": "yes couple friend and group results work best when every person is clearly visible in approved source photos and the chosen package is designed for more than one subject"
+      "normalized": "yes couple friend and group results work best when every person is clearly visible in approved source photos and the chosen package is designed for more than one subject",
+      "priority": 1
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[16]",
+      "key": "answer",
+      "text": "You can create talking photos, cinematic videos, social media videos, product videos, promotional videos, and other supported AI video styles. Explore AI Video Generation to see the available workflows.",
+      "normalized": "you can create talking photos cinematic videos social media videos product videos promotional videos and other supported ai video styles explore ai video generation to see the available workflows",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[1]",
       "key": "body",
       "text": "You can review the request before it starts, then return to the private gallery when the output is ready.",
-      "normalized": "you can review the request before it starts then return to the private gallery when the output is ready"
+      "normalized": "you can review the request before it starts then return to the private gallery when the output is ready",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[12]",
       "key": "answer",
       "text": "You can use suitable finished images for personal profiles, social posts, creator pages, cards, campaign drafts, and other channels when you have the rights and follow the destination platform's rules.",
-      "normalized": "you can use suitable finished images for personal profiles social posts creator pages cards campaign drafts and other channels when you have the rights and follow the destination platform s rules"
+      "normalized": "you can use suitable finished images for personal profiles social posts creator pages cards campaign drafts and other channels when you have the rights and follow the destination platform s rules",
+      "priority": 1
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1.blocks[0]",
       "key": "body",
       "text": "You choose a package or tool, review the visible credit cost, upload photos inside your account, and review the finished work in a private gallery.",
-      "normalized": "you choose a package or tool review the visible credit cost upload photos inside your account and review the finished work in a private gallery"
+      "normalized": "you choose a package or tool review the visible credit cost upload photos inside your account and review the finished work in a private gallery",
+      "priority": 1
     },
     {
-      "source": "approved-lock:themePage:/:publishedJson.sections.conversion_1",
+      "source": "approved-lock:themePage:/:publishedJson.sections.hero_1",
       "key": "eyebrow",
-      "text": "BEST AI MAKER",
-      "normalized": "best ai maker"
+      "text": "AI Video & Photo Creation",
+      "normalized": "ai video photo creation",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.conversion_1",
       "key": "secondaryCta",
       "text": "Choose a plan",
-      "normalized": "choose a plan"
+      "normalized": "choose a plan",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1",
       "key": "directorySubtitle",
       "text": "Compare every active theme by category, title, cover, and route before starting a private photo package.",
-      "normalized": "compare every active theme by category title cover and route before starting a private photo package"
+      "normalized": "compare every active theme by category title cover and route before starting a private photo package",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.conversion_1",
       "key": "primaryCta",
-      "text": "Create my first photo set",
-      "normalized": "create my first photo set"
+      "text": "Create Now",
+      "normalized": "create now",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1",
       "key": "eyebrow",
       "text": "Customer-created examples",
-      "normalized": "customer created examples"
+      "normalized": "customer created examples",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[5]",
       "key": "quote",
       "text": "I could see the credit cost before generating and keep the approved headshots, cards, and motion ideas in one workspace.",
-      "normalized": "i could see the credit cost before generating and keep the approved headshots cards and motion ideas in one workspace"
+      "normalized": "i could see the credit cost before generating and keep the approved headshots cards and motion ideas in one workspace",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[1]",
       "key": "quote",
       "text": "I needed profile images for a launch week. The VIP-style portraits gave me several usable looks without arranging a shoot or chasing edits.",
-      "normalized": "i needed profile images for a launch week the vip style portraits gave me several usable looks without arranging a shoot or chasing edits"
+      "normalized": "i needed profile images for a launch week the vip style portraits gave me several usable looks without arranging a shoot or chasing edits",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[3]",
       "key": "quote",
       "text": "My favorite part is the workflow. Upload, choose a package, approve the cost, and the finished set is easy to review with the rest of my account history.",
-      "normalized": "my favorite part is the workflow upload choose a package approve the cost and the finished set is easy to review with the rest of my account history"
+      "normalized": "my favorite part is the workflow upload choose a package approve the cost and the finished set is easy to review with the rest of my account history",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.pricing_1",
       "key": "sidePanelTitle",
       "text": "Plans start at $24.50/month. Compare billing periods and included credits before subscribing.",
-      "normalized": "plans start at 24 50 month compare billing periods and included credits before subscribing"
+      "normalized": "plans start at 24 50 month compare billing periods and included credits before subscribing",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.faq_1",
       "key": "eyebrow",
       "text": "Questions before upload",
-      "normalized": "questions before upload"
+      "normalized": "questions before upload",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.pricing_1",
       "key": "sidePanelBody",
       "text": "Review the credit cost before each generation, and use an available top-up when you need additional runs.",
-      "normalized": "review the credit cost before each generation and use an available top up when you need additional runs"
+      "normalized": "review the credit cost before each generation and use an available top up when you need additional runs",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1",
       "key": "primaryCta",
       "text": "Start with your photos",
-      "normalized": "start with your photos"
+      "normalized": "start with your photos",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.pricing_1",
       "key": "marketComparison",
       "text": "The average professional photoshoot can cost around $725. myDreamshoots keeps plan selection simple with monthly or quarterly and semiannually subscriptions.",
-      "normalized": "the average professional photoshoot can cost around 725 mydreamshoots keeps plan selection simple with monthly or quarterly and semiannually subscriptions"
+      "normalized": "the average professional photoshoot can cost around 725 mydreamshoots keeps plan selection simple with monthly or quarterly and semiannually subscriptions",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[2]",
       "key": "quote",
       "text": "The Christmas couple pack saved a lot of time. We compared the theme first, checked credits, then downloaded card-ready images from the gallery.",
-      "normalized": "the christmas couple pack saved a lot of time we compared the theme first checked credits then downloaded card ready images from the gallery"
+      "normalized": "the christmas couple pack saved a lot of time we compared the theme first checked credits then downloaded card ready images from the gallery",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[4]",
       "key": "quote",
       "text": "The creator examples helped me compare a few looks before I committed to a full set. Everything stayed clear and private while I reviewed the options.",
-      "normalized": "the creator examples helped me compare a few looks before i committed to a full set everything stayed clear and private while i reviewed the options"
+      "normalized": "the creator examples helped me compare a few looks before i committed to a full set everything stayed clear and private while i reviewed the options",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[0]",
       "key": "quote",
       "text": "The package cards made it easy to pick a direction before I spent credits. My sports fan set looked polished and stayed organized in one private gallery.",
-      "normalized": "the package cards made it easy to pick a direction before i spent credits my sports fan set looked polished and stayed organized in one private gallery"
+      "normalized": "the package cards made it easy to pick a direction before i spent credits my sports fan set looked polished and stayed organized in one private gallery",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[7]",
       "key": "quote",
       "text": "The short motion references were useful for planning the next post. I reviewed the stills and the clip direction before spending credits.",
-      "normalized": "the short motion references were useful for planning the next post i reviewed the stills and the clip direction before spending credits"
+      "normalized": "the short motion references were useful for planning the next post i reviewed the stills and the clip direction before spending credits",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[6]",
       "key": "quote",
       "text": "The themed previews made it easier to plan a consistent portrait set for a small team without booking a studio appointment.",
-      "normalized": "the themed previews made it easier to plan a consistent portrait set for a small team without booking a studio appointment"
+      "normalized": "the themed previews made it easier to plan a consistent portrait set for a small team without booking a studio appointment",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.tutorial_video_1",
       "key": "supportingCopy",
-      "text": "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.",
-      "normalized": "use a supported ai video workflow when you want to turn an approved image or image set into a short motion result then review the full clip before publishing"
+      "text": "Use the Upload Your Photos flow for supported AI Video, Save the Date, headshot, portrait, couple, seasonal, and creative photo workflows.",
+      "normalized": "use the upload your photos flow for supported ai video save the date headshot portrait couple seasonal and creative photo workflows",
+      "priority": 2
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[13]",
       "key": "credits",
       "text": "10 Photos",
-      "normalized": "10 photos"
+      "normalized": "10 photos",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[12]",
       "key": "credits",
       "text": "16 Photos",
-      "normalized": "16 photos"
+      "normalized": "16 photos",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[3]",
       "key": "credits",
       "text": "20 Photos",
-      "normalized": "20 photos"
+      "normalized": "20 photos",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[0]",
       "key": "credits",
       "text": "24 Photos",
-      "normalized": "24 photos"
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.hero_1.blocks[3]",
-      "key": "label",
-      "text": "AI image workflows",
-      "normalized": "ai image workflows"
+      "normalized": "24 photos",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1",
       "key": "label",
       "text": "AI PHOTO STUDIOS",
-      "normalized": "ai photo studios"
+      "normalized": "ai photo studios",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1",
       "key": "directoryLabel",
       "text": "AI PHOTO THEMED",
-      "normalized": "ai photo themed"
+      "normalized": "ai photo themed",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.hero_1.blocks[3]",
+      "key": "label",
+      "text": "AI video & photo workflows",
+      "normalized": "ai video photo workflows",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[24]",
       "key": "name",
       "text": "Anteater",
-      "normalized": "anteater"
+      "normalized": "anteater",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[0]",
       "key": "name",
       "text": "Ava M.",
-      "normalized": "ava m"
+      "normalized": "ava m",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[1]",
       "key": "name",
       "text": "Beer",
-      "normalized": "beer"
+      "normalized": "beer",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[26]",
       "key": "name",
       "text": "BISON",
-      "normalized": "bison"
+      "normalized": "bison",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[4]",
       "key": "badge",
       "text": "Campaigns",
-      "normalized": "campaigns"
+      "normalized": "campaigns",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[16]",
       "key": "name",
       "text": "CHINAWUZHOUGEM",
-      "normalized": "chinawuzhougem"
+      "normalized": "chinawuzhougem",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[4]",
       "key": "name",
       "text": "Chloe S.",
-      "normalized": "chloe s"
+      "normalized": "chloe s",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[2]",
       "key": "role",
       "text": "Christmas album",
-      "normalized": "christmas album"
+      "normalized": "christmas album",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[5]",
       "key": "role",
       "text": "Clear credits",
-      "normalized": "clear credits"
+      "normalized": "clear credits",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[14]",
       "key": "name",
       "text": "COFFEE SWAP",
-      "normalized": "coffee swap"
+      "normalized": "coffee swap",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[2]",
       "key": "badge",
       "text": "Commerce",
-      "normalized": "commerce"
+      "normalized": "commerce",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[3]",
       "key": "badge",
       "text": "Community",
-      "normalized": "community"
+      "normalized": "community",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[0]",
       "key": "badge",
       "text": "Content",
-      "normalized": "content"
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.hero_1.blocks[0]",
-      "key": "label",
-      "text": "Create Now",
-      "normalized": "create now"
+      "normalized": "content",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[6]",
       "key": "name",
       "text": "Creator coaches",
-      "normalized": "creator coaches"
+      "normalized": "creator coaches",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[4]",
       "key": "location",
       "text": "Creator scenes",
-      "normalized": "creator scenes"
+      "normalized": "creator scenes",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[0]",
       "key": "name",
       "text": "Creator teams",
-      "normalized": "creator teams"
+      "normalized": "creator teams",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[4]",
       "key": "role",
       "text": "Creator workflow",
-      "normalized": "creator workflow"
+      "normalized": "creator workflow",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[3]",
       "key": "role",
       "text": "Credit planning",
-      "normalized": "credit planning"
+      "normalized": "credit planning",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[7]",
       "key": "meta",
       "text": "Destination Portraits",
-      "normalized": "destination portraits"
+      "normalized": "destination portraits",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[5]",
       "key": "name",
       "text": "Eli T.",
-      "normalized": "eli t"
+      "normalized": "eli t",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[4]",
       "key": "name",
       "text": "Event marketers",
-      "normalized": "event marketers"
+      "normalized": "event marketers",
+      "priority": 3
+    },
+    {
+      "source": "approved-lock:themePage:/:publishedJson.sections.hero_1.blocks[1]",
+      "key": "label",
+      "text": "Explore AI Video",
+      "normalized": "explore ai video",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[6]",
       "key": "name",
       "text": "EZZY",
-      "normalized": "ezzy"
+      "normalized": "ezzy",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[15]",
       "key": "meta",
       "text": "Family Album",
-      "normalized": "family album"
+      "normalized": "family album",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[3]",
       "key": "name",
       "text": "Fan pages",
-      "normalized": "fan pages"
+      "normalized": "fan pages",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[0]",
       "key": "role",
       "text": "Fan photos",
-      "normalized": "fan photos"
+      "normalized": "fan photos",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[11]",
       "key": "meta",
       "text": "Fashion Profile",
-      "normalized": "fashion profile"
+      "normalized": "fashion profile",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[2]",
       "key": "meta",
       "text": "Formal Event",
-      "normalized": "formal event"
+      "normalized": "formal event",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[2]",
       "key": "name",
       "text": "FUMEI",
-      "normalized": "fumei"
+      "normalized": "fumei",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[8]",
       "key": "name",
       "text": "Giantdc",
-      "normalized": "giantdc"
+      "normalized": "giantdc",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[6]",
       "key": "badge",
       "text": "Guides",
-      "normalized": "guides"
+      "normalized": "guides",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[4]",
       "key": "meta",
       "text": "Hair Color",
-      "normalized": "hair color"
+      "normalized": "hair color",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[27]",
       "key": "name",
       "text": "HANA PET",
-      "normalized": "hana pet"
-    },
-    {
-      "source": "approved-lock:themePage:/:publishedJson.sections.hero_1.blocks[1]",
-      "key": "label",
-      "text": "Headshot Photo Package",
-      "normalized": "headshot photo package"
+      "normalized": "hana pet",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[5]",
       "key": "location",
       "text": "Headshots and cards",
-      "normalized": "headshots and cards"
+      "normalized": "headshots and cards",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[15]",
       "key": "name",
       "text": "HEART BEAT",
-      "normalized": "heart beat"
+      "normalized": "heart beat",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[2]",
       "key": "location",
       "text": "Holiday cards",
-      "normalized": "holiday cards"
+      "normalized": "holiday cards",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[5]",
       "key": "name",
       "text": "Holiday shops",
-      "normalized": "holiday shops"
+      "normalized": "holiday shops",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[0]",
       "key": "name",
       "text": "iKraddy",
-      "normalized": "ikraddy"
+      "normalized": "ikraddy",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[13]",
       "key": "meta",
       "text": "Image Polish",
-      "normalized": "image polish"
+      "normalized": "image polish",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[6]",
       "key": "name",
       "text": "Jordan K.",
-      "normalized": "jordan k"
+      "normalized": "jordan k",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[21]",
       "key": "name",
       "text": "LABOOM",
-      "normalized": "laboom"
+      "normalized": "laboom",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[3]",
       "key": "meta",
       "text": "LinkedIn",
-      "normalized": "linkedin"
+      "normalized": "linkedin",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.conversion_1.blocks[1]",
       "key": "label",
       "text": "live scene packs",
-      "normalized": "live scene packs"
+      "normalized": "live scene packs",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[1]",
       "key": "name",
       "text": "Lucas R.",
-      "normalized": "lucas r"
+      "normalized": "lucas r",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[11]",
       "key": "name",
       "text": "Mashtacore",
-      "normalized": "mashtacore"
+      "normalized": "mashtacore",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[0]",
       "key": "meta",
       "text": "Match Day",
-      "normalized": "match day"
+      "normalized": "match day",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[2]",
       "key": "name",
       "text": "Mia C.",
-      "normalized": "mia c"
+      "normalized": "mia c",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[18]",
       "key": "name",
       "text": "Monkey",
-      "normalized": "monkey"
+      "normalized": "monkey",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[22]",
       "key": "name",
       "text": "MOONPIZZA",
-      "normalized": "moonpizza"
+      "normalized": "moonpizza",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[7]",
       "key": "role",
       "text": "Motion previews",
-      "normalized": "motion previews"
+      "normalized": "motion previews",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[5]",
       "key": "name",
       "text": "MR.SDM",
-      "normalized": "mr sdm"
+      "normalized": "mr sdm",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[3]",
       "key": "name",
       "text": "MRLIN",
-      "normalized": "mrlin"
+      "normalized": "mrlin",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[5]",
       "key": "meta",
       "text": "Neon City",
-      "normalized": "neon city"
+      "normalized": "neon city",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[3]",
       "key": "name",
       "text": "Noah P.",
-      "normalized": "noah p"
+      "normalized": "noah p",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[6]",
       "key": "meta",
       "text": "Noir Character",
-      "normalized": "noir character"
+      "normalized": "noir character",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[23]",
       "key": "name",
       "text": "OBSERVER",
-      "normalized": "observer"
+      "normalized": "observer",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[28]",
       "key": "name",
       "text": "Oficina",
-      "normalized": "oficina"
+      "normalized": "oficina",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[9]",
       "key": "meta",
       "text": "Outfit Ideas",
-      "normalized": "outfit ideas"
+      "normalized": "outfit ideas",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[29]",
       "key": "name",
       "text": "Panda BER",
-      "normalized": "panda ber"
+      "normalized": "panda ber",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[1]",
       "key": "meta",
       "text": "Personal Brand",
-      "normalized": "personal brand"
+      "normalized": "personal brand",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[1]",
       "key": "name",
       "text": "Photo studios",
-      "normalized": "photo studios"
+      "normalized": "photo studios",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[4]",
       "key": "name",
       "text": "POPO",
-      "normalized": "popo"
+      "normalized": "popo",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[25]",
       "key": "name",
       "text": "Prevence",
-      "normalized": "prevence"
+      "normalized": "prevence",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[3]",
       "key": "location",
       "text": "Private gallery",
-      "normalized": "private gallery"
+      "normalized": "private gallery",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[10]",
       "key": "meta",
       "text": "Profile Icons",
-      "normalized": "profile icons"
+      "normalized": "profile icons",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[1]",
       "key": "location",
       "text": "Profile images",
-      "normalized": "profile images"
+      "normalized": "profile images",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[6]",
       "key": "location",
       "text": "Profile refresh",
-      "normalized": "profile refresh"
+      "normalized": "profile refresh",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[7]",
       "key": "badge",
       "text": "Profiles",
-      "normalized": "profiles"
+      "normalized": "profiles",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[7]",
       "key": "name",
       "text": "Riley W.",
-      "normalized": "riley w"
+      "normalized": "riley w",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[5]",
       "key": "badge",
       "text": "Seasonal",
-      "normalized": "seasonal"
+      "normalized": "seasonal",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[12]",
       "key": "meta",
       "text": "Short Motion",
-      "normalized": "short motion"
+      "normalized": "short motion",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.hero_1.blocks[2]",
       "key": "label",
       "text": "shown before generation",
-      "normalized": "shown before generation"
+      "normalized": "shown before generation",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[13]",
       "key": "name",
       "text": "SHURONG LIM",
-      "normalized": "shurong lim"
+      "normalized": "shurong lim",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[7]",
       "key": "name",
       "text": "Small teams",
-      "normalized": "small teams"
+      "normalized": "small teams",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[9]",
       "key": "name",
       "text": "SMART Check",
-      "normalized": "smart check"
+      "normalized": "smart check",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[7]",
       "key": "location",
       "text": "Social content",
-      "normalized": "social content"
+      "normalized": "social content",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[2]",
       "key": "name",
       "text": "Social sellers",
-      "normalized": "social sellers"
+      "normalized": "social sellers",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[0]",
       "key": "location",
       "text": "Sports fan set",
-      "normalized": "sports fan set"
+      "normalized": "sports fan set",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.conversion_1.blocks[0]",
       "key": "label",
       "text": "starter credits",
-      "normalized": "starter credits"
+      "normalized": "starter credits",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.package_catalog_1.blocks[8]",
       "key": "meta",
       "text": "Street Portraits",
-      "normalized": "street portraits"
+      "normalized": "street portraits",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.brand_strip_1.blocks[1]",
       "key": "badge",
       "text": "Studio",
-      "normalized": "studio"
+      "normalized": "studio",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[6]",
       "key": "role",
       "text": "Team portraits",
-      "normalized": "team portraits"
+      "normalized": "team portraits",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[17]",
       "key": "name",
       "text": "TOSACO",
-      "normalized": "tosaco"
+      "normalized": "tosaco",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.conversion_1.blocks[2]",
       "key": "label",
       "text": "uploads and albums",
-      "normalized": "uploads and albums"
+      "normalized": "uploads and albums",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.hero_1.blocks[4]",
       "key": "label",
       "text": "uploads, requests, galleries",
-      "normalized": "uploads requests galleries"
+      "normalized": "uploads requests galleries",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.proof_1.blocks[1]",
       "key": "role",
       "text": "VIP-style set",
-      "normalized": "vip style set"
+      "normalized": "vip style set",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.pricing_1",
       "key": "sidePanelEyebrow",
       "text": "Why people subscribe",
-      "normalized": "why people subscribe"
+      "normalized": "why people subscribe",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[0]",
       "key": "badge",
       "text": "Workflow example",
-      "normalized": "workflow example"
+      "normalized": "workflow example",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[7]",
       "key": "name",
       "text": "XRAZ",
-      "normalized": "xraz"
+      "normalized": "xraz",
+      "priority": 3
     },
     {
       "source": "approved-lock:themePage:/:publishedJson.sections.generation_showcase_1.blocks[19]",
       "key": "name",
       "text": "YU kidsrooms",
-      "normalized": "yu kidsrooms"
+      "normalized": "yu kidsrooms",
+      "priority": 3
     }
   ]
 }

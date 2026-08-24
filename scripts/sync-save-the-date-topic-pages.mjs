@@ -19,6 +19,11 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
+const removedLegacyPaths = new Set([
+  "/holidays-events/christmas",
+  "/holidays-events/thanksgiving",
+  "/holidays-events/new-year"
+]);
 const defaultSourceRoot = "/Users/a1/Downloads";
 const packages = [
   { key: "engagement", sourceDir: process.env.SAVE_THE_DATE_ENGAGEMENT_SOURCE_DIR || path.join(defaultSourceRoot, "ai-save-the-date-engagement 3"), pagePath: "/holidays-events/engagement", pageKey: "engagement", structureLabels: ["hero", "intent clarification", "three video story structures", "how it works", "eight video scene directions", "video quality standards", "output formats", "page boundaries", "product evidence gate", "faq", "related video pages"], sectionIds: ["hero", "intent", "story-structures", "workflow", "scene-directions", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"], faqCount: 8, mediaCount: 11 },
@@ -94,7 +99,7 @@ function parseManifest(dir, key) {
     const role = /^hero/i.test(row.scene_role || row.role || "") ? "hero" : "content";
     const dimensions = row.dimensions || "1600x1000";
     const [width, height] = dimensions.split("x").map(Number);
-    return { filename, role, alt: clean(alt), caption: clean(row.caption || ""), width: width || 1600, height: height || 1000, loading: role === "hero" ? "eager" : "lazy", fetchPriority: role === "hero" ? "high" : "auto", src: `/assets/dreamshoot/save-the-date/${key}/${filename}` };
+    return { filename, role, recommendedUsage: clean(row.recommended_usage || row.recommended_use || ""), alt: clean(alt), caption: clean(row.caption || ""), width: width || 1600, height: height || 1000, loading: role === "hero" ? "eager" : "lazy", fetchPriority: role === "hero" ? "high" : "auto", src: `/assets/dreamshoot/save-the-date/${key}/${filename}` };
   });
   if (images.length < 10 || new Set(images.map((item) => item.filename)).size !== images.length || images.some((item) => !item.alt || item.width !== 1600 || item.height !== 1000)) throw new Error(`${key}: invalid image manifest`);
   if (images.some((item) => !fs.existsSync(path.join(dir, "images", item.filename)))) throw new Error(`${key}: manifest references a missing image file`);
@@ -127,10 +132,24 @@ function parsePackage(config) {
   const h3 = (patterns) => h3Blocks(find(patterns));
   const faq = h3("FAQ").map((item, index) => ({ id: `${config.key}-faq-${index + 1}`, question: item.title, answer: item.text }));
   if (faq.length !== config.faqCount) throw new Error(`${config.key}: expected ${config.faqCount} FAQ items, got ${faq.length}`);
-  const imageSettings = (image) => ({ imageUrl: image.src, imageAlt: image.alt, imageWidth: image.width, imageHeight: image.height, imageLoading: image.loading, imageFetchPriority: image.fetchPriority });
-  const image = (index) => manifest[index % manifest.length];
-  const blocks = (items, type, settings = (item) => ({ title: item.title, text: item.text })) => items.map((item, index) => ({ id: `${config.key}-${type}-${index + 1}`, type, settings: { ...settings(item, index), ...imageSettings(image(index + 1)) } }));
-  const listSection = (id, type, title, source, blockType = "item") => ({ type, settings: { anchor: id, title }, blocks: blocks(listItems(source).map((text) => ({ title: text, text })), blockType) });
+  const imageSettings = (image) => image ? ({ imageUrl: image.src, imageAlt: image.alt, imageWidth: image.width, imageHeight: image.height, imageLoading: image.loading, imageFetchPriority: image.fetchPriority }) : {};
+  // Allocate each content asset at most once. The old modulo allocator restarted at
+  // every section, so a valid manifest was rendered as the same image on many cards.
+  const imageUseCount = manifest.map((_, index) => (index < 3 ? 1 : 0));
+  const usedContentImages = new Set();
+  const allocateImage = (sectionKey) => {
+    const candidates = manifest
+      .map((asset, index) => ({ asset, index }))
+      .filter(({ index }) => index >= 3 && !usedContentImages.has(index))
+      .sort((left, right) => imageUseCount[left.index] - imageUseCount[right.index] || left.index - right.index);
+    const chosen = candidates[0];
+    if (!chosen) return null;
+    usedContentImages.add(chosen.index);
+    imageUseCount[chosen.index] += 1;
+    return chosen.asset;
+  };
+  const blocks = (items, type, settings = (item) => ({ title: item.title, text: item.text }), sectionKey = type) => items.map((item, index) => ({ id: `${config.key}-${type}-${index + 1}`, type, settings: { ...settings(item, index), ...imageSettings(allocateImage(sectionKey)) } }));
+  const listSection = (id, type, title, source, blockType = "item") => ({ type, settings: { anchor: id, title }, blocks: blocks(listItems(source).map((text) => ({ title: text, text })), blockType, undefined, id) });
   const titleFor = (index, fallback) => structurePlan[index]?.title || h2[index] || fallback;
   const labelledCopy = (lines, label) => lines.find((line) => line.trim().toLowerCase().startsWith(`**${label.toLowerCase()}:**`))?.replace(/^\*\*[^:]+:\*\*\s*/, "").trim() || "";
   const heroPrimaryCta = labelledCopy(heroSource, "Primary CTA") || `Create ${heading}`;
@@ -154,17 +173,20 @@ function parsePackage(config) {
   for (let index = 0; index < config.sectionIds.length; index += 1) {
     const id = config.sectionIds[index]; const type = config.sectionTypes[index]; const sectionId = `${config.pageKey}_${id.replace(/-/g, "_")}`;
     if (id === "hero") sections[sectionId] = { type, settings: { anchor: id, title: heading, intro: heroIntro, intentChips, primaryCta: heroPrimaryCta, primaryHref: "/app/create", secondaryCta: heroSecondaryCta, secondaryHref: `#${config.sectionIds[2]}`, ...imageSettings(manifest[0]) }, blocks: manifest.slice(0, 3).map((asset, index) => ({ id: `${config.key}-hero-visual-${index + 1}`, type: "hero_visual", settings: imageSettings(asset) })) };
-    else if (id === "intent" || id === "definition") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "What this video page covers"), intro: paragraphs(find(config.key === "proposal" ? "What Is an AI Proposal Video" : config.key === "engagement" ? "What is an AI engagement" : "What is an AI Save the Date"))[0] || heroIntro, ...imageSettings(manifest[1]) }, blocks: paragraphs(find(config.key === "proposal" ? "What Is an AI Proposal Video" : config.key === "engagement" ? "What is an AI engagement" : "What is an AI Save the Date")).slice(1).map((text, n) => ({ id: `${config.key}-paragraph-${n + 1}`, type: "paragraph", settings: { text } })) };
-    else if (id === "story-structures" || id === "story-flow") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Story structures") }, blocks: blocks(story, "story_card") };
-    else if (id === "use-cases" || id === "scene-directions" || id === "scene-ideas") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Scene ideas") }, blocks: blocks(id === "use-cases" ? story : [{ title: "Scene direction", text: paragraphs(sceneSource).join(" ") }, ...listItems(sceneSource).map((text) => ({ title: text, text }))], "scene_card") };
-    else if (id === "workflow") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "How it works"), ...imageSettings(manifest[config.key === "proposal" ? 8 : 3]) }, blocks: blocks(workflow.length ? workflow : listItems(find("How to make|How It Works")).map((text) => ({ title: text, text })), "step", (item, n) => ({ number: n + 1, title: item.title, text: item.text })) };
+    else if (id === "intent" || id === "definition") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "What this video page covers"), intro: paragraphs(find(config.key === "proposal" ? "What Is an AI Proposal Video" : config.key === "engagement" ? "What is an AI engagement" : "What is an AI Save the Date"))[0] || heroIntro, ...imageSettings(allocateImage(id)) }, blocks: paragraphs(find(config.key === "proposal" ? "What Is an AI Proposal Video" : config.key === "engagement" ? "What is an AI engagement" : "What is an AI Save the Date")).slice(1).map((text, n) => ({ id: `${config.key}-paragraph-${n + 1}`, type: "paragraph", settings: { text } })) };
+    else if (id === "story-structures" || id === "story-flow") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Story structures") }, blocks: blocks(story, "story_card", undefined, id) };
+    else if (id === "use-cases" || id === "scene-directions" || id === "scene-ideas") {
+      const sceneItems = id === "use-cases" || config.key !== "save-the-date" ? (id === "use-cases" ? story : [{ title: "Scene direction", text: paragraphs(sceneSource).join(" ") }, ...listItems(sceneSource).map((text) => ({ title: text, text }))]) : listItems(sceneSource).map((text) => ({ title: text, text }));
+      sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Scene ideas") }, blocks: blocks(sceneItems, "scene_card", undefined, id) };
+    }
+    else if (id === "workflow") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "How it works"), ...imageSettings(allocateImage(id)) }, blocks: blocks(workflow.length ? workflow : listItems(find("How to make|How It Works")).map((text) => ({ title: text, text })), "step", (item, n) => ({ number: n + 1, title: item.title, text: item.text }), id) };
     else if (id === "quality" || id === "accuracy") sections[sectionId] = { type: "editorial_quality", settings: { anchor: id, title: titleFor(index, "Quality and responsibility") }, blocks: listItems(qualitySource).map((text, n) => ({ id: `${config.key}-quality-${n + 1}`, type: "quality_item", settings: { text } })) };
-    else if (id === "formats") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Output formats") }, blocks: blocks(formats, "format") };
+    else if (id === "formats") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Output formats") }, blocks: blocks(formats, "format", undefined, id) };
     else if (id === "boundaries") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Page boundaries") }, blocks: listItems(boundariesSource).map((text, n) => ({ id: `${config.key}-boundary-${n + 1}`, type: "boundary", settings: { text } })) };
     else if (id === "source-media") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Source media guidance") }, blocks: listItems(find("How It Works|Source-Media Guidance")).map((text, n) => ({ id: `${config.key}-source-${n + 1}`, type: "guidance", settings: { text } })) };
     else if (id === "evidence") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Evidence and review") }, blocks: [{ id: `${config.key}-evidence-1`, type: "evidence", settings: { text: paragraphs(evidenceSource).join(" ") || listItems(evidenceSource).join(" ") } }] };
     else if (id === "faq") sections[sectionId] = { type, settings: { anchor: id, title: "Frequently Asked Questions" }, blocks: faq.map((item) => ({ id: item.id, type: "faq_item", settings: item })) };
-    else if (id === "final-cta") sections[sectionId] = { type, settings: { anchor: id, title: finalCtaHeading, intro: finalCtaBody, primaryCta: finalCtaLabel, primaryHref: "/app/create", secondaryCta: heroSecondaryCta, secondaryHref: `#${config.sectionIds[Math.min(2, config.sectionIds.length - 1)]}`, ...imageSettings(manifest[2]) } };
+    else if (id === "final-cta") sections[sectionId] = { type, settings: { anchor: id, title: finalCtaHeading, intro: finalCtaBody, primaryCta: finalCtaLabel, primaryHref: "/app/create", secondaryCta: heroSecondaryCta, secondaryHref: `#${config.sectionIds[Math.min(2, config.sectionIds.length - 1)]}`, ...imageSettings(allocateImage(id)) } };
   }
   const publishedLinkTargets = new Set([
     "/ai-save-the-date/valentines-day",
@@ -205,7 +227,7 @@ try {
     const settings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
     const groups = parsed.map((item, index) => ({ label: item.key === "save-the-date" ? "Save the Date" : item.key[0].toUpperCase() + item.key.slice(1), slug: item.key, sortOrder: index + 1, items: [{ label: item.key === "save-the-date" ? "Save the Date" : item.key[0].toUpperCase() + item.key.slice(1), slug: item.key, href: item.pagePath, status: "published", sortOrder: 1 }] }));
     const existingNavigation = settings.saveTheDateNavigation?.groups ?? [];
-    const existingLoveItems = existingNavigation.find((group) => group.slug === "love-wedding")?.items ?? [];
+    const existingLoveItems = (existingNavigation.find((group) => group.slug === "love-wedding")?.items ?? []).filter((item) => !removedLegacyPaths.has(item.href));
     const loveItems = [...existingLoveItems.filter((item) => item.href === "/ai-save-the-date/valentines-day"), ...groups.flatMap((group) => group.items)]
       .filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index);
     const preservedGroups = existingNavigation.filter((group) => group.slug !== "love-wedding");

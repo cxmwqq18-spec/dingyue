@@ -46,7 +46,7 @@ import {
 import { compileMydreamshootsVideoTopicPublication } from "@/lib/mydreamshoots-video-topic-publication";
 import { normalizeGlobalSection } from "@/lib/theme/section-normalize";
 import { publicationSnapshotHash, publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
-import { MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES, MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
+import { isMydreamshootsRemovedLegacyRoute, MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES, MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 import type {
   MediaAsset,
   Product,
@@ -145,7 +145,7 @@ function buildHomepageShowcases(params: {
   }
 
   const saveDateItems = (site.themeSettings.draftJson ?? site.themeSettings.publishedJson).saveTheDateNavigation?.groups
-    ?.flatMap((group) => group.items.filter((item) => item.status === "published").map((item) => ({ ...item, group }))) ?? [];
+    ?.flatMap((group) => group.items.filter((item) => item.status === "published" && !(isPrimaryMydreamshootsSite(site) && isMydreamshootsRemovedLegacyRoute(item.href))).map((item) => ({ ...item, group }))) ?? [];
   for (const item of saveDateItems) {
     const entity = pageEntities.find((candidate) => candidate.canonicalPath === item.href && candidate.status === "published" && candidate.indexable);
     const pageMediaItem = entity ? standardMedia.find((candidate) => candidate.pageEntityId === entity.pageEntityId && candidate.status === "ready") : undefined;
@@ -211,9 +211,6 @@ const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_M
   "/holidays-events/proposal": "Proposal video scenes showing the planned story and reaction",
   "/holidays-events/save-the-date": "Save the Date video scenes for a confirmed wedding date",
   "/ai-video-generation/wedding-ceremony": "Wedding ceremony photo and video scenes for vows, rings, reactions, and the recessional",
-  "/holidays-events/thanksgiving": "Thanksgiving family, Friendsgiving, food, and fall holiday scenes",
-  "/holidays-events/christmas": "Christmas family, winter, pet, card, and holiday video scenes",
-  "/holidays-events/new-year": "New Year fireworks, countdown, greeting, family, and fresh-start scenes",
   "/holidays-events/mothers-day": "Mother's Day family, flowers, gifts, brunch, and spring celebration scenes",
   "/holidays-events/fathers-day": "Father's Day family, gifts, outdoor activities, and celebration scenes",
   "/holidays-events/halloween": "Halloween costume, couple, family, pet, pumpkin, party, and haunted-scene ideas"

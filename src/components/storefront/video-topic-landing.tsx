@@ -28,7 +28,7 @@ type VideoTopicUseCase = {
   noteLabel?: string;
   noteBody?: string;
   scenarioLabel?: string;
-  image: VideoTopicImage;
+  image?: VideoTopicImage;
 };
 
 type VideoTopicSupportingCard = {
@@ -205,7 +205,9 @@ function imageStyle(image: VideoTopicImage): { objectPosition: string } {
 }
 
 function portraitCropClass(image: VideoTopicImage): string {
-  return image.height / image.width > 1.3 ? "scale-[1.2] origin-center" : "";
+  // The supplied vertical design assets include a blurred bleed around the
+  // intended frame. Crop that bleed so cards show the actual scene edge to edge.
+  return image.height / image.width > 1.3 ? "scale-[1.55] origin-center" : "";
 }
 
 function optimizedTopicImageSrc(src: string): string {
@@ -242,29 +244,31 @@ function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }
   const noteBody = item.noteBody ?? (item.script ? `“${item.script}”` : undefined);
   return (
     <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f] shadow-[0_28px_70px_-54px_rgba(0,0,0,0.92)]" data-video-topic-use-case-card>
-      <div className="relative aspect-[16/9] overflow-hidden bg-[#292438]" data-video-topic-media>
-        <img
-          src={optimizedTopicImageSrc(item.image.src)}
-          alt={item.image.alt}
-          className={`absolute inset-0 h-full w-full object-cover transition duration-500 ${portraitCropClass(item.image)} group-hover:scale-[1.23]`}
-          style={{ objectPosition: "50% 50%" }}
-          width={item.image.width}
-          height={item.image.height}
-          loading="eager"
-          fetchPriority={index < 2 ? "high" : "auto"}
-          decoding="async"
-        />
-        <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-[#17151f]/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/80 backdrop-blur">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-      </div>
-      <div className="flex min-h-[22rem] flex-1 flex-col p-6 sm:p-7">
+      {item.image ? (
+        <div className="relative aspect-[16/9] overflow-hidden bg-[#292438]" data-video-topic-media>
+          <img
+            src={optimizedTopicImageSrc(item.image.src)}
+            alt={item.image.alt}
+            className={`absolute inset-0 h-full w-full object-cover transition duration-500 ${portraitCropClass(item.image)} group-hover:scale-[1.23]`}
+            style={{ objectPosition: "50% 50%" }}
+            width={item.image.width}
+            height={item.image.height}
+            loading="eager"
+            fetchPriority={index < 2 ? "high" : "auto"}
+            decoding="async"
+          />
+          <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-[#17151f]/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/80 backdrop-blur">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
+      ) : null}
+      <div className="flex flex-1 flex-col p-6 sm:p-7">
         <p className="text-xs font-semibold uppercase tracking-normal text-[#b8a7ff]">{label}</p>
-        {item.problem ? <p className="mt-3 min-h-[4.5rem] text-sm leading-6 text-white/65">{item.problem}</p> : null}
-        <h3 className={`${item.problem ? "mt-6" : "mt-3"} min-h-[3.5rem] text-xl font-semibold leading-tight text-white`}>{item.title}</h3>
-        <p className="mt-3 flex-1 text-sm leading-6 text-white/68">{item.body}</p>
+        {item.problem ? <p className="mt-3 text-sm leading-6 text-white/65">{item.problem}</p> : null}
+        <h3 className={`${item.problem ? "mt-6" : "mt-3"} text-xl font-semibold leading-tight text-white`}>{item.title}</h3>
+        <p className="mt-3 text-sm leading-6 text-white/68">{item.body}</p>
         {noteLabel && noteBody ? (
-          <div className="mt-5 min-h-[6.5rem] rounded-2xl border border-[#c4b5fd]/20 bg-[#c4b5fd]/[0.07] p-4">
+          <div className="mt-5 rounded-2xl border border-[#c4b5fd]/20 bg-[#c4b5fd]/[0.07] p-4">
             <p className="text-[11px] font-semibold uppercase tracking-normal text-[#c4b5fd]">{noteLabel}</p>
             <p className="mt-2 text-sm leading-6 text-white/82">{noteBody}</p>
           </div>

@@ -6,7 +6,7 @@ const focusHost = process.env.STOREFRONT_PUBLIC_ROUTES_FOCUS_HOST || "";
 const skipMediaChecks = process.env.STOREFRONT_PUBLIC_ROUTES_SKIP_MEDIA === "1";
 // This change set is scoped to the two .com storefronts; .eu remains covered by the language/SSR smokes.
 const routeChecks = [
-  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/ai-image-generation", "/ai-image-generation/portrait-photo", "/ai-image-generation/headshot", "/ai-image-generation/avatar", "/ai-image-generation/background-changer", "/ai-image-generation/motion-generator", "/ai-video-generation", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/product-ad-video", "/ai-video-generation/promo-video", "/ai-video-generation/ugc-ad-video", "/ai-video-generation/video-ad", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/cookies", "/terms", "/refunds"] },
+  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/ai-image-generation", "/ai-image-generation/portrait-photo", "/ai-image-generation/headshot", "/ai-image-generation/avatar", "/ai-image-generation/background-changer", "/ai-image-generation/motion-generator", "/ai-video-generation", "/ai-video-generation/explainer-video", "/ai-video-generation/how-to-video", "/ai-video-generation/meme-video", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/product-ad-video", "/ai-video-generation/promo-video", "/ai-video-generation/ugc-ad-video", "/ai-video-generation/video-ad", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/cookies", "/terms", "/refunds"] },
   { host: "www.aidreamcapes.com", paths: ["/", "/workflow", "/collections", "/collections/fan-scene-albums", "/collections/private-fan-scene-albums", "/collections/game-day-group-photos", "/collections/game-day-group-portraits", "/collections/christmas-holiday-albums", "/collections/christmas-group-albums", "/collections/new-year-countdown-albums", "/tools", "/tools/fan-scene-album-builder", "/tools/game-day-group-portrait-maker", "/tools/christmas-group-album-studio", "/tools/new-year-countdown-album-maker", "/tools/permission-safe-photo-planner", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog/private-fan-scene-album-photo-package-guide", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] }
 ];
 const imageAltRouteChecks = [
@@ -40,6 +40,9 @@ const legacyRedirectChecks = [
   { host: "www.aidreamcapes.com", path: "/blog/holiday-memory-albums-guide", target: "/blog/christmas-group-album-photo-package-guide" }
 ];
 const legacyGoneChecks = [
+  { host: "www.mydreamshoots.com", path: "/holidays-events/christmas" },
+  { host: "www.mydreamshoots.com", path: "/holidays-events/new-year" },
+  { host: "www.mydreamshoots.com", path: "/holidays-events/thanksgiving" },
   { host: "www.mydreamshoots.com", path: "/tools" },
   { host: "www.mydreamshoots.com", path: "/collections/wedding-portraits" },
   { host: "www.mydreamshoots.com", path: "/collections/profile-cards" },
@@ -55,6 +58,7 @@ const legacyGoneChecks = [
   { host: "www.mydreamshoots.com", path: "/tools/image-to-video" },
   { host: "www.mydreamshoots.com", path: "/tool" }
 ];
+const legacyGoneKeys = new Set(legacyGoneChecks.map((item) => `${item.host}${item.path}`));
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -392,6 +396,8 @@ async function smokeStorefrontPublicRoutes() {
         }
       }
       for (const path of Array.from(paths).sort()) {
+        if (path.startsWith("/cdn-cgi/")) continue;
+        if (legacyGoneKeys.has(`${check.host}${path}`)) continue;
         const status = await statusForPath(request, check.host, path).catch(() => 599);
         if (status === 404) failures.push({ host: check.host, path, status });
         if (status < 400 || [301, 302, 303, 307, 308, 401].includes(status)) {
@@ -421,7 +427,8 @@ async function smokeStorefrontPublicRoutes() {
         console.log(`✓ ${check.host}${check.path} -> 404`);
       }
     }
-    for (const check of pathModeRouteChecks.filter((item) => hostMatchesFocus(item.host) || item.host === "localhost")) {
+    const includePathModeRoutes = base.hostname === "localhost" || process.env.STOREFRONT_PUBLIC_ROUTES_INCLUDE_PATH_MODE === "1";
+    for (const check of pathModeRouteChecks.filter((item) => includePathModeRoutes && (hostMatchesFocus(item.host) || item.host === "localhost"))) {
       for (const path of check.paths.filter(pathModeMatchesFocus)) {
         const status = await statusForPath(request, check.host, path).catch(() => 599);
         if (status >= 400 && ![401].includes(status)) failures.push({ host: check.host, path, status });

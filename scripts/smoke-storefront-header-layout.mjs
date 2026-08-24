@@ -14,8 +14,8 @@ const stores = [
   {
     slug: "mydreamshoots",
     siteId: "site_dreamshoot",
-    publicLabels: ["AI Image Generation", "AI Video Generation", "Save the Date", "How it works", "Blog", "Pricing", "Workspace"],
-    appLabels: ["AI Image Generation", "AI Video Generation", "Save the Date", "How it works", "Blog", "Pricing", "Workspace"],
+    publicLabels: ["AI Video Generation", "AI Save the Date", "AI Image Generation", "How it works", "Blog", "Pricing", "Workspace"],
+    appLabels: ["AI Video Generation", "AI Save the Date", "AI Image Generation", "How it works", "Blog", "Pricing", "Workspace"],
     credentials: [
       {
         email: process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_EMAIL || process.env.SMOKE_CUSTOMER_EMAIL || "nora@mydreamshoots.localhost",
@@ -179,7 +179,9 @@ async function assertHeaderLayout(page, store, viewport, { scope = "public", exp
     assert(matchesLabel(snapshot.navText, label), `${store.slug} ${scope} ${viewport.name}: desktop navigation is missing ${Array.isArray(label) ? label.join(" / ") : label}; nav text: ${snapshot.navText}`);
   }
   assert(!/FAQ/.test(snapshot.navText), `${store.slug} ${scope} ${viewport.name}: FAQ returned to top navigation`);
-  assert(snapshot.navText.indexOf("Tools") < snapshot.navText.indexOf("Best Packages"), `${store.slug} ${scope} ${viewport.name}: Best Packages is not after Tools`);
+  if (store.slug !== "mydreamshoots") {
+    assert(snapshot.navText.indexOf("Tools") < snapshot.navText.indexOf("Best Packages"), `${store.slug} ${scope} ${viewport.name}: Best Packages is not after Tools`);
+  }
 }
 
 async function loginCustomer(context, store) {

@@ -278,6 +278,13 @@ function assertPage(pageJson, label, storeKey) {
   assert(settings.primaryHref === "/app/create", `${label}: primary CTA should point to the workspace create flow`);
   assert(!("imageSlugs" in settings), `${label}: homepage image cards must come from the publication projection`);
   assert(!("videoSlugs" in settings), `${label}: homepage video cards must come from the publication projection`);
+  if (storeKey === "mydreamshoots") {
+    assert(settings.videoIntro === "Turn your photos into AI videos for social media, storytelling, product marketing, and creative projects. Explore talking photo, cinematic video, social video, product video, and other supported workflows.", `${label}: video intro drifted`);
+    assert(settings.saveTheDateIntro === "Create personalized Save the Date videos from your photos for engagements, proposals, wedding invitations, anniversaries, and special celebrations.", `${label}: Save the Date intro drifted`);
+    assert(pageJson?.sections?.proof_1?.settings?.title === "What Our Customers Say", `${label}: review heading drifted`);
+    assert(pageJson?.sections?.conversion_1?.settings?.title === "Ready to create with myDreamshoots?", `${label}: conversion heading drifted`);
+    assert(pageJson?.sections?.conversion_1?.settings?.subtitle === "Create AI videos, personalized Save the Date videos, and professional photo sets from your images—all in one private workspace.", `${label}: conversion subtitle drifted`);
+  }
   if (storeKey === "aidreamcapes") {
     assert(pageJson?.sections?.visual_proof_1?.type === "dreamshoot_visual_proof", `${label}: missing Aidreamcapes proof gallery`);
     assert(pageJson?.sections?.flow_bridge_1?.type === "dreamshoot_flow_bridge", `${label}: missing Aidreamcapes workflow bridge`);
@@ -304,15 +311,15 @@ function assertPage(pageJson, label, storeKey) {
   assert((pageJson?.sections?.proof_1?.blocks ?? []).length >= 6, `${label}: expected at least 6 workflow example cards`);
   assert((pageJson?.sections?.faq_1?.blocks ?? []).length >= 12, `${label}: expected expanded FAQ content`);
   assert(Number(settings.videoItemLimit ?? 0) === 8, `${label}: expected 8 video showcase items`);
-  assert(settings.showTrustedLogoIntro === false, `${label}: workflow logo intro should stay disabled`);
+  assert(settings.showTrustedLogoIntro === true, `${label}: workflow example intro should stay enabled`);
   assert(settings.embeddedPricingSectionId === "pricing_1", `${label}: showcase should embed pricing_1`);
   const trustedLogoBlocks = (pageJson?.sections?.generation_showcase_1?.blocks ?? []).filter((block) => block?.type === "logo");
-  assert(trustedLogoBlocks.length === 0, `${label}: workflow logo intro blocks should be removed`);
+  assert(trustedLogoBlocks.length >= 1, `${label}: workflow example logo blocks should be present`);
   assert(!("itemLimit" in settings), `${label}: old image-limiting itemLimit should be removed`);
   const pricingSettings = pageJson?.sections?.pricing_1?.settings ?? {};
   assert(pricingSettings.subtitle === "Compare the current price, included credits, renewal interval, and supported workflows before selecting a plan.", `${label}: pricing subtitle drifted`);
   assert(String(pricingSettings.marketComparison ?? "").startsWith("Choose a monthly, quarterly, or semiannual plan"), `${label}: pricing market comparison should describe plan comparison`);
-  assert(pricingSettings.description === "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs.", `${label}: pricing description drifted`);
+  assert(pricingSettings.description === "Use credits across eligible AI photo and video workflows. The required credit cost is shown before generation.", `${label}: pricing description drifted`);
   assert(pricingSettings.sidePanelTitle === "Plans start at {LIVE_LOWEST_ACTIVE_PLAN_PRICE}, with the current credit allowance and billing interval shown for each option.", `${label}: pricing side panel title drifted`);
   const catalogSettings = pageJson?.sections?.package_catalog_1?.settings ?? {};
   assert(catalogSettings.label === "AI PHOTO STUDIOS", `${label}: package catalog label drifted`);
@@ -321,12 +328,9 @@ function assertPage(pageJson, label, storeKey) {
   assert(catalogSettings.directoryLabel === "AI PHOTO THEMED", `${label}: theme directory label drifted`);
   assert(catalogSettings.directorySubtitle === "Compare every active theme by category, title, cover, and route before starting a private photo package.", `${label}: theme directory subtitle drifted`);
   const proofSettings = pageJson?.sections?.proof_1?.settings ?? {};
-  assert(proofSettings.title === "Workflow examples from myDreamshoots use cases", `${label}: workflow example title drifted`);
-  assert(proofSettings.subtitle === "Use-case examples for private photo packages, clear credit review, gallery delivery, and supported motion workflows.", `${label}: workflow example subtitle drifted`);
-  assert(String(proofSettings.summaryBody ?? "").includes("short motion previews"), `${label}: workflow example body drifted`);
   const conversionSettings = pageJson?.sections?.conversion_1?.settings ?? {};
-  assert(conversionSettings.eyebrow === "BEST AI MAKER", `${label}: conversion eyebrow drifted`);
-  assert(conversionSettings.title === "Ready to try the myDreamshoots's Best AI Maker?", `${label}: conversion title drifted`);
+  assert(conversionSettings.eyebrow === "AI VIDEO + PHOTO CREATION", `${label}: conversion eyebrow drifted`);
+  assert(conversionSettings.title === "Ready to create with myDreamshoots?", `${label}: conversion title drifted`);
 }
 
 function assertBestPackagesPage(pageJson, label) {
@@ -385,10 +389,10 @@ function assertTutorialVideoSection(section, label, expectedEyebrow = "ai image"
   const videoUrl = comparableImageUrl(settings.videoUrl);
   const subtitle = String(settings.subtitle ?? "");
   assert(String(settings.eyebrow ?? "").toLowerCase().includes(expectedEyebrow), `${label}: tutorial eyebrow should identify ${expectedEyebrow}`);
-  const isMydreamHowItWorks = expectedEyebrow === "how it works" && String(settings.supportingCopy ?? "").includes("mydreamshoots's AI Video");
+  const isMydreamHowItWorks = expectedEyebrow === "how it works" && String(settings.supportingCopy ?? "").includes("Upload Your Photos");
   if (isMydreamHowItWorks) {
-    assert(String(settings.title ?? "").trim() === "How it works", `${label}: tutorial title should be How it works`);
-    assert(subtitle.includes("Upload selfies"), `${label}: tutorial copy should mention selfie uploads`);
+    assert(String(settings.title ?? "").trim() === "How It Works", `${label}: tutorial title should be How It Works`);
+    assert(subtitle.includes("upload your photos"), `${label}: tutorial copy should mention photo uploads`);
     assert(String(settings.supportingCopy ?? "").includes("AI Video"), `${label}: tutorial copy should mention AI Video`);
   } else {
     assert(String(settings.title ?? "").trim().length > 12, `${label}: tutorial should have a real title`);
@@ -406,9 +410,9 @@ function assertTutorialVideoSection(section, label, expectedEyebrow = "ai image"
 function assertMydreamshootsTutorialPair(pageJson, label) {
   assertTutorialVideoSection(pageJson?.sections?.tutorial_video_1, `${label}: How it works tutorial`, "how it works", expectedMydreamshootsTutorialVideos.image);
   const settings = pageJson?.sections?.tutorial_video_1?.settings ?? {};
-  assert(settings.title === "Watch the private photo package workflow.", `${label}: homepage tutorial title drifted`);
-  assert(settings.subtitle === "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.", `${label}: homepage tutorial subtitle drifted`);
-  assert(settings.supportingCopy === "Use a supported AI Video workflow when you want to turn an approved image or image set into a short motion result, then review the full clip before publishing.", `${label}: homepage tutorial supporting copy drifted`);
+  assert(settings.title === "How It Works", `${label}: homepage tutorial title drifted`);
+  assert(settings.subtitle === "Choose what you want to create, upload your photos, review examples and credit costs, then generate and download your AI video or photo.", `${label}: homepage tutorial subtitle drifted`);
+  assert(settings.supportingCopy === "Use the Upload Your Photos flow for supported AI Video, Save the Date, headshot, portrait, couple, seasonal, and creative photo workflows.", `${label}: homepage tutorial supporting copy drifted`);
   assert(!String(settings.videoBadge ?? "").trim(), `${label}: homepage tutorial video badge should be removed`);
   assert(!pageJson?.sections?.tutorial_video_2, `${label}: AI video tutorial should be removed from the homepage`);
   assert(!pageJson?.sections?.mobile_video_1, `${label}: mobile tutorial section should be removed`);

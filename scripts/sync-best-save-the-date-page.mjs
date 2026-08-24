@@ -22,15 +22,20 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
 const pagePath = "/best-save-the-date";
+const removedLegacyPaths = new Set([
+  "/holidays-events/christmas",
+  "/holidays-events/thanksgiving",
+  "/holidays-events/new-year"
+]);
 const sourcePaths = [
   "/ai-save-the-date/valentines-day",
   "/holidays-events/engagement",
   "/holidays-events/proposal",
   "/holidays-events/save-the-date",
   "/ai-video-generation/wedding-ceremony",
-  "/holidays-events/thanksgiving",
-  "/holidays-events/christmas",
-  "/holidays-events/new-year"
+  "/ai-image-generation/thanksgiving-photo",
+  "/ai-image-generation/christmas-photo",
+  "/ai-image-generation/holiday"
 ];
 
 const jiti = createJiti(import.meta.url);
@@ -64,7 +69,7 @@ try {
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
   const existingSettings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
   const existingGroups = existingSettings.saveTheDateNavigation?.groups ?? [];
-  const existingPublishedItems = existingGroups.flatMap((candidate) => candidate.items.filter((item) => item.status === "published").map((item) => ({ ...item, groupSlug: candidate.slug })));
+  const existingPublishedItems = existingGroups.flatMap((candidate) => candidate.items.filter((item) => item.status === "published" && !removedLegacyPaths.has(item.href)).map((item) => ({ ...item, groupSlug: candidate.slug })));
   const eligiblePaths = new Set([...sourcePaths, ...existingPublishedItems.map((item) => item.href)]);
   const sourcePages = new Map(siteRecord.pages.filter((page) => eligiblePaths.has(page.slug)).map((page) => [page.slug, page]));
   const missingPublishedSources = existingPublishedItems.filter((item) => !sourcePages.has(item.href)).map((item) => item.href);
@@ -75,9 +80,9 @@ try {
     ["/holidays-events/proposal", "Proposal"],
     ["/holidays-events/save-the-date", "Save the Date"],
     ["/ai-video-generation/wedding-ceremony", "Wedding Ceremony"],
-    ["/holidays-events/thanksgiving", "Thanksgiving"],
-    ["/holidays-events/christmas", "Christmas"],
-    ["/holidays-events/new-year", "New Year"]
+    ["/ai-image-generation/thanksgiving-photo", "Thanksgiving Photo"],
+    ["/ai-image-generation/christmas-photo", "Christmas Photo"],
+    ["/ai-image-generation/holiday", "Holiday"]
   ]);
   const existingPathsForGroup = (groupSlug) => existingPublishedItems
     .filter((item) => item.groupSlug === groupSlug && !sourcePaths.includes(item.href) && sourcePages.has(item.href))

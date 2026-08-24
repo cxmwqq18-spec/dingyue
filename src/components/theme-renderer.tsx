@@ -25,6 +25,7 @@ import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/st
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
 import { PricingBillingTable } from "@/components/storefront/pricing-billing-table";
 import { pricingSidePanelItemsFromMetadata } from "@/lib/mydreamshoots-pricing-facts";
+import mydreamshootsHomepageCopy from "@/lib/mydreamshoots-homepage-copy.json";
 import { StorefrontInstantLink, StorefrontLinkPrefetchProvider, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
 import { AiVideoTopicLanding } from "@/components/storefront/ai-video-topic-landing";
 import { TalkingPhotoLanding } from "@/components/storefront/talking-photo-landing";
@@ -36,6 +37,7 @@ import {
   type PhotoPackageUseCaseProfile
 } from "@/lib/photo-package-use-case-profiles";
 import { shortPolicyPath } from "@/lib/site-route-canonical";
+import { isMydreamshootsRemovedLegacyRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { isSpanishStorefrontSite, SPANISH_XBY_COLLECTION_ALIASES } from "@/lib/spanish-storefronts";
 import {
   storefrontCardImageAlt,
@@ -135,6 +137,7 @@ import type {
   ThemeSettingValue,
   ToolMenuItem,
   PublishedHomepageShowcaseItem,
+  SaveTheDateNavigationGroup,
   VideoTheme,
   VideoThemeCategory
 } from "@/lib/types";
@@ -1185,23 +1188,47 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     ? requiredLinks.map((link) => isWorkspaceNavLink(link.label, link.href) ? { ...link, label: workspaceLabel, href: "/app/create" } : link)
     : [...requiredLinks, workspaceLink];
   const saveTheDateConfig = settings.saveTheDateNavigation;
-  const saveTheDateGroups = saveTheDateConfig?.groups ?? [];
-  const saveTheDateMenuLabel = isMyDreamShootsCom
-    ? "AI Save the Date"
-    : saveTheDateConfig?.menuLabel?.trim() ?? "";
   const publishedSaveTheDateShowcases = homepageShowcases.filter(
     (item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible
   );
+  // Both sources are active-publication projections. The homepage projection is
+  // a resilient recovery path for an older local snapshot that missed settings,
+  // while still requiring a published route and media-backed showcase item.
+  const projectedSaveTheDateGroups: SaveTheDateNavigationGroup[] = publishedSaveTheDateShowcases.length
+    ? [{
+        label: publishedSaveTheDateShowcases[0]?.category?.trim() || "Save the Date",
+        slug: "published-save-the-date",
+        sortOrder: 0,
+        items: publishedSaveTheDateShowcases.map((item) => ({
+          label: item.title,
+          slug: item.canonicalPath.split("/").filter(Boolean).at(-1) || item.id,
+          href: item.canonicalPath,
+          description: item.subtitle,
+          imageUrl: item.imageUrl,
+          imageAlt: item.imageAlt,
+          status: "published" as const,
+          sortOrder: item.sortOrder
+        }))
+      }]
+    : [];
+  const saveTheDateGroups = saveTheDateConfig?.groups?.length ? saveTheDateConfig.groups : projectedSaveTheDateGroups;
+  const saveTheDateMenuLabel = isMyDreamShootsCom
+    ? saveTheDateConfig?.menuLabel?.trim() || "Save the Date"
+    : saveTheDateConfig?.menuLabel?.trim() ?? "";
   const hasPublishedSaveTheDateProjection = publishedSaveTheDateShowcases.length > 0;
   const routedSaveTheDateGroups = saveTheDateGroups.map((group) => ({
     ...group,
-    items: group.items.map((item) => ({ ...item, href: hrefForPage(site, item.href, pagePath) }))
+    items: group.items
+      .filter((item) => !(isMyDreamShootsCom && isMydreamshootsRemovedLegacyRoute(item.href)))
+      .map((item) => ({ ...item, href: hrefForPage(site, item.href, pagePath) }))
   }));
   const saveTheDateTarget = routedSaveTheDateGroups
     .flatMap((group) => group.items)
     .filter((item) => item.status === "published" && Boolean(item.href?.trim()) && (
       !hasPublishedSaveTheDateProjection ||
-      publishedSaveTheDateShowcases.some((showcase) => showcase.canonicalPath === item.href)
+      publishedSaveTheDateShowcases.some((showcase) =>
+        showcase.canonicalPath === item.href || hrefForPage(site, showcase.canonicalPath, pagePath) === item.href
+      )
     ))
     .sort((left, right) => left.sortOrder - right.sortOrder)[0];
   const saveTheDateTargetHref = saveTheDateTarget?.href?.trim() || "";
@@ -8698,13 +8725,14 @@ function SectionView({
     }
 
     if (section.type === "editorial_rich_text") {
+      const richTextList = setting(section, "sectionVariant") === "rich_text_list";
       return (
         <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
             <div className="mx-auto mt-7 max-w-[70ch] text-center">
               {intro ? <p className="text-base leading-8 sm:text-lg" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}
-              <div className="mt-5 space-y-5 text-base leading-8" style={{ color: editorialTheme.mutedText }}>{blocks.map((block, index) => <p key={instanceKey(block, index, "editorial_paragraph")} {...xfcartBlockAttrs(block, index, "editorial_paragraph")}>{blockValue(block, "text")}</p>)}</div>
+              {richTextList ? <ul className="mx-auto mt-5 max-w-[58ch] list-disc space-y-3 pl-6 text-left text-base leading-8" style={{ color: editorialTheme.mutedText }}>{blocks.map((block, index) => <li key={instanceKey(block, index, "editorial_list_item")} {...xfcartBlockAttrs(block, index, "editorial_list_item")}>{blockValue(block, "text")}</li>)}</ul> : <div className="mt-5 space-y-5 text-base leading-8" style={{ color: editorialTheme.mutedText }}>{blocks.map((block, index) => <p key={instanceKey(block, index, "editorial_paragraph")} {...xfcartBlockAttrs(block, index, "editorial_paragraph")}>{blockValue(block, "text")}</p>)}</div>}
             </div>
             {setting(section, "imageUrl") ? <div className="mx-auto mt-10 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#eadbd3]">{imageFor(section)}</div> : null}
           </div>
@@ -12572,9 +12600,32 @@ function SectionView({
 
   if (section.type === "dreamshoot_save_the_date_directory") {
     const navigation = site.themeSettings?.publishedJson?.saveTheDateNavigation;
-    const groups = (navigation?.groups ?? []).map((group) => ({
+    const publishedSaveTheDateShowcases = homepageShowcases
+      .filter((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible)
+      .sort((left, right) => left.sortOrder - right.sortOrder);
+    const projectedGroups: SaveTheDateNavigationGroup[] = publishedSaveTheDateShowcases.length
+      ? [{
+          label: publishedSaveTheDateShowcases[0]?.category?.trim() || "Save the Date",
+          slug: "published-save-the-date",
+          sortOrder: 0,
+          items: publishedSaveTheDateShowcases.map((item) => ({
+            label: item.title,
+            slug: item.canonicalPath.split("/").filter(Boolean).at(-1) || item.id,
+            href: item.canonicalPath,
+            description: item.subtitle,
+            imageUrl: item.imageUrl,
+            imageAlt: item.imageAlt,
+            status: "published" as const,
+            sortOrder: item.sortOrder
+          }))
+        }]
+      : [];
+    const sourceGroups = navigation?.groups?.length ? navigation.groups : projectedGroups;
+    const groups = sourceGroups.map((group) => ({
       ...group,
-      items: group.items.map((item) => ({ ...item, href: hrefFor(site, item.href) }))
+      items: group.items
+        .filter((item) => !(isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsRemovedLegacyRoute(item.href)))
+        .map((item) => ({ ...item, href: hrefFor(site, item.href) }))
     }));
     return <SaveTheDateDirectory createHref={hrefFor(site, "/app/create")} groups={groups} />;
   }
@@ -12703,10 +12754,10 @@ function SectionView({
     const aidreamcapes = isAidreamcapesSite(site);
     const mydreamProfileSite = isMyDreamShootsProfileSite(site);
     const canonicalGeneratorCopy = !isSpanishXbySite(site) && (mydreamProfileSite || aidreamcapes);
-    const imageTitle = canonicalGeneratorCopy ? "Featured AI Photo Generators" : setting(section, "imageTitle", "Featured AI Photo Generators");
+    const imageTitle = canonicalGeneratorCopy ? mydreamProfileSite ? mydreamshootsHomepageCopy.photoTitle : "Featured AI Photo Generators" : setting(section, "imageTitle", "Featured AI Photo Generators");
     const imageAllLabel = canonicalGeneratorCopy ? mydreamProfileSite ? "VIEW ALL PHOTO" : "View all photos" : setting(section, "imageAllLabel", "View all photos");
     const imageAllHref = canonicalGeneratorCopy ? "/best-ai-image" : setting(section, "imageAllHref", "/best-ai-image");
-    const videoTitle = canonicalGeneratorCopy ? "Featured AI Video Generators" : setting(section, "videoTitle", "Featured AI Video Generators");
+    const videoTitle = canonicalGeneratorCopy ? mydreamProfileSite ? mydreamshootsHomepageCopy.videoTitle : "Featured AI Video Generators" : setting(section, "videoTitle", "Featured AI Video Generators");
     const videoAllLabel = canonicalGeneratorCopy ? mydreamProfileSite ? "VIEW ALL VIDEO" : "View all videos" : setting(section, "videoAllLabel", "View all videos");
     const videoAllHref = canonicalGeneratorCopy ? "/best-ai-video" : setting(section, "videoAllHref", "/best-ai-video");
     const primaryHref = canonicalGeneratorCopy ? "/app/create" : setting(section, "primaryHref", "/app/create");
@@ -12782,8 +12833,8 @@ function SectionView({
         <div
           aria-label={logoAlt}
           className={mydreamProfileSite
-            ? "flex aspect-square w-[min(27vw,6.2rem)] shrink-0 items-center justify-center overflow-hidden rounded-[8px] border border-[#8291aa]/70 bg-[#162033] p-2 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.95)] ring-1 ring-white/12 sm:w-[5.7rem] md:w-[6.25rem]"
-            : "flex aspect-square w-[min(27vw,6.2rem)] shrink-0 items-center justify-center overflow-hidden rounded-[8px] border border-white/70 bg-white px-3 py-2.5 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.85)] ring-1 ring-black/10 sm:w-[5.7rem] md:w-[6.25rem]"}
+            ? "pointer-events-none flex aspect-square w-[min(27vw,6.2rem)] shrink-0 cursor-default select-none items-center justify-center overflow-hidden rounded-[8px] border border-[#8291aa]/70 bg-[#162033] p-2 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.95)] ring-1 ring-white/12 sm:w-[5.7rem] md:w-[6.25rem]"
+            : "pointer-events-none flex aspect-square w-[min(27vw,6.2rem)] shrink-0 cursor-default select-none items-center justify-center overflow-hidden rounded-[8px] border border-white/70 bg-white px-3 py-2.5 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.85)] ring-1 ring-black/10 sm:w-[5.7rem] md:w-[6.25rem]"}
           key={instanceKey(logo, index, "trusted_logo")}
           title={logoAlt}
           {...xfcartBlockAttrs(logo, index, "trusted_logo")}
@@ -12807,11 +12858,19 @@ function SectionView({
         data-dreamshoot-trusted-logos={mydreamProfileSite ? undefined : "true"}
         data-dreamshoot-workflow-examples={mydreamProfileSite ? "true" : undefined}
       >
-        <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
-          <DreamshootUnderlinedTitle gradient={accent}>
-	            {setting(section, "trustedLogoTitle", mydreamProfileSite ? "Creative workflow examples built with myDreamshoots" : "Most Trusted Creators. | myDreamshoots")}
-          </DreamshootUnderlinedTitle>
-        </h2>
+        {mydreamProfileSite ? (
+          <p className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
+            <DreamshootUnderlinedTitle gradient={accent}>
+              {setting(section, "trustedLogoTitle", "Creative workflow examples built with myDreamshoots")}
+            </DreamshootUnderlinedTitle>
+          </p>
+        ) : (
+          <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
+            <DreamshootUnderlinedTitle gradient={accent}>
+              {setting(section, "trustedLogoTitle", "Most Trusted Creators. | myDreamshoots")}
+            </DreamshootUnderlinedTitle>
+          </h2>
+        )}
         <div className="mx-auto mt-7 max-w-[78rem] space-y-3 md:mt-8 md:space-y-3.5">
           {trustedLogoRows.map((row, rowIndex) => (
             <DreamshootShowcaseRail
@@ -12850,9 +12909,15 @@ function SectionView({
           <p className="text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: aidreamcapes ? "#f2b27c" : "#8defff" }}>
             {setting(section, "eyebrow", "Customer-created examples")}
           </p>
-          <h2 className="mt-4 max-w-[46rem] text-[clamp(2.25rem,5vw,4.4rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-balance [font-family:var(--site-title-font)]">
-            {setting(section, "title", "Browse image and video themes customers have already created.")}
-          </h2>
+          {mydreamProfileSite ? (
+            <p className="mt-4 max-w-[46rem] text-[clamp(2.25rem,5vw,4.4rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-balance [font-family:var(--site-title-font)]">
+              {setting(section, "title", "Browse image and video themes customers have already created.")}
+            </p>
+          ) : (
+            <h2 className="mt-4 max-w-[46rem] text-[clamp(2.25rem,5vw,4.4rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-balance [font-family:var(--site-title-font)]">
+              {setting(section, "title", "Browse image and video themes customers have already created.")}
+            </h2>
+          )}
         </div>
         <div className={`rounded-[24px] border bg-white/[0.07] p-5 shadow-[0_32px_92px_-66px_rgba(0,0,0,0.92)] backdrop-blur ${aidreamcapes ? "border-white/12" : "border-white/10"}`}>
           <p className={`text-sm leading-7 ${mutedText}`}>
@@ -12962,8 +13027,8 @@ function SectionView({
         <div className="mt-12" data-dreamshoot-homepage-showcase-kind={kind}>
           {renderShowcaseSubsectionHeader(title, href, label, kind)}
           <p className="mx-auto mt-4 max-w-[64rem] text-center text-sm leading-7 text-white/66">{intro}</p>
-          <div className={kind === "save_the_date"
-            ? "mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6"
+            <div className={kind === "save_the_date"
+            ? "mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4"
             : "mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"}>
             {items.map(renderPublishedCard)}
           </div>
@@ -12974,9 +13039,9 @@ function SectionView({
           <div className={"absolute inset-0 opacity-38 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.72)_1px,transparent_1px)] [background-size:86px_86px]"} />
           <div className="relative mx-auto max-w-[var(--site-content-width)]">
             {trustedProof}
-            {renderPublishedSection(videoItems, setting(section, "videoTitle", "Featured AI Video Generators"), setting(section, "videoIntro", ""), setting(section, "videoAllHref", "/best-ai-video"), setting(section, "videoAllLabel", "VIEW ALL VIDEO"), "video")}
-            {renderPublishedSection(saveTheDateItems, setting(section, "saveTheDateTitle", "AI Save the Date Videos"), setting(section, "saveTheDateIntro", ""), setting(section, "saveTheDateAllHref", "/holidays-events/save-the-date"), setting(section, "saveTheDateAllLabel", "VIEW ALL SAVE THE DATE"), "save_the_date")}
-            {renderPublishedSection(photoItems, setting(section, "imageTitle", "Featured AI Photo Generators"), setting(section, "photoIntro", ""), setting(section, "imageAllHref", "/best-ai-image"), setting(section, "imageAllLabel", "VIEW ALL PHOTO"), "photo")}
+            {renderPublishedSection(videoItems, videoTitle, mydreamProfileSite ? mydreamshootsHomepageCopy.videoIntro : setting(section, "videoIntro", ""), videoAllHref, videoAllLabel, "video")}
+            {renderPublishedSection(saveTheDateItems, mydreamProfileSite ? mydreamshootsHomepageCopy.saveTheDateTitle : setting(section, "saveTheDateTitle", "AI Save the Date Videos"), mydreamProfileSite ? mydreamshootsHomepageCopy.saveTheDateIntro : setting(section, "saveTheDateIntro", ""), setting(section, "saveTheDateAllHref", "/holidays-events/save-the-date"), setting(section, "saveTheDateAllLabel", "VIEW ALL SAVE THE DATE"), "save_the_date")}
+            {renderPublishedSection(photoItems, imageTitle, setting(section, "photoIntro", ""), imageAllHref, imageAllLabel, "photo")}
             {embeddedPricing}
           </div>
         </section>
@@ -13648,7 +13713,7 @@ function SectionView({
                           <div className="relative aspect-[16/9] overflow-hidden bg-[#211c2c]" data-video-theme-card-image>
                             <img
                               alt={manualImageAlt({ src: coverImage.src, fallback: coverImage.alt })}
-                              className="block h-full w-full object-cover object-center transition duration-500 group-hover/theme:scale-[1.035]"
+                            className="block h-full w-full scale-[1.42] object-cover object-center transition duration-500 group-hover/theme:scale-[1.5]"
                               decoding="async"
                               loading={index === 0 ? "eager" : "lazy"}
                               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -13658,7 +13723,7 @@ function SectionView({
                               {String(index + 1).padStart(2, "0")}
                             </span>
                           </div>
-                          <div className="min-h-[178px] p-5">
+                          <div className="p-5">
                             <h3 className="text-xl font-semibold leading-tight tracking-normal text-white">{topic.label}</h3>
                             {topic.description ? <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/66">{topic.description}</p> : null}
                             <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ddd7ff] transition group-hover/theme:text-white">

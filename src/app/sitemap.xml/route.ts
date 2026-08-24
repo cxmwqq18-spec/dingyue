@@ -1,6 +1,13 @@
-import { getStorefrontPublicationIdentityForHost, getStorefrontSitemapEntriesForHost } from "@/lib/seo-indexing";
+import { unstable_cache } from "next/cache";
+import { getStorefrontSitemapPayloadForHost } from "@/lib/seo-indexing";
 
 export const dynamic = "force-dynamic";
+
+const getCachedSitemapPayload = unstable_cache(
+  async (host: string, forwardedHost: string) => getStorefrontSitemapPayloadForHost([forwardedHost, host]),
+  ["storefront-sitemap-payload"],
+  { revalidate: 300 }
+);
 
 function escapeXml(value: string): string {
   return value
@@ -47,11 +54,10 @@ function isGrownstrideHost(value: string | null | undefined): boolean {
 export async function GET(request: Request): Promise<Response> {
   const host = request.headers.get("host");
   const forwardedHost = request.headers.get("x-forwarded-host");
-  const entries = await getStorefrontSitemapEntriesForHost([
-    forwardedHost,
-    host
-  ]);
-  const identity = await getStorefrontPublicationIdentityForHost([forwardedHost, host]);
+  const cacheHost = host ?? "";
+  const cacheForwardedHost = forwardedHost ?? "";
+  const startedAt = Date.now();
+  const { entries, identity } = await getCachedSitemapPayload(cacheHost, cacheForwardedHost);
   const urlCount = entries.length;
   const imageCount = entries.reduce((total, entry) => total + entry.images.length, 0);
 
@@ -62,6 +68,7 @@ export async function GET(request: Request): Promise<Response> {
       "vary": "Host, X-Forwarded-Host, RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
       "x-sitemap-url-count": String(urlCount),
       "x-sitemap-image-count": String(imageCount),
+      "x-sitemap-generation-ms": String(Date.now() - startedAt),
       ...(identity?.publicationId ? { "x-storefront-publication": identity.publicationId } : {}),
       ...(identity?.publicationVersion !== undefined ? { "x-storefront-publication-version": String(identity.publicationVersion) } : {}),
       ...(identity?.snapshotHash ? { "x-storefront-snapshot-hash": identity.snapshotHash } : {}),
@@ -80,4 +87,9 @@ export async function GET(request: Request): Promise<Response> {
         : {})
     }
   });
+}
+
+export async function HEAD(request: Request): Promise<Response> {
+  const response = await GET(request);
+  return new Response(null, { status: response.status, headers: response.headers });
 }

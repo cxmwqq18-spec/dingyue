@@ -24,8 +24,8 @@ if (!apply) {
 }
 
 const approvedSeo = {
-  title: "Professional AI Photo Generator Online - myDreamshoots",
-  description: "Turn your selfies into stunning couple photos in seconds with myDreamshoots – the most advanced AI photo generator maker. No studio, no outfits, just magic.",
+  title: "AI Video & Photo Generator | myDreamshoots",
+  description: "Create AI videos from your photos, professional AI headshots, portraits, and themed photo sets. Make personalized Save the Date videos with myDreamshoots.",
   keywords: "Dream Shoots,Wedding Photoshoot,Travel Selfies,Free AI Photos,Free Photo Generator,AI Couple Photo,AI Headshot",
   canonicalPath: "/",
   index: true,

@@ -111,7 +111,7 @@ const myAssets = {
 
 const mydreamshootsTrustedLogoAssetBase = "/assets/dreamshoot/brand/trusted-creators-dark-v2";
 const aidreamTrustedLogoAssetBase = "/assets/sites/site_aidreamcapes/trusted-logos";
-const mydreamshootsAboutBody = "myDreamshoots is an AI photo and video studio for approved uploads, visible credit review, supported image and video workflows, and private account delivery. The current legal identity and policy facts are maintained in the published site profile.";
+const mydreamshootsAboutBody = "myDreamshoots is an AI video and photo generation platform that turns your images into AI videos, personalized Save the Date videos, professional AI headshots, portraits, couple photos, and themed photo sets.";
 const mydreamshootsTrustedLogoDefinitions = [
   { key: "ikraddy", name: "iKraddy", file: "01__ikraddy.webp" },
   { key: "beer", name: "Beer", file: "02__beer.webp" },
@@ -225,7 +225,7 @@ const stores = [
       title: "Subscription Plans",
 	      subtitle: "Compare the current price, included credits, renewal interval, and supported workflows before selecting a plan.",
 	      marketComparison: "Choose a monthly, quarterly, or semiannual plan based on the credits you expect to use. Compare the current price, included credits, renewal interval, and supported workflows before selecting a plan.",
-	      description: "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs.",
+	      description: "Use credits across eligible AI photo and video workflows. The required credit cost is shown before generation.",
 	      sidePanelEyebrow: "Why people subscribe",
 	      sidePanelTitle: "Plans start at {LIVE_LOWEST_ACTIVE_PLAN_PRICE}, with the current credit allowance and billing interval shown for each option.",
 	      sidePanelBody: "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs."
@@ -237,12 +237,12 @@ const stores = [
 	      eyebrow: "Customer-created examples",
 	      title: "Browse image and video themes customers have already created.",
 	      subtitle: "Scan photo themes and supported video workflows before you upload approved photos, review credits, and generate inside your signed-in workspace.",
-      imageTitle: "Best Photo Generator",
+      imageTitle: "Featured AI Photo Generators",
       imageAllLabel: "VIEW ALL PHOTO",
       imageAllHref: "/best-ai-image",
-      videoTitle: "Best Video Generator",
+      videoTitle: "Featured AI Video Generators",
       videoAllLabel: "VIEW ALL VIDEO",
-      videoAllHref: "/best-ai-video",
+      videoAllHref: "/ai-video-generation",
       primaryCta: "Start with your photos",
       primaryHref: "/app/create",
       imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
@@ -328,7 +328,7 @@ const stores = [
 	    reviews: section("testimonial_wall", {
 	      anchor: "reviews",
 	      mode: "use_cases",
-	      title: "Workflow examples from myDreamshoots use cases",
+	      title: "What Our Customers Say",
 	      subtitle: "Use-case examples for private photo packages, clear credit review, gallery delivery, and supported motion workflows.",
 	      summaryTitle: "Ways people use myDreamshoots",
 	      summaryBody: "Plan sports fan photos, VIP-style portraits, Christmas cards, professional headshots, creator scenes, and short motion previews before spending credits.",
@@ -345,9 +345,9 @@ const stores = [
     faq: mydreamshootsFaqSection(),
     conversion: section("conversion_panel", {
       anchor: "start",
-      eyebrow: "BEST AI MAKER",
-      title: "Ready to try the myDreamshoots's Best AI Maker?",
-      subtitle: "We've designed myDreamshoots to be as easy as possible to use, allowing you to focus on unleashing your creativity with complete peace of mind. Subscribe, upload, choose packages, generate results, and keep delivery in one workspace.",
+	      eyebrow: "AI VIDEO + PHOTO CREATION",
+	      title: "Ready to create with myDreamshoots?",
+	      subtitle: "Create AI videos, personalized Save the Date videos, and professional photo sets from your images—all in one private workspace.",
       primaryCta: "Create my first photo set",
       primaryHref: "/login",
       secondaryCta: "Choose a plan",

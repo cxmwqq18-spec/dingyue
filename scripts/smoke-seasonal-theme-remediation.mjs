@@ -14,6 +14,10 @@ const expected = {
   "fathers-day": {
     path: "/holidays-events/fathers-day", hero: "hero-ai-fathers-day-family-portrait.jpg", sceneCount: 9, faq: 6,
     title: "AI Father's Day Photo & Video Maker | Family Visuals"
+  },
+  "halloween": {
+    path: "/holidays-events/halloween", hero: "hero-ai-halloween-costume-party.jpg", sceneCount: 9, faq: 6,
+    title: "AI Halloween Photo and Video Maker | Spooky Visuals"
   }
 };
 for (const page of build.pages.filter((item) => expected[item.key])) {
@@ -24,11 +28,11 @@ for (const page of build.pages.filter((item) => expected[item.key])) {
   assert(json.seo.title.length <= 60, `${page.key}: title exceeds 60 characters`);
   assert(json.seo.description.length >= 120 && json.seo.description.length <= 160, `${page.key}: meta description length`);
   assert.equal(json.seo.robots.maxImagePreview, "large");
-  assert.equal(json.seo.index, true);
+  assert.equal(json.seo.index, page.key === "halloween" ? false : true);
   assert.equal(json.seo.follow, true);
   const sections = json.sections;
   const hero = sections[json.sectionsOrder[0]];
-  assert.equal(hero.blocks.length, 1, `${page.key}: hero must be single image`);
+  assert.equal(hero.blocks.length, page.key === "halloween" ? 3 : 1, `${page.key}: hero image count`);
   assert(hero.settings.imageUrl.endsWith(contract.hero), `${page.key}: hero mapping`);
   const scene = sections[`${json.contentContract.pageKey}_scene_ideas`];
   assert.equal(scene.blocks.length, contract.sceneCount, `${page.key}: scene count`);
@@ -42,13 +46,19 @@ for (const page of build.pages.filter((item) => expected[item.key])) {
     assert.equal(sections.mothers_day_workflow.blocks.length, 6);
     assert(sections.mothers_day_formats.settings.imageUrl.endsWith("ai-mothers-day-spring-walk.jpg"));
     assert(sections.mothers_day_family_match.settings.imageUrl.endsWith("ai-mothers-day-pet-portrait.jpg"));
-  } else {
+  } else if (page.key === "fathers-day") {
     assert.equal(sections.fathers_day_definition.blocks.length, 6);
     assert.equal(sections.fathers_day_quality.blocks.length, 4);
     assert.equal(sections.fathers_day_workflow.blocks.length, 8);
     assert.equal(sections.fathers_day_use_cases.blocks.length, 4);
     assert(sections.fathers_day_gallery.blocks[0].settings.imageUrl.endsWith("ai-fathers-day-family-dinner-toast.jpg"));
+  } else {
+    assert.equal(sections.halloween_definition.blocks.length, 7);
+    assert.equal(sections.halloween_quality.blocks.length, 6);
+    assert.equal(sections.halloween_workflow.blocks.length, 7);
+    assert.equal(sections.halloween_use_cases.blocks.length, 8);
+    assert(sections.halloween_use_cases.blocks.every((block) => block.settings.imageUrl && block.settings.imageAlt));
   }
 }
-assert.equal(build.pages.filter((page) => expected[page.key]).length, 2);
+assert.equal(build.pages.filter((page) => expected[page.key]).length, 3);
 console.log(JSON.stringify({ ok: true, pages: Object.keys(expected) }, null, 2));
