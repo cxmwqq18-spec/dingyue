@@ -29,11 +29,6 @@ try {
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products.map(mapProduct));
   const integrity = publicationSnapshotIntegrity(snapshot);
   if (integrity !== "valid") {
-    const badMedia = (snapshot.publishedStandardPageMedia || []).filter((item) => !item.primaryImage || !item.primaryImageAlt || !item.ogImage || !item.twitterImage || !item.jsonLdImage || !Array.isArray(item.sitemapImages) || !item.sitemapImages.length || !item.revision || !item.pageEntityId || !item.pageId || !item.canonicalPath || !item.mediaEntityId || item.ogImage !== item.primaryImage || item.twitterImage !== item.primaryImage || item.jsonLdImage !== item.primaryImage || !["ready", "review_required"].includes(item.status));
-    const text = (value) => typeof value === "string" && value.trim().length > 0;
-    const publicMediaUrl = (value) => text(value) && (/^https:\/\//i.test(value) || value.startsWith("/"));
-    const check = (item) => ({ path: item.canonicalPath, pageEntityId: text(item.pageEntityId), pageId: text(item.pageId), canonical: text(item.canonicalPath), mediaEntity: text(item.mediaEntityId), primary: publicMediaUrl(item.primaryImage), alt: text(item.primaryImageAlt), same: item.ogImage === item.primaryImage && item.twitterImage === item.primaryImage && item.jsonLdImage === item.primaryImage, sitemap: Array.isArray(item.sitemapImages) && item.sitemapImages.length > 0 && item.sitemapImages.every(publicMediaUrl), status: item.status === "ready" || item.status === "review_required", revision: text(item.revision) });
-    console.error(JSON.stringify({ badMedia: badMedia.map(check), all: (snapshot.publishedStandardPageMedia || []).map(check) }, null, 2));
     throw new Error(`Publication snapshot invalid: ${integrity}`);
   }
   const pageIds = record.pages.filter((page) => ["/holidays-events/mothers-day", "/holidays-events/fathers-day"].includes(page.slug)).map((page) => page.id);
