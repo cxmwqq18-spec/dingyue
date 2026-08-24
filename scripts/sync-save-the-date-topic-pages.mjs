@@ -193,7 +193,11 @@ try {
   for (const item of parsed) {
     const targetDir = path.join(repoRoot, "public/assets/dreamshoot/save-the-date", item.key);
     fs.mkdirSync(targetDir, { recursive: true });
-    for (const asset of item.manifest) fs.copyFileSync(path.join(item.sourceDir, "images", asset.filename), path.join(targetDir, asset.filename));
+    for (const asset of item.manifest) {
+      const targetPath = path.join(targetDir, asset.filename);
+      fs.copyFileSync(path.join(item.sourceDir, "images", asset.filename), targetPath);
+      fs.chmodSync(targetPath, 0o644);
+    }
   }
   const siteRecord = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
