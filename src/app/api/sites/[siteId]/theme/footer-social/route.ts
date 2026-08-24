@@ -10,6 +10,11 @@ function cleanText(value: unknown, maxLength: number) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
 }
 
+function cleanUrl(value: unknown) {
+  const url = cleanText(value, 500);
+  return url && /^https:\/\/[^\s]+$/i.test(url) ? url : "";
+}
+
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
   const guard = await requireSiteMutation(request, siteId, { roles: ["owner", "admin"], key: `${siteId}:footer-social` });
@@ -22,7 +27,12 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
   const socialLinks: ThemeFooterSocialLinks = {
     socialHeading: cleanText(body.socialHeading, 80) || "Follow Us",
-    socialBody: cleanText(body.socialBody, 240)
+    socialBody: cleanText(body.socialBody, 240),
+    instagramUrl: cleanUrl(body.instagramUrl),
+    facebookUrl: cleanUrl(body.facebookUrl),
+    threadsUrl: cleanUrl(body.threadsUrl),
+    pinterestUrl: cleanUrl(body.pinterestUrl),
+    youtubeUrl: cleanUrl(body.youtubeUrl)
   };
 
   try {

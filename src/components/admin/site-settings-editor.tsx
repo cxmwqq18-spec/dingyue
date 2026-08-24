@@ -43,6 +43,11 @@ type SiteSettingsForm = {
 type SocialLinksForm = {
   socialHeading: string;
   socialBody: string;
+  instagramUrl: string;
+  facebookUrl: string;
+  threadsUrl: string;
+  pinterestUrl: string;
+  youtubeUrl: string;
 };
 
 function themeText(value: unknown): string {
@@ -87,7 +92,12 @@ function createSocialLinksForm(site: Site): SocialLinksForm {
     {};
   return {
     socialHeading: themeText(footerSettings.socialHeading) || "Follow Us",
-    socialBody: themeText(footerSettings.socialBody)
+    socialBody: themeText(footerSettings.socialBody),
+    instagramUrl: themeText(footerSettings.instagramUrl),
+    facebookUrl: themeText(footerSettings.facebookUrl),
+    threadsUrl: themeText(footerSettings.threadsUrl),
+    pinterestUrl: themeText(footerSettings.pinterestUrl),
+    youtubeUrl: themeText(footerSettings.youtubeUrl)
   };
 }
 
@@ -151,7 +161,7 @@ export function SiteSettingsEditor({
   const [newDomain, setNewDomain] = useState("");
   const [newPrimary, setNewPrimary] = useState(false);
   const [message, setMessage] = useState("站点名称、品牌、收款状态和域名现在都可以在站点后台直接维护。");
-  const [socialMessage, setSocialMessage] = useState("这里只维护页脚社媒栏的展示文案；社交账号统一在站点资料 Profile 中维护。");
+  const [socialMessage, setSocialMessage] = useState("页脚社媒账号和展示文案都可在这里维护，保存后随站点发布生效。");
   const [saving, setSaving] = useState(false);
   const [savingSocial, setSavingSocial] = useState(false);
   const [domainPage, setDomainPage] = useState(1);
@@ -249,7 +259,7 @@ export function SiteSettingsEditor({
       return;
     }
     setSocialForm(result.socialLinks);
-    setSocialMessage("页脚社媒栏文案已保存为主题草稿；整站发布后生效。社交账号仍由 Profile 提供。");
+    setSocialMessage("页脚社媒账号和展示文案已保存为主题草稿；整站发布后生效。");
     router.refresh();
   }
 
@@ -483,7 +493,7 @@ export function SiteSettingsEditor({
       </ErpSection>
 
       <ErpSection
-        description="这里只维护页脚社媒栏的标题和说明。账号 URL 在站点资料 Profile 中统一维护。"
+        description="维护页脚社媒图标的跳转地址和展示文案。保存为草稿后，发布站点即可生效。"
         eyebrow="social presentation"
         title="社媒展示文案"
       >
@@ -491,7 +501,7 @@ export function SiteSettingsEditor({
         <ErpToolbar className="mb-5">
           <div className="flex flex-wrap gap-2">
             <ErpToolbarField label="栏目标题" value={socialForm.socialHeading || "Follow Us"} />
-            <ErpToolbarField label="账号来源" value="Storefront Profile" />
+            <ErpToolbarField label="账号来源" value="Footer settings" />
           </div>
           <div className="flex flex-wrap gap-2">
             <span className={socialDirty ? "tag_org" : "tag_green"}>{socialDirty ? "有未保存修改" : "与当前配置一致"}</span>
@@ -505,6 +515,17 @@ export function SiteSettingsEditor({
           <ErpField hint="显示在社媒图标上方的说明文案。前台用户可见，请填写英文。" label="前台说明文案" span="full">
             <ErpTextarea className="min-h-[96px] resize-y" onChange={(event) => updateSocial("socialBody", event.target.value)} value={socialForm.socialBody} />
           </ErpField>
+          {([
+            ["instagramUrl", "Instagram URL"],
+            ["facebookUrl", "Facebook URL"],
+            ["threadsUrl", "Threads URL"],
+            ["pinterestUrl", "Pinterest URL"],
+            ["youtubeUrl", "YouTube URL"]
+          ] as const).map(([key, label]) => (
+            <ErpField hint="仅支持 HTTPS 地址，例如 https://www.instagram.com/your-account" key={key} label={label}>
+              <ErpInput onChange={(event) => updateSocial(key, event.target.value)} placeholder="https://" type="url" value={socialForm[key]} />
+            </ErpField>
+          ))}
         </ErpFormGrid>
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-[12px] border border-[var(--admin-border-soft)] bg-[var(--admin-panel)] px-4 py-3">
           <div className="flex flex-wrap items-center gap-2">

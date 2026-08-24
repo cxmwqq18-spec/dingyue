@@ -1878,6 +1878,11 @@ export async function saveThemeSettingsDraftRelational(params: {
 export type ThemeFooterSocialLinks = {
   socialHeading: string;
   socialBody: string;
+  instagramUrl: string;
+  facebookUrl: string;
+  threadsUrl: string;
+  pinterestUrl: string;
+  youtubeUrl: string;
 };
 
 function applyFooterSocialLinks(settings: ThemeSettings, socialLinks: ThemeFooterSocialLinks): ThemeSettings {
@@ -1887,7 +1892,12 @@ function applyFooterSocialLinks(settings: ThemeSettings, socialLinks: ThemeFoote
   next.globalSections.footer.settings = {
     ...next.globalSections.footer.settings,
     socialHeading: socialLinks.socialHeading,
-    socialBody: socialLinks.socialBody
+    socialBody: socialLinks.socialBody,
+    instagramUrl: socialLinks.instagramUrl,
+    facebookUrl: socialLinks.facebookUrl,
+    threadsUrl: socialLinks.threadsUrl,
+    pinterestUrl: socialLinks.pinterestUrl,
+    youtubeUrl: socialLinks.youtubeUrl
   };
   return next;
 }

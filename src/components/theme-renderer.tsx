@@ -2047,15 +2047,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
     : semanticSupportLinks.length
       ? semanticSupportLinks
       : publishedLinks.slice(Math.min(4, publishedLinks.length));
-  const dreamshootDefaultSocials = isDreamShootFooter && !spanishXbyFooter
-    ? [
-        "https://www.instagram.com/blydey_inc",
-        "https://www.facebook.com/blydeyinc",
-        "https://www.youtube.com/@blydey-inc"
-      ]
-    : [];
+  const configuredSocialKeys = ["instagramUrl", "facebookUrl", "threadsUrl", "pinterestUrl", "youtubeUrl", "xUrl"];
+  const hasConfiguredSocialFields = Boolean(footer && configuredSocialKeys.some((key) => Object.prototype.hasOwnProperty.call(footer.settings, key)));
   const profileSocials = [
-    ...(identity?.sameAs ?? []),
     ...[
       footer ? setting(footer, "instagramUrl", "") : "",
       footer ? setting(footer, "facebookUrl", "") : "",
@@ -2063,8 +2057,8 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
       footer ? setting(footer, "pinterestUrl", "") : "",
       footer ? setting(footer, "youtubeUrl", "") : "",
       footer ? setting(footer, "xUrl", "") : "",
-      ...dreamshootDefaultSocials
-    ]
+    ],
+    ...(hasConfiguredSocialFields ? [] : (identity?.sameAs ?? []))
   ].filter((url): url is string => typeof url === "string" && /^https?:\/\//i.test(url));
   const socialHref = (pattern: RegExp) => profileSocials.find((url) => pattern.test(url)) ?? "";
   const socialLinks = [
