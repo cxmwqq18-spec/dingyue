@@ -844,6 +844,7 @@ function toAdminShellThemeSettings(record?: { draftJson?: unknown; publishedJson
         headerLinks: settings.navigation?.headerLinks ?? [],
         footerLinks: settings.navigation?.footerLinks ?? []
       },
+      saveTheDateNavigation: settings.saveTheDateNavigation,
       globalSections: settings.globalSections,
       seo: settings.seo
         ? {

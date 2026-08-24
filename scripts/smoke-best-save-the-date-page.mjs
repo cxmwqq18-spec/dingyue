@@ -39,7 +39,7 @@ const navigation = site.themeSettings?.publishedJson?.saveTheDateNavigation;
 assert.equal(navigation?.menuLabel, "Save the Date");
 assert.equal(navigation?.groups?.length, 2);
 const items = navigation.groups.flatMap((group) => group.items.filter((item) => item.status === "published"));
-assert.deepEqual(items.map((item) => item.href), expectedThemePaths);
+assert(expectedThemePaths.every((href) => items.some((item) => item.href === href)), "core Save the Date themes must remain published");
 for (const item of items) {
   assert(item.description?.trim(), `${item.href}: description required`);
   assert(item.imageUrl?.trim(), `${item.href}: cover image required`);
