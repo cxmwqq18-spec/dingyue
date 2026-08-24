@@ -8614,6 +8614,8 @@ function SectionView({
       const primaryCta = setting(section, "primaryCta");
       const secondaryCta = setting(section, "secondaryCta");
       const heroVisuals = blocks.filter((block) => blockValue(block, "imageUrl"));
+      const rawIntentChips = section.settings?.intentChips;
+      const intentChips = Array.isArray(rawIntentChips) ? rawIntentChips.map((chip) => typeof chip === "string" ? chip.trim() : "").filter(Boolean) : [];
       return (
         <section className="bg-[#26131a] text-[#fffaf6]" id={anchor}>
           <div className="mx-auto grid max-w-[var(--site-content-width)] lg:min-h-[650px] lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
@@ -8628,6 +8630,7 @@ function SectionView({
                   {secondaryCta ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#d6a99a] px-6 text-sm font-semibold text-[#fffaf6] transition hover:bg-white/10" href={hrefFor(site, setting(section, "secondaryHref"))}>{secondaryCta}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}
                 </div>
               ) : null}
+              {intentChips.length ? <div className="mt-6 flex flex-wrap gap-2">{intentChips.map((chip) => <span className="rounded-full border border-[#80515a] px-3 py-1.5 text-xs font-medium text-[#f3d8cf]" key={chip}>{chip}</span>)}</div> : null}
             </div>
             {heroVisuals.length > 1 ? (
               <div className="grid gap-3 p-5 sm:grid-cols-2 lg:p-8">

@@ -135,6 +135,8 @@ function parsePackage(config) {
   const labelledCopy = (lines, label) => lines.find((line) => line.trim().toLowerCase().startsWith(`**${label.toLowerCase()}:**`))?.replace(/^\*\*[^:]+:\*\*\s*/, "").trim() || "";
   const heroPrimaryCta = labelledCopy(heroSource, "Primary CTA") || `Create ${heading}`;
   const heroSecondaryCta = labelledCopy(heroSource, "Secondary CTA") || "Explore the story ideas";
+  const chipStart = heroSource.findIndex((line) => /intent chips/i.test(line));
+  const intentChips = chipStart >= 0 ? listItems(heroSource.slice(chipStart + 1)).slice(0, 6) : [];
   const finalCtaSource = find("Final CTA copy|Final CTA")
     .map((line) => clean(line))
     .filter(Boolean);
@@ -151,7 +153,7 @@ function parsePackage(config) {
   const sections = {};
   for (let index = 0; index < config.sectionIds.length; index += 1) {
     const id = config.sectionIds[index]; const type = config.sectionTypes[index]; const sectionId = `${config.pageKey}_${id.replace(/-/g, "_")}`;
-    if (id === "hero") sections[sectionId] = { type, settings: { anchor: id, title: heading, intro: heroIntro, primaryCta: heroPrimaryCta, primaryHref: "/app/create", secondaryCta: heroSecondaryCta, secondaryHref: `#${config.sectionIds[2]}`, ...imageSettings(manifest[0]) }, blocks: manifest.slice(0, 3).map((asset, index) => ({ id: `${config.key}-hero-visual-${index + 1}`, type: "hero_visual", settings: imageSettings(asset) })) };
+    if (id === "hero") sections[sectionId] = { type, settings: { anchor: id, title: heading, intro: heroIntro, intentChips, primaryCta: heroPrimaryCta, primaryHref: "/app/create", secondaryCta: heroSecondaryCta, secondaryHref: `#${config.sectionIds[2]}`, ...imageSettings(manifest[0]) }, blocks: manifest.slice(0, 3).map((asset, index) => ({ id: `${config.key}-hero-visual-${index + 1}`, type: "hero_visual", settings: imageSettings(asset) })) };
     else if (id === "intent" || id === "definition") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "What this video page covers"), intro: paragraphs(find(config.key === "proposal" ? "What Is an AI Proposal Video" : config.key === "engagement" ? "What is an AI engagement" : "What is an AI Save the Date"))[0] || heroIntro, ...imageSettings(manifest[1]) }, blocks: paragraphs(find(config.key === "proposal" ? "What Is an AI Proposal Video" : config.key === "engagement" ? "What is an AI engagement" : "What is an AI Save the Date")).slice(1).map((text, n) => ({ id: `${config.key}-paragraph-${n + 1}`, type: "paragraph", settings: { text } })) };
     else if (id === "story-structures" || id === "story-flow") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Story structures") }, blocks: blocks(story, "story_card") };
     else if (id === "use-cases" || id === "scene-directions" || id === "scene-ideas") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Scene ideas") }, blocks: blocks(id === "use-cases" ? story : [{ title: "Scene direction", text: paragraphs(sceneSource).join(" ") }, ...listItems(sceneSource).map((text) => ({ title: text, text }))], "scene_card") };
