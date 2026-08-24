@@ -26,7 +26,11 @@ const sourcePaths = [
   "/ai-save-the-date/valentines-day",
   "/holidays-events/engagement",
   "/holidays-events/proposal",
-  "/holidays-events/save-the-date"
+  "/holidays-events/save-the-date",
+  "/ai-video-generation/wedding-ceremony",
+  "/holidays-events/thanksgiving",
+  "/holidays-events/christmas",
+  "/holidays-events/new-year"
 ];
 
 const jiti = createJiti(import.meta.url);
@@ -66,9 +70,15 @@ try {
     ["/ai-save-the-date/valentines-day", "Valentine's Day"],
     ["/holidays-events/engagement", "Engagement"],
     ["/holidays-events/proposal", "Proposal"],
-    ["/holidays-events/save-the-date", "Save the Date"]
+    ["/holidays-events/save-the-date", "Save the Date"],
+    ["/ai-video-generation/wedding-ceremony", "Wedding Ceremony"],
+    ["/holidays-events/thanksgiving", "Thanksgiving"],
+    ["/holidays-events/christmas", "Christmas"],
+    ["/holidays-events/new-year", "New Year"]
   ]);
-  const nextItems = sourcePaths.map((href, index) => {
+  const lovePaths = sourcePaths.slice(0, 4);
+  const seasonalPaths = sourcePaths.slice(4);
+  const buildItems = (paths) => paths.map((href, index) => {
     const sourcePage = sourcePages.get(href);
     const media = firstMedia(sourcePage);
     const label = labelByPath.get(href) || href.split("/").pop() || "Save the Date theme";
@@ -83,12 +93,17 @@ try {
       sortOrder: index + 1
     };
   });
+  const nextGroups = [
+    { label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: buildItems(lovePaths) },
+    { label: "Seasonal Holidays", slug: "seasonal-holidays", sortOrder: 2, items: buildItems(seasonalPaths) }
+  ];
+  const nextItems = nextGroups.flatMap((candidate) => candidate.items);
   const leadMedia = firstMedia(sourcePages.get(sourcePaths[0]));
   const nextSettings = {
     ...existingSettings,
     saveTheDateNavigation: {
       menuLabel: "Save the Date",
-      groups: [{ ...group, sortOrder: 1, items: nextItems }]
+      groups: nextGroups
     }
   };
   const pageJson = {
@@ -121,7 +136,7 @@ try {
   const integrity = publicationSnapshotIntegrity(snapshot);
   if (integrity !== "valid") throw new Error(`Save the Date publication snapshot is invalid: ${integrity}`);
   await publishSeoSnapshotRelational({ siteId, snapshot, actor: "best-save-the-date-sync", scope: { type: "site", pageIds: [pageId], includeThemeSettings: true, includeStorefrontProfile: false } });
-  console.log(JSON.stringify({ siteId, pagePath, categories: 1, themes: nextItems.length, snapshotHash: snapshot.snapshotHash }, null, 2));
+  console.log(JSON.stringify({ siteId, pagePath, categories: nextGroups.length, themes: nextItems.length, snapshotHash: snapshot.snapshotHash }, null, 2));
 } finally {
   await prisma.$disconnect();
 }

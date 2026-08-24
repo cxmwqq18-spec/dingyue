@@ -4,7 +4,7 @@ import type { SaveTheDateNavigationGroup } from "@/lib/types";
 
 const fallbackCover = "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png";
 
-export function SaveTheDateDirectory({ groups }: { groups: SaveTheDateNavigationGroup[] }) {
+export function SaveTheDateDirectory({ groups, createHref = "/app/create" }: { groups: SaveTheDateNavigationGroup[]; createHref?: string }) {
   const visibleGroups = groups
     .map((group) => ({
       ...group,
@@ -76,7 +76,7 @@ export function SaveTheDateDirectory({ groups }: { groups: SaveTheDateNavigation
         ) : null}
 
         <div className="mt-14 border-t border-white/10 pt-8">
-          <Link className="inline-flex items-center gap-2 text-sm font-semibold text-[#ff9b57] transition hover:text-[#ffa45d]" href="/app/create" prefetch={false}>Create your Save the Date story <ArrowRight className="h-4 w-4" strokeWidth={1.9} /></Link>
+          <Link className="inline-flex items-center gap-2 text-sm font-semibold text-[#ff9b57] transition hover:text-[#ffa45d]" href={createHref} prefetch={false}>Create your Save the Date story <ArrowRight className="h-4 w-4" strokeWidth={1.9} /></Link>
         </div>
       </div>
     </section>

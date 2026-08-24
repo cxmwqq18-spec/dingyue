@@ -9,6 +9,7 @@ import { PrismaClient } from "@prisma/client";
 const repoRoot = process.cwd();
 const sourceRoot = path.join(repoRoot, "src");
 const sourcePackageRoot = process.env.SEASONAL_SOURCE_ROOT || "/tmp/mydreamshoots-seasonal-packages.83JYeu";
+const mothersFathersSourceRoot = process.env.SEASONAL_MOTHERS_FATHERS_SOURCE_ROOT || "/tmp/mothers-fathers-packages.eaALdG";
 const originalLoad = Module._load;
 Module._load = function load(request, ...args) {
   if (request === "server-only") return {};
@@ -95,6 +96,44 @@ const configs = [
       ["workflow", "editorial_steps", "How it works"],
       ["use-cases", "editorial_scene_grid", "Use cases"],
       ["quality", "editorial_quality", "What makes a New Year image usable on a website"],
+      ["faq", "faq", "FAQ"],
+      ["final-cta", "editorial_cta", "Final CTA"]
+    ]
+  },
+  {
+    key: "mothers-day",
+    displayName: "Mother's Day",
+    sourceDir: process.env.SEASONAL_MOTHERS_DAY_SOURCE_DIR || path.join(mothersFathersSourceRoot, "ai-mothers-day-photo-and-video-final"),
+    pagePath: "/holidays-events/mothers-day",
+    pageKey: "mothers_day",
+    tone: "mothers-day",
+    sections: [
+      ["hero", "editorial_hero", "Hero"],
+      ["definition", "editorial_rich_text", "What Is an AI Mother's Day Photo and Video Generator"],
+      ["use-cases", "editorial_story_grid", "Use Cases"],
+      ["quality", "editorial_quality", "What Makes Mother's Day Content Work"],
+      ["workflow", "editorial_steps", "How It Works"],
+      ["scene-ideas", "editorial_scene_grid", "Scene Ideas"],
+      ["formats", "editorial_rich_text", "Photo and Video Direction"],
+      ["family-match", "editorial_rich_text", "Family Photo Match"],
+      ["faq", "faq", "FAQ"],
+      ["final-cta", "editorial_cta", "Final CTA"]
+    ]
+  },
+  {
+    key: "fathers-day",
+    displayName: "Father's Day",
+    sourceDir: process.env.SEASONAL_FATHERS_DAY_SOURCE_DIR || path.join(mothersFathersSourceRoot, "ai-fathers-day-photo-and-video-final"),
+    pagePath: "/holidays-events/fathers-day",
+    pageKey: "fathers_day",
+    tone: "fathers-day",
+    sections: [
+      ["hero", "editorial_hero", "Hero"],
+      ["definition", "editorial_rich_text", "What is an AI Father’s Day photo and video maker"],
+      ["scene-ideas", "editorial_scene_grid", "Scene ideas for Father’s Day photos and videos"],
+      ["quality", "editorial_rich_text", "What makes Father’s Day content work"],
+      ["workflow", "editorial_steps", "How it works"],
+      ["use-cases", "editorial_scene_grid", "Use cases"],
       ["faq", "faq", "FAQ"],
       ["final-cta", "editorial_cta", "Final CTA"]
     ]
@@ -284,14 +323,15 @@ function buildPage(config) {
   const sectionData = {};
   sectionRows.forEach(([id, type, sourceTitle], index) => {
     const lines = sectionFor(sections, sourceTitle);
-    const title = sourceTitle === "Final CTA" ? (heading === seo.h1 ? `Create ${config.key.replace(/-/g, " ")} visuals with AI` : sourceTitle) : sourceTitle;
+    const themeLabel = config.displayName || config.key.replace(/-/g, " ");
+    const title = sourceTitle === "Final CTA" ? (heading === seo.h1 ? `Create ${themeLabel} visuals with AI` : sourceTitle) : sourceTitle;
     const base = { anchor: id, title, themeTone: config.tone };
     if (id === "hero") {
       const heroLines = sectionFor(sections, "Hero");
       const heroIntro = firstParagraph(heroLines, seo.meta_description || seo.description || "Create a focused visual story from approved source material.");
       sectionData[`${config.pageKey}_${id.replace(/-/g, "_")}`] = {
         type,
-        settings: { ...base, eyebrow: seo.primary_keyword || `AI ${config.key.replace(/-/g, " ")}`, title: heading, intro: heroIntro, support: "Use only source material you own or have permission to use. Review the complete result before publishing.", primaryCta: config.key === "wedding-ceremony" ? "Open Video Workspace" : `Create ${config.key.replace(/-/g, " ")} content`, primaryHref: "/app/create", secondaryCta: "Explore Scene Ideas", secondaryHref: "#scene-ideas", ...imageSettings(imageFor(0)) },
+        settings: { ...base, eyebrow: seo.primary_keyword || `AI ${themeLabel}`, title: heading, intro: heroIntro, support: "Use only source material you own or have permission to use. Review the complete result before publishing.", primaryCta: config.key === "wedding-ceremony" ? "Open Video Workspace" : `Create ${themeLabel} content`, primaryHref: "/app/create", secondaryCta: "Explore Scene Ideas", secondaryHref: "#scene-ideas", ...imageSettings(imageFor(0)) },
         blocks: images.slice(0, 3).map((image, heroIndex) => ({ id: `${config.key}-hero-${heroIndex + 1}`, type: "hero_visual", settings: imageSettings(image) }))
       };
       return;
@@ -301,7 +341,7 @@ function buildPage(config) {
       return;
     }
     if (id === "final-cta") {
-      sectionData[`${config.pageKey}_final_cta`] = { type, settings: { ...base, title: sourceTitle === "Final CTA" ? `Create ${config.key.replace(/-/g, " ")} visuals with AI` : sourceTitle, intro: firstParagraph(lines, seo.meta_description || "Start with a focused idea, review the result, and prepare the final crop for its intended channel."), primaryCta: config.key === "wedding-ceremony" ? "Open Video Workspace" : `Create ${config.key.replace(/-/g, " ")} content`, primaryHref: "/app/create", secondaryCta: "Explore More Themes", secondaryHref: "/holidays-events/save-the-date", ...imageSettings(imageFor(images.length - 1)) } };
+      sectionData[`${config.pageKey}_final_cta`] = { type, settings: { ...base, title: sourceTitle === "Final CTA" ? `Create ${themeLabel} visuals with AI` : sourceTitle, intro: firstParagraph(lines, seo.meta_description || "Start with a focused idea, review the result, and prepare the final crop for its intended channel."), primaryCta: config.key === "wedding-ceremony" ? "Open Video Workspace" : `Create ${themeLabel} content`, primaryHref: "/app/create", secondaryCta: "Explore More Themes", secondaryHref: "/holidays-events/save-the-date", ...imageSettings(imageFor(images.length - 1)) } };
       return;
     }
     const h3 = headingBlocks(lines);
@@ -319,7 +359,8 @@ function buildPage(config) {
       return;
     }
     if (type === "editorial_quality" || type === "editorial_boundaries") {
-      sectionData[`${config.pageKey}_${id.replace(/-/g, "_")}`] = { type, settings: { ...base, intro: firstParagraph(lines, "") }, blocks: list.map((text, blockIndex) => ({ id: `${config.key}-${id}-${blockIndex + 1}`, type: "item", settings: { text } })) };
+      const qualityItems = list.length ? list : h3.map((item) => `${item.title}: ${item.text}`);
+      sectionData[`${config.pageKey}_${id.replace(/-/g, "_")}`] = { type, settings: { ...base, intro: firstParagraph(lines, "") }, blocks: qualityItems.map((text, blockIndex) => ({ id: `${config.key}-${id}-${blockIndex + 1}`, type: "item", settings: { text } })) };
       return;
     }
     sectionData[`${config.pageKey}_${id.replace(/-/g, "_")}`] = { type, settings: { ...base, intro: firstParagraph(lines, "") }, blocks };
@@ -387,7 +428,7 @@ try {
     const nextItems = pages.map((item, index) => ({ label: item.key === "wedding-ceremony" ? "Wedding Ceremony" : item.key.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()), slug: item.key, href: item.pagePath, status: "published", sortOrder: index + 1 }));
     const merged = [...existingItems, ...nextItems].filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index);
     const loveWedding = merged.filter((item) => ["/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date", "/ai-video-generation/wedding-ceremony"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
-    const seasonal = merged.filter((item) => ["/holidays-events/thanksgiving", "/holidays-events/christmas", "/holidays-events/new-year"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
+    const seasonal = merged.filter((item) => ["/holidays-events/thanksgiving", "/holidays-events/christmas", "/holidays-events/new-year", "/holidays-events/mothers-day", "/holidays-events/fathers-day"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
     const nextSettings = { ...existingSettings, saveTheDateNavigation: { menuLabel: "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: loveWedding }, { label: "Seasonal Holidays", slug: "seasonal-holidays", sortOrder: 2, items: seasonal }] } };
     await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: nextSettings }, update: { draftJson: nextSettings, publishedJson: nextSettings } });
   });

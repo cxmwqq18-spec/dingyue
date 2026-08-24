@@ -8616,7 +8616,9 @@ function SectionView({
       wedding: { heroBg: "#fffdfa", heroText: "#171514", heroMuted: "#5f5952", heroSupport: "#716a62", accent: "#6d4aff", accentText: "#ffffff", border: "#cfc4e8", ctaBg: "#6d4aff", ctaText: "#ffffff", ctaBorder: "#b7a6e8" },
       thanksgiving: { heroBg: "#3b2b20", heroText: "#fff8ee", heroMuted: "#f3d8b5", heroSupport: "#d9b99a", accent: "#d99a42", accentText: "#2f2118", border: "#bd8b50", ctaBg: "#8c5a32", ctaText: "#fff8ee", ctaBorder: "#d5a765" },
       christmas: { heroBg: "#12352b", heroText: "#fffaf0", heroMuted: "#e6e0ca", heroSupport: "#c4d1bf", accent: "#d6af55", accentText: "#14261f", border: "#7f9c83", ctaBg: "#d6af55", ctaText: "#14261f", ctaBorder: "#d6af55" },
-      "new-year": { heroBg: "#111c3d", heroText: "#fffdf5", heroMuted: "#d9e0f3", heroSupport: "#afbddb", accent: "#d6b45f", accentText: "#17203b", border: "#7181ab", ctaBg: "#d6b45f", ctaText: "#17203b", ctaBorder: "#d6b45f" }
+      "new-year": { heroBg: "#111c3d", heroText: "#fffdf5", heroMuted: "#d9e0f3", heroSupport: "#afbddb", accent: "#d6b45f", accentText: "#17203b", border: "#7181ab", ctaBg: "#d6b45f", ctaText: "#17203b", ctaBorder: "#d6b45f" },
+      "mothers-day": { heroBg: "#17151d", heroText: "#fff8fb", heroMuted: "#eadde4", heroSupport: "#cdbdc8", accent: "#e78ba8", accentText: "#24151d", border: "#9a6376", ctaBg: "#8e3e5a", ctaText: "#fff7fa", ctaBorder: "#e78ba8" },
+      "fathers-day": { heroBg: "#101b35", heroText: "#fffaf0", heroMuted: "#e2e5ef", heroSupport: "#bbc4d9", accent: "#d7b35c", accentText: "#1b2237", border: "#6f7d9c", ctaBg: "#d7b35c", ctaText: "#1b2237", ctaBorder: "#d7b35c" }
     } as Record<string, { heroBg: string; heroText: string; heroMuted: string; heroSupport: string; accent: string; accentText: string; border: string; ctaBg: string; ctaText: string; ctaBorder: string }>)[editorialThemeTone] ?? {
       heroBg: "#26131a", heroText: "#fffaf6", heroMuted: "#f7ded3", heroSupport: "#d9b8b0", accent: "#e9b894", accentText: "#26131a", border: "#d6a99a", ctaBg: "#7f343d", ctaText: "#32171c", ctaBorder: "#f0c3a4"
     };
@@ -12559,7 +12561,7 @@ function SectionView({
       ...group,
       items: group.items.map((item) => ({ ...item, href: hrefFor(site, item.href) }))
     }));
-    return <SaveTheDateDirectory groups={groups} />;
+    return <SaveTheDateDirectory createHref={hrefFor(site, "/app/create")} groups={groups} />;
   }
 
   if (section.type === "dreamshoot_media_gallery") {

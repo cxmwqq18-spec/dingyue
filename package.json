@@ -63,6 +63,7 @@
     "sync:save-the-date-valentines-day": "node scripts/sync-save-the-date-valentines-day.mjs",
     "sync:save-the-date-topic-pages": "node scripts/sync-save-the-date-topic-pages.mjs",
     "sync:best-save-the-date-page": "node scripts/sync-best-save-the-date-page.mjs",
+    "smoke:best-save-the-date-page": "node scripts/smoke-best-save-the-date-page.mjs",
     "sync:seasonal-theme-pages": "node scripts/sync-seasonal-theme-pages.mjs",
     "smoke:seasonal-theme-packages": "node scripts/smoke-seasonal-theme-packages.mjs",
     "sync:aidreamcapes-homepage-layout": "node scripts/sync-dreamshoot-homepage-layout.mjs --site=aidreamcapes",

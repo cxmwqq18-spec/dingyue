@@ -1618,6 +1618,33 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     ],
     blocks: []
   },
+  dreamshoot_save_the_date_directory: {
+    type: "dreamshoot_save_the_date_directory",
+    label: "Save the Date Theme Directory",
+    category: "Storefront",
+    description: "Published Save the Date themes grouped by navigation category.",
+    maxBlocks: 0,
+    settings: [
+      text("anchor", "Anchor", "best-save-the-date"),
+      select(
+        "headingLevel",
+        "Heading level",
+        [
+          ["h1", "H1"],
+          ["h2", "H2"]
+        ],
+        "h1"
+      )
+    ],
+    presets: [
+      {
+        label: "Best Save the Date themes",
+        settings: { anchor: "best-save-the-date", headingLevel: "h1" },
+        blocks: []
+      }
+    ],
+    blocks: []
+  },
   dreamshoot_featured_pack: {
     type: "dreamshoot_featured_pack",
     label: "myDreamshoots Featured Pack",

@@ -6,7 +6,9 @@ export const MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES = [
   "/ai-video-generation/wedding-ceremony",
   "/holidays-events/thanksgiving",
   "/holidays-events/christmas",
-  "/holidays-events/new-year"
+  "/holidays-events/new-year",
+  "/holidays-events/mothers-day",
+  "/holidays-events/fathers-day"
 ] as const;
 
 export const MYDREAMSHOOTS_STANDARD_SEO_ROUTES = [

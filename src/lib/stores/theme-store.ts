@@ -213,7 +213,9 @@ const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_M
   "/ai-video-generation/wedding-ceremony": "Wedding ceremony photo and video scenes for vows, rings, reactions, and the recessional",
   "/holidays-events/thanksgiving": "Thanksgiving family, Friendsgiving, food, and fall holiday scenes",
   "/holidays-events/christmas": "Christmas family, winter, pet, card, and holiday video scenes",
-  "/holidays-events/new-year": "New Year fireworks, countdown, greeting, family, and fresh-start scenes"
+  "/holidays-events/new-year": "New Year fireworks, countdown, greeting, family, and fresh-start scenes",
+  "/holidays-events/mothers-day": "Mother's Day family, flowers, gifts, brunch, and spring celebration scenes",
+  "/holidays-events/fathers-day": "Father's Day family, gifts, outdoor activities, and celebration scenes"
 };
 function collectPublishedImageUrls(value: unknown, output: string[] = []): string[] {
   if (typeof value === "string" && /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(value.trim())) {

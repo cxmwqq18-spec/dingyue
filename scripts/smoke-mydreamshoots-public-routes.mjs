@@ -149,8 +149,8 @@ async function main() {
   const videoRoutes = ["/ai-video-generation", ...DEFAULT_VIDEO_SLUGS.map((slug) => `/ai-video-generation/${slug}`)];
   const hiddenVideoRoutes = HIDDEN_VIDEO_SLUGS.map((slug) => `/ai-video-generation/${slug}`);
   const legacyVideoGoneRoutes = ["/tools", ...LEGACY_VIDEO_GONE_SLUGS.map((slug) => `/tools/${slug}`)];
-  const keyRoutes = ["/", "/login", "/pricing", "/workflow", "/faq", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog"];
-  const htmlScanRoutes = ["/", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog", "/sitemap.xml"];
+  const keyRoutes = ["/", "/login", "/pricing", "/workflow", "/faq", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/blog"];
+  const htmlScanRoutes = ["/", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/blog", "/sitemap.xml"];
   const failures = [];
   const publicHost = process.env.MYDREAMSHOOTS_HOST || "www.mydreamshoots.com";
   const sitemapResult = await fetchRoute(baseUrl, "/sitemap.xml", { publicHost, accept: "application/xml" });

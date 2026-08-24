@@ -6,11 +6,14 @@ import path from "node:path";
 import sharp from "sharp";
 
 const root = process.env.SEASONAL_SOURCE_ROOT || "/tmp/mydreamshoots-seasonal-packages.83JYeu";
+const mothersFathersRoot = process.env.SEASONAL_MOTHERS_FATHERS_SOURCE_ROOT || "/tmp/mothers-fathers-packages.eaALdG";
 const packages = [
-  ["wedding-ceremony", "ai-wedding-ceremony-photo-video", "/ai-video-generation/wedding-ceremony"],
-  ["thanksgiving", "ai-thanksgiving-photo-and-video-final", "/holidays-events/thanksgiving"],
-  ["christmas", "ai-christmas-photo-and-video-final", "/holidays-events/christmas"],
-  ["new-year", "ai-new-year-photo-and-video-final", "/holidays-events/new-year"]
+  ["wedding-ceremony", "ai-wedding-ceremony-photo-video", "/ai-video-generation/wedding-ceremony", root],
+  ["thanksgiving", "ai-thanksgiving-photo-and-video-final", "/holidays-events/thanksgiving", root],
+  ["christmas", "ai-christmas-photo-and-video-final", "/holidays-events/christmas", root],
+  ["new-year", "ai-new-year-photo-and-video-final", "/holidays-events/new-year", root],
+  ["mothers-day", "ai-mothers-day-photo-and-video-final", "/holidays-events/mothers-day", mothersFathersRoot],
+  ["fathers-day", "ai-fathers-day-photo-and-video-final", "/holidays-events/fathers-day", mothersFathersRoot]
 ];
 
 function csvRows(file) {
@@ -41,8 +44,8 @@ function structureOrder(file) {
 }
 
 const results = [];
-for (const [key, directory, route] of packages) {
-  const dir = path.join(root, directory);
+for (const [key, directory, route, packageRoot] of packages) {
+  const dir = path.join(packageRoot, directory);
   assert(fs.existsSync(dir), `${key}: source directory missing`);
   for (const file of ["01_page_copy_final.md", "02_page_structure_final.md", "06_seo_config.csv", "10_internal_link_plan.csv", "11_image_manifest_and_alt.csv", "SHA256SUMS.txt"]) assert(fs.existsSync(path.join(dir, file)), `${key}: missing ${file}`);
   const config = seo(path.join(dir, "06_seo_config.csv"));

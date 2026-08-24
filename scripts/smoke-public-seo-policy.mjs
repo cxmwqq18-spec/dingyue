@@ -128,6 +128,7 @@ assertMetadataSource("/partner-registration");
 assertMetadataSource("/best-packages");
 assertMetadataSource("/best-ai-image");
 assertMetadataSource("/best-ai-video");
+assertMetadataSource("/best-save-the-date");
 await assertHeaders();
 assert.ok(middleware.includes("guardCookieEnabled !== true"), "storefront guard cookie should be opt-in so public HTML stays cacheable by default");
 assert.match(middleware, /cloudflare-cdn-cache-control/i, "HTML rewrite responses should keep Cloudflare CDN cache headers");
