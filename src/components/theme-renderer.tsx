@@ -133,6 +133,7 @@ import type {
   ThemeSettings,
   ThemeSettingValue,
   ToolMenuItem,
+  PublishedHomepageShowcaseItem,
   VideoTheme,
   VideoThemeCategory
 } from "@/lib/types";
@@ -181,6 +182,7 @@ export function ThemeRenderer({
   creativePackCategories = [],
   creativePacks = [],
   videoThemes = [],
+  homepageShowcases = [],
   videoThemeCategories = [],
   navigationCreativePackCategories,
   navigationCreativePacks,
@@ -207,6 +209,7 @@ export function ThemeRenderer({
   creativePackCategories?: CreativePackCategory[];
   creativePacks?: CreativePack[];
   videoThemes?: VideoTheme[];
+  homepageShowcases?: PublishedHomepageShowcaseItem[];
   videoThemeCategories?: VideoThemeCategory[];
   navigationCreativePackCategories?: CreativePackCategory[];
   navigationCreativePacks?: CreativePack[];
@@ -381,6 +384,7 @@ type ThemeSectionFrameProps = {
   creativePacks: CreativePack[];
   videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
+  homepageShowcases: PublishedHomepageShowcaseItem[];
   videoGenerationTopics?: HeaderVideoGenerationTopic[];
   runtime?: ThemeRuntimeData;
   lazyRender?: boolean;
@@ -414,6 +418,7 @@ export type StorefrontSectionPayload = {
     toolMenuItems: ToolMenuItem[];
     videoThemeCategories?: VideoThemeCategory[];
     videoThemes?: VideoTheme[];
+    homepageShowcases?: PublishedHomepageShowcaseItem[];
   };
   renderContext: RenderContext;
   storefrontContext?: StorefrontContext;
@@ -733,7 +738,7 @@ function runtimeWithOnlyShellState(runtime: ThemeRuntimeData): ThemeRuntimeData 
   };
 }
 
-export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, videoGenerationTopics, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
+export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, homepageShowcases, videoGenerationTopics, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
   const sectionType = canonicalSectionType(section.type);
   const lazyStyle: CSSProperties | undefined = lazyRender
     ? {
@@ -767,6 +772,7 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
           toolMenuItems={sectionTypesUsingToolMenuItems.has(sectionType) ? toolMenuItems : []}
           videoThemeCategories={videoThemeCategories}
           videoThemes={sectionTypesUsingVideoThemes.has(sectionType) ? videoThemes : []}
+          homepageShowcases={homepageShowcases}
           videoGenerationTopics={videoGenerationTopics}
         />
       </DreamshootShowcasePreview>
@@ -782,7 +788,8 @@ export function LazyStorefrontSectionMount(payload: StorefrontSectionPayload) {
     siteAiApps: [],
     toolMenuItems: [],
     videoThemeCategories: [],
-    videoThemes: []
+    videoThemes: [],
+    homepageShowcases: []
   };
   const site = payload.clientSite ?? payload.site;
   const activePackIds = payload.storefrontContext
@@ -805,6 +812,7 @@ export function LazyStorefrontSectionMount(payload: StorefrontSectionPayload) {
       toolMenuItems={renderData.toolMenuItems}
       videoThemeCategories={renderData.videoThemeCategories ?? []}
       videoThemes={renderData.videoThemes ?? []}
+      homepageShowcases={renderData.homepageShowcases ?? []}
     />
   );
 }
@@ -8520,6 +8528,7 @@ function SectionView({
   creativePacks,
   videoThemeCategories,
   videoThemes,
+  homepageShowcases,
   videoGenerationTopics,
   runtime,
   mode,
@@ -8536,6 +8545,7 @@ function SectionView({
   creativePacks: CreativePack[];
   videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
+  homepageShowcases: PublishedHomepageShowcaseItem[];
   videoGenerationTopics?: HeaderVideoGenerationTopic[];
   runtime?: ThemeRuntimeData;
   mode: "published" | "preview";
@@ -8560,6 +8570,7 @@ function SectionView({
         toolMenuItems={toolMenuItems}
         videoThemeCategories={videoThemeCategories}
         videoThemes={videoThemes}
+        homepageShowcases={homepageShowcases}
         videoGenerationTopics={videoGenerationTopics}
       />
     );
@@ -8597,11 +8608,11 @@ function SectionView({
             <div className="mt-10 divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">
               {blocks.map((block, index) => (
                 <details className="group py-5" key={instanceKey(block, index, "editorial_faq")} {...xfcartBlockAttrs(block, index, "editorial_faq")}>
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left">
+                  <summary className="relative flex cursor-pointer list-none items-center justify-center gap-6 text-center">
                     <h3 className={`${headingClass} text-lg`}>{blockValue(block, "question")}</h3>
-                    <span aria-hidden="true" className="shrink-0 text-2xl leading-none text-[#9a4b4b] transition group-open:rotate-45">+</span>
+                    <span aria-hidden="true" className="absolute right-0 text-2xl leading-none text-[#9a4b4b] transition group-open:rotate-45">+</span>
                   </summary>
-                  <p className="mt-4 max-w-3xl text-base leading-8 text-[#665252]" data-faq-answer="editorial">{blockValue(block, "answer")}</p>
+                  <p className="mx-auto mt-4 max-w-3xl text-center text-base leading-8 text-[#665252]" data-faq-answer="editorial">{blockValue(block, "answer")}</p>
                 </details>
               ))}
             </div>
@@ -12811,6 +12822,51 @@ function SectionView({
         </Link>
       </div>
     );
+
+    const publishedHomepageItems = homepageShowcases
+      .filter((item) => item.status === "published" && item.indexable && item.sitemapEligible)
+      .sort((left, right) => left.sortOrder - right.sortOrder || left.title.localeCompare(right.title));
+    if (mydreamProfileSite && renderContext.pagePath === "/" && publishedHomepageItems.length) {
+      const videoItems = publishedHomepageItems.filter((item) => item.kind === "video").slice(0, 8);
+      const saveTheDateItems = publishedHomepageItems.filter((item) => item.kind === "save_the_date");
+      const photoItems = publishedHomepageItems.filter((item) => item.kind === "photo").slice(0, 16);
+      const renderPublishedCard = (item: PublishedHomepageShowcaseItem) => {
+        const href = hrefFor(site, item.canonicalPath);
+        const media = item.videoUrl ? (
+          <DreamshootShowcaseVideo className="h-full w-full object-cover" label={item.imageAlt} poster={mediaAssetUrl(site, item.imageUrl)} priority={false} src={mediaAssetUrl(site, item.videoUrl)} />
+        ) : (
+          <StorefrontImage alt={item.imageAlt} className="h-full w-full object-cover" loading="lazy" preview={false} sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw" src={mediaAssetUrl(site, item.imageUrl)} />
+        );
+        return (
+          <Link className="group block min-w-0 overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] transition hover:-translate-y-0.5 hover:border-white/24" href={href} key={item.id}>
+            <div className="aspect-square overflow-hidden">{media}</div>
+            <div className="border-t border-white/10 p-3">
+              <h3 className="truncate text-sm font-semibold text-white">{item.title}</h3>
+              <p className="mt-1 line-clamp-2 text-xs leading-5 text-white/60">{item.subtitle}</p>
+            </div>
+          </Link>
+        );
+      };
+      const renderPublishedSection = (items: PublishedHomepageShowcaseItem[], title: string, intro: string, href: string, label: string, kind: "video" | "photo") => items.length ? (
+        <div className="mt-12" data-dreamshoot-homepage-showcase-kind={kind}>
+          {renderShowcaseSubsectionHeader(title, href, label, kind)}
+          <p className="mx-auto mt-4 max-w-[64rem] text-center text-sm leading-7 text-white/66">{intro}</p>
+          <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">{items.map(renderPublishedCard)}</div>
+        </div>
+      ) : null;
+      return (
+        <section className={`relative overflow-hidden ${shellTone} px-5 py-16 md:py-20`} id={sectionAnchor(section, "generated-showcase")}>
+          <div className={"absolute inset-0 opacity-38 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.72)_1px,transparent_1px)] [background-size:86px_86px]"} />
+          <div className="relative mx-auto max-w-[var(--site-content-width)]">
+            {trustedProof}
+            {renderPublishedSection(videoItems, setting(section, "videoTitle", "Featured AI Video Generators"), setting(section, "videoIntro", ""), setting(section, "videoAllHref", "/best-ai-video"), setting(section, "videoAllLabel", "VIEW ALL VIDEO"), "video")}
+            {renderPublishedSection(saveTheDateItems, setting(section, "saveTheDateTitle", "AI Save the Date Videos"), setting(section, "saveTheDateIntro", ""), setting(section, "saveTheDateAllHref", "/holidays-events/save-the-date"), setting(section, "saveTheDateAllLabel", "VIEW ALL SAVE THE DATE"), "video")}
+            {renderPublishedSection(photoItems, setting(section, "imageTitle", "Featured AI Photo Generators"), setting(section, "photoIntro", ""), setting(section, "imageAllHref", "/best-ai-image"), setting(section, "imageAllLabel", "VIEW ALL PHOTO"), "photo")}
+            {embeddedPricing}
+          </div>
+        </section>
+      );
+    }
 
     return (
       <section className={`relative overflow-hidden ${shellTone} px-5 py-16 md:py-20`} id={sectionAnchor(section, "generated-showcase")}>
