@@ -269,18 +269,15 @@ function assertPage(pageJson, label, storeKey) {
   const settings = pageJson?.sections?.generation_showcase_1?.settings ?? {};
   const expectedImageAllLabel = storeKey === "mydreamshoots" ? "VIEW ALL PHOTO" : "View all photos";
   const expectedVideoAllLabel = storeKey === "mydreamshoots" ? "VIEW ALL VIDEO" : "View all videos";
-  assert(String(settings.videoSlugs ?? "").split("|").filter(Boolean).length === 8, `${label}: expected 8 video slugs`);
-  assert(settings.imageTitle === "Best Photo Generator", `${label}: image showcase heading drifted`);
+  assert(settings.imageTitle === "Featured AI Photo Generators", `${label}: image showcase heading drifted`);
   assert(settings.imageAllLabel === expectedImageAllLabel, `${label}: image showcase all-link label drifted`);
   assert(settings.imageAllHref === "/best-ai-image", `${label}: image showcase all-link href drifted`);
-  assert(settings.videoTitle === "Best Video Generator", `${label}: video showcase heading drifted`);
+  assert(settings.videoTitle === "Featured AI Video Generators", `${label}: video showcase heading drifted`);
   assert(settings.videoAllLabel === expectedVideoAllLabel, `${label}: video showcase all-link label drifted`);
-  assert(settings.videoAllHref === "/best-ai-video", `${label}: video showcase all-link href drifted`);
+  assert(settings.videoAllHref === (storeKey === "mydreamshoots" ? "/ai-video-generation" : "/best-ai-video"), `${label}: video showcase all-link href drifted`);
   assert(settings.primaryHref === "/app/create", `${label}: primary CTA should point to the workspace create flow`);
-  assert(!String(settings.videoSlugs ?? "").includes("creator-scene-motion"), `${label}: showcase video slugs should not include creator-scene-motion`);
-  if (storeKey === "mydreamshoots") {
-    assert(String(settings.videoSlugs ?? "").includes("travel-route-story"), `${label}: showcase video slugs should include travel-route-story`);
-  }
+  assert(!("imageSlugs" in settings), `${label}: homepage image cards must come from the publication projection`);
+  assert(!("videoSlugs" in settings), `${label}: homepage video cards must come from the publication projection`);
   if (storeKey === "aidreamcapes") {
     assert(pageJson?.sections?.visual_proof_1?.type === "dreamshoot_visual_proof", `${label}: missing Aidreamcapes proof gallery`);
     assert(pageJson?.sections?.flow_bridge_1?.type === "dreamshoot_flow_bridge", `${label}: missing Aidreamcapes workflow bridge`);
@@ -485,19 +482,7 @@ function imageSlugsForPage(pageJson) {
 
 function assertMydreamshootsImageSlugPriority(pageJson, label) {
   const slugs = imageSlugsForPage(pageJson);
-  const expected = [
-    "world-cup-fan-photos",
-    "christmas-couple",
-    "christmas-photos",
-    "creator-portraits",
-    "gala-photos",
-    "holiday",
-    "professional-headshots",
-    "cyberpunk"
-  ];
-  assert(slugs.join("|") === expected.join("|"), `${label}: MyDreamShoots showcase image slugs drifted: ${slugs.join("|")}`);
-  assert(!slugs.includes("thanksgiving-group-photos"), `${label}: Thanksgiving should stay out of showcase image front row until a dedicated clear asset exists`);
-  assert(!slugs.includes("halloween-party-photos"), `${label}: Halloween should stay out of showcase image front row until a dedicated clear asset exists`);
+  assert(slugs.length === 0, `${label}: homepage cards must not carry static image slugs`);
 }
 
 for (const store of showcaseStores) {
@@ -533,7 +518,6 @@ for (const store of showcaseStores) {
     assertMydreamshootsImageSlugPriority(home?.publishedJson, `${store.key}: published home`);
     assertMydreamshootsHomepageAssets(home?.draftJson, `${store.key}: draft home`);
     assertMydreamshootsHomepageAssets(home?.publishedJson, `${store.key}: published home`);
-    assert(store.imageSlugs.join("|") === imageSlugsForPage(home?.publishedJson).join("|"), `${store.key}: showcase seed and published page image slug order differ`);
   }
 
   for (const theme of (state.siteThemes ?? []).filter((item) => item.siteId === store.siteId)) {

@@ -654,7 +654,7 @@ function trimRenderDataForPage(
     toolMenuItems: renderData.toolMenuItems.slice(0, 160).map(lightweightToolMenuItem),
     videoThemeCategories: renderData.videoThemeCategories,
     videoThemes: needsVideoThemes ? trimVideoThemesForStorefront(renderData, videoThemeLimit) : [],
-    homepageShowcases: slug === "/" ? renderData.homepageShowcases : []
+    homepageShowcases: renderData.homepageShowcases
   };
 }
 
@@ -687,7 +687,7 @@ function trimRenderDataForSection(renderData: SiteRenderData, pageJson: ThemePag
     toolMenuItems: needsToolMenuItems ? renderData.toolMenuItems.slice(0, 160).map(lightweightToolMenuItem) : [],
     videoThemeCategories: renderData.videoThemeCategories,
     videoThemes: needsVideoThemes ? trimVideoThemesForStorefront(renderData, videoThemeLimit, section) : [],
-    homepageShowcases: slug === "/" ? renderData.homepageShowcases : []
+    homepageShowcases: renderData.homepageShowcases
   };
 }
 
@@ -1395,10 +1395,35 @@ function withCustomerWorkspaceFlowPage(pageJson: ThemePageJson): ThemePageJson {
 function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site): ThemePageJson {
   if (!pageJson.sectionsOrder.length) return pageJson;
   const introSectionId = "collections_intro_1";
-  if (pageJson.sections[introSectionId]) return pageJson;
   const isAidreamcapes = isAidreamcapesStorefront(site);
   const isSpanishXby = isSpanishXbyStorefront(site);
-  const firstSection = pageJson.sections[pageJson.sectionsOrder[0]];
+  const isMyDreamShoots = !isAidreamcapes && !isSpanishXby;
+  const myDreamShootsIntroCopy = {
+    eyebrow: "AI photo package library",
+    title: "AI Photo Packages for Every Style and Goal",
+    body: "Browse every active myDreamshoots theme by professional, lifestyle, creative, magic, and photo-editing direction before you spend credits.",
+    primaryCta: "Browse photo packages"
+  };
+  if (pageJson.sections[introSectionId]) {
+    if (!isMyDreamShoots) return pageJson;
+    return {
+      ...pageJson,
+      sections: {
+        ...pageJson.sections,
+        [introSectionId]: {
+          ...pageJson.sections[introSectionId],
+          settings: {
+            ...pageJson.sections[introSectionId].settings,
+            eyebrow: myDreamShootsIntroCopy.eyebrow,
+            title: myDreamShootsIntroCopy.title,
+            subtitle: myDreamShootsIntroCopy.body,
+            primaryCta: myDreamShootsIntroCopy.primaryCta,
+            primaryHref: "#package-taxonomy"
+          }
+        }
+      }
+    };
+  }
   const sections = Object.fromEntries(
     Object.entries(pageJson.sections).map(([sectionId, section]) => {
       if (section.type !== "dreamshoot_package_taxonomy" && section.type !== "aidreamcapes_package_taxonomy") {
@@ -1425,20 +1450,20 @@ function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site)
         type: "rich_text",
         settings: {
           anchor: "packages",
-          eyebrow: isSpanishXby ? isAidreamcapes ? "Biblioteca de albumes de ocasion" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Occasion album library" : "Photo package library",
+          eyebrow: isSpanishXby ? isAidreamcapes ? "Biblioteca de albumes de ocasion" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Occasion album library" : myDreamShootsIntroCopy.eyebrow,
           title: isSpanishXby
             ? isAidreamcapes
               ? "Albumes privados de fans y recuerdos festivos por ocasion."
               : "Paquetes de fotos con IA por estilo, uso y entrega."
-            : firstSection?.settings?.title || (isAidreamcapes ? "Private fan-scene and holiday albums by occasion." : "AI photo packages by style, use case, and delivery goal."),
+            : myDreamShootsIntroCopy.title,
           body: isSpanishXby
             ? isAidreamcapes
               ? "Explora albumes de fans, grupos de partido, estrenos, Navidad, Accion de Gracias y Halloween antes de gastar creditos."
               : "Compara retratos profesionales, retratos de creador, fotos de hincha, belleza, albumes tematicos y video antes de gastar creditos."
-            : firstSection?.settings?.subtitle || (isAidreamcapes
+            : isAidreamcapes
               ? "Browse fan-scene albums, game-day group portraits, premiere-inspired sets, Christmas, Thanksgiving, Halloween, and seasonal memories before you spend credits."
-              : "Compare headshots, creator portraits, fan photos, beauty previews, themed albums, and video add-ons before you spend credits."),
-          primaryCta: isSpanishXby ? isAidreamcapes ? "Ver albumes de ocasion" : "Ver paquetes de fotos" : isAidreamcapes ? "Browse occasion albums" : "Browse photo packages",
+              : myDreamShootsIntroCopy.body,
+          primaryCta: isSpanishXby ? isAidreamcapes ? "Ver albumes de ocasion" : "Ver paquetes de fotos" : isAidreamcapes ? "Browse occasion albums" : myDreamShootsIntroCopy.primaryCta,
           primaryHref: "#package-taxonomy",
           secondaryCta: isSpanishXby ? "Ver precios" : "View pricing",
           secondaryHref: "/pricing",
@@ -1453,43 +1478,68 @@ function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site)
 
 function withDreamShootCollectionsDirectoryPage(pageJson: ThemePageJson, site: Site): ThemePageJson {
   const page = withLightweightCollectionIntroPage(pageJson, site);
-  const hasPackageTaxonomy = page.sectionsOrder.some((sectionId) => {
+  const taxonomySectionId = page.sectionsOrder.find((sectionId) => {
     const type = page.sections[sectionId]?.type;
     return type === "dreamshoot_package_taxonomy" || type === "aidreamcapes_package_taxonomy";
   });
-  if (hasPackageTaxonomy) return page;
 
   const isAidreamcapes = isAidreamcapesStorefront(site);
   const isSpanishXby = isSpanishXbyStorefront(site);
-  const taxonomySectionId = safeSectionId(page, "package_taxonomy_1");
+  const isMyDreamShoots = !isAidreamcapes && !isSpanishXby;
+  const myDreamShootsTaxonomyCopy = {
+    eyebrow: "AI photo package library",
+    title: "Browse AI photo packages by category",
+    subtitle: "Choose a top-level category, then compare focused themes, example outputs, and visible credit expectations before you start."
+  };
+  if (taxonomySectionId && isMyDreamShoots) {
+    return {
+      ...page,
+      sections: {
+        ...page.sections,
+        [taxonomySectionId]: {
+          ...page.sections[taxonomySectionId],
+          settings: {
+            ...page.sections[taxonomySectionId].settings,
+            eyebrow: myDreamShootsTaxonomyCopy.eyebrow,
+            title: myDreamShootsTaxonomyCopy.title,
+            subtitle: myDreamShootsTaxonomyCopy.subtitle,
+            headingLevel: "h2"
+          }
+        }
+      }
+    };
+  }
+  if (taxonomySectionId) return page;
+
+  const taxonomyId = safeSectionId(page, "package_taxonomy_1");
   const insertAfterIntro = page.sectionsOrder.indexOf("collections_intro_1");
   const sectionsOrder = [...page.sectionsOrder];
-  sectionsOrder.splice(insertAfterIntro >= 0 ? insertAfterIntro + 1 : Math.min(1, sectionsOrder.length), 0, taxonomySectionId);
+  sectionsOrder.splice(insertAfterIntro >= 0 ? insertAfterIntro + 1 : Math.min(1, sectionsOrder.length), 0, taxonomyId);
 
   return {
     ...page,
     sectionsOrder,
     sections: {
       ...page.sections,
-      [taxonomySectionId]: {
+      [taxonomyId]: {
         type: "dreamshoot_package_taxonomy",
         settings: {
           anchor: "package-taxonomy",
-          eyebrow: isSpanishXby ? isAidreamcapes ? "Biblioteca de albumes de ocasion" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Occasion album library" : "Photo package library",
+          eyebrow: isSpanishXby ? isAidreamcapes ? "Biblioteca de albumes de ocasion" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Occasion album library" : myDreamShootsTaxonomyCopy.eyebrow,
           title: isSpanishXby
             ? isAidreamcapes
               ? "Albumes privados de fans y recuerdos festivos por ocasion."
               : "Paquetes de fotos con IA por estilo, uso y entrega."
             : isAidreamcapes
               ? "Private fan-scene and holiday albums by occasion."
-              : "AI photo packages by style, use case, and delivery goal.",
+              : myDreamShootsTaxonomyCopy.title,
           subtitle: isSpanishXby
             ? isAidreamcapes
               ? "Explora albumes de fans, grupos de partido, estrenos, Navidad, Accion de Gracias y Halloween antes de gastar creditos."
               : "Compara retratos profesionales, retratos de creador, fotos de hincha, belleza, albumes tematicos y video antes de gastar creditos."
             : isAidreamcapes
               ? "Browse fan-scene albums, game-day group portraits, premiere-inspired sets, Christmas, Thanksgiving, Halloween, and seasonal memories before you spend credits."
-              : "Compare headshots, creator portraits, fan photos, beauty previews, themed albums, and video add-ons before you spend credits.",
+              : myDreamShootsTaxonomyCopy.subtitle,
           layout: "editorial",
           headingLevel: "h2"
         },
@@ -2581,6 +2631,7 @@ function renderThemePage({
         toolMenuItems={renderData.toolMenuItems}
         videoThemeCategories={renderData.videoThemeCategories}
         videoThemes={renderData.videoThemes}
+        homepageShowcases={renderData.homepageShowcases}
         lightweightChrome={lightweightChrome}
         storefrontContext={storefrontContext}
       />
@@ -2833,6 +2884,7 @@ export async function renderStorefrontSectionNode({
       toolMenuItems={payload.renderData.toolMenuItems}
       videoThemeCategories={payload.renderData.videoThemeCategories ?? []}
       videoThemes={payload.renderData.videoThemes ?? []}
+      homepageShowcases={payload.renderData.homepageShowcases ?? []}
     />
   );
 }

@@ -209,6 +209,15 @@ export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMeta
     index: true,
     follow: true
   },
+  "/best-save-the-date": {
+    title: "Best Save the Date themes | myDreamshoots",
+    description:
+      "Browse every myDreamshoots Save the Date theme for Valentine announcements, engagements, proposals, and wedding date stories.",
+    keywords: "Best Save the Date themes, myDreamshoots Save the Date, AI wedding announcement video, engagement announcement themes",
+    canonicalPath: "/best-save-the-date",
+    index: true,
+    follow: true
+  },
   "/faq": {
     title: "myDreamshoots FAQ",
     description:

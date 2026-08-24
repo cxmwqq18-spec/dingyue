@@ -16,6 +16,7 @@ import type {
   ThemePublicationSnapshot,
   PublishedSeoSnapshot
 } from "@/lib/types";
+import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 
 export type SnapshotIntegrity = "valid" | "invalid" | "legacy";
 
@@ -302,10 +303,10 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const mediaIds = publishedPageMedia.map((item) => item.mediaEntityId);
   const standardMediaIds = publishedStandardPageMedia.map((item) => item.mediaEntityId);
   const linkIds = links.map((item) => item.linkEntityId);
-  const expectedStandardPaths = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"];
-  for (const path of ["/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date"]) {
-    if (standardContentRoutes.some((route) => route.canonicalPath === path) || publishedStandardPageMedia.some((media) => media.canonicalPath === path)) expectedStandardPaths.push(path);
-  }
+  const expectedStandardPaths = Array.from(new Set([
+    ...MYDREAMSHOOTS_STANDARD_SEO_ROUTES.filter((path) => publishedStandardPageMedia.some((candidate) => candidate.canonicalPath === path && candidate.status === "ready")),
+    ...publishedStandardPageMedia.filter((candidate) => candidate.status === "ready").map((candidate) => candidate.canonicalPath)
+  ]));
   const imagePageEntities = publishedPageEntities.filter((item) => item.pageType === "ai-image-theme-leaf");
   const videoPageEntities = publishedPageEntities.filter((item) => item.pageType === "ai-video-topic-leaf");
   const imagePageMedia = publishedPageMedia.filter((item) => item.routeKind !== "ai-video-topic-leaf");

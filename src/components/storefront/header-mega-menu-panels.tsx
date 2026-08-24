@@ -38,7 +38,7 @@ export type HeaderVideoGenerationTopic = {
   sortOrder?: number;
 };
 
-export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, variantTone = "dark" }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; variantTone?: "dark" | "warm" }) {
+export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, ctaHref, ctaLabel = "View all Save the Date themes", variantTone = "dark" }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; ctaHref?: string; ctaLabel?: string; variantTone?: "dark" | "warm" }) {
   const warm = variantTone === "warm";
   const visibleGroups = groups.map((group) => ({ ...group, items: group.items.filter((item) => item.status === "published").sort((a, b) => a.sortOrder - b.sortOrder) })).filter((group) => group.items.length).sort((a, b) => a.sortOrder - b.sortOrder);
   const totalItems = visibleGroups.reduce((sum, group) => sum + group.items.length, 0);
@@ -62,15 +62,26 @@ export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, variantTone = "d
           </details>
         ))}
       </div>
+      {ctaHref ? (
+        <div className={warm ? "mt-5 border-t border-[#eadfce] pt-3 text-center" : "mt-5 border-t border-[#263247] pt-3 text-center"}>
+          <Link className={warm ? "inline-flex items-center gap-2 text-sm font-semibold text-[#b86e36] transition hover:text-[#8f5327]" : "inline-flex items-center gap-2 text-sm font-semibold text-[#ff8a2f] transition hover:text-[#ffa45d]"} href={ctaHref} prefetch={false}>
+            {ctaLabel}
+            <ArrowRight className="h-4 w-4" strokeWidth={1.9} />
+          </Link>
+        </div>
+      ) : null}
     </div>
   );
 }
 
-export function HeaderMobileSaveTheDateMenu({ groups, menuLabel, dark }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; dark: boolean }) {
+export function HeaderMobileSaveTheDateMenu({ groups, menuLabel, ctaHref, ctaLabel = "View all Save the Date themes", dark }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; ctaHref?: string; ctaLabel?: string; dark: boolean }) {
   const items = groups.flatMap((group) => group.items.filter((item) => item.status === "published").map((item) => ({ ...item, group: group.label })));
   return <details className={dark ? "rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
     <summary className={dark ? "flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-[16px] px-4 py-3 text-sm font-semibold text-white marker:hidden" : "flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-[16px] px-4 py-3 text-sm font-semibold text-[#171514] marker:hidden"}>{menuLabel}</summary>
-    <div className="grid gap-1 px-2 pb-2">{items.map((item) => <Link className={dark ? "rounded-[12px] px-3 py-2 text-sm text-white/76 hover:bg-white/[0.08] hover:text-white" : "rounded-[12px] px-3 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={item.href} key={item.slug}>{item.label}</Link>)}</div>
+    <div className="grid gap-1 px-2 pb-2">
+      {items.map((item) => <Link className={dark ? "rounded-[12px] px-3 py-2 text-sm text-white/76 hover:bg-white/[0.08] hover:text-white" : "rounded-[12px] px-3 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={item.href} key={item.slug}>{item.label}</Link>)}
+      {ctaHref ? <Link className={dark ? "mt-1 inline-flex items-center gap-2 border-t border-white/10 px-3 pt-3 text-sm font-semibold text-[#ff9b57]" : "mt-1 inline-flex items-center gap-2 border-t border-[#e2d7ca] px-3 pt-3 text-sm font-semibold text-[#b86e36]"} href={ctaHref}>{ctaLabel}<ArrowRight className="h-4 w-4" strokeWidth={1.9} /></Link> : null}
+    </div>
   </details>;
 }
 

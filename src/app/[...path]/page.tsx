@@ -30,6 +30,7 @@ import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resol
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
+import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -238,7 +239,7 @@ function isCollectionRouteRequest(path: string[]): boolean {
 }
 
 function isVideoGenerationRouteRequest(path: string[]): boolean {
-  return path[0] === "ai-video-generation";
+  return path[0] === "ai-video-generation" && !isMydreamshootsEditorialThemeRoute(`/${path.join("/")}`);
 }
 
 function collectionRouteLookupSlug(path: string[]): string {

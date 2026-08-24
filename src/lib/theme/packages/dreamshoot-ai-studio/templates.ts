@@ -14,7 +14,8 @@ export type MydreamShootsAiStudioTemplateKey =
   | "contact-us"
   | "best-packages"
   | "best-ai-image"
-  | "best-ai-video";
+  | "best-ai-video"
+  | "best-save-the-date";
 
 function section(type: SectionType, settings: SectionInstance["settings"], blocks: SectionInstance["blocks"] = []): SectionInstance {
   return { type, settings, blocks };
@@ -279,8 +280,8 @@ const homeSections: ThemePageJson["sections"] = {
     {
       anchor: "home",
       eyebrow: "",
-      headline: "Create Professional AI Headshots and Photo Sets Without a Studio",
-      subheadline: "Upload a few approved photos and choose the result you want - from professional headshots and portraits to wedding, engagement, seasonal, creative, and supported video workflows. Review the examples and credit cost before generation, then check the finished results in your signed-in workspace before downloading.",
+      headline: "Create AI Videos, Professional AI Headshots & Photo Sets from Your Images",
+      subheadline: "Upload your photos and choose what you want to create - from AI videos and professional AI headshots to portraits, couple photos, seasonal images, and creative photo sets. Review examples and credit costs before generation, then access your finished results in your workspace.",
       imageUrl: assets.heroPackageWall,
       secondaryImageUrl: assets.heroCreditStudioCard,
       tertiaryImageUrl: assets.gala,
@@ -288,21 +289,21 @@ const homeSections: ThemePageJson["sections"] = {
       bulletList:
         "Training policy - {LIVE_TRAINING_POLICY_STATEMENT}|Source-photo retention - Input photos follow the published {LIVE_SOURCE_MEDIA_RETENTION_DAYS}-day retention period.|Refund policy - {LIVE_REFUND_REVIEW_POLICY_STATEMENT}|Secure account workflow - Uploads, requests, credit review, and galleries stay inside your signed-in account.",
       highlightWord: "AI Headshots",
-      heroBadge: "AI Headshot Generators",
+      heroBadge: "AI Video & Photo Creation",
       authRibbon: "Review credits before generation",
       authPrimaryLabel: "Continue with Google",
       authEmailPlaceholder: "Email address",
-      authButtonLabel: "Create my first photo set with Email",
+      authButtonLabel: "Start Creating with Email",
       authPrimaryHref: "/login?mode=login",
       authEmailHref: "/login?mode=register",
       imageBadge: "{LIVE_AI_IMAGE_WORKFLOW_COUNT} AI image workflows",
-      imageCaption: "Create a private AI photo set for professional profiles, portraits, couples, seasonal images, creative styles, or other supported workflows.",
+      imageCaption: "Create AI videos and photo sets for social content, professional profiles, portraits, couple photos, seasonal images, and creative projects.",
       socialProofLabel: "Private uploads, requests, galleries",
       layout: "immersive_dark"
     },
     [
       block("hero_cta_primary", "cta", { label: "Create Now", href: "/login", style: "primary" }),
-      block("hero_cta_secondary", "cta", { label: "Headshot Generator", href: "/ai-image-generation/headshot", style: "secondary" }),
+      block("hero_cta_secondary", "cta", { label: "Explore AI Video", href: "/ai-video-generation", style: "secondary" }),
       block("hero_stat_credits", "stat", { value: "Credits", label: "shown before generation" }),
       block("hero_stat_packs", "stat", { value: "{LIVE_AI_IMAGE_WORKFLOW_COUNT}", label: "AI image workflows" }),
       block("hero_stat_private", "stat", { value: "Private", label: "uploads, requests, galleries" })
@@ -485,13 +486,11 @@ const homeSections: ThemePageJson["sections"] = {
       videoTitle: "Featured AI Video Generators",
       videoIntro: "Turn your photos into AI videos for social media, storytelling, product marketing, and creative projects.",
       videoAllLabel: "VIEW ALL VIDEO",
-      videoAllHref: "/best-ai-video",
+      videoAllHref: "/ai-video-generation",
       saveTheDateTitle: "AI Save the Date Videos",
       saveTheDateIntro: "Create personalized Save the Date videos from your photos for engagements, proposals, wedding invitations, anniversaries, and special celebrations.",
       saveTheDateAllLabel: "VIEW ALL SAVE THE DATE",
       saveTheDateAllHref: "/holidays-events/save-the-date",
-      imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
-      videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
       videoItemLimit: 8,
       primaryCta: "Start with your photos",
       primaryHref: "/app/create"
@@ -1924,8 +1923,6 @@ function aidreamcapesGenerationShowcaseSection(): SectionInstance {
     videoTitle: "Best Video Generator",
     videoAllLabel: "View all videos",
     videoAllHref: "/best-ai-video",
-    imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
-    videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
     videoItemLimit: 8,
     primaryCta: "Start with your photos",
     primaryHref: "/app/create"
@@ -2057,8 +2054,6 @@ function bestMediaGallerySection(kind: "image" | "video", aidreamcapes: boolean)
       : kind === "image"
         ? "Browse every myDreamshoots photo generator theme in one simple grid."
         : "Browse every myDreamshoots motion case in one simple grid.",
-    imageSlugs: "",
-    videoSlugs: ""
   });
 }
 
@@ -2108,6 +2103,21 @@ function bestMediaPage(kind: "image" | "video", aidreamcapes: boolean, site?: Dr
     },
     1,
     seoForPublicPage(path, site)
+  );
+}
+
+function bestSaveTheDatePage(): ThemePageJson {
+  return page(
+    "content",
+    ["best_save_the_date_1"],
+    {
+      best_save_the_date_1: section("dreamshoot_save_the_date_directory", {
+        anchor: "best-save-the-date",
+        headingLevel: "h1"
+      })
+    },
+    1,
+    seoForPublicPage("/best-save-the-date")
   );
 }
 
@@ -2369,11 +2379,21 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     "home",
     homeSectionsOrder,
     homePageSections,
-    1
+    1,
+    site?.id === "site_dreamshoot" ? {
+      title: "AI Video & Photo Generator | myDreamshoots",
+      description: "Create AI videos from your photos, professional AI headshots, portraits, couple photos, and themed photo sets with myDreamshoots.",
+      canonicalPath: "/",
+      canonical: "/",
+      index: true,
+      follow: true,
+      robots: { index: true, follow: true }
+    } : undefined
   ),
   "best-packages": bestPackagesPage(featuredPackSection, featuredChristmasSection, featuredThanksgivingSection, site),
   "best-ai-image": bestMediaPage("image", aidreamcapesTemplateSite, site),
   "best-ai-video": bestMediaPage("video", aidreamcapesTemplateSite, site),
+  "best-save-the-date": bestSaveTheDatePage(),
   pricing: page(
     "pricing",
     ["pricing_intro_1", "pricing_1", "plan_rules_1", "trust_1", "faq_1", "conversion_1"],
@@ -2822,6 +2842,7 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
   "best-packages": "Best Packages",
   "best-ai-image": "Best AI image",
   "best-ai-video": "Best AI video",
+  "best-save-the-date": "Best Save the Date themes",
   tools: "AI Tools Directory",
   workflow: "How It Works",
   "package-detail": "Package Detail",

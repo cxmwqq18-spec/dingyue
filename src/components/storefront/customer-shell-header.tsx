@@ -305,7 +305,7 @@ export function CustomerShellHeader({
             </ClickMegaMenu>
             {!isSpanishXby && hasSaveTheDate && saveTheDateMenuLabel ? (
               <ClickMegaMenu buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`} label={saveTheDateMenuLabel} panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out">
-                <HeaderSaveTheDateMegaPanel menuLabel={saveTheDateMenuLabel} groups={routedSaveTheDateGroups} variantTone="dark" />
+                <HeaderSaveTheDateMegaPanel ctaHref={`${basePath}/best-save-the-date`} menuLabel={saveTheDateMenuLabel} groups={routedSaveTheDateGroups} variantTone="dark" />
               </ClickMegaMenu>
             ) : null}
             <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={workflowHref}>

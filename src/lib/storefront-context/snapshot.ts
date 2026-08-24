@@ -9,6 +9,7 @@ import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integri
 import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
 import { canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
+import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 import type {
   EffectiveIndexability,
   EffectivePublishedPage,
@@ -131,7 +132,7 @@ const DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS = new Set([
   "/ai-video-generation/text-to-video",
   "/ai-video-generation/image-to-video"
 ]);
-const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", "/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date"]);
+const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set<string>(MYDREAMSHOOTS_STANDARD_SEO_ROUTES);
 
 function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): StorefrontContextBundle {
   return {
@@ -328,6 +329,9 @@ export function createPublishedSiteSnapshot(
   const publishedVideoNavigation = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedVideoNavigation)
     ? publication!.snapshot.publishedVideoNavigation as PublishedSiteSnapshot["publishedVideoNavigation"]
     : [];
+  const publishedHomepageShowcases = hasImmutableSeoProjection && Array.isArray(publication?.snapshot?.publishedHomepageShowcases)
+    ? publication!.snapshot.publishedHomepageShowcases as PublishedSiteSnapshot["publishedHomepageShowcases"]
+    : [];
   const entityReferences: EntityReference[] = [
     ...baseEntityReferences,
     ...publishedPageCopy.map((copy) => ({ entityType: "page_copy" as const, entityId: copy.pageEntityId, ownerId: site.id, revision: copy.copyRevision })),
@@ -369,6 +373,7 @@ export function createPublishedSiteSnapshot(
     publishedCollectionRefs,
     publishedLinkRefs,
     publishedVideoNavigation,
+    publishedHomepageShowcases,
     snapshotRevisions,
     legacyProjectionRequired: isMydreamshootsPublicationSite && !hasImmutableSeoProjection,
     snapshotIntegrity,

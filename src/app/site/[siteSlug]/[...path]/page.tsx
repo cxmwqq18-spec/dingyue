@@ -18,6 +18,7 @@ import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { STOREFRONT_PUBLIC_HOST_HEADER, storefrontPathForRouteMode, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
+import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 
 const dreamshootPartnerTemplateSlugs = new Set([
   "/workflow",
@@ -178,7 +179,7 @@ function isCollectionRouteRequest(path: string[]): boolean {
 }
 
 function isVideoGenerationRouteRequest(path: string[]): boolean {
-  return path[0] === "ai-video-generation";
+  return path[0] === "ai-video-generation" && !isMydreamshootsEditorialThemeRoute(`/${path.join("/")}`);
 }
 
 function canRenderPublishedPublicPath(

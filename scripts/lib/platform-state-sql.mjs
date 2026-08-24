@@ -79,6 +79,7 @@ export async function readPlatformStateFromSql(existingPrisma) {
       const siteDomains = domains.filter((domain) => domain.siteId === siteRow.id);
       site.primaryDomain = siteDomains.find((domain) => domain.isPrimary)?.domain ?? siteDomains[0]?.domain ?? site.primaryDomain;
       site.pages = pagesBySiteId.get(siteRow.id) ?? existing.pages ?? [];
+      site.mediaAssets = mediaAssets.filter((asset) => asset.siteId === siteRow.id).map(plain);
       const themeSettings = settingsBySiteId.get(siteRow.id);
       if (themeSettings) site.themeSettings = themeSettings;
       const storefrontProfile = profileBySiteId.get(siteRow.id);

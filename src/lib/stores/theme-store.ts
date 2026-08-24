@@ -46,6 +46,7 @@ import {
 import { compileMydreamshootsVideoTopicPublication } from "@/lib/mydreamshoots-video-topic-publication";
 import { normalizeGlobalSection } from "@/lib/theme/section-normalize";
 import { publicationSnapshotHash, publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
+import { MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES, MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 import type {
   MediaAsset,
   Product,
@@ -194,20 +195,25 @@ function buildHomepageShowcases(params: {
   return items;
 }
 
-const STANDARD_MYDREAMSHOOTS_MEDIA_PATHS = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"] as const;
-const SAVE_THE_DATE_PATH = "/ai-save-the-date/valentines-day" as const;
-const SAVE_THE_DATE_EDITORIAL_PATHS = [SAVE_THE_DATE_PATH, "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date"] as const;
+const STANDARD_MYDREAMSHOOTS_MEDIA_PATHS = ["/about-us", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/faq", "/workflow"] as const;
+const SAVE_THE_DATE_EDITORIAL_PATHS = MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES;
 const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_MEDIA_PATHS)[number] | (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number], string> = {
   "/about-us": "MyDreamShoots company overview with the private AI photo workflow",
   "/best-packages": "Published MyDreamShoots photo packages arranged for visual theme comparison",
   "/best-ai-image": "Published AI image examples selected from the current MyDreamShoots collection",
+  "/best-ai-video": "Published AI video examples selected from the current MyDreamShoots themes",
+  "/best-save-the-date": "Published Save the Date themes arranged for announcement story comparison",
   "/pricing": "MyDreamShoots subscription credits and billing options comparison visual",
   "/faq": "MyDreamShoots support questions for uploads credits generation and delivery",
   "/workflow": "MyDreamShoots approved upload generation review and private delivery workflow",
-  [SAVE_THE_DATE_PATH]: "Valentine's Day save the date visual story from approved couple photos",
+  "/ai-save-the-date/valentines-day": "Valentine's Day save the date visual story from approved couple photos",
   "/holidays-events/engagement": "Engagement save the date video scenes from approved couple visuals",
   "/holidays-events/proposal": "Proposal video scenes showing the planned story and reaction",
-  "/holidays-events/save-the-date": "Save the Date video scenes for a confirmed wedding date"
+  "/holidays-events/save-the-date": "Save the Date video scenes for a confirmed wedding date",
+  "/ai-video-generation/wedding-ceremony": "Wedding ceremony photo and video scenes for vows, rings, reactions, and the recessional",
+  "/holidays-events/thanksgiving": "Thanksgiving family, Friendsgiving, food, and fall holiday scenes",
+  "/holidays-events/christmas": "Christmas family, winter, pet, card, and holiday video scenes",
+  "/holidays-events/new-year": "New Year fireworks, countdown, greeting, family, and fresh-start scenes"
 };
 function collectPublishedImageUrls(value: unknown, output: string[] = []): string[] {
   if (typeof value === "string" && /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(value.trim())) {
@@ -275,7 +281,7 @@ function buildPublishedStandardPageMedia(
 function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStandardRouteProjection | undefined {
   if (!isPrimaryMydreamshootsSite(site)) return undefined;
   const canonicalPath = page.publishedJson.seo?.canonicalPath || page.publishedJson.seo?.canonical || page.slug;
-  const standardPaths = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", ...SAVE_THE_DATE_EDITORIAL_PATHS]);
+  const standardPaths = new Set<string>(MYDREAMSHOOTS_STANDARD_SEO_ROUTES);
   if (!standardPaths.has(canonicalPath)) return undefined;
   const pageEntityId = `mydreamshoots:standard:${canonicalPath.slice(1).replace(/[^a-z0-9]+/gi, "-")}`;
   const mediaEntityId = `${pageEntityId}:media`;

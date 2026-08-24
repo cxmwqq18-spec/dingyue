@@ -15,6 +15,7 @@ import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-sh
 import { DreamshootShowcaseRail } from "@/components/storefront/dreamshoot-showcase-rail";
 import { DreamshootShowcaseVideo } from "@/components/storefront/dreamshoot-showcase-video";
 import { DreamshootToolDirectoryClient, type DreamshootToolDirectoryCard } from "@/components/storefront/dreamshoot-tool-directory-client";
+import { SaveTheDateDirectory } from "@/components/storefront/save-the-date-directory";
 import { DreamShootMegaToolsPanel as SharedDreamShootMegaToolsPanel, getToolBlocksFromMenuItems as getSharedToolBlocksFromMenuItems } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderMobileVideoGenerationMenu, HeaderMobileSaveTheDateMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, HeaderVideoGenerationMegaPanel, HeaderSaveTheDateMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { LazyStorefrontSection } from "@/components/storefront/lazy-storefront-section";
@@ -290,6 +291,7 @@ export function ThemeRenderer({
             toolMenuItems={navigationToolMenuItems ?? toolMenuItems}
             videoThemeCategories={navigationVideoThemeCategories ?? videoThemeCategories}
             videoThemes={navigationVideoThemes ?? videoThemes}
+            homepageShowcases={homepageShowcases}
             videoGenerationTopics={navigationVideoGenerationTopics}
           />
         </div>
@@ -367,7 +369,7 @@ export function ThemeRenderer({
           }}
           {...previewSelectedAttrs(previewSelection, "footer_plus")}
         >
-          <ThemeGlobalFooter lightweight={lightweightChrome} site={routedSite} settings={settings} storefrontContext={storefrontContext} />
+          <ThemeGlobalFooter lightweight={lightweightChrome} site={routedSite} settings={settings} storefrontContext={storefrontContext} homepageShowcases={homepageShowcases} />
         </div>
       </div>
     </StorefrontLinkPrefetchProvider>
@@ -634,6 +636,9 @@ function sectionRendersMainHeading(sectionId: string, section: SectionInstance, 
   if (sectionType === "dreamshoot_media_gallery") {
     return normalizedHeadingLevel(setting(section, "headingLevel"), "h1") === "h1";
   }
+  if (sectionType === "dreamshoot_save_the_date_directory") {
+    return normalizedHeadingLevel(setting(section, "headingLevel"), "h1") === "h1";
+  }
   return [
     "ai_tool_entry",
     "cart",
@@ -859,6 +864,7 @@ function isPublicSeoRoute(pagePath: string): boolean {
     pagePath === "/best-packages" ||
     pagePath === "/best-ai-image" ||
     pagePath === "/best-ai-video" ||
+    pagePath === "/best-save-the-date" ||
     pagePath === "/about-us" ||
     pagePath === "/contact-us" ||
     pagePath === "/privacy" ||
@@ -897,6 +903,9 @@ function shouldServerRenderPublicSeoSection(pagePath: string, sectionType: strin
   }
   if (pagePath === "/best-ai-image" || pagePath === "/best-ai-video") {
     return sectionType === "dreamshoot_media_gallery";
+  }
+  if (pagePath === "/best-save-the-date") {
+    return sectionType === "dreamshoot_save_the_date_directory";
   }
   if (pagePath === "/collections" || pagePath === "/ai-image-generation") {
     return sectionType === "rich_text" ||
@@ -1060,7 +1069,7 @@ function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic
   };
 }
 
-export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [], videoGenerationTopics }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[]; videoGenerationTopics?: HeaderVideoGenerationTopic[] }) {
+export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [], homepageShowcases = [], videoGenerationTopics }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[]; homepageShowcases?: PublishedHomepageShowcaseItem[]; videoGenerationTopics?: HeaderVideoGenerationTopic[] }) {
   const HeaderLink = StorefrontInstantLink;
   const header = settings.globalSections?.header;
   const saasHeader = saasGlobalSection(settings, "header_plus");
@@ -1142,8 +1151,8 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const workspaceLabel = spanishXby ? "Espacio privado" : "Workspace";
   const workspaceLink = { label: workspaceLabel, href: "/app/create", block: { id: "header_nav_workspace", type: "menu_link", settings: { label: workspaceLabel, href: "/app/create" } } as SectionBlockInstance };
   const myDreamShootsHeaderLinks = [
-    { label: "AI Image Generation", href: "/ai-image-generation", block: { id: "dreamshoot_header_ai_image_generation", type: "menu_link", settings: { label: "AI Image Generation", href: "/ai-image-generation" } } as SectionBlockInstance },
     { label: "AI Video Generation", href: "/ai-video-generation", block: { id: "dreamshoot_header_ai_video_generation", type: "menu_link", settings: { label: "AI Video Generation", href: "/ai-video-generation" } } as SectionBlockInstance },
+    { label: "AI Image Generation", href: "/ai-image-generation", block: { id: "dreamshoot_header_ai_image_generation", type: "menu_link", settings: { label: "AI Image Generation", href: "/ai-image-generation" } } as SectionBlockInstance },
     { label: "How it works", href: "/workflow", block: { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } } as SectionBlockInstance },
     { label: "Blog", href: "/blog", block: { id: "dreamshoot_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } } as SectionBlockInstance },
     { label: pricingLabel, href: pricingHeaderHref, block: { id: "dreamshoot_header_pricing", type: "menu_link", settings: { label: pricingLabel, href: pricingHeaderHref } } as SectionBlockInstance },
@@ -1192,7 +1201,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     : null;
   const configuredSaveTheDate = Boolean(saveTheDateLink);
   const rawLinks = isMyDreamShootsCom
-    ? (saveTheDateLink ? [...myDreamShootsHeaderLinks.slice(0, 2), saveTheDateLink, ...myDreamShootsHeaderLinks.slice(2)] : myDreamShootsHeaderLinks)
+    ? (saveTheDateLink ? [...myDreamShootsHeaderLinks.slice(0, 1), saveTheDateLink, ...myDreamShootsHeaderLinks.slice(1)] : myDreamShootsHeaderLinks)
     : rawLinksBase;
   const seenHeaderHrefs = new Set<string>();
   const links = rawLinks.filter((link) => {
@@ -1487,7 +1496,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                prefetchPaths={isPackagesLink ? photoPackageMegaPrefetchPaths : toolsMegaPrefetchPaths}
 	              >
                   {isSaveTheDateLink ? (
-                    <HeaderSaveTheDateMegaPanel menuLabel={saveTheDateMenuLabel} groups={routedSaveTheDateGroups} variantTone="dark" />
+                    <HeaderSaveTheDateMegaPanel ctaHref={hrefForPage(site, "/best-save-the-date", pagePath)} menuLabel={saveTheDateMenuLabel} groups={routedSaveTheDateGroups} variantTone="dark" />
                   ) : isPackagesLink ? (
 	                    deferMegaMenuPanels ? (
 	                    <HeaderPhotoPackageMegaPanel
@@ -1636,7 +1645,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                     const isToolsLink = (showDreamShootToolsMega || showVideoGenerationMega) && (/tools|herramientas|video generation/i.test(linkIdentity) || normalizedLinkHref === "/ai-video-generation");
                     const isPackagesLink = showPhotoPackageMega && !isBestPackagesLink && (/route portrait packages|packages|paquetes|photoshoot|image generation/i.test(linkIdentity) || /collections|ai-image-generation/i.test(link.href));
                     if (isSaveTheDateLink) {
-                      return deferMegaMenuPanels ? <HeaderMobileSaveTheDateMenu groups={routedSaveTheDateGroups} menuLabel={saveTheDateMenuLabel} dark={dark} key={`mobile_${link.label}_${link.href}`} /> : <HeaderLink className={mobileLinkClass} href={hrefForPage(site, link.href, pagePath)} key={`mobile_${link.label}_${link.href}`}>{link.label}</HeaderLink>;
+                      return deferMegaMenuPanels ? <HeaderMobileSaveTheDateMenu ctaHref={hrefForPage(site, "/best-save-the-date", pagePath)} groups={routedSaveTheDateGroups} menuLabel={saveTheDateMenuLabel} dark={dark} key={`mobile_${link.label}_${link.href}`} /> : <HeaderLink className={mobileLinkClass} href={hrefForPage(site, link.href, pagePath)} key={`mobile_${link.label}_${link.href}`}>{link.label}</HeaderLink>;
                     }
                     if (isPackagesLink) {
 	                      return (
@@ -1763,7 +1772,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   );
 }
 
-export function ThemeGlobalFooter({ lightweight = false, site, settings, storefrontContext }: { lightweight?: boolean; site: Site; settings: ThemeSettings; storefrontContext?: StorefrontContext }) {
+export function ThemeGlobalFooter({ lightweight = false, site, settings, storefrontContext, homepageShowcases = [] }: { lightweight?: boolean; site: Site; settings: ThemeSettings; storefrontContext?: StorefrontContext; homepageShowcases?: PublishedHomepageShowcaseItem[] }) {
   const footer = settings.globalSections?.footer;
   const saasFooter = saasGlobalSection(settings, "footer_plus");
   const title = footer ? setting(footer, "title", site.branding.logoText) : site.branding.logoText;
@@ -1771,6 +1780,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
   const isDreamShootFooter = usesAiGenerationPublicRoutes(site) && !isAidreamcapesCapabilitySite(site);
   const isAidreamcapesFooter = isAidreamcapesCapabilitySite(site);
   const spanishXbyFooter = isSpanishStorefrontSite(site);
+  const hasPublishedSaveTheDate = homepageShowcases.some((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
   const readableFooterTitle = spanishXbyFooter
     ? site.branding.logoText || site.name
     : isDreamShootFooter
@@ -1835,8 +1845,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
         ]
       : isDreamShootFooter
         ? [
-            { label: "AI Image Generation", href: "/ai-image-generation" },
             { label: "AI Video Generation", href: "/ai-video-generation" },
+            ...(hasPublishedSaveTheDate ? [{ label: "AI Save the Date", href: "/holidays-events/save-the-date" }] : []),
+            { label: "AI Image Generation", href: "/ai-image-generation" },
             { label: "Best Packages", href: "/best-packages" },
             { label: "Pricing", href: "/pricing" }
           ]
@@ -1937,8 +1948,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
           ]
         : isDreamShootFooter
           ? [
-              ["AI Image Generation", "/ai-image-generation", "product"],
               ["AI Video Generation", "/ai-video-generation", "product"],
+              ...(hasPublishedSaveTheDate ? [["AI Save the Date", "/holidays-events/save-the-date", "product"] as const] : []),
+              ["AI Image Generation", "/ai-image-generation", "product"],
               ["Best Packages", "/best-packages", "product"],
               ["How it works", "/workflow", "product"],
               ["Pricing", "/pricing", "product"],
@@ -8599,6 +8611,15 @@ function SectionView({
     };
     const textBlock = (block: SectionBlockInstance, key = "text") => blockValue(block, key).trim();
     const headingClass = "text-balance font-semibold leading-[1.06] tracking-[-0.025em] [font-family:var(--site-title-font)]";
+    const editorialThemeTone = setting(section, "themeTone", "default");
+    const editorialTheme = ({
+      wedding: { heroBg: "#fffdfa", heroText: "#171514", heroMuted: "#5f5952", heroSupport: "#716a62", accent: "#6d4aff", accentText: "#ffffff", border: "#cfc4e8", ctaBg: "#6d4aff", ctaText: "#ffffff", ctaBorder: "#b7a6e8" },
+      thanksgiving: { heroBg: "#3b2b20", heroText: "#fff8ee", heroMuted: "#f3d8b5", heroSupport: "#d9b99a", accent: "#d99a42", accentText: "#2f2118", border: "#bd8b50", ctaBg: "#8c5a32", ctaText: "#fff8ee", ctaBorder: "#d5a765" },
+      christmas: { heroBg: "#12352b", heroText: "#fffaf0", heroMuted: "#e6e0ca", heroSupport: "#c4d1bf", accent: "#d6af55", accentText: "#14261f", border: "#7f9c83", ctaBg: "#d6af55", ctaText: "#14261f", ctaBorder: "#d6af55" },
+      "new-year": { heroBg: "#111c3d", heroText: "#fffdf5", heroMuted: "#d9e0f3", heroSupport: "#afbddb", accent: "#d6b45f", accentText: "#17203b", border: "#7181ab", ctaBg: "#d6b45f", ctaText: "#17203b", ctaBorder: "#d6b45f" }
+    } as Record<string, { heroBg: string; heroText: string; heroMuted: string; heroSupport: string; accent: string; accentText: string; border: string; ctaBg: string; ctaText: string; ctaBorder: string }>)[editorialThemeTone] ?? {
+      heroBg: "#26131a", heroText: "#fffaf6", heroMuted: "#f7ded3", heroSupport: "#d9b8b0", accent: "#e9b894", accentText: "#26131a", border: "#d6a99a", ctaBg: "#7f343d", ctaText: "#32171c", ctaBorder: "#f0c3a4"
+    };
     if (!title) return null;
 
     if (editorialFaq) {
@@ -8634,24 +8655,24 @@ function SectionView({
       const rawIntentChips = section.settings?.intentChips;
       const intentChips = Array.isArray(rawIntentChips) ? rawIntentChips.map((chip) => typeof chip === "string" ? chip.trim() : "").filter(Boolean) : [];
       return (
-        <section className="bg-[#26131a] text-[#fffaf6]" id={anchor}>
+        <section className="bg-[#26131a] text-[#fffaf6]" id={anchor} style={{ backgroundColor: editorialTheme.heroBg, color: editorialTheme.heroText }}>
           <div className="mx-auto grid max-w-[var(--site-content-width)] lg:min-h-[650px] lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
             <div className="flex flex-col justify-center px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
-              {setting(section, "eyebrow") ? <p className="mb-5 text-xs font-semibold uppercase tracking-[0.16em] text-[#e9b894]">{setting(section, "eyebrow")}</p> : null}
-              <h1 className={`${headingClass} max-w-[12ch] text-[clamp(2.7rem,5.4vw,5rem)] lg:max-w-[16ch]`}>{title}</h1>
-              {intro ? <p className="mt-7 max-w-[38rem] text-base leading-8 text-[#f7ded3] sm:text-lg">{intro}</p> : null}
-              {support ? <p className="mt-5 max-w-[38rem] text-sm leading-7 text-[#d9b8b0]">{support}</p> : null}
+              {setting(section, "eyebrow") ? <p className="mb-5 text-xs font-semibold uppercase tracking-[0.16em] text-[#e9b894]" style={{ color: editorialTheme.accent }}>{setting(section, "eyebrow")}</p> : null}
+              <h1 className={`${headingClass} max-w-[12ch] text-[clamp(2.7rem,5.4vw,5rem)] lg:max-w-[16ch]`} style={{ color: editorialTheme.heroText }}>{title}</h1>
+              {intro ? <p className="mt-7 max-w-[38rem] text-base leading-8 text-[#f7ded3] sm:text-lg" style={{ color: editorialTheme.heroMuted }}>{intro}</p> : null}
+              {support ? <p className="mt-5 max-w-[38rem] text-sm leading-7 text-[#d9b8b0]" style={{ color: editorialTheme.heroSupport }}>{support}</p> : null}
               {primaryCta || secondaryCta ? (
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                  {primaryCta ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#e9b894] px-6 text-sm font-semibold text-[#26131a] transition hover:bg-[#f3c6a5]" href={hrefFor(site, setting(section, "primaryHref"))}>{primaryCta}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}
-                  {secondaryCta ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#d6a99a] px-6 text-sm font-semibold text-[#fffaf6] transition hover:bg-white/10" href={hrefFor(site, setting(section, "secondaryHref"))}>{secondaryCta}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}
+                  {primaryCta ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#e9b894] px-6 text-sm font-semibold text-[#26131a] transition hover:bg-[#f3c6a5]" href={hrefFor(site, setting(section, "primaryHref"))} style={{ backgroundColor: editorialTheme.accent, color: editorialTheme.accentText }}>{primaryCta}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}
+                  {secondaryCta ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#d6a99a] px-6 text-sm font-semibold text-[#fffaf6] transition hover:bg-white/10" href={hrefFor(site, setting(section, "secondaryHref"))} style={{ borderColor: editorialTheme.border, color: editorialTheme.heroText }}>{secondaryCta}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}
                 </div>
               ) : null}
               {intentChips.length ? <div className="mt-6 flex flex-wrap gap-2">{intentChips.map((chip) => <span className="rounded-full border border-[#80515a] px-3 py-1.5 text-xs font-medium text-[#f3d8cf]" key={chip}>{chip}</span>)}</div> : null}
             </div>
             {heroVisuals.length > 1 ? (
               <div className="grid gap-3 p-5 sm:grid-cols-2 lg:p-8">
-                {heroVisuals.map((block, index) => <div className={`${index === 0 ? "sm:col-span-2" : ""} aspect-[5/3] overflow-hidden rounded-[14px] bg-[#5c2930]`} key={instanceKey(block, index, "hero_visual")}>{imageFor(block)}</div>)}
+                {heroVisuals.map((block, index) => <div className={`${index === 0 ? "sm:col-span-2" : ""} aspect-[5/3] overflow-hidden rounded-[14px] bg-[#5c2930]`} key={instanceKey(block, index, "hero_visual")} style={{ backgroundColor: editorialTheme.heroBg }}>{imageFor(block)}</div>)}
               </div>
             ) : <div className="aspect-[5/3] min-h-0 overflow-hidden">{imageFor(section)}</div>}
           </div>
@@ -8754,8 +8775,8 @@ function SectionView({
     }
 
     return (
-      <section className="relative overflow-hidden bg-[#7f343d] px-5 py-16 text-[#fffaf6] sm:px-8 lg:py-24" id={anchor}>
-        <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] text-center"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-6 max-w-[70ch] text-base leading-8 text-[#f7ded3]">{intro}</p> : null}<div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">{setting(section, "primaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#f0c3a4] px-6 text-sm font-semibold text-[#32171c]" href={hrefFor(site, setting(section, "primaryHref"))}>{setting(section, "primaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}{setting(section, "secondaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#f0c3a4] px-6 text-sm font-semibold text-white" href={hrefFor(site, setting(section, "secondaryHref"))}>{setting(section, "secondaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}</div><div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]">{imageFor(section)}</div></div>
+      <section className="relative overflow-hidden bg-[#7f343d] px-5 py-16 text-[#fffaf6] sm:px-8 lg:py-24" id={anchor} style={{ backgroundColor: editorialTheme.ctaBg, color: editorialTheme.heroText }}>
+        <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] text-center"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-4xl sm:text-5xl`} style={{ color: editorialTheme.heroText }}>{title}</h2>{intro ? <p className="mx-auto mt-6 max-w-[70ch] text-base leading-8 text-[#f7ded3]" style={{ color: editorialTheme.heroMuted }}>{intro}</p> : null}<div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">{setting(section, "primaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#f0c3a4] px-6 text-sm font-semibold text-[#32171c]" href={hrefFor(site, setting(section, "primaryHref"))} style={{ backgroundColor: editorialTheme.accent, color: editorialTheme.accentText }}>{setting(section, "primaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}{setting(section, "secondaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#f0c3a4] px-6 text-sm font-semibold text-white" href={hrefFor(site, setting(section, "secondaryHref"))} style={{ borderColor: editorialTheme.ctaBorder, color: editorialTheme.heroText }}>{setting(section, "secondaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}</div><div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]" style={{ backgroundColor: editorialTheme.heroBg }}>{imageFor(section)}</div></div>
       </section>
     );
   }
@@ -11284,6 +11305,8 @@ function SectionView({
         const imageUrl = category.imageUrl ? mediaAssetUrl(site, category.imageUrl) : matchingPack ? packImage(site, matchingPack) : fallbackHeroImages[0];
         return {
           id: category.id,
+          groupKey: parent?.slug || category.slug,
+          groupLabel: parent?.label || category.label,
           title: category.label,
           description: profile?.cardDescription || category.description || (matchingPack ? dreamshootPackageThemeIntro(matchingPack) : `${category.label} groups related AI photo package themes for private albums.`),
           meta: profile?.metaLabel || parent?.label || category.label,
@@ -11310,6 +11333,8 @@ function SectionView({
         const profile = aidreamcapes && !spanishXbyTaxonomy ? aidreamcapesProfileForPack(site, pack) : myDreamShootsProfileForPack(site, pack);
         return {
           id: pack.id,
+          groupKey: pack.categoryRecord?.parent?.slug || pack.categoryRecord?.slug || pack.category,
+          groupLabel: pack.categoryRecord?.parent?.label || pack.categoryRecord?.label || packCategoryLabelForStorefront(pack),
           title: pack.categoryRecord?.label || pack.name,
           description: profile?.cardDescription || dreamshootPackageThemeIntro(pack),
           meta: profile?.metaLabel || packCategoryLabelForStorefront(pack),
@@ -11338,6 +11363,8 @@ function SectionView({
       ? activePackageThemeCards
       : cards.map((card) => ({
           id: card.id,
+          groupKey: undefined as string | undefined,
+          groupLabel: undefined as string | undefined,
           title: blockValue(card, "title", "Photo package"),
           description: blockValue(card, "description"),
           meta: blockValue(card, "meta", "Package"),
@@ -11394,10 +11421,12 @@ function SectionView({
         .filter((keyword): keyword is string => Boolean(keyword))
         .map((keyword) => spanishXbyTaxonomy ? spanishXbyTaxonomyKeyword(keyword, aidreamcapes) : keyword)
         .filter(Boolean);
-	      return {
-	        brand: storefrontMediaBrandName(site),
-	        id: card.id,
-        title: card.title,
+        return {
+          brand: storefrontMediaBrandName(site),
+          id: card.id,
+          groupKey: card.groupKey,
+          groupLabel: card.groupLabel,
+          title: card.title,
         description: truncateText(profile?.cardDescription || card.description, 220),
         meta: spanishXbyTaxonomy ? spanishXbyCategoryLinkLabel(card.meta, aidreamcapes) : profile?.metaLabel || card.meta,
         keywords: Array.from(new Set(localizedKeywords)).slice(0, 5),
@@ -11443,7 +11472,8 @@ function SectionView({
       };
     });
     const _editorial = setting(section, "layout", "seo_grid") === "editorial";
-    const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation" ? "h1" : "h2") === "h1" ? "h1" : "h2";
+    const isPackageDirectory = renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation" || renderContext.pagePath === "/ai-image-generation/";
+    const HeadingTag = setting(section, "headingLevel", isPackageDirectory ? "h1" : "h2") === "h1" ? "h1" : "h2";
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
     const selectedPacks = activeCreativePacksForCollectionSlug(creativePacks, selectedCollectionSlug, site);
     const selectedPack = selectedPacks.length === 1 ? selectedPacks[0] : undefined;
@@ -11580,10 +11610,10 @@ function SectionView({
               <div>
                 <p className={taxonomyEyebrowClass}>{setting(section, "eyebrow", "Photo package library")}</p>
                 <HeadingTag className="mt-4 max-w-3xl text-[clamp(2.1rem,4.4vw,4.65rem)] font-semibold leading-[0.98] tracking-tight text-balance [font-family:var(--site-title-font)]">
-                  {localizedDynamicTitle || setting(section, "title", "Package categories customers already understand.")}
+                  {isPackageDirectory ? setting(section, "title", "Browse AI photo packages by category") : localizedDynamicTitle || setting(section, "title", "Package categories customers already understand.")}
                 </HeadingTag>
               </div>
-              <p className={taxonomySubtitleClass}>{dynamicSubtitle || setting(section, "subtitle")}</p>
+              <p className={taxonomySubtitleClass}>{isPackageDirectory ? setting(section, "subtitle", "Choose a top-level category, then compare focused themes, example outputs, and visible credit expectations before you start.") : dynamicSubtitle || setting(section, "subtitle")}</p>
             </div>
           ) : null}
           {isCollectionDetail ? (
@@ -11761,6 +11791,7 @@ function SectionView({
           ) : (
             <PackageTaxonomyClient
               cards={taxonomyClientCards}
+              grouped={renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation"}
               initialSlug={selectedCollectionSlug}
               locale={storefrontMediaAltLocaleForSite(site)}
               variant="dark"
@@ -12522,6 +12553,15 @@ function SectionView({
     );
   }
 
+  if (section.type === "dreamshoot_save_the_date_directory") {
+    const navigation = site.themeSettings?.publishedJson?.saveTheDateNavigation;
+    const groups = (navigation?.groups ?? []).map((group) => ({
+      ...group,
+      items: group.items.map((item) => ({ ...item, href: hrefFor(site, item.href) }))
+    }));
+    return <SaveTheDateDirectory groups={groups} />;
+  }
+
   if (section.type === "dreamshoot_media_gallery") {
     const aidreamcapes = isAidreamcapesSite(site);
     const kind = setting(section, "kind", "image").trim().toLowerCase() === "video" ? "video" : "image";
@@ -12827,7 +12867,8 @@ function SectionView({
     const publishedHomepageItems = homepageShowcases
       .filter((item) => item.status === "published" && item.indexable && item.sitemapEligible)
       .sort((left, right) => left.sortOrder - right.sortOrder || left.title.localeCompare(right.title));
-    if (mydreamProfileSite && renderContext.pagePath === "/" && publishedHomepageItems.length) {
+    if (mydreamProfileSite && renderContext.pagePath === "/") {
+      if (!publishedHomepageItems.length) return null;
       const videoItems = publishedHomepageItems.filter((item) => item.kind === "video").slice(0, 8);
       const saveTheDateItems = publishedHomepageItems.filter((item) => item.kind === "save_the_date");
       const photoItems = publishedHomepageItems.filter((item) => item.kind === "photo").slice(0, 16);

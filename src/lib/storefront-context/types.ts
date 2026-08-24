@@ -13,6 +13,7 @@ import type {
   PublishedStandardPageMediaProjection,
   PublishedRouteProjection,
   PublishedVideoNavigationProjection,
+  PublishedHomepageShowcaseItem,
   Site,
   StorefrontProfileJson,
   ThemePage,
@@ -209,6 +210,7 @@ export type PublishedSiteSnapshot = {
   publishedCollectionRefs: PublishedCollectionRef[];
   publishedLinkRefs: PublishedLinkRef[];
   publishedVideoNavigation: PublishedVideoNavigationProjection[];
+  publishedHomepageShowcases: PublishedHomepageShowcaseItem[];
   snapshotRevisions: NonNullable<ThemePublication["snapshot"]["revisions"]>;
   legacyProjectionRequired: boolean;
   snapshotIntegrity: "valid" | "invalid" | "legacy";

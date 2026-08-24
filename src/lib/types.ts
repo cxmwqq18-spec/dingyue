@@ -67,6 +67,9 @@ export interface SaveTheDateNavigationItem {
   label: string;
   slug: string;
   href: string;
+  description?: string;
+  imageUrl?: string;
+  imageAlt?: string;
   status: "published" | "draft" | "review_required";
   sortOrder: number;
 }
@@ -1157,7 +1160,7 @@ export interface PublishedSeoSnapshotRevisions {
   policyRevision: string;
   linkRevision: string;
   navigationRevision: string;
-  homepageShowcaseRevision: string;
+  homepageShowcaseRevision?: string;
   snapshotHash: string;
 }
 

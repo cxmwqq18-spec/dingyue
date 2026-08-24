@@ -30,7 +30,7 @@ try {
   const products = state.products.filter((candidate) => candidate.siteId === site.id);
   const { buildPublicationSnapshot } = createJiti(import.meta.url)("../src/lib/stores/theme-store.ts");
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products);
-  const expectedPaths = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"];
+  const expectedPaths = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", "/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date", "/ai-video-generation/wedding-ceremony", "/holidays-events/thanksgiving", "/holidays-events/christmas", "/holidays-events/new-year"];
   assert.equal(snapshot.publishedStandardPageMedia.length, expectedPaths.length);
   assert.deepEqual(snapshot.publishedStandardPageMedia.map((row) => row.canonicalPath).sort(), expectedPaths.slice().sort());
   for (const row of snapshot.publishedStandardPageMedia) {

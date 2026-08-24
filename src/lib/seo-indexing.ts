@@ -59,7 +59,7 @@ const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
   ...MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS.map((slug) => `/ai-video-generation/${slug}`)
 ];
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_SLUGS = new Set<string>(MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS);
-const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/best-packages", "/best-ai-image", "/best-ai-video"];
+const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date"];
 const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"];
 const CANONICAL_PUBLIC_PATHS = new Map([
   ["/about", "/about-us"],

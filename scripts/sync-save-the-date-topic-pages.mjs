@@ -205,8 +205,11 @@ try {
     const settings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
     const groups = parsed.map((item, index) => ({ label: item.key === "save-the-date" ? "Save the Date" : item.key[0].toUpperCase() + item.key.slice(1), slug: item.key, sortOrder: index + 1, items: [{ label: item.key === "save-the-date" ? "Save the Date" : item.key[0].toUpperCase() + item.key.slice(1), slug: item.key, href: item.pagePath, status: "published", sortOrder: 1 }] }));
     const existingNavigation = settings.saveTheDateNavigation?.groups ?? [];
-    const loveItems = [...(existingNavigation.find((group) => group.slug === "love-wedding")?.items ?? []).filter((item) => item.href === "/ai-save-the-date/valentines-day"), ...groups.flatMap((group) => group.items)];
-    const nextSettings = { ...settings, saveTheDateNavigation: { menuLabel: settings.saveTheDateNavigation?.menuLabel || "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: loveItems.map((item, index) => ({ ...item, sortOrder: index + 1, status: "published" })) }] } };
+    const existingLoveItems = existingNavigation.find((group) => group.slug === "love-wedding")?.items ?? [];
+    const loveItems = [...existingLoveItems.filter((item) => item.href === "/ai-save-the-date/valentines-day"), ...groups.flatMap((group) => group.items)]
+      .filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index);
+    const preservedGroups = existingNavigation.filter((group) => group.slug !== "love-wedding");
+    const nextSettings = { ...settings, saveTheDateNavigation: { menuLabel: settings.saveTheDateNavigation?.menuLabel || "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: loveItems.map((item, index) => ({ ...item, sortOrder: index + 1, status: "published" })) }, ...preservedGroups.map((group, index) => ({ ...group, sortOrder: index + 2 }))] } };
     await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: nextSettings }, update: { draftJson: nextSettings, publishedJson: nextSettings } });
     for (const item of parsed) {
       const pageId = `page_${siteId}_${item.key.replace(/[^a-z0-9]+/gi, "_")}`;

@@ -6,12 +6,13 @@ import { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
 import { applyTitleTemplate, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 import { robotsForPage } from "@/lib/theme/seo";
+import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 
 function clean(value: unknown): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
 }
 
-const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", "/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date"]);
+const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set<string>(MYDREAMSHOOTS_STANDARD_SEO_ROUTES);
 
 function revisionHash(value: string): string {
   let first = 0x811c9dc5;
