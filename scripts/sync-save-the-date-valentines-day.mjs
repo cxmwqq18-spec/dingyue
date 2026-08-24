@@ -212,7 +212,7 @@ try {
     const nextSettings = { ...settings, saveTheDateNavigation: { menuLabel: "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: [{ label: "Valentine's Day", slug: "valentines-day", href: pagePath, status: "published", sortOrder: 1 }] }] } };
     await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: nextSettings }, update: { draftJson: nextSettings, publishedJson: nextSettings } });
     for (const item of sourceImages) await tx.mediaAsset.upsert({ where: { siteId_storageKey: { siteId, storageKey: item.src } }, create: { id: `media_${siteId}_save_date_${item.filename.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}`, siteId, label: item.filename, storageKey: item.src, mimeType: "image/jpeg", usageType: "theme", sourceType: "save-the-date-source", previewUrl: item.src, originUrl: item.src, altText: item.alt, notes: item.caption }, update: { altText: item.alt, notes: item.caption, previewUrl: item.src, originUrl: item.src } });
-  });
+  }, { maxWait: 20_000, timeout: 120_000 });
   const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   const site = toSite(fresh);
   const packs = await prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: true } });

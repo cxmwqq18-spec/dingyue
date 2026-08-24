@@ -216,7 +216,7 @@ try {
       await tx.themePage.upsert({ where: { siteId_slug: { siteId, slug: item.pagePath } }, create: { id: pageId, siteId, pageType: "standard-content", templateKey: "save-the-date-editorial", slug: item.pagePath, title: item.heading, draftJson: item.pageJson, publishedJson: item.pageJson }, update: { pageType: "standard-content", templateKey: "save-the-date-editorial", title: item.heading, draftJson: item.pageJson, publishedJson: item.pageJson } });
       for (const asset of item.manifest) await tx.mediaAsset.upsert({ where: { siteId_storageKey: { siteId, storageKey: asset.src } }, create: { id: `media_${siteId}_${item.key}_${asset.filename.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}`, siteId, label: asset.filename, storageKey: asset.src, mimeType: "image/jpeg", usageType: "theme", sourceType: `save-the-date-${item.key}-source`, previewUrl: asset.src, originUrl: asset.src, altText: asset.alt, notes: asset.caption }, update: { altText: asset.alt, notes: asset.caption, previewUrl: asset.src, originUrl: asset.src } });
     }
-  });
+  }, { maxWait: 20_000, timeout: 120_000 });
   const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   const site = toSite(fresh);
   const packs = await prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: true } });
