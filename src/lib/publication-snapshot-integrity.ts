@@ -290,8 +290,8 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const standardMediaIds = publishedStandardPageMedia.map((item) => item.mediaEntityId);
   const linkIds = links.map((item) => item.linkEntityId);
   const expectedStandardPaths = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"];
-  if (standardContentRoutes.some((route) => route.canonicalPath === "/ai-save-the-date/valentines-day") || publishedStandardPageMedia.some((media) => media.canonicalPath === "/ai-save-the-date/valentines-day")) {
-    expectedStandardPaths.push("/ai-save-the-date/valentines-day");
+  for (const path of ["/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date"]) {
+    if (standardContentRoutes.some((route) => route.canonicalPath === path) || publishedStandardPageMedia.some((media) => media.canonicalPath === path)) expectedStandardPaths.push(path);
   }
   const imagePageEntities = publishedPageEntities.filter((item) => item.pageType === "ai-image-theme-leaf");
   const videoPageEntities = publishedPageEntities.filter((item) => item.pageType === "ai-video-topic-leaf");

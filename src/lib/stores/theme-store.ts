@@ -87,14 +87,18 @@ function asPublishedMediaPack(pack: PublishPreflightCreativePack | undefined): {
 
 const STANDARD_MYDREAMSHOOTS_MEDIA_PATHS = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"] as const;
 const SAVE_THE_DATE_PATH = "/ai-save-the-date/valentines-day" as const;
-const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_MEDIA_PATHS)[number] | typeof SAVE_THE_DATE_PATH, string> = {
+const SAVE_THE_DATE_EDITORIAL_PATHS = [SAVE_THE_DATE_PATH, "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date"] as const;
+const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_MEDIA_PATHS)[number] | (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number], string> = {
   "/about-us": "MyDreamShoots company overview with the private AI photo workflow",
   "/best-packages": "Published MyDreamShoots photo packages arranged for visual theme comparison",
   "/best-ai-image": "Published AI image examples selected from the current MyDreamShoots collection",
   "/pricing": "MyDreamShoots subscription credits and billing options comparison visual",
   "/faq": "MyDreamShoots support questions for uploads credits generation and delivery",
   "/workflow": "MyDreamShoots approved upload generation review and private delivery workflow",
-  [SAVE_THE_DATE_PATH]: "Valentine's Day save the date visual story from approved couple photos"
+  [SAVE_THE_DATE_PATH]: "Valentine's Day save the date visual story from approved couple photos",
+  "/holidays-events/engagement": "Engagement save the date video scenes from approved couple visuals",
+  "/holidays-events/proposal": "Proposal video scenes showing the planned story and reaction",
+  "/holidays-events/save-the-date": "Save the Date video scenes for a confirmed wedding date"
 };
 function collectPublishedImageUrls(value: unknown, output: string[] = []): string[] {
   if (typeof value === "string" && /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(value.trim())) {
@@ -117,9 +121,8 @@ function buildPublishedStandardPageMedia(
   leafMedia: ReturnType<typeof buildPublishedPageMediaProjection>[]
 ): PublishedStandardPageMediaProjection[] {
   if (!isPrimaryMydreamshootsSite(site)) return [];
-  const paths = site.pages.some((candidate) => candidate.slug === SAVE_THE_DATE_PATH || candidate.publishedJson.seo?.canonicalPath === SAVE_THE_DATE_PATH)
-    ? [...STANDARD_MYDREAMSHOOTS_MEDIA_PATHS, SAVE_THE_DATE_PATH]
-    : STANDARD_MYDREAMSHOOTS_MEDIA_PATHS;
+  const editorialPaths = SAVE_THE_DATE_EDITORIAL_PATHS.filter((path) => site.pages.some((candidate) => candidate.slug === path || candidate.publishedJson.seo?.canonicalPath === path));
+  const paths = [...STANDARD_MYDREAMSHOOTS_MEDIA_PATHS, ...editorialPaths];
   return paths.map((canonicalPath) => {
     const page = site.pages.find((candidate) => candidate.slug === canonicalPath || candidate.publishedJson.seo?.canonicalPath === canonicalPath);
     const manifest = page?.publishedJson.mediaManifest ?? [];
@@ -135,8 +138,9 @@ function buildPublishedStandardPageMedia(
     const mediaEntityId = `${pageEntityId}:media`;
     const primaryImageAlt = page ? (manifest[0]?.alt || STANDARD_MYDREAMSHOOTS_MEDIA_ALTS[canonicalPath] || "") : "";
     const sitemapImages = primaryImage ? [primaryImage, ...discovered.filter((image) => image !== primaryImage)].slice(0, 6) : [];
-    const manifestAssetsReady = canonicalPath !== SAVE_THE_DATE_PATH || (
-      manifest.length === 11 &&
+    const expectedMediaCount = page?.publishedJson.contentContract?.mediaCount ?? 11;
+    const manifestAssetsReady = !SAVE_THE_DATE_EDITORIAL_PATHS.includes(canonicalPath as (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number]) || (
+      manifest.length === expectedMediaCount &&
       manifest.every((item) => site.mediaAssets?.some((asset) => asset.siteId === site.id && asset.storageKey === item.src && asset.altText === item.alt))
     );
     const status = page && primaryImage && primaryImageAlt && manifestAssetsReady ? "ready" as const : "review_required" as const;
@@ -162,31 +166,34 @@ function buildPublishedStandardPageMedia(
 function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStandardRouteProjection | undefined {
   if (!isPrimaryMydreamshootsSite(site)) return undefined;
   const canonicalPath = page.publishedJson.seo?.canonicalPath || page.publishedJson.seo?.canonical || page.slug;
-  const standardPaths = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", "/ai-save-the-date/valentines-day"]);
+  const standardPaths = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", ...SAVE_THE_DATE_EDITORIAL_PATHS]);
   if (!standardPaths.has(canonicalPath)) return undefined;
   const pageEntityId = `mydreamshoots:standard:${canonicalPath.slice(1).replace(/[^a-z0-9]+/gi, "-")}`;
   const mediaEntityId = `${pageEntityId}:media`;
   const pageRevision = crypto.createHash("sha256").update(JSON.stringify(page.publishedJson)).digest("hex").slice(0, 20);
   const indexable = page.publishedJson.seo?.index !== false && page.publishedJson.seo?.robots?.index !== false;
-  const strictEditorial = canonicalPath === "/ai-save-the-date/valentines-day";
-  const expectedSections = ["hero", "positioning", "story-styles", "details", "workflow", "ideas", "formats", "checklist", "faq", "final-cta"];
-  const expectedSectionIds = expectedSections.map((id) => `save_date_${id.replace(/-/g, "_")}`);
-  const expectedSectionTypes = ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_detail_list", "editorial_steps", "editorial_ideas", "editorial_formats", "editorial_checklist", "faq", "editorial_cta"];
   const contract = page.publishedJson.contentContract;
+  const strictEditorial = SAVE_THE_DATE_EDITORIAL_PATHS.includes(canonicalPath as (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number]);
+  const expectedSections = contract?.requiredSections ?? [];
+  const expectedSectionIds = page.publishedJson.sectionsOrder;
+  const expectedSectionTypes = contract?.sectionTypes ?? [];
   const sectionIds = page.publishedJson.sectionsOrder.map((id) => page.publishedJson.sections[id]).filter(Boolean);
-  const sectionOrderReady = JSON.stringify(page.publishedJson.sectionsOrder) === JSON.stringify(expectedSectionIds);
+  const sectionOrderReady = expectedSections.length > 0 && page.publishedJson.sectionsOrder.length === expectedSections.length && page.publishedJson.sectionsOrder.every((id, index) => id === `${contract?.pageKey ?? "editorial"}_${expectedSections[index]?.replace(/-/g, "_")}`);
   const sectionTypesReady = sectionIds.length === expectedSectionTypes.length && sectionIds.every((section, index) => section.type === expectedSectionTypes[index]);
   const sectionAnchorsReady = sectionIds.length === expectedSections.length && sectionIds.every((section, index) => section.settings.anchor === expectedSections[index]);
-  const faqSection = page.publishedJson.sections[expectedSectionIds[8]];
-  const faqReady = faqSection?.type === "faq" && faqSection.blocks?.length === 6 && faqSection.blocks.every((block) => typeof block.settings.question === "string" && Boolean(block.settings.question.trim()) && typeof block.settings.answer === "string" && Boolean(block.settings.answer.trim()));
-  const ctaSection = page.publishedJson.sections[expectedSectionIds[9]];
+  const faqSectionId = expectedSectionIds.find((id) => page.publishedJson.sections[id]?.type === "faq");
+  const faqSection = faqSectionId ? page.publishedJson.sections[faqSectionId] : undefined;
+  const faqReady = faqSection?.type === "faq" && faqSection.blocks?.length === (contract?.faqCount ?? 0) && faqSection.blocks.every((block) => typeof block.settings.question === "string" && Boolean(block.settings.question.trim()) && typeof block.settings.answer === "string" && Boolean(block.settings.answer.trim()));
+  const ctaSectionId = expectedSectionIds.find((id) => page.publishedJson.sections[id]?.type === "editorial_cta");
+  const ctaSection = ctaSectionId ? page.publishedJson.sections[ctaSectionId] : undefined;
   const ctaReady = ctaSection?.type === "editorial_cta" && ["primaryCta", "primaryHref", "secondaryCta", "secondaryHref"].every((key) => typeof ctaSection.settings[key] === "string" && Boolean(String(ctaSection.settings[key]).trim()));
   const manifest = page.publishedJson.mediaManifest ?? [];
-  const manifestReady = manifest.length === 11 && new Set(manifest.map((item) => item.src)).size === 11 && manifest.every((item) => item.src && item.alt && item.width && item.height && ["hero", "content"].includes(item.role ?? "content"));
-  const mediaReady = canonicalPath !== SAVE_THE_DATE_PATH || (manifestReady && manifest.every((item) => site.mediaAssets?.some((asset) => asset.siteId === site.id && asset.storageKey === item.src && asset.altText === item.alt)));
+  const mediaCount = contract?.mediaCount ?? 11;
+  const manifestReady = manifest.length === mediaCount && new Set(manifest.map((item) => item.src)).size === mediaCount && manifest.every((item) => item.src && item.alt && item.width && item.height && ["hero", "content"].includes(item.role ?? "content"));
+  const mediaReady = !strictEditorial || (manifestReady && manifest.every((item) => site.mediaAssets?.some((asset) => asset.siteId === site.id && asset.storageKey === item.src && asset.altText === item.alt)));
   const noRawMarkdown = !JSON.stringify(page.publishedJson).match(/---|```|`[^`]+`|\[[^\]]+\]\([^)]*\)/);
-  const editorialReady = !strictEditorial || (
-    contract?.schema === "editorial-page-v1" &&
+  const editorialReady = !strictEditorial || Boolean(
+    contract?.schema === "editorial-page-v1" && contract.pageKey && contract.faqCount &&
     JSON.stringify(contract.requiredSections) === JSON.stringify(expectedSections) &&
     sectionIds.length === expectedSections.length &&
     sectionOrderReady &&
@@ -227,12 +234,13 @@ function standardContentEntity(site: Site, page: ThemePage, route: PublishedStan
     return fallback;
   };
   const sectionOf = (type: string) => sections.find((section) => section.type === type);
+  const sectionOfAny = (types: string[]) => sections.find((section) => types.includes(section.type));
   const blockText = (block: SectionBlockInstance, key: string) => String(block.settings?.[key] ?? "").trim();
   const sectionSetting = (type: string, key: string) => String(sectionOf(type)?.settings?.[key] ?? "").trim();
-  const story = sectionOf("editorial_story_grid");
+  const story = sectionOfAny(["editorial_story_grid", "editorial_scene_grid"]);
   const details = sectionOf("editorial_detail_list");
-  const workflow = sectionOf("editorial_steps");
-  const ideas = sectionOf("editorial_ideas");
+  const workflow = sectionOfAny(["editorial_steps", "editorial_story_flow"]);
+  const ideas = sectionOfAny(["editorial_ideas", "editorial_formats", "editorial_scene_grid"]);
   const checklist = sectionOf("editorial_checklist");
   const finalCta = sectionOf("editorial_cta");
   const storyBlocks = story?.blocks ?? [];
@@ -250,6 +258,7 @@ function standardContentEntity(site: Site, page: ThemePage, route: PublishedStan
     return clean;
   };
   const finalTitle = sectionSetting("editorial_cta", "title") || "Continue with the published page";
+  const strictEditorial = SAVE_THE_DATE_EDITORIAL_PATHS.includes(route.canonicalPath as (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number]);
   return {
     pageEntityId: route.pageEntityId,
     canonicalPath: route.canonicalPath,
@@ -280,7 +289,7 @@ function standardContentEntity(site: Site, page: ThemePage, route: PublishedStan
       ctaLinkEntityId: `${route.pageEntityId}:link:cta`,
       faqEyebrow: sectionSetting("faq", "eyebrow") || "FAQ",
       faqTitle: sectionSetting("faq", "title") || "Frequently asked questions",
-      faqItems: faqItems.length >= 4 ? faqItems : [
+      faqItems: faqItems.length >= 4 ? faqItems : strictEditorial ? [] : [
         { id: "faq-review-1", question: "What does this page cover?", answer: heroIntro },
         { id: "faq-review-2", question: "Where can I review the published details?", answer: "Review the visible page sections and the current published metadata before relying on this information." },
         { id: "faq-review-3", question: "Can the page content change?", answer: "Published content changes only when a new validated publication snapshot is activated." },
@@ -290,7 +299,7 @@ function standardContentEntity(site: Site, page: ThemePage, route: PublishedStan
       relatedTitle: "Continue exploring",
       relatedSubtitle: "Published related links appear here when route validation provides them.",
       relatedCtaLabel: "Explore published content",
-      relatedLinkEntityIds: [`${route.pageEntityId}:link:related:1`, `${route.pageEntityId}:link:related:2`]
+      relatedLinkEntityIds: faqItems.length >= 4 ? [`${route.pageEntityId}:link:related:1`, `${route.pageEntityId}:link:related:2`] : strictEditorial ? [] : [`${route.pageEntityId}:link:related:1`, `${route.pageEntityId}:link:related:2`]
     },
     mediaEntityId: route.mediaEntityId,
     pageRevision: route.pageRevision,

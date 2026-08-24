@@ -392,8 +392,8 @@ for (const requiredPath of requiredCollectionPaths) {
   );
 }
 assert(
-  headerLabels.includes("Best Packages") && headerHrefs[headerLabels.indexOf("Best Packages")] === "/best-packages",
-  "MyDreamShoots header must expose Best Packages at /best-packages",
+  headerLabels.includes("Save the Date"),
+  "MyDreamShoots header must expose the published Save the Date menu",
   { headerLinks }
 );
 assert(
@@ -407,13 +407,13 @@ assert(
   { headerLinks }
 );
 assert(
-  JSON.stringify(headerLabels) === JSON.stringify(["AI Image Generation", "AI Video Generation", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"]),
-  "MyDreamShoots header labels must use the fixed shared navigation order",
+  JSON.stringify(headerLabels) === JSON.stringify(["AI Image Generation", "AI Video Generation", "Save the Date", "How it works", "Blog", "Pricing", "Workspace"]),
+  "MyDreamShoots header labels must use the published navigation order",
   { headerLinks }
 );
 assert(
-  !headerLabels.includes("FAQ") && !headerLabels.includes("Headshot Generator"),
-  "MyDreamShoots header must not expose the old FAQ or Headshot Generator top label",
+  !headerLabels.includes("Best Packages") && !headerLabels.includes("Headshot Generator"),
+  "MyDreamShoots header must not expose the removed Best Packages or Headshot Generator top label",
   { headerLinks }
 );
 for (const [label, href] of [["Best Packages", "/best-packages"], ["Best AI image", "/best-ai-image"], ["Best AI video", "/best-ai-video"]]) {

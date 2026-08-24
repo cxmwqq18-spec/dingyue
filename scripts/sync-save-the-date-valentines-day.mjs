@@ -178,7 +178,7 @@ const pageJson = {
   pageType: "standard-content",
   version: 1,
   sectionsOrder: requiredSectionIds.map((id) => `save_date_${id.replace(/-/g, "_")}`),
-  contentContract: { schema: "editorial-page-v1", requiredSections: requiredSectionIds, sourceRevision: "plan-20260824" },
+  contentContract: { schema: "editorial-page-v1", pageKey: "save_date", requiredSections: requiredSectionIds, sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_detail_list", "editorial_steps", "editorial_ideas", "editorial_formats", "editorial_checklist", "faq", "editorial_cta"], faqCount: 6, mediaCount: 11, sourceRevision: "plan-20260824" },
   relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Best Packages", href: "/best-packages" }],
   mediaManifest: sourceImages,
   seo: { title: seo.title, description: seo.meta_description, keywords: seo.secondary_keywords, canonicalPath: pagePath, canonical: seo.canonical, ogImage: sourceImages[0]?.src, index: true, follow: true, robots: { index: true, follow: true, maxImagePreview: "large" } },

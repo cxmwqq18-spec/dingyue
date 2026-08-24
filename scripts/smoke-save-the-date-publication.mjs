@@ -68,9 +68,8 @@ const navigationConfig = site.themeSettings?.publishedJson?.saveTheDateNavigatio
 assert.equal(navigationConfig.menuLabel, "Save the Date");
 const navigation = navigationConfig.groups ?? [];
 const publishedItems = navigation.flatMap((group) => group.items.filter((item) => item.status === "published"));
-assert.equal(publishedItems.length, 1);
-assert.equal(publishedItems[0].href, PAGE_PATH);
-assert.equal(publishedItems[0].label, "Valentine's Day");
+assert.equal(publishedItems.length, 4);
+assert(publishedItems.some((item) => item.href === PAGE_PATH && item.label === "Valentine's Day"));
 assert.equal(navigation[0]?.label, "Love & Wedding");
 
 const ownedLinks = snapshot.publishedLinkRefs.filter((link) => link.ownerPageEntityId === route.pageEntityId);

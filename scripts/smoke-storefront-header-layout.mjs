@@ -14,8 +14,8 @@ const stores = [
   {
     slug: "mydreamshoots",
     siteId: "site_dreamshoot",
-    publicLabels: ["AI Image Generation", "AI Video Generation", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"],
-    appLabels: ["AI Image Generation", "AI Video Generation", "Best Packages", "How it works", "Blog", "Pricing", "Workspace"],
+    publicLabels: ["AI Image Generation", "AI Video Generation", "Save the Date", "How it works", "Blog", "Pricing", "Workspace"],
+    appLabels: ["AI Image Generation", "AI Video Generation", "Save the Date", "How it works", "Blog", "Pricing", "Workspace"],
     credentials: [
       {
         email: process.env.SMOKE_MYDREAMSHOOTS_CUSTOMER_EMAIL || process.env.SMOKE_CUSTOMER_EMAIL || "nora@mydreamshoots.localhost",

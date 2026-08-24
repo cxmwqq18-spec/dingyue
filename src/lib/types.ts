@@ -128,6 +128,10 @@ export interface ThemePageJson {
   contentContract?: {
     schema: "editorial-page-v1";
     requiredSections: string[];
+    sectionTypes?: string[];
+    faqCount?: number;
+    mediaCount?: number;
+    pageKey?: string;
     sourceRevision?: string;
   };
 }

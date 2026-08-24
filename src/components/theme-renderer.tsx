@@ -1101,7 +1101,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
         normalizedHref === "#faq" ||
         normalizedHref === "/#faq")
     ) {
-      return { ...link, label: "Best Packages", href: "/best-packages" };
+      return { ...link, label: "FAQ", href: "/faq" };
     }
     if (
       (isDreamShoot || isAidreamcapes) &&
@@ -1117,31 +1117,6 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
       return { ...link, label: "Preguntas", href: "/faq" };
     }
     return { ...link, label: spanishHeaderLabel(link.label, link.href) };
-  };
-  const orderBestPackagesHeaderLink = <T extends { label: string; href: string }>(items: T[]): T[] => {
-    if (spanishXby || (!isDreamShoot && !isAidreamcapes)) return items;
-    const bestPackagesLink = items.find((link) => {
-      const normalizedLabel = link.label.trim().toLowerCase();
-      const normalizedHref = link.href.trim().replace(/\/+$/, "") || "/";
-      return normalizedLabel === "best packages" || normalizedHref === "/best-packages";
-	    }) ?? ({
-	      label: "Best Packages",
-	      href: "/best-packages",
-	      block: { id: `${isAidreamcapes ? "aidreamcapes" : "dreamshoot"}_header_best_packages`, type: "menu_link", settings: { label: "Best Packages", href: "/best-packages" } } as SectionBlockInstance
-	    } as unknown as T);
-    const filtered = items.filter((link) => {
-      const normalizedLabel = link.label.trim().toLowerCase();
-      const normalizedHref = link.href.trim().replace(/\/+$/, "") || "/";
-      if (normalizedLabel === "best packages" || normalizedHref === "/best-packages") return false;
-      return !(normalizedLabel === "faq" || normalizedLabel === "help" || normalizedLabel === "help center" || normalizedHref === "/faq" || normalizedHref === "/help");
-    });
-    const toolsIndex = filtered.findIndex((link) => {
-      const normalizedLabel = link.label.trim().toLowerCase();
-      const normalizedHref = link.href.trim().replace(/\/+$/, "") || "/";
-      return normalizedLabel === "tools" || normalizedLabel === "ai video generation" || normalizedHref === "/tools" || normalizedHref === "/ai-video-generation";
-    });
-    const insertIndex = toolsIndex >= 0 ? toolsIndex + 1 : Math.min(2, filtered.length);
-    return [...filtered.slice(0, insertIndex), { ...bestPackagesLink, label: "Best Packages", href: "/best-packages" }, ...filtered.slice(insertIndex)];
   };
   const isRedundantAidreamcapesExamplesLink = (link: { label: string; href: string; block?: SectionBlockInstance }) => {
     if (!isAidreamcapes) return false;
@@ -1209,7 +1184,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const configuredSaveTheDate = Boolean(saveTheDateLink);
   const rawLinks = isMyDreamShootsCom
     ? (saveTheDateLink ? [...myDreamShootsHeaderLinks.slice(0, 2), saveTheDateLink, ...myDreamShootsHeaderLinks.slice(2)] : myDreamShootsHeaderLinks)
-    : orderBestPackagesHeaderLink(rawLinksBase);
+    : rawLinksBase;
   const seenHeaderHrefs = new Set<string>();
   const links = rawLinks.filter((link) => {
     if (!spanishXby) return true;
@@ -8594,7 +8569,7 @@ function SectionView({
   if (legacySaasSection) return legacySaasSection;
 
   const editorialFaq = section.type === "faq" && sectionBlocks(section).length > 0 && sectionBlocks(section).every((block) => Boolean(blockValue(block, "question") && blockValue(block, "answer")));
-  if (["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_detail_list", "editorial_steps", "editorial_ideas", "editorial_formats", "editorial_checklist", "editorial_cta"].includes(section.type) || editorialFaq) {
+  if (["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_scene_grid", "editorial_detail_list", "editorial_steps", "editorial_story_flow", "editorial_ideas", "editorial_formats", "editorial_quality", "editorial_boundaries", "editorial_evidence", "editorial_checklist", "editorial_cta"].includes(section.type) || editorialFaq) {
     const title = setting(section, "title");
     const anchor = sectionAnchor(section, id);
     const intro = setting(section, "intro");
@@ -8704,7 +8679,7 @@ function SectionView({
       );
     }
 
-    if (section.type === "editorial_steps") {
+    if (section.type === "editorial_steps" || section.type === "editorial_story_flow") {
       return (
         <section className="bg-[#26131a] px-5 py-16 text-[#fffaf6] sm:px-8 lg:py-24" id={anchor}>
           <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">{blocks.map((block, index) => <article className="border-t border-[#9c6762] pt-4" key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(block, index, "step")}><p className="text-sm font-semibold text-[#e9b894]">{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p><h3 className={`${headingClass} mt-3 text-xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#e8cfc9]">{textBlock(block)}</p></article>)}</div>{setting(section, "imageUrl") ? <div className="mx-auto mt-12 aspect-[5/3] w-full max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]">{imageFor(section)}</div> : null}</div>
@@ -8712,10 +8687,18 @@ function SectionView({
       );
     }
 
-    if (section.type === "editorial_ideas" || section.type === "editorial_formats") {
+    if (["editorial_ideas", "editorial_formats", "editorial_scene_grid"].includes(section.type)) {
       return (
         <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
           <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-5 max-w-3xl text-base leading-8 text-[#665252]">{intro}</p> : null}<div className="mt-10 grid gap-5 md:grid-cols-2">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t border-[#d9c3bd] pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr]" : "sm:grid-cols-1"}`} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(block, index, "editorial_item")}>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[12px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#665252]">{textBlock(block)}</p></div></article>; })}</div></div>
+        </section>
+      );
+    }
+
+    if (["editorial_quality", "editorial_boundaries", "editorial_evidence"].includes(section.type)) {
+      return (
+        <section className="bg-[#151822] px-5 py-16 text-[#f7f3ed] sm:px-8 lg:py-24" id={anchor}>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-5 max-w-3xl text-base leading-8 text-[#c8c3bd]">{intro}</p> : null}<ul className="mt-10 grid gap-4 md:grid-cols-2">{blocks.map((block, index) => <li className="border-t border-[#53465a] pt-4 text-base leading-7 text-[#d9d2ce]" key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(block, index, "editorial_guidance")}>{textBlock(block)}</li>)}</ul></div>
         </section>
       );
     }
