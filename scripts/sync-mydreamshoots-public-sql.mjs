@@ -217,6 +217,22 @@ if (sourceSiteId === targetSiteId && !allowSameSite) throw new Error("Source and
     }
     for (const page of source.pages) await tx.themePage.upsert({ where: { siteId_slug: { siteId: targetSiteId, slug: page.slug } }, create: { id: maps.ids.get(page.id), siteId: targetSiteId, pageType: page.pageType, templateKey: page.templateKey, slug: page.slug, title: page.title, draftJson: publicJson(page.draftJson, maps, source), publishedJson: publicJson(page.publishedJson, maps, source), draftMeta: remapJson(page.draftMeta, maps, source) }, update: { pageType: page.pageType, templateKey: page.templateKey, title: page.title, draftJson: publicJson(page.draftJson, maps, source), publishedJson: publicJson(page.publishedJson, maps, source), draftMeta: remapJson(page.draftMeta, maps, source), updatedAt: new Date() } });
     if (source.settings) await tx.themeSettings.update({ where: { siteId: targetSiteId }, data: { draftJson: publicJson(source.settings.draftJson, maps, source), publishedJson: publicJson(source.settings.publishedJson, maps, source), updatedAt: new Date() } });
+    if (source.storefrontProfile) await tx.storefrontProfile.upsert({
+      where: { siteId: targetSiteId },
+      create: {
+        id: `profile_${targetSiteId}`,
+        siteId: targetSiteId,
+        draftJson: publicJson(source.storefrontProfile.draftJson, maps, source),
+        publishedJson: publicJson(source.storefrontProfile.publishedJson, maps, source),
+        draftMeta: remapJson(source.storefrontProfile.draftMeta, maps, source)
+      },
+      update: {
+        draftJson: publicJson(source.storefrontProfile.draftJson, maps, source),
+        publishedJson: publicJson(source.storefrontProfile.publishedJson, maps, source),
+        draftMeta: remapJson(source.storefrontProfile.draftMeta, maps, source),
+        updatedAt: new Date()
+      }
+    });
     for (const theme of source.siteThemes) await tx.siteTheme.upsert({ where: { siteId_themeId: { siteId: targetSiteId, themeId: maps.ids.get(theme.themeId) } }, create: { id: maps.ids.get(theme.id), siteId: targetSiteId, name: theme.name, themeId: maps.ids.get(theme.themeId), themeKey: theme.themeKey, status: theme.status, templates: publicJson(theme.templates, maps, source), settings: publicJson(theme.settings, maps, source), source: theme.source, createdBy: theme.createdBy }, update: { name: theme.name, themeKey: theme.themeKey, status: theme.status, templates: publicJson(theme.templates, maps, source), settings: publicJson(theme.settings, maps, source), source: theme.source, createdBy: theme.createdBy, updatedAt: new Date() } });
     for (const copy of source.themeCopies) await tx.themeCopy.upsert({ where: { id: maps.ids.get(copy.id) }, create: { id: maps.ids.get(copy.id), siteId: targetSiteId, name: copy.name, themeKey: copy.themeKey, source: copy.source, templates: publicJson(copy.templates, maps, source), settings: publicJson(copy.settings, maps, source), createdBy: copy.createdBy }, update: { name: copy.name, themeKey: copy.themeKey, source: copy.source, templates: publicJson(copy.templates, maps, source), settings: publicJson(copy.settings, maps, source), createdBy: copy.createdBy, updatedAt: new Date() } });
   }, { timeout: 180000, maxWait: 20000 });

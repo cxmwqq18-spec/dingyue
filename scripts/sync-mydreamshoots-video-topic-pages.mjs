@@ -230,7 +230,7 @@ const pages = [
       "Turn one core idea into platform-aware social media videos. Adapt hooks, crops, captions, audio, pacing, safe zones, and CTAs for TikTok, Instagram Reels, YouTube Shorts, campaigns, testimonials, events, and weekly content.",
     keywords:
       "AI social media video maker, social media video generator, AI social video maker, create videos for social media, multi-platform video creator, social media content video maker, repurpose content into social videos, make vertical social media videos",
-    imageUrl: "/assets/dreamshoot/social-media-video/social-media-video-cross-platform-creator.png"
+    imageUrl: "/assets/dreamshoot/social-media-video/social-media-video-before-after-transformation.png"
   },
   {
     slug: "youtube-video",

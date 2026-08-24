@@ -12,6 +12,7 @@ import type {
   PublishedRouteProjection,
   PublishedRedirectRouteProjection,
   PublishedVideoNavigationProjection,
+  PublishedHomepageShowcaseItem,
   ThemePublicationSnapshot,
   PublishedSeoSnapshot
 } from "@/lib/types";
@@ -126,6 +127,15 @@ function videoNavigation(value: unknown): value is PublishedVideoNavigationProje
     Number.isInteger(value.sortOrder) && text(value.revision) && (value.imageUrl === undefined || publicMediaUrl(value.imageUrl));
 }
 
+function homepageShowcase(value: unknown): value is PublishedHomepageShowcaseItem {
+  return record(value) && text(value.id) && ["video", "save_the_date", "photo"].includes(String(value.kind)) &&
+    text(value.pageEntityId) && text(value.canonicalPath) && text(value.title) && text(value.subtitle) &&
+    Number.isInteger(value.sortOrder) && publicMediaUrl(value.imageUrl) && text(value.imageAlt) &&
+    value.status === "published" && value.indexable === true && value.sitemapEligible === true &&
+    text(value.entityRevision) && text(value.mediaRevision) &&
+    (value.videoUrl === undefined || publicMediaUrl(value.videoUrl));
+}
+
 function standardMedia(value: unknown): value is PublishedStandardPageMediaProjection {
   return record(value) && text(value.pageEntityId) && text(value.pageId) && text(value.canonicalPath) &&
     text(value.mediaEntityId) && publicMediaUrl(value.primaryImage) && text(value.primaryImageAlt) &&
@@ -218,6 +228,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     Array.isArray(v1.publishedCollectionRefs) && v1.publishedCollectionRefs.every(collection) &&
     Array.isArray(v1.publishedLinkRefs) && v1.publishedLinkRefs.every(link) &&
     (v1.publishedVideoNavigation === undefined || Array.isArray(v1.publishedVideoNavigation) && v1.publishedVideoNavigation.every(videoNavigation)) &&
+    (v1.publishedHomepageShowcases === undefined || Array.isArray(v1.publishedHomepageShowcases) && v1.publishedHomepageShowcases.every(homepageShowcase)) &&
     text(v1.snapshotHash) && text(v1.buildId) && text(v1.revisions?.snapshotHash) &&
     ["factsRevision", "routeRevision", "pageRevision", "copyRevision", "mediaRevision", "packRevision", "offerRevision", "collectionRevision", "policyRevision", "linkRevision", "navigationRevision"]
       .every((key) => text(v1.revisions?.[key as keyof typeof v1.revisions]));
@@ -237,6 +248,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
         collections: Array.isArray(v1.publishedCollectionRefs) && v1.publishedCollectionRefs.every(collection),
         links: Array.isArray(v1.publishedLinkRefs) && v1.publishedLinkRefs.every(link),
         videoNavigation: v1.publishedVideoNavigation === undefined || Array.isArray(v1.publishedVideoNavigation) && v1.publishedVideoNavigation.every(videoNavigation),
+        homepageShowcases: v1.publishedHomepageShowcases === undefined || Array.isArray(v1.publishedHomepageShowcases) && v1.publishedHomepageShowcases.every(homepageShowcase),
         snapshotHash: text(v1.snapshotHash),
         buildId: text(v1.buildId),
         revisions: Object.fromEntries(["factsRevision", "routeRevision", "pageRevision", "copyRevision", "mediaRevision", "packRevision", "offerRevision", "collectionRevision", "policyRevision", "linkRevision", "navigationRevision"]
@@ -262,6 +274,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const collections = v1.publishedCollectionRefs;
   const links = v1.publishedLinkRefs;
   const videoNavigationRows = v1.publishedVideoNavigation ?? [];
+  const homepageShowcaseRows = v1.publishedHomepageShowcases ?? [];
   const revisions = v1.revisions;
   const pages = new Map(publishedPageEntities.map((item) => [item.pageEntityId, item]));
   const mediaByPage = new Map(publishedPageMedia.map((item) => [item.pageEntityId, item]));
@@ -376,6 +389,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     (videoTopicRoutes.length === 0
       ? (v1.publishedVideoNavigation === undefined || revisions.navigationRevision === projectionRevision(videoNavigationRows))
       : revisions.navigationRevision === projectionRevision(videoNavigationRows)) &&
+    (v1.publishedHomepageShowcases === undefined || revisions.homepageShowcaseRevision === projectionRevision(homepageShowcaseRows)) &&
     revisions.policyRevision === projectionRevision({ privacy: v1.publishedFacts.privacy, refund: v1.publishedFacts.refund, creditLifecycle: v1.publishedFacts.creditLifecycle, security: v1.publishedFacts.security });
   if (!factsCompleteForIndexablePages(v1.publishedFacts, publishedPageEntities) || !projectionsAgree || !completeCoverage || !standardMediaAgree || !mediaOwnershipAgree || !videoNavigationAgree || !linksAgree || !aggregateRevisionsAgree ||
       !unique(routePaths) || !unique(entityIds) || !unique(mediaIds) || !unique(standardMediaIds) || !unique(linkIds) || snapshot.snapshotHash !== revisions.snapshotHash) {
@@ -388,6 +402,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
         completeCoverage,
         standardMediaAgree,
         mediaOwnershipAgree,
+        homepageShowcaseRows: homepageShowcaseRows.length,
         videoNavigationAgree,
         linksAgree,
         aggregateRevisionsAgree,

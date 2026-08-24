@@ -156,6 +156,7 @@ const tiktokImageRoot = "/assets/dreamshoot/tiktok-video";
 const instagramImageRoot = "/assets/dreamshoot/instagram-reels";
 const socialImageRoot = "/assets/dreamshoot/social-media-video";
 const youtubeImageRoot = "/assets/dreamshoot/youtube-video";
+const storyImageRoot = "/assets/dreamshoot/story-video";
 const memeImageRoot = "/assets/dreamshoot/meme-video";
 const productImageRoot = "/assets/dreamshoot/product-video";
 const productAdImageRoot = "/assets/dreamshoot/product-ad-video";
@@ -858,7 +859,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         "This page explains the creative direction. Open the current video workspace to review the creation tools available today.",
       rightsCopy: "Use content you own or have permission to use. Review platform rules, audio rights, factual claims, and AI disclosure needs before publishing.",
       imageNote: "Master story -> platform cut -> text/safe zone -> audio -> CTA",
-      image: image(`${socialImageRoot}/social-media-video-cross-platform-creator.png`, "Creator holding a phone for a polished vertical social video concept", 1080, 1920)
+      image: image(`${socialImageRoot}/social-media-video-before-after-transformation.png`, "Creator presenting a before-and-after visual story for a polished social video concept", 1080, 1920)
     },
     useCases: {
       eyebrow: "SIX SOCIAL VIDEO JOBS",
@@ -874,7 +875,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Core launch promise -> teaser -> demonstration -> proof -> reminder.",
           cta: "Create a Launch Campaign",
-          image: image(`${socialImageRoot}/social-media-video-launch-campaign.png`, "Creator walking through a street-level vertical video concept at night", 1080, 1920)
+          image: image(`${instagramImageRoot}/instagram-reels-announcement-launch-celebration.png`, "Creator celebrating a launch announcement in a social video", 1080, 1920)
         }),
         makeUseCaseCard({
           title: "Turn Existing Knowledge Into Focused Social Videos Without Reducing It to Generic Summaries",
@@ -884,7 +885,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Source insight -> platform-specific opening -> proof or example -> takeaway.",
           cta: "Create a Repurposed Cut",
-          image: image(`${socialImageRoot}/social-media-video-before-after-transformation.png`, "Creator presenting a before-and-after visual story for social media", 1080, 1920)
+          image: image(`${instagramImageRoot}/instagram-reels-before-after-visual-transformation.png`, "Creator presenting a before-and-after visual story for social media", 1080, 1920)
         }),
         makeUseCaseCard({
           title: "Separate the Human Quote, the Proof, and the Context",
@@ -894,7 +895,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Quote -> context -> proof -> outcome.",
           cta: "Create a Testimonial Cut",
-          image: image(`${socialImageRoot}/social-media-video-behind-scenes-creator.png`, "Creator preparing a behind-the-scenes social video in a studio", 1080, 1920)
+          image: image(`${instagramImageRoot}/instagram-reels-behind-the-scenes-creator-studio.png`, "Creator preparing a behind-the-scenes social video in a studio", 1080, 1920)
         }),
         makeUseCaseCard({
           title: "Plan the Event as a Content Cycle, Not a Single Recap",
@@ -904,7 +905,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Before: invite -> During: live context -> After: takeaway or recap.",
           cta: "Create an Event Cycle",
-          image: image(`${socialImageRoot}/social-media-video-product-proof-demo.png`, "Founder demonstrating a product for a social video", 1080, 1920)
+          image: image(`${productImageRoot}/product-video-size-scale-backpack.webp`, "Founder demonstrating product scale and use context for a social video", 1080, 1920)
         }),
         makeUseCaseCard({
           title: "Batch the Thinking, Not the Sameness",
@@ -914,7 +915,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Weekly topic -> content roles -> platform variants -> review.",
           cta: "Create a Weekly Batch",
-          image: image(`${socialImageRoot}/social-media-video-event-story.png`, "Speaker presenting an event insight for a social video", 1080, 1920)
+          image: image(`${storyImageRoot}/story-video-comeback-speaker-new-direction.webp`, "Speaker presenting an event insight for a social video", 1080, 1920)
         }),
         makeUseCaseCard({
           title: "Keep the Claim Consistent While Changing the Relevance",
@@ -1069,7 +1070,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Outcome -> chapter map -> process -> recap -> next step.",
           cta: "Create a Tutorial",
-          image: image(`${youtubeImageRoot}/youtube-video-full-tutorial.png`, "Professor presenting a lesson in front of a blackboard", 1080, 1920)
+          image: image(`${storyImageRoot}/story-video-mini-documentary-interview-creator.png`, "Presenter explaining a lesson in a documentary-style video", 1080, 1920)
         }),
         makeUseCaseCard({
           title: "Help the Viewer Reach a Decision, Not Just Watch a Demonstration",
@@ -1109,7 +1110,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Topic framing -> 3 key lessons -> practical takeaway -> deeper resource.",
           cta: "Create a Webinar Recap",
-          image: image(`${youtubeImageRoot}/youtube-video-webinar-recap.png`, "Speaker presenting an insight to an event audience", 1080, 1920)
+          image: image(`${storyImageRoot}/story-video-community-shared-milestone.png`, "Speaker presenting an insight to an event audience", 1080, 1920)
         }),
         makeUseCaseCard({
           title: "Make Each Episode Complete Enough - Then Let the Playlist Carry the Bigger Journey",

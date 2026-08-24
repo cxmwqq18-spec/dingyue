@@ -90,7 +90,7 @@ function comparableImageUrl(value: string): string {
 
 function cardImageUrls(card: DreamshootPackageCatalogCard): string[] {
   const seen = new Set<string>();
-  return [...(card.imageUrls ?? []), card.imageUrl]
+  const urls = [...(card.imageUrls ?? []), card.imageUrl]
     .map((value) => value.trim())
     .filter(Boolean)
     .filter((value) => {
@@ -99,6 +99,23 @@ function cardImageUrls(card: DreamshootPackageCatalogCard): string[] {
       seen.add(key);
       return true;
     });
+  if (urls.length >= 2) return urls;
+
+  // A stale published card can leave only one numbered gallery URL. Recover
+  // adjacent published gallery variants so the split cover never renders the
+  // same image twice.
+  const source = urls[0] || card.imageUrl.trim();
+  const match = source.match(/^(.*\/[^/?#]+-)(\d{2})(\.webp(?:[?#].*)?)$/i);
+  if (!match) return urls;
+  for (let index = 1; index <= 12 && urls.length < 2; index += 1) {
+    const candidate = `${match[1]}${String(index).padStart(2, "0")}${match[3]}`;
+    const key = comparableImageUrl(candidate);
+    if (key && !seen.has(key)) {
+      seen.add(key);
+      urls.push(candidate);
+    }
+  }
+  return urls;
 }
 
 function meaningfulUsesLabel(value: string | undefined): string | undefined {

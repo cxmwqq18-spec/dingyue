@@ -288,6 +288,10 @@ for (const [canonicalPath, aliases] of [["/privacy", ["/privacy-policy", "/polic
   }
 }
 const talkingPhotoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/talking-photo");
+const videoGenerationDirectory = await fetchHtml("/ai-video-generation");
+assert.match(videoGenerationDirectory, /<h1[^>]*>AI Video Generation<\/h1>/, "AI Video Generation root must render the video directory heading");
+assert.doesNotMatch(videoGenerationDirectory, /Paid AI photo tools for better source images\./, "AI Video Generation root must not render the legacy photo-tool heading");
+assert.match(videoGenerationDirectory, /data-video-theme-card=/, "AI Video Generation root must render published video theme cards");
 const storyVideoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/story-video");
 const memeVideoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/meme-video");
 const productVideoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/product-video");

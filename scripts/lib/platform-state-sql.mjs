@@ -15,8 +15,11 @@ export async function readPlatformStateFromSql(existingPrisma) {
       throw new Error("missing_platform_state_document:platform");
     }
     const state = structuredClone(document.state);
-    const [siteRows, domains, pages, settings, profiles, packs, packCategories, mediaAssets, products, siteThemes, videoCategories, videoThemes, siteAiApps] = await Promise.all([
-      prisma.site.findMany({ orderBy: { createdAt: "asc" } }),
+    const [siteRows, domains, pages, settings, profiles, packs, packCategories, mediaAssets, products, siteThemes, themePublications, toolCategories, toolMenuItems, videoCategories, videoThemes, siteAiApps] = await Promise.all([
+      prisma.site.findMany({
+        orderBy: { createdAt: "asc" },
+        include: { activePublication: { include: { publication: true } } }
+      }),
       prisma.siteDomain.findMany({ orderBy: [{ siteId: "asc" }, { isPrimary: "desc" }, { createdAt: "asc" }] }),
       prisma.themePage.findMany({ orderBy: [{ siteId: "asc" }, { slug: "asc" }] }),
       prisma.themeSettings.findMany(),
@@ -26,6 +29,9 @@ export async function readPlatformStateFromSql(existingPrisma) {
       prisma.mediaAsset.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
       prisma.product.findMany({ include: { prices: true }, orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
       prisma.siteTheme.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
+      prisma.themePublication.findMany({ orderBy: [{ siteId: "asc" }, { version: "desc" }] }),
+      prisma.toolCategory.findMany({ orderBy: [{ siteId: "asc" }, { parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }] }),
+      prisma.toolMenuItem.findMany({ orderBy: [{ siteId: "asc" }, { sortOrder: "asc" }, { title: "asc" }] }),
       prisma.videoThemeCategory.findMany({ orderBy: [{ siteId: "asc" }, { sortOrder: "asc" }, { slug: "asc" }] }),
       prisma.videoTheme.findMany({ orderBy: [{ siteId: "asc" }, { sortOrder: "asc" }, { createdAt: "asc" }] }),
       prisma.siteAiApp.findMany({ orderBy: [{ siteId: "asc" }, { routeKey: "asc" }] })
@@ -48,6 +54,9 @@ export async function readPlatformStateFromSql(existingPrisma) {
     state.mediaAssets = mediaAssets.map(plain);
     state.products = products.map(plain);
     state.siteThemes = siteThemes.map(plain);
+    state.themePublications = themePublications.map(plain);
+    state.toolCategories = toolCategories.map(plain);
+    state.toolMenuItems = toolMenuItems.map(plain);
     state.videoThemeCategories = videoCategories.map(plain);
     state.videoThemes = videoThemes.map(plain);
     state.siteAiApps = siteAiApps.map(plain);
@@ -63,6 +72,10 @@ export async function readPlatformStateFromSql(existingPrisma) {
     state.sites = siteRows.map((siteRow) => {
       const existing = state.sites?.find((site) => site.id === siteRow.id) ?? {};
       const site = { ...existing, ...plain(siteRow) };
+      const activePublication = siteRow.activePublication?.publication;
+      const latestPublication = themePublications.find((publication) => publication.siteId === siteRow.id);
+      if (activePublication) site.latestPublication = plain(activePublication);
+      else if (latestPublication) site.latestPublication = plain(latestPublication);
       const siteDomains = domains.filter((domain) => domain.siteId === siteRow.id);
       site.primaryDomain = siteDomains.find((domain) => domain.isPrimary)?.domain ?? siteDomains[0]?.domain ?? site.primaryDomain;
       site.pages = pagesBySiteId.get(siteRow.id) ?? existing.pages ?? [];

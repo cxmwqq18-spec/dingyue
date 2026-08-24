@@ -1,8 +1,27 @@
 import http from "node:http";
 import https from "node:https";
+import fs from "node:fs";
+import Module from "node:module";
+import path from "node:path";
+import createJiti from "jiti";
 import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
+const sourceRoot = path.join(repoRoot, "src");
+const originalResolveFilename = Module._resolveFilename;
+const originalLoad = Module._load;
+Module._load = function load(request, ...args) {
+  if (request === "server-only") return {};
+  return originalLoad.call(this, request, ...args);
+};
+Module._resolveFilename = function resolveFilename(request, ...args) {
+  if (request === "server-only") return path.join(sourceRoot, "lib/storefront-context/types.ts");
+  const aliasPath = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : "";
+  const resolvedRequest = aliasPath && fs.existsSync(`${aliasPath}.ts`) ? `${aliasPath}.ts` : aliasPath || request;
+  return originalResolveFilename.call(this, resolvedRequest, ...args);
+};
+const jiti = createJiti(import.meta.url);
+const { sitemapEntriesForSite } = jiti("../src/lib/seo-indexing.ts");
 const baseUrl = new URL((process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/$/, ""));
 const stateArgument = process.argv.find((value) => value.startsWith("--state="))?.slice("--state=".length);
 if (stateArgument || process.env.SEO_REVIEW_STATE_PATH) {
@@ -24,41 +43,42 @@ function normalizePath(value, fallback = "/") {
   return pathname === "/" ? "/" : `/${pathname.replace(/^\/+|\/+$/g, "")}`;
 }
 
-function canonicalPath(page) {
-  const seo = page.publishedJson?.seo ?? {};
-  return normalizePath(seo.canonical ?? seo.canonicalPath, page.slug);
-}
-
-function publishedPages(state, site) {
-  const current = (site.pages ?? []).filter((page) => Array.isArray(page.publishedJson?.sectionsOrder));
-  const publication = site.latestPublication ?? (state.themePublications ?? [])
-    .filter((candidate) => candidate.siteId === site.id)
-    .sort((left, right) => right.version - left.version)[0];
-  const publicationPages = publication?.snapshot?.pages;
-  if (!Array.isArray(publicationPages)) return current;
-  const byId = new Map(publicationPages.map((page) => [page.id, page]));
-  return current
-    .filter((page) => byId.has(page.id))
-    .map((page) => ({ ...page, ...byId.get(page.id), publishedJson: byId.get(page.id).publishedJson }));
-}
-
-function isIndexable(page) {
-  const seo = page.publishedJson?.seo ?? {};
-  if (page.pageType === "not_found" || page.slug === "/404") return false;
-  return seo.index !== false && seo.robots?.index !== false;
-}
-
 function expectedCanonicalPaths(state, site) {
-  const pages = publishedPages(state, site);
-  const paths = new Set();
-  for (const requestedPath of new Set(pages.map(canonicalPath))) {
-    const directPage = pages.find((page) => normalizePath(page.slug) === requestedPath);
-    const page = directPage ?? pages.find((candidate) => canonicalPath(candidate) === requestedPath);
-    if (!page || !isIndexable(page)) continue;
-    if (directPage && canonicalPath(page) !== requestedPath) continue;
-    paths.add(requestedPath);
+  const publication = site.latestPublication;
+  if (!publication?.id || !publication.snapshot) {
+    throw new Error(`missing_published_theme_snapshot:${site.id}`);
   }
-  return paths;
+  const entries = sitemapEntriesForSite(state, site);
+  return new Set(entries.map((entry) => normalizePath(new URL(entry.loc).pathname)));
+}
+
+function publicationIdentity(site) {
+  const publication = site.latestPublication;
+  return {
+    publicationId: publication?.id ?? null,
+    publicationVersion: publication?.version ?? null,
+    snapshotHash: publication?.snapshot?.snapshotHash ?? null,
+    factsRevision: publication?.factsRevision ?? publication?.snapshot?.revisions?.factsRevision ?? null
+  };
+}
+
+function pathFamily(pathname) {
+  if (pathname === "/" || pathname === "/workflow" || pathname === "/pricing" || pathname === "/faq" || pathname === "/about-us" || pathname === "/contact-us") return "base";
+  if (["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"].includes(pathname)) return "policy";
+  if (pathname === "/collections" || pathname.startsWith("/collections/")) return "collections";
+  if (pathname === "/tools" || pathname.startsWith("/tools/")) return "tools";
+  if (pathname === "/ai-image-generation" || pathname.startsWith("/ai-image-generation/")) return "image-themes";
+  if (pathname === "/ai-video-generation" || pathname.startsWith("/ai-video-generation/")) return "video-themes";
+  if (pathname === "/blog" || pathname.startsWith("/blog/")) return "blog";
+  return "other";
+}
+
+function familyCounts(paths) {
+  return [...paths].reduce((counts, pathname) => {
+    const family = pathFamily(pathname);
+    counts[family] = (counts[family] ?? 0) + 1;
+    return counts;
+  }, {});
 }
 
 function requestSitemap(host) {
@@ -195,8 +215,11 @@ for (const target of targets) {
     siteId: target.siteId,
     host: target.host,
     mode: state ? "snapshot-set" : "live-publication",
+    publication: site ? publicationIdentity(site) : null,
     expected: expected?.size ?? null,
     actual: actual.paths.size,
+    expectedPathFamilies: expected ? familyCounts(expected) : {},
+    actualPathFamilies: familyCounts(actual.paths),
     missing: expected ? [...expected].filter((value) => !actual.paths.has(value)) : [],
     unexpected: expected ? [...actual.paths].filter((value) => !expected.has(value)) : [],
     foreignHosts: actual.foreignHosts,
@@ -213,5 +236,5 @@ const failures = results.filter((result) =>
   result.liveFailures.length ||
   (result.mode === "live-publication" && (result.publications.length !== 1 || result.factsRevisions.length !== 1))
 );
-console.log(JSON.stringify({ ok: failures.length === 0, stateSource: "postgres:platformStateDocument", results }, null, 2));
+console.log(JSON.stringify({ ok: failures.length === 0, stateSource: "postgres:active-or-latest-theme-publication+seo-indexer", results }, null, 2));
 if (failures.length) process.exitCode = 1;

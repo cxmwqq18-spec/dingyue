@@ -1091,6 +1091,27 @@ export interface PublishedVideoNavigationProjection {
   revision: string;
 }
 
+export type PublishedHomepageShowcaseKind = "video" | "save_the_date" | "photo";
+
+export interface PublishedHomepageShowcaseItem {
+  id: string;
+  kind: PublishedHomepageShowcaseKind;
+  pageEntityId: string;
+  canonicalPath: string;
+  title: string;
+  subtitle: string;
+  category?: string;
+  sortOrder: number;
+  imageUrl: string;
+  imageAlt: string;
+  videoUrl?: string;
+  status: "published";
+  indexable: true;
+  sitemapEligible: true;
+  entityRevision: string;
+  mediaRevision: string;
+}
+
 export interface PublishedCollectionRef {
   ownerPageEntityId: string;
   collectionEntityId: string;
@@ -1136,6 +1157,7 @@ export interface PublishedSeoSnapshotRevisions {
   policyRevision: string;
   linkRevision: string;
   navigationRevision: string;
+  homepageShowcaseRevision: string;
   snapshotHash: string;
 }
 
@@ -1175,6 +1197,7 @@ export interface PublishedSeoSnapshot {
   publishedCollectionRefs: PublishedCollectionRef[];
   publishedLinkRefs: PublishedLinkRef[];
   publishedVideoNavigation: PublishedVideoNavigationProjection[];
+  publishedHomepageShowcases: PublishedHomepageShowcaseItem[];
   revisions: PublishedSeoSnapshotRevisions;
   snapshotHash: string;
   buildId: string;
@@ -1197,6 +1220,7 @@ export interface LegacyThemePublicationSnapshot {
   publishedCollectionRefs?: PublishedCollectionRef[];
   publishedLinkRefs?: PublishedLinkRef[];
   publishedVideoNavigation?: PublishedVideoNavigationProjection[];
+  publishedHomepageShowcases?: PublishedHomepageShowcaseItem[];
   revisions?: Partial<PublishedSeoSnapshotRevisions>;
   snapshotHash?: string;
   buildId?: string;

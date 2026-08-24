@@ -281,7 +281,7 @@ TDK 变更必须通过 `node scripts/publish-mydreamshoots-homepage-tdk.mjs --ap
 - [ ] 博客目录完整覆盖：`/blog`、全部可索引 `article` 页面对应的 `/blog/*` 路径。
 - [ ] Header 桌面 / 移动端 `Browse packages` / `Occasion Albums` / `Tools` 内链全部可以跳转，最终 canonical URL 为 200；可索引路径必须存在于对应网站 sitemap，`noindex` 路径必须不在 sitemap。
 - [ ] 旧路径、重定向路径、重复 policy 路径不得出现在 sitemap，例如旧工具、旧 travel blog、`/cookie-policy`、`/privacy-policy`、`/terms-of-service`。
-- [ ] 修改 PostgreSQL `PlatformStateDocument`、关系表、分类/工具菜单或 SEO 目录后，必须同步关系表与 active publication，再清理 `.next/cache/platform-state-postgres.json`。
+- [ ] 修改 PostgreSQL `PlatformStateDocument`、关系表、分类/工具菜单或 SEO 目录后，必须同步关系表与 active/latest `ThemePublication`，再清理 `.next/cache/platform-state-postgres.json`。sitemap 的目录事实以关系库发布快照为准，不能以旧的聚合 JSON 或手工目录数量代替。
 
 必跑命令：
 
@@ -293,12 +293,11 @@ npm run smoke:storefront-sitemap-directory-coverage
 自动化脚本说明：
 
 - `smoke:storefront-navigation-data`：确认不同页面上的套餐/工具弹层数据一致，避免局部页面读到旧分类或旧工具。
-- `smoke:storefront-sitemap-directory-coverage`：从 PostgreSQL published snapshot 与 SEO directory 元数据推导对应站点全部可索引目录，使用 Host header 拉取各站 `sitemap.xml`，检查缺失目录、跨站域名、旧路径残留，以及 sitemap 中是否误收录 `noindex` 页面。
+- `smoke:storefront-sitemap-directory-coverage`：从关系库的 active/latest `ThemePublication` 读取发布快照，并复用生产 `sitemapEntriesForSite` 生成器推导对应站点全部可索引目录；使用 Host header 拉取各站 `sitemap.xml`，检查缺失目录、跨站域名、旧路径残留，以及 sitemap 中是否误收录 `noindex` 页面。输出必须包含 publication ID、版本、snapshot hash、facts revision 和 URL 分类统计。
 - `smoke:storefront-public-routes`：本次 Best 页面回归默认覆盖两个 `.com` 店铺；`.eu` 店铺保持原有西语结构，由公开 SEO/语言 smoke 独立覆盖。
 
 当前 `.com` 店铺目录口径：
 
-| 店铺 | 套餐目录 | 工具目录 | 博客 / 公共目录 |
-| --- | --- | --- | --- |
-| MyDreamShoots | `/collections`、当前 11 个可索引 canonical collection 路径 | `/tools`、当前 29 个可索引 canonical 工具路径 | `/blog`、全部可索引 article、基础公共页、policy 页 |
-| AIdreamcapes | `/collections`、当前 28 个可索引 canonical collection 路径 | `/tools`、当前 21 个可索引 canonical 工具路径 | `/blog`、全部可索引 article、基础公共页、policy 页 |
+- MyDreamShoots：`/collections/*`、`/tools/*`、`/blog/*`、基础公共页、policy 页，以及 active publication 中所有可索引 `/ai-image-generation/*` 图片主题和 `/ai-video-generation/*` 视频主题。图片和视频路径均以当前线上发布快照为准，不维护第二套静态分类或数量。
+- AIdreamcapes：`/collections/*`、`/tools/*`、`/blog/*`、基础公共页、policy 页，以及 active publication 中的全部可索引目录。
+- 每次发布后保存 smoke 输出中的 publication ID、版本、snapshot hash、facts revision 与 URL 分类统计；只有这些运行时结果可作为目录数量基线。

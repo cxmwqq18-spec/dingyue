@@ -378,7 +378,7 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     headline: "Adapt one core idea into platform-aware social video.",
     description: "Turn one core idea into platform-aware social media videos with stronger hooks, crops, captions, audio, pacing, safe zones, and CTAs.",
     prompt: "Create a platform-aware social media video from the provided idea and frames. Keep the message clear, use mobile-safe composition, include natural pacing, and make the ending suitable for a simple call to action.",
-    imageUrl: "/assets/dreamshoot/social-media-video/social-media-video-cross-platform-creator.png",
+    imageUrl: "/assets/dreamshoot/social-media-video/social-media-video-before-after-transformation.png",
     creditCost: 24,
     durationSeconds: 6,
     maxFrames: 10,

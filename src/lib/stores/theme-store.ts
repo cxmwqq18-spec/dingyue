@@ -63,6 +63,7 @@ import type {
   PublishedStandardPageMediaProjection,
   PublishedPageEntityProjection,
   PublishedSeoSnapshot,
+  PublishedHomepageShowcaseItem,
   ThemeSectionSchema,
   ThemeSettings,
   ThemeSettingValue
@@ -83,6 +84,114 @@ function asPublishedMediaPack(pack: PublishPreflightCreativePack | undefined): {
     galleryImages: pack.galleryImages ?? undefined,
     galleryImageAlts: pack.galleryImageAlts ?? undefined
   };
+}
+
+function firstVideoUrl(value: unknown): string | undefined {
+  if (typeof value === "string" && /\.(?:mp4|webm)(?:[?#]|$)/i.test(value)) return value;
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const result = firstVideoUrl(item);
+      if (result) return result;
+    }
+  }
+  if (value && typeof value === "object") {
+    for (const item of Object.values(value as Record<string, unknown>)) {
+      const result = firstVideoUrl(item);
+      if (result) return result;
+    }
+  }
+  return undefined;
+}
+
+function buildHomepageShowcases(params: {
+  site: Site;
+  pages: ThemePage[];
+  videoNavigation: PublishedSeoSnapshot["publishedVideoNavigation"];
+  pageEntities: PublishedPageEntityProjection[];
+  pageMedia: PublishedSeoSnapshot["publishedPageMedia"];
+  standardMedia: PublishedStandardPageMediaProjection[];
+  collections: PublishedSeoSnapshot["publishedCollectionRefs"];
+}): PublishedHomepageShowcaseItem[] {
+  const { site, pages, videoNavigation, pageEntities, pageMedia, standardMedia, collections } = params;
+  const entities = new Map(pageEntities.map((entity) => [entity.pageEntityId, entity]));
+  const media = new Map(pageMedia.map((item) => [item.pageEntityId, item]));
+  const pageById = new Map(pages.map((page) => [page.id, page]));
+  const items: PublishedHomepageShowcaseItem[] = [];
+
+  for (const item of videoNavigation) {
+    const entity = entities.get(item.pageEntityId);
+    const pageMediaItem = media.get(item.pageEntityId);
+    if (!entity || entity.status !== "published" || !entity.indexable || !pageMediaItem || pageMediaItem.status !== "ready") continue;
+    const page = pageById.get(item.id);
+    items.push({
+      id: `homepage-video-${item.slug}`,
+      kind: "video",
+      pageEntityId: item.pageEntityId,
+      canonicalPath: item.canonicalPath,
+      title: item.label,
+      subtitle: item.description,
+      category: item.parentLabel,
+      sortOrder: item.sortOrder,
+      imageUrl: pageMediaItem.primaryImage,
+      imageAlt: pageMediaItem.imageAlts[0] || item.label,
+      ...(page ? { videoUrl: firstVideoUrl(page.publishedJson) } : {}),
+      status: "published",
+      indexable: true,
+      sitemapEligible: true,
+      entityRevision: entity.pageRevision,
+      mediaRevision: pageMediaItem.entityRevision
+    });
+  }
+
+  const saveDateItems = (site.themeSettings.draftJson ?? site.themeSettings.publishedJson).saveTheDateNavigation?.groups
+    ?.flatMap((group) => group.items.filter((item) => item.status === "published").map((item) => ({ ...item, group }))) ?? [];
+  for (const item of saveDateItems) {
+    const entity = pageEntities.find((candidate) => candidate.canonicalPath === item.href && candidate.status === "published" && candidate.indexable);
+    const pageMediaItem = entity ? standardMedia.find((candidate) => candidate.pageEntityId === entity.pageEntityId && candidate.status === "ready") : undefined;
+    if (!entity || !pageMediaItem) continue;
+    items.push({
+      id: `homepage-save-the-date-${item.slug}`,
+      kind: "save_the_date",
+      pageEntityId: entity.pageEntityId,
+      canonicalPath: entity.canonicalPath,
+      title: item.label,
+      subtitle: entity.metadata.description,
+      category: item.group.label,
+      sortOrder: item.sortOrder,
+      imageUrl: pageMediaItem.primaryImage,
+      imageAlt: pageMediaItem.primaryImageAlt,
+      status: "published",
+      indexable: true,
+      sitemapEligible: true,
+      entityRevision: entity.pageRevision,
+      mediaRevision: pageMediaItem.revision
+    });
+  }
+
+  for (const collection of collections) {
+    if (collection.status !== "published") continue;
+    const entity = entities.get(collection.pageEntityId);
+    const pageMediaItem = media.get(collection.pageEntityId);
+    if (!entity || !entity.indexable || !pageMediaItem || pageMediaItem.status !== "ready") continue;
+    items.push({
+      id: `homepage-photo-${collection.collectionSlug}`,
+      kind: "photo",
+      pageEntityId: collection.pageEntityId,
+      canonicalPath: collection.canonicalPath,
+      title: collection.label,
+      subtitle: collection.summary,
+      category: collection.categorySlug,
+      sortOrder: items.length,
+      imageUrl: pageMediaItem.primaryImage,
+      imageAlt: pageMediaItem.imageAlts[0] || collection.imageAlt,
+      status: "published",
+      indexable: true,
+      sitemapEligible: true,
+      entityRevision: entity.pageRevision,
+      mediaRevision: pageMediaItem.entityRevision
+    });
+  }
+  return items;
 }
 
 const STANDARD_MYDREAMSHOOTS_MEDIA_PATHS = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"] as const;
@@ -646,6 +755,15 @@ export function buildPublicationSnapshot(
     };
   });
   const collectionRevision = projectionRevision(publishedCollectionRefs);
+  const publishedHomepageShowcases = buildHomepageShowcases({
+    site,
+    pages: site.pages,
+    videoNavigation: publishedVideoNavigation,
+    pageEntities: publishedPageEntities,
+    pageMedia: publishedPageMedia,
+    standardMedia: publishedStandardPageMedia,
+    collections: publishedCollectionRefs
+  });
   const imagePublishedLinkRefs: NonNullable<ThemePublication["snapshot"]["publishedLinkRefs"]> = imagePublishedPageEntities.flatMap((entity) => {
     if (entity.status !== "published") return [];
     const slug = entity.canonicalPath.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1];
@@ -734,6 +852,7 @@ export function buildPublicationSnapshot(
   const packRevision = projectionRevision(publishedPackFacts);
   const linkRevision = projectionRevision(publishedLinkRefs);
   const navigationRevision = projectionRevision(publishedVideoNavigation);
+  const homepageShowcaseRevision = projectionRevision(publishedHomepageShowcases);
   const buildId = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local";
   const snapshot: PublishedSeoSnapshot = {
     seoProjectionVersion: 1,
@@ -777,6 +896,7 @@ export function buildPublicationSnapshot(
     publishedCollectionRefs,
     publishedLinkRefs,
     publishedVideoNavigation,
+    publishedHomepageShowcases,
     revisions: {
       factsRevision,
       routeRevision,
@@ -789,6 +909,7 @@ export function buildPublicationSnapshot(
       policyRevision,
       linkRevision,
       navigationRevision,
+      homepageShowcaseRevision,
       snapshotHash: ""
     },
     snapshotHash: "",

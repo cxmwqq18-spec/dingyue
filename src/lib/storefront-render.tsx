@@ -49,7 +49,7 @@ import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, 
 import { isMydreamshootsCollectionItemSlug, isMydreamshootsPublicVideoGenerationSlug, isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
-import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
 const dreamshootPartnerTemplateSlugs = new Set([
@@ -94,6 +94,7 @@ type SiteRenderData = {
   toolMenuItems: PlatformState["toolMenuItems"];
   videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
+  homepageShowcases: PublishedHomepageShowcaseItem[];
 };
 
 const storefrontMediaReferenceKeys = new Set([
@@ -126,7 +127,8 @@ function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData
     siteAiApps: (state.siteAiApps ?? []).filter((app) => app.siteId === siteId),
     toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === siteId),
     videoThemeCategories: (state.videoThemeCategories ?? []).filter((category) => category.siteId === siteId),
-    videoThemes: (state.videoThemes ?? []).filter((theme) => theme.siteId === siteId)
+    videoThemes: (state.videoThemes ?? []).filter((theme) => theme.siteId === siteId),
+    homepageShowcases: []
   };
 }
 
@@ -139,7 +141,8 @@ function emptySiteRenderData(): SiteRenderData {
     siteAiApps: [],
     toolMenuItems: [],
     videoThemeCategories: [],
-    videoThemes: []
+    videoThemes: [],
+    homepageShowcases: []
   };
 }
 
@@ -164,7 +167,8 @@ function trimToolDetailRenderData(renderData: SiteRenderData): SiteRenderData {
     })),
     toolMenuItems: renderData.toolMenuItems.slice(0, 24),
     videoThemeCategories: renderData.videoThemeCategories,
-    videoThemes: []
+    videoThemes: [],
+    homepageShowcases: []
   };
 }
 
@@ -649,7 +653,8 @@ function trimRenderDataForPage(
     siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData, siteAiAppLimit) : [],
     toolMenuItems: renderData.toolMenuItems.slice(0, 160).map(lightweightToolMenuItem),
     videoThemeCategories: renderData.videoThemeCategories,
-    videoThemes: needsVideoThemes ? trimVideoThemesForStorefront(renderData, videoThemeLimit) : []
+    videoThemes: needsVideoThemes ? trimVideoThemesForStorefront(renderData, videoThemeLimit) : [],
+    homepageShowcases: slug === "/" ? renderData.homepageShowcases : []
   };
 }
 
@@ -681,7 +686,8 @@ function trimRenderDataForSection(renderData: SiteRenderData, pageJson: ThemePag
     siteAiApps: needsSiteAiApps ? trimSiteAiAppsForStorefront(renderData, siteAiAppLimit) : [],
     toolMenuItems: needsToolMenuItems ? renderData.toolMenuItems.slice(0, 160).map(lightweightToolMenuItem) : [],
     videoThemeCategories: renderData.videoThemeCategories,
-    videoThemes: needsVideoThemes ? trimVideoThemesForStorefront(renderData, videoThemeLimit, section) : []
+    videoThemes: needsVideoThemes ? trimVideoThemesForStorefront(renderData, videoThemeLimit, section) : [],
+    homepageShowcases: slug === "/" ? renderData.homepageShowcases : []
   };
 }
 
@@ -2024,9 +2030,26 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
 }
 
 function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson): ThemePageJson {
-  // The active publication is the source of truth for this directory page.
-  // Do not replace its sections with a legacy static video-theme projection.
-  return pageJson;
+  // The root video directory has a dedicated presentation contract. Keep it
+  // independent from any legacy photo-tool sections that may remain in a
+  // publication snapshot while its topic pages are being updated.
+  return {
+    ...pageJson,
+    sectionsOrder: ["video_theme_directory_1"],
+    sections: {
+      video_theme_directory_1: {
+        type: "dreamshoot_tool_collection",
+        settings: {
+          anchor: "video-themes",
+          title: "AI Video Generation",
+          subtitle: "Browse every public AI video theme and open the dedicated guide for the direction you want.",
+          layout: "video_theme_grid",
+          headingLevel: "h1"
+        },
+        blocks: []
+      }
+    }
+  };
 }
 
 function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Site["pages"][number] {
@@ -2610,7 +2633,10 @@ export async function renderStorefrontPage({
         mediaAssets: [],
         products: publishedSnapshot.products
       }
-    : currentRenderData;
+    : {
+        ...currentRenderData,
+        homepageShowcases: publishedSnapshot.publishedHomepageShowcases ?? []
+      };
   const focusedCollectionRenderData = isFocusedCollectionPage ? trimFocusedCollectionRenderData(renderData, collectionCategory) : renderData;
   const useSharedNavigation = usesSharedDreamShootNavigation(currentSite);
   const navigationCreativePackCategories = useSharedNavigation
@@ -2995,7 +3021,8 @@ export async function renderStorefrontSectionPayloads({
         siteAiApps: pageRenderData.siteAiApps,
         toolMenuItems: pageRenderData.toolMenuItems,
         videoThemeCategories: pageRenderData.videoThemeCategories,
-        videoThemes: pageRenderData.videoThemes
+        videoThemes: pageRenderData.videoThemes,
+        homepageShowcases: pageRenderData.homepageShowcases
       },
       renderContext,
       storefrontContext,
@@ -3173,7 +3200,8 @@ export async function renderStorefrontSectionPayload({
       siteAiApps: pageRenderData.siteAiApps,
       toolMenuItems: pageRenderData.toolMenuItems,
       videoThemeCategories: pageRenderData.videoThemeCategories,
-      videoThemes: pageRenderData.videoThemes
+      videoThemes: pageRenderData.videoThemes,
+      homepageShowcases: pageRenderData.homepageShowcases
     },
     renderContext,
     storefrontContext,

@@ -67,6 +67,7 @@ function previewFromFallbackImage(image: HTMLImageElement): ShowcasePreview | nu
 
 function previewFromEventTarget(target: EventTarget | null): ShowcasePreview | null {
   if (!(target instanceof Element)) return null;
+  if (target.closest("[role='dialog']")) return null;
   const trigger = target.closest<HTMLElement>(PREVIEW_TRIGGER_SELECTOR);
   if (trigger) return previewFromTrigger(trigger);
   const image = target.closest<HTMLImageElement>(FALLBACK_IMAGE_SELECTOR);
@@ -120,34 +121,6 @@ export function DreamshootShowcasePreview({ children, className = "block" }: Dre
       event.stopPropagation();
     }
   };
-
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-    root.dataset.dreamshootPreviewHydrated = "true";
-
-    const handleNativeClick = (event: globalThis.MouseEvent) => {
-      if (openPreview(event.target)) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    };
-    const handleNativeKeyDown = (event: globalThis.KeyboardEvent) => {
-      if (event.key !== "Enter" && event.key !== " ") return;
-      if (openPreview(event.target)) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    };
-
-    root.addEventListener("click", handleNativeClick, true);
-    root.addEventListener("keydown", handleNativeKeyDown, true);
-
-    return () => {
-      root.removeEventListener("click", handleNativeClick, true);
-      root.removeEventListener("keydown", handleNativeKeyDown, true);
-    };
-  }, [openPreview]);
 
   useEffect(() => {
     if (!gallery) return;

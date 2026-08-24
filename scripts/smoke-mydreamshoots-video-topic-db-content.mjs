@@ -144,6 +144,10 @@ try {
     parsePublicVideoGenerationRouteForSite
   } = publicationContracts();
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "active publication must satisfy the immutable snapshot contract");
+  const videoDirectoryPage = snapshot.pages.find((page) => page.slug === "/ai-video-generation");
+  assert(videoDirectoryPage, "AI Video Generation root must be included in the active publication pages");
+  assert.deepEqual(videoDirectoryPage.publishedJson.sectionsOrder, ["video_theme_directory_1"], "AI Video Generation root must publish the dedicated directory section");
+  assert.equal(videoDirectoryPage.publishedJson.sections.video_theme_directory_1?.settings?.layout, "video_theme_grid", "AI Video Generation root must publish the video theme grid layout");
   const routeSnapshot = {
     site: { id: SITE_ID, slug: "mydreamshoots" },
     pages: snapshot.pages,
