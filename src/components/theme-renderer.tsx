@@ -8613,6 +8613,7 @@ function SectionView({
     if (section.type === "editorial_hero") {
       const primaryCta = setting(section, "primaryCta");
       const secondaryCta = setting(section, "secondaryCta");
+      const heroVisuals = blocks.filter((block) => blockValue(block, "imageUrl"));
       return (
         <section className="bg-[#26131a] text-[#fffaf6]" id={anchor}>
           <div className="mx-auto grid max-w-[var(--site-content-width)] lg:min-h-[650px] lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
@@ -8628,7 +8629,11 @@ function SectionView({
                 </div>
               ) : null}
             </div>
-            <div className="aspect-[5/3] min-h-0 overflow-hidden">{imageFor(section)}</div>
+            {heroVisuals.length > 1 ? (
+              <div className="grid gap-3 p-5 sm:grid-cols-2 lg:p-8">
+                {heroVisuals.map((block, index) => <div className={`${index === 0 ? "sm:col-span-2" : ""} aspect-[5/3] overflow-hidden rounded-[14px] bg-[#5c2930]`} key={instanceKey(block, index, "hero_visual")}>{imageFor(block)}</div>)}
+              </div>
+            ) : <div className="aspect-[5/3] min-h-0 overflow-hidden">{imageFor(section)}</div>}
           </div>
         </section>
       );
@@ -8637,13 +8642,13 @@ function SectionView({
     if (section.type === "editorial_rich_text") {
       return (
         <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[1fr_0.92fr] lg:items-center lg:gap-16">
-            <div>
-              <h2 className={`${headingClass} max-w-[16ch] text-4xl sm:text-5xl`}>{title}</h2>
-              {intro ? <p className="mt-6 max-w-[42rem] text-base leading-8 text-[#5d4847] sm:text-lg">{intro}</p> : null}
-              <div className="mt-5 max-w-[42rem] space-y-5 text-base leading-8 text-[#5d4847]">{blocks.map((block, index) => <p key={instanceKey(block, index, "editorial_paragraph")} {...xfcartBlockAttrs(block, index, "editorial_paragraph")}>{textBlock(block)}</p>)}</div>
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
+            <div className="mx-auto mt-7 max-w-[70ch] text-center">
+              {intro ? <p className="text-base leading-8 text-[#5d4847] sm:text-lg">{intro}</p> : null}
+              <div className="mt-5 space-y-5 text-base leading-8 text-[#5d4847]">{blocks.map((block, index) => <p key={instanceKey(block, index, "editorial_paragraph")} {...xfcartBlockAttrs(block, index, "editorial_paragraph")}>{textBlock(block)}</p>)}</div>
             </div>
-            <div className="aspect-[5/3] overflow-hidden rounded-[14px] bg-[#eadbd3]">{imageFor(section)}</div>
+            {setting(section, "imageUrl") ? <div className="mx-auto mt-10 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#eadbd3]">{imageFor(section)}</div> : null}
           </div>
         </section>
       );
@@ -8653,7 +8658,7 @@ function SectionView({
       return (
         <section className="bg-[#f1e4de] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
           <div className="mx-auto max-w-[var(--site-content-width)]">
-            <h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>
+            <h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
             <div className="mt-10 grid gap-5 min-[760px]:grid-cols-3">
               {blocks.map((block, index) => <article className="overflow-hidden rounded-[14px] border border-[#d7bdb8] bg-[#fffaf6]" key={instanceKey(block, index, "story_card")} {...xfcartBlockAttrs(block, index, "story_card")}>
                 <div className="aspect-[5/3] bg-[#eadbd3]">{imageFor(block)}</div>
@@ -8668,8 +8673,8 @@ function SectionView({
     if (section.type === "editorial_detail_list") {
       return (
         <section className="bg-[#fffaf6] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-            <div><h2 className={`${headingClass} max-w-[15ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-6 max-w-md text-base leading-8 text-[#665252]">{intro}</p> : null}</div>
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <div className="mx-auto max-w-[70ch] text-center"><h2 className={`${headingClass} max-w-[34ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-6 text-base leading-8 text-[#665252]">{intro}</p> : null}</div>
             <dl className="divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">{blocks.map((block, index) => {
               const hasImage = Boolean(blockValue(block, "imageUrl"));
               return <div className={`grid gap-4 py-5 sm:items-center sm:gap-6 ${hasImage ? "sm:grid-cols-[8rem_0.8fr_1fr]" : "sm:grid-cols-[8rem_1fr]"}`} key={instanceKey(block, index, "detail_item")} {...xfcartBlockAttrs(block, index, "detail_item")}><dt className="font-semibold text-[#9a4b4b]">{blockValue(block, "label")}</dt>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[10px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<dd className="text-base leading-7 text-[#665252]">{textBlock(block)}</dd></div>;
@@ -8682,7 +8687,7 @@ function SectionView({
     if (section.type === "editorial_steps" || section.type === "editorial_story_flow") {
       return (
         <section className="bg-[#26131a] px-5 py-16 text-[#fffaf6] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">{blocks.map((block, index) => <article className="border-t border-[#9c6762] pt-4" key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(block, index, "step")}><p className="text-sm font-semibold text-[#e9b894]">{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p><h3 className={`${headingClass} mt-3 text-xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#e8cfc9]">{textBlock(block)}</p></article>)}</div>{setting(section, "imageUrl") ? <div className="mx-auto mt-12 aspect-[5/3] w-full max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]">{imageFor(section)}</div> : null}</div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2><div className="mt-10 grid gap-x-6 gap-y-8 md:grid-cols-2 lg:grid-cols-3">{blocks.map((block, index) => <article className="border-t border-[#9c6762] pt-4" key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(block, index, "step")}><p className="text-sm font-semibold text-[#e9b894]">{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p><h3 className={`${headingClass} mt-3 text-xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#e8cfc9]">{textBlock(block)}</p></article>)}</div>{setting(section, "imageUrl") ? <div className="mx-auto mt-12 aspect-[5/3] w-full max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]">{imageFor(section)}</div> : null}</div>
         </section>
       );
     }
@@ -8690,7 +8695,7 @@ function SectionView({
     if (["editorial_ideas", "editorial_formats", "editorial_scene_grid"].includes(section.type)) {
       return (
         <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-5 max-w-3xl text-base leading-8 text-[#665252]">{intro}</p> : null}<div className="mt-10 grid gap-5 md:grid-cols-2">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t border-[#d9c3bd] pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr]" : "sm:grid-cols-1"}`} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(block, index, "editorial_item")}>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[12px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#665252]">{textBlock(block)}</p></div></article>; })}</div></div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8 text-[#665252]">{intro}</p> : null}<div className="mt-10 grid gap-5 md:grid-cols-2">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t border-[#d9c3bd] pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr]" : "sm:grid-cols-1"}`} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(block, index, "editorial_item")}>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[12px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#665252]">{textBlock(block)}</p></div></article>; })}</div></div>
         </section>
       );
     }
@@ -8698,7 +8703,7 @@ function SectionView({
     if (["editorial_quality", "editorial_boundaries", "editorial_evidence"].includes(section.type)) {
       return (
         <section className="bg-[#151822] px-5 py-16 text-[#f7f3ed] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-5 max-w-3xl text-base leading-8 text-[#c8c3bd]">{intro}</p> : null}<ul className="mt-10 grid gap-4 md:grid-cols-2">{blocks.map((block, index) => <li className="border-t border-[#53465a] pt-4 text-base leading-7 text-[#d9d2ce]" key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(block, index, "editorial_guidance")}>{textBlock(block)}</li>)}</ul></div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8 text-[#c8c3bd]">{intro}</p> : null}<ul className="mt-10 grid gap-4 md:grid-cols-2">{blocks.map((block, index) => <li className="border-t border-[#53465a] pt-4 text-base leading-7 text-[#d9d2ce]" key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(block, index, "editorial_guidance")}>{textBlock(block)}</li>)}</ul></div>
         </section>
       );
     }
@@ -8706,14 +8711,14 @@ function SectionView({
     if (section.type === "editorial_checklist") {
       return (
         <section className="bg-[#f1e4de] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2><ul className="mt-10 grid gap-x-10 gap-y-5 md:grid-cols-2">{blocks.map((block, index) => <li className="flex gap-3 border-t border-[#d7bdb8] pt-4 text-base leading-7 text-[#5e4a4a]" key={instanceKey(block, index, "check_item")} {...xfcartBlockAttrs(block, index, "check_item")}><span aria-hidden="true" className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#9a4b4b] text-xs text-white">✓</span><span>{textBlock(block)}</span></li>)}</ul></div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2><ul className="mx-auto mt-10 grid max-w-5xl gap-x-10 gap-y-5 md:grid-cols-2">{blocks.map((block, index) => <li className="flex gap-3 border-t border-[#d7bdb8] pt-4 text-base leading-7 text-[#5e4a4a]" key={instanceKey(block, index, "check_item")} {...xfcartBlockAttrs(block, index, "check_item")}><span aria-hidden="true" className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#9a4b4b] text-xs text-white">✓</span><span>{textBlock(block)}</span></li>)}</ul></div>
         </section>
       );
     }
 
     return (
       <section className="relative overflow-hidden bg-[#7f343d] px-5 py-16 text-[#fffaf6] sm:px-8 lg:py-24" id={anchor}>
-        <div className="relative z-10 mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[1fr_0.78fr] lg:items-center"><div><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-6 max-w-2xl text-base leading-8 text-[#f7ded3]">{intro}</p> : null}<div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">{setting(section, "primaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#f0c3a4] px-6 text-sm font-semibold text-[#32171c]" href={hrefFor(site, setting(section, "primaryHref"))}>{setting(section, "primaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}{setting(section, "secondaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#f0c3a4] px-6 text-sm font-semibold text-white" href={hrefFor(site, setting(section, "secondaryHref"))}>{setting(section, "secondaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}</div></div><div className="aspect-[5/3] overflow-hidden rounded-[14px] bg-[#5c2930]">{imageFor(section)}</div></div>
+        <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] text-center"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-6 max-w-[70ch] text-base leading-8 text-[#f7ded3]">{intro}</p> : null}<div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">{setting(section, "primaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#f0c3a4] px-6 text-sm font-semibold text-[#32171c]" href={hrefFor(site, setting(section, "primaryHref"))}>{setting(section, "primaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}{setting(section, "secondaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#f0c3a4] px-6 text-sm font-semibold text-white" href={hrefFor(site, setting(section, "secondaryHref"))}>{setting(section, "secondaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}</div><div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]">{imageFor(section)}</div></div>
       </section>
     );
   }
