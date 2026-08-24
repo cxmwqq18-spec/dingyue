@@ -8593,7 +8593,7 @@ function SectionView({
       return (
         <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
           <div className="mx-auto max-w-[var(--site-content-width)]">
-            <h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>
+            <h2 className={`${headingClass} mx-auto max-w-[24ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
             <div className="mt-10 divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">
               {blocks.map((block, index) => (
                 <details className="group py-5" key={instanceKey(block, index, "editorial_faq")} {...xfcartBlockAttrs(block, index, "editorial_faq")}>
@@ -8609,6 +8609,11 @@ function SectionView({
         </section>
       );
     }
+
+    // Evidence gates are publication controls, not customer-facing product content.
+    // Keep them in the published contract for integrity checks, but do not expose
+    // internal launch requirements in the public editorial page.
+    if (section.type === "editorial_evidence") return null;
 
     if (section.type === "editorial_hero") {
       const primaryCta = setting(section, "primaryCta");
@@ -8674,6 +8679,23 @@ function SectionView({
     }
 
     if (section.type === "editorial_detail_list") {
+      const featureImage = setting(section, "imageUrl");
+      if (setting(section, "layout") === "feature_list" && featureImage) {
+        return (
+          <section className="bg-[#fffaf6] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
+            <div className="mx-auto grid max-w-[var(--site-content-width)] items-center gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16">
+              <div className="mx-auto aspect-[5/3] w-full max-w-2xl overflow-hidden rounded-[14px] bg-[#eadbd3]">{imageFor(section)}</div>
+              <div>
+                <h2 className={`${headingClass} max-w-[24ch] text-4xl sm:text-5xl`}>{title}</h2>
+                {intro ? <p className="mt-6 max-w-[62ch] text-base leading-8 text-[#665252]">{intro}</p> : null}
+                <dl className="mt-8 divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">
+                  {blocks.map((block, index) => <div className="grid gap-2 py-4 sm:grid-cols-[8rem_1fr] sm:gap-5" key={instanceKey(block, index, "feature_detail_item")} {...xfcartBlockAttrs(block, index, "feature_detail_item")}><dt className="font-semibold text-[#9a4b4b]">{blockValue(block, "label")}</dt><dd className="text-base leading-7 text-[#665252]">{textBlock(block)}</dd></div>)}
+                </dl>
+              </div>
+            </div>
+          </section>
+        );
+      }
       return (
         <section className="bg-[#fffaf6] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
           <div className="mx-auto max-w-[var(--site-content-width)]">
@@ -8698,7 +8720,7 @@ function SectionView({
     if (["editorial_ideas", "editorial_formats", "editorial_scene_grid"].includes(section.type)) {
       return (
         <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8 text-[#665252]">{intro}</p> : null}<div className="mt-10 grid gap-5 md:grid-cols-2">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t border-[#d9c3bd] pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr]" : "sm:grid-cols-1"}`} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(block, index, "editorial_item")}>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[12px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#665252]">{textBlock(block)}</p></div></article>; })}</div></div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8 text-[#665252]">{intro}</p> : null}<div className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t border-[#d9c3bd] pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr] lg:grid-cols-1" : "sm:grid-cols-1"}`} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(block, index, "editorial_item")}>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[12px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#665252]">{textBlock(block)}</p></div></article>; })}</div></div>
         </section>
       );
     }
