@@ -209,7 +209,22 @@ try {
   await prisma.$transaction(async (tx) => {
     await tx.themePage.upsert({ where: { siteId_slug: { siteId, slug: pagePath } }, create: { id: pageId, siteId, pageType: "standard-content", templateKey: "save-the-date", slug: pagePath, title: heading, draftJson: pageJson, publishedJson: pageJson }, update: { pageType: "standard-content", templateKey: "save-the-date", title: heading, draftJson: pageJson, publishedJson: pageJson } });
     const settings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
-    const nextSettings = { ...settings, saveTheDateNavigation: { menuLabel: "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: [{ label: "Valentine's Day", slug: "valentines-day", href: pagePath, status: "published", sortOrder: 1 }] }] } };
+    const existingNavigation = settings.saveTheDateNavigation?.groups ?? [];
+    const existingLoveItems = existingNavigation.find((group) => group.slug === "love-wedding")?.items ?? [];
+    const valentinesItem = { label: "Valentine's Day", slug: "valentines-day", href: pagePath, status: "published", sortOrder: 1 };
+    const loveItems = [valentinesItem, ...existingLoveItems.filter((item) => item.href !== pagePath)]
+      .filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index)
+      .map((item, index) => ({ ...item, sortOrder: index + 1, status: "published" }));
+    const nextSettings = {
+      ...settings,
+      saveTheDateNavigation: {
+        menuLabel: settings.saveTheDateNavigation?.menuLabel || "Save the Date",
+        groups: [
+          { label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: loveItems },
+          ...existingNavigation.filter((group) => group.slug !== "love-wedding").map((group, index) => ({ ...group, sortOrder: index + 2 }))
+        ]
+      }
+    };
     await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: nextSettings }, update: { draftJson: nextSettings, publishedJson: nextSettings } });
     for (const item of sourceImages) await tx.mediaAsset.upsert({ where: { siteId_storageKey: { siteId, storageKey: item.src } }, create: { id: `media_${siteId}_save_date_${item.filename.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}`, siteId, label: item.filename, storageKey: item.src, mimeType: "image/jpeg", usageType: "theme", sourceType: "save-the-date-source", previewUrl: item.src, originUrl: item.src, altText: item.alt, notes: item.caption }, update: { altText: item.alt, notes: item.caption, previewUrl: item.src, originUrl: item.src } });
   }, { maxWait: 20_000, timeout: 120_000 });
