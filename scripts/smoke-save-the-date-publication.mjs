@@ -41,8 +41,15 @@ const media = snapshot.publishedStandardPageMedia.find((candidate) => candidate.
 assert.equal(media?.status, "ready");
 assert.equal(media?.mediaEntityId, route.mediaEntityId);
 assert.equal(page.publishedJson?.mediaManifest?.length, 11);
+assert.equal(new Set(page.publishedJson?.mediaManifest?.map((item) => item.src)).size, 11);
+assert(page.publishedJson?.mediaManifest?.every((item) => ["hero", "content"].includes(item.role)), "manifest_roles_not_normalized");
+assert(page.publishedJson?.mediaManifest?.every((item) => item.alt && item.width > 0 && item.height > 0), "manifest_metadata_incomplete");
+assert(page.publishedJson?.mediaManifest?.every((item) => state.mediaAssets.some((asset) => asset.siteId === SITE_ID && asset.storageKey === item.src && asset.altText === item.alt)), "manifest_media_owner_missing");
 assert.deepEqual(page.publishedJson?.contentContract?.requiredSections, ["hero", "positioning", "story-styles", "details", "workflow", "ideas", "formats", "checklist", "faq", "final-cta"]);
 assert.equal(page.publishedJson?.sectionsOrder?.length, 10);
+assert.deepEqual(page.publishedJson?.sectionsOrder?.map((id) => page.publishedJson.sections[id]?.type), ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_detail_list", "editorial_steps", "editorial_ideas", "editorial_formats", "editorial_checklist", "faq", "editorial_cta"]);
+assert.equal(page.publishedJson?.sections?.save_date_faq?.blocks?.length, 6);
+assert(page.publishedJson?.sections?.save_date_final_cta?.settings?.primaryCta && page.publishedJson?.sections?.save_date_final_cta?.settings?.secondaryCta, "cta_content_missing");
 assert.equal(page.publishedJson?.seo?.robots?.maxImagePreview, "large");
 assert(!JSON.stringify(page.publishedJson).match(/---|```|`[^`]+`|\[[^\]]+\]\([^)]*\)/), "raw_markdown_in_published_page");
 assert.equal(media?.sitemapImages?.length, 6);

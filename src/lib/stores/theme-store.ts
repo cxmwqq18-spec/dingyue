@@ -135,7 +135,11 @@ function buildPublishedStandardPageMedia(
     const mediaEntityId = `${pageEntityId}:media`;
     const primaryImageAlt = page ? (manifest[0]?.alt || STANDARD_MYDREAMSHOOTS_MEDIA_ALTS[canonicalPath] || "") : "";
     const sitemapImages = primaryImage ? [primaryImage, ...discovered.filter((image) => image !== primaryImage)].slice(0, 6) : [];
-    const status = page && primaryImage && primaryImageAlt ? "ready" as const : "review_required" as const;
+    const manifestAssetsReady = canonicalPath !== SAVE_THE_DATE_PATH || (
+      manifest.length === 11 &&
+      manifest.every((item) => site.mediaAssets?.some((asset) => asset.siteId === site.id && asset.storageKey === item.src && asset.altText === item.alt))
+    );
+    const status = page && primaryImage && primaryImageAlt && manifestAssetsReady ? "ready" as const : "review_required" as const;
     const revision = projectionRevision({ pageEntityId, pageId: page?.id, canonicalPath, primaryImage, primaryImageAlt, sitemapImages, status });
     return {
       pageEntityId,
@@ -150,7 +154,7 @@ function buildPublishedStandardPageMedia(
       sitemapImages,
       status,
       revision,
-      ...(status === "ready" ? {} : { reviewReason: "STANDARD_PAGE_MEDIA_REQUIRED" })
+      ...(status === "ready" ? {} : { reviewReason: manifestAssetsReady ? "STANDARD_PAGE_MEDIA_REQUIRED" : "SAVE_THE_DATE_MEDIA_OWNER_REQUIRED" })
     };
   });
 }
@@ -166,14 +170,33 @@ function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStan
   const indexable = page.publishedJson.seo?.index !== false && page.publishedJson.seo?.robots?.index !== false;
   const strictEditorial = canonicalPath === "/ai-save-the-date/valentines-day";
   const expectedSections = ["hero", "positioning", "story-styles", "details", "workflow", "ideas", "formats", "checklist", "faq", "final-cta"];
+  const expectedSectionIds = expectedSections.map((id) => `save_date_${id.replace(/-/g, "_")}`);
+  const expectedSectionTypes = ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_detail_list", "editorial_steps", "editorial_ideas", "editorial_formats", "editorial_checklist", "faq", "editorial_cta"];
   const contract = page.publishedJson.contentContract;
   const sectionIds = page.publishedJson.sectionsOrder.map((id) => page.publishedJson.sections[id]).filter(Boolean);
+  const sectionOrderReady = JSON.stringify(page.publishedJson.sectionsOrder) === JSON.stringify(expectedSectionIds);
+  const sectionTypesReady = sectionIds.length === expectedSectionTypes.length && sectionIds.every((section, index) => section.type === expectedSectionTypes[index]);
+  const sectionAnchorsReady = sectionIds.length === expectedSections.length && sectionIds.every((section, index) => section.settings.anchor === expectedSections[index]);
+  const faqSection = page.publishedJson.sections[expectedSectionIds[8]];
+  const faqReady = faqSection?.type === "faq" && faqSection.blocks?.length === 6 && faqSection.blocks.every((block) => typeof block.settings.question === "string" && Boolean(block.settings.question.trim()) && typeof block.settings.answer === "string" && Boolean(block.settings.answer.trim()));
+  const ctaSection = page.publishedJson.sections[expectedSectionIds[9]];
+  const ctaReady = ctaSection?.type === "editorial_cta" && ["primaryCta", "primaryHref", "secondaryCta", "secondaryHref"].every((key) => typeof ctaSection.settings[key] === "string" && Boolean(String(ctaSection.settings[key]).trim()));
+  const manifest = page.publishedJson.mediaManifest ?? [];
+  const manifestReady = manifest.length === 11 && new Set(manifest.map((item) => item.src)).size === 11 && manifest.every((item) => item.src && item.alt && item.width && item.height && ["hero", "content"].includes(item.role ?? "content"));
+  const mediaReady = canonicalPath !== SAVE_THE_DATE_PATH || (manifestReady && manifest.every((item) => site.mediaAssets?.some((asset) => asset.siteId === site.id && asset.storageKey === item.src && asset.altText === item.alt)));
   const noRawMarkdown = !JSON.stringify(page.publishedJson).match(/---|```|`[^`]+`|\[[^\]]+\]\([^)]*\)/);
   const editorialReady = !strictEditorial || (
     contract?.schema === "editorial-page-v1" &&
     JSON.stringify(contract.requiredSections) === JSON.stringify(expectedSections) &&
     sectionIds.length === expectedSections.length &&
+    sectionOrderReady &&
+    sectionTypesReady &&
+    sectionAnchorsReady &&
     new Set(sectionIds.map((section) => String(section.settings.anchor ?? ""))).size === expectedSections.length &&
+    faqReady &&
+    ctaReady &&
+    manifestReady &&
+    mediaReady &&
     noRawMarkdown
   );
   const publishable = indexable && editorialReady;
@@ -388,6 +411,7 @@ async function getSiteWithThemeRecords(db: PrismaLike, siteId: string) {
       pages: { orderBy: { slug: "asc" } },
       settings: true,
       storefrontProfile: true,
+      mediaAssets: true,
       activePublication: { include: { publication: true } },
       publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 },
       connect: true

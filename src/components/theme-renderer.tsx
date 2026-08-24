@@ -8695,7 +8695,10 @@ function SectionView({
         <section className="bg-[#fffaf6] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
           <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
             <div><h2 className={`${headingClass} max-w-[15ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-6 max-w-md text-base leading-8 text-[#665252]">{intro}</p> : null}</div>
-            <dl className="divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">{blocks.map((block, index) => <div className="grid gap-4 py-5 sm:grid-cols-[8rem_0.8fr_1fr] sm:items-center sm:gap-6" key={instanceKey(block, index, "detail_item")} {...xfcartBlockAttrs(block, index, "detail_item")}><dt className="font-semibold text-[#9a4b4b]">{blockValue(block, "label")}</dt>{blockValue(block, "imageUrl") ? <div className="aspect-[5/3] overflow-hidden rounded-[10px] bg-[#eadbd3]">{imageFor(block)}</div> : <div className="hidden sm:block" />}<dd className="text-base leading-7 text-[#665252]">{textBlock(block)}</dd></div>)}</dl>
+            <dl className="divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">{blocks.map((block, index) => {
+              const hasImage = Boolean(blockValue(block, "imageUrl"));
+              return <div className={`grid gap-4 py-5 sm:items-center sm:gap-6 ${hasImage ? "sm:grid-cols-[8rem_0.8fr_1fr]" : "sm:grid-cols-[8rem_1fr]"}`} key={instanceKey(block, index, "detail_item")} {...xfcartBlockAttrs(block, index, "detail_item")}><dt className="font-semibold text-[#9a4b4b]">{blockValue(block, "label")}</dt>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[10px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<dd className="text-base leading-7 text-[#665252]">{textBlock(block)}</dd></div>;
+            })}</dl>
           </div>
         </section>
       );
@@ -8704,7 +8707,7 @@ function SectionView({
     if (section.type === "editorial_steps") {
       return (
         <section className="bg-[#26131a] px-5 py-16 text-[#fffaf6] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">{blocks.map((block, index) => <article className="border-t border-[#9c6762] pt-4" key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(block, index, "step")}><p className="text-sm font-semibold text-[#e9b894]">{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p><h3 className={`${headingClass} mt-3 text-xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#e8cfc9]">{textBlock(block)}</p></article>)}</div>{setting(section, "imageUrl") ? <div className="mt-12 aspect-[5/3] max-w-3xl overflow-hidden rounded-[14px] bg-[#5c2930]">{imageFor(section)}</div> : null}</div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">{blocks.map((block, index) => <article className="border-t border-[#9c6762] pt-4" key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(block, index, "step")}><p className="text-sm font-semibold text-[#e9b894]">{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p><h3 className={`${headingClass} mt-3 text-xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#e8cfc9]">{textBlock(block)}</p></article>)}</div>{setting(section, "imageUrl") ? <div className="mx-auto mt-12 aspect-[5/3] w-full max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]">{imageFor(section)}</div> : null}</div>
         </section>
       );
     }
@@ -8712,7 +8715,7 @@ function SectionView({
     if (section.type === "editorial_ideas" || section.type === "editorial_formats") {
       return (
         <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-5 max-w-3xl text-base leading-8 text-[#665252]">{intro}</p> : null}<div className="mt-10 grid gap-5 md:grid-cols-2">{blocks.map((block, index) => <article className="grid gap-5 border-t border-[#d9c3bd] pt-5 sm:grid-cols-[0.72fr_1fr]" key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(block, index, "editorial_item")}><div className="aspect-[5/3] overflow-hidden rounded-[12px] bg-[#eadbd3]">{imageFor(block)}</div><div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#665252]">{textBlock(block)}</p></div></article>)}</div></div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-5 max-w-3xl text-base leading-8 text-[#665252]">{intro}</p> : null}<div className="mt-10 grid gap-5 md:grid-cols-2">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t border-[#d9c3bd] pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr]" : "sm:grid-cols-1"}`} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(block, index, "editorial_item")}>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[12px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#665252]">{textBlock(block)}</p></div></article>; })}</div></div>
         </section>
       );
     }
@@ -13466,7 +13469,6 @@ function SectionView({
                               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                               src={coverImage.src}
                             />
-                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,8,13,0)_34%,rgba(9,8,13,0.82)_100%)]" />
                             <span className="absolute left-3 top-3 rounded-full border border-white/16 bg-black/44 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/82 backdrop-blur">
                               {String(index + 1).padStart(2, "0")}
                             </span>

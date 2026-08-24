@@ -36,7 +36,10 @@ const csvRows = (file) => read(file).trim().split(/\r?\n/).slice(1).map((line) =
   let quoted = false;
   for (let i = 0; i < line.length; i += 1) {
     const char = line[i];
-    if (char === '"') quoted = !quoted;
+    if (char === '"') {
+      if (quoted && line[i + 1] === '"') { current += '"'; i += 1; }
+      else quoted = !quoted;
+    }
     else if (char === "," && !quoted) { values.push(current); current = ""; }
     else current += char;
   }
@@ -44,10 +47,9 @@ const csvRows = (file) => read(file).trim().split(/\r?\n/).slice(1).map((line) =
   return values.map((value) => value.trim().replace(/^"|"$/g, ""));
 });
 const seo = Object.fromEntries(csvRows(seoPath).map(([key, value]) => [key, value]));
-const manifest = csvRows(imageManifestPath).map(([filename, role, section, alt, caption, focusKeyword, width, height, format, loading, fetchpriority]) => ({ filename, role, section, alt, caption, focusKeyword, width: Number(width) || 1600, height: Number(height) || 1000, format, loading: loading === "eager" ? "eager" : "lazy", fetchPriority: fetchpriority || "auto" }));
+const manifest = csvRows(imageManifestPath).map(([filename, role, section, alt, caption, focusKeyword, width, height, format, loading, fetchpriority]) => ({ filename, role: /^hero/i.test(role) ? "hero" : "content", section, alt, caption, focusKeyword, width: Number(width) || 1600, height: Number(height) || 1000, format, loading: loading === "eager" ? "eager" : "lazy", fetchPriority: fetchpriority || "auto" }));
 const markdown = read(copyPath);
 const structure = read(structurePath);
-const requiredSectionIds = ["hero", "positioning", "story-styles", "details", "workflow", "ideas", "formats", "checklist", "faq", "final-cta"];
 const cleanInline = (value) => String(value ?? "")
   .replace(/`([^`]+)`/g, "$1")
   .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
@@ -55,6 +57,18 @@ const cleanInline = (value) => String(value ?? "")
   .replace(/\*([^*]+)\*/g, "$1")
   .replace(/\s+/g, " ")
   .trim();
+const structureRows = structure.split(/\r?\n/)
+  .filter((line) => /^\|\s*\d+\s*\|/.test(line))
+  .map((line) => line.split("|").slice(1, -1).map((cell) => cleanInline(cell)))
+  .map(([order, componentId, headingLevel, headingText, image, intent]) => ({ order: Number(order), componentId, headingLevel, heading: headingText, image, intent }))
+  .filter((row) => Number.isInteger(row.order) && row.componentId);
+const requiredSectionIds = structureRows.map((row) => row.componentId);
+const expectedSectionIds = ["hero", "positioning", "story-styles", "details", "workflow", "ideas", "formats", "checklist", "faq", "final-cta"];
+if (structureRows.length !== expectedSectionIds.length || requiredSectionIds.some((id, index) => id !== expectedSectionIds[index]) || structureRows.some((row, index) => row.order !== index + 1 || !row.heading || !row.image)) {
+  throw new Error("Save the Date page structure document is incomplete or out of order");
+}
+const structureById = new Map(structureRows.map((row) => [row.componentId, row]));
+const sectionHeading = (id) => structureById.get(id)?.heading || id;
 const lines = markdown.split(/\r?\n/);
 const heading = lines.find((line) => /^#\s+/.test(line))?.replace(/^#\s+/, "").trim() || seo.h1;
 const sectionText = (title) => {
@@ -138,11 +152,15 @@ const storyImageFiles = [
 ];
 const ideaImageFiles = [
   "valentines-day-save-the-date-rose-garden-couple.jpg",
-  "valentines-day-save-the-date-heart-bokeh-couple.jpg"
+  "valentines-day-save-the-date-heart-bokeh-couple.jpg",
+  "valentines-day-save-the-date-candlelight-dinner.jpg",
+  "hero-valentines-day-save-the-date-city-couple.jpg",
+  "hero-valentines-day-save-the-date-proposal.jpg"
 ];
 const formatImageFiles = [
   "valentines-day-save-the-date-beach-walk.jpg",
-  "valentines-day-save-the-date-celebration-hug.jpg"
+  "valentines-day-save-the-date-celebration-hug.jpg",
+  "valentines-day-save-the-date-heart-bokeh-couple.jpg"
 ];
 const detailImageFiles = [
   "valentines-day-save-the-date-candlelight-dinner.jpg",
@@ -166,15 +184,15 @@ const pageJson = {
   seo: { title: seo.title, description: seo.meta_description, keywords: seo.secondary_keywords, canonicalPath: pagePath, canonical: seo.canonical, ogImage: sourceImages[0]?.src, index: true, follow: true, robots: { index: true, follow: true, maxImagePreview: "large" } },
   sections: {
     save_date_hero: { type: "editorial_hero", settings: { anchor: "hero", eyebrow: labelledValue(heroLines, "Eyebrow"), title: heading, intro: heroIntro, support: labelledValue(heroLines, "Support line"), primaryCta: labelledValue(heroLines, "Primary CTA"), primaryHref: "/app/create", secondaryCta: labelledValue(heroLines, "Secondary CTA"), secondaryHref: "#story-styles", ...imageSettings(imageBy("hero-valentines-day-save-the-date-city-couple.jpg")) }, blocks: [] },
-    save_date_positioning: { type: "editorial_rich_text", settings: { anchor: "positioning", title: "Make Valentine's Day Part of the Wedding Announcement", intro: positioningParagraphs[0] || "", ...imageSettings(imageBy("hero-valentines-day-save-the-date-couple-candlelight.jpg")) }, blocks: positioningParagraphs.slice(1).map((text, index) => ({ id: `save-date-positioning-${index + 1}`, type: "paragraph", settings: { text } })) },
-    save_date_story_styles: { type: "editorial_story_grid", settings: { anchor: "story-styles", title: "Choose a Valentine Save the Date Story" }, blocks: storyBlocks.map((item, index) => ({ id: `save-date-story-${index + 1}`, type: "story_card", settings: { title: item.title, text: item.paragraphs.join(" "), ...imageSettings(imageBy(storyImageFiles[index])) } })) },
-    save_date_details: { type: "editorial_detail_list", settings: { anchor: "details", title: "Build the Video Around the Details Guests Need", intro: paragraphBlocks(detailsLines).find((item) => item.startsWith("A strong")) || "" }, blocks: detailBlocks.map((item, index) => ({ id: `save-date-detail-${index + 1}`, type: "detail_item", settings: { ...item, ...(detailImageFiles[index] ? imageSettings(imageBy(detailImageFiles[index])) : {}) } })) },
-    save_date_workflow: { type: "editorial_steps", settings: { anchor: "workflow", title: "Turn Couple Photos into a Romantic Save the Date Video", ...imageSettings(imageBy("valentines-day-save-the-date-couple-planning.jpg")) }, blocks: workflowBlocks.map((item, index) => ({ id: `save-date-step-${index + 1}`, type: "step", settings: { number: index + 1, title: item.title.replace(/^\d+\.\s*/, ""), text: item.paragraphs.join(" ") } })) },
-    save_date_ideas: { type: "editorial_ideas", settings: { anchor: "ideas", title: "Valentine's Day Save the Date Ideas", intro: paragraphBlocks(ideasLines).find((item) => item.startsWith("Match the visual")) || "" }, blocks: ideaTexts.map((item, index) => ({ id: `save-date-idea-${index + 1}`, type: "idea", settings: { title: item.title, text: item.text, ...(ideaImageFiles[index] ? imageSettings(imageBy(ideaImageFiles[index])) : {}) } })) },
-    save_date_formats: { type: "editorial_formats", settings: { anchor: "formats", title: "Design for Email, Wedding Websites, and Social" }, blocks: formatBlocks.map((item, index) => ({ id: `save-date-format-${index + 1}`, type: "format", settings: { title: item.title, text: item.paragraphs.join(" "), ...(formatImageFiles[index] ? imageSettings(imageBy(formatImageFiles[index])) : {}) } })) },
-    save_date_checklist: { type: "editorial_checklist", settings: { anchor: "checklist", title: "What to Check Before You Send It" }, blocks: checklistBlocks },
-    save_date_faq: { type: "faq", settings: { anchor: "faq", title: "Frequently Asked Questions" }, blocks: faqItems.map((item) => ({ id: item.id, type: "faq_item", settings: { question: item.question, answer: item.answer } })) },
-    save_date_final_cta: { type: "editorial_cta", settings: { anchor: "final-cta", title: "Announce the Date with a Valentine Story That Still Feels Like You", intro: paragraphBlocks(finalCtaLines).find((item) => item.startsWith("Build a concise")) || "", primaryCta: "Create Your Save the Date", primaryHref: "/app/create", secondaryCta: "View All Save the Date Styles", secondaryHref: "#story-styles", ...imageSettings(imageBy("valentines-day-save-the-date-rose-garden-couple.jpg")) }, blocks: [] }
+    save_date_positioning: { type: "editorial_rich_text", settings: { anchor: "positioning", title: sectionHeading("positioning"), intro: positioningParagraphs[0] || "", ...imageSettings(imageBy("hero-valentines-day-save-the-date-couple-candlelight.jpg")) }, blocks: positioningParagraphs.slice(1).map((text, index) => ({ id: `save-date-positioning-${index + 1}`, type: "paragraph", settings: { text } })) },
+    save_date_story_styles: { type: "editorial_story_grid", settings: { anchor: "story-styles", title: sectionHeading("story-styles") }, blocks: storyBlocks.map((item, index) => ({ id: `save-date-story-${index + 1}`, type: "story_card", settings: { title: item.title, text: item.paragraphs.join(" "), ...imageSettings(imageBy(storyImageFiles[index])) } })) },
+    save_date_details: { type: "editorial_detail_list", settings: { anchor: "details", title: sectionHeading("details"), intro: paragraphBlocks(detailsLines).find((item) => item.startsWith("A strong")) || "" }, blocks: detailBlocks.map((item, index) => ({ id: `save-date-detail-${index + 1}`, type: "detail_item", settings: { ...item, ...(detailImageFiles[index] ? imageSettings(imageBy(detailImageFiles[index])) : {}) } })) },
+    save_date_workflow: { type: "editorial_steps", settings: { anchor: "workflow", title: sectionHeading("workflow"), ...imageSettings(imageBy("valentines-day-save-the-date-couple-planning.jpg")) }, blocks: workflowBlocks.map((item, index) => ({ id: `save-date-step-${index + 1}`, type: "step", settings: { number: index + 1, title: item.title.replace(/^\d+\.\s*/, ""), text: item.paragraphs.join(" ") } })) },
+    save_date_ideas: { type: "editorial_ideas", settings: { anchor: "ideas", title: sectionHeading("ideas"), intro: paragraphBlocks(ideasLines).find((item) => item.startsWith("Match the visual")) || "" }, blocks: ideaTexts.map((item, index) => ({ id: `save-date-idea-${index + 1}`, type: "idea", settings: { title: item.title, text: item.text, ...(ideaImageFiles[index] ? imageSettings(imageBy(ideaImageFiles[index])) : {}) } })) },
+    save_date_formats: { type: "editorial_formats", settings: { anchor: "formats", title: sectionHeading("formats") }, blocks: formatBlocks.map((item, index) => ({ id: `save-date-format-${index + 1}`, type: "format", settings: { title: item.title, text: item.paragraphs.join(" "), ...(formatImageFiles[index] ? imageSettings(imageBy(formatImageFiles[index])) : {}) } })) },
+    save_date_checklist: { type: "editorial_checklist", settings: { anchor: "checklist", title: sectionHeading("checklist") }, blocks: checklistBlocks },
+    save_date_faq: { type: "faq", settings: { anchor: "faq", title: sectionHeading("faq") }, blocks: faqItems.map((item) => ({ id: item.id, type: "faq_item", settings: { question: item.question, answer: item.answer } })) },
+    save_date_final_cta: { type: "editorial_cta", settings: { anchor: "final-cta", title: sectionHeading("final-cta"), intro: paragraphBlocks(finalCtaLines).find((item) => item.startsWith("Build a concise")) || "", primaryCta: "Create Your Save the Date", primaryHref: "/app/create", secondaryCta: "View All Save the Date Styles", secondaryHref: "#story-styles", ...imageSettings(imageBy("valentines-day-save-the-date-rose-garden-couple.jpg")) }, blocks: [] }
   }
 };
 noRawMarkdown(pageJson);
@@ -185,7 +203,7 @@ const { buildPublicationSnapshot, publishSeoSnapshotRelational } = jiti("../src/
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const prisma = new PrismaClient();
 try {
-  const siteRecord = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
+  const siteRecord = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
   const pageId = `page_${siteId}_save_the_date_valentines_day`;
   await prisma.$transaction(async (tx) => {
@@ -195,7 +213,7 @@ try {
     await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: nextSettings }, update: { draftJson: nextSettings, publishedJson: nextSettings } });
     for (const item of sourceImages) await tx.mediaAsset.upsert({ where: { siteId_storageKey: { siteId, storageKey: item.src } }, create: { id: `media_${siteId}_save_date_${item.filename.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}`, siteId, label: item.filename, storageKey: item.src, mimeType: "image/jpeg", usageType: "theme", sourceType: "save-the-date-source", previewUrl: item.src, originUrl: item.src, altText: item.alt, notes: item.caption }, update: { altText: item.alt, notes: item.caption, previewUrl: item.src, originUrl: item.src } });
   });
-  const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
+  const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   const site = toSite(fresh);
   const packs = await prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: true } });
   const products = await prisma.product.findMany({ where: { siteId }, include: { prices: true } });

@@ -689,6 +689,7 @@ export function toSite(record: {
   storefrontProfile?: Parameters<typeof toStorefrontProfile>[0];
   publications?: Array<Parameters<typeof toThemePublication>[0]>;
   activePublication?: { publication: Parameters<typeof toThemePublication>[0] } | null;
+  mediaAssets?: Array<Parameters<typeof toMediaAsset>[0]>;
   connect?: { stripeAccountId: string; onboardingStatus: string; chargesEnabled: boolean; payoutsEnabled: boolean } | null;
 }): import("@/lib/types").Site {
   const primaryDomain = record.domains?.find((domain) => domain.isPrimary)?.domain ?? record.domains?.[0]?.domain ?? "";
@@ -713,7 +714,8 @@ export function toSite(record: {
     latestPublication: record.activePublication?.publication
       ? toThemePublication(record.activePublication.publication)
       : undefined,
-    pages: (record.pages ?? []).map(toThemePage)
+    pages: (record.pages ?? []).map(toThemePage),
+    mediaAssets: (record.mediaAssets ?? []).map(toMediaAsset)
   };
 }
 

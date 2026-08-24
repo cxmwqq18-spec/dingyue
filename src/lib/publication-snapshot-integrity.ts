@@ -266,7 +266,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const pages = new Map(publishedPageEntities.map((item) => [item.pageEntityId, item]));
   const mediaByPage = new Map(publishedPageMedia.map((item) => [item.pageEntityId, item]));
   const copyByPage = new Map(pageCopyRows.map((item) => [item.pageEntityId, item]));
-  const projectionsAgree = [...leafRoutes, ...videoTopicRoutes].every((item) => {
+  const leafProjectionsAgree = [...leafRoutes, ...videoTopicRoutes].every((item) => {
     const page = pages.get(item.pageEntityId);
     const pageMedia = mediaByPage.get(item.pageEntityId);
     const copy = copyByPage.get(item.pageEntityId);
@@ -275,6 +275,15 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
       pageMedia?.mediaEntityId === item.mediaEntityId && copy?.copyRevision === item.copyRevision &&
       (item.status !== "published" || (page.status === "published" && pageMedia.status === "ready"));
   });
+  const standardProjectionsAgree = standardContentRoutes.every((item) => {
+    const page = pages.get(item.pageEntityId);
+    const media = publishedStandardPageMedia.find((candidate) => candidate.mediaEntityId === item.mediaEntityId);
+    return page?.canonicalPath === item.canonicalPath && page?.pageRevision === item.pageRevision &&
+      page?.mediaEntityId === item.mediaEntityId && media?.pageEntityId === item.pageEntityId &&
+      media?.pageId === item.pageId && media?.canonicalPath === item.canonicalPath &&
+      (item.status !== "published" || (page.status === "published" && media.status === "ready"));
+  });
+  const projectionsAgree = leafProjectionsAgree && standardProjectionsAgree;
   const routePaths = publishedRoutes.map((item) => item.disposition === "redirect" ? item.aliasPath : item.canonicalPath);
   const entityIds = publishedPageEntities.map((item) => item.pageEntityId);
   const mediaIds = publishedPageMedia.map((item) => item.mediaEntityId);
@@ -325,6 +334,11 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     const pageMedia = mediaByPage.get(item.pageEntityId);
     return page?.mediaEntityId === item.mediaEntityId && pageMedia?.ownerPageEntityId === item.pageEntityId &&
       pageMedia?.sourcePackId === item.pageId && pageMedia?.packId === item.pageId && pageMedia.routeKind === "ai-video-topic-leaf";
+  }) && standardContentRoutes.every((item) => {
+    const page = pages.get(item.pageEntityId);
+    const media = publishedStandardPageMedia.find((candidate) => candidate.mediaEntityId === item.mediaEntityId);
+    return page?.mediaEntityId === item.mediaEntityId && media?.pageEntityId === item.pageEntityId &&
+      media?.pageId === item.pageId && media?.canonicalPath === item.canonicalPath;
   });
   const videoNavigationAgree = videoTopicRoutes.length === 0
     ? videoNavigationRows.length === 0
@@ -368,6 +382,8 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     if (process.env.MYDREAMSHOOTS_SNAPSHOT_DEBUG === "1") {
       console.error(JSON.stringify({
         projectionsAgree,
+        leafProjectionsAgree,
+        standardProjectionsAgree,
         factsCompleteForIndexablePages: factsCompleteForIndexablePages(v1.publishedFacts, publishedPageEntities),
         completeCoverage,
         standardMediaAgree,

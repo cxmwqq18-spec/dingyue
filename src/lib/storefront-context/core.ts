@@ -11,7 +11,7 @@ function clean(value: unknown): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
 }
 
-const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"]);
+const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", "/ai-save-the-date/valentines-day"]);
 
 function revisionHash(value: string): string {
   let first = 0x811c9dc5;
@@ -231,6 +231,10 @@ export function resolveStorefrontContext(
   const snapshotFailClosed = mode === "published" && primaryMydreamshoots &&
     (Boolean(pageCopySlug || videoTopicSlug) || MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(seo.canonicalPath)) &&
     bundle.snapshotIntegrity !== "valid";
+  const standardPageMedia = standardPageEntityPath ? bundle.publishedStandardPageMedia?.[standardPageEntityPath] : undefined;
+  const standardPageEntityMissing = mode === "published" && Boolean(standardPageEntityPath) && !pageEntity;
+  const standardPageMediaMissing = mode === "published" && Boolean(standardPageEntityPath) && standardPageMedia?.status !== "ready";
+  const entityFailClosed = standardPageEntityMissing || standardPageMediaMissing;
   const resolvedSeo = pageEntity
     ? {
         ...seo,
@@ -242,10 +246,12 @@ export function resolveStorefrontContext(
         follow: pageEntity.metadata.robots.follow,
         sitemapEligible: pageEntity.sitemapEligible
       }
-    : snapshotFailClosed
+    : snapshotFailClosed || entityFailClosed
       ? { ...seo, index: false, follow: true, sitemapEligible: false }
       : seo;
   if (snapshotFailClosed) missingFacts.push("published.seo.snapshot");
+  if (standardPageEntityMissing) missingFacts.push("published.standard_page_entity");
+  if (standardPageMediaMissing) missingFacts.push("published.standard_page_media");
   if (mode === "published" && primaryMydreamshoots && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(resolvedSeo.canonicalPath) && !bundle.publishedStandardPageMedia?.[resolvedSeo.canonicalPath]) {
     missingFacts.push("published.standard_page_media");
   }
