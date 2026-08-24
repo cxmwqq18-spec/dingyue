@@ -215,7 +215,8 @@ const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_M
   "/holidays-events/christmas": "Christmas family, winter, pet, card, and holiday video scenes",
   "/holidays-events/new-year": "New Year fireworks, countdown, greeting, family, and fresh-start scenes",
   "/holidays-events/mothers-day": "Mother's Day family, flowers, gifts, brunch, and spring celebration scenes",
-  "/holidays-events/fathers-day": "Father's Day family, gifts, outdoor activities, and celebration scenes"
+  "/holidays-events/fathers-day": "Father's Day family, gifts, outdoor activities, and celebration scenes",
+  "/holidays-events/halloween": "Halloween costume, couple, family, pet, pumpkin, party, and haunted-scene ideas"
 };
 function collectPublishedImageUrls(value: unknown, output: string[] = []): string[] {
   if (typeof value === "string" && /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(value.trim())) {
@@ -324,7 +325,10 @@ function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStan
     mediaReady &&
     noRawMarkdown
   );
-  const publishable = indexable && editorialReady;
+  // A page can be publicly reachable while its launch gate keeps it out of
+  // search and sitemap. This is used by design packages marked HOLD until
+  // product evidence is approved.
+  const publishable = editorialReady;
   return {
     disposition: "render",
     siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
@@ -334,8 +338,8 @@ function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStan
     pageId: page.id,
     pageRevision,
     status: publishable ? "published" : "review_required",
-    indexable: publishable,
-    sitemapEligible: publishable,
+    indexable: publishable && indexable,
+    sitemapEligible: publishable && indexable,
     mediaEntityId,
     ...(!indexable ? { reviewReason: "PAGE_SEO_REVIEW_REQUIRED" } : !editorialReady ? { reviewReason: "EDITORIAL_PAGE_CONTRACT_REQUIRED" } : {})
   };
@@ -1883,6 +1887,7 @@ export type ThemeFooterSocialLinks = {
   threadsUrl: string;
   pinterestUrl: string;
   youtubeUrl: string;
+  xUrl: string;
 };
 
 function applyFooterSocialLinks(settings: ThemeSettings, socialLinks: ThemeFooterSocialLinks): ThemeSettings {
@@ -1897,7 +1902,8 @@ function applyFooterSocialLinks(settings: ThemeSettings, socialLinks: ThemeFoote
     facebookUrl: socialLinks.facebookUrl,
     threadsUrl: socialLinks.threadsUrl,
     pinterestUrl: socialLinks.pinterestUrl,
-    youtubeUrl: socialLinks.youtubeUrl
+    youtubeUrl: socialLinks.youtubeUrl,
+    xUrl: socialLinks.xUrl
   };
   return next;
 }

@@ -1186,7 +1186,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     : [...requiredLinks, workspaceLink];
   const saveTheDateConfig = settings.saveTheDateNavigation;
   const saveTheDateGroups = saveTheDateConfig?.groups ?? [];
-  const saveTheDateMenuLabel = saveTheDateConfig?.menuLabel?.trim() ?? "";
+  const saveTheDateMenuLabel = isMyDreamShootsCom
+    ? "AI Save the Date"
+    : saveTheDateConfig?.menuLabel?.trim() ?? "";
   const publishedSaveTheDateShowcases = homepageShowcases.filter(
     (item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible
   );
@@ -1857,7 +1859,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
             { label: "AI Video Generation", href: "/ai-video-generation" },
             ...(hasPublishedSaveTheDate ? [{ label: "AI Save the Date", href: "/holidays-events/save-the-date" }] : []),
             { label: "AI Image Generation", href: "/ai-image-generation" },
-            { label: "Best Packages", href: "/best-packages" },
+            { label: "AI Photo Packages", href: "/best-packages" },
             { label: "Pricing", href: "/pricing" }
           ]
         : [
@@ -1960,7 +1962,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
               ["AI Video Generation", "/ai-video-generation", "product"],
               ...(hasPublishedSaveTheDate ? [["AI Save the Date", "/holidays-events/save-the-date", "product"] as const] : []),
               ["AI Image Generation", "/ai-image-generation", "product"],
-              ["Best Packages", "/best-packages", "product"],
+              ["AI Photo Packages", "/best-packages", "product"],
               ["How it works", "/workflow", "product"],
               ["Pricing", "/pricing", "product"],
               ["Blog", "/blog", "company"],
@@ -2067,7 +2069,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
     { label: "Threads", href: socialHref(/threads\.(?:com|net)/i), icon: AtSign },
     { label: "Pinterest", href: socialHref(/pinterest\./i), icon: Pin },
     { label: "YouTube", href: socialHref(/youtube\.com/i), icon: Youtube },
-    { label: "X", href: socialHref(/(?:^|\.)x\.com/i), icon: Twitter }
+    { label: "X", href: socialHref(/(?:^|https?:\/\/)(?:www\.)?x\.com/i), icon: Twitter }
   ].filter((item) => item.href);
   const showPaymentIconsValue = footer?.settings.showPaymentIcons;
   const showPaymentIcons = showPaymentIconsValue === undefined ? true : showPaymentIconsValue !== false && showPaymentIconsValue !== "false";
@@ -2201,16 +2203,16 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
                   {socialLinks.map((item) => {
                     const Icon = item.icon;
                     return (
-                      <Link
+                      <a
                         aria-label={`${item.label} for ${readableFooterTitle}`}
                         className={dark ? "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/74 transition hover:border-white/24 hover:bg-white/[0.1] hover:text-white" : "inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ddd2c5] bg-white/80 text-[#171514] transition hover:bg-white"}
                         href={item.href}
                         key={item.label}
-                        rel={isExternalFooterLink(item.href) ? "nofollow noopener noreferrer" : undefined}
-                        target={isExternalFooterLink(item.href) ? "_blank" : undefined}
+                        rel="nofollow noopener noreferrer"
+                        target="_blank"
                       >
                         <Icon className="h-4 w-4" strokeWidth={1.8} />
-                      </Link>
+                      </a>
                     );
                   })}
                 </div>
@@ -2821,11 +2823,23 @@ type GenerationShowcaseImageCard = {
 
 type GenerationShowcaseVideoCard = {
   id: string;
+  slug: string;
   title: string;
   posterUrl: string;
   videoUrl: string;
   meta: string;
   index: number;
+};
+
+const MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES: Record<string, string> = {
+  "talking-photo": "Create a talking video from a portrait",
+  "cinematic-video": "Turn photos into cinematic video scenes",
+  "tiktok-video": "Create short AI videos for TikTok",
+  "instagram-reels": "Create vertical AI videos for Instagram",
+  "product-video": "Turn product images into AI product videos",
+  "product-ad-video": "Create AI video ads from product images",
+  "promo-video": "Create promotional AI videos for campaigns",
+  "motion-generator": "Turn photos into AI videos with motion"
 };
 
 function sortedByShowcaseSlugs<T>(items: T[], selectedSlugs: string[], slugFor: (item: T) => string, fallbackSortFor?: (item: T) => number): T[] {
@@ -3087,6 +3101,7 @@ function generationShowcaseVideoCardsForSite(videoThemes: VideoTheme[], selected
       const videoUrl = (theme.galleryImages ?? []).find((item) => /\.(?:mp4|webm)(?:\?|#|$)/i.test(item)) ?? "";
       return {
         id: theme.id,
+        slug: dreamshootCategorySlug(theme.slug),
         title: theme.name,
         posterUrl: theme.imageUrl || fallbackImageForSeed(`${theme.siteId}-${theme.slug}-poster`),
         videoUrl,
@@ -3297,7 +3312,6 @@ type StorefrontImageProps = {
 };
 
 type StorefrontSafeImageProps = StorefrontImageProps & {
-  backgroundClassName?: string;
   imageClassName?: string;
 };
 
@@ -3467,7 +3481,6 @@ function StorefrontSafeImage({
   src,
   alt,
   className = "",
-  backgroundClassName = "",
   imageClassName = "",
   sizes,
   priority,
@@ -3479,14 +3492,9 @@ function StorefrontSafeImage({
   const safeAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAltFromImageSrc(resolvedSrc) });
   return (
     <div className={`relative overflow-hidden ${className}`}>
-      <span
-        aria-hidden="true"
-        className={`absolute inset-0 h-full w-full scale-105 bg-cover bg-center opacity-[0.24] blur-lg ${backgroundClassName}`}
-        style={decorativeImageBackgroundStyle(resolvedSrc)}
-      />
       <StorefrontImage
         alt={safeAlt}
-        className={`relative z-10 h-full w-full object-contain object-center ${imageClassName}`}
+        className={`relative z-10 h-full w-full object-cover object-center ${imageClassName}`}
         fetchPriority={fetchPriority}
         loading={loading}
         preview={preview}
@@ -8110,10 +8118,10 @@ function renderLegacySaasSection({
         <div className="mx-auto max-w-[var(--site-content-width)]">
           {setting(section, "title") ? <h2 className="text-center text-2xl font-semibold">{setting(section, "title")}</h2> : null}
           <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6">
-            {(blocks.length ? blocks : Array.from({ length: 6 }, (_, index) => ({ id: `logo_${index}`, type: "logo_image", settings: { image: "", link: "" } }))).map((block, index) => (
-              <Link className="grid h-24 place-items-center rounded-[1rem] border border-black/10 bg-zinc-50 p-4 text-center font-mono text-xs uppercase tracking-[0.18em] text-zinc-500" href={hrefFor(site, blockValue(block, "link", "#"))} key={instanceKey(block, index, "logo")} {...xfcartBlockAttrs(block, index, "logo")}>
+            {(blocks.length ? blocks : Array.from({ length: 6 }, (_, index) => ({ id: `logo_${index}`, type: "logo_image", settings: { image: "" } }))).map((block, index) => (
+              <div className="grid h-24 place-items-center rounded-[1rem] border border-black/10 bg-zinc-50 p-4 text-center font-mono text-xs uppercase tracking-[0.18em] text-zinc-500" key={instanceKey(block, index, "logo")} {...xfcartBlockAttrs(block, index, "logo")}>
                 {blockValue(block, "image") ? <img className="max-h-12 max-w-full object-contain" src={mediaAssetUrl(site, blockValue(block, "image"))} alt={`Logo ${index + 1}`} /> : `Brand ${index + 1}`}
-              </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -8441,7 +8449,7 @@ function PricingTableSectionView({
     setting(
       section,
       "description",
-      "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs."
+      "Use credits across eligible AI photo and video workflows. The required credit cost is shown before generation."
     ),
     homepageMetrics
   );
@@ -8621,7 +8629,8 @@ function SectionView({
       christmas: { heroBg: "#12352b", heroText: "#fffaf0", heroMuted: "#e6e0ca", heroSupport: "#c4d1bf", accent: "#d6af55", accentText: "#14261f", border: "#7f9c83", ctaBg: "#d6af55", ctaText: "#14261f", ctaBorder: "#d6af55", sectionBg: "#fffaf0", sectionAltBg: "#edf1e8", cardBg: "#ffffff", cardBorder: "#c4d1bf", text: "#14261f", mutedText: "#526257", workflowBg: "#edf1e8", faqBorder: "#cad6c6" },
       "new-year": { heroBg: "#111c3d", heroText: "#fffdf5", heroMuted: "#d9e0f3", heroSupport: "#afbddb", accent: "#d6b45f", accentText: "#17203b", border: "#7181ab", ctaBg: "#d6b45f", ctaText: "#17203b", ctaBorder: "#d6b45f", sectionBg: "#fffdf5", sectionAltBg: "#eef1f8", cardBg: "#ffffff", cardBorder: "#c5cee3", text: "#17203b", mutedText: "#56617a", workflowBg: "#eef1f8", faqBorder: "#cbd3e5" },
       "mothers-day": { heroBg: "#17151d", heroText: "#fff8fb", heroMuted: "#eadde4", heroSupport: "#cdbdc8", accent: "#e78ba8", accentText: "#24151d", border: "#9a6376", ctaBg: "#8e3e5a", ctaText: "#fff7fa", ctaBorder: "#e78ba8", sectionBg: "#17151d", sectionAltBg: "#26202a", cardBg: "#211b25", cardBorder: "#9a6376", text: "#fff8fb", mutedText: "#d8c8d0", workflowBg: "#f7e4eb", faqBorder: "#b78598", workflowText: "#2b2027" },
-      "fathers-day": { heroBg: "#101b35", heroText: "#fffaf0", heroMuted: "#e2e5ef", heroSupport: "#bbc4d9", accent: "#d7b35c", accentText: "#1b2237", border: "#6f7d9c", ctaBg: "#d7b35c", ctaText: "#1b2237", ctaBorder: "#d7b35c", sectionBg: "#101b35", sectionAltBg: "#172644", cardBg: "#16233f", cardBorder: "#53678e", text: "#fffaf0", mutedText: "#bbc4d9", workflowBg: "#172644", faqBorder: "#53678e" }
+      "fathers-day": { heroBg: "#101b35", heroText: "#fffaf0", heroMuted: "#e2e5ef", heroSupport: "#bbc4d9", accent: "#d7b35c", accentText: "#1b2237", border: "#6f7d9c", ctaBg: "#d7b35c", ctaText: "#1b2237", ctaBorder: "#d7b35c", sectionBg: "#101b35", sectionAltBg: "#172644", cardBg: "#16233f", cardBorder: "#53678e", text: "#fffaf0", mutedText: "#bbc4d9", workflowBg: "#172644", faqBorder: "#53678e" },
+      halloween: { heroBg: "#07080c", heroText: "#fff9f0", heroMuted: "#e8d8ca", heroSupport: "#c8b6a6", accent: "#ff7a18", accentText: "#1a0d05", border: "#9a4a19", ctaBg: "#c65314", ctaText: "#fff9f0", ctaBorder: "#ff8a2b", sectionBg: "#090a0f", sectionAltBg: "#151017", cardBg: "#111018", cardBorder: "#6f3b24", text: "#fff9f0", mutedText: "#d2c2b6", workflowBg: "#20150f", faqBorder: "#74462e" }
     } as Record<string, { heroBg: string; heroText: string; heroMuted: string; heroSupport: string; accent: string; accentText: string; border: string; ctaBg: string; ctaText: string; ctaBorder: string; sectionBg: string; sectionAltBg: string; cardBg: string; cardBorder: string; text: string; mutedText: string; workflowBg: string; faqBorder: string; workflowText?: string }>)[editorialThemeTone] ?? {
       heroBg: "#26131a", heroText: "#fffaf6", heroMuted: "#f7ded3", heroSupport: "#d9b8b0", accent: "#e9b894", accentText: "#26131a", border: "#d6a99a", ctaBg: "#7f343d", ctaText: "#32171c", ctaBorder: "#f0c3a4", sectionBg: "#fffaf6", sectionAltBg: "#f1e4de", cardBg: "#fffaf6", cardBorder: "#d7bdb8", text: "#2b2021", mutedText: "#665252", workflowBg: "#26131a", faqBorder: "#e4d1cb"
     };
@@ -8632,17 +8641,17 @@ function SectionView({
 
     if (editorialFaq) {
       return (
-        <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
+        <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor} style={editorialThemeTone === "halloween" ? sectionStyle : undefined}>
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <h2 className={`${headingClass} mx-auto max-w-[24ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
-            <div className="mx-auto mt-10 max-w-[66rem] divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">
+            <div className={`mx-auto mt-10 max-w-[66rem] divide-y ${editorialThemeTone === "halloween" ? "divide-[#74462e] border-[#74462e]" : "divide-[#e4d1cb] border-[#e4d1cb]"} border-y`}>
               {blocks.map((block, index) => (
                 <details className="group py-5" key={instanceKey(block, index, "editorial_faq")} {...xfcartBlockAttrs(block, index, "editorial_faq")}>
-                  <summary className="relative flex cursor-pointer list-none items-center justify-start gap-6 text-left">
+                  <summary className="relative flex cursor-pointer list-none items-center justify-start gap-6 pr-10 text-left">
                     <h3 className={`${headingClass} text-lg`}>{blockValue(block, "question")}</h3>
-                    <span aria-hidden="true" className="absolute right-0 text-2xl leading-none text-[#9a4b4b] transition group-open:rotate-45">+</span>
+                    <span aria-hidden="true" className="absolute right-0 text-2xl leading-none text-[#9a4b4b] transition group-open:rotate-45" style={editorialThemeTone === "halloween" ? { color: editorialTheme.accent } : undefined}>+</span>
                   </summary>
-                  <p className="mt-4 max-w-3xl text-left text-base leading-8 text-[#665252]" data-faq-answer="editorial">{blockValue(block, "answer")}</p>
+                  <p className="mt-4 max-w-3xl text-left text-base leading-8 text-[#665252]" style={editorialThemeTone === "halloween" ? { color: editorialTheme.mutedText } : undefined} data-faq-answer="editorial">{blockValue(block, "answer")}</p>
                 </details>
               ))}
             </div>
@@ -9160,7 +9169,7 @@ function SectionView({
                         : "Sets, creditos, pagos y albumes privados permanecen dentro de tu cuenta."
                       : aidreamcapes
                         ? "Credits, fan-scene albums, holiday memory sets, and checkout stay inside your account."
-                        : "Credits, AI shoot packages, private albums, and checkout stay inside your account."}
+                        : isMyDreamShootsProfileSite(site) ? "Credits, AI video and photo projects, private albums, and checkout stay inside your account." : "Credits, AI shoot packages, private albums, and checkout stay inside your account."}
                   </p>
                 </div>
                 </div>
@@ -12694,10 +12703,10 @@ function SectionView({
     const aidreamcapes = isAidreamcapesSite(site);
     const mydreamProfileSite = isMyDreamShootsProfileSite(site);
     const canonicalGeneratorCopy = !isSpanishXbySite(site) && (mydreamProfileSite || aidreamcapes);
-    const imageTitle = canonicalGeneratorCopy ? "Best Photo Generator" : setting(section, "imageTitle", "Best Photo Generator");
+    const imageTitle = canonicalGeneratorCopy ? "Featured AI Photo Generators" : setting(section, "imageTitle", "Featured AI Photo Generators");
     const imageAllLabel = canonicalGeneratorCopy ? mydreamProfileSite ? "VIEW ALL PHOTO" : "View all photos" : setting(section, "imageAllLabel", "View all photos");
     const imageAllHref = canonicalGeneratorCopy ? "/best-ai-image" : setting(section, "imageAllHref", "/best-ai-image");
-    const videoTitle = canonicalGeneratorCopy ? "Best Video Generator" : setting(section, "videoTitle", "Best Video Generator");
+    const videoTitle = canonicalGeneratorCopy ? "Featured AI Video Generators" : setting(section, "videoTitle", "Featured AI Video Generators");
     const videoAllLabel = canonicalGeneratorCopy ? mydreamProfileSite ? "VIEW ALL VIDEO" : "View all videos" : setting(section, "videoAllLabel", "View all videos");
     const videoAllHref = canonicalGeneratorCopy ? "/best-ai-video" : setting(section, "videoAllHref", "/best-ai-video");
     const primaryHref = canonicalGeneratorCopy ? "/app/create" : setting(section, "primaryHref", "/app/create");
@@ -12856,15 +12865,15 @@ function SectionView({
         </div>
       </div>
     );
-    const renderShowcaseSubsectionHeader = (title: string, href: string, label: string, kind: "photo" | "video") => (
+    const renderShowcaseSubsectionHeader = (title: string, href: string, label: string, kind: "photo" | "video" | "save_the_date") => (
       <div className="relative flex flex-col items-center gap-3 text-center md:block" data-dreamshoot-showcase-heading={kind}>
-        <h3 className="text-2xl font-semibold tracking-normal md:text-3xl [font-family:var(--site-title-font)]">
+        <h2 className="text-2xl font-semibold tracking-normal md:text-3xl [font-family:var(--site-title-font)]">
           <Link className="inline-flex max-w-full flex-col items-stretch transition hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80" href={hrefFor(site, href)}>
             <DreamshootUnderlinedTitle gradient={accent} underlineClassName="mt-2">
               {title}
             </DreamshootUnderlinedTitle>
           </Link>
-        </h3>
+        </h2>
         <Link className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:text-white/76 md:absolute md:right-0 md:top-1" href={hrefFor(site, href)}>
           {label}
           <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
@@ -12880,31 +12889,84 @@ function SectionView({
         // Keep the existing database-backed showcase visible while an older active
         // publication is waiting for the homepage projection migration.
       } else {
-      const videoItems = publishedHomepageItems.filter((item) => item.kind === "video").slice(0, 8);
-      const saveTheDateItems = publishedHomepageItems.filter((item) => item.kind === "save_the_date");
-      const photoItems = publishedHomepageItems.filter((item) => item.kind === "photo").slice(0, 16);
+      // Keep the homepage video rail backed by the real, database-backed video
+      // themes. The immutable SEO projection intentionally stores topic-page
+      // media only, so using its video items here would silently fall back to
+      // hero images instead of the existing playable MP4 examples.
+      const selectedVideoSlugs = listLines(setting(section, "videoSlugs"));
+      const realVideoCards = generationShowcaseVideoCardsForSite(
+        publicVideoThemesForShowcase(site, videoThemes),
+        selectedVideoSlugs,
+        8
+      );
+      const projectedVideoItems: PublishedHomepageShowcaseItem[] = realVideoCards.map((card, index) => ({
+        id: `homepage-real-video-${card.id}`,
+        kind: "video",
+        pageEntityId: card.id,
+        canonicalPath: "/best-ai-video",
+        title: card.title,
+        subtitle: MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES[card.slug] ?? card.meta,
+        category: card.meta,
+        sortOrder: index + 1,
+        imageUrl: card.posterUrl,
+        imageAlt: `${card.title} video example thumbnail`,
+        videoUrl: card.videoUrl,
+        status: "published",
+        indexable: true,
+        sitemapEligible: true,
+        entityRevision: card.id,
+        mediaRevision: card.videoUrl
+      }));
+      const videoItems: PublishedHomepageShowcaseItem[] = projectedVideoItems.length
+        ? projectedVideoItems
+        : selectedVideoSlugs
+            .map((slug) => publishedHomepageItems.find((item) => item.kind === "video" && item.canonicalPath === `/ai-video-generation/${slug}`))
+            .filter((item): item is PublishedHomepageShowcaseItem => Boolean(item))
+            .slice(0, 8)
+            .map((item, index) => ({
+              ...item,
+              id: `homepage-published-video-${item.id}`,
+              sortOrder: index + 1,
+              subtitle: MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES[selectedVideoSlugs[index] ?? ""] ?? item.subtitle
+            }));
+      const saveTheDateItems = publishedHomepageItems
+        .filter((item) => item.kind === "save_the_date")
+        .slice(0, Math.max(1, Math.min(6, numberSetting(section, "saveTheDateItemLimit", 6))));
+      const photoItems = publishedHomepageItems.filter((item) => item.kind === "photo").slice(0, 8);
       const renderPublishedCard = (item: PublishedHomepageShowcaseItem) => {
         const href = hrefFor(site, item.canonicalPath);
+        const compactCard = item.kind === "save_the_date";
         const media = item.videoUrl ? (
           <DreamshootShowcaseVideo className="h-full w-full object-cover" label={item.imageAlt} poster={mediaAssetUrl(site, item.imageUrl)} priority={false} src={mediaAssetUrl(site, item.videoUrl)} />
         ) : (
           <StorefrontImage alt={item.imageAlt} className="h-full w-full object-cover" loading="lazy" preview={false} sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw" src={mediaAssetUrl(site, item.imageUrl)} />
         );
         return (
-          <Link className="group block min-w-0 overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] transition hover:-translate-y-0.5 hover:border-white/24" href={href} key={item.id}>
+          <Link
+            aria-label={item.kind === "video" ? `${item.title} video example` : item.title}
+            className="group block min-w-0 overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] transition hover:-translate-y-0.5 hover:border-white/24"
+            data-dreamshoot-showcase-preview={item.kind === "video" ? "video" : "image"}
+            data-showcase-card-kind={item.kind === "video" ? "video" : "image"}
+            href={href}
+            key={item.id}
+          >
             <div className="aspect-square overflow-hidden">{media}</div>
-            <div className="border-t border-white/10 p-3">
-              <h3 className="truncate text-sm font-semibold text-white">{item.title}</h3>
-              <p className="mt-1 line-clamp-2 text-xs leading-5 text-white/60">{item.subtitle}</p>
+            <div className={compactCard ? "border-t border-white/10 p-2 sm:p-2.5" : "border-t border-white/10 p-3"}>
+              <h3 className={compactCard ? "truncate text-xs font-semibold text-white sm:text-sm" : "truncate text-sm font-semibold text-white"}>{item.title}</h3>
+              <p className={compactCard ? "mt-1 line-clamp-2 text-[11px] leading-4 text-white/60 sm:text-xs" : "mt-1 line-clamp-2 text-xs leading-5 text-white/60"}>{item.subtitle}</p>
             </div>
           </Link>
         );
       };
-      const renderPublishedSection = (items: PublishedHomepageShowcaseItem[], title: string, intro: string, href: string, label: string, kind: "video" | "photo") => items.length ? (
+      const renderPublishedSection = (items: PublishedHomepageShowcaseItem[], title: string, intro: string, href: string, label: string, kind: "video" | "save_the_date" | "photo") => items.length ? (
         <div className="mt-12" data-dreamshoot-homepage-showcase-kind={kind}>
           {renderShowcaseSubsectionHeader(title, href, label, kind)}
           <p className="mx-auto mt-4 max-w-[64rem] text-center text-sm leading-7 text-white/66">{intro}</p>
-          <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">{items.map(renderPublishedCard)}</div>
+          <div className={kind === "save_the_date"
+            ? "mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6"
+            : "mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"}>
+            {items.map(renderPublishedCard)}
+          </div>
         </div>
       ) : null;
       return (
@@ -12913,7 +12975,7 @@ function SectionView({
           <div className="relative mx-auto max-w-[var(--site-content-width)]">
             {trustedProof}
             {renderPublishedSection(videoItems, setting(section, "videoTitle", "Featured AI Video Generators"), setting(section, "videoIntro", ""), setting(section, "videoAllHref", "/best-ai-video"), setting(section, "videoAllLabel", "VIEW ALL VIDEO"), "video")}
-            {renderPublishedSection(saveTheDateItems, setting(section, "saveTheDateTitle", "AI Save the Date Videos"), setting(section, "saveTheDateIntro", ""), setting(section, "saveTheDateAllHref", "/holidays-events/save-the-date"), setting(section, "saveTheDateAllLabel", "VIEW ALL SAVE THE DATE"), "video")}
+            {renderPublishedSection(saveTheDateItems, setting(section, "saveTheDateTitle", "AI Save the Date Videos"), setting(section, "saveTheDateIntro", ""), setting(section, "saveTheDateAllHref", "/holidays-events/save-the-date"), setting(section, "saveTheDateAllLabel", "VIEW ALL SAVE THE DATE"), "save_the_date")}
             {renderPublishedSection(photoItems, setting(section, "imageTitle", "Featured AI Photo Generators"), setting(section, "photoIntro", ""), setting(section, "imageAllHref", "/best-ai-image"), setting(section, "imageAllLabel", "VIEW ALL PHOTO"), "photo")}
             {embeddedPricing}
           </div>

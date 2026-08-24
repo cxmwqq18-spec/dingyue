@@ -12,7 +12,8 @@ const links = {
   facebookUrl: "https://www.facebook.com/mydreamshoots/",
   threadsUrl: "https://www.threads.com/@mydreamshoots",
   pinterestUrl: "https://www.pinterest.com/myDreamshoots/",
-  youtubeUrl: "https://www.youtube.com/@myDreamshoots"
+  youtubeUrl: "https://www.youtube.com/@myDreamshoots",
+  xUrl: "https://x.com/myDreamshoots"
 };
 
 if (apply && !confirm) throw new Error("Refusing to write without --confirm-footer-social-links");
