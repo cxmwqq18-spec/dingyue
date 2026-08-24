@@ -138,11 +138,17 @@ function homepageShowcase(value: unknown): value is PublishedHomepageShowcaseIte
 }
 
 function standardMedia(value: unknown): value is PublishedStandardPageMediaProjection {
-  return record(value) && text(value.pageEntityId) && text(value.pageId) && text(value.canonicalPath) &&
-    text(value.mediaEntityId) && publicMediaUrl(value.primaryImage) && text(value.primaryImageAlt) &&
+  if (!record(value)) return false;
+  const primaryImage = String(value.primaryImage ?? "");
+  const primaryAlt = String(value.primaryImageAlt ?? "");
+  const sitemapImages = Array.isArray(value.sitemapImages) ? value.sitemapImages.map((item) => String(item ?? "")) : [];
+  const result = text(value.pageEntityId) && text(value.pageId) && text(value.canonicalPath) &&
+    text(value.mediaEntityId) && publicMediaUrl(primaryImage) && text(primaryAlt) &&
     value.ogImage === value.primaryImage && value.twitterImage === value.primaryImage && value.jsonLdImage === value.primaryImage &&
-    Array.isArray(value.sitemapImages) && value.sitemapImages.length > 0 && value.sitemapImages.every(publicMediaUrl) &&
+    sitemapImages.length > 0 && sitemapImages.every(publicMediaUrl) &&
     (value.status === "ready" || value.status === "review_required") && text(value.revision);
+  if (!result && process.env.MYDREAMSHOOTS_SNAPSHOT_DEBUG === "1") console.error("standardMedia failed", JSON.stringify({ path: value.canonicalPath, primaryImage, primaryAlt, sitemapImages, og: value.ogImage, twitter: value.twitterImage, jsonLd: value.jsonLdImage, status: value.status, revision: value.revision }));
+  return result;
 }
 
 function offer(value: unknown): value is PublishedOfferProjection {

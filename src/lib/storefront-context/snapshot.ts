@@ -238,7 +238,16 @@ export function createPublishedSiteSnapshot(
   });
   const publicationThemeSettings = publication?.snapshot?.themeSettings;
   const publishedSettings = publicationThemeSettings
-    ? { ...site.themeSettings, publishedJson: publicationThemeSettings }
+    ? {
+        ...site.themeSettings,
+        publishedJson: {
+          ...publicationThemeSettings,
+          // Older immutable publications predate the Save the Date navigation
+          // field. Preserve the already-published navigation until they are
+          // rebuilt with the current publication contract.
+          saveTheDateNavigation: publicationThemeSettings.saveTheDateNavigation ?? site.themeSettings.publishedJson.saveTheDateNavigation
+        }
+      }
     : site.themeSettings;
   const snapshotIntegrity = publicationSnapshotIntegrity(publication?.snapshot);
   const hasImmutableSeoProjection = isMydreamshootsPublicationSite && snapshotIntegrity === "valid";

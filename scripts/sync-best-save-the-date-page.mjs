@@ -62,10 +62,13 @@ try {
     include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true }
   });
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
-  const sourcePages = new Map(siteRecord.pages.filter((page) => sourcePaths.includes(page.slug)).map((page) => [page.slug, page]));
   const existingSettings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
   const existingGroups = existingSettings.saveTheDateNavigation?.groups ?? [];
-  const group = existingGroups.find((candidate) => candidate.slug === "love-wedding") ?? { label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: [] };
+  const existingPublishedItems = existingGroups.flatMap((candidate) => candidate.items.filter((item) => item.status === "published").map((item) => ({ ...item, groupSlug: candidate.slug })));
+  const eligiblePaths = new Set([...sourcePaths, ...existingPublishedItems.map((item) => item.href)]);
+  const sourcePages = new Map(siteRecord.pages.filter((page) => eligiblePaths.has(page.slug)).map((page) => [page.slug, page]));
+  const missingPublishedSources = existingPublishedItems.filter((item) => !sourcePages.has(item.href)).map((item) => item.href);
+  if (missingPublishedSources.length) throw new Error(`Published Save the Date navigation items have no source page: ${missingPublishedSources.join(", ")}`);
   const labelByPath = new Map([
     ["/ai-save-the-date/valentines-day", "Valentine's Day"],
     ["/holidays-events/engagement", "Engagement"],
@@ -76,18 +79,24 @@ try {
     ["/holidays-events/christmas", "Christmas"],
     ["/holidays-events/new-year", "New Year"]
   ]);
-  const lovePaths = sourcePaths.slice(0, 4);
-  const seasonalPaths = sourcePaths.slice(4);
+  const existingPathsForGroup = (groupSlug) => existingPublishedItems
+    .filter((item) => item.groupSlug === groupSlug && !sourcePaths.includes(item.href) && sourcePages.has(item.href))
+    .map((item) => item.href);
+  const lovePaths = [...sourcePaths.slice(0, 4), ...existingPathsForGroup("love-wedding")];
+  const seasonalPaths = [...sourcePaths.slice(4), ...existingPublishedItems
+    .filter((item) => item.groupSlug !== "love-wedding" && !sourcePaths.includes(item.href) && sourcePages.has(item.href))
+    .map((item) => item.href)];
   const buildItems = (paths) => paths.map((href, index) => {
     const sourcePage = sourcePages.get(href);
     const media = firstMedia(sourcePage);
-    const label = labelByPath.get(href) || href.split("/").pop() || "Save the Date theme";
+    const existingItem = existingPublishedItems.find((item) => item.href === href);
+    const label = labelByPath.get(href) || existingItem?.label || href.split("/").pop() || "Save the Date theme";
     return {
-      ...(group.items.find((item) => item.href === href) || {}),
+      ...(existingItem || {}),
       label,
       slug: label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
       href,
-      description: pageDescription(sourcePage, `Create a polished ${label} story from approved couple photos and a clear announcement direction.`),
+      description: pageDescription(sourcePage, existingItem?.description || `Create a polished ${label} story from approved couple photos and a clear announcement direction.`),
       ...(media ? { imageUrl: media.src, imageAlt: media.alt || `${label} Save the Date theme preview` } : {}),
       status: "published",
       sortOrder: index + 1

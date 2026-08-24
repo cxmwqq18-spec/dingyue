@@ -8601,7 +8601,7 @@ function SectionView({
   const legacySaasSection = usesNativeDreamShootRenderer ? null : renderLegacySaasSection({ id, section, site, products, creativePacks, mode, renderContext, storefrontContext, siteAiApps });
   if (legacySaasSection) return legacySaasSection;
 
-  const editorialFaq = section.type === "faq" && sectionBlocks(section).length > 0 && sectionBlocks(section).every((block) => Boolean(blockValue(block, "question") && blockValue(block, "answer")));
+  const editorialFaq = section.type === "faq" && setting(section, "layout", "default") !== "visual_faq" && sectionBlocks(section).length > 0 && sectionBlocks(section).every((block) => Boolean(blockValue(block, "question") && blockValue(block, "answer")));
   if (["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_scene_grid", "editorial_detail_list", "editorial_steps", "editorial_story_flow", "editorial_ideas", "editorial_formats", "editorial_quality", "editorial_boundaries", "editorial_evidence", "editorial_checklist", "editorial_cta"].includes(section.type) || editorialFaq) {
     const title = setting(section, "title");
     const anchor = sectionAnchor(section, id);
