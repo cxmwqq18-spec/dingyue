@@ -1187,13 +1187,20 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const saveTheDateConfig = settings.saveTheDateNavigation;
   const saveTheDateGroups = saveTheDateConfig?.groups ?? [];
   const saveTheDateMenuLabel = saveTheDateConfig?.menuLabel?.trim() ?? "";
+  const publishedSaveTheDateShowcases = homepageShowcases.filter(
+    (item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible
+  );
+  const hasPublishedSaveTheDateProjection = publishedSaveTheDateShowcases.length > 0;
   const routedSaveTheDateGroups = saveTheDateGroups.map((group) => ({
     ...group,
     items: group.items.map((item) => ({ ...item, href: hrefForPage(site, item.href, pagePath) }))
   }));
-  const saveTheDateTarget = saveTheDateGroups
+  const saveTheDateTarget = routedSaveTheDateGroups
     .flatMap((group) => group.items)
-    .filter((item) => item.status === "published")
+    .filter((item) => item.status === "published" && Boolean(item.href?.trim()) && (
+      !hasPublishedSaveTheDateProjection ||
+      publishedSaveTheDateShowcases.some((showcase) => showcase.canonicalPath === item.href)
+    ))
     .sort((left, right) => left.sortOrder - right.sortOrder)[0];
   const saveTheDateTargetHref = saveTheDateTarget?.href?.trim() || "";
   const saveTheDateLink = saveTheDateTarget && saveTheDateMenuLabel
@@ -1780,7 +1787,9 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
   const isDreamShootFooter = usesAiGenerationPublicRoutes(site) && !isAidreamcapesCapabilitySite(site);
   const isAidreamcapesFooter = isAidreamcapesCapabilitySite(site);
   const spanishXbyFooter = isSpanishStorefrontSite(site);
-  const hasPublishedSaveTheDate = homepageShowcases.some((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
+  const hasPublishedSaveTheDateProjection = homepageShowcases.some((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
+  const hasPublishedSaveTheDateConfig = settings.saveTheDateNavigation?.groups?.some((group) => group.items.some((item) => item.status === "published" && Boolean(item.href?.trim()))) ?? false;
+  const hasPublishedSaveTheDate = hasPublishedSaveTheDateProjection || hasPublishedSaveTheDateConfig;
   const readableFooterTitle = spanishXbyFooter
     ? site.branding.logoText || site.name
     : isDreamShootFooter
@@ -8610,18 +8619,21 @@ function SectionView({
       return <StorefrontImage alt={read("imageAlt")} className="h-full w-full object-cover" fetchPriority={fetchPriority} height={height} loading={loading} priority={loading === "eager"} sizes="(max-width: 760px) 100vw, 50vw" src={mediaAssetUrl(site, src)} width={width} />;
     };
     const textBlock = (block: SectionBlockInstance, key = "text") => blockValue(block, key).trim();
-    const headingClass = "text-balance font-semibold leading-[1.06] tracking-[-0.025em] [font-family:var(--site-title-font)]";
+    const headingClass = "text-balance font-semibold leading-[1.06] [font-family:var(--site-title-font)]";
     const editorialThemeTone = setting(section, "themeTone", "default");
     const editorialTheme = ({
-      wedding: { heroBg: "#fffdfa", heroText: "#171514", heroMuted: "#5f5952", heroSupport: "#716a62", accent: "#6d4aff", accentText: "#ffffff", border: "#cfc4e8", ctaBg: "#6d4aff", ctaText: "#ffffff", ctaBorder: "#b7a6e8" },
-      thanksgiving: { heroBg: "#3b2b20", heroText: "#fff8ee", heroMuted: "#f3d8b5", heroSupport: "#d9b99a", accent: "#d99a42", accentText: "#2f2118", border: "#bd8b50", ctaBg: "#8c5a32", ctaText: "#fff8ee", ctaBorder: "#d5a765" },
-      christmas: { heroBg: "#12352b", heroText: "#fffaf0", heroMuted: "#e6e0ca", heroSupport: "#c4d1bf", accent: "#d6af55", accentText: "#14261f", border: "#7f9c83", ctaBg: "#d6af55", ctaText: "#14261f", ctaBorder: "#d6af55" },
-      "new-year": { heroBg: "#111c3d", heroText: "#fffdf5", heroMuted: "#d9e0f3", heroSupport: "#afbddb", accent: "#d6b45f", accentText: "#17203b", border: "#7181ab", ctaBg: "#d6b45f", ctaText: "#17203b", ctaBorder: "#d6b45f" },
-      "mothers-day": { heroBg: "#17151d", heroText: "#fff8fb", heroMuted: "#eadde4", heroSupport: "#cdbdc8", accent: "#e78ba8", accentText: "#24151d", border: "#9a6376", ctaBg: "#8e3e5a", ctaText: "#fff7fa", ctaBorder: "#e78ba8" },
-      "fathers-day": { heroBg: "#101b35", heroText: "#fffaf0", heroMuted: "#e2e5ef", heroSupport: "#bbc4d9", accent: "#d7b35c", accentText: "#1b2237", border: "#6f7d9c", ctaBg: "#d7b35c", ctaText: "#1b2237", ctaBorder: "#d7b35c" }
-    } as Record<string, { heroBg: string; heroText: string; heroMuted: string; heroSupport: string; accent: string; accentText: string; border: string; ctaBg: string; ctaText: string; ctaBorder: string }>)[editorialThemeTone] ?? {
-      heroBg: "#26131a", heroText: "#fffaf6", heroMuted: "#f7ded3", heroSupport: "#d9b8b0", accent: "#e9b894", accentText: "#26131a", border: "#d6a99a", ctaBg: "#7f343d", ctaText: "#32171c", ctaBorder: "#f0c3a4"
+      wedding: { heroBg: "#fffdfa", heroText: "#171514", heroMuted: "#5f5952", heroSupport: "#716a62", accent: "#6d4aff", accentText: "#ffffff", border: "#cfc4e8", ctaBg: "#6d4aff", ctaText: "#ffffff", ctaBorder: "#b7a6e8", sectionBg: "#fffdfa", sectionAltBg: "#f7f2ed", cardBg: "#ffffff", cardBorder: "#d8cec4", text: "#2b2021", mutedText: "#665252", workflowBg: "#f7f2ed", faqBorder: "#e4d1cb" },
+      thanksgiving: { heroBg: "#3b2b20", heroText: "#fff8ee", heroMuted: "#f3d8b5", heroSupport: "#d9b99a", accent: "#d99a42", accentText: "#2f2118", border: "#bd8b50", ctaBg: "#8c5a32", ctaText: "#fff8ee", ctaBorder: "#d5a765", sectionBg: "#fff8ee", sectionAltBg: "#f1e2d0", cardBg: "#fffaf4", cardBorder: "#d8b992", text: "#2f2118", mutedText: "#6b584b", workflowBg: "#f1e2d0", faqBorder: "#dcc4a8" },
+      christmas: { heroBg: "#12352b", heroText: "#fffaf0", heroMuted: "#e6e0ca", heroSupport: "#c4d1bf", accent: "#d6af55", accentText: "#14261f", border: "#7f9c83", ctaBg: "#d6af55", ctaText: "#14261f", ctaBorder: "#d6af55", sectionBg: "#fffaf0", sectionAltBg: "#edf1e8", cardBg: "#ffffff", cardBorder: "#c4d1bf", text: "#14261f", mutedText: "#526257", workflowBg: "#edf1e8", faqBorder: "#cad6c6" },
+      "new-year": { heroBg: "#111c3d", heroText: "#fffdf5", heroMuted: "#d9e0f3", heroSupport: "#afbddb", accent: "#d6b45f", accentText: "#17203b", border: "#7181ab", ctaBg: "#d6b45f", ctaText: "#17203b", ctaBorder: "#d6b45f", sectionBg: "#fffdf5", sectionAltBg: "#eef1f8", cardBg: "#ffffff", cardBorder: "#c5cee3", text: "#17203b", mutedText: "#56617a", workflowBg: "#eef1f8", faqBorder: "#cbd3e5" },
+      "mothers-day": { heroBg: "#17151d", heroText: "#fff8fb", heroMuted: "#eadde4", heroSupport: "#cdbdc8", accent: "#e78ba8", accentText: "#24151d", border: "#9a6376", ctaBg: "#8e3e5a", ctaText: "#fff7fa", ctaBorder: "#e78ba8", sectionBg: "#17151d", sectionAltBg: "#26202a", cardBg: "#211b25", cardBorder: "#9a6376", text: "#fff8fb", mutedText: "#d8c8d0", workflowBg: "#f7e4eb", faqBorder: "#b78598", workflowText: "#2b2027" },
+      "fathers-day": { heroBg: "#101b35", heroText: "#fffaf0", heroMuted: "#e2e5ef", heroSupport: "#bbc4d9", accent: "#d7b35c", accentText: "#1b2237", border: "#6f7d9c", ctaBg: "#d7b35c", ctaText: "#1b2237", ctaBorder: "#d7b35c", sectionBg: "#101b35", sectionAltBg: "#172644", cardBg: "#16233f", cardBorder: "#53678e", text: "#fffaf0", mutedText: "#bbc4d9", workflowBg: "#172644", faqBorder: "#53678e" }
+    } as Record<string, { heroBg: string; heroText: string; heroMuted: string; heroSupport: string; accent: string; accentText: string; border: string; ctaBg: string; ctaText: string; ctaBorder: string; sectionBg: string; sectionAltBg: string; cardBg: string; cardBorder: string; text: string; mutedText: string; workflowBg: string; faqBorder: string; workflowText?: string }>)[editorialThemeTone] ?? {
+      heroBg: "#26131a", heroText: "#fffaf6", heroMuted: "#f7ded3", heroSupport: "#d9b8b0", accent: "#e9b894", accentText: "#26131a", border: "#d6a99a", ctaBg: "#7f343d", ctaText: "#32171c", ctaBorder: "#f0c3a4", sectionBg: "#fffaf6", sectionAltBg: "#f1e4de", cardBg: "#fffaf6", cardBorder: "#d7bdb8", text: "#2b2021", mutedText: "#665252", workflowBg: "#26131a", faqBorder: "#e4d1cb"
     };
+    const sectionStyle = { backgroundColor: editorialTheme.sectionBg, color: editorialTheme.text };
+    const altSectionStyle = { backgroundColor: editorialTheme.sectionAltBg, color: editorialTheme.text };
+    const cardStyle = { backgroundColor: editorialTheme.cardBg, borderColor: editorialTheme.cardBorder, color: editorialTheme.text };
     if (!title) return null;
 
     if (editorialFaq) {
@@ -8684,12 +8696,12 @@ function SectionView({
 
     if (section.type === "editorial_rich_text") {
       return (
-        <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
+        <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
             <div className="mx-auto mt-7 max-w-[70ch] text-center">
-              {intro ? <p className="text-base leading-8 text-[#5d4847] sm:text-lg">{intro}</p> : null}
-              <div className="mt-5 space-y-5 text-base leading-8 text-[#5d4847]">{blocks.map((block, index) => <p key={instanceKey(block, index, "editorial_paragraph")} {...xfcartBlockAttrs(block, index, "editorial_paragraph")}>{textBlock(block)}</p>)}</div>
+              {intro ? <p className="text-base leading-8 sm:text-lg" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}
+              <div className="mt-5 space-y-5 text-base leading-8" style={{ color: editorialTheme.mutedText }}>{blocks.map((block, index) => <p key={instanceKey(block, index, "editorial_paragraph")} {...xfcartBlockAttrs(block, index, "editorial_paragraph")}>{blockValue(block, "text")}</p>)}</div>
             </div>
             {setting(section, "imageUrl") ? <div className="mx-auto mt-10 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#eadbd3]">{imageFor(section)}</div> : null}
           </div>
@@ -8699,13 +8711,13 @@ function SectionView({
 
     if (section.type === "editorial_story_grid") {
       return (
-        <section className="bg-[#f1e4de] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
+        <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={altSectionStyle}>
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
             <div className="mt-10 grid gap-5 min-[760px]:grid-cols-3">
-              {blocks.map((block, index) => <article className="overflow-hidden rounded-[14px] border border-[#d7bdb8] bg-[#fffaf6]" key={instanceKey(block, index, "story_card")} {...xfcartBlockAttrs(block, index, "story_card")}>
-                <div className="aspect-[5/3] bg-[#eadbd3]">{imageFor(block)}</div>
-                <div className="p-5"><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#665252]">{textBlock(block)}</p></div>
+              {blocks.map((block, index) => <article className="overflow-hidden rounded-[8px] border" style={cardStyle} key={instanceKey(block, index, "story_card")} {...xfcartBlockAttrs(block, index, "story_card")}>
+                {blockValue(block, "imageUrl") ? <div className="aspect-[5/3]">{imageFor(block)}</div> : null}
+                <div className="p-5"><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p></div>
               </article>)}
             </div>
           </div>
@@ -8746,24 +8758,24 @@ function SectionView({
 
     if (section.type === "editorial_steps" || section.type === "editorial_story_flow") {
       return (
-        <section className="bg-[#26131a] px-5 py-16 text-[#fffaf6] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2><div className="mt-10 grid gap-x-6 gap-y-8 md:grid-cols-2 lg:grid-cols-3">{blocks.map((block, index) => <article className="border-t border-[#9c6762] pt-4" key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(block, index, "step")}><p className="text-sm font-semibold text-[#e9b894]">{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p><h3 className={`${headingClass} mt-3 text-xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#e8cfc9]">{textBlock(block)}</p></article>)}</div>{setting(section, "imageUrl") ? <div className="mx-auto mt-12 aspect-[5/3] w-full max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]">{imageFor(section)}</div> : null}</div>
+        <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2><div className="mt-10 grid gap-x-6 gap-y-8 md:grid-cols-2 lg:grid-cols-3">{blocks.map((block, index) => <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(block, index, "step")}><p className="text-sm font-semibold" style={{ color: editorialTheme.accent }}>{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p><h3 className={`${headingClass} mt-3 text-xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p></article>)}</div>{setting(section, "imageUrl") ? <div className="mx-auto mt-12 aspect-[5/3] w-full max-w-4xl overflow-hidden rounded-[14px]">{imageFor(section)}</div> : null}</div>
         </section>
       );
     }
 
     if (["editorial_ideas", "editorial_formats", "editorial_scene_grid"].includes(section.type)) {
       return (
-        <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8 text-[#665252]">{intro}</p> : null}<div className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t border-[#d9c3bd] pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr] lg:grid-cols-1" : "sm:grid-cols-1"}`} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(block, index, "editorial_item")}>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[12px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#665252]">{textBlock(block)}</p></div></article>; })}</div></div>
+        <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}<div className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr] lg:grid-cols-1" : "sm:grid-cols-1"}`} style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(block, index, "editorial_item")}>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[12px]">{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p></div></article>; })}</div></div>
         </section>
       );
     }
 
     if (["editorial_quality", "editorial_boundaries", "editorial_evidence"].includes(section.type)) {
       return (
-        <section className="bg-[#151822] px-5 py-16 text-[#f7f3ed] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8 text-[#c8c3bd]">{intro}</p> : null}<ul className="mt-10 grid gap-4 md:grid-cols-2">{blocks.map((block, index) => <li className="border-t border-[#53465a] pt-4 text-base leading-7 text-[#d9d2ce]" key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(block, index, "editorial_guidance")}>{textBlock(block)}</li>)}</ul></div>
+        <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}<div className="mt-10 grid gap-4 md:grid-cols-2">{blocks.map((block, index) => { const rawItems = block.settings?.items; const items: string[] | null = Array.isArray(rawItems) ? rawItems.map((item) => String(item)) : null; return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(block, index, "editorial_guidance")}><h3 className={`${headingClass} text-xl`}>{blockValue(block, "title")}</h3>{items ? <ul className="mt-3 space-y-2 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{items.map((item) => <li key={item}>{item}</li>)}</ul> : <p className="mt-3 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p>}</article>; })}</div></div>
         </section>
       );
     }
@@ -12870,7 +12882,10 @@ function SectionView({
       .filter((item) => item.status === "published" && item.indexable && item.sitemapEligible)
       .sort((left, right) => left.sortOrder - right.sortOrder || left.title.localeCompare(right.title));
     if (mydreamProfileSite && renderContext.pagePath === "/") {
-      if (!publishedHomepageItems.length) return null;
+      if (!publishedHomepageItems.length) {
+        // Keep the existing database-backed showcase visible while an older active
+        // publication is waiting for the homepage projection migration.
+      } else {
       const videoItems = publishedHomepageItems.filter((item) => item.kind === "video").slice(0, 8);
       const saveTheDateItems = publishedHomepageItems.filter((item) => item.kind === "save_the_date");
       const photoItems = publishedHomepageItems.filter((item) => item.kind === "photo").slice(0, 16);
@@ -12910,6 +12925,7 @@ function SectionView({
           </div>
         </section>
       );
+      }
     }
 
     return (
