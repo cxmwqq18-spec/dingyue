@@ -811,11 +811,12 @@ function lightweightBlogArticlePageForClient(page: ThemePage): ThemePage {
 }
 
 function lightweightSiteForClient(site: Site, pages: ThemePage[]): Site {
-  const { colors, radii, typography } = site.themeSettings.publishedJson;
+  const { colors, radii, typography, saveTheDateNavigation } = site.themeSettings.publishedJson;
   const settings: Site["themeSettings"]["publishedJson"] = {
     colors,
     typography,
     radii,
+    saveTheDateNavigation,
     navigation: {
       headerLinks: [],
       footerLinks: []
