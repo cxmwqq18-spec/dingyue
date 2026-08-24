@@ -267,11 +267,12 @@ async function completePublicCreativePacksForSite(site: Site, existing: SiteRend
   // The homepage runtime can already contain the requested number of lightweight
   // packs while omitting their gallery arrays. MyDreamShoots recommendation cards
   // need two published gallery images, so complete those rows before rendering.
-  const needsGalleryCompletion = isPrimaryMydreamshootsCapabilitySite(site) && sanitizedExisting.some((pack) =>
-    pack.status === "active" && (pack.galleryImages ?? []).filter(Boolean).length < 2
-  );
-  if (typeof limit === "number" && sanitizedExisting.length >= limit && !needsGalleryCompletion) return sanitizedExisting.slice(0, limit);
-  const fullPacks = (await getStorefrontPublicCreativePacksForSite(site.id, needsGalleryCompletion ? undefined : limit)).map(lightweightCreativePack);
+  // Published snapshots can contain a complete gallery but still carry an old
+  // imageUrl. Refresh all primary-site packs so the card cover and gallery are
+  // sourced from the same current relational row.
+  const shouldRefreshPrimaryMydreamshoots = isPrimaryMydreamshootsCapabilitySite(site) && sanitizedExisting.some((pack) => pack.status === "active");
+  if (typeof limit === "number" && sanitizedExisting.length >= limit && !shouldRefreshPrimaryMydreamshoots) return sanitizedExisting.slice(0, limit);
+  const fullPacks = (await getStorefrontPublicCreativePacksForSite(site.id, shouldRefreshPrimaryMydreamshoots ? undefined : limit)).map(lightweightCreativePack);
   if (!fullPacks.length) return limitedCreativePacks(sanitizedExisting, limit);
 
   const fullPackIds = new Set(fullPacks.map((pack) => pack.id));
@@ -2759,7 +2760,12 @@ export async function renderStorefrontPage({
           creativePacks: pageRenderData.creativePacks,
           products: usesPublishedLeafProjection ? publishedSnapshot.products : state.products,
           context: storefrontContext,
-          videoThemes: pageRenderData.videoThemes
+          videoThemes: pageRenderData.videoThemes,
+          publishedRoutePaths: publishedSnapshot.publishedRoutes.flatMap((route) =>
+            route.disposition === "render" && route.status === "published" && "canonicalPath" in route
+              ? [route.canonicalPath]
+              : []
+          )
         }),
     lightweightChrome: false
   });

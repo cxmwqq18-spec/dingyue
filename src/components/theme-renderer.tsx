@@ -16,7 +16,7 @@ import { DreamshootShowcaseRail } from "@/components/storefront/dreamshoot-showc
 import { DreamshootShowcaseVideo } from "@/components/storefront/dreamshoot-showcase-video";
 import { DreamshootToolDirectoryClient, type DreamshootToolDirectoryCard } from "@/components/storefront/dreamshoot-tool-directory-client";
 import { DreamShootMegaToolsPanel as SharedDreamShootMegaToolsPanel, getToolBlocksFromMenuItems as getSharedToolBlocksFromMenuItems } from "@/components/storefront/dreamshoot-tools-mega-menu";
-import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderMobileVideoGenerationMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
+import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderMobileVideoGenerationMenu, HeaderMobileSaveTheDateMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, HeaderVideoGenerationMegaPanel, HeaderSaveTheDateMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { LazyStorefrontSection } from "@/components/storefront/lazy-storefront-section";
 import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
@@ -868,6 +868,7 @@ function isPublicSeoRoute(pagePath: string): boolean {
     pagePath === "/policies/children-privacy" ||
     pagePath === "/state-privacy" ||
     pagePath === "/policies/state-privacy" ||
+    pagePath.startsWith("/ai-save-the-date/") ||
     pagePath.startsWith("/collections/") ||
     pagePath.startsWith("/ai-image-generation/") ||
     pagePath.startsWith("/tools/") ||
@@ -1159,7 +1160,6 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const myDreamShootsHeaderLinks = [
     { label: "AI Image Generation", href: "/ai-image-generation", block: { id: "dreamshoot_header_ai_image_generation", type: "menu_link", settings: { label: "AI Image Generation", href: "/ai-image-generation" } } as SectionBlockInstance },
     { label: "AI Video Generation", href: "/ai-video-generation", block: { id: "dreamshoot_header_ai_video_generation", type: "menu_link", settings: { label: "AI Video Generation", href: "/ai-video-generation" } } as SectionBlockInstance },
-    { label: "Best Packages", href: "/best-packages", block: { id: "dreamshoot_header_best_packages", type: "menu_link", settings: { label: "Best Packages", href: "/best-packages" } } as SectionBlockInstance },
     { label: "How it works", href: "/workflow", block: { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } } as SectionBlockInstance },
     { label: "Blog", href: "/blog", block: { id: "dreamshoot_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } } as SectionBlockInstance },
     { label: pricingLabel, href: pricingHeaderHref, block: { id: "dreamshoot_header_pricing", type: "menu_link", settings: { label: pricingLabel, href: pricingHeaderHref } } as SectionBlockInstance },
@@ -1191,7 +1191,25 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const rawLinksBase = requiredLinks.some((link) => isWorkspaceNavLink(link.label, link.href))
     ? requiredLinks.map((link) => isWorkspaceNavLink(link.label, link.href) ? { ...link, label: workspaceLabel, href: "/app/create" } : link)
     : [...requiredLinks, workspaceLink];
-  const rawLinks = isMyDreamShootsCom ? myDreamShootsHeaderLinks : orderBestPackagesHeaderLink(rawLinksBase);
+  const saveTheDateConfig = settings.saveTheDateNavigation;
+  const saveTheDateGroups = saveTheDateConfig?.groups ?? [];
+  const saveTheDateMenuLabel = saveTheDateConfig?.menuLabel?.trim() ?? "";
+  const routedSaveTheDateGroups = saveTheDateGroups.map((group) => ({
+    ...group,
+    items: group.items.map((item) => ({ ...item, href: hrefForPage(site, item.href, pagePath) }))
+  }));
+  const saveTheDateTarget = saveTheDateGroups
+    .flatMap((group) => group.items)
+    .filter((item) => item.status === "published")
+    .sort((left, right) => left.sortOrder - right.sortOrder)[0];
+  const saveTheDateTargetHref = saveTheDateTarget?.href?.trim() || "";
+  const saveTheDateLink = saveTheDateTarget && saveTheDateMenuLabel
+    ? { label: saveTheDateMenuLabel, href: saveTheDateTargetHref, block: { id: "dreamshoot_header_save_the_date", type: "menu_link", settings: { label: saveTheDateMenuLabel, href: saveTheDateTargetHref } } as SectionBlockInstance }
+    : null;
+  const configuredSaveTheDate = Boolean(saveTheDateLink);
+  const rawLinks = isMyDreamShootsCom
+    ? (saveTheDateLink ? [...myDreamShootsHeaderLinks.slice(0, 2), saveTheDateLink, ...myDreamShootsHeaderLinks.slice(2)] : myDreamShootsHeaderLinks)
+    : orderBestPackagesHeaderLink(rawLinksBase);
   const seenHeaderHrefs = new Set<string>();
   const links = rawLinks.filter((link) => {
     if (!spanishXby) return true;
@@ -1453,9 +1471,10 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
             const normalizedLinkHref = link.href.trim().replace(/\/+$/, "") || "/";
             const linkIdentity = `${link.label} ${link.href}`;
             const isBestPackagesLink = normalizedLinkHref === "/best-packages";
+            const isSaveTheDateLink = configuredSaveTheDate && normalizedLinkHref === saveTheDateTargetHref;
             const isToolsLink = (showDreamShootToolsMega || showVideoGenerationMega) && (/tools|herramientas|video generation/i.test(linkIdentity) || normalizedLinkHref === "/ai-video-generation");
             const isPackagesLink = showPhotoPackageMega && !isBestPackagesLink && (/route portrait packages|packages|paquetes|photoshoot|image generation/i.test(linkIdentity) || /collections|ai-image-generation/i.test(link.href));
-            const isMegaLink = isToolsLink || isPackagesLink;
+            const isMegaLink = isToolsLink || isPackagesLink || isSaveTheDateLink;
 	            const linkNode = isMegaLink ? null : (
 		              <HeaderLink
 		                className={navClass}
@@ -1483,7 +1502,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                   panelClassName={`fixed left-1/2 z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out ${announceEnabled && announceText ? "top-[126px]" : "top-[78px]"}`}
 	                prefetchPaths={isPackagesLink ? photoPackageMegaPrefetchPaths : toolsMegaPrefetchPaths}
 	              >
-	                  {isPackagesLink ? (
+                  {isSaveTheDateLink ? (
+                    <HeaderSaveTheDateMegaPanel menuLabel={saveTheDateMenuLabel} groups={routedSaveTheDateGroups} variantTone="dark" />
+                  ) : isPackagesLink ? (
 	                    deferMegaMenuPanels ? (
 	                    <HeaderPhotoPackageMegaPanel
 	                        aidreamcapes={isAidreamcapes}
@@ -1627,9 +1648,13 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                     const normalizedLinkHref = link.href.trim().replace(/\/+$/, "") || "/";
                     const linkIdentity = `${link.label} ${link.href}`;
                     const isBestPackagesLink = normalizedLinkHref === "/best-packages";
+                    const isSaveTheDateLink = configuredSaveTheDate && normalizedLinkHref === saveTheDateTargetHref;
                     const isToolsLink = (showDreamShootToolsMega || showVideoGenerationMega) && (/tools|herramientas|video generation/i.test(linkIdentity) || normalizedLinkHref === "/ai-video-generation");
                     const isPackagesLink = showPhotoPackageMega && !isBestPackagesLink && (/route portrait packages|packages|paquetes|photoshoot|image generation/i.test(linkIdentity) || /collections|ai-image-generation/i.test(link.href));
-	                    if (isPackagesLink) {
+                    if (isSaveTheDateLink) {
+                      return deferMegaMenuPanels ? <HeaderMobileSaveTheDateMenu groups={routedSaveTheDateGroups} menuLabel={saveTheDateMenuLabel} dark={dark} key={`mobile_${link.label}_${link.href}`} /> : <HeaderLink className={mobileLinkClass} href={hrefForPage(site, link.href, pagePath)} key={`mobile_${link.label}_${link.href}`}>{link.label}</HeaderLink>;
+                    }
+                    if (isPackagesLink) {
 	                      return (
 	                        deferMegaMenuPanels ? (
 	                          <HeaderMobilePhotoPackagesMenu
@@ -8568,6 +8593,145 @@ function SectionView({
   const legacySaasSection = usesNativeDreamShootRenderer ? null : renderLegacySaasSection({ id, section, site, products, creativePacks, mode, renderContext, storefrontContext, siteAiApps });
   if (legacySaasSection) return legacySaasSection;
 
+  const editorialFaq = section.type === "faq" && sectionBlocks(section).length > 0 && sectionBlocks(section).every((block) => Boolean(blockValue(block, "question") && blockValue(block, "answer")));
+  if (["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_detail_list", "editorial_steps", "editorial_ideas", "editorial_formats", "editorial_checklist", "editorial_cta"].includes(section.type) || editorialFaq) {
+    const title = setting(section, "title");
+    const anchor = sectionAnchor(section, id);
+    const intro = setting(section, "intro");
+    const support = setting(section, "support");
+    const blocks = sectionBlocks(section);
+    const imageFor = (source: SectionInstance | SectionBlockInstance) => {
+      const read = (key: string) => source.type === section.type ? setting(source as SectionInstance, key) : blockValue(source as SectionBlockInstance, key);
+      const src = read("imageUrl");
+      if (!src) return null;
+      const width = Number(read("imageWidth")) || 1600;
+      const height = Number(read("imageHeight")) || 1000;
+      const loading = read("imageLoading") === "eager" ? "eager" : "lazy";
+      const fetchPriority = read("imageFetchPriority") === "high" ? "high" : read("imageFetchPriority") === "low" ? "low" : "auto";
+      return <StorefrontImage alt={read("imageAlt")} className="h-full w-full object-cover" fetchPriority={fetchPriority} height={height} loading={loading} priority={loading === "eager"} sizes="(max-width: 760px) 100vw, 50vw" src={mediaAssetUrl(site, src)} width={width} />;
+    };
+    const textBlock = (block: SectionBlockInstance, key = "text") => blockValue(block, key).trim();
+    const headingClass = "text-balance font-semibold leading-[1.06] tracking-[-0.025em] [font-family:var(--site-title-font)]";
+    if (!title) return null;
+
+    if (editorialFaq) {
+      return (
+        <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>
+            <div className="mt-10 divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">
+              {blocks.map((block, index) => (
+                <details className="group py-5" key={instanceKey(block, index, "editorial_faq")} {...xfcartBlockAttrs(block, index, "editorial_faq")}>
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left">
+                    <h3 className={`${headingClass} text-lg`}>{blockValue(block, "question")}</h3>
+                    <span aria-hidden="true" className="shrink-0 text-2xl leading-none text-[#9a4b4b] transition group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-4 max-w-3xl text-base leading-8 text-[#665252]" data-faq-answer="editorial">{blockValue(block, "answer")}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    if (section.type === "editorial_hero") {
+      const primaryCta = setting(section, "primaryCta");
+      const secondaryCta = setting(section, "secondaryCta");
+      return (
+        <section className="bg-[#26131a] text-[#fffaf6]" id={anchor}>
+          <div className="mx-auto grid max-w-[var(--site-content-width)] lg:min-h-[650px] lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+            <div className="flex flex-col justify-center px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
+              {setting(section, "eyebrow") ? <p className="mb-5 text-xs font-semibold uppercase tracking-[0.16em] text-[#e9b894]">{setting(section, "eyebrow")}</p> : null}
+              <h1 className={`${headingClass} max-w-[12ch] text-[clamp(2.7rem,5.4vw,5rem)] lg:max-w-[16ch]`}>{title}</h1>
+              {intro ? <p className="mt-7 max-w-[38rem] text-base leading-8 text-[#f7ded3] sm:text-lg">{intro}</p> : null}
+              {support ? <p className="mt-5 max-w-[38rem] text-sm leading-7 text-[#d9b8b0]">{support}</p> : null}
+              {primaryCta || secondaryCta ? (
+                <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  {primaryCta ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#e9b894] px-6 text-sm font-semibold text-[#26131a] transition hover:bg-[#f3c6a5]" href={hrefFor(site, setting(section, "primaryHref"))}>{primaryCta}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}
+                  {secondaryCta ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#d6a99a] px-6 text-sm font-semibold text-[#fffaf6] transition hover:bg-white/10" href={hrefFor(site, setting(section, "secondaryHref"))}>{secondaryCta}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}
+                </div>
+              ) : null}
+            </div>
+            <div className="aspect-[5/3] min-h-0 overflow-hidden">{imageFor(section)}</div>
+          </div>
+        </section>
+      );
+    }
+
+    if (section.type === "editorial_rich_text") {
+      return (
+        <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
+          <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[1fr_0.92fr] lg:items-center lg:gap-16">
+            <div>
+              <h2 className={`${headingClass} max-w-[16ch] text-4xl sm:text-5xl`}>{title}</h2>
+              {intro ? <p className="mt-6 max-w-[42rem] text-base leading-8 text-[#5d4847] sm:text-lg">{intro}</p> : null}
+              <div className="mt-5 max-w-[42rem] space-y-5 text-base leading-8 text-[#5d4847]">{blocks.map((block, index) => <p key={instanceKey(block, index, "editorial_paragraph")} {...xfcartBlockAttrs(block, index, "editorial_paragraph")}>{textBlock(block)}</p>)}</div>
+            </div>
+            <div className="aspect-[5/3] overflow-hidden rounded-[14px] bg-[#eadbd3]">{imageFor(section)}</div>
+          </div>
+        </section>
+      );
+    }
+
+    if (section.type === "editorial_story_grid") {
+      return (
+        <section className="bg-[#f1e4de] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>
+            <div className="mt-10 grid gap-5 min-[760px]:grid-cols-3">
+              {blocks.map((block, index) => <article className="overflow-hidden rounded-[14px] border border-[#d7bdb8] bg-[#fffaf6]" key={instanceKey(block, index, "story_card")} {...xfcartBlockAttrs(block, index, "story_card")}>
+                <div className="aspect-[5/3] bg-[#eadbd3]">{imageFor(block)}</div>
+                <div className="p-5"><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#665252]">{textBlock(block)}</p></div>
+              </article>)}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    if (section.type === "editorial_detail_list") {
+      return (
+        <section className="bg-[#fffaf6] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
+          <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+            <div><h2 className={`${headingClass} max-w-[15ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-6 max-w-md text-base leading-8 text-[#665252]">{intro}</p> : null}</div>
+            <dl className="divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">{blocks.map((block, index) => <div className="grid gap-4 py-5 sm:grid-cols-[8rem_0.8fr_1fr] sm:items-center sm:gap-6" key={instanceKey(block, index, "detail_item")} {...xfcartBlockAttrs(block, index, "detail_item")}><dt className="font-semibold text-[#9a4b4b]">{blockValue(block, "label")}</dt>{blockValue(block, "imageUrl") ? <div className="aspect-[5/3] overflow-hidden rounded-[10px] bg-[#eadbd3]">{imageFor(block)}</div> : <div className="hidden sm:block" />}<dd className="text-base leading-7 text-[#665252]">{textBlock(block)}</dd></div>)}</dl>
+          </div>
+        </section>
+      );
+    }
+
+    if (section.type === "editorial_steps") {
+      return (
+        <section className="bg-[#26131a] px-5 py-16 text-[#fffaf6] sm:px-8 lg:py-24" id={anchor}>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">{blocks.map((block, index) => <article className="border-t border-[#9c6762] pt-4" key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(block, index, "step")}><p className="text-sm font-semibold text-[#e9b894]">{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p><h3 className={`${headingClass} mt-3 text-xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#e8cfc9]">{textBlock(block)}</p></article>)}</div>{setting(section, "imageUrl") ? <div className="mt-12 aspect-[5/3] max-w-3xl overflow-hidden rounded-[14px] bg-[#5c2930]">{imageFor(section)}</div> : null}</div>
+        </section>
+      );
+    }
+
+    if (section.type === "editorial_ideas" || section.type === "editorial_formats") {
+      return (
+        <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-5 max-w-3xl text-base leading-8 text-[#665252]">{intro}</p> : null}<div className="mt-10 grid gap-5 md:grid-cols-2">{blocks.map((block, index) => <article className="grid gap-5 border-t border-[#d9c3bd] pt-5 sm:grid-cols-[0.72fr_1fr]" key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(block, index, "editorial_item")}><div className="aspect-[5/3] overflow-hidden rounded-[12px] bg-[#eadbd3]">{imageFor(block)}</div><div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7 text-[#665252]">{textBlock(block)}</p></div></article>)}</div></div>
+        </section>
+      );
+    }
+
+    if (section.type === "editorial_checklist") {
+      return (
+        <section className="bg-[#f1e4de] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2><ul className="mt-10 grid gap-x-10 gap-y-5 md:grid-cols-2">{blocks.map((block, index) => <li className="flex gap-3 border-t border-[#d7bdb8] pt-4 text-base leading-7 text-[#5e4a4a]" key={instanceKey(block, index, "check_item")} {...xfcartBlockAttrs(block, index, "check_item")}><span aria-hidden="true" className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#9a4b4b] text-xs text-white">✓</span><span>{textBlock(block)}</span></li>)}</ul></div>
+        </section>
+      );
+    }
+
+    return (
+      <section className="relative overflow-hidden bg-[#7f343d] px-5 py-16 text-[#fffaf6] sm:px-8 lg:py-24" id={anchor}>
+        <div className="relative z-10 mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[1fr_0.78fr] lg:items-center"><div><h2 className={`${headingClass} max-w-[18ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-6 max-w-2xl text-base leading-8 text-[#f7ded3]">{intro}</p> : null}<div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">{setting(section, "primaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#f0c3a4] px-6 text-sm font-semibold text-[#32171c]" href={hrefFor(site, setting(section, "primaryHref"))}>{setting(section, "primaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}{setting(section, "secondaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#f0c3a4] px-6 text-sm font-semibold text-white" href={hrefFor(site, setting(section, "secondaryHref"))}>{setting(section, "secondaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}</div></div><div className="aspect-[5/3] overflow-hidden rounded-[14px] bg-[#5c2930]">{imageFor(section)}</div></div>
+      </section>
+    );
+  }
+
   if (section.type === "ai_video_topic_landing") {
     return <AiVideoTopicLanding section={section} site={site} />;
   }
@@ -13293,10 +13457,10 @@ function SectionView({
                           key={topic.id}
                           prefetch={false}
                         >
-                          <div className="relative overflow-hidden bg-[#211c2c]">
+                          <div className="relative aspect-[16/9] overflow-hidden bg-[#211c2c]" data-video-theme-card-image>
                             <img
                               alt={manualImageAlt({ src: coverImage.src, fallback: coverImage.alt })}
-                              className="block h-auto w-full object-cover transition duration-500 group-hover/theme:scale-[1.035]"
+                              className="block h-full w-full object-cover object-center transition duration-500 group-hover/theme:scale-[1.035]"
                               decoding="async"
                               loading={index === 0 ? "eager" : "lazy"}
                               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -16292,7 +16456,7 @@ function SectionView({
                   <details className="group overflow-hidden bg-white data-[separated=true]:border-t data-[separated=true]:border-[#f0e6da]" data-separated={index > 0 ? "true" : "false"} key={instanceKey(item, index, "faq")} {...xfcartBlockAttrs(item, index, "faq")}>
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left">
                       <h3 className="text-[0.95rem] font-semibold text-[#171514]">{question}</h3>
-                      <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#eadfce] bg-[#fffaf3] text-lg leading-none text-[#8f7d6d] transition group-open:rotate-45">+</span>
+                      <span aria-hidden="true" className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#eadfce] bg-[#fffaf3] text-lg leading-none text-[#8f7d6d] transition group-open:rotate-45">+</span>
                     </summary>
                     <div className="border-t border-[#f0e6da] bg-[#fffdfa] px-5 py-4">
                       <p className="max-w-[48rem] text-sm leading-7 text-[#6d665f]">{answer}</p>

@@ -63,6 +63,26 @@ export interface ThemeNavLink {
   group?: string;
 }
 
+export interface SaveTheDateNavigationItem {
+  label: string;
+  slug: string;
+  href: string;
+  status: "published" | "draft" | "review_required";
+  sortOrder: number;
+}
+
+export interface SaveTheDateNavigationGroup {
+  label: string;
+  slug: string;
+  sortOrder: number;
+  items: SaveTheDateNavigationItem[];
+}
+
+export interface SaveTheDateNavigationConfig {
+  menuLabel: string;
+  groups: SaveTheDateNavigationGroup[];
+}
+
 export interface SectionBlockInstance {
   id: string;
   type: string;
@@ -80,6 +100,7 @@ export interface ThemePageJson {
   version: number;
   sectionsOrder: string[];
   sections: Record<string, SectionInstance>;
+  relatedLinks?: Array<{ label: string; href: string }>;
   seo?: {
     title?: string;
     description?: string;
@@ -90,9 +111,24 @@ export interface ThemePageJson {
     robots?: {
       index?: boolean;
       follow?: boolean;
+      maxImagePreview?: "none" | "standard" | "large";
     };
     index?: boolean;
     follow?: boolean;
+  };
+  mediaManifest?: Array<{
+    src: string;
+    alt: string;
+    role?: "hero" | "content";
+    loading?: "eager" | "lazy";
+    fetchPriority?: "high" | "low" | "auto";
+    width?: number;
+    height?: number;
+  }>;
+  contentContract?: {
+    schema: "editorial-page-v1";
+    requiredSections: string[];
+    sourceRevision?: string;
   };
 }
 
@@ -174,6 +210,7 @@ export interface ThemeSettings {
     headerLinks: ThemeNavLink[];
     footerLinks: ThemeNavLink[];
   };
+  saveTheDateNavigation?: SaveTheDateNavigationConfig;
   globalSections?: {
     header?: SectionInstance;
     footer?: SectionInstance;
@@ -895,7 +932,7 @@ export interface PublishedPageEntityProjection {
     title: string;
     description: string;
     canonicalPath: string;
-    robots: { index: boolean; follow: boolean };
+    robots: { index: boolean; follow: boolean; maxImagePreview?: "none" | "standard" | "large" };
   };
   content: PublishedPageEntityContent;
   mediaEntityId: string;
@@ -1001,6 +1038,21 @@ export interface PublishedPolicyRouteProjection {
   sitemapEligible: true;
 }
 
+export interface PublishedStandardRouteProjection {
+  disposition: "render";
+  siteId: "site_dreamshoot" | "site_grownstride_test";
+  routeKind: "standard-content";
+  canonicalPath: string;
+  pageEntityId: string;
+  pageId: string;
+  pageRevision: string;
+  status: "published" | "review_required";
+  indexable: boolean;
+  sitemapEligible: boolean;
+  mediaEntityId: string;
+  reviewReason?: string;
+}
+
 export interface PublishedRedirectRouteProjection {
   disposition: "redirect";
   siteId: "site_dreamshoot" | "site_grownstride_test";
@@ -1017,6 +1069,7 @@ export type PublishedRouteProjection =
   | PublishedLeafRouteProjection
   | PublishedVideoTopicRouteProjection
   | PublishedPolicyRouteProjection
+  | PublishedStandardRouteProjection
   | PublishedRedirectRouteProjection;
 
 export interface PublishedVideoNavigationProjection {

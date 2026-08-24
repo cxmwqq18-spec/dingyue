@@ -1,7 +1,7 @@
 import "server-only";
 
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
-import type { CreativePack, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage } from "@/lib/types";
+import type { CreativePack, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedStandardRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage } from "@/lib/types";
 import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
 import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
@@ -40,8 +40,8 @@ function isLeafRenderRoute(route: PublishedRouteProjection): route is PublishedL
   return route.disposition === "render" && route.routeKind === "ai-image-theme-leaf";
 }
 
-function isPublishedPageEntityRoute(route: PublishedRouteProjection): route is PublishedLeafRouteProjection | PublishedVideoTopicRouteProjection {
-  return route.disposition === "render" && (route.routeKind === "ai-image-theme-leaf" || route.routeKind === "ai-video-topic-leaf");
+function isPublishedPageEntityRoute(route: PublishedRouteProjection): route is PublishedLeafRouteProjection | PublishedStandardRouteProjection | PublishedVideoTopicRouteProjection {
+  return route.disposition === "render" && (route.routeKind === "ai-image-theme-leaf" || route.routeKind === "ai-video-topic-leaf" || route.routeKind === "standard-content");
 }
 
 function profileFromPublishedFacts(facts: PublishedSiteSnapshot["publishedFacts"]): StorefrontProfileJson | undefined {
@@ -131,7 +131,7 @@ const DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS = new Set([
   "/ai-video-generation/text-to-video",
   "/ai-video-generation/image-to-video"
 ]);
-const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"]);
+const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", "/ai-save-the-date/valentines-day"]);
 
 function bundleFor(snapshot: PublishedSiteSnapshot, page: ThemePage): StorefrontContextBundle {
   return {
@@ -422,7 +422,7 @@ export function resolveEffectiveIndexability(snapshot: PublishedSiteSnapshot, pa
   const publishedMedia = resolved.pageMedia;
   const standardMedia = resolved.standardPageMedia;
   const mediaReady = publishedRoute
-    ? publishedRoute.indexable && publishedMedia?.status === "ready"
+    ? publishedRoute.indexable && (publishedRoute.routeKind === "standard-content" ? standardMedia?.status === "ready" : publishedMedia?.status === "ready")
       : MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(canonicalPath)
       ? standardMedia?.status === "ready"
       : true;
@@ -507,6 +507,15 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
     if (exactPublishedRoute.status !== "published" && !evidenceOnlyReview) return { kind: "not_found", status: 404, path: requestedPath };
     const page = snapshot.pages.find((candidate) => candidate.id === exactPublishedRoute.pageId && normalizePath(candidate.slug) === requestedPath);
     return page
+      ? { kind: "render", status: 200, path: requestedPath, pageId: page.id }
+      : { kind: "not_found", status: 404, path: requestedPath };
+  }
+  if (exactPublishedRoute?.disposition === "render" && exactPublishedRoute.routeKind === "standard-content") {
+    if (exactPublishedRoute.status !== "published") return { kind: "not_found", status: 404, path: requestedPath };
+    const page = snapshot.pages.find((candidate) => candidate.id === exactPublishedRoute.pageId && normalizePath(candidate.slug) === requestedPath);
+    const entity = snapshot.publishedPageEntities.find((candidate) => candidate.pageEntityId === exactPublishedRoute.pageEntityId && candidate.canonicalPath === requestedPath && candidate.status === "published");
+    const media = snapshot.publishedStandardPageMedia.find((candidate) => candidate.canonicalPath === requestedPath && candidate.mediaEntityId === exactPublishedRoute.mediaEntityId && candidate.status === "ready");
+    return page && entity && media
       ? { kind: "render", status: 200, path: requestedPath, pageId: page.id }
       : { kind: "not_found", status: 404, path: requestedPath };
   }

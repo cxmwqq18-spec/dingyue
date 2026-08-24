@@ -4,18 +4,18 @@ import { Camera, Coffee, Heart, ImageIcon, Map as MapIcon, Mountain, PlayCircle,
 import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
-import { HeaderPhotoPackageMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
+import { HeaderPhotoPackageMegaPanel, HeaderSaveTheDateMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import { isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationParentCategories, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { getPhotoPackageMegaGroups } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
-import type { CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, SaveTheDateNavigationGroup, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 
-type CustomerShellHeaderSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
+type CustomerShellHeaderSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain"> & { themeSettings?: Site["themeSettings"] };
 type MenuGroupItem = { label: string; href: string };
 type MenuGroupEntry = { label: string; accent: string; icon: LucideIcon; items: MenuGroupItem[] };
 type MenuGroup = MenuGroupEntry[];
@@ -192,6 +192,11 @@ export function CustomerShellHeader({
   const fallbackPackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
   const hasCatalogData = creativePacks.length > 0 || creativePackCategories.length > 0;
   const activePackageGroups = hasCatalogData ? dynamicPackageGroups : fallbackPackageGroups;
+  const saveTheDateConfig = site.themeSettings?.publishedJson?.saveTheDateNavigation;
+  const saveTheDateGroups: SaveTheDateNavigationGroup[] = saveTheDateConfig?.groups ?? [];
+  const saveTheDateMenuLabel = saveTheDateConfig?.menuLabel?.trim() ?? "";
+  const routedSaveTheDateGroups = saveTheDateGroups.map((group) => ({ ...group, items: group.items.map((item) => ({ ...item, href: `${basePath}${item.href}` })) }));
+  const hasSaveTheDate = saveTheDateGroups.some((group) => group.items.some((item) => item.status === "published"));
   const menuSite = { ...site, __storefrontBasePath: basePath };
   const primaryMyDreamShoots = isMyDreamShoots && !isSpanishXby;
   const useVideoGenerationToolsMenu = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXby;
@@ -298,10 +303,10 @@ export function CustomerShellHeader({
                 />
               )}
             </ClickMegaMenu>
-            {!isSpanishXby ? (
-              <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/best-packages`}>
-                Best Packages
-              </StorefrontInstantLink>
+            {!isSpanishXby && hasSaveTheDate && saveTheDateMenuLabel ? (
+              <ClickMegaMenu buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`} label={saveTheDateMenuLabel} panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out">
+                <HeaderSaveTheDateMegaPanel menuLabel={saveTheDateMenuLabel} groups={routedSaveTheDateGroups} variantTone="dark" />
+              </ClickMegaMenu>
             ) : null}
             <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={workflowHref}>
               {isSpanishXby ? "Como funciona" : "How it works"}

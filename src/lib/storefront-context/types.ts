@@ -34,6 +34,7 @@ export type ResolvedPageSeo = {
   ogImage?: string;
   index: boolean;
   follow: boolean;
+  maxImagePreview?: "none" | "standard" | "large";
   sitemapEligible: boolean;
 };
 

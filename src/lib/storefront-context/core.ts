@@ -58,6 +58,7 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
       : clean(pageSeo?.ogImage) || (pageScopedSocial ? undefined : clean(settings.seo?.defaultOgImage) || undefined),
     index: defaultIndex && pageRobots.index && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true),
     follow: pageRobots.follow && (pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true),
+    maxImagePreview: pageSeo?.robots?.maxImagePreview,
     sitemapEligible: defaultIndex && pageRobots.index && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true)
   };
 }
@@ -210,7 +211,8 @@ export function resolveStorefrontContext(
   const missingFacts = missingStorefrontProfileFacts(profile);
   const pageCopySlug = seo.canonicalPath.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1];
   const videoTopicSlug = seo.canonicalPath.match(/^\/ai-video-generation\/([^/?#]+)$/)?.[1];
-  const pageEntity = (pageCopySlug || videoTopicSlug) && mode === "published" && bundle.publishedPageEntities
+  const standardPageEntityPath = primaryMydreamshoots && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(seo.canonicalPath) ? seo.canonicalPath : undefined;
+  const pageEntity = (pageCopySlug || videoTopicSlug || standardPageEntityPath) && mode === "published" && bundle.publishedPageEntities
     ? bundle.publishedPageEntities[seo.canonicalPath]
     : undefined;
   const pageCopy = pageCopySlug && mode === "published" && primaryMydreamshoots

@@ -24,6 +24,7 @@ type JsonLdInput = {
   products?: Product[];
   videoThemes?: VideoTheme[];
   context: StorefrontContext;
+  publishedRoutePaths?: readonly string[];
 };
 
 function cleanText(value: unknown, fallback = ""): string {
@@ -376,7 +377,7 @@ function pageDescription(site: Site, page: Pick<ThemePage, "id" | "title">, cont
   return context?.seo.description || cleanSchemaText(site, page.title);
 }
 
-function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, title: string): JsonLdNode {
+function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, title: string, publishedRoutePaths: readonly string[] = []): JsonLdNode {
   const parts = pagePath.split("/").filter(Boolean);
   const items = [
     {
@@ -389,10 +390,12 @@ function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, t
   let current = "";
   parts.forEach((part, index) => {
     current += `/${part}`;
+    const isFinal = index === parts.length - 1;
+    if (!isFinal && !publishedRoutePaths.includes(current)) return;
     items.push({
       "@type": "ListItem",
-      position: index + 2,
-      name: index === parts.length - 1 ? title : schemaPathLabel(site, part),
+      position: items.length + 1,
+      name: isFinal ? title : schemaPathLabel(site, part),
       item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, current))
     });
   });
@@ -971,7 +974,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     organizationSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.context),
     websiteSchema(resolvedInput.site, resolvedInput.routeMode),
     storefrontApplicationSchema(resolvedInput, title, description),
-    breadcrumbs(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title),
+    breadcrumbs(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, resolvedInput.publishedRoutePaths),
     publishedStandardPageSchema(resolvedInput, title, description),
     faqSchema(resolvedInput.site, resolvedInput.pageJson, resolvedInput),
     articleSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, description, resolvedInput.pageJson),

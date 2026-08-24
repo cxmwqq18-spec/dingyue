@@ -453,7 +453,8 @@ function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): Sitem
 function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   if (page.siteId !== site.id) return "";
   const pageSeo = page.publishedJson.seo;
-  const canonicalPath = canonicalPublicPath(normalizePath(pageSeo?.canonical ?? pageSeo?.canonicalPath ?? page.slug));
+  const canonicalValue = pageSeo?.canonical ?? pageSeo?.canonicalPath ?? page.slug;
+  const canonicalPath = canonicalPublicPath(normalizePath(/^https?:\/\//i.test(canonicalValue) ? new URL(canonicalValue).pathname : canonicalValue));
   const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug));
   return isIndexablePage(page) && !isLegacyDuplicate && !isBlockedPublicPathForSite(site, canonicalPath) && pageSeo?.robots?.index !== false && pageSeo?.index !== false
     ? canonicalDirectoryPathForSite(site, canonicalPath)
@@ -553,7 +554,8 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
 }
 
 function canonicalPathForSitemapPage(page: ThemePage): string {
-  return normalizePath(page.publishedJson.seo?.canonical ?? page.publishedJson.seo?.canonicalPath ?? page.slug);
+  const canonicalValue = page.publishedJson.seo?.canonical ?? page.publishedJson.seo?.canonicalPath ?? page.slug;
+  return normalizePath(/^https?:\/\//i.test(canonicalValue) ? new URL(canonicalValue).pathname : canonicalValue);
 }
 
 function slugifySegment(value: string): string {

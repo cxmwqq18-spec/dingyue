@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, ChevronRight, PlayCircle } from "lucide-react";
 import { creativePackIconByName, suggestedCreativePackIconName } from "@/lib/creative-pack-icons";
+import type { SaveTheDateNavigationGroup } from "@/lib/types";
 
 export type HeaderPhotoPackageMegaGroup = {
   label: string;
@@ -36,6 +37,42 @@ export type HeaderVideoGenerationTopic = {
   parentSortOrder?: number;
   sortOrder?: number;
 };
+
+export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, variantTone = "dark" }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; variantTone?: "dark" | "warm" }) {
+  const warm = variantTone === "warm";
+  const visibleGroups = groups.map((group) => ({ ...group, items: group.items.filter((item) => item.status === "published").sort((a, b) => a.sortOrder - b.sortOrder) })).filter((group) => group.items.length).sort((a, b) => a.sortOrder - b.sortOrder);
+  const totalItems = visibleGroups.reduce((sum, group) => sum + group.items.length, 0);
+  return (
+    <div className={warm ? "overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)]" : "overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)]"}>
+      <div className="mb-4 flex items-center justify-center gap-3 text-center">
+        <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
+        <div>
+          <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>{menuLabel}</span>
+          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{visibleGroups.length} groups · {totalItems} pages</p>
+        </div>
+        <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
+      </div>
+      <div className={warm ? "grid gap-3 border-t border-[#eadfce] pt-5 lg:grid-cols-3" : "grid gap-3 border-t border-[#263247] pt-5 lg:grid-cols-3"}>
+        {visibleGroups.map((group) => (
+          <details className={warm ? "rounded-[14px] border border-[#eadfce] bg-white p-3" : "rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3"} key={group.slug} open>
+            <summary className={warm ? "flex min-h-10 cursor-pointer list-none items-center text-[0.94rem] font-semibold text-[#b86e36]" : "flex min-h-10 cursor-pointer list-none items-center text-[0.94rem] font-semibold text-[#38a8ff]"}>{group.label}<span className={warm ? "ml-auto text-[11px] text-[#9b8877]" : "ml-auto text-[11px] text-white/42"}>{group.items.length}</span></summary>
+            <div className="mt-3 grid gap-2 border-t border-white/10 pt-3">
+              {group.items.map((item) => <Link className={warm ? "flex min-h-10 items-center rounded-[10px] px-2 py-2 text-[0.94rem] font-semibold text-[#4b4037] transition hover:bg-[#f5eadf]" : "flex min-h-10 items-center rounded-[10px] px-2 py-2 text-[0.94rem] font-semibold text-white/82 transition hover:bg-white/[0.06] hover:text-white"} href={item.href} key={item.slug} prefetch={false}>{item.label}<ChevronRight className="ml-auto h-3.5 w-3.5 shrink-0" strokeWidth={2} /></Link>)}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function HeaderMobileSaveTheDateMenu({ groups, menuLabel, dark }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; dark: boolean }) {
+  const items = groups.flatMap((group) => group.items.filter((item) => item.status === "published").map((item) => ({ ...item, group: group.label })));
+  return <details className={dark ? "rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
+    <summary className={dark ? "flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-[16px] px-4 py-3 text-sm font-semibold text-white marker:hidden" : "flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-[16px] px-4 py-3 text-sm font-semibold text-[#171514] marker:hidden"}>{menuLabel}</summary>
+    <div className="grid gap-1 px-2 pb-2">{items.map((item) => <Link className={dark ? "rounded-[12px] px-3 py-2 text-sm text-white/76 hover:bg-white/[0.08] hover:text-white" : "rounded-[12px] px-3 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={item.href} key={item.slug}>{item.label}</Link>)}</div>
+  </details>;
+}
 
 function splitColumns<T>(items: T[], columnCount = 3): T[][] {
   const columns = Array.from({ length: columnCount }, () => [] as T[]);

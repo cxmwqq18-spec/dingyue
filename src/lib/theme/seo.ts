@@ -90,7 +90,11 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
     description: seo.description,
     keywords: seo.keywords || undefined,
     alternates: canonical ? { canonical } : undefined,
-    robots: { index: seo.index, follow: seo.follow },
+    robots: {
+      index: seo.index,
+      follow: seo.follow,
+      ...(seo.maxImagePreview ? { "max-image-preview": seo.maxImagePreview } : {})
+    },
     openGraph: {
       title: seo.title,
       description: seo.description,

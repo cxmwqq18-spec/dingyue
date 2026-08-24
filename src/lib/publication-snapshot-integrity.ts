@@ -59,6 +59,11 @@ function route(value: unknown): value is PublishedRouteProjection {
     return policyCanonicalPaths.has(value.canonicalPath as typeof policyRouteSpecs[number]["canonicalPath"]) && text(value.pageEntityId) &&
       text(value.pageId) && text(value.pageRevision) && value.status === "published" && value.indexable === true && value.sitemapEligible === true;
   }
+  if (value.routeKind === "standard-content") {
+    return text(value.canonicalPath) && text(value.pageEntityId) && text(value.pageId) && text(value.pageRevision) && text(value.mediaEntityId) &&
+      (value.status === "published" || value.status === "review_required") && typeof value.indexable === "boolean" && typeof value.sitemapEligible === "boolean" &&
+      (value.status === "published" ? value.indexable && value.sitemapEligible : !value.indexable && !value.sitemapEligible);
+  }
   if (value.routeKind === "ai-video-topic-leaf") {
     return text(value.canonicalSlug) && text(value.canonicalPath) && text(value.pageId) && text(value.pageEntityId) &&
       text(value.pageRevision) && text(value.copyRevision) && value.copySource === "theme-page" &&
@@ -87,6 +92,7 @@ function pageEntity(value: unknown): value is PublishedPageEntityProjection {
   const content = value.content;
   return text(metadata.title) && text(metadata.description) && metadata.canonicalPath === value.canonicalPath && record(metadata.robots) &&
     typeof metadata.robots.index === "boolean" && typeof metadata.robots.follow === "boolean" &&
+    (metadata.robots.maxImagePreview === undefined || ["none", "standard", "large"].includes(String(metadata.robots.maxImagePreview))) &&
     text(content.h1) && text(content.heroIntro) && text(content.metaLabel) && textArray(content.tags) && textArray(content.detailTags) &&
     text(content.detailIntro) && text(content.whatCreates) && textArray(content.bestFor, 3) && textArray(content.workflow, 3) &&
     textArray(content.styleNotes, 3) && textArray(content.reviewCriteria, 3) && text(content.coverNote) &&
@@ -247,8 +253,9 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const leafRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "ai-image-theme-leaf");
   const videoTopicRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "ai-video-topic-leaf");
   const policyRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "policy");
+  const standardContentRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "standard-content");
   const redirectRoutes = publishedRoutes.filter((item): item is PublishedRedirectRouteProjection => item.disposition === "redirect" && item.routeKind === "policy-alias");
-  const legacyRedirectRoutes = publishedRoutes.filter((item): item is PublishedRedirectRouteProjection => item.disposition === "redirect" && item.routeKind === "legacy-topic-alias");
+  const legacyRedirectRoutes = publishedRoutes.filter((item) => item.disposition === "redirect" && (item as { routeKind?: string }).routeKind === "legacy-topic-alias") as PublishedRedirectRouteProjection[];
   const expectedPolicyPaths = policyRouteSpecs.map((spec) => spec.canonicalPath);
   const expectedPolicyAliases = policyRouteSpecs.flatMap((spec) => spec.aliases);
   const pageCopyRows = v1.publishedPageCopy;
@@ -274,6 +281,9 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const standardMediaIds = publishedStandardPageMedia.map((item) => item.mediaEntityId);
   const linkIds = links.map((item) => item.linkEntityId);
   const expectedStandardPaths = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"];
+  if (standardContentRoutes.some((route) => route.canonicalPath === "/ai-save-the-date/valentines-day") || publishedStandardPageMedia.some((media) => media.canonicalPath === "/ai-save-the-date/valentines-day")) {
+    expectedStandardPaths.push("/ai-save-the-date/valentines-day");
+  }
   const imagePageEntities = publishedPageEntities.filter((item) => item.pageType === "ai-image-theme-leaf");
   const videoPageEntities = publishedPageEntities.filter((item) => item.pageType === "ai-video-topic-leaf");
   const imagePageMedia = publishedPageMedia.filter((item) => item.routeKind !== "ai-video-topic-leaf");
@@ -290,7 +300,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     expectedPolicyAliases.every((path) => redirectRoutes.some((item) => item.aliasPath === path)) &&
     legacyRedirectRoutes.length === 1 && legacyRedirectRoutes[0]?.aliasPath === legacyMotionAlias.aliasPath &&
     legacyRedirectRoutes[0]?.targetPath === legacyMotionAlias.targetPath &&
-    [...pages.keys()].every((id) => [...leafRoutes, ...videoTopicRoutes].some((routeItem) => routeItem.pageEntityId === id)) &&
+    [...pages.keys()].every((id) => [...leafRoutes, ...videoTopicRoutes, ...standardContentRoutes].some((routeItem) => routeItem.pageEntityId === id || snapshot.pages.some((page) => page.id === (routeItem as { pageId?: string }).pageId && page.id === id))) &&
     collections.every((item) => pages.has(item.pageEntityId) && mediaByPage.get(item.pageEntityId)?.mediaEntityId === item.mediaEntityId) &&
     policyRoutes.every((item) => snapshot.pages.some((page) => page.id === item.pageId && page.slug === item.canonicalPath)) &&
     redirectRoutes.every((item) => policyRoutes.some((routeItem) => routeItem.canonicalPath === item.targetPath));

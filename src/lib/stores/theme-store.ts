@@ -59,7 +59,9 @@ import type {
   ThemePage,
   ThemePublication,
   PublishedRouteProjection,
+  PublishedStandardRouteProjection,
   PublishedStandardPageMediaProjection,
+  PublishedPageEntityProjection,
   PublishedSeoSnapshot,
   ThemeSectionSchema,
   ThemeSettings,
@@ -84,13 +86,15 @@ function asPublishedMediaPack(pack: PublishPreflightCreativePack | undefined): {
 }
 
 const STANDARD_MYDREAMSHOOTS_MEDIA_PATHS = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"] as const;
-const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_MEDIA_PATHS)[number], string> = {
+const SAVE_THE_DATE_PATH = "/ai-save-the-date/valentines-day" as const;
+const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_MEDIA_PATHS)[number] | typeof SAVE_THE_DATE_PATH, string> = {
   "/about-us": "MyDreamShoots company overview with the private AI photo workflow",
   "/best-packages": "Published MyDreamShoots photo packages arranged for visual theme comparison",
   "/best-ai-image": "Published AI image examples selected from the current MyDreamShoots collection",
   "/pricing": "MyDreamShoots subscription credits and billing options comparison visual",
   "/faq": "MyDreamShoots support questions for uploads credits generation and delivery",
-  "/workflow": "MyDreamShoots approved upload generation review and private delivery workflow"
+  "/workflow": "MyDreamShoots approved upload generation review and private delivery workflow",
+  [SAVE_THE_DATE_PATH]: "Valentine's Day save the date visual story from approved couple photos"
 };
 function collectPublishedImageUrls(value: unknown, output: string[] = []): string[] {
   if (typeof value === "string" && /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(value.trim())) {
@@ -113,9 +117,13 @@ function buildPublishedStandardPageMedia(
   leafMedia: ReturnType<typeof buildPublishedPageMediaProjection>[]
 ): PublishedStandardPageMediaProjection[] {
   if (!isPrimaryMydreamshootsSite(site)) return [];
-  return STANDARD_MYDREAMSHOOTS_MEDIA_PATHS.map((canonicalPath) => {
+  const paths = site.pages.some((candidate) => candidate.slug === SAVE_THE_DATE_PATH || candidate.publishedJson.seo?.canonicalPath === SAVE_THE_DATE_PATH)
+    ? [...STANDARD_MYDREAMSHOOTS_MEDIA_PATHS, SAVE_THE_DATE_PATH]
+    : STANDARD_MYDREAMSHOOTS_MEDIA_PATHS;
+  return paths.map((canonicalPath) => {
     const page = site.pages.find((candidate) => candidate.slug === canonicalPath || candidate.publishedJson.seo?.canonicalPath === canonicalPath);
-    const discovered = page ? collectPublishedImageUrls(page.publishedJson) : [];
+    const manifest = page?.publishedJson.mediaManifest ?? [];
+    const discovered = manifest.length ? manifest.map((item) => item.src).filter(Boolean) : page ? collectPublishedImageUrls(page.publishedJson) : [];
     const firstReadyLeafMedia = canonicalPath === "/best-ai-image"
       ? leafRoutes.flatMap((route) => {
           const media = leafMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId);
@@ -125,7 +133,7 @@ function buildPublishedStandardPageMedia(
     const primaryImage = firstReadyLeafMedia?.primaryImage ?? page?.publishedJson.seo?.ogImage ?? discovered[0] ?? "";
     const pageEntityId = `mydreamshoots:standard:${canonicalPath.slice(1).replace(/[^a-z0-9]+/gi, "-")}`;
     const mediaEntityId = `${pageEntityId}:media`;
-    const primaryImageAlt = page ? STANDARD_MYDREAMSHOOTS_MEDIA_ALTS[canonicalPath] : "";
+    const primaryImageAlt = page ? (manifest[0]?.alt || STANDARD_MYDREAMSHOOTS_MEDIA_ALTS[canonicalPath] || "") : "";
     const sitemapImages = primaryImage ? [primaryImage, ...discovered.filter((image) => image !== primaryImage)].slice(0, 6) : [];
     const status = page && primaryImage && primaryImageAlt ? "ready" as const : "review_required" as const;
     const revision = projectionRevision({ pageEntityId, pageId: page?.id, canonicalPath, primaryImage, primaryImageAlt, sitemapImages, status });
@@ -145,6 +153,127 @@ function buildPublishedStandardPageMedia(
       ...(status === "ready" ? {} : { reviewReason: "STANDARD_PAGE_MEDIA_REQUIRED" })
     };
   });
+}
+
+function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStandardRouteProjection | undefined {
+  if (!isPrimaryMydreamshootsSite(site)) return undefined;
+  const canonicalPath = page.publishedJson.seo?.canonicalPath || page.publishedJson.seo?.canonical || page.slug;
+  const standardPaths = new Set(["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", "/ai-save-the-date/valentines-day"]);
+  if (!standardPaths.has(canonicalPath)) return undefined;
+  const pageEntityId = `mydreamshoots:standard:${canonicalPath.slice(1).replace(/[^a-z0-9]+/gi, "-")}`;
+  const mediaEntityId = `${pageEntityId}:media`;
+  const pageRevision = crypto.createHash("sha256").update(JSON.stringify(page.publishedJson)).digest("hex").slice(0, 20);
+  const indexable = page.publishedJson.seo?.index !== false && page.publishedJson.seo?.robots?.index !== false;
+  const strictEditorial = canonicalPath === "/ai-save-the-date/valentines-day";
+  const expectedSections = ["hero", "positioning", "story-styles", "details", "workflow", "ideas", "formats", "checklist", "faq", "final-cta"];
+  const contract = page.publishedJson.contentContract;
+  const sectionIds = page.publishedJson.sectionsOrder.map((id) => page.publishedJson.sections[id]).filter(Boolean);
+  const noRawMarkdown = !JSON.stringify(page.publishedJson).match(/---|```|`[^`]+`|\[[^\]]+\]\([^)]*\)/);
+  const editorialReady = !strictEditorial || (
+    contract?.schema === "editorial-page-v1" &&
+    JSON.stringify(contract.requiredSections) === JSON.stringify(expectedSections) &&
+    sectionIds.length === expectedSections.length &&
+    new Set(sectionIds.map((section) => String(section.settings.anchor ?? ""))).size === expectedSections.length &&
+    noRawMarkdown
+  );
+  const publishable = indexable && editorialReady;
+  return {
+    disposition: "render",
+    siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
+    routeKind: "standard-content",
+    canonicalPath,
+    pageEntityId,
+    pageId: page.id,
+    pageRevision,
+    status: publishable ? "published" : "review_required",
+    indexable: publishable,
+    sitemapEligible: publishable,
+    mediaEntityId,
+    ...(!indexable ? { reviewReason: "PAGE_SEO_REVIEW_REQUIRED" } : !editorialReady ? { reviewReason: "EDITORIAL_PAGE_CONTRACT_REQUIRED" } : {})
+  };
+}
+
+function standardContentEntity(site: Site, page: ThemePage, route: PublishedStandardRouteProjection): PublishedPageEntityProjection {
+  const seo = page.publishedJson.seo ?? {};
+  const sections = page.publishedJson.sectionsOrder.map((id) => page.publishedJson.sections[id]).filter(Boolean);
+  const setting = (key: string, fallback = "") => {
+    for (const section of sections) {
+      const value = section.settings?.[key];
+      if (typeof value === "string" && value.trim()) return value.trim();
+    }
+    return fallback;
+  };
+  const sectionOf = (type: string) => sections.find((section) => section.type === type);
+  const blockText = (block: SectionBlockInstance, key: string) => String(block.settings?.[key] ?? "").trim();
+  const sectionSetting = (type: string, key: string) => String(sectionOf(type)?.settings?.[key] ?? "").trim();
+  const story = sectionOf("editorial_story_grid");
+  const details = sectionOf("editorial_detail_list");
+  const workflow = sectionOf("editorial_steps");
+  const ideas = sectionOf("editorial_ideas");
+  const checklist = sectionOf("editorial_checklist");
+  const finalCta = sectionOf("editorial_cta");
+  const storyBlocks = story?.blocks ?? [];
+  const detailBlocks = details?.blocks ?? [];
+  const workflowBlocks = workflow?.blocks ?? [];
+  const ideaBlocks = ideas?.blocks ?? [];
+  const checklistBlocks = checklist?.blocks ?? [];
+  const heroTitle = sectionSetting("editorial_hero", "title") || page.title;
+  const heroIntro = sectionSetting("editorial_hero", "intro") || seo.description || "Publication content pending review.";
+  const faqSection = sections.find((section) => section.type === "faq");
+  const faqItems = (faqSection?.blocks ?? []).map((block, index) => ({ id: block.id || `faq-${index + 1}`, question: String(block.settings.question ?? ""), answer: String(block.settings.answer ?? "") })).filter((item) => item.question && item.answer);
+  const listOrFallback = (values: string[], fallback: string) => {
+    const clean = values.filter(Boolean).slice(0, 8);
+    while (clean.length < 3) clean.push(clean[clean.length % Math.max(clean.length, 1)] || fallback);
+    return clean;
+  };
+  const finalTitle = sectionSetting("editorial_cta", "title") || "Continue with the published page";
+  return {
+    pageEntityId: route.pageEntityId,
+    canonicalPath: route.canonicalPath,
+    pageType: "standard-content",
+    status: route.status,
+    indexable: route.indexable,
+    sitemapEligible: route.sitemapEligible,
+    metadata: { title: seo.title || page.title, description: seo.description || "", canonicalPath: route.canonicalPath, robots: { index: route.indexable, follow: seo.follow !== false, ...(seo.robots?.maxImagePreview ? { maxImagePreview: seo.robots.maxImagePreview } : {}) } },
+    content: {
+      h1: heroTitle,
+      heroIntro,
+      metaLabel: sectionSetting("editorial_hero", "eyebrow") || setting("eyebrow", "Published page"),
+      tags: listOrFallback(storyBlocks.map((block) => blockText(block, "title")), "Published content"),
+      detailTags: listOrFallback(detailBlocks.map((block) => blockText(block, "label")), "Page detail"),
+      detailIntro: sectionSetting("editorial_detail_list", "intro") || heroIntro,
+      whatCreates: heroIntro,
+      bestFor: listOrFallback(storyBlocks.map((block) => blockText(block, "title")), "Published content"),
+      workflow: listOrFallback(workflowBlocks.map((block) => blockText(block, "title")), "Published step"),
+      styleNotes: listOrFallback(ideaBlocks.map((block) => blockText(block, "title")), "Published direction"),
+      reviewCriteria: listOrFallback(checklistBlocks.map((block) => blockText(block, "text")), "Published review item"),
+      coverNote: sectionSetting("editorial_cta", "intro") || heroIntro,
+      safetyNote: undefined,
+      galleryTitle: sectionSetting("editorial_story_grid", "title") || sectionSetting("editorial_ideas", "title") || page.title,
+      galleryIntro: sectionSetting("editorial_ideas", "intro") || heroIntro,
+      ctaEyebrow: sectionSetting("editorial_hero", "eyebrow") || "Published action",
+      ctaTitle: finalTitle,
+      ctaSubtitle: sectionSetting("editorial_cta", "intro") || heroIntro,
+      ctaLinkEntityId: `${route.pageEntityId}:link:cta`,
+      faqEyebrow: sectionSetting("faq", "eyebrow") || "FAQ",
+      faqTitle: sectionSetting("faq", "title") || "Frequently asked questions",
+      faqItems: faqItems.length >= 4 ? faqItems : [
+        { id: "faq-review-1", question: "What does this page cover?", answer: heroIntro },
+        { id: "faq-review-2", question: "Where can I review the published details?", answer: "Review the visible page sections and the current published metadata before relying on this information." },
+        { id: "faq-review-3", question: "Can the page content change?", answer: "Published content changes only when a new validated publication snapshot is activated." },
+        { id: "faq-review-4", question: "Who can help with questions?", answer: "Contact the published storefront support channel for account or page questions." }
+      ],
+      relatedEyebrow: "Related content",
+      relatedTitle: "Continue exploring",
+      relatedSubtitle: "Published related links appear here when route validation provides them.",
+      relatedCtaLabel: "Explore published content",
+      relatedLinkEntityIds: [`${route.pageEntityId}:link:related:1`, `${route.pageEntityId}:link:related:2`]
+    },
+    mediaEntityId: route.mediaEntityId,
+    pageRevision: route.pageRevision,
+    copyRevision: route.pageRevision,
+    reviewReasons: []
+  };
 }
 
 function stableProjection(value: unknown): unknown {
@@ -309,6 +438,14 @@ export function buildPublicationSnapshot(
     };
   });
   const publishedStandardPageMedia = buildPublishedStandardPageMedia(site, leafRoutes, imagePublishedPageMedia);
+  const standardContentPages = isMydreamshootsPublicationSite
+    ? site.pages.map((page) => {
+        const route = standardContentRouteForPage(site, page);
+        return route ? { page, route } : undefined;
+      }).filter((entry): entry is { page: ThemePage; route: PublishedStandardRouteProjection } => Boolean(entry))
+    : [];
+  const standardContentRoutes = standardContentPages.map(({ route }) => route);
+  const standardContentEntities = standardContentPages.map(({ page, route }) => standardContentEntity(site, page, route));
   const policyRouteSpecs = [
     { canonicalPath: "/privacy" as const, aliases: ["/privacy-policy", "/policies/privacy", "/policies/privacy-policy"] },
     { canonicalPath: "/terms" as const, aliases: ["/terms-of-service", "/policies/terms", "/policies/terms-of-service"] },
@@ -374,7 +511,7 @@ export function buildPublicationSnapshot(
         routeRevision: crypto.createHash("sha256").update(JSON.stringify(["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator", 308])).digest("hex").slice(0, 20)
       }]
     : [];
-  const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...policyRoutes, ...videoTopicPublication.routes, ...motionLegacyRedirect];
+  const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...standardContentRoutes, ...policyRoutes, ...videoTopicPublication.routes, ...motionLegacyRedirect];
   const sourcePageEntities = isMydreamshootsPublicationSite
     ? mydreamshootsPublishedPageEntities(site.id as "site_dreamshoot" | "site_grownstride_test")
     : [];
@@ -395,7 +532,7 @@ export function buildPublicationSnapshot(
         : entity.reviewReasons
     };
   });
-  const publishedPageEntities = [...imagePublishedPageEntities, ...videoTopicPublication.pageEntities];
+  const publishedPageEntities = [...imagePublishedPageEntities, ...standardContentEntities, ...videoTopicPublication.pageEntities];
   const publishedPageCopy = [...imagePublishedPageCopy, ...videoTopicPublication.pageCopy];
   const publishedPageMedia = [...imagePublishedPageMedia, ...videoTopicPublication.pageMedia];
   const publishedVideoNavigation = videoTopicPublication.navigation;
@@ -526,7 +663,38 @@ export function buildPublicationSnapshot(
     entity.content.relatedLinkEntityIds = related.map((item) => item.linkEntityId);
     return [...cta, ...related];
   });
-  const publishedLinkRefs = [...imagePublishedLinkRefs, ...videoTopicPublication.linkRefs];
+  const standardContentLinkRefs: NonNullable<ThemePublication["snapshot"]["publishedLinkRefs"]> = standardContentEntities.flatMap((entity) => {
+    const cta = {
+      linkEntityId: entity.content.ctaLinkEntityId,
+      ownerPageEntityId: entity.pageEntityId,
+      kind: "cta" as const,
+      targetType: "private_action" as const,
+      label: entity.content.ctaTitle,
+      href: "/app/create",
+      revision: crypto.createHash("sha256").update(JSON.stringify([entity.pageEntityId, "cta", "/app/create"])).digest("hex").slice(0, 20)
+    };
+    const sourcePage = standardContentPages.find(({ route }) => route.pageEntityId === entity.pageEntityId)?.page;
+    const relatedLinks = sourcePage?.publishedJson.relatedLinks?.length
+      ? sourcePage.publishedJson.relatedLinks
+      : [{ label: "How it works", href: "/workflow" }, { label: "Best Packages", href: "/best-packages" }];
+    const targets = relatedLinks.map((candidate, index) => {
+      const href = candidate.href.trim();
+      const label = candidate.label.trim();
+      const target = standardContentEntities.find((candidate) => candidate.canonicalPath === href);
+      return target ? {
+        linkEntityId: `${entity.pageEntityId}:link:related:${index + 1}`,
+        ownerPageEntityId: entity.pageEntityId,
+        targetPageEntityId: target.pageEntityId,
+        targetType: "published_render" as const,
+        kind: "related" as const,
+        label,
+        href,
+        revision: crypto.createHash("sha256").update(JSON.stringify([entity.pageEntityId, target.pageEntityId, href])).digest("hex").slice(0, 20)
+      } : undefined;
+    }).filter(Boolean);
+    return [cta, ...targets] as NonNullable<ThemePublication["snapshot"]["publishedLinkRefs"]>;
+  });
+  const publishedLinkRefs = [...imagePublishedLinkRefs, ...standardContentLinkRefs, ...videoTopicPublication.linkRefs];
   const pageRevision = projectionRevision(publishedPageEntities);
   const copyRevision = projectionRevision(publishedPageCopy);
   const mediaRevision = projectionRevision({ leaf: publishedPageMedia, standard: publishedStandardPageMedia });
