@@ -77,7 +77,6 @@ try {
   const backupPath = path.join(backupDir, `mydreamshoots-video-directory-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
   fs.writeFileSync(
       backupPath,
-      target: databaseTarget || "local",
     `${JSON.stringify({ createdAt: new Date().toISOString(), target: databaseTarget || "local", database: parseDatabaseUrl(), page, activePublication: active }, null, 2)}\n`,
     { mode: 0o600 }
   );
