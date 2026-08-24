@@ -4,13 +4,14 @@ import fs from "node:fs";
 import Module from "node:module";
 import path from "node:path";
 import createJiti from "jiti";
-import { assertNonProductionWriteTarget } from "./lib/database-target.mjs";
+import { assertDatabaseTarget, assertNonProductionWriteTarget } from "./lib/database-target.mjs";
 
 const repoRoot = process.cwd();
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const updateDb = args.has("--db");
 const refreshContent = args.has("--refresh-content");
+const productionConfirmed = args.has("--confirm-production");
 const siteIdArg = process.argv.find((arg) => arg.startsWith("--site-id="));
 const SITE_ID = siteIdArg ? siteIdArg.slice("--site-id=".length) : process.env.SITE_ID || "site_dreamshoot";
 const UPDATE_TIMESTAMP = "2026-08-16T00:00:00.000Z";
@@ -1025,7 +1026,11 @@ syncExistingVideoThemePreviews(state, changes);
 
 let databasePublication;
 if (updateDb && !dryRun) {
-  assertNonProductionWriteTarget();
+  if (String(process.env.DATABASE_TARGET || "").trim().toLowerCase() === "production") {
+    assertDatabaseTarget({ expectedTarget: "production", requireProductionConfirmation: true, productionConfirmed });
+  } else {
+    assertNonProductionWriteTarget();
+  }
   databasePublication = await updateDatabase(state, categories, syncedPages);
 }
 console.log(

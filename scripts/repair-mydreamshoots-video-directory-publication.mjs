@@ -9,8 +9,14 @@ import { PrismaClient } from "@prisma/client";
 import { assertDatabaseTarget, parseDatabaseUrl } from "./lib/database-target.mjs";
 
 const apply = process.argv.includes("--apply");
-if (!apply) throw new Error("Use --apply to repair the local MyDreamShoots video directory publication.");
-assertDatabaseTarget({ expectedTarget: "local" });
+const productionConfirmed = process.argv.includes("--confirm-production");
+if (!apply) throw new Error("Use --apply to repair the MyDreamShoots video directory publication.");
+const databaseTarget = String(process.env.DATABASE_TARGET || "").trim().toLowerCase();
+if (databaseTarget === "production") {
+  assertDatabaseTarget({ expectedTarget: "production", requireProductionConfirmation: true, productionConfirmed });
+} else {
+  assertDatabaseTarget({ expectedTarget: "local" });
+}
 
 const siteId = "site_dreamshoot";
 const pageSlug = "/ai-video-generation";
@@ -70,8 +76,9 @@ try {
   fs.mkdirSync(backupDir, { recursive: true, mode: 0o700 });
   const backupPath = path.join(backupDir, `mydreamshoots-video-directory-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
   fs.writeFileSync(
-    backupPath,
-    `${JSON.stringify({ createdAt: new Date().toISOString(), target: "local", database: parseDatabaseUrl(), page, activePublication: active }, null, 2)}\n`,
+      backupPath,
+      target: databaseTarget || "local",
+    `${JSON.stringify({ createdAt: new Date().toISOString(), target: databaseTarget || "local", database: parseDatabaseUrl(), page, activePublication: active }, null, 2)}\n`,
     { mode: 0o600 }
   );
 
