@@ -334,6 +334,7 @@ export function ThemeRenderer({
                 toolMenuItems={toolMenuItems}
                 videoThemeCategories={videoThemeCategories}
                 videoThemes={videoThemes}
+                homepageShowcases={homepageShowcases}
                 videoGenerationTopics={navigationVideoGenerationTopics}
               />
             );
@@ -8605,14 +8606,14 @@ function SectionView({
         <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <h2 className={`${headingClass} mx-auto max-w-[24ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
-            <div className="mt-10 divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">
+            <div className="mx-auto mt-10 max-w-[66rem] divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">
               {blocks.map((block, index) => (
                 <details className="group py-5" key={instanceKey(block, index, "editorial_faq")} {...xfcartBlockAttrs(block, index, "editorial_faq")}>
-                  <summary className="relative flex cursor-pointer list-none items-center justify-center gap-6 text-center">
+                  <summary className="relative flex cursor-pointer list-none items-center justify-start gap-6 text-left">
                     <h3 className={`${headingClass} text-lg`}>{blockValue(block, "question")}</h3>
                     <span aria-hidden="true" className="absolute right-0 text-2xl leading-none text-[#9a4b4b] transition group-open:rotate-45">+</span>
                   </summary>
-                  <p className="mx-auto mt-4 max-w-3xl text-center text-base leading-8 text-[#665252]" data-faq-answer="editorial">{blockValue(block, "answer")}</p>
+                  <p className="mt-4 max-w-3xl text-left text-base leading-8 text-[#665252]" data-faq-answer="editorial">{blockValue(block, "answer")}</p>
                 </details>
               ))}
             </div>
