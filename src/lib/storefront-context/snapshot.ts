@@ -1,7 +1,7 @@
 import "server-only";
 
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
-import type { CreativePack, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedStandardRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedStandardRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage, VideoTheme } from "@/lib/types";
 import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
 import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
@@ -196,32 +196,16 @@ export function createPublishedSiteSnapshot(
   options: { source?: "postgres" | "platform-state" } = {}
 ): PublishedSiteSnapshot {
   const isMydreamshootsPublicationSite = isPrimaryMydreamshootsSite(site);
-  const publication = isMydreamshootsPublicationSite
-    ? site.latestPublication
-    : site.latestPublication ?? (state.themePublications ?? [])
-      .filter((candidate) => candidate.siteId === site.id)
-      .sort((left, right) => right.version - left.version)[0];
+  // Public rendering is intentionally fail-closed.  The active pointer is
+  // the only publication selector; latest/history and site row projections
+  // are not valid sources for HTML, metadata, schema, sitemap, or navigation.
+  const publication = site.latestPublication;
+  if (!publication) throw new Error("published_snapshot_active_publication_required");
+  const snapshotIntegrity = publicationSnapshotIntegrity(publication.snapshot);
+  if (snapshotIntegrity !== "valid") throw new Error("published_snapshot_integrity_invalid");
   const currentPages = new Map(site.pages.map((page) => [page.id, page]));
-  const snapshotPages = Array.isArray(publication?.snapshot?.pages) ? publication.snapshot.pages : [];
-  const useRemoteLegacyProjection =
-    isMydreamshootsPublicationSite &&
-    ["remote", "remote-readonly"].includes(process.env.DINGYUE_ENV || "") &&
-    snapshotPages.length === 0;
-  const pages = (useRemoteLegacyProjection ? site.pages : snapshotPages).map((publishedPage): ThemePage => {
-    if (useRemoteLegacyProjection) {
-      return {
-        id: publishedPage.id,
-        siteId: publishedPage.siteId ?? site.id,
-        pageType: publishedPage.pageType ?? "page",
-        templateKey: publishedPage.templateKey,
-        slug: publishedPage.slug,
-        title: publishedPage.title ?? publishedPage.slug,
-        draftJson: publishedPage.publishedJson,
-        publishedJson: publishedPage.publishedJson,
-        createdAt: publishedPage.createdAt,
-        updatedAt: publishedPage.updatedAt
-      };
-    }
+  const snapshotPages = publication.snapshot.pages;
+  const pages = snapshotPages.map((publishedPage): ThemePage => {
     const currentPage = currentPages.get(publishedPage.id);
     return {
       id: publishedPage.id,
@@ -240,23 +224,14 @@ export function createPublishedSiteSnapshot(
   const publishedSettings = publicationThemeSettings
     ? {
         ...site.themeSettings,
-        publishedJson: {
-          ...publicationThemeSettings,
-          // Older immutable publications predate the Save the Date navigation
-          // field. Preserve the already-published navigation until they are
-          // rebuilt with the current publication contract.
-          saveTheDateNavigation: publicationThemeSettings.saveTheDateNavigation ?? site.themeSettings.publishedJson.saveTheDateNavigation
-        }
+        publishedJson: publicationThemeSettings
       }
     : site.themeSettings;
-  const snapshotIntegrity = publicationSnapshotIntegrity(publication?.snapshot);
-  const hasImmutableSeoProjection = isMydreamshootsPublicationSite && snapshotIntegrity === "valid";
+  const hasImmutableSeoProjection = snapshotIntegrity === "valid";
   const publishedFacts = hasImmutableSeoProjection ? publication?.snapshot.publishedFacts : undefined;
   const publishedProfile = hasImmutableSeoProjection
     ? profileFromPublishedFacts(publishedFacts)
-    : isMydreamshootsPublicationSite
-      ? undefined
-      : publication?.snapshot.storefrontProfile ?? site.storefrontProfile?.publishedJson;
+    : publication.snapshot.storefrontProfile;
   const publishedSite = {
     ...site,
     pages,
@@ -273,25 +248,11 @@ export function createPublishedSiteSnapshot(
     ...pages.flatMap((page) => [normalizePath(page.slug), canonicalPathForPage(page)]),
     ...publishedRoutes.flatMap((route) => route.disposition === "render" && route.status === "published" ? [route.canonicalPath] : [])
   ]));
-  const products = hasImmutableSeoProjection
-    ? productsFromPublishedOffers(publication!.snapshot)
-    : useRemoteLegacyProjection
-      ? state.products.filter((product) => product.siteId === site.id)
-      : isMydreamshootsPublicationSite ? [] : state.products.filter((product) => product.siteId === site.id);
-  const creativePacks = hasImmutableSeoProjection
-    ? creativePacksFromPublishedCollections(publication!.snapshot, publication?.publishedAt, site.id)
-    : useRemoteLegacyProjection
-      ? state.creativePacks.filter((pack) => pack.siteId === site.id)
-      : isMydreamshootsPublicationSite ? [] : state.creativePacks.filter((pack) => pack.siteId === site.id);
-  const creativePackCategories = useRemoteLegacyProjection
-    ? (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id)
-    : isMydreamshootsPublicationSite ? [] : (state.creativePackCategories ?? []).filter((category) => category.siteId === site.id);
-  const videoThemes = useRemoteLegacyProjection
-    ? (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id)
-    : isMydreamshootsPublicationSite ? [] : (state.videoThemes ?? []).filter((theme) => theme.siteId === site.id);
-  const mediaAssets = useRemoteLegacyProjection
-    ? state.mediaAssets.filter((asset) => asset.siteId === site.id)
-    : isMydreamshootsPublicationSite ? [] : state.mediaAssets.filter((asset) => asset.siteId === site.id);
+  const products = productsFromPublishedOffers(publication.snapshot);
+  const creativePacks = creativePacksFromPublishedCollections(publication.snapshot, publication.publishedAt, site.id);
+  const creativePackCategories: CreativePackCategory[] = [];
+  const videoThemes: VideoTheme[] = [];
+  const mediaAssets: MediaAsset[] = [];
   const baseEntityReferences: EntityReference[] = [
     ...pages.map((page) => ({ entityType: "page" as const, entityId: page.id, ownerId: site.id, revision: page.draftMeta?.etag ?? revision([page.id, page.publishedJson.version, page.updatedAt]), updatedAt: page.updatedAt })),
     ...publishedRoutes.map((route) => ({

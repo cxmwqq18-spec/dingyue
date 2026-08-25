@@ -955,13 +955,12 @@ function toPublicSiteShell(
     },
     themeSettings: toAdminShellThemeSettings(settingsRecord),
     storefrontProfile: toStorefrontProfile(profileRecord),
+    // Public consumers must use the explicitly activated immutable snapshot.
+    // Never substitute the newest historical publication when the active
+    // pointer is absent; that would make the public result non-deterministic.
     latestPublication: record.activePublication?.publication
       ? toThemePublication(record.activePublication.publication)
-      : isMydreamshootsContentSourceSiteId(record.id)
-        ? undefined
-        : record.publications[0]
-          ? toThemePublication(record.publications[0])
-          : undefined,
+      : undefined,
     pages: record.pages.map((page) => toThemePage({
       ...page,
       draftJson: page.publishedJson

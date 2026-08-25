@@ -72,7 +72,7 @@ const indexingSource = read("src/lib/seo-indexing.ts");
 const renderSource = read("src/lib/storefront-render.tsx");
 const ownershipAssertions = [
   [!/\b(?:seoTitle|galleryTitle|galleryIntro|ctaTitle|ctaSubtitle|faqItems|relatedTitle|relatedSubtitle)\??:/.test(packProfileSource), "Pack Profile still declares page SEO/copy fields"],
-  [/publicationSnapshotIntegrity\(publication\?\.snapshot\)/.test(snapshotSource), "published resolver does not validate snapshot integrity"],
+  [/publicationSnapshotIntegrity\(publication(?:\?\.|\.)snapshot\)/.test(snapshotSource), "published resolver does not validate snapshot integrity"],
   [!/mydreamshootsPublishedRouteManifest\(/.test(snapshotSource), "published resolver rebuilds routes from current taxonomy"],
   [!/mydreamshootsPublishedPageMediaProjections\(/.test(snapshotSource), "published resolver rebuilds media from current packs"],
   [/publishedPageEntities/.test(themeStoreSource) && /publishedOffers/.test(themeStoreSource) && /publishedFacts/.test(themeStoreSource) && /publishedLinkRefs/.test(themeStoreSource), "publication builder does not persist the complete SEO snapshot"],

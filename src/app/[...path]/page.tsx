@@ -343,7 +343,9 @@ async function getHostPublicCollectionRuntimeStateWithFallback(hosts: Array<stri
     const resolved = resolveHostCollectionPage(state, hosts, collectionSlug);
     if (resolved) return state;
   }
-  return getHostRuntimeStateForModeWithFallback(hosts, "public", fallbackCollectionRootPathForHost(hosts.find(Boolean)), collectionSlug);
+  // A missing published collection is a hard miss. Do not fall back to the
+  // full platform state or synthesize a page from legacy collection data.
+  return undefined;
 }
 
 function knownWorkspaceSiteSlugForHost(hosts: Array<string | null>): string | undefined {
@@ -383,8 +385,12 @@ async function getHostRuntimeStateForModeWithFallback(hosts: Array<string | null
       if (state) return state;
     }
   } catch {
-    // Fall through to the full state reader for local or migrating databases.
+    // Public requests fail closed when the relational publication read fails.
+    if (mode === "public") return undefined;
+    // Private workspace reads may still use the full state reader during local
+    // development and migrations.
   }
+  if (mode === "public") return undefined;
   const state = await readStorefrontPlatformStateFromDatabase();
   const site = getSiteByHostCandidatesFromState(state, hosts);
   return site ? state : undefined;

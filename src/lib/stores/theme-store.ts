@@ -144,7 +144,7 @@ function buildHomepageShowcases(params: {
     });
   }
 
-  const saveDateItems = (site.themeSettings.draftJson ?? site.themeSettings.publishedJson).saveTheDateNavigation?.groups
+  const saveDateItems = site.themeSettings.publishedJson.saveTheDateNavigation?.groups
     ?.flatMap((group) => group.items.filter((item) => item.status === "published" && !(isPrimaryMydreamshootsSite(site) && isMydreamshootsRemovedLegacyRoute(item.href))).map((item) => ({ ...item, group }))) ?? [];
   for (const item of saveDateItems) {
     const entity = pageEntities.find((candidate) => candidate.canonicalPath === item.href && candidate.status === "published" && candidate.indexable);
@@ -722,19 +722,19 @@ export function buildPublicationSnapshot(
     })));
   const offerRevision = projectionRevision(publishedOffers);
   const publishedFacts = {
-    identity: site.storefrontProfile?.draftJson?.identity ?? site.storefrontProfile?.publishedJson?.identity,
+    identity: site.storefrontProfile?.publishedJson?.identity,
     privacy: {
-      customerMediaTraining: site.storefrontProfile?.draftJson?.policyFacts?.usesCustomerMediaForTraining ?? site.storefrontProfile?.publishedJson?.policyFacts?.usesCustomerMediaForTraining,
-      sourceMediaRetentionDays: site.storefrontProfile?.draftJson?.policyFacts?.sourceMediaRetentionDays ?? site.storefrontProfile?.publishedJson?.policyFacts?.sourceMediaRetentionDays
+      customerMediaTraining: site.storefrontProfile?.publishedJson?.policyFacts?.usesCustomerMediaForTraining,
+      sourceMediaRetentionDays: site.storefrontProfile?.publishedJson?.policyFacts?.sourceMediaRetentionDays
     },
     refund: {
-      reviewRequired: site.storefrontProfile?.draftJson?.policyFacts?.refundReviewRequired ?? site.storefrontProfile?.publishedJson?.policyFacts?.refundReviewRequired,
-      windowDays: site.storefrontProfile?.draftJson?.policyFacts?.refundWindowDays ?? site.storefrontProfile?.publishedJson?.policyFacts?.refundWindowDays,
-      effectiveDate: site.storefrontProfile?.draftJson?.policyFacts?.effectiveDate ?? site.storefrontProfile?.publishedJson?.policyFacts?.effectiveDate
+      reviewRequired: site.storefrontProfile?.publishedJson?.policyFacts?.refundReviewRequired,
+      windowDays: site.storefrontProfile?.publishedJson?.policyFacts?.refundWindowDays,
+      effectiveDate: site.storefrontProfile?.publishedJson?.policyFacts?.effectiveDate
     },
-    creditLifecycle: site.storefrontProfile?.draftJson?.policyFacts?.creditLifecycle ?? site.storefrontProfile?.publishedJson?.policyFacts?.creditLifecycle,
-    security: site.storefrontProfile?.draftJson?.policyFacts?.security ?? site.storefrontProfile?.publishedJson?.policyFacts?.security,
-    claimRevision: crypto.createHash("sha256").update(JSON.stringify(site.storefrontProfile?.draftJson ?? site.storefrontProfile?.publishedJson ?? {})).digest("hex").slice(0, 20)
+    creditLifecycle: site.storefrontProfile?.publishedJson?.policyFacts?.creditLifecycle,
+    security: site.storefrontProfile?.publishedJson?.policyFacts?.security,
+    claimRevision: crypto.createHash("sha256").update(JSON.stringify(site.storefrontProfile?.publishedJson ?? {})).digest("hex").slice(0, 20)
   };
   const factsRevision = projectionRevision(publishedFacts);
   const policyRevision = projectionRevision({ privacy: publishedFacts.privacy, refund: publishedFacts.refund, creditLifecycle: publishedFacts.creditLifecycle, security: publishedFacts.security });
@@ -876,13 +876,13 @@ export function buildPublicationSnapshot(
       templateKey: page.templateKey,
       slug: page.slug,
       title: page.title,
-      publishedJson: cloneJson(page.draftJson ?? page.publishedJson),
+      publishedJson: cloneJson(page.publishedJson),
       createdAt: page.createdAt,
       updatedAt: page.updatedAt
       })),
-    themeSettings: cloneJson(site.themeSettings.draftJson ?? site.themeSettings.publishedJson),
-    storefrontProfile: (site.storefrontProfile?.draftJson ?? site.storefrontProfile?.publishedJson)
-      ? cloneJson(site.storefrontProfile.draftJson ?? site.storefrontProfile.publishedJson)
+    themeSettings: cloneJson(site.themeSettings.publishedJson),
+    storefrontProfile: site.storefrontProfile?.publishedJson
+      ? cloneJson(site.storefrontProfile.publishedJson)
       : undefined,
     saasTheme: siteTheme
       ? {
@@ -985,21 +985,42 @@ async function createAndActivateImmutablePublication(
   return publicationRecord;
 }
 
+/**
+ * Compatibility entry point for old operational scripts.  The caller's
+ * snapshot is deliberately ignored: the transaction re-reads only published
+ * relational rows and compiles a fresh complete snapshot before activation.
+ * New code should call publishDraftSiteRelational directly.
+ */
 export async function publishSeoSnapshotRelational(params: {
   siteId: string;
-  snapshot: PublishedSeoSnapshot;
   actor?: string;
   scope?: ImmutablePublicationScope;
 }): Promise<{ publication: ThemePublication; publishedVersion: number }> {
   const actor = params.actor ?? "site_admin_demo";
   const scope = params.scope ?? { type: "site", pageIds: [], includeThemeSettings: true, includeStorefrontProfile: true };
   const result = await prisma.$transaction(async (tx) => {
+    const siteRecord = await getSiteWithThemeRecords(tx, params.siteId);
+    const site = toSite(siteRecord);
+    const [publicationPacks, productRows] = await Promise.all([
+      tx.creativePack.findMany({
+        where: { siteId: params.siteId },
+        select: { id: true, status: true, creditCost: true, outputCount: true, category: true, imageUrl: true, galleryImages: true, galleryImageAlts: true, categoryRecord: { select: { slug: true } } },
+        orderBy: { id: "asc" }
+      }),
+      tx.product.findMany({ where: { siteId: params.siteId }, include: { prices: true }, orderBy: { id: "asc" } })
+    ]);
+    const snapshot = buildPublicationSnapshot(
+      site,
+      undefined,
+      publicationPacks.map((pack) => normalizedPublishPack(pack as PublishPreflightCreativePack)),
+      productRows.map(mapProduct)
+    );
     const latest = await tx.themePublication.findFirst({ where: { siteId: params.siteId }, orderBy: [{ version: "desc" }, { publishedAt: "desc" }], select: { version: true } });
     const publishedVersion = (latest?.version ?? 0) + 1;
     const publicationRecord = await createAndActivateImmutablePublication(tx, {
       siteId: params.siteId,
       version: publishedVersion,
-      snapshot: params.snapshot,
+      snapshot,
       actor,
       scope
     });
@@ -1010,7 +1031,7 @@ export async function publishSeoSnapshotRelational(params: {
       action: "seo_snapshot_published",
       targetType: "theme_publication",
       targetId: publicationRecord.id,
-      metadata: { version: publishedVersion, snapshotHash: params.snapshot.snapshotHash }
+      metadata: { version: publishedVersion, snapshotHash: snapshot.snapshotHash, source: "published-relational-compiler" }
     }, { syncPlatformState: false });
     return { publication: toThemePublication(publicationRecord), publishedVersion };
   }, { timeout: 600_000, maxWait: 20_000 });

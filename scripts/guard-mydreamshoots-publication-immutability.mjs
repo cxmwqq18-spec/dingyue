@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const scripts = fs.readdirSync(path.join(repoRoot, "scripts"))
-  .filter((name) => /^(?:sync|rectify|enrich|migrate|repair)-(?:mydreamshoots|dreamshoot)/.test(name) && name.endsWith(".mjs"))
+  .filter((name) => name !== "guard-mydreamshoots-publication-immutability.mjs" && name.endsWith(".mjs") && /(?:mydreamshoots|dreamshoot|save-the-date|seasonal|footer)/i.test(name))
   .sort()
   .map((name) => `scripts/${name}`);
 const forbiddenPublication = /(?:\btx\.)?themePublication\.(?:update|updateMany|delete|deleteMany)\s*\(/g;
@@ -13,6 +13,7 @@ const publishedRecordWrite = /(?:themePage|themeSettings|storefrontProfile)\.(?:
 const forbiddenSnapshotMutation = /(?:syncPublicationSnapshots\s*\(|\bpublication\.snapshot(?:\.[a-zA-Z0-9_$]+)?\s*=)/g;
 const forbiddenPublishedAssignment = /(?:\b(?:page|homePage|site\.themeSettings|themeSettings)\.publishedJson\s*=|\b(?:page|homePage)\.publishedJson\.[a-zA-Z0-9_$]+\s*=)/g;
 const forbiddenPublicationIteration = /for\s*\(\s*const\s+publication\s+of\s+(?:state\.)?themePublications/g;
+const forbiddenLegacyPublicationApi = /publishSeoSnapshotRelational\s*\(/g;
 const failures = [];
 
 for (const relative of scripts) {
@@ -23,11 +24,13 @@ for (const relative of scripts) {
     failures.push({ file: relative, line, kind: "historical-publication-write", match: match[0] });
   }
   for (const match of source.matchAll(publishedRecordWrite)) {
-    // A scoped publication command may materialize its source into the
-    // published row before creating and activating the immutable snapshot.
-    // The publication service call is the boundary; direct writes without it
-    // remain failures.
-    if (/publishSeoSnapshotRelational\s*\(/.test(source)) continue;
+    // The legacy snapshot-input API is not an allowlist. Only the reviewed
+    // draft publication command may materialize published rows.
+    if (relative !== "scripts/publish-draft-site.mjs") {
+      const line = source.slice(0, match.index).split("\n").length;
+      failures.push({ file: relative, line, kind: "published-record-write", match: match[0] });
+      continue;
+    }
     const call = source.slice(match.index, match.index + 3200);
     const end = call.search(/\n\s*\}\);/);
     const body = end >= 0 ? call.slice(0, end + 4) : call;
@@ -46,6 +49,10 @@ for (const relative of scripts) {
   for (const match of source.matchAll(forbiddenPublicationIteration)) {
     const line = source.slice(0, match.index).split("\n").length;
     failures.push({ file: relative, line, kind: "historical-publication-iteration", match: match[0] });
+  }
+  for (const match of source.matchAll(forbiddenLegacyPublicationApi)) {
+    const line = source.slice(0, match.index).split("\n").length;
+    failures.push({ file: relative, line, kind: "legacy-publication-api", match: match[0] });
   }
 }
 
