@@ -64,7 +64,7 @@ function route(value: unknown): value is PublishedRouteProjection {
   if (value.routeKind === "standard-content") {
     return text(value.canonicalPath) && text(value.pageEntityId) && text(value.pageId) && text(value.pageRevision) && text(value.mediaEntityId) &&
       (value.status === "published" || value.status === "review_required") && typeof value.indexable === "boolean" && typeof value.sitemapEligible === "boolean" &&
-      (value.status === "published" ? value.indexable && value.sitemapEligible : !value.indexable && !value.sitemapEligible);
+      (value.status === "published" ? true : !value.indexable && !value.sitemapEligible);
   }
   if (value.routeKind === "ai-video-topic-leaf") {
     return text(value.canonicalSlug) && text(value.canonicalPath) && text(value.pageId) && text(value.pageEntityId) &&
@@ -103,7 +103,7 @@ function pageEntity(value: unknown): value is PublishedPageEntityProjection {
     Array.isArray(content.faqItems) && content.faqItems.length >= 4 && content.faqItems.every((item) => record(item) && text(item.id) && text(item.question) && text(item.answer)) &&
     text(content.relatedEyebrow) && text(content.relatedTitle) && text(content.relatedSubtitle) && text(content.relatedCtaLabel) &&
     textArray(content.relatedLinkEntityIds) &&
-    (value.status === "published" ? value.indexable && value.sitemapEligible && metadata.robots.index === true : !value.indexable && !value.sitemapEligible && metadata.robots.index === false);
+    (value.status === "published" ? metadata.robots.index === value.indexable && metadata.robots.follow === true : !value.indexable && !value.sitemapEligible && metadata.robots.index === false);
 }
 
 function pageCopy(value: unknown): value is PublishedPageCopyProjection {
