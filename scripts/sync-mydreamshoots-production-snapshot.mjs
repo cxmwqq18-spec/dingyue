@@ -72,7 +72,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 function clone(value) {
@@ -234,7 +234,7 @@ try {
           slug: page.slug,
           title: page.title,
           draftJson: page.draftJson ?? publishedJson,
-          publishedJson,
+          publishedJson: current?.publishedJson ?? {},
           draftMeta: page.draftMeta ?? null,
           updatedAt: date(page.updatedAt) ?? new Date()
         };
@@ -246,13 +246,13 @@ try {
       }
 
       const settings = snapshot.site.settings;
-      await tx.themeSettings.update({ where: { siteId }, data: { draftJson: settings.draftJson, publishedJson: settings.publishedJson, updatedAt: new Date() } });
+      await tx.themeSettings.update({ where: { siteId }, data: { draftJson: settings.draftJson, updatedAt: new Date() } });
       if (snapshot.site.storefrontProfile) {
         const profile = snapshot.site.storefrontProfile;
         await tx.storefrontProfile.upsert({
           where: { siteId },
-          create: { id: profile.id, siteId, draftJson: profile.draftJson, publishedJson: profile.publishedJson, draftMeta: profile.draftMeta ?? null, createdAt: date(profile.createdAt) ?? new Date(), updatedAt: date(profile.updatedAt) ?? new Date() },
-          update: { draftJson: profile.draftJson, publishedJson: profile.publishedJson, draftMeta: profile.draftMeta ?? null, updatedAt: new Date() }
+          create: { id: profile.id, siteId, draftJson: profile.draftJson, publishedJson: {}, draftMeta: profile.draftMeta ?? null, createdAt: date(profile.createdAt) ?? new Date(), updatedAt: date(profile.updatedAt) ?? new Date() },
+          update: { draftJson: profile.draftJson, draftMeta: profile.draftMeta ?? null, updatedAt: new Date() }
         });
       }
 
@@ -373,7 +373,7 @@ try {
     currentSnapshot.snapshotHash = publicationSnapshotHash(currentSnapshot);
     currentSnapshot.revisions.snapshotHash = currentSnapshot.snapshotHash;
     assert.equal(publicationSnapshotIntegrity(currentSnapshot), "valid", "imported publication must be valid");
-    const published = await publishSeoSnapshotRelational({ siteId, snapshot: currentSnapshot, actor: "sync:mydreamshoots-production-snapshot" });
+    const published = await publishReviewedDraftSiteRelational(siteId, "sync:mydreamshoots-production-snapshot");
     const readback = await prisma.themePublication.findUnique({ where: { id: published.publication.id }, select: { id: true, version: true, snapshot: true } });
     console.log(JSON.stringify({ ok: true, mode: "applied", source: snapshot.source, sourceSnapshotHash: snapshot.snapshotHash, backupPath, publicationId: readback?.id, version: readback?.version, localSnapshotHash: readback?.snapshot?.snapshotHash, sourceCounts, localCounts, diff, syncVideo, replaceLocalPages, useSourcePublication }, null, 2));
   }

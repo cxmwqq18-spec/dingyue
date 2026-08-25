@@ -57,8 +57,7 @@ async function main() {
     await prisma.themeSettings.update({
       where: { siteId },
       data: {
-        draftJson: syncSettingsJson(settings.draftJson),
-        publishedJson: syncSettingsJson(settings.publishedJson)
+        draftJson: syncSettingsJson(settings.draftJson)
       }
     });
   }

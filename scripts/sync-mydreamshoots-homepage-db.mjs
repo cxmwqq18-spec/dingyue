@@ -44,7 +44,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 
 const jiti = createJiti(import.meta.url);
 const { dreamshootAiStudioTemplatesForSite } = jiti("../src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
-const { publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 function clone(value) {
@@ -269,7 +269,6 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
     settings: {
       ...clone(next.sections.generation_showcase_1?.settings ?? {}),
       ...clone(templateGeneration.settings),
-      imageSlugs: catalogOrder.join("|"),
       showTrustedLogoIntro: true,
       trustedLogoTitle: "Creative workflow examples built with myDreamshoots",
       aboutTitle: "What is myDreamshoots?",
@@ -279,6 +278,8 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
     },
     blocks: clone(templateGeneration.blocks ?? [])
   };
+  delete next.sections.generation_showcase_1.settings.imageSlugs;
+  delete next.sections.generation_showcase_1.settings.videoSlugs;
   const hero = next.sections.hero_1;
   if (hero) {
     hero.settings = {
@@ -429,10 +430,17 @@ try {
   const mergedJson = mergeHomepage(currentJson, templateHome, pricingPage?.draftJson ?? pricingPage?.publishedJson, creativePacks);
   const { page: bestImagePage, json: currentBestImageJson } = pageJsonFromSlug(siteRecord, "/best-ai-image");
   const { page: bestVideoPage, json: currentBestVideoJson } = pageJsonFromSlug(siteRecord, "/best-ai-video");
-  const productionVideoSlugs = String(mergedJson.sections.generation_showcase_1.settings?.videoSlugs ?? "")
-    .split("|").map((slug) => slug.trim()).filter(Boolean);
   const mergedBestImageJson = mergeBestGallery(currentBestImageJson, "image");
-  const mergedBestVideoJson = mergeBestGallery(currentBestVideoJson, "video", productionVideoSlugs);
+  const mergedBestVideoJson = mergeBestGallery(currentBestVideoJson, "video", [
+    "motion-generator",
+    "talking-photo",
+    "cinematic-video",
+    "tiktok-video",
+    "instagram-reels",
+    "product-video",
+    "product-ad-video",
+    "promo-video"
+  ]);
   const showcase = showcaseStores.find((store) => store.siteId === siteId)
     ?? (siteId === "site_grownstride_test" ? showcaseStores.find((store) => store.siteId === "site_dreamshoot") : null);
   assert(showcase, `showcase source missing for ${siteId}`);
@@ -465,8 +473,8 @@ try {
       homepageCatalogBlocks: mergedJson.sections.package_catalog_1.blocks?.length ?? 0,
       footerLinks: mergedThemeSettings.navigation.footerLinks.length,
       embedsPricing: mergedJson.sections.generation_showcase_1.settings?.embeddedPricingSectionId === "pricing_1",
-      homepageVideoSlugs: mergedJson.sections.generation_showcase_1.settings?.videoSlugs,
-      bestVideoSlugs: productionVideoSlugs,
+      homepageVideoSlugs: undefined,
+      bestVideoSlugs: ["motion-generator", "talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "promo-video"],
       showcaseVideoThemes: showcase.videoThemes.length,
       wouldWriteBackup: backupPath
     }, null, 2));
@@ -474,10 +482,10 @@ try {
     fs.mkdirSync(backupDir, { recursive: true, mode: 0o700 });
   fs.writeFileSync(backupPath, `${JSON.stringify(backup, null, 2)}\n`, { mode: 0o600 });
   await prisma.$transaction(async (tx) => {
-    await tx.themePage.update({ where: { id: homepage.id }, data: { draftJson: mergedJson, publishedJson: mergedJson, updatedAt: new Date() } });
-    await tx.themePage.update({ where: { id: bestImagePage.id }, data: { draftJson: mergedBestImageJson, publishedJson: mergedBestImageJson, updatedAt: new Date() } });
-    await tx.themePage.update({ where: { id: bestVideoPage.id }, data: { draftJson: mergedBestVideoJson, publishedJson: mergedBestVideoJson, updatedAt: new Date() } });
-    await tx.themeSettings.update({ where: { siteId }, data: { draftJson: mergedThemeSettings, publishedJson: mergedThemeSettings, updatedAt: new Date() } });
+    await tx.themePage.update({ where: { id: homepage.id }, data: { draftJson: mergedJson, updatedAt: new Date() } });
+    await tx.themePage.update({ where: { id: bestImagePage.id }, data: { draftJson: mergedBestImageJson, updatedAt: new Date() } });
+    await tx.themePage.update({ where: { id: bestVideoPage.id }, data: { draftJson: mergedBestVideoJson, updatedAt: new Date() } });
+    await tx.themeSettings.update({ where: { siteId }, data: { draftJson: mergedThemeSettings, updatedAt: new Date() } });
     for (const product of Object.entries(subscriptionMetadata)) {
       const [name, metadata] = product;
       await tx.product.updateMany({ where: { siteId, name, type: "subscription" }, data: { metadata } });
@@ -574,7 +582,7 @@ try {
   snapshotForPublish.snapshotHash = publicationSnapshotHash(snapshotForPublish);
   snapshotForPublish.revisions.snapshotHash = snapshotForPublish.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshotForPublish), "valid", "homepage repair must preserve snapshot integrity");
-  const published = await publishSeoSnapshotRelational({ siteId, snapshot: snapshotForPublish, actor: "sync:mydreamshoots-homepage-db" });
+    const published = await publishReviewedDraftSiteRelational(siteId, "sync:mydreamshoots-homepage-db");
     console.log(JSON.stringify({ ok: true, mode: "applied", siteId, backupPath, publicationId: published.publication.id, version: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash, collectionRefs: published.publication.snapshot.publishedCollectionRefs.length, offers: published.publication.snapshot.publishedOffers.length, showcaseVideoThemes: showcase.videoThemes.length }, null, 2));
   }
 } finally {

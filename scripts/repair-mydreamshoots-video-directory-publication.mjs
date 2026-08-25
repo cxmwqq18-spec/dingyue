@@ -38,7 +38,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const videoDirectoryJson = (pageJson) => ({
@@ -84,7 +84,7 @@ try {
   await prisma.$transaction(async (tx) => {
     await tx.themePage.update({
       where: { id: page.id },
-      data: { draftJson: nextJson, publishedJson: nextJson, updatedAt: new Date() }
+      data: { draftJson: nextJson, updatedAt: new Date() }
     });
   }, { timeout: 120_000 });
 
@@ -98,12 +98,7 @@ try {
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "Repaired publication snapshot must be valid");
 
-  const published = await publishSeoSnapshotRelational({
-    siteId,
-    snapshot,
-    actor: "repair:mydreamshoots-video-directory",
-    scope: { type: "page", pageIds: [page.id], includeThemeSettings: false, includeStorefrontProfile: false }
-  });
+  const published = await publishReviewedDraftSiteRelational(siteId, "repair:mydreamshoots-video-directory");
   console.log(JSON.stringify({
     ok: true,
     page: pageSlug,

@@ -29,9 +29,9 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { buildPublicationSnapshot, publishSeoSnapshotRelational, activateThemePublicationRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { publishReviewedDraftSiteRelational, activateThemePublicationRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
-const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
+const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const prisma = new PrismaClient();
 let beforeActive;
 let draftPage;
@@ -41,12 +41,6 @@ const keepNewPublication = process.env.MYDREAMSHOOTS_LIFECYCLE_KEEP_NEW === "1";
 
 function stableSnapshotJson(value) {
   return JSON.stringify(value);
-}
-
-function refreshSnapshotHash(snapshot) {
-  snapshot.snapshotHash = publicationSnapshotHash({ ...snapshot, snapshotHash: "", revisions: { ...snapshot.revisions, snapshotHash: "" } });
-  snapshot.revisions.snapshotHash = snapshot.snapshotHash;
-  return snapshot;
 }
 
 try {
@@ -92,33 +86,7 @@ try {
       }
     }
   };
-  const [packRows, productRows] = await Promise.all([
-    prisma.creativePack.findMany({
-      where: { siteId },
-      select: { id: true, status: true, creditCost: true, outputCount: true, category: true, imageUrl: true, galleryImages: true, galleryImageAlts: true, categoryRecord: { select: { slug: true } } },
-      orderBy: { id: "asc" }
-    }),
-    prisma.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: { id: "asc" } })
-  ]);
-  const normalizedPacks = packRows.map((pack) => ({
-    id: pack.id,
-    status: ["active", "draft", "paused"].includes(pack.status) ? pack.status : "draft",
-    creditCost: Number(pack.creditCost ?? 0),
-    outputCount: Number(pack.outputCount ?? 0),
-    category: pack.category ?? undefined,
-    categoryRecord: pack.categoryRecord?.slug ? { slug: pack.categoryRecord.slug } : null,
-    imageUrl: typeof pack.imageUrl === "string" ? pack.imageUrl : undefined,
-    galleryImages: Array.isArray(pack.galleryImages) ? pack.galleryImages.filter((value) => typeof value === "string") : [],
-    galleryImageAlts: (() => {
-      const images = [pack.imageUrl, ...(Array.isArray(pack.galleryImages) ? pack.galleryImages : [])].filter((value) => typeof value === "string" && value.trim());
-      const label = String(pack.categoryRecord?.slug || pack.category || pack.id).replace(/[-_]+/g, " ").trim();
-      return images.map((_, index) => `MyDreamShoots ${label} ${index === 0 ? "hero cover" : "gallery preview"} for image generation planning`);
-    })()
-  }));
-  const snapshot = buildPublicationSnapshot(site, undefined, normalizedPacks, productRows.map(mapProduct));
-  assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "builder must create a valid v1 snapshot before database publish");
-
-  const first = await publishSeoSnapshotRelational({ siteId, snapshot, actor: "smoke:publication-lifecycle" });
+  const first = await publishReviewedDraftSiteRelational(siteId, "smoke:publication-lifecycle");
   createdPublicationIds.push(first.publication.id);
   keepPublicationId = first.publication.id;
   const firstRead = await prisma.themePublication.findUnique({ where: { id: first.publication.id } });
@@ -133,9 +101,7 @@ try {
   const afterDrift = await prisma.themePublication.findUnique({ where: { id: first.publication.id } });
   assert.equal(stableSnapshotJson(afterDrift?.snapshot), firstBytes, "draft drift must not mutate the first immutable publication");
 
-  const secondSnapshot = refreshSnapshotHash({ ...snapshot, buildId: "smoke-publication-lifecycle-second" });
-  assert.equal(publicationSnapshotIntegrity(secondSnapshot), "valid");
-  const second = await publishSeoSnapshotRelational({ siteId, snapshot: secondSnapshot, actor: "smoke:publication-lifecycle" });
+  const second = await publishReviewedDraftSiteRelational(siteId, "smoke:publication-lifecycle");
   createdPublicationIds.push(second.publication.id);
   if (keepNewPublication) keepPublicationId = second.publication.id;
   assert.notEqual(second.publication.id, first.publication.id, "republish must create a new publication ID");
@@ -147,7 +113,7 @@ try {
   const rollbackPointer = await prisma.activeThemePublication.findUnique({ where: { siteId } });
   assert.equal(rollbackPointer?.publicationId, first.publication.id, "rollback must only switch the active pointer");
   const secondAfterRollback = await prisma.themePublication.findUnique({ where: { id: second.publication.id } });
-  assert.equal(secondAfterRollback?.snapshot.snapshotHash, secondSnapshot.snapshotHash, "rollback must not rewrite the newer publication");
+  assert.equal(secondAfterRollback?.snapshot.snapshotHash, second.publication.snapshot.snapshotHash, "rollback must not rewrite the newer publication");
 
   await prisma.themePage.update({ where: { id: draftPage.id }, data: { draftJson: draftPage.draftJson } });
   console.log(JSON.stringify({
@@ -175,8 +141,7 @@ try {
   } else if (testOwnedActivePointer) {
     await prisma.activeThemePublication.delete({ where: { siteId } }).catch(() => {});
   }
-  const deletePublicationIds = createdPublicationIds.filter((id) => id !== restorePublicationId);
-  if (deletePublicationIds.length) await prisma.themePublication.deleteMany({ where: { id: { in: deletePublicationIds } } }).catch(() => {});
+  // Publications are immutable audit records; lifecycle smoke never deletes them.
   await prisma.$disconnect();
   Module._resolveFilename = originalResolveFilename;
   Module._load = originalLoad;

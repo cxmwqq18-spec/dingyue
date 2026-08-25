@@ -16,6 +16,33 @@ const forbiddenPublicationIteration = /for\s*\(\s*const\s+publication\s+of\s+(?:
 const forbiddenLegacyPublicationApi = /publishSeoSnapshotRelational\s*\(/g;
 const failures = [];
 
+function callBody(source, matchIndex) {
+  const open = source.indexOf("(", matchIndex);
+  if (open < 0) return "";
+  let depth = 0;
+  let quote = "";
+  let escaped = false;
+  for (let index = open; index < source.length; index += 1) {
+    const char = source[index];
+    if (quote) {
+      if (escaped) escaped = false;
+      else if (char === "\\") escaped = true;
+      else if (char === quote) quote = "";
+      continue;
+    }
+    if (char === "\"" || char === "'" || char === "`") {
+      quote = char;
+      continue;
+    }
+    if (char === "(") depth += 1;
+    if (char === ")") {
+      depth -= 1;
+      if (depth === 0) return source.slice(open, index + 1);
+    }
+  }
+  return source.slice(open);
+}
+
 for (const relative of scripts) {
   const absolute = path.join(repoRoot, relative);
   const source = fs.readFileSync(absolute, "utf8");
@@ -24,6 +51,9 @@ for (const relative of scripts) {
     failures.push({ file: relative, line, kind: "historical-publication-write", match: match[0] });
   }
   for (const match of source.matchAll(publishedRecordWrite)) {
+    const body = callBody(source, match.index);
+    if (!/\bpublishedJson\s*:/.test(body)) continue;
+    if (/\bpublishedJson\s*:\s*\{\s*\}/.test(body)) continue;
     // The legacy snapshot-input API is not an allowlist. Only the reviewed
     // draft publication command may materialize published rows.
     if (relative !== "scripts/publish-reviewed-draft-site.mjs") {
@@ -31,9 +61,6 @@ for (const relative of scripts) {
       failures.push({ file: relative, line, kind: "published-record-write", match: match[0] });
       continue;
     }
-    const call = source.slice(match.index, match.index + 3200);
-    const end = call.search(/\n\s*\}\);/);
-    const body = end >= 0 ? call.slice(0, end + 4) : call;
     if (!/(?:\bpublishedJson\s*:|\{\s*publishedJson\s*[,}])/.test(body)) continue;
     const line = source.slice(0, match.index).split("\n").length;
     failures.push({ file: relative, line, kind: "published-json-write", match: match[0] });

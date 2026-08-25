@@ -49,7 +49,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 process.env.DATABASE_URL = targetUrl;
 const jiti = createJiti(import.meta.url);
-const { buildPublicationSnapshot, publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { mapProduct, toSite } = jiti("../src/lib/stores/prisma-mappers.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const prisma = new PrismaClient({ datasources: { db: { url: targetUrl } } });
@@ -215,20 +215,19 @@ if (sourceSiteId === targetSiteId && !allowSameSite) throw new Error("Source and
         if (existingPrice) await tx.price.update({ where: { id: existingPrice.id }, data }); else await tx.price.create({ data: { id: maps.ids.get(price.id), ...data } });
       }
     }
-    for (const page of source.pages) await tx.themePage.upsert({ where: { siteId_slug: { siteId: targetSiteId, slug: page.slug } }, create: { id: maps.ids.get(page.id), siteId: targetSiteId, pageType: page.pageType, templateKey: page.templateKey, slug: page.slug, title: page.title, draftJson: publicJson(page.draftJson, maps, source), publishedJson: publicJson(page.publishedJson, maps, source), draftMeta: remapJson(page.draftMeta, maps, source) }, update: { pageType: page.pageType, templateKey: page.templateKey, title: page.title, draftJson: publicJson(page.draftJson, maps, source), publishedJson: publicJson(page.publishedJson, maps, source), draftMeta: remapJson(page.draftMeta, maps, source), updatedAt: new Date() } });
-    if (source.settings) await tx.themeSettings.update({ where: { siteId: targetSiteId }, data: { draftJson: publicJson(source.settings.draftJson, maps, source), publishedJson: publicJson(source.settings.publishedJson, maps, source), updatedAt: new Date() } });
+    for (const page of source.pages) await tx.themePage.upsert({ where: { siteId_slug: { siteId: targetSiteId, slug: page.slug } }, create: { id: maps.ids.get(page.id), siteId: targetSiteId, pageType: page.pageType, templateKey: page.templateKey, slug: page.slug, title: page.title, draftJson: publicJson(page.draftJson, maps, source), publishedJson: {}, draftMeta: remapJson(page.draftMeta, maps, source) }, update: { pageType: page.pageType, templateKey: page.templateKey, title: page.title, draftJson: publicJson(page.draftJson, maps, source), draftMeta: remapJson(page.draftMeta, maps, source), updatedAt: new Date() } });
+    if (source.settings) await tx.themeSettings.update({ where: { siteId: targetSiteId }, data: { draftJson: publicJson(source.settings.draftJson, maps, source), updatedAt: new Date() } });
     if (source.storefrontProfile) await tx.storefrontProfile.upsert({
       where: { siteId: targetSiteId },
       create: {
         id: `profile_${targetSiteId}`,
         siteId: targetSiteId,
         draftJson: publicJson(source.storefrontProfile.draftJson, maps, source),
-        publishedJson: publicJson(source.storefrontProfile.publishedJson, maps, source),
+        publishedJson: {},
         draftMeta: remapJson(source.storefrontProfile.draftMeta, maps, source)
       },
       update: {
         draftJson: publicJson(source.storefrontProfile.draftJson, maps, source),
-        publishedJson: publicJson(source.storefrontProfile.publishedJson, maps, source),
         draftMeta: remapJson(source.storefrontProfile.draftMeta, maps, source),
         updatedAt: new Date()
       }
@@ -263,7 +262,7 @@ if (sourceSiteId === targetSiteId && !allowSameSite) throw new Error("Source and
   }));
   const snapshot = buildPublicationSnapshot(targetSite, undefined, normalizedPacks, fresh.products.map(mapProduct));
   if (publicationSnapshotIntegrity(snapshot) !== "valid") throw new Error("Target public SQL publication snapshot is invalid after rebuild.");
-  const published = await publishSeoSnapshotRelational({ siteId: targetSiteId, snapshot, actor: "sync:mydreamshoots-public-sql" });
+  const published = await publishReviewedDraftSiteRelational(targetSiteId, "sync:mydreamshoots-public-sql");
   console.log(JSON.stringify({ ok: true, mode: "applied", target, sourceSiteId, targetSiteId, noIndex, source: counts(source), targetAfter: counts(await readSite(targetSiteId)), publicationId: published.publication.id, publishedVersion: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash, protected: protectedAfter }, null, 2));
 }
 

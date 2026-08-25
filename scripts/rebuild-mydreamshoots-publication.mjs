@@ -40,7 +40,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { buildPublicationSnapshot, publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { toSite } = jiti("../src/lib/stores/prisma-mappers.ts");
 const { mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
@@ -117,7 +117,7 @@ try {
     fs.mkdirSync(backupDir, { recursive: true, mode: 0o700 });
     const backupPath = path.join(backupDir, `mydreamshoots-publication-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
     fs.writeFileSync(backupPath, `${JSON.stringify({ createdAt: new Date().toISOString(), siteId, activePublication: site.activePublication?.publication ?? null }, null, 2)}\n`, { mode: 0o600 });
-    const published = await publishSeoSnapshotRelational({ siteId, snapshot, actor: "repair:mydreamshoots-publication" });
+    const published = await publishReviewedDraftSiteRelational(siteId, "repair:mydreamshoots-publication");
     summary.publicationId = published.publication.id;
     summary.version = published.publishedVersion;
     summary.backupPath = backupPath;

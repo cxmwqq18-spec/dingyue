@@ -30,7 +30,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { toSite } = jiti("../src/lib/stores/prisma-mappers.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const { publicationSnapshotHash } = jiti("../src/lib/publication-snapshot-integrity.ts");
@@ -89,11 +89,7 @@ try {
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "homepage repair must preserve immutable snapshot integrity");
 
-  const result = await publishSeoSnapshotRelational({
-    siteId,
-    snapshot,
-    actor: "repair:mydreamshoots-homepage"
-  });
+  const result = await publishReviewedDraftSiteRelational(siteId, "repair:mydreamshoots-homepage");
 
   console.log(JSON.stringify({
     ok: true,

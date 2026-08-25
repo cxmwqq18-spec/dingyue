@@ -31,7 +31,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { buildPublicationSnapshot, publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
@@ -122,11 +122,7 @@ try {
   assert.doesNotMatch(bestImage.primaryImage, /cyberpunk/i);
   assert.equal(bestImage.sitemapImages.some((image) => /cyberpunk/i.test(image)), false, "standard media sitemap images must not retain Cyberpunk fallback");
 
-  const published = await publishSeoSnapshotRelational({
-    siteId,
-    snapshot,
-    actor: "repair:mydreamshoots-standard-page-media"
-  });
+  const published = await publishReviewedDraftSiteRelational(siteId, "repair:mydreamshoots-standard-page-media");
   console.log(JSON.stringify({
     ok: true,
     siteId,

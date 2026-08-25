@@ -49,7 +49,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { buildPublicationSnapshot, publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { mapProduct, toSite } = jiti("../src/lib/stores/prisma-mappers.ts");
 
 function clone(value) {
@@ -103,7 +103,7 @@ try {
     galleryImageAlts: Array.isArray(pack.galleryImageAlts) ? pack.galleryImageAlts.filter((value) => typeof value === "string") : []
     }));
     const snapshot = buildPublicationSnapshot(targetSite, undefined, normalizedPacks, fresh.products.map(mapProduct));
-    const published = await publishSeoSnapshotRelational({ siteId, snapshot, actor: `repair:mydreamshoots-pricing-side-panel:${mode}` });
+    const published = await publishReviewedDraftSiteRelational(siteId, `repair:mydreamshoots-pricing-side-panel:${mode}`);
     console.log(JSON.stringify({ ok: true, publicationId: published.publication.id, publishedVersion: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash }, null, 2));
   }
 } finally {

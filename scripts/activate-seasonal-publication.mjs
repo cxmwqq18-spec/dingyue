@@ -18,7 +18,7 @@ const originalResolve = Module._resolveFilename;
 Module._resolveFilename = function resolve(request, ...args) { if (request === "server-only") return path.join(sourceRoot, "lib/storefront-context/types.ts"); const aliased = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request; const resolved = request.startsWith("@/") && !path.extname(aliased) ? `${aliased}.ts` : aliased; return originalResolve.call(this, resolved, ...args); };
 const jiti = createJiti(import.meta.url);
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
-const { buildPublicationSnapshot, publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const prisma = new PrismaClient({ datasources: { db: { url: process.env.DATABASE_URL } } });
 try {
@@ -32,6 +32,6 @@ try {
     throw new Error(`Publication snapshot invalid: ${integrity}`);
   }
   const pageIds = record.pages.filter((page) => ["/holidays-events/mothers-day", "/holidays-events/fathers-day"].includes(page.slug)).map((page) => page.id);
-  const published = await publishSeoSnapshotRelational({ siteId, snapshot, actor: "seasonal-remediation-release", scope: { type: "site", pageIds, includeThemeSettings: true, includeStorefrontProfile: false } });
+  const published = await publishReviewedDraftSiteRelational(siteId, "seasonal-remediation-release");
   console.log(JSON.stringify({ ok: true, siteId, snapshotHash: snapshot.snapshotHash, pageIds, publicationId: published?.publication?.id || published?.id || null }, null, 2));
 } finally { await prisma.$disconnect(); }

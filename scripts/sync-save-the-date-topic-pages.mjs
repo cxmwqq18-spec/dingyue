@@ -123,6 +123,18 @@ function parsePackage(config) {
   const seo = seoRows(path.join(config.sourceDir, "06_seo_config.csv"));
   const manifest = parseManifest(config.sourceDir, config.key);
   if (manifest.length !== config.mediaCount) throw new Error(`${config.key}: manifest count ${manifest.length} does not match package contract ${config.mediaCount}`);
+  // The Save the Date source package historically reused the Engagement hero
+  // image byte-for-byte. Keep the page's 11-image contract, but give the
+  // directory card a dedicated cover from the approved Valentine's asset set.
+  // This prevents identical cross-page cards from reappearing after a sync.
+  if (config.key === "save-the-date") {
+    const uniqueCover = "/assets/dreamshoot/generated/pack-galleries/wedding-portraits/wedding-portraits-01.webp";
+    manifest[0] = {
+      ...manifest[0],
+      src: uniqueCover,
+      alt: "Couple sharing a warm city sunset moment for a Save the Date video."
+    };
+  }
   const copyHeading = copyLines.find((line) => /^#\s+/.test(line))?.replace(/^#\s+/, "").replace(/\s+[—-]\s+Final(?:\s+Page)?\s+Copy.*$/i, "").replace(/:\s*Final.*$/i, "").trim();
   const heading = seo.h1 || copyHeading || seo.title;
   const h2 = copyLines.filter((line) => /^##\s+/.test(line)).map((line) => clean(line.replace(/^##\s+/, "")));
@@ -163,6 +175,18 @@ function parsePackage(config) {
   const finalCtaBody = finalCtaSource.find((line) => /^\*\*Body:/i.test(line))?.replace(/^\*\*Body:\*\*\s*/i, "") || heroIntro;
   const finalCtaLabel = finalCtaSource.find((line) => /^\*\*CTA:/i.test(line))?.replace(/^\*\*CTA:\*\*\s*/i, "") || heroPrimaryCta;
   const story = h3(config.key === "proposal" ? "Proposal Video Use Cases" : config.key === "engagement" ? "Three engagement Save the Date video structures" : "Save the Date video use cases");
+  const proposalUseCases = config.key === "proposal"
+    ? listItems(find("Proposal Video Use Cases")).map((text) => ({ title: text, text }))
+    : [];
+  const proposalStoryFlow = config.key === "proposal"
+    ? [
+      ["Setup", "Open with the location, context, and couple details before the proposal moment."],
+      ["Build-up", "Use a short sequence that increases anticipation without inventing factual event details."],
+      ["Proposal", "Hold on the central question and ring reveal as the story’s clear visual peak."],
+      ["Reaction", "Give the answer, embrace, and authentic response enough screen time to read naturally."],
+      ["Close", "Finish with a calm couple frame and editable message layer for the intended destination."]
+    ].map(([title, text]) => ({ title, text }))
+    : [];
   const workflow = h3(config.key === "proposal" ? "How It Works" : config.key === "engagement" ? "How to make an engagement Save the Date video" : "How to make a Save the Date video");
   const formats = h3(config.key === "engagement" ? "Engagement Save the Date video formats" : "Output and placement planning");
   const qualitySource = find(config.key === "proposal" ? "Accuracy and Quality" : config.key === "engagement" ? "Video quality and identity standards" : "Image, identity, and publishing quality standards");
@@ -174,14 +198,56 @@ function parsePackage(config) {
     const id = config.sectionIds[index]; const type = config.sectionTypes[index]; const sectionId = `${config.pageKey}_${id.replace(/-/g, "_")}`;
     if (id === "hero") sections[sectionId] = { type, settings: { anchor: id, title: heading, intro: heroIntro, intentChips, primaryCta: heroPrimaryCta, primaryHref: "/app/create", secondaryCta: heroSecondaryCta, secondaryHref: `#${config.sectionIds[2]}`, ...imageSettings(manifest[0]) }, blocks: manifest.slice(0, 3).map((asset, index) => ({ id: `${config.key}-hero-visual-${index + 1}`, type: "hero_visual", settings: imageSettings(asset) })) };
     else if (id === "intent" || id === "definition") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "What this video page covers"), intro: paragraphs(find(config.key === "proposal" ? "What Is an AI Proposal Video" : config.key === "engagement" ? "What is an AI engagement" : "What is an AI Save the Date"))[0] || heroIntro, ...imageSettings(allocateImage(id)) }, blocks: paragraphs(find(config.key === "proposal" ? "What Is an AI Proposal Video" : config.key === "engagement" ? "What is an AI engagement" : "What is an AI Save the Date")).slice(1).map((text, n) => ({ id: `${config.key}-paragraph-${n + 1}`, type: "paragraph", settings: { text } })) };
-    else if (id === "story-structures" || id === "story-flow") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Story structures") }, blocks: blocks(story, "story_card", undefined, id) };
-    else if (id === "use-cases" || id === "scene-directions" || id === "scene-ideas") {
-      const sceneItems = id === "use-cases" || config.key !== "save-the-date" ? (id === "use-cases" ? story : [{ title: "Scene direction", text: paragraphs(sceneSource).join(" ") }, ...listItems(sceneSource).map((text) => ({ title: text, text }))]) : listItems(sceneSource).map((text) => ({ title: text, text }));
-      sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Scene ideas") }, blocks: blocks(sceneItems, "scene_card", undefined, id) };
+    else if (id === "story-structures" || id === "story-flow") {
+      const storyItems = id === "story-flow" && config.key === "proposal" ? proposalStoryFlow : story;
+      const storyBlocks = blocks(storyItems, "story_card", undefined, id);
+      if (config.key === "proposal" && id === "story-flow") {
+        const storyAssets = [manifest[0], manifest[3], manifest[4], manifest[5], manifest[6]];
+        storyBlocks.forEach((block, blockIndex) => { if (storyAssets[blockIndex]) block.settings = { ...block.settings, ...imageSettings(storyAssets[blockIndex]) }; });
+      }
+      sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Story structures") }, blocks: storyBlocks };
     }
-    else if (id === "workflow") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "How it works"), ...imageSettings(allocateImage(id)) }, blocks: blocks(workflow.length ? workflow : listItems(find("How to make|How It Works")).map((text) => ({ title: text, text })), "step", (item, n) => ({ number: n + 1, title: item.title, text: item.text }), id) };
+    else if (id === "use-cases" || id === "scene-directions" || id === "scene-ideas") {
+      const sceneItems = config.key === "proposal" && id === "use-cases"
+        ? proposalUseCases
+        : id === "use-cases" || config.key !== "save-the-date"
+          ? (id === "use-cases" ? story : [{ title: "Scene direction", text: paragraphs(sceneSource).join(" ") }, ...listItems(sceneSource).map((text) => ({ title: text, text }))])
+          : listItems(sceneSource).map((text) => ({ title: text, text }));
+      const sceneBlocks = blocks(sceneItems, "scene_card", undefined, id);
+      // The engagement design contract calls for eight concrete scene cards
+      // with eight supporting visuals. Keep the introductory card text-only,
+      // then map the eight non-hero assets to the eight scene directions in
+      // the same order as the image manifest. These assets may also be reused
+      // by the workflow/story sections; the page-level manifest remains the
+      // canonical set of 11 unique media records.
+      if (config.key === "engagement" && id === "scene-directions") {
+        sceneBlocks.forEach((block, blockIndex) => {
+          if (blockIndex === 0) return;
+          const supportingAsset = manifest[blockIndex + 2];
+          if (supportingAsset) block.settings = { ...block.settings, ...imageSettings(supportingAsset) };
+        });
+      }
+      if (config.key === "save-the-date" && id === "scene-ideas") {
+        sceneBlocks.forEach((block, blockIndex) => { const supportingAsset = manifest[blockIndex]; if (supportingAsset) block.settings = { ...block.settings, ...imageSettings(supportingAsset) }; });
+      }
+      if (config.key === "proposal" && id === "use-cases") {
+        sceneBlocks.forEach((block, blockIndex) => { const supportingAsset = manifest[blockIndex + 3]; if (supportingAsset) block.settings = { ...block.settings, ...imageSettings(supportingAsset) }; });
+      }
+      sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Scene ideas") }, blocks: sceneBlocks };
+    }
+    else if (id === "workflow") {
+      const workflowBlocks = blocks(workflow.length ? workflow : listItems(find("How to make|How It Works")).map((text) => ({ title: text, text })), "step", (item, n) => ({ number: n + 1, title: item.title, text: item.text }), id);
+      const workflowAssets = config.key === "proposal" ? [manifest[8], manifest[0], manifest[4], manifest[5], manifest[8], manifest[9]] : config.key === "engagement" ? [manifest[5], manifest[5], manifest[6], manifest[3], manifest[10], manifest[10]] : [manifest[3], manifest[3], manifest[7], manifest[8], manifest[10], manifest[10]];
+      workflowBlocks.forEach((block, blockIndex) => { const asset = workflowAssets[blockIndex]; if (asset) block.settings = { ...block.settings, ...imageSettings(asset) }; });
+      sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "How it works"), ...imageSettings(workflowAssets[0] || allocateImage(id)) }, blocks: workflowBlocks };
+    }
     else if (id === "quality" || id === "accuracy") sections[sectionId] = { type: "editorial_quality", settings: { anchor: id, title: titleFor(index, "Quality and responsibility") }, blocks: listItems(qualitySource).map((text, n) => ({ id: `${config.key}-quality-${n + 1}`, type: "quality_item", settings: { text } })) };
-    else if (id === "formats") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Output formats") }, blocks: blocks(formats, "format", undefined, id) };
+    else if (id === "formats") {
+      const formatBlocks = blocks(formats, "format", undefined, id);
+      const formatAssets = config.key === "engagement" ? [manifest[10], manifest[9], manifest[10]] : [manifest[10], manifest[6], manifest[9]];
+      formatBlocks.forEach((block, blockIndex) => { const asset = formatAssets[blockIndex]; if (asset) block.settings = { ...block.settings, ...imageSettings(asset) }; });
+      sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Output formats"), ...imageSettings(formatAssets[0]) }, blocks: formatBlocks };
+    }
     else if (id === "boundaries") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Page boundaries") }, blocks: listItems(boundariesSource).map((text, n) => ({ id: `${config.key}-boundary-${n + 1}`, type: "boundary", settings: { text } })) };
     else if (id === "source-media") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Source media guidance") }, blocks: listItems(find("How It Works|Source-Media Guidance")).map((text, n) => ({ id: `${config.key}-source-${n + 1}`, type: "guidance", settings: { text } })) };
     else if (id === "evidence") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Evidence and review") }, blocks: [{ id: `${config.key}-evidence-1`, type: "evidence", settings: { text: paragraphs(evidenceSource).join(" ") || listItems(evidenceSource).join(" ") } }] };
@@ -207,7 +273,7 @@ function parsePackage(config) {
 
 const jiti = createJiti(import.meta.url);
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
-const { buildPublicationSnapshot, publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const prisma = new PrismaClient();
 try {
@@ -217,7 +283,10 @@ try {
     fs.mkdirSync(targetDir, { recursive: true });
     for (const asset of item.manifest) {
       const targetPath = path.join(targetDir, asset.filename);
-      fs.copyFileSync(path.join(item.sourceDir, "images", asset.filename), targetPath);
+      const sourcePath = asset.src === "/assets/dreamshoot/generated/pack-galleries/wedding-portraits/wedding-portraits-01.webp"
+        ? path.join(repoRoot, "public", asset.src.replace(/^\//, ""))
+        : path.join(item.sourceDir, "images", asset.filename);
+      fs.copyFileSync(sourcePath, targetPath);
       fs.chmodSync(targetPath, 0o644);
     }
   }
@@ -232,10 +301,10 @@ try {
       .filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index);
     const preservedGroups = existingNavigation.filter((group) => group.slug !== "love-wedding");
     const nextSettings = { ...settings, saveTheDateNavigation: { menuLabel: settings.saveTheDateNavigation?.menuLabel || "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: loveItems.map((item, index) => ({ ...item, sortOrder: index + 1, status: "published" })) }, ...preservedGroups.map((group, index) => ({ ...group, sortOrder: index + 2 }))] } };
-    await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: nextSettings }, update: { draftJson: nextSettings, publishedJson: nextSettings } });
+    await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: {} }, update: { draftJson: nextSettings } });
     for (const item of parsed) {
       const pageId = `page_${siteId}_${item.key.replace(/[^a-z0-9]+/gi, "_")}`;
-      await tx.themePage.upsert({ where: { siteId_slug: { siteId, slug: item.pagePath } }, create: { id: pageId, siteId, pageType: "standard-content", templateKey: "save-the-date-editorial", slug: item.pagePath, title: item.heading, draftJson: item.pageJson, publishedJson: item.pageJson }, update: { pageType: "standard-content", templateKey: "save-the-date-editorial", title: item.heading, draftJson: item.pageJson, publishedJson: item.pageJson } });
+      await tx.themePage.upsert({ where: { siteId_slug: { siteId, slug: item.pagePath } }, create: { id: pageId, siteId, pageType: "standard-content", templateKey: "save-the-date-editorial", slug: item.pagePath, title: item.heading, draftJson: item.pageJson, publishedJson: {} }, update: { pageType: "standard-content", templateKey: "save-the-date-editorial", title: item.heading, draftJson: item.pageJson } });
       for (const asset of item.manifest) await tx.mediaAsset.upsert({ where: { siteId_storageKey: { siteId, storageKey: asset.src } }, create: { id: `media_${siteId}_${item.key}_${asset.filename.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}`, siteId, label: asset.filename, storageKey: asset.src, mimeType: "image/jpeg", usageType: "theme", sourceType: `save-the-date-${item.key}-source`, previewUrl: asset.src, originUrl: asset.src, altText: asset.alt, notes: asset.caption }, update: { altText: asset.alt, notes: asset.caption, previewUrl: asset.src, originUrl: asset.src } });
     }
   }, { maxWait: 20_000, timeout: 120_000 });
@@ -246,6 +315,6 @@ try {
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products.map(mapProduct));
   const integrity = publicationSnapshotIntegrity(snapshot);
   if (integrity !== "valid") throw new Error(`Save the Date topic publication snapshot is invalid: ${integrity}`);
-  await publishSeoSnapshotRelational({ siteId, snapshot, actor: "save-the-date-topic-sync", scope: { type: "site", pageIds: parsed.map((item) => `page_${siteId}_${item.key.replace(/[^a-z0-9]+/gi, "_")}`), includeThemeSettings: true, includeStorefrontProfile: false } });
+  await publishReviewedDraftSiteRelational(siteId, "save-the-date-topic-sync");
   console.log(JSON.stringify({ siteId, pages: parsed.map((item) => ({ key: item.key, path: item.pagePath, media: item.manifest.length, faq: item.faqCount })), snapshotHash: snapshot.snapshotHash }, null, 2));
 } finally { await prisma.$disconnect(); }

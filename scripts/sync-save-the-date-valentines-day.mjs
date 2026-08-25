@@ -199,7 +199,7 @@ noRawMarkdown(pageJson);
 
 const jiti = createJiti(import.meta.url);
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
-const { buildPublicationSnapshot, publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const prisma = new PrismaClient();
 try {
@@ -207,7 +207,7 @@ try {
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
   const pageId = `page_${siteId}_save_the_date_valentines_day`;
   await prisma.$transaction(async (tx) => {
-    await tx.themePage.upsert({ where: { siteId_slug: { siteId, slug: pagePath } }, create: { id: pageId, siteId, pageType: "standard-content", templateKey: "save-the-date", slug: pagePath, title: heading, draftJson: pageJson, publishedJson: pageJson }, update: { pageType: "standard-content", templateKey: "save-the-date", title: heading, draftJson: pageJson, publishedJson: pageJson } });
+    await tx.themePage.upsert({ where: { siteId_slug: { siteId, slug: pagePath } }, create: { id: pageId, siteId, pageType: "standard-content", templateKey: "save-the-date", slug: pagePath, title: heading, draftJson: pageJson, publishedJson: {} }, update: { pageType: "standard-content", templateKey: "save-the-date", title: heading, draftJson: pageJson } });
     const settings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
     const existingNavigation = settings.saveTheDateNavigation?.groups ?? [];
     const existingLoveItems = existingNavigation.find((group) => group.slug === "love-wedding")?.items ?? [];
@@ -225,7 +225,7 @@ try {
         ]
       }
     };
-    await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: nextSettings }, update: { draftJson: nextSettings, publishedJson: nextSettings } });
+    await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: {} }, update: { draftJson: nextSettings } });
     for (const item of sourceImages) await tx.mediaAsset.upsert({ where: { siteId_storageKey: { siteId, storageKey: item.src } }, create: { id: `media_${siteId}_save_date_${item.filename.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}`, siteId, label: item.filename, storageKey: item.src, mimeType: "image/jpeg", usageType: "theme", sourceType: "save-the-date-source", previewUrl: item.src, originUrl: item.src, altText: item.alt, notes: item.caption }, update: { altText: item.alt, notes: item.caption, previewUrl: item.src, originUrl: item.src } });
   }, { maxWait: 20_000, timeout: 120_000 });
   const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
@@ -235,6 +235,6 @@ try {
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products.map(mapProduct));
   const integrity = publicationSnapshotIntegrity(snapshot);
   if (integrity !== "valid") throw new Error(`Save the Date publication snapshot is invalid before activation: ${integrity}`);
-  await publishSeoSnapshotRelational({ siteId, snapshot, actor: "save-the-date-sync", scope: { type: "site", pageIds: [pageId], includeThemeSettings: true, includeStorefrontProfile: false } });
+  await publishReviewedDraftSiteRelational(siteId, "save-the-date-sync");
   console.log(JSON.stringify({ siteId, pagePath, mediaCount: sourceImages.length, faqCount: faqItems.length, snapshotHash: snapshot.snapshotHash }, null, 2));
 } finally { await prisma.$disconnect(); }

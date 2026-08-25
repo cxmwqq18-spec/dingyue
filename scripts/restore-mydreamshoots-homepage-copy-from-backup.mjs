@@ -37,7 +37,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const hash = (value) => crypto.createHash("sha256").update(JSON.stringify(value)).digest("hex");
@@ -76,8 +76,8 @@ try {
     const rollbackPath = path.join(backupDir, `mydreamshoots-homepage-copy-before-restore-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
     fs.writeFileSync(rollbackPath, `${JSON.stringify({ createdAt: new Date().toISOString(), sourceBackup: backupPath, ...current }, null, 2)}\n`, { mode: 0o600 });
     await prisma.$transaction(async (tx) => {
-      await tx.themePage.update({ where: { id: homepage.id }, data: { draftJson: clone(backup.homepage.draftJson), publishedJson: clone(backup.homepage.publishedJson), updatedAt: new Date() } });
-      await tx.themeSettings.update({ where: { siteId }, data: { draftJson: clone(backup.themeSettings.draftJson), publishedJson: clone(backup.themeSettings.publishedJson), updatedAt: new Date() } });
+  await tx.themePage.update({ where: { id: homepage.id }, data: { draftJson: clone(backup.homepage.draftJson), updatedAt: new Date() } });
+  await tx.themeSettings.update({ where: { siteId }, data: { draftJson: clone(backup.themeSettings.draftJson), updatedAt: new Date() } });
     });
     const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { pages: { where: { slug: "/" } }, settings: true, activePublication: { include: { publication: true } } } });
     assert(fresh?.activePublication?.publication && fresh.pages.length === 1 && fresh.settings, "local restore readback failed");
@@ -95,7 +95,7 @@ try {
     snapshot.snapshotHash = publicationSnapshotHash(snapshot);
     snapshot.revisions.snapshotHash = snapshot.snapshotHash;
     assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "restored publication snapshot is invalid");
-    const published = await publishSeoSnapshotRelational({ siteId, snapshot, actor: "restore:mydreamshoots-homepage-copy-from-backup" });
+    const published = await publishReviewedDraftSiteRelational(siteId, "restore:mydreamshoots-homepage-copy-from-backup");
     console.log(JSON.stringify({ ...result, rollbackPath, publicationId: published.publication.id, version: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash }, null, 2));
   }
 } finally {

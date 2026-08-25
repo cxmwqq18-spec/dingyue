@@ -72,11 +72,6 @@ for (const theme of state.siteThemes ?? []) {
   changeCount += normalizeSeoObjectsDeep(theme);
 }
 
-for (const publication of state.themePublications ?? []) {
-  if (publication.siteId !== "site_dreamshoot") continue;
-  changeCount += normalizeSeoObjectsDeep(publication);
-}
-
 for (const page of state.themePages ?? []) {
   if (page.siteId !== "site_dreamshoot") continue;
   changeCount += normalizeSeoObjectsDeep(page);

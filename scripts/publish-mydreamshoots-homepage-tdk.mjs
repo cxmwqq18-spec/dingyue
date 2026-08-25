@@ -50,7 +50,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 function clone(value) {
@@ -100,8 +100,8 @@ try {
   const nextPublishedSettings = applySettingsSeo(site.settings.publishedJson, home.id);
 
   await prisma.$transaction(async (tx) => {
-    await tx.themePage.update({ where: { id: home.id }, data: { draftJson: nextDraft, publishedJson: nextPublished, updatedAt: new Date() } });
-    await tx.themeSettings.update({ where: { siteId }, data: { draftJson: nextDraftSettings, publishedJson: nextPublishedSettings, updatedAt: new Date() } });
+    await tx.themePage.update({ where: { id: home.id }, data: { draftJson: nextDraft, updatedAt: new Date() } });
+    await tx.themeSettings.update({ where: { siteId }, data: { draftJson: nextDraftSettings, updatedAt: new Date() } });
   }, { timeout: 120_000 });
 
   const snapshot = clone(active.snapshot);
@@ -115,12 +115,7 @@ try {
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "updated TDK publication snapshot must be valid");
 
-  const published = await publishSeoSnapshotRelational({
-    siteId,
-    snapshot,
-    actor: `publish:mydreamshoots-homepage-tdk:${expectedTarget}`,
-    scope: { type: "page", pageIds: [home.id], includeThemeSettings: true, includeStorefrontProfile: false }
-  });
+  const published = await publishReviewedDraftSiteRelational(siteId, `publish:mydreamshoots-homepage-tdk:${expectedTarget}`);
   const readback = await prisma.themePublication.findUnique({ where: { id: published.publication.id } });
   assert.equal(readback?.snapshot?.pages?.find((page) => page.slug === "/")?.publishedJson?.seo?.description, approvedSeo.description, "publication TDK readback failed");
   console.log(JSON.stringify({ ok: true, target: expectedTarget, publicationId: published.publication.id, version: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash, backupPath, seo: approvedSeo }, null, 2));

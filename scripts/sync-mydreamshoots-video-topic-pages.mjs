@@ -777,9 +777,8 @@ function loadPublicationTools() {
   try {
     const jiti = createJiti(import.meta.url);
     return {
-      buildPublicationSnapshot: jiti("../src/lib/stores/theme-store.ts").buildPublicationSnapshot,
       missingStorefrontProfileFacts: jiti("../src/lib/storefront-context/facts.ts").missingStorefrontProfileFacts,
-      publishSeoSnapshotRelational: jiti("../src/lib/stores/theme-store.ts").publishSeoSnapshotRelational,
+      publishReviewedDraftSiteRelational: jiti("../src/lib/stores/theme-store.ts").publishReviewedDraftSiteRelational,
       applyMydreamshootsVideoTopicPublication: jiti("../src/lib/mydreamshoots-video-topic-publication.ts").applyMydreamshootsVideoTopicPublication,
       publicationSnapshotHash: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotHash,
       publicationSnapshotIntegrity: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotIntegrity
@@ -788,16 +787,6 @@ function loadPublicationTools() {
     Module._resolveFilename = originalResolveFilename;
     Module._load = originalLoad;
   }
-}
-
-function refreshSnapshotHash(snapshot, publicationSnapshotHash) {
-  snapshot.snapshotHash = publicationSnapshotHash({
-    ...snapshot,
-    snapshotHash: "",
-    revisions: { ...snapshot.revisions, snapshotHash: "" }
-  });
-  snapshot.revisions.snapshotHash = snapshot.snapshotHash;
-  return snapshot;
 }
 
 function addPublicationToState(state, publication) {
@@ -809,26 +798,16 @@ function addPublicationToState(state, publication) {
 
 async function publishMissingVideoPages(state, syncedPages, prisma) {
   const {
-    buildPublicationSnapshot,
     missingStorefrontProfileFacts,
-    publishSeoSnapshotRelational,
-    applyMydreamshootsVideoTopicPublication,
-    publicationSnapshotHash,
     publicationSnapshotIntegrity
   } = loadPublicationTools();
   const activePointer = await prisma.activeThemePublication.findUnique({
     where: { siteId: SITE_ID },
     include: { publication: true }
   });
-  const allPublications = await prisma.themePublication.findMany({
-    where: { siteId: SITE_ID },
-    orderBy: [{ version: "desc" }, { publishedAt: "desc" }]
-  });
-  const publicationCandidates = [
-    activePointer?.publication,
-    ...allPublications.filter((publication) => publication.id !== activePointer?.publication?.id)
-  ].filter(Boolean);
-  const currentPublication = publicationCandidates.find((publication) => publicationSnapshotIntegrity(publication.snapshot) === "valid");
+  const currentPublication = activePointer?.publication && publicationSnapshotIntegrity(activePointer.publication.snapshot) === "valid"
+    ? activePointer.publication
+    : undefined;
   const sourceSite = (state.sites ?? []).find((site) => site.id === SITE_ID);
   if (!sourceSite) throw new Error(`missing_site:${SITE_ID}`);
   if (!currentPublication) {
@@ -839,16 +818,6 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
     }
   }
 
-  // Legacy publications cannot be patched. Recompile a complete immutable snapshot from
-  // the current relational draft state, then let the normal publication transaction activate it.
-  const snapshot = currentPublication
-    ? clone(currentPublication.snapshot)
-    : buildPublicationSnapshot(
-      sourceSite,
-      undefined,
-      (state.creativePacks ?? []).filter((pack) => pack.siteId === SITE_ID),
-      (state.products ?? []).filter((product) => product.siteId === SITE_ID)
-    );
   const databaseVideoPages = await prisma.themePage.findMany({
     where: {
       siteId: SITE_ID,
@@ -856,62 +825,8 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
     },
     orderBy: [{ slug: "asc" }]
   });
-  const publishCandidates = [
-    ...syncedPages,
-    ...databaseVideoPages
-  ];
-  const dedupedBySlug = new Map(
-    publishCandidates
-      .filter((page) => page.slug.startsWith("/ai-video-generation/"))
-      .map((page) => [page.slug, page])
-  );
-  const syncedPublicPages = [...dedupedBySlug.values()]
-    .map((page) => ({
-      id: page.id,
-      siteId: page.siteId ?? SITE_ID,
-      pageType: page.pageType,
-      templateKey: page.templateKey,
-      slug: page.slug,
-      title: page.title,
-      publishedJson: clone(page.draftJson ?? page.publishedJson),
-      createdAt: page.createdAt instanceof Date ? page.createdAt.toISOString() : page.createdAt,
-      updatedAt: page.updatedAt instanceof Date ? page.updatedAt.toISOString() : page.updatedAt
-    }));
-  const syncedBySlug = new Map(syncedPublicPages.map((page) => [page.slug, page]));
-  let replacedCount = 0;
-  const existingSlugs = new Set();
-  snapshot.pages = snapshot.pages.map((page) => {
-    existingSlugs.add(page.slug);
-    const replacement = syncedBySlug.get(page.slug);
-    if (!replacement) return page;
-    if (sameJson(page, replacement)) return page;
-    replacedCount += 1;
-    return replacement;
-  });
-  const missingPages = syncedPublicPages.filter((page) => !existingSlugs.has(page.slug));
-  snapshot.pages = [...snapshot.pages, ...missingPages];
-  const publishedVideoRouteCount = Array.isArray(snapshot.publishedRoutes)
-    ? snapshot.publishedRoutes.filter((route) => route.routeKind === "ai-video-topic-leaf").length
-    : 0;
-  const publishedVideoNavigation = Array.isArray(snapshot.publishedVideoNavigation)
-    ? snapshot.publishedVideoNavigation
-    : [];
-  const needsVideoProjection = publishedVideoRouteCount !== syncedPublicPages.length ||
-    publishedVideoNavigation.length !== syncedPublicPages.length ||
-    publishedVideoNavigation.some((item) => typeof item.description !== "string" || !item.description.trim());
-  if (currentPublication && !replacedCount && !missingPages.length && !needsVideoProjection) return undefined;
-  const compiledSnapshot = applyMydreamshootsVideoTopicPublication(snapshot, SITE_ID);
-  Object.assign(snapshot, compiledSnapshot);
-  refreshSnapshotHash(snapshot, publicationSnapshotHash);
-  if (publicationSnapshotIntegrity(snapshot) !== "valid") {
-    throw new Error("video_topic_publication_snapshot_integrity_failed");
-  }
-
-  const result = await publishSeoSnapshotRelational({
-    siteId: SITE_ID,
-    snapshot,
-    actor: "sync:mydreamshoots-video-topic-pages"
-  });
+  if (currentPublication && !syncedPages.length && !databaseVideoPages.length) return undefined;
+  const result = await publishReviewedDraftSiteRelational(SITE_ID, "sync:mydreamshoots-video-topic-pages");
   addPublicationToState(state, result.publication);
   return result.publication;
 }

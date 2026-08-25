@@ -670,7 +670,7 @@ if (process.env.SEASONAL_BUILD_ONLY === "1") {
 
 const jiti = createJiti(import.meta.url);
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
-const { buildPublicationSnapshot, publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const prisma = new PrismaClient();
 try {
@@ -693,7 +693,7 @@ try {
     for (const item of pages) {
       const pageId = `page_${siteId}_${item.pageKey}`;
       pageIds.push(pageId);
-      await tx.themePage.upsert({ where: { siteId_slug: { siteId, slug: item.pagePath } }, create: { id: pageId, siteId, pageType: "standard-content", templateKey: "seasonal-editorial", slug: item.pagePath, title: item.heading, draftJson: item.pageJson, publishedJson: item.pageJson }, update: { pageType: "standard-content", templateKey: "seasonal-editorial", title: item.heading, draftJson: item.pageJson, publishedJson: item.pageJson } });
+      await tx.themePage.upsert({ where: { siteId_slug: { siteId, slug: item.pagePath } }, create: { id: pageId, siteId, pageType: "standard-content", templateKey: "seasonal-editorial", slug: item.pagePath, title: item.heading, draftJson: item.pageJson, publishedJson: {} }, update: { pageType: "standard-content", templateKey: "seasonal-editorial", title: item.heading, draftJson: item.pageJson } });
       for (const image of item.pageJson.mediaManifest) {
         await tx.mediaAsset.upsert({ where: { siteId_storageKey: { siteId, storageKey: image.src } }, create: { id: `media_${siteId}_${item.pageKey}_${image.filename.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}`, siteId, label: image.filename, storageKey: image.src, mimeType: "image/jpeg", usageType: "theme", sourceType: `seasonal-${item.key}-source`, previewUrl: image.src, originUrl: image.src, altText: image.alt, notes: image.caption }, update: { altText: image.alt, notes: image.caption, previewUrl: image.src, originUrl: image.src } });
       }
@@ -719,7 +719,7 @@ try {
     const loveWedding = merged.filter((item) => groupFor(item.href) === "love-wedding").map((item, index) => ({ ...item, sortOrder: index + 1 }));
     const seasonal = merged.filter((item) => groupFor(item.href) === "seasonal-holidays").map((item, index) => ({ ...item, sortOrder: index + 1 }));
     const nextSettings = { ...existingSettings, saveTheDateNavigation: { menuLabel: "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: loveWedding }, { label: "Seasonal Holidays", slug: "seasonal-holidays", sortOrder: 2, items: seasonal }] } };
-    await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: nextSettings }, update: { draftJson: nextSettings, publishedJson: nextSettings } });
+    await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: {} }, update: { draftJson: nextSettings } });
   });
   const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   const site = toSite(fresh);
@@ -728,7 +728,7 @@ try {
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products.map(mapProduct));
   const integrity = publicationSnapshotIntegrity(snapshot);
   if (integrity !== "valid") throw new Error(`Seasonal publication snapshot is invalid: ${integrity}`);
-  await publishSeoSnapshotRelational({ siteId, snapshot, actor: "seasonal-theme-sync", scope: { type: "site", pageIds, includeThemeSettings: true, includeStorefrontProfile: false } });
+  await publishReviewedDraftSiteRelational(siteId, "seasonal-theme-sync");
   console.log(JSON.stringify({ siteId, pages: pages.map((item) => ({ key: item.key, path: item.pagePath, media: item.pageJson.mediaManifest.length, faq: item.pageJson.contentContract.faqCount })), snapshotHash: snapshot.snapshotHash }, null, 2));
 } finally {
   await prisma.$disconnect();

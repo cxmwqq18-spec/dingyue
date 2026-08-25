@@ -44,7 +44,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
   return originalResolveFilename.call(this, resolved, ...args);
 };
 const jiti = createJiti(import.meta.url);
-const { publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 const prisma = new PrismaClient();
@@ -80,7 +80,7 @@ try {
     snapshot.snapshotHash = publicationSnapshotHash(snapshot);
     snapshot.revisions.snapshotHash = snapshot.snapshotHash;
     assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "indexing publication must preserve snapshot integrity");
-    const published = await publishSeoSnapshotRelational({ siteId, snapshot, actor: "sync:grownstride-test-public-indexing" });
+    const published = await publishReviewedDraftSiteRelational(siteId, "sync:grownstride-test-public-indexing");
     console.log(JSON.stringify({ publicationId: published.publication.id, version: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash }, null, 2));
   }
   console.log(JSON.stringify({ ok: true, mode: apply ? "applied" : "dry-run", siteId, pages: targetSlugs, changed: changed.length }, null, 2));

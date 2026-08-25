@@ -32,7 +32,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
   return originalResolveFilename.call(this, resolved, ...args);
 };
 const jiti = createJiti(import.meta.url);
-const { publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const clone = (value) => value === undefined ? undefined : JSON.parse(JSON.stringify(value));
 
@@ -50,7 +50,7 @@ try {
   fs.writeFileSync(backupPath, `${JSON.stringify({ createdAt: new Date().toISOString(), target: expectedTarget, database, page, activePublication: active }, null, 2)}\n`, { mode: 0o600 });
   const nextJson = clone(sourcePage.publishedJson);
   await prisma.$transaction(async (tx) => {
-    await tx.themePage.update({ where: { id: page.id }, data: { draftJson: nextJson, publishedJson: nextJson, updatedAt: new Date() } });
+  await tx.themePage.update({ where: { id: page.id }, data: { draftJson: nextJson, updatedAt: new Date() } });
   }, { timeout: 120_000 });
   const snapshot = clone(active.snapshot);
   const targetPage = snapshot.pages.find((item) => item.slug === slug);
@@ -61,7 +61,7 @@ try {
   snapshot.snapshotHash = publicationSnapshotHash(snapshot);
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "video page publication snapshot must be valid");
-  const published = await publishSeoSnapshotRelational({ siteId, snapshot, actor: `publish:mydreamshoots-video-page:${expectedTarget}`, scope: { type: "page", pageIds: [page.id], includeThemeSettings: false, includeStorefrontProfile: false } });
+  const published = await publishReviewedDraftSiteRelational(siteId, `publish:mydreamshoots-video-page:${expectedTarget}`);
   console.log(JSON.stringify({ ok: true, target: expectedTarget, page: slug, publicationId: published.publication.id, version: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash, backupPath }, null, 2));
 } finally {
   await prisma.$disconnect();

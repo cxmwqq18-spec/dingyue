@@ -266,13 +266,13 @@ for (let leftIndex = 0; leftIndex < pages.length; leftIndex += 1) {
   }
 }
 
-for (const publication of state.themePublications ?? []) {
-  if (publication.siteId !== "site_dreamshoot") continue;
+const activePublication = state.sites?.find((site) => site.id === "site_dreamshoot")?.latestPublication;
+if (activePublication) {
   for (const item of expected) {
     const livePage = pages.find((page) => page.slug === item.slug);
-    const snapshotPage = publication.snapshot?.pages?.find((page) => page.slug === item.slug);
-    assert(Boolean(snapshotPage), `${publication.id} contains ${item.slug}`);
-    assert(JSON.stringify(snapshotPage?.publishedJson) === JSON.stringify(livePage?.publishedJson), `${publication.id} snapshot matches ${item.slug}`);
+    const snapshotPage = activePublication.snapshot?.pages?.find((page) => page.slug === item.slug);
+    assert(Boolean(snapshotPage), `${activePublication.id} contains ${item.slug}`);
+    assert(JSON.stringify(snapshotPage?.publishedJson) === JSON.stringify(livePage?.publishedJson), `${activePublication.id} snapshot matches ${item.slug}`);
   }
 }
 

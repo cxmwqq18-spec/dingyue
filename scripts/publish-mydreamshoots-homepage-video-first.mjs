@@ -33,7 +33,6 @@ const HOW_IT_WORKS_SUBTITLE = "Choose what you want to create, upload your photo
 const HOW_IT_WORKS_SUPPORTING_COPY = "Use the Upload Your Photos flow for supported AI Video, Save the Date, headshot, portrait, couple, seasonal, and creative photo workflows.";
 const PRICING_DESCRIPTION = "Use credits across eligible AI photo and video workflows. The required credit cost is shown before generation.";
 const HERO_SUBHEADLINE = "Upload your photos and choose what you want to create—from AI videos and personalized Save the Date videos to professional AI headshots, portraits, couple photos, seasonal images, and creative photo sets. Review examples and credit costs before generation, then access your finished results in your workspace.";
-const VIDEO_SLUGS = "motion-generator|talking-photo|cinematic-video|tiktok-video|instagram-reels|product-video|product-ad-video|promo-video";
 const PHOTO_SUBTITLES = new Map([
   ["world-cup-fan-photos", "Create match-day fan portraits and photos"],
   ["christmas-couple", "Create festive Christmas couple photos"],
@@ -62,7 +61,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const clone = (value) => value === undefined ? undefined : JSON.parse(JSON.stringify(value));
 function stable(value) {
@@ -132,7 +131,6 @@ function updateHomepage(page, homePageId) {
       imageTitle: "Featured AI Photo Generators",
       videoTitle: "Featured AI Video Generators",
       videoIntro: VIDEO_INTRO,
-      videoSlugs: VIDEO_SLUGS,
       saveTheDateTitle: "AI Save the Date Videos",
       saveTheDateIntro: SAVE_THE_DATE_INTRO,
       photoIntro: PHOTO_INTRO,
@@ -141,6 +139,8 @@ function updateHomepage(page, homePageId) {
       saveTheDateItemLimit: 6,
       imageItemLimit: 8
     };
+    delete showcase.settings.imageSlugs;
+    delete showcase.settings.videoSlugs;
   }
   if (next.sections.faq_1) next.sections.faq_1 = updateFaq(next.sections.faq_1);
   if (next.sections.tutorial_video_1) {
@@ -170,7 +170,7 @@ function updateHomepage(page, homePageId) {
       title: "Ready to create with myDreamshoots?",
       subtitle: "Create AI videos, personalized Save the Date videos, and professional photo sets from your images—all in one private workspace.",
       primaryCta: "Create Now",
-      primaryHref: "/login"
+      primaryHref: "/app/create"
     };
   }
   return next;
@@ -274,8 +274,8 @@ try {
   const nextSettings = updateSettings(applySeo(site.settings.publishedJson, home.id), home.id);
   const nextDraftSettings = updateSettings(applySeo(site.settings.draftJson, home.id), home.id);
   await prisma.$transaction(async (tx) => {
-    await tx.themePage.update({ where: { id: home.id }, data: { publishedJson: nextPublished, draftJson: nextDraft, updatedAt: new Date() } });
-    await tx.themeSettings.update({ where: { siteId }, data: { publishedJson: nextSettings, draftJson: nextDraftSettings, updatedAt: new Date() } });
+    await tx.themePage.update({ where: { id: home.id }, data: { draftJson: nextDraft, updatedAt: new Date() } });
+    await tx.themeSettings.update({ where: { siteId }, data: { draftJson: nextDraftSettings, updatedAt: new Date() } });
   }, { timeout: 120_000 });
   const previousPublications = await prisma.themePublication.findMany({ where: { siteId, version: { lt: active.version } }, orderBy: { version: "desc" } });
   const sourcePublication = previousPublications.sort((left, right) => {
@@ -294,7 +294,7 @@ try {
   snapshot.snapshotHash = publicationSnapshotHash(snapshot);
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "updated homepage publication snapshot must be valid");
-  const published = await publishSeoSnapshotRelational({ siteId, snapshot, actor: `publish:mydreamshoots-homepage-video-first:${target}`, scope: { type: "page", pageIds: [home.id], includeThemeSettings: true, includeStorefrontProfile: false } });
+  const published = await publishReviewedDraftSiteRelational(siteId, `publish:mydreamshoots-homepage-video-first:${target}`);
   const readback = await prisma.themePublication.findUnique({ where: { id: published.publication.id } });
   const readbackHome = readback?.snapshot?.pages?.find((page) => page.slug === "/");
   assert.equal(readbackHome?.publishedJson?.seo?.title, SEO.title, "publication SEO title readback failed");
