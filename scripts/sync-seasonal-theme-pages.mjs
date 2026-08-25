@@ -30,6 +30,27 @@ const removedLegacyPaths = new Set([
   "/holidays-events/thanksgiving",
   "/holidays-events/new-year"
 ]);
+// Taxonomy entries are eligible only when their target is already published
+// (or is included in the package set handled by this run). This keeps the
+// menu complete without manufacturing links to missing pages.
+const navigationCatalogue = [
+  { href: "/ai-save-the-date/valentines-day", label: "Valentine's Day", group: "love-wedding" },
+  { href: "/holidays-events/engagement", label: "Engagement", group: "love-wedding" },
+  { href: "/holidays-events/proposal", label: "Proposal", group: "love-wedding" },
+  { href: "/holidays-events/save-the-date", label: "Save the Date", group: "love-wedding" },
+  { href: "/holidays-events/wedding-invitation", label: "Wedding Invitation", group: "love-wedding" },
+  { href: "/ai-video-generation/wedding-ceremony", label: "Wedding Ceremony", group: "love-wedding" },
+  { href: "/holidays-events/wedding-album", label: "Wedding Album", group: "love-wedding" },
+  { href: "/holidays-events/wedding-anniversary", label: "Wedding Anniversary", group: "love-wedding" },
+  { href: "/holidays-events/bridal-shower", label: "Bridal Shower", group: "love-wedding" },
+  { href: "/ai-image-generation/christmas-photo", label: "Christmas", group: "seasonal-holidays" },
+  { href: "/holidays-events/halloween", label: "Halloween", group: "seasonal-holidays" },
+  { href: "/ai-image-generation/thanksgiving-photo", label: "Thanksgiving", group: "seasonal-holidays" },
+  { href: "/holidays-events/new-year", label: "New Year", group: "seasonal-holidays" },
+  { href: "/holidays-events/easter", label: "Easter", group: "seasonal-holidays" },
+  { href: "/holidays-events/mothers-day", label: "Mother's Day", group: "seasonal-holidays" },
+  { href: "/holidays-events/fathers-day", label: "Father's Day", group: "seasonal-holidays" }
+];
 const configs = [
   {
     key: "wedding-ceremony",
@@ -679,11 +700,24 @@ try {
     }
     const existingSettings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
     const existingNavigation = existingSettings.saveTheDateNavigation || { menuLabel: "Save the Date", groups: [] };
-    const existingItems = existingNavigation.groups.flatMap((group) => group.items || []).filter((item) => !removedLegacyPaths.has(item.href));
-    const nextItems = pages.map((item, index) => ({ label: item.key === "wedding-ceremony" ? "Wedding Ceremony" : item.key.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()), slug: item.key, href: item.pagePath, status: "published", sortOrder: index + 1 }));
-    const merged = [...existingItems, ...nextItems].filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index);
-    const loveWedding = merged.filter((item) => ["/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date", "/ai-video-generation/wedding-ceremony"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
-    const seasonal = merged.filter((item) => ["/holidays-events/mothers-day", "/holidays-events/fathers-day", "/holidays-events/halloween"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
+    const publishedRoutePaths = new Set((siteRecord.activePublication?.publication?.snapshot?.publishedRoutes || [])
+      .filter((route) => route?.status === "published")
+      .map((route) => route.canonicalPath || route.canonicalSlug)
+      .filter(Boolean));
+    const packagePaths = new Set(pages.map((item) => item.pagePath));
+    const isAvailable = (href) => publishedRoutePaths.has(href) || packagePaths.has(href);
+    const existingItems = existingNavigation.groups.flatMap((group) => group.items || [])
+      .filter((item) => !removedLegacyPaths.has(item.href) && isAvailable(item.href));
+    const catalogueItems = navigationCatalogue
+      .filter((item) => !removedLegacyPaths.has(item.href) && isAvailable(item.href))
+      .map((item) => ({ ...item, slug: item.href.split("/").pop(), status: "published" }));
+    const nextItems = pages.map((item) => ({ label: item.key === "wedding-ceremony" ? "Wedding Ceremony" : item.key.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()), slug: item.key, href: item.pagePath, status: "published" }));
+    const merged = [...catalogueItems, ...existingItems, ...nextItems]
+      .filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index);
+    const groupFor = (href) => navigationCatalogue.find((item) => item.href === href)?.group
+      || (href.includes("wedding") || href.includes("engagement") || href.includes("proposal") || href.includes("save-the-date") ? "love-wedding" : "seasonal-holidays");
+    const loveWedding = merged.filter((item) => groupFor(item.href) === "love-wedding").map((item, index) => ({ ...item, sortOrder: index + 1 }));
+    const seasonal = merged.filter((item) => groupFor(item.href) === "seasonal-holidays").map((item, index) => ({ ...item, sortOrder: index + 1 }));
     const nextSettings = { ...existingSettings, saveTheDateNavigation: { menuLabel: "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: loveWedding }, { label: "Seasonal Holidays", slug: "seasonal-holidays", sortOrder: 2, items: seasonal }] } };
     await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: nextSettings }, update: { draftJson: nextSettings, publishedJson: nextSettings } });
   });
