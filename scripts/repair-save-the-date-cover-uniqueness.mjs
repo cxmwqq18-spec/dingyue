@@ -10,6 +10,7 @@ import createJiti from "jiti";
 import { assertDatabaseTarget } from "./lib/database-target.mjs";
 
 const target = String(process.env.DATABASE_TARGET || "").trim().toLowerCase();
+const apply = process.argv.includes("--apply");
 assertDatabaseTarget({ expectedTarget: target || "remote" });
 const siteId = "site_dreamshoot";
 const coverRepairs = new Map([
@@ -79,7 +80,7 @@ try {
     nextPage.mediaManifest[0] = { ...nextPage.mediaManifest[0], src: repair.cover, alt: repair.alt };
     nextPage.seo = { ...(nextPage.seo ?? {}), ogImage: repair.cover };
     nextPages.set(pathName, { page, nextPage, repair });
-    const mediaAsset = await prisma.mediaAsset.upsert({
+    const mediaAsset = apply ? await prisma.mediaAsset.upsert({
       where: { siteId_storageKey: { siteId, storageKey: repair.cover } },
       create: {
         id: repair.mediaAssetId ?? `media_${siteId}_${Buffer.from(repair.cover).toString("hex").slice(0, 24)}`,
@@ -94,9 +95,9 @@ try {
         altText: repair.alt
       },
       update: { altText: repair.alt, previewUrl: repair.cover, originUrl: repair.cover }
-    });
-    mediaAssetRepairs.set(mediaAsset.id, repair.alt);
-    await prisma.themePage.update({ where: { id: page.id }, data: { draftJson: nextPage } });
+    }) : await prisma.mediaAsset.findUnique({ where: { siteId_storageKey: { siteId, storageKey: repair.cover } }, select: { id: true } });
+    if (mediaAsset) mediaAssetRepairs.set(mediaAsset.id, repair.alt);
+    if (apply) await prisma.themePage.update({ where: { id: page.id }, data: { draftJson: nextPage } });
   }
   const settings = clone(site.settings?.publishedJson ?? site.settings?.draftJson ?? {});
   for (const group of settings.saveTheDateNavigation?.groups ?? []) {
@@ -108,7 +109,7 @@ try {
       }
     }
   }
-  await prisma.themeSettings.update({ where: { siteId }, data: { draftJson: settings } });
+  if (apply) await prisma.themeSettings.update({ where: { siteId }, data: { draftJson: settings } });
 
   const snapshot = clone(site.activePublication.publication.snapshot);
   for (const { page, nextPage } of nextPages.values()) {
@@ -140,13 +141,13 @@ try {
   snapshot.snapshotHash = publicationSnapshotHash(snapshot);
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "cover repair must preserve snapshot integrity");
-  for (const [mediaAssetId, altText] of mediaAssetRepairs) {
+  if (apply) for (const [mediaAssetId, altText] of mediaAssetRepairs) {
     await prisma.mediaAsset.update({ where: { id: mediaAssetId }, data: { altText } });
   }
   console.log(JSON.stringify({
     ok: true,
     target,
-    mode: "draft-only",
+    mode: apply ? "draft-only" : "dry-run",
     repairedPaths: [...coverRepairs.keys()],
     changedPageIds: [...nextPages.values()].map(({ page }) => page.id),
     changedMediaAssetIds: [...mediaAssetRepairs.keys()],

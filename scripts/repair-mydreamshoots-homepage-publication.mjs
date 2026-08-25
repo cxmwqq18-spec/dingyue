@@ -5,9 +5,12 @@ import Module from "node:module";
 import path from "node:path";
 import createJiti from "jiti";
 import "./load-runtime-env.mjs";
+import { assertDatabaseTarget } from "./lib/database-target.mjs";
 
 const siteId = "site_dreamshoot";
 const homepageSlug = "/";
+const apply = process.argv.includes("--apply");
+assertDatabaseTarget({ expectedTarget: "local" });
 
 const databaseUrl = process.env.DATABASE_URL?.trim();
 if (!databaseUrl) throw new Error("DATABASE_URL is required for the homepage publication repair");
@@ -69,12 +72,10 @@ try {
   const site = toSite(siteRecord);
   const { page: homepage, publishedJson } = normalizeHomePage(site);
 
-  await prisma.themePage.update({
-    where: { id: homepage.id },
-    data: {
-      draftJson: publishedJson
-    }
-  });
+  if (apply) await prisma.themePage.update({
+      where: { id: homepage.id },
+      data: { draftJson: publishedJson }
+    });
 
   const activePublication = siteRecord.activePublication?.publication;
   if (!activePublication || publicationSnapshotIntegrity(activePublication.snapshot) !== "valid") {
@@ -95,7 +96,7 @@ try {
     ok: true,
     siteId,
     homepagePageId: homepage.id,
-    mode: "draft-only",
+    mode: apply ? "draft-only" : "dry-run",
     manifestHash: manifest.manifestHash,
     publicationRequired: true
   }, null, 2));

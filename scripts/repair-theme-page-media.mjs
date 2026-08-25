@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { assertDatabaseTarget } from "./lib/database-target.mjs";
 
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
+const apply = process.argv.includes("--apply");
+assertDatabaseTarget({ expectedTarget: "local" });
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const image = (asset) => asset ? ({ imageUrl: asset.src, imageAlt: asset.alt || asset.altText || asset.filename, imageWidth: asset.width || 1600, imageHeight: asset.height || 1000, imageLoading: asset.loading || "lazy", imageFetchPriority: asset.fetchPriority || "auto" }) : {};
 const section = (json, id) => json.sections?.[id];
@@ -73,16 +76,16 @@ try {
     for (const asset of assets) {
         if (!asset?.src) continue;
         const safeName = String(asset.filename || asset.src).replace(/[^a-z0-9]+/gi, "_").toLowerCase();
-        await prisma.mediaAsset.upsert({
+        if (apply) await prisma.mediaAsset.upsert({
           where: { siteId_storageKey: { siteId, storageKey: asset.src } },
           create: { id: `media_${siteId}_${safeName}`, siteId, label: asset.filename || safeName, storageKey: asset.src, mimeType: "image/jpeg", usageType: "theme", sourceType: `theme-${page.slug.slice(1).replace(/[^a-z0-9]+/gi, "-")}-source`, previewUrl: asset.src, originUrl: asset.src, altText: asset.alt || asset.altText || asset.filename || safeName, notes: asset.caption || null },
           update: { altText: asset.alt || asset.altText || asset.filename || safeName, previewUrl: asset.src, originUrl: asset.src, notes: asset.caption || null }
         });
     }
     if (JSON.stringify(json) !== before) {
-      await prisma.themePage.update({ where: { id: page.id }, data: { draftJson: json } });
+      if (apply) await prisma.themePage.update({ where: { id: page.id }, data: { draftJson: json } });
       reports.push({ slug: page.slug, updated: true });
     } else reports.push({ slug: page.slug, updated: false });
   }
-  console.log(JSON.stringify({ siteId, reports }, null, 2));
+  console.log(JSON.stringify({ siteId, mode: apply ? "draft-only" : "dry-run", reports, publicationRequired: true }, null, 2));
 } finally { await prisma.$disconnect(); }

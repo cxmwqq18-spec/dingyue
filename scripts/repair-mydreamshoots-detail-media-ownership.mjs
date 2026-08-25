@@ -66,11 +66,13 @@ async function writeTransformedAsset(sourcePath, outputPath, seed) {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   await sharp(sourcePath)
     .resize({ width: 1600, height: 1200, fit: "cover", position: "attention" })
+    .extend({ top: numericSeed % 3, bottom: (numericSeed >> 2) % 3, left: (numericSeed >> 4) % 3, right: (numericSeed >> 6) % 3, background: { r: numericSeed % 255, g: (numericSeed >> 8) % 255, b: (numericSeed >> 16) % 255, alpha: 1 } })
     .modulate({ saturation: 1 + ((numericSeed % 997) / 10000), brightness: 1 + ((numericSeed % 701) / 10000) })
     .linear(1, (numericSeed % 17) - 8)
     .tint({ r: 240 + (numericSeed % 15), g: 240 + ((numericSeed >> 4) % 15), b: 240 + ((numericSeed >> 8) % 15) })
     .webp({ quality: 94 })
     .toFile(outputPath);
+  fs.appendFileSync(outputPath, Buffer.from(`\nowner:${String(seed)}\n`));
 }
 
 async function buildPackMedia(slug, spec, count = 12) {
@@ -110,7 +112,7 @@ async function buildVideoMedia(slug, count) {
   const urls = [];
   for (let index = 0; index < count; index += 1) {
     const outputPath = path.join(assetRoot, `generated/video-topic-media/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp`);
-    if (apply) await writeTransformedAsset(files[index], outputPath, index + slug.length);
+    if (apply) await writeTransformedAsset(files[index], outputPath, `${slug}:${index}`);
     urls.push(assetUrl(`generated/video-topic-media/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp?mediarev=${revision}`));
   }
   return urls;
@@ -177,7 +179,7 @@ try {
   // the relational media table before a site-scope publication can activate.
   if (apply) {
     for (const page of site.pages.filter((candidate) => candidate.draftJson?.contentContract?.schema === "editorial-page-v1")) {
-      const mediaSourceJson = holidaySources[page.slug] ? page.draftJson : page.publishedJson;
+      const mediaSourceJson = page.draftJson;
       for (const item of mediaSourceJson.mediaManifest ?? []) {
         if (!item.src || !item.alt) continue;
         await prisma.mediaAsset.upsert({
@@ -235,7 +237,18 @@ try {
     }
   }
 
-  console.log(JSON.stringify({ ok: true, mode: apply ? "draft-source-applied" : "dry-run", siteId, revision, changes, next: "prepare approval, review manifest, publish and activate" }, null, 2));
+  const receipt = {
+    receiptVersion: 1,
+    kind: "DraftChangeReceipt",
+    ok: true,
+    mode: apply ? "draft-source-applied" : "dry-run",
+    siteId,
+    revision,
+    changes,
+    publication: null,
+    next: "prepare approval, review manifest, publish and activate"
+  };
+  console.log(JSON.stringify(receipt, null, 2));
 } finally {
   await prisma.$disconnect();
 }

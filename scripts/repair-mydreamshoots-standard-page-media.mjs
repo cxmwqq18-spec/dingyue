@@ -100,7 +100,7 @@ try {
   const mappedPage = site.pages.find((page) => page.slug === "/best-ai-image");
   assert.ok(pageRecord && mappedPage, "/best-ai-image ThemePage is required");
   const draftJson = withOgImage(pageRecord.draftJson, firstReadyLeaf.primaryImage);
-  await prisma.themePage.update({ where: { id: pageRecord.id }, data: { draftJson } });
+  if (process.argv.includes("--apply")) await prisma.themePage.update({ where: { id: pageRecord.id }, data: { draftJson } });
   mappedPage.draftJson = draftJson;
 
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products);
@@ -126,7 +126,7 @@ try {
     siteId,
     canonicalPath: "/best-ai-image",
     primaryImage: bestImage.primaryImage,
-    mode: "draft-only",
+    mode: process.argv.includes("--apply") ? "draft-only" : "dry-run",
     manifestHash: manifest.manifestHash,
     publicationRequired: true
   }, null, 2));
