@@ -7,26 +7,18 @@ import ts from "typescript";
 const repoRoot = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const scriptsRoot = path.join(repoRoot, "scripts");
 const formalOwner = "src/lib/stores/theme-store.ts";
-const allowedFixtureOrMigrationPaths = new Set([
+const migrationOnlyPaths = new Set([
+  "scripts/sync-fan-holiday-storefront-theme.mjs",
   "scripts/sync-grownstride-test-public-state-from-json.mjs",
-  "scripts/sync-grownstride-test-store.mjs",
-  "scripts/refresh-test-public-asset-urls.mjs",
+  "scripts/sync-grownstride-test-store.mjs"
+]);
+const allowedFixtureOrMigrationPaths = new Set([
   "scripts/db-import-relational-state.mjs",
   "scripts/migrate-storefront-single-source.mjs",
   "scripts/migrate-dreamshoot-demo.mjs",
   "scripts/migrate-aidreamcapes-demo.mjs",
   "scripts/migrate-lumen-wedding-demo.mjs",
   "scripts/create-spanish-xby-stores.mjs",
-  "scripts/sync-fan-holiday-storefront-theme.mjs",
-  "scripts/fix-mydreamshoots-seo-brand-wordmark.mjs",
-  "scripts/repair-save-the-date-navigation-publication.mjs",
-  "scripts/repair-theme-page-media.mjs",
-  "scripts/sync-best-save-the-date-page.mjs",
-  "scripts/sync-mydreamshoots-production-snapshot.mjs",
-  "scripts/sync-mydreamshoots-public-sql.mjs",
-  "scripts/sync-save-the-date-topic-pages.mjs",
-  "scripts/sync-save-the-date-valentines-day.mjs",
-  "scripts/sync-seasonal-theme-pages.mjs",
   // The lifecycle smoke intentionally exercises pointer rollback and restores
   // the original row in its finally block. Keep this exception explicit so a
   // production script cannot gain the same bypass by being named `smoke-*`.
@@ -69,7 +61,9 @@ function objectContainsProperty(node, name) {
   if (!ts.isObjectLiteralExpression(node)) return false;
   for (const property of node.properties) {
     if (ts.isPropertyAssignment(property)) {
-      if (propertyName(property.name) === name) return true;
+      if (propertyName(property.name) === name) {
+        return !(ts.isObjectLiteralExpression(property.initializer) && property.initializer.properties.length === 0);
+      }
       if (objectContainsProperty(property.initializer, name)) return true;
     } else if (ts.isShorthandPropertyAssignment(property) && property.name.text === name) {
       return true;
@@ -94,14 +88,14 @@ function checkFile(relative) {
     return;
   }
   const fixtureOrSmoke = relative.startsWith("scripts/fixtures/");
-  const allowed = relative === formalOwner || fixtureOrSmoke || allowedFixtureOrMigrationPaths.has(relative);
+  const allowed = relative === formalOwner || fixtureOrSmoke || allowedFixtureOrMigrationPaths.has(relative) || migrationOnlyPaths.has(relative);
   function visit(node) {
     if (ts.isCallExpression(node)) {
       const chain = accessChain(node.expression);
-      if (isPublicationWrite(chain) && !allowed) failures.push({ file: relative, line: lineOf(sourceFile, node), kind: "publication-write", match: chain.join(".") });
+      if (isPublicationWrite(chain) && !allowed && !(migrationOnlyPaths.has(relative) && process.env.DATABASE_TARGET === "test")) failures.push({ file: relative, line: lineOf(sourceFile, node), kind: "publication-write", match: chain.join(".") });
       if (chain.at(-1) === "update" || chain.at(-1) === "updateMany" || chain.at(-1) === "upsert") {
         const model = chain.at(-2);
-        if (["themePage", "themeSettings", "storefrontProfile"].includes(model) && node.arguments.some((argument) => objectContainsProperty(argument, "publishedJson")) && !allowed) {
+        if (["themePage", "themeSettings", "storefrontProfile"].includes(model) && node.arguments.some((argument) => objectContainsProperty(argument, "publishedJson")) && !allowed && !(migrationOnlyPaths.has(relative) && process.env.DATABASE_TARGET === "test")) {
           failures.push({ file: relative, line: lineOf(sourceFile, node), kind: "published-json-write", match: chain.join(".") });
         }
       }

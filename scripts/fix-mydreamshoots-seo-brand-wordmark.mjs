@@ -106,22 +106,18 @@ async function fixPrismaJson() {
     const settings = await prisma.themeSettings.findUnique({ where: { siteId: site.id } });
     if (settings) {
       const draftJson = cloneJson(settings.draftJson);
-      const publishedJson = cloneJson(settings.publishedJson);
       normalizeSeoObjectsDeep(draftJson);
-      normalizeSeoObjectsDeep(publishedJson);
-      if (changed(settings.draftJson, draftJson) || changed(settings.publishedJson, publishedJson)) {
-        await prisma.themeSettings.update({ where: { siteId: site.id }, data: { draftJson, publishedJson } });
+      if (changed(settings.draftJson, draftJson)) {
+        await prisma.themeSettings.update({ where: { siteId: site.id }, data: { draftJson } });
         result.themeSettings += 1;
       }
     }
 
     for (const page of await prisma.themePage.findMany({ where: { siteId: site.id } })) {
       const draftJson = cloneJson(page.draftJson);
-      const publishedJson = cloneJson(page.publishedJson);
       normalizeSeoObjectsDeep(draftJson);
-      normalizeSeoObjectsDeep(publishedJson);
-      if (changed(page.draftJson, draftJson) || changed(page.publishedJson, publishedJson)) {
-        await prisma.themePage.update({ where: { id: page.id }, data: { draftJson, publishedJson } });
+      if (changed(page.draftJson, draftJson)) {
+        await prisma.themePage.update({ where: { id: page.id }, data: { draftJson } });
         result.themePages += 1;
       }
     }

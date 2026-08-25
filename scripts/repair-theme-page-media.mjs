@@ -80,7 +80,7 @@ try {
         });
     }
     if (JSON.stringify(json) !== before) {
-      await prisma.themePage.update({ where: { id: page.id }, data: { draftJson: json, publishedJson: json } });
+      await prisma.themePage.update({ where: { id: page.id }, data: { draftJson: json } });
       reports.push({ slug: page.slug, updated: true });
     } else reports.push({ slug: page.slug, updated: false });
   }

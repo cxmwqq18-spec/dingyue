@@ -403,21 +403,22 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     collections.every((item) => pages.has(item.pageEntityId) && mediaByPage.get(item.pageEntityId)?.mediaEntityId === item.mediaEntityId) &&
     policyRoutes.every((item) => snapshot.pages.some((page) => page.id === item.pageId && page.slug === item.canonicalPath)) &&
     redirectRoutes.every((item) => policyRoutes.some((routeItem) => routeItem.canonicalPath === item.targetPath));
+  const standardRouteFailures: string[] = [];
   const standardRoutesAgree = MYDREAMSHOOTS_STANDARD_SEO_INVENTORY.every((expected) => {
     const matchingRoutes = publishedRoutes.filter((candidate) => candidate.disposition === "render" && candidate.canonicalPath === expected.canonicalPath);
     const candidate = matchingRoutes[0];
-    if (matchingRoutes.length !== 1 || candidate.routeKind !== expected.routeKind || candidate.disposition !== expected.disposition) return false;
+    if (matchingRoutes.length !== 1 || candidate.routeKind !== expected.routeKind || candidate.disposition !== expected.disposition) { standardRouteFailures.push(`${expected.canonicalPath}:route`); return false; }
     const page = snapshot.pages.find((item) => item.id === candidate.pageId);
     const copy = pageCopyRows.find((item) => item.pageEntityId === candidate.pageEntityId);
     const media = publishedStandardPageMedia.find((item) => item.canonicalPath === expected.canonicalPath);
     const links = v1.publishedLinkRefs.filter((item: PublishedLinkRef) => item.ownerPageEntityId === candidate.pageEntityId);
     const required = new Set(expected.requiredProjectionKinds);
-    if (required.has("page") && (!page || page.id !== candidate.pageId)) return false;
+    if (required.has("page") && (!page || page.id !== candidate.pageId)) { standardRouteFailures.push(`${expected.canonicalPath}:page`); return false; }
     // Inventory requirements are presence contracts, not merely shape checks:
     // a missing projection must fail closed just like a malformed one.
-    if (required.has("copy") && (!copy || !text(copy.copyRevision))) return false;
-    if (required.has("media") && (!media || media.canonicalPath !== expected.canonicalPath)) return false;
-    if (required.has("links") && (!links.length || links.some((item) => !text(item.linkEntityId)))) return false;
+    if (required.has("copy") && (!copy || !text(copy.copyRevision))) { standardRouteFailures.push(`${expected.canonicalPath}:copy`); return false; }
+    if (required.has("media") && (!media || media.canonicalPath !== expected.canonicalPath)) { standardRouteFailures.push(`${expected.canonicalPath}:media`); return false; }
+    if (required.has("links") && (!links.length || links.some((item) => !text(item.linkEntityId)))) { standardRouteFailures.push(`${expected.canonicalPath}:links`); return false; }
     return candidate.status === "published"
       ? candidate.indexable === expected.indexable && candidate.sitemapEligible === expected.sitemapEligible
       : candidate.status === "review_required" && candidate.indexable === false && candidate.sitemapEligible === false;
@@ -501,6 +502,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
         completeCoverage,
         standardRoutesAgree,
         standardMediaAgree,
+        standardRouteFailures,
         mediaOwnershipAgree,
         detailMedia,
         homepageShowcaseRows: homepageShowcaseRows.length,

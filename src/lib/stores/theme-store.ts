@@ -331,6 +331,9 @@ function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStan
   // search and sitemap. This is used by design packages marked HOLD until
   // product evidence is approved.
   const publishable = editorialReady;
+  if (process.env.MYDREAMSHOOTS_SNAPSHOT_DEBUG === "1" && strictEditorial && !publishable) {
+    console.error("standard_editorial_debug", canonicalPath, { sectionOrderReady, sectionTypesReady, sectionAnchorsReady, faqReady, ctaReady, manifestReady, mediaReady, noRawMarkdown, mediaCount, manifestLength: manifest.length });
+  }
   return {
     disposition: "render",
     siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
@@ -690,7 +693,16 @@ export function buildPublicationSnapshot(
     };
   });
   const publishedPageEntities = [...imagePublishedPageEntities, ...standardContentEntities, ...videoTopicPublication.pageEntities];
-  const publishedPageCopy = [...imagePublishedPageCopy, ...videoTopicPublication.pageCopy];
+  const standardPublishedPageCopy = standardContentPages.map(({ page, route }) => {
+    const copyRevision = crypto.createHash("sha256").update(JSON.stringify(page.publishedJson)).digest("hex").slice(0, 20);
+    return {
+      pageEntityId: route.pageEntityId,
+      copyRevision,
+      canonicalSlug: route.canonicalPath.replace(/^\//, ""),
+      sourceHash: crypto.createHash("sha256").update(JSON.stringify({ canonicalPath: route.canonicalPath, copyRevision })).digest("hex")
+    };
+  });
+  const publishedPageCopy = [...imagePublishedPageCopy, ...standardPublishedPageCopy, ...videoTopicPublication.pageCopy];
   const publishedPageMedia = [...imagePublishedPageMedia, ...videoTopicPublication.pageMedia];
   const publishedVideoNavigation = videoTopicPublication.navigation;
   const publishedPackFacts = creativePacks.map((pack) => ({
@@ -2127,6 +2139,7 @@ export type StorefrontPublishManifest = {
   pageVersions: Record<string, ThemeDraftVersionExpectation>;
   settingsVersion?: ThemeDraftVersionExpectation;
   profileVersion?: ThemeDraftVersionExpectation;
+  sourceRevisions?: Record<string, { objectType: string; objectId: string; ownerId: string; revision: string; etag?: string; valueHash: string }>;
   manifestHash: string;
 };
 
@@ -2162,7 +2175,24 @@ function approvalItemsForManifest(siteId: string, manifest: StorefrontPublishMan
     etag: manifest.profileVersion?.expectedEtag,
     valueHash: crypto.createHash("sha256").update(JSON.stringify(manifest.profileVersion ?? {})).digest("hex")
   });
-  return items;
+  return items.concat(Object.values(manifest.sourceRevisions ?? {}).map((item) => ({ ...item, etag: item.etag ?? undefined })));
+}
+
+async function sourceRevisionsForPublish(siteId: string, db: PrismaLike = prisma) {
+  const [mediaAssets, packs, products] = await Promise.all([
+    db.mediaAsset.findMany({ where: { siteId }, orderBy: { id: "asc" }, select: { id: true, updatedAt: true, storageKey: true, altText: true } }),
+    db.creativePack.findMany({ where: { siteId }, orderBy: { id: "asc" }, select: { id: true, updatedAt: true, imageUrl: true, galleryImages: true } }),
+    db.product.findMany({ where: { siteId }, orderBy: { id: "asc" }, include: { prices: true } })
+  ]);
+  const rows: Record<string, { objectType: string; objectId: string; ownerId: string; revision: string; etag: string; valueHash: string }> = {};
+  const add = (objectType: string, objectId: string, value: unknown, updatedAt: Date | null) => {
+    const valueHash = crypto.createHash("sha256").update(JSON.stringify(stableProjection(value))).digest("hex");
+    rows[`${objectType}:${objectId}`] = { objectType, objectId, ownerId: siteId, revision: updatedAt?.toISOString?.() ?? valueHash, etag: valueHash, valueHash };
+  };
+  mediaAssets.forEach((row) => add("media_asset", row.id, row, row.updatedAt));
+  packs.forEach((row) => add("creative_pack", row.id, row, row.updatedAt));
+  products.forEach((row) => add("product_offer", row.id, row, row.updatedAt));
+  return rows;
 }
 
 export function storefrontPublishManifestHash(manifest: Omit<StorefrontPublishManifest, "manifestHash">): string {
@@ -2172,7 +2202,8 @@ export function storefrontPublishManifestHash(manifest: Omit<StorefrontPublishMa
     includeStorefrontProfile: manifest.includeStorefrontProfile,
     pageVersions: Object.fromEntries(Object.entries(manifest.pageVersions).sort()),
     settingsVersion: manifest.settingsVersion,
-    profileVersion: manifest.profileVersion
+    profileVersion: manifest.profileVersion,
+    sourceRevisions: Object.fromEntries(Object.entries(manifest.sourceRevisions ?? {}).sort())
   })).digest("hex");
 }
 
@@ -2193,7 +2224,8 @@ export async function prepareDraftPublishManifestRelational(siteId: string): Pro
     includeStorefrontProfile,
     pageVersions,
     ...(includeThemeSettings ? { settingsVersion: { expectedRevision: site.themeSettings.draftMeta?.revision, expectedEtag: site.themeSettings.draftMeta?.etag } } : {}),
-    ...(includeStorefrontProfile ? { profileVersion: { expectedRevision: site.storefrontProfile?.draftMeta?.revision, expectedEtag: site.storefrontProfile?.draftMeta?.etag } } : {})
+    ...(includeStorefrontProfile ? { profileVersion: { expectedRevision: site.storefrontProfile?.draftMeta?.revision, expectedEtag: site.storefrontProfile?.draftMeta?.etag } } : {}),
+    sourceRevisions: await sourceRevisionsForPublish(siteId)
   } as Omit<StorefrontPublishManifest, "manifestHash">;
   return { ...manifestBase, manifestHash: storefrontPublishManifestHash(manifestBase) };
 }
@@ -2202,15 +2234,17 @@ export async function createThemePublishApprovalRelational(input: ThemePublishAp
   if (!input.siteId.trim()) throw new RelationalStoreError("theme_publish_site_required", 400);
   if (!input.approvedBy.trim()) throw new RelationalStoreError("theme_publish_approver_required", 400);
   if (input.expiresAt && input.expiresAt <= new Date()) throw new RelationalStoreError("theme_publish_approval_expired", 400);
-  const expectedHash = storefrontPublishManifestHash(input.manifest);
-  if (input.manifest.manifestHash !== expectedHash) throw new RelationalStoreError("theme_publish_manifest_hash_invalid", 409);
-  const items = approvalItemsForManifest(input.siteId, input.manifest);
+  const prepared = await prepareDraftPublishManifestRelational(input.siteId);
+  const manifest = input.manifest.sourceRevisions ? input.manifest : prepared;
+  const expectedHash = storefrontPublishManifestHash(manifest);
+  if (manifest.manifestHash !== expectedHash) throw new RelationalStoreError("theme_publish_manifest_hash_invalid", 409);
+  const items = approvalItemsForManifest(input.siteId, manifest);
   const approvalId = `approval_${input.siteId}_${Date.now().toString(36)}_${crypto.randomBytes(4).toString("hex")}`;
   return prisma.themePublishApproval.create({
     data: {
       id: approvalId,
       siteId: input.siteId,
-      manifestHash: input.manifest.manifestHash,
+      manifestHash: manifest.manifestHash,
       approvedBy: input.approvedBy,
       expiresAt: input.expiresAt,
       items: { create: items.map((item, index) => ({ id: `${approvalId}_item_${index}`, ...item })) }
@@ -2260,8 +2294,16 @@ export async function publishDraftSiteRelational(
       throw new RelationalStoreError("theme_publish_approval_unavailable", 409);
     }
     assertApprovalMatchesManifest(approval, siteId, manifest);
+    if (manifest.sourceRevisions) {
+      const currentSource = await sourceRevisionsForPublish(siteId, tx);
+      if (JSON.stringify(currentSource) !== JSON.stringify(manifest.sourceRevisions)) {
+        throw new RelationalStoreError("theme_publish_source_revision_conflict", 409);
+      }
+    }
     const siteRecord = await getSiteWithThemeRecords(tx, siteId);
     const site = toSite(siteRecord);
+    const txPreflight = runThemePublishPreflight({ site, products: preflightBundle.products, siteAiApps: preflightBundle.siteAiApps, mediaAssets: preflightBundle.mediaAssets, storefrontProfile: site.storefrontProfile?.draftJson, creativePacks: preflightBundle.creativePacks, dirtyPageIds: site.pages.filter((page) => JSON.stringify(page.draftJson) !== JSON.stringify(page.publishedJson)).map((page) => page.id) });
+    if (!txPreflight.canPublish) throw new RelationalStoreError("theme_publish_preflight_blocked", 409);
     const omittedDirtyPages = site.pages.filter((page) => !manifest.pageIds.includes(page.id) && JSON.stringify(page.draftJson) !== JSON.stringify(page.publishedJson));
     const settingsDirty = JSON.stringify(site.themeSettings.draftJson) !== JSON.stringify(site.themeSettings.publishedJson);
     const profileDirty = JSON.stringify(site.storefrontProfile?.draftJson) !== JSON.stringify(site.storefrontProfile?.publishedJson);

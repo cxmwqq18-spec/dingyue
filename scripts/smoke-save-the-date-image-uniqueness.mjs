@@ -24,9 +24,9 @@ if (/<Link[\s\S]*?logo/.test(logoBarBlock) || /hrefFor\(site, blockValue\(block,
 }
 
 const packageDirs = [
-  ["engagement", process.env.SAVE_THE_DATE_ENGAGEMENT_SOURCE_DIR || "/Users/a1/Downloads/ai-save-the-date-engagement 3"],
-  ["proposal", process.env.SAVE_THE_DATE_PROPOSAL_SOURCE_DIR || "/Users/a1/Downloads/ai-proposal-video-final"],
-  ["save-the-date", process.env.SAVE_THE_DATE_GENERIC_SOURCE_DIR || "/Users/a1/Downloads/ai-save-the-date-video 2"]
+  ["engagement", process.env.SAVE_THE_DATE_ENGAGEMENT_SOURCE_DIR || path.join(repoRoot, "scripts/fixtures/save-the-date/engagement")],
+  ["proposal", process.env.SAVE_THE_DATE_PROPOSAL_SOURCE_DIR || path.join(repoRoot, "scripts/fixtures/save-the-date/proposal")],
+  ["save-the-date", process.env.SAVE_THE_DATE_GENERIC_SOURCE_DIR || path.join(repoRoot, "scripts/fixtures/save-the-date/save-the-date")]
 ];
 for (const [key, sourceDir] of packageDirs) {
   const manifestPath = path.join(sourceDir, "11_image_manifest_and_alt.csv");

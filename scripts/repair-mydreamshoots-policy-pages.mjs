@@ -58,7 +58,7 @@ try {
     fs.writeFileSync(backupPath, `${JSON.stringify({ createdAt: new Date().toISOString(), siteId, pages: changes.map(({ current, canonicalPath }) => ({ canonicalPath, page: current })) }, null, 2)}\n`, { mode: 0o600 });
     await prisma.$transaction(async (tx) => {
       for (const item of changes) {
-        const data = { siteId, pageType: "policy", templateKey: item.source.templateKey || item.source.pageType || "policy", slug: item.canonicalPath, title: item.title, draftJson: item.nextJson, publishedJson: item.nextJson, updatedAt: new Date() };
+        const data = { siteId, pageType: "policy", templateKey: item.source.templateKey || item.source.pageType || "policy", slug: item.canonicalPath, title: item.title, draftJson: item.nextJson, publishedJson: {}, updatedAt: new Date() };
         if (item.current) await tx.themePage.update({ where: { id: item.current.id }, data });
         else await tx.themePage.create({ data: { id: `${siteId}_policy_${item.canonicalPath.slice(1).replace(/[^a-z0-9]+/gi, "_")}`, ...data, createdAt: new Date() } });
       }

@@ -46,12 +46,12 @@ try {
   const pageUpdates = pages.map((row) => ({
     ...row,
     draftJson: refresh(row.draftJson),
-    publishedJson: refresh(row.publishedJson)
+    publishedJson: row.publishedJson
   })).filter((row) => changed(pages.find((item) => item.id === row.id), row));
   const settingsUpdate = settings ? {
     ...settings,
     draftJson: refresh(settings.draftJson),
-    publishedJson: refresh(settings.publishedJson)
+    publishedJson: settings.publishedJson
   } : null;
   const packUpdates = packs.map((row) => ({ ...row, imageUrl: refresh(row.imageUrl), galleryImages: refresh(row.galleryImages) }))
     .filter((row) => changed(packs.find((item) => item.id === row.id), row));
@@ -71,10 +71,10 @@ try {
   if (apply) {
     await prisma.$transaction(async (tx) => {
       for (const row of pageUpdates) {
-        await tx.themePage.update({ where: { id: row.id }, data: { draftJson: row.draftJson, publishedJson: row.publishedJson, updatedAt: new Date() } });
+        await tx.themePage.update({ where: { id: row.id }, data: { draftJson: row.draftJson, updatedAt: new Date() } });
       }
       if (settingsUpdate && changed(settings, settingsUpdate)) {
-        await tx.themeSettings.update({ where: { id: settingsUpdate.id }, data: { draftJson: settingsUpdate.draftJson, publishedJson: settingsUpdate.publishedJson, updatedAt: new Date() } });
+        await tx.themeSettings.update({ where: { id: settingsUpdate.id }, data: { draftJson: settingsUpdate.draftJson, updatedAt: new Date() } });
       }
       for (const row of packUpdates) {
         await tx.creativePack.update({ where: { id: row.id }, data: { imageUrl: row.imageUrl, galleryImages: row.galleryImages, updatedAt: new Date() } });
