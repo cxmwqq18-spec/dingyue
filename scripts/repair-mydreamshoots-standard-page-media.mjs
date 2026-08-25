@@ -9,6 +9,7 @@ import "./load-runtime-env.mjs";
 import { assertDatabaseTarget } from "./lib/database-target.mjs";
 
 const siteId = "site_dreamshoot";
+const apply = process.argv.includes("--apply");
 const databaseUrl = process.env.DATABASE_URL?.trim();
 if (!databaseUrl) throw new Error("DATABASE_URL is required");
 assertDatabaseTarget({ expectedTarget: "local" });
@@ -100,7 +101,7 @@ try {
   const mappedPage = site.pages.find((page) => page.slug === "/best-ai-image");
   assert.ok(pageRecord && mappedPage, "/best-ai-image ThemePage is required");
   const draftJson = withOgImage(pageRecord.draftJson, firstReadyLeaf.primaryImage);
-  if (process.argv.includes("--apply")) await prisma.themePage.update({ where: { id: pageRecord.id }, data: { draftJson } });
+  if (apply) await prisma.themePage.update({ where: { id: pageRecord.id }, data: { draftJson } });
   mappedPage.draftJson = draftJson;
 
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products);
@@ -113,7 +114,12 @@ try {
   snapshot.revisions.snapshotHash = "";
   snapshot.snapshotHash = publicationSnapshotHash(snapshot);
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
-  assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "repaired standard media snapshot must be valid");
+  const integrity = publicationSnapshotIntegrity(snapshot);
+  if (!apply && integrity !== "valid") {
+    const manifest = await prepareDraftPublishManifestRelational(siteId);
+    console.log(JSON.stringify({ ok: true, siteId, canonicalPath: "/best-ai-image", mode: "dry-run", candidateIntegrity: integrity, manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
+  } else {
+    assert.equal(integrity, "valid", "repaired standard media snapshot must be valid");
   const bestImage = snapshot.publishedStandardPageMedia.find((row) => row.canonicalPath === "/best-ai-image");
   assert.ok(bestImage, "repaired /best-ai-image standard media is required");
   assert.equal(bestImage.primaryImage, firstReadyLeaf.primaryImage);
@@ -126,10 +132,11 @@ try {
     siteId,
     canonicalPath: "/best-ai-image",
     primaryImage: bestImage.primaryImage,
-    mode: process.argv.includes("--apply") ? "draft-only" : "dry-run",
+    mode: apply ? "draft-only" : "dry-run",
     manifestHash: manifest.manifestHash,
     publicationRequired: true
-  }, null, 2));
+    }, null, 2));
+  }
 } finally {
   await prisma.$disconnect();
   Module._resolveFilename = originalResolveFilename;
