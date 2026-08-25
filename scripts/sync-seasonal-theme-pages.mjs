@@ -181,6 +181,23 @@ const configs = [
   }
 ];
 
+// CI and release operators can provide only the design packages being restored
+// (for example, `SEASONAL_KEYS=wedding-ceremony,halloween`). Keeping this
+// filter in the synchronizer preserves the same parser and publication
+// contract without requiring unrelated temporary package directories.
+const requestedKeys = String(process.env.SEASONAL_KEYS || "")
+  .split(",")
+  .map((key) => key.trim())
+  .filter(Boolean);
+const activeConfigs = requestedKeys.length
+  ? configs.filter((config) => requestedKeys.includes(config.key))
+  : configs;
+if (requestedKeys.length && activeConfigs.length !== requestedKeys.length) {
+  const knownKeys = new Set(configs.map((config) => config.key));
+  const unknown = requestedKeys.filter((key) => !knownKeys.has(key));
+  throw new Error(`Unknown seasonal package key(s): ${unknown.join(", ")}`);
+}
+
 const read = (file) => fs.readFileSync(file, "utf8").replace(/^\uFEFF/, "");
 const clean = (value) => String(value ?? "")
   .replace(/`([^`]+)`/g, "$1")
@@ -616,7 +633,7 @@ function copyAssets(config, images) {
   for (const image of images) fs.copyFileSync(path.join(config.sourceDir, "images", image.filename), path.join(destination, image.filename));
 }
 
-const pages = configs.map((config) => {
+const pages = activeConfigs.map((config) => {
   const pageJson = buildPage(config);
   copyAssets(config, pageJson.mediaManifest);
   return { ...config, pageJson, heading: pageJson.sections[pageJson.sectionsOrder[0]].settings.title };
@@ -639,7 +656,7 @@ try {
   const siteRecord = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
   const standardPagePaths = siteRecord.pages.filter((page) => page.pageType === "standard-content").map((page) => page.slug);
-  const availablePaths = new Set([...standardPagePaths, ...configs.map((config) => config.pagePath), "/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", "/holidays-events/save-the-date"]);
+  const availablePaths = new Set([...standardPagePaths, ...activeConfigs.map((config) => config.pagePath), "/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", "/holidays-events/save-the-date"]);
   for (const item of pages) {
     const planned = packageInternalLinks(item, availablePaths);
     const fallback = [
