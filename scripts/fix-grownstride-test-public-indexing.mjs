@@ -44,23 +44,23 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
   return originalResolveFilename.call(this, resolved, ...args);
 };
 const jiti = createJiti(import.meta.url);
-const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 const prisma = new PrismaClient();
 try {
   const pages = await prisma.themePage.findMany({
     where: { siteId, slug: { in: targetSlugs } },
-    select: { id: true, slug: true, draftJson: true, publishedJson: true }
+    select: { id: true, slug: true, draftJson: true }
   });
   assert.equal(pages.length, targetSlugs.length, "all public directory pages must exist");
-  const changed = pages.filter((page) => JSON.stringify(page.draftJson) !== JSON.stringify(makeIndexable(page.draftJson)) || JSON.stringify(page.publishedJson) !== JSON.stringify(makeIndexable(page.publishedJson)));
+  const changed = pages.filter((page) => JSON.stringify(page.draftJson) !== JSON.stringify(makeIndexable(page.draftJson)));
   if (apply) {
     await prisma.$transaction(async (tx) => {
       for (const page of changed) {
         await tx.themePage.update({
           where: { id: page.id },
-          data: { draftJson: makeIndexable(page.draftJson), publishedJson: makeIndexable(page.publishedJson), updatedAt: new Date() }
+          data: { draftJson: makeIndexable(page.draftJson), updatedAt: new Date() }
         });
       }
     });
@@ -80,8 +80,8 @@ try {
     snapshot.snapshotHash = publicationSnapshotHash(snapshot);
     snapshot.revisions.snapshotHash = snapshot.snapshotHash;
     assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "indexing publication must preserve snapshot integrity");
-    const published = await publishReviewedDraftSiteRelational(siteId, "sync:grownstride-test-public-indexing");
-    console.log(JSON.stringify({ publicationId: published.publication.id, version: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash }, null, 2));
+    const manifest = await prepareDraftPublishManifestRelational(siteId);
+    console.log(JSON.stringify({ mode: "draft-only", manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
   }
   console.log(JSON.stringify({ ok: true, mode: apply ? "applied" : "dry-run", siteId, pages: targetSlugs, changed: changed.length }, null, 2));
 } finally {

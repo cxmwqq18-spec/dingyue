@@ -89,8 +89,7 @@ const profileSlugAliases: Record<string, string> = {
   "ai-video-add-ons": "motion-generator",
   "upscaler": "photo-enhancer",
   "image-upscaler": "photo-enhancer",
-  "magic-upscaler": "photo-enhancer",
-  "anime-avatar": "black-friday"
+  "magic-upscaler": "photo-enhancer"
 };
 
 function normalizeProfileSlug(value: string | null | undefined): string {

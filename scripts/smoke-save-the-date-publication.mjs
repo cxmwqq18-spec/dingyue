@@ -22,7 +22,7 @@ const PAGE_PATH = "/ai-save-the-date/valentines-day";
 const state = await readPlatformStateFromSql();
 const site = state.sites.find((candidate) => candidate.id === SITE_ID);
 assert(site, `missing_site:${SITE_ID}`);
-const publication = site.latestPublication;
+const publication = site.activePublication;
 assert(publication?.snapshot, "missing_active_publication_snapshot");
 const snapshot = publication.snapshot;
 const route = snapshot.publishedRoutes.find((candidate) => candidate.canonicalPath === PAGE_PATH);

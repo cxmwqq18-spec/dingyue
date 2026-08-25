@@ -778,7 +778,7 @@ function loadPublicationTools() {
     const jiti = createJiti(import.meta.url);
     return {
       missingStorefrontProfileFacts: jiti("../src/lib/storefront-context/facts.ts").missingStorefrontProfileFacts,
-      publishReviewedDraftSiteRelational: jiti("../src/lib/stores/theme-store.ts").publishReviewedDraftSiteRelational,
+      prepareDraftPublishManifestRelational: jiti("../src/lib/stores/theme-store.ts").prepareDraftPublishManifestRelational,
       applyMydreamshootsVideoTopicPublication: jiti("../src/lib/mydreamshoots-video-topic-publication.ts").applyMydreamshootsVideoTopicPublication,
       publicationSnapshotHash: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotHash,
       publicationSnapshotIntegrity: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotIntegrity
@@ -799,7 +799,8 @@ function addPublicationToState(state, publication) {
 async function publishMissingVideoPages(state, syncedPages, prisma) {
   const {
     missingStorefrontProfileFacts,
-    publicationSnapshotIntegrity
+    publicationSnapshotIntegrity,
+    prepareDraftPublishManifestRelational
   } = loadPublicationTools();
   const activePointer = await prisma.activeThemePublication.findUnique({
     where: { siteId: SITE_ID },
@@ -826,9 +827,7 @@ async function publishMissingVideoPages(state, syncedPages, prisma) {
     orderBy: [{ slug: "asc" }]
   });
   if (currentPublication && !syncedPages.length && !databaseVideoPages.length) return undefined;
-  const result = await publishReviewedDraftSiteRelational(SITE_ID, "sync:mydreamshoots-video-topic-pages");
-  addPublicationToState(state, result.publication);
-  return result.publication;
+  return prepareDraftPublishManifestRelational(SITE_ID);
 }
 
 async function updateDatabase(state, categories, syncedPages) {
@@ -1001,8 +1000,8 @@ console.log(
       categories: categories.map((category) => category.slug),
       changedFields: changes.length,
       changedRecords: new Set(changes.map((change) => `${change.targetType}:${change.id}`)).size,
-      publishedVersion: databasePublication?.version,
-      publicationId: databasePublication?.id,
+      manifestHash: databasePublication?.manifestHash,
+      publicationRequired: Boolean(databasePublication),
       sampleChanges: changes.slice(0, 12)
     },
     null,

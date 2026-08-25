@@ -24,6 +24,21 @@ const coverRepairs = new Map([
   ["/holidays-events/wedding-anniversary", {
     cover: "/assets/dreamshoot/save-the-date/save-the-date/save-the-date-romantic-beach-walk.jpg",
     alt: "Couple holding hands on the beach at sunset for a wedding anniversary story."
+  }],
+  ["/holidays-events/christmas", {
+    cover: "/assets/dreamshoot/seasonal/christmas/hero-ai-christmas-family-gift.jpg",
+    alt: "Family exchanging gifts together in a warm Christmas living room.",
+    mediaAssetId: "media_site_dreamshoot_holidays_events_christmas_hero_family_gift"
+  }],
+  ["/holidays-events/thanksgiving", {
+    cover: "/assets/dreamshoot/seasonal/thanksgiving/hero-ai-thanksgiving-family-dinner.jpg",
+    alt: "Family gathering around a warm Thanksgiving dinner table.",
+    mediaAssetId: "media_site_dreamshoot_holidays_events_thanksgiving_hero_family_dinner"
+  }],
+  ["/holidays-events/new-year", {
+    cover: "/assets/dreamshoot/seasonal/new-year/hero-ai-new-year-family-celebration.jpg",
+    alt: "Family celebrating the New Year together with festive lights.",
+    mediaAssetId: "media_site_dreamshoot_holidays_events_new_year_hero_family_celebration"
   }]
 ]);
 const repairByCover = new Map([...coverRepairs.values()].map((repair) => [repair.cover, repair]));
@@ -64,8 +79,22 @@ try {
     nextPage.mediaManifest[0] = { ...nextPage.mediaManifest[0], src: repair.cover, alt: repair.alt };
     nextPage.seo = { ...(nextPage.seo ?? {}), ogImage: repair.cover };
     nextPages.set(pathName, { page, nextPage, repair });
-    const mediaAsset = await prisma.mediaAsset.findFirst({ where: { siteId, storageKey: repair.cover } });
-    assert(mediaAsset, `${pathName} cover media asset is required`);
+    const mediaAsset = await prisma.mediaAsset.upsert({
+      where: { siteId_storageKey: { siteId, storageKey: repair.cover } },
+      create: {
+        id: repair.mediaAssetId ?? `media_${siteId}_${Buffer.from(repair.cover).toString("hex").slice(0, 24)}`,
+        siteId,
+        label: repair.cover.split("/").pop() || repair.cover,
+        storageKey: repair.cover,
+        mimeType: "image/jpeg",
+        usageType: "theme",
+        sourceType: "save-the-date-cover-repair",
+        previewUrl: repair.cover,
+        originUrl: repair.cover,
+        altText: repair.alt
+      },
+      update: { altText: repair.alt, previewUrl: repair.cover, originUrl: repair.cover }
+    });
     mediaAssetRepairs.set(mediaAsset.id, repair.alt);
     await prisma.themePage.update({ where: { id: page.id }, data: { draftJson: nextPage } });
   }
@@ -111,49 +140,19 @@ try {
   snapshot.snapshotHash = publicationSnapshotHash(snapshot);
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "cover repair must preserve snapshot integrity");
-  const latest = await prisma.themePublication.findFirst({ where: { siteId }, orderBy: [{ version: "desc" }, { publishedAt: "desc" }], select: { version: true } });
-  const publishedVersion = Math.max(latest?.version ?? 0, site.pages.reduce((max, page) => Math.max(max, Number(page.publishedJson?.version ?? 0)), 0)) + 1;
-  for (const { nextPage } of nextPages.values()) nextPage.version = publishedVersion;
-  for (const { page, nextPage } of nextPages.values()) {
-    const snapshotPage = snapshot.pages.find((candidate) => candidate.id === page.id);
-    if (snapshotPage) snapshotPage.publishedJson = nextPage;
+  for (const [mediaAssetId, altText] of mediaAssetRepairs) {
+    await prisma.mediaAsset.update({ where: { id: mediaAssetId }, data: { altText } });
   }
-  snapshot.snapshotHash = "";
-  snapshot.revisions.snapshotHash = "";
-  snapshot.snapshotHash = publicationSnapshotHash(snapshot);
-  snapshot.revisions.snapshotHash = snapshot.snapshotHash;
-  assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "versioned cover repair must preserve snapshot integrity");
-  const actor = `repair:save-the-date-cover:${target}`;
-  const publication = await prisma.$transaction(async (tx) => {
-    for (const { page, nextPage } of nextPages.values()) {
-      await tx.themePage.update({ where: { id: page.id }, data: { draftJson: nextPage, publishedJson: nextPage } });
-    }
-    for (const [mediaAssetId, altText] of mediaAssetRepairs) {
-      await tx.mediaAsset.update({ where: { id: mediaAssetId }, data: { altText } });
-    }
-    await tx.themeSettings.update({ where: { siteId }, data: { draftJson: settings, publishedJson: settings } });
-    const record = await tx.themePublication.create({
-      data: {
-        id: `pub_${siteId}_${Date.now().toString(36)}_${crypto.randomBytes(4).toString("hex")}`,
-        siteId,
-        version: publishedVersion,
-        snapshot,
-        pageCount: snapshot.pages.length,
-        sectionCount: snapshot.pages.reduce((sum, page) => sum + (page.publishedJson?.sectionsOrder?.length ?? 0), 0),
-        snapshotBytes: Buffer.byteLength(JSON.stringify(snapshot), "utf8"),
-        publishedBy: actor,
-        scope: { type: "site", pageIds: [...nextPages.values()].map(({ page }) => page.id), mediaAssetIds: [...mediaAssetRepairs.keys()], includeThemeSettings: true, includeStorefrontProfile: false },
-        factsRevision: snapshot.revisions.factsRevision
-      }
-    });
-    await tx.activeThemePublication.upsert({
-      where: { siteId },
-      create: { siteId, publicationId: record.id, activatedBy: actor },
-      update: { publicationId: record.id, activatedAt: new Date(), activatedBy: actor }
-    });
-    return record;
-  });
-  console.log(JSON.stringify({ ok: true, target, repairedPaths: [...coverRepairs.keys()], publicationId: publication.id, version: publishedVersion, snapshotHash: snapshot.snapshotHash }, null, 2));
+  console.log(JSON.stringify({
+    ok: true,
+    target,
+    mode: "draft-only",
+    repairedPaths: [...coverRepairs.keys()],
+    changedPageIds: [...nextPages.values()].map(({ page }) => page.id),
+    changedMediaAssetIds: [...mediaAssetRepairs.keys()],
+    candidateSnapshotHash: snapshot.snapshotHash,
+    publicationRequired: true
+  }, null, 2));
 } finally {
   await prisma.$disconnect();
   Module._resolveFilename = originalResolveFilename;

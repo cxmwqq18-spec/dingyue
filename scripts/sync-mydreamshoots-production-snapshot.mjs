@@ -72,7 +72,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 function clone(value) {
@@ -373,9 +373,8 @@ try {
     currentSnapshot.snapshotHash = publicationSnapshotHash(currentSnapshot);
     currentSnapshot.revisions.snapshotHash = currentSnapshot.snapshotHash;
     assert.equal(publicationSnapshotIntegrity(currentSnapshot), "valid", "imported publication must be valid");
-    const published = await publishReviewedDraftSiteRelational(siteId, "sync:mydreamshoots-production-snapshot");
-    const readback = await prisma.themePublication.findUnique({ where: { id: published.publication.id }, select: { id: true, version: true, snapshot: true } });
-    console.log(JSON.stringify({ ok: true, mode: "applied", source: snapshot.source, sourceSnapshotHash: snapshot.snapshotHash, backupPath, publicationId: readback?.id, version: readback?.version, localSnapshotHash: readback?.snapshot?.snapshotHash, sourceCounts, localCounts, diff, syncVideo, replaceLocalPages, useSourcePublication }, null, 2));
+    const manifest = await prepareDraftPublishManifestRelational(siteId);
+    console.log(JSON.stringify({ ok: true, mode: "draft-only", source: snapshot.source, sourceSnapshotHash: snapshot.snapshotHash, backupPath, manifestHash: manifest.manifestHash, publicationRequired: true, sourceCounts, localCounts, diff, syncVideo, replaceLocalPages, useSourcePublication }, null, 2));
   }
 } finally {
   await prisma.$disconnect();

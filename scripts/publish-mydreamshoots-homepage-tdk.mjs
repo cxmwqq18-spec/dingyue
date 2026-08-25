@@ -50,7 +50,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 function clone(value) {
@@ -115,10 +115,8 @@ try {
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "updated TDK publication snapshot must be valid");
 
-  const published = await publishReviewedDraftSiteRelational(siteId, `publish:mydreamshoots-homepage-tdk:${expectedTarget}`);
-  const readback = await prisma.themePublication.findUnique({ where: { id: published.publication.id } });
-  assert.equal(readback?.snapshot?.pages?.find((page) => page.slug === "/")?.publishedJson?.seo?.description, approvedSeo.description, "publication TDK readback failed");
-  console.log(JSON.stringify({ ok: true, target: expectedTarget, publicationId: published.publication.id, version: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash, backupPath, seo: approvedSeo }, null, 2));
+  const manifest = await prepareDraftPublishManifestRelational(siteId);
+  console.log(JSON.stringify({ ok: true, target: expectedTarget, mode: "draft-only", manifestHash: manifest.manifestHash, publicationRequired: true, backupPath, seo: approvedSeo }, null, 2));
 } finally {
   await prisma.$disconnect();
   Module._resolveFilename = originalResolveFilename;

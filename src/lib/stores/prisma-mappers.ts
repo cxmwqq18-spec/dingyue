@@ -711,6 +711,9 @@ export function toSite(record: {
     },
     themeSettings: toThemeSettings(record.settings),
     storefrontProfile: toStorefrontProfile(record.storefrontProfile),
+    activePublication: record.activePublication?.publication
+      ? toThemePublication(record.activePublication.publication)
+      : undefined,
     latestPublication: record.activePublication?.publication
       ? toThemePublication(record.activePublication.publication)
       : undefined,

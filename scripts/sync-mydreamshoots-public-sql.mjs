@@ -49,7 +49,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 process.env.DATABASE_URL = targetUrl;
 const jiti = createJiti(import.meta.url);
-const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { mapProduct, toSite } = jiti("../src/lib/stores/prisma-mappers.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const prisma = new PrismaClient({ datasources: { db: { url: targetUrl } } });
@@ -262,8 +262,8 @@ if (sourceSiteId === targetSiteId && !allowSameSite) throw new Error("Source and
   }));
   const snapshot = buildPublicationSnapshot(targetSite, undefined, normalizedPacks, fresh.products.map(mapProduct));
   if (publicationSnapshotIntegrity(snapshot) !== "valid") throw new Error("Target public SQL publication snapshot is invalid after rebuild.");
-  const published = await publishReviewedDraftSiteRelational(targetSiteId, "sync:mydreamshoots-public-sql");
-  console.log(JSON.stringify({ ok: true, mode: "applied", target, sourceSiteId, targetSiteId, noIndex, source: counts(source), targetAfter: counts(await readSite(targetSiteId)), publicationId: published.publication.id, publishedVersion: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash, protected: protectedAfter }, null, 2));
+  const manifest = await prepareDraftPublishManifestRelational(targetSiteId);
+  console.log(JSON.stringify({ ok: true, mode: "draft-only", target, sourceSiteId, targetSiteId, noIndex, source: counts(source), targetAfter: counts(await readSite(targetSiteId)), manifestHash: manifest.manifestHash, publicationRequired: true, protected: protectedAfter }, null, 2));
 }
 
 main().catch((error) => { console.error(error?.stack || error); process.exitCode = 1; }).finally(async () => { await prisma.$disconnect(); await sourcePrisma.$disconnect(); Module._resolveFilename = originalResolveFilename; });

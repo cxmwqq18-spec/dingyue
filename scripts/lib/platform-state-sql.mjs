@@ -73,9 +73,14 @@ export async function readPlatformStateFromSql(existingPrisma) {
       const existing = state.sites?.find((site) => site.id === siteRow.id) ?? {};
       const site = { ...existing, ...plain(siteRow) };
       const activePublication = siteRow.activePublication?.publication;
-      const latestPublication = themePublications.find((publication) => publication.siteId === siteRow.id);
-      if (activePublication) site.latestPublication = plain(activePublication);
-      else if (latestPublication) site.latestPublication = plain(latestPublication);
+      const latestHistoricalPublication = themePublications.find((publication) => publication.siteId === siteRow.id);
+      if (activePublication) {
+        site.activePublication = plain(activePublication);
+        // Transitional alias for non-public admin consumers. It is never
+        // populated from historical data when the active pointer is absent.
+        site.latestPublication = plain(activePublication);
+      }
+      if (latestHistoricalPublication) site.latestHistoricalPublication = plain(latestHistoricalPublication);
       const siteDomains = domains.filter((domain) => domain.siteId === siteRow.id);
       site.primaryDomain = siteDomains.find((domain) => domain.isPrimary)?.domain ?? siteDomains[0]?.domain ?? site.primaryDomain;
       site.pages = pagesBySiteId.get(siteRow.id) ?? existing.pages ?? [];

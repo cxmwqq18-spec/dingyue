@@ -348,6 +348,62 @@ assertThemedBlockImageReferences();
 const recordsBySite = Object.fromEntries(siteIds.map((siteId) => [siteId, collectStorefrontImages(siteId)]));
 const perceptualRecordsBySite = {};
 
+function detailPath(pathname) {
+  return pathname.startsWith("/ai-image-generation/") || pathname.startsWith("/ai-video-generation/") || pathname.startsWith("/holidays-events/");
+}
+
+function normalizedDetailUrl(value) {
+  return typeof value === "string" ? value.trim().split(/[?#]/, 1)[0] : "";
+}
+
+async function assertPublishedDetailMediaIsolation(siteId) {
+  const site = state.sites.find((candidate) => candidate.id === siteId);
+  const snapshot = site?.activePublication?.snapshot;
+  if (!snapshot || !Array.isArray(snapshot.publishedRoutes)) {
+    failures.push(`missing_active_publication_snapshot:${siteId}`);
+    return;
+  }
+  const pageMediaByEntity = new Map((snapshot.publishedPageMedia ?? []).map((media) => [media.pageEntityId, media]));
+  const standardMediaByPath = new Map((snapshot.publishedStandardPageMedia ?? []).map((media) => [media.canonicalPath, media]));
+  const owners = new Map();
+  const hashes = new Map();
+  for (const route of snapshot.publishedRoutes.filter((candidate) => candidate.disposition === "render" && candidate.status === "published" && candidate.indexable && candidate.sitemapEligible && detailPath(candidate.canonicalPath))) {
+    const media = route.routeKind === "standard-content" ? standardMediaByPath.get(route.canonicalPath) : pageMediaByEntity.get(route.pageEntityId);
+    if (!media || media.status !== "ready") {
+      failures.push(`detail_media_missing_ready:${siteId}:${route.canonicalPath}`);
+      continue;
+    }
+    const images = route.routeKind === "standard-content" ? media.sitemapImages : [media.primaryImage, ...(media.galleryImages ?? [])];
+    const localUrls = new Set();
+    for (const rawUrl of images) {
+      const url = normalizedDetailUrl(rawUrl);
+      if (!url) continue;
+      if (localUrls.has(url)) failures.push(`detail_media_duplicate_within_page:${siteId}:${route.canonicalPath}:${url}`);
+      localUrls.add(url);
+      const previousOwner = owners.get(url);
+      if (previousOwner && previousOwner !== route.canonicalPath) {
+        failures.push(`detail_media_url_conflict:${siteId}:${url}:${previousOwner}<->${route.canonicalPath}`);
+      } else {
+        owners.set(url, route.canonicalPath);
+      }
+      const filePath = localFileForUrl(url);
+      if (!fs.existsSync(filePath)) continue;
+      const hash = hashFile(url);
+      const previousHashOwner = hashes.get(hash);
+      if (previousHashOwner && previousHashOwner !== route.canonicalPath) {
+        failures.push(`detail_media_hash_conflict:${siteId}:${hash}:${previousHashOwner}<->${route.canonicalPath}:${url}`);
+      } else if (hash) {
+        hashes.set(hash, route.canonicalPath);
+      }
+    }
+    if (route.routeKind === "ai-image-theme-leaf" && (media.galleryImages?.length ?? 0) !== 12) {
+      failures.push(`detail_media_gallery_count:${siteId}:${route.canonicalPath}:${media.galleryImages?.length ?? 0}`);
+    }
+  }
+}
+
+await assertPublishedDetailMediaIsolation("site_dreamshoot");
+
 const crossThemePathRules = [
   {
     siteId: "site_dreamshoot",
@@ -436,10 +492,9 @@ for (const siteId of siteIds) {
 }
 
 const duplicateStrictScopes = new Set([
-  "creative-pack-cover",
-  "category",
   "tool-menu",
-  "video-theme-poster"
+  // Category and catalog/pack assets may intentionally be reused on directory
+  // pages; detail-page ownership is checked from the active snapshot above.
 ]);
 
 for (const siteId of siteIds) {

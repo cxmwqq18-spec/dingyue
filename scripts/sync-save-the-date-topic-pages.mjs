@@ -269,7 +269,7 @@ function parsePackage(config) {
 
 const jiti = createJiti(import.meta.url);
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
-const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const prisma = new PrismaClient();
 try {
@@ -358,6 +358,6 @@ try {
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products.map(mapProduct));
   const integrity = publicationSnapshotIntegrity(snapshot);
   if (integrity !== "valid") throw new Error(`Save the Date topic publication snapshot is invalid: ${integrity}`);
-  await publishReviewedDraftSiteRelational(siteId, "save-the-date-topic-sync");
-  console.log(JSON.stringify({ siteId, pages: parsed.map((item) => ({ key: item.key, path: item.pagePath, media: item.manifest.length, faq: item.faqCount })), snapshotHash: snapshot.snapshotHash }, null, 2));
+  const manifest = await prepareDraftPublishManifestRelational(siteId);
+  console.log(JSON.stringify({ siteId, mode: "draft-only", pages: parsed.map((item) => ({ key: item.key, path: item.pagePath, media: item.manifest.length, faq: item.faqCount })), snapshotHash: snapshot.snapshotHash, manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
 } finally { await prisma.$disconnect(); }

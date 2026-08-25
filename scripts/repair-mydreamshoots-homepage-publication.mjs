@@ -30,7 +30,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { toSite } = jiti("../src/lib/stores/prisma-mappers.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const { publicationSnapshotHash } = jiti("../src/lib/publication-snapshot-integrity.ts");
@@ -89,15 +89,15 @@ try {
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "homepage repair must preserve immutable snapshot integrity");
 
-  const result = await publishReviewedDraftSiteRelational(siteId, "repair:mydreamshoots-homepage");
+  const manifest = await prepareDraftPublishManifestRelational(siteId);
 
   console.log(JSON.stringify({
     ok: true,
     siteId,
     homepagePageId: homepage.id,
-    publicationId: result.publication.id,
-    version: result.publishedVersion,
-    snapshotHash: result.publication.snapshot.snapshotHash
+    mode: "draft-only",
+    manifestHash: manifest.manifestHash,
+    publicationRequired: true
   }, null, 2));
 } finally {
   await prisma.$disconnect();

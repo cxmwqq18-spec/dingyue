@@ -87,8 +87,8 @@ async function loadPrismaBundle(siteId: string) {
     site,
     products: siteRecord.products.map(mapProduct),
     creativePacks: siteRecord.creativePacks.map(toCreativePack),
-    publication: site.latestPublication,
-    factsRevision: site.latestPublication?.factsRevision,
+    publication: site.activePublication,
+    factsRevision: site.activePublication?.factsRevision,
     buildId: release?.codeCommit
   };
 }

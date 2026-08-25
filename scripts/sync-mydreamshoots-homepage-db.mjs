@@ -44,7 +44,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 
 const jiti = createJiti(import.meta.url);
 const { dreamshootAiStudioTemplatesForSite } = jiti("../src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
-const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 function clone(value) {
@@ -582,8 +582,8 @@ try {
   snapshotForPublish.snapshotHash = publicationSnapshotHash(snapshotForPublish);
   snapshotForPublish.revisions.snapshotHash = snapshotForPublish.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshotForPublish), "valid", "homepage repair must preserve snapshot integrity");
-    const published = await publishReviewedDraftSiteRelational(siteId, "sync:mydreamshoots-homepage-db");
-    console.log(JSON.stringify({ ok: true, mode: "applied", siteId, backupPath, publicationId: published.publication.id, version: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash, collectionRefs: published.publication.snapshot.publishedCollectionRefs.length, offers: published.publication.snapshot.publishedOffers.length, showcaseVideoThemes: showcase.videoThemes.length }, null, 2));
+    const manifest = await prepareDraftPublishManifestRelational(siteId);
+    console.log(JSON.stringify({ ok: true, mode: "draft-only", siteId, backupPath, manifestHash: manifest.manifestHash, publicationRequired: true, showcaseVideoThemes: showcase.videoThemes.length }, null, 2));
   }
 } finally {
   await prisma.$disconnect();

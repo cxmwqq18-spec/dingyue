@@ -665,7 +665,7 @@ if (process.env.SEASONAL_BUILD_ONLY === "1") {
 
 const jiti = createJiti(import.meta.url);
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
-const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const prisma = new PrismaClient();
 try {
@@ -723,8 +723,8 @@ try {
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products.map(mapProduct));
   const integrity = publicationSnapshotIntegrity(snapshot);
   if (integrity !== "valid") throw new Error(`Seasonal publication snapshot is invalid: ${integrity}`);
-  await publishReviewedDraftSiteRelational(siteId, "seasonal-theme-sync");
-  console.log(JSON.stringify({ siteId, pages: pages.map((item) => ({ key: item.key, path: item.pagePath, media: item.pageJson.mediaManifest.length, faq: item.pageJson.contentContract.faqCount })), snapshotHash: snapshot.snapshotHash }, null, 2));
+  const manifest = await prepareDraftPublishManifestRelational(siteId);
+  console.log(JSON.stringify({ siteId, mode: "draft-only", pages: pages.map((item) => ({ key: item.key, path: item.pagePath, media: item.pageJson.mediaManifest.length, faq: item.pageJson.contentContract.faqCount })), snapshotHash: snapshot.snapshotHash, manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
 } finally {
   await prisma.$disconnect();
 }

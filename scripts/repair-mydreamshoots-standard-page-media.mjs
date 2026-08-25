@@ -31,7 +31,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { buildPublicationSnapshot, publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot, prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
@@ -100,10 +100,8 @@ try {
   const mappedPage = site.pages.find((page) => page.slug === "/best-ai-image");
   assert.ok(pageRecord && mappedPage, "/best-ai-image ThemePage is required");
   const draftJson = withOgImage(pageRecord.draftJson, firstReadyLeaf.primaryImage);
-  const publishedJson = withOgImage(pageRecord.publishedJson, firstReadyLeaf.primaryImage);
-  await prisma.themePage.update({ where: { id: pageRecord.id }, data: { draftJson, publishedJson } });
+  await prisma.themePage.update({ where: { id: pageRecord.id }, data: { draftJson } });
   mappedPage.draftJson = draftJson;
-  mappedPage.publishedJson = publishedJson;
 
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products);
   // Keep the already validated publication facts while the relational page/media
@@ -122,15 +120,15 @@ try {
   assert.doesNotMatch(bestImage.primaryImage, /cyberpunk/i);
   assert.equal(bestImage.sitemapImages.some((image) => /cyberpunk/i.test(image)), false, "standard media sitemap images must not retain Cyberpunk fallback");
 
-  const published = await publishReviewedDraftSiteRelational(siteId, "repair:mydreamshoots-standard-page-media");
+  const manifest = await prepareDraftPublishManifestRelational(siteId);
   console.log(JSON.stringify({
     ok: true,
     siteId,
     canonicalPath: "/best-ai-image",
     primaryImage: bestImage.primaryImage,
-    publicationId: published.publication.id,
-    version: published.publishedVersion,
-    snapshotHash: published.publication.snapshot.snapshotHash
+    mode: "draft-only",
+    manifestHash: manifest.manifestHash,
+    publicationRequired: true
   }, null, 2));
 } finally {
   await prisma.$disconnect();

@@ -239,6 +239,26 @@ function mediaReference(value: ThemeSettingValue | undefined): string {
   return stringValue;
 }
 
+function detailMediaContract(creativePacks: PublishPreflightCreativePack[]): { urls: string[]; owner: string[] } {
+  const detailSlugs = new Set(mydreamshootsPublishedRouteManifest().filter((route) => route.status === "published").map((route) => normalizePublishedSlug(route.canonicalSlug)));
+  const owners = new Map<string, string>();
+  const conflicts: string[] = [];
+  for (const pack of creativePacks.filter((candidate) => candidate.status === "active" && detailSlugs.has(normalizePublishedSlug(candidate.categoryRecord?.slug || candidate.category || "")))) {
+    const owner = pack.id;
+    const urls = [pack.imageUrl ?? "", ...(pack.galleryImages ?? [])]
+      .map((value) => value.split(/[?#]/, 1)[0].trim())
+      .filter(Boolean);
+    if (urls.length < 13) conflicts.push(`${owner}:cover_plus_gallery_under_13`);
+    if (new Set(urls).size !== urls.length) conflicts.push(`${owner}:within_page_duplicate`);
+    for (const url of urls) {
+      const previous = owners.get(url);
+      if (previous && previous !== owner) conflicts.push(`${url}:${previous}<->${owner}`);
+      else owners.set(url, owner);
+    }
+  }
+  return { urls: [...new Set(conflicts)], owner: [...owners.values()] };
+}
+
 function collectMediaReferencesFromSections(sections: Array<{ section: SectionInstance }>): string[] {
   const refs = new Set<string>();
   for (const { section } of sections) {
@@ -312,6 +332,7 @@ export function runThemePublishPreflight({
   const mediaIds = new Set(mediaAssets.map((asset) => asset.id));
   const missingMediaRefs = collectMediaReferencesFromSections(sections).filter((ref) => !mediaIds.has(ref));
   const mediaOwnerReviewRequired = mediaAssets.filter((asset) => mediaIds.has(asset.id) && (!asset.ownerId || !asset.entityRevision || asset.ownerId !== site.id));
+  const detailMedia = site.id === "site_dreamshoot" ? detailMediaContract(creativePacks) : { urls: [], owner: [] };
   const pageCopyFailures: string[] = [];
   const pageCopyRouteFailures: string[] = [];
   const pageCopyRevisionFailures: string[] = [];
@@ -550,6 +571,12 @@ export function runThemePublishPreflight({
           mediaOwnerReviewRequired.length ? `owner/revision: ${mediaOwnerReviewRequired.slice(0, 6).map((asset) => asset.id).join(", ")}` : ""
         ].filter(Boolean).join("; "))
       : pass("media_refs", "media", "媒体引用有效", "draft 中的站点媒体引用都有本站 owner 和 entity revision。")
+  );
+
+  checks.push(
+    detailMedia.urls.length
+      ? block("detail_media_unique", "media", "主题详情图片必须独立归属", detailMedia.urls.slice(0, 8).join("; "))
+      : pass("detail_media_unique", "media", "主题详情图片归属独立", "每个 active CreativePack 都有独立 cover/gallery，且未发现跨主题 URL 冲突。")
   );
 
   checks.push(

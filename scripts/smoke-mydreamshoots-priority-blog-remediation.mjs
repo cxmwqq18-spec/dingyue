@@ -266,7 +266,7 @@ for (let leftIndex = 0; leftIndex < pages.length; leftIndex += 1) {
   }
 }
 
-const activePublication = state.sites?.find((site) => site.id === "site_dreamshoot")?.latestPublication;
+const activePublication = state.sites?.find((site) => site.id === "site_dreamshoot")?.activePublication;
 if (activePublication) {
   for (const item of expected) {
     const livePage = pages.find((page) => page.slug === item.slug);

@@ -359,6 +359,9 @@ export interface Site {
     draftMeta?: ThemeDraftMeta;
   };
   storefrontProfile?: StorefrontProfile;
+  activePublication?: ThemePublication;
+  latestHistoricalPublication?: ThemePublication;
+  /** @deprecated Public runtime must use activePublication. */
   latestPublication?: ThemePublication;
   pages: ThemePage[];
   mediaAssets?: MediaAsset[];

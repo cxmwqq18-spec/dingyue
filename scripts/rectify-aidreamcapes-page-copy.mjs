@@ -71,18 +71,16 @@ async function updatePostgresState() {
   const settings = await prisma.themeSettings.findUnique({ where: { siteId: site.id } });
   if (settings) {
     const draftJson = rewriteJson(settings.draftJson);
-    const publishedJson = rewriteJson(settings.publishedJson);
-    if (changed(settings.draftJson, draftJson) || changed(settings.publishedJson, publishedJson)) {
-      await prisma.themeSettings.update({ where: { siteId: site.id }, data: { draftJson, publishedJson } });
+    if (changed(settings.draftJson, draftJson)) {
+      await prisma.themeSettings.update({ where: { siteId: site.id }, data: { draftJson } });
       result.themeSettings += 1;
     }
   }
 
   for (const page of await prisma.themePage.findMany({ where: { siteId: site.id } })) {
     const draftJson = rewriteJson(page.draftJson);
-    const publishedJson = rewriteJson(page.publishedJson);
-    if (!changed(page.draftJson, draftJson) && !changed(page.publishedJson, publishedJson)) continue;
-    await prisma.themePage.update({ where: { id: page.id }, data: { draftJson, publishedJson } });
+    if (!changed(page.draftJson, draftJson)) continue;
+    await prisma.themePage.update({ where: { id: page.id }, data: { draftJson } });
     result.themePages += 1;
   }
 
@@ -92,13 +90,6 @@ async function updatePostgresState() {
     if (!changed(theme.templates, templates) && !changed(theme.settings, themeSettings)) continue;
     await prisma.siteTheme.update({ where: { id: theme.id }, data: { templates, settings: themeSettings } });
     result.siteThemes += 1;
-  }
-
-  for (const publication of await prisma.themePublication.findMany({ where: { siteId: site.id } })) {
-    const snapshot = rewriteJson(publication.snapshot);
-    if (!changed(publication.snapshot, snapshot)) continue;
-    await prisma.themePublication.update({ where: { id: publication.id }, data: { snapshot } });
-    result.themePublications += 1;
   }
 
   return { siteId: site.id, ...result };

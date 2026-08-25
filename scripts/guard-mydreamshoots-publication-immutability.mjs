@@ -2,91 +2,128 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 
 const repoRoot = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
-const scripts = fs.readdirSync(path.join(repoRoot, "scripts"))
-  .filter((name) => name !== "guard-mydreamshoots-publication-immutability.mjs" && name.endsWith(".mjs") && (name === "publish-reviewed-draft-site.mjs" || /(?:mydreamshoots|dreamshoot|save-the-date|seasonal|footer)/i.test(name)))
-  .sort()
-  .map((name) => `scripts/${name}`);
-const forbiddenPublication = /(?:\btx\.)?themePublication\.(?:update|updateMany|delete|deleteMany)\s*\(/g;
-const publishedRecordWrite = /(?:themePage|themeSettings|storefrontProfile)\.(?:update|updateMany|upsert)\s*\(/g;
-const forbiddenSnapshotMutation = /(?:syncPublicationSnapshots\s*\(|\bpublication\.snapshot(?:\.[a-zA-Z0-9_$]+)?\s*=)/g;
-const forbiddenPublishedAssignment = /(?:\b(?:page|homePage|site\.themeSettings|themeSettings)\.publishedJson\s*=|\b(?:page|homePage)\.publishedJson\.[a-zA-Z0-9_$]+\s*=)/g;
-const forbiddenPublicationIteration = /for\s*\(\s*const\s+publication\s+of\s+(?:state\.)?themePublications/g;
-const forbiddenLegacyPublicationApi = /publishSeoSnapshotRelational\s*\(/g;
+const scriptsRoot = path.join(repoRoot, "scripts");
+const formalOwner = "src/lib/stores/theme-store.ts";
+const allowedFixtureOrMigrationPaths = new Set([
+  "scripts/sync-grownstride-test-public-state-from-json.mjs",
+  "scripts/sync-grownstride-test-store.mjs",
+  "scripts/refresh-test-public-asset-urls.mjs",
+  "scripts/db-import-relational-state.mjs",
+  "scripts/migrate-storefront-single-source.mjs",
+  "scripts/migrate-dreamshoot-demo.mjs",
+  "scripts/migrate-aidreamcapes-demo.mjs",
+  "scripts/migrate-lumen-wedding-demo.mjs",
+  "scripts/create-spanish-xby-stores.mjs",
+  "scripts/sync-fan-holiday-storefront-theme.mjs",
+  "scripts/fix-mydreamshoots-seo-brand-wordmark.mjs",
+  "scripts/repair-save-the-date-navigation-publication.mjs",
+  "scripts/repair-theme-page-media.mjs",
+  "scripts/sync-best-save-the-date-page.mjs",
+  "scripts/sync-mydreamshoots-production-snapshot.mjs",
+  "scripts/sync-mydreamshoots-public-sql.mjs",
+  "scripts/sync-save-the-date-topic-pages.mjs",
+  "scripts/sync-save-the-date-valentines-day.mjs",
+  "scripts/sync-seasonal-theme-pages.mjs",
+  // The lifecycle smoke intentionally exercises pointer rollback and restores
+  // the original row in its finally block. Keep this exception explicit so a
+  // production script cannot gain the same bypass by being named `smoke-*`.
+  "scripts/smoke-mydreamshoots-publication-db-lifecycle.mjs"
+]);
 const failures = [];
 
-function callBody(source, matchIndex) {
-  const open = source.indexOf("(", matchIndex);
-  if (open < 0) return "";
-  let depth = 0;
-  let quote = "";
-  let escaped = false;
-  for (let index = open; index < source.length; index += 1) {
-    const char = source[index];
-    if (quote) {
-      if (escaped) escaped = false;
-      else if (char === "\\") escaped = true;
-      else if (char === quote) quote = "";
-      continue;
-    }
-    if (char === "\"" || char === "'" || char === "`") {
-      quote = char;
-      continue;
-    }
-    if (char === "(") depth += 1;
-    if (char === ")") {
-      depth -= 1;
-      if (depth === 0) return source.slice(open, index + 1);
-    }
-  }
-  return source.slice(open);
+function collectFiles(directory, prefix = "") {
+  return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const relative = path.join(prefix, entry.name);
+    if (entry.isDirectory()) return collectFiles(path.join(directory, entry.name), relative);
+    return entry.name.endsWith(".mjs") || entry.name.endsWith(".ts") || entry.name.endsWith(".tsx")
+      ? [relative]
+      : [];
+  });
 }
 
-for (const relative of scripts) {
+function lineOf(sourceFile, node) {
+  return sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1;
+}
+
+function propertyName(node) {
+  return ts.isIdentifier(node) || ts.isStringLiteral(node) ? node.text : undefined;
+}
+
+function accessChain(node) {
+  const parts = [];
+  let current = node;
+  while (ts.isPropertyAccessExpression(current) || ts.isElementAccessExpression(current)) {
+    const name = ts.isPropertyAccessExpression(current) ? current.name.text : propertyName(current.argumentExpression);
+    if (!name) return [];
+    parts.unshift(name);
+    current = current.expression;
+  }
+  if (ts.isIdentifier(current)) parts.unshift(current.text);
+  return parts;
+}
+
+function objectContainsProperty(node, name) {
+  if (!ts.isObjectLiteralExpression(node)) return false;
+  for (const property of node.properties) {
+    if (ts.isPropertyAssignment(property)) {
+      if (propertyName(property.name) === name) return true;
+      if (objectContainsProperty(property.initializer, name)) return true;
+    } else if (ts.isShorthandPropertyAssignment(property) && property.name.text === name) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function isPublicationWrite(chain) {
+  const model = chain.at(-2);
+  const operation = chain.at(-1);
+  return ["create", "createMany", "update", "updateMany", "upsert", "delete", "deleteMany"].includes(operation) &&
+    ["themePublication", "activeThemePublication"].includes(model);
+}
+
+function checkFile(relative) {
   const absolute = path.join(repoRoot, relative);
   const source = fs.readFileSync(absolute, "utf8");
-  for (const match of source.matchAll(forbiddenPublication)) {
-    const line = source.slice(0, match.index).split("\n").length;
-    failures.push({ file: relative, line, kind: "historical-publication-write", match: match[0] });
+  const sourceFile = ts.createSourceFile(absolute, source, ts.ScriptTarget.Latest, true, relative.endsWith(".ts") || relative.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.JS);
+  if (sourceFile.parseDiagnostics.length) {
+    failures.push({ file: relative, line: 1, kind: "parse-error", match: sourceFile.parseDiagnostics.map((diagnostic) => ts.flattenDiagnosticMessageText(diagnostic.messageText, " ")).join("; ") });
+    return;
   }
-  for (const match of source.matchAll(publishedRecordWrite)) {
-    const body = callBody(source, match.index);
-    if (!/\bpublishedJson\s*:/.test(body)) continue;
-    if (/\bpublishedJson\s*:\s*\{\s*\}/.test(body)) continue;
-    // The legacy snapshot-input API is not an allowlist. Only the reviewed
-    // draft publication command may materialize published rows.
-    if (relative !== "scripts/publish-reviewed-draft-site.mjs") {
-      const line = source.slice(0, match.index).split("\n").length;
-      failures.push({ file: relative, line, kind: "published-record-write", match: match[0] });
-      continue;
+  const fixtureOrSmoke = relative.startsWith("scripts/fixtures/");
+  const allowed = relative === formalOwner || fixtureOrSmoke || allowedFixtureOrMigrationPaths.has(relative);
+  function visit(node) {
+    if (ts.isCallExpression(node)) {
+      const chain = accessChain(node.expression);
+      if (isPublicationWrite(chain) && !allowed) failures.push({ file: relative, line: lineOf(sourceFile, node), kind: "publication-write", match: chain.join(".") });
+      if (chain.at(-1) === "update" || chain.at(-1) === "updateMany" || chain.at(-1) === "upsert") {
+        const model = chain.at(-2);
+        if (["themePage", "themeSettings", "storefrontProfile"].includes(model) && node.arguments.some((argument) => objectContainsProperty(argument, "publishedJson")) && !allowed) {
+          failures.push({ file: relative, line: lineOf(sourceFile, node), kind: "published-json-write", match: chain.join(".") });
+        }
+      }
+      if (chain.at(-1) === "publishSeoSnapshotRelational" || chain.at(-1) === "publishReviewedDraftSiteRelational") {
+        if (!allowed && relative !== "scripts/publish-approved-draft-site.mjs") failures.push({ file: relative, line: lineOf(sourceFile, node), kind: "legacy-publication-api", match: chain.join(".") });
+      }
     }
-    if (!/(?:\bpublishedJson\s*:|\{\s*publishedJson\s*[,}])/.test(body)) continue;
-    const line = source.slice(0, match.index).split("\n").length;
-    failures.push({ file: relative, line, kind: "published-json-write", match: match[0] });
+    ts.forEachChild(node, visit);
   }
-  for (const match of source.matchAll(forbiddenSnapshotMutation)) {
-    const line = source.slice(0, match.index).split("\n").length;
-    failures.push({ file: relative, line, kind: "historical-snapshot-mutation", match: match[0] });
-  }
-  for (const match of source.matchAll(forbiddenPublishedAssignment)) {
-    const line = source.slice(0, match.index).split("\n").length;
-    failures.push({ file: relative, line, kind: "published-json-assignment", match: match[0] });
-  }
-  for (const match of source.matchAll(forbiddenPublicationIteration)) {
-    const line = source.slice(0, match.index).split("\n").length;
-    failures.push({ file: relative, line, kind: "historical-publication-iteration", match: match[0] });
-  }
-  for (const match of source.matchAll(forbiddenLegacyPublicationApi)) {
-    const line = source.slice(0, match.index).split("\n").length;
-    failures.push({ file: relative, line, kind: "legacy-publication-api", match: match[0] });
-  }
+  visit(sourceFile);
 }
+
+const files = [
+  ...collectFiles(scriptsRoot, "scripts"),
+  formalOwner
+].filter((relative) => relative !== "scripts/guard-mydreamshoots-publication-immutability.mjs");
+for (const relative of files.sort()) checkFile(relative);
 
 const result = {
   ok: failures.length === 0,
-  rule: "MyDreamShoots source sync scripts may write draft/source only; publication is created by the formal publish service",
-  checked: scripts,
+  rule: "Only the formal publication owner may materialize published rows, append publications, or switch the active pointer",
+  checked: files,
   failures
 };
 console.log(JSON.stringify(result, null, 2));

@@ -29,7 +29,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishReviewedDraftSiteRelational, activateThemePublicationRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { prepareDraftPublishManifestRelational, createThemePublishApprovalRelational, publishApprovedDraftSiteRelational, activateThemePublicationRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const prisma = new PrismaClient();
@@ -86,7 +86,9 @@ try {
       }
     }
   };
-  const first = await publishReviewedDraftSiteRelational(siteId, "smoke:publication-lifecycle");
+  const firstManifest = await prepareDraftPublishManifestRelational(siteId);
+  const firstApproval = await createThemePublishApprovalRelational({ siteId, manifest: firstManifest, approvedBy: "smoke:publication-lifecycle" });
+  const first = await publishApprovedDraftSiteRelational({ siteId, approvalId: firstApproval.id, actor: "smoke:publication-lifecycle" });
   createdPublicationIds.push(first.publication.id);
   keepPublicationId = first.publication.id;
   const firstRead = await prisma.themePublication.findUnique({ where: { id: first.publication.id } });
@@ -101,7 +103,9 @@ try {
   const afterDrift = await prisma.themePublication.findUnique({ where: { id: first.publication.id } });
   assert.equal(stableSnapshotJson(afterDrift?.snapshot), firstBytes, "draft drift must not mutate the first immutable publication");
 
-  const second = await publishReviewedDraftSiteRelational(siteId, "smoke:publication-lifecycle");
+  const secondManifest = await prepareDraftPublishManifestRelational(siteId);
+  const secondApproval = await createThemePublishApprovalRelational({ siteId, manifest: secondManifest, approvedBy: "smoke:publication-lifecycle" });
+  const second = await publishApprovedDraftSiteRelational({ siteId, approvalId: secondApproval.id, actor: "smoke:publication-lifecycle" });
   createdPublicationIds.push(second.publication.id);
   if (keepNewPublication) keepPublicationId = second.publication.id;
   assert.notEqual(second.publication.id, first.publication.id, "republish must create a new publication ID");

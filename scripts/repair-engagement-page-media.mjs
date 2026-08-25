@@ -37,7 +37,7 @@ const clone = (value) => JSON.parse(JSON.stringify(value));
 const prisma = new PrismaClient();
 const jiti = createJiti(import.meta.url);
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
-const { buildPublicationSnapshot, publishSeoSnapshotRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { buildPublicationSnapshot } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 try {
@@ -74,7 +74,7 @@ try {
 
   await prisma.themePage.update({
     where: { siteId_slug: { siteId, slug: pagePath } },
-    data: { draftJson: pageJson, publishedJson: pageJson }
+    data: { draftJson: pageJson }
   });
   const fresh = await prisma.site.findUnique({
     where: { id: siteId },
@@ -109,13 +109,13 @@ try {
     console.log(JSON.stringify({ ...report, persisted: true, published: false, reason: "existing_snapshot_integrity_gate" }, null, 2));
     process.exit(0);
   }
-  const published = await publishSeoSnapshotRelational({
-    siteId,
-    snapshot,
-    actor: "engagement-media-remediation",
-    scope: { type: "site", pageIds: [page.id], includeThemeSettings: false, includeStorefrontProfile: false }
-  });
-  console.log(JSON.stringify({ ...report, publishedVersion: published.publishedVersion, snapshotHash: snapshot.snapshotHash }, null, 2));
+  console.log(JSON.stringify({
+    ...report,
+    mode: "draft-only",
+    changedPageIds: [page.id],
+    candidateSnapshotHash: snapshot.snapshotHash,
+    publicationRequired: true
+  }, null, 2));
 } finally {
   await prisma.$disconnect();
 }

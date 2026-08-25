@@ -37,7 +37,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const hash = (value) => crypto.createHash("sha256").update(JSON.stringify(value)).digest("hex");
@@ -95,8 +95,8 @@ try {
     snapshot.snapshotHash = publicationSnapshotHash(snapshot);
     snapshot.revisions.snapshotHash = snapshot.snapshotHash;
     assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "restored publication snapshot is invalid");
-    const published = await publishReviewedDraftSiteRelational(siteId, "restore:mydreamshoots-homepage-copy-from-backup");
-    console.log(JSON.stringify({ ...result, rollbackPath, publicationId: published.publication.id, version: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash }, null, 2));
+    const manifest = await prepareDraftPublishManifestRelational(siteId);
+    console.log(JSON.stringify({ ...result, rollbackPath, mode: "draft-only", manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
   }
 } finally {
   await prisma.$disconnect();

@@ -173,6 +173,7 @@ model Site {
   settings                ThemeSettings?
   storefrontProfile       StorefrontProfile?
   publications            ThemePublication[]
+  publishApprovals         ThemePublishApproval[]
   activePublication       ActiveThemePublication?
   siteThemes              SiteTheme[]
   themeCopies             ThemeCopy[]
@@ -661,15 +662,50 @@ model ThemePublication {
   scope         Json?
   manifestHash  String?
   factsRevision String?
+  approvalId    String?                 @unique
   publishedBy   String
   publishedAt   DateTime                @default(now())
   site          Site                    @relation(fields: [siteId], references: [id], onDelete: Cascade)
   activeFor     ActiveThemePublication?
+  approval      ThemePublishApproval?    @relation(fields: [approvalId], references: [id], onDelete: Restrict)
 
   @@unique([siteId, version])
   @@index([siteId, publishedAt])
   @@index([siteId, version])
   @@index([siteId, factsRevision])
+}
+
+model ThemePublishApproval {
+  id                   String                     @id
+  siteId               String
+  manifestHash         String
+  approvedBy           String
+  approvedAt           DateTime                   @default(now())
+  expiresAt            DateTime?
+  status               String                     @default("approved")
+  consumedAt           DateTime?
+  consumedPublicationId String?                   @unique
+  site                 Site                       @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  items                ThemePublishApprovalItem[]
+  publication          ThemePublication?
+
+  @@index([siteId, status, approvedAt])
+  @@index([siteId, manifestHash])
+}
+
+model ThemePublishApprovalItem {
+  id         String              @id
+  approvalId String
+  objectType String
+  objectId   String
+  ownerId    String
+  revision   String
+  etag       String?
+  valueHash  String
+  approval   ThemePublishApproval @relation(fields: [approvalId], references: [id], onDelete: Cascade)
+
+  @@unique([approvalId, objectType, objectId])
+  @@index([approvalId, objectType])
 }
 
 model ActiveThemePublication {

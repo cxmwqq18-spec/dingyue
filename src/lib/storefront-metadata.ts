@@ -28,7 +28,7 @@ export async function metadataForPublishedStorefrontPage({
     products: products.filter((product) => product.siteId === site.id),
     creativePacks: creativePacks.filter((pack) => pack.siteId === site.id),
     mediaAssets: site.mediaAssets ?? [],
-    publications: site.latestPublication ? [site.latestPublication] : []
+    publications: site.activePublication ? [site.activePublication] : []
   } as unknown as PlatformState, site);
   const snapshotPage = preferProvidedPageJson
     ? page

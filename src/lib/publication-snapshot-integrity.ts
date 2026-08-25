@@ -10,13 +10,14 @@ import type {
   PublishedPageMediaProjection,
   PublishedStandardPageMediaProjection,
   PublishedRouteProjection,
+  PublishedLeafRouteProjection,
   PublishedRedirectRouteProjection,
   PublishedVideoNavigationProjection,
   PublishedHomepageShowcaseItem,
   ThemePublicationSnapshot,
   PublishedSeoSnapshot
 } from "@/lib/types";
-import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
+import { MYDREAMSHOOTS_STANDARD_SEO_INVENTORY } from "@/lib/mydreamshoots-editorial-routes";
 
 export type SnapshotIntegrity = "valid" | "invalid" | "legacy";
 
@@ -216,6 +217,72 @@ function unique(values: string[]): boolean {
   return new Set(values).size === values.length;
 }
 
+function normalizeDetailMediaUrl(value: string): string {
+  return value.trim().split(/[?#]/, 1)[0] ?? "";
+}
+
+/**
+ * Indexable detail routes own their cover/gallery URLs. Directory cards and
+ * homepage showcases are intentionally excluded from this ownership check.
+ * The binary SHA-256 check is performed by the release smoke (which has the
+ * public asset filesystem); this pure snapshot check still exposes the same
+ * gate names so approval code cannot silently omit the ownership contract.
+ */
+export function detailMediaUniqueness(snapshot: PublishedSeoSnapshot): {
+  detailMediaUnique: boolean;
+  detailMediaOwner: boolean;
+  detailMediaHashUnique: boolean;
+  conflicts: string[];
+} {
+  const detailRoutes = snapshot.publishedRoutes.filter((route) => route.disposition === "render").filter((route) => {
+    const candidate = route as { status?: string; indexable?: boolean; sitemapEligible?: boolean; canonicalPath?: string; pageEntityId?: string };
+    return candidate.status === "published" && candidate.indexable && candidate.sitemapEligible && typeof candidate.canonicalPath === "string" &&
+      (candidate.canonicalPath.startsWith("/ai-image-generation/") || candidate.canonicalPath.startsWith("/ai-video-generation/") || candidate.canonicalPath.startsWith("/holidays-events/"));
+  });
+  const pageMediaByEntity = new Map(snapshot.publishedPageMedia.map((media) => [media.pageEntityId, media]));
+  const standardMediaByPath = new Map(snapshot.publishedStandardPageMedia.map((media) => [media.canonicalPath, media]));
+  const owners = new Map<string, string>();
+  const conflicts: string[] = [];
+  let ownerValid = true;
+  let withinPageValid = true;
+  for (const route of detailRoutes) {
+    const candidate = route as PublishedRouteProjection & { canonicalPath: string; pageEntityId?: string };
+    const media = route.routeKind === "standard-content" ? standardMediaByPath.get(candidate.canonicalPath) : pageMediaByEntity.get(candidate.pageEntityId ?? "");
+    if (!media || media.status !== "ready") {
+      ownerValid = false;
+      conflicts.push(`${candidate.canonicalPath}:missing-ready-media`);
+      continue;
+    }
+    const images = route.routeKind === "standard-content"
+      ? ("sitemapImages" in media ? media.sitemapImages : [])
+      : ("galleryImages" in media ? [media.primaryImage, ...media.galleryImages] : []);
+    const normalizedImages = images.map(normalizeDetailMediaUrl).filter(Boolean);
+    const local = new Set<string>();
+    for (const image of normalizedImages) {
+      if (local.has(image)) {
+        withinPageValid = false;
+        conflicts.push(`${candidate.canonicalPath}:within-page:${image}`);
+      }
+      local.add(image);
+      const previousOwner = owners.get(image);
+      if (previousOwner && previousOwner !== candidate.canonicalPath) {
+        conflicts.push(`${image}:${previousOwner}<->${candidate.canonicalPath}`);
+      } else {
+        owners.set(image, candidate.canonicalPath);
+      }
+    }
+  }
+  const detailMediaUnique = conflicts.filter((item) => !item.includes(":missing-ready-media")).length === 0 && withinPageValid;
+  return {
+    detailMediaUnique,
+    detailMediaOwner: ownerValid,
+    // Binary hash uniqueness is asserted by smoke-storefront-image-isolation;
+    // a URL collision is already a guaranteed hash collision for this layer.
+    detailMediaHashUnique: detailMediaUnique,
+    conflicts
+  };
+}
+
 export function publicationSnapshotHash(snapshot: ThemePublicationSnapshot): string {
   const unhashed = {
     ...snapshot,
@@ -315,10 +382,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const mediaIds = publishedPageMedia.map((item) => item.mediaEntityId);
   const standardMediaIds = publishedStandardPageMedia.map((item) => item.mediaEntityId);
   const linkIds = links.map((item) => item.linkEntityId);
-  const expectedStandardPaths = Array.from(new Set([
-    ...MYDREAMSHOOTS_STANDARD_SEO_ROUTES.filter((path) => publishedStandardPageMedia.some((candidate) => candidate.canonicalPath === path && candidate.status === "ready")),
-    ...publishedStandardPageMedia.filter((candidate) => candidate.status === "ready").map((candidate) => candidate.canonicalPath)
-  ]));
+  const expectedStandardPaths = MYDREAMSHOOTS_STANDARD_SEO_INVENTORY.map((item) => item.canonicalPath);
   const imagePageEntities = publishedPageEntities.filter((item) => item.pageType === "ai-image-theme-leaf");
   const videoPageEntities = publishedPageEntities.filter((item) => item.pageType === "ai-video-topic-leaf");
   const imagePageMedia = publishedPageMedia.filter((item) => item.routeKind !== "ai-video-topic-leaf");
@@ -339,6 +403,23 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     collections.every((item) => pages.has(item.pageEntityId) && mediaByPage.get(item.pageEntityId)?.mediaEntityId === item.mediaEntityId) &&
     policyRoutes.every((item) => snapshot.pages.some((page) => page.id === item.pageId && page.slug === item.canonicalPath)) &&
     redirectRoutes.every((item) => policyRoutes.some((routeItem) => routeItem.canonicalPath === item.targetPath));
+  const standardRoutesAgree = MYDREAMSHOOTS_STANDARD_SEO_INVENTORY.every((expected) => {
+    const matchingRoutes = publishedRoutes.filter((candidate) => candidate.disposition === "render" && candidate.canonicalPath === expected.canonicalPath);
+    const candidate = matchingRoutes[0];
+    if (matchingRoutes.length !== 1 || candidate.routeKind !== expected.routeKind || candidate.disposition !== expected.disposition) return false;
+    const page = snapshot.pages.find((item) => item.id === candidate.pageId);
+    const copy = pageCopyRows.find((item) => item.pageEntityId === candidate.pageEntityId);
+    const media = publishedStandardPageMedia.find((item) => item.canonicalPath === expected.canonicalPath);
+    const links = v1.publishedLinkRefs.filter((item: PublishedLinkRef) => item.ownerPageEntityId === candidate.pageEntityId);
+    const required = new Set(expected.requiredProjectionKinds);
+    if (required.has("page") && (!page || page.id !== candidate.pageId)) return false;
+    if (required.has("copy") && copy && !text(copy.copyRevision)) return false;
+    if (required.has("media") && (!media || media.canonicalPath !== expected.canonicalPath)) return false;
+    if (required.has("links") && links.some((item) => !text(item.linkEntityId))) return false;
+    return candidate.status === "published"
+      ? candidate.indexable === expected.indexable && candidate.sitemapEligible === expected.sitemapEligible
+      : candidate.status === "review_required" && candidate.indexable === false && candidate.sitemapEligible === false;
+  });
   const standardMediaAgree = publishedStandardPageMedia.length === expectedStandardPaths.length &&
     expectedStandardPaths.every((path) => publishedStandardPageMedia.some((item) => {
       const page = snapshot.pages.find((candidate) => candidate.id === item.pageId);
@@ -366,6 +447,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     return page?.mediaEntityId === item.mediaEntityId && media?.pageEntityId === item.pageEntityId &&
       media?.pageId === item.pageId && media?.canonicalPath === item.canonicalPath;
   });
+  const detailMedia = detailMediaUniqueness(v1);
   const videoNavigationAgree = videoTopicRoutes.length === 0
     ? videoNavigationRows.length === 0
     : videoNavigationRows.length === videoTopicRoutes.length &&
@@ -406,7 +488,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
       : revisions.navigationRevision === projectionRevision(videoNavigationRows)) &&
     (v1.publishedHomepageShowcases === undefined || revisions.homepageShowcaseRevision === projectionRevision(homepageShowcaseRows)) &&
     revisions.policyRevision === projectionRevision({ privacy: v1.publishedFacts.privacy, refund: v1.publishedFacts.refund, creditLifecycle: v1.publishedFacts.creditLifecycle, security: v1.publishedFacts.security });
-  if (!factsCompleteForIndexablePages(v1.publishedFacts, publishedPageEntities) || !projectionsAgree || !completeCoverage || !standardMediaAgree || !mediaOwnershipAgree || !videoNavigationAgree || !linksAgree || !aggregateRevisionsAgree || !saveTheDateImagesUnique ||
+  if (!factsCompleteForIndexablePages(v1.publishedFacts, publishedPageEntities) || !projectionsAgree || !completeCoverage || !standardRoutesAgree || !standardMediaAgree || !mediaOwnershipAgree || !detailMedia.detailMediaUnique || !detailMedia.detailMediaOwner || !detailMedia.detailMediaHashUnique || !videoNavigationAgree || !linksAgree || !aggregateRevisionsAgree || !saveTheDateImagesUnique ||
       !unique(routePaths) || !unique(entityIds) || !unique(mediaIds) || !unique(standardMediaIds) || !unique(linkIds) || snapshot.snapshotHash !== revisions.snapshotHash) {
     if (process.env.MYDREAMSHOOTS_SNAPSHOT_DEBUG === "1") {
       console.error(JSON.stringify({
@@ -415,8 +497,10 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
         standardProjectionsAgree,
         factsCompleteForIndexablePages: factsCompleteForIndexablePages(v1.publishedFacts, publishedPageEntities),
         completeCoverage,
+        standardRoutesAgree,
         standardMediaAgree,
         mediaOwnershipAgree,
+        detailMedia,
         homepageShowcaseRows: homepageShowcaseRows.length,
         saveTheDateImagesUnique,
         videoNavigationAgree,

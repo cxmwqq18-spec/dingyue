@@ -625,6 +625,9 @@ function canonicalBlogPathForSite(site: Site, path: string): string {
   const normalized = normalizePath(path);
   if (!normalized.startsWith("/blog/")) return normalized;
   const articleSlug = normalized.slice("/blog/".length);
+  if (isDreamshootSite(site) && articleSlug === "ai-video-add-ons-photo-package-guide") {
+    return "/blog/video-photo-package-guide";
+  }
   const canonicalPath = isAidreamcapesSite(site)
     ? legacyBlogCanonicalPath(
       articleSlug,
@@ -1066,7 +1069,7 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
   const entries = isLocalHostRequest
     ? runtime.sites.flatMap((item) => sitemapEntriesForSite(runtime.state, item))
     : site ? sitemapEntriesForSite(runtime.state, site) : [];
-  const publication = site?.latestPublication;
+  const publication = site?.activePublication;
   if (!publication || publicationSnapshotIntegrity(publication.snapshot) !== "valid") return { entries };
   const revisions = (publication.snapshot as PublishedSeoSnapshot).revisions;
   return {

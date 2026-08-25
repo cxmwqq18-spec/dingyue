@@ -26,7 +26,7 @@ const state = await readPlatformStateFromSql();
 const site = state.sites.find((candidate) => candidate.id === SITE_ID);
 assert(site, `missing_site:${SITE_ID}`);
 
-const route = site.latestPublication?.snapshot?.publishedRoutes?.find((candidate) => candidate.canonicalPath === PAGE_PATH);
+  const route = site.activePublication?.snapshot?.publishedRoutes?.find((candidate) => candidate.canonicalPath === PAGE_PATH);
 assert.equal(route?.status, "published", "directory route must be published");
 assert.equal(route?.indexable, true, "directory route must be indexable");
 assert.equal(route?.sitemapEligible, true, "directory route must be in the sitemap");
@@ -60,4 +60,4 @@ assert.match(directory, /loading=\{index === 0 \? "eager" : "lazy"\}/);
 assert.match(directory, /alt=\{imageAlt\}/);
 assert.match(directory, /status === "published"/);
 
-console.log(JSON.stringify({ ok: true, route: PAGE_PATH, categories: navigation.groups.length, themes: items.length }, null, 2));
+  console.log(JSON.stringify({ ok: true, route: PAGE_PATH, categories: navigation.groups.length, themes: items.length }, null, 2));

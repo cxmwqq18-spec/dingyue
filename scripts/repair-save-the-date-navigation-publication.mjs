@@ -144,10 +144,10 @@ try {
   const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { pages: { orderBy: { slug: "asc" } }, settings: true, domains: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   const jiti = (await import("jiti")).default(import.meta.url);
   const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
-  const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+  const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
   const site = toSite(fresh);
-  const publication = await publishReviewedDraftSiteRelational(siteId, "save-the-date-navigation-repair");
-  console.log(JSON.stringify({ ok: true, siteId, publicationVersion: publication.publishedVersion, newPages: [...pageWrites.keys()], navigation: settings.saveTheDateNavigation }, null, 2));
+  const manifest = await prepareDraftPublishManifestRelational(siteId);
+  console.log(JSON.stringify({ ok: true, siteId, mode: "draft-only", manifestHash: manifest.manifestHash, newPages: [...pageWrites.keys()], navigation: settings.saveTheDateNavigation, publicationRequired: true }, null, 2));
 } finally {
   await prisma.$disconnect();
 }

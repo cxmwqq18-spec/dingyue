@@ -32,7 +32,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
   return originalResolveFilename.call(this, resolved, ...args);
 };
 const jiti = createJiti(import.meta.url);
-const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const clone = (value) => value === undefined ? undefined : JSON.parse(JSON.stringify(value));
 
@@ -61,8 +61,8 @@ try {
   snapshot.snapshotHash = publicationSnapshotHash(snapshot);
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "video page publication snapshot must be valid");
-  const published = await publishReviewedDraftSiteRelational(siteId, `publish:mydreamshoots-video-page:${expectedTarget}`);
-  console.log(JSON.stringify({ ok: true, target: expectedTarget, page: slug, publicationId: published.publication.id, version: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash, backupPath }, null, 2));
+  const manifest = await prepareDraftPublishManifestRelational(siteId);
+  console.log(JSON.stringify({ ok: true, target: expectedTarget, page: slug, mode: "draft-only", manifestHash: manifest.manifestHash, publicationRequired: true, backupPath }, null, 2));
 } finally {
   await prisma.$disconnect();
   Module._resolveFilename = originalResolveFilename;

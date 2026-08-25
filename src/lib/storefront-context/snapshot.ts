@@ -61,7 +61,7 @@ function profileFromPublishedFacts(facts: PublishedSiteSnapshot["publishedFacts"
   };
 }
 
-function productsFromPublishedOffers(snapshot: NonNullable<Site["latestPublication"]>["snapshot"]): Product[] {
+function productsFromPublishedOffers(snapshot: NonNullable<Site["activePublication"]>["snapshot"]): Product[] {
   const offers = snapshot.publishedOffers ?? [];
   const products = new Map<string, Product>();
   for (const offer of offers) {
@@ -95,7 +95,7 @@ function productsFromPublishedOffers(snapshot: NonNullable<Site["latestPublicati
 }
 
 function creativePacksFromPublishedCollections(
-  snapshot: NonNullable<Site["latestPublication"]>["snapshot"],
+  snapshot: NonNullable<Site["activePublication"]>["snapshot"],
   publishedAt: string | undefined,
   siteId: string
 ): CreativePack[] {
@@ -199,7 +199,7 @@ export function createPublishedSiteSnapshot(
   // Public rendering is intentionally fail-closed.  The active pointer is
   // the only publication selector; latest/history and site row projections
   // are not valid sources for HTML, metadata, schema, sitemap, or navigation.
-  const publication = site.latestPublication;
+  const publication = site.activePublication;
   if (!publication) throw new Error("published_snapshot_active_publication_required");
   const snapshotIntegrity = publicationSnapshotIntegrity(publication.snapshot);
   if (snapshotIntegrity !== "valid") throw new Error("published_snapshot_integrity_invalid");

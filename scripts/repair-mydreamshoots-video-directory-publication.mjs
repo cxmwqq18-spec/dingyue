@@ -38,7 +38,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const videoDirectoryJson = (pageJson) => ({
@@ -98,12 +98,13 @@ try {
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "Repaired publication snapshot must be valid");
 
-  const published = await publishReviewedDraftSiteRelational(siteId, "repair:mydreamshoots-video-directory");
+  const manifest = await prepareDraftPublishManifestRelational(siteId);
   console.log(JSON.stringify({
     ok: true,
     page: pageSlug,
-    publicationId: published.publication.id,
-    version: published.publishedVersion,
+    mode: "draft-only",
+    manifestHash: manifest.manifestHash,
+    publicationRequired: true,
     backupPath
   }, null, 2));
 } finally {

@@ -61,7 +61,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publishReviewedDraftSiteRelational } = jiti("../src/lib/stores/theme-store.ts");
+const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
 const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const clone = (value) => value === undefined ? undefined : JSON.parse(JSON.stringify(value));
 function stable(value) {
@@ -294,12 +294,8 @@ try {
   snapshot.snapshotHash = publicationSnapshotHash(snapshot);
   snapshot.revisions.snapshotHash = snapshot.snapshotHash;
   assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "updated homepage publication snapshot must be valid");
-  const published = await publishReviewedDraftSiteRelational(siteId, `publish:mydreamshoots-homepage-video-first:${target}`);
-  const readback = await prisma.themePublication.findUnique({ where: { id: published.publication.id } });
-  const readbackHome = readback?.snapshot?.pages?.find((page) => page.slug === "/");
-  assert.equal(readbackHome?.publishedJson?.seo?.title, SEO.title, "publication SEO title readback failed");
-  assert.equal(readbackHome?.publishedJson?.sections?.hero_1?.settings?.heroBadge, "AI Video & Photo Creation", "publication hero readback failed");
-  console.log(JSON.stringify({ ok: true, target, publicationId: published.publication.id, version: published.publishedVersion, snapshotHash: published.publication.snapshot.snapshotHash, backupPath, seo: SEO }, null, 2));
+  const manifest = await prepareDraftPublishManifestRelational(siteId);
+  console.log(JSON.stringify({ ok: true, target, mode: "draft-only", manifestHash: manifest.manifestHash, publicationRequired: true, backupPath, seo: SEO }, null, 2));
 } finally {
   await prisma.$disconnect();
   Module._resolveFilename = originalResolveFilename;

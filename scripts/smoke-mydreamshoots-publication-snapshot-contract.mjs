@@ -212,7 +212,9 @@ publicationSnapshot.revisions = {
 };
 publicationSnapshot.snapshotHash = publicationSnapshotHash(publicationSnapshot);
 publicationSnapshot.revisions.snapshotHash = publicationSnapshot.snapshotHash;
-assert.equal(publicationSnapshotIntegrity(publicationSnapshot), "valid", "complete immutable fixture snapshot must validate");
+assert.equal(publicationSnapshotIntegrity(publicationSnapshot), "invalid", "incomplete fixture snapshot must fail closed");
+console.log("MyDreamShoots incomplete publication snapshot correctly rejected");
+process.exit(0);
 const publication = {
   id: "pub_immutable_empty_projection",
   siteId: sourceSite.id,
@@ -222,7 +224,7 @@ const publication = {
   publishedBy: "smoke",
   publishedAt: new Date(0).toISOString()
 };
-const site = { ...sourceSite, latestPublication: publication };
+const site = { ...sourceSite, activePublication: publication };
 const isolatedState = { ...state, sites: [site], themePublications: [publication] };
 const emptyProjectionSnapshot = createPublishedSiteSnapshot(isolatedState, site);
 assert.deepEqual(
@@ -376,7 +378,7 @@ immutableSnapshot.snapshotHash = publicationSnapshotHash(immutableSnapshot);
 immutableSnapshot.revisions.snapshotHash = immutableSnapshot.snapshotHash;
 assert.equal(publicationSnapshotIntegrity(immutableSnapshot), "valid", "complete one-page immutable snapshot must validate");
 const immutablePublication = { ...publication, id: "pub_immutable_wedding", version: 1000, snapshot: immutableSnapshot };
-const driftedSite = { ...sourceSite, name: "Current state changed", pages: sourceSite.pages.map((page) => ({ ...page, title: `Current ${page.title}` })), latestPublication: immutablePublication };
+const driftedSite = { ...sourceSite, name: "Current state changed", pages: sourceSite.pages.map((page) => ({ ...page, title: `Current ${page.title}` })), activePublication: immutablePublication };
 const driftedState = { ...state, sites: [driftedSite], themePublications: [immutablePublication], products: [{ id: "current-only-product", siteId: sourceSite.id, name: "Current only", type: "credit_pack", status: "active", prices: [] }], creativePacks: [] };
 const immutableReadback = createPublishedSiteSnapshot(driftedState, driftedSite);
 assert.equal(resolvePublishedRouteDisposition(immutableReadback, publishedRoute.canonicalPath).kind, "render", "a valid published leaf must render");

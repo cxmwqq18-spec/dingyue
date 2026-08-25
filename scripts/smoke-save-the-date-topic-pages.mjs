@@ -16,7 +16,7 @@ const pages = [
 const state = await readPlatformStateFromSql();
 const site = state.sites.find((candidate) => candidate.id === SITE_ID);
 assert(site, `missing_site:${SITE_ID}`);
-const snapshot = site.latestPublication?.snapshot;
+const snapshot = site.activePublication?.snapshot;
 assert(snapshot, "missing_active_publication_snapshot");
 
 for (const expected of pages) {
@@ -91,4 +91,4 @@ const sitemap = snapshot.publishedStandardPageMedia.map((media) => media.canonic
 for (const page of pages) assert(sitemap.includes(page.path), `${page.path}: missing sitemap media projection`);
 const renderer = fs.readFileSync(path.join(process.cwd(), "src/components/theme-renderer.tsx"), "utf8");
 for (const token of ["/holidays-events/engagement", "/holidays-events/proposal", "hero-ai-proposal-rooftop-surprise-night.jpg"]) assert(!renderer.includes(token), `renderer contains page-specific token: ${token}`);
-console.log(JSON.stringify({ siteId: SITE_ID, publicationVersion: site.latestPublication.version, pages: pages.map((page) => ({ path: page.path, media: page.media, faq: page.faq })) }, null, 2));
+console.log(JSON.stringify({ siteId: SITE_ID, publicationVersion: site.activePublication.version, pages: pages.map((page) => ({ path: page.path, media: page.media, faq: page.faq })) }, null, 2));

@@ -34,6 +34,15 @@ export const MYDREAMSHOOTS_STANDARD_SEO_ROUTES = [
   ...MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES
 ] as const;
 
+export const MYDREAMSHOOTS_STANDARD_SEO_INVENTORY = MYDREAMSHOOTS_STANDARD_SEO_ROUTES.map((canonicalPath) => ({
+  canonicalPath,
+  routeKind: "standard-content" as const,
+  disposition: "render" as const,
+  indexable: true,
+  sitemapEligible: true,
+  requiredProjectionKinds: ["page", "copy", "media", "links"] as const
+}));
+
 export function isMydreamshootsEditorialThemeRoute(path: string): boolean {
   return MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES.includes(path as (typeof MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES)[number]);
 }

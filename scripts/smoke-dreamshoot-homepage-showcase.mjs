@@ -60,6 +60,15 @@ async function main() {
   assert.ok(html.includes(copy.packageVideoLinkLabel), "photo packages must link to AI Video Generation");
   assert.ok(html.includes(copy.reviewTitle), "production homepage must expose the approved review heading");
   assert.ok(html.includes(copy.videoTitle) && html.includes(copy.saveTheDateTitle) && html.includes(copy.photoTitle), "production gallery headings must use the Phase B contract");
+  const photoSectionStart = html.indexOf('data-dreamshoot-homepage-showcase-kind="photo"');
+  const videoSectionStart = html.indexOf('data-dreamshoot-homepage-showcase-kind="video"', photoSectionStart + 1);
+  const photoShowcaseHtml = photoSectionStart >= 0 && videoSectionStart > photoSectionStart
+    ? html.slice(photoSectionStart, videoSectionStart)
+    : "";
+  assert.ok(
+    photoShowcaseHtml.includes('data-dreamshoot-homepage-showcase-kind="photo"') || photoShowcaseHtml.includes('data-dreamshoot-showcase-preview="image"'),
+    "production photo showcase must contain at least one rendered photo card"
+  );
 
   console.log(JSON.stringify({ ok: true, publication: { id: publication.id, version: publication.version }, counts, production: { origin, status: response.status } }, null, 2));
 }
