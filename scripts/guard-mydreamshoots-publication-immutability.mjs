@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const scripts = fs.readdirSync(path.join(repoRoot, "scripts"))
-  .filter((name) => name !== "guard-mydreamshoots-publication-immutability.mjs" && name.endsWith(".mjs") && /(?:mydreamshoots|dreamshoot|save-the-date|seasonal|footer)/i.test(name))
+  .filter((name) => name !== "guard-mydreamshoots-publication-immutability.mjs" && name.endsWith(".mjs") && (name === "publish-reviewed-draft-site.mjs" || /(?:mydreamshoots|dreamshoot|save-the-date|seasonal|footer)/i.test(name)))
   .sort()
   .map((name) => `scripts/${name}`);
 const forbiddenPublication = /(?:\btx\.)?themePublication\.(?:update|updateMany|delete|deleteMany)\s*\(/g;
@@ -26,7 +26,7 @@ for (const relative of scripts) {
   for (const match of source.matchAll(publishedRecordWrite)) {
     // The legacy snapshot-input API is not an allowlist. Only the reviewed
     // draft publication command may materialize published rows.
-    if (relative !== "scripts/publish-draft-site.mjs") {
+    if (relative !== "scripts/publish-reviewed-draft-site.mjs") {
       const line = source.slice(0, match.index).split("\n").length;
       failures.push({ file: relative, line, kind: "published-record-write", match: match[0] });
       continue;
