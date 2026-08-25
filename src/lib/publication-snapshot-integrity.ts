@@ -413,9 +413,11 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     const links = v1.publishedLinkRefs.filter((item: PublishedLinkRef) => item.ownerPageEntityId === candidate.pageEntityId);
     const required = new Set(expected.requiredProjectionKinds);
     if (required.has("page") && (!page || page.id !== candidate.pageId)) return false;
-    if (required.has("copy") && copy && !text(copy.copyRevision)) return false;
+    // Inventory requirements are presence contracts, not merely shape checks:
+    // a missing projection must fail closed just like a malformed one.
+    if (required.has("copy") && (!copy || !text(copy.copyRevision))) return false;
     if (required.has("media") && (!media || media.canonicalPath !== expected.canonicalPath)) return false;
-    if (required.has("links") && links.some((item) => !text(item.linkEntityId))) return false;
+    if (required.has("links") && (!links.length || links.some((item) => !text(item.linkEntityId)))) return false;
     return candidate.status === "published"
       ? candidate.indexable === expected.indexable && candidate.sitemapEligible === expected.sitemapEligible
       : candidate.status === "review_required" && candidate.indexable === false && candidate.sitemapEligible === false;
