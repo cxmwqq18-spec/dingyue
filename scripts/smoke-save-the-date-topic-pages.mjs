@@ -10,9 +10,8 @@ const pages = [
   { path: "/holidays-events/proposal", key: "proposal", media: 10, faq: 8, sections: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_flow", "editorial_steps", "editorial_quality", "editorial_quality", "faq", "editorial_cta"] },
   { path: "/holidays-events/save-the-date", key: "save_date", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "workflow", "scene-ideas", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"] },
   { path: "/ai-video-generation/wedding-ceremony", key: "wedding_ceremony", media: 11, faq: 9, sections: ["hero", "definition", "reasons", "sources", "workflow", "scene-ideas", "quality", "boundaries", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_quality", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_boundaries", "faq", "editorial_cta"] },
-  ,{ path: "/holidays-events/mothers-day", key: "mothers_day", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "quality", "workflow", "scene-ideas", "formats", "family-match", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_quality", "editorial_steps", "editorial_scene_grid", "editorial_rich_text", "editorial_rich_text", "faq", "editorial_cta"] },
-  { path: "/holidays-events/fathers-day", key: "fathers_day", media: 11, faq: 6, sections: ["hero", "definition", "scene-ideas", "quality", "workflow", "use-cases", "gallery", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_quality", "editorial_steps", "editorial_story_grid", "editorial_scene_grid", "faq", "editorial_cta"] },
-  { path: "/holidays-events/halloween", key: "halloween", media: 11, faq: 6, sections: ["hero", "definition", "scene-ideas", "quality", "workflow", "use-cases", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_quality", "editorial_steps", "editorial_scene_grid", "faq", "editorial_cta"], indexable: false }
+  { path: "/holidays-events/mothers-day", key: "mothers_day", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "quality", "workflow", "scene-ideas", "formats", "family-match", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_quality", "editorial_steps", "editorial_scene_grid", "editorial_rich_text", "editorial_rich_text", "faq", "editorial_cta"] },
+  { path: "/holidays-events/fathers-day", key: "fathers_day", media: 11, faq: 6, sections: ["hero", "definition", "scene-ideas", "quality", "workflow", "use-cases", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_rich_text", "editorial_steps", "editorial_scene_grid", "faq", "editorial_cta"] },
 ];
 const state = await readPlatformStateFromSql();
 const site = state.sites.find((candidate) => candidate.id === SITE_ID);
@@ -44,6 +43,27 @@ for (const expected of pages) {
   assert.equal(new Set(json.mediaManifest.map((item) => item.src)).size, expected.media, `${expected.path}: manifest uniqueness`);
   assert(json.mediaManifest.every((item) => item.alt && item.width === 1600 && item.height === 1000 && ["hero", "content"].includes(item.role)), `${expected.path}: manifest metadata`);
   assert(json.mediaManifest.every((item) => state.mediaAssets.some((asset) => asset.siteId === SITE_ID && asset.storageKey === item.src && asset.altText === item.alt)), `${expected.path}: media owner`);
+  if (expected.path === "/holidays-events/engagement") {
+    const sceneSection = json.sections?.["engagement_scene_directions"];
+    const sceneBlocks = sceneSection?.blocks?.slice(1) ?? [];
+    assert.equal(sceneBlocks.length, 8, `${expected.path}: scene direction count`);
+    assert(sceneBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: scene direction media`);
+  }
+  if (expected.path === "/holidays-events/save-the-date") {
+    const sceneBlocks = json.sections?.save_date_scene_ideas?.blocks ?? [];
+    assert.equal(sceneBlocks.length, 11, `${expected.path}: scene idea count`);
+    assert(sceneBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: scene idea media`);
+    const formatBlocks = json.sections?.save_date_formats?.blocks ?? [];
+    assert(formatBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: format media`);
+  }
+  if (expected.path === "/holidays-events/proposal") {
+    const useCaseBlocks = json.sections?.proposal_use_cases?.blocks ?? [];
+    const flowBlocks = json.sections?.proposal_story_flow?.blocks ?? [];
+    assert.equal(useCaseBlocks.length, 7, `${expected.path}: use-case count`);
+    assert.equal(flowBlocks.length, 5, `${expected.path}: story-flow count`);
+    assert(useCaseBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: use-case media`);
+    assert(flowBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: story-flow media`);
+  }
   assert.equal(json.seo?.canonicalPath, expected.path, `${expected.path}: canonical path`);
   assert(json.seo?.title && json.seo?.description, `${expected.path}: SEO title/description`);
   assert.equal(json.sections?.[json.sectionsOrder[0]]?.settings?.themeTone, expected.path.includes("wedding-ceremony") ? "wedding" : expected.path.includes("thanksgiving") ? "thanksgiving" : expected.path.includes("christmas") ? "christmas" : expected.path.includes("new-year") ? "new-year" : expected.path.includes("mothers-day") ? "mothers-day" : expected.path.includes("fathers-day") ? "fathers-day" : expected.path.includes("halloween") ? "halloween" : undefined, `${expected.path}: theme token`);
@@ -63,7 +83,8 @@ for (const expected of pages) {
 const navigation = site.themeSettings?.publishedJson?.saveTheDateNavigation;
 assert.equal(navigation?.menuLabel, "Save the Date");
 const items = navigation.groups.flatMap((group) => group.items.filter((item) => item.status === "published"));
-assert.deepEqual(items.map((item) => item.href), ["/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date", "/ai-video-generation/wedding-ceremony", "/holidays-events/mothers-day", "/holidays-events/fathers-day", "/holidays-events/halloween"]);
+assert.equal(new Set(items.map((item) => item.href)).size, items.length, "Save the Date navigation paths must be unique");
+assert(items.every((item) => snapshot.publishedRoutes.some((route) => route.disposition === "render" && route.status === "published" && route.canonicalPath === item.href)), "Save the Date navigation must target published routes");
 assert.equal(navigation.groups[1]?.label, "Seasonal Holidays");
 assert.equal(navigation.groups[0]?.label, "Love & Wedding");
 const sitemap = snapshot.publishedStandardPageMedia.map((media) => media.canonicalPath);

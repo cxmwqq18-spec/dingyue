@@ -3,17 +3,20 @@ export const MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES = [
   "/holidays-events/engagement",
   "/holidays-events/proposal",
   "/holidays-events/save-the-date",
+  "/holidays-events/wedding-invitation",
   "/ai-video-generation/wedding-ceremony",
+  "/holidays-events/wedding-anniversary",
+  "/holidays-events/christmas",
+  "/holidays-events/thanksgiving",
+  "/holidays-events/new-year",
   "/holidays-events/mothers-day",
   "/holidays-events/fathers-day",
   "/holidays-events/halloween"
 ] as const;
 
-export const MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES = [
-  "/holidays-events/christmas",
-  "/holidays-events/thanksgiving",
-  "/holidays-events/new-year"
-] as const;
+// These routes were previously treated as legacy content, but they are part
+// of the approved Save the Date taxonomy and must remain publishable.
+export const MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES = [] as const;
 
 export function isMydreamshootsRemovedLegacyRoute(path: string): boolean {
   return MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES.includes(path as (typeof MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES)[number]);
