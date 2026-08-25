@@ -1,18 +1,9 @@
 import type { MediaAsset, Site } from "@/lib/types";
 
-const fallbackImages = [
-  "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
-  "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
-  "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
-  "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png",
-  "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png",
-  "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
-  "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png"
-] as const;
-
-export function fallbackImageForSeed(seed: string): string {
-  const hash = [...seed].reduce((total, char) => total + char.charCodeAt(0), 0);
-  return fallbackImages[hash % fallbackImages.length];
+// Missing media is a publication error. Keep the compatibility helper for
+// draft templates, but never synthesize a public image from a seed.
+export function fallbackImageForSeed(_seed: string): string {
+  return "";
 }
 
 export function siteMediaAssets(site: Site): MediaAsset[] {
@@ -50,9 +41,9 @@ export function resolveMediaAssetUrl(site: Site, value: string | undefined): str
   if (lookup.startsWith("/assets/dreamshoot/")) return lookup;
   if (lookup.startsWith("customer-assets/")) return customerAssetPublicUrl(lookup);
   if (lookup.startsWith("sites/") && lookup.includes("/customers/")) return customerAssetPublicUrl(lookup);
-  if (lookup.startsWith("/themes/theme1/")) return fallbackImageForSeed(lookup);
+  if (lookup.startsWith("/themes/theme1/")) return "";
   if (lookup.startsWith("http")) return lookup;
   if (lookup.startsWith("/")) return lookup;
-  if (lookup.startsWith(`sites/${site.id}/`)) return fallbackImageForSeed(`${site.slug}-${lookup}`);
-  return fallbackImageForSeed(`${site.slug}-${lookup}`.replace(/[^a-z0-9-]/gi, "-"));
+  if (lookup.startsWith(`sites/${site.id}/`)) return "";
+  return "";
 }

@@ -20,17 +20,6 @@ import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerat
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 
-const dreamshootPartnerTemplateSlugs = new Set([
-  "/workflow",
-  "/faq",
-  "/creators-circle",
-  "/partner-registration",
-  "/about-us",
-  "/contact-us",
-  "/best-packages",
-  "/best-ai-image",
-  "/best-ai-video"
-]);
 
 type HeaderReader = {
   get(name: string): string | null;
@@ -440,11 +429,8 @@ export default async function SiteCatchAllPage({
     if (canonicalCollectionPath !== collectionRoute.canonicalPath) redirect(routePath(canonicalCollectionPath));
   }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, publicSite, collectionCategory)) notFound();
-  const canUseDreamShootPartnerTemplate =
-    dreamshootPartnerTemplateSlugs.has(pageSlug) &&
-    (isSpanishXbyStorefrontSite(publicSite) || isDreamshootPartnerTemplateSite(publicSite));
   if (!isCollectionRequest && !canRenderPublishedPublicPath(snapshot, pageSlug, slug, publicSite)) notFound();
-  if (!isCollectionRequest && !findPage(publicSite, pageSlug) && resolvePublishedRouteDisposition(snapshot, pageSlug).kind !== "render" && !canUseDreamShootPartnerTemplate) notFound();
+  if (!isCollectionRequest && !findPage(publicSite, pageSlug) && resolvePublishedRouteDisposition(snapshot, pageSlug).kind !== "render") notFound();
   const publicPath = collectionRoute?.canonicalPath ?? publicContentPageSlug(slug);
   return renderStorefrontPage({ site: publicSite, slug: pageSlug, publicPath, query: storefrontQuery, routeMode, state, deferCustomerRuntime: pageSlug !== "/cart" });
 }

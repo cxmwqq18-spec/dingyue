@@ -835,9 +835,16 @@ export function buildPublicationSnapshot(
       revision: crypto.createHash("sha256").update(JSON.stringify([entity.pageEntityId, "cta", "/app/create"])).digest("hex").slice(0, 20)
     };
     const sourcePage = standardContentPages.find(({ route }) => route.pageEntityId === entity.pageEntityId)?.page;
-    const relatedLinks = sourcePage?.publishedJson.relatedLinks?.length
+    const configuredRelatedLinks = sourcePage?.publishedJson.relatedLinks?.length
       ? sourcePage.publishedJson.relatedLinks
-      : [{ label: "How it works", href: "/workflow" }, { label: "Best Packages", href: "/best-packages" }];
+      : [];
+    const fallbackRelatedLinks = [
+      { label: "How it works", href: "/workflow" },
+      { label: "Best Packages", href: "/best-packages" },
+      { label: "Pricing", href: "/pricing" }
+    ];
+    const relatedLinks = [...configuredRelatedLinks, ...fallbackRelatedLinks]
+      .filter((candidate, index, candidates) => candidates.findIndex((item) => item.href === candidate.href) === index);
     const targets = relatedLinks.map((candidate, index) => {
       const href = candidate.href.trim();
       const label = candidate.label.trim();
@@ -852,7 +859,8 @@ export function buildPublicationSnapshot(
         href,
         revision: crypto.createHash("sha256").update(JSON.stringify([entity.pageEntityId, target.pageEntityId, href])).digest("hex").slice(0, 20)
       } : undefined;
-    }).filter(Boolean);
+    }).filter(Boolean).slice(0, 2);
+    entity.content.relatedLinkEntityIds = targets.map((item) => item!.linkEntityId);
     return [cta, ...targets] as NonNullable<ThemePublication["snapshot"]["publishedLinkRefs"]>;
   });
   const publishedLinkRefs = [...imagePublishedLinkRefs, ...standardContentLinkRefs, ...videoTopicPublication.linkRefs];
@@ -2273,7 +2281,16 @@ export async function publishDraftSiteRelational(
       }
     });
     if (crossSiteSocial) throw new RelationalStoreError("storefront_profile_social_cross_site", 409);
-    const publishedVersion = Math.max(0, ...site.pages.map((page) => page.publishedJson.version ?? 0)) + 1;
+    const latestPublication = await tx.themePublication.findFirst({
+      where: { siteId },
+      orderBy: [{ version: "desc" }, { publishedAt: "desc" }],
+      select: { version: true }
+    });
+    const publishedVersion = Math.max(
+      0,
+      latestPublication?.version ?? 0,
+      ...site.pages.map((page) => page.publishedJson.version ?? 0)
+    ) + 1;
     for (const page of pages) {
       page.publishedJson = cloneJson(page.draftJson);
       page.publishedJson.version = publishedVersion;

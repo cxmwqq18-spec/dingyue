@@ -139,6 +139,7 @@
     "smoke:platform-email-domain-verification": "node scripts/smoke-platform-email-domain-verification.mjs",
     "smoke:mydreamshoots-pricing-checkout": "node scripts/smoke-mydreamshoots-pricing-checkout.mjs",
     "smoke:mydreamshoots-seo-indexing": "node scripts/smoke-mydreamshoots-seo-indexing.mjs",
+    "smoke:mydreamshoots-public-runtime-contract": "node scripts/smoke-mydreamshoots-public-runtime-contract.mjs",
     "smoke:mydreamshoots-publication-snapshot": "node scripts/smoke-mydreamshoots-publication-snapshot-contract.mjs",
     "smoke:mydreamshoots-publication-db-readback": "node scripts/smoke-mydreamshoots-publication-db-readback.mjs",
     "smoke:mydreamshoots-publication-db-lifecycle": "node scripts/smoke-mydreamshoots-publication-db-lifecycle.mjs",

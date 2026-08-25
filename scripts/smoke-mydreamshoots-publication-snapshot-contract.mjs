@@ -78,7 +78,9 @@ const sourceSite = {
     publishedJson: sourceSiteRecord.settings.publishedJson
   }
 };
-const standardPaths = ["/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow"];
+// This fixture intentionally contains one immutable leaf only. Standard pages
+// are not projected unless their entities and media are included as well.
+const standardPaths = [];
 const sourcePageIdForPath = (sourceSite, canonicalPath) => sourceSite.pages.find((page) => page.slug === canonicalPath)?.id ?? "";
 const standardMedia = standardPaths.map((canonicalPath) => ({
   pageEntityId: `mydreamshoots:standard:${canonicalPath.slice(1)}`,
@@ -144,6 +146,17 @@ const policyRoutes = policySpecs.flatMap(({ canonicalPath, aliases }) => {
     routeRevision: crypto.createHash("sha256").update(JSON.stringify([aliasPath, canonicalPath, 308])).digest("hex").slice(0, 20)
   }))];
 });
+const legacyMotionRedirect = {
+  siteId: sourceSite.id,
+  disposition: "redirect",
+  routeKind: "legacy-topic-alias",
+  aliasPath: "/ai-image-generation/motion-generator",
+  targetPath: "/ai-video-generation/motion-generator",
+  statusCode: 308,
+  indexable: false,
+  sitemapEligible: false,
+  routeRevision: "legacy-motion-v1"
+};
 const publicationSnapshot = {
   seoProjectionVersion: 1,
   pages: [...sourceSite.pages.filter((page) => !policyAliasPaths.has(page.slug)), ...policyPages].map((page) => ({
@@ -158,7 +171,7 @@ const publicationSnapshot = {
     updatedAt: page.updatedAt
   })),
   themeSettings: sourceSite.themeSettings.publishedJson,
-  publishedRoutes: policyRoutes,
+  publishedRoutes: [...policyRoutes, legacyMotionRedirect],
   publishedPageEntities: [],
   publishedPageCopy: [],
   publishedPageMedia: [],
@@ -290,7 +303,7 @@ const publishedContent = {
 };
 const immutableSnapshot = {
   ...publicationSnapshot,
-  publishedRoutes: [publishedRoute, ...policyRoutes],
+  publishedRoutes: [publishedRoute, ...policyRoutes, legacyMotionRedirect],
   publishedPageEntities: [{
     pageEntityId,
     canonicalPath: publishedRoute.canonicalPath,

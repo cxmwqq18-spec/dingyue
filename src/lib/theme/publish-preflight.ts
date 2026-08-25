@@ -369,9 +369,20 @@ export function runThemePublishPreflight({
     return mydreamshootsPublishedSlugs.has(routeSlug);
   };
   const indexablePageCopyFailures = pageCopyFailures.filter(publishedOnlyPageFailure);
-  const pagesMissingSeoTitle = site.pages.filter((page) => !page.draftJson.seo?.title?.trim());
-  const pagesMissingSeoDescription = site.pages.filter((page) => !page.draftJson.seo?.description?.trim());
-  const pagesWithShortSeoDescription = site.pages.filter((page) => {
+  const policyAliasPaths = new Set([
+    "/privacy-policy", "/policies/privacy", "/policies/privacy-policy",
+    "/terms-of-service", "/policies/terms", "/policies/terms-of-service",
+    "/cookie-policy", "/policies/cookies",
+    "/refund-policy", "/policies/refund", "/policies/refunds",
+    "/content-policy", "/policies/content",
+    "/shipping-policy", "/delivery-policy", "/policies/shipping",
+    "/children-privacy-policy", "/childrens-privacy", "/policies/children-privacy",
+    "/state-privacy-rights", "/california-privacy", "/ccpa", "/policies/state-privacy"
+  ]);
+  const seoEligiblePages = site.pages.filter((page) => !policyAliasPaths.has(page.slug));
+  const pagesMissingSeoTitle = seoEligiblePages.filter((page) => !page.draftJson.seo?.title?.trim());
+  const pagesMissingSeoDescription = seoEligiblePages.filter((page) => !page.draftJson.seo?.description?.trim());
+  const pagesWithShortSeoDescription = seoEligiblePages.filter((page) => {
     const length = page.draftJson.seo?.description?.trim().length ?? 0;
     return length > 0 && length < 50;
   });

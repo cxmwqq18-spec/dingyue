@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Download, ExternalLink, ImageIcon, PencilLine, Plus, RefreshCcw, Save, Search, ShieldCheck, Trash2, UploadCloud } from "lucide-react";
 import { downloadCsv } from "@/components/admin/export-utils";
 import { siteAdminJsonHeaders } from "@/lib/client-csrf";
-import { fallbackImageForSeed, resolveMediaAssetUrl } from "@/lib/media";
+import { resolveMediaAssetUrl } from "@/lib/media";
 import type { MediaAsset, Site } from "@/lib/types";
 
 type UsageFilter = "all" | MediaAsset["usage"];
@@ -42,7 +42,7 @@ function emptyAsset(siteId: string): MediaAsset {
 
 function previewFor(site: Site, asset: MediaAsset) {
   if (!asset.id && !asset.previewUrl && !asset.originUrl) return "";
-  return asset.previewUrl || asset.originUrl || resolveMediaAssetUrl(site, asset.id || asset.storageKey) || fallbackImageForSeed(`${site.slug}-${asset.label || asset.storageKey}`);
+  return asset.previewUrl || asset.originUrl || resolveMediaAssetUrl(site, asset.id || asset.storageKey);
 }
 
 function cloneAsset(asset: MediaAsset): MediaAsset {
