@@ -1695,21 +1695,6 @@ function isStandaloneVideoToolSlug(toolSlug: string): boolean {
   return toolSlug.includes("video") || toolSlug.includes("clip") || toolSlug.includes("motion") || toolSlug.includes("reel");
 }
 
-function fallbackToolBlockForSlug(toolSlug: string): SectionBlockInstance | undefined {
-  if (!dreamshootImageStudioToolAliases.has(toolSlug)) return undefined;
-  const title = titleFromToolSlug(toolSlug);
-  return {
-    id: `fallback_tool_${toolSlug}`,
-    type: "tool_card",
-    settings: {
-      title,
-      category: categoryForToolSlug(toolSlug),
-      href: `/tools/${toolSlug}`,
-      description: customerToolIntro(toolSlug, title)
-    }
-  };
-}
-
 function aidreamcapesToolBlockForSlug(site: Site, toolSlug: string): SectionBlockInstance {
   const content = getSeoDirectoryContentForSite(site, "tool", toolSlug);
   const category = toolSlug.includes("avatar") ? "Fantasy Portrait Tools" :
@@ -1976,10 +1961,6 @@ const dreamshootToolDirectorySlugs = [
   "creator-intro-video"
 ];
 
-const fallbackToolDirectoryBlocks = cache((): SectionBlockInstance[] =>
-  dreamshootToolDirectorySlugs.map((slug) => fallbackToolBlockForSlug(slug)).filter((block): block is SectionBlockInstance => Boolean(block))
-);
-
 function toolsDirectoryFaqSectionForSite(site: Site): SectionInstance {
   const isAidreamcapes = isAidreamcapesStorefront(site);
   const isSpanishXby = isSpanishXbyStorefront(site);
@@ -2043,10 +2024,6 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
   if (isAidreamcapes) {
     for (const slug of getExplicitSeoDirectorySlugsForSite(site, "tool")) {
       toolsBySlug.set(slug, aidreamcapesToolBlockForSlug(site, slug));
-    }
-  } else {
-    for (const block of fallbackToolDirectoryBlocks()) {
-      toolsBySlug.set(toolSlugFromBlock(block), block);
     }
   }
   for (const block of blocks) {
@@ -2509,19 +2486,10 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
   const localizedToolBlock = toolBlock ? spanishXbyToolBlockForSite(site, toolBlock) : undefined;
   const basePage = baseToolDetailPageForSite(site, page);
   if (!basePage) return { siteAiApps, page: undefined, app, matched: false, resolvedSlug };
-  const synthesizedPage = localizedToolBlock
-    ? synthesizeToolDetailPage(
-        basePage.publishedJson,
-        localizedToolBlock,
-        canonicalToolSlug,
-        appSlugForToolCategory(blockString(toolBlock!, "category", "AI Photo"), siteAiApps),
-        site,
-      )
-    : undefined;
   const matched = isAidreamcapes
     ? !aidreamcapesAliasTarget && Boolean(page || directApp || menuTool || themeToolBlock || explicitAidreamcapesToolSlug)
     : Boolean(page || directApp || legacyImageApp || databaseVideoTheme || toolBlock);
-  return { siteAiApps, page: synthesizedPage ? { ...basePage, slug: normalizedPageSlug, title: blockString(localizedToolBlock!, "title", basePage.title), publishedJson: synthesizedPage } : basePage, app, matched, resolvedSlug };
+  return { siteAiApps, page: basePage, app, matched, resolvedSlug };
 }
 
 function renderThemePage({
@@ -3621,24 +3589,9 @@ export async function renderToolPage({
   const pageHasTalkingPhotoLanding = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "talking_photo_landing");
   const pageHasAiVideoTopicLanding = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "ai_video_topic_landing");
   const pageHasDedicatedVideoLanding = pageHasTalkingPhotoLanding || pageHasAiVideoTopicLanding;
-  const basePageJson = pageHasDedicatedVideoLanding
+  const basePageJson = pageHasDedicatedVideoLanding || !pageHasToolEntry
     ? page.publishedJson
-    : pageHasToolEntry
-    ? withToolEntryFirst(page.publishedJson)
-    : (() => {
-        const fallbackBlock = isAidreamcapesStorefront(currentSite)
-          ? aidreamcapesToolBlockForSlug(currentSite, normalizedToolSlug)
-          : fallbackToolBlockForSlug(normalizedToolSlug);
-        if (!fallbackBlock) return page.publishedJson;
-        const localizedBlock = spanishXbyToolBlockForSite(currentSite, fallbackBlock);
-        return withToolEntryFirst(synthesizeToolDetailPage(
-          page.publishedJson,
-          localizedBlock,
-          normalizedToolSlug,
-          appSlugForToolCategory(blockString(fallbackBlock, "category", "AI Photo"), renderData.siteAiApps),
-          currentSite
-        ));
-      })();
+    : withToolEntryFirst(page.publishedJson);
   const pageJson = pageHasDedicatedVideoLanding
     ? withSeoDirectorySeo(basePageJson, "tool", toolSlug, currentSite)
     : withSeoDirectorySection(basePageJson, "tool", toolSlug, { site: currentSite });

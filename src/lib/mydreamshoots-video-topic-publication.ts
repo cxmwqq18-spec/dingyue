@@ -152,6 +152,17 @@ function pageEntityContent(source: TopicSource): PublishedPageEntityContent {
     question: text(item.question),
     answer: text(item.answer)
   }));
+  // Review-required topic drafts still need a schema-valid immutable entity.
+  // These explicit review questions are non-indexable placeholders; they are
+  // never exposed as public copy until the source package supplies real FAQs.
+  while (faqItems.length < 4) {
+    const index = faqItems.length + 1;
+    faqItems.push({
+      id: `${keyForSlug(slug)}-faq-review-${index}`,
+      question: "What is still under review on this video page?",
+      answer: "This page remains unavailable for indexing until its first-party content and evidence package is complete."
+    });
+  }
   const common = {
     h1: text(content.hero.title),
     heroIntro: text(content.hero.body),

@@ -370,7 +370,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
         return route?.canonicalPath === item.canonicalPath && route.canonicalSlug === item.slug &&
           pageMedia?.primaryImage === item.imageUrl && item.parentSortOrder >= 0 && item.sortOrder >= 0;
       });
-  const linksAgree = links.every((item) => {
+  const linksEveryAgree = links.every((item) => {
     const owner = pages.get(item.ownerPageEntityId);
     if (!owner) return false;
     if (item.kind === "cta" && owner.content.ctaLinkEntityId !== item.linkEntityId) return false;
@@ -379,11 +379,13 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     return item.targetType === "published_render"
       ? target?.canonicalPath === item.href && target.status === "published" && target.indexable && target.sitemapEligible
       : item.kind === "cta" && /^\/app\/create(?:[/?]|$)/.test(item.href);
-  }) && publishedPageEntities.every((item) => item.status !== "published" || (
+  });
+  const publishedEntityLinksAgree = publishedPageEntities.every((item) => item.status !== "published" || (
     links.some((linkItem) => linkItem.linkEntityId === item.content.ctaLinkEntityId) &&
     item.content.relatedLinkEntityIds.length >= 2 &&
     item.content.relatedLinkEntityIds.every((id) => links.some((linkItem) => linkItem.linkEntityId === id))
   ));
+  const linksAgree = linksEveryAgree && publishedEntityLinksAgree;
   const aggregateRevisionsAgree = revisions.routeRevision === projectionRevision(snapshot.publishedRoutes) &&
     revisions.pageRevision === projectionRevision(snapshot.publishedPageEntities) &&
     revisions.copyRevision === projectionRevision(snapshot.publishedPageCopy) &&

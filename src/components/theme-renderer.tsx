@@ -13202,16 +13202,7 @@ function SectionView({
     const aidreamcapes = isAidreamcapesSite(site);
     const spanishXbyFeaturedPack = isSpanishXbySite(site);
     const images = sectionBlocks(section, "seasonal_image");
-    const fallbackImages: SectionBlockInstance[] = [
-      { id: "featured_worldcup_1", type: "seasonal_image", settings: { label: "Stadium Portrait", meta: "Cinematic fan look", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png", shape: "tall" } },
-      { id: "featured_worldcup_2", type: "seasonal_image", settings: { label: "Fan Meetup Photos", meta: "Group-friendly shots", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/friend-fan-photos.png", shape: "wide" } },
-      { id: "featured_worldcup_3", type: "seasonal_image", settings: { label: "Match-day Avatar", meta: "Profile-ready crop", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/match-day-avatar.png", shape: "square" } },
-      { id: "featured_worldcup_4", type: "seasonal_image", settings: { label: "Fan Poster", meta: "Story and feed artwork", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png", shape: "tall" } },
-      { id: "featured_worldcup_5", type: "seasonal_image", settings: { label: "Social Story", meta: "Mobile-first layout", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/social-story.png", shape: "tall" } },
-      { id: "featured_worldcup_6", type: "seasonal_image", settings: { label: "Banner / Cover", meta: "Wide campaign image", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/banner-cover.png", shape: "wide" } }
-    ];
-    const collage = (images.length ? images : fallbackImages).slice(0, 6);
-    while (collage.length < 6) collage.push(fallbackImages[collage.length]);
+    const collage = images.slice(0, 6);
     const configuredPackId = selectorIdSetting(section, "creativePackId", "");
     const featuredPack = configuredPackId
       ? storefrontContext?.catalog.activePacks.find((pack) => pack.id === configuredPackId)

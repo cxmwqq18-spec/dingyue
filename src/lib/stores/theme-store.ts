@@ -210,7 +210,12 @@ const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_M
   "/holidays-events/engagement": "Engagement save the date video scenes from approved couple visuals",
   "/holidays-events/proposal": "Proposal video scenes showing the planned story and reaction",
   "/holidays-events/save-the-date": "Save the Date video scenes for a confirmed wedding date",
+  "/holidays-events/wedding-invitation": "Wedding invitation visuals for ceremony details and guest communication",
   "/ai-video-generation/wedding-ceremony": "Wedding ceremony photo and video scenes for vows, rings, reactions, and the recessional",
+  "/holidays-events/wedding-anniversary": "Wedding anniversary photo and video scenes for shared memories and celebration",
+  "/holidays-events/christmas": "Christmas family, gifts, portraits, and seasonal celebration scenes",
+  "/holidays-events/thanksgiving": "Thanksgiving family dinner, gratitude, and seasonal gathering scenes",
+  "/holidays-events/new-year": "New Year fireworks, countdown, celebration, and fresh-start scenes",
   "/holidays-events/mothers-day": "Mother's Day family, flowers, gifts, brunch, and spring celebration scenes",
   "/holidays-events/fathers-day": "Father's Day family, gifts, outdoor activities, and celebration scenes",
   "/holidays-events/halloween": "Halloween costume, couple, family, pet, pumpkin, party, and haunted-scene ideas"
