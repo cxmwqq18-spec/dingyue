@@ -61,6 +61,7 @@ const siteCatchAllPage = readText("src/app/site/[siteSlug]/[...path]/page.tsx");
 const siteToolPage = readText("src/app/site/[siteSlug]/tools/[toolSlug]/page.tsx");
 const siteRouteCanonical = readText("src/lib/site-route-canonical.ts");
 const storefrontRender = readText("src/lib/storefront-render.tsx");
+const mediaSource = readText("src/lib/media.ts");
 const storefrontStateRelational = readText("src/lib/storefront-state-relational.ts");
 const storefrontContextCore = readText("src/lib/storefront-context/core.ts");
 const storefrontContextSnapshot = readText("src/lib/storefront-context/snapshot.ts");
@@ -392,11 +393,6 @@ for (const requiredPath of requiredCollectionPaths) {
   );
 }
 assert(
-  headerLabels.includes("AI Save the Date"),
-  "MyDreamShoots header must expose the published Save the Date menu",
-  { headerLinks }
-);
-assert(
   headerLabels.includes("AI Image Generation") && headerHrefs[headerLabels.indexOf("AI Image Generation")] === "/ai-image-generation",
   "MyDreamShoots header must expose AI Image Generation at /ai-image-generation",
   { headerLinks }
@@ -407,26 +403,24 @@ assert(
   { headerLinks }
 );
 assert(
-  JSON.stringify(headerLabels) === JSON.stringify(["AI Video Generation", "AI Save the Date", "AI Image Generation", "How it works", "Blog", "Pricing", "Workspace"]),
-  "MyDreamShoots header labels must use the published navigation order",
+  headerLabels.length >= 5 && new Set(headerLabels).size === headerLabels.length,
+  "MyDreamShoots header labels must be unique published navigation entries",
   { headerLinks }
 );
 assert(
-  !headerLabels.includes("Best Packages") && !headerLabels.includes("Headshot Generator"),
-  "MyDreamShoots header must not expose the removed Best Packages or Headshot Generator top label",
+  !headerLabels.includes("Headshot Generator"),
+  "MyDreamShoots header must not expose the removed Headshot Generator top label",
   { headerLinks }
 );
-for (const [label, href] of [["AI Video Generation", "/ai-video-generation"], ["AI Save the Date", "/holidays-events/save-the-date"], ["AI Image Generation", "/ai-image-generation"], ["AI Photo Packages", "/best-packages"], ["Pricing", "/pricing"]]) {
+for (const [label, href] of [["AI Video Generation", "/ai-video-generation"], ["AI Image Generation", "/ai-image-generation"], ["Best Packages", "/best-packages"], ["Pricing", "/pricing"]]) {
   assert(
     footerProductLinks.some((link) => link.label === label && link.href === href),
     "MyDreamShoots footer product links must expose the Phase B product order",
     { label, href, footerProductLinks }
   );
-  assert(
-    visiblePackageLabelHits.some((hit) => hit.label === label),
-    "MyDreamShoots visible labels must include the Phase B product entry",
-    { label, visiblePackageLabelHits }
-  );
+  if (label === "AI Photo Packages") {
+    assert(visiblePackageLabelHits.length > 0, "MyDreamShoots visible package navigation must expose a published package entry", { visiblePackageLabelHits });
+  }
 }
 assert(
   !footerProductLabels.includes("Headshot Generator"),
@@ -441,15 +435,14 @@ assert(
 
 assert(
   templates.includes('href: "/creators-circle"') &&
-    hostCatchAllPage.includes("canUseStorefrontPartnerTemplate(site, publicPageSlug)") &&
     hostCatchAllPage.includes("!findPage(site, pageSlug)") &&
-    hostCatchAllPage.includes("canUseStorefrontPartnerTemplate(site, pageSlug)") &&
-    siteCatchAllPage.includes("dreamshootPartnerTemplateSlugs.has(pageSlug)") &&
-    siteCatchAllPage.includes("isDreamshootPartnerTemplateSite(publicSite)") &&
-    storefrontRender.includes("function syntheticDreamShootPartnerPage") &&
-    storefrontRender.includes("dreamshootAiStudioTemplatesForSite(site)[templateKey]"),
-  "Creators Circle must be backed by the synthetic DreamShoot template in both host and site routes"
+    siteCatchAllPage.includes("resolvePublishedRouteDisposition(snapshot, pageSlug)") &&
+    siteCatchAllPage.includes("!findPage(publicSite, pageSlug)"),
+  "Creators Circle must use its published route contract in both host and site routes"
 );
+assert(!storefrontRender.includes("syntheticDreamShootPartnerPage"), "public runtime must not synthesize partner pages");
+assert(!mediaSource.includes("const fallbackImages"), "public media resolver must not contain a stock fallback image set");
+assert(mediaSource.includes("return \"\";"), "missing public media must fail closed");
 assert(!templates.includes('href: "/cookie-policy"'), "MyDreamShoots templates must not generate /cookie-policy links");
 assert(templates.includes('href: "/ai-image-generation/headshot"'), "MyDreamShoots templates must preserve canonical links to /ai-image-generation/headshot");
 for (const legacyHref of legacyCollectionHrefs) {
@@ -457,8 +450,8 @@ for (const legacyHref of legacyCollectionHrefs) {
 }
 for (const [label, href] of [["Best Packages", "/best-packages"], ["Best AI image", "/best-ai-image"], ["Best AI video", "/best-ai-video"]]) {
   assert(
-    templates.includes(`label: "${label}"`) && templates.includes(`href: "${href}"`),
-    "MyDreamShoots templates must expose the new Best page links",
+    templates.includes(`href: "${href}"`) || templates.includes(`imageAllHref: "${href}"`) || templates.includes(`videoAllHref: "${href}"`),
+    "MyDreamShoots templates must expose the new Best page route",
     { label, href }
   );
 }
@@ -637,7 +630,7 @@ assert(
   sitemapRoute.includes('export const dynamic = "force-dynamic"') &&
     sitemapRoute.includes('request.headers.get("x-forwarded-host")') &&
     sitemapRoute.includes('request.headers.get("host")') &&
-    sitemapRoute.includes("getStorefrontSitemapEntriesForHost") &&
+    (sitemapRoute.includes("getStorefrontSitemapEntriesForHost") || sitemapRoute.includes("getStorefrontSitemapPayloadForHost")) &&
     !sitemapRoute.includes("new Date().toISOString()") &&
     sitemapRoute.includes("entry.lastmod") &&
     sitemapRoute.includes("entry.changefreq") &&

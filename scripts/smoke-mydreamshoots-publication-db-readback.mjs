@@ -49,9 +49,11 @@ if (!rawUrl) {
     assert.equal(publicationSnapshotIntegrity(first.snapshot), "valid", "readback snapshot must satisfy the immutable contract");
     assert.equal(publicationSnapshotHash(first.snapshot), first.snapshot.snapshotHash, "snapshot hash must verify after readback");
     const policyRoutes = first.snapshot.publishedRoutes.filter((route) => route.routeKind === "policy" || route.routeKind === "policy-alias");
-    assert.deepEqual(policyRoutes.filter((route) => route.disposition === "render").map((route) => route.canonicalPath).sort(), ["/privacy", "/terms"]);
+    assert.deepEqual(policyRoutes.filter((route) => route.disposition === "render").map((route) => route.canonicalPath).sort(), [
+      "/children-privacy", "/content", "/cookies", "/privacy", "/refunds", "/shipping", "/state-privacy", "/terms"
+    ]);
     assert.deepEqual(policyRoutes.filter((route) => route.disposition === "redirect").map((route) => route.aliasPath).sort(), [
-      "/policies/privacy", "/policies/privacy-policy", "/policies/terms", "/policies/terms-of-service", "/privacy-policy", "/terms-of-service"
+      "/california-privacy", "/ccpa", "/children-privacy-policy", "/childrens-privacy", "/content-policy", "/cookie-policy", "/delivery-policy", "/policies/children-privacy", "/policies/content", "/policies/cookies", "/policies/privacy", "/policies/privacy-policy", "/policies/refund", "/policies/refunds", "/policies/shipping", "/policies/state-privacy", "/policies/terms", "/policies/terms-of-service", "/privacy-policy", "/refund-policy", "/shipping-policy", "/state-privacy-rights", "/terms-of-service"
     ]);
     assert.ok(policyRoutes.filter((route) => route.disposition === "redirect").every((route) => route.statusCode === 308 && route.indexable === false && route.sitemapEligible === false));
     for (const field of ["publishedRoutes", "publishedPageEntities", "publishedPageCopy", "publishedPageMedia", "publishedStandardPageMedia", "publishedPackFacts", "publishedOffers", "publishedFacts", "publishedCollectionRefs", "publishedLinkRefs", "revisions", "snapshotHash", "buildId"]) {

@@ -1,9 +1,13 @@
-"use client";
-
-import Link from "next/link";
+import type { AnchorHTMLAttributes } from "react";
 import { ArrowRight, ChevronRight, PlayCircle } from "lucide-react";
 import { creativePackIconByName, suggestedCreativePackIconName } from "@/lib/creative-pack-icons";
 import type { SaveTheDateNavigationGroup } from "@/lib/types";
+
+type NativeLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & { prefetch?: boolean };
+
+function Link({ prefetch: _prefetch, ...props }: NativeLinkProps) {
+  return <a {...props} />;
+}
 
 export type HeaderPhotoPackageMegaGroup = {
   label: string;

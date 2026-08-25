@@ -2927,24 +2927,42 @@ function enrichCollectionGuide(seed: SeoDirectorySeed, brandName: string): SeoDi
     ? ["Source-photo checklist", "Occasion and mood planning", "Private gallery review"]
     : ["Source-photo checklist", "Credit and delivery review", "Private gallery review"];
   const guideDetails = aidreamcapes
-    ? [
-        `For stronger ${lower} results, use clear portraits that show the subject naturally and add outfit, light, color, group, or occasion references when the album scene needs a specific story.`,
-        `Before starting, compare the scene examples, occasion mood, visible credit cost, and intended gallery format so the ${lower} direction fits the profile, post, campaign, or keepsake you have in mind.`
-      ]
-    : [
-        `For stronger ${lower} results, upload several clear photos you own or have permission to use, with natural lighting, visible subject detail, and enough angle variety for a consistent private gallery.`,
-        `Before starting, compare the sample gallery, expected output, visible credit cost, and download goal so the ${lower} direction fits the profile, post, campaign, or album you have in mind.`
-      ];
+    ? [`For stronger ${lower} results, use clear portraits that show the subject naturally and add outfit, light, color, group, or occasion references when the album scene needs a specific story.`, `Before starting, compare the scene examples, occasion mood, visible credit cost, and intended gallery format so the ${lower} direction fits the profile, post, campaign, or keepsake you have in mind.`]
+    : [`For stronger ${lower} results, upload several clear photos you own or have permission to use, with natural lighting, visible subject detail, and enough angle variety for a consistent private gallery.`, `Before starting, compare the sample gallery, expected output, visible credit cost, and download goal so the ${lower} direction fits the profile, post, campaign, or album you have in mind.`];
   const details = Array.from(new Set([...seed.details, ...guideDetails])).slice(0, 5);
   const h3 = Array.from(new Set([...seed.h3, ...guideHeadings])).slice(0, details.length);
-  return {
-    ...seed,
-    h3,
-    details
-  };
+  return { ...seed, h3, details };
 }
 
 type SeoUseCaseProfile = PhotoPackageUseCaseProfile;
+
+function spanishDirectorySeed(kind: SeoDirectoryKind, slug: string, brandName: string, aidreamcapes: boolean): SeoDirectorySeed {
+  const label = spanishDirectoryLabel(kind, slug, aidreamcapes);
+  const lower = label.toLowerCase();
+  const collection = kind === "collection";
+  return {
+    label,
+    title: collection ? `${label} con IA | ${brandName}` : `Herramienta ${label} con IA | ${brandName}`,
+    description: collection
+      ? `Explora el paquete ${label} en ${brandName}: fotos fuente privadas, creditos visibles, estilos creativos y entrega en galeria.`
+      : `Usa ${label} en ${brandName} para transformar subidas privadas en fotos, retratos, vistas previas y albumes listos para descargar.`,
+    keywords: `${lower} IA, ${collection ? "paquete de fotos" : "herramienta de fotos"} IA, ${brandName}, galeria privada`,
+    h2: collection ? `${lower} con IA` : `herramienta ${lower}`,
+    h3: collection ? ["Direccion del paquete", "Fotos fuente privadas", "Album descargable"] : ["Guia de entrada", "Resultado esperado", "Entrega privada"],
+    intro: collection
+      ? `Esta coleccion ayuda a elegir un estilo visual antes de subir fotos y gastar creditos en ${brandName}.`
+      : `Usa ${label} para pasar de una subida clara a un resultado privado con IA y creditos visibles.`,
+    details: ["Revisa el estilo, los creditos y el resultado esperado antes de continuar.", "Sube solo fotos propias o con permiso de uso.", "Los resultados se entregan dentro de una cuenta privada para revisar y descargar."],
+    useCases: collection ? ["Fotos de perfil", "Contenido para creadores", "Albumes privados", "Conceptos visuales"] : ["Fotos de perfil", "Vistas previas creativas", "Ediciones rapidas", "Albumes privados"],
+    workflow: ["Elige una direccion visual.", "Sube fotos claras.", "Confirma creditos antes de generar.", "Descarga tus favoritos desde la galeria privada."],
+    ctaLabel: collection ? "Crear fotos con IA" : "Empezar ahora",
+    ctaHref: collection ? "/app/create" : `/app/create?tool_id=${slug}`
+  };
+}
+
+function missingToolDirectoryContent(slug: string): SeoDirectorySeed {
+  throw new Error(`published tool directory content is missing for ${slug}`);
+}
 
 function truncateSeoDescription(value: string, maxLength = 220): string {
   if (value.length <= maxLength) return value;
@@ -2952,30 +2970,12 @@ function truncateSeoDescription(value: string, maxLength = 220): string {
   return `${trimmed}.`;
 }
 
-function collectionSeedWithUseCaseProfile(
-  seed: SeoDirectorySeed,
-  profile: SeoUseCaseProfile,
-  brandName: string
-): SeoDirectorySeed {
+function collectionSeedWithUseCaseProfile(seed: SeoDirectorySeed, profile: SeoUseCaseProfile, brandName: string): SeoDirectorySeed {
   const titleScenario = profile.tags.slice(0, 2).join(" and ");
-  const title = profile.seoTitle || (titleScenario
-    ? `${profile.metaLabel} for ${titleScenario} | ${brandName}`
-    : `${profile.metaLabel} | ${brandName}`);
+  const title = profile.seoTitle || (titleScenario ? `${profile.metaLabel} for ${titleScenario} | ${brandName}` : `${profile.metaLabel} | ${brandName}`);
   const description = truncateSeoDescription(profile.cardDescription);
-  const keywordParts = [
-    ...seed.keywords.split(",").map((keyword) => keyword.trim()),
-    profile.metaLabel,
-    ...profile.tags,
-    ...profile.detailTags.slice(0, 6)
-  ];
-  const details = [
-    profile.detailIntro,
-    profile.whatCreates,
-    profile.coverNote,
-    profile.safetyNote ?? "",
-    ...seed.details
-  ].filter(Boolean);
-
+  const keywordParts = [...seed.keywords.split(",").map((keyword) => keyword.trim()), profile.metaLabel, ...profile.tags, ...profile.detailTags.slice(0, 6)];
+  const details = [profile.detailIntro, profile.whatCreates, profile.coverNote, profile.safetyNote ?? "", ...seed.details].filter(Boolean);
   return {
     ...seed,
     title,
@@ -2989,65 +2989,6 @@ function collectionSeedWithUseCaseProfile(
     workflow: profile.workflow,
     ctaLabel: `Create ${profile.metaLabel}`,
     ctaHref: seed.ctaHref
-  };
-}
-
-function spanishDirectorySeed(kind: SeoDirectoryKind, slug: string, brandName: string, aidreamcapes: boolean): SeoDirectorySeed {
-  const label = spanishDirectoryLabel(kind, slug, aidreamcapes);
-  const lower = label.toLowerCase();
-  if (kind === "collection") {
-    return {
-      label,
-      title: aidreamcapes ? `${label} con IA | ${brandName}` : `Paquete de fotos ${label} con IA | ${brandName}`,
-      description: aidreamcapes
-        ? `Explora ${label} en ${brandName}: retratos de viaje, escenas de destino, creditos visibles, subidas privadas y galerias descargables.`
-        : `Explora el paquete ${label} en ${brandName}: fotos fuente privadas, creditos visibles, estilos creativos y entrega en galeria.`,
-      keywords: aidreamcapes
-        ? `${lower} IA, retratos de viaje IA, ${brandName}, galeria privada`
-        : `${lower} IA, paquete de fotos IA, ${brandName}, galeria privada`,
-      h2: aidreamcapes ? `${lower} con estilo de viaje` : `${lower} con IA`,
-      h3: aidreamcapes
-        ? ["Direccion de destino", "Fotos fuente privadas", "Entrega en galeria"]
-        : ["Direccion del paquete", "Fotos fuente privadas", "Album descargable"],
-      intro: aidreamcapes
-        ? `Esta coleccion ayuda a elegir un ambiente de viaje antes de generar imagenes con ${brandName}.`
-        : `Esta coleccion ayuda a elegir un estilo visual antes de subir fotos y gastar creditos en ${brandName}.`,
-      details: [
-        "Revisa el estilo, los creditos y el resultado esperado antes de continuar.",
-        "Sube solo fotos propias o con permiso de uso.",
-        "Los resultados se entregan dentro de una cuenta privada para revisar y descargar."
-      ],
-      useCases: aidreamcapes
-        ? ["Retratos de destino", "Perfiles de viaje", "Historias para creadores", "Recuerdos privados"]
-        : ["Fotos de perfil", "Contenido para creadores", "Albumes privados", "Conceptos visuales"],
-      workflow: ["Elige una direccion visual.", "Sube fotos claras.", "Confirma creditos antes de generar.", "Descarga tus favoritos desde la galeria privada."],
-      ctaLabel: aidreamcapes ? "Crear retratos de viaje" : "Crear fotos con IA",
-      ctaHref: "/app/create"
-    };
-  }
-  return {
-    label,
-    title: aidreamcapes ? `Herramienta ${label} con IA | ${brandName}` : `Herramienta ${label} con IA | ${brandName}`,
-    description: aidreamcapes
-      ? `Usa ${label} en ${brandName} para preparar retratos de viaje, escenas de destino, creditos visibles y galerias privadas.`
-      : `Usa ${label} en ${brandName} para transformar subidas privadas en fotos, retratos, vistas previas y albumes listos para descargar.`,
-    keywords: aidreamcapes
-      ? `${lower} IA, herramienta de viaje IA, ${brandName}, galeria privada`
-      : `${lower} IA, herramienta de fotos IA, ${brandName}, editor IA`,
-    h2: `herramienta ${lower}`,
-    h3: ["Guia de entrada", "Resultado esperado", "Entrega privada"],
-    intro: `Usa ${label} para pasar de una subida clara a un resultado privado con IA y creditos visibles.`,
-    details: [
-      "Empieza con fotos o referencias claras que tengas permiso para usar.",
-      "El resultado aparece en tu cuenta privada para revisar, descargar o continuar editando.",
-      "El coste en creditos se muestra antes de iniciar la generacion."
-    ],
-    useCases: aidreamcapes
-      ? ["Retratos de ruta", "Escenas de viaje", "Conceptos de destino", "Galerias privadas"]
-      : ["Fotos de perfil", "Vistas previas creativas", "Ediciones rapidas", "Albumes privados"],
-    workflow: ["Revisa el uso recomendado.", "Sube fotos claras.", "Elige el estilo o destino.", "Genera y descarga desde tu galeria privada."],
-    ctaLabel: "Empezar ahora",
-    ctaHref: `/app/create?tool_id=${slug}`
   };
 }
 
@@ -3100,7 +3041,7 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
     ? spanishDirectorySeed(kind, canonicalSlug, brandName, aidreamcapes)
     : kind === "collection"
       ? collectionSource[canonicalSlug] ?? fallbackCollection(slug, brandName)
-      : toolSource[canonicalSlug] ?? fallbackTool(slug, brandName);
+      : toolSource[canonicalSlug] ?? missingToolDirectoryContent(canonicalSlug);
   const collectionProfile = kind === "collection" && !spanishXby
     ? aidreamcapes
       ? aidreamcapesCategoryUseCaseProfileForSlug(canonicalSlug)

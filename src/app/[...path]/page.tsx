@@ -183,7 +183,6 @@ const AIDREAMCAPES_LEGACY_BLOG_VIDEO_REDIRECTS: Record<string, string> = {
   "route-motion": "/blog/private-fan-scene-album-photo-package-guide"
 };
 const PUBLIC_DIRECTORY_PAGE_SLUGS = new Set(["/collections", "/tools", "/ai-image-generation", "/ai-video-generation", "/best-packages", "/best-ai-image", "/best-ai-video"]);
-const DREAMSHOOT_PARTNER_TEMPLATE_SLUGS = new Set(["/workflow", "/faq", "/creators-circle", "/partner-registration", "/about-us", "/contact-us", "/best-packages", "/best-ai-image", "/best-ai-video"]);
 const STATIC_ASSET_REQUEST_SEGMENTS = new Set(["_next", "assets"]);
 
 function isStaticAssetCatchAllRequest(firstSegment: string): boolean {
@@ -255,14 +254,6 @@ function isMydreamshootsPublicSlug(slug: string | undefined): boolean {
 
 function fallbackCollectionRootPathForHost(host: string | null | undefined): string {
   return isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null])) ? "/ai-image-generation" : "/collections";
-}
-
-function isSpanishXbyStorefrontSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }): boolean {
-  return isSpanishStorefrontSite(site);
-}
-
-function canUseStorefrontPartnerTemplate(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }, slug: string): boolean {
-  return DREAMSHOOT_PARTNER_TEMPLATE_SLUGS.has(slug) && (isSpanishXbyStorefrontSite(site) || isMydreamshootsSite(site) || isAidreamcapesSite(site));
 }
 
 function redirectMydreamshootsLegacyTool(site: { slug: string; name: string; branding: { logoText: string } }, toolSlug: string): void {
@@ -488,7 +479,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   }
   if (path[0] === "tools" && path[1]) {
     const resolved = await resolveHostToolPageWithFallback(hostCandidates, path[1]);
-    if (!resolved) return {};
+    if (!resolved || !resolved.page) return {};
     return metadataForPublishedStorefrontDirectoryPage({
       site: resolved.site,
       page: resolved.page,
@@ -658,8 +649,7 @@ export default async function HostStorefrontCatchAllPage({
     Boolean(videoGenerationRoute) ||
     Boolean(collectionRoute) ||
     Boolean(findPage(site, publicPageSlug)) ||
-    resolvePublishedRouteDisposition(snapshot, publicPageSlug).kind === "render" ||
-    canUseStorefrontPartnerTemplate(site, publicPageSlug);
+    resolvePublishedRouteDisposition(snapshot, publicPageSlug).kind === "render";
   if (!needsPrivateRuntime && !hasKnownPublicRoute) notFound();
   const query = searchParams ? await searchParams : {};
   if (firstSegment === "app") {
@@ -720,7 +710,7 @@ export default async function HostStorefrontCatchAllPage({
   if (collectionCategory && !canResolveCollectionSlugForSite(state, site, collectionCategory)) notFound();
   const pageSlug = collectionRoute ? publicCollectionRootPathForSite(site) : publicContentPageSlug(`/${path.join("/")}`);
   if (!collectionRoute && resolvePublishedRouteDisposition(snapshot, pageSlug).kind !== "render") notFound();
-  if (!collectionRoute && !findPage(site, pageSlug) && resolvePublishedRouteDisposition(snapshot, pageSlug).kind !== "render" && !canUseStorefrontPartnerTemplate(site, pageSlug)) notFound();
+  if (!collectionRoute && !findPage(site, pageSlug) && resolvePublishedRouteDisposition(snapshot, pageSlug).kind !== "render") notFound();
   const storefrontQuery = collectionCategory ? { ...query, category: collectionCategory } : query;
   return renderStorefrontPage({
     site,
@@ -728,6 +718,7 @@ export default async function HostStorefrontCatchAllPage({
     publicPath: collectionRoute?.canonicalPath ?? pageSlug,
     query: storefrontQuery,
     routeMode: "host",
-    state
+    state,
+    deferCustomerRuntime: true
   });
 }

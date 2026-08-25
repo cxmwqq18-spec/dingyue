@@ -253,8 +253,7 @@ function buildPublishedStandardPageMedia(
           return route.status === "published" && media?.status === "ready" ? [media] : [];
         })[0]
       : undefined;
-    const fallbackSiteImage = site.mediaAssets?.find((asset) => typeof asset.storageKey === "string" && (/^https:\/\//i.test(asset.storageKey) || asset.storageKey.startsWith("/")))?.storageKey ?? "";
-    const primaryImage = firstReadyLeafMedia?.primaryImage ?? page?.publishedJson.seo?.ogImage ?? discovered[0] ?? fallbackSiteImage;
+    const primaryImage = firstReadyLeafMedia?.primaryImage ?? page?.publishedJson.seo?.ogImage ?? discovered[0] ?? "";
     const pageEntityId = `mydreamshoots:standard:${canonicalPath.slice(1).replace(/[^a-z0-9]+/gi, "-")}`;
     const mediaEntityId = `${pageEntityId}:media`;
     const primaryImageAlt = page ? (manifest[0]?.alt || STANDARD_MYDREAMSHOOTS_MEDIA_ALTS[canonicalPath] || "") : "";

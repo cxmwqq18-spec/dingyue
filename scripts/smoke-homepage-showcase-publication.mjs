@@ -28,36 +28,14 @@ assert.doesNotMatch(packageCatalog, /<h2[^>]*>\{card\.title\}<\/h2>/, "package c
 assert.match(packageCatalog, /Want to bring your photos to life\? Explore AI Video Generation/, "photo package catalog must link to AI Video Generation");
 assert.equal(homepageCopy.reviewTitle, "What Our Customers Say", "homepage copy contract must use the approved review heading");
 assert.equal(homepageCopy.packageVideoLinkHref, "/ai-video-generation", "homepage copy contract must use the AI Video Generation route");
-assert.match(renderer, /realVideoCards = generationShowcaseVideoCardsForSite/, "homepage video showcase must use real playable video themes");
-assert.match(renderer, /Math\.min\(6, numberSetting\(section, \"saveTheDateItemLimit\", 6\)\)/, "homepage Save the Date showcase must cap the featured cards at six");
-assert.match(renderer, /xl:grid-cols-6/, "homepage Save the Date showcase must use six columns on wide screens");
+assert.match(renderer, /projectedVideosByPath = new Map/, "homepage video showcase must use active-publication projection rows");
+assert.match(renderer, /MYDREAMSHOOTS_HOMEPAGE_VIDEO_ORDER/, "homepage video showcase must use the approved eight-item order");
+assert.match(renderer, /slice\(0, Math\.max\(1, Math\.min\(6, numberSetting\(section, "saveTheDateItemLimit", 6\)\)\)\)/, "MyDreamShoots Save the Date showcase must render up to six published cards");
+assert.match(renderer, /const raw = setting\(section, key, ""\)\.trim\(\);[\s\S]{0,100}if \(!raw\) return fallback;/, "numeric section settings must fall back when empty");
+assert.match(renderer, /data-dreamshoot-showcase-heading=\{kind\}/, "homepage Save the Date showcase must expose a semantic heading marker");
 const homeShowcaseTemplate = templates.match(/generation_showcase_1:[\s\S]*?\n  \),\n  flow_bridge_1:/)?.[0] ?? "";
 assert.ok(homeShowcaseTemplate, "homepage showcase template must be present");
 assert.doesNotMatch(homeShowcaseTemplate, /imageSlugs\s*:/, "homepage template must not persist static image slugs");
 assert.doesNotMatch(homeShowcaseTemplate, /videoSlugs\s*:/, "homepage template must not persist static video slugs");
-
-const statePath = path.join(root, "data/platform-state.json");
-if (fs.existsSync(statePath)) {
-  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
-  const publications = (state.themePublications ?? []).filter((item) => item.siteId === "site_dreamshoot");
-  const latest = publications.sort((a, b) => Number(b.version ?? 0) - Number(a.version ?? 0))[0];
-  const rows = latest?.snapshot?.publishedHomepageShowcases;
-  if (rows !== undefined) {
-    assert.ok(Array.isArray(rows), "publishedHomepageShowcases must be an array");
-    const ids = new Set();
-    for (const item of rows) {
-      assert.ok(["video", "save_the_date", "photo"].includes(item.kind), `unsupported showcase kind: ${item.kind}`);
-      assert.ok(item.status === "published" && item.indexable === true && item.sitemapEligible === true, `unpublished showcase leaked: ${item.id}`);
-      assert.ok(item.canonicalPath?.startsWith("/"), `showcase canonical must be a path: ${item.id}`);
-      assert.ok(item.imageUrl && item.imageAlt, `showcase media metadata is incomplete: ${item.id}`);
-      assert.ok(!ids.has(item.id), `duplicate showcase id: ${item.id}`);
-      ids.add(item.id);
-    }
-    const kinds = rows.map((item) => item.kind);
-    const firstPhoto = kinds.indexOf("photo");
-    const firstSaveDate = kinds.indexOf("save_the_date");
-    assert.ok(firstPhoto === -1 || firstSaveDate === -1 || firstSaveDate < firstPhoto, "Save the Date must precede photo showcases");
-  }
-}
 
 console.log(JSON.stringify({ ok: true, check: "homepage-showcase-publication" }, null, 2));

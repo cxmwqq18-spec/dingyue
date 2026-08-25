@@ -25,11 +25,6 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const siteId = process.env.SEASONAL_SITE_ID || "site_dreamshoot";
-const removedLegacyPaths = new Set([
-  "/holidays-events/christmas",
-  "/holidays-events/thanksgiving",
-  "/holidays-events/new-year"
-]);
 // Taxonomy entries are eligible only when their target is already published
 // (or is included in the package set handled by this run). This keeps the
 // menu complete without manufacturing links to missing pages.
@@ -43,9 +38,9 @@ const navigationCatalogue = [
   { href: "/holidays-events/wedding-album", label: "Wedding Album", group: "love-wedding" },
   { href: "/holidays-events/wedding-anniversary", label: "Wedding Anniversary", group: "love-wedding" },
   { href: "/holidays-events/bridal-shower", label: "Bridal Shower", group: "love-wedding" },
-  { href: "/ai-image-generation/christmas-photo", label: "Christmas", group: "seasonal-holidays" },
+  { href: "/holidays-events/christmas", label: "Christmas", group: "seasonal-holidays" },
   { href: "/holidays-events/halloween", label: "Halloween", group: "seasonal-holidays" },
-  { href: "/ai-image-generation/thanksgiving-photo", label: "Thanksgiving", group: "seasonal-holidays" },
+  { href: "/holidays-events/thanksgiving", label: "Thanksgiving", group: "seasonal-holidays" },
   { href: "/holidays-events/new-year", label: "New Year", group: "seasonal-holidays" },
   { href: "/holidays-events/easter", label: "Easter", group: "seasonal-holidays" },
   { href: "/holidays-events/mothers-day", label: "Mother's Day", group: "seasonal-holidays" },
@@ -707,9 +702,9 @@ try {
     const packagePaths = new Set(pages.map((item) => item.pagePath));
     const isAvailable = (href) => publishedRoutePaths.has(href) || packagePaths.has(href);
     const existingItems = existingNavigation.groups.flatMap((group) => group.items || [])
-      .filter((item) => !removedLegacyPaths.has(item.href) && isAvailable(item.href));
+      .filter((item) => isAvailable(item.href));
     const catalogueItems = navigationCatalogue
-      .filter((item) => !removedLegacyPaths.has(item.href) && isAvailable(item.href))
+      .filter((item) => isAvailable(item.href))
       .map((item) => ({ ...item, slug: item.href.split("/").pop(), status: "published" }));
     const nextItems = pages.map((item) => ({ label: item.key === "wedding-ceremony" ? "Wedding Ceremony" : item.key.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()), slug: item.key, href: item.pagePath, status: "published" }));
     const merged = [...catalogueItems, ...existingItems, ...nextItems]

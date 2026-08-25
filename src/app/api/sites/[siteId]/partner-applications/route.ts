@@ -8,7 +8,10 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const limited = checkRateLimitOrResponse(request, RATE_LIMITS.register, `${siteId}:partner:${request.headers.get("x-forwarded-for") ?? "unknown"}`);
   if (!limited.allowed) return limited.response;
 
-  const body = (await request.json().catch(() => ({}))) as Record<string, unknown>;
+  const contentType = request.headers.get("content-type") ?? "";
+  const body = contentType.includes("application/json")
+    ? (await request.json().catch(() => ({}))) as Record<string, unknown>
+    : Object.fromEntries(Array.from((await request.formData()).entries()).map(([key, value]) => [key, typeof value === "string" ? value : value.name]));
   if (typeof body.website_url === "string" && body.website_url.trim()) {
     return NextResponse.json({ ok: true });
   }
@@ -31,6 +34,10 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         referer: request.headers.get("referer") ?? undefined
       }
     });
+    if (!contentType.includes("application/json")) {
+      const referer = request.headers.get("referer");
+      if (referer) return NextResponse.redirect(new URL(`${referer}${referer.includes("?") ? "&" : "?"}partner=success`, request.url), 303);
+    }
     return NextResponse.json({ ok: true, application: result.receipt });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

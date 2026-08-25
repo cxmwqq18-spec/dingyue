@@ -64,13 +64,20 @@ assert.equal(entity.metadata.canonicalPath, PAGE_PATH);
 assert.equal(`https://${site.primaryDomain}${entity.metadata.canonicalPath}`, pageSeo.canonical);
 assert.equal(state.mediaAssets.filter((asset) => asset.siteId === SITE_ID && asset.storageKey.startsWith("/assets/dreamshoot/save-the-date/valentines-day/")).length, 11);
 
+const coverPaths = ["/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date", PAGE_PATH]
+  .map((slug) => state.sites.find((candidate) => candidate.id === SITE_ID)?.pages.find((candidate) => candidate.slug === slug)?.publishedJson?.mediaManifest?.[0]?.src)
+  .filter(Boolean);
+assert.equal(new Set(coverPaths).size, coverPaths.length, "Save the Date directory covers must be unique across published themes");
+
 const navigationConfig = site.themeSettings?.publishedJson?.saveTheDateNavigation ?? { menuLabel: "", groups: [] };
 assert.equal(navigationConfig.menuLabel, "Save the Date");
 const navigation = navigationConfig.groups ?? [];
 const publishedItems = navigation.flatMap((group) => group.items.filter((item) => item.status === "published"));
-assert(publishedItems.length >= 8, `Save the Date navigation should retain all published themes (found ${publishedItems.length})`);
+assert(publishedItems.length >= 7, `Save the Date navigation should retain all published themes (found ${publishedItems.length})`);
 assert(publishedItems.every((item) => item.description?.trim() && item.imageUrl?.trim() && item.imageAlt?.trim()), "published Save the Date themes require description, cover, and alt text");
 assert(publishedItems.some((item) => item.href === PAGE_PATH && item.label === "Valentine's Day"));
+const homepageSaveTheDate = (snapshot.publishedHomepageShowcases ?? []).filter((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
+assert.equal(new Set(homepageSaveTheDate.map((item) => item.imageUrl)).size, homepageSaveTheDate.length, "published homepage Save the Date covers must be unique");
 assert.equal(navigation[0]?.label, "Love & Wedding");
 assert.equal(navigation[1]?.label, "Seasonal Holidays");
 

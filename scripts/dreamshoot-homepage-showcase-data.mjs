@@ -1,4 +1,4 @@
-export const SHOWCASE_VERSION = "20260801visualfix1";
+export const SHOWCASE_VERSION = "20260825media-cleanup1";
 
 function showcaseSlug(value) {
   return String(value || "")

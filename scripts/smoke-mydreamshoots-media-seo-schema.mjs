@@ -147,7 +147,7 @@ const fixtureSite = {
   }
 };
 const immutableSnapshot = buildPublicationSnapshot(fixtureSite, undefined, activePacks, activeProducts);
-const expectedStandardMediaCount = fixtureSite.pages.some((page) => page.slug === "/ai-save-the-date/valentines-day" || page.publishedJson.seo?.canonicalPath === "/ai-save-the-date/valentines-day") ? 7 : 6;
+const expectedStandardMediaCount = 8;
 assert.equal(immutableSnapshot.publishedStandardPageMedia.length, expectedStandardMediaCount, "standard page media must include Save the Date when its page entity is present");
 assert.equal(publicationSnapshotIntegrity(immutableSnapshot), "valid", "media schema smoke must use a valid immutable fixture publication");
 const publishedSiteSnapshot = createPublishedSiteSnapshot({

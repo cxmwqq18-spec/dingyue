@@ -2136,7 +2136,12 @@ function detailList(detail: ToolMenuItem["detailJson"] | undefined, key: "useCas
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string" && item.trim().length > 0) : fallback;
 }
 
-function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockInstance, toolSlug: string, appSlug: string, site: Site): ThemePageJson {
+/*
+ * Historical request-time tool detail synthesis was removed. Tool detail
+ * pages must be compiled into the active publication snapshot instead.
+ * The old implementation remains below only as a migration reference and is
+ * deliberately kept outside the runtime module.
+/*
   const page = clonePageJson(basePage);
   const title = blockString(tool, "title", sectionSetting(page, "entry_1", "title", "AI photo tool"));
   const category = blockString(tool, "category", "AI Photo");
@@ -2285,6 +2290,7 @@ function synthesizeToolDetailPage(basePage: ThemePageJson, tool: SectionBlockIns
   return page;
 }
 
+*/
 const dreamshootImageStudioToolAliases = new Set([
   "photo-ai",
   "video-ai",

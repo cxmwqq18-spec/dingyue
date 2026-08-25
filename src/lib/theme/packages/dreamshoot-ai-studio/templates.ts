@@ -2,6 +2,7 @@ import type { SectionBlockInstance, SectionInstance, SectionType, ThemePageJson,
 import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite } from "@/lib/storefront-context/capabilities";
 import mydreamshootsHomepageCopy from "@/lib/mydreamshoots-homepage-copy.json";
+import { getDreamshootPublicSeoPageMetadataForSite } from "@/lib/dreamshoot-seo-content";
 
 export type MydreamShootsAiStudioTemplateKey =
   | ThemePackageTemplateKey
@@ -42,9 +43,19 @@ function page(pageType: string, sectionsOrder: string[], sections: ThemePageJson
 
 type DreamshootPublicSeoSiteSeed = { id: string; slug: string; name: string; primaryDomain: string; branding?: { logoText?: string } };
 
-function seoForPublicPage(_path: string, _site?: DreamshootPublicSeoSiteSeed): ThemePageJson["seo"] {
-  // SEO is authored on ThemePage and is intentionally absent from template defaults.
-  return undefined;
+function seoForPublicPage(path: string, site?: DreamshootPublicSeoSiteSeed): ThemePageJson["seo"] {
+  const metadata = getDreamshootPublicSeoPageMetadataForSite(site as Parameters<typeof getDreamshootPublicSeoPageMetadataForSite>[0], path);
+  if (!metadata) return undefined;
+  return {
+    title: metadata.title,
+    description: metadata.description,
+    keywords: metadata.keywords,
+    canonicalPath: metadata.canonicalPath,
+    canonical: metadata.canonicalPath,
+    index: true,
+    follow: true,
+    robots: { index: true, follow: true }
+  };
 }
 
 function isAidreamcapesTemplateSite(site?: DreamshootPublicSeoSiteSeed): boolean {
@@ -350,7 +361,7 @@ const homeSections: ThemePageJson["sections"] = {
       title: "Soccer fan photos for match-day style moments.",
       subtitle: "Turn everyday selfies into fan meetups, stadium-style group photos, match-day posters, and private albums built for social sharing.",
       primaryCta: "Create Fan Photos",
-      primaryHref: "/login",
+      primaryHref: "/app/create",
       secondaryCta: "View Sports Packs",
       secondaryHref: "/ai-image-generation",
       photos: "Private gallery",
@@ -859,7 +870,7 @@ const homeSections: ThemePageJson["sections"] = {
       title: mydreamshootsHomepageCopy.conversionTitle,
       subtitle: mydreamshootsHomepageCopy.conversionSubtitle,
       primaryCta: "Create Now",
-      primaryHref: "/login",
+      primaryHref: "/app/create",
       secondaryCta: "Choose a plan",
       secondaryHref: "/pricing"
     },

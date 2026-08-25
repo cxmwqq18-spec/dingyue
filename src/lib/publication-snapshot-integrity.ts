@@ -41,6 +41,10 @@ function text(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
+function uniqueText(values: string[]): boolean {
+  return new Set(values).size === values.length;
+}
+
 function publicMediaUrl(value: unknown): value is string {
   return text(value) && (/^https:\/\//i.test(value) || value.startsWith("/"));
 }
@@ -282,6 +286,8 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const links = v1.publishedLinkRefs;
   const videoNavigationRows = v1.publishedVideoNavigation ?? [];
   const homepageShowcaseRows = v1.publishedHomepageShowcases ?? [];
+  const saveTheDateShowcaseRows = homepageShowcaseRows.filter((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
+  const saveTheDateImagesUnique = uniqueText(saveTheDateShowcaseRows.map((item) => item.imageUrl));
   const revisions = v1.revisions;
   const pages = new Map(publishedPageEntities.map((item) => [item.pageEntityId, item]));
   const mediaByPage = new Map(publishedPageMedia.map((item) => [item.pageEntityId, item]));
@@ -400,7 +406,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
       : revisions.navigationRevision === projectionRevision(videoNavigationRows)) &&
     (v1.publishedHomepageShowcases === undefined || revisions.homepageShowcaseRevision === projectionRevision(homepageShowcaseRows)) &&
     revisions.policyRevision === projectionRevision({ privacy: v1.publishedFacts.privacy, refund: v1.publishedFacts.refund, creditLifecycle: v1.publishedFacts.creditLifecycle, security: v1.publishedFacts.security });
-  if (!factsCompleteForIndexablePages(v1.publishedFacts, publishedPageEntities) || !projectionsAgree || !completeCoverage || !standardMediaAgree || !mediaOwnershipAgree || !videoNavigationAgree || !linksAgree || !aggregateRevisionsAgree ||
+  if (!factsCompleteForIndexablePages(v1.publishedFacts, publishedPageEntities) || !projectionsAgree || !completeCoverage || !standardMediaAgree || !mediaOwnershipAgree || !videoNavigationAgree || !linksAgree || !aggregateRevisionsAgree || !saveTheDateImagesUnique ||
       !unique(routePaths) || !unique(entityIds) || !unique(mediaIds) || !unique(standardMediaIds) || !unique(linkIds) || snapshot.snapshotHash !== revisions.snapshotHash) {
     if (process.env.MYDREAMSHOOTS_SNAPSHOT_DEBUG === "1") {
       console.error(JSON.stringify({
@@ -412,6 +418,7 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
         standardMediaAgree,
         mediaOwnershipAgree,
         homepageShowcaseRows: homepageShowcaseRows.length,
+        saveTheDateImagesUnique,
         videoNavigationAgree,
         linksAgree,
         aggregateRevisionsAgree,

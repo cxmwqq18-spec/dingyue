@@ -252,13 +252,13 @@ export function ThemeRenderer({
         className="bg-[var(--site-bg)] text-[var(--site-fg)] [font-family:var(--site-text-font)]"
         suppressHydrationWarning={mode === "published"}
       >
-        {runtime?.customer && runtime.clientBootstrapCustomer === true && mode === "published" ? (
+        <StorefrontNavigationFeedback />
+        {runtime?.customer && runtime.clientBootstrapCustomer === true && mode === "published" && !publicStorefrontPage ? (
           <>
             <CustomerBootstrapPrefetch mode="shell" siteSlug={publicSlug} />
             <CustomerWorkspaceRuntimePrefetch siteId={site.id} siteSlug={publicSlug} />
           </>
         ) : null}
-        <StorefrontNavigationFeedback />
         <div
           className="xfcart-section"
           data-section-id="header_plus"
@@ -273,6 +273,7 @@ export function ThemeRenderer({
             deferMegaMenuPanels
             disablePrefetch={disableStorefrontPrefetch}
             lightweight={lightweightChrome}
+            publicStorefrontPage={publicStorefrontPage}
             runtime={runtime}
             site={routedSite}
             settings={settings}
@@ -690,6 +691,17 @@ const sectionTypesUsingCustomerRuntime = new Set([
   "upload_panel"
 ]);
 
+// Indexable storefront sections must remain complete in the initial HTML. The
+// flag is enforced here as a final renderer boundary so callers cannot
+// accidentally re-introduce lazy placeholders for SEO-critical content.
+const publicSeoCriticalSectionTypes = new Set([
+  "pricing_table",
+  "testimonial_wall",
+  "reviews",
+  "trust_signal_bar",
+  "brand_logo_strip"
+]);
+
 function runtimeForSection(section: SectionInstance, runtime: ThemeRuntimeData | undefined): ThemeRuntimeData | undefined {
   if (!runtime) return undefined;
   if (sectionTypesUsingCustomerRuntime.has(section.type)) return runtime;
@@ -715,7 +727,9 @@ function runtimeWithOnlyShellState(runtime: ThemeRuntimeData): ThemeRuntimeData 
 
 export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, homepageShowcases, videoGenerationTopics, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
   const sectionType = canonicalSectionType(section.type);
-  const lazyStyle: CSSProperties | undefined = lazyRender
+  const pagePath = renderContext.pagePath;
+  const allowLazyRender = lazyRender && !(isPublicSeoRoute(pagePath) && publicSeoCriticalSectionTypes.has(sectionType));
+  const lazyStyle: CSSProperties | undefined = allowLazyRender
     ? {
         contentVisibility: "auto",
         containIntrinsicSize: `1px ${lazyIntrinsicSectionSize(sectionType)}`
@@ -752,43 +766,6 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
         />
       </DreamshootShowcasePreview>
     </div>
-  );
-}
-
-export function LazyStorefrontSectionMount(payload: StorefrontSectionPayload) {
-  const renderData = payload.renderData ?? {
-    creativePackCategories: [],
-    creativePacks: [],
-    products: [],
-    siteAiApps: [],
-    toolMenuItems: [],
-    videoThemeCategories: [],
-    videoThemes: [],
-    homepageShowcases: []
-  };
-  const site = payload.clientSite ?? payload.site;
-  const activePackIds = payload.storefrontContext
-    ? new Set(payload.storefrontContext.catalog.activePacks.map((pack) => pack.id))
-    : undefined;
-  return (
-    <ThemeSectionFrame
-      creativePackCategories={renderData.creativePackCategories}
-      creativePacks={activePackIds ? renderData.creativePacks.filter((pack) => activePackIds.has(pack.id)) : renderData.creativePacks}
-      id={payload.id}
-      lazyRender={false}
-      mode={payload.mode}
-      products={renderData.products}
-      renderContext={payload.renderContext}
-      runtime={payload.runtime}
-      section={payload.section}
-      site={site}
-      siteAiApps={renderData.siteAiApps}
-      storefrontContext={payload.storefrontContext}
-      toolMenuItems={renderData.toolMenuItems}
-      videoThemeCategories={renderData.videoThemeCategories ?? []}
-      videoThemes={renderData.videoThemes ?? []}
-      homepageShowcases={renderData.homepageShowcases ?? []}
-    />
   );
 }
 
@@ -982,7 +959,7 @@ function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic
   };
 }
 
-export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [], homepageShowcases = [], videoGenerationTopics }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[]; homepageShowcases?: PublishedHomepageShowcaseItem[]; videoGenerationTopics?: HeaderVideoGenerationTopic[] }) {
+export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, publicStorefrontPage = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [], homepageShowcases = [], videoGenerationTopics }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; publicStorefrontPage?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[]; homepageShowcases?: PublishedHomepageShowcaseItem[]; videoGenerationTopics?: HeaderVideoGenerationTopic[] }) {
   const HeaderLink = StorefrontInstantLink;
   const MegaMenu = NativeMegaMenu;
   const header = settings.globalSections?.header;
@@ -1210,15 +1187,6 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const showPhotoPackageMega = !lightweight && (isDreamShoot || isAidreamcapes);
   const clientPhotoPackageMegaGroups = deferMegaMenuPanels ? headerPhotoPackageMegaGroupsForClient(site, photoPackageMegaGroups) : [];
   const clientToolMegaItems = deferMegaMenuPanels ? headerToolMegaItemsForClient(site, toolMegaBlocks, spanishXby) : [];
-  const photoPackageMegaPrefetchPaths = [
-    hrefFor(site, publicCollectionPathForSite(site, "")),
-    ...photoPackageMegaGroups.flatMap((group) => group.items.map((item) => hrefFor(site, item.href)))
-  ].slice(0, 10);
-  const toolsMegaPrefetchPaths = showDreamShootToolsMega
-    ? [hrefFor(site, isMyDreamShootsCom ? "/ai-video-generation" : "/tools"), ...toolMegaBlocks.slice(0, 6).map((tool) => hrefFor(site, blockValue(tool, "href", isMyDreamShootsCom ? "/ai-video-generation" : "/tools")))]
-    : showVideoGenerationMega
-    ? [hrefFor(site, "/ai-video-generation"), ...videoGenerationMenuTopics.slice(0, 8).map((topic) => topic.href)]
-    : [];
   const market = site.branding.market || "AI photo subscriptions, private uploads, and customer galleries";
   const ctaLabel = spanishXby ? "Comenzar" : header ? setting(header, "ctaLabel", "Get Started") : "Get Started";
   const configuredCtaHref = header ? setting(header, "ctaHref", "/app/create") : "/app/create";
@@ -1262,7 +1230,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
           : `${readableBrandTitle} logo`;
   const brandMark = brandInitials(readableBrandTitle);
   const customer = runtime?.customer;
-  const shouldClientBootstrapCustomer = runtime?.clientBootstrapCustomer === true && !customer;
+  const shouldClientBootstrapCustomer = !publicStorefrontPage && runtime?.clientBootstrapCustomer === true && !customer;
   const unifiedDreamShootHeader = isDreamShoot || isAidreamcapes;
   const signedInClassName = darkHeaderControls
     ? unifiedDreamShootHeader
@@ -1436,11 +1404,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
             <MegaMenu
 	                blockAttrs={xfcartBlockAttrs(link.block, index, "header_nav")}
 	                buttonClassName={navClass}
-                disablePrefetch={disablePublicSeoPrefetch}
 	                key={`${link.label}_${link.href}`}
 	                label={link.label}
                   panelClassName={`fixed left-1/2 z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out ${announceEnabled && announceText ? "top-[126px]" : "top-[78px]"}`}
-	                prefetchPaths={isPackagesLink ? photoPackageMegaPrefetchPaths : toolsMegaPrefetchPaths}
 	              >
                   {isSaveTheDateLink ? (
                     <HeaderSaveTheDateMegaPanel ctaHref={hrefForPage(site, "/best-save-the-date", pagePath)} menuLabel={saveTheDateMenuLabel} groups={routedSaveTheDateGroups} variantTone="dark" />
@@ -2580,7 +2546,7 @@ function storefrontSectionLabel(type: string): string {
   return labels[type] ?? type.replace(/[_-]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-const storefrontPublicWatermarkCacheVersion = "20260811watermark30sync2";
+const storefrontPublicWatermarkCacheVersion = "20260825save-date-unique-publication153";
 
 function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   const cleanValue = value.trim();
@@ -6778,7 +6744,9 @@ function sectionAnchor(section: SectionInstance, fallback: string): string {
 }
 
 function numberSetting(section: SectionInstance, key: string, fallback: number): number {
-  const value = Number(setting(section, key, ""));
+  const raw = setting(section, key, "").trim();
+  if (!raw) return fallback;
+  const value = Number(raw);
   return Number.isFinite(value) ? value : fallback;
 }
 
@@ -12897,7 +12865,7 @@ function SectionView({
         .filter((item): item is PublishedHomepageShowcaseItem => Boolean(item));
       const saveTheDateItems = publishedHomepageItems
         .filter((item) => item.kind === "save_the_date")
-        .slice(0, mydreamProfileSite ? 4 : Math.max(1, Math.min(6, numberSetting(section, "saveTheDateItemLimit", 6))));
+        .slice(0, Math.max(1, Math.min(6, numberSetting(section, "saveTheDateItemLimit", 6))));
       const photoItems = publishedHomepageItems.filter((item) => item.kind === "photo").slice(0, 8);
       const renderPublishedCard = (item: PublishedHomepageShowcaseItem) => {
         const href = hrefFor(site, item.canonicalPath);
@@ -13664,45 +13632,10 @@ function SectionView({
     }
     const dynamicToolBlocks = getToolBlocksFromMenuItems(toolMenuItems);
     const blocks = sectionBlocks(section, "tool_card");
-    const fallbackTools: SectionBlockInstance[] = [
-      {
-        id: "tool_background",
-        type: "tool_card",
-        settings: {
-          title: "Background changer",
-          description: "Swap a plain portrait background before creating a full scene pack.",
-          category: "AI Photo Edit",
-          badge: "Studio",
-          imageUrl: dreamshootToolSceneDefaults.entry,
-          href: "/tools/background-changer"
-        }
-      },
-      {
-        id: "tool_preview",
-        type: "tool_card",
-        settings: {
-          title: "Package preview",
-          description: "Try a guided package preview before subscribing to full private packs.",
-          category: "Route Portrait",
-          badge: "Popular",
-          imageUrl: fallbackHeroImages[0],
-          href: "/tools/package-preview"
-        }
-      },
-      {
-        id: "tool_video",
-        type: "tool_card",
-        settings: {
-          title: "Image to video",
-          description: "Turn a favorite generated photo into a short motion concept.",
-          category: "Video AI",
-          badge: "Preview",
-          imageUrl: dreamshootToolSceneDefaults.progress,
-          href: "/app/create#step-video"
-        }
-      }
-    ];
-    const baseTools = dynamicToolBlocks.length ? dynamicToolBlocks : blocks.length ? blocks : fallbackTools;
+    // Public tool cards must come from the published section projection or
+    // the published navigation menu. An empty projection is rendered empty;
+    // request-time cards would create unowned, non-snapshotted public content.
+    const baseTools = dynamicToolBlocks.length ? dynamicToolBlocks : blocks;
     const rawTools = primaryMyDreamShoots
       ? mergeDreamshootToolBlocks(baseTools.length ? baseTools : getDreamshootToolBlocks(undefined))
           .filter((tool) => {

@@ -17,9 +17,9 @@ let lastPendingAt = 0;
 const subscribers = new Set<() => void>();
 
 function navigationPendingDelayMs() {
-  const configuredDelay = Number(process.env.NEXT_PUBLIC_STOREFRONT_NAV_PENDING_DELAY_MS ?? 2400);
-  if (!Number.isFinite(configuredDelay)) return 2400;
-  return Math.min(Math.max(configuredDelay, 650), 5000);
+  const configuredDelay = Number(process.env.NEXT_PUBLIC_STOREFRONT_NAV_PENDING_DELAY_MS ?? 120);
+  if (!Number.isFinite(configuredDelay)) return 120;
+  return Math.min(Math.max(configuredDelay, 0), 1200);
 }
 
 function emitSnapshot(next: StorefrontNavigationSnapshot) {
@@ -82,7 +82,12 @@ function shouldShowStorefrontNavigationFeedback(anchor: HTMLAnchorElement) {
 
   const targetUrl = new URL(href, window.location.href);
   if (targetUrl.origin !== window.location.origin) return false;
-  if (!targetUrl.pathname.startsWith("/site/")) return false;
+  const isStorefrontPath = targetUrl.pathname.startsWith("/site/") ||
+    !targetUrl.pathname.startsWith("/api/") &&
+    !targetUrl.pathname.startsWith("/_next/") &&
+    !targetUrl.pathname.startsWith("/admin") &&
+    !targetUrl.pathname.startsWith("/platform");
+  if (!isStorefrontPath) return false;
   if (targetUrl.pathname.includes("/admin")) return false;
   if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) return false;
   return hrefFromUrl(targetUrl);

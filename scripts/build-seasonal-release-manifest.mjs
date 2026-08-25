@@ -14,11 +14,6 @@ assertDatabaseTarget({ expectedTarget: "remote-readonly", env: { ...process.env,
 const prisma = new PrismaClient({ datasources: { db: { url: buildTunneledReadonlyDatabaseUrl(process.env.REMOTE_DB_READONLY_DATABASE_URL) } } });
 const build = JSON.parse(fs.readFileSync(buildPath, "utf8"));
 const targetPages = new Map(build.pages.filter((page) => ["mothers-day", "fathers-day", "halloween"].includes(page.key)).map((page) => [page.pagePath, page]));
-const removedLegacyPaths = new Set([
-  "/holidays-events/christmas",
-  "/holidays-events/thanksgiving",
-  "/holidays-events/new-year"
-]);
 const git = (args) => { try { return execFileSync("git", args, { encoding: "utf8" }).trim(); } catch { return "unknown"; } };
 const clone = (value) => value === undefined ? undefined : JSON.parse(JSON.stringify(value));
 const stable = (value) => value === null || typeof value !== "object" ? JSON.stringify(value) : Array.isArray(value) ? `[${value.map(stable).join(",")}]` : `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stable(value[key])}`).join(",")}}`;
@@ -66,7 +61,7 @@ try {
   const settings = themeSettings[0] || { id: `settings_${siteId}`, siteId, draftJson: {}, publishedJson: {} };
   const current = settings.publishedJson || settings.draftJson || {};
   const navigation = current.saveTheDateNavigation || { menuLabel: "Save the Date", groups: [] };
-  const existingItems = navigation.groups.flatMap((group) => group.items || []).filter((item) => !removedLegacyPaths.has(item.href));
+  const existingItems = navigation.groups.flatMap((group) => group.items || []);
   const additions = [...targetPages.values()].map((item) => ({ label: item.key === "mothers-day" ? "Mother's Day" : item.key === "fathers-day" ? "Father's Day" : "Halloween", slug: item.key, href: item.pagePath, status: "published", sortOrder: 20 }));
   const merged = [...existingItems, ...additions].filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index);
   const love = merged.filter((item) => ["/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date", "/ai-video-generation/wedding-ceremony"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));

@@ -214,7 +214,7 @@ function faqAnswerText(block: SectionBlockInstance): string {
     .join(" ");
 }
 
-const storefrontPublicWatermarkCacheVersion = "20260811watermark30sync2";
+const storefrontPublicWatermarkCacheVersion = "20260825save-date-unique-publication153";
 
 function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   const cleanValue = value.trim();

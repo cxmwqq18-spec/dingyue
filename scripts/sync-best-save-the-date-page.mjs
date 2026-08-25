@@ -22,11 +22,6 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
 const pagePath = "/best-save-the-date";
-const removedLegacyPaths = new Set([
-  "/holidays-events/christmas",
-  "/holidays-events/thanksgiving",
-  "/holidays-events/new-year"
-]);
 const sourcePaths = [
   "/ai-save-the-date/valentines-day",
   "/holidays-events/engagement",
@@ -69,7 +64,7 @@ try {
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
   const existingSettings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
   const existingGroups = existingSettings.saveTheDateNavigation?.groups ?? [];
-  const existingPublishedItems = existingGroups.flatMap((candidate) => candidate.items.filter((item) => item.status === "published" && !removedLegacyPaths.has(item.href)).map((item) => ({ ...item, groupSlug: candidate.slug })));
+  const existingPublishedItems = existingGroups.flatMap((candidate) => candidate.items.filter((item) => item.status === "published").map((item) => ({ ...item, groupSlug: candidate.slug })));
   const eligiblePaths = new Set([...sourcePaths, ...existingPublishedItems.map((item) => item.href)]);
   const sourcePages = new Map(siteRecord.pages.filter((page) => eligiblePaths.has(page.slug)).map((page) => [page.slug, page]));
   const missingPublishedSources = existingPublishedItems.filter((item) => !sourcePages.has(item.href)).map((item) => item.href);

@@ -245,8 +245,6 @@ const stores = [
       videoAllHref: "/ai-video-generation",
       primaryCta: "Start with your photos",
       primaryHref: "/app/create",
-      imageSlugs: "world-cup-fan-photos|christmas-couple|christmas-photos|creator-portraits|gala-photos|holiday|professional-headshots|cyberpunk",
-      videoSlugs: "cinematic-portrait-motion|social-profile-clip|travel-route-story|wedding-memory-film|holiday-card-motion|product-showcase-motion|prompt-directed-motion|creator-intro-motion",
       videoItemLimit: 8
     },
 	    generationBlocks: [],
@@ -348,8 +346,8 @@ const stores = [
 	      eyebrow: "AI VIDEO + PHOTO CREATION",
 	      title: "Ready to create with myDreamshoots?",
 	      subtitle: "Create AI videos, personalized Save the Date videos, and professional photo sets from your images—all in one private workspace.",
-      primaryCta: "Create my first photo set",
-      primaryHref: "/login",
+      primaryCta: "Create Now",
+      primaryHref: "/app/create",
       secondaryCta: "Choose a plan",
       secondaryHref: "/pricing"
     }, [
