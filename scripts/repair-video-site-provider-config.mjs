@@ -1,8 +1,11 @@
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { assertDatabaseTarget } from "./lib/database-target.mjs";
 
 const prisma = new PrismaClient();
-const dryRun = process.env.DRY_RUN === "1";
+const apply = process.argv.includes("--apply");
+const dryRun = !apply || process.env.DRY_RUN === "1";
+assertDatabaseTarget({ expectedTarget: String(process.env.DATABASE_TARGET || "local").trim().toLowerCase() });
 
 function recordValue(value) {
   return value && typeof value === "object" && !Array.isArray(value) ? value : {};

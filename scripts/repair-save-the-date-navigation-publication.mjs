@@ -21,6 +21,7 @@ Module._resolveFilename = function resolve(request, ...args) {
 };
 
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
+const apply = process.argv.includes("--apply");
 const databaseTarget = String(process.env.DATABASE_TARGET || "local").trim().toLowerCase();
 if (databaseTarget === "production" && process.env.CONFIRM_SAVE_THE_DATE_PRODUCTION !== "1") {
   throw new Error("Production repair requires CONFIRM_SAVE_THE_DATE_PRODUCTION=1.");
@@ -110,7 +111,7 @@ try {
       { label: "Seasonal Holidays", slug: "seasonal-holidays", sortOrder: 2, items: seasonalPaths.map(itemFor) }
     ]
   };
-  await prisma.$transaction(async (tx) => {
+  if (apply) await prisma.$transaction(async (tx) => {
     for (const page of pageWrites.values()) await tx.themePage.create({ data: page });
     for (const page of allPages.filter((candidate) => validPathSet.has(candidate.slug))) {
       const nextJson = pageWrites.has(page.slug)
@@ -141,13 +142,10 @@ try {
     }
     await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: settings, publishedJson: {} }, update: { draftJson: settings } });
   });
-  const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { pages: { orderBy: { slug: "asc" } }, settings: true, domains: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   const jiti = (await import("jiti")).default(import.meta.url);
-  const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
   const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
-  const site = toSite(fresh);
   const manifest = await prepareDraftPublishManifestRelational(siteId);
-  console.log(JSON.stringify({ ok: true, siteId, mode: "draft-only", manifestHash: manifest.manifestHash, newPages: [...pageWrites.keys()], navigation: settings.saveTheDateNavigation, publicationRequired: true }, null, 2));
+  console.log(JSON.stringify({ ok: true, siteId, mode: apply ? "draft-only" : "dry-run", manifestHash: manifest.manifestHash, newPages: [...pageWrites.keys()], navigation: settings.saveTheDateNavigation, publicationRequired: true }, null, 2));
 } finally {
   await prisma.$disconnect();
 }
