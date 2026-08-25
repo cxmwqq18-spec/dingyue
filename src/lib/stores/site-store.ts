@@ -68,7 +68,6 @@ import {
   hashRelationalPassword,
   relationalSessionTtlMs,
   relationalUid,
-  PrismaLike,
   RelationalStoreError,
   slugify,
   toGatewayGroup,
@@ -100,6 +99,7 @@ import {
   toVideoThemeCategory,
   uid,
   verifyRelationalPassword,
+  type PrismaLike,
 } from "./prisma-mappers";
 
 const siteRuntimeInclude = {
@@ -2877,7 +2877,7 @@ export async function getThemePublishPreflightSiteRelational(siteId: string): Pr
   }
 }
 
-export async function getThemePublishPreflightBundleRelational(siteId: string): Promise<{
+export async function getThemePublishPreflightBundleRelational(siteId: string, existingPrisma?: PrismaLike): Promise<{
   site?: Site;
   dirtyPageIds: string[];
   products: PublishPreflightProduct[];
@@ -2887,7 +2887,7 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
   mediaAssets: PublishPreflightMediaAsset[];
 }> {
   try {
-    return await siteReadCache.get(`theme-preflight-bundle:${siteId}`, () => runSiteAdminRead(`theme preflight bundle:${siteId}`, async () => {
+    const readBundle = async () => {
       type PreflightBundleRow = {
         id: string;
         name: string;
@@ -2923,7 +2923,8 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
         siteAiApps: PublishPreflightSiteAiApp[];
         mediaAssets: PublishPreflightMediaAsset[];
       };
-      const rows = await prisma.$queryRaw<PreflightBundleRow[]>`
+      const queryClient = existingPrisma ?? prisma;
+      const rows = await queryClient.$queryRaw<PreflightBundleRow[]>`
         SELECT
           s."id",
           s."name",
@@ -3076,7 +3077,10 @@ export async function getThemePublishPreflightBundleRelational(siteId: string): 
           }))
         }
       };
-    }, { timeoutMs: siteAdminSummaryReadTimeoutMs }), Number(process.env.SITE_ADMIN_PREFLIGHT_CACHE_TTL_MS ?? 15_000));
+    };
+    return existingPrisma
+      ? await readBundle()
+      : await siteReadCache.get(`theme-preflight-bundle:${siteId}`, () => runSiteAdminRead(`theme preflight bundle:${siteId}`, readBundle, { timeoutMs: siteAdminSummaryReadTimeoutMs }), Number(process.env.SITE_ADMIN_PREFLIGHT_CACHE_TTL_MS ?? 15_000));
   } catch (error) {
     if (!shouldFallbackRelationalRead(error)) throw error;
     throw new RelationalStoreError("relational_theme_preflight_bundle_unavailable", 503);

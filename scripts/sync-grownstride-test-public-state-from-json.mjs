@@ -3,6 +3,9 @@ import fs from "node:fs";
 import path from "node:path";
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
+import { assertDatabaseTarget } from "./lib/database-target.mjs";
+
+assertDatabaseTarget({ expectedTarget: "test" });
 
 const DEFAULT_SITE_ID = "site_grownstride_test";
 const DEFAULT_DOMAIN = "test.grownstride.com";

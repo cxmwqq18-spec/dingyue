@@ -37,12 +37,15 @@ try {
   assert.equal(approval.items.length, manifest.pageIds.length + (manifest.includeThemeSettings ? 1 : 0) + (manifest.includeStorefrontProfile ? 1 : 0) + Object.keys(manifest.sourceRevisions ?? {}).length);
   assert.ok(approval.items.some((item) => item.objectType === "media_asset"));
   assert.ok(approval.items.some((item) => item.objectType === "creative_pack"));
-  assert.ok(approval.items.some((item) => item.objectType === "product_offer"));
+  for (const objectType of ["product_offer", "site_ai_app", "navigation", "facts", "page_links"]) {
+    assert.ok(approval.items.some((item) => item.objectType === objectType), `approval must lock ${objectType} revisions`);
+  }
 
   const revoked = await prisma.themePublishApproval.update({ where: { id: approval.id }, data: { status: "revoked" } });
   assert.equal(revoked.status, "revoked");
   const revokedConsume = await prisma.themePublishApproval.updateMany({ where: { id: approval.id, status: "approved", consumedAt: null }, data: { status: "consumed", consumedAt: new Date(), consumedPublicationId: `smoke_${approval.id}_revoked` } });
   assert.equal(revokedConsume.count, 0, "revoked approval must not be consumable");
+  await assert.rejects(() => publishDraftSiteRelational(siteId, manifest, "smoke:approval-contract", approval.id), /theme_publish_approval_unavailable/);
   await prisma.themePublishApproval.update({ where: { id: approval.id }, data: { status: "approved" } });
 
   const driftManifest = await prepareDraftPublishManifestRelational(siteId);
@@ -59,6 +62,7 @@ try {
   });
   cleanupApprovalIds.push(expired.id);
   assert.ok(expired.expiresAt && expired.expiresAt < new Date());
+  await assert.rejects(() => publishDraftSiteRelational(siteId, manifest, "smoke:approval-contract", expired.id), /theme_publish_approval_unavailable/);
 
   const [first, second] = await Promise.all([
     prisma.themePublishApproval.updateMany({ where: { id: approval.id, status: "approved", consumedAt: null }, data: { status: "consumed", consumedAt: new Date(), consumedPublicationId: `smoke_${approval.id}_1` } }),

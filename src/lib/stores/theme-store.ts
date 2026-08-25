@@ -2287,19 +2287,8 @@ export async function publishDraftSiteRelational(
   const expectedHash = storefrontPublishManifestHash(manifest);
   if (manifest.manifestHash !== expectedHash) throw new RelationalStoreError("theme_publish_manifest_hash_invalid", 409);
   if (!manifest.pageIds.length) throw new RelationalStoreError("theme_publish_manifest_empty", 409);
-  const preflightBundle = await getThemePublishPreflightBundleRelational(siteId);
-  if (!preflightBundle.site) throw new RelationalStoreError("theme_site_not_found", 404);
-  const preflight = runThemePublishPreflight({
-    site: preflightBundle.site,
-    products: preflightBundle.products,
-    siteAiApps: preflightBundle.siteAiApps,
-    mediaAssets: preflightBundle.mediaAssets,
-    storefrontProfile: preflightBundle.storefrontProfile,
-    creativePacks: preflightBundle.creativePacks,
-    dirtyPageIds: preflightBundle.dirtyPageIds
-  });
-  if (!preflight.canPublish) throw new RelationalStoreError("theme_publish_preflight_blocked", 409);
   const result = await prisma.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT "id" FROM "ThemePublishApproval" WHERE "id" = ${approvalId} FOR UPDATE`;
     const approval = await tx.themePublishApproval.findUnique({ where: { id: approvalId }, include: { items: true } });
     if (!approval || approval.siteId !== siteId || approval.status !== "approved" || (approval.expiresAt && approval.expiresAt <= new Date())) {
       throw new RelationalStoreError("theme_publish_approval_unavailable", 409);
@@ -2311,9 +2300,11 @@ export async function publishDraftSiteRelational(
         throw new RelationalStoreError("theme_publish_source_revision_conflict", 409);
       }
     }
+    const preflightBundle = await getThemePublishPreflightBundleRelational(siteId, tx);
+    if (!preflightBundle.site) throw new RelationalStoreError("theme_site_not_found", 404);
     const siteRecord = await getSiteWithThemeRecords(tx, siteId);
     const site = toSite(siteRecord);
-    const txPreflight = runThemePublishPreflight({ site, products: preflightBundle.products, siteAiApps: preflightBundle.siteAiApps, mediaAssets: preflightBundle.mediaAssets, storefrontProfile: site.storefrontProfile?.draftJson, creativePacks: preflightBundle.creativePacks, dirtyPageIds: site.pages.filter((page) => JSON.stringify(page.draftJson) !== JSON.stringify(page.publishedJson)).map((page) => page.id) });
+    const txPreflight = runThemePublishPreflight({ site: preflightBundle.site, products: preflightBundle.products, siteAiApps: preflightBundle.siteAiApps, mediaAssets: preflightBundle.mediaAssets, storefrontProfile: preflightBundle.storefrontProfile, creativePacks: preflightBundle.creativePacks, dirtyPageIds: preflightBundle.dirtyPageIds });
     if (!txPreflight.canPublish) throw new RelationalStoreError("theme_publish_preflight_blocked", 409);
     const omittedDirtyPages = site.pages.filter((page) => !manifest.pageIds.includes(page.id) && JSON.stringify(page.draftJson) !== JSON.stringify(page.publishedJson));
     const settingsDirty = JSON.stringify(site.themeSettings.draftJson) !== JSON.stringify(site.themeSettings.publishedJson);

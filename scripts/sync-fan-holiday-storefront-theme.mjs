@@ -5,6 +5,7 @@ import fsSync from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
+import { assertDatabaseTarget } from "./lib/database-target.mjs";
 import {
   localShowcasePosterPath,
   localShowcaseVideoPath,
@@ -14,6 +15,8 @@ import {
 } from "./dreamshoot-homepage-showcase-data.mjs";
 import Module from "node:module";
 import createJiti from "jiti";
+
+assertDatabaseTarget({ expectedTarget: "local" });
 
 const repoRoot = process.cwd();
 const sourceRoot = path.join(repoRoot, "src");

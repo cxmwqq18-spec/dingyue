@@ -6,6 +6,9 @@ import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
 import createJiti from "jiti";
 import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
+import { assertDatabaseTarget } from "./lib/database-target.mjs";
+
+assertDatabaseTarget({ expectedTarget: "test" });
 
 const repoRoot = process.cwd();
 const sourceRoot = path.join(repoRoot, "src");

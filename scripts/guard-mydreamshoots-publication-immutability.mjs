@@ -7,10 +7,10 @@ import ts from "typescript";
 const repoRoot = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const scriptsRoot = path.join(repoRoot, "scripts");
 const formalOwner = "src/lib/stores/theme-store.ts";
-const migrationOnlyPaths = new Set([
-  "scripts/sync-fan-holiday-storefront-theme.mjs",
-  "scripts/sync-grownstride-test-public-state-from-json.mjs",
-  "scripts/sync-grownstride-test-store.mjs"
+const migrationTargetContracts = new Map([
+  ["scripts/sync-fan-holiday-storefront-theme.mjs", "local"],
+  ["scripts/sync-grownstride-test-public-state-from-json.mjs", "test"],
+  ["scripts/sync-grownstride-test-store.mjs", "test"]
 ]);
 const allowedFixtureOrMigrationPaths = new Set([
   "scripts/db-import-relational-state.mjs",
@@ -90,14 +90,20 @@ function checkFile(relative) {
     return;
   }
   const fixtureOrSmoke = relative.startsWith("scripts/fixtures/");
-  const allowed = relative === formalOwner || fixtureOrSmoke || allowedFixtureOrMigrationPaths.has(relative) || migrationOnlyPaths.has(relative);
+  const migrationTarget = migrationTargetContracts.get(relative);
+  const migrationAllowed = Boolean(
+    migrationTarget &&
+      source.includes("assertDatabaseTarget") &&
+      source.includes(`expectedTarget: \"${migrationTarget}\"`)
+  );
+  const allowed = relative === formalOwner || fixtureOrSmoke || allowedFixtureOrMigrationPaths.has(relative) || migrationAllowed;
   function visit(node) {
     if (ts.isCallExpression(node)) {
       const chain = accessChain(node.expression);
-      if (isPublicationWrite(chain) && !allowed && !(migrationOnlyPaths.has(relative) && process.env.DATABASE_TARGET === "test")) failures.push({ file: relative, line: lineOf(sourceFile, node), kind: "publication-write", match: chain.join(".") });
+      if (isPublicationWrite(chain) && !allowed) failures.push({ file: relative, line: lineOf(sourceFile, node), kind: "publication-write", match: chain.join(".") });
       if (["create", "createMany", "update", "updateMany", "upsert"].includes(chain.at(-1))) {
         const model = chain.at(-2);
-        if (["themePage", "themeSettings", "storefrontProfile"].includes(model) && node.arguments.some((argument) => objectContainsProperty(argument, "publishedJson")) && !allowed && !(migrationOnlyPaths.has(relative) && process.env.DATABASE_TARGET === "test")) {
+        if (["themePage", "themeSettings", "storefrontProfile"].includes(model) && node.arguments.some((argument) => objectContainsProperty(argument, "publishedJson")) && !allowed) {
           failures.push({ file: relative, line: lineOf(sourceFile, node), kind: "published-json-write", match: chain.join(".") });
         }
       }
