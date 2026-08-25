@@ -1101,6 +1101,7 @@ export function buildCollectionDirectoryJsonLd({
 }): JsonLdNode[] {
   const pageSlug = canonicalCollectionSlugForCandidate(site, collectionSlug) || slugifySchemaPart(collectionSlug);
   const pagePath = pageSlug ? canonicalSeoDirectoryPathForSite(site, "collection", pageSlug) : canonicalSeoDirectoryPathForSite(site, "collection", "");
+  if (isPrimaryMyDreamShootsSite(site) && !context.pageCopy) return [];
   const collectionLabel = cleanText(collectionSlug, pageSlug).replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()) || "Photo Packages";
   const fallbackCollectionLabel = isSpanishXbySite(site) ? "Paquetes de fotos" : collectionLabel;
   const item = context.pageCopy && isPrimaryMyDreamShootsSite(site)

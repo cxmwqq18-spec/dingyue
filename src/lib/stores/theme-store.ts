@@ -2305,6 +2305,36 @@ export async function publishDraftSiteRelational(
   return result;
 }
 
+/**
+ * Narrow operational command for source-sync scripts. It derives a complete
+ * manifest from the current draft rows, then delegates to the reviewed site
+ * publication transaction. Callers cannot provide or patch a snapshot.
+ */
+export async function publishReviewedDraftSiteRelational(
+  siteId: string,
+  actor = "site_admin_demo"
+): Promise<{ site: Site; publication: ThemePublication; publishedVersion: number }> {
+  const siteRecord = await getSiteWithThemeRecords(prisma, siteId);
+  const site = toSite(siteRecord);
+  const pageIds = site.pages.filter((page) => JSON.stringify(page.draftJson) !== JSON.stringify(page.publishedJson)).map((page) => page.id);
+  const selectedPageIds = pageIds.length ? pageIds : site.pages.map((page) => page.id);
+  const pageVersions = Object.fromEntries(selectedPageIds.map((pageId) => {
+    const page = site.pages.find((candidate) => candidate.id === pageId);
+    return [pageId, { expectedRevision: page?.draftMeta?.revision, expectedEtag: page?.draftMeta?.etag }];
+  }));
+  const includeThemeSettings = JSON.stringify(site.themeSettings.draftJson) !== JSON.stringify(site.themeSettings.publishedJson);
+  const includeStorefrontProfile = Boolean(site.storefrontProfile && JSON.stringify(site.storefrontProfile.draftJson) !== JSON.stringify(site.storefrontProfile.publishedJson));
+  const manifestBase = {
+    pageIds: selectedPageIds,
+    includeThemeSettings,
+    includeStorefrontProfile,
+    pageVersions,
+    ...(includeThemeSettings ? { settingsVersion: { expectedRevision: site.themeSettings.draftMeta?.revision, expectedEtag: site.themeSettings.draftMeta?.etag } } : {}),
+    ...(includeStorefrontProfile ? { profileVersion: { expectedRevision: site.storefrontProfile?.draftMeta?.revision, expectedEtag: site.storefrontProfile?.draftMeta?.etag } } : {})
+  } as Omit<StorefrontPublishManifest, "manifestHash">;
+  return publishDraftSiteRelational(siteId, { ...manifestBase, manifestHash: storefrontPublishManifestHash(manifestBase) }, actor);
+}
+
 export async function restoreDraftThemeFromPublicationRelational(
   siteId: string,
   publicationId: string,

@@ -26,12 +26,15 @@ const routes = contract.mydreamshootsPublishedRouteManifest();
 const entities = contract.mydreamshootsPublishedPageEntities();
 const profiles = JSON.parse(fs.readFileSync(path.join(root, "src/lib/photo-package-use-case-profiles.json"), "utf8")).mydreamshootsCategories ?? {};
 
-assert.equal(routes.length, 38, "all taxonomy routes must have a projection row");
-assert.equal(entities.length, 38, "all taxonomy pages must have a page entity row");
+// motion-generator is a legacy alias owned by the published redirect
+// projection, not an indexable image-leaf entity. The taxonomy therefore has
+// 37 render rows plus one redirect disposition in the complete route inventory.
+assert.equal(routes.length, 37, "all indexable taxonomy routes must have a projection row");
+assert.equal(entities.length, 37, "all indexable taxonomy pages must have a page entity row");
 const publishedRoutes = routes.filter((route) => route.status === "published");
 const reviewRoutes = routes.filter((route) => route.status === "review_required");
-assert.equal(publishedRoutes.length, 37, "all non-deferred independent pages may be indexable");
-assert.equal(reviewRoutes.length, 1, "only the deferred page must remain isolated for review");
+assert.equal(publishedRoutes.length, 37, "all independent pages may be indexable");
+assert.equal(reviewRoutes.length, 0, "all current taxonomy render rows must be publishable or explicitly removed");
 for (const route of routes) {
   const entity = entities.find((candidate) => candidate.pageEntityId === route.pageEntityId);
   assert.ok(entity, `${route.canonicalSlug} must have a matching page entity`);
@@ -59,4 +62,4 @@ const source = fs.readFileSync(path.join(root, "src/lib/storefront-context/snaps
 assert.match(source, /resolvePublishedRouteDisposition/);
 assert.match(source, /route\.disposition === "redirect"/);
 assert.match(source, /return \{ kind: "not_found"/);
-console.log(JSON.stringify({ ok: true, sourceRows: 38, independentRows: 37, reviewRows: 1, prospectiveProjectionRows: 38 }, null, 2));
+console.log(JSON.stringify({ ok: true, sourceRows: 38, renderRows: 37, redirectRows: 1, independentRows: 37, reviewRows: 0, prospectiveProjectionRows: 38 }, null, 2));

@@ -164,7 +164,7 @@ assert.match(
 );
 assert.match(
   sitemapRoute,
-  /getStorefrontSitemapEntriesForHost\(\[\s*forwardedHost,\s*host\s*\]\)/,
+  /getStorefrontSitemapPayloadForHost\(\[\s*forwardedHost,\s*host\s*\]\)/,
   "sitemap route should prefer x-forwarded-host over host behind proxies"
 );
 assert.match(

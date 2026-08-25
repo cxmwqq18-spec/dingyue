@@ -1025,10 +1025,8 @@ async function getPublicSectionStateForRoute(
     publicSiteSlug(item.slug) === publicSlug ||
     canonicalSiteSlug(item.slug) === canonicalSiteSlug(publicSlug)
   );
-  const shellPage = shellSite
-    ? findPage(shellSite, slug) ?? syntheticDreamShootPartnerPage(shellSite, slug)
-    : undefined;
-  if (!shellState || !shellSite || !shellPage) return shellState;
+  const shellPage = shellSite ? findPage(shellSite, slug) : undefined;
+  if (!shellState || !shellSite || !shellPage) return undefined;
   if (!sectionIdsNeedPublicRuntime(shellPage.publishedJson, slug, sectionIds, query)) return shellState;
   if (routeMode === "path") return readPathModePublicRuntimeState(publicSlug, slug);
   try {
@@ -2115,24 +2113,14 @@ function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson): Th
   };
 }
 
-function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Site["pages"][number] {
+function baseToolDetailPageForSite(site: Site, page?: Site["pages"][number]): Site["pages"][number] | undefined {
   const existingToolPage =
     page ??
     site.pages.find((item) => item.slug === "/ai-video-generation") ??
     site.pages.find((item) => item.slug === "/tools/image-studio") ??
     site.pages.find((item) => item.pageType === "ai_tool" && /^\/(?:tools|ai-video-generation)\/[^/]+$/.test(item.slug));
   if (existingToolPage) return existingToolPage;
-  const template = clonePageJson(dreamshootAiStudioTemplates["tool-detail"]);
-  return {
-    id: `${site.id}_synthetic_tool_detail`,
-    siteId: site.id,
-    pageType: "ai_tool",
-    templateKey: "tool-detail",
-    slug: "/tools/image-studio",
-    title: "AI tool",
-    draftJson: template,
-    publishedJson: template
-  };
+  return undefined;
 }
 
 function isAidreamcapesStorefront(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
@@ -2482,7 +2470,7 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
   if (isPublicVideoTopic) {
     return {
       siteAiApps,
-      page: page ?? baseToolDetailPageForSite(site, page),
+      page,
       app: undefined,
       // The public topic route is valid only when its immutable publication
       // contains a dedicated landing page. Generic tool pages never stand in
@@ -2517,9 +2505,10 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     : undefined;
   const toolBlock = menuTool
     ? toolBlockFromMenuItem(menuTool)
-    : themeToolBlock ?? databaseThemeToolBlock ?? (explicitAidreamcapesToolSlug ? aidreamcapesToolBlockForSlug(site, canonicalToolSlug) : isAidreamcapes ? undefined : fallbackToolBlockForSlug(canonicalToolSlug));
+    : themeToolBlock ?? databaseThemeToolBlock ?? (explicitAidreamcapesToolSlug ? aidreamcapesToolBlockForSlug(site, canonicalToolSlug) : undefined);
   const localizedToolBlock = toolBlock ? spanishXbyToolBlockForSite(site, toolBlock) : undefined;
   const basePage = baseToolDetailPageForSite(site, page);
+  if (!basePage) return { siteAiApps, page: undefined, app, matched: false, resolvedSlug };
   const synthesizedPage = localizedToolBlock
     ? synthesizeToolDetailPage(
         basePage.publishedJson,
@@ -2531,7 +2520,7 @@ export function resolveToolPageForSite(state: PlatformState, site: Site, toolSlu
     : undefined;
   const matched = isAidreamcapes
     ? !aidreamcapesAliasTarget && Boolean(page || directApp || menuTool || themeToolBlock || explicitAidreamcapesToolSlug)
-    : Boolean(page || directApp || legacyImageApp || databaseVideoTheme || toolBlock || aliasMap.has(toolSlug) || aliasMap.has(directPageSlug) || aliasMap.has(normalizedToolSlug));
+    : Boolean(page || directApp || legacyImageApp || databaseVideoTheme || toolBlock);
   return { siteAiApps, page: synthesizedPage ? { ...basePage, slug: normalizedPageSlug, title: blockString(localizedToolBlock!, "title", basePage.title), publishedJson: synthesizedPage } : basePage, app, matched, resolvedSlug };
 }
 
@@ -2956,7 +2945,7 @@ export async function renderStorefrontSectionPayloads({
     : undefined;
   const directPage = resolvedToolDetail?.matched
     ? resolvedToolDetail.page
-    : findPage(currentSite, internalSlug) ?? syntheticDreamShootPartnerPage(currentSite, internalSlug);
+    : findPage(currentSite, internalSlug);
   if (!directPage) return [];
   if (isFocusedCollectionPage && isPrimaryMydreamshootsStorefront(currentSite) && resolvePublishedRouteDisposition(publishedSnapshot, renderPagePath).kind !== "render") return [];
   if (isFocusedCollectionPage) {
@@ -3150,7 +3139,7 @@ export async function renderStorefrontSectionPayload({
     : undefined;
   const directPage = resolvedToolDetail?.matched
     ? resolvedToolDetail.page
-    : findPage(currentSite, internalSlug) ?? syntheticDreamShootPartnerPage(currentSite, internalSlug);
+    : findPage(currentSite, internalSlug);
   if (!directPage) return undefined;
   if (isFocusedCollectionPage && isPrimaryMydreamshootsStorefront(currentSite) && resolvePublishedRouteDisposition(publishedSnapshot, renderPagePath).kind !== "render") return undefined;
   if (isFocusedCollectionPage) {
@@ -3280,41 +3269,6 @@ export async function renderStorefrontSectionPayload({
     runtime,
     section,
     site: routedSite as RoutedSite
-  };
-}
-
-function syntheticDreamShootPartnerPage(site: Site, slug: string): ThemePage | undefined {
-  if (!dreamshootPartnerTemplateSlugs.has(slug)) return undefined;
-  if (!usesSharedDreamShootNavigation(site)) return undefined;
-  const templateKey =
-    slug === "/workflow" ? "workflow" :
-    slug === "/faq" ? "help" :
-    slug === "/partner-registration" ? "partner-registration" :
-    slug === "/about-us" ? "about-us" :
-    slug === "/contact-us" ? "contact-us" :
-    slug === "/best-packages" ? "best-packages" :
-    slug === "/best-ai-image" ? "best-ai-image" :
-    slug === "/best-ai-video" ? "best-ai-video" :
-    "creators-circle";
-  const pageJson = dreamshootAiStudioTemplatesForSite(site)[templateKey];
-  return {
-    id: `${site.id}_${templateKey}_synthetic`,
-    siteId: site.id,
-    pageType: pageJson.pageType,
-    templateKey,
-    slug,
-    title:
-      templateKey === "workflow" ? "How It Works" :
-      templateKey === "help" ? "FAQ" :
-      templateKey === "partner-registration" ? "Partner Registration" :
-      templateKey === "about-us" ? "About Us" :
-      templateKey === "contact-us" ? "Contact Us" :
-      templateKey === "best-packages" ? "Best Packages" :
-      templateKey === "best-ai-image" ? "Best AI image" :
-      templateKey === "best-ai-video" ? "Best AI video" :
-      "Creators Circle",
-    draftJson: pageJson,
-    publishedJson: pageJson
   };
 }
 
@@ -3656,8 +3610,9 @@ export async function renderToolPage({
   const candidate = resolvedPage
     ? { page: resolvedPage, matched: true }
     : resolveToolPageForSite(state, currentSite, toolSlug, renderData.siteAiApps, renderData.creativePacks);
-  const page = publishedSnapshot.pages.find((publishedPage) => publishedPage.id === candidate.page.id);
-  if (!candidate.matched || !page) notFound();
+  if (!candidate.matched || !candidate.page) notFound();
+  const page = publishedSnapshot.pages.find((publishedPage) => publishedPage.id === candidate.page!.id);
+  if (!page) notFound();
   const toolRenderData = trimToolDetailRenderData(renderData);
   currentSite.mediaAssets = toolRenderData.mediaAssets;
   const settings = currentSite.themeSettings.publishedJson;

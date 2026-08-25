@@ -2868,6 +2868,16 @@ const MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES: Record<string, string> = {
   "promo-video": "Create promotional AI videos for campaigns",
   "motion-generator": "Turn photos into AI videos with motion"
 };
+const MYDREAMSHOOTS_HOMEPAGE_VIDEO_ORDER = [
+  "talking-photo",
+  "cinematic-video",
+  "tiktok-video",
+  "instagram-reels",
+  "product-video",
+  "product-ad-video",
+  "promo-video",
+  "motion-generator"
+];
 
 function sortedByShowcaseSlugs<T>(items: T[], selectedSlugs: string[], slugFor: (item: T) => string, fallbackSortFor?: (item: T) => number): T[] {
   const priorities = new Map(selectedSlugs.map((slug, index) => [dreamshootCategorySlug(slug), index]));
@@ -12759,7 +12769,9 @@ function SectionView({
     const imageAllHref = canonicalGeneratorCopy ? "/best-ai-image" : setting(section, "imageAllHref", "/best-ai-image");
     const videoTitle = canonicalGeneratorCopy ? mydreamProfileSite ? mydreamshootsHomepageCopy.videoTitle : "Featured AI Video Generators" : setting(section, "videoTitle", "Featured AI Video Generators");
     const videoAllLabel = canonicalGeneratorCopy ? mydreamProfileSite ? "VIEW ALL VIDEO" : "View all videos" : setting(section, "videoAllLabel", "View all videos");
-    const videoAllHref = canonicalGeneratorCopy ? "/best-ai-video" : setting(section, "videoAllHref", "/best-ai-video");
+    const videoAllHref = canonicalGeneratorCopy
+      ? mydreamProfileSite ? "/ai-video-generation" : "/best-ai-video"
+      : setting(section, "videoAllHref", "/best-ai-video");
     const primaryHref = canonicalGeneratorCopy ? "/app/create" : setting(section, "primaryHref", "/app/create");
     const useMydreamShowcaseGrid = mydreamProfileSite && renderContext.pagePath === "/";
     const configuredVideoItemLimit = numberSetting(section, "videoItemLimit", numberSetting(section, "itemLimit", 8));
@@ -12954,57 +12966,40 @@ function SectionView({
         // Keep the existing database-backed showcase visible while an older active
         // publication is waiting for the homepage projection migration.
       } else {
-      // Keep the homepage video rail backed by the real, database-backed video
-      // themes. The immutable SEO projection intentionally stores topic-page
-      // media only, so using its video items here would silently fall back to
-      // hero images instead of the existing playable MP4 examples.
-      const selectedVideoSlugs = listLines(setting(section, "videoSlugs"));
-      const realVideoCards = generationShowcaseVideoCardsForSite(
-        publicVideoThemesForShowcase(site, videoThemes),
-        selectedVideoSlugs,
-        8
+      const projectedVideosByPath = new Map(
+        publishedHomepageItems
+          .filter((item) => item.kind === "video")
+          .map((item) => [item.canonicalPath, item])
       );
-      const projectedVideoItems: PublishedHomepageShowcaseItem[] = realVideoCards.map((card, index) => ({
-        id: `homepage-real-video-${card.id}`,
-        kind: "video",
-        pageEntityId: card.id,
-        canonicalPath: "/best-ai-video",
-        title: card.title,
-        subtitle: MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES[card.slug] ?? card.meta,
-        category: card.meta,
-        sortOrder: index + 1,
-        imageUrl: card.posterUrl,
-        imageAlt: `${card.title} video example thumbnail`,
-        videoUrl: card.videoUrl,
-        status: "published",
-        indexable: true,
-        sitemapEligible: true,
-        entityRevision: card.id,
-        mediaRevision: card.videoUrl
-      }));
-      const videoItems: PublishedHomepageShowcaseItem[] = projectedVideoItems.length
-        ? projectedVideoItems
-        : selectedVideoSlugs
-            .map((slug) => publishedHomepageItems.find((item) => item.kind === "video" && item.canonicalPath === `/ai-video-generation/${slug}`))
-            .filter((item): item is PublishedHomepageShowcaseItem => Boolean(item))
-            .slice(0, 8)
-            .map((item, index) => ({
-              ...item,
-              id: `homepage-published-video-${item.id}`,
-              sortOrder: index + 1,
-              subtitle: MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES[selectedVideoSlugs[index] ?? ""] ?? item.subtitle
-            }));
+      const videoItems = MYDREAMSHOOTS_HOMEPAGE_VIDEO_ORDER
+        .map((slug, index) => {
+          const item = projectedVideosByPath.get(`/ai-video-generation/${slug}`);
+          return item
+            ? {
+                ...item,
+                id: `homepage-published-video-${item.id}`,
+                sortOrder: index + 1,
+                subtitle: MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES[slug] ?? item.subtitle
+              }
+            : undefined;
+        })
+        .filter((item): item is PublishedHomepageShowcaseItem => Boolean(item));
       const saveTheDateItems = publishedHomepageItems
         .filter((item) => item.kind === "save_the_date")
-        .slice(0, Math.max(1, Math.min(6, numberSetting(section, "saveTheDateItemLimit", 6))));
+        .slice(0, mydreamProfileSite ? 4 : Math.max(1, Math.min(6, numberSetting(section, "saveTheDateItemLimit", 6))));
       const photoItems = publishedHomepageItems.filter((item) => item.kind === "photo").slice(0, 8);
       const renderPublishedCard = (item: PublishedHomepageShowcaseItem) => {
         const href = hrefFor(site, item.canonicalPath);
         const compactCard = item.kind === "save_the_date";
+        // The TikTok and Instagram source artwork is portrait-oriented with a
+        // blurred bleed around the intended frame. Crop that decorative bleed
+        // on the homepage so these cards match the direct image presentation.
+        const cropPortraitBleed = /\/(?:tiktok-video|instagram-reels)\/?$/.test(item.canonicalPath);
+        const mediaClassName = `h-full w-full object-cover${cropPortraitBleed ? " scale-[1.55]" : ""}`;
         const media = item.videoUrl ? (
-          <DreamshootShowcaseVideo className="h-full w-full object-cover" label={item.imageAlt} poster={mediaAssetUrl(site, item.imageUrl)} priority={false} src={mediaAssetUrl(site, item.videoUrl)} />
+          <DreamshootShowcaseVideo className={mediaClassName} label={item.imageAlt} poster={mediaAssetUrl(site, item.imageUrl)} priority={false} src={mediaAssetUrl(site, item.videoUrl)} />
         ) : (
-          <StorefrontImage alt={item.imageAlt} className="h-full w-full object-cover" loading="lazy" preview={false} sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw" src={mediaAssetUrl(site, item.imageUrl)} />
+          <StorefrontImage alt={item.imageAlt} className={mediaClassName} loading="lazy" preview={false} sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw" src={mediaAssetUrl(site, item.imageUrl)} />
         );
         return (
           <Link
@@ -13028,7 +13023,7 @@ function SectionView({
           {renderShowcaseSubsectionHeader(title, href, label, kind)}
           <p className="mx-auto mt-4 max-w-[64rem] text-center text-sm leading-7 text-white/66">{intro}</p>
             <div className={kind === "save_the_date"
-            ? "mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4"
+            ? "mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6"
             : "mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"}>
             {items.map(renderPublishedCard)}
           </div>
@@ -14256,7 +14251,11 @@ function SectionView({
         <div className="mx-auto grid max-w-[var(--site-content-width)] overflow-hidden rounded-[1.7rem] border border-[#ddd7cb] bg-[#fbfaf7] shadow-[0_28px_75px_-52px_rgba(20,22,26,0.24)] md:grid-cols-[1fr_0.78fr]">
           <div className="p-8 text-[#14161a] md:p-12">
             <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#7a7c80]">{setting(section, "eyebrow", "Start creating")}</p>
-            <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "AI photo tools")}</h2>
+            {isMyDreamShootsProfileSite(site) && renderContext.pagePath === "/" ? (
+              <p className="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "AI photo tools")}</p>
+            ) : (
+              <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "AI photo tools")}</h2>
+            )}
             <p className="mt-5 max-w-2xl text-sm leading-7 text-[#64686f]">{setting(section, "subtitle")}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link className="inline-flex items-center gap-2 rounded-full bg-[#14161a] px-5 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "primaryHref", "/login"))}>
@@ -17126,41 +17125,9 @@ function SectionView({
     const spanishBlog = isSpanishXbySite(site);
     const aidreamcapesBlog = isAidreamcapesSite(site);
     const guideType = setting(section, "guideType", spanishBlog ? aidreamcapesBlog ? "Nota de viaje IA" : "Guia de fotos IA" : "AI photo guide");
-    const fallbackArticles: BlogArticleCard[] = (spanishBlog
-      ? aidreamcapesBlog
-        ? ["Como preparar fotos fuente", "Creditos y entrega de ruta", "Planificar un destino visual"]
-        : ["Como elegir selfies fuente", "Creditos y entrega del album", "Planificar un set tematico IA"]
-      : ["How to choose upload photos", "Credits and album delivery", "Planning a themed AI shoot"]).map((title, index) => {
-        const description = setting(section, "body", spanishBlog ? "Guia editorial para preparar mejores resultados de fotos con IA." : "Editorial guidance for planning better AI photo results.");
-        const imageUrl = mediaAssetUrl(site, fallbackImageForSeed(`${site.slug}-blog-${index}`));
-        return {
-          id: `fallback_blog_${index}`,
-          slug: "/blog",
-          href: "/blog",
-          title,
-          description,
-          imageUrl,
-          imageAlt: cardImageAltForSite(site, {
-            category: guideType,
-            description,
-            imageUrl,
-            meta: title,
-            role: "article",
-            title
-          }),
-          author: aidreamcapesBlog ? "Aidreamcapes editorial team" : "myDreamshoots editorial team",
-          publishedAt: "",
-          updatedAt: "",
-          readMinutes: articleReadTimeLabel("6"),
-          tags: [guideType],
-          guideType,
-          targetHref: "/blog",
-          targetLabel: title,
-          sortTime: 0
-        };
-      });
     const articles = blogArticleCardsForSite(site, renderContext.pagePath);
-    const visibleArticles = articles.length ? articles : fallbackArticles;
+    const visibleArticles = articles;
+    if (!visibleArticles.length) return null;
     const defaultHeadingLevel = renderContext.page.pageType === "article" ? "h2" : "h1";
     const HeadingTag = setting(section, "headingLevel", defaultHeadingLevel) === "h2" ? "h2" : "h1";
     const blogHomeList = renderContext.pagePath === "/blog" && renderContext.page.pageType === "blog";
