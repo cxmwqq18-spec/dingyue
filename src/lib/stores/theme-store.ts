@@ -2003,7 +2003,7 @@ export async function resetDraftThemeFromActiveRelational(
   }, { timeout: 60000 });
 }
 
-export async function publishDraftPageRelational(
+async function disabledLegacyPublishDraftPageRelational(
   siteId: string,
   pageId: string,
   actor = "site_admin_demo",
@@ -2179,10 +2179,14 @@ function approvalItemsForManifest(siteId: string, manifest: StorefrontPublishMan
 }
 
 async function sourceRevisionsForPublish(siteId: string, db: PrismaLike = prisma) {
-  const [mediaAssets, packs, products] = await Promise.all([
+  const [mediaAssets, packs, products, siteAiApps, pages, settings, profile] = await Promise.all([
     db.mediaAsset.findMany({ where: { siteId }, orderBy: { id: "asc" }, select: { id: true, updatedAt: true, storageKey: true, altText: true } }),
     db.creativePack.findMany({ where: { siteId }, orderBy: { id: "asc" }, select: { id: true, updatedAt: true, imageUrl: true, galleryImages: true } }),
-    db.product.findMany({ where: { siteId }, orderBy: { id: "asc" }, include: { prices: true } })
+    db.product.findMany({ where: { siteId }, orderBy: { id: "asc" }, include: { prices: true } }),
+    db.siteAiApp.findMany({ where: { siteId }, orderBy: { id: "asc" } }),
+    db.themePage.findMany({ where: { siteId }, orderBy: { id: "asc" }, select: { id: true, publishedJson: true, draftJson: true, updatedAt: true } }),
+    db.themeSettings.findUnique({ where: { siteId }, select: { siteId: true, draftJson: true, updatedAt: true } }),
+    db.storefrontProfile.findUnique({ where: { siteId }, select: { siteId: true, draftJson: true, updatedAt: true } })
   ]);
   const rows: Record<string, { objectType: string; objectId: string; ownerId: string; revision: string; etag: string; valueHash: string }> = {};
   const add = (objectType: string, objectId: string, value: unknown, updatedAt: Date | null) => {
@@ -2192,6 +2196,13 @@ async function sourceRevisionsForPublish(siteId: string, db: PrismaLike = prisma
   mediaAssets.forEach((row) => add("media_asset", row.id, row, row.updatedAt));
   packs.forEach((row) => add("creative_pack", row.id, row, row.updatedAt));
   products.forEach((row) => add("product_offer", row.id, row, row.updatedAt));
+  siteAiApps.forEach((row) => add("site_ai_app", row.id, row, row.updatedAt));
+  if (settings) add("navigation", siteId, settings.draftJson, settings.updatedAt);
+  if (profile) add("facts", siteId, profile.draftJson, profile.updatedAt);
+  pages.forEach((row) => {
+    const json = row.draftJson && typeof row.draftJson === "object" && !Array.isArray(row.draftJson) ? row.draftJson as Record<string, unknown> : {};
+    add("page_links", row.id, json.links ?? json.relatedLinks ?? json.sections ?? {}, row.updatedAt);
+  });
   return rows;
 }
 
@@ -2234,8 +2245,8 @@ export async function createThemePublishApprovalRelational(input: ThemePublishAp
   if (!input.siteId.trim()) throw new RelationalStoreError("theme_publish_site_required", 400);
   if (!input.approvedBy.trim()) throw new RelationalStoreError("theme_publish_approver_required", 400);
   if (input.expiresAt && input.expiresAt <= new Date()) throw new RelationalStoreError("theme_publish_approval_expired", 400);
-  const prepared = await prepareDraftPublishManifestRelational(input.siteId);
-  const manifest = input.manifest.sourceRevisions ? input.manifest : prepared;
+  if (!input.manifest.sourceRevisions) throw new RelationalStoreError("theme_publish_source_revisions_required", 409);
+  const manifest = input.manifest;
   const expectedHash = storefrontPublishManifestHash(manifest);
   if (manifest.manifestHash !== expectedHash) throw new RelationalStoreError("theme_publish_manifest_hash_invalid", 409);
   const items = approvalItemsForManifest(input.siteId, manifest);

@@ -62,7 +62,9 @@ function objectContainsProperty(node, name) {
   for (const property of node.properties) {
     if (ts.isPropertyAssignment(property)) {
       if (propertyName(property.name) === name) {
-        return !(ts.isObjectLiteralExpression(property.initializer) && property.initializer.properties.length === 0);
+        if (ts.isObjectLiteralExpression(property.initializer) && property.initializer.properties.length === 0) return false;
+        if (ts.isCallExpression(property.initializer) && ts.isIdentifier(property.initializer.expression) && property.initializer.expression.text === "toPrismaJson" && property.initializer.arguments[0]?.getText().includes("EMPTY_UNPUBLISHED")) return false;
+        return true;
       }
       if (objectContainsProperty(property.initializer, name)) return true;
     } else if (ts.isShorthandPropertyAssignment(property) && property.name.text === name) {
@@ -93,7 +95,7 @@ function checkFile(relative) {
     if (ts.isCallExpression(node)) {
       const chain = accessChain(node.expression);
       if (isPublicationWrite(chain) && !allowed && !(migrationOnlyPaths.has(relative) && process.env.DATABASE_TARGET === "test")) failures.push({ file: relative, line: lineOf(sourceFile, node), kind: "publication-write", match: chain.join(".") });
-      if (chain.at(-1) === "update" || chain.at(-1) === "updateMany" || chain.at(-1) === "upsert") {
+      if (["create", "createMany", "update", "updateMany", "upsert"].includes(chain.at(-1))) {
         const model = chain.at(-2);
         if (["themePage", "themeSettings", "storefrontProfile"].includes(model) && node.arguments.some((argument) => objectContainsProperty(argument, "publishedJson")) && !allowed && !(migrationOnlyPaths.has(relative) && process.env.DATABASE_TARGET === "test")) {
           failures.push({ file: relative, line: lineOf(sourceFile, node), kind: "published-json-write", match: chain.join(".") });
