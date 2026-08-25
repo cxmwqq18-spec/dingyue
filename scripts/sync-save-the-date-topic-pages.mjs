@@ -2,6 +2,7 @@
 import "./load-runtime-env.mjs";
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import Module from "node:module";
 import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
@@ -19,11 +20,6 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
-const removedLegacyPaths = new Set([
-  "/holidays-events/christmas",
-  "/holidays-events/thanksgiving",
-  "/holidays-events/new-year"
-]);
 const defaultSourceRoot = "/Users/a1/Downloads";
 const packages = [
   { key: "engagement", sourceDir: process.env.SAVE_THE_DATE_ENGAGEMENT_SOURCE_DIR || path.join(defaultSourceRoot, "ai-save-the-date-engagement 3"), pagePath: "/holidays-events/engagement", pageKey: "engagement", structureLabels: ["hero", "intent clarification", "three video story structures", "how it works", "eight video scene directions", "video quality standards", "output formats", "page boundaries", "product evidence gate", "faq", "related video pages"], sectionIds: ["hero", "intent", "story-structures", "workflow", "scene-directions", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"], faqCount: 8, mediaCount: 11 },
@@ -294,18 +290,65 @@ try {
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
   await prisma.$transaction(async (tx) => {
     const settings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
-    const groups = parsed.map((item, index) => ({ label: item.key === "save-the-date" ? "Save the Date" : item.key[0].toUpperCase() + item.key.slice(1), slug: item.key, sortOrder: index + 1, items: [{ label: item.key === "save-the-date" ? "Save the Date" : item.key[0].toUpperCase() + item.key.slice(1), slug: item.key, href: item.pagePath, status: "published", sortOrder: 1 }] }));
-    const existingNavigation = settings.saveTheDateNavigation?.groups ?? [];
-    const existingLoveItems = (existingNavigation.find((group) => group.slug === "love-wedding")?.items ?? []).filter((item) => !removedLegacyPaths.has(item.href));
-    const loveItems = [...existingLoveItems.filter((item) => item.href === "/ai-save-the-date/valentines-day"), ...groups.flatMap((group) => group.items)]
-      .filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index);
-    const preservedGroups = existingNavigation.filter((group) => group.slug !== "love-wedding");
-    const nextSettings = { ...settings, saveTheDateNavigation: { menuLabel: settings.saveTheDateNavigation?.menuLabel || "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: loveItems.map((item, index) => ({ ...item, sortOrder: index + 1, status: "published" })) }, ...preservedGroups.map((group, index) => ({ ...group, sortOrder: index + 2 }))] } };
+    const navigationPaths = [
+      "/ai-save-the-date/valentines-day",
+      "/holidays-events/engagement",
+      "/holidays-events/proposal",
+      "/holidays-events/save-the-date",
+      "/holidays-events/wedding-invitation",
+      "/ai-video-generation/wedding-ceremony",
+      "/holidays-events/wedding-anniversary",
+      "/holidays-events/christmas",
+      "/holidays-events/thanksgiving",
+      "/holidays-events/new-year",
+      "/holidays-events/mothers-day",
+      "/holidays-events/fathers-day"
+    ];
+    const parsedByPath = new Map(parsed.map((item) => [item.pagePath, item]));
+    const navigationItem = (href, sortOrder) => {
+      const parsedItem = parsedByPath.get(href);
+      const page = siteRecord.pages.find((candidate) => candidate.slug === href);
+      const json = parsedItem?.pageJson || page?.draftJson || page?.publishedJson;
+      const hero = json?.sections?.[json.sectionsOrder?.[0]]?.settings || {};
+      const media = json?.mediaManifest?.[0];
+      const label = href === "/ai-save-the-date/valentines-day"
+        ? "Valentine's Day"
+        : parsedItem?.key === "save-the-date"
+        ? "Save the Date"
+        : parsedItem?.key
+          ? parsedItem.key[0].toUpperCase() + parsedItem.key.slice(1)
+          : page?.title || href.split("/").filter(Boolean).pop()?.replace(/-/g, " ") || href;
+      return {
+        label,
+        slug: href.split("/").filter(Boolean).pop() || href,
+        href,
+        status: "published",
+        sortOrder,
+        description: String(hero.intro || json?.seo?.description || "").trim(),
+        imageUrl: String(hero.imageUrl || media?.src || "").trim(),
+        imageAlt: String(hero.imageAlt || media?.alt || "").trim()
+      };
+    };
+    const groups = [{
+      label: "Love & Wedding",
+      slug: "love-wedding",
+      sortOrder: 1,
+      items: navigationPaths.slice(0, 4).map((href, index) => navigationItem(href, index + 1))
+    }, {
+      label: "Seasonal Holidays",
+      slug: "seasonal-holidays",
+      sortOrder: 2,
+      items: navigationPaths.slice(4).map((href, index) => navigationItem(href, index + 1))
+    }];
+    const nextSettings = { ...settings, saveTheDateNavigation: { menuLabel: settings.saveTheDateNavigation?.menuLabel || "Save the Date", groups } };
     await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: {} }, update: { draftJson: nextSettings } });
     for (const item of parsed) {
       const pageId = `page_${siteId}_${item.key.replace(/[^a-z0-9]+/gi, "_")}`;
       await tx.themePage.upsert({ where: { siteId_slug: { siteId, slug: item.pagePath } }, create: { id: pageId, siteId, pageType: "standard-content", templateKey: "save-the-date-editorial", slug: item.pagePath, title: item.heading, draftJson: item.pageJson, publishedJson: {} }, update: { pageType: "standard-content", templateKey: "save-the-date-editorial", title: item.heading, draftJson: item.pageJson } });
-      for (const asset of item.manifest) await tx.mediaAsset.upsert({ where: { siteId_storageKey: { siteId, storageKey: asset.src } }, create: { id: `media_${siteId}_${item.key}_${asset.filename.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}`, siteId, label: asset.filename, storageKey: asset.src, mimeType: "image/jpeg", usageType: "theme", sourceType: `save-the-date-${item.key}-source`, previewUrl: asset.src, originUrl: asset.src, altText: asset.alt, notes: asset.caption }, update: { altText: asset.alt, notes: asset.caption, previewUrl: asset.src, originUrl: asset.src } });
+      for (const asset of item.manifest) {
+        const assetId = `media_${siteId}_${crypto.createHash("sha1").update(asset.src).digest("hex").slice(0, 16)}`;
+        await tx.mediaAsset.upsert({ where: { siteId_storageKey: { siteId, storageKey: asset.src } }, create: { id: assetId, siteId, label: asset.filename, storageKey: asset.src, mimeType: "image/jpeg", usageType: "theme", sourceType: `save-the-date-${item.key}-source`, previewUrl: asset.src, originUrl: asset.src, altText: asset.alt, notes: asset.caption }, update: { altText: asset.alt, notes: asset.caption, previewUrl: asset.src, originUrl: asset.src } });
+      }
     }
   }, { maxWait: 20_000, timeout: 120_000 });
   const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
