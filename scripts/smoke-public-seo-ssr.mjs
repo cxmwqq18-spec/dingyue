@@ -6,7 +6,7 @@ const base = new URL(baseUrl);
 const storefrontRoutes = [
   {
     host: "www.mydreamshoots.com",
-    paths: ["/", "/collections", "/tools", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/workflow", "/faq", "/blog", "/about-us", "/contact-us"]
+    paths: ["/", "/collections", "/tools", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/workflow", "/faq", "/blog", "/about-us", "/contact-us", "/ai-video-generation", "/ai-video-generation/motion-generator", "/holidays-events/save-the-date"]
   },
   {
     host: "www.aidreamcapes.com",
@@ -169,6 +169,10 @@ async function crawlPublicPathsForHost(host) {
     assert(
       !html.includes("/storefront-section"),
       `${host}${path} must not embed storefront section API URLs in initial HTML`
+    );
+    assert(
+      !html.includes('data-lazy-storefront-section="true"'),
+      `${host}${path} must contain complete server-rendered sections`
     );
     results.push({ host, path, htmlBytes: Buffer.byteLength(html) });
     for (const linkPath of internalPathsFromHtml(host, html)) {

@@ -1,6 +1,3 @@
-"use client";
-
-import { useMemo } from "react";
 import { ArrowRight } from "lucide-react";
 import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 import { photoPackageLabel, photoPackageSlug } from "@/lib/photo-package-taxonomy";
@@ -342,10 +339,7 @@ export function DreamshootPackageCatalogClient({
   title: string;
 }) {
   const selectedCategory = categorySlug(initialCategory || "all");
-  const visibleCards = useMemo(
-    () => cards.filter((card) => categoryMatches(card, selectedCategory)),
-    [cards, selectedCategory]
-  );
+  const visibleCards = cards.filter((card) => categoryMatches(card, selectedCategory));
   const displayCards = visibleCards.length ? visibleCards : cards;
   const useReferenceCards = locale === "en";
   const featuredLimit = Math.max(1, Math.min(featuredCount, displayCards.length || featuredCount));

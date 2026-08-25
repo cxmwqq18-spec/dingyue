@@ -1,6 +1,3 @@
-"use client";
-
-import { useMemo } from "react";
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 import { storefrontCardImageAlt } from "@/lib/storefront-media-alt";
@@ -205,13 +202,13 @@ export function PackageTaxonomyClient({
   locale?: "en" | "es";
   variant?: "dark" | "cream";
 }) {
-  const initialCard = useMemo(() => {
+  const initialCard = (() => {
     const normalized = initialSlug.trim().toLowerCase();
     if (!normalized) return null;
     return cards.find((card) => slugFromHref(card.href).toLowerCase() === normalized) ?? null;
-  }, [cards, initialSlug]);
+  })();
   const selected = initialCard;
-  const taxonomyGroups = useMemo(() => {
+  const taxonomyGroups = (() => {
     const groups = new Map<string, { key: string; label: string; cards: PackageTaxonomyCard[] }>();
     cards.forEach((card) => {
       const key = card.groupKey?.trim() || "all-packages";
@@ -224,7 +221,7 @@ export function PackageTaxonomyClient({
       }
     });
     return Array.from(groups.values());
-  }, [cards, locale]);
+  })();
 
   if (selected) {
     const spanish = locale === "es";

@@ -25,6 +25,12 @@ function sectionIdsFromParams(searchParams: URLSearchParams): string[] {
 }
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ siteSlug: string }> }) {
+  // This endpoint is retained only for controlled preview tooling. Published
+  // storefront HTML is rendered in one server pass and must never be filled
+  // by a browser-side section request.
+  if (request.headers.get("x-storefront-preview") !== "1") {
+    return NextResponse.json({ ok: false, error: "public_section_fetch_disabled" }, { status: 404 });
+  }
   const { siteSlug } = await params;
   const searchParams = request.nextUrl.searchParams;
   const pagePath = searchParams.get("pagePath") || "/";

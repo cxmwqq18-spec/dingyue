@@ -1,6 +1,3 @@
-"use client";
-
-import { useMemo } from "react";
 import { ArrowRight, ChevronRight } from "lucide-react";
 
 export type DreamshootToolDirectoryCard = {
@@ -43,10 +40,7 @@ export function DreamshootToolDirectoryClient({
   sectionId: string;
 }) {
   const spanish = locale === "es";
-  const allCategories = useMemo(
-    () => Array.from(new Set([...categories, ...cards.map((card) => card.category)])),
-    [categories, cards]
-  );
+  const allCategories = Array.from(new Set([...categories, ...cards.map((card) => card.category)]));
 
   return (
     <>

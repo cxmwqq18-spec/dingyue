@@ -8,8 +8,6 @@ import { CustomerAccountDataIsland } from "@/components/storefront/customer-acco
 import { CustomerAssetDownloadButton } from "@/components/storefront/customer-asset-download-button";
 import { CustomerBootstrapPrefetch, CustomerHeaderBootstrapControls, CustomerWorkspaceRuntimePrefetch } from "@/components/storefront/customer-bootstrap-client";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
-import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
-import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-prefetch";
 import { DreamshootPackageCatalogClient, type DreamshootCategoryHrefOverrides } from "@/components/storefront/dreamshoot-package-catalog-client";
 import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 import { DreamshootShowcaseRail } from "@/components/storefront/dreamshoot-showcase-rail";
@@ -18,7 +16,6 @@ import { DreamshootToolDirectoryClient, type DreamshootToolDirectoryCard } from 
 import { SaveTheDateDirectory } from "@/components/storefront/save-the-date-directory";
 import { DreamShootMegaToolsPanel as SharedDreamShootMegaToolsPanel, getToolBlocksFromMenuItems as getSharedToolBlocksFromMenuItems } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderMobileVideoGenerationMenu, HeaderMobileSaveTheDateMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, HeaderVideoGenerationMegaPanel, HeaderSaveTheDateMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
-import { LazyStorefrontSection } from "@/components/storefront/lazy-storefront-section";
 import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
@@ -93,13 +90,23 @@ function Link(props: StorefrontInstantLinkProps) {
 const dreamShootsVisibleTitle = "myᕲreamshoots";
 const aidreamcapesVisibleTitle = "ልiጋreamርapes";
 
-function publicPrefetchCandidatesForPath(path: string) {
-  if (path === "/") return ["/login", "/ai-image-generation", "/ai-video-generation", "/pricing"];
-  if (path === "/collections" || path.startsWith("/collections/") || path === "/ai-image-generation" || path.startsWith("/ai-image-generation/")) return ["/", "/pricing", "/ai-video-generation"];
-  if (path === "/ai-video-generation" || path.startsWith("/ai-video-generation/") || path === "/tools" || path.startsWith("/tools/")) return ["/", "/pricing", "/ai-image-generation"];
-  if (path === "/pricing") return ["/", "/ai-image-generation", "/ai-video-generation", "/faq"];
-  if (path === "/faq" || path === "/help") return ["/", "/ai-image-generation", "/ai-video-generation", "/pricing"];
-  return ["/", "/ai-image-generation", "/ai-video-generation", "/pricing"];
+type NativeMegaMenuProps = {
+  blockAttrs?: Record<string, string | number | boolean | undefined>;
+  buttonClassName: string;
+  children: ReactNode;
+  disablePrefetch?: boolean;
+  label: string;
+  panelClassName: string;
+  prefetchPaths?: string[];
+};
+
+function NativeMegaMenu({ blockAttrs, buttonClassName, children, label, panelClassName }: NativeMegaMenuProps) {
+  return (
+    <details className="relative" {...blockAttrs}>
+      <summary className={buttonClassName}>{label}</summary>
+      <div className={panelClassName}>{children}</div>
+    </details>
+  );
 }
 
 import { getSectionSchema, getThemeBlockSchema, readThemeFieldValue, resolveThemeFieldSchema } from "@/lib/section-schema";
@@ -240,17 +247,16 @@ export function ThemeRenderer({
   const normalizedPath = pagePath ?? sitePathFromPage(displaySite, page.pageType);
   const entries = visibleSectionEntriesForRoute(getSectionEntries(displayPage), normalizedPath, displaySite);
   const publicSlug = publicSiteSlug(site.slug);
-  const lazyRouteMode: StorefrontRouteMode = routeMode === "host" ? "host" : "path";
-  const disablePublicSeoPrefetch = mode === "published" && isPublicSeoRoute(normalizedPath);
-  const disableStorefrontPrefetch = mode === "preview" || disablePublicSeoPrefetch;
+  // Public storefront HTML is the complete data boundary.  Published pages
+  // must never defer a section to a browser API request or warm an RSC route.
+  // Private workspace pages keep their own client runtime, but they do not
+  // use this public page renderer for content sections.
+  const publicStorefrontPage = mode === "published" && !isPrivateStorefrontPath(normalizedPath);
+  const disableStorefrontPrefetch = mode === "preview" || publicStorefrontPage;
   const routedSite: RoutedSite = {
     ...displaySite,
     __storefrontBasePath: routeMode === "host" ? "" : `/site/${publicSlug}`
   };
-  const publicPrefetchPaths = mode === "published" && !disableStorefrontPrefetch
-    ? publicPrefetchCandidatesForPath(normalizedPath).map((path) => hrefFor(routedSite, path))
-    : [];
-  const storefrontPrefetchPaths = Array.from(new Set(publicPrefetchPaths)).slice(0, 4);
   const renderContext = {
     pagePath: normalizedPath,
     query,
@@ -258,14 +264,12 @@ export function ThemeRenderer({
     pages: pageNeedsSearchEntries(displayPage) ? searchPageEntriesForSite(displaySite) : []
   };
   const previewHasEmptyBody = mode === "preview" && entries.length === 0;
-  const focusedCollectionRoute = Boolean(collectionSlugFromPath(normalizedPath) || ((normalizedPath === "/collections" || normalizedPath === "/ai-image-generation") && typeof query.category === "string" && query.category));
   return (
     <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
       <div
         className="bg-[var(--site-bg)] text-[var(--site-fg)] [font-family:var(--site-text-font)]"
         suppressHydrationWarning={mode === "published"}
       >
-        {storefrontPrefetchPaths.length ? <CustomerRoutePrefetch paths={storefrontPrefetchPaths} /> : null}
         {runtime?.customer && runtime.clientBootstrapCustomer === true && mode === "published" ? (
           <>
             <CustomerBootstrapPrefetch mode="shell" siteSlug={publicSlug} />
@@ -299,28 +303,8 @@ export function ThemeRenderer({
           />
         </div>
         <main className={previewHasEmptyBody ? "flex min-h-0 flex-1 flex-col" : undefined} data-theme-sections-root="">
-          {entries.length ? entries.map(([id, section], index) => {
-            const sectionType = canonicalSectionType(section.type);
-            const shouldServerRenderPublicSeo = shouldServerRenderPublicSeoSection(normalizedPath, sectionType);
-            const shouldLazyRender = mode === "published" &&
-              index > 0 &&
-              sectionType !== "policy_content" &&
-              sectionType !== "blog_article" &&
-              sectionType !== "blog_list" &&
-              sectionType !== "video_feature" &&
-              sectionType !== "mobile_video_showcase" &&
-              !isPublicSeoRoute(normalizedPath) &&
-              !shouldServerRenderPublicSeo &&
-              (!focusedCollectionRoute || !shouldServerRenderFocusedCollectionSection(sectionType));
-            return shouldLazyRender ? (
-              <LazyStorefrontSection
-                apiPath={storefrontSectionApiPath(publicSlug, normalizedPath, id, query, lazyRouteMode)}
-                intrinsicSize={lazyIntrinsicSectionSize(sectionType)}
-                key={id}
-                sectionId={id}
-                sectionType={section.type}
-              />
-            ) : (
+          {entries.length ? entries.map(([id, section]) => {
+            return (
               <ThemeSectionFrame
                 creativePackCategories={creativePackCategories}
                 creativePacks={creativePacks}
@@ -836,22 +820,6 @@ function lazyIntrinsicSectionSize(sectionType: string): string {
   return "720px";
 }
 
-function shouldServerRenderFocusedCollectionSection(sectionType: string): boolean {
-  return sectionType === "seo_directory_content" ||
-    sectionType === "dreamshoot_package_taxonomy" ||
-    sectionType === "dreamshoot_theme_cta" ||
-    sectionType === "dreamshoot_theme_faq" ||
-    sectionType === "policy_content";
-}
-
-const publicSeoCriticalSectionTypes = new Set([
-  "pricing_table",
-  "testimonial_wall",
-  "reviews",
-  "trust_signal_bar",
-  "brand_logo_strip"
-]);
-
 function isPublicSeoRoute(pagePath: string): boolean {
   return pagePath === "/" ||
     pagePath === "/pricing" ||
@@ -887,6 +855,7 @@ function isPublicSeoRoute(pagePath: string): boolean {
     pagePath === "/state-privacy" ||
     pagePath === "/policies/state-privacy" ||
     pagePath.startsWith("/ai-save-the-date/") ||
+    pagePath.startsWith("/holidays-events/") ||
     pagePath.startsWith("/collections/") ||
     pagePath.startsWith("/ai-image-generation/") ||
     pagePath.startsWith("/tools/") ||
@@ -894,38 +863,9 @@ function isPublicSeoRoute(pagePath: string): boolean {
     pagePath.startsWith("/blog/");
 }
 
-function shouldServerRenderPublicSeoSection(pagePath: string, sectionType: string): boolean {
-  if (isPublicSeoRoute(pagePath) && publicSeoCriticalSectionTypes.has(sectionType)) {
-    return true;
-  }
-  if (pagePath === "/pricing") {
-    return sectionType === "pricing_table";
-  }
-  if (pagePath === "/best-packages") {
-    return sectionType === "dreamshoot_featured_pack";
-  }
-  if (pagePath === "/best-ai-image" || pagePath === "/best-ai-video") {
-    return sectionType === "dreamshoot_media_gallery";
-  }
-  if (pagePath === "/best-save-the-date") {
-    return sectionType === "dreamshoot_save_the_date_directory";
-  }
-  if (pagePath === "/collections" || pagePath === "/ai-image-generation") {
-    return sectionType === "rich_text" ||
-      sectionType === "dreamshoot_package_taxonomy";
-  }
-  if (pagePath === "/") {
-    return sectionType === "dreamshoot_visual_proof" ||
-      sectionType === "brand_logo_strip" ||
-      sectionType === "dreamshoot_featured_pack" ||
-      sectionType === "dreamshoot_package_catalog" ||
-      sectionType === "dreamshoot_generation_showcase" ||
-      sectionType === "dreamshoot_flow_bridge" ||
-      sectionType === "dreamshoot_package_taxonomy" ||
-      sectionType === "photo_package_wall" ||
-      sectionType === "feature_grid";
-  }
-  return false;
+function isPrivateStorefrontPath(pagePath: string): boolean {
+  return ["/account", "/album", "/app", "/cart", "/checkout", "/dashboard", "/job", "/login"]
+    .some((prefix) => pagePath === prefix || pagePath.startsWith(`${prefix}/`));
 }
 
 function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: string } | undefined, sectionId: string) {
@@ -934,18 +874,6 @@ function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: 
     "data-xfcart-selected": "true",
     ...(previewSelection.blockId ? { "data-xfcart-selected-block": previewSelection.blockId } : {})
   };
-}
-
-function storefrontSectionApiPath(siteSlug: string, pagePath: string, sectionId: string, query: Record<string, string | string[] | undefined>, routeMode: StorefrontRouteMode) {
-  const params = new URLSearchParams();
-  params.set("pagePath", pagePath);
-  params.set("routeMode", routeMode);
-  params.set("sectionId", sectionId);
-  Object.entries(query).forEach(([key, value]) => {
-    if (typeof value === "string") params.append(key, value);
-    else if (Array.isArray(value)) value.forEach((item) => params.append(key, item));
-  });
-  return `/api/site-slugs/${encodeURIComponent(siteSlug)}/storefront-section?${params.toString()}`;
 }
 
 function AidreamcapesLogoMark({ ariaLabel = "Aidreamcapes logo for private fan-scene and holiday photo albums", className = "h-full w-full" }: { ariaLabel?: string; className?: string }) {
@@ -1074,6 +1002,7 @@ function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic
 
 export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [], homepageShowcases = [], videoGenerationTopics }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[]; homepageShowcases?: PublishedHomepageShowcaseItem[]; videoGenerationTopics?: HeaderVideoGenerationTopic[] }) {
   const HeaderLink = StorefrontInstantLink;
+  const MegaMenu = NativeMegaMenu;
   const header = settings.globalSections?.header;
   const saasHeader = saasGlobalSection(settings, "header_plus");
   const title = header ? setting(header, "title", site.branding.logoText) : site.branding.logoText;
@@ -1522,7 +1451,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
               );
             }
 	            return (
-            <ClickMegaMenu
+            <MegaMenu
 	                blockAttrs={xfcartBlockAttrs(link.block, index, "header_nav")}
 	                buttonClassName={navClass}
                 disablePrefetch={disablePublicSeoPrefetch}
@@ -1570,7 +1499,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                      variant="popover"
 	                    />
 	                  )}
-	              </ClickMegaMenu>
+              </MegaMenu>
             );
           })}
         </nav>

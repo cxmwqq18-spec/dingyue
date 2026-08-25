@@ -368,6 +368,31 @@ localhost 强制读取 legacy JSON
 | 媒体/事实/链接缺失 | 发布 preflight 阻断或降级为明确不可索引状态 |
 | 缓存与 snapshot revision 不一致 | 清缓存/阻断 readback，不得静默混用 |
 
+### 8.4 公开 storefront 禁止浏览器取数
+
+所有公开、可索引 storefront 页面必须在首次响应中输出完整 HTML。浏览器
+JavaScript 不得通过 `fetch`、XHR、EventSource、客户端 API、路由预取或
+warm-fetch 获取页面文案、导航、目录、主题详情、SEO、媒体投影或客户运行时
+数据。公开页面不得依赖 IntersectionObserver 触发 section API 来补正文。
+
+可编辑内容必须遵循：
+
+```text
+PostgreSQL draft
+  -> publish compiler
+  -> active immutable publication snapshot
+  -> server resolver
+  -> complete HTML / metadata / JSON-LD
+```
+
+`use client` 仅可用于不读取业务数据的明确表现层行为；不得成为公开页面的
+第二数据源。`/account`、`/app`、认证、结账、客户生成工作区和后台管理属于
+私有运行时，可继续使用受认证保护的客户端 API。
+
+新增公开路由必须默认 SSR-only，并通过静态依赖扫描、禁用 JavaScript 的 raw
+HTML 检查和浏览器网络请求门禁。缺失数据时必须由发布/路由合同阻断、404 或
+noindex，不能由硬编码文案或客户端请求补齐。
+
 ## 9. 发布闭环
 
 ### 9.1 标准流程
