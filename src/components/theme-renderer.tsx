@@ -17,6 +17,7 @@ import { SaveTheDateDirectory } from "@/components/storefront/save-the-date-dire
 import { DreamShootMegaToolsPanel as SharedDreamShootMegaToolsPanel, getToolBlocksFromMenuItems as getSharedToolBlocksFromMenuItems } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderMobileVideoGenerationMenu, HeaderMobileSaveTheDateMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, HeaderVideoGenerationMegaPanel, HeaderSaveTheDateMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
+import { NativeMegaMenu } from "@/components/storefront/native-mega-menu";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
@@ -89,25 +90,6 @@ function Link(props: StorefrontInstantLinkProps) {
 
 const dreamShootsVisibleTitle = "myᕲreamshoots";
 const aidreamcapesVisibleTitle = "ልiጋreamርapes";
-
-type NativeMegaMenuProps = {
-  blockAttrs?: Record<string, string | number | boolean | undefined>;
-  buttonClassName: string;
-  children: ReactNode;
-  disablePrefetch?: boolean;
-  label: string;
-  panelClassName: string;
-  prefetchPaths?: string[];
-};
-
-function NativeMegaMenu({ blockAttrs, buttonClassName, children, label, panelClassName }: NativeMegaMenuProps) {
-  return (
-    <details className="relative" {...blockAttrs}>
-      <summary className={buttonClassName}>{label}</summary>
-      <div className={panelClassName}>{children}</div>
-    </details>
-  );
-}
 
 import { getSectionSchema, getThemeBlockSchema, readThemeFieldValue, resolveThemeFieldSchema } from "@/lib/section-schema";
 import { getSectionEntries } from "@/lib/theme";
