@@ -186,6 +186,8 @@ try {
   });
   const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   const site = toSite(fresh);
+  for (const page of site.pages) page.publishedJson = page.draftJson;
+  site.themeSettings.publishedJson = nextSettings;
   const candidatePage = site.pages.find((page) => page.slug === pagePath);
   if (candidatePage) candidatePage.publishedJson = pageJson;
   const packs = await prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: true } });
