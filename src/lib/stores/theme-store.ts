@@ -292,7 +292,11 @@ function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStan
   const pageEntityId = `mydreamshoots:standard:${canonicalPath.slice(1).replace(/[^a-z0-9]+/gi, "-")}`;
   const mediaEntityId = `${pageEntityId}:media`;
   const pageRevision = crypto.createHash("sha256").update(JSON.stringify(page.publishedJson)).digest("hex").slice(0, 20);
-  const indexable = page.publishedJson.seo?.index !== false && page.publishedJson.seo?.robots?.index !== false;
+  // The standard inventory is the publication policy for these routes. It
+  // prevents an older page-level SEO flag from reopening a route intentionally
+  // held out of search and the sitemap (for example, Wedding Anniversary).
+  const inventoryEntry = MYDREAMSHOOTS_STANDARD_SEO_INVENTORY.find((item) => item.canonicalPath === canonicalPath);
+  const indexable = inventoryEntry?.indexable ?? (page.publishedJson.seo?.index !== false && page.publishedJson.seo?.robots?.index !== false);
   const contract = page.publishedJson.contentContract;
   const strictEditorial = SAVE_THE_DATE_EDITORIAL_PATHS.includes(canonicalPath as (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number]);
   const expectedSections = contract?.requiredSections ?? [];
