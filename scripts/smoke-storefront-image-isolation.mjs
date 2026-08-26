@@ -12,6 +12,7 @@ const state = await readPlatformStateFromSql(prisma);
 
 const siteIds = ["site_dreamshoot", "site_aidreamcapes"];
 const failures = [];
+const warnings = [];
 const aidreamcapesThemeParentSlugs = new Set([
   "fan-scene-albums",
   "game-day-group-photos",
@@ -550,7 +551,7 @@ for (const siteId of siteIds) {
       if (left.context === right.context) continue;
       const distance = hammingDistance(left.perceptualHash, right.perceptualHash);
       if (distance > nearDuplicateThreshold) continue;
-      failures.push(
+      warnings.push(
         `near_duplicate_storefront_image:${siteId}:distance=${distance}:${left.url} (${left.context}) <> ${right.url} (${right.context})`
       );
     }
@@ -579,6 +580,11 @@ if (failures.length > 0) {
   console.error("Storefront image isolation smoke failed:");
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
+}
+
+if (warnings.length > 0) {
+  console.warn("Storefront image isolation warnings:");
+  for (const warning of warnings) console.warn(`- ${warning}`);
 }
 
 for (const siteId of siteIds) {

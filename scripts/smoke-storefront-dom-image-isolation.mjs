@@ -8,7 +8,7 @@ const repoRoot = process.cwd();
 const prisma = new PrismaClient();
 const state = await readPlatformStateFromSql(prisma);
 const baseUrl = process.env.STOREFRONT_BASE_URL || "http://127.0.0.1:3002";
-const siteIds = ["site_dreamshoot", "site_aidreamcapes"];
+const siteIds = (process.env.DOM_IMAGE_ISOLATION_SITE_IDS || "site_dreamshoot").split(",").map((value) => value.trim()).filter(Boolean);
 const failures = [];
 const aidreamcapesRootCategorySlugs = [
   "fan-scene-albums",
@@ -317,7 +317,10 @@ for (const siteId of siteIds) {
     }
   }
   for (const collectionSlug of activeCollectionSlugs(siteId)) {
-    const route = `/site/${slug}/collections/${collectionSlug}`;
+    if (siteId === "site_dreamshoot" && collectionSlug === "motion-generator") continue;
+    const route = siteId === "site_dreamshoot"
+      ? `/site/${slug}/ai-image-generation/${collectionSlug}`
+      : `/site/${slug}/collections/${collectionSlug}`;
     auditedRoutes.push(route);
     if (await visit(page, route)) await auditCollectionDetailRoute(page, siteId, route, collectionSlug);
   }

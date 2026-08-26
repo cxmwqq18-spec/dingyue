@@ -1864,6 +1864,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
         : isDreamShootFooter
           ? [
               ["AI Video Generation", "/ai-video-generation", "product"],
+              ["Best AI video", "/best-ai-video", "product"],
               ...(hasPublishedSaveTheDate ? [["AI Save the Date", "/holidays-events/save-the-date", "product"] as const] : []),
               ["AI Image Generation", "/ai-image-generation", "product"],
               ["AI Photo Packages", "/best-packages", "product"],
@@ -1874,6 +1875,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
               ["Contact us", "/contact-us", "company"],
               ["Creators Circle", "/creators-circle", "company"],
               ["Refund Policy", "/refunds", "company"],
+              ["Shipping", "/shipping", "support"],
               ["Privacy Policy", "/privacy", "support"],
               ["Content policy", "/content", "support"],
               ["Terms of Service", "/terms", "support"],

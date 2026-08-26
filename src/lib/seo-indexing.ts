@@ -466,7 +466,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
   const collectionItems = resolvePublicCollectionItems(snapshot);
   const entries = new Map<string, SitemapEntry>();
   for (const page of snapshot.pages) {
-    const canonicalPath = canonicalPathForSitemapPage(page);
+    const canonicalPath = canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page));
     if (resolvePublishedRouteDisposition(snapshot, canonicalPath).kind !== "render") continue;
     const effective = resolveEffectivePublishedPage(snapshot, canonicalPath);
     if (effective.routeDisposition.kind !== "render" || !effective.indexability.sitemapEligible) continue;

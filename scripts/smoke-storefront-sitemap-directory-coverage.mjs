@@ -233,7 +233,7 @@ async function validateLivePublishedPages(host, paths) {
         inboundCount: inbound.get(pathname)?.size ?? 0
       };
       pageResults.push(pageResult);
-      if (response.status !== 200 || (response.status >= 300 && response.status < 400) || canonical !== expectedCanonical || !hasIndexFollow || !publication || publication === "unpublished" || !factsRevision || !/<(?:main|body)\\b/i.test(response.body)) {
+      if (response.status !== 200 || (response.status >= 300 && response.status < 400) || canonical !== expectedCanonical || !hasIndexFollow || !publication || publication === "unpublished" || !factsRevision || !/<(?:main|body)\b/i.test(response.body)) {
         failures.push({ pathname, status: response.status, canonical, expectedCanonical, robots, publication, factsRevision });
       }
       if (publication && publication !== "unpublished") publications.add(publication);

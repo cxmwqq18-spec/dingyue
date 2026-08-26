@@ -561,7 +561,8 @@ for (const pathName of ["/policies/privacy", "/policies/terms", "/policies/refun
 
 assert(
   seoIndexing.includes("createPublishedSiteSnapshot(state, site)") &&
-    seoIndexing.includes("const canonicalPath = canonicalPathForSitemapPage(page)") &&
+    (seoIndexing.includes("const canonicalPath = canonicalPathForSitemapPage(page)") ||
+      seoIndexing.includes("const canonicalPath = canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page))")) &&
     seoIndexing.includes('resolvePublishedRouteDisposition(snapshot, canonicalPath).kind !== "render"') &&
     seoIndexing.includes("resolveEffectivePublishedPage(snapshot, canonicalPath)") &&
     seoIndexing.includes("page.publishedJson.seo?.canonical") &&

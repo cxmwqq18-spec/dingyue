@@ -15,6 +15,7 @@ import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platfor
 const mydreamshootsTaxonomyPath = path.join(process.cwd(), "src", "lib", "mydreamshoots-theme-taxonomy.json");
 const MYDREAMSHOOTS_SITE_ID = "site_dreamshoot";
 const MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS = [
+  "/blog/video-photo-package-guide",
   "/blog/cyberpunk-photo-package-guide",
   "/blog/mafia-photo-package-guide",
   "/blog/magic-upscaler-photo-package-guide",
@@ -25,6 +26,9 @@ const MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS = [
   "/blog/wedding-portraits-photo-package-guide",
   "/blog/world-cup-fan-photos-photo-package-guide"
 ];
+const MYDREAMSHOOTS_LEGACY_BLOG_SLUG_BY_CANONICAL = new Map([
+  ["/blog/video-photo-package-guide", "/blog/ai-video-add-ons-photo-package-guide"]
+]);
 const SOCCER_MIGRATION_APPROVED = process.env.MDS_SOCCER_MIGRATION_APPROVED === "1";
 const mydreamshootsPriorityBlogSlugSet = new Set([
   ...MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS,
@@ -696,6 +700,16 @@ const mydreamshootsBlogSafeImageOverrides = new Map([
 ]);
 
 const mydreamshootsArticleFacts = {
+  "/blog/video-photo-package-guide": {
+    entityName: "AI video add-on photo workflow",
+    productSlug: "motion-generator",
+    userIntent: "Plan a motion-ready photo frame or short video add-on from an approved private image set.",
+    inputRequirements: ["clear motion-ready source frame", "one movement direction", "permission-safe upload"],
+    verifiedLimitations: ["Motion output, identity stability, and crop suitability require review."],
+    reviewChecklist: ["face stability", "hands and hair", "motion crop", "background artifacts"],
+    rightsWarnings: ["Use only approved source images and avoid protected marks or unapproved likenesses."],
+    relatedGuides: ["Motion Generator", "Creator portraits", "Profile cards"]
+  },
   "/blog/cyberpunk-photo-package-guide": {
     entityName: "Cyberpunk AI photos",
     productSlug: "cyberpunk",
@@ -860,6 +874,35 @@ function makePriorityBlogArticle(input) {
 }
 
 const mydreamshootsPriorityArticleOverrides = new Map([
+  makePriorityBlogArticle({
+    slug: "/blog/video-photo-package-guide",
+    pageTitle: "Video photo package guide",
+    title: "Video Photo Add-ons: Plan Motion-Ready Frames for Private Albums",
+    summary: "Plan a motion-ready photo frame or short video add-on with one clear movement idea, permission-safe source images, and a focused review of identity stability and crop quality.",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp?v=20260715b",
+    imageAlt: "Motion-ready portrait frame prepared for a private AI video add-on.",
+    tags: "AI video add-ons|Motion Generator|Image-to-video planning|Private albums",
+    seoTitle: "Video photo add-ons guide | myDreamshoots",
+    seoDescription: "Plan motion-ready photo frames and short AI video add-ons with focused source images, one movement direction, and a private review checklist.",
+    seoKeywords: "AI video add-ons, motion-ready photo frames, image-to-video guide, Motion Generator, private gallery",
+    targetLabel: "Open Motion Generator",
+    targetHref: "/ai-video-generation/motion-generator",
+    relatedLinks: [
+      { label: "Open Motion Generator", href: "/ai-video-generation/motion-generator" },
+      { label: "Read the Creator portraits guide", href: "/blog/creator-photo-package-guide" },
+      { label: "Compare Profile cards", href: "/ai-image-generation/avatar" }
+    ],
+    body: html`
+      <p>Use this guide when a finished image should become a short motion concept, profile clip, or private album add-on. Keep one movement idea in the brief and review the result in the private gallery before downloading.</p>
+      <h2 id="video-photo-source">Choose a motion-ready source frame</h2>
+      <p>Start with a clear, recent image where the face, hairline, hands, and main subject edges are readable. Use only photos you own or have permission to use. A clean source frame gives the motion pass less identity detail to guess.</p>
+      <h2 id="video-photo-movement">Name one movement direction</h2>
+      <p>Choose one slow camera drift, gentle reveal, profile turn, or background motion cue. Mixing several unrelated movements makes the clip harder to review and can introduce unstable faces, hands, or clothing edges.</p>
+      <h2 id="video-photo-review">Review the private result before download</h2>
+      <ul><li>Check face and eye stability across the full clip.</li><li>Inspect hands, hair, clothing edges, and accessories.</li><li>Review crop, pacing, and background geometry.</li><li>Remove any invented marks, text, or protected branding.</li></ul>
+      <p>Open Motion Generator for the current workflow and visible credit cost. Keep the original source frame with the private job so the final choice remains easy to explain.</p>
+    `
+  }),
   makePriorityBlogArticle({
     slug: "/blog/profile-cards-photo-package-guide",
     pageTitle: "Profile card photo guide",
@@ -1293,6 +1336,8 @@ const mydreamshootsPriorityArticleOverrides = new Map([
 ].map((article) => [article.slug, article]));
 
 const mydreamshootsPriorityBlogSlugByPackSlug = new Map([
+  ["ai-video-add-ons", "/blog/video-photo-package-guide"],
+  ["motion-generator", "/blog/video-photo-package-guide"],
   ["profile-cards", "/blog/profile-cards-photo-package-guide"],
   ["avatar", "/blog/profile-cards-photo-package-guide"],
   ["cyberpunk", "/blog/cyberpunk-photo-package-guide"],
@@ -1541,7 +1586,7 @@ function assertMyDreamShootsArticleFacts(config) {
       throw new Error(`${slug} must declare related guides through the editorial whitelist.`);
     }
     for (const link of article.relatedLinks) {
-      if (!link || typeof link.href !== "string" || !/^\/(?:ai-image-generation(?:\/|$)|blog\/|policies\/|content$)/.test(link.href)) {
+      if (!link || typeof link.href !== "string" || !/^\/(?:ai-image-generation(?:\/|$)|ai-video-generation(?:\/|$)|blog\/|policies\/|content$)/.test(link.href)) {
         throw new Error(`${slug} has a non-local related guide href: ${String(link?.href ?? "")}`);
       }
     }
@@ -2268,7 +2313,8 @@ function syncScopedSite(state, config, slugs) {
 
   const sourceArticlePage = site.pages.find((page) => page.slug.startsWith("/blog/"));
   const pages = selectedArticles.map((article) => {
-    const existingPage = site.pages.find((page) => page.slug === article.slug);
+    const legacySlug = MYDREAMSHOOTS_LEGACY_BLOG_SLUG_BY_CANONICAL.get(article.slug);
+    const existingPage = site.pages.find((page) => page.slug === article.slug || page.slug === legacySlug);
     const articleJson = makeArticleJson(config, article, existingPage, sourceArticlePage);
     const page = {
       id: existingPage?.id ?? article.id,
@@ -2280,7 +2326,9 @@ function syncScopedSite(state, config, slugs) {
       draftJson: clone(articleJson),
       ...(existingPage?.publishedJson ? { publishedJson: existingPage.publishedJson } : {})
     };
-    upsertPage(site, page);
+    const legacyIndex = legacySlug ? site.pages.findIndex((item) => item.slug === legacySlug) : -1;
+    if (legacyIndex >= 0) site.pages[legacyIndex] = page;
+    else upsertPage(site, page);
     return page;
   });
 
@@ -2315,10 +2363,14 @@ async function updateScopedDatabase(state, pages) {
     await prisma.$transaction(async (tx) => {
       const databasePages = [];
       for (const page of pages) {
+        const legacySlug = MYDREAMSHOOTS_LEGACY_BLOG_SLUG_BY_CANONICAL.get(page.slug);
         const existing = await tx.themePage.findUnique({
           where: { siteId_slug: { siteId: MYDREAMSHOOTS_SITE_ID, slug: page.slug } },
           select: { id: true }
-        });
+        }) ?? (legacySlug ? await tx.themePage.findUnique({
+          where: { siteId_slug: { siteId: MYDREAMSHOOTS_SITE_ID, slug: legacySlug } },
+          select: { id: true }
+        }) : null);
         if (!existing) throw new Error(`ThemePage ${MYDREAMSHOOTS_SITE_ID}:${page.slug} must exist before draft content can be imported.`);
         const id = existing.id;
         const data = {

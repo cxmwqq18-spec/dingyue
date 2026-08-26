@@ -331,9 +331,6 @@ function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStan
   // search and sitemap. This is used by design packages marked HOLD until
   // product evidence is approved.
   const publishable = editorialReady;
-  if (process.env.MYDREAMSHOOTS_SNAPSHOT_DEBUG === "1" && strictEditorial && !publishable) {
-    console.error("standard_editorial_debug", canonicalPath, { sectionOrderReady, sectionTypesReady, sectionAnchorsReady, faqReady, ctaReady, manifestReady, mediaReady, noRawMarkdown, mediaCount, manifestLength: manifest.length });
-  }
   return {
     disposition: "render",
     siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
