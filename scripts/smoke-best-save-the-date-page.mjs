@@ -43,6 +43,31 @@ const navigation = site.themeSettings?.publishedJson?.saveTheDateNavigation;
 assert.equal(navigation?.menuLabel, "Save the Date");
 assert.equal(navigation?.groups?.length, 2);
 const items = navigation.groups.flatMap((group) => group.items.filter((item) => item.status === "published"));
+const expectedNavigation = {
+  "Love & Wedding": [
+    ["Valentine's Day", "/ai-save-the-date/valentines-day"],
+    ["Engagement", "/holidays-events/engagement"],
+    ["Proposal", "/holidays-events/proposal"],
+    ["Save the Date", "/holidays-events/save-the-date"],
+    ["Wedding Invitation", "/holidays-events/wedding-invitation"],
+    ["Wedding Ceremony", "/ai-video-generation/wedding-ceremony"]
+  ],
+  "Seasonal Holidays": [
+    ["Christmas", "/holidays-events/christmas"],
+    ["Halloween", "/holidays-events/halloween"],
+    ["Thanksgiving", "/holidays-events/thanksgiving"],
+    ["New Year", "/holidays-events/new-year"],
+    ["Mother's Day", "/holidays-events/mothers-day"],
+    ["Father's Day", "/holidays-events/fathers-day"]
+  ]
+};
+for (const group of navigation.groups) {
+  const expected = expectedNavigation[group.label];
+  assert(expected, `unexpected Save the Date navigation group: ${group.label}`);
+  assert.deepEqual(group.items.filter((item) => item.status === "published").map((item) => [item.label, item.href]), expected, `${group.label}: canonical navigation taxonomy`);
+}
+assert(items.every((item) => item.href.startsWith("/")), "Save the Date navigation hrefs must be absolute paths");
+assert(!items.some((item) => /photo|holiday|create |videos|engagement-photo/i.test(item.label)), "Save the Date navigation must not reuse image-theme or editorial labels");
 assert(expectedThemePaths.every((href) => items.some((item) => item.href === href)), "core Save the Date themes must remain published");
 for (const item of items) {
   assert(item.description?.trim(), `${item.href}: description required`);
