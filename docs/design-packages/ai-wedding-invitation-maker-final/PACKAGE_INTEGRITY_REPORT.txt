@@ -1,0 +1,65 @@
+AI WEDDING INVITATION MAKER — PACKAGE INTEGRITY REPORT
+====================================================================
+
+Automated checks passed: 51/51
+
+[PASS] Formal image count = 10 (user-approved exception) — found 10
+[PASS] Hero image count = 3 — found 3
+[PASS] Content image count = 7 — found 7
+[PASS] ai-wedding-invitation-bridesmaid-review.jpg: 1600x1000 — (1600, 1000)
+[PASS] ai-wedding-invitation-bridesmaid-review.jpg: RGB — RGB
+[PASS] ai-wedding-invitation-bridesmaid-review.jpg: JPEG — JPEG
+[PASS] ai-wedding-invitation-card-closeup.jpg: 1600x1000 — (1600, 1000)
+[PASS] ai-wedding-invitation-card-closeup.jpg: RGB — RGB
+[PASS] ai-wedding-invitation-card-closeup.jpg: JPEG — JPEG
+[PASS] ai-wedding-invitation-design-selection.jpg: 1600x1000 — (1600, 1000)
+[PASS] ai-wedding-invitation-design-selection.jpg: RGB — RGB
+[PASS] ai-wedding-invitation-design-selection.jpg: JPEG — JPEG
+[PASS] ai-wedding-invitation-digital-share.jpg: 1600x1000 — (1600, 1000)
+[PASS] ai-wedding-invitation-digital-share.jpg: RGB — RGB
+[PASS] ai-wedding-invitation-digital-share.jpg: JPEG — JPEG
+[PASS] ai-wedding-invitation-envelope-prep.jpg: 1600x1000 — (1600, 1000)
+[PASS] ai-wedding-invitation-envelope-prep.jpg: RGB — RGB
+[PASS] ai-wedding-invitation-envelope-prep.jpg: JPEG — JPEG
+[PASS] ai-wedding-invitation-reception-table.jpg: 1600x1000 — (1600, 1000)
+[PASS] ai-wedding-invitation-reception-table.jpg: RGB — RGB
+[PASS] ai-wedding-invitation-reception-table.jpg: JPEG — JPEG
+[PASS] ai-wedding-invitation-venue-display.jpg: 1600x1000 — (1600, 1000)
+[PASS] ai-wedding-invitation-venue-display.jpg: RGB — RGB
+[PASS] ai-wedding-invitation-venue-display.jpg: JPEG — JPEG
+[PASS] hero-ai-wedding-invitation-couple-reviewing.jpg: 1600x1000 — (1600, 1000)
+[PASS] hero-ai-wedding-invitation-couple-reviewing.jpg: RGB — RGB
+[PASS] hero-ai-wedding-invitation-couple-reviewing.jpg: JPEG — JPEG
+[PASS] hero-ai-wedding-invitation-garden-couple.jpg: 1600x1000 — (1600, 1000)
+[PASS] hero-ai-wedding-invitation-garden-couple.jpg: RGB — RGB
+[PASS] hero-ai-wedding-invitation-garden-couple.jpg: JPEG — JPEG
+[PASS] hero-ai-wedding-invitation-luxury-stationery.jpg: 1600x1000 — (1600, 1000)
+[PASS] hero-ai-wedding-invitation-luxury-stationery.jpg: RGB — RGB
+[PASS] hero-ai-wedding-invitation-luxury-stationery.jpg: JPEG — JPEG
+[PASS] Formal image SHA256 values unique — unique 10/10
+[PASS] Original AI source files = 10 — found 10
+[PASS] Contact sheet separates preview from formal images
+[PASS] HTML Title present
+[PASS] HTML one H1 — found 1
+[PASS] HTML meta description present
+[PASS] HTML canonical present
+[PASS] HTML primary intent is Wedding Invitation Maker
+[PASS] HTML images exist
+[PASS] HTML images have alt
+[PASS] Image manifest rows = 10 — found 10
+[PASS] HTML alt matches manifest
+[PASS] SEO Excel valid XLSX
+[PASS] 7 spreadsheet previews present — found 7
+[PASS] Required handoff files present
+[PASS] Primary keyword present in page copy
+[PASS] Wedding Invitation vs Save the Date separation present
+[PASS] Editable factual-detail rule present
+
+USER-APPROVED EXCEPTION
+[PASS] Formal image count is 10 (3 Hero + 7 Content) because the user explicitly approved generating 10 images for this package.
+[PASS] All 10 formal images came from separate AI generation results; none were cut from a contact sheet, page screenshot or UI mockup.
+
+MANUAL / LAUNCH GATES
+[HOLD] Product evidence not supplied.
+[HOLD] Final live Wedding Invitation route/canonical requires approval.
+[REVIEW] Digital-share photo contains a real photographed phone interface; it is not a screenshot-derived formal image, but final production may replace it if a no-UI image policy is enforced strictly.

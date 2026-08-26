@@ -20,8 +20,10 @@ const assetRoot = path.join(publicRoot, "assets/dreamshoot");
 const revision = crypto.createHash("sha256").update(new Date().toISOString()).digest("hex").slice(0, 12);
 
 const imagePackRepairs = {
-  "black-friday": { source: "generated/pack-galleries/fashion-editorial", coverSource: "generated/pack-covers/fashion-editorial" },
-  cannes: { source: "generated/pack-galleries/desi-wedding", coverSource: "generated/pack-covers/desi-wedding" },
+  "black-friday": { source: "generated/pack-galleries/black-friday", coverSource: "generated/pack-covers/black-friday" },
+  cannes: { source: "generated/pack-galleries/cannes", coverSource: "generated/pack-covers/cannes" },
+  nightlife: { source: "generated/pack-galleries/nightlife", coverSource: "generated/pack-covers/nightlife" },
+  "rich-lifestyle": { source: "generated/pack-galleries/rich-lifestyle", coverSource: "generated/pack-covers/rich-lifestyle" },
   "wedding-photo": { source: "generated/pack-galleries/wedding-portraits", coverSource: "generated/pack-covers/wedding-portraits" }
 };
 const holidaySources = {

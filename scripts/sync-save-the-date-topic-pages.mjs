@@ -24,7 +24,7 @@ const defaultSourceRoot = "/Users/a1/Downloads";
 const packages = [
   { key: "engagement", sourceDir: process.env.SAVE_THE_DATE_ENGAGEMENT_SOURCE_DIR || path.join(defaultSourceRoot, "ai-save-the-date-engagement 3"), pagePath: "/holidays-events/engagement", pageKey: "engagement", structureLabels: ["hero", "intent clarification", "three video story structures", "how it works", "eight video scene directions", "video quality standards", "output formats", "page boundaries", "product evidence gate", "faq", "related video pages"], sectionIds: ["hero", "intent", "story-structures", "workflow", "scene-directions", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"], faqCount: 8, mediaCount: 11 },
   { key: "proposal", sourceDir: process.env.SAVE_THE_DATE_PROPOSAL_SOURCE_DIR || path.join(defaultSourceRoot, "ai-proposal-video-final"), pagePath: "/holidays-events/proposal", pageKey: "proposal", structureLabels: ["hero", "what is an ai proposal video", "proposal use cases", "proposal story flow", "how it works", "source-media guidance", "accuracy & responsibility", "faq", "final cta"], sectionIds: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_flow", "editorial_steps", "editorial_quality", "editorial_quality", "faq", "editorial_cta"], faqCount: 8, mediaCount: 10 },
-  { key: "save-the-date", sourceDir: process.env.SAVE_THE_DATE_GENERIC_SOURCE_DIR || path.join(defaultSourceRoot, "ai-save-the-date-video 2"), pagePath: "/holidays-events/save-the-date", pageKey: "save_date", structureLabels: ["hero", "what is an ai save the date video", "use cases", "how it works", "scene ideas", "quality standards", "output planning", "page boundaries", "evidence gate", "faq", "related pages"], sectionIds: ["hero", "definition", "use-cases", "workflow", "scene-ideas", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"], faqCount: 8, mediaCount: 11 }
+  { key: "save-the-date", sourceDir: process.env.SAVE_THE_DATE_GENERIC_SOURCE_DIR || path.join(repoRoot, "docs/design-packages/ai-save-the-date-video"), pagePath: "/holidays-events/save-the-date", pageKey: "save_date", structureLabels: ["hero", "what is an ai save the date video", "use cases", "how it works", "scene ideas", "quality standards", "output planning", "page boundaries", "evidence gate", "faq", "related pages"], sectionIds: ["hero", "definition", "use-cases", "workflow", "scene-ideas", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"], faqCount: 8, mediaCount: 11 }
 ];
 
 const read = (file) => fs.readFileSync(file, "utf8").replace(/^\uFEFF/, "");
@@ -119,18 +119,6 @@ function parsePackage(config) {
   const seo = seoRows(path.join(config.sourceDir, "06_seo_config.csv"));
   const manifest = parseManifest(config.sourceDir, config.key);
   if (manifest.length !== config.mediaCount) throw new Error(`${config.key}: manifest count ${manifest.length} does not match package contract ${config.mediaCount}`);
-  // The Save the Date source package historically reused the Engagement hero
-  // image byte-for-byte. Keep the page's 11-image contract, but give the
-  // directory card a dedicated cover from the approved Valentine's asset set.
-  // This prevents identical cross-page cards from reappearing after a sync.
-  if (config.key === "save-the-date") {
-    const uniqueCover = "/assets/dreamshoot/generated/pack-galleries/wedding-portraits/wedding-portraits-01.webp";
-    manifest[0] = {
-      ...manifest[0],
-      src: uniqueCover,
-      alt: "Couple sharing a warm city sunset moment for a Save the Date video."
-    };
-  }
   const copyHeading = copyLines.find((line) => /^#\s+/.test(line))?.replace(/^#\s+/, "").replace(/\s+[—-]\s+Final(?:\s+Page)?\s+Copy.*$/i, "").replace(/:\s*Final.*$/i, "").trim();
   const heading = seo.h1 || copyHeading || seo.title;
   const h2 = copyLines.filter((line) => /^##\s+/.test(line)).map((line) => clean(line.replace(/^##\s+/, "")));
@@ -297,7 +285,6 @@ try {
       "/holidays-events/save-the-date",
       "/holidays-events/wedding-invitation",
       "/ai-video-generation/wedding-ceremony",
-      "/holidays-events/wedding-anniversary",
       "/holidays-events/christmas",
       "/holidays-events/thanksgiving",
       "/holidays-events/new-year",

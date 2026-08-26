@@ -15,8 +15,8 @@ assertDatabaseTarget({ expectedTarget: target || "remote" });
 const siteId = "site_dreamshoot";
 const coverRepairs = new Map([
   ["/holidays-events/save-the-date", {
-    cover: "/assets/dreamshoot/save-the-date/save-the-date/hero-ai-save-the-date-video-announcement.jpg",
-    alt: "Couple recording a direct-to-camera Save the Date announcement outdoors at golden hour."
+    cover: "/assets/dreamshoot/save-the-date/save-the-date/hero-ai-save-the-date-couple-sunset.jpg",
+    alt: "Couple embracing at sunset as the opening scene of an AI Save the Date video."
   }],
   ["/holidays-events/wedding-invitation", {
     cover: "/assets/dreamshoot/save-the-date/save-the-date/save-the-date-couple-ring-announcement.jpg",

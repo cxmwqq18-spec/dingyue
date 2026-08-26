@@ -1,0 +1,44 @@
+AI SAVE THE DATE VIDEO PACKAGE INTEGRITY REPORT
+Generated: 2026-08-24
+
+[Delivery scope] PASS — complete developer / SEO / design handoff package
+[SEO direction] PASS — generic Save the Date video intent
+[Primary keyword] PASS — ai save the date video maker
+[Title] PASS — AI Save the Date Video Maker | myDreamshoots (44 chars)
+[Meta description] PASS — 154 chars
+[H1] PASS — Create an AI Save the Date Video
+[Slug] PASS — save-the-date
+[Canonical] PASS — https://www.mydreamshoots.com/holidays-events/save-the-date
+[Indexation status] HOLD — current first-party product evidence is still required
+
+[Image count] PASS — 11 formal JPEGs
+[Hero / Content split] PASS — 3 Hero + 8 Content
+[Image dimensions] PASS — all 1600×1000
+[Image color / format] PASS — all RGB JPEG
+[Image uniqueness] PASS — 11 unique SHA256 hashes
+[Image provenance] PASS — standalone full-frame AI-generated source assets from the supplied reference package; reused without collage/UI/screenshot cropping
+[Contact Sheet review] PASS — formal assets are people/scene images, not page screenshots, folder screenshots, Excel screenshots, UI mockups, or contact-sheet crops; no baked SEO blocks or watermarks observed
+[People visual spot-check] PASS at package-review level — faces/eyes/hair are clear in the contact sheet; proposal/ring scenes were specifically reviewed for visible hand/jewelry anomalies; full-resolution human review remains required before live publication
+
+[Image SEO] PASS — 11 filenames, Alt texts, captions, scene roles, target keywords, usages, dimensions, and generation sources supplied
+[Image/content mapping] PASS — every formal image has a page role matching its Alt / Caption / Scene Role
+
+[HTML] PASS — 11 image references, all paths present, all Alt attributes non-empty
+[FAQ] PASS — 8 Save the Date-specific FAQ items present
+[Page content] PASS — Hero, What is, Use Cases, How It Works, Scene Ideas, Quality Standards, Boundaries, Evidence Gate, FAQ, and CTA covered
+[Desktop preview] PASS — design preview and full-page preview included
+[Mobile preview] PASS — design preview and full-page preview included
+
+[Workbook] PASS — exactly 7 sheets: Overview, SEO Config, Page Sections, Image SEO, Keyword Map, Internal Links, Evidence Gate
+[Workbook formulas] PASS — LEN and PASS/REVIEW formulas evaluate; scan found no #REF!, #VALUE!, #DIV/0!, #NAME?, or #N/A
+[Spreadsheet previews] PASS — seven sheet previews plus combined workbook preview included
+
+[Cannibalization] PASS — Save the Date owns generic Save the Date video terms; Engagement, Proposal, Wedding Invitation, and Image-to-Video retain their primary intents
+[Internal linking] PASS — bidirectional plan supplied with distinct intent-owned anchors
+[Evidence Gate] PASS as governance control — unsupported instant / one-click / free / unlimited / no watermark / 100% private / commercial-rights claims are explicitly blocked pending proof
+[Reference audit] PASS — taxonomy evidence separated from product-capability evidence
+
+[ZIP extraction] PASS — archive test completed successfully
+[TAR.GZ extraction] PASS — archive test completed successfully
+
+FINAL RESULT: PASS FOR HANDOFF — package structure, content, imagery, SEO workbook, previews, metadata, boundaries, checksums, and QA are complete. INDEXATION REMAINS HOLD until the product Evidence Gate is cleared with current first-party proof.

@@ -14,9 +14,11 @@ export const MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES = [
   "/holidays-events/halloween"
 ] as const;
 
-// These routes were previously treated as legacy content, but they are part
-// of the approved Save the Date taxonomy and must remain publishable.
-export const MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES = [] as const;
+// These routes stay available by direct URL, but are temporarily suppressed
+// from the public Save the Date navigation while their catalogue status is reviewed.
+export const MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES = [
+  "/holidays-events/wedding-anniversary"
+] as const;
 
 export function isMydreamshootsRemovedLegacyRoute(path: string): boolean {
   return MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES.includes(path as (typeof MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES)[number]);
@@ -38,8 +40,10 @@ export const MYDREAMSHOOTS_STANDARD_SEO_INVENTORY = MYDREAMSHOOTS_STANDARD_SEO_R
   canonicalPath,
   routeKind: "standard-content" as const,
   disposition: "render" as const,
-  indexable: true,
-  sitemapEligible: true,
+  // Wedding Invitation is intentionally visible but held from indexing until
+  // the design package's product-evidence gate is cleared.
+  indexable: canonicalPath === "/holidays-events/wedding-invitation" ? false : true,
+  sitemapEligible: canonicalPath === "/holidays-events/wedding-invitation" ? false : true,
   requiredProjectionKinds: ["page", "copy", "media", "links"] as const
 }));
 

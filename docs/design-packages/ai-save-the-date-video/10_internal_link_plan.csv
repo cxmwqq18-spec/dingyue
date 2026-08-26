@@ -1,0 +1,10 @@
+﻿Source page,Target URL,Anchor text,Rationale,Priority
+Save the Date,/holidays-events/engagement,engagement Save the Date video,Route engagement-led storytelling to the page that owns engagement milestone intent.,High
+Save the Date,/holidays-events/proposal,AI proposal video,Keep proposal-specific surprise and question-story intent separate from date-announcement intent.,High
+Save the Date,/holidays-events/wedding-invitation,AI wedding invitation video,"Move users from early date announcement to formal invitation wording, logistics, and RSVP intent.",High
+Save the Date,/ai-video-generation/image-to-video,turn couple photos into video,Support the photo-to-video workflow without making generic image-to-video the page target.,High
+Save the Date,/ai-video-generation/story-video,relationship story video,Support couples who want a longer narrative while preserving Save the Date ownership.,Medium
+Save the Date,/ai-video-generation/social-media-video,social media video,Support channel-specific publishing without making social media the primary intent.,Medium
+Engagement,/holidays-events/save-the-date,AI Save the Date video maker,Send users with generic date-announcement intent to the owning page.,High
+Proposal,/holidays-events/save-the-date,Save the Date video,Move users from the proposal milestone to the later date-announcement stage.,Medium
+Wedding Invitation,/holidays-events/save-the-date,Save the Date video,Clarify the earlier wedding communication stage for users not ready for a formal invitation.,Medium

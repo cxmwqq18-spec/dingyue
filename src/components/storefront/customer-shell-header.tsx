@@ -10,6 +10,7 @@ import { hostAwareSitePath } from "@/lib/domain-routing";
 import { isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationParentCategories, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { getPhotoPackageMegaGroups } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isMydreamshootsRemovedLegacyRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import type { CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, SaveTheDateNavigationGroup, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
@@ -195,7 +196,12 @@ export function CustomerShellHeader({
   const saveTheDateConfig = site.themeSettings?.publishedJson?.saveTheDateNavigation;
   const saveTheDateGroups: SaveTheDateNavigationGroup[] = saveTheDateConfig?.groups ?? [];
   const saveTheDateMenuLabel = saveTheDateConfig?.menuLabel?.trim() ?? "";
-  const routedSaveTheDateGroups = saveTheDateGroups.map((group) => ({ ...group, items: group.items.map((item) => ({ ...item, href: `${basePath}${item.href}` })) }));
+  const routedSaveTheDateGroups = saveTheDateGroups.map((group) => ({
+    ...group,
+    items: group.items
+      .filter((item) => !(isMyDreamShoots && isMydreamshootsRemovedLegacyRoute(item.href)))
+      .map((item) => ({ ...item, href: `${basePath}${item.href}` }))
+  }));
   const hasSaveTheDate = saveTheDateGroups.some((group) => group.items.some((item) => item.status === "published"));
   const menuSite = { ...site, __storefrontBasePath: basePath };
   const primaryMyDreamShoots = isMyDreamShoots && !isSpanishXby;

@@ -36,7 +36,6 @@ const routeLabel = new Map([
   ["/holidays-events/save-the-date", "Save the Date"],
   ["/holidays-events/wedding-invitation", "Wedding Invitation"],
   ["/ai-video-generation/wedding-ceremony", "Wedding Ceremony"],
-  ["/holidays-events/wedding-anniversary", "Wedding Anniversary"],
   ["/holidays-events/christmas", "Christmas"],
   ["/holidays-events/thanksgiving", "Thanksgiving"],
   ["/holidays-events/new-year", "New Year"],
@@ -50,8 +49,7 @@ const lovePaths = [
   "/holidays-events/proposal",
   "/holidays-events/save-the-date",
   "/holidays-events/wedding-invitation",
-  "/ai-video-generation/wedding-ceremony",
-  "/holidays-events/wedding-anniversary"
+  "/ai-video-generation/wedding-ceremony"
 ];
 const seasonalPaths = [
   "/holidays-events/christmas",
@@ -116,7 +114,7 @@ try {
     for (const page of allPages.filter((candidate) => validPathSet.has(candidate.slug))) {
       const nextJson = pageWrites.has(page.slug)
         ? pageWrites.get(page.slug).draftJson
-        : ["/holidays-events/wedding-invitation", "/holidays-events/wedding-anniversary", "/holidays-events/halloween"].includes(page.slug)
+        : ["/holidays-events/wedding-invitation", "/holidays-events/halloween"].includes(page.slug)
           ? normalizePageJson(page.draftJson?.sectionsOrder?.length ? page.draftJson : page.publishedJson, page.slug, routeLabel.get(page.slug))
           : clone(previousPages.get(page.slug) || (page.draftJson?.sectionsOrder?.length ? page.draftJson : page.publishedJson));
       const contractSections = nextJson.sectionsOrder.map((id) => nextJson.sections[id]).filter(Boolean);

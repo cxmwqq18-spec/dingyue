@@ -13,7 +13,6 @@ const expectedThemePaths = [
   "/holidays-events/save-the-date",
   "/holidays-events/wedding-invitation",
   "/ai-video-generation/wedding-ceremony",
-  "/holidays-events/wedding-anniversary",
   "/holidays-events/christmas",
   "/holidays-events/thanksgiving",
   "/holidays-events/new-year",
@@ -50,11 +49,11 @@ for (const item of items) {
   assert(item.imageUrl?.trim(), `${item.href}: cover image required`);
   assert(item.imageAlt?.trim(), `${item.href}: image alt required`);
 }
-
 const renderer = fs.readFileSync(path.join(process.cwd(), "src/components/theme-renderer.tsx"), "utf8");
 const directory = fs.readFileSync(path.join(process.cwd(), "src/components/storefront/save-the-date-directory.tsx"), "utf8");
 assert.match(renderer, /dreamshoot_save_the_date_directory/);
 assert.match(renderer, /hrefFor\(site, "\/app\/create"\)/);
+assert.match(renderer, /isMydreamshootsRemovedLegacyRoute/);
 assert.match(directory, /data-save-the-date-card/);
 assert.match(directory, /loading=\{index === 0 \? "eager" : "lazy"\}/);
 assert.match(directory, /alt=\{imageAlt\}/);

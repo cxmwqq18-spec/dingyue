@@ -36,7 +36,6 @@ const navigationCatalogue = [
   { href: "/holidays-events/wedding-invitation", label: "Wedding Invitation", group: "love-wedding" },
   { href: "/ai-video-generation/wedding-ceremony", label: "Wedding Ceremony", group: "love-wedding" },
   { href: "/holidays-events/wedding-album", label: "Wedding Album", group: "love-wedding" },
-  { href: "/holidays-events/wedding-anniversary", label: "Wedding Anniversary", group: "love-wedding" },
   { href: "/holidays-events/bridal-shower", label: "Bridal Shower", group: "love-wedding" },
   { href: "/holidays-events/christmas", label: "Christmas", group: "seasonal-holidays" },
   { href: "/holidays-events/halloween", label: "Halloween", group: "seasonal-holidays" },
