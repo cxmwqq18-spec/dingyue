@@ -2302,6 +2302,7 @@ export async function publishDraftSiteRelational(
     const siteRecord = await getSiteWithThemeRecords(tx, siteId);
     const site = toSite(siteRecord);
     const txPreflight = runThemePublishPreflight({ site: preflightBundle.site, products: preflightBundle.products, siteAiApps: preflightBundle.siteAiApps, mediaAssets: preflightBundle.mediaAssets, storefrontProfile: preflightBundle.storefrontProfile, creativePacks: preflightBundle.creativePacks, dirtyPageIds: preflightBundle.dirtyPageIds });
+    if (!txPreflight.canPublish && process.env.MYDREAMSHOOTS_PREFLIGHT_DEBUG === "1") console.error(JSON.stringify(txPreflight.checks.filter((check) => check.severity === "block"), null, 2));
     if (!txPreflight.canPublish) throw new RelationalStoreError("theme_publish_preflight_blocked", 409);
     const omittedDirtyPages = site.pages.filter((page) => !manifest.pageIds.includes(page.id) && JSON.stringify(page.draftJson) !== JSON.stringify(page.publishedJson));
     const settingsDirty = JSON.stringify(site.themeSettings.draftJson) !== JSON.stringify(site.themeSettings.publishedJson);
