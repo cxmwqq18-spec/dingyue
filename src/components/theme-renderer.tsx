@@ -2548,8 +2548,6 @@ function storefrontSectionLabel(type: string): string {
   return labels[type] ?? type.replace(/[_-]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-const storefrontPublicWatermarkCacheVersion = "20260825save-date-unique-publication153";
-
 function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   const cleanValue = value.trim();
   let pathname = "";
@@ -2577,12 +2575,13 @@ function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   } else {
     return value;
   }
-  // Video-topic media is already a published, immutable asset. Its historical
-  // watermark query variant can resolve to an obsolete grayscale derivative.
-  if (pathname.includes("/brand/") || pathname.includes("/assets/dreamshoot/generated/video-topic-media/")) return value;
+  if (pathname.includes("/brand/")) return value;
   if (!/\.(?:avif|jpe?g|png|svg|webp|m4v|mov|mp4|webm)$/i.test(pathname)) return value;
-  params.set("wm", storefrontPublicWatermarkCacheVersion);
-  return `${prefix}${pathname}?${params.toString()}${hash}`;
+  // Public media is already watermarked at publish time. Remove the legacy
+  // query variant, which can resolve to an obsolete grayscale derivative.
+  params.delete("wm");
+  const query = params.toString();
+  return `${prefix}${pathname}${query ? `?${query}` : ""}${hash}`;
 }
 
 const aidreamcapesMissingTrustedLogoFiles = new Set([

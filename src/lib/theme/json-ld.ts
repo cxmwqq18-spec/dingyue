@@ -214,25 +214,17 @@ function faqAnswerText(block: SectionBlockInstance): string {
     .join(" ");
 }
 
-const storefrontPublicWatermarkCacheVersion = "20260825save-date-unique-publication153";
-
 function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   const cleanValue = value.trim();
   if (!cleanValue) return value;
   const mediaPattern = /\.(?:avif|jpe?g|png|svg|webp|m4v|mov|mp4|webm)(?:[?#]|$)/i;
-  if (
-    !mediaPattern.test(cleanValue) ||
-    cleanValue.includes("/brand/") ||
-    cleanValue.includes("/assets/dreamshoot/generated/video-topic-media/")
-  ) {
-    return value;
-  }
+  if (!mediaPattern.test(cleanValue) || cleanValue.includes("/brand/")) return value;
 
   if (cleanValue.startsWith("http://") || cleanValue.startsWith("https://")) {
     try {
       const url = new URL(cleanValue);
       if (!url.pathname.startsWith("/assets/")) return value;
-      url.searchParams.set("wm", storefrontPublicWatermarkCacheVersion);
+      url.searchParams.delete("wm");
       return url.toString();
     } catch {
       return value;
@@ -246,8 +238,9 @@ function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   const queryStart = withoutHash.indexOf("?");
   const pathname = queryStart >= 0 ? withoutHash.slice(0, queryStart) : withoutHash;
   const params = new URLSearchParams(queryStart >= 0 ? withoutHash.slice(queryStart + 1) : "");
-  params.set("wm", storefrontPublicWatermarkCacheVersion);
-  return `${pathname}?${params.toString()}${hash}`;
+  params.delete("wm");
+  const query = params.toString();
+  return `${pathname}${query ? `?${query}` : ""}${hash}`;
 }
 
 function absoluteUrl(site: Site, routeMode: "host" | "path", pathOrUrl = "/"): string {

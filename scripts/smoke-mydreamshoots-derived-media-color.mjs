@@ -47,17 +47,17 @@ try {
   assert.ok(!repairSource.includes('fit: "cover"'), "derived media must not crop source frames");
   assert.ok(!repairSource.includes(".tint("), "derived media must not tint images into monochrome");
   assert.ok(repairSource.includes("function embeddedFrameBounds"), "embedded sharp frames must be extracted from legacy blurred canvases");
-  assert.ok(!landingSource.includes("object-cover"), "video topic media must not crop images in the browser");
+  assert.ok(landingSource.includes("mediaObjectFit"), "video topic media must choose a fit based on the published frame");
   assert.ok(!landingSource.includes("portraitCropClass"), "video topic media must not apply an extra portrait crop");
   assert.ok(directorySource.includes('data-video-theme-card-image>'), "video theme directory must expose media frames for verification");
   assert.ok(!directorySource.includes('scale-[1.42] object-cover object-center transition duration-500 group-hover/theme:scale-[1.5]'), "video theme directory must not crop or zoom media");
   assert.ok(
-    directorySource.includes('pathname.includes("/assets/dreamshoot/generated/video-topic-media/")'),
-    "video topic media must bypass obsolete watermark cache variants"
+    directorySource.includes('params.delete("wm")'),
+    "public media must bypass obsolete watermark cache variants"
   );
   assert.ok(
-    jsonLdSource.includes('cleanValue.includes("/assets/dreamshoot/generated/video-topic-media/")'),
-    "video topic structured data must use the same published media URL"
+    jsonLdSource.includes('params.delete("wm")') && jsonLdSource.includes('url.searchParams.delete("wm")'),
+    "structured data must use the same published media URL"
   );
 
   const themes = await prisma.videoTheme.findMany({
