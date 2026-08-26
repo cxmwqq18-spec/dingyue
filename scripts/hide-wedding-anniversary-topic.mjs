@@ -44,11 +44,25 @@ try {
       .filter((item) => item.href !== hiddenPath)
       .map((item, index) => ({ ...item, sortOrder: index + 1 }));
   }
-  if (apply) await prisma.themeSettings.update({ where: { siteId }, data: { draftJson: settings } });
+  const page = await prisma.themePage.findFirst({ where: { siteId, slug: hiddenPath } });
+  if (!page) throw new Error(`Missing page for ${hiddenPath}`);
+  const pageJson = structuredClone(page.draftJson || page.publishedJson || {});
+  pageJson.seo = {
+    ...(pageJson.seo || {}),
+    index: false,
+    follow: true,
+    robots: { ...(pageJson.seo?.robots || {}), index: false, follow: true, maxImagePreview: "large" }
+  };
+  if (apply) {
+    await prisma.$transaction(async (tx) => {
+      await tx.themeSettings.update({ where: { siteId }, data: { draftJson: settings } });
+      await tx.themePage.update({ where: { id: page.id }, data: { draftJson: pageJson } });
+    });
+  }
   const jiti = createJiti(import.meta.url);
   const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
   const manifest = await prepareDraftPublishManifestRelational(siteId);
-  console.log(JSON.stringify({ ok: true, siteId, mode: apply ? "draft-only" : "dry-run", hiddenPath, removedItems: before, manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
+  console.log(JSON.stringify({ ok: true, siteId, mode: apply ? "draft-only" : "dry-run", hiddenPath, removedItems: before, pageSeoIndex: pageJson.seo.index, manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
 } finally {
   await prisma.$disconnect();
 }

@@ -28,6 +28,7 @@ const sourcePaths = [
   "/holidays-events/proposal",
   "/holidays-events/save-the-date",
   "/ai-video-generation/wedding-ceremony",
+  "/holidays-events/halloween",
   "/ai-image-generation/thanksgiving-photo",
   "/ai-image-generation/christmas-photo",
   "/ai-image-generation/holiday"
@@ -100,6 +101,7 @@ try {
     ["/holidays-events/proposal", "Proposal"],
     ["/holidays-events/save-the-date", "Save the Date"],
     ["/ai-video-generation/wedding-ceremony", "Wedding Ceremony"],
+    ["/holidays-events/halloween", "Halloween"],
     ["/ai-image-generation/thanksgiving-photo", "Thanksgiving Photo"],
     ["/ai-image-generation/christmas-photo", "Christmas Photo"],
     ["/ai-image-generation/holiday", "Holiday"]
