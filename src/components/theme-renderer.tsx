@@ -2577,7 +2577,9 @@ function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   } else {
     return value;
   }
-  if (pathname.includes("/brand/")) return value;
+  // Video-topic media is already a published, immutable asset. Its historical
+  // watermark query variant can resolve to an obsolete grayscale derivative.
+  if (pathname.includes("/brand/") || pathname.includes("/assets/dreamshoot/generated/video-topic-media/")) return value;
   if (!/\.(?:avif|jpe?g|png|svg|webp|m4v|mov|mp4|webm)$/i.test(pathname)) return value;
   params.set("wm", storefrontPublicWatermarkCacheVersion);
   return `${prefix}${pathname}?${params.toString()}${hash}`;

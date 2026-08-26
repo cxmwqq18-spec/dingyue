@@ -220,7 +220,13 @@ function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   const cleanValue = value.trim();
   if (!cleanValue) return value;
   const mediaPattern = /\.(?:avif|jpe?g|png|svg|webp|m4v|mov|mp4|webm)(?:[?#]|$)/i;
-  if (!mediaPattern.test(cleanValue) || cleanValue.includes("/brand/")) return value;
+  if (
+    !mediaPattern.test(cleanValue) ||
+    cleanValue.includes("/brand/") ||
+    cleanValue.includes("/assets/dreamshoot/generated/video-topic-media/")
+  ) {
+    return value;
+  }
 
   if (cleanValue.startsWith("http://") || cleanValue.startsWith("https://")) {
     try {

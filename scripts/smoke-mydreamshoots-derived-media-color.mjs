@@ -42,6 +42,7 @@ try {
   const repairSource = fs.readFileSync(path.join(repoRoot, "scripts", "repair-mydreamshoots-detail-media-ownership.mjs"), "utf8");
   const landingSource = fs.readFileSync(path.join(repoRoot, "src", "components", "storefront", "video-topic-landing.tsx"), "utf8");
   const directorySource = fs.readFileSync(path.join(repoRoot, "src", "components", "theme-renderer.tsx"), "utf8");
+  const jsonLdSource = fs.readFileSync(path.join(repoRoot, "src", "lib", "theme", "json-ld.ts"), "utf8");
   assert.ok(repairSource.includes('fit: "contain"'), "derived media must preserve each source frame");
   assert.ok(!repairSource.includes('fit: "cover"'), "derived media must not crop source frames");
   assert.ok(!repairSource.includes(".tint("), "derived media must not tint images into monochrome");
@@ -50,6 +51,14 @@ try {
   assert.ok(!landingSource.includes("portraitCropClass"), "video topic media must not apply an extra portrait crop");
   assert.ok(directorySource.includes('data-video-theme-card-image>'), "video theme directory must expose media frames for verification");
   assert.ok(!directorySource.includes('scale-[1.42] object-cover object-center transition duration-500 group-hover/theme:scale-[1.5]'), "video theme directory must not crop or zoom media");
+  assert.ok(
+    directorySource.includes('pathname.includes("/assets/dreamshoot/generated/video-topic-media/")'),
+    "video topic media must bypass obsolete watermark cache variants"
+  );
+  assert.ok(
+    jsonLdSource.includes('cleanValue.includes("/assets/dreamshoot/generated/video-topic-media/")'),
+    "video topic structured data must use the same published media URL"
+  );
 
   const themes = await prisma.videoTheme.findMany({
     where: { siteId, status: "active", imageUrl: { startsWith: "/assets/dreamshoot/generated/video-topic-media/" } },
