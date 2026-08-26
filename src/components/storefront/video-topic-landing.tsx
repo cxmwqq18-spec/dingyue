@@ -204,12 +204,6 @@ function imageStyle(image: VideoTopicImage): { objectPosition: string } {
   return { objectPosition: image.height / image.width > 1.3 ? "50% 50%" : defaultObjectPosition };
 }
 
-function portraitCropClass(image: VideoTopicImage): string {
-  // The supplied vertical design assets include a blurred bleed around the
-  // intended frame. Crop that bleed so cards show the actual scene edge to edge.
-  return image.height / image.width > 1.3 ? "scale-[1.55] origin-center" : "";
-}
-
 function optimizedTopicImageSrc(src: string): string {
   if (!src.startsWith("/assets/dreamshoot/")) return src;
   return src.replace(/\.png(?=[?#]|$)/i, ".webp");
@@ -224,7 +218,7 @@ function DirectTopicHeroCards({ images }: { images: VideoTopicImage[] }) {
           <img
             src={optimizedTopicImageSrc(item.src)}
             alt={item.alt}
-            className={`absolute inset-0 h-full w-full object-cover object-center ${portraitCropClass(item)}`}
+            className="absolute inset-0 h-full w-full object-contain object-center"
             style={{ objectPosition: "50% 50%" }}
             width={item.width}
             height={item.height}
@@ -249,7 +243,7 @@ function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }
           <img
             src={optimizedTopicImageSrc(item.image.src)}
             alt={item.image.alt}
-            className={`absolute inset-0 h-full w-full object-cover transition duration-500 ${portraitCropClass(item.image)} group-hover:scale-[1.23]`}
+            className="absolute inset-0 h-full w-full object-contain object-center"
             style={{ objectPosition: "50% 50%" }}
             width={item.image.width}
             height={item.image.height}
@@ -286,7 +280,7 @@ function SupportingCard({ card, light = false, site }: { card: VideoTopicSupport
           <img
             src={optimizedTopicImageSrc(card.image.src)}
             alt={card.image.alt}
-            className={`h-full w-full object-cover ${portraitCropClass(card.image)}`}
+            className="h-full w-full object-contain object-center"
             style={imageStyle(card.image)}
             width={card.image.width}
             height={card.image.height}
@@ -362,7 +356,7 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
             <img
               src={optimizedTopicImageSrc(section.image.src)}
               alt={section.image.alt}
-              className={`absolute inset-0 h-full w-full object-cover ${portraitCropClass(section.image)}`}
+              className="absolute inset-0 h-full w-full object-contain object-center"
               style={imageStyle(section.image)}
               width={section.image.width}
               height={section.image.height}
@@ -479,7 +473,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
               {galleryItems.map((item) => (
                 <article className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-video-ad-scene key={item.title}>
                   <div className="relative aspect-[4/5] overflow-hidden bg-[#d9d1f6]">
-                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className={`absolute inset-0 h-full w-full object-cover ${portraitCropClass(item.image)}`} style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className="absolute inset-0 h-full w-full object-contain object-center" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -600,7 +594,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
                 <img
                   src={optimizedTopicImageSrc(content.hero.image.src)}
                   alt={content.hero.image.alt}
-                  className={`absolute inset-0 h-full w-full object-cover ${portraitCropClass(content.hero.image)}`}
+                  className="absolute inset-0 h-full w-full object-contain object-center"
                   style={imageStyle(content.hero.image)}
                   width={content.hero.image.width}
                   height={content.hero.image.height}
@@ -791,7 +785,7 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
                 <img
                   src={content.hero.image.src}
                   alt={content.hero.image.alt}
-                  className={`absolute inset-0 h-full w-full object-cover ${portraitCropClass(content.hero.image)}`}
+                  className="absolute inset-0 h-full w-full object-contain object-center"
                   style={imageStyle(content.hero.image)}
                   width={content.hero.image.width}
                   height={content.hero.image.height}
@@ -1176,7 +1170,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
               {galleryItems.map((item, index) => (
                 <article className={`flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65 ${index === 0 ? "sm:col-span-2 lg:row-span-2" : index === 3 ? "lg:col-span-2" : ""}`} data-brand-video-scene key={item.title}>
                   <div className={`relative overflow-hidden bg-[#d9d1f6] ${index === 0 ? "aspect-[16/10] lg:h-full lg:aspect-auto" : index === 3 ? "aspect-[16/9]" : "aspect-[4/5]"}`}>
-                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className={`absolute inset-0 h-full w-full object-cover ${portraitCropClass(item.image)}`} style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className="absolute inset-0 h-full w-full object-contain object-center" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -1349,7 +1343,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} /><div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">{content.steps.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-step key={item.title}><span className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</span><h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div><div className="mt-10"><ActionLink href={primaryHref} label={content.steps.cta} site={site} /></div></div></section>
 
-      {galleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? "SCENE REFERENCES"} title={content.gallery?.title ?? "Eight Directions for the Next Shot"} body={content.gallery?.intro} light /><div className="mt-12 grid auto-rows-[minmax(16rem,auto)] gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{galleryItems.map((item, index) => <article className={`flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65 ${index === 0 ? "sm:col-span-2 lg:row-span-2" : index === 3 ? "lg:col-span-2" : ""}`} data-scene-topic-scene key={item.title}><div className={`relative overflow-hidden bg-[#d9d1f6] ${index === 0 ? "aspect-[16/10] lg:h-full lg:aspect-auto" : index === 3 ? "aspect-[16/9]" : "aspect-[4/5]"}`}><img src={item.image.src} alt={item.image.alt} className={`absolute inset-0 h-full w-full object-cover ${portraitCropClass(item.image)}`} style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
+      {galleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? "SCENE REFERENCES"} title={content.gallery?.title ?? "Eight Directions for the Next Shot"} body={content.gallery?.intro} light /><div className="mt-12 grid auto-rows-[minmax(16rem,auto)] gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{galleryItems.map((item, index) => <article className={`flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65 ${index === 0 ? "sm:col-span-2 lg:row-span-2" : index === 3 ? "lg:col-span-2" : ""}`} data-scene-topic-scene key={item.title}><div className={`relative overflow-hidden bg-[#d9d1f6] ${index === 0 ? "aspect-[16/10] lg:h-full lg:aspect-auto" : index === 3 ? "aspect-[16/9]" : "aspect-[4/5]"}`}><img src={item.image.src} alt={item.image.alt} className="absolute inset-0 h-full w-full object-contain object-center" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="sequence-guide" data-video-topic-section="sequence-guide"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.guidance.cards.map((card) => <SupportingCard card={card} key={card.title} site={site} />)}</div></div></section>
 
@@ -1412,7 +1406,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
                 <img
                   src={optimizedTopicImageSrc(item.src)}
                   alt={item.alt}
-                  className={`absolute inset-0 h-full w-full object-cover object-center ${portraitCropClass(item)}`}
+                  className="absolute inset-0 h-full w-full object-contain object-center"
                   style={{ objectPosition: "50% 50%" }}
                   width={item.width}
                   height={item.height}
@@ -1420,7 +1414,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
                   fetchPriority={index === 0 ? "high" : undefined}
                   decoding="async"
                 />
-              </div>) : <div className="absolute inset-0 grid grid-cols-3 gap-2 bg-[#17151f] p-2">{heroImages.map((item, index) => <div className="relative min-w-0 overflow-hidden rounded-[6px] bg-[#292438]" key={`hero-card-${item.src}`}><img src={optimizedTopicImageSrc(item.src)} alt={item.alt} className={`absolute inset-0 h-full w-full object-cover object-center ${portraitCropClass(item)}`} style={{ objectPosition: "50% 50%" }} width={item.width} height={item.height} loading={index === 0 ? "eager" : "lazy"} decoding="async" /></div>)}</div>}
+              </div>) : <div className="absolute inset-0 grid grid-cols-3 gap-2 bg-[#17151f] p-2">{heroImages.map((item, index) => <div className="relative min-w-0 overflow-hidden rounded-[6px] bg-[#292438]" key={`hero-card-${item.src}`}><img src={optimizedTopicImageSrc(item.src)} alt={item.alt} className="absolute inset-0 h-full w-full object-contain object-center" style={{ objectPosition: "50% 50%" }} width={item.width} height={item.height} loading={index === 0 ? "eager" : "lazy"} decoding="async" /></div>)}</div>}
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
               <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />

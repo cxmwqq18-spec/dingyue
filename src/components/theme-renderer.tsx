@@ -13580,7 +13580,7 @@ function SectionView({
                           <div className="relative aspect-[16/9] overflow-hidden bg-[#211c2c]" data-video-theme-card-image>
                             <img
                               alt={manualImageAlt({ src: coverImage.src, fallback: coverImage.alt })}
-                            className="block h-full w-full scale-[1.42] object-cover object-center transition duration-500 group-hover/theme:scale-[1.5]"
+                            className="block h-full w-full object-contain object-center"
                               decoding="async"
                               loading={index === 0 ? "eager" : "lazy"}
                               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"

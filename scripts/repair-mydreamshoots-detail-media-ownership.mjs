@@ -73,25 +73,33 @@ function uniqueAssetUrls(relative, count) {
   assert(files.length >= count, `not_enough_local_assets:${relative}:${files.length}:${count}`);
   return files.slice(0, count).map((file) => assetUrl(path.relative(assetRoot, file)));
 }
-async function writeTransformedAsset(sourcePath, outputPath, seed) {
-  const numericSeed = typeof seed === "number" ? seed : Number.parseInt(crypto.createHash("sha256").update(String(seed)).digest("hex").slice(0, 6), 16);
+
+function embeddedFrameBounds(metadata) {
+  // A small, known group of legacy social-source assets is a 9:16 canvas
+  // containing one crisp 4:3 photo over a deliberately blurred duplicate.
+  // Extracting the framed photo removes the blur without cutting its subject.
+  if (metadata.width !== 1080 || metadata.height !== 1920) return undefined;
+  return { left: 36, top: 582, width: 1008, height: 756 };
+}
+
+async function writeTransformedAsset(sourcePath, outputPath) {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   const sameFile = path.resolve(sourcePath) === path.resolve(outputPath);
-  const temporaryOutputPath = sameFile ? `${outputPath}.tmp-${process.pid}-${numericSeed}` : outputPath;
+  const temporaryOutputPath = sameFile ? `${outputPath}.tmp-${process.pid}` : outputPath;
   try {
-    await sharp(sourcePath)
-      .resize({ width: 1600, height: 1200, fit: "cover", position: "attention" })
-      .extend({ top: numericSeed % 3, bottom: (numericSeed >> 2) % 3, left: (numericSeed >> 4) % 3, right: (numericSeed >> 6) % 3, background: { r: numericSeed % 255, g: (numericSeed >> 8) % 255, b: (numericSeed >> 16) % 255, alpha: 1 } })
-      .modulate({ saturation: 1 + ((numericSeed % 997) / 10000), brightness: 1 + ((numericSeed % 701) / 10000) })
-      .linear(1, (numericSeed % 17) - 8)
-      .tint({ r: 240 + (numericSeed % 15), g: 240 + ((numericSeed >> 4) % 15), b: 240 + ((numericSeed >> 8) % 15) })
+    const image = sharp(sourcePath).rotate();
+    const embeddedFrame = embeddedFrameBounds(await image.metadata());
+    if (embeddedFrame) image.extract(embeddedFrame);
+    await image
+      // Keep the entire source frame. Editorial cards can letterbox, but they
+      // must never remove a subject's face or replace the image with a blur.
+      .resize({ width: 1600, height: 1200, fit: "contain", background: { r: 23, g: 21, b: 31, alpha: 1 } })
       .webp({ quality: 94 })
       .toFile(temporaryOutputPath);
     if (sameFile) fs.renameSync(temporaryOutputPath, outputPath);
   } finally {
     if (sameFile && fs.existsSync(temporaryOutputPath)) fs.rmSync(temporaryOutputPath);
   }
-  fs.appendFileSync(outputPath, Buffer.from(`\nowner:${String(seed)}\n`));
 }
 
 async function buildPackMedia(slug, spec, count = 12) {
@@ -100,10 +108,10 @@ async function buildPackMedia(slug, spec, count = 12) {
   assert(sources.length >= count && coverSources.length > 0, `pack_sources_missing:${slug}`);
   const coverPath = path.join(assetRoot, `generated/pack-covers/${slug}/${slug}-cover.webp`);
   const gallery = [];
-  if (apply) await writeTransformedAsset(coverSources[0], coverPath, `${slug}:cover`);
+  if (apply) await writeTransformedAsset(coverSources[0], coverPath);
   for (let index = 0; index < count; index += 1) {
     const outputPath = path.join(assetRoot, `generated/pack-galleries/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp`);
-    if (apply) await writeTransformedAsset(sources[index], outputPath, `${slug}:${index}`);
+    if (apply) await writeTransformedAsset(sources[index], outputPath);
     gallery.push(assetUrl(`generated/pack-galleries/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp?mediarev=${revision}`));
   }
   return {
@@ -119,7 +127,7 @@ async function buildStandardMedia(slug, sources, count) {
   const urls = [];
   for (let index = 0; index < count; index += 1) {
     const outputPath = path.join(assetRoot, `generated/standard-page-media/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp`);
-    if (apply) await writeTransformedAsset(files[index], outputPath, `${slug}:${index}`);
+    if (apply) await writeTransformedAsset(files[index], outputPath);
     urls.push(assetUrl(`generated/standard-page-media/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp?mediarev=${revision}`));
   }
   return urls;
@@ -131,7 +139,7 @@ async function buildVideoMedia(slug, count) {
   const urls = [];
   for (let index = 0; index < count; index += 1) {
     const outputPath = path.join(assetRoot, `generated/video-topic-media/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp`);
-    if (apply) await writeTransformedAsset(files[index], outputPath, `${slug}:${index}`);
+    if (apply) await writeTransformedAsset(files[index], outputPath);
     urls.push(assetUrl(`generated/video-topic-media/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp?mediarev=${revision}`));
   }
   return urls;

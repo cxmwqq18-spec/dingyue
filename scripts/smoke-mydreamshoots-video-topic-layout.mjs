@@ -128,7 +128,7 @@ try {
             assert.equal(result.media.length, 8, `${topic} ${viewport.name} should render eight scene media frames`);
             assert.equal(new Set(result.media.map((media) => media.src)).size, 8, `${topic} ${viewport.name} scene images must be unique`);
             assert.equal(result.media.every((media) => media.loaded && media.alt.trim()), true, `${topic} ${viewport.name} scene images must load with alt text`);
-            assert.equal(result.media.every((media) => media.objectFit === "cover"), true, `${topic} ${viewport.name} scene images must use cover`);
+            assert.equal(result.media.every((media) => media.objectFit === "contain"), true, `${topic} ${viewport.name} scene images must preserve their complete frame`);
             assert.equal(result.media.every((media) => Math.abs(media.width / media.height - 4 / 5) < 0.04), true, `${topic} ${viewport.name} scene media must use 4:5 frames`);
             assert.equal(result.workspaceCtaCount, 4, `${topic} ${viewport.name} should expose hero, steps, workflow, and final workspace CTAs`);
             assert.equal(new Set(result.workspaceCtaHrefs).size, 1, `${topic} ${viewport.name} workspace CTAs must share one destination`);
@@ -301,7 +301,7 @@ try {
             };
           });
           assert.equal(result.pageMarker, 1, `${topic} ${viewport.name} should render one shared page marker`);
-          assert.equal(result.hero.objectFit, "cover", `${topic} ${viewport.name} hero image must use cover`);
+          assert.equal(result.hero.objectFit, "contain", `${topic} ${viewport.name} hero image must preserve its complete frame`);
           assert.equal(Math.abs(result.hero.width / result.hero.height - 16 / 9) < 0.04, true, `${topic} ${viewport.name} hero media must use a 16:9 frame`);
           assert.equal(result.cards, 6, `${topic} ${viewport.name} should render six use-case cards`);
           assert.equal(result.columns, viewport.columns, `${topic} ${viewport.name} should render ${viewport.columns} use-case columns`);
@@ -310,7 +310,7 @@ try {
           assert.equal(result.media.length, 6, `${topic} ${viewport.name} should render six use-case media frames`);
           assert.equal(new Set(result.media.map((media) => media.src)).size, 6, `${topic} ${viewport.name} use-case images must be unique`);
           assert.equal(result.media.every((media) => media.loaded && media.alt.trim()), true, `${topic} ${viewport.name} use-case images must load with alt text`);
-          assert.equal(result.media.every((media) => media.objectFit === "cover"), true, `${topic} ${viewport.name} use-case images must use cover`);
+          assert.equal(result.media.every((media) => media.objectFit === "contain"), true, `${topic} ${viewport.name} use-case images must preserve their complete frames`);
           assert.equal(result.media.every((media) => Math.abs(media.width / media.height - 16 / 9) < 0.04), true, `${topic} ${viewport.name} media must use 16:9 frames`);
           assert.equal(result.cardLinks.length, 0, `${topic} ${viewport.name} use-case cards must not expose repeated actions`);
           assert.equal(result.workspaceCtaCount, 3, `${topic} ${viewport.name} should expose hero, steps, and final workspace CTAs`);

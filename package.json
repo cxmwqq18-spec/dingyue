@@ -159,6 +159,7 @@
     "smoke:theme-publish-approval-contract": "node scripts/smoke-theme-publish-approval-contract.mjs",
     "smoke:seo-architecture-contract": "node scripts/smoke-seo-architecture-contract.mjs",
     "smoke:mydreamshoots-media-seo-schema": "node scripts/smoke-mydreamshoots-media-seo-schema.mjs",
+    "smoke:mydreamshoots-derived-media-color": "node scripts/smoke-mydreamshoots-derived-media-color.mjs",
     "smoke:mydreamshoots-standard-page-media": "node scripts/smoke-mydreamshoots-standard-page-media.mjs",
     "smoke:mydreamshoots-seo-architecture": "npm run guard:storefront-single-source && npm run guard:mydreamshoots-publication-immutability && npm run smoke:mydreamshoots-publication-snapshot && npm run smoke:mydreamshoots-route-entity-contract && npm run smoke:mydreamshoots-standard-page-media",
     "sync:mydreamshoots-best-packages-source": "node scripts/sync-mydreamshoots-best-packages-source.mjs",
