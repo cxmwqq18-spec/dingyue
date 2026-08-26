@@ -52,6 +52,11 @@ const configs = [
     pagePath: "/ai-video-generation/wedding-ceremony",
     pageKey: "wedding_ceremony",
     tone: "wedding",
+    heroImages: [
+      "hero-ai-wedding-ceremony-recessional.jpg",
+      "wedding-ceremony-church-atmosphere.jpg",
+      "wedding-ceremony-ring-exchange.jpg"
+    ],
     sections: [
       ["hero", "editorial_hero", "Hero"],
       ["definition", "editorial_rich_text", "What Is an AI Wedding Ceremony Photo Video"],
@@ -337,7 +342,14 @@ function parseManifest(config) {
       if (!expected || expected !== actual) throw new Error(`${config.key}: checksum mismatch for ${image.filename}`);
     }
   }
-  return images;
+  if (!config.heroImages?.length) return images;
+  const heroImages = config.heroImages.map((filename) => {
+    const image = images.find((candidate) => candidate.filename === filename);
+    if (!image) throw new Error(`${config.key}: configured hero image ${filename} is not in the manifest`);
+    return image;
+  });
+  const heroFilenames = new Set(heroImages.map((image) => image.filename));
+  return [...heroImages, ...images.filter((image) => !heroFilenames.has(image.filename))];
 }
 
 function normalizeInternalPath(value) {

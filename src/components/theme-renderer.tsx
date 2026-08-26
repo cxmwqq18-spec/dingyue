@@ -8536,7 +8536,7 @@ function SectionView({
       const height = Number(read("imageHeight")) || 1000;
       const loading = read("imageLoading") === "eager" ? "eager" : "lazy";
       const fetchPriority = read("imageFetchPriority") === "high" ? "high" : read("imageFetchPriority") === "low" ? "low" : "auto";
-      return <StorefrontImage alt={read("imageAlt")} className="h-full w-full object-cover" fetchPriority={fetchPriority} height={height} loading={loading} priority={loading === "eager"} sizes="(max-width: 760px) 100vw, 50vw" src={mediaAssetUrl(site, src)} width={width} />;
+      return <StorefrontImage alt={read("imageAlt")} className="h-full w-full object-contain" fetchPriority={fetchPriority} height={height} loading={loading} priority={loading === "eager"} sizes="(max-width: 760px) 100vw, 50vw" src={mediaAssetUrl(site, src)} width={width} />;
     };
     const textBlock = (block: SectionBlockInstance, key = "text") => blockValue(block, key).trim();
     const headingClass = "text-balance font-semibold leading-[1.06] [font-family:var(--site-title-font)]";
@@ -13559,8 +13559,9 @@ function SectionView({
                 </p>
               </div>
             </div>
-            <div className="mt-8 grid items-start gap-10">
-              {topicGroups.map((group) => (
+            <DreamshootShowcasePreview className="contents">
+              <div className="mt-8 grid items-start gap-10">
+                {topicGroups.map((group) => (
                 <section key={group.slug}>
                   <div className="flex items-end justify-between gap-4 border-b border-white/10 pb-3">
                     <h2 className="text-2xl font-semibold tracking-normal text-white">{group.label}</h2>
@@ -13603,8 +13604,9 @@ function SectionView({
                     })}
                   </div>
                 </section>
-              ))}
-            </div>
+                ))}
+              </div>
+            </DreamshootShowcasePreview>
           </div>
         </section>
       );

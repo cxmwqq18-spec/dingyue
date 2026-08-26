@@ -67,6 +67,7 @@
     "smoke:best-save-the-date-page": "node scripts/smoke-best-save-the-date-page.mjs",
     "sync:seasonal-theme-pages": "node scripts/sync-seasonal-theme-pages.mjs",
     "smoke:seasonal-theme-packages": "node scripts/smoke-seasonal-theme-packages.mjs",
+    "smoke:mydreamshoots-editorial-media-presentation": "node scripts/smoke-mydreamshoots-editorial-media-presentation.mjs",
     "sync:aidreamcapes-homepage-layout": "node scripts/sync-dreamshoot-homepage-layout.mjs --site=aidreamcapes",
     "sync:aidreamcapes-homepage-layout:db": "node scripts/sync-dreamshoot-homepage-layout.mjs --site=aidreamcapes --db",
     "sync:aidreamcapes-trusted-logos": "node scripts/sync-aidreamcapes-trusted-logos.mjs",

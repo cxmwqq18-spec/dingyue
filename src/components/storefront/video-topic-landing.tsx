@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import type { SectionInstance, Site } from "@/lib/types";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
+import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import { aiVideoTopicLandingContentFromSection, type AiVideoTopicLandingContent } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
@@ -1586,11 +1587,19 @@ export function AiVideoTopicLanding({ section, site }: { section: SectionInstanc
   const contentKey = String(section.settings.contentKey ?? section.settings.anchor ?? "").trim();
   const content = aiVideoTopicLandingContentFromSection(section);
   if (!content) notFound();
-  return <VideoTopicLanding content={normalizeAiContent(content)} contentKey={contentKey} section={section} site={site} />;
+  return (
+    <DreamshootShowcasePreview>
+      <VideoTopicLanding content={normalizeAiContent(content)} contentKey={contentKey} section={section} site={site} />
+    </DreamshootShowcasePreview>
+  );
 }
 
 export function TalkingPhotoLanding({ section, site }: { section: SectionInstance; site: Site }) {
   const content = talkingPhotoContentFromSection(section);
   if (!content) notFound();
-  return <VideoTopicLanding content={normalizeTalkingContent(content)} contentKey="talking-photo" section={section} site={site} />;
+  return (
+    <DreamshootShowcasePreview>
+      <VideoTopicLanding content={normalizeTalkingContent(content)} contentKey="talking-photo" section={section} site={site} />
+    </DreamshootShowcasePreview>
+  );
 }
