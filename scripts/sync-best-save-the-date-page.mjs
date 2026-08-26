@@ -33,6 +33,30 @@ const sourcePaths = [
   "/ai-image-generation/holiday"
 ];
 
+const directoryMedia = [
+  ["save-the-date-01.webp", "Save the Date couple portrait for the opening theme directory card."],
+  ["save-the-date-02.webp", "Save the Date announcement scene for the theme directory."],
+  ["save-the-date-03.webp", "Save the Date garden couple scene for the theme directory."],
+  ["save-the-date-04.webp", "Save the Date planning scene for the theme directory."],
+  ["save-the-date-05.webp", "Save the Date city walk scene for the theme directory."],
+  ["save-the-date-06.webp", "Save the Date destination scene for the theme directory."],
+  ["save-the-date-07.webp", "Save the Date beach transition scene for the theme directory."],
+  ["save-the-date-08.webp", "Save the Date ring detail scene for the theme directory."],
+  ["save-the-date-09.webp", "Save the Date proposal memory scene for the theme directory."],
+  ["save-the-date-10.webp", "Save the Date ring announcement scene for the theme directory."],
+  ["save-the-date-11.webp", "Save the Date production scene for the theme directory."]
+].map(([filename, alt], index) => ({
+  filename,
+  src: `/assets/dreamshoot/generated/standard-page-media/save-the-date/${filename}`,
+  alt,
+  role: index === 0 ? "hero" : "content",
+  width: 1600,
+  height: 1000,
+  format: "WEBP",
+  loading: index === 0 ? "eager" : "lazy",
+  fetchPriority: index === 0 ? "high" : "auto"
+}));
+
 const jiti = createJiti(import.meta.url);
 const { toSite, mapProduct } = jiti("../src/lib/stores/prisma-mappers.ts");
 const { buildPublicationSnapshot, prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
@@ -120,7 +144,12 @@ try {
     version: 1,
     sectionsOrder: ["best_save_the_date_1"],
     sections: { best_save_the_date_1: { type: "dreamshoot_save_the_date_directory", settings: { anchor: "best-save-the-date", headingLevel: "h1" }, blocks: [] } },
-    ...(leadMedia ? { mediaManifest: [{ ...leadMedia, role: "hero", loading: "eager", fetchPriority: "high" }] } : {}),
+    mediaManifest: directoryMedia,
+    contentContract: {
+      schema: "editorial-page-v1",
+      pageKey: "best_save_the_date",
+      mediaCount: directoryMedia.length
+    },
     seo: {
       title: "Best Save the Date themes | myDreamshoots",
       description: "Browse every myDreamshoots Save the Date theme for Valentine announcements, engagements, proposals, and wedding date stories.",
@@ -135,10 +164,30 @@ try {
   const pageId = `page_${siteId}_best_save_the_date`;
   await prisma.$transaction(async (tx) => {
   await tx.themePage.upsert({ where: { siteId_slug: { siteId, slug: pagePath } }, create: { id: pageId, siteId, pageType: "content", templateKey: "best-save-the-date", slug: pagePath, title: "Best Save the Date themes", draftJson: pageJson, publishedJson: {} }, update: { pageType: "content", templateKey: "best-save-the-date", title: "Best Save the Date themes", draftJson: pageJson } });
+  for (const item of directoryMedia) {
+    await tx.mediaAsset.upsert({
+      where: { siteId_storageKey: { siteId, storageKey: item.src } },
+      create: {
+        id: `media_${siteId}_best_save_the_date_${item.filename.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}`,
+        siteId,
+        label: item.filename,
+        storageKey: item.src,
+        mimeType: "image/webp",
+        usageType: "theme",
+        sourceType: "best-save-the-date-directory",
+        previewUrl: item.src,
+        originUrl: item.src,
+        altText: item.alt
+      },
+      update: { altText: item.alt, previewUrl: item.src, originUrl: item.src, usageType: "theme", sourceType: "best-save-the-date-directory" }
+    });
+  }
   await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: {} }, update: { draftJson: nextSettings } });
   });
   const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   const site = toSite(fresh);
+  const candidatePage = site.pages.find((page) => page.slug === pagePath);
+  if (candidatePage) candidatePage.publishedJson = pageJson;
   const packs = await prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: true } });
   const products = await prisma.product.findMany({ where: { siteId }, include: { prices: true } });
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products.map(mapProduct));
