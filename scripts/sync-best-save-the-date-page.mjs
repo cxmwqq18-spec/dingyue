@@ -88,11 +88,12 @@ try {
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
   const existingSettings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
   const existingGroups = existingSettings.saveTheDateNavigation?.groups ?? [];
-  const existingPublishedItems = existingGroups.flatMap((candidate) => candidate.items.filter((item) => item.status === "published").map((item) => ({ ...item, groupSlug: candidate.slug })));
-  const eligiblePaths = new Set([...sourcePaths, ...existingPublishedItems.map((item) => item.href)]);
+  const publishedItems = existingGroups.flatMap((candidate) => candidate.items.filter((item) => item.status === "published").map((item) => ({ ...item, groupSlug: candidate.slug })));
+  const eligiblePaths = new Set([...sourcePaths, ...publishedItems.map((item) => item.href)]);
   const sourcePages = new Map(siteRecord.pages.filter((page) => eligiblePaths.has(page.slug)).map((page) => [page.slug, page]));
-  const missingPublishedSources = existingPublishedItems.filter((item) => !sourcePages.has(item.href)).map((item) => item.href);
-  if (missingPublishedSources.length) throw new Error(`Published Save the Date navigation items have no source page: ${missingPublishedSources.join(", ")}`);
+  const missingPublishedSources = publishedItems.filter((item) => !sourcePages.has(item.href)).map((item) => item.href);
+  const existingPublishedItems = publishedItems.filter((item) => sourcePages.has(item.href));
+  const availableSourcePaths = sourcePaths.filter((href) => sourcePages.has(href));
   const labelByPath = new Map([
     ["/ai-save-the-date/valentines-day", "Valentine's Day"],
     ["/holidays-events/engagement", "Engagement"],
@@ -106,8 +107,8 @@ try {
   const existingPathsForGroup = (groupSlug) => existingPublishedItems
     .filter((item) => item.groupSlug === groupSlug && !sourcePaths.includes(item.href) && sourcePages.has(item.href))
     .map((item) => item.href);
-  const lovePaths = [...sourcePaths.slice(0, 4), ...existingPathsForGroup("love-wedding")];
-  const seasonalPaths = [...sourcePaths.slice(4), ...existingPublishedItems
+  const lovePaths = [...availableSourcePaths.slice(0, 4), ...existingPathsForGroup("love-wedding")];
+  const seasonalPaths = [...availableSourcePaths.slice(4), ...existingPublishedItems
     .filter((item) => item.groupSlug !== "love-wedding" && !sourcePaths.includes(item.href) && sourcePages.has(item.href))
     .map((item) => item.href)];
   const buildItems = (paths) => paths.map((href, index) => {
@@ -131,7 +132,6 @@ try {
     { label: "Seasonal Holidays", slug: "seasonal-holidays", sortOrder: 2, items: buildItems(seasonalPaths) }
   ];
   const nextItems = nextGroups.flatMap((candidate) => candidate.items);
-  const leadMedia = firstMedia(sourcePages.get(sourcePaths[0]));
   const nextSettings = {
     ...existingSettings,
     saveTheDateNavigation: {
@@ -194,7 +194,7 @@ try {
   const integrity = publicationSnapshotIntegrity(snapshot);
   if (integrity !== "valid") throw new Error(`Save the Date publication snapshot is invalid: ${integrity}`);
   const manifest = await prepareDraftPublishManifestRelational(siteId);
-  console.log(JSON.stringify({ siteId, pagePath, mode: "draft-only", categories: nextGroups.length, themes: nextItems.length, snapshotHash: snapshot.snapshotHash, manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
+  console.log(JSON.stringify({ siteId, pagePath, mode: "draft-only", categories: nextGroups.length, themes: nextItems.length, removedMissingSources: missingPublishedSources, snapshotHash: snapshot.snapshotHash, manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
 } finally {
   await prisma.$disconnect();
 }
