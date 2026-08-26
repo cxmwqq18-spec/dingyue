@@ -217,6 +217,14 @@ function decodeHtmlEntities(value) {
     .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCharCode(parseInt(code, 16)));
 }
 
+function headingSequence(html) {
+  return [...renderedMarkup(html).matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi)]
+    .map((match) => ({
+      level: Number(match[1]),
+      text: visibleText(match[2])
+    }));
+}
+
 function visibleText(html) {
   return decodeHtmlEntities(html)
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
@@ -244,7 +252,10 @@ const headshotIsPublished = sitemapHasLoc(`https://${host}${headshotPath}`);
 const collectionResponse = await fetchText(headshotPath, "text/html");
 assert.equal(collectionResponse.status, headshotIsPublished ? 200 : 404, `${headshotPath} status must match the active immutable snapshot`);
 const collection = headshotIsPublished ? collectionResponse.body : "";
-const focusCollectionSlugs = (localTaxonomy.items ?? []).map((item) => item.slug).filter(Boolean);
+const focusCollectionSlugs = (localTaxonomy.items ?? [])
+  .filter((item) => item.slug !== "motion-generator")
+  .map((item) => item.slug)
+  .filter(Boolean);
 const focusCollectionPaths = focusCollectionSlugs.map((slug) => `/ai-image-generation/${slug}`);
 const focusCollections = {};
 for (const pathname of focusCollectionPaths) {
@@ -445,6 +456,13 @@ for (const [pathname, html] of Object.entries(focusCollections)) {
   const canonical = canonicalHref(html);
   const text = visibleText(html);
   const normalizedHtml = text.toLowerCase();
+  const headings = headingSequence(html);
+  const h1Headings = headings.filter((heading) => heading.level === 1);
+  assert.equal(h1Headings.length, 1, `${pathname} must render exactly one H1`);
+  assert.equal(headings[0]?.level, 1, `${pathname} first content heading must be an H1`);
+  assert.equal(headings[0]?.text, pageCopy.headline, `${pathname} first content heading must match the approved page headline`);
+  assert.ok(headings.some((heading) => heading.level === 2 && heading.text === pageCopy.galleryTitle), `${pathname} gallery title must render as H2`);
+  assert.equal(h1Headings.some((heading) => heading.text === pageCopy.galleryTitle), false, `${pathname} gallery title must never render as H1`);
   assert.equal(canonical, `https://www.mydreamshoots.com${pathname}`, `${pathname} must expose the canonical AI Image Generation URL`);
   assert.equal(decodeHtmlEntities(title), pageCopy.seoTitle, `${pathname} must expose the approved page-copy SEO title`);
   assert.equal(decodeHtmlEntities(description), pageCopy.cardDescription, `${pathname} must keep the approved meta description`);

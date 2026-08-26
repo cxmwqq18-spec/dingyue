@@ -12014,7 +12014,7 @@ function SectionView({
       .filter((entry): entry is { label: string; href: string } => Boolean(entry));
     const kind = setting(section, "kind", "collection");
     const focusedCollectionRoute = renderContext.pagePath.startsWith("/ai-image-generation/") && renderContext.pagePath !== "/ai-image-generation";
-    const DirectoryHeadingTag = focusedCollectionRoute ? "h1" : "h2";
+    const DirectoryHeadingTag = setting(section, "headingLevel", focusedCollectionRoute ? "h1" : "h2") === "h1" ? "h1" : "h2";
     const spanishXbyDirectory = isSpanishXbySite(site);
     const selectedPageCopy = kind === "collection" && !spanishXbyDirectory && !isAidreamcapesSite(site)
       ? storefrontContext?.pageCopy

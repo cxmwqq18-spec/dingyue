@@ -3146,7 +3146,7 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
     settings: {
       anchor: `${kind}-${item.slug}`,
       kind,
-      headingLevel: options.focused && kind === "collection" ? "h1" : "h2",
+      headingLevel: "h2",
       label: item.label,
       title: item.h2,
       subtitle: item.intro,
@@ -3206,7 +3206,7 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
         settings: {
           anchor: pageJson.sections[firstSection].settings.anchor,
           eyebrow: pageJson.sections[firstSection].settings.eyebrow,
-          headingLevel: pageJson.sections[firstSection].settings.headingLevel,
+          headingLevel: options.focused && kind === "collection" ? "h1" : pageJson.sections[firstSection].settings.headingLevel,
           layout: pageJson.sections[firstSection].settings.layout,
           subtitle: pageJson.sections[firstSection].settings.subtitle,
           title: pageJson.sections[firstSection].settings.title

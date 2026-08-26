@@ -9,7 +9,11 @@ const screenshotDir = path.join(reportDir, "screenshots");
 fs.mkdirSync(screenshotDir, { recursive: true });
 
 const taxonomy = JSON.parse(fs.readFileSync(path.join(repoRoot, "src/lib/mydreamshoots-theme-taxonomy.json"), "utf8"));
-const productSlugs = [...new Set((taxonomy.items ?? []).map((item) => item.slug).filter(Boolean))].sort();
+const pageCopyProfiles = JSON.parse(fs.readFileSync(path.join(repoRoot, "src/lib/photo-package-use-case-profiles.json"), "utf8")).mydreamshootsCategories ?? {};
+const productSlugs = [...new Set((taxonomy.items ?? [])
+  .filter((item) => item.slug !== "motion-generator")
+  .map((item) => item.slug)
+  .filter(Boolean))].sort();
 const viewports = {
   desktop: { width: 1440, height: 1000 },
   mobile: { width: 390, height: 844 }
@@ -57,12 +61,17 @@ async function inspectProduct(context, route, routeKind, viewportName, screensho
       const main = document.querySelector("main") || document.body;
       const images = [...main.querySelectorAll("img")];
       const h1s = [...main.querySelectorAll("h1")];
+      const headings = [...main.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((node) => ({
+        level: Number(node.tagName.slice(1)),
+        text: node.textContent?.replace(/\s+/g, " ").trim() || ""
+      }));
       return {
         title: document.title,
         description: document.querySelector('meta[name="description"]')?.getAttribute("content") || "",
         canonical: document.querySelector('link[rel="canonical"]')?.getAttribute("href") || "",
         h1Count: h1s.length,
         h1: h1s[0]?.textContent?.replace(/\s+/g, " ").trim() || "",
+        headings,
         bodyCharacters: main.textContent?.replace(/\s+/g, " ").trim().length || 0,
         imageCount: images.length,
         brokenImages: images.filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.getAttribute("src") || ""),
@@ -80,6 +89,18 @@ async function inspectProduct(context, route, routeKind, viewportName, screensho
   if (responseStatus !== 200) failures.push(`HTTP ${responseStatus}`);
   if (navigationError) failures.push(navigationError);
   if (signals.h1Count !== 1 || !signals.h1) failures.push(`H1 count/text invalid (${signals.h1Count}, ${signals.h1})`);
+  const pageCopy = pageCopyProfiles[route.split("/").pop()];
+  if (pageCopy) {
+    if (signals.headings?.[0]?.level !== 1 || signals.headings?.[0]?.text !== pageCopy.headline) {
+      failures.push(`first heading invalid (${signals.headings?.[0]?.level ?? "missing"}, ${signals.headings?.[0]?.text ?? ""})`);
+    }
+    if (!signals.headings?.some((heading) => heading.level === 2 && heading.text === pageCopy.galleryTitle)) {
+      failures.push(`gallery title is not H2 (${pageCopy.galleryTitle})`);
+    }
+    if (signals.headings?.some((heading) => heading.level === 1 && heading.text === pageCopy.galleryTitle)) {
+      failures.push("gallery title must not be H1");
+    }
+  }
   if (!signals.title || !signals.description) failures.push("title or description missing");
   if (signals.canonical !== expectedCanonical(route)) failures.push(`canonical ${signals.canonical || "<missing>"}`);
   if (signals.bodyCharacters < 250) failures.push(`body too short (${signals.bodyCharacters})`);

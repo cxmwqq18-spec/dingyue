@@ -10,6 +10,7 @@ import { assertDatabaseTarget } from "./lib/database-target.mjs";
 
 const siteId = "site_dreamshoot";
 const apply = process.argv.includes("--apply");
+const imageSlugArgument = process.argv.find((argument) => argument.startsWith("--image-slugs="));
 const target = process.env.DATABASE_TARGET || "local";
 assertDatabaseTarget({ expectedTarget: target });
 assert.equal(target, "local", "detail media repair is local-database only; publish through approval after review");
@@ -26,6 +27,15 @@ const imagePackRepairs = {
   "rich-lifestyle": { source: "generated/pack-galleries/rich-lifestyle", coverSource: "generated/pack-covers/rich-lifestyle" },
   "wedding-photo": { source: "generated/pack-galleries/wedding-portraits", coverSource: "generated/pack-covers/wedding-portraits" }
 };
+const scopedImageSlugs = imageSlugArgument
+  ? imageSlugArgument.slice("--image-slugs=".length).split(",").map((slug) => slug.trim()).filter(Boolean)
+  : undefined;
+if (scopedImageSlugs) {
+  assert(scopedImageSlugs.length > 0, "image_slug_scope_empty");
+  assert.equal(new Set(scopedImageSlugs).size, scopedImageSlugs.length, "image_slug_scope_contains_duplicates");
+  for (const slug of scopedImageSlugs) assert.ok(imagePackRepairs[slug], `unknown_image_pack_slug:${slug}`);
+}
+const selectedImagePackRepairs = Object.entries(imagePackRepairs).filter(([slug]) => !scopedImageSlugs || scopedImageSlugs.includes(slug));
 const holidaySources = {
   "/holidays-events/save-the-date": "save-the-date/save-the-date",
   "/holidays-events/wedding-anniversary": ["save-the-date/engagement", "save-the-date/valentines-day"],
@@ -66,14 +76,21 @@ function uniqueAssetUrls(relative, count) {
 async function writeTransformedAsset(sourcePath, outputPath, seed) {
   const numericSeed = typeof seed === "number" ? seed : Number.parseInt(crypto.createHash("sha256").update(String(seed)).digest("hex").slice(0, 6), 16);
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  await sharp(sourcePath)
-    .resize({ width: 1600, height: 1200, fit: "cover", position: "attention" })
-    .extend({ top: numericSeed % 3, bottom: (numericSeed >> 2) % 3, left: (numericSeed >> 4) % 3, right: (numericSeed >> 6) % 3, background: { r: numericSeed % 255, g: (numericSeed >> 8) % 255, b: (numericSeed >> 16) % 255, alpha: 1 } })
-    .modulate({ saturation: 1 + ((numericSeed % 997) / 10000), brightness: 1 + ((numericSeed % 701) / 10000) })
-    .linear(1, (numericSeed % 17) - 8)
-    .tint({ r: 240 + (numericSeed % 15), g: 240 + ((numericSeed >> 4) % 15), b: 240 + ((numericSeed >> 8) % 15) })
-    .webp({ quality: 94 })
-    .toFile(outputPath);
+  const sameFile = path.resolve(sourcePath) === path.resolve(outputPath);
+  const temporaryOutputPath = sameFile ? `${outputPath}.tmp-${process.pid}-${numericSeed}` : outputPath;
+  try {
+    await sharp(sourcePath)
+      .resize({ width: 1600, height: 1200, fit: "cover", position: "attention" })
+      .extend({ top: numericSeed % 3, bottom: (numericSeed >> 2) % 3, left: (numericSeed >> 4) % 3, right: (numericSeed >> 6) % 3, background: { r: numericSeed % 255, g: (numericSeed >> 8) % 255, b: (numericSeed >> 16) % 255, alpha: 1 } })
+      .modulate({ saturation: 1 + ((numericSeed % 997) / 10000), brightness: 1 + ((numericSeed % 701) / 10000) })
+      .linear(1, (numericSeed % 17) - 8)
+      .tint({ r: 240 + (numericSeed % 15), g: 240 + ((numericSeed >> 4) % 15), b: 240 + ((numericSeed >> 8) % 15) })
+      .webp({ quality: 94 })
+      .toFile(temporaryOutputPath);
+    if (sameFile) fs.renameSync(temporaryOutputPath, outputPath);
+  } finally {
+    if (sameFile && fs.existsSync(temporaryOutputPath)) fs.rmSync(temporaryOutputPath);
+  }
   fs.appendFileSync(outputPath, Buffer.from(`\nowner:${String(seed)}\n`));
 }
 
@@ -126,7 +143,7 @@ try {
   assert(site, `missing_site:${siteId}`);
   const changes = [];
 
-  for (const [slug, spec] of Object.entries(imagePackRepairs)) {
+  for (const [slug, spec] of selectedImagePackRepairs) {
     const pack = site.creativePacks.find((candidate) => candidate.siteId === siteId && candidate.status === "active" && candidate.category === slug);
     assert(pack, `missing_creative_pack:${slug}`);
     const media = await buildPackMedia(slug, spec);
@@ -134,7 +151,7 @@ try {
     if (apply) await prisma.creativePack.update({ where: { id: pack.id }, data: media });
   }
 
-  for (const [pagePath, sourceDirectory] of Object.entries(holidaySources)) {
+  if (!scopedImageSlugs) for (const [pagePath, sourceDirectory] of Object.entries(holidaySources)) {
     const page = site.pages.find((candidate) => candidate.slug === pagePath);
     assert(page, `missing_theme_page:${pagePath}`);
     const current = [...new Set(imageUrlsIn(page.draftJson))];
@@ -179,7 +196,7 @@ try {
 
   // Existing editorial Save-the-Date pages must also have owner/alt rows in
   // the relational media table before a site-scope publication can activate.
-  if (apply) {
+  if (apply && !scopedImageSlugs) {
     for (const page of site.pages.filter((candidate) => candidate.draftJson?.contentContract?.schema === "editorial-page-v1")) {
       const mediaSourceJson = page.draftJson;
       for (const item of mediaSourceJson.mediaManifest ?? []) {
@@ -216,7 +233,7 @@ try {
     }
   }
 
-  const videoSlugs = site.pages
+  const videoSlugs = scopedImageSlugs ? [] : site.pages
     .filter((page) => page.slug.startsWith("/ai-video-generation/") && page.slug !== "/ai-video-generation/motion-generator")
     .map((page) => page.slug.slice("/ai-video-generation/".length))
     .filter((slug) => sourceFiles(slug).length > 0);
@@ -246,6 +263,7 @@ try {
     mode: apply ? "draft-source-applied" : "dry-run",
     siteId,
     revision,
+    imageSlugs: scopedImageSlugs ?? null,
     changes,
     publication: null,
     next: "prepare approval, review manifest, publish and activate"
