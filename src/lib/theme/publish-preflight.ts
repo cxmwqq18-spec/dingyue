@@ -241,6 +241,7 @@ function mediaReference(value: ThemeSettingValue | undefined): string {
 
 function detailMediaContract(creativePacks: PublishPreflightCreativePack[]): { urls: string[]; owner: string[] } {
   const detailSlugs = new Set(mydreamshootsPublishedRouteManifest().filter((route) => route.status === "published").map((route) => normalizePublishedSlug(route.canonicalSlug)));
+  const slugOwnedMediaThemes = new Set(["black-friday", "cannes", "nightlife", "rich-lifestyle"]);
   const owners = new Map<string, string>();
   const conflicts: string[] = [];
   for (const pack of creativePacks.filter((candidate) => candidate.status === "active" && detailSlugs.has(normalizePublishedSlug(candidate.categoryRecord?.slug || candidate.category || "")))) {
@@ -251,6 +252,11 @@ function detailMediaContract(creativePacks: PublishPreflightCreativePack[]): { u
     if (urls.length < 13) conflicts.push(`${owner}:cover_plus_gallery_under_13`);
     if (new Set(urls).size !== urls.length) conflicts.push(`${owner}:within_page_duplicate`);
     for (const url of urls) {
+      const themeSlug = normalizePublishedSlug(pack.categoryRecord?.slug || pack.category || "");
+      if (slugOwnedMediaThemes.has(themeSlug)) {
+        const mediaSlug = url.split(/[?#]/, 1)[0].split("/").filter(Boolean).at(-2) || "";
+        if (mediaSlug !== themeSlug) conflicts.push(`${owner}:media_owner_mismatch:${themeSlug}:${mediaSlug}`);
+      }
       const previous = owners.get(url);
       if (previous && previous !== owner) conflicts.push(`${url}:${previous}<->${owner}`);
       else owners.set(url, owner);

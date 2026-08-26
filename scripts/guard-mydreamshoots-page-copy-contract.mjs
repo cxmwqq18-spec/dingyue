@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 const prisma = new PrismaClient();
@@ -13,9 +14,7 @@ function readJson(relativePath) {
 }
 
 async function readPlatformState() {
-  const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
-  if (!document?.state) throw new Error("missing_platform_state_document");
-  return document.state;
+  return readPlatformStateFromSql(prisma);
 }
 
 function normalizeSlug(value) {
@@ -34,7 +33,14 @@ const useCaseProfiles = readJson("src/lib/photo-package-use-case-profiles.json")
 const packProfiles = readJson("src/lib/dreamshoot-pack-profiles.json");
 const platformState = await readPlatformState();
 const blackFridayPack = (platformState.creativePacks ?? []).find((pack) => pack.siteId === "site_dreamshoot" && normalizeSlug(pack.category || pack.name) === "black-friday");
-const blackFridayMediaMismatch = Boolean(blackFridayPack && [blackFridayPack.imageUrl, ...(blackFridayPack.galleryImages ?? [])].some((image) => /creator-portraits|anime-avatar/i.test(String(image ?? ""))));
+const ownedMediaSlugs = new Set(["black-friday", "cannes", "nightlife", "rich-lifestyle"]);
+const mediaSlugFromUrl = (value) => String(value || "").split(/[?#]/, 1)[0].split("/").filter(Boolean).at(-2) || "";
+const mediaOwnerMismatches = (platformState.creativePacks ?? [])
+  .filter((pack) => pack.siteId === "site_dreamshoot" && pack.status === "active" && ownedMediaSlugs.has(normalizeSlug(pack.categoryRecord?.slug || pack.category || pack.name)))
+  .flatMap((pack) => {
+    const slug = normalizeSlug(pack.categoryRecord?.slug || pack.category || pack.name);
+    return [pack.imageUrl, ...(pack.galleryImages ?? [])].filter(Boolean).filter((image) => mediaSlugFromUrl(image) !== slug).map((image) => `${slug}:${image}`);
+  });
 
 async function activePublicationStatus() {
   try {
@@ -243,6 +249,7 @@ assert.equal(packProfileOwnerRows.length, 0, "pack profiles must contain operati
 assert.ok(blackFridayPack, "Black Friday pack must exist in platform-state");
 assert.equal(blackFridayPack.id, "pack_dreamshoot_black_friday", "Black Friday must own a dedicated pack id instead of Anime Avatar");
 assert.ok(blackFridayPack.imageUrl, "Black Friday pack must keep a cover image");
+assert.equal(mediaOwnerMismatches.length, 0, "dedicated MyDreamShoots theme media must be owned by its own slug", { mediaOwnerMismatches });
 
 const reviewIsolationFailures = routeRows.filter((route) => route.status === "review_required" && (route.indexable || route.sitemapEligible));
 const activePublication = await activePublicationStatus();
@@ -256,7 +263,7 @@ const expectedIndexableRows = imageRequiredSlugs.length - deferredRows.length;
 const reviewIsolationReady = fallbackRows.length === 0 && reviewIsolationFailures.length === 0;
 const productionReleaseReady = reviewIsolationReady &&
   blockingReviewRows.length === 0 &&
-  blackFridayMediaMismatch === false &&
+  mediaOwnerMismatches.length === 0 &&
   activeProjectionRows === expectedIndexableRows &&
   productionFactsReady;
 const report = {
@@ -282,7 +289,7 @@ const report = {
   missingFacts,
   invalidFacts,
   blackFridayPack: blackFridayPack?.id ?? null,
-  blackFridayMediaMismatch,
+  mediaOwnerMismatches,
   reviewIsolationFailures,
   reviewSlugs: reviewRows.map((row) => row.slug)
 };

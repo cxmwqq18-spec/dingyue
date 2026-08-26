@@ -8,12 +8,17 @@ const repoRoot = process.cwd();
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const updateDb = args.has("--db");
+const skipPlatformStateDocument = args.has("--skip-platform-state-document");
 const taxonomyPath = path.join(repoRoot, "src", "lib", "mydreamshoots-theme-taxonomy.json");
 const useCaseProfilesPath = path.join(repoRoot, "src", "lib", "photo-package-use-case-profiles.json");
 const SITE_ID = "site_dreamshoot";
 const UPDATE_TIMESTAMP = "2026-08-14T00:00:00.000Z";
-const generatedThemeAssetVersion = process.env.THEME_ASSET_VERSION ?? "20260815unique1";
+const generatedThemeAssetVersion = process.env.THEME_ASSET_VERSION ?? "20260826mediaowner1";
 const generatedThemeSlugs = new Set([
+  "black-friday",
+  "cannes",
+  "nightlife",
+  "rich-lifestyle",
   "only-fans",
   "singles-awareness-day",
   "bikini",
@@ -471,12 +476,26 @@ function galleryImageAltsForItem(item, sourcePack) {
 }
 
 const dedicatedMediaSourceBySlug = {
-  "black-friday": "pack_dreamshoot_gala",
-  cannes: "pack_dreamshoot_gala",
-  nightlife: "pack_dreamshoot_christmas_couple",
-  "rich-lifestyle": "pack_dreamshoot_indian_wedding",
   urban: "pack_dreamshoot_travel"
 };
+
+const slugOwnedMediaThemes = new Set(["black-friday", "cannes", "nightlife", "rich-lifestyle"]);
+
+function mediaSlugFromUrl(value) {
+  return String(value || "")
+    .split(/[?#]/, 1)[0]
+    .split("/")
+    .filter(Boolean)
+    .at(-2) || "";
+}
+
+function assertSlugOwnedMedia(slug, imageUrl, galleryImages) {
+  if (!slugOwnedMediaThemes.has(slug)) return;
+  const urls = [imageUrl, ...(Array.isArray(galleryImages) ? galleryImages : [])].filter(Boolean);
+  if (urls.length < 13 || urls.some((url) => mediaSlugFromUrl(url) !== slug)) {
+    throw new Error(`media_owner_mismatch:${slug}:${urls.map(mediaSlugFromUrl).join(",")}`);
+  }
+}
 
 function profileContractForItem(item, profile, taxonomyItems) {
   const label = item.label.trim();
@@ -543,6 +562,8 @@ function packFieldsForItem(item, categoryId, sourcePack) {
   const profile = profileForItem(item);
   const generatedMedia = generatedThemeMediaForSlug(item.slug);
   const galleryImages = generatedMedia?.galleryImages || sourcePack?.galleryImages || [];
+  const imageUrl = generatedMedia?.imageUrl || sourcePack?.imageUrl || "/assets/dreamshoot/generated/pack-covers/professional-headshots/professional-headshots-cover.webp?v=20260731themeuniqueness1";
+  assertSlugOwnedMedia(item.slug, imageUrl, galleryImages);
   return {
     siteId: SITE_ID,
     categoryId,
@@ -558,7 +579,7 @@ function packFieldsForItem(item, categoryId, sourcePack) {
     trainingRequired: sourcePack?.trainingRequired ?? true,
     generationCount: sourcePack?.generationCount ?? 0,
     conversionRate: sourcePack?.conversionRate ?? 0,
-    imageUrl: generatedMedia?.imageUrl || sourcePack?.imageUrl || "/assets/dreamshoot/generated/pack-covers/professional-headshots/professional-headshots-cover.webp?v=20260731themeuniqueness1",
+    imageUrl,
     galleryImages,
     galleryImageAlts: galleryImageAltsForItem(item, generatedMedia ? { ...sourcePack, ...generatedMedia, galleryImages } : sourcePack),
     updatedAt: UPDATE_TIMESTAMP
@@ -1019,11 +1040,13 @@ async function updateDatabase({ state, categories, packs }) {
       await rewriteThemeJsonRows(tx, "themePage", ["draftJson", "draftMeta"]);
       await rewriteThemeJsonRows(tx, "themeSettings", ["draftJson"]);
       await rewriteThemeJsonRows(tx, "siteTheme", ["templates", "settings"]);
-      await tx.platformStateDocument.upsert({
-        where: { id: "platform" },
-        create: { id: "platform", state: stateJson },
-        update: { state: stateJson }
-      });
+      if (!skipPlatformStateDocument) {
+        await tx.platformStateDocument.upsert({
+          where: { id: "platform" },
+          create: { id: "platform", state: stateJson },
+          update: { state: stateJson }
+        });
+      }
     }, { timeout: 180_000 });
     clearPlatformStateCaches();
   } finally {
@@ -1153,7 +1176,7 @@ applyScopedHrefReplacements(state, changes);
 
 if (!dryRun) {
   writeJson(useCaseProfilesPath, useCaseProfiles);
-  await writePlatformStateToSql(state);
+  if (!skipPlatformStateDocument) await writePlatformStateToSql(state);
 }
 
 if (updateDb && !dryRun) {

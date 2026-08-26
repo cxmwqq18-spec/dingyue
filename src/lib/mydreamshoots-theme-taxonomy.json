@@ -239,7 +239,7 @@
     },
     {
       "slug": "black-friday",
-      "sourceCategorySlug": "creator-portraits",
+      "sourceCategorySlug": "black-friday",
       "reusePackId": "pack_dreamshoot_black_friday",
       "mediaReviewStatus": "ready",
       "groupSlug": "professional",
@@ -343,7 +343,7 @@
     },
     {
       "slug": "cannes",
-      "sourceCategorySlug": "desi-wedding",
+      "sourceCategorySlug": "cannes",
       "reusePackId": "pack_dreamshoot_cannes",
       "groupSlug": "lifestyle-creative",
       "label": "Cannes",
@@ -361,7 +361,7 @@
     },
     {
       "slug": "nightlife",
-      "sourceCategorySlug": "christmas-couple",
+      "sourceCategorySlug": "nightlife",
       "reusePackId": "pack_dreamshoot_nightlife",
       "groupSlug": "lifestyle-creative",
       "label": "Nightlife",
@@ -379,7 +379,7 @@
     },
     {
       "slug": "rich-lifestyle",
-      "sourceCategorySlug": "indian-wedding",
+      "sourceCategorySlug": "rich-lifestyle",
       "reusePackId": "pack_dreamshoot_rich_lifestyle",
       "groupSlug": "lifestyle-creative",
       "label": "Rich Lifestyle",

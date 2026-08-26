@@ -369,30 +369,30 @@
     "operationalDescription": "Make confident solo portraits, self-love cards, dating profile updates, independence-themed posts, and upbeat private albums."
   },
   "cannes": {
-    "packId": "pack_dreamshoot_desi_wedding",
+    "packId": "pack_dreamshoot_cannes",
     "creditCost": 24,
     "outputCount": 24,
-    "toolRef": "/app/create?pack_id=pack_dreamshoot_desi_wedding",
+    "toolRef": "/app/create?pack_id=pack_dreamshoot_cannes",
     "promptRef": "dreamshoot:cannes",
-    "mediaRef": "pack_dreamshoot_desi_wedding",
+    "mediaRef": "pack_dreamshoot_cannes",
     "operationalDescription": "Create Cannes-inspired festival portraits with glamorous arrival energy, flash photography, elegant styling, and editorial crops."
   },
   "nightlife": {
-    "packId": "pack_dreamshoot_christmas_couple",
+    "packId": "pack_dreamshoot_nightlife",
     "creditCost": 22,
     "outputCount": 24,
-    "toolRef": "/app/create?pack_id=pack_dreamshoot_christmas_couple",
+    "toolRef": "/app/create?pack_id=pack_dreamshoot_nightlife",
     "promptRef": "dreamshoot:nightlife",
-    "mediaRef": "pack_dreamshoot_christmas_couple",
+    "mediaRef": "pack_dreamshoot_nightlife",
     "operationalDescription": "Create nightlife portraits with city lights, lounge mood, evening wardrobe, neon accents, and private after-dark albums."
   },
   "rich-lifestyle": {
-    "packId": "pack_dreamshoot_indian_wedding",
+    "packId": "pack_dreamshoot_rich_lifestyle",
     "creditCost": 24,
     "outputCount": 24,
-    "toolRef": "/app/create?pack_id=pack_dreamshoot_indian_wedding",
+    "toolRef": "/app/create?pack_id=pack_dreamshoot_rich_lifestyle",
     "promptRef": "dreamshoot:rich-lifestyle",
-    "mediaRef": "pack_dreamshoot_indian_wedding",
+    "mediaRef": "pack_dreamshoot_rich_lifestyle",
     "operationalDescription": "Build luxury lifestyle portraits with elevated interiors, premium wardrobe mood, travel energy, and polished creator crops."
   },
   "bikini": {

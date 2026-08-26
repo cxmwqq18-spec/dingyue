@@ -3,9 +3,9 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import Module from "node:module";
 import path from "node:path";
-import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import createJiti from "jiti";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const repoRoot = process.cwd();
 const sourceRoot = path.join(repoRoot, "src");
@@ -37,21 +37,7 @@ const { createPublishedSiteSnapshot } = jiti("../src/lib/storefront-context/snap
 const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 async function readPlatformState() {
-  const prisma = new PrismaClient();
-  try {
-    const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
-    assert.ok(document?.state && typeof document.state === "object", "PostgreSQL platform state document must exist");
-    const state = document.state;
-    const active = await prisma.activeThemePublication.findUnique({
-      where: { siteId: "site_dreamshoot" },
-      include: { publication: true }
-    });
-    const site = state.sites?.find((item) => item.id === "site_dreamshoot");
-    if (site && active?.publication) site.activePublication = active.publication;
-    return state;
-  } finally {
-    await prisma.$disconnect().catch(() => {});
-  }
+  return readPlatformStateFromSql();
 }
 
 function graphNodes(nodes) {
@@ -116,6 +102,8 @@ const legacyVideoThemes = (state.videoThemes ?? []).filter((theme) => theme.site
 // only immutable publication entities are allowed to feed public schema.
 const activeVideoThemes = [];
 const blackFridayPack = activePacks.find((pack) => schemaSlug(pack.category || pack.name) === "black-friday" || schemaSlug(pack.name) === "black-friday");
+const slugOwnedMediaThemes = ["black-friday", "cannes", "nightlife", "rich-lifestyle"];
+const mediaSlugFromUrl = (value) => String(value ?? "").split(/[?#]/, 1)[0].split("/").filter(Boolean).at(-2) || "";
 const homePage = site.pages.find((page) => page.slug === "/");
 assert.ok(homePage, "MyDreamShoots homepage should exist");
 const fixtureFacts = {
@@ -201,6 +189,13 @@ assert.equal(blackFridayPack.id, "pack_dreamshoot_black_friday", "Black Friday s
 assert.equal(dreamshootPackProfileSlug("anime-avatar"), "anime-avatar", "Anime Avatar must retain its own pack profile");
 assert.equal(/anime-avatar/i.test(blackFridayPack.imageUrl ?? ""), false, "Black Friday pack cover must not reuse Anime Avatar art");
 assert.equal((blackFridayPack.galleryImages ?? []).some((image) => /anime-avatar/i.test(image)), false, "Black Friday pack gallery must not reuse Anime Avatar art");
+for (const slug of slugOwnedMediaThemes) {
+  const pack = activePacks.find((candidate) => schemaSlug(candidate.category || candidate.name) === slug || schemaSlug(candidate.name) === slug);
+  assert.ok(pack, `${slug} pack should exist`);
+  const media = [pack.imageUrl, ...(pack.galleryImages ?? [])].filter(Boolean);
+  assert.equal(media.length, 13, `${slug} pack should expose one cover and twelve gallery images`);
+  assert.ok(media.every((image) => mediaSlugFromUrl(image) === slug), `${slug} pack media must be owned by its same-slug directory`);
+}
 
 const homeGraph = graphNodes(buildStorefrontJsonLd({
   site: fixtureSite,

@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
+import net from "node:net";
 import path from "node:path";
+import { ProxyAgent } from "undici";
 import { PrismaClient } from "@prisma/client";
 import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
@@ -32,7 +34,7 @@ const outRoot = path.resolve(process.cwd(), args.get("out") ?? "public/assets/dr
 const publicPrefix = args.get("public-prefix") ?? "/assets/dreamshoot/generated/pack-galleries";
 const coverRoot = path.resolve(process.cwd(), args.get("cover-out") ?? "public/assets/dreamshoot/generated/pack-covers");
 const coverPublicPrefix = args.get("cover-public-prefix") ?? "/assets/dreamshoot/generated/pack-covers";
-const publicVersion = args.get("version") ?? process.env.THEME_GALLERY_VERSION ?? "20260715b";
+const publicVersion = args.get("version") ?? process.env.THEME_GALLERY_VERSION ?? "20260826mediaowner1";
 const coverPublicVersion = args.get("cover-version") ?? process.env.THEME_COVER_VERSION ?? publicVersion;
 const coverPublicVersionBySlug = {
   engagement: process.env.THEME_ENGAGEMENT_COVER_VERSION ?? "20260805uncropped1"
@@ -51,6 +53,33 @@ const onlySlugs = new Set(String(args.get("slugs") ?? process.env.THEME_GALLERY_
   .split(",")
   .map((slug) => slug.trim())
   .filter(Boolean));
+const providerProxyUrl = String(
+  process.env.AI_WORKER_HTTPS_PROXY || process.env.HTTPS_PROXY || process.env.HTTP_PROXY || ""
+).trim();
+let providerProxyDispatcher;
+
+function loopbackProxyAddress(value) {
+  try {
+    const parsed = new URL(value);
+    if (!["127.0.0.1", "localhost", "::1"].includes(parsed.hostname)) return undefined;
+    return { host: parsed.hostname, port: Number(parsed.port || 80) };
+  } catch {
+    return undefined;
+  }
+}
+
+async function resolveProviderProxyDispatcher() {
+  const address = loopbackProxyAddress(providerProxyUrl);
+  if (!address) return undefined;
+  const reachable = await new Promise((resolve) => {
+    const socket = net.createConnection(address.port, address.host);
+    const finish = (value) => { socket.destroy(); resolve(value); };
+    socket.once('connect', () => finish(true));
+    socket.once('error', () => finish(false));
+    socket.setTimeout(500, () => finish(false));
+  });
+  return reachable ? new ProxyAgent(providerProxyUrl) : undefined;
+}
 
 const themeDirections = {
   "professional-headshots": "premium professional headshot portraits for LinkedIn, resumes, founders, and team pages; clean business wardrobe, office or studio backgrounds, believable lighting",
@@ -64,6 +93,10 @@ const themeDirections = {
   "virtual-try-on": "private fashion try-on previews with outfits, styling mirrors, wardrobe racks, garment details, and lookbook poses",
   "profile-cards": "clean social profile card portraits, avatar crops, bio images, personal landing page visuals, and identity-card compositions",
   "creator-portraits": "creator portraits for newsletters, thumbnails, media kits, studio lights, desk setups, microphones, cameras, and personal-brand scenes",
+  "black-friday": "Black Friday campaign portraits for sale banners, social ads, shopping feeds, creator promos, and seasonal promotional posts; dark studio styling, high contrast, bold red and black accents, product-launch energy",
+  cannes: "Cannes-inspired film-festival glamour portraits with red-carpet arrival energy, flash photography, elegant eveningwear, premiere lighting, luxury terraces, and editorial crops; no official festival logos or real-event claims",
+  nightlife: "after-dark nightlife portraits with city lights, lounge interiors, rooftop bars, neon reflections, evening wardrobe, confident social crops, and polished contemporary event energy; no Christmas or wedding styling",
+  "rich-lifestyle": "premium rich-lifestyle portraits with luxury interiors, elevated wardrobe, travel-inspired settings, warm architectural light, refined status cues, and polished creator campaign crops; no wedding ceremony or cultural wedding attire",
   "fashion-editorial": "fashion editorial portraits with magazine lighting, runway energy, wardrobe styling, refined poses, and high-end campaign mood",
   "anime-avatar": "anime-inspired avatar portraits and stylized character profile images; playful, polished, original characters only, no copyrighted characters",
   "product-style": "creator-led product lifestyle scenes, product tables, package mockups, softbox lighting, social commerce visuals, and clean catalog compositions",
@@ -121,7 +154,7 @@ async function imageBufferFromUrl(url) {
     const [, payload = ""] = url.split(",", 2);
     return Buffer.from(payload, url.includes(";base64,") ? "base64" : "utf8");
   }
-  const response = await fetch(url, { cache: "no-store" });
+  const response = await fetch(url, { cache: "no-store", ...(providerProxyDispatcher ? { dispatcher: providerProxyDispatcher } : {}) });
   if (!response.ok) throw new Error(`image_url_fetch_failed_${response.status}`);
   return Buffer.from(await response.arrayBuffer());
 }
@@ -248,6 +281,7 @@ async function generateContactSheet({ pack, slug, provider, sheetIndex }) {
         "X-Client-Request-Id": requestId
       },
       signal: controller.signal,
+      ...(providerProxyDispatcher ? { dispatcher: providerProxyDispatcher } : {}),
       body: JSON.stringify({
         model: provider.model,
         prompt: buildPrompt(pack, slug, sheetIndex),
@@ -396,6 +430,7 @@ async function activeThemePacksForSite() {
 }
 
 async function main() {
+  providerProxyDispatcher = await resolveProviderProxyDispatcher();
   const packSource = await activeThemePacksForSite();
   const packs = packSource.packs;
   const selected = packs
