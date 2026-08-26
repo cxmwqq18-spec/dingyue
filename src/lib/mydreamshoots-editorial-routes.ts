@@ -40,10 +40,10 @@ export const MYDREAMSHOOTS_STANDARD_SEO_INVENTORY = MYDREAMSHOOTS_STANDARD_SEO_R
   canonicalPath,
   routeKind: "standard-content" as const,
   disposition: "render" as const,
-  // Wedding Invitation remains directly reachable while its catalogue status
-  // is reviewed. Wedding Anniversary is already published and indexable.
-  indexable: canonicalPath !== "/holidays-events/wedding-invitation",
-  sitemapEligible: canonicalPath !== "/holidays-events/wedding-invitation",
+  // These pages remain directly reachable while their catalogue status is
+  // reviewed, but neither is currently eligible for search indexing.
+  indexable: canonicalPath !== "/holidays-events/wedding-invitation" && canonicalPath !== "/holidays-events/wedding-anniversary",
+  sitemapEligible: canonicalPath !== "/holidays-events/wedding-invitation" && canonicalPath !== "/holidays-events/wedding-anniversary",
   requiredProjectionKinds: ["page", "copy", "media", "links"] as const
 }));
 
