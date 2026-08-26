@@ -234,7 +234,10 @@ if (sourceSiteId === targetSiteId && !allowSameSite) throw new Error("Source and
     });
     for (const theme of source.siteThemes) await tx.siteTheme.upsert({ where: { siteId_themeId: { siteId: targetSiteId, themeId: maps.ids.get(theme.themeId) } }, create: { id: maps.ids.get(theme.id), siteId: targetSiteId, name: theme.name, themeId: maps.ids.get(theme.themeId), themeKey: theme.themeKey, status: theme.status, templates: publicJson(theme.templates, maps, source), settings: publicJson(theme.settings, maps, source), source: theme.source, createdBy: theme.createdBy }, update: { name: theme.name, themeKey: theme.themeKey, status: theme.status, templates: publicJson(theme.templates, maps, source), settings: publicJson(theme.settings, maps, source), source: theme.source, createdBy: theme.createdBy, updatedAt: new Date() } });
     for (const copy of source.themeCopies) await tx.themeCopy.upsert({ where: { id: maps.ids.get(copy.id) }, create: { id: maps.ids.get(copy.id), siteId: targetSiteId, name: copy.name, themeKey: copy.themeKey, source: copy.source, templates: publicJson(copy.templates, maps, source), settings: publicJson(copy.settings, maps, source), createdBy: copy.createdBy }, update: { name: copy.name, themeKey: copy.themeKey, source: copy.source, templates: publicJson(copy.templates, maps, source), settings: publicJson(copy.settings, maps, source), createdBy: copy.createdBy, updatedAt: new Date() } });
-  }, { timeout: 180000, maxWait: 20000 });
+  }, {
+    timeout: Math.max(180_000, Number(process.env.PUBLIC_SQL_SYNC_TRANSACTION_TIMEOUT_MS || 600_000)),
+    maxWait: 20_000
+  });
 
   const protectedAfter = await protectedFingerprint(prisma);
   if (protectedBefore.hash !== protectedAfter.hash) throw new Error("Protected business row contents changed during public SQL sync.");
